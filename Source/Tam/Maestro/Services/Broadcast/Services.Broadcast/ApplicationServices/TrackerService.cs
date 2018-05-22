@@ -23,7 +23,6 @@ namespace Services.Broadcast.ApplicationServices
     {
         LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate);
         BvsLoadDto GetBvsLoadData(DateTime currentDateTime);
-        List<LookupDto> GetNsiPostingBookMonths();
         int SaveSchedule(ScheduleSaveRequest request);
         Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request);
         string SaveBvsViaFtp(string userName);
@@ -63,13 +62,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ISMSClient _SmsClient;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        private readonly INsiPostingBookService _NsiPostingBookService;
 
         public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBvsPostingEngine bvsPostingEngine,
             ITrackingEngine trackingEngine, IScxConverter scxConverter, IBvsConverter bvsConverter,
             IAssemblyScheduleConverter assemblyFileConverter,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
             IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
-            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient, IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient, 
+            IImpressionAdjustmentEngine impressionAdjustmentEngine, INsiPostingBookService nsiPostingBookService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BvsPostingEngine = bvsPostingEngine;
@@ -84,6 +85,7 @@ namespace Services.Broadcast.ApplicationServices
             _QuarterCalculationEngine = quarterCalculationEngine;
             _SmsClient = smsClient;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
+            _NsiPostingBookService = nsiPostingBookService;
         }
 
         public LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate)
@@ -95,7 +97,7 @@ namespace Services.Broadcast.ApplicationServices
             var scheduleAdvertisers = ret.Schedules.Select(x => x.AdvertiserId).ToList();
             ret.Advertisers = _SmsClient.GetActiveAdvertisers().Where(a => scheduleAdvertisers.Contains(a.Id)).ToList();
 
-            var nsiPostingBooks = _GetNsiPostingMediaMonths();
+            var nsiPostingBooks = _NsiPostingBookService.GetNsiPostingMediaMonths();
             ret.PostingBooks = nsiPostingBooks.Select(d => new LookupDto() {Id = d.Id, Display = d.MediaMonthX}).ToList();
             foreach (var schedule in ret.Schedules)
             {
@@ -136,7 +138,7 @@ namespace Services.Broadcast.ApplicationServices
                     x =>
                         x.StartDate.Month <= currentDateTime.Month && x.EndDate.Month >= currentDateTime.Month &&
                         x.StartDate.Year == currentDateTime.Year);
-            ret.PostingBooks = GetNsiPostingBookMonths();
+            ret.PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths();
 
             ret.InventorySources =
                 Enum.GetValues(typeof(InventorySourceEnum))
@@ -202,32 +204,6 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             return ret;
-        }
-
-        public List<LookupDto> GetNsiPostingBookMonths()
-        {
-            var postingBooks =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
-                    .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
-
-            var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
-
-            return (from x in mediaMonths
-                    select new LookupDto
-                    {
-                        Id = x.Id
-                    ,
-                        Display = x.MediaMonthX
-                    }).ToList();
-        }
-
-        internal List<MediaMonth> _GetNsiPostingMediaMonths()
-        {
-            var postingBooks =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
-                    .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
-
-            return _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
         }
 
         public ScheduleFileType _GetRequestFileType(ScheduleSaveRequest request)
@@ -674,7 +650,7 @@ namespace Services.Broadcast.ApplicationServices
             scrubbingDto.EstimateId = schedule.EstimateId;
             scrubbingDto.ScheduleName = schedule.ScheduleName;
             scrubbingDto.ISCIs = string.Join(",", schedule.ISCIs.Select(i => i.House));
-            scrubbingDto.PostingBooks = GetNsiPostingBookMonths();
+            scrubbingDto.PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths();
             scrubbingDto.BvsDetails = GetBvsDetailsWithAdjustedImpressions(estimateId, schedule);
             scrubbingDto.SchedulePrograms = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleLookupPrograms(schedule.Id);
             scrubbingDto.ScheduleNetworks = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetScheduleLookupStations(schedule.Id);
@@ -799,7 +775,7 @@ namespace Services.Broadcast.ApplicationServices
         public RatingAdjustmentsResponse GetRatingAdjustments()
         {
             var adjustments = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments();
-            var postingBooks = GetNsiPostingBookMonths();
+            var postingBooks = _NsiPostingBookService.GetNsiPostingBookMonths();
 
             // update display for each adjustment
             adjustments.ForEach(a =>

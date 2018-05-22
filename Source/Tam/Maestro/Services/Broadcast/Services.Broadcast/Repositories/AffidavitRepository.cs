@@ -111,7 +111,12 @@ namespace Services.Broadcast.Repositories
                         effective_genre = s.EffectiveGenre,
                         effective_show_type = s.EffectiveShowType,
                         lead_in = s.LeadIn,
-                        status = (int)s.Status
+                        status = (int)s.Status,
+                        affidavit_client_scrub_audiences = s.AffidavitClientScrubAudiences.Select( a => new affidavit_client_scrub_audiences
+                        {
+                            audience_id = a.AudienceId,
+                            impressions = a.Impressions
+                        }).ToList()
                     }).ToList(),
                     affidavit_file_detail_problems = d.AffidavitFileDetailProblems.Select(p => new affidavit_file_detail_problems
                     {
@@ -123,13 +128,7 @@ namespace Services.Broadcast.Repositories
                         audience_id = demo.AudienceId,
                         overnight_impressions = demo.OvernightImpressions,
                         overnight_rating = demo.OvernightRating
-                    }).ToList(),
-                    affidavit_file_detail_audiences = d.AffidavitFileDetailAudiences.Select(a => new affidavit_file_detail_audiences
-                    {
-                        audience_id = a.AudienceId,
-                        impressions = a.Impressions
                     }).ToList()
-
                 }).ToList()
             };
 
@@ -143,7 +142,6 @@ namespace Services.Broadcast.Repositories
                 {
                     var query = context.affidavit_files
                         .Include(a => a.affidavit_file_details)
-                        .Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_audiences))
                         .Include(a => a.affidavit_file_problems);
 
                     if (includeScrubbingDetail)
@@ -151,6 +149,7 @@ namespace Services.Broadcast.Repositories
                         query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_client_scrubs));
                         query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_demographics));
                         query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_file_detail_problems));
+                        query.Include(a => a.affidavit_file_details.Select(d => d.affidavit_client_scrubs.Select(s => s.affidavit_client_scrub_audiences)));
                     }
 
                     var affidavitFile = query.Single(a => a.id == affidavitId, "Affidavit/Post not found in database");
@@ -228,13 +227,15 @@ namespace Services.Broadcast.Repositories
                         Comment = a.comment,
                         ModifiedBy = a.modified_by,
                         ModifiedDate = a.modified_date,
-                        LeadIn = a.lead_in
-                    }).ToList(),
-                    AffidavitFileDetailAudiences = d.affidavit_file_detail_audiences.Select(a => new AffidavitFileDetailAudience
-                    {
-                        AffidavitFileDetailId = a.affidavit_file_detail_id,
-                        AudienceId = a.audience_id,
-                        Impressions = a.impressions
+                        LeadIn = a.lead_in,
+                        ProposalVersionDetailId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.id,
+                        PostingBookId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.posting_book_id,
+                        AffidavitClientScrubAudiences = a.affidavit_client_scrub_audiences.Select(sa => new AffidavitClientScrubAudience
+                        {
+                            AffidavitClientScrubId = sa.affidavit_client_scrub_id,
+                            AudienceId = sa.audience_id,
+                            Impressions = sa.impressions
+                        }).ToList()                            
                     }).ToList()
                 }).ToList()
             };
@@ -324,9 +325,10 @@ namespace Services.Broadcast.Repositories
                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                          from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                         from AffidavitClientScrubAudiences in affidavitClientScrub.affidavit_client_scrub_audiences
                                          let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
                                          where proposal.id == proposalId && affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
-                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks, affidavitClientScrub })
+                                         select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks, affidavitClientScrub, AffidavitClientScrubAudiences })
                                          .ToList();
 
                     var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
@@ -338,7 +340,7 @@ namespace Services.Broadcast.Repositories
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,
                         DaypartName = x.proposalVersionDetail.daypart_code,
-                        AudienceImpressions = x.affidavitFileDetails.affidavit_file_detail_audiences
+                        AudienceImpressions = x.affidavitClientScrub.affidavit_client_scrub_audiences
                                                 .ToDictionary(i => i.audience_id, j => j.impressions),
                         OvernightImpressions = x.affidavitFileDetails.affidavit_file_detail_demographics
                                                 .ToDictionary(i => i.audience_id.Value, j => (double)j.overnight_impressions.Value),
@@ -347,7 +349,7 @@ namespace Services.Broadcast.Repositories
                         AdvertiserId = x.proposal.advertiser_id,
                         ProposalWeekTotalCost = x.proposalVersionWeeks.cost,
                         ProposalWeekTotalImpressionsGoal = x.proposalVersionWeeks.impressions_goal,
-                        Units = x.proposalVersionWeeks.units
+                        Units = x.proposalVersionWeeks.units,
                     }).OrderBy(x=>x.Station).ThenBy(x=>x.AirDate).ThenBy(x=>x.AirTime).ToList();
 
                     return inSpecAffidavitFileDetails;

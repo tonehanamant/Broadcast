@@ -27,7 +27,6 @@ namespace Services.Broadcast.Entities
         public string Affiliate { get; set; }
         public List<AffidavitDemographics> Demographics { get; set; }
         public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; }
-        public List<AffidavitFileDetailAudience> AffidavitFileDetailAudiences { get; set; }
         public List<AffidavitFileDetailProblem> AffidavitFileDetailProblems { get; set; }
         public string ShowType { get; set; }
         public string LeadInShowType { get; set; }
@@ -39,7 +38,6 @@ namespace Services.Broadcast.Entities
         {
             Demographics = new List<AffidavitDemographics>();
             AffidavitClientScrubs = new List<AffidavitClientScrub>();
-            AffidavitFileDetailAudiences = new List<AffidavitFileDetailAudience>();
             AffidavitFileDetailProblems = new List<Entities.AffidavitFileDetailProblem>();
         }
     }

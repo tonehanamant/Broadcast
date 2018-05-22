@@ -5,14 +5,14 @@
   "DefaultProjectionBooks": {
     "DefaultHutBook": {
       "HasWarning": true,
-      "PostingBookId": 413,
+      "PostingBookId": 418,
       "WarningMessage": "The hut book for the last year's quarter is not available, the default has been set as the latest possible book"
     },
     "DefaultPlaybackType": 4,
     "DefaultShareBook": {
-      "HasWarning": true,
-      "PostingBookId": 416,
-      "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
+      "HasWarning": false,
+      "PostingBookId": 422,
+      "WarningMessage": null
     }
   },
   "FlightEdited": false,

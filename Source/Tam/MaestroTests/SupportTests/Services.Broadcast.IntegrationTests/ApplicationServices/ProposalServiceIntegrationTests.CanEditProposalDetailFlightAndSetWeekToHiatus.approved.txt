@@ -15,9 +15,9 @@
         },
         "DefaultPlaybackType": 4,
         "DefaultShareBook": {
-          "HasWarning": true,
-          "PostingBookId": 416,
-          "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
+          "HasWarning": false,
+          "PostingBookId": 428,
+          "WarningMessage": null
         }
       },
       "FlightEdited": false,

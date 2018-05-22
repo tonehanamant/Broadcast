@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -7,6 +8,7 @@ namespace Services.Broadcast.Entities
         public int Id { get; set; }
         public long AffidavitFileDetailId { get; set; }
         public int ProposalVersionDetailQuarterWeekId { get; set; }
+        public int ProposalVersionDetailId { get; set; }
         public bool MatchProgram { get; set; }
         public bool MatchGenre { get; set; }
         public bool MatchShowType { get; set; }
@@ -23,5 +25,11 @@ namespace Services.Broadcast.Entities
         public string EffectiveProgramName { get; set; }
         public string EffectiveGenre { get; set; }
         public string EffectiveShowType { get; set; }
+        public int? PostingBookId { get; set; }
+        public List<AffidavitClientScrubAudience> AffidavitClientScrubAudiences { get; set; }
+        public AffidavitClientScrub()
+        {
+            AffidavitClientScrubAudiences = new List<AffidavitClientScrubAudience>();
+        }
     }
 }

@@ -202,6 +202,34 @@
   "ForecastDefaults": {
     "CrunchedMonths": [
       {
+        "Display": "February 2018",
+        "Id": 437
+      },
+      {
+        "Display": "November 2017",
+        "Id": 434
+      },
+      {
+        "Display": "July 2017",
+        "Id": 430
+      },
+      {
+        "Display": "May 2017",
+        "Id": 428
+      },
+      {
+        "Display": "February 2017",
+        "Id": 425
+      },
+      {
+        "Display": "November 2016",
+        "Id": 422
+      },
+      {
+        "Display": "July 2016",
+        "Id": 418
+      },
+      {
         "Display": "May 2016",
         "Id": 416
       },

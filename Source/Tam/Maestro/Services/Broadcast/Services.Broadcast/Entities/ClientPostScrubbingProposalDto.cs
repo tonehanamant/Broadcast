@@ -48,5 +48,6 @@ namespace Services.Broadcast.Entities
         public List<string> DistinctStations { get; set; }
         public List<DateTime> DistinctWeekStarts { get; set; }
         public List<string> DistinctShowTypes { get; set; }
+        public List<int> DistinctSequences { get; set; }
     }
 }

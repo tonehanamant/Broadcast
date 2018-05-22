@@ -67,6 +67,7 @@ namespace Services.Broadcast.Repositories
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
         ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
+        void UpdateProposalDetailPostingBooks(List<Tuple<int, int>> list);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1513,6 +1514,9 @@ namespace Services.Broadcast.Repositories
                                 ProposalVersionDetailId = i.proposal_version_detail_quarter_weeks
                                                         .proposal_version_detail_quarters
                                                         .proposal_version_detail_id,
+                                ProposalVersionDetailPostingBookId = i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_details.posting_book_id,
                                 ProposalVersionDetailWeekStart = i.proposal_version_detail_quarter_weeks.start_date,
                                 ProposalVersionDetailWeekEnd = i.proposal_version_detail_quarter_weeks.end_date,
                                 Spots = i.proposal_version_detail_quarter_weeks.units,
@@ -1527,6 +1531,22 @@ namespace Services.Broadcast.Repositories
                             }).ToList();
                     return weeks;
                 });
+        }
+
+        public void UpdateProposalDetailPostingBooks(List<Tuple<int, int>> detailTuples)
+        {
+            _InReadUncommitedTransaction(c =>
+            {
+                foreach(var detailTuple in detailTuples)
+                {
+                    var detail = c.proposal_version_details.Find(detailTuple.Item1);
+                    if(detail.posting_book_id == null)
+                    {
+                        detail.posting_book_id = detailTuple.Item2;
+                        c.SaveChanges();
+                    }                    
+                }                
+            });
         }
     }
 }

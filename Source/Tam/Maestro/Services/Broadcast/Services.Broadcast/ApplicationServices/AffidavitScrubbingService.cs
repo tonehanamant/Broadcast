@@ -48,6 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IProposalService _ProposalService;
+        private readonly IProjectionBooksService _ProjectionBooksService;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -62,6 +63,7 @@ namespace Services.Broadcast.ApplicationServices
             _AudiencesCache = audiencesCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
+            _ProjectionBooksService = postingBooksService;
         }
 
         /// <summary>
@@ -141,7 +143,8 @@ namespace Services.Broadcast.ApplicationServices
                     DistinctAffiliates = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Affiliate)).Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
                     DistinctStations = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Station)).Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
                     DistinctWeekStarts = result.ClientScrubs.Select(x => x.WeekStart).Distinct().OrderBy(x => x).ToList(),
-                    DistinctShowTypes = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ShowTypeName)).Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList()
+                    DistinctShowTypes = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ShowTypeName)).Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList(),
+                    DistinctSequences = result.ClientScrubs.Where(x => x.Sequence.HasValue).Select(x => x.Sequence.Value).Distinct().OrderBy(x => x).ToList()
                 };
                 return result;
             }

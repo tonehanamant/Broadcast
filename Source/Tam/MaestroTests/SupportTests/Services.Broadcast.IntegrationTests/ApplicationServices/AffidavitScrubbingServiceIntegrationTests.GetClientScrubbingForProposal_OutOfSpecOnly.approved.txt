@@ -72,6 +72,7 @@
     "DistinctHouseIscis": [],
     "DistinctMarkets": [],
     "DistinctPrograms": [],
+    "DistinctSequences": [],
     "DistinctShowTypes": [],
     "DistinctSpotLengths": [],
     "DistinctStations": [],

@@ -252,6 +252,7 @@
     "DistinctPrograms": [
       "Program Names R us"
     ],
+    "DistinctSequences": [],
     "DistinctShowTypes": [],
     "DistinctSpotLengths": [
       30

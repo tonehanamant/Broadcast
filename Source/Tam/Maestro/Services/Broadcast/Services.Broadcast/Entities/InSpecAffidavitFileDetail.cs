@@ -23,5 +23,6 @@ namespace Services.Broadcast.Entities
         public double ProposalWeekImpressionsGoal { get; set; }
         public decimal ProposalWeekCPM { get; set; }
         public int Units { get; set; }
+        public int? ProposalDetailPostingBookId { get; set; }
     }
 }

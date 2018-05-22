@@ -60,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalService _ProposalService;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly Lazy<Image> _LogoImage;
-        private readonly IProjectionBooksService _PostingBooksService;
+        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
 
         public PostReportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -68,7 +68,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IProjectionBooksService postingBooksService)
+            IProjectionBooksService projectionBooksService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -79,7 +79,7 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
-            _PostingBooksService = postingBooksService;
+            _ProjectionBooksService = projectionBooksService;
             _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(_SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
         }
 
@@ -128,13 +128,28 @@ namespace Services.Broadcast.ApplicationServices
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
-            var latestPostingBooks = _PostingBooksService.GetDefaultProjectionBooks();
-            var nsiMarketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(latestPostingBooks.DefaultShareBook.PostingBookId.Value);
+            var nsiMarketRankings = _GetMarketRankingsByPostingBook(inspecSpots);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
 
             return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
                                                 withOvernightImpressions, proposal.Equivalized);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inspecSpots"></param>
+        /// <returns>Dictionary by posting book id of dictionaries of maret rankings by market id</returns>
+        private Dictionary<int, Dictionary<int, int>> _GetMarketRankingsByPostingBook(List<InSpecAffidavitFileDetail> inspecSpots)
+        {
+            var result = new Dictionary<int, Dictionary<int, int>>();
+            var postingBooksFromProposalDetails = inspecSpots.Where(s => s.ProposalDetailPostingBookId.HasValue).Select(s => s.ProposalDetailPostingBookId.Value).Distinct().ToList();
+            foreach(var postingBookId in postingBooksFromProposalDetails)
+            {
+                var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(postingBookId);
+                result.Add(postingBookId, marketRankings);
+            }
+            return result;            
         }
 
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)

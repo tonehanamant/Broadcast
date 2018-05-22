@@ -345,13 +345,13 @@
     <Compile Include="affidavit_client_scrubs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="affidavit_client_scrub_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="affidavit_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_file_details.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="affidavit_file_detail_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_file_detail_demographics.cs">
