@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -198,9 +199,8 @@ namespace Services.Broadcast.ApplicationServices
 
         public void _ScrubAffidavitFile(AffidavitFile affidavitFile)
         {
-            var callLetters = affidavitFile.AffidavitFileDetails.Select(a => a.Station).ToList();
             var stations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
-                .GetBroadcastStationListByLegacyCallLetters(callLetters).ToDictionary(k => k.LegacyCallLetters, v => v);
+                .GetBroadcastStations().ToDictionary(k => k.LegacyCallLetters, v => v);
 
             foreach (var affidavitDetail in affidavitFile.AffidavitFileDetails)
             {
@@ -211,11 +211,7 @@ namespace Services.Broadcast.ApplicationServices
                     affidavitDetail.AffidavitClientScrubs.Select(s => s.ProposalVersionDetailQuarterWeekId).ToList();
                 var proposals = _ProposalService.GetProposalsByQuarterWeeks(quarterWeekIds);
 
-                DisplayBroadcastStation affidavitStation = null;
-                if (stations.ContainsKey(affidavitDetail.Station))
-                {
-                    affidavitStation = stations[affidavitDetail.Station];
-                }
+                var affidavitStation = _MatchAffidavitStation(stations, affidavitDetail);
 
                 foreach (var scrub in affidavitDetail.AffidavitClientScrubs)
                 {
@@ -254,6 +250,27 @@ namespace Services.Broadcast.ApplicationServices
                         : ScrubbingStatus.OutOfSpec;
                 }
             }
+        }
+
+        private static DisplayBroadcastStation _MatchAffidavitStation(Dictionary<string, DisplayBroadcastStation> stations, AffidavitFileDetail affidavitDetail)
+        {
+            const string tvEnding = "-TV";
+            string stationName = affidavitDetail.Station;
+
+            if (stations.ContainsKey(stationName))
+                return stations[stationName];
+
+            var index = stationName.LastIndexOf(tvEnding,StringComparison.CurrentCultureIgnoreCase);
+            if (index < 0)
+                return null;
+
+            stationName = stationName.Remove(index);
+            if (!stations.ContainsKey(stationName))
+            {
+                return null;
+            }
+
+            return stations[stationName];
         }
 
         private List<AffidavitFileProblem> _MapValidationErrorToAffidavitFileProblem(List<AffidavitValidationResult> affidavitValidationResults)
