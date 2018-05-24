@@ -2,13 +2,15 @@
   "Posts": [
     {
       "ContractName": "Proposal Test",
-      "PrimaryAudienceImpressions": 315366.80000000005,
+      "GuaranteedAudienceId": 31,
+      "PrimaryAudienceImpressions": 315366.8,
       "SpotsInSpec": 5,
       "SpotsOutOfSpec": 0,
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
       "ContractName": "NSI Report Test",
+      "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 2442.0,
       "SpotsInSpec": 4,
       "SpotsOutOfSpec": 0,
@@ -16,6 +18,7 @@
     },
     {
       "ContractName": "MYEvents Test Proposal",
+      "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 4,
       "SpotsOutOfSpec": 0,
@@ -23,6 +26,7 @@
     },
     {
       "ContractName": "MYEvents Test Proposal 2",
+      "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 8,
       "SpotsOutOfSpec": 0,
@@ -30,13 +34,23 @@
     },
     {
       "ContractName": "MYEvents Test Proposal 3",
+      "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 8,
       "SpotsOutOfSpec": 0,
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
+      "ContractName": "Post Impressions Test",
+      "GuaranteedAudienceId": 34,
+      "PrimaryAudienceImpressions": 9747.65,
+      "SpotsInSpec": 1,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
       "ContractName": "Proposal Test 5",
+      "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 2,
       "SpotsOutOfSpec": 0,
@@ -44,6 +58,7 @@
     },
     {
       "ContractName": "Proposal Test",
+      "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
       "SpotsInSpec": 0,
       "SpotsOutOfSpec": 0,
