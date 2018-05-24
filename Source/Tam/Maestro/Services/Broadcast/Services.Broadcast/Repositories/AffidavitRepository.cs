@@ -325,7 +325,7 @@ namespace Services.Broadcast.Repositories
                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                          from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                         from AffidavitClientScrubAudiences in affidavitClientScrub.affidavit_client_scrub_audiences
+                                         from AffidavitClientScrubAudiences in affidavitClientScrub.affidavit_client_scrub_audiences.DefaultIfEmpty()
                                          let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
                                          where proposal.id == proposalId && affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
                                          select new { affidavitFileDetails, proposalVersionQuarters, proposalVersionDetail, proposalVersion, proposal, proposalVersionWeeks, affidavitClientScrub, AffidavitClientScrubAudiences })

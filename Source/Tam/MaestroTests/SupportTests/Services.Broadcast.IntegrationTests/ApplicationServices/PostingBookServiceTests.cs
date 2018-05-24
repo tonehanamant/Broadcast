@@ -25,14 +25,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Ignore]
         public void DefaultShareBookNotAvailable()
         {
-            var dateTime = new DateTime(2017, 01, 1);
+            var dateTime = new DateTime(2005, 01, 1);
             var defaultPostingBook = _postingBooksService.GetDefaultProjectionBooks(dateTime);
 
-            Assert.AreEqual(416, defaultPostingBook.DefaultShareBook.PostingBookId);
-            Assert.AreEqual(413, defaultPostingBook.DefaultHutBook.PostingBookId);
+            Assert.IsNull(defaultPostingBook.DefaultShareBook.PostingBookId);
+            Assert.IsNull(defaultPostingBook.DefaultHutBook.PostingBookId);
             Assert.IsTrue(defaultPostingBook.DefaultShareBook.HasWarning);
-            Assert.IsFalse(defaultPostingBook.DefaultHutBook.HasWarning);
-            Assert.AreEqual(ProjectionBooksService.ShareBookForCurrentQuarterNotAvailable, defaultPostingBook.DefaultShareBook.WarningMessage);
+            Assert.IsTrue(defaultPostingBook.DefaultHutBook.HasWarning);
+            Assert.AreEqual(ProjectionBooksService.ShareBookNotFound, defaultPostingBook.DefaultShareBook.WarningMessage);
         }
 
         [Test]
