@@ -40,8 +40,6 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
     {
-        private const string MyEventsZipFileName = "MYEventsReport.zip";
-
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IPostRepository _PostRepository;
@@ -72,11 +70,31 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of PostDto objects</returns>
         public PostedContractedProposalsDto GetPosts()
         {
+            var postedProposals = _PostRepository.GetAllPostedProposals();
+
+            foreach(var post in postedProposals)
+            {
+                _SetPrimaryAudienceImpressions(post);
+            }
+
             return new PostedContractedProposalsDto()
             {
-                Posts = _PostRepository.GetAllPostFiles(),
+                Posts = postedProposals,
                 UnlinkedIscis = _PostRepository.CountUnlinkedIscis()
             };
+        }
+
+        private void _SetPrimaryAudienceImpressions(PostDto post)
+        {
+            var broadcastAudienceRepository = _BroadcastDataRepositoryFactory
+                .GetDataRepository<IBroadcastAudienceRepository>();
+
+            var ratingsAudiencesIds = broadcastAudienceRepository.
+                GetRatingsAudiencesByMaestroAudience(new List<int> { post.GuaranteedAudienceId }).
+                Select(x => x.rating_audience_id).
+                ToList();
+
+            post.PrimaryAudienceImpressions = _PostRepository.GetPostImpressions(post.ContractId, ratingsAudiencesIds);
         }
 
         /// <summary>

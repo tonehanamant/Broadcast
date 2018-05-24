@@ -705,6 +705,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_Funky_TV_Station_Name_BCOP3092()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().Station = "WBTS-TV";
+
+                var postingDate = new DateTime(2016, 4, 20);
+
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+
+                VerifyAffidavit(result);
+            }
+        }
+
+
+
         private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {
             var request = new OpenMarketAllocationSaveRequest

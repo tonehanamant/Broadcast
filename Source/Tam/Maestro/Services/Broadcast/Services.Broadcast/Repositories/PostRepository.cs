@@ -13,7 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
-        List<PostDto> GetAllPostFiles();
+        List<PostDto> GetAllPostedProposals();
 
         /// <summary>
         /// Counts all the unlinked iscis
@@ -26,6 +26,15 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>List of UnlinkedIscisDto objects</returns>
         List<UnlinkedIscisDto> GetUnlinkedIscis();
+
+
+        /// <summary>
+        /// Gets the impressions for a contract and rating audiences
+        /// </summary>
+        /// <param name="proposalId">proposal or contract id</param>
+        /// <param name="ratingsAudiences">list of rating audiences</param>
+        /// <returns></returns>
+        double GetPostImpressions(int proposalId, List<int> ratingsAudiences);
     }
 
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
@@ -35,7 +44,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<PostDto> GetAllPostFiles()
+        public List<PostDto> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -64,18 +73,30 @@ namespace Services.Broadcast.Repositories
                                           select (DateTime?)affidavitFileScrub.affidavit_file_details.affidavit_files.created_date).FirstOrDefault(),
                             SpotsInSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.InSpec),
                             SpotsOutOfSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec),
-                            PrimaryAudienceImpressions = (from proposalVersionDetail in proposal.proposal_version_details
-                                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                                          from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                                          from affidavitFileScrubAudience in affidavitFileScrub.affidavit_client_scrub_audiences
-                                                          where (ScrubbingStatus)affidavitFileScrub.status == ScrubbingStatus.InSpec &&
-                                                                affidavitFileScrubAudience.audience_id == proposal.guaranteed_audience_id
-                                                          select affidavitFileScrubAudience.impressions).Sum()
+                            GuaranteedAudienceId = proposal.guaranteed_audience_id
                         });
                     }
 
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
+                });
+        }
+
+        public double GetPostImpressions(int proposalId, List<int> ratingsAudiences)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from proposal in context.proposals
+                            from proposalVersion in proposal.proposal_versions
+                            from proposalVersionDetail in proposalVersion.proposal_version_details
+                            from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                            from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                            from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                            from affidavitClientScrubAudience in affidavitClientScrub.affidavit_client_scrub_audiences
+                            where proposal.id == proposalId &&
+                                  (ScrubbingStatus)affidavitClientScrub.status == ScrubbingStatus.InSpec &&
+                                  ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id)
+                            select affidavitClientScrubAudience.impressions).Sum(x => (double?)x) ?? 0;
                 });
         }
 
