@@ -8,9 +8,9 @@ import { Row, Col, Button } from 'react-bootstrap';
 import SearchInputButton from 'Components/shared/SearchInputButton';
 import UnlinkedIsciModal from './UnlinkedIsciModal';
 
-const mapStateToProps = ({ post: { post, unlinkedIscis } }) => ({
-  post,
+const mapStateToProps = ({ post: { unlinkedIscis, unlinkedIscisLength } }) => ({
   unlinkedIscis,
+  unlinkedIscisLength,
 });
 
 const mapDispatchToProps = dispatch => (
@@ -38,17 +38,19 @@ export class PageHeaderContainer extends Component {
 	}
 
   render() {
-    const unlinkedNumber = this.props.post.UnlinkedIscis;
-    const showUnlinked = (unlinkedNumber !== 0);
-    const unlinkedText = `Unlinked ISCIs (${unlinkedNumber})`;
+    const { unlinkedIscisLength } = this.props;
     return (
       <div>
 			<Row>
 				<Col xs={6}>
-        {
-          showUnlinked &&
-          <Button bsStyle="success" onClick={this.openUnlinkedIscis} bsSize="small">{unlinkedText}</Button>
-        }
+        {!!unlinkedIscisLength &&
+          <Button
+            bsStyle="success"
+            onClick={this.openUnlinkedIscis}
+            bsSize="small"
+          >
+            {`Unlinked ISCIs (${unlinkedIscisLength})`}
+          </Button>}
 				</Col>
         <Col xs={6}>
 					<SearchInputButton
@@ -70,9 +72,9 @@ export class PageHeaderContainer extends Component {
 PageHeaderContainer.propTypes = {
   getPostFiltered: PropTypes.func.isRequired,
   getUnlinkedIscis: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
 	unlinkedIscis: PropTypes.array.isRequired,
+	unlinkedIscisLength: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHeaderContainer);

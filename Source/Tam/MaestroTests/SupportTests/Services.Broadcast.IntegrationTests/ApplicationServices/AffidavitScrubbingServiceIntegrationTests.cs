@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -69,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var scrubbingRequest = new ProposalScrubbingRequest() { ScrubbingStatusFilter = ScrubbingStatus.InSpec};
+                var scrubbingRequest = new ProposalScrubbingRequest() { ScrubbingStatusFilter = ScrubbingStatus.InSpec };
                 var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253, scrubbingRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -155,7 +156,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _AffidavitScrubbingService.GetUnlinkedIscis();
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(UnlinkedIscisDto), "FileDetailsId");
+                jsonResolver.Ignore(typeof(UnlinkedIscisDto), "FileDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -166,7 +167,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ArchiveIsci()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() { 4286 }, "ApprovedTest");
                 
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(System.Exception), ExpectedMessage = "There are already blacklisted iscis in your list", MatchType = MessageMatch.Exact)]
+        public void ArchiveIsci_ExistingIsci()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() { 4286 }, "ApprovedTest");
+                _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() { 4286 }, "ApprovedTest");
+            }
+        }
         
         [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposalMultipleGenres()

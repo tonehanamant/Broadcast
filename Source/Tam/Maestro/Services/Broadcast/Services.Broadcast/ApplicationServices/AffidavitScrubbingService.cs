@@ -1,17 +1,12 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
-using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
@@ -36,6 +31,14 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>List of UnlinkedIscisDto objects</returns>
         List<UnlinkedIscisDto> GetUnlinkedIscis();
+
+        /// <summary>
+        /// Archives an isci from the unlinked isci list
+        /// </summary>
+        /// <param name="fileDetailIds">Iscis to archive</param>
+        /// <param name="username">User requesting the change</param>
+        /// <returns>True or false based on the errors</returns>
+        bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -175,6 +178,35 @@ namespace Services.Broadcast.ApplicationServices
         public List<UnlinkedIscisDto> GetUnlinkedIscis()
         {
             return _PostRepository.GetUnlinkedIscis();
+        }
+
+        /// <summary>
+        /// Archives an isci from the unlinked isci list
+        /// </summary>
+        /// <param name="fileDetailIds">Iscis to archive</param>
+        /// <param name="username">User requesting the change</param>
+        /// <returns>True or false based on the errors</returns>
+        public bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username)
+        {
+            List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
+            List<string> iscisToArchive = fileDetailList.Select(x => x.Isci).ToList();
+
+            if (!_PostRepository.IsIsciBlacklisted(iscisToArchive))
+            {
+                using (var transaction = new TransactionScopeWrapper()) //Ensure all db requests succeed or fail
+                {
+                    _PostRepository.ArchiveIsci(iscisToArchive, username);
+                    _PostRepository.AddNotACadentIsciProblem(fileDetailList);
+                    _PostRepository.ArchiveFileDetailRecord(iscisToArchive);
+                    transaction.Complete();
+                }
+            }
+            else
+            {
+                throw new Exception("There are already blacklisted iscis in your list");
+            }
+                
+            return true;
         }
     }
 }

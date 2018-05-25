@@ -27,8 +27,6 @@ namespace Services.Broadcast.BusinessEngines
 
             var validationResults = new List<AffidavitValidationResult>();
             
-
-
             if (affidavitDetail.AirTime == DateTime.MinValue)
             {
                 validationResults.Add(new AffidavitValidationResult()
@@ -112,7 +110,7 @@ namespace Services.Broadcast.BusinessEngines
 
             return validationResults;
         }
-
+        
         private bool _IsSpotLengthValid(int spotLength, ref Dictionary<int, int> spotLengthDict)
         {
             if (spotLengthDict == null)

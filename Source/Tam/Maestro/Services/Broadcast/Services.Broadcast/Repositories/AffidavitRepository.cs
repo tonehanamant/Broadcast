@@ -94,6 +94,7 @@ namespace Services.Broadcast.Repositories
                     leadin_show_type = d.LeadInShowType,
                     leadout_show_type = d.LeadOutShowType,
                     adjusted_air_date = d.AdjustedAirDate,
+                    archived = d.Archived,
                     affidavit_client_scrubs = d.AffidavitClientScrubs.Select(s => new affidavit_client_scrubs
                     {
                         proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,

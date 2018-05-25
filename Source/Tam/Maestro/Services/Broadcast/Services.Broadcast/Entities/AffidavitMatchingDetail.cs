@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -10,14 +6,9 @@ namespace Services.Broadcast.Entities
     {
         public int LineNumber { get; set; }
         public AffidavitSaveRequestDetail AffidavitDetail { get; set; }
-        public List<AffidavitMatchingProposalWeek> ProposalDetailWeeks { get; set; }
-
-        public List<AffidavitFileDetailProblem> AffidavitDetailProblems { get; set; }
-
-        public AffidavitMatchingDetail()
-        {
-            ProposalDetailWeeks = new List<AffidavitMatchingProposalWeek>();
-            AffidavitDetailProblems = new List<AffidavitFileDetailProblem>();
-        }
+        public bool Archived { get; set; }
+        public List<AffidavitMatchingProposalWeek> ProposalDetailWeeks { get; set; } = new List<AffidavitMatchingProposalWeek>();
+        public List<AffidavitFileDetailProblem> AffidavitDetailProblems { get; set; } = new List<AffidavitFileDetailProblem>();
+        
     }
 }
