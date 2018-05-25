@@ -154,7 +154,7 @@ export class PostScrubbingGrid extends Component {
             },
             {
                 name: 'Show Type',
-                dataIndex: 'ShowType',
+                dataIndex: 'ShowTypeName',
                 width: 100,
                 renderer: ({ row: { ShowTypeName, MatchShowType } }) => {
                     const showTypeRow = <span style={MatchShowType ? {} : style}>{ShowTypeName || '-'}</span>;

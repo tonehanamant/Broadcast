@@ -19,7 +19,7 @@
       "Genres": [],
       "Id": 14,
       "Programs": [],
-      "Sequence": null,
+      "Sequence": 1,
       "SpotLength": "30"
     },
     {
@@ -49,7 +49,7 @@
       "Genres": [],
       "Id": 15,
       "Programs": [],
-      "Sequence": null,
+      "Sequence": 2,
       "SpotLength": "30"
     },
     {
@@ -60,7 +60,7 @@
       "Genres": [],
       "Id": 10799,
       "Programs": [],
-      "Sequence": null,
+      "Sequence": 3,
       "SpotLength": "30"
     }
   ],
