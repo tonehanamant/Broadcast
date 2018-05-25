@@ -189,7 +189,7 @@ namespace Services.Broadcast.ApplicationServices
         public bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username)
         {
             List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
-            List<string> iscisToArchive = fileDetailList.Select(x => x.Isci).ToList();
+            List<string> iscisToArchive = fileDetailList.Select(x => x.Isci).Distinct().ToList();
 
             if (!_PostRepository.IsIsciBlacklisted(iscisToArchive))
             {
