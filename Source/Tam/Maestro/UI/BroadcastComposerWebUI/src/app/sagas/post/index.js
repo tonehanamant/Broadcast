@@ -4,7 +4,10 @@ import moment from 'moment';
 import _ from 'lodash';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as postActions from 'Ducks/post/actionTypes';
+import { setOverlayLoading, toggleModal } from 'Ducks/app';
+import { selectModal } from 'Ducks/app/selectors';
 import api from '../api';
+import sagaWrapper from '../wrapper';
 
 const ACTIONS = { ...appActions, ...postActions };
 
@@ -375,82 +378,42 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   }
 }
 
+
 /* ////////////////////////////////// */
 /* REQUEST POST SCRUBBING HEADER */
 /* ////////////////////////////////// */
 export function* requestUnlinkedIscis() {
   const { getUnlinkedIscis } = api.post;
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'PostUniqueIscis',
-        loading: true },
-      });
-    const response = yield getUnlinkedIscis();
-    const { status, data } = response;
+    yield put(setOverlayLoading({ id: 'PostUniqueIscis', loading: true }));
+    return yield getUnlinkedIscis();
+  } finally {
+    yield put(setOverlayLoading({ id: 'PostUniqueIscis', loading: false }));
+  }
+}
 
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'PostUniqueIscis',
-        loading: false,
+export function* unlinkedIscisSuccess() {
+  const modal = select(selectModal, 'postUnlinkedIsciModal');
+  if (modal && !modal.active) {
+    yield put(toggleModal({
+      modal: 'postUnlinkedIsciModal',
+      active: true,
+      properties: {
+        titleText: 'POST Unique Iscis',
+        bodyText: 'Isci Details',
       },
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No post unique ISCI data returned.',
-          message: `The server encountered an error processing the request (Unique ISCIs). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
-        },
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No Unique Isci data returned.',
-          message: data.Message || 'The server encountered an error processing the request (Unique ISCIs). Please try again or contact your administrator to review error logs.',
-        },
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_UNLINKED_ISCIS_DATA,
-      data,
-    });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
-        modal: 'postUnlinkedIsciModal',
-        active: true,
-        properties: {
-          titleText: 'POST Unique Iscis',
-          bodyText: 'Isci Details',
-        },
-      },
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: 'No unique Isci data returned.',
-          message: 'The server encountered an error processing the request (Unique Iscis). Please try again or contact your administrator to review error logs.',
-          exception: e.response.data.ExceptionMessage || '',
-        },
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
-      });
-    }
+    }));
+  }
+}
+
+
+export function* archiveUnlinkedIsci({ ids }) {
+  const { archiveUnlinkedIscis } = api.post;
+  try {
+    yield put(setOverlayLoading({ id: 'postArchiveIsci', loading: true }));
+    return yield archiveUnlinkedIscis(ids);
+  } finally {
+    yield put(setOverlayLoading({ id: 'postArchiveIsci', loading: false }));
   }
 }
 
@@ -483,5 +446,16 @@ export function* watchRequestClearScrubbingFiltersList() {
 }
 
 export function* watchRequestUniqueIscis() {
-  yield takeEvery(ACTIONS.REQUEST_UNLINKED_ISCIS_DATA, requestUnlinkedIscis);
+  yield takeEvery(
+    [ACTIONS.UNLINKED_ISCIS_DATA.request, ACTIONS.ARCHIVE_UNLIKED_ISCI.success],
+    sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA),
+  );
+}
+
+export function* watchRequestUniqueIscisSuccess() {
+  yield takeEvery(ACTIONS.UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
+}
+
+export function* watchArchiveUnlinkedIsci() {
+  yield takeEvery(ACTIONS.ARCHIVE_UNLIKED_ISCI.request, sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI));
 }

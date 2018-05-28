@@ -38,6 +38,9 @@ const post = {
   getUnlinkedIscis: () => (
     call(GET, `${apiBase}Post/UnlinkedIscis `, {})
   ),
+  archiveUnlinkedIscis: isciIds => (
+    call(POST, `${apiBase}Post/ArchiveUnlinkedIsci`, isciIds)
+  ),
 };
 
 const postPrePosting = {

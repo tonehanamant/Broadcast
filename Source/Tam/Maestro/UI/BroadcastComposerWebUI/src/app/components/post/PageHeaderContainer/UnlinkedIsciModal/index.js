@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import moment from 'moment';
+import { bindActionCreators } from 'redux';
 import { Button, Modal } from 'react-bootstrap';
-import { Grid } from 'react-redux-grid';
+import { Grid, Actions } from 'react-redux-grid';
+import { archiveUnlinkedIscis } from 'Ducks/post';
+
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
 
-// import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
+const { MenuActions, SelectionActions } = Actions;
+const { showMenu, hideMenu } = MenuActions;
+const { selectRow, deselectAll } = SelectionActions;
+
+const setPosition = (e) => {
+  const rowElement = e.target.closest('.react-grid-row');
+  const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
+  contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) + 45}px`);
+};
+
+const stateKey = 'unlinked-isci-modal';
 
 const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } } }) => ({
 	modal,
-	// selection,
-	// dataSource,
 });
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    showMenu,
+    hideMenu,
+    selectRow,
+    deselectAll,
+    archiveIscis: archiveUnlinkedIscis,
+  }, dispatch)
+);
 
 export class UnlinkedIsciModal extends Component {
   constructor(props, context) {
@@ -30,84 +50,64 @@ export class UnlinkedIsciModal extends Component {
 	}
 
   render() {
+    const { archiveIscis } = this.props;
 		/* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
-    const stateKey = 'gridPostIscis';
 
 		/* GRID COLUMNS */
 		const columns = [
 			{
-					name: 'ISCI',
-					dataIndex: 'ISCI',
-					width: '15%',
+				name: 'ISCI',
+				dataIndex: 'ISCI',
+				width: '15%',
       },
       {
         name: 'Date Aired',
         dataIndex: 'DateAired',
         width: '10%',
-        renderer: ({ row }) => {
-            const date = <span>{getDateInFormat(row.DateAired) || '-'}</span>;
-            return (
-                date
-            );
-        },
-    },
-    {
+        renderer: ({ row }) => (<span>{getDateInFormat(row.DateAired) || '-'}</span>),
+      },
+      {
         name: 'Time Aired',
         dataIndex: 'TimeAired',
         width: '10%',
-        renderer: ({ row }) => {
-            // const TimeAired = <span>{getDateInFormat(row.TimeAired, false, true) || '-'}</span>;
-            // const TimeAired = row.TimeAired ? moment({}).seconds(row.TimeAired).format('h:mm:ss A') : '-';
-            const TimeAired = row.TimeAired ? getSecondsToTimeString(row.TimeAired) : '-';
-            return (
-                TimeAired
-            );
-        },
-    },
-    {
-      name: 'Spot Length',
-      dataIndex: 'SpotLength',
-      width: '8%',
-      renderer: ({ row }) => (
-          <span>{row.SpotLength || '-'}</span>
-      ),
-    },
-    {
-      name: 'Program',
-      dataIndex: 'ProgramName',
-      width: '20%',
-    },
-    {
-      name: 'Genre',
-      dataIndex: 'Genre',
-      width: '10%',
-    },
-    {
-      name: 'Affiliate',
-      dataIndex: 'Affiliate',
-      width: '9%',
-      renderer: ({ row }) => (
-          <span>{row.Affiliate || '-'}</span>
-      ),
-    },
-    {
-      name: 'Market',
-      dataIndex: 'Market',
-      width: '9%',
-      renderer: ({ row }) => (
-          <span>{row.Market || '-'}</span>
-      ),
-    },
-    {
-      name: 'Station',
-      dataIndex: 'Station',
-      width: '9%',
-      renderer: ({ row }) => (
-          <span>{row.Station || '-'}</span>
-      ),
-    },
+        renderer: ({ row }) => (row.TimeAired ? getSecondsToTimeString(row.TimeAired) : '-'),
+      },
+      {
+        name: 'Spot Length',
+        dataIndex: 'SpotLength',
+        width: '8%',
+        renderer: ({ row }) => (<span>{row.SpotLength || '-'}</span>),
+      },
+      {
+        name: 'Program',
+        dataIndex: 'ProgramName',
+        width: '20%',
+      },
+      {
+        name: 'Genre',
+        dataIndex: 'Genre',
+        width: '10%',
+      },
+      {
+        name: 'Affiliate',
+        dataIndex: 'Affiliate',
+        width: '9%',
+        renderer: ({ row }) => (<span>{row.Affiliate || '-'}</span>),
+      },
+      {
+        name: 'Market',
+        dataIndex: 'Market',
+        width: '9%',
+        renderer: ({ row }) => (<span>{row.Market || '-'}</span>),
+      },
+      {
+        name: 'Station',
+        dataIndex: 'Station',
+        width: '9%',
+        renderer: ({ row }) => (<span>{row.Station || '-'}</span>),
+      },
 		];
 
 		/* GRID PLGUINS */
@@ -119,27 +119,51 @@ export class UnlinkedIsciModal extends Component {
 						enabled: true,
 						method: 'local',
 				},
-			},
-			// SELECTION_MODEL: {
-			// 	mode: 'single',
-			// 	enabled: true,
-			// 	allowDeselect: true,
-			// 	activeCls: 'active',
-			// 	selectionEvent: 'singleclick',
-			// },
-		};
+      },
+      GRID_ACTIONS: {
+        iconCls: 'action-icon',
+        menu: [
+          {
+            text: 'Archive ISCI',
+            key: 'menu-archive-isci',
+            EVENT_HANDLER: ({ metaData }) => {
+              archiveIscis([metaData.rowData.FileDetailId]);
+            },
+          },
+        ],
+      },
+      ROW: {
+        enabled: true,
+        renderer: ({ rowProps, cells, row }) => {
+          const { showMenu, hideMenu, selectRow, deselectAll } = this.props;
+          const rowId = row.get('_key');
+          const updatedRowProps = {
+            ...rowProps,
+            tabIndex: 1,
+            onBlur: () => {
+              if (rowId) {
+                hideMenu({ stateKey });
+              }
+            },
+            onContextMenu: (e) => {
+              e.preventDefault();
+              setPosition(e);
+              deselectAll({ stateKey });
+              selectRow({ rowId, stateKey });
+              showMenu({ id: rowId, stateKey });
+            },
+          };
+          return (
+            <tr {...updatedRowProps}>{ cells }</tr>
+          );
+        },
+      },
+    };
 
-		/* GRID EVENTS */
-		/* const events = {
-			HANDLE_ROW_DOUBLE_CLICK: () => {
-				this.openVersion();
-			},
-		}; */
 
 		const grid = {
 			columns,
-			plugins,
-			// events,
+      plugins,
 			stateKey,
 		};
 
@@ -156,7 +180,6 @@ export class UnlinkedIsciModal extends Component {
         </Modal.Body>
         <Modal.Footer>
 					<Button onClick={this.close}>Close</Button>
-          {/* <Button onClick={this.saveScrub} bsStyle="success">Open</Button> */}
         </Modal.Footer>
       </Modal>
     );
@@ -170,16 +193,16 @@ UnlinkedIsciModal.defaultProps = {
   },
 };
 
-/* eslint-disable react/no-unused-prop-types */
 UnlinkedIsciModal.propTypes = {
 	modal: PropTypes.object,
-	// selection: PropTypes.object.isRequired,
-	// dataSource: PropTypes.object.isRequired,
-
 	toggleModal: PropTypes.func.isRequired,
-	// initialdata: PropTypes.object.isRequired,
-	// proposal: PropTypes.object.isRequired,
-	unlinkedIscis: PropTypes.array.isRequired,
+  unlinkedIscis: PropTypes.array.isRequired,
+  archiveIscis: PropTypes.array.isRequired,
+
+	deselectAll: PropTypes.func.isRequired,
+	selectRow: PropTypes.func.isRequired,
+	showMenu: PropTypes.func.isRequired,
+	hideMenu: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(UnlinkedIsciModal);
+export default connect(mapStateToProps, mapDispatchToProps)(UnlinkedIsciModal);

@@ -6,6 +6,7 @@
       "AffidavitFileDetailProblems": [],
       "Affiliate": "Affiate",
       "AirTime": 29040,
+      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
       "Genre": "Do It Yourself",

@@ -193,6 +193,7 @@ const initialState = {
         filterOptions: [],
       },
     },
+    unlinkedIscisLength: 0,
 };
 
 // Reducer
@@ -204,6 +205,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         post: data.Data,
+        unlinkedIscisLength: data.Data.UnlinkedIscis,
         postGridData: data.Data.Posts,
         postUnfilteredGridData: data.Data.Posts,
       };
@@ -322,10 +324,11 @@ export default function reducer(state = initialState, action) {
       scrubbingFiltersList: [data.activeFilters],
     });
 
-    case ACTIONS.RECEIVE_UNLINKED_ISCIS_DATA:
+    case ACTIONS.UNLINKED_ISCIS_DATA.success:
     return {
       ...state,
       unlinkedIscis: data.Data,
+      unlinkedIscisLength: data.Data.length,
     };
 
     case ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST:
@@ -366,6 +369,11 @@ export const clearScrubbingFiltersList = () => ({
 });
 
 export const getUnlinkedIscis = () => ({
-  type: ACTIONS.REQUEST_UNLINKED_ISCIS_DATA,
+  type: ACTIONS.UNLINKED_ISCIS_DATA.request,
   payload: {},
+});
+
+export const archiveUnlinkedIscis = ids => ({
+  type: ACTIONS.ARCHIVE_UNLIKED_ISCI.request,
+  payload: { ids },
 });

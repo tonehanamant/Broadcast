@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -40,6 +39,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IProposalRepository _ProposalRepository;
+        private readonly IPostRepository _PostRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IAffidavitValidationEngine _AffidavitValidationEngine;
@@ -63,6 +63,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProjectionBooksService = projectionBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _AffidavitValidationEngine = affidavitValidationEngine;
             _NsiPostingBookService = nsiPostingBookService;
@@ -93,6 +94,7 @@ namespace Services.Broadcast.ApplicationServices
         private AffidavitSaveResult _AffidavitSaveResult(AffidavitSaveRequest saveRequest, string username,
             DateTime currentDateTime, AffidavitFile affidavitFile)
         {
+            const string ARCHIVED_ISCI = "Not a Cadent Isci";
             Dictionary<int, int> spotLengthDict = null;
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(saveRequest);
@@ -101,17 +103,26 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
             {
-                var validationResults =
+                var validationErrors =
                     _AffidavitValidationEngine.ValidateAffidavitRecord(matchedAffidavitDetail.AffidavitDetail);
-
-                if (validationResults.Any())
+                
+                if (validationErrors.Any())
                 {
-                    validationResults.ForEach(r => r.InvalidLine = matchedAffidavitDetail.LineNumber);
-                    affidavitValidationResults.AddRange(validationResults);
+                    validationErrors.ForEach(r => r.InvalidLine = matchedAffidavitDetail.LineNumber);
+                    affidavitValidationResults.AddRange(validationErrors);
 
                     var problems = _MapValidationErrorToAffidavitFileProblem(affidavitValidationResults);
                     affidavitFile.AffidavitFileProblems.AddRange(problems);
                     continue;
+                }
+                
+                if(_PostRepository.IsIsciBlacklisted(new List<string> { matchedAffidavitDetail.AffidavitDetail.Isci })){
+                    matchedAffidavitDetail.AffidavitDetailProblems.Add(new AffidavitFileDetailProblem
+                    {
+                        Description = ARCHIVED_ISCI,
+                        Type = AffidavitFileDetailProblemTypeEnum.ArchivedIsci
+                    });
+                    matchedAffidavitDetail.Archived = true;
                 }
 
                 var det = new AffidavitFileDetail
@@ -139,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
                     ShowType = matchedAffidavitDetail.AffidavitDetail.ShowType,
                     LeadInShowType = matchedAffidavitDetail.AffidavitDetail.LeadInShowType,
                     LeadOutShowType = matchedAffidavitDetail.AffidavitDetail.LeadOutShowType,
-
+                    Archived = matchedAffidavitDetail.Archived,
                     AffidavitClientScrubs =
                         matchedAffidavitDetail.ProposalDetailWeeks.Select(
                             w => new AffidavitClientScrub

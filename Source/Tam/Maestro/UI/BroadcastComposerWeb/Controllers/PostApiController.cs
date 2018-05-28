@@ -28,10 +28,10 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetPosts());
         }
-        
+
         [HttpPost]
         [Route("ClientScrubbingProposal/{proposalId}")]
-        public BaseResponse<ClientPostScrubbingProposalDto>  GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest)
+        public BaseResponse<ClientPostScrubbingProposalDto> GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest)
         {
             return
                 _ConvertToBaseResponse(
@@ -97,5 +97,12 @@ namespace BroadcastComposerWeb.Controllers
                 _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis());
         }
 
+        [HttpPost]
+        [Route("ArchiveUnlinkedIsci")]
+        public BaseResponse<bool> ArchiveUnlinkedIsci(List<long> FileDetailsIds)
+        {
+            return _ConvertToBaseResponse(() => 
+            _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(FileDetailsIds, Identity.Name));
+        }
     }
 }

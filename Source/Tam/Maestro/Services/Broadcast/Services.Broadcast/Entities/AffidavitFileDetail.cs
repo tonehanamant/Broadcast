@@ -33,6 +33,7 @@ namespace Services.Broadcast.Entities
         public string LeadOutShowType { get; set; }
         public int LeadOutStartTime { get; set; }
         public int LeadInEndTime { get; set; }
+        public bool Archived { get; set; }
 
         public AffidavitFileDetail()
         {

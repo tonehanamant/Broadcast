@@ -52,6 +52,31 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-3022 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('affidavit_blacklist'))
+BEGIN
+	CREATE TABLE [affidavit_blacklist](
+		id INT IDENTITY(1,1) NOT NULL,
+		ISCI VARCHAR(63) NOT NULL,
+		created_date DATETIME NULL,
+		created_by VARCHAR(255) NOT NULL
+		CONSTRAINT [PK_affidavit_blacklist] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'archived' AND object_id = OBJECT_ID('affidavit_file_details'))
+BEGIN
+	ALTER TABLE affidavit_file_details ADD [archived] BIT NULL;
+	UPDATE affidavit_file_details SET [archived] = 0;
+	ALTER TABLE affidavit_file_details ALTER COLUMN [archived] BIT NOT  NULL;
+END
+GO
+
+/*************************************** END BCOP-3022 ***************************************************************/
+
 /*************************************** START BCOP-2910 ***************************************************************/
 IF NOT EXISTS(
 	SELECT *
