@@ -66,7 +66,7 @@ BEGIN
 		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
 	)
 END
-
+GO
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'archived' AND object_id = OBJECT_ID('affidavit_file_details'))
 BEGIN
 	ALTER TABLE affidavit_file_details ADD [archived] BIT NULL;
