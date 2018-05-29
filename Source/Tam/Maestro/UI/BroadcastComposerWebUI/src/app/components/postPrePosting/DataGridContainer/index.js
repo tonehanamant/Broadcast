@@ -244,13 +244,15 @@ export class DataGridContainer extends Component {
       },
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells }) => {
-          const stateKey = cells[0].props.stateKey;
-          const rowId = cells[0].props.rowId;
-          const updatedRowProps = { ...rowProps,
-            onClick: (e) => {
-              rowProps.onClick(e);
-              this.hideContextMenu({ stateKey });
+        renderer: ({ rowProps, cells, row }) => {
+          const rowId = row.get('_key');
+          const updatedRowProps = {
+            ...rowProps,
+            tabIndex: 1,
+            onBlur: () => {
+              if (rowId) {
+                this.hideContextMenu({ stateKey });
+              }
             },
             onContextMenu: (e) => {
               e.preventDefault();

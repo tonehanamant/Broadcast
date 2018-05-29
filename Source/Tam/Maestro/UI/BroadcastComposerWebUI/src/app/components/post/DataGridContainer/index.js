@@ -7,11 +7,7 @@ import { getPost, getPostClientScrubbing } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import Sorter from 'Utils/react-redux-grid-sorter';
-// import NumberCommaWhole from 'Components/shared/TextFormatters/NumberCommaWhole';
 import numeral from 'numeral';
-
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -30,7 +26,6 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     getPost,
     createAlert,
     toggleModal,
-    // setOverlayLoading,
     showMenu,
     hideMenu,
     selectRow,
@@ -141,7 +136,6 @@ export class DataGridContainer extends Component {
         dataIndex: 'PrimaryAudienceImpressions',
         width: '20%',
         renderer: ({ row }) => (
-          // <NumberCommaWhole number={row.PrimaryAudienceImpressions / 1000} dash />
           row.PrimaryAudienceImpressions ? numeral(row.PrimaryAudienceImpressions / 1000).format('0,0.[000]') : '-'
         ),
       },
@@ -235,18 +229,17 @@ export class DataGridContainer extends Component {
       ROW: {
         enabled: true,
         renderer: ({ rowProps, cells, row }) => {
-          const stateKey = cells[0].props.stateKey;
-          const rowId = cells[0].props.rowId;
-          // const inSpec = cells[0].props.row.SpotsInSpec !== 0;
-          // console.log('row props', cells[0], inSpec);
-          const updatedRowProps = { ...rowProps,
-            onClick: (e) => {
-              rowProps.onClick(e);
-              this.hideContextMenu({ stateKey });
+          const rowId = row.get('_key');
+          const updatedRowProps = {
+            ...rowProps,
+            tabIndex: 1,
+            onBlur: () => {
+              if (rowId) {
+                this.hideContextMenu({ stateKey });
+              }
             },
             onContextMenu: (e) => {
               e.preventDefault();
-              // if (inSpec) {
               const rowElement = e.target.closest('.react-grid-row');
               const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
               contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) - 102}px`); // 102 contextMenu width
@@ -254,7 +247,6 @@ export class DataGridContainer extends Component {
               this.deselectAll({ stateKey });
               this.selectRow({ rowId, stateKey });
               this.showContextMenu({ id: rowId, stateKey });
-              // }
             },
           };
           return (
@@ -267,7 +259,6 @@ export class DataGridContainer extends Component {
     const events = {
       HANDLE_BEFORE_SORT: () => {
         this.deselectAll({ stateKey });
-        this.hideContextMenu({ stateKey });
       },
       HANDLE_ROW_DOUBLE_CLICK: (row) => {
           const Id = row.row.ContractId;
@@ -291,14 +282,12 @@ DataGridContainer.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
   menu: PropTypes.object.isRequired,
-  // post: PropTypes.array.isRequired,
   postGridData: PropTypes.array.isRequired,
 
   getPost: PropTypes.func.isRequired,
   getPostClientScrubbing: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
-  // setOverlayLoading: PropTypes.func.isRequired,
 
   showMenu: PropTypes.func.isRequired,
   hideMenu: PropTypes.func.isRequired,
