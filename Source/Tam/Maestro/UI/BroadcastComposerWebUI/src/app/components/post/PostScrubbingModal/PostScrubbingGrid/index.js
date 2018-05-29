@@ -47,7 +47,7 @@ export class PostScrubbingGrid extends Component {
                 dataIndex: 'Status',
                 // width: '3%',
                 // test specific width
-                width: 44,
+                width: 59,
                 renderer: ({ row }) => {
                     const iconClassName = (row.Status === 2) ? 'fa-check-circle' : 'fa-times-circle';
                     return (
@@ -58,7 +58,7 @@ export class PostScrubbingGrid extends Component {
             {
               name: 'Detail ID',
               dataIndex: 'Sequence',
-              width: 60,
+              width: 75,
               renderer: ({ row }) => (
                 <span>{row.Sequence || '-'}</span>
               ),
@@ -111,7 +111,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Spot Length',
                 dataIndex: 'SpotLength',
-                width: 80,
+                width: 95,
                 renderer: ({ row }) => (
                     <span>{row.SpotLength || '-'}</span>
                 ),
@@ -166,7 +166,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Affiliate',
                 dataIndex: 'Affiliate',
-                width: 60,
+                width: 75,
                 renderer: ({ row }) => (
                     <span>{row.Affiliate || '-'}</span>
                 ),
@@ -185,7 +185,7 @@ export class PostScrubbingGrid extends Component {
             {
                 name: 'Station',
                 dataIndex: 'Station',
-                width: 60,
+                width: 75,
                 renderer: ({ row }) => {
                     const Station = row.MatchStation ? <span>{row.Station || '-'}</span> : <span style={style}>{row.Station || '-'}</span>;
                     return (

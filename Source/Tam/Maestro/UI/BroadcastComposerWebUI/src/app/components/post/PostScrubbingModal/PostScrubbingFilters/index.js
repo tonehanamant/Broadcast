@@ -63,7 +63,7 @@ export class PostScrubbingFilters extends Component {
         dataIndex: 'Status',
         // width: '3%',
         // test specific width
-        width: 44,
+        width: 59,
         renderer: () => (
           <div style={inactiveFilterStyle} />
         ),
@@ -71,7 +71,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Sequence',
         dataIndex: 'Sequence',
-        width: 60,
+        width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
           filterDisplay={value.filterDisplay}
@@ -139,7 +139,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Ad Length',
         dataIndex: 'SpotLength',
-        width: 80,
+        width: 95,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
           filterDisplay={value.filterDisplay}
@@ -241,7 +241,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Affiliate',
         dataIndex: 'Affiliate',
-        width: 60,
+        width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
           filterDisplay={value.filterDisplay}
@@ -275,7 +275,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: 'Station',
         dataIndex: 'Station',
-        width: 60,
+        width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
           filterDisplay={value.filterDisplay}
