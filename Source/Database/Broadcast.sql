@@ -67,7 +67,7 @@ BEGIN
 	)
 END
 GO
-IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'archived' AND object_id = OBJECT_ID('affidavit_file_details'))
+IF NOT EXISTS(SELECT * FROM sys.columns WHERE name = 'archived' AND object_id = OBJECT_ID('affidavit_file_details'))
 BEGIN
 	ALTER TABLE affidavit_file_details ADD [archived] BIT NULL;
 	UPDATE affidavit_file_details SET [archived] = 0;
