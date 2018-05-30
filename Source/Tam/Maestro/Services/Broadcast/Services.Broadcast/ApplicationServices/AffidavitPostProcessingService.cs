@@ -95,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices
                 return;
             }
 
-            using (WWTVSharedNetworkHelper.GetLocalErrorFolderConnection())
+            WWTVSharedNetworkHelper.Impersonate(delegate 
             {
                 foreach (var file in filesToProcess)
                 {
@@ -150,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
                     var errorMessage = "Error deleting affidavit file(s) from FTP site:\n\n" + e.ToString();
                     ftpFilesToDelete.ForEach(filePath => ProcessErrorWWTVFile(filePath, errorMessage));
                 }
-            }
+            });
         }
 
         private void _ProceseTotalFTPFailure(Exception e)

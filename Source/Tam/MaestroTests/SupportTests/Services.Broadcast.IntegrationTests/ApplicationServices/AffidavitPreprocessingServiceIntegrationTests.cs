@@ -9,7 +9,9 @@ using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Services;
 using Tam.Maestro.Common.DataLayer;
 
@@ -178,6 +180,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 File.Copy(src, dest);
                 File.Delete(dest);
             }
+        }
+        [Ignore]
+        [Test]
+        [ExpectedException(typeof(Win32Exception))]
+        public void Test_ImpersonationHelper_Impersonate_Success()
+        {
+            string fileName = "\\\\cadapps-qa1\\WWTVErrors\\ddr.txt";
+            string userName = "svc_wwtvdata@crossmw.com";
+            string password = "78!ttwG&Dc$4fB2xZ94x";
+
+            ImpersonateUser.Impersonate("crossmw",userName, password, delegate
+            {
+                if (!File.Exists(fileName))
+                {
+                    Console.WriteLine("exists");
+                }
+                else
+                {
+                    Console.WriteLine("no exists");
+
+                }
+            });
+        }
+        [Ignore]
+        [Test]
+        [ExpectedException(typeof(Win32Exception))]
+        public void Test_ImpersonationHelper_fail_user()
+        {
+            string fileName = "\\\\cadapps-qa1\\WWTVErrors\\ddr.txt";
+            string userName = "_svc_wwtvdata@crossmw.com";
+            string password = "78!ttwG&Dc$4fB2xZ94x";
+
+            ImpersonateUser.Impersonate("crossmw", userName, password, delegate
+            {
+                if (!File.Exists(fileName))
+                {
+                    Console.WriteLine("exists");
+                }
+                else
+                {
+                    Console.WriteLine("no exists");
+
+                }
+            });
         }
     }
 }

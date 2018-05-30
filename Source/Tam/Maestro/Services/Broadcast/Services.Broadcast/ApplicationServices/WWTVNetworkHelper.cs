@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using OfficeOpenXml.FormulaParsing.Exceptions;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -41,6 +42,21 @@ namespace Services.Broadcast.ApplicationServices
 
         #endregion
 
+        #region Impersonation
+
+        public static void Impersonate(Action actionToExecute)
+        {
+            var userName = BroadcastServiceSystemParameter.WWTV_SharedFolder_UserName;
+            var password = BroadcastServiceSystemParameter.WWTV_SharedFolder_Password;
+
+            ImpersonateUser.Impersonate("", userName, password, actionToExecute);
+        }
+
+
+        #endregion
+
+
+        #region Shared Network Resource
         public static SharedNetworkConnection GetConnection(string sharedFolder)
         {
             var credentials = GetNetworkCredentials();
@@ -65,5 +81,6 @@ namespace Services.Broadcast.ApplicationServices
 
             return credentials;
         }
+        #endregion
     }
 }

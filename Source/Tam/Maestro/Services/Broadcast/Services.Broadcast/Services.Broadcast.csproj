@@ -222,8 +222,9 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
+    <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
     <Compile Include="ApplicationServices\WWTVFtpHelper.cs" />
-    <Compile Include="ApplicationServices\SharedNetworkConnection.cs" />
+    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
     <Compile Include="ApplicationServices\WWTVNetworkHelper.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
