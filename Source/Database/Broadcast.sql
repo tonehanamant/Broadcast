@@ -69,9 +69,8 @@ END
 GO
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'archived' AND object_id = OBJECT_ID('affidavit_file_details'))
 BEGIN
-	ALTER TABLE affidavit_file_details ADD [archived] BIT NULL;
-	UPDATE affidavit_file_details SET [archived] = 0;
-	ALTER TABLE affidavit_file_details ALTER COLUMN [archived] BIT NOT  NULL;
+	ALTER TABLE affidavit_file_details ADD [archived] BIT CONSTRAINT DF_affidavit_file_details_archived DEFAULT(0) NOT NULL;
+	ALTER TABLE dbo.affidavit_file_details DROP CONSTRAINT DF_affidavit_file_details_archived
 END
 GO
 
