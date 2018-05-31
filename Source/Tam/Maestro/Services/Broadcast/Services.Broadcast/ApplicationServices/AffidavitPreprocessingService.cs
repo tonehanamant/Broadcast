@@ -137,7 +137,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
         private void _CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files)
         {
-            string zipFileName = Path.GetTempPath();
+            string zipFileName = WWTVSharedNetworkHelper.GetLocalErrorFolder();
             if (!zipFileName.EndsWith("\\"))
                 zipFileName += "\\";
             zipFileName += "Post_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";

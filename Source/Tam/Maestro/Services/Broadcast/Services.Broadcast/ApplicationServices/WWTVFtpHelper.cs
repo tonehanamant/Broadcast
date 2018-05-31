@@ -50,7 +50,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = GetFtpClientCredentials();
-                ftpClient.UploadFile(sourceFilePath, destPath);
+                ftpClient.UploadFile(destPath, "STOR",sourceFilePath);
 
                 OnSuccessfulUpload.Invoke(sourceFilePath);
             }

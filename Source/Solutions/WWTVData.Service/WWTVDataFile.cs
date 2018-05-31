@@ -9,10 +9,8 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace WWTVData.Service
 {
-
-    public class WWTVDataFile :  ScheduledServiceMethod
+    public class WWTVDataFile : ScheduledServiceMethod
     {
-
         public WWTVDataFile() : base(null)
         {
         }
@@ -20,12 +18,13 @@ namespace WWTVData.Service
 
         public override string ServiceName
         {
-            get { return "WWTV File Retriever";  }
+            get { return "WWTV File Retriever"; }
         }
 
 
         private bool _RunWhenChecked = false;
         private DateTime? _RunWhen = null;
+
         /// <summary>
         /// Use when you want day/time of week to run.
         /// </summary>
@@ -42,10 +41,7 @@ namespace WWTVData.Service
 
         public override int SecondsBetweenRuns
         {
-            get
-            {
-                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
-            }
+            get { return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns; }
         }
 
         public override bool RunService(DateTime timeSignaled)
