@@ -2,6 +2,8 @@ import { createAction } from '../actionCreator';
 
 export const ARCHIVE_UNLIKED_ISCI = createAction('ARCHIVE_UNLIKED_ISCI');
 export const UNLINKED_ISCIS_DATA = createAction('UNLINKED_ISCIS_DATA');
+export const LOAD_ARCHIVED_ISCI = createAction('LOAD_ARCHIVED_ISCI');
+
 
 export const REQUEST_POST = 'REQUEST_POST';
 export const RECEIVE_POST = 'RECEIVE_POST';

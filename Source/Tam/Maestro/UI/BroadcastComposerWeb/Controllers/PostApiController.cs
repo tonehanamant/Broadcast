@@ -94,7 +94,15 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<UnlinkedIscisDto>> GetUnlinkedIscis()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis());
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis(false));
+        }
+
+        [HttpGet]
+        [Route("ArchivedIscis")]
+        public BaseResponse<List<UnlinkedIscisDto>> GetArchivedIsciss()
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis(true));
         }
 
         [HttpPost]
