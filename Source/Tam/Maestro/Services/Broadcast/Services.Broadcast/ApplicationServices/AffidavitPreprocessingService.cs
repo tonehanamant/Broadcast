@@ -66,12 +66,12 @@ namespace Services.Broadcast.ApplicationServices
         public List<OutboundAffidavitFileValidationResultDto> ProcessFiles(string userName)
         {
             List<string> filepathList;
-
-            using (WWTVSharedNetworkHelper.GetLocalDropfolderConnection())
-            using (WWTVSharedNetworkHelper.GetLocalErrorFolderConnection())
+            List<OutboundAffidavitFileValidationResultDto> validationList =
+                new List<OutboundAffidavitFileValidationResultDto>();
+            WWTVSharedNetworkHelper.Impersonate(delegate 
             {
                 filepathList = GetDropFolderFileList();
-                List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
+                validationList = ValidateFiles(filepathList, userName);
                 _AffidavitRepository.SaveValidationObject(validationList);
                 var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
                     .ToList();
@@ -82,9 +82,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 ProcessInvalidFiles(validationList);
                 DeleteSuccessfulFiles(validationList);
+            });
 
-                return validationList;
-            }
+            return validationList;
         }
 
         private static List<string> GetDropFolderFileList()
@@ -182,13 +182,13 @@ namespace Services.Broadcast.ApplicationServices
         {
             var remoteFTPPath = WWTVFtpHelper.GetErrorPath();
 
-            using (WWTVSharedNetworkHelper.GetLocalErrorFolderConnection())
+            WWTVSharedNetworkHelper.Impersonate(delegate
             {
                 var files = WWTVFtpHelper.GetFileList(remoteFTPPath);
                 var localPaths = new List<string>();
                 var completedFiles = _DownloadFTPFiles(files, remoteFTPPath, ref localPaths);
                 EmailFTPErrorFiles(localPaths);
-            }
+            });
         }
 
         private void EmailFTPErrorFiles(List<string> filePaths)

@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
-namespace Services.Broadcast.ApplicationServices
+namespace Services.Broadcast.ApplicationServices.Security
 {
 
     /// <summary>
