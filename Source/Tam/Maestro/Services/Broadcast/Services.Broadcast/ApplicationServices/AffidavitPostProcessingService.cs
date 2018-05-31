@@ -89,25 +89,27 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
 
-            List<string> downloadedFiles = new List<string>();
             if (!filesToProcess.Any())
             {
                 return;
             }
 
-            WWTVSharedNetworkHelper.Impersonate(delegate 
+            List<string> downloadedFiles = new List<string>();
+            List<Tuple<string, string>> fileErrorsToProcess = new List<Tuple<string, string>>();
+            WWTVSharedNetworkHelper.Impersonate(delegate
             {
                 foreach (var file in filesToProcess)
                 {
                     // no need to use shared connection for local temp path (unless we have to)
-                    string filePath = $"{Path.GetTempPath()}{file}";
+                    string filePath = Path.Combine(WWTVSharedNetworkHelper.GetLocalErrorFolder(), file);
                     try
                     {
                         _DownloadFileFromWWTVFtp(file, filePath);
                     }
                     catch (Exception e)
                     {
-                        filesFailedDownload.Add(string.Format("{0} :: Reason -> {1}", file, e.Message));
+                        filesFailedDownload.Add(string.Format("File '{0}' filed to download, reason: {1}", file,
+                            e.Message));
                         continue; // skip to next file 
                     }
 
@@ -118,7 +120,8 @@ namespace Services.Broadcast.ApplicationServices
                     AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath, out errorMessage);
                     if (!string.IsNullOrEmpty(errorMessage))
                     {
-                        ProcessErrorWWTVFile(filePath, errorMessage);
+                        var fileError = new Tuple<string, string>(filePath, errorMessage);
+                        fileErrorsToProcess.Add(fileError);
                         continue;
                     }
 
@@ -129,7 +132,8 @@ namespace Services.Broadcast.ApplicationServices
                     catch (Exception e)
                     {
                         errorMessage = "Error saving affidavit:\n\n" + e.ToString();
-                        ProcessErrorWWTVFile(filePath, errorMessage);
+                        var fileError = new Tuple<string, string>(filePath, errorMessage);
+                        fileErrorsToProcess.Add(fileError);
                         continue;
                     }
                 }
@@ -150,6 +154,8 @@ namespace Services.Broadcast.ApplicationServices
                     var errorMessage = "Error deleting affidavit file(s) from FTP site:\n\n" + e.ToString();
                     ftpFilesToDelete.ForEach(filePath => ProcessErrorWWTVFile(filePath, errorMessage));
                 }
+
+                fileErrorsToProcess.ForEach(f => ProcessErrorWWTVFile(f.Item1, f.Item2));
             });
         }
 
@@ -172,9 +178,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public void ProcessErrorWWTVFile(string filePath,string errorMessage)
         {
-            var invalidFilePath = _MoveFileToInvalidFilesFolder(filePath);
-
-            var emailBody = _CreateInvalidFileEmailBody(errorMessage, invalidFilePath);
+            var emailBody = _CreateInvalidFileEmailBody(errorMessage, filePath);
 
             _AffidavitEmailSenderService.Send(emailBody, "WWTV File Failed");
 
@@ -252,20 +256,6 @@ namespace Services.Broadcast.ApplicationServices
 
             return emailBody.ToString();
         }
-
-        private string _MoveFileToInvalidFilesFolder(string fileName)
-        {
-            var failFolder = WWTVSharedNetworkHelper.GetLocalErrorFolder();
-            var combinedFilePath = Path.Combine(failFolder,Path.GetFileName(fileName));
-
-            if (File.Exists(combinedFilePath))
-                File.Delete(combinedFilePath);
-
-            File.Move(fileName, combinedFilePath);
-
-            return combinedFilePath;
-        }
-
 
         
         /// <summary>

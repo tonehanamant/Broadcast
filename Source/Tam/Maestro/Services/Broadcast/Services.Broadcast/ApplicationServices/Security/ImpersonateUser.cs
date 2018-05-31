@@ -25,6 +25,12 @@ namespace Services.Broadcast.ApplicationServices.Security
             SafeTokenHandle safeTokenHandle;
             try
             {
+                if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(userPassword))
+                {   // missing user info, then execute action as normal.
+                    actionToExecute();
+                    return;
+                }
+
                 const int LOGON32_PROVIDER_DEFAULT = 0;
                 //This parameter causes LogonUser to create a primary token.
                 const int LOGON32_LOGON_INTERACTIVE = 2;

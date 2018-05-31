@@ -417,6 +417,17 @@ export function* archiveUnlinkedIsci({ ids }) {
   }
 }
 
+
+export function* loadArchivedIsci() {
+  const { getArchivedIscis } = api.post;
+  try {
+    yield put(setOverlayLoading({ id: 'loadArchiveIsci', loading: true }));
+    return yield getArchivedIscis();
+  } finally {
+    yield put(setOverlayLoading({ id: 'loadArchiveIsci', loading: false }));
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -458,4 +469,8 @@ export function* watchRequestUniqueIscisSuccess() {
 
 export function* watchArchiveUnlinkedIsci() {
   yield takeEvery(ACTIONS.ARCHIVE_UNLIKED_ISCI.request, sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI));
+}
+
+export function* watchLoadArchivedIscis() {
+  yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
 }

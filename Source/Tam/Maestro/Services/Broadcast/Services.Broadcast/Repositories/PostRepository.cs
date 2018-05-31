@@ -27,6 +27,11 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of UnlinkedIscisDto objects</returns>
         List<UnlinkedIscisDto> GetUnlinkedIscis();
 
+        /// <summary>
+        /// Gets the archived iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        List<UnlinkedIscisDto> GetArchivedIscis();
 
         /// <summary>
         /// Gets the impressions for a contract and rating audiences
@@ -154,22 +159,40 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var spotLengths = (from sl in context.spot_lengths select sl).ToList();
-                    var unlinkedIscis = _GetUnlinkedIscisQuery(context).ToList();
-                    return unlinkedIscis.Select(x => new UnlinkedIscisDto
-                    {
-                        Affiliate = x.affiliate,
-                        Genre = x.genre,
-                        FileDetailId = x.id,
-                        ISCI = x.isci,
-                        Market = x.market,
-                        ProgramName = x.program_name,
-                        SpotLength = spotLengths.Single(y => y.id == x.spot_length_id).length,
-                        Station = x.station,
-                        TimeAired = x.air_time,
-                        DateAired = x.original_air_date
-                    }).OrderBy(x => x.ISCI).ToList();
+                    var iscis = _GetUnlinkedIscisQuery(context);
+                    return _MapUnlinkedOrArchiveIsci(iscis);
                 });
+        }
+
+        /// <summary>
+        /// Gets the archived iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        public List<UnlinkedIscisDto> GetArchivedIscis()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var iscis = _GetArchivedIscisQuery(context);
+                    return _MapUnlinkedOrArchiveIsci(iscis);
+                });
+        }
+
+        private List<UnlinkedIscisDto> _MapUnlinkedOrArchiveIsci(IQueryable<affidavit_file_details> iscis)
+        {
+            return iscis.ToList().Select(x => new UnlinkedIscisDto
+            {
+                Affiliate = x.affiliate,
+                Genre = x.genre,
+                FileDetailId = x.id,
+                ISCI = x.isci,
+                Market = x.market,
+                ProgramName = x.program_name,
+                Station = x.station,
+                TimeAired = x.air_time,
+                DateAired = x.original_air_date,
+                SpotLength = x.spot_length_id
+            }).OrderBy(x => x.ISCI).ToList();
         }
 
         /// <summary>
@@ -274,8 +297,14 @@ namespace Services.Broadcast.Repositories
                    into dataGroupped
                    from x in dataGroupped.DefaultIfEmpty()
                    where x == null && fileDetails.archived == false
+                   select fileDetails;                   
+        }
+
+        private IQueryable<affidavit_file_details> _GetArchivedIscisQuery(QueryHintBroadcastContext context)
+        {
+            return from fileDetails in context.affidavit_file_details
+                   where fileDetails.archived == true
                    select fileDetails;
-                   
         }
     }
 }

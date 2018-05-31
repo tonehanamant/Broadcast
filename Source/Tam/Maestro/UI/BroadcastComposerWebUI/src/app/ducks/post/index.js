@@ -324,6 +324,11 @@ export default function reducer(state = initialState, action) {
       scrubbingFiltersList: [data.activeFilters],
     });
 
+    case ACTIONS.LOAD_ARCHIVED_ISCI.success:
+      return {
+        ...state,
+        unlinkedIscis: data.Data,
+      };
     case ACTIONS.UNLINKED_ISCIS_DATA.success:
     return {
       ...state,
@@ -377,3 +382,23 @@ export const archiveUnlinkedIscis = ids => ({
   type: ACTIONS.ARCHIVE_UNLIKED_ISCI.request,
   payload: { ids },
 });
+
+export const loadArchivedIscis = () => ({
+  type: ACTIONS.LOAD_ARCHIVED_ISCI.request,
+  payload: {},
+});
+
+// toggle unlinked tabs
+const tabsMap = {
+  unlinked: getUnlinkedIscis,
+  archived: loadArchivedIscis,
+};
+
+export const toggleUnlinkedTab = (tab) => {
+  const tabFunction = tabsMap[tab];
+  if (tabFunction) {
+    return tabFunction();
+  }
+  console.error('You should add function in the tabsMap to load your tab values');
+  return undefined;
+};

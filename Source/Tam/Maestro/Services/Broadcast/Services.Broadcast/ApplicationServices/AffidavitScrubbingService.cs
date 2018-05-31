@@ -29,8 +29,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns a list of unlinked iscis
         /// </summary>
+        /// <param name="archived">Switch for the archived iscis</param>
         /// <returns>List of UnlinkedIscisDto objects</returns>
-        List<UnlinkedIscisDto> GetUnlinkedIscis();
+        List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived);
 
         /// <summary>
         /// Archives an isci from the unlinked isci list
@@ -38,7 +39,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileDetailIds">Iscis to archive</param>
         /// <param name="username">User requesting the change</param>
         /// <returns>True or false based on the errors</returns>
-        bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);
+        bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);        
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -68,7 +69,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Returns a list of the posts nad unlinked iscis in the system
+        /// Returns a list of the posts and unlinked iscis in the system
         /// </summary>
         /// <returns>List of PostDto objects</returns>
         public PostedContractedProposalsDto GetPosts()
@@ -174,10 +175,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns a list of unlinked iscis
         /// </summary>
+        /// <param name="archived">Switch for the archived iscis</param>
         /// <returns>List of UnlinkedIscisDto objects</returns>
-        public List<UnlinkedIscisDto> GetUnlinkedIscis()
+        public List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived)
         {
-            return _PostRepository.GetUnlinkedIscis();
+            var spotsLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            var iscis =  archived ? _PostRepository.GetArchivedIscis() :  _PostRepository.GetUnlinkedIscis();
+            iscis.ForEach(x => x.SpotLength = spotsLength.Single(y=> y.Value == x.SpotLength).Key);
+            return iscis;
         }
 
         /// <summary>
@@ -207,6 +212,6 @@ namespace Services.Broadcast.ApplicationServices
             }
                 
             return true;
-        }
+        }        
     }
 }
