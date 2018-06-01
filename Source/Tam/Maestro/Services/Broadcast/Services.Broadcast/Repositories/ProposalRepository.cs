@@ -1520,6 +1520,9 @@ namespace Services.Broadcast.Repositories
                                 ProposalVersionDetailPostingBookId = i.proposal_version_detail_quarter_weeks
                                                         .proposal_version_detail_quarters
                                                         .proposal_version_details.posting_book_id,
+                                ProposalVersionDetailPostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_details.posting_playback_type,
                                 ProposalVersionDetailWeekStart = i.proposal_version_detail_quarter_weeks.start_date,
                                 ProposalVersionDetailWeekEnd = i.proposal_version_detail_quarter_weeks.end_date,
                                 Spots = i.proposal_version_detail_quarter_weeks.units,

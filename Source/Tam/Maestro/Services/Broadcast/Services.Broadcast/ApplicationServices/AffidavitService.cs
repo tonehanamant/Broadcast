@@ -211,6 +211,10 @@ namespace Services.Broadcast.ApplicationServices
                 if (!proposalDetailWeek.ProposalVersionDetailPostingBookId.HasValue)
                 {
                     proposalDetailWeek.ProposalVersionDetailPostingBookId = postingBookId;
+                }
+
+                if (!proposalDetailWeek.ProposalVersionDetailPostingPlaybackType.HasValue)
+                {
                     proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = DefaultPlaybackType;
                 }
             }
@@ -388,6 +392,11 @@ namespace Services.Broadcast.ApplicationServices
             ,"LeadInGenre"
             ,"LeadOutTitle"
             ,"LeadOutGenre"
+            ,"Inventory Source"
+            ,"Affiliate"
+            ,"ShowType"
+            ,"LeadInShowType"
+            ,"LeadOutShowType"
         };
         
         public string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request)
@@ -428,7 +437,7 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
                     detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
-                    //detail.InventorySource = Int32.Parse(reader.GetCellValue("Inventory Source"));
+                    detail.InventorySource = (AffidaviteFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source"));
                     detail.Affiliate = reader.GetCellValue("Affiliate");
                     detail.ShowType = reader.GetCellValue("ShowType");
                     detail.LeadInShowType = reader.GetCellValue("LeadInShowType");
