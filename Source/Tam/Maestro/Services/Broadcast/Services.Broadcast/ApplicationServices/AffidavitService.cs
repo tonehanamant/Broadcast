@@ -412,6 +412,16 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var imps = impressionsPointInTime.Where(i => i.id == ctr).ToList();
 
+                    var remainingAudienceImpressions = audiencesIds
+                        .Where(audienceId => !imps.Select(i => i.audience_id).Contains(audienceId))
+                        .Select(audienceId => new StationImpressionsWithAudience
+                    {
+                         audience_id = audienceId,
+                         impressions = 0 //We want to save zero impressions for those audiences that we did not receive impressions for
+                    });
+
+                    imps.AddRange(remainingAudienceImpressions);
+
                     affidavitFileDetail.AffidavitClientScrubs.Where(s => s.PostingBookId == postingBookId)
                         .ForEach(s => s.AffidavitClientScrubAudiences = imps.Select(imp => new AffidavitClientScrubAudience
                             {
