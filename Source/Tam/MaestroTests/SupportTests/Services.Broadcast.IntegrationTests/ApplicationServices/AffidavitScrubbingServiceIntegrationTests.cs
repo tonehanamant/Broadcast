@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -16,6 +17,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [UseReporter(typeof(DiffReporter))]
     public class AffidavitScrubbingServiceIntegrationTests
     {
+        private readonly IAffidavitService _AffidavitService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitService>();
         private readonly IAffidavitScrubbingService _AffidavitScrubbingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>();
         private readonly IPostReportService _PostReportService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostReportService>();
         private readonly IAffidavitRepository _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -220,6 +222,66 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var scrubbingRequest = new ProposalScrubbingRequest();
                 var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(255, scrubbingRequest);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientScrubbingReturnsEffectiveProgramGenreShowtype()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                AffidavitSaveRequest affidavitSaveRequest = new AffidavitSaveRequest
+                {
+                    FileHash = "abc123",
+                    Source = (int)AffidaviteFileSourceEnum.Strata,
+                    FileName = "test.file",
+                    Details = new List<AffidavitSaveRequestDetail>()
+                {
+                    new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("06/29/2017 8:00AM"),
+                        Isci = "FFFFFF",
+                        ProgramName = "MainProgramName",
+                        SpotLength = 30,
+                        Genre = "MainGenre",
+                        Station = "WWSB",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ShowType = "Movie",
+                        LeadInShowType = "LeadInShowType",
+                        LeadOutShowType = "LeadOutShowType",
+                        LeadInGenre = "LeadInGenre",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    }
+                }
+                };
+
+                _AffidavitService.SaveAffidavit(affidavitSaveRequest, "TestUser", DateTime.Parse("06/29/2017 8:04AM"));
+
+                var scrubbingRequest = new ProposalScrubbingRequest();
+                var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253, scrubbingRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
