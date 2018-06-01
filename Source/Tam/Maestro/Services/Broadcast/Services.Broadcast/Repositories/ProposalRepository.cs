@@ -1,17 +1,14 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.OpenMarketInventory;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
-using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities.OpenMarketInventory;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -67,7 +64,7 @@ namespace Services.Broadcast.Repositories
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
         ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
-        void UpdateProposalDetailPostingBooks(List<Tuple<int, int>> list);
+        void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> list);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -331,7 +328,9 @@ namespace Services.Broadcast.Repositories
                     single_projection_book_id = proposalDetail.SingleProjectionBookId,
                     hut_projection_book_id = proposalDetail.HutProjectionBookId,
                     share_projection_book_id = proposalDetail.ShareProjectionBookId,
-                    playback_type = (byte)proposalDetail.PlaybackType,
+                    projection_playback_type = (byte)proposalDetail.ProjectionPlaybackType,
+                    posting_book_id = proposalDetail.PostingBookId,
+                    posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -438,7 +437,9 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.single_projection_book_id = detail.SingleProjectionBookId;
                     updatedDetail.hut_projection_book_id = detail.HutProjectionBookId;
                     updatedDetail.share_projection_book_id = detail.ShareProjectionBookId;
-                    updatedDetail.playback_type = (byte)detail.PlaybackType;
+                    updatedDetail.projection_playback_type = (byte)detail.ProjectionPlaybackType;
+                    updatedDetail.posting_book_id = detail.PostingBookId;
+                    updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
 
                     //update proposal detail genre criteria
@@ -827,7 +828,9 @@ namespace Services.Broadcast.Repositories
                     SingleProjectionBookId = version.single_projection_book_id,
                     ShareProjectionBookId = version.share_projection_book_id,
                     HutProjectionBookId = version.hut_projection_book_id,
-                    PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
+                    ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)version.projection_playback_type,
+                    PostingBookId = version.posting_book_id,
+                    PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1083,7 +1086,7 @@ namespace Services.Broadcast.Repositories
                     SingleProjectionBookId = proposalDetail.single_projection_book_id,
                     ShareProjectionBookId = proposalDetail.share_projection_book_id,
                     HutProjectionBookId = proposalDetail.hut_projection_book_id,
-                    PlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.playback_type,
+                    ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.projection_playback_type,
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1457,7 +1460,7 @@ namespace Services.Broadcast.Repositories
             baseDto.SingleProjectionBookId = pvd.single_projection_book_id;
             baseDto.SingleProjectionBookId = pvd.share_projection_book_id;
             baseDto.HutProjectionBookId = pvd.hut_projection_book_id;
-            baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
+            baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
         }
 
         public void DeleteProposal(int proposalId)
@@ -1533,16 +1536,17 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateProposalDetailPostingBooks(List<Tuple<int, int>> detailTuples)
+        public void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> detailPostingData)
         {
             _InReadUncommitedTransaction(c =>
             {
-                foreach(var detailTuple in detailTuples)
+                foreach(var detailData in detailPostingData)
                 {
-                    var detail = c.proposal_version_details.Find(detailTuple.Item1);
+                    var detail = c.proposal_version_details.Find(detailData.ProposalVersionDetailId);
                     if(detail.posting_book_id == null)
                     {
-                        detail.posting_book_id = detailTuple.Item2;
+                        detail.posting_book_id = detailData.PostingBookId;
+                        detail.posting_playback_type = (byte)detailData.PostingPlaybackType.Value;
                         c.SaveChanges();
                     }                    
                 }                

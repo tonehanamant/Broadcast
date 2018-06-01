@@ -63,7 +63,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DaypartCode = "NAV",
                 ShareProjectionBookId = 413,
                 HutProjectionBookId = 410,
-                PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                ProjectionPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
                 GenreCriteria = new List<GenreCriteria>()
                 {
                     new GenreCriteria
@@ -2232,5 +2232,78 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.AreEqual(410, ratingBook);
         }
 
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanUpdatePostingDataForProposal()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26006);
+                var firstDetail = proposal.Details.First();
+
+                firstDetail.PostingBookId = 430;
+                firstDetail.PostingPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus7;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot set posting data before uploading affadavit file", MatchType = MessageMatch.Contains)]
+        public void CannotUpdatePostingDataForProposalBeforeAffidavitDataIsLoaded()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(253);
+                var firstDetail = proposal.Details.First();
+
+                firstDetail.PostingBookId = 430;
+                firstDetail.PostingPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus7;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanRecalculateImpressionsWhenPostingBookIsChanged()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var affidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                .GetDataRepository<IAffidavitRepository>();
+                var proposal = _ProposalService.GetProposalById(26006);
+                var firstDetail = proposal.Details.First();
+
+                firstDetail.PostingBookId = 430;
+
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var affidavitFile = affidavitRepository.GetAffidavit(167, true);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(affidavitFile));
+            }
+        }
     }
 }

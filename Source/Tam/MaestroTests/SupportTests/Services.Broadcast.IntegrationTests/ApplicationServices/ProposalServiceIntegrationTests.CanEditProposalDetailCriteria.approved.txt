@@ -40,8 +40,10 @@
           "Id": null
         }
       ],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
-      "PlaybackType": 3,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -51,6 +53,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {

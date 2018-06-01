@@ -88,7 +88,7 @@ namespace Services.Broadcast.Converters
             var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
             string mediaMonthInfo = mediaMonth.Abbreviation + mediaMonth.Year.ToString().Substring(2);
 
-            var rawData = repo.GetPlaybackForMarketBy(bookingMediaMonthId, proposalDetailDto.PlaybackType);
+            var rawData = repo.GetPlaybackForMarketBy(bookingMediaMonthId, proposalDetailDto.ProjectionPlaybackType);
             data.MarketPlaybackTypes = rawData.Where(d => data.MarketIds.Contains(d.market_code)).ToList();
             data.SurveyData = rawData.ToDictionary(
                 k => k.MarketId,
@@ -167,7 +167,7 @@ namespace Services.Broadcast.Converters
 
         private void _GetDemoImpressionData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var playbackType = proposalDetailDto.PlaybackType;
+            var playbackType = proposalDetailDto.ProjectionPlaybackType;
 
             var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;

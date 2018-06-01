@@ -20,9 +20,12 @@
         }
       ],
       "GenreCriteria": [],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -177,9 +180,12 @@
         }
       ],
       "GenreCriteria": [],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -267,9 +273,12 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {

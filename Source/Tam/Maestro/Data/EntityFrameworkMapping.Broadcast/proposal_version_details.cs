@@ -37,13 +37,14 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> single_projection_book_id { get; set; }
         public Nullable<int> hut_projection_book_id { get; set; }
         public Nullable<int> share_projection_book_id { get; set; }
-        public byte playback_type { get; set; }
+        public byte projection_playback_type { get; set; }
         public double open_market_impressions_total { get; set; }
         public decimal open_market_cost_total { get; set; }
         public double proprietary_impressions_total { get; set; }
         public decimal proprietary_cost_total { get; set; }
         public Nullable<int> sequence { get; set; }
         public Nullable<int> posting_book_id { get; set; }
+        public Nullable<byte> posting_playback_type { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual media_months media_months { get; set; }

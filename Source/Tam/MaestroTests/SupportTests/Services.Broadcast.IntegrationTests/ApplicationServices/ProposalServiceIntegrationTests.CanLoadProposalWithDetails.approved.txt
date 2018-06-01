@@ -32,8 +32,10 @@
         }
       ],
       "GenreCriteria": [],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 2,
@@ -42,6 +44,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -103,9 +106,12 @@
         }
       ],
       "GenreCriteria": [],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {

@@ -20,9 +20,12 @@
   "FlightStartDate": "2016-12-05T00:00:00",
   "FlightWeeks": [],
   "GenreCriteria": [],
+  "HasPostingDataChanged": false,
   "HutProjectionBookId": null,
-  "PlaybackType": 0,
+  "PostingBookId": null,
+  "PostingPlaybackType": null,
   "ProgramCriteria": [],
+  "ProjectionPlaybackType": 0,
   "ProposalFlightWeeks": [],
   "Quarters": [
     {

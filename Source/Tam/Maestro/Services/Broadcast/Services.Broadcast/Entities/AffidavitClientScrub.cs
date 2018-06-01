@@ -26,6 +26,7 @@ namespace Services.Broadcast.Entities
         public string EffectiveGenre { get; set; }
         public string EffectiveShowType { get; set; }
         public int? PostingBookId { get; set; }
+        public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
         public List<AffidavitClientScrubAudience> AffidavitClientScrubAudiences { get; set; }
         public AffidavitClientScrub()
         {

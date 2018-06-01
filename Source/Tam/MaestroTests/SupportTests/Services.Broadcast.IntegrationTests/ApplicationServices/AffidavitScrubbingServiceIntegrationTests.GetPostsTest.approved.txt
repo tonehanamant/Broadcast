@@ -49,6 +49,22 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
+      "ContractName": "Affidavit Impressions Calculation Test",
+      "GuaranteedAudienceId": 34,
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 1,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
+      "ContractName": "Impressions Recalculation Test",
+      "GuaranteedAudienceId": 34,
+      "PrimaryAudienceImpressions": 9747.65,
+      "SpotsInSpec": 1,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
       "ContractName": "Proposal Test 5",
       "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,

@@ -704,7 +704,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveAffidaviteService_Funky_TV_Station_Name_BCOP3092()
@@ -722,8 +721,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyAffidavit(result);
             }
         }
-
-
 
         private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {

@@ -38,7 +38,7 @@ class Sweeps extends Component {
     if (detail) {
       let shareBookId = detail.ShareProjectionBookId;
       let hutBookId = detail.HutProjectionBookId;
-      let playbackTypeId = detail.PlaybackType;
+      let playbackTypeId = detail.ProjectionPlaybackType;
 
       if (detail.DefaultProjectionBooks) {
         shareBookId = shareBookId || detail.DefaultProjectionBooks.DefaultShareBook.PostingBookId;
@@ -73,7 +73,7 @@ class Sweeps extends Component {
       // default values
       updateProposalEditFormDetail({ id: detail.Id, key: 'ShareProjectionBookId', value: shareBookId });
       updateProposalEditFormDetail({ id: detail.Id, key: 'HutProjectionBookId', value: hutBookId });
-      updateProposalEditFormDetail({ id: detail.Id, key: 'PlaybackType', value: playbackTypeId });
+      updateProposalEditFormDetail({ id: detail.Id, key: 'ProjectionPlaybackType', value: playbackTypeId });
     }
   }
 
@@ -93,7 +93,7 @@ class Sweeps extends Component {
 
     updateProposalEditFormDetail({ id: detail.Id, key: 'ShareProjectionBookId', value: currentShareBook.Id });
     updateProposalEditFormDetail({ id: detail.Id, key: 'HutProjectionBookId', value: currentHutBook.Id });
-    updateProposalEditFormDetail({ id: detail.Id, key: 'PlaybackType', value: currentPlaybackType.Id });
+    updateProposalEditFormDetail({ id: detail.Id, key: 'ProjectionPlaybackType', value: currentPlaybackType.Id });
 
     this.setState({
       shareBook: currentShareBook,
@@ -138,7 +138,7 @@ class Sweeps extends Component {
             <Button className="close" bsStyle="link" onClick={this.onCancel} style={{ display: 'inline-block', float: 'right' }}>
             <span>&times;</span>
           </Button>
-          <Modal.Title>Manage Ratings</Modal.Title>
+          <Modal.Title>Projection Books</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>

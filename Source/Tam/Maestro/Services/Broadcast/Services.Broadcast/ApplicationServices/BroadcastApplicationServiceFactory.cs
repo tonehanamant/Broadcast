@@ -114,6 +114,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitEmailSenderService, AffidavitEmailSenderService>();
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
             unityContainer.RegisterType<IPostReportService, PostReportService>();
+            unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();
 
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 
