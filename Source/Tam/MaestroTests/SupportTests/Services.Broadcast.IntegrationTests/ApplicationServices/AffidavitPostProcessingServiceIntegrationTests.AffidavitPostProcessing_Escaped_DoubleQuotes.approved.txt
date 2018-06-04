@@ -1,30 +1,38 @@
 ﻿{
-  "Details": [
+  "AffidavitFileDetails": [
     {
-      "Affiliate": null,
-      "AirTime": "2018-01-01T14:46:00",
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [],
+      "AffidavitFileDetailProblems": [],
+      "Affiliate": "Hello Affiliate",
+      "AirTime": 53160,
+      "Archived": false,
       "Demographics": [],
       "EstimateId": 3926,
       "Genre": "Reality",
       "InventorySource": 2,
       "Isci": "C\"ECT\"21LR02H",
-      "LeadInEndTime": "2018-01-01T16:30:00",
-      "LeadInGenre": "Reality",
-      "LeadInProgramName": "Hot Bench",
+      "LeadInEndTime": 59400,
+      "LeadinGenre": "Reality",
+      "LeadinProgramName": "Hot Bench",
       "LeadInShowType": "Series",
-      "LeadOutGenre": null,
-      "LeadOutProgramName": "Ellen DeGeneres Show, The",
+      "LeadoutGenre": null,
+      "LeadoutProgramName": "Ellen DeGeneres Show, The",
       "LeadOutShowType": "Series",
-      "LeadOutStartTime": "2018-01-01T23:00:00",
+      "LeadOutStartTime": 82800,
       "Market": "Birmingham",
+      "OriginalAirDate": "2018-01-01T00:00:00",
       "ProgramName": "Hot Bench",
       "ShowType": "Series",
       "SpotCost": 0.0,
-      "SpotLength": 30,
+      "SpotLengthId": 1,
       "Station": "WICZ-TV"
     }
   ],
-  "FileHash": "15-BD-7C-A4-EC-08-4F-E3-1B-B3-AD-20-86-56-B1-8C-59-F7-D2-71",
+  "AffidavitFileProblems": [],
+  "FileHash": "33-33-89-17-98-97-15-20-74-A2-3A-E0-70-39-2C-D7-F2-2B-7F-09",
   "FileName": "WWTV_Escaped_DoubleQuotes.txt",
-  "Source": 1
+  "MediaMonthId": 0,
+  "SourceId": 1,
+  "Status": 1
 }

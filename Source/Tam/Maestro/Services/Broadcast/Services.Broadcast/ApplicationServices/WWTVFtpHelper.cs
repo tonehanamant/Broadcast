@@ -35,7 +35,7 @@ namespace Services.Broadcast.ApplicationServices
             return $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpErrorFolder}";
         }
 
-        public static string GetInboundPath()
+        public static string GetFTPInboundPath()
         {
             return
                 $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}";

@@ -179,6 +179,11 @@ namespace Services.Broadcast.ApplicationServices
             result.ValidationResults = affidavitValidationResults;
             affidavitFile.Status = affidavitValidationResults.Any() ? AffidaviteFileProcessingStatus.Invalid : AffidaviteFileProcessingStatus.Valid;
 
+            if (affidavitValidationResults.Any())
+            {
+                return result;
+            }
+
             _ScrubAffidavitFile(affidavitFile);
             _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFile(affidavitFile);
 
@@ -341,9 +346,10 @@ namespace Services.Broadcast.ApplicationServices
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
         {
             var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
-            int line = 1;
+            int line = 0;
             foreach (var requestDetail in saveRequest.Details)
             {
+                line++;
                 var proposalWeeks =
                     _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
                         .GetAffidavitMatchingProposalWeeksByHouseIsci(requestDetail.Isci);
@@ -357,7 +363,6 @@ namespace Services.Broadcast.ApplicationServices
                     ProposalDetailWeeks = matchedProposalWeeks,
                     AffidavitDetailProblems = matchingProblems
                 });
-
             }
 
             return matchedAffidavitDetails;

@@ -31,12 +31,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         void DownloadAndProcessWWTVFiles(string userName);
 
-        /// <summary>
-        /// Process and WWTV post processing file
-        /// </summary>
-        /// <param name="filePath">Path of the file to process</param>
-        /// <returns>BaseResponse object</returns>
-        AffidavitSaveRequest ParseWWTVFile(string filePath,out string errorMessage);
+        AffidavitSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
 
         /// <summary>
         /// Logs any errors that happened in DownloadAndProcessWWTV Files and ParseWWTVFile.
@@ -55,6 +50,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
         private const string HTTP_ACCEPT_HEADER = "application/json";
+
+        private const string _EmailValidationSubject = "WWTV File Failed Validation";
 
         public AffidavitPostProcessingService(
             IBroadcastAudiencesCache audienceCache,
@@ -77,7 +74,6 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         public void DownloadAndProcessWWTVFiles(string userName)
         {
-            var filesFailedDownload = new List<string>();
             List<string> filesToProcess;
             try
             {
@@ -94,91 +90,105 @@ namespace Services.Broadcast.ApplicationServices
                 return;
             }
 
-            List<string> downloadedFiles = new List<string>();
-            List<Tuple<string, string>> fileErrorsToProcess = new List<Tuple<string, string>>();
-            WWTVSharedNetworkHelper.Impersonate(delegate
+            var inboundFtpPath = WWTVFtpHelper.GetFTPInboundPath();
+
+            var failedDownloads = new List<string>();
+            foreach (var filePath in filesToProcess)
             {
-                foreach (var file in filesToProcess)
-                {
-                    // no need to use shared connection for local temp path (unless we have to)
-                    string filePath = Path.Combine(WWTVSharedNetworkHelper.GetLocalErrorFolder(), file);
-                    try
-                    {
-                        _DownloadFileFromWWTVFtp(file, filePath);
-                    }
-                    catch (Exception e)
-                    {
-                        filesFailedDownload.Add(string.Format("File '{0}' filed to download, reason: {1}", file,
-                            e.Message));
-                        continue; // skip to next file 
-                    }
-
-                    downloadedFiles.Add(filePath);
-                    AffidavitSaveResult response = null;
-
-                    string errorMessage;
-                    AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(filePath, out errorMessage);
-                    if (!string.IsNullOrEmpty(errorMessage))
-                    {
-                        var fileError = new Tuple<string, string>(filePath, errorMessage);
-                        fileErrorsToProcess.Add(fileError);
-                        continue;
-                    }
-
-                    try
-                    {
-                        _AffidavidService.SaveAffidavit(affidavitSaveRequest, userName, DateTime.Now);
-                    }
-                    catch (Exception e)
-                    {
-                        errorMessage = "Error saving affidavit:\n\n" + e.ToString();
-                        var fileError = new Tuple<string, string>(filePath, errorMessage);
-                        fileErrorsToProcess.Add(fileError);
-                        continue;
-                    }
-                }
-
-                if (filesFailedDownload.Any())
-                {
-                    _ProcessFailedFiles(filesFailedDownload);
-                }
-
-                var outbound = WWTVFtpHelper.GetInboundPath();
-                var ftpFilesToDelete = downloadedFiles.Select(d => outbound + "/" + Path.GetFileName(d)).ToList();
+                string fileContents;
                 try
                 {
-                    WWTVFtpHelper.DeleteFiles(ftpFilesToDelete);
+                    fileContents = _DownloadFileFromWWTVFtpToString(filePath);
                 }
                 catch (Exception e)
                 {
-                    var errorMessage = "Error deleting affidavit file(s) from FTP site:\n\n" + e.ToString();
-                    ftpFilesToDelete.ForEach(filePath => ProcessErrorWWTVFile(filePath, errorMessage));
+                    failedDownloads.Add(filePath + " Reason: " + e);
+                    continue; // skip to next file 
+                }
+                string fileName = Path.GetFileName(filePath);
+
+                var ftpFileToDelete = inboundFtpPath + "/" + fileName;
+                try
+                {
+                    WWTVFtpHelper.DeleteFile(ftpFileToDelete);
+                }
+                catch (Exception e)
+                {
+                    var errorMessage = "Error deleting affidavit file from FTP site: " + ftpFileToDelete + "\r\n" + e;
+                    _ProcessTechErrorWWTVFile(filePath, errorMessage);
+                    continue;
                 }
 
-                fileErrorsToProcess.ForEach(f => ProcessErrorWWTVFile(f.Item1, f.Item2));
-            });
+                var validationErrors = new List<AffidavitValidationResult>();
+                var result = ProcessFileContents(userName, fileName, fileContents);
+
+                if (result.ValidationResults.Any())
+                    _ProcessValidationErrors(fileName, validationErrors);
+            }
+
+            _ProcessFailedFiles(failedDownloads,inboundFtpPath);
         }
 
+        public AffidavitSaveResult ProcessFileContents(string userName, string fileName, string fileContents)
+        {
+            List<AffidavitValidationResult> validationErrors = new List<AffidavitValidationResult>();
+            AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(fileName, fileContents, validationErrors);
+            if (validationErrors.Any())
+            {
+                
+                return new AffidavitSaveResult{ ValidationResults = validationErrors };
+            }
+
+            AffidavitSaveResult result;
+            try
+            {
+                result = _AffidavidService.SaveAffidavit(affidavitSaveRequest, userName, DateTime.Now);
+            }
+            catch (Exception e)
+            {
+                string errorMessage = "Error saving affidavit:\n\n" + e.ToString();
+                _ProcessTechErrorWWTVFile(fileName, errorMessage);
+                return null;
+            }
+
+            return result;
+        }
+
+
+        private void _ProcessValidationErrors(string fileName, List<AffidavitValidationResult> validationErrors)
+        {
+            string message = AffidavitValidationResult.FormatValidationMessage(validationErrors);
+
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            var emailBody = _CreateValidationErrorEmailBody(message, fileName);
+            _AffidavitEmailSenderService.Send(emailBody, _EmailValidationSubject);
+        }
+    
         private void _ProceseTotalFTPFailure(Exception e)
         {
             var emailBody =
                 "There was an error reading from or connecting to the FTP server. \n\nHere is some technical information." + e;
-            _AffidavitEmailSenderService.Send(emailBody);
+            _AffidavitEmailSenderService.Send(emailBody,"WWTV FTP Error");
         }
-        private void _ProcessFailedFiles(List<string> filesFailedDownload)
+        private void _ProcessFailedFiles(List<string> filesFailedDownload,string ftpLocation)
         {
-            var emailBody = "The following file(s) could not be downloaded.\n\n";
+            if (!filesFailedDownload.Any())
+                return;
+
+            var emailBody = "The following file(s) could not be downloaded from:\r\n" + ftpLocation;
             foreach (var file in filesFailedDownload)
             {
                 emailBody += string.Format("{0}\n",file);
 
             }
-            _AffidavitEmailSenderService.Send(emailBody);
+            _AffidavitEmailSenderService.Send(emailBody, "WWTV File Failed");
         }
 
-        public void ProcessErrorWWTVFile(string filePath,string errorMessage)
+        private void _ProcessTechErrorWWTVFile(string filePath,string errorMessage)
         {
-            var emailBody = _CreateInvalidFileEmailBody(errorMessage, filePath);
+            var emailBody = _CreateTechErrorEmailBody(errorMessage, filePath);
 
             _AffidavitEmailSenderService.Send(emailBody, "WWTV File Failed");
 
@@ -208,43 +218,47 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="filePath">Path of the file to process</param>
         /// <returns>BaseResponse object containing the new id of the affidavit_file</returns>
-        public AffidavitSaveRequest ParseWWTVFile(string filePath,out string errorMessage)
+        public AffidavitSaveRequest ParseWWTVFile(string fileName,string fileContents, List<AffidavitValidationResult> validationErrors)
         {
             AffidavitSaveRequest affidavitSaveRequest = new AffidavitSaveRequest();
-            affidavitSaveRequest.FileName = Path.GetFileName(filePath);
-            errorMessage = "";
-
             try
             {
-                if (!File.Exists(filePath))
-                {
-                    throw new Exception("File does not exist.");
-                }
-
-                if (!Path.GetExtension(filePath).Equals(".txt"))
+                if (!Path.GetExtension(fileName).Equals(VALID_INCOMING_FILE_EXTENSION))
                 {
                     throw new Exception("Invalid file extension.");
                 }
+                affidavitSaveRequest.FileName = Path.GetFileName(fileName);
 
-                _MapWWTVFileToAffidavitFile(affidavitSaveRequest,filePath,out errorMessage);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    return null;
-                }
+                _MapWWTVFileToAffidavitFile(fileContents,affidavitSaveRequest, validationErrors);
             }
             catch (Exception e)
             {
-                errorMessage = "Could not process file.\n  " + e.ToString();
+                validationErrors.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage = "Could not process file.\n  " + e.ToString()
+                });
 
                 return affidavitSaveRequest;
             }
 
-            affidavitSaveRequest.FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filePath));
+            affidavitSaveRequest.FileHash = HashGenerator.ComputeHash(fileContents.ToByteArray());
 
             return affidavitSaveRequest;
         }
+        private string _CreateValidationErrorEmailBody(string errorMessage, string filePath)
+        {
+            var emailBody = new StringBuilder();
 
-        private string _CreateInvalidFileEmailBody(string errorMessage,string filePath)
+            emailBody.AppendFormat("File {0} file validation for WWTV upload.", Path.GetFileName(filePath));
+
+            emailBody.AppendFormat("\n\n{0}", errorMessage);
+
+            emailBody.AppendFormat("\n\nFile located in {0}\n", filePath);
+
+            return emailBody.ToString();
+        }
+
+        private string _CreateTechErrorEmailBody(string errorMessage,string filePath)
         {
             var emailBody = new StringBuilder();
 
@@ -259,17 +273,22 @@ namespace Services.Broadcast.ApplicationServices
 
         
         /// <summary>
-        /// Deals with fact that time comes in 2 formats  HHMMTT 
-        /// and HMMTT (single and double digit hour which is not supported properly by .NET library)
+        /// Deals with fact that time comes in 2 formats  HHMMTT and HMMTT 
+        /// (single and double digit hour which is not supported properly by .NET library)
         /// </summary>
-        private static System.TimeSpan ExtractTimeHacky(string timeToParse, ref string errorMessage, string fieldName, int recordNumber)
+        private static System.TimeSpan ExtractTimeHacky(string timeToParse, List<AffidavitValidationResult> validationErrors, string fieldName, int recordNumber)
         {
             Regex regExp = new Regex(@"^(?<hours>(([0][1-9]|[1][0-2]|[0-9])))(?<minutes>([0-5][0-9]))(?<ampm>A|P)$");
             var match = regExp.Match(timeToParse);
 
             if (!match.Success)
             {
-                errorMessage += $"Record: {recordNumber + 1}: field: '{fieldName}' is invalid time.  Please use format \"HHMMA|P\".\n";
+                validationErrors.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage = "is invalid time.  Please use format \"HHMMA|P\".",
+                    InvalidField = fieldName,
+                    InvalidLine = recordNumber
+                });
                 return new System.TimeSpan();
             }
 
@@ -285,53 +304,59 @@ namespace Services.Broadcast.ApplicationServices
             return result.TimeOfDay;
         }
 
-        private System.TimeSpan ExtractDateTime(string datetime, ref string errorMessage, string fieldName, int recordNumber)
+        private System.TimeSpan ExtractDateTime(string datetime, List<AffidavitValidationResult> validationErrors, string fieldName, int recordNumber)
         {
             if (!DateTime.TryParse(datetime, out DateTime parsedTime))
             {
-                errorMessage += $"Record: {recordNumber+1}: field: '{fieldName}' is invalid date or time.\n";
+                validationErrors.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage = "is invalid date or time.",
+                    InvalidField = fieldName,
+                    InvalidLine = recordNumber
+                });
+                return new System.TimeSpan();
             }
 
             return parsedTime.TimeOfDay;
         }
-        private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(AffidavitSaveRequest affidavitSaveRequest,string filePath,out string errorMessage)
+        private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(string fileContents,  AffidavitSaveRequest affidavitSaveRequest, List<AffidavitValidationResult> validationErrors)
         {
             affidavitSaveRequest.Source = (int) AffidaviteFileSourceEnum.Strata;
             affidavitSaveRequest.Details = new List<AffidavitSaveRequestDetail>();
-            errorMessage = "";
 
             WhosWatchingTVPostProcessingFile jsonFile;
             try
             {
                 jsonFile = new WhosWatchingTVPostProcessingFile();
-                jsonFile.Details = JsonConvert.DeserializeObject<List<WhosWatchingTVDetail>>(File.ReadAllText(filePath));
+                jsonFile.Details = JsonConvert.DeserializeObject<List<WhosWatchingTVDetail>>(fileContents);
             }
             catch (Exception e)
             {
-                errorMessage =
-                    "File is in an invalid format.  It cannot be read in its current state; must be a valid JSON file." +
-                    "\r\n" + e.ToString();
+                validationErrors.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage = "File is in an invalid format.  It cannot be read in its current state; must be a valid JSON file." +
+                                   "\r\n" + e.ToString()
+                });
                 return affidavitSaveRequest;
             }
-
-            errorMessage = "";
 
             for (var recordNumber = 0; recordNumber < jsonFile.Details.Count; recordNumber++)
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
-                var airTime = jsonDetail.Date.Add(ExtractTimeHacky(jsonDetail.Time, ref errorMessage, "Time", recordNumber));
-                var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, ref errorMessage, "LeadInEndTime", recordNumber));
-                var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, ref errorMessage, "LeadOutStartTime", recordNumber));
-
+                var airTime = jsonDetail.Date.Add(ExtractTimeHacky(jsonDetail.Time, validationErrors, "Time", recordNumber));
+                var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, validationErrors, "LeadInEndTime", recordNumber));
+                var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, validationErrors, "LeadOutStartTime", recordNumber));
 
                 if (!Enum.TryParse(jsonDetail.InventorySource, out AffidaviteFileSourceEnum inventorySource))
                 {
-                    errorMessage += $"Record: {recordNumber + 1}: field: 'InventorySource' is inventory source.\n";
+                    validationErrors.Add(new AffidavitValidationResult()
+                    {
+                        ErrorMessage = "is invalid",
+                        InvalidField = "InventorySource",
+                        InvalidLine = recordNumber
+                    });
                 }
-
-                if (!string.IsNullOrEmpty(errorMessage))
-                    continue;
 
                 var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail()
                 {
@@ -370,29 +395,23 @@ namespace Services.Broadcast.ApplicationServices
 
                 affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
             }
-
-            if (!string.IsNullOrEmpty(errorMessage))
-                errorMessage = $"Found some date/time errors within the file.  \r\n\r\n{errorMessage}";
             return affidavitSaveRequest;
         }
 
-        /// <summary>
-        /// It is assumed filePath is locally accessible resource and not networked resource
-        /// </summary>
-        private void _DownloadFileFromWWTVFtp(string fileName, string filePath)
+        private string _DownloadFileFromWWTVFtpToString(string fileName)
         {
-            var shareFolder = WWTVFtpHelper.GetInboundPath();
+            var shareFolder = WWTVFtpHelper.GetFTPInboundPath();
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = WWTVFtpHelper.GetFtpClientCredentials();
-                ftpClient.DownloadFile($"{shareFolder}/{fileName}",
-                    filePath);
+                StreamReader reader = new StreamReader(ftpClient.OpenRead($"{shareFolder}/{fileName}"));
+                return reader.ReadToEnd();
             }
         }
 
         private List<string> _GetWWTVFTPFileNames()
         {
-            string uri = WWTVFtpHelper.GetInboundPath();
+            string uri = WWTVFtpHelper.GetFTPInboundPath();
             return WWTVFtpHelper.GetFileList(uri, (file) => file.EndsWith(VALID_INCOMING_FILE_EXTENSION));
         }
     }

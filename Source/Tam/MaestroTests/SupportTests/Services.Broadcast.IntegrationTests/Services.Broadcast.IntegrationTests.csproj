@@ -657,6 +657,9 @@
     <Content Include="Files\WWTV_Bad_File_times.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\WWTV_Basic_Required_Validation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\WWTV_Escaped_DoubleQuotes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
