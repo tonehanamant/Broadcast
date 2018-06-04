@@ -282,13 +282,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private static DisplayBroadcastStation _MatchAffidavitStation(Dictionary<string, DisplayBroadcastStation> stations, AffidavitFileDetail affidavitDetail)
         {
-            const string tvEnding = "-TV";
+            const string dashEnding = "-";
             string stationName = affidavitDetail.Station;
 
             if (stations.ContainsKey(stationName))
                 return stations[stationName];
 
-            var index = stationName.LastIndexOf(tvEnding,StringComparison.CurrentCultureIgnoreCase);
+            var index = stationName.LastIndexOf(dashEnding,StringComparison.CurrentCultureIgnoreCase);
             if (index < 0)
                 return null;
 
