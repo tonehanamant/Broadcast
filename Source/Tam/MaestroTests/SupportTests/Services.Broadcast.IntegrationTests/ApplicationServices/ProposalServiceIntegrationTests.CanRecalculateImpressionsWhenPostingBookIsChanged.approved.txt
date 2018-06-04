@@ -6,140 +6,169 @@
         {
           "AffidavitClientScrubAudiences": [
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 4,
               "Impressions": 0.0
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 5,
               "Impressions": 0.0
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 6,
               "Impressions": 0.0
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 7,
               "Impressions": 0.0
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 13,
-              "Impressions": 2826.05
+              "Impressions": 215.05
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 14,
-              "Impressions": 2803.75
+              "Impressions": 428.75
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 15,
-              "Impressions": 2151.45
+              "Impressions": 1396.05
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 19,
               "Impressions": 0.0
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 20,
-              "Impressions": 0.0
+              "Impressions": 66.4
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 21,
-              "Impressions": 0.0
+              "Impressions": 35.0
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 22,
-              "Impressions": 189.65
+              "Impressions": 35.5
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 28,
-              "Impressions": 0.0
+              "Impressions": 93.1
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 29,
-              "Impressions": 703.25
+              "Impressions": 66.7
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 30,
-              "Impressions": 0.0
+              "Impressions": 314.15
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 31,
-              "Impressions": 9141.6
+              "Impressions": 3910.45
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 46,
-              "Impressions": 233.95
+              "Impressions": 516.65
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 284,
-              "Impressions": 0.0
+              "Impressions": 106.2
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 290,
-              "Impressions": 128.75
+              "Impressions": 94.05
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 339,
-              "Impressions": 446.4
+              "Impressions": 102.3
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 347,
-              "Impressions": 343.6
+              "Impressions": 1015.15
             },
             {
+              "AffidavitClientScrubId": 1034,
               "AudienceId": 348,
-              "Impressions": 0.0
+              "Impressions": 169.1
             }
           ],
+          "AffidavitFileDetailId": 1034,
           "Comment": null,
           "EffectiveGenre": "Do It Yourself",
           "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "News",
+          "EffectiveShowType": "",
+          "Id": 1034,
           "LeadIn": false,
           "MatchDate": true,
-          "MatchGenre": false,
-          "MatchIsciDays": false,
+          "MatchGenre": true,
+          "MatchIsciDays": true,
           "MatchMarket": true,
           "MatchProgram": true,
           "MatchShowType": true,
           "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "test user",
-          "PostingBookId": 416,
+          "ModifiedDate": "2018-02-08T12:57:39.69",
+          "PostingBookId": 430,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 8123,
-          "ProposalVersionDetailQuarterWeekId": 8522,
-          "Status": 1
+          "ProposalVersionDetailId": 9961,
+          "ProposalVersionDetailQuarterWeekId": 39,
+          "Status": 2
         }
       ],
       "AffidavitFileDetailProblems": [],
-      "Affiliate": "Affiate",
-      "AirTime": 29040,
+      "AffidavitFileId": 167,
+      "Affiliate": null,
+      "AirTime": 32400,
       "Archived": false,
       "Demographics": [],
       "EstimateId": null,
       "Genre": "Do It Yourself",
+      "Id": 1034,
       "InventorySource": 1,
-      "Isci": "WAWA",
-      "LeadInEndTime": 30660,
-      "LeadinGenre": "News",
-      "LeadinProgramName": "LeadInProgramName",
-      "LeadInShowType": "Comedy",
-      "LeadoutGenre": "Do It Yourself",
-      "LeadoutProgramName": "Program Names R us",
-      "LeadOutShowType": "Documentary",
-      "LeadOutStartTime": 28920,
-      "Market": "Tampa-St. Pete (Sarasota)",
-      "OriginalAirDate": "2017-06-29T00:00:00",
+      "Isci": "IMPT2",
+      "LeadInEndTime": 32400,
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadInShowType": "",
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
+      "LeadOutShowType": "",
+      "LeadOutStartTime": 32400,
+      "Market": "New York",
+      "OriginalAirDate": "2016-06-03T00:00:00",
       "ProgramName": "Program Names R us",
-      "ShowType": "News",
+      "ShowType": "",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WWSB"
+      "Station": "KAPP"
     }
   ],
   "AffidavitFileProblems": [],
+  "CreatedDate": "2018-02-08T12:57:39.693",
   "FileHash": "abc123",
   "FileName": "test.file",
+  "Id": 167,
+  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
 }

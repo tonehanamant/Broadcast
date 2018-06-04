@@ -9,6 +9,7 @@ import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
+import PostingBook from './PostingBook';
 // import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
@@ -32,8 +33,6 @@ export class ProposalDetail extends Component {
     this.onDeleteProposalDetail = this.onDeleteProposalDetail.bind(this);
 
     this.flightPickerApply = this.flightPickerApply.bind(this);
-    this.openSweepsModal = this.openSweepsModal.bind(this);
-    this.openProgramGenreModal = this.openProgramGenreModal.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
     this.onSaveShowValidation = this.onSaveShowValidation.bind(this);
@@ -41,6 +40,7 @@ export class ProposalDetail extends Component {
     this.checkValidDaypart = this.checkValidDaypart.bind(this);
     this.checkValidDaypartCode = this.checkValidDaypartCode.bind(this);
     this.openInventory = this.openInventory.bind(this);
+    this.openModal = this.openModal.bind(this);
 
     this.state = {
       validationStates: {
@@ -128,19 +128,12 @@ export class ProposalDetail extends Component {
     }
   }
 
-  openSweepsModal() {
+  openModal(modal) {
+    const { detail } = this.props;
     this.props.toggleModal({
-      modal: 'sweepsModal',
+      modal,
       active: true,
-      properties: { detailId: this.props.detail.Id },
-    });
-  }
-
-  openProgramGenreModal() {
-    this.props.toggleModal({
-      modal: 'programGenreModal',
-      active: true,
-      properties: { detailId: this.props.detail.Id },
+      properties: { detailId: detail.Id },
     });
   }
 
@@ -315,8 +308,9 @@ export class ProposalDetail extends Component {
                   <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
-                      <MenuItem eventKey="3" onClick={this.openSweepsModal}>Sweeps</MenuItem>
-                      <MenuItem eventKey="4" onClick={this.openProgramGenreModal}>Program/Genre/Show Type</MenuItem>
+                      <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
+                      <MenuItem eventKey="postingBook" onSelect={this.openModal}>Posting Book</MenuItem>
+                      <MenuItem eventKey="programGenreModal" onClick={this.openModal}>Program/Genre/Show Type</MenuItem>
                   </DropdownButton>
                 </div>
               }
@@ -362,6 +356,13 @@ export class ProposalDetail extends Component {
           detail={detail}
           isReadOnly={isReadOnly}
         />
+        { detail &&
+          <PostingBook
+            updateProposalEditFormDetail={updateProposalEditFormDetail}
+            initialdata={initialdata}
+            detail={detail}
+            isReadOnly={isReadOnly}
+          /> }
 			</Well>
     );
   }

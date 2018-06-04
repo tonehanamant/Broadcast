@@ -179,6 +179,30 @@ END
 
 /*************************************** END BCOP-2376 ***************************************************************/
 
+/*************************************** START BCOP-2909 ***************************************************************/
+
+IF EXISTS(
+	SELECT *
+	FROM sys.columns 
+	WHERE 
+		name      = 'playback_type' AND 
+		object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	EXEC sp_RENAME 'proposal_version_details.playback_type', 'projection_playback_type', 'COLUMN'
+END
+GO
+
+IF NOT EXISTS(SELECT 1 
+			  FROM sys.columns 
+			  WHERE name = 'posting_playback_type ' AND 
+			  object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details] 
+		ADD posting_playback_type TINYINT NULL
+END
+
+/*************************************** END BCOP-2909 ***************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

@@ -20,6 +20,7 @@
           "MatchTime": false,
           "ModifiedBy": "test user",
           "PostingBookId": 416,
+          "PostingPlaybackType": 4,
           "ProposalVersionDetailId": 14,
           "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1

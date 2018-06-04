@@ -49,8 +49,10 @@
           }
         }
       ],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -65,6 +67,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -181,8 +184,10 @@
           }
         }
       ],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -197,6 +202,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -313,8 +319,10 @@
           }
         }
       ],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
-      "PlaybackType": 4,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -329,6 +337,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {

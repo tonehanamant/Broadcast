@@ -72,6 +72,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
+        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
 
         const char ISCI_DAYS_DELIMITER = '-';
 
@@ -86,7 +87,8 @@ namespace Services.Broadcast.ApplicationServices
             IProjectionBooksService postingBooksService,
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
-            IProposalProprietaryInventoryService proposalProprietaryInventoryService)
+            IProposalProprietaryInventoryService proposalProprietaryInventoryService,
+            IAffidavitImpressionsService affidavitImpressionsService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -108,6 +110,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
             _ShowTypeReporitory = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
+            _AffidavitImpressionsService = affidavitImpressionsService;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -141,7 +144,9 @@ namespace Services.Broadcast.ApplicationServices
                     if (proposal.Status == ProposalEnums.ProposalStatusType.Proposed && saveRequest.Status == ProposalEnums.ProposalStatusType.Contracted)
                         throw new Exception("Cannot change proposal status from Proposed to Contracted");
 
-                    EnsureContractedOnHoldStatus(saveRequest, proposal);
+                    _EnsureContractedOnHoldStatus(saveRequest, proposal);
+
+                    _CheckIfPostingDataHasChanged(saveRequest, proposal);
 
                     if (proposal.Status == ProposalEnums.ProposalStatusType.AgencyOnHold && saveRequest.Status == ProposalEnums.ProposalStatusType.Proposed)
                     {
@@ -164,7 +169,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
-                    EnsureContractedOnHoldStatus(saveRequest);
+                    _EnsureContractedOnHoldStatus(saveRequest);
                 }
 
                 // set flightweeks id and dayparts
@@ -188,6 +193,32 @@ namespace Services.Broadcast.ApplicationServices
                 return saveRequest.Version.HasValue
                     ? GetProposalByIdWithVersion(proposalId, saveRequest.Version.Value)
                     : GetProposalById(proposalId);
+            }
+        }
+
+        private void _CheckIfPostingDataHasChanged(ProposalDto saveRequest, ProposalDto proposal)
+        {
+            foreach(var newDetail in saveRequest.Details)
+            {
+                if (!newDetail.Id.HasValue)
+                    continue;
+
+                var previousDetail = proposal.Details.First(x => x.Id == newDetail.Id);
+                var newPostingBook = newDetail.PostingBookId;
+                var newPlaybackType = newDetail.PostingPlaybackType;
+                var previousPostingBook = previousDetail.PostingBookId;
+                var previousPlaybackType = previousDetail.PostingPlaybackType;
+
+                if ((previousPostingBook == null && newPostingBook != null) ||
+                    (previousPlaybackType == null && newPlaybackType != null))
+                {
+                    throw new Exception("Cannot set posting data before uploading affadavit file");
+                }
+
+                if (previousPostingBook != newPostingBook || previousPlaybackType != newPlaybackType)
+                {
+                    newDetail.HasPostingDataChanged = true;
+                }
             }
         }
 
@@ -244,7 +275,7 @@ namespace Services.Broadcast.ApplicationServices
                     proposalVersionQuarterWeeksIds);
         }
 
-        private void EnsureContractedOnHoldStatus(ProposalDto saveRequest, ProposalDto proposal = null)
+        private void _EnsureContractedOnHoldStatus(ProposalDto saveRequest, ProposalDto proposal = null)
         {
             if (saveRequest.Id == null)
                 return;
@@ -404,6 +435,8 @@ namespace Services.Broadcast.ApplicationServices
 
                     // handle proposal detail updates
                     _ProposalRepository.UpdateProposal(proposalDto, userName);
+
+                    _RecalculateAffidavitImpressions(proposalDto);
                 }
                 else
                 {
@@ -413,6 +446,17 @@ namespace Services.Broadcast.ApplicationServices
                 transaction.Complete();
 
                 return proposalDto.Id.Value;
+            }
+        }
+
+        private void _RecalculateAffidavitImpressions(ProposalDto proposalDto)
+        {
+            foreach(var detail in proposalDto.Details)
+            {
+                if (detail.Id.HasValue && detail.HasPostingDataChanged)
+                {
+                    _AffidavitImpressionsService.RecalculateAffidavitImpressionsForProposalDetail(detail.Id.Value);
+                }
             }
         }
 
@@ -773,12 +817,12 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
-        private void _ValidateProposalRatingsBooks(ProposalDetailDto proposalDetailDto)
+        private void _ValidateProposalProjectionBooks(ProposalDetailDto proposalDetailDto)
         {
             if (proposalDetailDto.ShareProjectionBookId == null)
                 throw new Exception("Cannot save proposal without specifying a Share Book");
 
-            if (proposalDetailDto.PlaybackType == null)
+            if (proposalDetailDto.ProjectionPlaybackType == null)
                 throw new Exception("Cannot save proposal without specifying a Playback Type");
 
             if (proposalDetailDto.ShareProjectionBookId == proposalDetailDto.HutProjectionBookId ||
@@ -792,7 +836,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var detail in proposalDto.Details)
             {
-                _ValidateProposalRatingsBooks(detail);
+                _ValidateProposalProjectionBooks(detail);
 
                 if (detail.FlightEndDate == default(DateTime) || detail.FlightStartDate == default(DateTime))
                     throw new Exception("Cannot save proposal detail without specifying flight start/end date.");

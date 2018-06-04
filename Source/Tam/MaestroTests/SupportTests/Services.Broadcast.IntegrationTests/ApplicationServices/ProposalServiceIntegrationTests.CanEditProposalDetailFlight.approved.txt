@@ -56,9 +56,12 @@
         }
       ],
       "GenreCriteria": [],
+      "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
-      "PlaybackType": 3,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {

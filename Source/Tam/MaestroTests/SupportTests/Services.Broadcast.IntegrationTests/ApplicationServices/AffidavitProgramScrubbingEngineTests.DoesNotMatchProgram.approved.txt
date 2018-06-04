@@ -18,6 +18,7 @@
   "ModifiedBy": null,
   "ModifiedDate": null,
   "PostingBookId": null,
+  "PostingPlaybackType": null,
   "ProposalVersionDetailId": 0,
   "ProposalVersionDetailQuarterWeekId": 0,
   "Status": 0
