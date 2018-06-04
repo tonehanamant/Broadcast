@@ -55,6 +55,7 @@ namespace Services.Broadcast.Entities
             public double ProposalWeekTotalImpressionsGoal { get; set; }
             public double ProposalWeekImpressionsGoal { get; set; }
             public int ProposalWeekUnits { get; set; }
+            public int ProposalWeekId { get; set; }
         }
 
         public class NsiPostReportQuarterSummaryTableRow
@@ -80,7 +81,7 @@ namespace Services.Broadcast.Entities
                             Dictionary<int, double> spotLengthMultipliers,
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
-                            Dictionary<int ,Dictionary<int, int>> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
+                            Dictionary<int, Dictionary<int, int>> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
                             List<Tuple<DateTime, DateTime>> flights, bool withOvernightImpressions, bool equivalized)
         {
             Advertiser = advertiser.Display;
@@ -132,7 +133,8 @@ namespace Services.Broadcast.Entities
                             ProposalWeekTotalImpressionsGoal = r.ProposalWeekTotalImpressionsGoal,
                             ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal,
                             ProposalWeekUnits = r.Units,
-                            ProposalWeekCPM = r.ProposalWeekCPM
+                            ProposalWeekCPM = r.ProposalWeekCPM,
+                            ProposalWeekId = r.ProposalWeekId
                         };
                     }).ToList()
                 };
@@ -156,7 +158,7 @@ namespace Services.Broadcast.Entities
                                      Contract = x.Key.DaypartName,
                                      SpotLength = x.Key.SpotLength,
                                      WeekStartDate = x.Key.WeekStart,
-                                     Spots = items.Select(y => y.ProposalWeekUnits).Sum(),
+                                     Spots = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekUnits }).Select(y => y.Key.ProposalWeekUnits).Sum(),
                                      ActualImpressions = items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
                                      ProposalWeekTotalCost = items.Select(y => y.ProposalWeekTotalCost).Sum(),
                                      ProposalWeekTotalImpressionsGoal = items.Select(y => y.ProposalWeekTotalImpressionsGoal).Sum()
@@ -180,7 +182,7 @@ namespace Services.Broadcast.Entities
                 SpotLengthsDisplay += " (Equivalized)";
             }
         }
-        
+
         private void _EquivalizeImpressions(double spotLengthMutiplier, ref Dictionary<int, double> audienceImpressions)
         {
             foreach (var key in audienceImpressions.Keys.ToArray())
