@@ -70,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
+                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
