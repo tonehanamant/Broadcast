@@ -8,8 +8,6 @@ import Select from 'react-select';
 import { toggleModal } from 'Ducks/app';
 import { updateProposalEditFormDetail } from 'Ducks/planning';
 
-const validation = (playbackType, postingBook) => (!!playbackType && !!postingBook);
-
 const findValue = (options, id) => (options.find(option => option.Id === id));
 
 const isActiveDialog = (detail, modal) => (
@@ -99,11 +97,13 @@ class PostingBook extends Component {
   render() {
     const { isReadOnly, modal, detail, initialdata } = this.props;
     const { postingBook, playbackType, showConfirmation } = this.state;
-    const show = modal && modal.properties.detailId === detail.Id && modal.active;
+    const show = isActiveDialog(detail, modal);
     const { CrunchedMonths, PlaybackTypes } = initialdata.ForecastDefaults;
-    const selectedPlayback = playbackType || findValue(PlaybackTypes, detail.PostingPlaybackType);
-    const selectedPostingBook = postingBook || findValue(CrunchedMonths, detail.PostingBookId);
-    const isValid = validation(selectedPlayback, selectedPostingBook);
+    const originalPlayback = findValue(PlaybackTypes, detail.PostingPlaybackType);
+    const originalPostingBook = findValue(CrunchedMonths, detail.PostingBookId);
+    const selectedPlayback = playbackType || originalPlayback;
+    const selectedPostingBook = postingBook || originalPostingBook;
+    const isDisableForm = !originalPlayback && !originalPostingBook;
 
     return (
       <div>
@@ -135,7 +135,7 @@ class PostingBook extends Component {
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
-                    disabled={isReadOnly}
+                    disabled={isDisableForm}
                   />
                 </Col>
               </FormGroup>
@@ -152,7 +152,7 @@ class PostingBook extends Component {
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
-                    disabled={isReadOnly}
+                    disabled={isDisableForm}
                   />
                 </Col>
               </FormGroup>
@@ -163,7 +163,7 @@ class PostingBook extends Component {
             <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
             {!isReadOnly &&
               <Button
-                disabled={!isValid}
+                disabled={isDisableForm}
                 onClick={this.showConfirmation}
                 bsStyle="success"
               >
