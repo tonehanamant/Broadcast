@@ -43,8 +43,8 @@ namespace Services.Broadcast.ApplicationServices
     {
         internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
 
-        public readonly string _ValidStrataExtension = ".xlsx";
-        public readonly string _ValidStrataTabName = "PostAnalRep_ExportDetail";
+        public const string _ValidStrataExtension = ".xlsx";
+        public const string _ValidStrataTabName = "PostAnalRep_ExportDetail";
 
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
@@ -66,8 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<OutboundAffidavitFileValidationResultDto> ProcessFiles(string userName)
         {
             List<string> filepathList;
-            List<OutboundAffidavitFileValidationResultDto> validationList =
-                new List<OutboundAffidavitFileValidationResultDto>();
+            List<OutboundAffidavitFileValidationResultDto> validationList = new List<OutboundAffidavitFileValidationResultDto>();
             WWTVSharedNetworkHelper.Impersonate(delegate 
             {
                 filepathList = GetDropFolderFileList();
@@ -127,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var emailBody = _CreateInvalidFileEmailBody(invalidFile, invalidFilePath);
 
-                _AffidavitEmailSenderService.Send(emailBody);
+                _AffidavitEmailSenderService.Send(emailBody,"Error Preprocessing");
             }
         }
 

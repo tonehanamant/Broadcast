@@ -353,6 +353,8 @@ namespace Services.Broadcast.Repositories
                         ProposalWeekTotalCost = x.proposalVersionWeeks.cost,
                         ProposalWeekTotalImpressionsGoal = x.proposalVersionWeeks.impressions_goal,
                         Units = x.proposalVersionWeeks.units,
+                        ProposalWeekId = x.proposalVersionWeeks.id,
+                        ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id
                     }).OrderBy(x=>x.Station).ThenBy(x=>x.AirDate).ThenBy(x=>x.AirTime).ToList();
 
                     return inSpecAffidavitFileDetails;

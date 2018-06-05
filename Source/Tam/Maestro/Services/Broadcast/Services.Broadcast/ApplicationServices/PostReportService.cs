@@ -143,7 +143,7 @@ namespace Services.Broadcast.ApplicationServices
         private Dictionary<int, Dictionary<int, int>> _GetMarketRankingsByPostingBook(List<InSpecAffidavitFileDetail> inspecSpots)
         {
             var result = new Dictionary<int, Dictionary<int, int>>();
-            var postingBooksFromProposalDetails = inspecSpots.Where(s => s.ProposalDetailPostingBookId.HasValue).Select(s => s.ProposalDetailPostingBookId.Value).Distinct().ToList();
+            var postingBooksFromProposalDetails = inspecSpots.Select(s => s.ProposalDetailPostingBookId.Value).Distinct().ToList();
             foreach(var postingBookId in postingBooksFromProposalDetails)
             {
                 var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(postingBookId);

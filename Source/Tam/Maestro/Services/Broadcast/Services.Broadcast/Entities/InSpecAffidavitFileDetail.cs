@@ -24,5 +24,6 @@ namespace Services.Broadcast.Entities
         public decimal ProposalWeekCPM { get; set; }
         public int Units { get; set; }
         public int? ProposalDetailPostingBookId { get; set; }
+        public int ProposalWeekId { get; set; }
     }
 }

@@ -2275,7 +2275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposal = _ProposalService.GetProposalById(253);
+                var proposal = _ProposalService.GetProposalById(250);
                 var firstDetail = proposal.Details.First();
 
                 firstDetail.PostingBookId = 430;

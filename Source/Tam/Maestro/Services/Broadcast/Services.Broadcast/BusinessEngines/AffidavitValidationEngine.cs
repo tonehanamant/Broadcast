@@ -32,7 +32,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "AirTime",
-                    ErrorMessage = "'AirTime' must be a valid date",
+                    ErrorMessage = "must be a valid date",
                 });
             }
 
@@ -41,7 +41,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "InventorySource",
-                    ErrorMessage = "'InventorySource' must be valid",
+                    ErrorMessage = "must be valid",
                 });
             }
 
@@ -50,7 +50,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "Station",
-                    ErrorMessage = "'Station' is required",
+                    ErrorMessage = "is required",
                 });
             }
 
@@ -59,7 +59,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "SpotLength",
-                    ErrorMessage = "'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300",
+                    ErrorMessage = "must be valid broadcast spot length: 15,30,60,120,180,300",
                 });
             }
 
@@ -68,7 +68,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "Isci",
-                    ErrorMessage = "'Isci' is required",
+                    ErrorMessage = "is required",
                 });
             }
 
@@ -77,7 +77,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "Affiliate",
-                    ErrorMessage = "'Affiliate' is required",
+                    ErrorMessage = "is required",
                 });
             }
 
@@ -86,7 +86,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "ShowType",
-                    ErrorMessage = "'ShowType' is required",
+                    ErrorMessage = "is required",
                 });
             }
 
@@ -95,7 +95,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "LeadInShowType",
-                    ErrorMessage = "'LeadInShowType' is required",
+                    ErrorMessage = "is required",
                 });
             }
 
@@ -104,7 +104,7 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new AffidavitValidationResult()
                 {
                     InvalidField = "LeadOutShowType",
-                    ErrorMessage = "'LeadOutShowType' is required",
+                    ErrorMessage = "is required",
                 });
             }
 

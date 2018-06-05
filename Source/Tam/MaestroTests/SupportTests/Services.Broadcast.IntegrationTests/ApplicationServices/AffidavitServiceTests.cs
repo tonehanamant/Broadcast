@@ -69,7 +69,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _Sut.SaveAffidavit(request, "test user", postingDate);
 
-                VerifyAffidavit(result);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                Approvals.Verify(json);
             }
         }
 
@@ -190,6 +199,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         private void VerifyAffidavit(AffidavitSaveResult result)
         {
+            if (result.ValidationResults.Any() && !result.Id.HasValue)
+            {
+                var msg = AffidavitValidationResult.FormatValidationMessage(result.ValidationResults);
+                Assert.IsTrue(!result.ValidationResults.Any(), msg);
+            }
+
             Assert.IsTrue(result.Id.HasValue,result.ToString());
 
             AffidavitFile affidavit;
@@ -721,6 +736,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyAffidavit(result);
             }
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_Funky_Station_Name_BCOP3159()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().Station = "WNBC-SR";
+
+                var postingDate = new DateTime(2016, 4, 20);
+
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+
+                VerifyAffidavit(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_Funky_Station_Name_BCOP3159_Dash_Only()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                request.Details.First().Station = "WNBC-";
+
+                var postingDate = new DateTime(2016, 4, 20);
+
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+
+                VerifyAffidavit(result);
+            }
+        }
+
 
         private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {

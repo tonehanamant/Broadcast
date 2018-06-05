@@ -1,18 +1,20 @@
 ﻿{
-  "AffidavitFileDetails": [],
-  "AffidavitFileProblems": [
+  "Id": null,
+  "ValidationResults": [
     {
-      "ProblemDescription": "Record: 1: Field: 'AirTime' is invalid\r\n'AirTime' must be a valid date"
+      "ErrorMessage": "must be a valid date",
+      "InvalidField": "AirTime",
+      "InvalidLine": 1
     },
     {
-      "ProblemDescription": "Record: 1: Field: 'InventorySource' is invalid\r\n'InventorySource' must be valid"
+      "ErrorMessage": "must be valid",
+      "InvalidField": "InventorySource",
+      "InvalidLine": 1
     },
     {
-      "ProblemDescription": "Record: 1: Field: 'Affiliate' is invalid\r\n'Affiliate' is required"
+      "ErrorMessage": "is required",
+      "InvalidField": "Affiliate",
+      "InvalidLine": 1
     }
-  ],
-  "FileHash": "abc123",
-  "FileName": "test.file",
-  "SourceId": 1,
-  "Status": 2
+  ]
 }

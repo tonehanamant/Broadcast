@@ -9,7 +9,7 @@
     "Time": "246P",
     "SpotCost": 0.00,
     "ISCI": "C\"ECT\"21LR02H",
-    "Affiliate": null,
+    "Affiliate": "Hello Affiliate",
     "Program": "Hot Bench",
     "ShowType": "Series",
     "Genre": "Reality",

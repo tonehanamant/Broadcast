@@ -1,0 +1,60 @@
+﻿{
+  "AffidavitFileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "AffidavitClientScrubAudiences": [],
+          "Comment": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "News",
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": false,
+          "MatchStation": true,
+          "MatchTime": false,
+          "ModifiedBy": "test user",
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 14,
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 1
+        }
+      ],
+      "AffidavitFileDetailProblems": [],
+      "Affiliate": "Affiate",
+      "AirTime": 29040,
+      "Archived": false,
+      "Demographics": [],
+      "EstimateId": null,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "DDDDDDDD",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "Market": "New York",
+      "OriginalAirDate": "2017-06-29T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ShowType": "News",
+      "SpotCost": null,
+      "SpotLengthId": 1,
+      "Station": "WNBC-SR"
+    }
+  ],
+  "AffidavitFileProblems": [],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "SourceId": 1,
+  "Status": 1
+}
