@@ -79,7 +79,7 @@ export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll,
         iconCls: 'action-icon',
         menu: [
           {
-            text: 'Archive ISCI',
+            text: 'Not a Cadent ISCI',
             key: 'menu-archive-isci',
             EVENT_HANDLER: ({ metaData }) => {
               archiveIscis([metaData.rowData.FileDetailId]);
