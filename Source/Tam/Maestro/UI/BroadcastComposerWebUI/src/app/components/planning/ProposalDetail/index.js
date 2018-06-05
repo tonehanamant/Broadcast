@@ -310,7 +310,7 @@ export class ProposalDetail extends Component {
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
                       <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
                       <MenuItem eventKey="postingBook" onSelect={this.openModal}>Posting Book</MenuItem>
-                      <MenuItem eventKey="programGenreModal" onClick={this.openModal}>Program/Genre/Show Type</MenuItem>
+                      <MenuItem eventKey="programGenreModal" onSelect={this.openModal}>Program/Genre/Show Type</MenuItem>
                   </DropdownButton>
                 </div>
               }
