@@ -309,20 +309,11 @@ namespace Services.Broadcast.ReportGenerators
                 wsSummary.Cells[item.Key].Value = item.Value;                
             }
             int rowOffset = 17;
-            if (reportData.Equivalized)
+            foreach (var item in reportData.FlightDates)
             {
-                foreach (var item in reportData.FlightDates)
-                {
-                    wsSummary.Cells[$"C{rowOffset++}"].Value = item;
-                }
+                wsSummary.Cells[$"C{rowOffset++}"].Value = item;
             }
-            else
-            {
-                wsSummary.Cells[$"C{rowOffset}"].Value = reportData.FlightDates.First();
-                wsSummary.Cells[$"C{rowOffset}"].Style.Font.Bold = true;
-                wsSummary.Cells[$"C{rowOffset}"].Style.Font.Size = 16;
-            }
-
+            
             wsSummary.Cells["B9:B17"].Style.Font.Bold = true;
             wsSummary.Cells["B9:B17"].Style.Font.Size = 10;
             wsSummary.Cells["B9:B17"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;

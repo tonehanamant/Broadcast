@@ -171,7 +171,7 @@ namespace Services.Broadcast.Entities
                              }).ToList()
                     });
             }
-            FlightDates = _GetFormattedFlights(flights, QuarterTables, Equivalized);
+            FlightDates = _GetFormattedFlights(flights, QuarterTables);
             SpotLengthsDisplay = string.Join(" & ", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
             if (Equivalized)
             {
@@ -205,29 +205,19 @@ namespace Services.Broadcast.Entities
             }
         }
 
-        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<NsiPostReportQuarterSummaryTable> quarterTables, bool isEquivalized)
+        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<NsiPostReportQuarterSummaryTable> quarterTables)
         {
-            if (isEquivalized)
+            List<string> flights = new List<string>();
+            if (quarterTables.Count() > 1)
             {
-                List<string> flights = new List<string>();
-                if (quarterTables.Count() > 1)
-                {
-                    flights.Add($@"{quarterTables.Select(x => x.TableName).First()}-{quarterTables.Select(x => x.TableName).Last()} - {quarterTables.SelectMany(x => x.TableRows.Select(y => y.WeekStartDate)).Distinct().Count()} weeks");
-                }
-                quarterTables.ForEach(x =>
-                {
-                    var distinctWeeks = x.TableRows.Select(y => y.WeekStartDate.ToString(@"M\/d")).Distinct().ToList();
-                    flights.Add($@"{x.TableName}: {distinctWeeks.Count()} {(distinctWeeks.Count() > 1 ? "weeks" : "week")} - {string.Join(", ", distinctWeeks)}");
-                });
-                return flights;
+                flights.Add($@"{quarterTables.Select(x => x.TableName).First()}-{quarterTables.Select(x => x.TableName).Last()} - {quarterTables.SelectMany(x => x.TableRows.Select(y => y.WeekStartDate)).Distinct().Count()} weeks");
             }
-            else
+            quarterTables.ForEach(x =>
             {
-                return new List<string>()
-                {
-                    string.Join(" & ", flightDates.Select(x => $"{x.Item1.ToString(@"M\/d\/yyyy")}-{x.Item2.ToString(@"M\/d\/yyyy")}").ToList())
-                };
-            }
+                var distinctWeeks = x.TableRows.Select(y => y.WeekStartDate.ToString(@"M\/d")).Distinct().ToList();
+                flights.Add($@"{x.TableName}: {distinctWeeks.Count()} {(distinctWeeks.Count() > 1 ? "weeks" : "week")} - {string.Join(", ", distinctWeeks)}");
+            });
+            return flights;
         }
     }
 }
