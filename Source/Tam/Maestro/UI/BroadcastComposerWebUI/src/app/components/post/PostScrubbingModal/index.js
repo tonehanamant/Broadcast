@@ -15,10 +15,11 @@ const { SelectionActions, GridActions } = Actions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [] }, grid, dataSource }) => ({
+const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [], hasActiveScrubbingFilters }, grid, dataSource }) => ({
 	modal,
   proposalHeader,
   scrubbingFiltersList,
+  hasActiveScrubbingFilters,
 	grid,
   dataSource,
 });
@@ -61,7 +62,7 @@ export class PostScrubbingModal extends Component {
 
 	render() {
 	// const { getPostScrubbingDetail } = this.props;
-		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing } = this.props;
+		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing, hasActiveScrubbingFilters } = this.props;
 		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
 		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
 		const { grid, dataSource } = this.props;
@@ -92,6 +93,7 @@ export class PostScrubbingModal extends Component {
               activeScrubbingData={activeScrubbingData}
               scrubbingFiltersList={scrubbingFiltersList}
               getPostClientScrubbing={getPostClientScrubbing}
+              hasActiveScrubbingFilters={hasActiveScrubbingFilters}
 							grid={grid}
 							dataSource={dataSource}
 							selectRow={selectRow}
@@ -134,6 +136,7 @@ PostScrubbingModal.propTypes = {
   scrubbingFiltersList: PropTypes.array.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,
+  hasActiveScrubbingFilters: PropTypes.bool.isRequired,
   deselectAll: PropTypes.func.isRequired,
   doLocalSort: PropTypes.func.isRequired,
 };

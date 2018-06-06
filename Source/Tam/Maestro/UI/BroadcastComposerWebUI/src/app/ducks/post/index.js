@@ -8,13 +8,17 @@ const initialState = {
   proposalHeader: {},
   unlinkedIscis: [],
   modals: {},
+  unlinkedIscisLength: 0,
   scrubbingFiltersList: [],
   activeScrubbingFilters: {},
+  activeFilterKey: 'All', // represents global Filter state: 'All', 'InSpec', 'OutOfSpec'
+  hasActiveScrubbingFilters: false, // specific filters are active
   defaultScrubbingFilters:
     {
       Affiliate: {
         filterDisplay: 'Affiliates',
         filterKey: 'Affiliate',
+        distinctKey: 'DistinctAffiliates',
         type: 'filterList',
         hasMatchSpec: false, // NA
         activeMatch: false,
@@ -30,6 +34,7 @@ const initialState = {
       ClientISCI: {
         filterDisplay: 'Client ISCIs',
         filterKey: 'ClientISCI',
+        distinctKey: 'DistinctClientIscis',
         type: 'filterList',
         hasMatchSpec: false, // NA
         activeMatch: false,
@@ -45,6 +50,7 @@ const initialState = {
       DayOfWeek: {
         filterDisplay: 'Days',
         filterKey: 'DayOfWeek',
+        distinctKey: 'DistinctDayOfWeek',
         type: 'filterList',
         hasMatchSpec: true,
         active: false,
@@ -60,6 +66,7 @@ const initialState = {
       GenreName: {
         filterDisplay: 'Genres',
         filterKey: 'GenreName',
+        distinctKey: 'DistinctGenres',
         type: 'filterList',
         hasMatchSpec: true,
         activeMatch: false,
@@ -75,6 +82,7 @@ const initialState = {
       ISCI: {
         filterDisplay: 'House ISCIs',
         filterKey: 'ISCI',
+        distinctKey: 'DistinctHouseIscis',
         type: 'filterList',
         hasMatchSpec: false, // NA
         activeMatch: false,
@@ -90,6 +98,7 @@ const initialState = {
       Market: {
         filterDisplay: 'Markets',
         filterKey: 'Market',
+        distinctKey: 'DistinctMarkets',
         type: 'filterList',
         hasMatchSpec: true,
         activeMatch: false,
@@ -105,6 +114,7 @@ const initialState = {
       ProgramName: {
         filterDisplay: 'Programs',
         filterKey: 'ProgramName',
+        distinctKey: 'DistinctPrograms',
         type: 'filterList',
         hasMatchSpec: true,
         activeMatch: false,
@@ -120,6 +130,7 @@ const initialState = {
       Sequence: {
         filterDisplay: 'Sequences',
         filterKey: 'Sequence',
+        distinctKey: 'DistinctSequences',
         type: 'filterList',
         hasMatchSpec: false, // NA
         activeMatch: false,
@@ -135,6 +146,7 @@ const initialState = {
       ShowTypeName: {
         filterDisplay: 'Show Types',
         filterKey: 'ShowTypeName',
+        distinctKey: 'DistinctShowTypes',
         type: 'filterList',
         hasMatchSpec: true,
         activeMatch: false,
@@ -150,6 +162,7 @@ const initialState = {
       SpotLength: {
         filterDisplay: 'Spot Lengths',
         filterKey: 'SpotLength',
+        distinctKey: 'DistinctSpotLengths',
         type: 'filterList',
         hasMatchSpec: false, // NA
         activeMatch: false,
@@ -165,6 +178,7 @@ const initialState = {
       Station: {
         filterDisplay: 'Stations',
         filterKey: 'Station',
+        distinctKey: 'DistinctStations',
         type: 'filterList',
         hasMatchSpec: true,
         activeMatch: false,
@@ -180,6 +194,7 @@ const initialState = {
       WeekStart: {
         filterDisplay: 'Week Starts',
         filterKey: 'WeekStart',
+        distinctKey: 'DistinctWeekStarts',
         type: 'filterList',
         hasMatchSpec: false, // NA
         activeMatch: false,
@@ -193,7 +208,6 @@ const initialState = {
         filterOptions: [],
       },
     },
-    unlinkedIscisLength: 0,
 };
 
 // Reducer
@@ -299,6 +313,8 @@ export default function reducer(state = initialState, action) {
       prepareFilterOptions();
       return {
         ...state,
+        activeFilterKey: data.Data.filterKey,
+        hasActiveScrubbingFilters: false,
         proposalHeader: {
           scrubbingData: data.Data,
           activeScrubbingData: data.Data,
@@ -313,6 +329,25 @@ export default function reducer(state = initialState, action) {
     return Object.assign({}, state, {
       proposalHeader: {
         ...state.proposalHeader,
+        activeScrubbingData: {
+          ...state.proposalHeader.activeScrubbingData,
+          ClientScrubs: data.filteredClientScrubs,
+        },
+      },
+      ...state.activeScrubbingFilters,
+      activeScrubbingFilters: data.activeFilters,
+      ...state.scrubbingFiltersList,
+      scrubbingFiltersList: [data.activeFilters],
+      ...state.hasActiveScrubbingFilters,
+      hasActiveScrubbingFilters: data.hasActiveScrubbingFilters,
+    });
+
+    case ACTIONS.RECEIVE_POST_OVERRIDE_STATUS:
+    // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data);
+    return Object.assign({}, state, {
+      proposalHeader: {
+        ...state.proposalHeader,
+        scrubbingData: data.scrubbingData,
         activeScrubbingData: {
           ...state.proposalHeader.activeScrubbingData,
           ClientScrubs: data.filteredClientScrubs,
@@ -376,6 +411,11 @@ export const clearScrubbingFiltersList = () => ({
 export const getUnlinkedIscis = () => ({
   type: ACTIONS.UNLINKED_ISCIS_DATA.request,
   payload: {},
+});
+
+export const overrideStatus = params => ({
+  type: ACTIONS.REQUEST_POST_OVERRIDE_STATUS,
+  payload: params,
 });
 
 export const archiveUnlinkedIscis = ids => ({
