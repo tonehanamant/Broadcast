@@ -293,7 +293,7 @@ class ProgramGenre extends Component {
         toDisable = 'showTypeExclude';
         this.setState({ selectedShowType: [] });
         this.showTypeTypeahed.getInstance().clear();
-        // disable genre selection
+        // disable show type selection
         this.setButtonDisabled('showTypeAll', true);
       }
       this.setButtonDisabled(toDisable, true);
@@ -319,6 +319,7 @@ class ProgramGenre extends Component {
   addExcludeCriteria(type, data) {
     // check already exists; change disabled states; check allowed include/exclude?
     const dupe = this.state.excludeCriteria.find(item => item.Id === data.Id && item.type === type);
+    // console.log('add Exclude', type, dupe, data);
     if (!dupe) {
       const key = `${type}_${data.Id}`;
       const item = Object.assign({}, data, { type, key });
@@ -332,6 +333,12 @@ class ProgramGenre extends Component {
         this.programTypeahed.getInstance().clear();
         // disable program selection
         this.setButtonDisabled('programAll', true);
+      } else if (type === 'genre') {
+        toDisable = 'genreInclude';
+        this.setState({ selectedGenre: [] });
+        this.genreTypeahed.getInstance().clear();
+        // disable genre selection
+        this.setButtonDisabled('genreAll', true);
       } else if (type === 'showType') {
         toDisable = 'showTypeInclude';
         this.setState({ selectedShowType: [] });

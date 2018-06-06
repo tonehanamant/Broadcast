@@ -357,9 +357,6 @@
     <Compile Include="affidavit_file_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="affidavit_file_detail_audiences.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="affidavit_file_detail_demographics.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

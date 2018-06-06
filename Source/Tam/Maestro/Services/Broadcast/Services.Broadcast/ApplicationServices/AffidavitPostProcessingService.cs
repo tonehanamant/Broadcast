@@ -119,11 +119,10 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
                 }
 
-                var validationErrors = new List<AffidavitValidationResult>();
                 var result = ProcessFileContents(userName, fileName, fileContents);
 
                 if (result.ValidationResults.Any())
-                    _ProcessValidationErrors(fileName, validationErrors);
+                    _ProcessValidationErrors(fileName, result.ValidationResults);
             }
 
             _ProcessFailedFiles(failedDownloads,inboundFtpPath);

@@ -22,9 +22,9 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IAffidavitService : IApplicationService
     {
-        AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username,DateTime currentDateTime);
+        AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
 
-        string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request);
+        string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
     }
 
     public class AffidavitService : IAffidavitService
@@ -105,18 +105,19 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var validationErrors =
                     _AffidavitValidationEngine.ValidateAffidavitRecord(matchedAffidavitDetail.AffidavitDetail);
-                
+
                 if (validationErrors.Any())
                 {
                     validationErrors.ForEach(r => r.InvalidLine = matchedAffidavitDetail.LineNumber);
-                    affidavitValidationResults.AddRange(validationErrors);
-
-                    var problems = _MapValidationErrorToAffidavitFileProblem(affidavitValidationResults);
+                    var problems = _MapValidationErrorToAffidavitFileProblem(validationErrors);
                     affidavitFile.AffidavitFileProblems.AddRange(problems);
+
+                    affidavitValidationResults.AddRange(validationErrors);
                     continue;
                 }
-                
-                if(_PostRepository.IsIsciBlacklisted(new List<string> { matchedAffidavitDetail.AffidavitDetail.Isci })){
+
+                if (_PostRepository.IsIsciBlacklisted(new List<string> { matchedAffidavitDetail.AffidavitDetail.Isci }))
+                {
                     matchedAffidavitDetail.AffidavitDetailProblems.Add(new AffidavitFileDetailProblem
                     {
                         Description = ARCHIVED_ISCI,
@@ -180,7 +181,8 @@ namespace Services.Broadcast.ApplicationServices
             affidavitFile.Status = affidavitValidationResults.Any() ? AffidaviteFileProcessingStatus.Invalid : AffidaviteFileProcessingStatus.Valid;
 
             if (affidavitValidationResults.Any())
-            {
+            {   // save and get out
+                result.Id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
                 return result;
             }
 
@@ -210,8 +212,8 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private void _SetPostingBookData(List<AffidavitMatchingDetail> matchedAffidavitDetails, int postingBookId)
-        {            
-            foreach(var proposalDetailWeek in matchedAffidavitDetails.SelectMany(d => d.ProposalDetailWeeks))
+        {
+            foreach (var proposalDetailWeek in matchedAffidavitDetails.SelectMany(d => d.ProposalDetailWeeks))
             {
                 if (!proposalDetailWeek.ProposalVersionDetailPostingBookId.HasValue)
                 {
@@ -265,16 +267,16 @@ namespace Services.Broadcast.ApplicationServices
                         var marketGeoName = affidavitStation.OriginMarket;
                         if (markets.Any(m => m.Display == marketGeoName))
                         {
-                        affidavitDetail.Market = marketGeoName;
-                        scrub.MatchStation = true;
-                        scrub.MatchMarket = true;
+                            affidavitDetail.Market = marketGeoName;
+                            scrub.MatchStation = true;
+                            scrub.MatchMarket = true;
                         }
                     }
 
                     _AffidavitProgramScrubbingEngine.Scrub(proposalDetail, affidavitDetail, scrub);
 
-                    scrub.Status = (scrub.MatchStation && scrub.MatchMarket && scrub.MatchGenre && scrub.MatchProgram && scrub.MatchTime && scrub.MatchIsciDays && scrub.MatchDate && scrub.MatchShowType) 
-                        ? ScrubbingStatus.InSpec 
+                    scrub.Status = (scrub.MatchStation && scrub.MatchMarket && scrub.MatchGenre && scrub.MatchProgram && scrub.MatchTime && scrub.MatchIsciDays && scrub.MatchDate && scrub.MatchShowType)
+                        ? ScrubbingStatus.InSpec
                         : ScrubbingStatus.OutOfSpec;
                 }
             }
@@ -288,7 +290,7 @@ namespace Services.Broadcast.ApplicationServices
             if (stations.ContainsKey(stationName))
                 return stations[stationName];
 
-            var index = stationName.LastIndexOf(dashEnding,StringComparison.CurrentCultureIgnoreCase);
+            var index = stationName.LastIndexOf(dashEnding, StringComparison.CurrentCultureIgnoreCase);
             if (index < 0)
                 return null;
 
@@ -311,7 +313,7 @@ namespace Services.Broadcast.ApplicationServices
                 var description = v.ErrorMessage;
                 if (!string.IsNullOrEmpty(v.InvalidField))
                 {
-                    description = string.Format("Record: {0}: Field: '{1}' is invalid\r\n{2}",v.InvalidLine,v.InvalidField,v.ErrorMessage);
+                    description = string.Format("Record: {0}: Field: '{1}' is invalid\r\n{2}", v.InvalidLine, v.InvalidField, v.ErrorMessage);
                 }
                 problem.ProblemDescription = description;
                 problems.Add(problem);
@@ -346,7 +348,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return isMatch;
         }
-        
+
         private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(AffidavitSaveRequest saveRequest)
         {
             var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
@@ -403,12 +405,12 @@ namespace Services.Broadcast.ApplicationServices
             ,"LeadInShowType"
             ,"LeadOutShowType"
         };
-        
-        public string JSONifyFile(Stream rawStream,string fileName,out AffidavitSaveRequest request)
+
+        public string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request)
         {
             TextFileLineReader reader;
             if (fileName.EndsWith("csv"))
-            { 
+            {
                 reader = new CsvFileReader(FileHeaders);
             }
             else
@@ -431,7 +433,7 @@ namespace Services.Broadcast.ApplicationServices
                         break;
 
                     var detail = new AffidavitSaveRequestDetail();
-                    
+
                     detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
                     detail.Genre = reader.GetCellValue("Genre");
                     detail.Isci = reader.GetCellValue("ISCI");

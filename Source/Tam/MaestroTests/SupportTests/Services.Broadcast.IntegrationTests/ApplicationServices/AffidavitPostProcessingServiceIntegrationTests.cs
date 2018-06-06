@@ -151,6 +151,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -158,6 +160,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            }
+        }
+
+
+        /// <summary>
+        /// similar to AffidavitPostProcessing_Basic_Required_Field_Validation_Errors() 
+        /// but checks the output of the saved affidavit with validation errors (bascially 
+        /// looking at the "Problems" table)
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_Basic_Required_Field_Validation_Problems()
+        {
+            
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_Basic_Required_Validation.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                
+                VerifyAffidavit(response.Id.Value);
             }
         }
 

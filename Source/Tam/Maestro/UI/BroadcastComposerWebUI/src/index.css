@@ -17,3 +17,11 @@
   cursor: not-allowed;
   background-color: #eee;
 }
+
+textarea:-webkit-autofill,
+select:-webkit-autofill,
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 10000px white inset;
+    -moz-box-shadow: 0 0 0 10000px white inset;
+    -ms-box-shadow: 0 0 0 10000px white inset;
+}
