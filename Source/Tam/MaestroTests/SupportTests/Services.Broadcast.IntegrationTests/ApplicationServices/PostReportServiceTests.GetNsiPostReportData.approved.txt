@@ -25,20 +25,6 @@
       "TableName": "2Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 314866.8,
-          "Contract": "NAV",
-          "DeliveredImpressionsPercentage": 3.11749307,
-          "HHRating": 0,
-          "ProposalWeekCost": 4.2500,
-          "ProposalWeekCPM": 0.8415841584158415841584158000,
-          "ProposalWeekImpressionsGoal": 5050.0,
-          "ProposalWeekTotalCost": 85.0000,
-          "ProposalWeekTotalImpressionsGoal": 101000.0,
-          "SpotLength": 30,
-          "Spots": 20,
-          "WeekStartDate": "2016-05-30T00:00:00"
-        },
-        {
           "ActualImpressions": 250.0,
           "Contract": "NAV",
           "DeliveredImpressionsPercentage": 0.0025,
@@ -50,6 +36,20 @@
           "ProposalWeekTotalImpressionsGoal": 100000.0,
           "SpotLength": 15,
           "Spots": 10,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        },
+        {
+          "ActualImpressions": 314866.8,
+          "Contract": "NAV",
+          "DeliveredImpressionsPercentage": 3.11749307,
+          "HHRating": 0,
+          "ProposalWeekCost": 4.2500,
+          "ProposalWeekCPM": 0.8415841584158415841584158000,
+          "ProposalWeekImpressionsGoal": 5050.0,
+          "ProposalWeekTotalCost": 85.0000,
+          "ProposalWeekTotalImpressionsGoal": 101000.0,
+          "SpotLength": 30,
+          "Spots": 20,
           "WeekStartDate": "2016-05-30T00:00:00"
         }
       ]

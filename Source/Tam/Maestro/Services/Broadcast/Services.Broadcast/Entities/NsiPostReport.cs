@@ -150,10 +150,10 @@ namespace Services.Broadcast.Entities
                             x.DaypartName,
                             x.SpotLength,
                             x.WeekStart
-                        }).Select(x =>
+                        }).OrderBy(x => x.Key.WeekStart).ThenBy(x => x.Key.SpotLength).Select(x =>
                              {
                                  var items = x.ToList();
-                                 return new NsiPostReportQuarterSummaryTableRow
+                                 var row = new NsiPostReportQuarterSummaryTableRow
                                  {
                                      Contract = x.Key.DaypartName,
                                      SpotLength = x.Key.SpotLength,
@@ -163,18 +163,14 @@ namespace Services.Broadcast.Entities
                                      ProposalWeekTotalCost = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalCost }).Select(y => y.Key.ProposalWeekTotalCost).Sum(),
                                      ProposalWeekTotalImpressionsGoal = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalImpressionsGoal }).Select(y => y.Key.ProposalWeekTotalImpressionsGoal).Sum()
                                  };
+                                 row.DeliveredImpressionsPercentage = row.ActualImpressions / row.ProposalWeekTotalImpressionsGoal;
+                                 row.ProposalWeekCost = row.ProposalWeekTotalCost / row.Spots;
+                                 row.ProposalWeekImpressionsGoal = row.ProposalWeekTotalImpressionsGoal / row.Spots;
+                                 row.ProposalWeekCPM = row.ProposalWeekCost / (decimal)row.ProposalWeekImpressionsGoal * 1000;
+                                 return row;
                              }).ToList()
                     });
             }
-
-            QuarterTables.ForEach(x => x.TableRows.OrderBy(y => y.WeekStartDate).ThenBy(y => y.SpotLength).ToList().ForEach(y =>
-                {
-                    y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal;
-                    y.ProposalWeekCost = y.ProposalWeekTotalCost / y.Spots;
-                    y.ProposalWeekImpressionsGoal = y.ProposalWeekTotalImpressionsGoal / y.Spots;
-                    y.ProposalWeekCPM = y.ProposalWeekCost / (decimal)y.ProposalWeekImpressionsGoal * 1000;
-                }));
-
             FlightDates = _GetFormattedFlights(flights, QuarterTables, Equivalized);
             SpotLengthsDisplay = string.Join(" & ", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
             if (Equivalized)
