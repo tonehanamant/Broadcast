@@ -34,7 +34,7 @@ export class PostScrubbingHeader extends Component {
       secondaryDemoOptions.push(option);
     });
 
-    const stateKey = 'PostScubbingDetailsGrid';
+    const stateKey = 'PostScrubbingDetailsGrid';
 
     const columns = [
       {

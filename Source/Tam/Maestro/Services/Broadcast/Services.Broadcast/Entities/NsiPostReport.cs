@@ -150,10 +150,10 @@ namespace Services.Broadcast.Entities
                             x.DaypartName,
                             x.SpotLength,
                             x.WeekStart
-                        }).Select(x =>
+                        }).OrderBy(x => x.Key.WeekStart).ThenBy(x => x.Key.SpotLength).Select(x =>
                              {
                                  var items = x.ToList();
-                                 return new NsiPostReportQuarterSummaryTableRow
+                                 var row = new NsiPostReportQuarterSummaryTableRow
                                  {
                                      Contract = x.Key.DaypartName,
                                      SpotLength = x.Key.SpotLength,
@@ -163,19 +163,15 @@ namespace Services.Broadcast.Entities
                                      ProposalWeekTotalCost = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalCost }).Select(y => y.Key.ProposalWeekTotalCost).Sum(),
                                      ProposalWeekTotalImpressionsGoal = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalImpressionsGoal }).Select(y => y.Key.ProposalWeekTotalImpressionsGoal).Sum()
                                  };
+                                 row.DeliveredImpressionsPercentage = row.ActualImpressions / row.ProposalWeekTotalImpressionsGoal;
+                                 row.ProposalWeekCost = row.ProposalWeekTotalCost / row.Spots;
+                                 row.ProposalWeekImpressionsGoal = row.ProposalWeekTotalImpressionsGoal / row.Spots;
+                                 row.ProposalWeekCPM = row.ProposalWeekCost / (decimal)row.ProposalWeekImpressionsGoal * 1000;
+                                 return row;
                              }).ToList()
                     });
             }
-
-            QuarterTables.ForEach(x => x.TableRows.OrderBy(y => y.WeekStartDate).ThenBy(y => y.SpotLength).ToList().ForEach(y =>
-                {
-                    y.DeliveredImpressionsPercentage = y.ActualImpressions / y.ProposalWeekTotalImpressionsGoal;
-                    y.ProposalWeekCost = y.ProposalWeekTotalCost / y.Spots;
-                    y.ProposalWeekImpressionsGoal = y.ProposalWeekTotalImpressionsGoal / y.Spots;
-                    y.ProposalWeekCPM = y.ProposalWeekCost / (decimal)y.ProposalWeekImpressionsGoal * 1000;
-                }));
-
-            FlightDates = _GetFormattedFlights(flights, QuarterTables, Equivalized);
+            FlightDates = _GetFormattedFlights(flights, QuarterTables);
             SpotLengthsDisplay = string.Join(" & ", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
             if (Equivalized)
             {
@@ -209,29 +205,19 @@ namespace Services.Broadcast.Entities
             }
         }
 
-        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<NsiPostReportQuarterSummaryTable> quarterTables, bool isEquivalized)
+        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<NsiPostReportQuarterSummaryTable> quarterTables)
         {
-            if (isEquivalized)
+            List<string> flights = new List<string>();
+            if (quarterTables.Count() > 1)
             {
-                List<string> flights = new List<string>();
-                if (quarterTables.Count() > 1)
-                {
-                    flights.Add($@"{quarterTables.Select(x => x.TableName).First()}-{quarterTables.Select(x => x.TableName).Last()} - {quarterTables.SelectMany(x => x.TableRows.Select(y => y.WeekStartDate)).Distinct().Count()} weeks");
-                }
-                quarterTables.ForEach(x =>
-                {
-                    var distinctWeeks = x.TableRows.Select(y => y.WeekStartDate.ToString(@"M\/d")).Distinct().ToList();
-                    flights.Add($@"{x.TableName}: {distinctWeeks.Count()} {(distinctWeeks.Count() > 1 ? "weeks" : "week")} - {string.Join(", ", distinctWeeks)}");
-                });
-                return flights;
+                flights.Add($@"{quarterTables.Select(x => x.TableName).First()}-{quarterTables.Select(x => x.TableName).Last()} - {quarterTables.SelectMany(x => x.TableRows.Select(y => y.WeekStartDate)).Distinct().Count()} weeks");
             }
-            else
+            quarterTables.ForEach(x =>
             {
-                return new List<string>()
-                {
-                    string.Join(" & ", flightDates.Select(x => $"{x.Item1.ToString(@"M\/d\/yyyy")}-{x.Item2.ToString(@"M\/d\/yyyy")}").ToList())
-                };
-            }
+                var distinctWeeks = x.TableRows.Select(y => y.WeekStartDate.ToString(@"M\/d")).Distinct().ToList();
+                flights.Add($@"{x.TableName}: {distinctWeeks.Count()} {(distinctWeeks.Count() > 1 ? "weeks" : "week")} - {string.Join(", ", distinctWeeks)}");
+            });
+            return flights;
         }
     }
 }

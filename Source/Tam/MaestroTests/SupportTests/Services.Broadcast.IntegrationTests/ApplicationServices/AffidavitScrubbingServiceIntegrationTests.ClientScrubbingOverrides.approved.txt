@@ -82,38 +82,10 @@
       "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
-      "Status": 2,
-      "StatusOverride": false,
+      "Status": 1,
+      "StatusOverride": true,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
-    },
-    {
-      "Affiliate": "ABC",
-      "ClientISCI": "FFFFFF",
-      "Comments": null,
-      "DateAired": "2017-06-29T00:00:00",
-      "DayOfWeek": 4,
-      "GenreName": "LeadOutGenre",
-      "ISCI": "FFFFFF",
-      "Market": "Tampa-St. Pete (Sarasota)",
-      "MatchDate": false,
-      "MatchGenre": true,
-      "MatchIsciDays": true,
-      "MatchMarket": true,
-      "MatchProgram": true,
-      "MatchShowType": true,
-      "MatchStation": true,
-      "MatchTime": false,
-      "ProgramName": "LeadOutProgramName",
-      "ProposalDetailId": 15,
-      "Sequence": 2,
-      "ShowTypeName": "LeadOutShowType",
-      "SpotLength": 30,
-      "Station": "WWSB",
-      "Status": 1,
-      "StatusOverride": false,
-      "TimeAired": 28800,
-      "WeekStart": "2016-06-07T00:00:00"
     }
   ],
   "Details": [
@@ -179,55 +151,43 @@
   ],
   "Filters": {
     "DistinctAffiliates": [
-      "ABC",
       "NBC"
     ],
     "DistinctClientIscis": [
       "AAAAAAAA",
-      "BBBBBBBB",
-      "FFFFFF"
+      "BBBBBBBB"
     ],
     "DistinctDayOfWeek": [
       0,
-      4,
       5
     ],
     "DistinctGenres": [
-      "Do It Yourself",
-      "LeadOutGenre"
+      "Do It Yourself"
     ],
     "DistinctHouseIscis": [
       "AAAAAAAA",
-      "BBBBBBBBB",
-      "FFFFFF"
+      "BBBBBBBBB"
     ],
     "DistinctMarkets": [
-      "New York",
-      "Tampa-St. Pete (Sarasota)"
+      "New York"
     ],
     "DistinctPrograms": [
-      "LeadOutProgramName",
       "Program Names R us"
     ],
     "DistinctSequences": [
-      1,
-      2
+      1
     ],
-    "DistinctShowTypes": [
-      "LeadOutShowType"
-    ],
+    "DistinctShowTypes": [],
     "DistinctSpotLengths": [
       30
     ],
     "DistinctStations": [
-      "WNBC",
-      "WWSB"
+      "WNBC"
     ],
     "DistinctWeekStarts": [
-      "2016-05-30T00:00:00",
-      "2016-06-07T00:00:00"
+      "2016-05-30T00:00:00"
     ],
-    "WeekEnd": "2016-06-14T00:00:00",
+    "WeekEnd": "2016-06-06T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"
   },
   "GuaranteedDemo": "House Holds",

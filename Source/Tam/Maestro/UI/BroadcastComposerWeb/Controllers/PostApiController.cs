@@ -112,5 +112,14 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => 
             _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(FileDetailsIds, Identity.Name));
         }
+
+        [HttpPut]
+        [Route("OverrideStatus")]
+        public BaseResponse<ClientPostScrubbingProposalDto> OverrideScrubStatus(ScrubStatusOverrideRequest request)
+        {
+            return
+            _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().OverrideScrubbingStatus(request));
+        }
     }
 }

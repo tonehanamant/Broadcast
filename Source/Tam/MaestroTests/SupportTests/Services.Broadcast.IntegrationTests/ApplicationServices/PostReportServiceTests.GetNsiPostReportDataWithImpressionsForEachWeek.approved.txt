@@ -3,7 +3,9 @@
   "Daypart": null,
   "Equivalized": false,
   "FlightDates": [
-    "5/30/2016-6/14/2016"
+    "1Q'16-2Q'16 - 2 weeks",
+    "1Q'16: 2 weeks - 5/30, 6/6",
+    "2Q'16: 2 weeks - 5/30, 6/6"
   ],
   "GuaranteedDemo": "House Holds",
   "ProposalAudiences": [

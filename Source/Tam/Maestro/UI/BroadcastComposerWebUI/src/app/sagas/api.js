@@ -38,6 +38,9 @@ const post = {
   getUnlinkedIscis: () => (
     call(GET, `${apiBase}Post/UnlinkedIscis `, {})
   ),
+  overrideStatus: params => (
+    call(PUT, `${apiBase}Post/OverrideStatus`, params)
+  ),
   getArchivedIscis: () => (
     call(GET, `${apiBase}Post/ArchivedIscis `, {})
   ),

@@ -27,8 +27,8 @@ export class PostScrubbingDetail extends Component {
 
   render() {
     const { activeScrubbingData, scrubbingFiltersList, grid, dataSource } = this.props;
-    const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
-    const hasData = activeScrubbingData.ClientScrubs.length > 0;
+    const { selectRow, deselectAll, doLocalSort, setOverlayLoading, hasActiveScrubbingFilters } = this.props;
+    const hasData = (activeScrubbingData.ClientScrubs.length > 0) || hasActiveScrubbingFilters;
     return (
       <div>
         <Nav style={{ marginBottom: 3 }} bsStyle="tabs" activeKey={this.state.activeTabKey} onSelect={this.handleTabSelect}>
@@ -70,6 +70,7 @@ export class PostScrubbingDetail extends Component {
 
 PostScrubbingDetail.defaultProps = {
     isReadOnly: true,
+    hasActiveScrubbingFilters: false,
 };
 
 PostScrubbingDetail.propTypes = {
@@ -77,6 +78,7 @@ PostScrubbingDetail.propTypes = {
   dataSource: PropTypes.object.isRequired,
   activeScrubbingData: PropTypes.object.isRequired,
   scrubbingFiltersList: PropTypes.array.isRequired,
+  hasActiveScrubbingFilters: PropTypes.bool.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,
   getPostClientScrubbing: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,
