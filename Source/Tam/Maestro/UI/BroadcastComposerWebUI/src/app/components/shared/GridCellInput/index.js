@@ -28,10 +28,10 @@ export default class GridCellInput extends Component {
 	}
 
 	onInputChange(event) {
-		this.setState({
-			// touched: true,
-			inputValue: event.target.value,
-		});
+  this.setState({
+    // touched: true,
+    inputValue: event.target.value,
+  });
 		// this.props.toggleEditGridCellClass(true);
 	}
 
@@ -39,7 +39,8 @@ export default class GridCellInput extends Component {
 		event.persist();
 		if (this.props.emptyZeroDefault && (this.state.inputValue === '' || this.state.inputValue === '0')) {
 			this.setState({ inputValue: this.props.value });
-		} else if (this.state.inputValue.toString() !== this.props.value.toString()) {
+		// } else if (this.state.inputValue.toString() !== this.props.value.toString()) {
+    } else if (this.state.inputValue !== this.props.value) {
 			if (this.props.confirmInput === true) {
 				this.props.toggleModal({
 					modal: 'confirmModal',
@@ -108,9 +109,11 @@ export default class GridCellInput extends Component {
 
 				disabled={!this.props.isEditable}
 				onFocus={this.onInputFocus}
-				onChange={this.onInputChange}
+        onChange={this.onInputChange}
+        maxLength={this.props.maxLength}
 				onKeyPress={(event) => {
-					if (event.key === 'Enter') { event.currentTarget.blur(); }
+          if (event.key === 'Enter') { event.currentTarget.blur(); }
+          this.props.onKeyPress(event);
 				}}
 				onBlur={this.onInput}
 				mask={maskType(this.props.maskType)}
@@ -136,7 +139,8 @@ GridCellInput.defaultProps = {
 	onSaveShowValidation: false,
 
 	blurAction: () => {},
-	enterKeyPressAction: () => {},
+  enterKeyPressAction: () => {},
+  onKeyPress: () => {},
 
 	maskType: 'none', // 'custom', 'createNumber'
 	maskCustom: null,
@@ -151,7 +155,9 @@ GridCellInput.defaultProps = {
 	maskIntegerLimit: null,
 	maskRequireDecimal: false,
 	maskAllowNegative: false,
-	maskAllowLeadingZeros: false,
+  maskAllowLeadingZeros: false,
+
+  maxLength: 500,
 };
 
 GridCellInput.propTypes = {
@@ -171,7 +177,8 @@ GridCellInput.propTypes = {
 	onSaveShowValidation: PropTypes.bool,
 
 	blurAction: PropTypes.func,
-	// enterKeyPressAction: PropTypes.func,
+  // enterKeyPressAction: PropTypes.func,
+  onKeyPress: PropTypes.func,
 
 	maskType: PropTypes.string,
 	maskCustom: PropTypes.array,
@@ -185,7 +192,8 @@ GridCellInput.propTypes = {
 	maskIntegerLimit: PropTypes.number,
 	maskRequireDecimal: PropTypes.bool,
 	maskAllowNegative: PropTypes.bool,
-	maskAllowLeadingZeros: PropTypes.bool,
+  maskAllowLeadingZeros: PropTypes.bool,
+  maxLength: PropTypes.number,
 
 	isGridCellEdited: PropTypes.bool.isRequired,
 	// toggleEditGridCellClass: PropTypes.func.isRequired,

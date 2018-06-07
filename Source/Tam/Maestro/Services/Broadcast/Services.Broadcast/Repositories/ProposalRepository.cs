@@ -364,6 +364,7 @@ namespace Services.Broadcast.Repositories
                                         media_week_id = quarterWeek.MediaWeekId,
                                         end_date = quarterWeek.EndDate,
                                         start_date = quarterWeek.StartDate,
+                                        myevents_report_name = quarterWeek.MyEventsReportName,
                                         proposal_version_detail_quarter_week_iscis = quarterWeek.Iscis.Select(isic =>
                                             new proposal_version_detail_quarter_week_iscis
                                             {
@@ -543,6 +544,7 @@ namespace Services.Broadcast.Repositories
                                     quarterWeek.units = detatilQuarterWeek.Units;
                                     quarterWeek.impressions_goal = detatilQuarterWeek.Impressions;
                                     quarterWeek.cost = detatilQuarterWeek.Cost;
+                                    quarterWeek.myevents_report_name = detatilQuarterWeek.MyEventsReportName;
 
                                     _UpdateProposalWeekIscis(context, detatilQuarterWeek, quarterWeek);
                                 }
@@ -871,6 +873,7 @@ namespace Services.Broadcast.Repositories
                             Units = week.units,
                             MediaWeekId = week.media_week_id,
                             Week = week.start_date.ToShortDateString(),
+                            MyEventsReportName = week.myevents_report_name,
                             Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
                             {
                                 Id = isci.id,

@@ -15,10 +15,21 @@ export default class ProposalDetailGrid extends Component {
     this.context = context;
     this.isciCellItems = {};
     this.checkEditable = this.checkEditable.bind(this);
+    this.keyPress = this.keyPress.bind(this);
 
     this.state = {
       DetailGridsInvalid: this.props.proposalValidationStates.DetailGridsInvalid,
     };
+  }
+
+  keyPress(event) {
+    console.log('keyPress', this.event);
+    // prevent entering special characters
+    const re = /[0-9a-zA-Z ]+/g;
+    if (!re.test(event.key)) {
+      event.preventDefault();
+    }
+    if (event.key === 'Enter') { event.currentTarget.blur(); }
   }
 
   checkEditable(values, isUnits) {
@@ -36,7 +47,6 @@ export default class ProposalDetailGrid extends Component {
     if ((values.Type === 'week') && values.IsHiatus) {
       can = false;
     }
-    // console.log('checkEditable', can);
     return can;
   }
 
@@ -293,11 +303,51 @@ export default class ProposalDetailGrid extends Component {
               // toggleEditIsciClass={this.props.toggleEditIsciClass}
             />
           );
-        }
+          }
           // empty for quarter, total
           return '';
         },
-    },
+      },
+      {
+        name: 'MyEvent Report Name',
+        dataIndex: 'MyEventsReportName',
+        width: '20%',
+        renderer: ({ value, row }) => {
+          const isEditable = this.checkEditable(row, true);
+          const inputMyEvent = (event) => {
+            const storeValue = event.target.value;
+            const storeKey = event.target.getAttribute('valueKey');
+            this.props.updateProposalEditFormDetailGrid({
+              id: this.props.detailId,
+              quarterIndex: row.QuarterIdx,
+              weekIndex: row.WeekIdx,
+              key: 'MyEventsReportName',
+              value: storeValue,
+              row: row._key,
+            });
+          };
+
+          if (row.Type === 'total' || row.Type === 'quarter') return null;
+          return (
+            <GridCellInput
+              name="MyEvent"
+              placeholder=""
+              value={value}
+              valueKey="MyEvent"
+              isEditable={isEditable}
+              maxLength={25}
+              onKeyPress={this.keyPress}
+
+              // emptyZeroDefault
+              onSaveShowValidation={this.state.DetailGridsInvalid}
+              blurAction={inputMyEvent}
+              enterKeyPressAction={inputMyEvent}
+              maskType="default"
+              isGridCellEdited={this.props.isGridCellEdited}
+            />
+          );
+        },
+      },
     ];
 
     this.gridColumns = columns;

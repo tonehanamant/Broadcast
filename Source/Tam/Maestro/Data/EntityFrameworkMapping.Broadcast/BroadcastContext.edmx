@@ -492,6 +492,7 @@
           <Property Name="open_market_cost_total" Type="money" Nullable="false" />
           <Property Name="proprietary_impressions_total" Type="float" Nullable="false" />
           <Property Name="proprietary_cost_total" Type="money" Nullable="false" />
+          <Property Name="myevents_report_name" Type="varchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="proposal_version_detail_quarters">
           <Key>
@@ -4043,6 +4044,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_spots" Relationship="BroadcastModel.FK_station_inventory_spots_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="station_inventory_spots" />
           <NavigationProperty Name="proposal_version_detail_quarter_week_iscis" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks" FromRole="proposal_version_detail_quarter_weeks" ToRole="proposal_version_detail_quarter_week_iscis" />
           <NavigationProperty Name="affidavit_client_scrubs" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="proposal_version_detail_quarter_weeks" ToRole="affidavit_client_scrubs" />
+          <Property Name="myevents_report_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_proposal_version_detail_quarter_weeks_media_weeks">
           <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
@@ -5798,6 +5800,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_version_detail_quarter_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_quarter_weeks">
               <MappingFragment StoreEntitySet="proposal_version_detail_quarter_weeks">
+                <ScalarProperty Name="myevents_report_name" ColumnName="myevents_report_name" />
                 <ScalarProperty Name="proprietary_cost_total" ColumnName="proprietary_cost_total" />
                 <ScalarProperty Name="proprietary_impressions_total" ColumnName="proprietary_impressions_total" />
                 <ScalarProperty Name="open_market_cost_total" ColumnName="open_market_cost_total" />
