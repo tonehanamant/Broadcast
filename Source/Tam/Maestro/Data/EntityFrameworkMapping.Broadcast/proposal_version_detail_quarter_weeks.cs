@@ -34,6 +34,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal open_market_cost_total { get; set; }
         public double proprietary_impressions_total { get; set; }
         public decimal proprietary_cost_total { get; set; }
+        public string myevents_report_name { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual proposal_version_detail_quarters proposal_version_detail_quarters { get; set; }

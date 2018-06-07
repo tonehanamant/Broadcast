@@ -20,5 +20,6 @@ namespace Services.Broadcast.Entities
         public DateTime EndDate { get; set; }
         public DateTime StartDate { get; set; }
         public List<ProposalWeekIsciDto> Iscis { get; set; }
+        public string MyEventsReportName { get; set; }
     }
 }

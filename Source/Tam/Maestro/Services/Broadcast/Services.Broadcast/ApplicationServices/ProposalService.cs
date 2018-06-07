@@ -495,6 +495,41 @@ namespace Services.Broadcast.ApplicationServices
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
 
+            _SetMyEventsReporDefaultValue(proposalDto);
+        }
+
+        private void _SetMyEventsReporDefaultValue(ProposalDto proposalDto)
+        {
+            var advertiser = _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
+
+            foreach (var detail in proposalDto.Details)
+            {
+                var spotLength = _SpotLengthRepository.GetSpotLengthById(detail.SpotLengthId);
+
+                foreach (var quarter in detail.Quarters)
+                {
+                    foreach(var week in quarter.Weeks)
+                    {
+                        if (string.IsNullOrWhiteSpace(week.MyEventsReportName))
+                        {
+                            week.MyEventsReportName = _GetMyEventsReportName(detail.DaypartCode, spotLength, week.StartDate, advertiser.Display);
+                        }
+                    }
+                }
+            }
+        }
+
+        private string _GetMyEventsReportName(string daypartCode, int spotLength, DateTime weekStart, string advertiser)
+        {
+            const int MyEventsReportNameMaxLength = 25;
+            var partialReportName = $" {daypartCode} {spotLength} {weekStart:MM-dd-yy}";
+            var partialReportNameLength = partialReportName.Length;
+            var remainingLength = MyEventsReportNameMaxLength - partialReportNameLength;
+
+            if (advertiser.Length + partialReportNameLength > MyEventsReportNameMaxLength)
+                return advertiser.Substring(0, remainingLength) + partialReportName;
+
+            return advertiser + partialReportName;
         }
 
         private void _DeleteAnyOpenMarketAllocations(ProposalDto proposalDto)

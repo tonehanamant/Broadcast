@@ -42,6 +42,7 @@
           "Iscis": [],
           "IsHiatus": true,
           "MediaWeekId": 676,
+          "MyEventsReportName": null,
           "StartDate": "2016-12-05T00:00:00",
           "Units": 0,
           "Week": "12/5/2016"
@@ -53,6 +54,7 @@
           "Iscis": [],
           "IsHiatus": false,
           "MediaWeekId": 677,
+          "MyEventsReportName": null,
           "StartDate": "2016-12-12T00:00:00",
           "Units": 1,
           "Week": "12/12/2016"
@@ -64,6 +66,7 @@
           "Iscis": [],
           "IsHiatus": false,
           "MediaWeekId": 678,
+          "MyEventsReportName": null,
           "StartDate": "2016-12-19T00:00:00",
           "Units": 1,
           "Week": "12/19/2016"

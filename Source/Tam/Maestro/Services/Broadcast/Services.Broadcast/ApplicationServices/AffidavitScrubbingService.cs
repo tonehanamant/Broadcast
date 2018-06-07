@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using Newtonsoft.Json;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Clients;
 
@@ -24,7 +26,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest);
+        ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> scrubs = null);
 
         /// <summary>
         /// Returns a list of unlinked iscis
@@ -32,6 +34,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="archived">Switch for the archived iscis</param>
         /// <returns>List of UnlinkedIscisDto objects</returns>
         List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived);
+
+        ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides);
 
         /// <summary>
         /// Archives an isci from the unlinked isci list
@@ -106,7 +110,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest)
+        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> scrubs = null)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -139,16 +143,20 @@ namespace Services.Broadcast.ApplicationServices
                     SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
                 };
 
+                var clientScrubs = scrubs;
+                if (clientScrubs == null)
+                    clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter);
+                
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
-                    var clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(x.Id.Value, proposalScrubbingRequest.ScrubbingStatusFilter);
-                    clientScrubs.ForEach(y =>
+                    var detailClientScrubs = clientScrubs.Where(cs => cs.ProposalDetailId == x.Id.Value).ToList();
+                    detailClientScrubs.ForEach(y =>
                     {
                         y.Sequence = x.Sequence;
                         y.ProposalDetailId = x.Id;
                     });
-                    result.ClientScrubs.AddRange(clientScrubs);
+                    result.ClientScrubs.AddRange(detailClientScrubs);
                 });
                 //load filters
                 result.Filters = new FilterOptions
@@ -183,6 +191,16 @@ namespace Services.Broadcast.ApplicationServices
             var iscis =  archived ? _PostRepository.GetArchivedIscis() :  _PostRepository.GetUnlinkedIscis();
             iscis.ForEach(x => x.SpotLength = spotsLength.Single(y=> y.Value == x.SpotLength).Key);
             return iscis;
+        }
+
+        public ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides)
+        {
+            _AffidavitRepository.OverrideScrubStatus(scrubStatusOverrides.ScrubIds,
+                scrubStatusOverrides.OverrideStatus);
+
+            ProposalScrubbingRequest filter =
+                new ProposalScrubbingRequest() {ScrubbingStatusFilter = scrubStatusOverrides.ReturnStatusFilter};
+            return GetClientScrubbingForProposal(scrubStatusOverrides.ProposalId, filter);
         }
 
         /// <summary>

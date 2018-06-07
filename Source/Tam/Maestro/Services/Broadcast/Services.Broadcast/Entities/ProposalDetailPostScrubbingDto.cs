@@ -4,6 +4,7 @@ namespace Services.Broadcast.Entities
 {
     public class ProposalDetailPostScrubbingDto
     {
+        public int ScrubbingClientId { get; set; }
         public int? ProposalDetailId { get; set; }
         public DateTime DateAired { get; set; }
         public int TimeAired { get; set; }
@@ -27,6 +28,7 @@ namespace Services.Broadcast.Entities
         public int? Sequence { get; set; }
         public bool MatchDate { get; set; }
         public string ShowTypeName { get; set; }
+        public bool StatusOverride { get; set; }
         public ScrubbingStatus Status { get; set; }
         public bool MatchShowType { get; set; }
 

@@ -2,10 +2,22 @@
   "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
-  "CanDelete": false,
+  "CanDelete": true,
   "Details": [
     {
       "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -31,70 +43,54 @@
           "StartDate": "2017-05-29T00:00:00"
         }
       ],
-      "GenreCriteria": [
-        {
-          "Contain": 1,
-          "Genre": {
-            "Display": "Action"
-          },
-          "Id": null
-        }
-      ],
+      "GenreCriteria": [],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "ProgramCriteria": [
-        {
-          "Contain": 1,
-          "Id": null,
-          "Program": {
-            "Display": "Test Program 123"
-          }
-        }
-      ],
+      "ProgramCriteria": [],
       "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 12.5300,
           "DistributeGoals": false,
-          "ImpressionGoal": 18089000.0,
+          "ImpressionGoal": 10000.0,
           "Quarter": 1,
           "QuarterText": "2017 Q1",
           "Weeks": [
             {
-              "Cost": 56385.00,
+              "Cost": 589.0000,
               "EndDate": "2017-05-21T00:00:00",
               "Impressions": 4500000.0,
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 699,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Testing 2",
               "StartDate": "2017-05-15T00:00:00",
               "Units": 1,
               "Week": "5/15/2017"
             },
             {
-              "Cost": 12530.00,
+              "Cost": 200.0000,
               "EndDate": "2017-05-28T00:00:00",
               "Impressions": 1000000.0,
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 700,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 05-22-17",
               "StartDate": "2017-05-22T00:00:00",
               "Units": 1,
               "Week": "5/22/2017"
             },
             {
-              "Cost": 157740.17,
+              "Cost": 100.0000,
               "EndDate": "2017-06-04T00:00:00",
               "Impressions": 12589000.0,
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 701,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 05-29-17",
               "StartDate": "2017-05-29T00:00:00",
               "Units": 1,
               "Week": "5/29/2017"
@@ -108,9 +104,9 @@
       "ShowTypeCriteria": [],
       "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
-      "TotalCost": 226655.17,
-      "TotalImpressions": 18089000.0,
-      "TotalUnits": 3
+      "TotalCost": 0.0000,
+      "TotalImpressions": 0.0,
+      "TotalUnits": 0
     }
   ],
   "Equivalized": false,
@@ -138,8 +134,13 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
-  "MarketGroup": null,
+  "MarketGroup": {
+    "Count": 100,
+    "Display": "Top 100",
+    "Id": 100
+  },
   "MarketGroupId": 100,
+  "Markets": [],
   "Notes": null,
   "PostType": 1,
   "ProposalName": "Proposal Calculation Test 2",
@@ -150,10 +151,10 @@
     }
   ],
   "Status": 1,
-  "TargetBudget": 226655.17,
-  "TargetCPM": 12.53,
-  "TargetImpressions": 18089000.0,
-  "TargetUnits": 3,
+  "TargetBudget": null,
+  "TargetCPM": 0.0000,
+  "TargetImpressions": 0.0,
+  "TargetUnits": null,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,

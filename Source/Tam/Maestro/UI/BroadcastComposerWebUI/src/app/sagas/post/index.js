@@ -247,6 +247,7 @@ export function* requestPostClientScrubbing({ payload: params }) {
       });
       throw new Error();
     }
+    data.Data.filterKey = params.filterKey; // set for ref in store
     yield put({
       type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
       data,
@@ -305,16 +306,19 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     actingFilter.filterOptions = query.filterOptions;
     actingFilter.matchOptions = query.matchOptions;
     actingFilter.activeMatch = query.activeMatch;
+    let hasActiveScrubbingFilters = false;
     // TBD iterate existing or acting only?
     const filteredResult = listUnfiltered.filter((item) => {
        let ret = true;
+
       _.forEach(activeFilters, (value) => {
         if (value.active && ret === true) {
+          hasActiveScrubbingFilters = true;
           if (value.activeMatch) {
             // just base on one or the other?
             const toMatch = (value.matchOptions.inSpec === true);
-           ret = !_.includes(value.exclusions, item[value.filterKey]) && item[value.matchOptions.matchKey] === toMatch;
-           // console.log('filter each', ret, item[value.filterKey]);
+            ret = !_.includes(value.exclusions, item[value.filterKey]) && item[value.matchOptions.matchKey] === toMatch;
+            // console.log('filter each', ret, item[value.filterKey]);
           } else {
             ret = !_.includes(value.exclusions, item[value.filterKey]);
           }
@@ -325,9 +329,9 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     // console.log('request apply filter', actingFilter, activeFilters);
     // test to make sure there is returned data
     if (filteredResult.length < 1) {
-      return { filteredClientScrubs: listFiltered, actingFilter, activeFilters: originalFilters, alertEmpty: true };
+      return { filteredClientScrubs: listFiltered, actingFilter, activeFilters: originalFilters, alertEmpty: true, hasActiveScrubbingFilters };
     }
-    return { filteredClientScrubs: filteredResult, actingFilter, activeFilters, alertEmpty: false };
+    return { filteredClientScrubs: filteredResult, actingFilter, activeFilters, alertEmpty: false, hasActiveScrubbingFilters };
   };
 
   try {
@@ -418,6 +422,142 @@ export function* archiveUnlinkedIsci({ ids }) {
 }
 
 
+/* ////////////////////////////////// */
+/* refilter scrubs following override */
+/* ////////////////////////////////// */
+export function refilterOnOverride(clientScrubs, keys, status, isRemove) {
+  // if is Remove filter out the keys
+  // else for each key find scrub and change Status/overide true
+  if (isRemove) {
+    return clientScrubs.filter(item => !_.includes(keys, item.ScrubbingClientId));
+  }
+
+  return clientScrubs.map((item) => {
+    if (_.includes(keys, item.ScrubbingClientId)) {
+      return { ...item, Status: status, StatusOverride: true };
+    }
+    return { ...item };
+  });
+}
+
+/* ////////////////////////////////// */
+/* reset filter options following override - specific cases only */
+/* ////////////////////////////////// */
+export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
+  // if options need changing (delete above)
+  // compare new to active filters and change filterOptions, exclusions etc
+  // return new filterOptions
+  // console.log('reset filter options', activeFilters, newFilters);
+  const adjustedFilters = {};
+  // console.log('current active filters >>>>>>>>>>', activeFilters);
+  _.forEach(activeFilters, (filter, key) => {
+    const newOptions = newFilters[filter.distinctKey];
+    // console.log('filter options reset', filter, newOptions);
+    if (filter && filter.filterOptions && filter.filterOptions.length) {
+      const filterOptions = filter.filterOptions.filter(item => _.includes(newOptions, item.Value));
+      adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+    }
+  });
+  return adjustedFilters;
+}
+
+/* ////////////////////////////////// */
+/* REQUEST POST OVERRIDE STATUS */
+/* ////////////////////////////////// */
+export function* requestOverrideStatus({ payload: params }) {
+  const { overrideStatus } = api.post;
+
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'postOverrideStatus',
+        loading: true },
+      });
+      // change All for BE to NULL
+    const adjustParams = (params.ReturnStatusFilter === 'All') ? Object.assign(params, { ReturnStatusFilter: null }) : params;
+    const response = yield overrideStatus(adjustParams);
+    const { status, data } = response;
+    const hasActiveScrubbingFilters = yield select(state => state.post.hasActiveScrubbingFilters);
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'postOverrideStatus',
+        loading: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post override status returned.',
+          message: `The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post override status returned.',
+          message: data.Message || 'The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    // if no scrubbing filters - process as receive; else handle filters
+    if (hasActiveScrubbingFilters) {
+      const scrubs = yield select(state => state.post.proposalHeader.activeScrubbingData.ClientScrubs);
+      const status = params.OverrideStatus === 'InSpec' ? 2 : 1;
+      const isRemove = (params.ReturnStatusFilter === 'All') ? false : (params.ReturnStatusFilter !== params.OverrideStatus);
+      const adjustedScrubbing = refilterOnOverride(scrubs, params.ScrubIds, status, isRemove);
+      const activeFilters = _.cloneDeep(yield select(state => state.post.activeScrubbingFilters));
+      let adjustedFilters = null;
+      // remove so redjust filter options as needed
+      if (isRemove) {
+        // const activeFilters = _.cloneDeep(yield select(state => state.post.activeScrubbingFilters));
+        adjustedFilters = resetfilterOptionsOnOverride(activeFilters, data.Data.Filters);
+        // console.log('adjusted filters', adjustedFilters);
+      }
+      const ret = { filteredClientScrubs: adjustedScrubbing, scrubbingData: data.Data, activeFilters: isRemove ? adjustedFilters : activeFilters };
+      // console.log('remove test', isRemove, ret);
+      // clear the data so grid registers as update
+      yield call(requestClearScrubbingDataFiltersList);
+      yield put({
+        type: ACTIONS.RECEIVE_POST_OVERRIDE_STATUS,
+        data: ret,
+      });
+    } else {
+      // clear the data so grid registers as update
+      yield call(requestClearScrubbingDataFiltersList);
+      yield put({
+        type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
+        data,
+      });
+    }
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No post override status returned.',
+          message: 'The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 export function* loadArchivedIsci() {
   const { getArchivedIscis } = api.post;
   try {
@@ -471,6 +611,9 @@ export function* watchArchiveUnlinkedIsci() {
   yield takeEvery(ACTIONS.ARCHIVE_UNLIKED_ISCI.request, sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI));
 }
 
+export function* watchRequestOverrideStatus() {
+  yield takeEvery(ACTIONS.REQUEST_POST_OVERRIDE_STATUS, requestOverrideStatus);
+}
 export function* watchLoadArchivedIscis() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
 }

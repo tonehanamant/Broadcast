@@ -113,6 +113,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": "Test Adver A1 30 05-30-16",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 3,
               "Week": "5/30/2016"
@@ -248,6 +249,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": "Test Adver A3 30 05-30-16",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 3,
               "Week": "5/30/2016"
@@ -383,6 +385,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": "Test Adver A4 30 05-30-16",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 3,
               "Week": "5/30/2016"

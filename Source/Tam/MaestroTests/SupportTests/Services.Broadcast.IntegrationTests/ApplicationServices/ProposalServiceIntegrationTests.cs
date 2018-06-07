@@ -2305,5 +2305,75 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(affidavitFile));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveMyEventsReportName()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposal = _ProposalService.GetProposalById(251);
+                var firstDetail = proposal.Details.First();
+                var firstWeek = firstDetail.Quarters.First().Weeks.First();
+
+                firstWeek.MyEventsReportName = "Testing 2";
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveMyEventsReportDefaultValue()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposal = _ProposalService.GetProposalById(251);
+                var firstDetail = proposal.Details.First();
+                var firstWeek = firstDetail.Quarters.First().Weeks.First();
+
+                firstWeek.MyEventsReportName = null;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
 }

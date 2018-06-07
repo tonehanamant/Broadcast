@@ -211,6 +211,19 @@ DROP TABLE affidavit_file_detail_audiences
 
 /*************************************** START BCOP-3099 ***************************************************************/
 
+/*************************************** START BCOP-3110 ***************************************************************/
+
+IF NOT EXISTS(SELECT 1 
+			  FROM sys.columns 
+			  WHERE name = 'myevents_report_name ' AND 
+			  object_id = OBJECT_ID('proposal_version_detail_quarter_weeks'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_detail_quarter_weeks]
+		ADD myevents_report_name varchar(25) NULL
+END
+
+/*************************************** END BCOP-3110 ***************************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

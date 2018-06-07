@@ -42,7 +42,7 @@ export default class GridIsciCell extends Component {
   onChangeIscis(event) {
     const val = event.target.value;
     this.setState({ iscisValue: val, isChanged: true });
-    // this.props.toggleEditIsciClass(true);
+    // this.prosetStateps.toggleEditIsciClass(true);
   }
 
   // display/edit conversion - both for popover and edit house display/tips

@@ -78,6 +78,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 699,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-15T00:00:00",
               "Units": 1,
               "Week": "5/15/2017"
@@ -89,6 +90,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 700,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-22T00:00:00",
               "Units": 1,
               "Week": "5/22/2017"
@@ -100,6 +102,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 701,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-29T00:00:00",
               "Units": 1,
               "Week": "5/29/2017"
@@ -111,6 +114,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 702,
+              "MyEventsReportName": null,
               "StartDate": "2017-06-05T00:00:00",
               "Units": 1,
               "Week": "6/5/2017"
@@ -122,6 +126,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 703,
+              "MyEventsReportName": null,
               "StartDate": "2017-06-12T00:00:00",
               "Units": 1,
               "Week": "6/12/2017"
