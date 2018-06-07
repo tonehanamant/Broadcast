@@ -134,8 +134,7 @@ namespace Services.Broadcast.ApplicationServices
             AffidavitSaveRequest affidavitSaveRequest = ParseWWTVFile(fileName, fileContents, validationErrors);
             if (validationErrors.Any())
             {
-                
-                return new AffidavitSaveResult{ ValidationResults = validationErrors };
+                return _AffidavidService.SaveAffidavitValidationErrors(affidavitSaveRequest, userName, validationErrors);
             }
 
             AffidavitSaveResult result;
@@ -180,7 +179,6 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var file in filesFailedDownload)
             {
                 emailBody += string.Format("{0}\n",file);
-
             }
             _AffidavitEmailSenderService.Send(emailBody, "WWTV File Failed");
         }
