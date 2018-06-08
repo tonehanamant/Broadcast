@@ -30,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_InvalidFileType()
         {
@@ -118,6 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_File_Error_Date_Time()
         {
