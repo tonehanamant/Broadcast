@@ -179,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public void ProcessErrorFiles()
         {
-            var remoteFTPPath = WWTVFtpHelper.GetErrorPath();
+            var remoteFTPPath = WWTVFtpHelper.GetFTPErrorPath();
 
             WWTVSharedNetworkHelper.Impersonate(delegate
             {
@@ -248,7 +248,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _UploadZipToWWTV(string zipFileName)
         {
-            var sharedFolder = WWTVFtpHelper.GetOutboundPath();
+            var sharedFolder = WWTVFtpHelper.GetFTPOutboundPath();
             var uploadUrl = $"{sharedFolder}/{Path.GetFileName(zipFileName)}";
             WWTVFtpHelper.UploadFile(zipFileName, uploadUrl,File.Delete); 
         }

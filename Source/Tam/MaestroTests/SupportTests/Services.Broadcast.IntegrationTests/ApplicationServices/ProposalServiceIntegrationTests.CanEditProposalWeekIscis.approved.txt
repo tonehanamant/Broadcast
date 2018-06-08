@@ -127,6 +127,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": null,
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"
@@ -217,6 +218,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 650,
+              "MyEventsReportName": null,
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -228,6 +230,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 650,
+              "MyEventsReportName": null,
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -239,6 +242,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 650,
+              "MyEventsReportName": null,
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"

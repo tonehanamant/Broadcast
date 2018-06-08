@@ -24,6 +24,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
 
+        AffidavitSaveResult SaveAffidavitValidationErrors(AffidavitSaveRequest saveRequest, string userName,List<AffidavitValidationResult> affidavitValidationResults);
         string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
     }
 
@@ -71,7 +72,24 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitImpressionsService = affidavitImpressionsService;
         }
 
-        public AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
+        public AffidavitSaveResult SaveAffidavitValidationErrors(AffidavitSaveRequest saveRequest, string userName,List<AffidavitValidationResult> affidavitValidationResults)
+        {
+            var affidavitFile = _EnsureAffidavitFile(saveRequest, DateTime.Now);
+
+            var problems = _MapValidationErrorToAffidavitFileProblem((affidavitValidationResults));
+            affidavitFile.AffidavitFileProblems.AddRange(problems);
+            var result = new AffidavitSaveResult();
+            result.ValidationResults = affidavitValidationResults;
+            affidavitFile.Status = affidavitValidationResults.Any() ? AffidaviteFileProcessingStatus.Invalid : AffidaviteFileProcessingStatus.Valid;
+
+            if (affidavitValidationResults.Any())
+            {   // save and get out
+                result.Id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
+            }
+            return result;
+        }
+
+        private static AffidavitFile _EnsureAffidavitFile(AffidavitSaveRequest saveRequest, DateTime currentDateTime)
         {
             if (saveRequest == null)
             {
@@ -85,11 +103,17 @@ namespace Services.Broadcast.ApplicationServices
                 FileName = saveRequest.FileName,
                 SourceId = saveRequest.Source
             };
+            return affidavitFile;
+        }
 
+        public AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
+        {
+            var affidavitFile = _EnsureAffidavitFile(saveRequest, currentDateTime);
             var result = _AffidavitSaveResult(saveRequest, username, currentDateTime, affidavitFile);
 
             return result;
         }
+
 
         private AffidavitSaveResult _AffidavitSaveResult(AffidavitSaveRequest saveRequest, string username,
             DateTime currentDateTime, AffidavitFile affidavitFile)
@@ -303,7 +327,7 @@ namespace Services.Broadcast.ApplicationServices
             return stations[stationName];
         }
 
-        private List<AffidavitFileProblem> _MapValidationErrorToAffidavitFileProblem(List<AffidavitValidationResult> affidavitValidationResults)
+        public List<AffidavitFileProblem> _MapValidationErrorToAffidavitFileProblem(List<AffidavitValidationResult> affidavitValidationResults)
         {
             List<AffidavitFileProblem> problems = new List<AffidavitFileProblem>();
 

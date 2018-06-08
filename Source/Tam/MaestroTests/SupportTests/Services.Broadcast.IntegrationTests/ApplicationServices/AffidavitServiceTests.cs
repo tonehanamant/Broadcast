@@ -772,6 +772,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidavitValidationErrors()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+
+                List<AffidavitValidationResult> validationResults = new List<AffidavitValidationResult>();
+                validationResults.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage =  "Generic error message",
+                    InvalidField = "ErrorField",
+                    InvalidLine = 255
+                });
+                var postingDate = new DateTime(2016, 4, 20);
+                var result = _Sut.SaveAffidavitValidationErrors(request, "test user", validationResults);
+
+                VerifyAffidavit(result);
+            }
+        }
 
         private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {

@@ -16,6 +16,15 @@ namespace Services.Broadcast.ApplicationServices
     {
         private const string FTP_SCHEME = "ftp://";
 
+        public static string Host
+        {
+            get
+            {
+                // uncomment if debugging locally (don't forget to recomment when checking in)
+                //return "localhost";
+                return BroadcastServiceSystemParameter.WWTV_FtpHost;
+            }
+        }
         public static NetworkCredential GetFtpClientCredentials()
         {
             return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
@@ -25,20 +34,25 @@ namespace Services.Broadcast.ApplicationServices
         
         #region Remote path getters 
 
-        public static string GetOutboundPath()
+        public static string GetFTPOutboundPath()
         {
-            return $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}";
+            var path = BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder;
+
+            return $"{FTP_SCHEME}{Host}/{path}";
         }
         
-        public static string GetErrorPath()
+        public static string GetFTPErrorPath()
         {
-            return $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpErrorFolder}";
+            var path = BroadcastServiceSystemParameter.WWTV_FtpErrorFolder;
+
+            return $"{FTP_SCHEME}{Host}/{path}";
         }
 
         public static string GetFTPInboundPath()
         {
-            return
-                $"{FTP_SCHEME}{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpInboundFolder}";
+            var path = BroadcastServiceSystemParameter.WWTV_FtpInboundFolder;
+
+            return $"{FTP_SCHEME}{Host}/{path}";
         }
 
         #endregion
