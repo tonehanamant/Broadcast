@@ -220,12 +220,13 @@ namespace Services.Broadcast.ApplicationServices
             AffidavitSaveRequest affidavitSaveRequest = new AffidavitSaveRequest();
             try
             {
+                affidavitSaveRequest.FileName = Path.GetFileName(fileName);
+                affidavitSaveRequest.FileHash = HashGenerator.ComputeHash(fileContents.ToByteArray());
+
                 if (!Path.GetExtension(fileName).Equals(VALID_INCOMING_FILE_EXTENSION))
                 {
                     throw new Exception("Invalid file extension.");
                 }
-                affidavitSaveRequest.FileName = Path.GetFileName(fileName);
-
                 _MapWWTVFileToAffidavitFile(fileContents,affidavitSaveRequest, validationErrors);
             }
             catch (Exception e)
@@ -234,11 +235,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     ErrorMessage = "Could not process file.\n  " + e.ToString()
                 });
-
                 return affidavitSaveRequest;
             }
-
-            affidavitSaveRequest.FileHash = HashGenerator.ComputeHash(fileContents.ToByteArray());
 
             return affidavitSaveRequest;
         }

@@ -30,7 +30,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_InvalidFileType()
         {
@@ -119,7 +118,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_File_Error_Date_Time()
         {
@@ -131,6 +129,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

@@ -1,5 +1,4 @@
 ﻿{
-  "Id": null,
   "ValidationResults": [
     {
       "ErrorMessage": "is invalid time.  Please use format \"HHMMA|P\".",
