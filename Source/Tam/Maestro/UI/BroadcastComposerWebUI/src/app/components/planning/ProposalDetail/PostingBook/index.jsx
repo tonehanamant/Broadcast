@@ -95,7 +95,7 @@ class PostingBook extends Component {
   }
 
   render() {
-    const { isReadOnly, modal, detail, initialdata } = this.props;
+    const { modal, detail, initialdata } = this.props;
     const { postingBook, playbackType, showConfirmation } = this.state;
     const show = isActiveDialog(detail, modal);
     const { CrunchedMonths, PlaybackTypes } = initialdata.ForecastDefaults;
@@ -161,7 +161,7 @@ class PostingBook extends Component {
 
           <Modal.Footer>
             <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
-            {!isReadOnly &&
+            {!isDisableForm &&
               <Button
                 disabled={isDisableForm}
                 onClick={this.showConfirmation}
@@ -203,7 +203,6 @@ PostingBook.propTypes = {
   modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   updateDetail: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool,
   initialdata: PropTypes.object.isRequired,
   detail: PropTypes.object.isRequired,
 };
