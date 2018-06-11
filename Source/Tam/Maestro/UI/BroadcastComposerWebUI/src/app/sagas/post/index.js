@@ -6,6 +6,7 @@ import * as appActions from 'Ducks/app/actionTypes';
 import * as postActions from 'Ducks/post/actionTypes';
 import { setOverlayLoading, toggleModal } from 'Ducks/app';
 import { selectModal } from 'Ducks/app/selectors';
+import { getPost } from 'Ducks/post';
 import api from '../api';
 import sagaWrapper from '../wrapper';
 
@@ -568,6 +569,20 @@ export function* loadArchivedIsci() {
   }
 }
 
+export function* rescrubUnlinkedIsci({ ids }) {
+  yield console.log(ids);
+  return { status: 200, data: { Success: true } };
+}
+
+export function* closeUnlinkedIsciModal({ modalPrams }) {
+  yield put(toggleModal({
+    modal: 'postUnlinkedIsciModal',
+    active: false,
+    properties: modalPrams,
+  }));
+  yield put(getPost());
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -597,8 +612,11 @@ export function* watchRequestClearScrubbingFiltersList() {
 }
 
 export function* watchRequestUniqueIscis() {
-  yield takeEvery(
-    [ACTIONS.UNLINKED_ISCIS_DATA.request, ACTIONS.ARCHIVE_UNLIKED_ISCI.success],
+  yield takeEvery([
+    ACTIONS.UNLINKED_ISCIS_DATA.request,
+    ACTIONS.ARCHIVE_UNLIKED_ISCI.success,
+    ACTIONS.RESCRUB_UNLIKED_ISCI.success,
+  ],
     sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA),
   );
 }
@@ -616,4 +634,12 @@ export function* watchRequestOverrideStatus() {
 }
 export function* watchLoadArchivedIscis() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
+}
+
+export function* watchRescrubUnlinkedIsci() {
+  yield takeEvery(ACTIONS.RESCRUB_UNLIKED_ISCI.request, sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI));
+}
+
+export function* watchCloseUnlinkedIsciModal() {
+  yield takeEvery(ACTIONS.CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
 }

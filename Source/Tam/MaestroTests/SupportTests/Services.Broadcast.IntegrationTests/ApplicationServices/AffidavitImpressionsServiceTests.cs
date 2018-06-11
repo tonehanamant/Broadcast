@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 .GetDataRepository<IAffidavitRepository>();
             var affidavitFile = affidavitRepository.GetAffidavit(166, true);
 
-            _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFile(affidavitFile);
+            _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitFile.AffidavitFileDetails);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(affidavitFile));
         }

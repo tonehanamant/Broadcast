@@ -442,3 +442,13 @@ export const toggleUnlinkedTab = (tab) => {
   console.error('You should add function in the tabsMap to load your tab values');
   return undefined;
 };
+
+export const rescrubUnlinkedIscis = ids => ({
+  type: ACTIONS.RESCRUB_UNLIKED_ISCI.request,
+  payload: { ids },
+});
+
+export const closeUnlinkedIsciModal = modalPrams => ({
+  type: ACTIONS.CLOSE_UNLINKED_ISCI_MODAL,
+  payload: { modalPrams },
+});
