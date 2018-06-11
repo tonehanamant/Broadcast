@@ -202,6 +202,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPostProcessing_Overnight_Impressions_With_Decimals()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_Affidavit_Decimal_Overnight_Impressions.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                VerifyAffidavit(response.Id.Value);
+            }
+        }
+
         private void VerifyAffidavit(int affidavitId)
         {
             var response = _AffidavitRepository.GetAffidavit(affidavitId);

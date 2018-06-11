@@ -7,8 +7,15 @@
       "Affiliate": "CBS",
       "AirTime": 81300,
       "Archived": false,
-      "Demographics": [],
-      "EstimateId": null,
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 1928.43,
+          "OvernightRating": 2.3
+        }
+      ],
+      "EstimateId": 123,
       "Genre": "Comedy",
       "InventorySource": 1,
       "Isci": "ABC123",
@@ -24,7 +31,7 @@
       "OriginalAirDate": "2017-12-26T00:00:00",
       "ProgramName": "Everybody Loves Raymond",
       "ShowType": "Comedy",
-      "SpotCost": null,
+      "SpotCost": 315.25,
       "SpotLengthId": 1,
       "Station": "WCBS"
     },
@@ -39,13 +46,13 @@
         {
           "AudienceId": 36,
           "Demographic": null,
-          "OvernightImpressions": 825.0,
+          "OvernightImpressions": 825.9999,
           "OvernightRating": 1.5
         }
       ],
       "EstimateId": 456,
       "Genre": "Talk",
-      "InventorySource": 2,
+      "InventorySource": 1,
       "Isci": "DEF456",
       "LeadInEndTime": 32462,
       "LeadinGenre": "Talk",
@@ -65,8 +72,8 @@
     }
   ],
   "AffidavitFileProblems": [],
-  "FileHash": "16-65-D5-83-95-78-71-05-3C-83-98-D2-90-B8-8E-1B-42-54-30-D3",
-  "FileName": "WWTV_AffidavitValidFileContent_NullDemo.txt",
+  "FileHash": "0C-11-C6-8A-22-5D-F9-EB-D0-89-7B-22-D2-1B-6A-33-C8-12-DB-02",
+  "FileName": "WWTV_Affidavit_Decimal_Overnight_Impressions.txt",
   "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
