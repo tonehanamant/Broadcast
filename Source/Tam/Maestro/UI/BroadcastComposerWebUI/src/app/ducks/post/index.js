@@ -47,6 +47,21 @@ const initialState = {
         exclusions: [],
         filterOptions: [],
       },
+      DateAired: {
+        filterDisplay: 'Select Date Range',
+        filterKey: 'DateAired',
+        type: 'dateInput',
+        // hasMatchSpec: false, // NA
+        // activeMatch: false,
+        active: false,
+        /* matchOptions: {
+          matchKey: 'MatchClientISCI', // not currently available
+          inSpec: true,
+          outOfSpec: true,
+        }, */
+        exclusions: false,
+        filterOptions: [],
+      },
       DayOfWeek: {
         filterDisplay: 'Days',
         filterKey: 'DayOfWeek',
@@ -300,6 +315,13 @@ export default function reducer(state = initialState, action) {
         activeFilters.Affiliate.filterOptions = affiliateOptions;
         activeFilters.ClientISCI.filterOptions = clientIsciOptions;
         activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
+        activeFilters.DateAired.filterOptions = {
+            DateAiredStart: filtersData.DateAiredStart,
+            DateAiredEnd: filtersData.DateAiredEnd,
+            originalDateAiredStart: filtersData.DateAiredStart,
+            originalDateAiredEnd: filtersData.DateAiredEnd,
+
+        };
         activeFilters.GenreName.filterOptions = genreOptions;
         activeFilters.ISCI.filterOptions = houseIsciOptions;
         activeFilters.Market.filterOptions = marketOptions;
@@ -325,7 +347,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA:
-    // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data);
+    // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data, state);
     return Object.assign({}, state, {
       proposalHeader: {
         ...state.proposalHeader,

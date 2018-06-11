@@ -178,6 +178,8 @@
     }
   ],
   "Filters": {
+    "DateAiredEnd": "2017-06-29T00:00:00",
+    "DateAiredStart": "2016-06-03T00:00:00",
     "DistinctAffiliates": [
       "ABC",
       "NBC"
