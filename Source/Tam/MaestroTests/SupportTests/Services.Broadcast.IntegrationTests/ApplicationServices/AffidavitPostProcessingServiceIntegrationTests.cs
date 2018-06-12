@@ -12,6 +12,7 @@ using System.Linq;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.Entities;
+using Microsoft.Practices.Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -22,8 +23,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IAffidavitRepository _AffidavitRepository;
         private const string _UserName = "Test User";
 
+        private readonly IBroadcastAudiencesCache _AudiencesCache;
+
         public AffidavitPostProcessingServiceIntegrationTests()
         {
+            _AudiencesCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IBroadcastAudiencesCache>();
             _AffidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
             _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
@@ -236,5 +240,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
+
+
+        [Ignore]
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PostPrePost_Report_Perf_Test()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                var demos = _AudiencesCache.GetAllLookups();
+                var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostPrePostingService>();
+
+                var fileName = "Master File APR18.xlsx";
+                var filePath = @".\Files\Master File APR18.xlsx";
+                var fileContents = File.OpenRead(filePath);
+
+                int postingBookId = 437; // april 2018 book
+
+                PostRequest request = new PostRequest()
+                {
+                    PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                    Audiences = demos.Select(d => d.Id).ToList(),
+                    FileName = fileName,
+                    PostStream= fileContents,
+                    Equivalized = true,
+                    PostingBookId = postingBookId
+                };
+
+                var response = sut.SavePost(request);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
+                //Approvals.Verify(json);
+            }
+        }
+
     }
 }
