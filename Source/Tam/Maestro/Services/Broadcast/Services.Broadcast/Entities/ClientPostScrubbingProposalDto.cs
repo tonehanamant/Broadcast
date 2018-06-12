@@ -39,6 +39,8 @@ namespace Services.Broadcast.Entities
         public List<string> DistinctGenres { get; set; }
         public DateTime? WeekStart { get; set; }
         public DateTime? WeekEnd { get; set; }
+        public DateTime? DateAiredStart { get; set; }
+        public DateTime? DateAiredEnd { get; set; }
         public List<string> DistinctPrograms { get; set; }
         public List<string> DistinctMarkets { get; set; }
         public List<string> DistinctClientIscis { get; set; }

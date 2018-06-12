@@ -11,7 +11,7 @@
         {
           "AudienceId": 36,
           "Demographic": null,
-          "OvernightImpressions": 1928,
+          "OvernightImpressions": 1928.0,
           "OvernightRating": 2.3
         }
       ],
@@ -46,7 +46,7 @@
         {
           "AudienceId": 36,
           "Demographic": null,
-          "OvernightImpressions": 825,
+          "OvernightImpressions": 825.0,
           "OvernightRating": 1.5
         }
       ],

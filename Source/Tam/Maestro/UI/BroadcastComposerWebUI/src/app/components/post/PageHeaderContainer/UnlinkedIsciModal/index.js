@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
 import { Grid, Actions } from 'react-redux-grid';
-import { archiveUnlinkedIscis, toggleUnlinkedTab } from 'Ducks/post';
+import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
 import { generateGridConfig } from './util';
 
 
@@ -23,6 +23,8 @@ const mapDispatchToProps = dispatch => (
     hideMenu,
     selectRow,
     deselectAll,
+    closeUnlinkedIsciModal,
+    rescrubIscis: rescrubUnlinkedIscis,
     archiveIscis: archiveUnlinkedIscis,
     toggleTab: toggleUnlinkedTab,
   }, dispatch)
@@ -41,11 +43,7 @@ export class UnlinkedIsciModal extends Component {
   }
 
   close() {
-    this.props.toggleModal({
-      modal: 'postUnlinkedIsciModal',
-      active: false,
-      properties: this.props.modal.properties,
-    });
+    this.props.closeUnlinkedIsciModal(this.props.modal.properties);
     this.setState({ activeTab: 'unlinked' });
   }
 
@@ -96,9 +94,11 @@ UnlinkedIsciModal.defaultProps = {
 UnlinkedIsciModal.propTypes = {
 	modal: PropTypes.object,
 	toggleModal: PropTypes.func.isRequired,
+	rescrubIscis: PropTypes.func.isRequired,
   unlinkedIscis: PropTypes.array.isRequired,
-  archiveIscis: PropTypes.array.isRequired,
   toggleTab: PropTypes.func.isRequired,
+  archiveIscis: PropTypes.func.isRequired,
+  closeUnlinkedIsciModal: PropTypes.func.isRequired,
 
 	deselectAll: PropTypes.func.isRequired,
 	selectRow: PropTypes.func.isRequired,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Popover, Glyphicon, OverlayTrigger } from 'react-bootstrap';
 import FilterListInput from '../FilterListInput';
+import FilterDateInput from '../FilterDateInput';
 
 export default class FilterPopoverWrapper extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ export default class FilterPopoverWrapper extends Component {
   }
 
   render() {
-    const { filterKey, filterDisplay, filterOptions, matchOptions, hasTextSearch, hasMatchSpec } = this.props;
+    const { filterKey, filterDisplay, filterOptions, filterType, matchOptions, hasTextSearch, hasMatchSpec } = this.props;
     const isActive = this.props.filterActive;
     const activeColor = isActive ? 'green' : '#999';
     // console.log('render filter wrapper', filterOptions);
@@ -58,14 +59,24 @@ export default class FilterPopoverWrapper extends Component {
         id="popover-positioned-scrolling-top"
         title={filterDisplay}
       >
-        <FilterListInput
-          filterKey={filterKey}
-          filterOptions={filterOptions}
-          matchOptions={matchOptions}
-          applySelection={this.setFilter}
-          hasTextSearch={hasTextSearch}
-          hasMatchSpec={hasMatchSpec}
-        />
+        {filterType === 'dateInput' &&
+          <FilterDateInput
+            filterKey={filterKey}
+            filterOptions={filterOptions}
+            applySelection={this.setFilter}
+          />
+        }
+
+        {filterType === 'filterList' &&
+          <FilterListInput
+            filterKey={filterKey}
+            filterOptions={filterOptions}
+            matchOptions={matchOptions}
+            applySelection={this.setFilter}
+            hasTextSearch={hasTextSearch}
+            hasMatchSpec={hasMatchSpec}
+          />
+        }
       </Popover>
     );
 
@@ -96,7 +107,9 @@ FilterPopoverWrapper.defaultProps = {
   applyFilter: () => {},
   hasTextSearch: true,
   hasMatchSpec: false,
+  matchOptions: {},
   filterActive: false,
+  filterType: 'filterList',
 };
 
 FilterPopoverWrapper.propTypes = {
@@ -104,8 +117,13 @@ FilterPopoverWrapper.propTypes = {
   hasTextSearch: PropTypes.bool,
   hasMatchSpec: PropTypes.bool,
   matchOptions: PropTypes.object.isRequired,
+  filterType: PropTypes.string,
   filterKey: PropTypes.string.isRequired,
   filterDisplay: PropTypes.string.isRequired,
-  filterOptions: PropTypes.array.isRequired,
+  // filterOptions: PropTypes.array.isRequired,
+  filterOptions: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]).isRequired,
   filterActive: PropTypes.bool.isRequired,
 };

@@ -11,6 +11,6 @@ namespace Services.Broadcast.Entities
         public int AudienceId { get; set; }
         public string Demographic { get; set; }
         public double OvernightRating { get; set; }
-        public int OvernightImpressions { get; set; }
+        public double OvernightImpressions { get; set; }
     }
 }

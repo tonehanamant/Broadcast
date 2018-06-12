@@ -137,8 +137,6 @@
         <EntityTypeShape EntityType="BroadcastModel.affidavit_outbound_file_problems" Width="1.5" PointX="25.75" PointY="1.375" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_outbound_files" Width="1.5" PointX="23.5" PointY="1" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_outbound_file_problems_affidavit_outbound_files" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_demographics" Width="1.5" PointX="29.875" PointY="10.125" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_show_types" Width="1.5" PointX="26.25" PointY="22.875" />
         <EntityTypeShape EntityType="BroadcastModel.show_types" Width="1.5" PointX="24" PointY="28.75" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_criteria_show_types_show_types" />
@@ -152,7 +150,6 @@
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_audiences" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_details" Width="1.5" PointX="22.625" PointY="7.875" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_details" Width="1.5" PointX="24" PointY="19.5" />
@@ -168,6 +165,9 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_demographics" Width="1.5" PointX="24.875" PointY="5.25" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,9 +18,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> audience_id { get; set; }
         public Nullable<long> affidavit_file_detail_id { get; set; }
         public Nullable<double> overnight_rating { get; set; }
-        public Nullable<int> overnight_impressions { get; set; }
+        public Nullable<double> overnight_impressions { get; set; }
     
-        public virtual audience audience { get; set; }
         public virtual affidavit_file_details affidavit_file_details { get; set; }
+        public virtual audience audience { get; set; }
     }
 }

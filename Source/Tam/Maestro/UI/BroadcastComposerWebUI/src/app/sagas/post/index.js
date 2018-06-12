@@ -6,6 +6,7 @@ import * as appActions from 'Ducks/app/actionTypes';
 import * as postActions from 'Ducks/post/actionTypes';
 import { setOverlayLoading, toggleModal } from 'Ducks/app';
 import { selectModal } from 'Ducks/app/selectors';
+import { getPost } from 'Ducks/post';
 import api from '../api';
 import sagaWrapper from '../wrapper';
 
@@ -298,34 +299,45 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   const actingFilter = activeFilters[query.filterKey]; // this is undefined
   // console.log('request scrub filter', query, activeFilters, actingFilter);
   const applyFilter = () => {
+    const isList = actingFilter.type === 'filterList';
      // active -depends on if clearing etc; also now if matching in play
-    const isActive = (query.exclusions.length > 0) || query.activeMatch;
-     // todo should apply copy?
-    actingFilter.active = isActive;
-    actingFilter.exclusions = query.exclusions;
-    actingFilter.filterOptions = query.filterOptions;
-    actingFilter.matchOptions = query.matchOptions;
-    actingFilter.activeMatch = query.activeMatch;
+    let isActive = false;
     let hasActiveScrubbingFilters = false;
-    // TBD iterate existing or acting only?
-    const filteredResult = listUnfiltered.filter((item) => {
-       let ret = true;
-
-      _.forEach(activeFilters, (value) => {
-        if (value.active && ret === true) {
-          hasActiveScrubbingFilters = true;
-          if (value.activeMatch) {
-            // just base on one or the other?
-            const toMatch = (value.matchOptions.inSpec === true);
-            ret = !_.includes(value.exclusions, item[value.filterKey]) && item[value.matchOptions.matchKey] === toMatch;
-            // console.log('filter each', ret, item[value.filterKey]);
-          } else {
-            ret = !_.includes(value.exclusions, item[value.filterKey]);
+    if (isList) {
+      isActive = (query.exclusions.length > 0) || query.activeMatch;
+      actingFilter.matchOptions = query.matchOptions;
+      actingFilter.activeMatch = query.activeMatch;
+    } else {
+      isActive = query.exclusions; // bool for date/time aired
+    }
+      actingFilter.active = isActive;
+      actingFilter.exclusions = query.exclusions;
+      // leave originals in place if not list
+      actingFilter.filterOptions = isList ? query.filterOptions : Object.assign(actingFilter.filterOptions, query.filterOptions);
+      // TBD date/time aired versus list
+      const filteredResult = listUnfiltered.filter((item) => {
+        let ret = true;
+        _.forEach(activeFilters, (value) => {
+          if (value.active && ret === true) {
+            hasActiveScrubbingFilters = true;
+            if (value.type === 'filterList') {
+              if (value.activeMatch) {
+                // just base on one or the other?
+                const toMatch = (value.matchOptions.inSpec === true);
+                ret = !_.includes(value.exclusions, item[value.filterKey]) && item[value.matchOptions.matchKey] === toMatch;
+              // console.log('filter each', ret, item[value.filterKey]);
+              } else {
+                ret = !_.includes(value.exclusions, item[value.filterKey]);
+              }
+            } else if (value.type === 'dateInput') {
+              // tbd check range based on value.filterOptions
+              // todo: need to check if the 2 values are equal
+              ret = moment(item[value.filterKey]).isBetween(value.filterOptions.DateAiredStart, value.filterOptions.DateAiredEnd, 'day', true);
+            }
           }
-        }
+        });
+        return ret;
       });
-      return ret;
-    });
     // console.log('request apply filter', actingFilter, activeFilters);
     // test to make sure there is returned data
     if (filteredResult.length < 1) {
@@ -445,17 +457,30 @@ export function refilterOnOverride(clientScrubs, keys, status, isRemove) {
 /* ////////////////////////////////// */
 export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
   // if options need changing (delete above)
-  // compare new to active filters and change filterOptions, exclusions etc
+  // compare new to active filters and change filterOptions, exclusions etc; handle date/time separately
   // return new filterOptions
   // console.log('reset filter options', activeFilters, newFilters);
   const adjustedFilters = {};
   // console.log('current active filters >>>>>>>>>>', activeFilters);
   _.forEach(activeFilters, (filter, key) => {
-    const newOptions = newFilters[filter.distinctKey];
-    // console.log('filter options reset', filter, newOptions);
-    if (filter && filter.filterOptions && filter.filterOptions.length) {
-      const filterOptions = filter.filterOptions.filter(item => _.includes(newOptions, item.Value));
-      adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+    if (filter && filter.filterOptions) {
+      if (filter.type === 'filterList') {
+        const newOptions = newFilters[filter.distinctKey];
+        // console.log('filter options reset', filter, newOptions);
+        if (filter.filterOptions.length) {
+          const filterOptions = filter.filterOptions.filter(item => _.includes(newOptions, item.Value));
+          adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+        }
+      } else if (filter.type === 'dateInput') {
+        // change originals - modifying active could beak what user has changed
+        const filterOptions = {
+          DateAiredStart: filter.filterOptions.DateAiredStart,
+          DateAiredEnd: filter.filterOptions.DateAiredEnd,
+          originalDateAiredStart: newFilters.DateAiredStart,
+          originalDateAiredEnd: newFilters.DateAiredEnd,
+        };
+        adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+      }
     }
   });
   return adjustedFilters;
@@ -568,6 +593,20 @@ export function* loadArchivedIsci() {
   }
 }
 
+export function* rescrubUnlinkedIsci({ ids }) {
+  yield console.log(ids);
+  return { status: 200, data: { Success: true } };
+}
+
+export function* closeUnlinkedIsciModal({ modalPrams }) {
+  yield put(toggleModal({
+    modal: 'postUnlinkedIsciModal',
+    active: false,
+    properties: modalPrams,
+  }));
+  yield put(getPost());
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -597,8 +636,11 @@ export function* watchRequestClearScrubbingFiltersList() {
 }
 
 export function* watchRequestUniqueIscis() {
-  yield takeEvery(
-    [ACTIONS.UNLINKED_ISCIS_DATA.request, ACTIONS.ARCHIVE_UNLIKED_ISCI.success],
+  yield takeEvery([
+    ACTIONS.UNLINKED_ISCIS_DATA.request,
+    ACTIONS.ARCHIVE_UNLIKED_ISCI.success,
+    ACTIONS.RESCRUB_UNLIKED_ISCI.success,
+  ],
     sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA),
   );
 }
@@ -616,4 +658,12 @@ export function* watchRequestOverrideStatus() {
 }
 export function* watchLoadArchivedIscis() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
+}
+
+export function* watchRescrubUnlinkedIsci() {
+  yield takeEvery(ACTIONS.RESCRUB_UNLIKED_ISCI.request, sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI));
+}
+
+export function* watchCloseUnlinkedIsciModal() {
+  yield takeEvery(ACTIONS.CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
 }

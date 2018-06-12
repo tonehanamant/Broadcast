@@ -12,7 +12,7 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IAffidavitImpressionsService : IApplicationService
     {
-        void CalculateAffidavitImpressionsForAffidavitFile(AffidavitFile affidavitFile);
+        void CalculateAffidavitImpressionsForAffidavitFileDetails(List<AffidavitFileDetail> details);
 
         void RecalculateAffidavitImpressionsForProposalDetail(int proposalDetailId);
     }
@@ -49,9 +49,8 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public void CalculateAffidavitImpressionsForAffidavitFile(AffidavitFile affidavitFile)
+        public void CalculateAffidavitImpressionsForAffidavitFileDetails(List<AffidavitFileDetail> details)
         {
-            var details = affidavitFile.AffidavitFileDetails;
             var audiencesIds =
                 _NsiComponentAudienceRepository.GetAllNsiComponentAudiences().
                 Select(a => a.Id).

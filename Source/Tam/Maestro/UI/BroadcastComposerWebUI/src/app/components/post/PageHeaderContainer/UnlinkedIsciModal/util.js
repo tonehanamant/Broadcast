@@ -11,7 +11,7 @@ export const setPosition = (e) => {
 };
 
 
-export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll, archiveIscis }, isAllowContextMenu) => {
+export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll, archiveIscis, rescrubIscis }, isAllowContextMenu) => {
 		const columns = [
 			{
 				name: 'ISCI',
@@ -83,6 +83,13 @@ export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll,
             key: 'menu-archive-isci',
             EVENT_HANDLER: ({ metaData }) => {
               archiveIscis([metaData.rowData.FileDetailId]);
+            },
+          },
+          {
+            text: 'Rescrub this ISCI',
+            key: 'menu-rescrub-isci',
+            EVENT_HANDLER: ({ metaData }) => {
+              rescrubIscis([metaData.rowData.FileDetailId]);
             },
           },
         ],
