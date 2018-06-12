@@ -593,9 +593,14 @@ export function* loadArchivedIsci() {
   }
 }
 
-export function* rescrubUnlinkedIsci({ ids }) {
-  yield console.log(ids);
-  return { status: 200, data: { Success: true } };
+export function* rescrubUnlinkedIsci({ isci }) {
+  const { rescrubUnlinkedIscis } = api.post;
+  try {
+    yield put(setOverlayLoading({ id: 'rescrubIsci', loading: true }));
+    return yield rescrubUnlinkedIscis(isci);
+  } finally {
+    yield put(setOverlayLoading({ id: 'rescrubIsci', loading: false }));
+  }
 }
 
 export function* closeUnlinkedIsciModal({ modalPrams }) {

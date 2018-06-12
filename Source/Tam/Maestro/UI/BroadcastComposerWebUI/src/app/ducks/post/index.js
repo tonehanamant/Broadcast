@@ -465,9 +465,9 @@ export const toggleUnlinkedTab = (tab) => {
   return undefined;
 };
 
-export const rescrubUnlinkedIscis = ids => ({
+export const rescrubUnlinkedIscis = isci => ({
   type: ACTIONS.RESCRUB_UNLIKED_ISCI.request,
-  payload: { ids },
+  payload: { isci },
 });
 
 export const closeUnlinkedIsciModal = modalPrams => ({
