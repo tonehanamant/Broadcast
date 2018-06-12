@@ -794,6 +794,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ScrubUnlinkedIsci()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new ScrubIsciRequest
+                {
+                    Isci = "AAAAAAAA"
+                };
+                var result = _Sut.ScrubUnlinkedAffidavitDetailsByIsci(request,DateTime.Now, "test-user");
+
+                var affidavit = _Repo.GetAffidavit(157, true);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
+                jsonResolver.Ignore(typeof(AffidavitClientScrub), "Id");
+                jsonResolver.Ignore(typeof(AffidavitClientScrubAudience), "AffidavitClientScrubId");
+                jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
+                jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
+                jsonResolver.Ignore(typeof(AffidavitFile), "MediaMonthId");
+                jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileProblem), "AffidavitFileId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(affidavit, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
         private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {
             var request = new OpenMarketAllocationSaveRequest

@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -95,6 +96,15 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis(false));
+        }
+
+        [HttpPost]
+        [Route("ScrubUnlinkedIsci")]
+        public BaseResponse<bool> ScrubUnlinkedIsci(ScrubIsciRequest request)
+        {
+            return
+                _ConvertToBaseResponse(() =>
+                    _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().ScrubUnlinkedAffidavitDetailsByIsci(request, DateTime.Now, Identity.Name));
         }
 
         [HttpGet]

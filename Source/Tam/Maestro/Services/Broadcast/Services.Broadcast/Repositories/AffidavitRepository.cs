@@ -102,7 +102,7 @@ namespace Services.Broadcast.Repositories
                     leadout_show_type = d.LeadOutShowType,
                     adjusted_air_date = d.AdjustedAirDate,
                     archived = d.Archived,
-                    affidavit_client_scrubs = _MapFromAffidavitClientSubs(d.AffidavitClientScrubs),
+                    affidavit_client_scrubs = _MapFromAffidavitClientScrubs(d.AffidavitClientScrubs),
                     affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(d.AffidavitFileDetailProblems),
                     affidavit_file_detail_demographics = d.Demographics.Select(demo =>
                         new affidavit_file_detail_demographics
@@ -128,7 +128,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        private ICollection<affidavit_client_scrubs> _MapFromAffidavitClientSubs(List<AffidavitClientScrub> affidavitClientScrubs)
+        private ICollection<affidavit_client_scrubs> _MapFromAffidavitClientScrubs(List<AffidavitClientScrub> affidavitClientScrubs)
         {
             var result = affidavitClientScrubs.Select(s => new affidavit_client_scrubs
             {
@@ -169,7 +169,7 @@ namespace Services.Broadcast.Repositories
                         context.affidavit_file_detail_problems.RemoveRange(detail.affidavit_file_detail_problems);
                         context.affidavit_client_scrubs.RemoveRange(detail.affidavit_client_scrubs);
                         detail.affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(affidavitFileDetail.AffidavitFileDetailProblems);
-                        detail.affidavit_client_scrubs = _MapFromAffidavitClientSubs(affidavitFileDetail.AffidavitClientScrubs);
+                        detail.affidavit_client_scrubs = _MapFromAffidavitClientScrubs(affidavitFileDetail.AffidavitClientScrubs);
                         context.SaveChanges();
                     }
                 });
@@ -654,7 +654,7 @@ namespace Services.Broadcast.Repositories
                     var affidavitDetails = (from affidavitFileDetail in context.affidavit_file_details
                                             where affidavitFileDetail.isci == isci
                                             && !affidavitFileDetail.affidavit_client_scrubs.Any()
-                                            select affidavitFileDetail);
+                                            select affidavitFileDetail).ToList();
 
                     return affidavitDetails.Select(d => new AffidavitFileDetail
                     {

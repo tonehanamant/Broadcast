@@ -47,6 +47,9 @@ const post = {
   archiveUnlinkedIscis: isciIds => (
     call(POST, `${apiBase}Post/ArchiveUnlinkedIsci`, isciIds)
   ),
+  rescrubUnlinkedIscis: isci => (
+    call(POST, `${apiBase}Post/ScrubUnlinkedIsci`, { Isci: isci })
+  ),
 };
 
 const postPrePosting = {

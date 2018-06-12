@@ -25,7 +25,7 @@ namespace Services.Broadcast.ApplicationServices
         AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
 
         AffidavitSaveResult SaveAffidavitValidationErrors(AffidavitSaveRequest saveRequest, string userName,List<AffidavitValidationResult> affidavitValidationResults);
-        void RescrubUnlinkedAffidavitDetailsByIsci(string isci, DateTime currentDateTime, string username);
+        bool ScrubUnlinkedAffidavitDetailsByIsci(ScrubIsciRequest request, DateTime currentDateTime, string username);
 
         string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
     }
@@ -153,23 +153,28 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
 
-            var matchedAffidavitDetails = _LinkAndValidateContractIscis(_MapToAffidavitFileDetails(saveRequest.Details));
+            var affidavitFileDetailsToBeLinked = _MapToAffidavitFileDetails(saveRequest.Details);
+            foreach (var detail in affidavitFileDetailsToBeLinked)
+            {
+                if (_PostRepository.IsIsciBlacklisted(new List<string> { detail.Isci }))
+                {
+                    detail.AffidavitFileDetailProblems.Add(new AffidavitFileDetailProblem
+                    {
+                        Description = ARCHIVED_ISCI,
+                        Type = AffidavitFileDetailProblemTypeEnum.ArchivedIsci
+                    });
+                    detail.Archived = true;
+                    affidavitFile.AffidavitFileDetails.Add(detail);
+                    affidavitFileDetailsToBeLinked.Remove(detail);
+                }
+            }
+
+            var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitFileDetailsToBeLinked);
             _SetPostingBookData(matchedAffidavitDetails, postingBookId);
 
 
             foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
             {
-                //=== START> Move this section before linking in order to exclude blacklisted records from linking
-                if (_PostRepository.IsIsciBlacklisted(new List<string> { matchedAffidavitDetail.AffidavitDetail.Isci }))
-                {
-                    matchedAffidavitDetail.AffidavitDetailProblems.Add(new AffidavitFileDetailProblem
-                    {
-                        Description = ARCHIVED_ISCI,
-                        Type = AffidavitFileDetailProblemTypeEnum.ArchivedIsci
-                    });
-                    matchedAffidavitDetail.Archived = true;
-                }
-                //====== END<
 
                 var det = matchedAffidavitDetail.AffidavitDetail;
                 det.AffidavitClientScrubs =
@@ -199,7 +204,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper()) //Ensure both database requests succeed or fail together
             {
                 result.Id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
-                _ProposalRepository.UpdateProposalDetailPostingBooks(_GetProposalDetailIdsWithPostingBookId(affidavitFile));
+                _ProposalRepository.UpdateProposalDetailPostingBooks(_GetProposalDetailIdsWithPostingBookId(affidavitFile.AffidavitFileDetails));
                 transaction.Complete();
             }
 
@@ -238,10 +243,10 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        public void RescrubUnlinkedAffidavitDetailsByIsci(string isci, DateTime currentDateTime, string username)
+        public bool ScrubUnlinkedAffidavitDetailsByIsci(ScrubIsciRequest request, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
-            var unlinkedAffidavitDetails = _AffidavitRepository.GetUnlinkedAffidavitDetailsByIsci(isci);
+            var unlinkedAffidavitDetails = _AffidavitRepository.GetUnlinkedAffidavitDetailsByIsci(request.Isci);
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(unlinkedAffidavitDetails);
             _SetPostingBookData(matchedAffidavitDetails, postingBookId);
             foreach (var matchedAffidavitDetail in matchedAffidavitDetails)
@@ -268,12 +273,18 @@ namespace Services.Broadcast.ApplicationServices
             var affidavitFileDetails = matchedAffidavitDetails.Select(d => d.AffidavitDetail).ToList();
             _ScrubMatchedAffidavitRecords(affidavitFileDetails);
             _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitFileDetails);
-            _AffidavitRepository.SaveScrubbedFileDetails(affidavitFileDetails);
+            using (var transaction = new TransactionScopeWrapper()) //Ensure both database requests succeed or fail together
+            {
+                _AffidavitRepository.SaveScrubbedFileDetails(affidavitFileDetails);
+                _ProposalRepository.UpdateProposalDetailPostingBooks(_GetProposalDetailIdsWithPostingBookId(affidavitFileDetails));
+                transaction.Complete();
+            }
+            return true;
         }
 
-        private List<ProposalDetailPostingData> _GetProposalDetailIdsWithPostingBookId(AffidavitFile affidavitFile)
+        private List<ProposalDetailPostingData> _GetProposalDetailIdsWithPostingBookId(List<AffidavitFileDetail> affidavitFileDetails)
         {
-            var result = affidavitFile.AffidavitFileDetails.SelectMany(d => d.AffidavitClientScrubs.Select(s => new ProposalDetailPostingData
+            var result = affidavitFileDetails.SelectMany(d => d.AffidavitClientScrubs.Select(s => new ProposalDetailPostingData
             {
                 ProposalVersionDetailId = s.ProposalVersionDetailId,
                 PostingBookId = s.PostingBookId.Value,
@@ -299,7 +310,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public void _ScrubMatchedAffidavitRecords(List<AffidavitFileDetail> affidavitFileDetails)
+        private void _ScrubMatchedAffidavitRecords(List<AffidavitFileDetail> affidavitFileDetails)
         {
             var stations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStations().ToDictionary(k => k.LegacyCallLetters, v => v);
