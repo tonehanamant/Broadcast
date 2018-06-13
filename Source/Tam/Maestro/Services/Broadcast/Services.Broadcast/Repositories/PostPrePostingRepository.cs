@@ -55,99 +55,80 @@ namespace Services.Broadcast.Repositories
 
         public PostPrePostingFile GetPost(int id)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            return _InReadUncommitedTransaction(c =>
             {
-                return _InReadUncommitedTransaction(c =>
-                {
-                    return c.post_files.Include(f => f.post_file_details)
-                                       .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
-                                       .Single(f => f.id == id).Convert();
-                });
-            }
+                return c.post_files.Include(f => f.post_file_details)
+                                    .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
+                                    .Single(f => f.id == id).Convert();
+            });
         }
 
         public int SavePost(post_files file)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            _InReadUncommitedTransaction(
+            context =>
             {
-                _InReadUncommitedTransaction(
-                context =>
+                if (file.id > 0)
                 {
-                    if (file.id > 0)
-                    {
-                        var dbPost = context.post_files.Find(file.id);
-                        dbPost.equivalized = file.equivalized;
-                        dbPost.posting_book_id = file.posting_book_id;
+                    var dbPost = context.post_files.Find(file.id);
+                    dbPost.equivalized = file.equivalized;
+                    dbPost.posting_book_id = file.posting_book_id;
 
-                        var oldPostFileDemos = context.post_file_demos.Where(pfd => pfd.post_file_id == file.id);
-                        context.post_file_demos.RemoveRange(oldPostFileDemos);
+                    var oldPostFileDemos = context.post_file_demos.Where(pfd => pfd.post_file_id == file.id);
+                    context.post_file_demos.RemoveRange(oldPostFileDemos);
 
-                        dbPost.post_file_demos = file.post_file_demos.Select(pfd => new post_file_demos { demo = pfd.demo }).ToList();
-                        dbPost.playback_type = file.playback_type;
-                        dbPost.modified_date = file.modified_date;
-                    }
-                    else
-                    {
-                        context.post_files.Add(file);
-                    }
-                    context.SaveChanges();
-                });
-                return file.id;
-            }
+                    dbPost.post_file_demos = file.post_file_demos.Select(pfd => new post_file_demos { demo = pfd.demo }).ToList();
+                    dbPost.playback_type = file.playback_type;
+                    dbPost.modified_date = file.modified_date;
+                }
+                else
+                {
+                    context.post_files.Add(file);
+                }
+                context.SaveChanges();
+            });
+            return file.id;
         }
 
         public bool DeletePost(int id)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            _InReadUncommitedTransaction(c =>
             {
-                _InReadUncommitedTransaction(c =>
-                {
-                    var upload = c.post_files.Single(f => f.id == id);
+                var upload = c.post_files.Single(f => f.id == id);
 
-                    c.post_files.Remove(upload);
+                c.post_files.Remove(upload);
 
-                    c.SaveChanges();
-                });
-            }
+                c.SaveChanges();
+            });
             return true;
         }
 
         public void SavePostImpressions(List<post_file_detail_impressions> impressions)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            _InReadUncommitedTransaction(c =>
             {
-                _InReadUncommitedTransaction(c =>
-                {
-                    c.post_file_detail_impressions.AddRange(impressions);
-                    c.SaveChanges();
-                });
-            }
+                BulkInsert(c,impressions);
+            });
         }
 
         public void DeletePostImpressions(int id)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
                 _InReadUncommitedTransaction(c =>
                 {
                     c.post_file_detail_impressions.RemoveRange(c.post_file_details.Where(d => d.post_file_id == id).SelectMany(d => d.post_file_detail_impressions));
                     c.SaveChanges();
                 });
-            }
         }
 
         public post_files GetPostEF(int id)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            return _InReadUncommitedTransaction(c =>
             {
-                return _InReadUncommitedTransaction(c =>
-                {
-                    return c.post_files.Include(f => f.post_file_details)
-                        .Include(f => f.post_file_demos)
-                        .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
-                        .Single(f => f.id == id);
-                });
-            }
+                return c.post_files.Include(f => f.post_file_details)
+                    .Include(f => f.post_file_demos)
+                    .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
+                    .Single(f => f.id == id);
+            });
         }
 
         public bool PostExist(string fileName)

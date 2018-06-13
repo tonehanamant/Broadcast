@@ -89,7 +89,7 @@ export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll,
             text: 'Rescrub this ISCI',
             key: 'menu-rescrub-isci',
             EVENT_HANDLER: ({ metaData }) => {
-              rescrubIscis([metaData.rowData.FileDetailId]);
+              rescrubIscis(metaData.rowData.ISCI);
             },
           },
         ],

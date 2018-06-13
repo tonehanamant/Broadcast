@@ -427,6 +427,9 @@
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Master File APR18.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\MASTER_CONTACT_LIST.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
