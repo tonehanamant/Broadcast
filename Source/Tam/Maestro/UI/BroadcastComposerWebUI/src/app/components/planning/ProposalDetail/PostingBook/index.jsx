@@ -161,14 +161,13 @@ class PostingBook extends Component {
 
           <Modal.Footer>
             <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
-            {!isDisableForm &&
               <Button
                 disabled={isDisableForm}
                 onClick={this.showConfirmation}
                 bsStyle="success"
               >
               Save
-              </Button>}
+              </Button>
           </Modal.Footer>
         </Modal>
 

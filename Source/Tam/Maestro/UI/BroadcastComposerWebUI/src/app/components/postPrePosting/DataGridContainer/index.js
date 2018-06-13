@@ -6,6 +6,7 @@ import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
 import { getPostPrePostingInitialData, getPostPrePosting, getPostPrePostingFiltered, deletePostPrePosting, getPostPrePostingFileEdit } from 'Ducks/postPrePosting';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
+import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import Sorter from 'Utils/react-redux-grid-sorter';
 
 /* ////////////////////////////////// */
@@ -185,6 +186,30 @@ export class DataGridContainer extends Component {
       },
     ];
 
+    const menuItems = [
+      {
+        text: 'File Settings',
+        key: 'menu-file-settings',
+        EVENT_HANDLER: ({ metaData }) => {
+          this.contextMenuFileSettingsAction(metaData.rowData.Id);
+        },
+      },
+      {
+        text: 'Post Report',
+        key: 'menu-post-report',
+        EVENT_HANDLER: ({ metaData }) => {
+          window.open(`${window.location.origin}/broadcast/api/PostPrePosting/Report/${metaData.rowData.Id}`, '_blank');
+        },
+      },
+      {
+        text: 'Delete',
+        key: 'menu-delete',
+        EVENT_HANDLER: ({ metaData }) => {
+          this.contextMenuDeleteAction(metaData.rowData);
+        },
+      },
+    ];
+
     /* GRID PLGUINS */
     const plugins = {
       COLUMN_MANAGER: {
@@ -216,60 +241,17 @@ export class DataGridContainer extends Component {
         activeCls: 'active',
         selectionEvent: 'singleclick',
       },
-      GRID_ACTIONS: {
-        iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'File Settings',
-            key: 'menu-file-settings',
-            EVENT_HANDLER: ({ metaData }) => {
-              this.contextMenuFileSettingsAction(metaData.rowData.Id);
-            },
-          },
-          {
-            text: 'Post Report',
-            key: 'menu-post-report',
-            EVENT_HANDLER: ({ metaData }) => {
-              window.open(`${window.location.origin}/broadcast/api/PostPrePosting/Report/${metaData.rowData.Id}`, '_blank');
-            },
-          },
-          {
-            text: 'Delete',
-            key: 'menu-delete',
-            EVENT_HANDLER: ({ metaData }) => {
-              this.contextMenuDeleteAction(metaData.rowData);
-            },
-          },
-        ],
-      },
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
-          const rowId = row.get('_key');
-          const updatedRowProps = {
-            ...rowProps,
-            tabIndex: 1,
-            onBlur: () => {
-              if (rowId) {
-                this.hideContextMenu({ stateKey });
-              }
-            },
-            onContextMenu: (e) => {
-              e.preventDefault();
-
-              const rowElement = e.target.closest('.react-grid-row');
-              const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
-              contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) - 102}px`); // 102 contextMenu width
-
-              this.deselectAll({ stateKey });
-              this.selectRow({ rowId, stateKey });
-              this.showContextMenu({ id: rowId, stateKey });
-            },
-          };
-          return (
-            <tr {...updatedRowProps}>{ cells }</tr>
-          );
-        },
+        renderer: ({ cells, ...rowData }) => (
+            <ContextMenuRow
+              {...rowData}
+              menuItems={menuItems}
+              stateKey={stateKey}
+            >
+              {cells}
+            </ContextMenuRow>
+          ),
       },
     };
 
