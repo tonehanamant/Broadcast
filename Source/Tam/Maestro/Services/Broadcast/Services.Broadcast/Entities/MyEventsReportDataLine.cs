@@ -4,23 +4,7 @@ namespace Services.Broadcast.Entities
 {
     public class MyEventsReportDataLine
     {
-        private const int ReportableNameMaxLength = 25;
-
-        public string ReportableName
-        {
-            get
-            {
-                var partialReportableName = $" {DaypartCode} {SpotLength} {ScheduleStartDate:MM-dd-yy}";
-                var partialReportableNameLength = partialReportableName.Length;
-                var remainingLength = ReportableNameMaxLength - partialReportableNameLength;
-                var advertiser = Advertiser;
-
-                if (Advertiser.Length + partialReportableNameLength > ReportableNameMaxLength)
-                    advertiser = advertiser.Substring(0, remainingLength);
-
-                return advertiser + partialReportableName;
-            }
-        }
+        public string ReportableName { get; set; }
         public string Advertiser { get; set; }
         public string DaypartCode { get; set; }
         public int SpotLength { get; set; }
@@ -43,7 +27,7 @@ namespace Services.Broadcast.Entities
                 return ScheduleStartDate.AddDays(6);
             }
         }
-        public string CallLetter { get; set; }
+        public string StationCallLetters { get; set; }
         public char LineupPOT { get { return 'O'; } }
         public string LineupDOW
         {

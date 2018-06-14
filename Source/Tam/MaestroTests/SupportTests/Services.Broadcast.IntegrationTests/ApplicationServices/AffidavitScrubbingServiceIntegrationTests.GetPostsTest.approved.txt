@@ -65,6 +65,22 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
+      "ContractName": "MyEvents Naming Test",
+      "GuaranteedAudienceId": 34,
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 2,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
+      "ContractName": "MyEvents Naming Test 2",
+      "GuaranteedAudienceId": 34,
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 2,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
       "ContractName": "Proposal Test 5",
       "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
