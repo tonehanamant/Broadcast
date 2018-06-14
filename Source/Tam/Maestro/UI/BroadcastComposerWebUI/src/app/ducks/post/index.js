@@ -206,6 +206,14 @@ const initialState = {
         exclusions: [],
         filterOptions: [],
       },
+      TimeAired: {
+        filterDisplay: 'Select Time Range',
+        filterKey: 'TimeAired',
+        type: 'timeInput',
+        active: false,
+        exclusions: false,
+        filterOptions: [],
+      },
       WeekStart: {
         filterDisplay: 'Week Starts',
         filterKey: 'WeekStart',
@@ -320,8 +328,13 @@ export default function reducer(state = initialState, action) {
             DateAiredEnd: filtersData.DateAiredEnd,
             originalDateAiredStart: filtersData.DateAiredStart,
             originalDateAiredEnd: filtersData.DateAiredEnd,
-
         };
+        activeFilters.TimeAired.filterOptions = {
+          TimeAiredStart: filtersData.TimeAiredStart,
+          TimeAiredEnd: filtersData.TimeAiredEnd,
+          originalTimeAiredStart: filtersData.TimeAiredStart,
+          originalTimeAiredEnd: filtersData.TimeAiredEnd,
+      };
         activeFilters.GenreName.filterOptions = genreOptions;
         activeFilters.ISCI.filterOptions = houseIsciOptions;
         activeFilters.Market.filterOptions = marketOptions;

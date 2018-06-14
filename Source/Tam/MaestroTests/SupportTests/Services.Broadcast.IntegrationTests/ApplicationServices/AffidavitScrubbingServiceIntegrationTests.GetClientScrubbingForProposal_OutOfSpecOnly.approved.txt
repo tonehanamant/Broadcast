@@ -79,6 +79,8 @@
     "DistinctSpotLengths": [],
     "DistinctStations": [],
     "DistinctWeekStarts": [],
+    "TimeAiredEnd": null,
+    "TimeAiredStart": null,
     "WeekEnd": null,
     "WeekStart": null
   },

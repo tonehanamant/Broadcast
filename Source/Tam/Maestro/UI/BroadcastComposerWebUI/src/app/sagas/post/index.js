@@ -333,6 +333,10 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
               // tbd check range based on value.filterOptions
               // todo: need to check if the 2 values are equal
               ret = moment(item[value.filterKey]).isBetween(value.filterOptions.DateAiredStart, value.filterOptions.DateAiredEnd, 'day', true);
+            } else if (value.type === 'timeInput') {
+              // tbd check range based on value.filterOptions
+              // todo: need to check if the 2 values are equal
+              ret = moment(item[value.filterKey]).isBetween(value.filterOptions.TimeAiredStart, value.filterOptions.TimeAiredEnd, 'seconds', true);
             }
           }
         });
@@ -480,6 +484,16 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
           originalDateAiredEnd: newFilters.DateAiredEnd,
         };
         adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+      } else if (filter.type === 'timeInput') {
+        // change originals - modifying active could beak what user has changed
+        const filterOptions = {
+          TimeAiredStart: filter.filterOptions.TimeAiredStart,
+          TimeAiredEnd: filter.filterOptions.TimeAiredEnd,
+          originalTimeAiredStart: newFilters.originalTimeAiredStart,
+          originalTimeAiredEnd: newFilters.originalTimeAiredEnd,
+        };
+        adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+        // adjustedFilters[key] = filter;
       }
     }
   });
