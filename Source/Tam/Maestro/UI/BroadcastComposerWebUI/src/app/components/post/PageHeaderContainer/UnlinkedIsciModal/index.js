@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
-import { Grid, Actions } from 'react-redux-grid';
+import { Grid } from 'react-redux-grid';
 import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
 import { generateGridConfig } from './util';
-
-
-const { MenuActions, SelectionActions } = Actions;
-const { showMenu, hideMenu } = MenuActions;
-const { selectRow, deselectAll } = SelectionActions;
 
 
 const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } } }) => ({
@@ -19,10 +14,6 @@ const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } } }) 
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    showMenu,
-    hideMenu,
-    selectRow,
-    deselectAll,
     closeUnlinkedIsciModal,
     rescrubIscis: rescrubUnlinkedIscis,
     archiveIscis: archiveUnlinkedIscis,
@@ -59,7 +50,7 @@ export class UnlinkedIsciModal extends Component {
   render() {
     const { modal, unlinkedIscis } = this.props;
     const { activeTab } = this.state;
-    const grid = generateGridConfig(this.props, activeTab === 'unlinked');
+    const grid = generateGridConfig(this.props, activeTab);
 
     return (
       <Modal show={modal.active} onHide={this.close} dialogClassName="large-80-modal">
@@ -99,11 +90,6 @@ UnlinkedIsciModal.propTypes = {
   toggleTab: PropTypes.func.isRequired,
   archiveIscis: PropTypes.func.isRequired,
   closeUnlinkedIsciModal: PropTypes.func.isRequired,
-
-	deselectAll: PropTypes.func.isRequired,
-	selectRow: PropTypes.func.isRequired,
-	showMenu: PropTypes.func.isRequired,
-	hideMenu: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UnlinkedIsciModal);
