@@ -227,6 +227,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsServiceTests.cs" />
+    <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />

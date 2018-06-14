@@ -111,7 +111,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitProgramScrubbingEngine, AffidavitProgramScrubbingEngine>();
             unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
             unityContainer.RegisterType<IAffidavitScrubbingService, AffidavitScrubbingService>();
-            unityContainer.RegisterType<IAffidavitEmailSenderService, AffidavitEmailSenderService>();
+            unityContainer.RegisterType<IAffidavitEmailProcessorService, AffidavitEmailProcessorService>();
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
             unityContainer.RegisterType<IPostReportService, PostReportService>();
             unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();

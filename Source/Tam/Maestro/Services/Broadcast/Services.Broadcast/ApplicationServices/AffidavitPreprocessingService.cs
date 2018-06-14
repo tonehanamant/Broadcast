@@ -30,13 +30,6 @@ namespace Services.Broadcast.ApplicationServices
         List<OutboundAffidavitFileValidationResultDto> ProcessFiles(string userName);
         List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName);
         void ProcessErrorFiles();
-
-
-        /// <summary>
-        /// Move invalid files to invalid files folder. Notify users about failed files
-        /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> files);
     }
 
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
@@ -48,13 +41,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
+        private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
         
-        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailSenderService affidavitEmailSenderService)
+        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailProcessorService affidavitEmailProcessorService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            _AffidavitEmailSenderService = affidavitEmailSenderService;
+            _affidavitEmailProcessorService = affidavitEmailProcessorService;
         }
 
         /// <summary>
@@ -79,7 +72,7 @@ namespace Services.Broadcast.ApplicationServices
                     this._CreateAndUploadZipArchiveToWWTV(validFileList);
                 }
 
-                ProcessInvalidFiles(validationList);
+                _affidavitEmailProcessorService.ProcessAndSendInvalidDataFiles(validationList);
                 DeleteSuccessfulFiles(validationList);
             });
 
@@ -91,7 +84,8 @@ namespace Services.Broadcast.ApplicationServices
             List<string> filepathList;
             try
             {
-                filepathList = Directory.GetFiles(WWTVSharedNetworkHelper.GetLocalDropFolder()).ToList();
+                var dropFolder = WWTVSharedNetworkHelper.GetLocalDropFolder();
+                filepathList = Directory.GetFiles(dropFolder).ToList();
             }
             catch (Exception e)
             {
@@ -112,23 +106,6 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        /// <summary>
-        /// Move invalid files to invalid files folder. Notify users about failed files
-        /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        public void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
-        {
-            var invalidFiles = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Invalid);
-
-            foreach (var invalidFile in invalidFiles)
-            {
-                var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
-
-                var emailBody = _CreateInvalidFileEmailBody(invalidFile, invalidFilePath);
-
-                _AffidavitEmailSenderService.Send(emailBody,"Error Preprocessing");
-            }
-        }
 
         /// <summary>
         /// Creates and uploads a zip archive to WWTV FTP server
@@ -146,34 +123,6 @@ namespace Services.Broadcast.ApplicationServices
                 _UploadZipToWWTV(zipFileName);
                 File.Delete(zipFileName);
             }
-        }
-
-        private string _CreateInvalidFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath)
-        {
-            var mailBody = new StringBuilder();
-
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", invalidFile.FileName);
-
-            foreach (var errorMessage in invalidFile.ErrorMessages)
-            {
-                mailBody.Append(string.Format("{0}\n",errorMessage));
-            }
-
-            mailBody.AppendFormat("\nFile located in {0}\n", invalidFilePath);
-
-            return mailBody.ToString();
-        }
-
-        private string _MoveInvalidFileToArchiveFolder(OutboundAffidavitFileValidationResultDto invalidFile)
-        {
-            var combinedFilePath = WWTVSharedNetworkHelper.BuildLocalErrorPath(Path.GetFileName(invalidFile.FilePath));
-
-            if (File.Exists(combinedFilePath))
-                File.Delete(combinedFilePath);
-
-            File.Move(invalidFile.FilePath,combinedFilePath);
-
-            return combinedFilePath;
         }
 
 
@@ -203,7 +152,6 @@ namespace Services.Broadcast.ApplicationServices
                 var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
                 Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
             });
-            
         }
 
         private List<string> _DownloadFTPFiles(List<string> files, string remoteFTPPath,ref List<string> localFilePaths)

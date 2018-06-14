@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class AffidavitServiceTests
     {
-        private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+        private readonly IProposalService _ProposalService ;
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
         private readonly IAffidavitService _Sut;
         private readonly IAffidavitRepository _Repo;
@@ -36,6 +36,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _Sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitService>();
             _Repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                 .GetDataRepository<IAffidavitRepository>();
+
+            _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
         }
         [Ignore]
         [Test]
