@@ -34,7 +34,11 @@ const ContextMenuRow = (props) => {
         id={menuId}
         storeRef={false}
         render={({ children, ...rest }) => (
-          <tr {...rowProps} {...rest}>
+          <tr
+            {...rowProps}
+            {...rest}
+            className={rowProps.className}
+          >
             {children}
           </tr>
         )}

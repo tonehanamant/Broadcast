@@ -1,5 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
@@ -62,13 +63,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly Lazy<Image> _LogoImage;
         private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
 
         public PostReportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IProjectionBooksService projectionBooksService)
+            IProjectionBooksService projectionBooksService,
+            IMyEventsReportNamingEngine myEventsReportNamingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -80,6 +83,7 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _ProposalService = proposalService;
             _ProjectionBooksService = projectionBooksService;
+            _MyEventsReportNamingEngine = myEventsReportNamingEngine;
             _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(_SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
         }
 
@@ -263,6 +267,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     line.Advertiser = advertiser.Display;
                     line.SpotLength = spotLengths[line.SpotLengthId];
+                    line.ReportableName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(line.DaypartCode, line.SpotLength, line.ScheduleStartDate, line.Advertiser);
                 }
 
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);
@@ -273,7 +278,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
         {
-            var grouped = myEventsReportDataList.GroupBy(x => x.CallLetter);
+            var grouped = myEventsReportDataList.GroupBy(x => x.StationCallLetters);
 
             foreach(var group in grouped)
             {
