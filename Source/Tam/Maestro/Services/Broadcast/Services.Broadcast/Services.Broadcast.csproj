@@ -244,6 +244,7 @@
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
+    <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\AffidavitFileProblems.cs" />
     <Compile Include="Entities\AffidavitSaveResult.cs" />
     <Compile Include="Entities\AffidavitValidationResult.cs" />

@@ -99,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
+            unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
 
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();

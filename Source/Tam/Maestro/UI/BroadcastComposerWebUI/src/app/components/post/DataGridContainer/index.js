@@ -6,6 +6,7 @@ import { toggleModal, createAlert } from 'Ducks/app';
 import { getPost, getPostClientScrubbing } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
+import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import Sorter from 'Utils/react-redux-grid-sorter';
 import numeral from 'numeral';
 
@@ -13,6 +14,7 @@ const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
+
 
 const mapStateToProps = ({ post: { postGridData }, grid, dataSource, menu }) => ({
   postGridData,
@@ -48,17 +50,11 @@ export class DataGridContainer extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.postGridData !== this.props.postGridData) {
-     /*  this.props.setOverlayLoading({
-        id: 'gridPostMain',
-        loading: true,
-      }); */
-
       // evaluate column sort direction
       setTimeout(() => {
         const cols = this.props.grid.get('gridPostMain').get('columns');
         let sortCol = cols.find(x => x.sortDirection);
         if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
-
         if (sortCol) {
           const datasource = this.props.dataSource.get('gridPostMain');
           const sorted = Sorter.sortBy(sortCol.dataIndex, sortCol.sortDirection || sortCol.defaultSortDirection, datasource);
@@ -68,15 +64,7 @@ export class DataGridContainer extends Component {
             stateKey: 'gridPostMain',
           });
         }
-
-        /* this.props.setOverlayLoading({
-          id: 'gridPostMain',
-          loading: false,
-        }); */
       }, 0);
-
-      // Hide Context Menu (assumes visible)
-      this.props.hideMenu({ stateKey: 'gridPostMain' });
     }
   }
 
@@ -99,8 +87,62 @@ export class DataGridContainer extends Component {
     // change to params
     this.props.getPostClientScrubbing({ proposalId: Id, showModal: true, filterKey: 'All' });
   }
+
   render() {
     const stateKey = 'gridPostMain';
+    const menuItems = [
+      {
+        text: 'NSI Post Report',
+        key: 'menu-post-nsi-report',
+        EVENT_HANDLER: ({ metaData }) => {
+          const inSpec = metaData.rowData.SpotsInSpec !== 0;
+          // console.log('nsi menu', metaData, inSpec);
+          if (inSpec) {
+            window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReport/${metaData.rowData.ContractId}`, '_blank');
+          } else {
+            this.props.createAlert({
+              type: 'warning',
+              headline: 'NSI Report Unavailable',
+              message: 'There are no in-spec spots for this proposal.',
+            });
+          }
+        },
+      },
+      {
+        text: 'NSI Post Report with Overnights',
+        key: 'menu-post-nsi-report-overnight',
+        EVENT_HANDLER: ({ metaData }) => {
+          const inSpec = metaData.rowData.SpotsInSpec !== 0;
+          // console.log('nsi overnight menu', metaData, inSpec);
+          if (inSpec) {
+            window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReportWithOvernight/${metaData.rowData.ContractId}`, '_blank');
+          } else {
+            this.props.createAlert({
+              type: 'warning',
+              headline: 'NSI Report with Overnights Unavailable',
+              message: 'There are no in-spec spots for this proposal.',
+            });
+          }
+        },
+      },
+      {
+        text: 'MYEvents Report',
+        key: 'menu-post-myevents-report',
+        EVENT_HANDLER: ({ metaData }) => {
+          const inSpec = metaData.rowData.SpotsInSpec !== 0;
+          if (inSpec) {
+            window.open(`${window.location.origin}/broadcast/api/Post/DownloadMyEventsReport/${metaData.rowData.ContractId}`, '_blank');
+          } else {
+            this.props.createAlert({
+              type: 'warning',
+              headline: 'MYEvents Report Unavailable',
+              message: 'There are no in-spec spots for this proposal.',
+            });
+          }
+        },
+      },
+    ];
+
     const columns = [
       {
           name: 'Contract',
@@ -171,88 +213,16 @@ export class DataGridContainer extends Component {
         activeCls: 'active',
         selectionEvent: 'singleclick',
       },
-      GRID_ACTIONS: {
-        iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'NSI Post Report',
-            key: 'menu-post-nsi-report',
-            EVENT_HANDLER: ({ metaData }) => {
-              const inSpec = metaData.rowData.SpotsInSpec !== 0;
-              // console.log('nsi menu', metaData, inSpec);
-              if (inSpec) {
-                window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReport/${metaData.rowData.ContractId}`, '_blank');
-              } else {
-                this.props.createAlert({
-                  type: 'warning',
-                  headline: 'NSI Report Unavailable',
-                  message: 'There are no in-spec spots for this proposal.',
-                });
-              }
-            },
-          },
-          {
-            text: 'NSI Post Report with Overnights',
-            key: 'menu-post-nsi-report-overnight',
-            EVENT_HANDLER: ({ metaData }) => {
-              const inSpec = metaData.rowData.SpotsInSpec !== 0;
-              // console.log('nsi overnight menu', metaData, inSpec);
-              if (inSpec) {
-                window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReportWithOvernight/${metaData.rowData.ContractId}`, '_blank');
-              } else {
-                this.props.createAlert({
-                  type: 'warning',
-                  headline: 'NSI Report with Overnights Unavailable',
-                  message: 'There are no in-spec spots for this proposal.',
-                });
-              }
-            },
-          },
-          {
-            text: 'MYEvents Report',
-            key: 'menu-post-myevents-report',
-            EVENT_HANDLER: ({ metaData }) => {
-              const inSpec = metaData.rowData.SpotsInSpec !== 0;
-              if (inSpec) {
-                window.open(`${window.location.origin}/broadcast/api/Post/DownloadMyEventsReport/${metaData.rowData.ContractId}`, '_blank');
-              } else {
-                this.props.createAlert({
-                  type: 'warning',
-                  headline: 'MYEvents Report Unavailable',
-                  message: 'There are no in-spec spots for this proposal.',
-                });
-              }
-            },
-          },
-        ],
-      },
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
-          const rowId = row.get('_key');
-          const updatedRowProps = {
-            ...rowProps,
-            tabIndex: 1,
-            onBlur: () => {
-              if (rowId) {
-                this.hideContextMenu({ stateKey });
-              }
-            },
-            onContextMenu: (e) => {
-              e.preventDefault();
-              const rowElement = e.target.closest('.react-grid-row');
-              const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
-              contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) - 102}px`); // 102 contextMenu width
-
-              this.deselectAll({ stateKey });
-              this.selectRow({ rowId, stateKey });
-              this.showContextMenu({ id: rowId, stateKey });
-            },
-          };
-          return (
-            <tr {...updatedRowProps}>{ cells }</tr>
-          );
-        },
+        renderer: ({ cells, ...rowData }) => (
+          <ContextMenuRow
+            {...rowData}
+            menuItems={menuItems}
+            stateKey={stateKey}
+          >
+            {cells}
+          </ContextMenuRow>),
       },
     };
 

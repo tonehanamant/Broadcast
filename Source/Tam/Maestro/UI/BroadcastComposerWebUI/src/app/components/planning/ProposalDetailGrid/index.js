@@ -312,8 +312,9 @@ export default class ProposalDetailGrid extends Component {
         name: 'MyEvent Report Name',
         dataIndex: 'MyEventsReportName',
         width: '20%',
+        editable: true,
         renderer: ({ value, row }) => {
-          const isEditable = this.checkEditable(row, true);
+          const isEditable = true;
           const inputMyEvent = (event) => {
             const storeValue = event.target.value;
             const storeKey = event.target.getAttribute('valueKey');
@@ -331,14 +332,13 @@ export default class ProposalDetailGrid extends Component {
           return (
             <GridCellInput
               name="MyEvent"
-              placeholder=""
+              // placeholder=""
               value={value}
               valueKey="MyEvent"
               isEditable={isEditable}
               maxLength={25}
               onKeyPress={this.keyPress}
 
-              // emptyZeroDefault
               onSaveShowValidation={this.state.DetailGridsInvalid}
               blurAction={inputMyEvent}
               enterKeyPressAction={inputMyEvent}

@@ -1,17 +1,40 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
+
 
 export const stateKey = 'unlinked-isci-modal';
 
-export const setPosition = (e) => {
-    const rowElement = e.target.closest('.react-grid-row');
-    const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
-    contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) + 45}px`);
+const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis }) => ([
+    {
+      text: 'Not a Cadent ISCI',
+      key: 'menu-archive-isci',
+      EVENT_HANDLER: ({ metaData }) => {
+        archiveIscis([metaData.rowData.FileDetailId]);
+      },
+    },
+    {
+      text: 'Rescrub this ISCI',
+      key: 'menu-rescrub-isci',
+      EVENT_HANDLER: ({ metaData }) => {
+        rescrubIscis(metaData.rowData.ISCI);
+      },
+    },
+  ]
+);
+
+const tabInfo = {
+  unlinked: {
+    generateMenuitems: generateUnlinkedMenuitems,
+  },
+  archived: {
+    generateMenuitems: () => {},
+  },
 };
 
 
-export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll, archiveIscis, rescrubIscis }, isAllowContextMenu) => {
+export const generateGridConfig = (props, tabName) => {
 		const columns = [
 			{
 				name: 'ISCI',
@@ -75,48 +98,18 @@ export const generateGridConfig = ({ showMenu, hideMenu, selectRow, deselectAll,
 						method: 'local',
 				},
       },
-      GRID_ACTIONS: {
-        iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'Not a Cadent ISCI',
-            key: 'menu-archive-isci',
-            EVENT_HANDLER: ({ metaData }) => {
-              archiveIscis([metaData.rowData.FileDetailId]);
-            },
-          },
-          {
-            text: 'Rescrub this ISCI',
-            key: 'menu-rescrub-isci',
-            EVENT_HANDLER: ({ metaData }) => {
-              rescrubIscis(metaData.rowData.ISCI);
-            },
-          },
-        ],
-      },
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
-          const rowId = row.get('_key');
-          const updatedRowProps = {
-            ...rowProps,
-            tabIndex: 1,
-            onBlur: () => {
-              if (rowId) {
-                hideMenu({ stateKey });
-              }
-            },
-            onContextMenu: (e) => {
-              if (!isAllowContextMenu) return;
-              e.preventDefault();
-              setPosition(e);
-              deselectAll({ stateKey });
-              selectRow({ rowId, stateKey });
-              showMenu({ id: rowId, stateKey });
-            },
-          };
+        renderer: ({ cells, ...rowData }) => {
+          const menuItems = tabInfo[tabName].generateMenuitems(props);
           return (
-            <tr {...updatedRowProps}>{ cells }</tr>
+            <ContextMenuRow
+              {...rowData}
+              menuItems={menuItems}
+              stateKey={stateKey}
+            >
+              {cells}
+            </ContextMenuRow>
           );
         },
       },

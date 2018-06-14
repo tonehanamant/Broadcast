@@ -474,14 +474,15 @@ namespace Services.Broadcast.Repositories
                             from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
                             let affidavitFileDetail = affidavitClientScrub.affidavit_file_details
                             where proposalVersionDetail.proposal_versions.proposal_id == proposalId &&
-                                  affidavitClientScrub.status == (int) ScrubbingStatus.InSpec
-                            select new {affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail})
+                                  affidavitClientScrub.status == (int) ScrubbingStatus.InSpec &&
+                                  proposalVersionWeeks.myevents_report_name != null
+                            select new {affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail, proposalVersionWeeks})
                         .ToList();
 
-                    var affidavitDataGrouped = affidavitData.GroupBy(x =>
-                        new {x.proposalVersionDetail.spot_length_id, x.proposalVersionDetail.daypart_code});
+                    var affidavitDataGroupedByReportName = affidavitData.
+                        GroupBy(x => x.proposalVersionWeeks.myevents_report_name);
 
-                    foreach (var affidavitDataGroup in affidavitDataGrouped)
+                    foreach (var affidavitDataGroup in affidavitDataGroupedByReportName)
                     {
                         var myEventsReportDataGroup = new MyEventsReportData();
 
@@ -489,7 +490,8 @@ namespace Services.Broadcast.Repositories
                         {
                             var myEventsReportDataItem = new MyEventsReportDataLine
                             {
-                                CallLetter = affidavit.affidavitFileDetail.station,
+                                ReportableName = affidavit.proposalVersionWeeks.myevents_report_name,
+                                StationCallLetters = affidavit.affidavitFileDetail.station,
                                 LineupStartDate = affidavit.affidavitFileDetail.original_air_date,
                                 LineupStartTime = new DateTime().AddSeconds(affidavit.affidavitFileDetail.air_time),
                                 AirDate = affidavit.affidavitFileDetail.original_air_date.AddSeconds(affidavit

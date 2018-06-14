@@ -215,5 +215,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReportWithMyEventsReportName()
+        {
+            var result = _PostReportService.GetMyEventsReportData(26007);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReportWithMyEventsReportNameAndNullReportName()
+        {
+            var result = _PostReportService.GetMyEventsReportData(26008);
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
     }
 }
