@@ -88,13 +88,13 @@ namespace Services.Broadcast.ReportGenerators
         }
 
         /// <summary>
-        /// Generates a report of type T
+        /// Generates a NSI Post Report
         /// </summary>
-        /// <param name="reportData">Data object used to generate the file</param>
+        /// <param name="reportData">Data object used to generate the report</param>
         /// <returns>ReportOutput object containing the generated file stream</returns>
         public ReportOutput Generate(NsiPostReport reportData)
         {
-            var output = new ReportOutput($"NSI Post Report{(reportData.WithOvernightImpressions ? " with Overnights" : string.Empty)}_{reportData.ProposalId}.xlsx");
+            var output = new ReportOutput(reportData.ReportName);
 
             var package = _GenerateExcelPackage(reportData);
 

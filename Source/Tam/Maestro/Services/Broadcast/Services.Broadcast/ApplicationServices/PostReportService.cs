@@ -137,7 +137,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions, proposal.Equivalized);
+                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName);
         }
         /// <summary>
         /// 
