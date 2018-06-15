@@ -148,6 +148,7 @@ namespace Services.Broadcast.Repositories
                 effective_show_type = s.EffectiveShowType,
                 lead_in = s.LeadIn,
                 status = (int)s.Status,
+                effective_isci = s.EffectiveIsci,
                 affidavit_client_scrub_audiences = s.AffidavitClientScrubAudiences.Select(a =>
                     new affidavit_client_scrub_audiences
                     {
@@ -269,6 +270,7 @@ namespace Services.Broadcast.Repositories
                         ModifiedBy = a.modified_by,
                         ModifiedDate = a.modified_date,
                         LeadIn = a.lead_in,
+                        EffectiveIsci = a.effective_isci,
                         ProposalVersionDetailId = a.proposal_version_detail_quarter_weeks
                             .proposal_version_detail_quarters.proposal_version_details.id,
                         PostingBookId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
@@ -654,7 +656,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var affidavitDetails = (from affidavitFileDetail in context.affidavit_file_details
-                                            where affidavitFileDetail.isci == isci
+                                            where affidavitFileDetail.isci.Equals(isci)
                                             && !affidavitFileDetail.affidavit_client_scrubs.Any()
                                             select affidavitFileDetail).ToList();
 

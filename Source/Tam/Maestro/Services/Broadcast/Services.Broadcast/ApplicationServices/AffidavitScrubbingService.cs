@@ -9,6 +9,7 @@ using System.Transactions;
 using Newtonsoft.Json;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
@@ -44,6 +45,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="username">User requesting the change</param>
         /// <returns>True or false based on the errors</returns>
         bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);
+
+        /// <summary>
+        /// Finds all the valid iscis based on the filter
+        /// </summary>
+        /// <param name="isci">Isci filter</param>
+        /// <returns>List of valid iscis</returns>
+        List<string> FindValidIscis(string isci);        
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -234,6 +242,28 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Finds all the valid iscis based on the filter
+        /// </summary>
+        /// <param name="isciFilter">Isci filter</param>
+        /// <returns>List of valid iscis</returns>
+        public List<string> FindValidIscis(string isciFilter)
+        {
+            var iscis = _PostRepository.FindValidIscis(isciFilter);
+            var groupedIscis = iscis.GroupBy(x => new { x.HouseIsci, x.ProposalId });
+            var distinctIscis = iscis.Select(x => x.HouseIsci).Distinct().ToList();
+            foreach (var isci in distinctIscis)
+            {
+                if (groupedIscis.Where(x => x.Key.HouseIsci.Equals(isci)).Count() > 1 
+                    && iscis.Any(x=>x.HouseIsci.Equals(isci) && x.Married == false))
+                {
+                    iscis.RemoveAll(x => x.HouseIsci.Equals(isci));
+                }
+            }
+            
+            return iscis.Select(x=>x.HouseIsci).ToList();
         }
     }
 }

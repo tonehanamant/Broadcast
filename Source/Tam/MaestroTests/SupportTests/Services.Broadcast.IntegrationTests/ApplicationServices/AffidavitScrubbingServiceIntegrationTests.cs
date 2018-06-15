@@ -416,5 +416,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void FindValidIscis()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _AffidavitScrubbingService.FindValidIscis(string.Empty);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
     }
 }

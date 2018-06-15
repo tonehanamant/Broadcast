@@ -3,6 +3,7 @@
   "AffidavitFileDetailId": 0,
   "Comment": null,
   "EffectiveGenre": "Nature",
+  "EffectiveIsci": null,
   "EffectiveProgramName": "East Works",
   "EffectiveShowType": "Documentary",
   "Id": 0,

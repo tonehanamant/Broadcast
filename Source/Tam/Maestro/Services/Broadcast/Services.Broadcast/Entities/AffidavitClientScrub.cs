@@ -27,10 +27,7 @@ namespace Services.Broadcast.Entities
         public string EffectiveShowType { get; set; }
         public int? PostingBookId { get; set; }
         public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
-        public List<AffidavitClientScrubAudience> AffidavitClientScrubAudiences { get; set; }
-        public AffidavitClientScrub()
-        {
-            AffidavitClientScrubAudiences = new List<AffidavitClientScrubAudience>();
-        }
+        public List<AffidavitClientScrubAudience> AffidavitClientScrubAudiences { get; set; } = new List<AffidavitClientScrubAudience>();
+        public string EffectiveIsci { get; set; }
     }
 }

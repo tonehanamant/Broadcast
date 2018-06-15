@@ -3,7 +3,9 @@ import { createAction } from '../actionCreator';
 export const ARCHIVE_UNLIKED_ISCI = createAction('ARCHIVE_UNLIKED_ISCI');
 export const UNLINKED_ISCIS_DATA = createAction('UNLINKED_ISCIS_DATA');
 export const LOAD_ARCHIVED_ISCI = createAction('LOAD_ARCHIVED_ISCI');
+export const LOAD_VALID_ISCI = createAction('LOAD_VALID_ISCI');
 export const RESCRUB_UNLIKED_ISCI = createAction('RESCRUB_UNLIKED_ISCI');
+export const MAP_UNLINKED_ISCI = createAction('MAP_UNLINKED_ISCI');
 
 export const CLOSE_UNLINKED_ISCI_MODAL = 'CLOSE_UNLINKED_ISCI_MODAL';
 

@@ -3,6 +3,8 @@ import * as ACTIONS from './actionTypes.js';
 import { getDay, getDateInFormat } from '../../utils/dateFormatter';
 
 const initialState = {
+  loadingValidIscis: false,
+  typeaheadIscisList: [],
   post: {},
   postGridData: [],
   proposalHeader: {},
@@ -412,6 +414,25 @@ export default function reducer(state = initialState, action) {
       scrubbingFiltersList: [],
     };
 
+    case ACTIONS.LOAD_VALID_ISCI.request:
+      return {
+        ...state,
+        loadingValidIscis: true,
+      };
+
+    case ACTIONS.LOAD_VALID_ISCI.success:
+      return {
+        ...state,
+        typeaheadIscisList: data.Data,
+        loadingValidIscis: false,
+      };
+
+    case ACTIONS.LOAD_VALID_ISCI.failure:
+      return {
+        ...state,
+        loadingValidIscis: false,
+      };
+
     default:
       return state;
   }
@@ -461,6 +482,16 @@ export const archiveUnlinkedIscis = ids => ({
 export const loadArchivedIscis = () => ({
   type: ACTIONS.LOAD_ARCHIVED_ISCI.request,
   payload: {},
+});
+
+export const loadValidIscis = query => ({
+  type: ACTIONS.LOAD_VALID_ISCI.request,
+  payload: { query },
+});
+
+export const mapUnlinkedIsci = payload => ({
+  type: ACTIONS.MAP_UNLINKED_ISCI.request,
+  payload,
 });
 
 // toggle unlinked tabs
