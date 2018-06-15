@@ -1,11 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
 
 namespace WWTVData.Service
 {

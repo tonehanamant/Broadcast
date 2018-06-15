@@ -122,11 +122,18 @@ export class PostScrubbingFilters extends Component {
       },
       {
         name: 'Time Aired',
-        // we need a separate BE dataset
-        dataIndex: 'MatchTime',
+        dataIndex: 'TimeAired',
         width: 100,
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
+        renderer: ({ value }) => (
+          // <div style={inactiveFilterStyle} />
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          filterType="timeInput"
+          applyFilter={this.applyFilter}
+          />
         ),
       },
       {

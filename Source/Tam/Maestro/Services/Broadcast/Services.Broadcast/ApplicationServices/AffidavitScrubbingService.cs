@@ -43,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileDetailIds">Iscis to archive</param>
         /// <param name="username">User requesting the change</param>
         /// <returns>True or false based on the errors</returns>
-        bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);        
+        bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -80,7 +80,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var postedProposals = _PostRepository.GetAllPostedProposals();
 
-            foreach(var post in postedProposals)
+            foreach (var post in postedProposals)
             {
                 _SetPrimaryAudienceImpressions(post);
             }
@@ -146,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices
                 var clientScrubs = scrubs;
                 if (clientScrubs == null)
                     clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter);
-                
+
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
@@ -163,7 +163,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
                     DistinctGenres = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.GenreName)).Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
+                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList() ,
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
                     WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
                     DateAiredStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.DateAired).OrderBy(x => x).First() : (DateTime?)null,
@@ -176,7 +176,9 @@ namespace Services.Broadcast.ApplicationServices
                     DistinctStations = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Station)).Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
                     DistinctWeekStarts = result.ClientScrubs.Select(x => x.WeekStart).Distinct().OrderBy(x => x).ToList(),
                     DistinctShowTypes = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ShowTypeName)).Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctSequences = result.ClientScrubs.Where(x => x.Sequence.HasValue).Select(x => x.Sequence.Value).Distinct().OrderBy(x => x).ToList()
+                    DistinctSequences = result.ClientScrubs.Where(x => x.Sequence.HasValue).Select(x => x.Sequence.Value).Distinct().OrderBy(x => x).ToList(),
+                    TimeAiredStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.TimeAired).OrderBy(x => x).First() : (int?)null,
+                    TimeAiredEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.TimeAired).OrderBy(x => x).Last() : (int?)null
                 };
                 return result;
             }
@@ -190,8 +192,8 @@ namespace Services.Broadcast.ApplicationServices
         public List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived)
         {
             var spotsLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            var iscis =  archived ? _PostRepository.GetArchivedIscis() :  _PostRepository.GetUnlinkedIscis();
-            iscis.ForEach(x => x.SpotLength = spotsLength.Single(y=> y.Value == x.SpotLength).Key);
+            var iscis = archived ? _PostRepository.GetArchivedIscis() : _PostRepository.GetUnlinkedIscis();
+            iscis.ForEach(x => x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key);
             return iscis;
         }
 
@@ -201,7 +203,7 @@ namespace Services.Broadcast.ApplicationServices
                 scrubStatusOverrides.OverrideStatus);
 
             ProposalScrubbingRequest filter =
-                new ProposalScrubbingRequest() {ScrubbingStatusFilter = scrubStatusOverrides.ReturnStatusFilter};
+                new ProposalScrubbingRequest() { ScrubbingStatusFilter = scrubStatusOverrides.ReturnStatusFilter };
             return GetClientScrubbingForProposal(scrubStatusOverrides.ProposalId, filter);
         }
 
@@ -230,8 +232,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new Exception("There are already blacklisted iscis in your list");
             }
-                
+
             return true;
-        }        
+        }
     }
 }

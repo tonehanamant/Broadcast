@@ -35,36 +35,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_InvalidFileType()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filePath = @".\Files\Checkers BVS Report.DAT";
-
-                var response = _AffidavitPostProcessingService.ProcessFileContents(_UserName,filePath, "");
-                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, response.ValidationResults.First().ErrorMessage.Substring(0, 25));
-
-                VerifyAffidavit(affidavitId);
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_InvalidFileContent()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filePath = @".\Files\WWTV_AffidavitInValidFileContent.txt";
-                var fileContents = File.ReadAllText(filePath);
-
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName,filePath, fileContents);
-                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, response.ValidationResults.First().ErrorMessage.Substring(0, 25));
-                VerifyAffidavit(affidavitId);
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void AffidavitPostProcessing_ValidFileContent()
         {
             using (new TransactionScopeWrapper())
@@ -103,21 +73,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 VerifyAffidavit(response.Id.Value);
-            }
-        }
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_File_Error_Logging()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filePath = @".\Files\WWTV_bad_file.txt";
-                var fileContents = File.ReadAllText(filePath);
-
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
-                int affidavitId = _AffidavitPostProcessingService.LogAffidavitError(filePath, response.ValidationResults.First().ErrorMessage.Substring(0, 25));
-
-                VerifyAffidavit(affidavitId);
             }
         }
 

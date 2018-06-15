@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { v4 } from 'uuid';
 import { Col, Form, ButtonToolbar, Button, FormGroup } from 'react-bootstrap/lib/';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css';
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
+import { DatePicker } from 'antd';
 import './index.css';
+
+const dateFormat = 'MM/DD/YYYY';
 
 class FilterDateInput extends Component {
   constructor(props) {
@@ -17,33 +20,68 @@ class FilterDateInput extends Component {
       originalStartDate: moment(this.props.filterOptions.originalDateAiredStart, 'YYYY-MM-DD').toDate(),
       originalEndDate: moment(this.props.filterOptions.originalDateAiredEnd, 'YYYY-MM-DD').toDate(),
       filterOptions: {},
+      startValid: true,
+      endValid: true,
+      isValidSelection: true,
     };
-    this.startInput = null;
-    this.endInput = null;
+    this.disabledStartDate = this.disabledStartDate.bind(this);
+    this.disabledEndDate = this.disabledEndDate.bind(this);
     this.handleStartChange = this.handleStartChange.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
     this.apply = this.apply.bind(this);
     this.clear = this.clear.bind(this);
+    this.setValidSelections = this.setValidSelections.bind(this);
   }
 
   componentWillMount() {
-    // console.log('Date Input Mount >>>>', this.props);
     this.setState({
       startDate: moment(this.props.filterOptions.DateAiredStart, 'YYYY-MM-DD'),
       endDate: moment(this.props.filterOptions.DateAiredEnd, 'YYYY-MM-DD'),
     });
   }
 
+  disabledStartDate(current) {
+    console.log(this);
+    return current && current.valueOf() < this.state.originalStartDate;
+  }
+
+  disabledEndDate(current) {
+    console.log(this);
+    return current && current.valueOf() > this.state.originalEndDate;
+  }
+
   handleStartChange(date) {
-    this.setState({
-      startDate: date,
-    });
+    if (date && moment(date).isValid()) {
+      this.setState({
+        startDate: date,
+        startValid: true,
+      }, () => {
+        this.setValidSelections();
+      });
+    }
   }
 
   handleEndChange(date) {
-    this.setState({
-      endDate: date,
-    });
+    if (date && moment(date).isValid()) {
+      this.setState({
+        endDate: date,
+        endValid: true,
+      }, () => {
+        this.setValidSelections();
+      });
+    }
+  }
+
+  setValidSelections() {
+    if (this.state.startValid && this.state.endValid) {
+      this.setState({
+        isValidSelection: true,
+      });
+    } else {
+      this.setState({
+        isValidSelection: false,
+      });
+    }
   }
 
   clear() {
@@ -75,26 +113,28 @@ class FilterDateInput extends Component {
           <FormGroup>
             <Col style={{ textAlign: 'left' }} className="control-label" sm={4}>Start date</Col>
             <Col sm={8}>
-              {/* <label style={{ display: 'inline' }} className="control-label" htmlFor="date1">Start date</label> */}
               <DatePicker
-                // className="form-control"
-                selected={this.state.startDate}
+                disabledDate={this.disabledStartDate}
+                format={dateFormat}
+                allowClear={false}
+                showToday={false}
+                value={this.state.startDate}
                 onChange={this.handleStartChange}
-                minDate={this.state.originalStartDate}
-                maxDate={this.state.originalEndDate}
+                getCalendarContainer={triggerNode => triggerNode.parentNode}
               />
             </Col>
           </FormGroup>
           <FormGroup>
-            {/* <label style={{ display: 'inline' }} className="control-label" htmlFor="date2">End date</label> */}
             <Col style={{ textAlign: 'left' }} className="control-label" sm={4}>End date</Col>
             <Col sm={8}>
               <DatePicker
-                // className="form-control"
-                selected={this.state.endDate}
+                disabledDate={this.disabledEndDate}
+                format={dateFormat}
+                allowClear={false}
+                value={this.state.endDate}
                 onChange={this.handleEndChange}
-                minDate={this.state.originalStartDate}
-                maxDate={this.state.originalEndDate}
+                showToday={false}
+                getCalendarContainer={triggerNode => triggerNode.parentNode}
               />
             </Col>
           </FormGroup>
@@ -104,13 +144,12 @@ class FilterDateInput extends Component {
             bsStyle="success"
             bsSize="xsmall"
             onClick={this.clear}
-            // disabled={!canFilter}
           >Clear
           </Button>
           <Button
             bsStyle="success"
             bsSize="xsmall"
-            // disabled={!canFilter || !this.state.isValidSelection}
+            disabled={!this.state.isValidSelection}
             style={{ marginLeft: '10px' }}
             onClick={this.apply}
           > Apply

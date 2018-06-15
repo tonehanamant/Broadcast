@@ -16,12 +16,12 @@
       "InvalidLine": 0
     },
     {
-      "ErrorMessage": "is invalid",
+      "ErrorMessage": "is invalid (CNN Entertainment)",
       "InvalidField": "InventorySource",
       "InvalidLine": 0
     },
     {
-      "ErrorMessage": "is invalid",
+      "ErrorMessage": "is invalid (CNN Entertainment)",
       "InvalidField": "InventorySource",
       "InvalidLine": 1
     },
@@ -31,7 +31,7 @@
       "InvalidLine": 2
     },
     {
-      "ErrorMessage": "is invalid",
+      "ErrorMessage": "is invalid (CNN Entertainment)",
       "InvalidField": "InventorySource",
       "InvalidLine": 2
     },
@@ -41,12 +41,12 @@
       "InvalidLine": 3
     },
     {
-      "ErrorMessage": "is invalid",
+      "ErrorMessage": "is invalid (CNN Entertainment)",
       "InvalidField": "InventorySource",
       "InvalidLine": 3
     },
     {
-      "ErrorMessage": "is invalid",
+      "ErrorMessage": "is invalid (CNN Entertainment)",
       "InvalidField": "InventorySource",
       "InvalidLine": 4
     },
@@ -56,7 +56,7 @@
       "InvalidLine": 5
     },
     {
-      "ErrorMessage": "is invalid",
+      "ErrorMessage": "is invalid (CNN Entertainment)",
       "InvalidField": "InventorySource",
       "InvalidLine": 5
     }

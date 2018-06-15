@@ -73,6 +73,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
         private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
+        private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
 
         const char ISCI_DAYS_DELIMITER = '-';
 
@@ -88,7 +89,8 @@ namespace Services.Broadcast.ApplicationServices
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
             IProposalProprietaryInventoryService proposalProprietaryInventoryService,
-            IAffidavitImpressionsService affidavitImpressionsService)
+            IAffidavitImpressionsService affidavitImpressionsService,
+            IMyEventsReportNamingEngine myEventsReportNamingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -111,6 +113,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
             _ShowTypeReporitory = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             _AffidavitImpressionsService = affidavitImpressionsService;
+            _MyEventsReportNamingEngine = myEventsReportNamingEngine;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -512,24 +515,11 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         if (string.IsNullOrWhiteSpace(week.MyEventsReportName))
                         {
-                            week.MyEventsReportName = _GetMyEventsReportName(detail.DaypartCode, spotLength, week.StartDate, advertiser.Display);
+                            week.MyEventsReportName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(detail.DaypartCode, spotLength, week.StartDate, advertiser.Display);
                         }
                     }
                 }
             }
-        }
-
-        private string _GetMyEventsReportName(string daypartCode, int spotLength, DateTime weekStart, string advertiser)
-        {
-            const int MyEventsReportNameMaxLength = 25;
-            var partialReportName = $" {daypartCode} {spotLength} {weekStart:MM-dd-yy}";
-            var partialReportNameLength = partialReportName.Length;
-            var remainingLength = MyEventsReportNameMaxLength - partialReportNameLength;
-
-            if (advertiser.Length + partialReportNameLength > MyEventsReportNameMaxLength)
-                return advertiser.Substring(0, remainingLength) + partialReportName;
-
-            return advertiser + partialReportName;
         }
 
         private void _DeleteAnyOpenMarketAllocations(ProposalDto proposalDto)

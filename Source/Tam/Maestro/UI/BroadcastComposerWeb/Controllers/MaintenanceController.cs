@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -78,7 +79,7 @@ namespace BroadcastComposerWeb.Controllers
 
         public void ClearSystemParameterCache()
         {
-            SMSClient.Handler.ClearSystemComponentParameterCache(null, null);
+            SMSClient.Handler.ClearSystemComponentParameterCache(BroadcastServiceSystemParameterNames.ComponentID, null);
         }
 
     }

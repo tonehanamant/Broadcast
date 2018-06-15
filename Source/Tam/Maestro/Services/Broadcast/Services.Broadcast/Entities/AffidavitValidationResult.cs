@@ -18,7 +18,7 @@ namespace Services.Broadcast.Entities
             if (InvalidLine >= 0)
                 errorMessage += $"Record: {InvalidLine + 1}: ";
             if (!string.IsNullOrEmpty(InvalidField))
-                errorMessage += $"field: '{InvalidField}' ";
+                errorMessage += $"'{InvalidField}' ";
             errorMessage += this.ErrorMessage + "\r\n";
             return errorMessage;
         }

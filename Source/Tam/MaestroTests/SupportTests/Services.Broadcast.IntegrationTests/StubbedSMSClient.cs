@@ -148,6 +148,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "EmailNotificationsEnabled":
                     result = "True";
                     break;
+                case "WWTV_LocalFtpErrorFolder":
+                    result = "\\\\LocalFtp\\Folder";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

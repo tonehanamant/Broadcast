@@ -51,5 +51,7 @@ namespace Services.Broadcast.Entities
         public List<DateTime> DistinctWeekStarts { get; set; }
         public List<string> DistinctShowTypes { get; set; }
         public List<int> DistinctSequences { get; set; }
+        public int? TimeAiredStart { get; set; }
+        public int? TimeAiredEnd { get; set; }
     }
 }
