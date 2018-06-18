@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
@@ -25,21 +24,15 @@ namespace Services.Broadcast.Entities
         public int InventorySource { get; set; }
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
-        public List<AffidavitDemographics> Demographics { get; set; }
-        public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; }
-        public List<AffidavitFileDetailProblem> AffidavitFileDetailProblems { get; set; }
+        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
+        public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; } = new List<AffidavitClientScrub>();
+        public List<AffidavitFileDetailProblem> AffidavitFileDetailProblems { get; set; } = new List<AffidavitFileDetailProblem>();
         public string ShowType { get; set; }
         public string LeadInShowType { get; set; }
         public string LeadOutShowType { get; set; }
         public int LeadOutStartTime { get; set; }
         public int LeadInEndTime { get; set; }
         public bool Archived { get; set; }
-
-        public AffidavitFileDetail()
-        {
-            Demographics = new List<AffidavitDemographics>();
-            AffidavitClientScrubs = new List<AffidavitClientScrub>();
-            AffidavitFileDetailProblems = new List<Entities.AffidavitFileDetailProblem>();
-        }
+        public string MappedIsci { get; set; }        
     }
 }

@@ -392,6 +392,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastMatchingBuffer"; }
         }
 	 
+		public static string DefaultNtiConversionFactor  
+		{
+            get { return "DefaultNtiConversionFactor"; }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return "EmailFrom"; }
@@ -1394,6 +1399,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DefaultEmailGroupTo"; }
         }
 	 
+		public static string InnovarXmlPath  
+		{
+            get { return "InnovarXmlPath"; }
+        }
+	 
 		public static string MaxTrafficBreakdownThreads  
 		{
             get { return "MaxTrafficBreakdownThreads"; }
@@ -1463,6 +1473,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string FourAsDisclaimer  
 		{
             get { return "FourAsDisclaimer"; }
+        }
+	 
+		public static string MarriedTrafficReportDirectory  
+		{
+            get { return "MarriedTrafficReportDirectory"; }
         }
 	 
 		public static string MaxLoaderThreads  

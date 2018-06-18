@@ -68,14 +68,19 @@ class FilterTimeInput extends Component {
     // const startTime = moment(this.state.startTime).format('hh:mm:ss');
     const startTime = moment(this.state.startTime, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     const endTime = moment(this.state.endTime, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
-
+    let exclusions = true;
+    // if startTime and endTime are the same as originalStartTime and originalEndDate
+    // then set exclusions to false, otherwise set to true
+    if (startTime === this.props.filterOptions.originalTimeAiredStart && endTime === this.props.filterOptions.originalTimeAiredEnd) {
+      exclusions = false;
+    }
     const options = {
       TimeAiredStart: startTime,
       TimeAiredEnd: endTime,
     };
     this.props.applySelection({
       filterKey: this.props.filterKey,
-      exclusions: true,
+      exclusions,
       filterOptions: options,
     });
   }

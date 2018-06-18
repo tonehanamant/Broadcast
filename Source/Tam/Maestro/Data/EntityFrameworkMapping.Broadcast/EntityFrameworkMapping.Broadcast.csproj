@@ -425,6 +425,9 @@
     <Compile Include="inventory_sources.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="isci_mapping.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="market.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

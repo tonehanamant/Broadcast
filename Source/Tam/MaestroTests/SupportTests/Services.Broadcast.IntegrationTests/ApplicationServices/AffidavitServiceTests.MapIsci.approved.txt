@@ -449,7 +449,116 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
+      "AffidavitClientScrubs": [
+        {
+          "AffidavitClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 145.45
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 14819.05
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 23688.05
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 46500.2
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 942.9
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 345.3
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 2291.3
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 10145.75
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 7103.65
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 167703.25
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 5898.5
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 982.35
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 19195.0
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 5332.05
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 38901.25
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 8275.15
+            }
+          ],
+          "Comment": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "AAAAAAAA1",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "",
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": true,
+          "MatchStation": true,
+          "MatchTime": false,
+          "ModifiedBy": "test-user",
+          "PostingBookId": 428,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 9951,
+          "ProposalVersionDetailQuarterWeekId": 9951,
+          "Status": 1
+        }
+      ],
       "AffidavitFileDetailProblems": [],
       "Affiliate": null,
       "AirTime": 31400,
@@ -478,116 +587,7 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
-        {
-          "AffidavitClientScrubAudiences": [
-            {
-              "AudienceId": 4,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 5,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 6,
-              "Impressions": 610.75
-            },
-            {
-              "AudienceId": 7,
-              "Impressions": 804.25
-            },
-            {
-              "AudienceId": 13,
-              "Impressions": 16703.875
-            },
-            {
-              "AudienceId": 14,
-              "Impressions": 34490.25
-            },
-            {
-              "AudienceId": 15,
-              "Impressions": 50242.625
-            },
-            {
-              "AudienceId": 19,
-              "Impressions": 781.625
-            },
-            {
-              "AudienceId": 20,
-              "Impressions": 778.25
-            },
-            {
-              "AudienceId": 21,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 22,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 28,
-              "Impressions": 10273.875
-            },
-            {
-              "AudienceId": 29,
-              "Impressions": 19975.875
-            },
-            {
-              "AudienceId": 30,
-              "Impressions": 15955.375
-            },
-            {
-              "AudienceId": 31,
-              "Impressions": 177491.0
-            },
-            {
-              "AudienceId": 46,
-              "Impressions": 2654.375
-            },
-            {
-              "AudienceId": 284,
-              "Impressions": 4806.125
-            },
-            {
-              "AudienceId": 290,
-              "Impressions": 13527.375
-            },
-            {
-              "AudienceId": 339,
-              "Impressions": 793.75
-            },
-            {
-              "AudienceId": 347,
-              "Impressions": 26693.125
-            },
-            {
-              "AudienceId": 348,
-              "Impressions": 2872.0
-            }
-          ],
-          "Comment": null,
-          "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": "AAAAAAAA",
-          "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "",
-          "LeadIn": false,
-          "MatchDate": true,
-          "MatchGenre": true,
-          "MatchIsciDays": false,
-          "MatchMarket": true,
-          "MatchProgram": true,
-          "MatchShowType": false,
-          "MatchStation": true,
-          "MatchTime": true,
-          "ModifiedBy": "test-user",
-          "PostingBookId": 416,
-          "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 1
-        }
-      ],
+      "AffidavitClientScrubs": [],
       "AffidavitFileDetailProblems": [],
       "Affiliate": null,
       "AirTime": 32400,

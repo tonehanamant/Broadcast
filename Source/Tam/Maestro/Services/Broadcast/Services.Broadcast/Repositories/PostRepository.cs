@@ -72,6 +72,27 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="iscis">Iscis to set the flag to</param>
         void ArchiveFileDetailRecord(List<string> iscis);
+
+        /// <summary>
+        /// Searches for all the iscis that contain the filter in all the contracted proposals
+        /// </summary>
+        /// <param name="isci">Filter</param>
+        /// <returns>List of iscis found</returns>
+        List<ValidIsciDto> FindValidIscis(string isci);
+
+        /// <summary>
+        /// Adds a new isci mapping
+        /// </summary>
+        /// <param name="mapIsciDto">MapIsciDto object</param>
+        /// <param name="name">User requesting the mapping</param>
+        void AddNewMapping(MapIsciDto mapIsciDto, string name);
+
+        /// <summary>
+        /// Loads all the isci mappings from DB
+        /// </summary>
+        /// <param name="iscis">List of iscis to load the mappings for</param>
+        /// <returns>Dictionary containing the isci mappings</returns>
+        Dictionary<string, string> LoadIsciMappings(List<string> iscis);
     }
 
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
@@ -297,7 +318,7 @@ namespace Services.Broadcast.Repositories
                    into dataGroupped
                    from x in dataGroupped.DefaultIfEmpty()
                    where x == null && fileDetails.archived == false
-                   select fileDetails;                   
+                   select fileDetails;
         }
 
         private IQueryable<affidavit_file_details> _GetArchivedIscisQuery(QueryHintBroadcastContext context)
@@ -305,6 +326,69 @@ namespace Services.Broadcast.Repositories
             return from fileDetails in context.affidavit_file_details
                    where fileDetails.archived == true
                    select fileDetails;
+        }
+
+        /// <summary>
+        /// Searches for all the iscis that contain the filter in all the contracted proposals
+        /// </summary>
+        /// <param name="isci">Filter</param>
+        /// <returns>List of iscis found</returns>
+        public List<ValidIsciDto> FindValidIscis(string isci)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   return (from proposalVersion in context.proposal_versions
+                           from proposalDetail in proposalVersion.proposal_version_details
+                           from proposalDetailQuarter in proposalDetail.proposal_version_detail_quarters
+                           from proposalDetailQuarterWeek in proposalDetailQuarter.proposal_version_detail_quarter_weeks
+                           from proposalDetailQuarterWeekIsci in proposalDetailQuarterWeek.proposal_version_detail_quarter_week_iscis
+                           where proposalVersion.status == (int)ProposalEnums.ProposalStatusType.Contracted
+                                && proposalDetailQuarterWeekIsci.client_isci.StartsWith(isci)
+                           select new ValidIsciDto
+                           {
+                               HouseIsci = proposalDetailQuarterWeekIsci.house_isci,
+                               Married = proposalDetailQuarterWeekIsci.married_house_iscii,
+                               ProposalId = proposalVersion.proposal_id
+                           }).Distinct().OrderBy(x => x).ToList();
+               });
+        }
+
+        /// <summary>
+        /// Adds a new isci mapping
+        /// </summary>
+        /// <param name="mapIsciDto">MapIsciDto object</param>
+        /// <param name="name">User requesting the mapping</param>
+        public void AddNewMapping(MapIsciDto mapIsciDto, string name)
+        {
+            _InReadUncommitedTransaction(
+              context =>
+              {
+                  context.isci_mapping.Add(new isci_mapping
+                  {
+                      created_date = DateTime.Now,
+                      created_by = name,
+                      original_isci = mapIsciDto.OriginalIsci,
+                      effective_isci = mapIsciDto.EffectiveIsci
+                  });
+                  context.SaveChanges();
+              });
+        }
+
+        /// <summary>
+        /// Loads all the isci mappings from DB
+        /// </summary>
+        /// <param name="iscis">List of iscis to load the mappings for</param>
+        /// <returns>Dictionary containing the isci mappings</returns>
+        public Dictionary<string, string> LoadIsciMappings(List<string> iscis)
+        {
+            return _InReadUncommitedTransaction(
+              context =>
+              {
+                  return context.isci_mapping
+                              .Where(x => iscis.Contains(x.original_isci))
+                              .ToDictionary(x => x.original_isci, x => x.effective_isci);
+              });
         }
     }
 }

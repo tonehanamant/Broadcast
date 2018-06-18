@@ -425,6 +425,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
         }
 	 
+		public static float DefaultNtiConversionFactor  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<float>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1535,6 +1541,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.DefaultEmailGroupTo); }
         }
 	 
+		public static string InnovarXmlPath  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.InnovarXmlPath); }
+        }
+	 
 		public static int MaxTrafficBreakdownThreads  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -1605,6 +1617,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(ReportingServiceSystemParameterNames.ComponentID , ReportingServiceSystemParameterNames.FourAsDisclaimer); }
+        }
+	 
+		public static string MarriedTrafficReportDirectory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ReportingServiceSystemParameterNames.ComponentID , ReportingServiceSystemParameterNames.MarriedTrafficReportDirectory); }
         }
 	 
 		public static int MaxLoaderThreads  

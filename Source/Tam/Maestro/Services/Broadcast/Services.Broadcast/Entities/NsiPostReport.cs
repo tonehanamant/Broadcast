@@ -19,6 +19,7 @@ namespace Services.Broadcast.Entities
         public string Daypart { get; set; }
         public List<string> FlightDates { get; set; }
         public string SpotLengthsDisplay { get; set; }
+        public string ReportName { get; set; }
 
         public class NsiPostReportQuarterTab
         {
@@ -82,7 +83,7 @@ namespace Services.Broadcast.Entities
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, Dictionary<int, int>> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
-                            List<Tuple<DateTime, DateTime>> flights, bool withOvernightImpressions, bool equivalized)
+                            List<Tuple<DateTime, DateTime>> flights, bool withOvernightImpressions, bool equivalized, string proposalName)
         {
             Advertiser = advertiser.Display;
             ProposalId = proposalId;
@@ -90,9 +91,26 @@ namespace Services.Broadcast.Entities
             Equivalized = equivalized;
             GuaranteedDemo = guaranteedDemo;
             ProposalAudiences = proposalAudiences;
-
+            
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
 
+            //generate the name of the report file
+            if (quartersGroup.Any())
+            {
+                string firstQuarter = $"{quartersGroup.Select(x => x.Key.Quarter).First() }Q{ quartersGroup.Select(x => x.Key.Year.ToString().Substring(2)).First()}";
+                string lastQuarter = $"{quartersGroup.Select(x => x.Key.Quarter).Last() }Q{ quartersGroup.Select(x => x.Key.Year.ToString().Substring(2)).Last()}";
+                ReportName = String.Format("{0} - {1} - Cadent Network {2} Post Report{3}.xlsx",
+                    proposalName,
+                    Advertiser,
+                    firstQuarter.Equals(lastQuarter) ? firstQuarter : $"{firstQuarter}-{lastQuarter}",
+                    WithOvernightImpressions ? " with Overnights" : string.Empty);
+            }
+            else
+            {
+                ReportName = $"{proposalName} - {Advertiser} - Cadent Network Post Report{(WithOvernightImpressions ? " with Overnights" : string.Empty)}.xlsx";
+            }
+
+            //map the data
             foreach (var group in quartersGroup)
             {
                 var tab = new NsiPostReportQuarterTab()

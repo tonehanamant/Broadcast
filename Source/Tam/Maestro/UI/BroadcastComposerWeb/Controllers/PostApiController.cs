@@ -104,7 +104,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(() =>
-                    _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().ScrubUnlinkedAffidavitDetailsByIsci(request, DateTime.Now, Identity.Name));
+                    _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().ScrubUnlinkedAffidavitDetailsByIsci(request.Isci, DateTime.Now, Identity.Name));
         }
 
         [HttpGet]
@@ -121,6 +121,22 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => 
             _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(FileDetailsIds, Identity.Name));
+        }
+
+        [HttpGet]
+        [Route("FindValidIscis/{isci}")]
+        public BaseResponse<List<string>> FindValidIscis(string isci)
+        { 
+            return _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().FindValidIscis(isci));
+        }
+
+        [HttpPost]
+        [Route("MapIsci")]
+        public BaseResponse<bool> MapIsci(MapIsciDto mapIsciDto)
+        {
+            return _ConvertToBaseResponse(() =>
+            _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().MapIsci(mapIsciDto, DateTime.Now, Identity.Name));
         }
 
         [HttpPut]

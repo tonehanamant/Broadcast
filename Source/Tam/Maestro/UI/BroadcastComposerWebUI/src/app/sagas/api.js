@@ -47,8 +47,14 @@ const post = {
   archiveUnlinkedIscis: isciIds => (
     call(POST, `${apiBase}Post/ArchiveUnlinkedIsci`, isciIds)
   ),
+  getValidIscis: query => (
+    call(GET, `${apiBase}Post/FindValidIscis/${query}`)
+  ),
   rescrubUnlinkedIscis: isci => (
     call(POST, `${apiBase}Post/ScrubUnlinkedIsci`, { Isci: isci })
+  ),
+  mapUnlinkedIscis: ({ OriginalIsci, EffectiveIsci }) => (
+    call(POST, `${apiBase}Post/MapIsci`, { OriginalIsci, EffectiveIsci })
   ),
 };
 
