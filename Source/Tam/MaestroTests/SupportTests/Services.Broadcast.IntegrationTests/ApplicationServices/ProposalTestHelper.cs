@@ -58,8 +58,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var proposalDetailId = proposal.Details.First().Id.Value;
             return proposalDetailId;
         }
-
-
     }
 
 }

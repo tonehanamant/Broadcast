@@ -119,6 +119,8 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 
+            unityContainer.RegisterType<IEmailerService, EmailerService>();
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();

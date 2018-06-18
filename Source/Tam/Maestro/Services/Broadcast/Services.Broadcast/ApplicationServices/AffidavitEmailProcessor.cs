@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
@@ -39,9 +40,12 @@ namespace Services.Broadcast.BusinessEngines
     {
         private const string _EmailValidationSubject = "WWTV File Failed Validation";
         private readonly IAffidavitRepository _AffidavitRepository;
+        private readonly IEmailerService _EmailerService;
 
-        public AffidavitEmailProcessorService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public AffidavitEmailProcessorService(IEmailerService emailerService,
+                                                IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
+            _EmailerService = emailerService;
             _AffidavitRepository = broadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
 
@@ -200,7 +204,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var from = new MailAddress(BroadcastServiceSystemParameter.EmailUsername);
             var to = new List<MailAddress>() {new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail)};
-            Emailer.QuickSend(false,emailBody, subject,MailPriority.Normal,from ,to);
+            _EmailerService.QuickSend(false,emailBody, subject,MailPriority.Normal,from ,to);
         }
     }
 }
