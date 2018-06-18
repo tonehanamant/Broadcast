@@ -3,6 +3,7 @@
   "AffidavitFileDetailId": 0,
   "Comment": null,
   "EffectiveGenre": null,
+  "EffectiveIsci": null,
   "EffectiveProgramName": null,
   "EffectiveShowType": null,
   "Id": 0,

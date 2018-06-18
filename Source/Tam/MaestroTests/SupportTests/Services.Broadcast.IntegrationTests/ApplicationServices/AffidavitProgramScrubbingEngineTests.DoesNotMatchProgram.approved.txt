@@ -3,6 +3,7 @@
   "AffidavitFileDetailId": 0,
   "Comment": null,
   "EffectiveGenre": "Comedy",
+  "EffectiveIsci": null,
   "EffectiveProgramName": "Wayne's World",
   "EffectiveShowType": "Movie",
   "Id": 0,

@@ -152,7 +152,9 @@ export default class ProposalDetailGrid extends Component {
                 onSaveShowValidation={this.state.DetailGridsInvalid}
                 blurAction={inputUnits}
                 enterKeyPressAction={inputUnits}
-                maskType="default"
+                // maskType="default"
+                maskType="createNumber"
+                maskAllowDecimal={false}
                 isGridCellEdited={this.props.isGridCellEdited}
                //  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />

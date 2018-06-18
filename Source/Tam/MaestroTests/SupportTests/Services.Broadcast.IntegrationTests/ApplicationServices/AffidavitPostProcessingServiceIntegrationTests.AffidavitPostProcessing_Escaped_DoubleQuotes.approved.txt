@@ -20,6 +20,7 @@
       "LeadoutProgramName": "Ellen DeGeneres Show, The",
       "LeadOutShowType": "Series",
       "LeadOutStartTime": 82800,
+      "MappedIsci": null,
       "Market": "Birmingham",
       "OriginalAirDate": "2018-01-01T00:00:00",
       "ProgramName": "Hot Bench",

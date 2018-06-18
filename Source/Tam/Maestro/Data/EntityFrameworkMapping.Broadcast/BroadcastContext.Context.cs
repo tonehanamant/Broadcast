@@ -89,12 +89,13 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<affidavit_outbound_files> affidavit_outbound_files { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
         public virtual DbSet<show_types> show_types { get; set; }
-        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_file_problems> affidavit_file_problems { get; set; }
         public virtual DbSet<affidavit_blacklist> affidavit_blacklist { get; set; }
         public virtual DbSet<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
+        public virtual DbSet<isci_mapping> isci_mapping { get; set; }
+        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
     }
 }

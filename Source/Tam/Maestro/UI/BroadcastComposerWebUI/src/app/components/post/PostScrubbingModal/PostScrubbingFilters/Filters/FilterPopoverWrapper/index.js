@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Popover, Glyphicon, OverlayTrigger } from 'react-bootstrap';
 import FilterListInput from '../FilterListInput';
 import FilterDateInput from '../FilterDateInput';
+import FilterTimeInput from '../FilterTimeInput';
 
 export default class FilterPopoverWrapper extends Component {
   constructor(props) {
@@ -61,6 +62,14 @@ export default class FilterPopoverWrapper extends Component {
       >
         {filterType === 'dateInput' &&
           <FilterDateInput
+            filterKey={filterKey}
+            filterOptions={filterOptions}
+            applySelection={this.setFilter}
+          />
+        }
+
+        {filterType === 'timeInput' &&
+          <FilterTimeInput
             filterKey={filterKey}
             filterOptions={filterOptions}
             applySelection={this.setFilter}

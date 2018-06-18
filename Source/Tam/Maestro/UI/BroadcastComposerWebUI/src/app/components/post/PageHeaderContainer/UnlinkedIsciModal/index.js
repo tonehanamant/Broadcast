@@ -6,6 +6,7 @@ import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
 import { Grid } from 'react-redux-grid';
 import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
 import { generateGridConfig } from './util';
+import MapUnlinkedIsciModal from '../MapUnlinkedIsciModal/index';
 
 
 const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } } }) => ({
@@ -53,24 +54,27 @@ export class UnlinkedIsciModal extends Component {
     const grid = generateGridConfig(this.props, activeTab);
 
     return (
-      <Modal show={modal.active} onHide={this.close} dialogClassName="large-80-modal">
-        <Modal.Header>
-          <Modal.Title style={{ display: 'inline-block' }}>Unlinked ISCIs</Modal.Title>
-          <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
-            <span>&times;</span>
-          </Button>
-        </Modal.Header>
-        <Modal.Body>
-          <Nav style={{ marginBottom: 3 }} bsStyle="tabs" activeKey={activeTab} onSelect={this.onTabSelect}>
-              <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
-              <NavItem eventKey="archived">Archived ISCIs</NavItem>
-          </Nav>
-					<Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
-        </Modal.Body>
-        <Modal.Footer>
-					<Button onClick={this.close}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      <div>
+        <Modal show={modal.active} onHide={this.close} dialogClassName="large-80-modal">
+          <Modal.Header>
+            <Modal.Title style={{ display: 'inline-block' }}>Unlinked ISCIs</Modal.Title>
+            <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
+              <span>&times;</span>
+            </Button>
+          </Modal.Header>
+          <Modal.Body>
+            <Nav style={{ marginBottom: 3 }} bsStyle="tabs" activeKey={activeTab} onSelect={this.onTabSelect}>
+                <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
+                <NavItem eventKey="archived">Archived ISCIs</NavItem>
+            </Nav>
+            <Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+        <MapUnlinkedIsciModal />
+      </div>
     );
   }
 }

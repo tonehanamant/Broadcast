@@ -6,7 +6,7 @@ import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateF
 
 export const stateKey = 'unlinked-isci-modal';
 
-const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis }) => ([
+const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis, toggleModal }) => ([
     {
       text: 'Not a Cadent ISCI',
       key: 'menu-archive-isci',
@@ -19,6 +19,17 @@ const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis }) => ([
       key: 'menu-rescrub-isci',
       EVENT_HANDLER: ({ metaData }) => {
         rescrubIscis(metaData.rowData.ISCI);
+      },
+    },
+    {
+      text: 'Map ISCI',
+      key: 'menu-map-isci',
+      EVENT_HANDLER: ({ metaData }) => {
+        toggleModal({
+          modal: 'mapUnlinkedIsci',
+          active: true,
+          properties: { rowData: metaData.rowData },
+        });
       },
     },
   ]

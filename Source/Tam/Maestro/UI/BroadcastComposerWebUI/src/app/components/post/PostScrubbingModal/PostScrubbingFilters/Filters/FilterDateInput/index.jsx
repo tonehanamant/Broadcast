@@ -97,11 +97,16 @@ class FilterDateInput extends Component {
     // get values of both inputs
     const startDate = moment(this.state.startDate).toISOString();
     const endDate = moment(this.state.endDate).toISOString();
-
+    let exclusions = true;
+    // if startDate and endDate are the same as originalStartDate and originalEndDate
+    // then set exclusions to false, otherwise set to true
+    if (startDate === moment(this.props.filterOptions.originalDateAiredStart).toISOString() && endDate === moment(this.props.filterOptions.originalDateAiredEnd).toISOString()) {
+      exclusions = false;
+    }
     const options = { DateAiredStart: startDate, DateAiredEnd: endDate };
     this.props.applySelection({
       filterKey: this.props.filterKey,
-      exclusions: true,
+      exclusions,
       filterOptions: options,
     });
   }

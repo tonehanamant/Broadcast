@@ -52,6 +52,30 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2471 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('isci_mapping'))
+BEGIN
+	CREATE TABLE [isci_mapping](
+		id INT IDENTITY(1,1) NOT NULL,
+		original_isci VARCHAR(63) NOT NULL,
+		effective_isci VARCHAR(63) NOT NULL,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(255) NOT NULL
+		CONSTRAINT [PK_isci_mapping] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+		CONSTRAINT [UQ_isci_mapping_original_isci] UNIQUE(original_isci)	
+	)
+END
+GO
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_isci' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE dbo.affidavit_client_scrubs ADD [effective_isci] VARCHAR(63) NULL
+END
+GO
+/*************************************** END BCOP-2471 ***************************************************************/
+
 /*************************************** START BCOP-3022 ***************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('affidavit_blacklist'))
 BEGIN

@@ -333,6 +333,10 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
               // tbd check range based on value.filterOptions
               // todo: need to check if the 2 values are equal
               ret = moment(item[value.filterKey]).isBetween(value.filterOptions.DateAiredStart, value.filterOptions.DateAiredEnd, 'day', true);
+            } else if (value.type === 'timeInput') {
+              // tbd check range based on value.filterOptions
+              // todo: need to check if the 2 values are equal
+              ret = moment(item[value.filterKey]).isBetween(value.filterOptions.TimeAiredStart, value.filterOptions.TimeAiredEnd, 'seconds', true);
             }
           }
         });
@@ -480,6 +484,16 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
           originalDateAiredEnd: newFilters.DateAiredEnd,
         };
         adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+      } else if (filter.type === 'timeInput') {
+        // change originals - modifying active could beak what user has changed
+        const filterOptions = {
+          TimeAiredStart: filter.filterOptions.TimeAiredStart,
+          TimeAiredEnd: filter.filterOptions.TimeAiredEnd,
+          originalTimeAiredStart: newFilters.originalTimeAiredStart,
+          originalTimeAiredEnd: newFilters.originalTimeAiredEnd,
+        };
+        adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
+        // adjustedFilters[key] = filter;
       }
     }
   });
@@ -593,6 +607,11 @@ export function* loadArchivedIsci() {
   }
 }
 
+export function* loadValidIscis({ query }) {
+  const { getValidIscis } = api.post;
+  return yield getValidIscis(query);
+}
+
 export function* rescrubUnlinkedIsci({ isci }) {
   const { rescrubUnlinkedIscis } = api.post;
   try {
@@ -601,6 +620,25 @@ export function* rescrubUnlinkedIsci({ isci }) {
   } finally {
     yield put(setOverlayLoading({ id: 'rescrubIsci', loading: false }));
   }
+}
+
+
+export function* mapUnlinkedIsci(payload) {
+  const { mapUnlinkedIscis } = api.post;
+  try {
+    yield put(setOverlayLoading({ id: 'mapUnlinkedIsci', loading: true }));
+    return yield mapUnlinkedIscis(payload);
+  } finally {
+    yield put(setOverlayLoading({ id: 'mapUnlinkedIsci', loading: false }));
+  }
+}
+
+export function* mapUnlinkedIsciSuccess() {
+  yield put(toggleModal({
+    modal: 'mapUnlinkedIsci',
+    active: false,
+    properties: {},
+  }));
 }
 
 export function* closeUnlinkedIsciModal({ modalPrams }) {
@@ -645,6 +683,7 @@ export function* watchRequestUniqueIscis() {
     ACTIONS.UNLINKED_ISCIS_DATA.request,
     ACTIONS.ARCHIVE_UNLIKED_ISCI.success,
     ACTIONS.RESCRUB_UNLIKED_ISCI.success,
+    ACTIONS.MAP_UNLINKED_ISCI.success,
   ],
     sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA),
   );
@@ -665,10 +704,22 @@ export function* watchLoadArchivedIscis() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
 }
 
+export function* watchLoadValidIscis() {
+  yield takeEvery(ACTIONS.LOAD_VALID_ISCI.request, sagaWrapper(loadValidIscis, ACTIONS.LOAD_VALID_ISCI));
+}
+
 export function* watchRescrubUnlinkedIsci() {
   yield takeEvery(ACTIONS.RESCRUB_UNLIKED_ISCI.request, sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI));
 }
 
+export function* watchMapUnlinkedIsci() {
+  yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.request, sagaWrapper(mapUnlinkedIsci, ACTIONS.MAP_UNLINKED_ISCI));
+}
+
 export function* watchCloseUnlinkedIsciModal() {
   yield takeEvery(ACTIONS.CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
+}
+
+export function* watchMapUnlinkedIsciSuccess() {
+  yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
 }
