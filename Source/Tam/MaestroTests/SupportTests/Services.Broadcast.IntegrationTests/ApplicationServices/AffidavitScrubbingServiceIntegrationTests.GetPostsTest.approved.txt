@@ -95,6 +95,14 @@
       "SpotsInSpec": 0,
       "SpotsOutOfSpec": 0,
       "UploadDate": null
+    },
+    {
+      "ContractName": "Pickle Rick Test",
+      "GuaranteedAudienceId": 31,
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 0,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": null
     }
   ],
   "UnlinkedIscis": 3
