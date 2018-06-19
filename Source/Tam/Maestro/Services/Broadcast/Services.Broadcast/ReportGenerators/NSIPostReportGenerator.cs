@@ -247,7 +247,7 @@ namespace Services.Broadcast.ReportGenerators
             int tableHeaderRowIndex = firstTableRow - 1;
             wsSummary.Cells[$"B{tableHeaderRowIndex - 1}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);  //table name
             wsSummary.Cells[$"M{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex - 1}"].Merge = true;     //Post section header
-            wsSummary.Cells[$"D{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            wsSummary.Cells[$"B{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             wsSummary.Cells[$"B{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Font.Bold = true;
 
             wsSummary.Cells[$"B{tableHeaderRowIndex}:K{tableHeaderRowIndex}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
@@ -263,7 +263,7 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"I{firstTableRow}:J{rowOffset}"].Style.Numberformat.Format = NUMBER_FORMAT;
             wsSummary.Cells[$"F{firstTableRow}:G{rowOffset}"].Style.Numberformat.Format = MONEY_FORMAT;
             wsSummary.Cells[$"K{firstTableRow}:K{rowOffset}"].Style.Numberformat.Format = MONEY_FORMAT;
-            wsSummary.Cells[$"D{firstTableRow}:N{rowOffset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            wsSummary.Cells[$"B{firstTableRow}:N{rowOffset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             //styles for totals
             wsSummary.Cells[$"B{rowOffset}:N{rowOffset}"].Style.Font.Bold = true;
