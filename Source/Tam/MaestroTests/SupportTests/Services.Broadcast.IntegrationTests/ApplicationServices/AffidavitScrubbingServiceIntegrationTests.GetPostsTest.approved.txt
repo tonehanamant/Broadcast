@@ -81,6 +81,22 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
+      "ContractName": "NSI ADU Adjustment Test",
+      "GuaranteedAudienceId": 31,
+      "PrimaryAudienceImpressions": 2000.0,
+      "SpotsInSpec": 2,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
+      "ContractName": "NSI ADU Adjustment Test 2",
+      "GuaranteedAudienceId": 31,
+      "PrimaryAudienceImpressions": 1499.0,
+      "SpotsInSpec": 2,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
       "ContractName": "Proposal Test 5",
       "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
