@@ -26,6 +26,7 @@
       "TableRows": [
         {
           "ActualImpressions": 250.0,
+          "Adu": false,
           "Contract": "NAV",
           "DeliveredImpressionsPercentage": 0.0025,
           "HHRating": 0,
@@ -39,9 +40,10 @@
           "WeekStartDate": "2016-05-30T00:00:00"
         },
         {
-          "ActualImpressions": 314866.8,
+          "ActualImpressions": 314866.80000000005,
+          "Adu": false,
           "Contract": "NAV",
-          "DeliveredImpressionsPercentage": 3.11749307,
+          "DeliveredImpressionsPercentage": 3.1174930693069314,
           "HHRating": 0,
           "ProposalWeekCost": 3.7500,
           "ProposalWeekCPM": 0.7425742574257425742574257000,
@@ -60,6 +62,7 @@
       "TabName": "Spot Detail 2Q16",
       "TabRows": [
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
@@ -86,6 +89,7 @@
           "WeekStart": "2016-05-30T00:00:00"
         },
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 157433.4,
@@ -112,6 +116,7 @@
           "WeekStart": "2016-05-30T00:00:00"
         },
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 0.0,
@@ -138,6 +143,7 @@
           "WeekStart": "2016-05-30T00:00:00"
         },
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 250.0,
@@ -164,6 +170,7 @@
           "WeekStart": "2016-05-30T00:00:00"
         },
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 0.0,

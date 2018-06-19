@@ -20,6 +20,7 @@
       "TableRows": [
         {
           "ActualImpressions": 444.0,
+          "Adu": false,
           "Contract": "NAV1",
           "DeliveredImpressionsPercentage": 0.444,
           "HHRating": 0,
@@ -34,6 +35,7 @@
         },
         {
           "ActualImpressions": 555.0,
+          "Adu": false,
           "Contract": "NAV1",
           "DeliveredImpressionsPercentage": 0.555,
           "HHRating": 0,
@@ -53,6 +55,7 @@
       "TableRows": [
         {
           "ActualImpressions": 666.0,
+          "Adu": false,
           "Contract": "NAV1",
           "DeliveredImpressionsPercentage": 0.666,
           "HHRating": 0,
@@ -67,6 +70,7 @@
         },
         {
           "ActualImpressions": 777.0,
+          "Adu": false,
           "Contract": "NAV1",
           "DeliveredImpressionsPercentage": 0.777,
           "HHRating": 0,
@@ -87,6 +91,7 @@
       "TabName": "Spot Detail 1Q16",
       "TabRows": [
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 444.0
@@ -111,6 +116,7 @@
           "WeekStart": "2016-05-30T00:00:00"
         },
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 555.0
@@ -141,6 +147,7 @@
       "TabName": "Spot Detail 2Q16",
       "TabRows": [
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 666.0
@@ -165,6 +172,7 @@
           "WeekStart": "2016-05-30T00:00:00"
         },
         {
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
             "31": 777.0

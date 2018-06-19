@@ -66,7 +66,7 @@ namespace Services.Broadcast.ReportGenerators
         private const string DAYPART = "Daypart";
 
         private const string BACKGROUNT_COLOR_CODE = "#A1E5FD";
-        private const string NUMBER_FORMAT = "###,###,##0";
+        private const string IMPRESSIONS_FORMAT = "#,##0,";
         private const string MONEY_FORMAT = "$###,###,##0";
         private const string PERCENTAGE_FORMAT = "#0.00%";
         private const string FONT_SUMMARY_TAB = "Calibri";
@@ -259,8 +259,9 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"M{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);
 
             //styles for data
+            wsSummary.Cells[$"M{firstTableRow}:M{rowOffset}"].Style.Numberformat.Format = IMPRESSIONS_FORMAT;
             wsSummary.Cells[$"N{firstTableRow}:N{rowOffset}"].Style.Numberformat.Format = PERCENTAGE_FORMAT;
-            wsSummary.Cells[$"I{firstTableRow}:J{rowOffset}"].Style.Numberformat.Format = NUMBER_FORMAT;
+            wsSummary.Cells[$"I{firstTableRow}:J{rowOffset}"].Style.Numberformat.Format = IMPRESSIONS_FORMAT;
             wsSummary.Cells[$"F{firstTableRow}:G{rowOffset}"].Style.Numberformat.Format = MONEY_FORMAT;
             wsSummary.Cells[$"K{firstTableRow}:K{rowOffset}"].Style.Numberformat.Format = MONEY_FORMAT;
             wsSummary.Cells[$"B{firstTableRow}:N{rowOffset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -275,6 +276,8 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
             wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Fill.BackgroundColor.SetColor(BACKGROUND_COLOR);
             wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);
+
+            wsSummary.Cells[$"M{rowOffset}:M{rowOffset}"].Style.Numberformat.Format = IMPRESSIONS_FORMAT;
 
             wsSummary.Cells[$"B{tableHeaderRowIndex}:N{rowOffset}"].AutoFitColumns();
         }

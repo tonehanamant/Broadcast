@@ -41,5 +41,9 @@
   "NSI2",
   "NSI3",
   "NSI4",
+  "NSIADU1",
+  "NSIADU2",
+  "NSIADU3",
+  "NSIADU4",
   "PIT1"
 ]
