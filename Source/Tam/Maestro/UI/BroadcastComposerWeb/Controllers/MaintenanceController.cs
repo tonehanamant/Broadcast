@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Common.Services;
 using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
@@ -38,7 +39,8 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         public ActionResult TestEmail(string test_email)
         {
-            Emailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
+            var quickEmailer = _ApplicationServiceFactory.GetApplicationService<IEmailerService>();
+            quickEmailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
                 MailPriority.Normal, "test@test.com", new string[] {"test_email@test.com"});
             ViewBag.Message = "Test email sent.";
            return View("Index");

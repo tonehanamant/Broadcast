@@ -257,8 +257,9 @@
     <Compile Include="Repositories\ProposalRepositoryTests.cs" />
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
+    <Compile Include="EmailerServicedStubb.cs" />
     <Compile Include="StubbedSMSClient.cs" />
-    <Compile Include="EmailerTests.cs" />
+    <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitProgramScrubbingEngineTests.cs" />
     <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />

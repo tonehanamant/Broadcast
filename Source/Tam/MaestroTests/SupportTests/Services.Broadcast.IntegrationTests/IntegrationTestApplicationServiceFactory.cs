@@ -6,6 +6,7 @@ using Moq;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Repositories;
 using System;
+using Common.Services;
 using IntegrationTests.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -45,6 +46,8 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
                     MediaMonthAndWeekAggregateCache = _instance.Resolve<IMediaMonthAndWeekAggregateCache>();
+
+                    _instance.RegisterType<IEmailerService, EmailerServiceStubb>();
                 }
             }
         }

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using Common.Services;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -42,12 +43,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
-        
-        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailProcessorService affidavitEmailProcessorService)
+        private readonly IEmailerService _EmailerService;
+
+        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
+                                                IAffidavitEmailProcessorService affidavitEmailProcessorService, 
+                                                IEmailerService emailerService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
+            _EmailerService = emailerService;
         }
 
         /// <summary>
@@ -150,7 +155,7 @@ namespace Services.Broadcast.ApplicationServices
                 var subject = "Error files from WWTV";
                 var from = BroadcastServiceSystemParameter.EmailUsername;
                 var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
-                Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
+                _EmailerService.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
             });
         }
 
