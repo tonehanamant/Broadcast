@@ -127,7 +127,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 05-30-16",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"
@@ -141,7 +141,6 @@
       "ShowTypeCriteria": [
         {
           "Contain": 1,
-          "Id": 1,
           "ShowType": {
             "Display": "Mini-Movie"
           }
@@ -218,7 +217,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 650,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 06-07-16",
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -227,10 +226,25 @@
               "Cost": 20.00,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
-              "Iscis": [],
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "FFFFFF",
+                  "Days": "Su-M-T-W-Th-F-Sa",
+                  "Friday": true,
+                  "HouseIsci": "FFFFFF",
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": true,
+                  "Sunday": true,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
+                }
+              ],
               "IsHiatus": false,
               "MediaWeekId": 650,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 06-07-16",
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -239,10 +253,25 @@
               "Cost": 20.00,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
-              "Iscis": [],
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "FFFFFF",
+                  "Days": "Su-M-T-W-Th-F-Sa",
+                  "Friday": true,
+                  "HouseIsci": "FFFFFF",
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": true,
+                  "Sunday": true,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
+                }
+              ],
               "IsHiatus": false,
               "MediaWeekId": 650,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 06-07-16",
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -256,7 +285,6 @@
       "ShowTypeCriteria": [
         {
           "Contain": 2,
-          "Id": 2,
           "ShowType": {
             "Display": "Movie"
           }

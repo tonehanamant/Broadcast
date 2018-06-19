@@ -6,7 +6,7 @@ import { Actions } from 'react-redux-grid';
 
 import { Button, Modal } from 'react-bootstrap';
 import { toggleModal, setOverlayLoading } from 'Ducks/app';
-import { getPostClientScrubbing } from 'Ducks/post';
+import { getPost, getPostClientScrubbing } from 'Ducks/post';
 
 import PostScrubbingHeader from './PostScrubbingHeader';
 import PostScrubbingDetail from './PostScrubbingDetail';
@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => (
 		// clearPostScrubbingDetail,
     // getPostScrubbingDetail,
     getPostClientScrubbing,
+    getPost,
 		toggleModal,
 		selectRow,
 		deselectAll,
@@ -42,7 +43,8 @@ export class PostScrubbingModal extends Component {
 	constructor(props) {
 		super(props);
 		this.close = this.close.bind(this);
-		this.dismiss = this.dismiss.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.refreshPost = this.refreshPost.bind(this);
 	}
 
 	close() {
@@ -58,7 +60,11 @@ export class PostScrubbingModal extends Component {
 	dismiss() {
 		this.props.modal.properties.dismiss();
 		this.close();
-	}
+  }
+
+  refreshPost() {
+    this.props.getPost();
+  }
 
 	render() {
 	// const { getPostScrubbingDetail } = this.props;
@@ -69,7 +75,7 @@ export class PostScrubbingModal extends Component {
 		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
 
 		return (
-			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal" enforceFocus={false}>
+			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal" enforceFocus={false} onExited={this.refreshPost}>
 					<Modal.Header>
             <Modal.Title style={{ display: 'inline-block' }}>Scrubbing Screen</Modal.Title>
 						<Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
@@ -130,6 +136,7 @@ PostScrubbingModal.propTypes = {
 	modal: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
   getPostClientScrubbing: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
 	grid: PropTypes.object.isRequired,
 	dataSource: PropTypes.object.isRequired,
 	proposalHeader: PropTypes.object.isRequired,
