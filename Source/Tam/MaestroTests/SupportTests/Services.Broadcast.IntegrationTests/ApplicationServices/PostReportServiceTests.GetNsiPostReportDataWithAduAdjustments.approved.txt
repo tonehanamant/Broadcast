@@ -1,0 +1,113 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Daypart": null,
+  "Equivalized": false,
+  "FlightDates": [
+    "2Q'16: 1 week - 5/30"
+  ],
+  "GuaranteedDemo": "House Holds",
+  "ProposalAudiences": [
+    {
+      "Display": "HH",
+      "Id": 31
+    }
+  ],
+  "QuarterTables": [
+    {
+      "TableName": "2Q'16",
+      "TableRows": [
+        {
+          "ActualImpressions": 1000.0,
+          "Adu": false,
+          "Contract": "NSIADU2",
+          "DeliveredImpressionsPercentage": 1.0,
+          "HHRating": 0,
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 25.0000,
+          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "SpotLength": 30,
+          "Spots": 10,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        },
+        {
+          "ActualImpressions": 1000.0,
+          "Adu": true,
+          "Contract": "ADU",
+          "DeliveredImpressionsPercentage": null,
+          "HHRating": 0,
+          "ProposalWeekCost": null,
+          "ProposalWeekCPM": null,
+          "ProposalWeekImpressionsGoal": null,
+          "ProposalWeekTotalCost": null,
+          "ProposalWeekTotalImpressionsGoal": null,
+          "SpotLength": 30,
+          "Spots": 10,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        }
+      ]
+    }
+  ],
+  "QuarterTabs": [
+    {
+      "TabName": "Spot Detail 2Q16",
+      "TabRows": [
+        {
+          "Adu": true,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 500.0
+          },
+          "DateAired": "2016-05-31T00:00:00",
+          "DaypartName": "ADU",
+          "Isci": "NSIADU1",
+          "Market": "Yakima-Pasco-Rchlnd-Knnwck",
+          "NetworkAffiliate": "ABC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 25.0000,
+          "ProposalWeekId": 44,
+          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 114,
+          "SpotLength": 30,
+          "Station": "KAPP",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 1500.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NSIADU2",
+          "Isci": "NSIADU2",
+          "Market": "Yakima-Pasco-Rchlnd-Knnwck",
+          "NetworkAffiliate": "ABC",
+          "ProgramName": "Program Names R us",
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 25.0000,
+          "ProposalWeekId": 45,
+          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 114,
+          "SpotLength": 30,
+          "Station": "KAPP",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        }
+      ],
+      "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
+    }
+  ],
+  "ReportName": "NSI ADU Adjustment Test - Test Advertiser 9 - Cadent Network 2Q16 Post Report.xlsx",
+  "SpotLengthsDisplay": ":30s",
+  "WithOvernightImpressions": false
+}

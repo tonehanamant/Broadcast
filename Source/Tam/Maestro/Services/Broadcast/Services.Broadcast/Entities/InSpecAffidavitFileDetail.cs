@@ -25,5 +25,6 @@ namespace Services.Broadcast.Entities
         public int Units { get; set; }
         public int? ProposalDetailPostingBookId { get; set; }
         public int ProposalWeekId { get; set; }
+        public bool Adu { get; internal set; }
     }
 }

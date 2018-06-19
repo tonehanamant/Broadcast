@@ -118,7 +118,7 @@ class FilterTimeInput extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar style={{ minWidth: '90%' }}>
+        <ButtonToolbar className="pull-right" style={{ margin: '0 0 8px 0' }}>
           <Button
             bsStyle="success"
             bsSize="xsmall"

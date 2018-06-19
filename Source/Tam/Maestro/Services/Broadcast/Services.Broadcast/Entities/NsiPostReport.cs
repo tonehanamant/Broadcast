@@ -57,6 +57,7 @@ namespace Services.Broadcast.Entities
             public double ProposalWeekImpressionsGoal { get; set; }
             public int ProposalWeekUnits { get; set; }
             public int ProposalWeekId { get; set; }
+            public bool Adu { get; set; }
         }
 
         public class NsiPostReportQuarterSummaryTableRow
@@ -65,14 +66,15 @@ namespace Services.Broadcast.Entities
             public DateTime WeekStartDate { get; set; }
             public int Spots { get; set; }
             public int SpotLength { get; set; }
-            public decimal ProposalWeekTotalCost { get; set; }
-            public decimal ProposalWeekCost { get; set; }
-            public decimal ProposalWeekCPM { get; set; }
+            public decimal? ProposalWeekTotalCost { get; set; }
+            public decimal? ProposalWeekCost { get; set; }
+            public decimal? ProposalWeekCPM { get; set; }
             public int HHRating { get; set; }
-            public double ProposalWeekTotalImpressionsGoal { get; set; }
-            public double ProposalWeekImpressionsGoal { get; set; }
-            public double ActualImpressions { get; set; }
-            public double DeliveredImpressionsPercentage { get; set; }
+            public double? ProposalWeekTotalImpressionsGoal { get; set; }
+            public double? ProposalWeekImpressionsGoal { get; set; }
+            public double? ActualImpressions { get; set; }
+            public double? DeliveredImpressionsPercentage { get; set; }
+            public bool Adu { get; set; }
         }
 
         public NsiPostReport(int proposalId, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails,
@@ -144,7 +146,7 @@ namespace Services.Broadcast.Entities
                             DateAired = r.AirDate,
                             SpotLength = spotLengthMappings[r.SpotLengthId],
                             Advertiser = advertiser.Display,
-                            DaypartName = r.DaypartName,
+                            DaypartName = r.Adu ? "ADU" : r.DaypartName,
                             AudienceImpressions = audienceImpressions,
                             ProposalWeekTotalCost = r.ProposalWeekTotalCost,
                             ProposalWeekCost = r.ProposalWeekCost,
@@ -152,7 +154,8 @@ namespace Services.Broadcast.Entities
                             ProposalWeekImpressionsGoal = r.ProposalWeekImpressionsGoal,
                             ProposalWeekUnits = r.Units,
                             ProposalWeekCPM = r.ProposalWeekCPM,
-                            ProposalWeekId = r.ProposalWeekId
+                            ProposalWeekId = r.ProposalWeekId,
+                            Adu = r.Adu
                         };
                     }).ToList()
                 };
@@ -167,8 +170,9 @@ namespace Services.Broadcast.Entities
                         {
                             x.DaypartName,
                             x.SpotLength,
-                            x.WeekStart
-                        }).OrderBy(x => x.Key.WeekStart).ThenBy(x => x.Key.SpotLength).Select(x =>
+                            x.WeekStart,
+                            x.Adu
+                        }).OrderBy(x => x.Key.WeekStart).ThenBy(x => x.Key.SpotLength).ThenBy(x => x.Key.Adu).Select(x =>
                              {
                                  var items = x.ToList();
                                  var row = new NsiPostReportQuarterSummaryTableRow
@@ -183,17 +187,56 @@ namespace Services.Broadcast.Entities
                                  };
                                  row.DeliveredImpressionsPercentage = row.ActualImpressions / row.ProposalWeekTotalImpressionsGoal;
                                  row.ProposalWeekCost = row.ProposalWeekTotalCost / row.Spots;
-                                 row.ProposalWeekImpressionsGoal = row.ProposalWeekTotalImpressionsGoal / row.Spots;
+                                 row.ProposalWeekImpressionsGoal = (row.ProposalWeekTotalImpressionsGoal / row.Spots);
                                  row.ProposalWeekCPM = row.ProposalWeekCost / (decimal)row.ProposalWeekImpressionsGoal * 1000;
+                                 row.Adu = x.Key.Adu;
                                  return row;
                              }).ToList()
                     });
             }
+
+            _ApplyAduAdjustments(QuarterTables);
+
             FlightDates = _GetFormattedFlights(flights, QuarterTables);
             SpotLengthsDisplay = string.Join(" & ", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
             if (Equivalized)
             {
                 SpotLengthsDisplay += " (Equivalized)";
+            }
+        }
+
+        private void _ApplyAduAdjustments(List<NsiPostReportQuarterSummaryTable> quarterTables)
+        {
+            foreach (var quarterTable in quarterTables)
+            {
+                foreach (var quarterRow in quarterTable.TableRows)
+                {
+                    if (!quarterRow.Adu)
+                        continue;
+
+                    var weeks = quarterTable.TableRows.Where(x => x.WeekStartDate == quarterRow.WeekStartDate && x.SpotLength == quarterRow.SpotLength && !x.Adu);
+
+                    quarterRow.ProposalWeekTotalImpressionsGoal = null;
+                    quarterRow.ProposalWeekImpressionsGoal = null;
+                    quarterRow.DeliveredImpressionsPercentage = null;
+                    quarterRow.ProposalWeekCost = null;
+                    quarterRow.ProposalWeekTotalCost = null;
+                    quarterRow.ProposalWeekCPM = null;
+
+                    foreach (var week in weeks)
+                    {
+                        if (week.ActualImpressions > week.ProposalWeekTotalImpressionsGoal)
+                        {
+                            var overflowingImpressions = week.ActualImpressions - week.ProposalWeekTotalImpressionsGoal;
+
+                            week.ActualImpressions = week.ActualImpressions - overflowingImpressions;
+
+                            week.DeliveredImpressionsPercentage = week.ActualImpressions / week.ProposalWeekTotalImpressionsGoal;
+
+                            quarterRow.ActualImpressions += overflowingImpressions;
+                        }
+                    }
+                }
             }
         }
 
