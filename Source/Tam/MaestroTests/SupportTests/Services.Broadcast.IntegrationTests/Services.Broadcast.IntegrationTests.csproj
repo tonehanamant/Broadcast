@@ -253,12 +253,14 @@
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
+    <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
+    <Compile Include="Stubbs\FtpServiceStubb.cs" />
     <Compile Include="Repositories\ProposalInventoryRepositoryIntegrationTests.cs" />
     <Compile Include="Repositories\ProposalRepositoryTests.cs" />
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
-    <Compile Include="EmailerServicedStubb.cs" />
-    <Compile Include="StubbedSMSClient.cs" />
+    <Compile Include="Stubbs\EmailerServicedStubb.cs" />
+    <Compile Include="Stubbs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitProgramScrubbingEngineTests.cs" />
     <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
@@ -294,6 +296,7 @@
     <None Include="app.config" />
     <None Include="EnvironmentSpecificSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="EnvironmentSpecificSettings.config.development">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -645,9 +648,6 @@
     <None Include="Files\Test Adv NAV4 30 05-30-16.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Files\WWTV_AffidavitInValidFileContent.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Files\WWTV_AffidavitValidFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -659,9 +659,6 @@
     </Content>
     <Content Include="Files\WWTV_Affidavit_Decimal_Overnight_Impressions.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\WWTV_Bad_File.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_Bad_File_times.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

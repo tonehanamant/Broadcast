@@ -12,8 +12,30 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public static class WWTVSharedNetworkHelper
+    public interface IWWTVSharedNetworkHelper
     {
+        void Impersonate(Action actionToExecute);
+    }
+
+    public class WWTVSharedNetworkHelper : IWWTVSharedNetworkHelper
+    {
+        private readonly IImpersonateUser _ImpersonateUser;
+
+        public WWTVSharedNetworkHelper(IImpersonateUser impersonateUser)
+        {
+            _ImpersonateUser = impersonateUser;
+        }
+
+        public void Impersonate(Action actionToExecute)
+        {
+            var userName = BroadcastServiceSystemParameter.WWTV_SharedFolder_UserName;
+            var password = BroadcastServiceSystemParameter.WWTV_SharedFolder_Password;
+
+            _ImpersonateUser.Impersonate("", userName, password, actionToExecute);
+        }
+
+
+
         #region Local Paths and network shared connections
         public static string GetLocalDropFolder()
         {
@@ -43,15 +65,6 @@ namespace Services.Broadcast.ApplicationServices
         #endregion
 
         #region Impersonation
-
-        public static void Impersonate(Action actionToExecute)
-        {
-            var userName = BroadcastServiceSystemParameter.WWTV_SharedFolder_UserName;
-            var password = BroadcastServiceSystemParameter.WWTV_SharedFolder_Password;
-
-            ImpersonateUser.Impersonate("", userName, password, actionToExecute);
-        }
-
 
         #endregion
 

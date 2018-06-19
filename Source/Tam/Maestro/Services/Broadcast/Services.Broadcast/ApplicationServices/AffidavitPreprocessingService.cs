@@ -44,15 +44,21 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
         private readonly IEmailerService _EmailerService;
+        private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
 
         public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
-                                                IAffidavitEmailProcessorService affidavitEmailProcessorService, 
+                                                IAffidavitEmailProcessorService affidavitEmailProcessorService,
+                                                IWWTVFtpHelper WWTVFtpHelper,
+                                                IWWTVSharedNetworkHelper WWTVSharedNetworkHelper,
                                                 IEmailerService emailerService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
+            _WWTVFtpHelper = WWTVFtpHelper;
             _EmailerService = emailerService;
+            _WWTVSharedNetworkHelper = WWTVSharedNetworkHelper;
         }
 
         /// <summary>
@@ -65,7 +71,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<string> filepathList;
             List<OutboundAffidavitFileValidationResultDto> validationList = new List<OutboundAffidavitFileValidationResultDto>();
-            WWTVSharedNetworkHelper.Impersonate(delegate 
+            _WWTVSharedNetworkHelper.Impersonate(delegate 
             {
                 filepathList = GetDropFolderFileList();
                 validationList = ValidateFiles(filepathList, userName);
@@ -133,12 +139,12 @@ namespace Services.Broadcast.ApplicationServices
 
         public void ProcessErrorFiles()
         {
-            var remoteFTPPath = WWTVFtpHelper.GetFTPErrorPath();
-
-            WWTVSharedNetworkHelper.Impersonate(delegate
+            _WWTVSharedNetworkHelper.Impersonate(delegate
             {
-                var files = WWTVFtpHelper.GetFileList(remoteFTPPath);
+                var files = _WWTVFtpHelper.GetFtpErrorFileList();
                 var localPaths = new List<string>();
+                var remoteFTPPath = _WWTVFtpHelper.GetErrorPath();
+
                 var completedFiles = _DownloadFTPFiles(files, remoteFTPPath, ref localPaths);
                 EmailFTPErrorFiles(localPaths);
             });
@@ -159,25 +165,23 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private List<string> _DownloadFTPFiles(List<string> files, string remoteFTPPath,ref List<string> localFilePaths)
+        private List<string> _DownloadFTPFiles(List<string> files, string remoteFtpPath,ref List<string> localFilePaths)
         {
             var local = new List<string>();
             List<string> completedFiles = new List<string>();
-            using (var ftpClient = new WebClient())
+            using (var ftpClient = _WWTVFtpHelper.EnsureFtpClient())
             {
-                ftpClient.Credentials = WWTVFtpHelper.GetFtpClientCredentials();
-
                 var localFolder = WWTVSharedNetworkHelper.GetLocalErrorFolder();
                 files.ForEach(filePath =>
                 {
-                    var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
+                    var path = remoteFtpPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
                     var localPath = localFolder + @"\" + filePath.Replace(@"/", @"\");
                     if (File.Exists(localPath))
                         File.Delete(localPath);
 
-                    ftpClient.DownloadFile(path, localPath);
+                    _WWTVFtpHelper.DownloadFileFromClient(ftpClient,path, localPath);
                     local.Add(localPath);
-                    WWTVFtpHelper.DeleteFile(path);
+                    _WWTVFtpHelper.DeleteFile(path);
                     completedFiles.Add(path);
                 });
             }
@@ -201,9 +205,9 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _UploadZipToWWTV(string zipFileName)
         {
-            var sharedFolder = WWTVFtpHelper.GetFTPOutboundPath();
+            var sharedFolder = _WWTVFtpHelper.GetOutboundPath();
             var uploadUrl = $"{sharedFolder}/{Path.GetFileName(zipFileName)}";
-            WWTVFtpHelper.UploadFile(zipFileName, uploadUrl,File.Delete); 
+            _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl,File.Delete); 
         }
 
         public List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)

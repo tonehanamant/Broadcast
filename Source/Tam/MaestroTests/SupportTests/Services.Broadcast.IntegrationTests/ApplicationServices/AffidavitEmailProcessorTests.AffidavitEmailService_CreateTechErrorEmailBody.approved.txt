@@ -1,6 +1,6 @@
 ﻿File FileName could not be properly processed.  Including technical information to help figure out the issue.
 
-File located in \\LocalFtp\Folder\FileName
+File located in .\Files\FileName
 
 Technical Information:
 

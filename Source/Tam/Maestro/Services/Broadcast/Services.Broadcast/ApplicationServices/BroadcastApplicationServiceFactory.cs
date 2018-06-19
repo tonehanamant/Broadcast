@@ -13,6 +13,7 @@ using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System.Collections.Generic;
+using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -120,6 +121,12 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 
             unityContainer.RegisterType<IEmailerService, EmailerService>();
+
+            unityContainer.RegisterType<IWWTVFtpHelper, WWTVFtpHelper>();
+            unityContainer.RegisterType<IFtpService, FtpService>();
+
+            unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
+            unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>(); 
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

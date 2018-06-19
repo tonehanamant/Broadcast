@@ -8,9 +8,13 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Services.Broadcast.ApplicationServices.Security
 {
+    public interface IImpersonateUser
+    {
+        void Impersonate(string domainName, string userName, string userPassword, Action actionToExecute);
+    }
     /// <summary>
     /// </summary>
-    public class ImpersonateUser
+    public class ImpersonateUser : IImpersonateUser
     {
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         private static extern bool LogonUser(String lpszUsername, String lpszDomain, String lpszPassword,
@@ -20,7 +24,7 @@ namespace Services.Broadcast.ApplicationServices.Security
         private extern static bool CloseHandle(IntPtr handle);
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        public static void Impersonate(string domainName, string userName, string userPassword, Action actionToExecute)
+        public void Impersonate(string domainName, string userName, string userPassword, Action actionToExecute)
         {
             SafeTokenHandle safeTokenHandle;
             try

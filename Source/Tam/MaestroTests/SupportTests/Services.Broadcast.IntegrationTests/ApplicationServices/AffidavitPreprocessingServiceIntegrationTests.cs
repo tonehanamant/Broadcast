@@ -1,18 +1,18 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Mail;
+using Common.Services;
 using Services.Broadcast.ApplicationServices.Security;
-using Services.Broadcast.Services;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -21,11 +21,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class AffidavitPreprocessingServiceIntegrationTests
     {
         private readonly IAffidavitPreprocessingService _AffidavitPreprocessingService;
+        private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
+
         private const string USERNAME = "AffidavitPreprocessing_User";
 
         public AffidavitPreprocessingServiceIntegrationTests()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
             _AffidavitPreprocessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
+            _WWTVSharedNetworkHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IWWTVSharedNetworkHelper>();
         }
 
         [Test]
@@ -140,12 +147,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-        [Ignore]
+
+        [UseReporter(typeof(DiffReporter))]
         [Test]
         // use for manual testing and not automated running 
         public void Test_ProcessErrorFiles() //Errors returned from WWTV
         {
+            FtpServiceStubb.ResponseFromGetFileList = new List<string>()
+            {
+                "Special_Ftp_Phantom_File.txt"
+            };
+
             _AffidavitPreprocessingService.ProcessErrorFiles();
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(MailMessage), "Attachments");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            try
+            {
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings));
+            }
+            finally
+            {
+                EmailerServiceStubb.ClearLastMessage();
+                FtpServiceStubb.CleanUpCreatedFiles();
+            }
         }
 
         [Ignore]
@@ -163,50 +194,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 File.Copy(src, dest);
                 File.Delete(dest);
             }
-        }
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(Win32Exception))]
-        public void Test_ImpersonationHelper_Impersonate_Success()
-        {
-            string fileName = "\\\\cadapps-qa1\\WWTVErrors\\ddr.txt";
-            string userName = "svc_wwtvdata@crossmw.com";
-            string password = "78!ttwG&Dc$4fB2xZ94x";
-
-            ImpersonateUser.Impersonate("crossmw",userName, password, delegate
-            {
-                if (!File.Exists(fileName))
-                {
-                    Console.WriteLine("exists");
-                }
-                else
-                {
-                    Console.WriteLine("no exists");
-
-                }
-            });
-        }
-        [Ignore]
-        [Test]
-        [ExpectedException(typeof(Win32Exception))]
-        public void Test_ImpersonationHelper_fail_user()
-        {
-            string fileName = "\\\\cadapps-qa1\\WWTVErrors\\ddr.txt";
-            string userName = "_svc_wwtvdata@crossmw.com";
-            string password = "78!ttwG&Dc$4fB2xZ94x";
-
-            ImpersonateUser.Impersonate("crossmw", userName, password, delegate
-            {
-                if (!File.Exists(fileName))
-                {
-                    Console.WriteLine("exists");
-                }
-                else
-                {
-                    Console.WriteLine("no exists");
-
-                }
-            });
         }
     }
 }

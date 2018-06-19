@@ -4,4 +4,4 @@ Record: 124: 'FieldName' is required
 'SecondField' is also required
 
 
-File located in \\LocalFtp\Folder\FileNameCausingError
+File located in .\Files\FileNameCausingError
