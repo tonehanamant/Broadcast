@@ -419,7 +419,7 @@ namespace Services.Broadcast.Repositories
                         AudienceImpressions = x.affidavitClientScrub.affidavit_client_scrub_audiences
                             .ToDictionary(i => i.audience_id, j => j.impressions),
                         OvernightImpressions = x.affidavitFileDetails.affidavit_file_detail_demographics
-                            .ToDictionary(i => i.audience_id.Value, j => (double) j.overnight_impressions.Value),
+                            .ToDictionary(i => i.audience_id.Value, j => (double)j.overnight_impressions.Value),
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
                         AdvertiserId = x.proposal.advertiser_id,
@@ -427,7 +427,8 @@ namespace Services.Broadcast.Repositories
                         ProposalWeekTotalImpressionsGoal = x.proposalVersionWeeks.impressions_goal,
                         Units = x.proposalVersionWeeks.units,
                         ProposalWeekId = x.proposalVersionWeeks.id,
-                        ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id
+                        ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id,
+                        Adu = x.proposalVersionDetail.adu
                     }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ToList();
 
                     return inSpecAffidavitFileDetails;

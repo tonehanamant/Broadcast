@@ -19,6 +19,8 @@ namespace Services.Broadcast.IntegrationTests
         [UseReporter(typeof(DiffReporter))]
         public void Email_Hello_Test()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+
             var from = new MailAddress("broadcastsmtp@crossmw.com");
 
             var emailerService = IntegrationTestApplicationServiceFactory.GetApplicationService<IEmailerService>() ;

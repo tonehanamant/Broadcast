@@ -2,21 +2,53 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Web.Mvc;
+using Common.Services;
+using EntityFrameworkMapping.Broadcast;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public static class WWTVFtpHelper
+    public interface IWWTVFtpHelper
+    {
+        string Host { get; }
+        NetworkCredential GetClientCredentials();
+        string GetOutboundPath();
+        string GetErrorPath();
+        string GetInboundPath();
+
+        #region Client Operations (WebClient style ftp)
+
+        /// <summary>
+        /// Creates new WebClient with proper credentials to be used accross multiple client operations.
+        /// </summary>
+        WebClient EnsureFtpClient();
+        void DownloadFileFromClient(WebClient client, string path, string localPath);
+
+        #endregion
+
+        void UploadFile(string sourceFilePath, string destPath, Action<string> OnSuccessfulUpload);
+
+        string DownloadFileFtpToString(string fileName);
+
+        List<string> GetFtpErrorFileList(Func<string, bool> isValidFile = null);
+        List<string> GetInboundFileList(Func<string, bool> isValidFile = null);
+        void DeleteFiles(List<string> fileNames);
+        void DeleteFile(string remoteFfpPath);
+    }
+
+    public class WWTVFtpHelper : IWWTVFtpHelper
     {
         private const string FTP_SCHEME = "ftp://";
 
-        public static string Host
+        private IFtpService _FtpService;
+        public string Host
         {
             get
             {
@@ -25,7 +57,12 @@ namespace Services.Broadcast.ApplicationServices
                 return BroadcastServiceSystemParameter.WWTV_FtpHost;
             }
         }
-        public static NetworkCredential GetFtpClientCredentials()
+
+        public WWTVFtpHelper(IFtpService ftpService)
+        {
+            _FtpService = ftpService;
+        }
+        public NetworkCredential GetClientCredentials()
         {
             return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
                 BroadcastServiceSystemParameter.WWTV_FtpPassword);
@@ -34,21 +71,21 @@ namespace Services.Broadcast.ApplicationServices
         
         #region Remote path getters 
 
-        public static string GetFTPOutboundPath()
+        public string GetOutboundPath()
         {
             var path = BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder;
 
             return $"{FTP_SCHEME}{Host}/{path}";
         }
         
-        public static string GetFTPErrorPath()
+        public string GetErrorPath()
         {
             var path = BroadcastServiceSystemParameter.WWTV_FtpErrorFolder;
 
             return $"{FTP_SCHEME}{Host}/{path}";
         }
 
-        public static string GetFTPInboundPath()
+        public string GetInboundPath()
         {
             var path = BroadcastServiceSystemParameter.WWTV_FtpInboundFolder;
 
@@ -59,46 +96,75 @@ namespace Services.Broadcast.ApplicationServices
 
 
         #region Basic FTP operations
-        public static void UploadFile(string sourceFilePath, string destPath, Action<string> OnSuccessfulUpload)
+
+        public WebClient EnsureFtpClient()
         {
+            var webClient = new WebClient();
+            webClient.Credentials = GetClientCredentials();
+
+            return webClient;
+        }
+
+        public void DownloadFileFromClient(WebClient webClient, string path, string localPath)
+        {
+            if (webClient == null)
+                throw new InvalidEnumArgumentException("WebClient parameter must not be null");
+
+            _FtpService.DownloadFileFromWebClient(webClient,path, localPath);
+        }
+
+        public void UploadFile(string sourceFilePath, string destPath, Action<string> OnSuccessfulUpload = null)
+        {
+            var credentials = GetClientCredentials();
+            _FtpService.UploadFile(credentials, sourceFilePath, destPath);
+
+            OnSuccessfulUpload?.Invoke(sourceFilePath);
+        }
+
+        public string DownloadFileFtpToString(string fileName)
+        {
+            var shareFolder = GetInboundPath();
             using (var ftpClient = new WebClient())
             {
-                ftpClient.Credentials = GetFtpClientCredentials();
-                ftpClient.UploadFile(destPath, "STOR",sourceFilePath);
-
-                OnSuccessfulUpload.Invoke(sourceFilePath);
+                ftpClient.Credentials = GetClientCredentials();
+                StreamReader reader = new StreamReader(ftpClient.OpenRead($"{shareFolder}/{fileName}"));
+                return reader.ReadToEnd();
             }
+
         }
 
 
-        public static List<string> GetFileList(string remoteFTPPath, Func<string, bool> isValidFile = null)
+
+        public List<string> GetFtpErrorFileList(Func<string, bool> isValidFile = null)
         {
-            var request = (FtpWebRequest)WebRequest.Create(remoteFTPPath);
+            var remoteFTPPath = GetErrorPath();
 
-            request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.Credentials = WWTVFtpHelper.GetFtpClientCredentials();
+            var credentials = GetClientCredentials();
+            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
 
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-            List<string> files = new List<string>();
+            var validList = list;
+            if (isValidFile != null)
+                validList = list.Where(f => isValidFile(f)).ToList();
 
-            using (StreamReader reader = new StreamReader(responseStream))
-            {
-                var line = reader.ReadLine();
+            return validList;
+        }
 
-                while (!string.IsNullOrEmpty(line))
-                {
-                    if (isValidFile == null || isValidFile(line))
-                        files.Add(line);
+        public List<string> GetInboundFileList(Func<string, bool> isValidFile = null)
+        {
+            string remoteFTPPath = GetInboundPath();
 
-                    line = reader.ReadLine();
-                }
-            }
-            return files;
+            var credentials = GetClientCredentials();
+            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
+
+            var validList = list;
+            if (isValidFile != null)
+                validList = list.Where(f => isValidFile(f)).ToList();
+
+            return validList;
         }
 
 
-        public static void DeleteFiles(List<string> fileNames)
+        public void DeleteFiles(List<string> fileNames)
         {
             foreach (var fileName in fileNames)
             {
@@ -106,16 +172,9 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public static void DeleteFile(string remoteFTPPath)
+        public void DeleteFile(string remoteFtpPath)
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(remoteFTPPath);
-
-            request.Method = WebRequestMethods.Ftp.DeleteFile;
-            request.Credentials = GetFtpClientCredentials();
-            request.Proxy = null;
-
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            response.Close();
+            _FtpService.DeleteFile(GetClientCredentials(), remoteFtpPath);
         }
 
 #endregion

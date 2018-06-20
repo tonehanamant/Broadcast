@@ -1,0 +1,53 @@
+﻿{
+  "AlternateViews": [],
+  "Bcc": [],
+  "Body": "Special_Ftp_Phantom_File.txt",
+  "BodyEncoding": {
+    "BodyName": "us-ascii",
+    "CodePage": 20127,
+    "DecoderFallback": {
+      "DefaultString": "?",
+      "MaxCharCount": 1
+    },
+    "EncoderFallback": {
+      "DefaultString": "?",
+      "MaxCharCount": 1
+    },
+    "EncodingName": "US-ASCII",
+    "HeaderName": "us-ascii",
+    "IsBrowserDisplay": false,
+    "IsBrowserSave": false,
+    "IsMailNewsDisplay": true,
+    "IsMailNewsSave": true,
+    "IsReadOnly": true,
+    "IsSingleByte": true,
+    "WebName": "us-ascii",
+    "WindowsCodePage": 1252
+  },
+  "BodyTransferEncoding": -1,
+  "CC": [],
+  "DeliveryNotificationOptions": 0,
+  "From": {
+    "Address": "broadcastsmtp@crossmw.com",
+    "DisplayName": "",
+    "Host": "crossmw.com",
+    "User": "broadcastsmtp"
+  },
+  "Headers": [],
+  "HeadersEncoding": null,
+  "IsBodyHtml": true,
+  "Priority": 0,
+  "ReplyTo": null,
+  "ReplyToList": [],
+  "Sender": null,
+  "Subject": "Error files from WWTV",
+  "SubjectEncoding": null,
+  "To": [
+    {
+      "Address": "mhohenshilt@crossmw.com",
+      "DisplayName": "",
+      "Host": "crossmw.com",
+      "User": "mhohenshilt"
+    }
+  ]
+}

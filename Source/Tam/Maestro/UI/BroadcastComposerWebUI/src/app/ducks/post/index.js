@@ -348,6 +348,7 @@ export default function reducer(state = initialState, action) {
         activeFilters.WeekStart.filterOptions = weekStartOptions;
       };
       prepareFilterOptions();
+      // console.log('after prepare filter options', activeFilters, state);
       return {
         ...state,
         activeFilterKey: data.Data.filterKey,
@@ -363,7 +364,7 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA:
     // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data, state);
-    return Object.assign({}, state, {
+    /* return Object.assign({}, state, {
       proposalHeader: {
         ...state.proposalHeader,
         activeScrubbingData: {
@@ -377,11 +378,24 @@ export default function reducer(state = initialState, action) {
       scrubbingFiltersList: [data.activeFilters],
       ...state.hasActiveScrubbingFilters,
       hasActiveScrubbingFilters: data.hasActiveScrubbingFilters,
-    });
+    }); */
+    return {
+      ...state,
+      proposalHeader: {
+        ...state.proposalHeader,
+        activeScrubbingData: {
+          ...state.proposalHeader.activeScrubbingData,
+          ClientScrubs: data.filteredClientScrubs,
+        },
+      },
+      activeScrubbingFilters: data.activeFilters,
+      scrubbingFiltersList: [data.activeFilters],
+      hasActiveScrubbingFilters: data.hasActiveScrubbingFilters,
+    };
 
     case ACTIONS.RECEIVE_POST_OVERRIDE_STATUS:
-    // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data);
-    return Object.assign({}, state, {
+    return {
+      ...state,
       proposalHeader: {
         ...state.proposalHeader,
         scrubbingData: data.scrubbingData,
@@ -390,11 +404,9 @@ export default function reducer(state = initialState, action) {
           ClientScrubs: data.filteredClientScrubs,
         },
       },
-      ...state.activeScrubbingFilters,
       activeScrubbingFilters: data.activeFilters,
-      ...state.scrubbingFiltersList,
       scrubbingFiltersList: [data.activeFilters],
-    });
+    };
 
     case ACTIONS.LOAD_ARCHIVED_ISCI.success:
       return {

@@ -40,6 +40,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
         private readonly IAffidavitService _AffidavidService;
+        private readonly IWWTVFtpHelper _WWTVFtpHelper;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
         private const string HTTP_ACCEPT_HEADER = "application/json";
@@ -49,11 +50,13 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastAudiencesCache audienceCache,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IAffidavitEmailProcessorService affidavitEmailProcessorService,
-            IAffidavitService affidavidService)
+            IAffidavitService affidavidService,
+            IWWTVFtpHelper ftpHelper)
         {
             _AudienceCache = audienceCache;
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;
+            _WWTVFtpHelper = ftpHelper;
         }
 
 
@@ -81,7 +84,7 @@ namespace Services.Broadcast.ApplicationServices
                 return;
             }
 
-            var inboundFtpPath = WWTVFtpHelper.GetFTPInboundPath();
+            var inboundFtpPath = _WWTVFtpHelper.GetInboundPath();
 
             var failedDownloads = new List<string>();
             foreach (var filePath in filesToProcess)
@@ -101,7 +104,7 @@ namespace Services.Broadcast.ApplicationServices
                 var ftpFileToDelete = inboundFtpPath + "/" + fileName;
                 try
                 {
-                    WWTVFtpHelper.DeleteFile(ftpFileToDelete);
+                    _WWTVFtpHelper.DeleteFile(ftpFileToDelete);
                 }
                 catch (Exception e)
                 {
@@ -312,20 +315,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private string _DownloadFileFromWWTVFtpToString(string fileName)
         {
-            var shareFolder = WWTVFtpHelper.GetFTPInboundPath();
-            using (var ftpClient = new WebClient())
-            {
-                ftpClient.Credentials = WWTVFtpHelper.GetFtpClientCredentials();
-                StreamReader reader = new StreamReader(ftpClient.OpenRead($"{shareFolder}/{fileName}"));
-                return reader.ReadToEnd();
-            }
+            return _WWTVFtpHelper.DownloadFileFtpToString(fileName);
+
         }
 
 
         private List<string> _GetWWTVFTPFileNames()
         {
-            string uri = WWTVFtpHelper.GetFTPInboundPath();
-            return WWTVFtpHelper.GetFileList(uri, (file) => file.EndsWith(VALID_INCOMING_FILE_EXTENSION));
+            return _WWTVFtpHelper.GetInboundFileList((file) => file.EndsWith(VALID_INCOMING_FILE_EXTENSION));
         }
     }
 }

@@ -46,8 +46,6 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
                     MediaMonthAndWeekAggregateCache = _instance.Resolve<IMediaMonthAndWeekAggregateCache>();
-
-                    _instance.RegisterType<IEmailerService, EmailerServiceStubb>();
                 }
             }
         }
