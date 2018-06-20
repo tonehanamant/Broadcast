@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid } from 'react-redux-grid';
 import numeral from 'numeral';
 import GridCellInput from 'Components/shared/GridCellInput';
+import GridTextInput from 'Components/shared/GridTextInput';
 import GridIsciCell from './GridIsciCell';
 
 /* eslint-disable no-unused-vars */
@@ -332,20 +333,15 @@ export default class ProposalDetailGrid extends Component {
 
           if (row.Type === 'total' || row.Type === 'quarter') return null;
           return (
-            <GridCellInput
+            <GridTextInput
               name="MyEvent"
-              // placeholder=""
               value={value}
               valueKey="MyEvent"
               isEditable={isEditable}
               maxLength={25}
               onKeyPress={this.keyPress}
-
               onSaveShowValidation={this.state.DetailGridsInvalid}
-              blurAction={inputMyEvent}
               enterKeyPressAction={inputMyEvent}
-              maskType="default"
-              isGridCellEdited={this.props.isGridCellEdited}
             />
           );
         },
