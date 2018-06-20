@@ -344,6 +344,7 @@
     <Compile Include="Entities\StationInventoryManifestRate.cs" />
     <Compile Include="Entities\StationProgram.cs" />
     <Compile Include="Entities\StationProgramConflictRequest.cs" />
+    <Compile Include="Entities\SwapProposalDetailRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\OutboundAffidavitFileValidationResultDto.cs" />
     <Compile Include="Entities\UnlinkedIscisDto.cs" />

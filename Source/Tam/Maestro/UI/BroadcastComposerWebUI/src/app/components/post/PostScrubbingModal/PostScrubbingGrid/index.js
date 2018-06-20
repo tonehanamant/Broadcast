@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Grid, Actions } from 'react-redux-grid';
 // import Sorter from 'Utils/react-redux-grid-sorter';
 import { overrideStatus } from 'Ducks/post';
-
+import SwapDetailModal from './SwapDetailModal';
 // import CustomPager from 'Components/shared/CustomPager';
 import { getDateInFormat, getSecondsToTimeString, getDay } from '../../../../utils/dateFormatter';
 
@@ -38,6 +38,7 @@ export class PostScrubbingGrid extends Component {
       this.processManualOverrides = this.processManualOverrides.bind(this);
       this.hideContextMenu = this.hideContextMenu.bind(this);
       this.showContextMenu = this.showContextMenu.bind(this);
+      this.openSwapDetailModal = this.openSwapDetailModal.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -98,10 +99,18 @@ export class PostScrubbingGrid extends Component {
         this.props.deselectAll(ref);
     }
 
+    openSwapDetailModal(selections) {
+      this.props.toggleModal({
+        modal: 'swapDetailModal',
+        active: true,
+        properties: { selections },
+      });
+    }
+
     render() {
         const style = { color: '#FF0000' };
         const stateKey = 'PostScrubbingGrid';
-        const { activeScrubbingData } = this.props;
+        const { activeScrubbingData, details } = this.props;
         // const { Details = [] } = activeScrubbingData;
         const { ClientScrubs = [] } = activeScrubbingData;
 
@@ -334,6 +343,16 @@ export class PostScrubbingGrid extends Component {
                     this.processManualOverrides('OutOfSpec', selections);
                   },
                 },
+                {
+                  text: 'Swap Proposal Detail',
+                  key: 'menu-post-swap-detail',
+                  EVENT_HANDLER: ({ metaData }) => {
+                    // todo process as just Ids? or need to handle response
+                    const selections = this.getScrubbingSelections();
+                    // console.log('override in spec', selections, metaData, metaData.rowData);
+                    this.openSwapDetailModal(selections);
+                  },
+                },
               ],
             },
             ROW: {
@@ -390,7 +409,10 @@ export class PostScrubbingGrid extends Component {
         };
 
         return (
+            <div>
             <Grid {...grid} data={ClientScrubs} store={this.context.store} height={340} />
+            <SwapDetailModal details={details} />
+            </div>
         );
     }
 }
@@ -408,6 +430,8 @@ PostScrubbingGrid.propTypes = {
     showMenu: PropTypes.func.isRequired,
     hideMenu: PropTypes.func.isRequired,
     overrideStatus: PropTypes.func.isRequired,
+    details: PropTypes.array.isRequired,
+    toggleModal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingGrid);

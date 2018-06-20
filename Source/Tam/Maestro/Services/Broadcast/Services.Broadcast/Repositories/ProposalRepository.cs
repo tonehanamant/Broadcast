@@ -65,6 +65,13 @@ namespace Services.Broadcast.Repositories
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
         ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
         void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> list);
+
+        /// <summary>
+        /// Gets all weeks for a proposal detail
+        /// </summary>
+        /// <param name="proposalDetailId">Proposal detail id to filter by</param>
+        /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
+        List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1540,6 +1547,42 @@ namespace Services.Broadcast.Repositories
                             }).ToList();
                     return weeks;
                 });
+        }
+
+        /// <summary>
+        /// Gets all weeks for a proposal detail
+        /// </summary>
+        /// <param name="proposalDetailId">Proposal detail id to filter by</param>
+        /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
+        public List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var weeks = (from detail in context.proposal_version_details
+                               from quarter in detail.proposal_version_detail_quarters
+                               from week in quarter.proposal_version_detail_quarter_weeks
+                               from isci in week.proposal_version_detail_quarter_week_iscis
+                               where detail.id == proposalDetailId
+                               select new { detail, quarter, week, isci }).ToList();
+                   return weeks.Select(
+                           i => new AffidavitMatchingProposalWeek()
+                           {
+                               ProposalVersionId = i.detail.proposal_version_id,
+                               ProposalVersionDetailId = i.detail.id,
+                               ProposalVersionDetailPostingBookId = i.detail.posting_book_id,
+                               ProposalVersionDetailPostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)i.detail.posting_playback_type,
+                               ProposalVersionDetailWeekStart = i.week.start_date,
+                               ProposalVersionDetailWeekEnd = i.week.end_date,
+                               Spots = i.week.units,
+                               ProposalVersionDetailDaypartId = i.detail.daypart_id,
+                               ProposalVersionDetailQuarterWeekId = i.isci.proposal_version_detail_quarter_week_id,
+                               ClientIsci = i.isci.client_isci,
+                               HouseIsci = i.isci.house_isci,
+                               MarriedHouseIsci = i.isci.married_house_iscii,
+                               Brand = i.isci.brand
+                           }).ToList();                   
+               });
         }
 
         public void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> detailPostingData)

@@ -68,7 +68,7 @@ export class PostScrubbingModal extends Component {
 
 	render() {
 	// const { getPostScrubbingDetail } = this.props;
-		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing, hasActiveScrubbingFilters } = this.props;
+		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing, hasActiveScrubbingFilters, toggleModal } = this.props;
 		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
 		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
 		const { grid, dataSource } = this.props;
@@ -100,12 +100,14 @@ export class PostScrubbingModal extends Component {
               scrubbingFiltersList={scrubbingFiltersList}
               getPostClientScrubbing={getPostClientScrubbing}
               hasActiveScrubbingFilters={hasActiveScrubbingFilters}
+              details={Details}
 							grid={grid}
 							dataSource={dataSource}
 							selectRow={selectRow}
 							deselectAll={deselectAll}
 							doLocalSort={doLocalSort}
-							setOverlayLoading={setOverlayLoading}
+              setOverlayLoading={setOverlayLoading}
+              toggleModal={toggleModal}
 						/>
 					</Modal.Body>
 					<Modal.Footer>

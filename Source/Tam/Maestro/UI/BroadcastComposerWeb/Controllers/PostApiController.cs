@@ -147,5 +147,13 @@ namespace BroadcastComposerWeb.Controllers
             _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().OverrideScrubbingStatus(request));
         }
+
+        [HttpPost]
+        [Route("SwapProposalDetail")]
+        public BaseResponse<bool> SwapProposalDetail(SwapProposalDetailRequest requestData)
+        {
+            return _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().SwapProposalDetails(requestData, DateTime.Now, Identity.Name));
+        }
     }
 }

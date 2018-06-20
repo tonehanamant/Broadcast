@@ -29,5 +29,7 @@ namespace Services.Broadcast.Entities
         public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
         public List<AffidavitClientScrubAudience> AffidavitClientScrubAudiences { get; set; } = new List<AffidavitClientScrubAudience>();
         public string EffectiveIsci { get; set; }
+        public bool MatchIsci { get; set; }
+        public string EffectiveClientIsci { get; set; }
     }
 }

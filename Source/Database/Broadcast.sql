@@ -52,6 +52,20 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-3029 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'match_isci' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE dbo.affidavit_client_scrubs ADD [match_isci] BIT CONSTRAINT DF_affidavit_client_scrubs_match_isci DEFAULT(1) NOT NULL;
+	ALTER TABLE dbo.affidavit_client_scrubs DROP CONSTRAINT DF_affidavit_client_scrubs_match_isci
+END
+GO
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_client_isci' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
+BEGIN
+	ALTER TABLE dbo.affidavit_client_scrubs ADD [effective_client_isci] VARCHAR(63) NULL
+END
+GO
+/*************************************** END BCOP-2471 ***************************************************************/
+
 /*************************************** START BCOP-2471 ***************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('isci_mapping'))
 BEGIN

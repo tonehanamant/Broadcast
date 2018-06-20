@@ -1,14 +1,11 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.OpenMarketInventory;
@@ -847,6 +844,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _Sut.MapIsci(request, DateTime.Now, "test-user");
 
                 var affidavit = _Repo.GetAffidavit(157, true);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
+                jsonResolver.Ignore(typeof(AffidavitClientScrub), "Id");
+                jsonResolver.Ignore(typeof(AffidavitClientScrubAudience), "AffidavitClientScrubId");
+                jsonResolver.Ignore(typeof(AffidavitClientScrub), "AffidavitFileDetailId");
+                jsonResolver.Ignore(typeof(AffidavitClientScrub), "ModifiedDate");
+                jsonResolver.Ignore(typeof(AffidavitFile), "MediaMonthId");
+                jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
+                jsonResolver.Ignore(typeof(AffidavitFileProblem), "AffidavitFileId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(affidavit, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SwapProposalDetail()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new SwapProposalDetailRequest
+                {
+                    AffidavitScrubbingIds = new List<int> { 1008, 1009 },
+                    ProposalDetailId = 9954
+                };
+                var result = _Sut.SwapProposalDetails(request, DateTime.Now, "test-user");
+
+                var affidavit = _Repo.GetAffidavit(161, true);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");

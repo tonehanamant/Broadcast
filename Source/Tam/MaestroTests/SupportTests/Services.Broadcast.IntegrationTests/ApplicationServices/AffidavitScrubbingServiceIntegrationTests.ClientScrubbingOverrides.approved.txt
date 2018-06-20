@@ -5,7 +5,7 @@
   "ClientScrubs": [
     {
       "Affiliate": "NBC",
-      "ClientISCI": "AAAAAAAA",
+      "ClientISCI": null,
       "Comments": null,
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
@@ -14,6 +14,7 @@
       "Market": "New York",
       "MatchDate": true,
       "MatchGenre": true,
+      "MatchIsci": false,
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
@@ -33,35 +34,7 @@
     },
     {
       "Affiliate": "NBC",
-      "ClientISCI": "AAAAAAAA",
-      "Comments": "BCOP-2997",
-      "DateAired": "2016-06-05T00:00:00",
-      "DayOfWeek": 0,
-      "GenreName": "Do It Yourself",
-      "ISCI": "AAAAAAAA",
-      "Market": "New York",
-      "MatchDate": true,
-      "MatchGenre": true,
-      "MatchIsciDays": true,
-      "MatchMarket": true,
-      "MatchProgram": true,
-      "MatchShowType": true,
-      "MatchStation": true,
-      "MatchTime": true,
-      "ProgramName": "Program Names R us",
-      "ProposalDetailId": 14,
-      "Sequence": 1,
-      "ShowTypeName": "",
-      "SpotLength": 30,
-      "Station": "WNBC",
-      "Status": 2,
-      "StatusOverride": false,
-      "TimeAired": 32400,
-      "WeekStart": "2016-05-30T00:00:00"
-    },
-    {
-      "Affiliate": "NBC",
-      "ClientISCI": "BBBBBBBB",
+      "ClientISCI": null,
       "Comments": null,
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
@@ -70,6 +43,7 @@
       "Market": "New York",
       "MatchDate": true,
       "MatchGenre": true,
+      "MatchIsci": false,
       "MatchIsciDays": true,
       "MatchMarket": true,
       "MatchProgram": true,
@@ -82,10 +56,97 @@
       "ShowTypeName": "",
       "SpotLength": 30,
       "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-05-30T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": "BCOP-2997",
+      "DateAired": "2016-06-05T00:00:00",
+      "DayOfWeek": 0,
+      "GenreName": "Do It Yourself",
+      "ISCI": "AAAAAAAA",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 14,
+      "Sequence": 1,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-05-30T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": "BCOP-2952",
+      "DateAired": "2016-06-03T00:00:00",
+      "DayOfWeek": 5,
+      "GenreName": "Do It Yourself",
+      "ISCI": "CCCCCCC",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 14,
+      "Sequence": 1,
+      "ShowTypeName": "",
+      "SpotLength": 15,
+      "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-05-30T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": null,
+      "DateAired": "2016-06-03T00:00:00",
+      "DayOfWeek": 5,
+      "GenreName": "Do It Yourself",
+      "ISCI": "AAAAAAAA",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 15,
+      "Sequence": 2,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
       "Status": 1,
       "StatusOverride": true,
       "TimeAired": 32400,
-      "WeekStart": "2016-05-30T00:00:00"
+      "WeekStart": "2016-06-07T00:00:00"
     }
   ],
   "Details": [
@@ -155,10 +216,7 @@
     "DistinctAffiliates": [
       "NBC"
     ],
-    "DistinctClientIscis": [
-      "AAAAAAAA",
-      "BBBBBBBB"
-    ],
+    "DistinctClientIscis": [],
     "DistinctDayOfWeek": [
       0,
       5
@@ -168,7 +226,8 @@
     ],
     "DistinctHouseIscis": [
       "AAAAAAAA",
-      "BBBBBBBBB"
+      "BBBBBBBBB",
+      "CCCCCCC"
     ],
     "DistinctMarkets": [
       "New York"
@@ -177,21 +236,24 @@
       "Program Names R us"
     ],
     "DistinctSequences": [
-      1
+      1,
+      2
     ],
     "DistinctShowTypes": [],
     "DistinctSpotLengths": [
+      15,
       30
     ],
     "DistinctStations": [
       "WNBC"
     ],
     "DistinctWeekStarts": [
-      "2016-05-30T00:00:00"
+      "2016-05-30T00:00:00",
+      "2016-06-07T00:00:00"
     ],
     "TimeAiredEnd": 32400,
     "TimeAiredStart": 32400,
-    "WeekEnd": "2016-06-06T00:00:00",
+    "WeekEnd": "2016-06-14T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"
   },
   "GuaranteedDemo": "House Holds",

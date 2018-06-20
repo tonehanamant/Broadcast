@@ -93,26 +93,56 @@
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": null,
+          "EffectiveIsci": "NSI1",
           "EffectiveProgramName": "Program Names R us",
           "EffectiveShowType": "",
           "LeadIn": false,
           "MatchDate": true,
           "MatchGenre": true,
-          "MatchIsci": true,
-          "MatchIsciDays": true,
+          "MatchIsci": false,
+          "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
           "MatchShowType": true,
           "MatchStation": true,
           "MatchTime": true,
-          "ModifiedBy": "test user",
+          "ModifiedBy": "test-user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 2
-        },
+          "ProposalVersionDetailId": 9954,
+          "ProposalVersionDetailQuarterWeekId": 29,
+          "Status": 1
+        }
+      ],
+      "AffidavitFileDetailProblems": [],
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "Demographics": [],
+      "EstimateId": null,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "NSI1",
+      "LeadInEndTime": 32400,
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadInShowType": "",
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
+      "LeadOutShowType": "",
+      "LeadOutStartTime": 32400,
+      "MappedIsci": null,
+      "Market": null,
+      "OriginalAirDate": "2016-06-03T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ShowType": "",
+      "SpotCost": null,
+      "SpotLengthId": 1,
+      "Station": "WNBC"
+    },
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
         {
           "AffidavitClientScrubAudiences": [
             {
@@ -203,25 +233,25 @@
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": null,
+          "EffectiveIsci": "NSI2",
           "EffectiveProgramName": "Program Names R us",
           "EffectiveShowType": "",
           "LeadIn": false,
           "MatchDate": true,
           "MatchGenre": true,
-          "MatchIsci": true,
-          "MatchIsciDays": true,
+          "MatchIsci": false,
+          "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
           "MatchShowType": true,
           "MatchStation": true,
           "MatchTime": true,
-          "ModifiedBy": "sroiu",
+          "ModifiedBy": "test-user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 11199,
-          "Status": 2
+          "ProposalVersionDetailId": 9954,
+          "ProposalVersionDetailQuarterWeekId": 29,
+          "Status": 1
         }
       ],
       "AffidavitFileDetailProblems": [],
@@ -232,7 +262,7 @@
       "EstimateId": null,
       "Genre": "Do It Yourself",
       "InventorySource": 1,
-      "Isci": "AAAAAAAA",
+      "Isci": "NSI2",
       "LeadInEndTime": 32400,
       "LeadinGenre": null,
       "LeadinProgramName": null,
@@ -243,7 +273,7 @@
       "LeadOutStartTime": 32400,
       "MappedIsci": null,
       "Market": null,
-      "OriginalAirDate": "2016-06-03T00:00:00",
+      "OriginalAirDate": "2016-06-08T00:00:00",
       "ProgramName": "Program Names R us",
       "ShowType": "",
       "SpotCost": null,
@@ -254,7 +284,12 @@
       "AdjustedAirDate": "0001-01-01T00:00:00",
       "AffidavitClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [],
+          "AffidavitClientScrubAudiences": [
+            {
+              "AudienceId": 31,
+              "Impressions": 666.0
+            }
+          ],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
@@ -274,8 +309,8 @@
           "ModifiedBy": "sroibu",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
+          "ProposalVersionDetailId": 9954,
+          "ProposalVersionDetailQuarterWeekId": 29,
           "Status": 2
         }
       ],
@@ -287,36 +322,7 @@
       "EstimateId": null,
       "Genre": "Do It Yourself",
       "InventorySource": 1,
-      "Isci": "BBBBBBBBB",
-      "LeadInEndTime": 32400,
-      "LeadinGenre": null,
-      "LeadinProgramName": null,
-      "LeadInShowType": "",
-      "LeadoutGenre": null,
-      "LeadoutProgramName": null,
-      "LeadOutShowType": "",
-      "LeadOutStartTime": 32400,
-      "MappedIsci": null,
-      "Market": null,
-      "OriginalAirDate": "2016-06-03T00:00:00",
-      "ProgramName": "Program Names R us",
-      "ShowType": "",
-      "SpotCost": null,
-      "SpotLengthId": 1,
-      "Station": "WNBC"
-    },
-    {
-      "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
-      "Demographics": [],
-      "EstimateId": null,
-      "Genre": "Do It Yourself",
-      "InventorySource": 1,
-      "Isci": "SomeISCI",
+      "Isci": "NSI3",
       "LeadInEndTime": 32400,
       "LeadinGenre": null,
       "LeadinProgramName": null,
@@ -338,266 +344,34 @@
       "AdjustedAirDate": "0001-01-01T00:00:00",
       "AffidavitClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [],
-          "Comment": "BCOP-2997",
-          "EffectiveClientIsci": null,
-          "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": null,
-          "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "",
-          "LeadIn": false,
-          "MatchDate": true,
-          "MatchGenre": true,
-          "MatchIsci": true,
-          "MatchIsciDays": true,
-          "MatchMarket": true,
-          "MatchProgram": true,
-          "MatchShowType": true,
-          "MatchStation": true,
-          "MatchTime": true,
-          "ModifiedBy": "sroibu",
-          "PostingBookId": 416,
-          "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 2
-        }
-      ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
-      "Demographics": [],
-      "EstimateId": null,
-      "Genre": "Do It Yourself",
-      "InventorySource": 1,
-      "Isci": "AAAAAAAA",
-      "LeadInEndTime": 32400,
-      "LeadinGenre": null,
-      "LeadinProgramName": null,
-      "LeadInShowType": "",
-      "LeadoutGenre": null,
-      "LeadoutProgramName": null,
-      "LeadOutShowType": "",
-      "LeadOutStartTime": 32400,
-      "MappedIsci": null,
-      "Market": null,
-      "OriginalAirDate": "2016-06-05T00:00:00",
-      "ProgramName": "Program Names R us",
-      "ShowType": "",
-      "SpotCost": null,
-      "SpotLengthId": 1,
-      "Station": "WNBC"
-    },
-    {
-      "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
-        {
           "AffidavitClientScrubAudiences": [
             {
-              "AudienceId": 5,
-              "Impressions": 500.0
-            },
-            {
-              "AudienceId": 6,
-              "Impressions": 500.0
-            },
-            {
               "AudienceId": 31,
-              "Impressions": 500.0
-            }
-          ],
-          "Comment": "BCOP-2952",
-          "EffectiveClientIsci": null,
-          "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": null,
-          "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "",
-          "LeadIn": false,
-          "MatchDate": true,
-          "MatchGenre": true,
-          "MatchIsci": true,
-          "MatchIsciDays": true,
-          "MatchMarket": true,
-          "MatchProgram": true,
-          "MatchShowType": true,
-          "MatchStation": true,
-          "MatchTime": true,
-          "ModifiedBy": "sroibu",
-          "PostingBookId": 416,
-          "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 2
-        }
-      ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
-      "Demographics": [],
-      "EstimateId": null,
-      "Genre": "Do It Yourself",
-      "InventorySource": 1,
-      "Isci": "CCCCCCC",
-      "LeadInEndTime": 32400,
-      "LeadinGenre": null,
-      "LeadinProgramName": null,
-      "LeadInShowType": "",
-      "LeadoutGenre": null,
-      "LeadoutProgramName": null,
-      "LeadOutShowType": "",
-      "LeadOutStartTime": 32400,
-      "MappedIsci": null,
-      "Market": null,
-      "OriginalAirDate": "2016-06-03T00:00:00",
-      "ProgramName": "Program Names R us",
-      "ShowType": "",
-      "SpotCost": null,
-      "SpotLengthId": 3,
-      "Station": "WNBC"
-    },
-    {
-      "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 31400,
-      "Archived": false,
-      "Demographics": [],
-      "EstimateId": null,
-      "Genre": "Do It Yourself",
-      "InventorySource": 1,
-      "Isci": "ToBeArchivedIsci",
-      "LeadInEndTime": 32400,
-      "LeadinGenre": null,
-      "LeadinProgramName": null,
-      "LeadInShowType": "",
-      "LeadoutGenre": null,
-      "LeadoutProgramName": null,
-      "LeadOutShowType": "",
-      "LeadOutStartTime": 32400,
-      "MappedIsci": null,
-      "Market": null,
-      "OriginalAirDate": "2016-06-03T00:00:00",
-      "ProgramName": "Program Names R us",
-      "ShowType": "",
-      "SpotCost": null,
-      "SpotLengthId": 1,
-      "Station": "WNBC"
-    },
-    {
-      "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
-        {
-          "AffidavitClientScrubAudiences": [
-            {
-              "AudienceId": 4,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 5,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 6,
-              "Impressions": 610.75
-            },
-            {
-              "AudienceId": 7,
-              "Impressions": 804.25
-            },
-            {
-              "AudienceId": 13,
-              "Impressions": 16703.875
-            },
-            {
-              "AudienceId": 14,
-              "Impressions": 34490.25
-            },
-            {
-              "AudienceId": 15,
-              "Impressions": 50242.625
-            },
-            {
-              "AudienceId": 19,
-              "Impressions": 781.625
-            },
-            {
-              "AudienceId": 20,
-              "Impressions": 778.25
-            },
-            {
-              "AudienceId": 21,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 22,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 28,
-              "Impressions": 10273.875
-            },
-            {
-              "AudienceId": 29,
-              "Impressions": 19975.875
-            },
-            {
-              "AudienceId": 30,
-              "Impressions": 15955.375
-            },
-            {
-              "AudienceId": 31,
-              "Impressions": 177491.0
-            },
-            {
-              "AudienceId": 46,
-              "Impressions": 2654.375
-            },
-            {
-              "AudienceId": 284,
-              "Impressions": 4806.125
-            },
-            {
-              "AudienceId": 290,
-              "Impressions": 13527.375
-            },
-            {
-              "AudienceId": 339,
-              "Impressions": 793.75
-            },
-            {
-              "AudienceId": 347,
-              "Impressions": 26693.125
-            },
-            {
-              "AudienceId": 348,
-              "Impressions": 2872.0
+              "Impressions": 777.0
             }
           ],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": "AAAAAAAA",
+          "EffectiveIsci": null,
           "EffectiveProgramName": "Program Names R us",
           "EffectiveShowType": "",
           "LeadIn": false,
           "MatchDate": true,
           "MatchGenre": true,
           "MatchIsci": true,
-          "MatchIsciDays": false,
+          "MatchIsciDays": true,
           "MatchMarket": true,
           "MatchProgram": true,
-          "MatchShowType": false,
+          "MatchShowType": true,
           "MatchStation": true,
           "MatchTime": true,
-          "ModifiedBy": "test-user",
+          "ModifiedBy": "sroibu",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
-          "Status": 1
+          "ProposalVersionDetailId": 9954,
+          "ProposalVersionDetailQuarterWeekId": 30,
+          "Status": 2
         }
       ],
       "AffidavitFileDetailProblems": [],
@@ -608,18 +382,18 @@
       "EstimateId": null,
       "Genre": "Do It Yourself",
       "InventorySource": 1,
-      "Isci": "AAAAAAAA",
-      "LeadInEndTime": 32300,
+      "Isci": "NSI4",
+      "LeadInEndTime": 32400,
       "LeadinGenre": null,
       "LeadinProgramName": null,
       "LeadInShowType": "",
       "LeadoutGenre": null,
       "LeadoutProgramName": null,
       "LeadOutShowType": "",
-      "LeadOutStartTime": 32500,
+      "LeadOutStartTime": 32400,
       "MappedIsci": null,
-      "Market": null,
-      "OriginalAirDate": "2016-06-05T00:00:00",
+      "Market": "New York",
+      "OriginalAirDate": "2016-06-08T00:00:00",
       "ProgramName": "Program Names R us",
       "ShowType": "",
       "SpotCost": null,

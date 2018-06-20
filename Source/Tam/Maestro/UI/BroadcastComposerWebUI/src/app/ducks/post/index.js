@@ -426,11 +426,17 @@ export default function reducer(state = initialState, action) {
       scrubbingFiltersList: [],
     };
 
+    /* case ACTIONS.RECEIVE_SWAP_PROPOSAL_DETAIL: {
+    const params = {};
+    return getPostClientScrubbing(params)
+    } */
+
     case ACTIONS.LOAD_VALID_ISCI.request:
       return {
         ...state,
         loadingValidIscis: true,
       };
+
 
     case ACTIONS.LOAD_VALID_ISCI.success:
       return {
@@ -483,6 +489,11 @@ export const getUnlinkedIscis = () => ({
 
 export const overrideStatus = params => ({
   type: ACTIONS.REQUEST_POST_OVERRIDE_STATUS,
+  payload: params,
+});
+
+export const swapProposalDetail = params => ({
+  type: ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL,
   payload: params,
 });
 

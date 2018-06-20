@@ -95,7 +95,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
         public virtual DbSet<isci_mapping> isci_mapping { get; set; }
-        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
+        public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
     }
 }

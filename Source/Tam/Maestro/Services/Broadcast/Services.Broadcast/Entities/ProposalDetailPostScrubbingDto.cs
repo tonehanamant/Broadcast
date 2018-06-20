@@ -31,6 +31,7 @@ namespace Services.Broadcast.Entities
         public bool StatusOverride { get; set; }
         public ScrubbingStatus Status { get; set; }
         public bool MatchShowType { get; set; }
+        public bool MatchIsci { get; set; }
 
     }
 }

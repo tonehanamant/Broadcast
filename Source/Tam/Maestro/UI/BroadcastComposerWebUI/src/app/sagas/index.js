@@ -18,6 +18,7 @@ export default function* rootSaga() {
     postSaga.watchRequestScrubbingDataFiltered(),
     postSaga.watchRequestClearScrubbingFiltersList(),
     postSaga.watchRequestOverrideStatus(),
+    postSaga.watchSwapProposalDetail(),
     postSaga.watchArchiveUnlinkedIsci(),
     postSaga.watchRequestUniqueIscisSuccess(),
     postSaga.watchLoadArchivedIscis(),

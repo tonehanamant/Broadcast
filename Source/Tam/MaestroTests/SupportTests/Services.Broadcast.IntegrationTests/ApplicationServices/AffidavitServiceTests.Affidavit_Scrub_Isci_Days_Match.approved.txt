@@ -91,6 +91,7 @@
             }
           ],
           "Comment": null,
+          "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
           "EffectiveIsci": "WAWA",
           "EffectiveProgramName": "Program Names R us",
@@ -98,6 +99,7 @@
           "LeadIn": false,
           "MatchDate": true,
           "MatchGenre": true,
+          "MatchIsci": true,
           "MatchIsciDays": true,
           "MatchMarket": true,
           "MatchProgram": true,
