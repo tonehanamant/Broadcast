@@ -189,6 +189,7 @@ export function* requestClearScrubbingDataFiltersList() {
 // allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
 // if not from modal show processing, else show loading (loading not shown inside modal)
 export function* requestPostClientScrubbing({ payload: params }) {
+  console.log('requestPostClientScrubbing', params);
   const { getPostClientScrubbing } = api.post;
   try {
     if (params.showModal) {
@@ -597,6 +598,88 @@ export function* requestOverrideStatus({ payload: params }) {
   }
 }
 
+export function* swapProposalDetail({ payload: params }) {
+  const { swapProposalDetail } = api.post;
+
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'swapDetail',
+        loading: true },
+      });
+    const response = yield swapProposalDetail(params);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'swapDetail',
+        loading: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No swap proposal detail returned.',
+          message: `The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No swap proposal detail returned.',
+          message: data.Message || 'The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs.',
+        },
+      });
+      throw new Error();
+    }
+    yield put({
+      type: ACTIONS.CREATE_ALERT,
+      alert: {
+        type: 'success',
+        headline: 'Swap Proposal Detail',
+        message: 'Records updated successfully',
+      },
+    });
+    yield put(toggleModal({
+      modal: 'swapDetailModal',
+      active: false,
+      properties: {},
+    }));
+    // refresh scrubbing
+    const id = yield select(state => state.post.proposalHeader.activeScrubbingData.Id);
+    const refreshParams = { proposalId: id, showModal: true, filterKey: 'All' };
+    yield call(requestPostClientScrubbing, { payload: refreshParams });
+     /*  yield put({
+      type: ACTIONS.RECEIVE_SWAP_PROPOSAL_DETAIL,
+      data,
+    }); */
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No swap proposal detail returned.',
+          message: 'The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 export function* loadArchivedIsci() {
   const { getArchivedIscis } = api.post;
   try {
@@ -700,6 +783,11 @@ export function* watchArchiveUnlinkedIsci() {
 export function* watchRequestOverrideStatus() {
   yield takeEvery(ACTIONS.REQUEST_POST_OVERRIDE_STATUS, requestOverrideStatus);
 }
+
+export function* watchSwapProposalDetail() {
+  yield takeEvery(ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL, swapProposalDetail);
+}
+
 export function* watchLoadArchivedIscis() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
 }

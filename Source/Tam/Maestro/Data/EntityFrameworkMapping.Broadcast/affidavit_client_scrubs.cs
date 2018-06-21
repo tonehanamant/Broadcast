@@ -40,6 +40,8 @@ namespace EntityFrameworkMapping.Broadcast
         public bool match_show_type { get; set; }
         public bool status_override { get; set; }
         public string effective_isci { get; set; }
+        public bool match_isci { get; set; }
+        public string effective_client_isci { get; set; }
     
         public virtual ICollection<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
         public virtual affidavit_file_details affidavit_file_details { get; set; }

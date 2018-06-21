@@ -56,6 +56,9 @@ const post = {
   mapUnlinkedIscis: ({ OriginalIsci, EffectiveIsci }) => (
     call(POST, `${apiBase}Post/MapIsci`, { OriginalIsci, EffectiveIsci })
   ),
+  swapProposalDetail: params => (
+    call(POST, `${apiBase}Post/SwapProposalDetail`, params)
+  ),
 };
 
 const postPrePosting = {

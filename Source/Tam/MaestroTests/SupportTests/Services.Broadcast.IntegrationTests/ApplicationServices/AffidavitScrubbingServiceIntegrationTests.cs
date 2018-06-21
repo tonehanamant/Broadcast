@@ -210,7 +210,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() {4286}, "ApprovedTest");
+                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() { 1003 }, "ApprovedTest");
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

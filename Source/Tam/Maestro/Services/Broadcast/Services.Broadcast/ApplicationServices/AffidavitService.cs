@@ -38,6 +38,15 @@ namespace Services.Broadcast.ApplicationServices
         string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
 
         /// <summary>
+        /// Swaps one or more client scrubs to another proposal detail
+        /// </summary>
+        /// <param name="requestData">SwapProposalDetailRequest object containing a list of affidavit client scrubs to be swapped and the proposal detail id to swap to</param>
+        /// <param name="currentDateTime">Current date and time</param>
+        /// <param name="username">Username requesting the change</param>
+        /// <returns>True or false</returns>
+        bool SwapProposalDetails(SwapProposalDetailRequest requestData, DateTime currentDateTime, string username);
+
+        /// <summary>
         /// Maps an original isci to an effective isci
         /// </summary>
         /// <param name="mapIsciDto">MapIsciDto object containing the iscis to map</param>
@@ -193,7 +202,7 @@ namespace Services.Broadcast.ApplicationServices
             _MapToAffidavitFileDetails(matchedAffidavitDetails, currentDateTime, username);
 
             affidavitFile.AffidavitFileDetails.AddRange(matchedAffidavitDetails.Select(x => x.AffidavitDetail).ToList());
-           
+
             _ScrubMatchedAffidavitRecords(affidavitFile.AffidavitFileDetails);
             _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitFile.AffidavitFileDetails);
 
@@ -297,7 +306,8 @@ namespace Services.Broadcast.ApplicationServices
                                 LeadIn = w.IsLeadInMatch,
                                 PostingBookId = w.ProposalVersionDetailPostingBookId.Value,
                                 PostingPlaybackType = w.ProposalVersionDetailPostingPlaybackType,
-                                EffectiveIsci = matchedAffidavitDetail.EffectiveIsci
+                                EffectiveIsci = matchedAffidavitDetail.EffectiveIsci,
+                                EffectiveClientIsci = w.ClientIsci
                             }).ToList();
                 matchedAffidavitDetail.AffidavitDetail.AffidavitFileDetailProblems = matchedAffidavitDetail.AffidavitDetailProblems;
             }
@@ -315,6 +325,35 @@ namespace Services.Broadcast.ApplicationServices
             return ScrubUnlinkedAffidavitDetailsByIsci(mapIsciDto.OriginalIsci, currentDateTime, username);
         }
 
+        /// <summary>
+        /// Swaps one or more client scrubs to another proposal detail
+        /// </summary>
+        /// <param name="requestData">SwapProposalDetailRequest object containing a list of affidavit client scrubs to be swapped and the proposal detail id to swap to</param>
+        /// <param name="currentDateTime">Current date and time</param>
+        /// <param name="username">Username requesting the change</param>
+        /// <returns>True or false</returns>
+        public bool SwapProposalDetails(SwapProposalDetailRequest requestData, DateTime currentDateTime, string username)
+        {
+            var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
+            List<AffidavitFileDetail> affidavitDetails = _AffidavitRepository.GetAffidavitDetailsByClientScrubIds(requestData.AffidavitScrubbingIds);            
+            var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitDetails, requestData.ProposalDetailId);
+            _SetPostingBookData(matchedAffidavitDetails, postingBookId);
+            
+            //load AffidavitClientScrubs and AffidavitDetailProblems
+            _MapToAffidavitFileDetails(matchedAffidavitDetails, currentDateTime, username);
+
+            var affidavitFileDetails = matchedAffidavitDetails.Select(d => d.AffidavitDetail).ToList();
+            _ScrubMatchedAffidavitRecords(affidavitFileDetails);
+            _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitFileDetails);
+            using (var transaction = new TransactionScopeWrapper()) //Ensure both database requests succeed or fail together
+            {
+                _AffidavitRepository.SaveScrubbedFileDetails(affidavitFileDetails);
+                _ProposalRepository.UpdateProposalDetailPostingBooks(_GetProposalDetailIdsWithPostingBookId(affidavitFileDetails));
+                transaction.Complete();
+            }
+            return true;
+        }
+        
         private List<ProposalDetailPostingData> _GetProposalDetailIdsWithPostingBookId(List<AffidavitFileDetail> affidavitFileDetails)
         {
             var result = affidavitFileDetails.SelectMany(d => d.AffidavitClientScrubs.Select(s => new ProposalDetailPostingData
@@ -359,7 +398,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var affidavitStation = _MatchAffidavitStation(stations, affidavitDetail);
 
-                foreach (var scrub in affidavitDetail.AffidavitClientScrubs)
+                foreach (AffidavitClientScrub scrub in affidavitDetail.AffidavitClientScrubs)
                 {
                     var quarterWeekId = scrub.ProposalVersionDetailQuarterWeekId;
                     var proposal = proposals[quarterWeekId];
@@ -368,11 +407,19 @@ namespace Services.Broadcast.ApplicationServices
                     var proposalWeek = proposalDetail.Quarters.SelectMany(d => d.Weeks.Where(w => w.Id == quarterWeekId)).First();
                     var proposalWeekIsci = proposalWeek.Iscis.Any(i => i.HouseIsci.Equals(affidavitDetail.Isci, StringComparison.InvariantCultureIgnoreCase))
                         ? proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.Isci, StringComparison.InvariantCultureIgnoreCase))
-                        : proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.MappedIsci, StringComparison.InvariantCultureIgnoreCase));
-
-                    var dayOfWeek = affidavitDetail.OriginalAirDate.DayOfWeek;
-
-                    scrub.MatchIsciDays = _IsIsciDaysMatch(proposalWeekIsci, dayOfWeek);
+                        : !string.IsNullOrWhiteSpace(affidavitDetail.MappedIsci) ? proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.MappedIsci, StringComparison.InvariantCultureIgnoreCase))
+                                : null;
+                    
+                    if(proposalWeekIsci == null)
+                    {
+                        scrub.MatchIsci = false;
+                    }
+                    else
+                    {
+                        scrub.MatchIsciDays = _IsIsciDaysMatch(proposalWeekIsci, affidavitDetail.OriginalAirDate.DayOfWeek);
+                        scrub.MatchIsci = true;
+                        scrub.EffectiveClientIsci = proposalWeekIsci.ClientIsci;
+                    }
 
                     // match market/station
                     scrub.MatchStation = false;
@@ -393,7 +440,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     _AffidavitProgramScrubbingEngine.Scrub(proposalDetail, affidavitDetail, scrub);
 
-                    scrub.Status = (scrub.MatchStation && scrub.MatchMarket && scrub.MatchGenre && scrub.MatchProgram && scrub.MatchTime && scrub.MatchIsciDays && scrub.MatchDate && scrub.MatchShowType)
+                    scrub.Status = (scrub.MatchStation && scrub.MatchMarket && scrub.MatchGenre && scrub.MatchProgram && scrub.MatchTime && scrub.MatchIsciDays && scrub.MatchDate && scrub.MatchShowType && scrub.MatchIsci)
                         ? ScrubbingStatus.InSpec
                         : ScrubbingStatus.OutOfSpec;
                 }
@@ -467,13 +514,23 @@ namespace Services.Broadcast.ApplicationServices
             return isMatch;
         }
 
-        private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(List<AffidavitFileDetail> affidavitDetails)
+        private List<AffidavitMatchingDetail> _LinkAndValidateContractIscis(List<AffidavitFileDetail> affidavitDetails, int swapProposalDetailId = 0)
         {
             bool isIsciMapped = false;
             var matchedAffidavitDetails = new List<AffidavitMatchingDetail>();
+            List<AffidavitMatchingProposalWeek> proposalWeeks = new List<AffidavitMatchingProposalWeek>();
+            bool swappingProposalDetail = swapProposalDetailId > 0;
+            if (swappingProposalDetail)
+            {
+                proposalWeeks = _ProposalRepository.GetAffidavitMatchingProposalWeeksByDetailId(swapProposalDetailId);
+                swappingProposalDetail = true;
+            }
             foreach (var affidavitDetail in affidavitDetails)
             {
-                var proposalWeeks = _ProposalRepository.GetAffidavitMatchingProposalWeeksByHouseIsci(affidavitDetail.Isci);
+                if(!swappingProposalDetail)
+                {
+                    proposalWeeks = _ProposalRepository.GetAffidavitMatchingProposalWeeksByHouseIsci(affidavitDetail.Isci);
+                }
 
                 var matchedProposalWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
                 if (!matchedProposalWeeks.Any() && !string.IsNullOrWhiteSpace(affidavitDetail.MappedIsci))
