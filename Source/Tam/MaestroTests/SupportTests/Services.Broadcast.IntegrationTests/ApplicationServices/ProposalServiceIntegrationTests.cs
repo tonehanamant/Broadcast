@@ -1218,6 +1218,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
