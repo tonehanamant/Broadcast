@@ -3,178 +3,62 @@
     "MarketId": 101,
     "MarketName": "New York",
     "MarketRank": 1,
-    "MarketSubscribers": 7348620.0,
+    "MarketSubscribers": 7368320.0,
     "Stations": [
       {
-        "Affiliation": "COZ",
-        "CallLetters": "WNBC 4.2",
-        "LegacyCallLetters": "ENBC",
+        "Affiliation": "NBC",
+        "CallLetters": "WNBC 4.1",
+        "LegacyCallLetters": "WNBC",
         "Programs": [
           {
-            "Daypart": {
-              "Display": "M-SU 6AM-12AM",
-              "Id": 1
-            },
-            "FlightWeeks": [
+            "Dayparts": [
               {
-                "Allocations": [],
-                "EndDate": "0001-01-01T00:00:00",
-                "IsHiatus": false,
-                "MediaWeekId": 649,
-                "Rate": 5.0000,
-                "StartDate": "0001-01-01T00:00:00"
+                "Display": "M-F 9AM-10AM"
+              },
+              {
+                "Display": "M-F 6AM-8AM"
               }
             ],
-            "ProgramId": 2000,
-            "ProgramName": "Open Market Program",
-            "Spots": 0,
-            "StationCode": 4544,
-            "TargetCpm": 0.0,
-            "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
-          }
-        ],
-        "StationCode": 4544
-      },
-      {
-        "Affiliation": "IND",
-        "CallLetters": "WNYE-TV 25.1",
-        "LegacyCallLetters": "WNYE",
-        "Programs": [
-          {
-            "Daypart": {
-              "Display": "M-SU 6AM-12AM",
-              "Id": 1
-            },
             "FlightWeeks": [
               {
-                "Allocations": [],
-                "EndDate": "0001-01-01T00:00:00",
+                "Allocations": [
+                  {
+                    "MediaWeekId": 649,
+                    "Spots": 1
+                  }
+                ],
+                "EndDate": "2016-06-05T00:00:00",
                 "IsHiatus": false,
                 "MediaWeekId": 649,
                 "Rate": 10.0000,
-                "StartDate": "0001-01-01T00:00:00"
-              }
-            ],
-            "ProgramId": 2001,
-            "ProgramName": "Open Market Program Too",
-            "Spots": 0,
-            "StationCode": 5923,
-            "TargetCpm": 0.0,
-            "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
-          }
-        ],
-        "StationCode": 5923
-      }
-    ]
-  },
-  {
-    "MarketId": 104,
-    "MarketName": "Philadelphia",
-    "MarketRank": 4,
-    "MarketSubscribers": 2942800.0,
-    "Stations": [
-      {
-        "Affiliation": "ABC",
-        "CallLetters": "WPVI-TV 6.1",
-        "LegacyCallLetters": "WPVI",
-        "Programs": [
-          {
-            "Daypart": {
-              "Display": "M-SU 6AM-12AM",
-              "Id": 1
-            },
-            "FlightWeeks": [
+                "StartDate": "2016-05-30T00:00:00"
+              },
               {
-                "Allocations": [],
-                "EndDate": "0001-01-01T00:00:00",
+                "Allocations": [
+                  {
+                    "MediaWeekId": 650,
+                    "Spots": 0
+                  }
+                ],
+                "EndDate": "2016-06-12T00:00:00",
                 "IsHiatus": false,
-                "MediaWeekId": 649,
-                "Rate": 15.0000,
-                "StartDate": "0001-01-01T00:00:00"
+                "MediaWeekId": 650,
+                "Rate": 10.0000,
+                "StartDate": "2016-06-06T00:00:00"
               }
             ],
-            "ProgramId": 2003,
-            "ProgramName": "Open Market Program 3",
-            "Spots": 0,
-            "StationCode": 5017,
-            "TargetCpm": 0.0,
-            "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
-          }
-        ],
-        "StationCode": 5017
-      }
-    ]
-  },
-  {
-    "MarketId": 111,
-    "MarketName": "Washington, DC (Hagrstwn)",
-    "MarketRank": 7,
-    "MarketSubscribers": 2476680.0,
-    "Stations": [
-      {
-        "Affiliation": "PBS",
-        "CallLetters": "WETA-TV 26.4",
-        "LegacyCallLetters": "WETA",
-        "Programs": [
-          {
-            "Daypart": {
-              "Display": "M-SU 6AM-12AM",
-              "Id": 1
-            },
-            "FlightWeeks": [
-              {
-                "Allocations": [],
-                "EndDate": "0001-01-01T00:00:00",
-                "IsHiatus": false,
-                "MediaWeekId": 649,
-                "Rate": 15.0000,
-                "StartDate": "0001-01-01T00:00:00"
-              }
+            "ProgramNames": [
+              "Test Program",
+              "Test Program On Separate Daypart"
             ],
-            "ProgramId": 2002,
-            "ProgramName": "Open Market Program 2",
             "Spots": 0,
-            "StationCode": 5982,
-            "TargetCpm": 0.0,
+            "StationCode": 5013,
+            "TargetCpm": 0.00,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
+            "UnitImpressions": 5529244.875
           }
         ],
-        "StationCode": 5982
-      },
-      {
-        "Affiliation": "PBS",
-        "CallLetters": "WHUT-TV 32.1",
-        "LegacyCallLetters": "WHUT",
-        "Programs": [
-          {
-            "Daypart": {
-              "Display": "M-SU 6AM-12AM",
-              "Id": 1
-            },
-            "FlightWeeks": [
-              {
-                "Allocations": [],
-                "EndDate": "0001-01-01T00:00:00",
-                "IsHiatus": false,
-                "MediaWeekId": 649,
-                "Rate": 15.0000,
-                "StartDate": "0001-01-01T00:00:00"
-              }
-            ],
-            "ProgramId": 2004,
-            "ProgramName": "Open Market Program 4",
-            "Spots": 0,
-            "StationCode": 6852,
-            "TargetCpm": 0.0,
-            "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
-          }
-        ],
-        "StationCode": 6852
+        "StationCode": 5013
       }
     ]
   }

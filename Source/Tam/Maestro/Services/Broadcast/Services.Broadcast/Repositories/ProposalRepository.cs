@@ -1468,7 +1468,7 @@ namespace Services.Broadcast.Repositories
                         MediaWeekId = week.media_week_id
                     })).OrderBy(w => w.StartDate).ToList();
             baseDto.SingleProjectionBookId = pvd.single_projection_book_id;
-            baseDto.SingleProjectionBookId = pvd.share_projection_book_id;
+            baseDto.ShareProjectionBookId = pvd.share_projection_book_id;
             baseDto.HutProjectionBookId = pvd.hut_projection_book_id;
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
         }
