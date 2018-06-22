@@ -151,6 +151,36 @@ export class PostScrubbingGrid extends Component {
               ),
             },
             {
+              name: 'Market',
+              dataIndex: 'Market',
+              width: 150,
+              renderer: ({ row }) => {
+                  const Market = row.MatchMarket ? <span>{row.Market || '-'}</span> : <span style={style}>{row.Market || '-'}</span>;
+                  return (
+                      Market
+                  );
+              },
+            },
+            {
+              name: 'Station',
+              dataIndex: 'Station',
+              width: 75,
+              renderer: ({ row }) => {
+                  const Station = row.MatchStation ? <span>{row.Station || '-'}</span> : <span style={style}>{row.Station || '-'}</span>;
+                  return (
+                      Station
+                  );
+              },
+            },
+            {
+              name: 'Affiliate',
+              dataIndex: 'Affiliate',
+              width: 75,
+              renderer: ({ row }) => (
+                  <span>{row.Affiliate || '-'}</span>
+              ),
+            },
+            {
                 name: 'Week Start',
                 dataIndex: 'WeekStart',
                 width: 100,
@@ -160,6 +190,18 @@ export class PostScrubbingGrid extends Component {
                         weekStart
                     );
                 },
+            },
+            {
+              name: 'Day',
+              dataIndex: 'DayOfWeek',
+              width: 80,
+              renderer: ({ row }) => {
+                  const DayOfWeek = row.MatchIsciDays ? <span>{getDay(row.DayOfWeek) || '-'}</span> : <span style={style}>{getDay(row.DayOfWeek) || '-'}</span>;
+                  // const DayOfWeek = <span>{getDay(row.DayOfWeek) || '-'}</span>
+                  return (
+                      DayOfWeek
+                  );
+              },
             },
             {
                 name: 'Date',
@@ -184,16 +226,37 @@ export class PostScrubbingGrid extends Component {
                 },
             },
             {
-                name: 'Day',
-                dataIndex: 'DayOfWeek',
-                width: 80,
-                renderer: ({ row }) => {
-                    const DayOfWeek = row.MatchIsciDays ? <span>{getDay(row.DayOfWeek) || '-'}</span> : <span style={style}>{getDay(row.DayOfWeek) || '-'}</span>;
-                    // const DayOfWeek = <span>{getDay(row.DayOfWeek) || '-'}</span>
-                    return (
-                        DayOfWeek
-                    );
-                },
+              name: 'Program',
+              dataIndex: 'ProgramName',
+              width: 150,
+              renderer: ({ row }) => {
+                  const programName = row.MatchProgram ? <span>{row.ProgramName || '-'}</span> : <span style={style}>{row.ProgramName || '-'}</span>;
+                  return (
+                      programName
+                  );
+              },
+            },
+            {
+              name: 'Genre',
+              dataIndex: 'GenreName',
+              width: 100,
+              renderer: ({ row }) => {
+                  const GenreName = row.MatchGenre ? <span>{row.GenreName || '-'}</span> : <span style={style}>{row.GenreName || '-'}</span>;
+                  return (
+                      GenreName
+                  );
+              },
+            },
+            {
+              name: 'Show Type',
+              dataIndex: 'ShowTypeName',
+              width: 100,
+              renderer: ({ row: { ShowTypeName, MatchShowType } }) => {
+                  const showTypeRow = <span style={MatchShowType ? {} : style}>{ShowTypeName || '-'}</span>;
+                  return (
+                      showTypeRow
+                  );
+              },
             },
             {
                 name: 'Spot Length',
@@ -216,69 +279,6 @@ export class PostScrubbingGrid extends Component {
               // defaultSortDirection: 'ASC',
               width: 150,
               renderer: ({ row }) => (<span>{row.ClientISCI || '-'}</span>),
-            },
-            {
-                name: 'Program',
-                dataIndex: 'ProgramName',
-                width: 150,
-                renderer: ({ row }) => {
-                    const programName = row.MatchProgram ? <span>{row.ProgramName || '-'}</span> : <span style={style}>{row.ProgramName || '-'}</span>;
-                    return (
-                        programName
-                    );
-                },
-            },
-            {
-                name: 'Genre',
-                dataIndex: 'GenreName',
-                width: 100,
-                renderer: ({ row }) => {
-                    const GenreName = row.MatchGenre ? <span>{row.GenreName || '-'}</span> : <span style={style}>{row.GenreName || '-'}</span>;
-                    return (
-                        GenreName
-                    );
-                },
-            },
-            {
-                name: 'Show Type',
-                dataIndex: 'ShowTypeName',
-                width: 100,
-                renderer: ({ row: { ShowTypeName, MatchShowType } }) => {
-                    const showTypeRow = <span style={MatchShowType ? {} : style}>{ShowTypeName || '-'}</span>;
-                    return (
-                        showTypeRow
-                    );
-                },
-            },
-            {
-                name: 'Affiliate',
-                dataIndex: 'Affiliate',
-                width: 75,
-                renderer: ({ row }) => (
-                    <span>{row.Affiliate || '-'}</span>
-                ),
-            },
-            {
-                name: 'Market',
-                dataIndex: 'Market',
-                width: 150,
-                renderer: ({ row }) => {
-                    const Market = row.MatchMarket ? <span>{row.Market || '-'}</span> : <span style={style}>{row.Market || '-'}</span>;
-                    return (
-                        Market
-                    );
-                },
-            },
-            {
-                name: 'Station',
-                dataIndex: 'Station',
-                width: 75,
-                renderer: ({ row }) => {
-                    const Station = row.MatchStation ? <span>{row.Station || '-'}</span> : <span style={style}>{row.Station || '-'}</span>;
-                    return (
-                        Station
-                    );
-                },
             },
             {
               name: 'Comments',
