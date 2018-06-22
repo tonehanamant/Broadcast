@@ -53,9 +53,9 @@
             ],
             "Spots": 0,
             "StationCode": 5013,
-            "TargetCpm": 0.00,
+            "TargetCpm": 0.0,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 5529244.875
+            "UnitImpressions": 0.0
           }
         ],
         "StationCode": 5013
