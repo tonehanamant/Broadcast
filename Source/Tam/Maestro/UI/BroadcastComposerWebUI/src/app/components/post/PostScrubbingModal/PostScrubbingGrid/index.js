@@ -322,16 +322,6 @@ export class PostScrubbingGrid extends Component {
                 activeCls: 'active',
                 selectionEvent: 'singleclick',
             },
-                {
-                  text: 'Swap Proposal Detail',
-                  key: 'menu-post-swap-detail',
-                  EVENT_HANDLER: ({ metaData }) => {
-                    // todo process as just Ids? or need to handle response
-                    const selections = this.getScrubbingSelections();
-                    // console.log('override in spec', selections, metaData, metaData.rowData);
-                    this.openSwapDetailModal(selections);
-                  },
-                },
             ROW: {
               enabled: true,
               renderer: ({ cells, ...rowData }) => (
