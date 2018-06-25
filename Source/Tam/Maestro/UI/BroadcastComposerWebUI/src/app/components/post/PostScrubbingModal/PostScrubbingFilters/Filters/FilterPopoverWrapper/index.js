@@ -119,6 +119,7 @@ FilterPopoverWrapper.defaultProps = {
   matchOptions: {},
   filterActive: false,
   filterType: 'filterList',
+  filterDisplay: 'Filter',
 };
 
 FilterPopoverWrapper.propTypes = {
