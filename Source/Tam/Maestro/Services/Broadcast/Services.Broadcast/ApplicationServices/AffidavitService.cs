@@ -221,7 +221,13 @@ namespace Services.Broadcast.ApplicationServices
             Dictionary<string, string> isciMappings = _PostRepository.LoadIsciMappings(affidavitFileDetails.Select(x => x.Isci).ToList());
             if (isciMappings.Count > 0)
             {
-                affidavitFileDetails.ForEach(x => x.MappedIsci = isciMappings[x.Isci]);
+                affidavitFileDetails.ForEach(x =>
+                {
+                    if (isciMappings.TryGetValue(x.Isci, out string value))
+                    {
+                        x.MappedIsci = value;
+                    }
+                });
             }
         }
 
