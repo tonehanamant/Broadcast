@@ -18,9 +18,12 @@ const generateMenuItems = row => map(({ key, text, EVENT_HANDLER }) => (
 const ContextMenuRow = (props) => {
   const { rowProps, row, menuItems, isRender, stateKey } = props;
 
-  if (!isRender && !menuItems) {
+  if (!(isRender && menuItems)) {
     return (
-      <tr {...rowProps}>
+      <tr
+        {...rowProps}
+        onContextMenu={(e) => { e.preventDefault(); }}
+      >
         {props.children}
       </tr>
     );

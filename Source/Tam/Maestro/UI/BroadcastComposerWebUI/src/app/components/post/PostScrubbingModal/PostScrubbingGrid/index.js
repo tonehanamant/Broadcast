@@ -15,6 +15,8 @@ import './index.scss';
 const { MenuActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 
+const stateKey = 'PostScrubbingGrid';
+
 const mapStateToProps = ({ grid, selection, dataSource, menu }) => ({
   // Grid
   grid,
@@ -50,7 +52,6 @@ export class PostScrubbingGrid extends Component {
     }
 
     getScrubbingSelections() {
-      const stateKey = 'PostScrubbingGrid';
       const selectedIds = this.props.selection.get(stateKey).get('indexes');
       const rowData = this.props.dataSource.get(stateKey).toJSON(); // currentRecords or data - array
       const activeSelections = [];
@@ -324,14 +325,19 @@ export class PostScrubbingGrid extends Component {
             },
             ROW: {
               enabled: true,
-              renderer: ({ cells, ...rowData }) => (
-                <ContextMenuRow
-                  {...rowData}
-                  menuItems={gridContextMenu}
-                  stateKey={stateKey}
-                >
-                  {cells}
-                </ContextMenuRow>),
+              renderer: ({ cells, ...rowData }) => {
+                const selectedIds = this.props.selection.get(stateKey).get('indexes');
+                const isShowContextMenu = !!(selectedIds && selectedIds.size);
+                return (
+                  <ContextMenuRow
+                    {...rowData}
+                    menuItems={gridContextMenu}
+                    stateKey={stateKey}
+                    isRender={isShowContextMenu}
+                  >
+                    {cells}
+                  </ContextMenuRow>);
+                },
             },
         };
 
