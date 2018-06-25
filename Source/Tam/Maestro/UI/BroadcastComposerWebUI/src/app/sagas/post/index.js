@@ -189,7 +189,7 @@ export function* requestClearScrubbingDataFiltersList() {
 // allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
 // if not from modal show processing, else show loading (loading not shown inside modal)
 export function* requestPostClientScrubbing({ payload: params }) {
-  console.log('requestPostClientScrubbing', params);
+  // console.log('requestPostClientScrubbing', params);
   const { getPostClientScrubbing } = api.post;
   try {
     if (params.showModal) {
@@ -445,6 +445,7 @@ export function* archiveUnlinkedIsci({ ids }) {
 export function refilterOnOverride(clientScrubs, keys, status, isRemove) {
   // if is Remove filter out the keys
   // else for each key find scrub and change Status/overide true
+  // console.log('refilterOnOverride', isRemove, status, keys);
   if (isRemove) {
     return clientScrubs.filter(item => !_.includes(keys, item.ScrubbingClientId));
   }
@@ -514,8 +515,9 @@ export function* requestOverrideStatus({ payload: params }) {
         id: 'postOverrideStatus',
         loading: true },
       });
-      // change All for BE to NULL
-    const adjustParams = (params.ReturnStatusFilter === 'All') ? Object.assign(params, { ReturnStatusFilter: null }) : params;
+      // change All for BE to NULL; fix so does not override initial params ReturnStatusFilter
+    const adjustParams = (params.ReturnStatusFilter === 'All') ? Object.assign({}, params, { ReturnStatusFilter: null }) : params;
+    // console.log('adjustParams>>>>>>>>>>>>>', params, adjustParams);
     const response = yield overrideStatus(adjustParams);
     const { status, data } = response;
     const hasActiveScrubbingFilters = yield select(state => state.post.hasActiveScrubbingFilters);
@@ -551,6 +553,7 @@ export function* requestOverrideStatus({ payload: params }) {
       const scrubs = yield select(state => state.post.proposalHeader.activeScrubbingData.ClientScrubs);
       const status = params.OverrideStatus === 'InSpec' ? 2 : 1;
       const isRemove = (params.ReturnStatusFilter === 'All') ? false : (params.ReturnStatusFilter !== params.OverrideStatus);
+      // console.log('refilter needed as>>>>>>', params.ReturnStatusFilter);
       const adjustedScrubbing = refilterOnOverride(scrubs, params.ScrubIds, status, isRemove);
       const activeFilters = _.cloneDeep(yield select(state => state.post.activeScrubbingFilters));
       let adjustedFilters = null;
