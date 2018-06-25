@@ -2,7 +2,7 @@
   {
     "Lines": [
       {
-        "ReportableName": "Test Adv MYE1 30 05-30-16",
+        "ReportableName": "MyEventsReport 15 05 30",
         "Advertiser": "Test Advertiser 9",
         "DaypartCode": "MYE1",
         "SpotLength": 30,
@@ -30,7 +30,7 @@
   {
     "Lines": [
       {
-        "ReportableName": "Test Adv MYE2 30 05-30-16",
+        "ReportableName": "MyEventsReport 15 06 06",
         "Advertiser": "Test Advertiser 9",
         "DaypartCode": "MYE2",
         "SpotLength": 30,

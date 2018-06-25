@@ -267,7 +267,6 @@ namespace Services.Broadcast.ApplicationServices
 
                     line.Advertiser = advertiser.Display;
                     line.SpotLength = spotLengths[line.SpotLengthId];
-                    line.ReportableName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(line.DaypartCode, line.SpotLength, line.ScheduleStartDate, line.Advertiser);
                 }
 
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);
