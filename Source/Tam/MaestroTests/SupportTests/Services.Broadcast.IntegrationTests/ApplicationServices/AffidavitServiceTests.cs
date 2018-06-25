@@ -841,7 +841,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     OriginalIsci = "ToBeArchivedIsci",
                     EffectiveIsci = "AAAAAAAA1"
                 };
-                var result = _Sut.MapIsci(request, DateTime.Now, "test-user");
+                var result = _Sut.MapIsci(request, new DateTime(2018, 06, 01), "test-user");
 
                 var affidavit = _Repo.GetAffidavit(157, true);
 
