@@ -52,6 +52,15 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-2800 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'nti_conversion_factor' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [nti_conversion_factor] FLOAT CONSTRAINT DF_proposal_version_details_nti_conversion_factor DEFAULT(0.2) NOT NULL;
+	ALTER TABLE dbo.proposal_version_details DROP CONSTRAINT DF_proposal_version_details_nti_conversion_factor
+END
+GO
+/*************************************** END BCOP-2800 ***************************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

@@ -6,6 +6,18 @@
   "Details": [
     {
       "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -32,12 +44,13 @@
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
+          "Id": 14,
           "ImpressionGoal": 100000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
             {
-              "Cost": 2000.00,
+              "Cost": 25.0000,
               "EndDate": "2016-06-06T00:00:00",
               "Impressions": 100000.0,
               "Iscis": [
@@ -110,20 +123,6 @@
                   "Thursday": false,
                   "Tuesday": false,
                   "Wednesday": false
-                },
-                {
-                  "Brand": "Testing 45",
-                  "ClientIsci": "ZZZZZZ",
-                  "Days": "-W-Th-F-Sa-",
-                  "Friday": false,
-                  "HouseIsci": "ZZZZZZ",
-                  "MarriedHouseIsci": true,
-                  "Monday": false,
-                  "Saturday": false,
-                  "Sunday": false,
-                  "Thursday": false,
-                  "Tuesday": false,
-                  "Wednesday": false
                 }
               ],
               "IsHiatus": false,
@@ -149,12 +148,24 @@
       ],
       "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 2000.00,
-      "TotalImpressions": 100000.0,
-      "TotalUnits": 10
+      "TotalCost": 50.0000,
+      "TotalImpressions": 1000000.0,
+      "TotalUnits": 200
     },
     {
       "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -193,12 +204,13 @@
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
-          "ImpressionGoal": 3000.0,
+          "Id": 15,
+          "ImpressionGoal": 100000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
             {
-              "Cost": 20.00,
+              "Cost": 50.0000,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
               "Iscis": [
@@ -225,7 +237,7 @@
               "Week": "6/7/2016"
             },
             {
-              "Cost": 20.00,
+              "Cost": 50.0000,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
               "Iscis": [
@@ -252,7 +264,7 @@
               "Week": "6/7/2016"
             },
             {
-              "Cost": 20.00,
+              "Cost": 50.0000,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
               "Iscis": [
@@ -294,12 +306,24 @@
       ],
       "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 60.00,
-      "TotalImpressions": 3000.0,
-      "TotalUnits": 30
+      "TotalCost": 50.0000,
+      "TotalImpressions": 1000000.0,
+      "TotalUnits": 200
     },
     {
       "Adu": false,
+      "Daypart": {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      },
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -319,7 +343,8 @@
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
-          "ImpressionGoal": 0.0,
+          "Id": 10794,
+          "ImpressionGoal": 100000.0,
           "Quarter": 3,
           "QuarterText": "2016 Q3",
           "Weeks": [],
@@ -331,9 +356,9 @@
       "ShowTypeCriteria": [],
       "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 0.0,
-      "TotalImpressions": 0.0,
-      "TotalUnits": 0
+      "TotalCost": 60.0000,
+      "TotalImpressions": 1000000.0,
+      "TotalUnits": 200
     }
   ],
   "Equivalized": true,
@@ -353,12 +378,19 @@
       "StartDate": "2016-06-07T00:00:00"
     }
   ],
+  "ForceSave": false,
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
-  "MarketGroup": null,
+  "MarketGroup": {
+    "Count": 100,
+    "Display": "Top 100",
+    "Id": 100
+  },
   "MarketGroupId": 100,
+  "Markets": [],
   "Notes": null,
   "PostType": 1,
+  "PrimaryVersionId": 53,
   "ProposalName": "Proposal Test",
   "SecondaryDemos": [
     5,
@@ -370,10 +402,10 @@
     }
   ],
   "Status": 3,
-  "TargetBudget": 2060.00,
-  "TargetCPM": 20.00,
-  "TargetImpressions": 103000.0,
-  "TargetUnits": 40,
+  "TargetBudget": 0.0000,
+  "TargetCPM": 0.0000,
+  "TargetImpressions": 0.0,
+  "TargetUnits": 0,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,
