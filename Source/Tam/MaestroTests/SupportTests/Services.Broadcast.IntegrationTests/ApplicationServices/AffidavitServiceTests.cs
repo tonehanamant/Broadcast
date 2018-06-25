@@ -300,6 +300,62 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             return request;
         }
+        private AffidavitSaveRequest _SetupAffidavit_TwoDetails()
+        {
+            AffidavitSaveRequest request = new AffidavitSaveRequest
+            {
+                FileHash = "abc123",
+                Source = (int)AffidaviteFileSourceEnum.Strata,
+                FileName = "test.file",
+                Details = new List<AffidavitSaveRequestDetail>()
+                {
+                    new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("06/29/2017 8:04AM"),
+                        Isci = "DDDDDDDD",
+                        ProgramName = ProgramName1,
+                        SpotLength = 30,
+                        Genre = Genre1.Display,
+                        Station = "WWSB",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    },
+                    new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("06/29/2017 8:04AM"),
+                        Isci = "foey",
+                        ProgramName = ProgramName1 + " Part II",
+                        SpotLength = 30,
+                        Genre = Genre1.Display,
+                        Station = "WABC",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    }
+
+                }
+            };
+            return request;
+        }
 
         private AffidavitSaveRequest _SetupAffidavit_WithEscaped_Doublequotes()
         {
@@ -932,6 +988,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_Multiple_Isci_Mappings_BCOP3269()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit_TwoDetails();
+                var postingDate = new DateTime(2016, 4, 20);
+
+                _Sut.MapIsci(new MapIsciDto() { EffectiveIsci= "fff", OriginalIsci = "DDDDDDDD" }
+                    , postingDate
+                    , "Mapped Thing");
+
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                Approvals.Verify(json);
+            }
         }
 
     }
