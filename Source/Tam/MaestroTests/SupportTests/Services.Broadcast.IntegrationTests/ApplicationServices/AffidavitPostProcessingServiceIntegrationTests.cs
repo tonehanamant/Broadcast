@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web.Http.Validation;
 using Common.Services;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
@@ -295,6 +296,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
+                // remove stack trace gobble-de-gook
+                var body = EmailerServiceStubb.LastMailMessageGenerated.Body;
+                EmailerServiceStubb.LastMailMessageGenerated.Body = body.Substring(0,body.IndexOf("It cannot be read in its current state"));
                 var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings);
                 Approvals.Verify(json);
             }
