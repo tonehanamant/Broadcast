@@ -6,6 +6,7 @@ export const LOAD_ARCHIVED_ISCI = createAction('LOAD_ARCHIVED_ISCI');
 export const LOAD_VALID_ISCI = createAction('LOAD_VALID_ISCI');
 export const RESCRUB_UNLIKED_ISCI = createAction('RESCRUB_UNLIKED_ISCI');
 export const MAP_UNLINKED_ISCI = createAction('MAP_UNLINKED_ISCI');
+export const UNDO_ARCHIVED_ISCI = createAction('UNDO_ARCHIVED_ISCI');
 
 export const CLOSE_UNLINKED_ISCI_MODAL = 'CLOSE_UNLINKED_ISCI_MODAL';
 

@@ -1,6 +1,5 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -40,6 +39,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="ratingsAudiences">list of rating audiences</param>
         /// <returns></returns>
         double GetPostImpressions(int proposalId, List<int> ratingsAudiences);
+
         /// <summary>
         /// Adds a new record in affidavit_file_detail_problems with status: ArchivedIsci
         /// </summary>
@@ -51,7 +51,7 @@ namespace Services.Broadcast.Repositories
         /// Adds a 'Not a Cadent Isci' problem
         /// </summary>
         /// <param name="details">List of AffidavitFileDetail objects to process</param>
-        void AddNotACadentIsciProblem(List<AffidavitFileDetail> details);
+        void AddNotACadentIsciProblem(List<long> details);
 
         /// <summary>
         /// Checks if an isci is blacklisted
@@ -66,12 +66,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="fileDetailIds">List of file detail id</param>
         /// <returns>List of AffidavitFileDetail objects</returns>
         List<AffidavitFileDetail> LoadFileDetailsByIds(List<long> fileDetailIds);
-
-        /// <summary>
-        /// Sets the archived flag for all the records that contain specific iscis
-        /// </summary>
-        /// <param name="iscis">Iscis to set the flag to</param>
-        void ArchiveFileDetailRecord(List<string> iscis);
 
         /// <summary>
         /// Searches for all the iscis that contain the filter in all the contracted proposals
@@ -93,6 +87,25 @@ namespace Services.Broadcast.Repositories
         /// <param name="iscis">List of iscis to load the mappings for</param>
         /// <returns>Dictionary containing the isci mappings</returns>
         Dictionary<string, string> LoadIsciMappings(List<string> iscis);
+
+        /// <summary>
+        /// Removes iscis from blacklist table
+        /// </summary>
+        /// <param name="iscisToRemove">Isci list to remove</param>
+        void RemoveIscisFromBlacklistTable(List<string> iscisToRemove);
+
+        /// <summary>
+        /// Removes not a cadent entries for specific affidavit file details
+        /// </summary>
+        /// <param name="fileDetailList">Affidavit file detail ids to remove the problems for</param>
+        void RemoveNotACadentIsciProblems(List<long> fileDetailList);
+
+        /// <summary>
+        /// Sets the archived flag for all the iscis in the list
+        /// </summary>
+        /// <param name="fileDetailIds">List of AffidavitFileDetails to set the flag to</param>
+        /// <param name="flag">Flag to set</param>
+        void SetArchivedFlag(List<long> fileDetailIds, bool flag);
     }
 
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
@@ -237,20 +250,51 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <summary>
+        /// Removes iscis from blacklist table
+        /// </summary>
+        /// <param name="iscisToRemove">Isci list to remove</param>
+        public void RemoveIscisFromBlacklistTable(List<string> iscisToRemove)
+        {
+            _InReadUncommitedTransaction(
+                 context =>
+                 {
+                     context.affidavit_blacklist.RemoveRange(context.affidavit_blacklist.Where(x => iscisToRemove.Contains(x.ISCI)).ToList());
+                     context.SaveChanges();
+                 });
+        }
+
+        /// <summary>
         /// Adds a 'Not a Cadent Isci' problem
         /// </summary>
         /// <param name="details">List of AffidavitFileDetail objects to process</param>
-        public void AddNotACadentIsciProblem(List<AffidavitFileDetail> details)
+        public void AddNotACadentIsciProblem(List<long> details)
         {
             _InReadUncommitedTransaction(
                context =>
                {
                    context.affidavit_file_detail_problems.AddRange(details.Select(x => new affidavit_file_detail_problems
                    {
-                       affidavit_file_detail_id = x.Id,
+                       affidavit_file_detail_id = x,
                        problem_description = "Not a Cadent ISCI",
                        problem_type = (int)AffidavitFileDetailProblemTypeEnum.ArchivedIsci
                    }).ToList());
+                   context.SaveChanges();
+               });
+        }
+
+        /// <summary>
+        /// Removes not a cadent entries for specific affidavit file details
+        /// </summary>
+        /// <param name="fileDetailIds">Affidavit file detail ids to remove the problems for</param>
+        public void RemoveNotACadentIsciProblems(List<long> fileDetailIds)
+        {
+            _InReadUncommitedTransaction(
+               context =>
+               {
+                   context.affidavit_file_detail_problems.RemoveRange(
+                       context.affidavit_file_detail_problems
+                        .Where(x => fileDetailIds.Contains(x.affidavit_file_detail_id) && x.problem_type == (int)AffidavitFileDetailProblemTypeEnum.ArchivedIsci)
+                        .ToList());
                    context.SaveChanges();
                });
         }
@@ -279,9 +323,9 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                context =>
                {
-                   var initialList = context.affidavit_file_details.Where(x => fileDetailIds.Contains(x.id)).Select(x => x.isci).ToList();
+                   var iscisOnFileDetails = context.affidavit_file_details.Where(x => fileDetailIds.Contains(x.id)).Select(x => x.isci).ToList();
                    return context.affidavit_file_details
-                                    .Where(x => initialList.Contains(x.isci))
+                                    .Where(x => iscisOnFileDetails.Contains(x.isci))
                                     .Select(
                                        x => new AffidavitFileDetail
                                        {
@@ -292,20 +336,21 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <summary>
-        /// Sets the archived flag for all the records that contain specific iscis
+        /// Sets the archived flag for all the iscis in the list
         /// </summary>
-        /// <param name="iscis">Iscis to set the flag to</param>
-        public void ArchiveFileDetailRecord(List<string> iscis)
+        /// <param name="fileDetailIds">List of AffidavitFileDetails to set the flag to</param>
+        /// <param name="flag">Flag to set</param>
+        public void SetArchivedFlag(List<long> fileDetailIds, bool flag)
         {
             _InReadUncommitedTransaction(
                context =>
                {
                    context.affidavit_file_details
-                       .Where(x => iscis.Contains(x.isci))
+                       .Where(x => fileDetailIds.Contains(x.id))
                        .ToList()
                        .ForEach(x =>
                        {
-                           x.archived = true;
+                           x.archived = flag;
                        });
                    context.SaveChanges();
                });

@@ -27,6 +27,8 @@ export default function* rootSaga() {
     postSaga.watchMapUnlinkedIsciSuccess(),
     postSaga.watchRescrubUnlinkedIsci(),
     postSaga.watchCloseUnlinkedIsciModal(),
+    postSaga.watchUndoArchivedIscis(),
+
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),

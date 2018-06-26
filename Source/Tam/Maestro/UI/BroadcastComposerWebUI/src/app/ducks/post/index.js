@@ -517,6 +517,11 @@ export const mapUnlinkedIsci = payload => ({
   payload,
 });
 
+export const undoArchivedIscis = ids => ({
+  type: ACTIONS.UNDO_ARCHIVED_ISCI.request,
+  payload: { ids },
+});
+
 // toggle unlinked tabs
 const tabsMap = {
   unlinked: getUnlinkedIscis,

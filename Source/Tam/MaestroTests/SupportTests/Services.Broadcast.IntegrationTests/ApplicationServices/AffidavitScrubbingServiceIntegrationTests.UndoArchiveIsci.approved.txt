@@ -1,0 +1,50 @@
+﻿[
+  {
+    "Affiliate": null,
+    "DateAired": "2016-06-05T00:00:00",
+    "FileDetailId": 4287,
+    "Genre": "Do It Yourself",
+    "ISCI": "AAAAAAAA",
+    "Market": null,
+    "ProgramName": "Program Names R us",
+    "SpotLength": 30,
+    "Station": "WNBC",
+    "TimeAired": 32400
+  },
+  {
+    "Affiliate": null,
+    "DateAired": "2016-06-03T00:00:00",
+    "FileDetailId": 1003,
+    "Genre": "Do It Yourself",
+    "ISCI": "SomeISCI",
+    "Market": "New York",
+    "ProgramName": "Program Names R us",
+    "SpotLength": 30,
+    "Station": "WNBC",
+    "TimeAired": 32400
+  },
+  {
+    "Affiliate": null,
+    "DateAired": "2016-06-03T00:00:00",
+    "FileDetailId": 1007,
+    "Genre": "Do It Yourself",
+    "ISCI": "SomeISCI3",
+    "Market": "New York",
+    "ProgramName": "Program Names R us",
+    "SpotLength": 30,
+    "Station": "WNBC",
+    "TimeAired": 32400
+  },
+  {
+    "Affiliate": null,
+    "DateAired": "2016-06-03T00:00:00",
+    "FileDetailId": 4286,
+    "Genre": "Do It Yourself",
+    "ISCI": "ToBeArchivedIsci",
+    "Market": null,
+    "ProgramName": "Program Names R us",
+    "SpotLength": 30,
+    "Station": "WNBC",
+    "TimeAired": 31400
+  }
+]

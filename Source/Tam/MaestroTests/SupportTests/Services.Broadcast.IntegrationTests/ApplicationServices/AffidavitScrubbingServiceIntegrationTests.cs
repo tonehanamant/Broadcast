@@ -229,6 +229,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UndoArchiveIsci()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _AffidavitScrubbingService.UndoArchiveUnlinkedIsci(new List<long>() { 4286 }, DateTime.Now, "ApprovedTest");
+                var result = _AffidavitScrubbingService.GetUnlinkedIscis(false);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
         [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposalMultipleGenres()
         {

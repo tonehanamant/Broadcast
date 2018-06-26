@@ -438,6 +438,16 @@ export function* archiveUnlinkedIsci({ ids }) {
   }
 }
 
+export function* undoArchivedIscis({ ids }) {
+  const { undoArchivedIscis } = api.post;
+  try {
+    yield put(setOverlayLoading({ id: 'postArchiveIsci', loading: true }));
+    return yield undoArchivedIscis(ids);
+  } finally {
+    yield put(setOverlayLoading({ id: 'postArchiveIsci', loading: false }));
+  }
+}
+
 
 /* ////////////////////////////////// */
 /* refilter scrubs following override */
@@ -791,8 +801,17 @@ export function* watchSwapProposalDetail() {
   yield takeEvery(ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL, swapProposalDetail);
 }
 
-export function* watchLoadArchivedIscis() {
+/* export function* watchLoadArchivedIscis() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
+} */
+
+export function* watchLoadArchivedIscis() {
+  yield takeEvery([
+    ACTIONS.LOAD_ARCHIVED_ISCI.request,
+    ACTIONS.UNDO_ARCHIVED_ISCI.success,
+  ],
+    sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI),
+  );
 }
 
 export function* watchLoadValidIscis() {
@@ -813,4 +832,8 @@ export function* watchCloseUnlinkedIsciModal() {
 
 export function* watchMapUnlinkedIsciSuccess() {
   yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
+}
+
+export function* watchUndoArchivedIscis() {
+  yield takeEvery(ACTIONS.UNDO_ARCHIVED_ISCI.request, sagaWrapper(undoArchivedIscis, ACTIONS.UNDO_ARCHIVED_ISCI));
 }

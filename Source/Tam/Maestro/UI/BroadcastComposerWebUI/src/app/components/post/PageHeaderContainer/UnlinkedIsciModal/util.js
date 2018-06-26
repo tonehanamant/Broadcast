@@ -4,7 +4,7 @@ import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
 
 
-export const stateKey = 'unlinked-isci-modal';
+// export const stateKey = 'unlinked-isci-modal';
 
 const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis, toggleModal }) => ([
     {
@@ -35,18 +35,41 @@ const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis, toggleModal }) 
   ]
 );
 
+const generateArchivedMenuitems = ({ selection, dataSource, undoArchive }) => ([
+  {
+    text: 'Undo Archive',
+    key: 'menu-undo-archive',
+    EVENT_HANDLER: () => {
+      // note: as is selections undefined as multi select not taking on this grid
+      const stateKey = 'archived_grid';
+      const selectedIds = selection.get(stateKey).get('indexes');
+      const rowData = dataSource.get(stateKey).toJSON(); // currentRecords or data - array
+      const activeSelections = [];
+      // get just slected data FileDetailId for each for API call
+      selectedIds.forEach((idx) => {
+        activeSelections.push(rowData.data[idx].FileDetailId);
+      });
+      // console.log('undo archive selections', activeSelections, selectedIds, rowData, metaData);
+      undoArchive(activeSelections);
+    },
+  },
+]
+);
+
 const tabInfo = {
   unlinked: {
     generateMenuitems: generateUnlinkedMenuitems,
   },
   archived: {
-    generateMenuitems: () => {},
+    generateMenuitems: generateArchivedMenuitems, // () => {},
   },
 };
 
 
 export const generateGridConfig = (props, tabName) => {
-		const columns = [
+  // console.log('generate grid config', props, tabName);
+  const stateKey = `${tabName}_grid`;
+  const columns = [
 			{
 				name: 'ISCI',
 				dataIndex: 'ISCI',
@@ -109,15 +132,30 @@ export const generateGridConfig = (props, tabName) => {
 						method: 'local',
 				},
       },
+      SELECTION_MODEL: {
+        mode: (tabName === 'archived') ? 'multi' : 'single', // config takes but grids do not change
+        // mode: 'multi',
+        enabled: true,
+        allowDeselect: true,
+        activeCls: 'active',
+        selectionEvent: 'singleclick',
+    },
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
           const menuItems = tabInfo[tabName].generateMenuitems(props);
+          // const stateKey = 'archived_grid';
+          let isShowContextMenu = true;
+          if (tabName === 'archived') {
+            const selectedIds = props.selection.get(stateKey).get('indexes');
+            isShowContextMenu = !!(selectedIds && selectedIds.size);
+          }
           return (
             <ContextMenuRow
               {...rowData}
               menuItems={menuItems}
               stateKey={stateKey}
+              isRender={isShowContextMenu}
             >
               {cells}
             </ContextMenuRow>

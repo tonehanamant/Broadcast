@@ -51,7 +51,16 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="isci">Isci filter</param>
         /// <returns>List of valid iscis</returns>
-        List<string> FindValidIscis(string isci);        
+        List<string> FindValidIscis(string isci);
+
+        /// <summary>
+        /// Undo the archive process of a list of iscis
+        /// </summary>
+        /// <param name="fileDetailsIds">List of affidavit file detail ids</param>
+        /// <param name="currentDateTime">Current date and time</param>
+        /// <param name="name">User requesting the undo operation</param>
+        /// <returns>True or false</returns>
+        bool UndoArchiveUnlinkedIsci(List<long> fileDetailsIds, DateTime currentDateTime, string name);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -171,7 +180,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
                     DistinctGenres = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.GenreName)).Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList() ,
+                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
                     WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
                     DateAiredStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.DateAired).OrderBy(x => x).First() : (DateTime?)null,
@@ -225,14 +234,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
             List<string> iscisToArchive = fileDetailList.Select(x => x.Isci).Distinct().ToList();
+            List<long> fileDetailIdsToProcess = fileDetailList.Select(x => x.Id).ToList();
 
             if (!_PostRepository.IsIsciBlacklisted(iscisToArchive))
             {
                 using (var transaction = new TransactionScopeWrapper()) //Ensure all db requests succeed or fail
                 {
                     _PostRepository.ArchiveIsci(iscisToArchive, username);
-                    _PostRepository.AddNotACadentIsciProblem(fileDetailList);
-                    _PostRepository.ArchiveFileDetailRecord(iscisToArchive);
+                    _PostRepository.AddNotACadentIsciProblem(fileDetailIdsToProcess);
+                    _PostRepository.SetArchivedFlag(fileDetailIdsToProcess, true);
                     transaction.Complete();
                 }
             }
@@ -241,6 +251,29 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("There are already blacklisted iscis in your list");
             }
 
+            return true;
+        }
+
+        /// <summary>
+        /// Undo the archive process of a list of iscis
+        /// </summary>
+        /// <param name="fileDetailIds">List of affidavit file detail ids</param>
+        /// <param name="currentDateTime">Current date and time</param>
+        /// <param name="username">User requesting the undo operation</param>
+        /// <returns>True or false</returns>
+        public bool UndoArchiveUnlinkedIsci(List<long> fileDetailIds, DateTime currentDateTime, string username)
+        {
+            List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
+            List<string> iscisToUndo = fileDetailList.Select(x => x.Isci).Distinct().ToList();
+            List<long> fileDetailIdsToProcess = fileDetailList.Select(x => x.Id).ToList();
+
+            using (var transaction = new TransactionScopeWrapper()) //Ensure all db requests succeed or fail
+            {
+                _PostRepository.RemoveIscisFromBlacklistTable(iscisToUndo);
+                _PostRepository.RemoveNotACadentIsciProblems(fileDetailIdsToProcess);
+                _PostRepository.SetArchivedFlag(fileDetailIdsToProcess, false);
+                transaction.Complete();
+            }
             return true;
         }
 
@@ -256,14 +289,14 @@ namespace Services.Broadcast.ApplicationServices
             var distinctIscis = iscis.Select(x => x.HouseIsci).Distinct().ToList();
             foreach (var isci in distinctIscis)
             {
-                if (groupedIscis.Where(x => x.Key.HouseIsci.Equals(isci)).Count() > 1 
-                    && iscis.Any(x=>x.HouseIsci.Equals(isci) && x.Married == false))
+                if (groupedIscis.Where(x => x.Key.HouseIsci.Equals(isci)).Count() > 1
+                    && iscis.Any(x => x.HouseIsci.Equals(isci) && x.Married == false))
                 {
                     iscis.RemoveAll(x => x.HouseIsci.Equals(isci));
                 }
             }
-            
-            return iscis.Select(x=>x.HouseIsci).ToList();
+
+            return iscis.Select(x => x.HouseIsci).ToList();
         }
     }
 }
