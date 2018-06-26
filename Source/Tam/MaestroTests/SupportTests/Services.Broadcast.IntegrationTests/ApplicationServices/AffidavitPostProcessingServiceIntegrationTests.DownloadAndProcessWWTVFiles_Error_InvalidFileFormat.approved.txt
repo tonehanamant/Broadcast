@@ -1,0 +1,54 @@
+﻿{
+  "AlternateViews": [],
+  "Attachments": [],
+  "Bcc": [],
+  "Body": "File Special_Ftp_Phantom_File.txt file validation for WWTV upload.\n\nFile is in an invalid format.  It cannot be read in its current state; must be a valid JSON file.\r\nNewtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.\r\n   at Newtonsoft.Json.JsonTextReader.ParseValue()\r\n   at Newtonsoft.Json.JsonTextReader.Read()\r\n   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.ReadForType(JsonReader reader, JsonContract contract, Boolean hasConverter)\r\n   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)\r\n   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)\r\n   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)\r\n   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)\r\n   at Services.Broadcast.ApplicationServices.AffidavitPostProcessingService._MapWWTVFileToAffidavitFile(String fileContents, AffidavitSaveRequest affidavitSaveRequest, List`1 validationErrors) in C:\\src\\Broadcast\\Develop\\Source\\Tam\\Maestro\\Services\\Broadcast\\Services.Broadcast\\ApplicationServices\\AffidavitPostProcessingService.cs:line 265\r\n\n\nFile located in .\\Files\\Special_Ftp_Phantom_File.txt\n",
+  "BodyEncoding": {
+    "BodyName": "us-ascii",
+    "CodePage": 20127,
+    "DecoderFallback": {
+      "DefaultString": "?",
+      "MaxCharCount": 1
+    },
+    "EncoderFallback": {
+      "DefaultString": "?",
+      "MaxCharCount": 1
+    },
+    "EncodingName": "US-ASCII",
+    "HeaderName": "us-ascii",
+    "IsBrowserDisplay": false,
+    "IsBrowserSave": false,
+    "IsMailNewsDisplay": true,
+    "IsMailNewsSave": true,
+    "IsReadOnly": true,
+    "IsSingleByte": true,
+    "WebName": "us-ascii",
+    "WindowsCodePage": 1252
+  },
+  "BodyTransferEncoding": -1,
+  "CC": [],
+  "DeliveryNotificationOptions": 0,
+  "From": {
+    "Address": "broadcastsmtp@crossmw.com",
+    "DisplayName": "",
+    "Host": "crossmw.com",
+    "User": "broadcastsmtp"
+  },
+  "Headers": [],
+  "HeadersEncoding": null,
+  "IsBodyHtml": false,
+  "Priority": 0,
+  "ReplyTo": null,
+  "ReplyToList": [],
+  "Sender": null,
+  "Subject": "WWTV File Failed Validation",
+  "SubjectEncoding": null,
+  "To": [
+    {
+      "Address": "mhohenshilt@crossmw.com",
+      "DisplayName": "",
+      "Host": "crossmw.com",
+      "User": "mhohenshilt"
+    }
+  ]
+}

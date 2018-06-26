@@ -8,12 +8,15 @@ namespace Services.Broadcast.IntegrationTests
     public class EmailerServiceStubb : IEmailerService
     {
 
-        public static MailMessage LastMailMessageGenerated { get; private set; }
+        public static MailMessage LastMailMessageGenerated { get; set; }
 
         public static void ClearLastMessage()
         {
-            LastMailMessageGenerated.Dispose(); 
-            LastMailMessageGenerated = null;
+            if (LastMailMessageGenerated != null)
+            {
+                LastMailMessageGenerated.Dispose();
+                LastMailMessageGenerated = null;
+            }
         }
 
         public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from,

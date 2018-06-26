@@ -1,0 +1,39 @@
+﻿{
+  "AffidavitFileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [],
+      "AffidavitFileDetailProblems": [],
+      "Affiliate": "Affiliate",
+      "AirTime": 20580,
+      "Archived": false,
+      "Demographics": [],
+      "EstimateId": 3832,
+      "Genre": "News",
+      "InventorySource": 1,
+      "Isci": "32YO41TC18H",
+      "LeadInEndTime": 18000,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "NBC Boston Today at 04:30 AM",
+      "LeadInShowType": "News",
+      "LeadoutGenre": "News",
+      "LeadoutProgramName": "NBC Boston Today at 06:00 AM",
+      "LeadOutShowType": "News",
+      "LeadOutStartTime": 21600,
+      "MappedIsci": null,
+      "Market": "Boston",
+      "OriginalAirDate": "2017-11-01T00:00:00",
+      "ProgramName": "NBC Boston Today at 05:30 AM",
+      "ShowType": "News",
+      "SpotCost": 0.0,
+      "SpotLengthId": 1,
+      "Station": "WBTS-TV"
+    }
+  ],
+  "AffidavitFileProblems": [],
+  "FileHash": "F2-26-9B-9F-27-C0-E2-22-D9-BF-81-6C-69-A6-C7-76-1E-0B-72-2D",
+  "FileName": "Special_Ftp_Phantom_File.txt",
+  "MediaMonthId": 0,
+  "SourceId": 1,
+  "Status": 1
+}

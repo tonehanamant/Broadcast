@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
-using System.Net.Mail;
-using System.ServiceModel;
-using Common.Services.ApplicationServices;
-using Services.Broadcast;
-using Tam.Maestro.Common;
-using Tam.Maestro.Common.Logging;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Common.Services
 {
@@ -21,8 +11,8 @@ namespace Common.Services
         void UploadFile(NetworkCredential credentials, string sourceFilePath, string destPath);
         List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath);
         void DeleteFile(NetworkCredential credentials, string remoteFTPPath);
-
-        void DownloadFileFromWebClient(WebClient webClient, string path, string localPath);
+        void DownloadFile(WebClient webClient, string path, string localPath);
+        Stream DownloadFileToStream(WebClient webClient, string path);
     }
 
     public class FtpService : IFtpService
@@ -45,12 +35,20 @@ namespace Common.Services
 
         }
 
-        public void DownloadFileFromWebClient(WebClient webClient, string path, string localPath)
+        public void DownloadFile(WebClient webClient, string path, string localPath)
         {
             if (webClient == null)
                 throw new InvalidEnumArgumentException("webClient must not be null");
 
             webClient.DownloadFile(path,localPath);
+        }
+
+        public Stream DownloadFileToStream(WebClient webClient, string path)
+        {
+            if (webClient == null)
+                throw new InvalidEnumArgumentException("webClient must not be null");
+
+            return webClient.OpenRead(path);
         }
 
         public void UploadFile(NetworkCredential credentials, string sourceFilePath, string destPath)

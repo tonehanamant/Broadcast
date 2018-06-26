@@ -9,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Common.Services;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.Entities;
 using Microsoft.Practices.Unity;
+using Services.Broadcast.ApplicationServices.Security;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -27,6 +29,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public AffidavitPostProcessingServiceIntegrationTests()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
             _AudiencesCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IBroadcastAudiencesCache>();
             _AffidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
             _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -236,5 +242,192 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DownloadAndProcessWWTVFiles_Empty()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IAffidavitPostProcessingService>();
+
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DownloadAndProcessWWTVFiles_Error_InvalidFileFormat()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IAffidavitPostProcessingService>();
+
+                EmailerServiceStubb.LastMailMessageGenerated = null;
+                srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DownloadAndProcessWWTVFiles_Validation_Errors()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_Validation_Errors_Stubb>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IAffidavitPostProcessingService>();
+
+                EmailerServiceStubb.LastMailMessageGenerated = null;
+                srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DownloadAndProcessWWTVFiles_Clean()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_Clean_Stubb>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IAffidavitPostProcessingService>();
+
+                EmailerServiceStubb.LastMailMessageGenerated = null;
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                Assert.IsNull(EmailerServiceStubb.LastMailMessageGenerated);
+                Assert.IsEmpty(response.FailedDownloads);
+                Assert.IsEmpty(response.ValidationErrors);
+                Assert.IsTrue(response.FilesFoundToProcess.Count() == 1,"Expecting only one file found for processing");
+
+                VerifyAffidavit(response.AffidavitSaveResults.First().Id.Value);
+            }
+        }
+
     }
+
+    #region some stubbs for specific tests
+    public class DownloadAndProcessWWTVFiles_Validation_Errors_Stubb : FtpServiceStubb_SingleFile
+    {
+        protected override string GetFileContents()
+        {
+            return
+                @"
+ [ {
+    ""EstimateId"": 3832,
+    ""Market"": ""Boston"",
+    ""Date"": ""11/01/2017"",
+    ""InventorySource"": ""Strata"",
+    ""Station"": ""WBTS-TV"",
+    ""SpotLength"": 30,
+    ""Time"": ""0543A"",
+    ""SpotCost"": 0,
+    ""ISCI"": ""32YO41TC18H"",
+    ""Affiliate"": null,
+    ""Program"": ""NBC Boston Today at 05:30 AM"",
+    ""ShowType"": ""News"",
+    ""Genre"": ""News"",
+    ""LeadInProgram"": ""NBC Boston Today at 04:30 AM"",
+    ""LeadInShowType"": ""News"",
+    ""LeadInGenre"": ""News"",
+    ""LeadInEndTime"": ""11/01/2017 05:00 AM"",
+    ""LeadOutProgram"": ""NBC Boston Today at 06:00 AM"",
+    ""LeadOutShowType"": ""News"",
+    ""LeadOutGenre"": ""News"",
+    ""LeadOutStartTime"": ""11/01/2017 06:00 AM"",
+    ""Demographics"": null
+  }]";
+        }
+    }
+
+    public class DownloadAndProcessWWTVFiles_Clean_Stubb : FtpServiceStubb_SingleFile
+    {
+        protected override string GetFileContents()
+        {
+            return
+                @"
+ [ {
+    ""EstimateId"": 3832,
+    ""Market"": ""Boston"",
+    ""Date"": ""11/01/2017"",
+    ""InventorySource"": ""Strata"",
+    ""Station"": ""WBTS-TV"",
+    ""SpotLength"": 30,
+    ""Time"": ""0543A"",
+    ""SpotCost"": 0,
+    ""ISCI"": ""32YO41TC18H"",
+    ""Affiliate"": ""Affiliate"",
+    ""Program"": ""NBC Boston Today at 05:30 AM"",
+    ""ShowType"": ""News"",
+    ""Genre"": ""News"",
+    ""LeadInProgram"": ""NBC Boston Today at 04:30 AM"",
+    ""LeadInShowType"": ""News"",
+    ""LeadInGenre"": ""News"",
+    ""LeadInEndTime"": ""11/01/2017 05:00 AM"",
+    ""LeadOutProgram"": ""NBC Boston Today at 06:00 AM"",
+    ""LeadOutShowType"": ""News"",
+    ""LeadOutGenre"": ""News"",
+    ""LeadOutStartTime"": ""11/01/2017 06:00 AM"",
+    ""Demographics"": null
+  }]";
+        }
+    }
+    #endregion
+
 }

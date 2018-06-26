@@ -160,6 +160,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "DefaultNtiConversionFactor":
                    result = "0.2";
                    break;   
+                case "WWTV_SharedFolder":
+                    result = "C:\\WWTV\\WWTVData";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
