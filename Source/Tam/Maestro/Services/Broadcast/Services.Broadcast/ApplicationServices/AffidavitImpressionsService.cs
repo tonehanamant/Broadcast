@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Microsoft.Practices.ObjectBuilder2;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
@@ -21,11 +22,13 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly INsiComponentAudienceRepository _NsiComponentAudienceRepository;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
-        public AffidavitImpressionsService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public AffidavitImpressionsService(IDataRepositoryFactory broadcastDataRepositoryFactory, IStationProcessingEngine stationProcessingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _NsiComponentAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public void RecalculateAffidavitImpressionsForProposalDetail(int proposalDetailId)
@@ -75,7 +78,7 @@ namespace Services.Broadcast.ApplicationServices
                         new StationDetailPointInTime
                         {
                             Id = ctr++,
-                            LegacyCallLetters = affidavitFileDetail.Station,
+                            LegacyCallLetters = _StationProcessingEngine.StripStationSuffix(affidavitFileDetail.Station),
                             DayOfWeek = affidavitFileDetail.OriginalAirDate.DayOfWeek,
                             TimeAired = affidavitFileDetail.AirTime
                         }

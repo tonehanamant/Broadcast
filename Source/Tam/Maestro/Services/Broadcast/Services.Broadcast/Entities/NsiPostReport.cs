@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.BusinessEngines;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
@@ -87,6 +88,7 @@ namespace Services.Broadcast.Entities
                             Dictionary<int, Dictionary<int, int>> nsiMarketRankings, string guaranteedDemo, int guaranteedDemoId,
                             List<Tuple<DateTime, DateTime>> flights, bool withOvernightImpressions, bool equivalized, string proposalName)
         {
+            var stationProcessingEngine = new StationProcessingEngine();
             Advertiser = advertiser.Display;
             ProposalId = proposalId;
             WithOvernightImpressions = withOvernightImpressions;
@@ -133,12 +135,15 @@ namespace Services.Broadcast.Entities
                         {
                             _EquivalizeImpressions(spotLengthMultipliers[spotLengthMappings[r.SpotLengthId]], ref audienceImpressions);
                         }
+
+                        var foundStation = stationMappings.TryGetValue(stationProcessingEngine.StripStationSuffix(r.Station), out DisplayBroadcastStation currentStation);
+
                         return new NsiPostReportQuarterTabRow()
                         {
-                            Rank = stationMappings.TryGetValue(r.Station, out DisplayBroadcastStation currentStation) && r.ProposalDetailPostingBookId.HasValue ? nsiMarketRankings[r.ProposalDetailPostingBookId.Value][currentStation.MarketCode] : 0,
-                            Market = stationMappings.TryGetValue(r.Station, out currentStation) ? currentStation.OriginMarket : "",
+                            Rank = foundStation && r.ProposalDetailPostingBookId.HasValue ? nsiMarketRankings[r.ProposalDetailPostingBookId.Value][currentStation.MarketCode] : 0,
+                            Market = foundStation ? currentStation.OriginMarket : "",
                             Station = r.Station,
-                            NetworkAffiliate = stationMappings.TryGetValue(r.Station, out currentStation) ? currentStation.Affiliation : "",
+                            NetworkAffiliate = foundStation ? currentStation.Affiliation : "",
                             WeekStart = mediaWeekMappings[r.AirDate].StartDate,
                             ProgramName = r.ProgramName,
                             Isci = r.Isci,

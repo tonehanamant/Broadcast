@@ -153,7 +153,7 @@
       "ShowTypeCriteria": [
         {
           "Contain": 1,
-          "Id": 2359,
+          "Id": 2941,
           "ShowType": {
             "Display": "Mini-Movie"
           }
@@ -298,7 +298,7 @@
       "ShowTypeCriteria": [
         {
           "Contain": 2,
-          "Id": 2360,
+          "Id": 2942,
           "ShowType": {
             "Display": "Movie"
           }

@@ -126,7 +126,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IFtpService, FtpService>();
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
-            unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>(); 
+            unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
+
+            unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

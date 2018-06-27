@@ -74,6 +74,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
         private readonly Dictionary<int, int> _SpotLengthsDict;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public AffidavitService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IAffidavitMatchingEngine affidavitMatchingEngine,
@@ -84,7 +85,8 @@ namespace Services.Broadcast.ApplicationServices
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IAffidavitValidationEngine affidavitValidationEngine,
             INsiPostingBookService nsiPostingBookService,
-            IAffidavitImpressionsService affidavitImpressionsService)
+            IAffidavitImpressionsService affidavitImpressionsService,
+            IStationProcessingEngine stationProcessingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitMatchingEngine = affidavitMatchingEngine;
@@ -100,6 +102,7 @@ namespace Services.Broadcast.ApplicationServices
             _NsiPostingBookService = nsiPostingBookService;
             _AffidavitImpressionsService = affidavitImpressionsService;
             _SpotLengthsDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public AffidavitSaveResult SaveAffidavitValidationErrors(AffidavitSaveRequest saveRequest, string userName, List<AffidavitValidationResult> affidavitValidationResults)
@@ -453,25 +456,15 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private static DisplayBroadcastStation _MatchAffidavitStation(Dictionary<string, DisplayBroadcastStation> stations, AffidavitFileDetail affidavitDetail)
+        private DisplayBroadcastStation _MatchAffidavitStation(Dictionary<string, DisplayBroadcastStation> stations, AffidavitFileDetail affidavitDetail)
         {
-            const string dashEnding = "-";
-            string stationName = affidavitDetail.Station;
+            string stationName = _StationProcessingEngine.StripStationSuffix(affidavitDetail.Station);
 
-            if (stations.ContainsKey(stationName))
+            if (stations.ContainsKey(stationName)) {
                 return stations[stationName];
-
-            var index = stationName.LastIndexOf(dashEnding, StringComparison.CurrentCultureIgnoreCase);
-            if (index < 0)
-                return null;
-
-            stationName = stationName.Remove(index);
-            if (!stations.ContainsKey(stationName))
-            {
-                return null;
             }
 
-            return stations[stationName];
+            return null;
         }
 
         public List<AffidavitFileProblem> _MapValidationErrorToAffidavitFileProblem(List<AffidavitValidationResult> affidavitValidationResults)
