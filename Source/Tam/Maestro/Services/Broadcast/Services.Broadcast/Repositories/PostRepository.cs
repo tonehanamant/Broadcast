@@ -33,13 +33,12 @@ namespace Services.Broadcast.Repositories
         List<UnlinkedIscisDto> GetArchivedIscis();
 
         /// <summary>
-        /// Gets the impressions for a contract and rating audiences
+        /// Gets the impressions and NTI conversion factor for a contract and rating audiences
         /// </summary>
         /// <param name="proposalId">proposal or contract id</param>
         /// <param name="ratingsAudiences">list of rating audiences</param>
         /// <returns></returns>
-        double GetPostImpressions(int proposalId, List<int> ratingsAudiences);
-
+        List<PostImpressionsDataDto> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
         /// <summary>
         /// Adds a new record in affidavit_file_detail_problems with status: ArchivedIsci
         /// </summary>
@@ -120,13 +119,13 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var proposals = context.proposal_versions.Where(p =>
+                    var proposalVersions = context.proposal_versions.Where(p =>
                         (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted).ToList();
                     var posts = new List<PostDto>();
 
-                    foreach (var proposal in proposals)
+                    foreach (var proposalVersion in proposalVersions)
                     {
-                        var spots = (from proposalVersionDetail in proposal.proposal_version_details
+                        var spots = (from proposalVersionDetail in proposalVersion.proposal_version_details
                                      from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                      from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                      from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
@@ -134,9 +133,9 @@ namespace Services.Broadcast.Repositories
 
                         posts.Add(new PostDto
                         {
-                            ContractId = proposal.proposal_id,
-                            ContractName = proposal.proposal.name,
-                            UploadDate = (from proposalVersionDetail in proposal.proposal_version_details
+                            ContractId = proposalVersion.proposal_id,
+                            ContractName = proposalVersion.proposal.name,
+                            UploadDate = (from proposalVersionDetail in proposalVersion.proposal_version_details
                                           from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                           from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                           from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
@@ -144,7 +143,12 @@ namespace Services.Broadcast.Repositories
                                           select (DateTime?)affidavitFileScrub.affidavit_file_details.affidavit_files.created_date).FirstOrDefault(),
                             SpotsInSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.InSpec),
                             SpotsOutOfSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec),
-                            GuaranteedAudienceId = proposal.guaranteed_audience_id
+                            AdvertiserId = proposalVersion.proposal.advertiser_id,
+                            GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
+                            PostType = (SchedulePostType)proposalVersion.post_type,
+                            PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
+                                                     from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                                     select proposalVersionQuarters.impressions_goal).Sum(),
                         });
                     }
 
@@ -152,7 +156,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public double GetPostImpressions(int proposalId, List<int> ratingsAudiences)
+        public List<PostImpressionsDataDto> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -167,7 +171,7 @@ namespace Services.Broadcast.Repositories
                             where proposal.id == proposalId &&
                                   (ScrubbingStatus)affidavitClientScrub.status == ScrubbingStatus.InSpec &&
                                   ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id)
-                            select affidavitClientScrubAudience.impressions).Sum(x => (double?)x) ?? 0;
+                            select new PostImpressionsDataDto { Impressions = affidavitClientScrubAudience.impressions, NtiConversionFactor = proposalVersionDetail.nti_conversion_factor }).ToList();
                 });
         }
 

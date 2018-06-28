@@ -74,6 +74,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalService _ProposalService;
         private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
+        private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -91,6 +92,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalService = proposalService;
             _ProjectionBooksService = postingBooksService;
             _StationProcessingEngine = stationProcessingEngine;
+            _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
         }
 
         /// <summary>
@@ -103,7 +105,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var post in postedProposals)
             {
-                _SetPrimaryAudienceImpressions(post);
+                _SetPostData(post);
             }
 
             return new PostedContractedProposalsDto()
@@ -113,17 +115,64 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void _SetPrimaryAudienceImpressions(PostDto post)
+        private void _SetPostData(PostDto post)
         {
-            var broadcastAudienceRepository = _BroadcastDataRepositoryFactory
-                .GetDataRepository<IBroadcastAudienceRepository>();
+            _SetPostAdvertiser(post);
 
-            var ratingsAudiencesIds = broadcastAudienceRepository.
-                GetRatingsAudiencesByMaestroAudience(new List<int> { post.GuaranteedAudienceId }).
+            _SetPostPrimaryAudienceImpressions(post);
+
+            _SetPostHouseholdImpressions(post);
+
+            post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
+        }
+
+        private void _SetPostAdvertiser(PostDto post)
+        {
+            var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
+            post.Advertiser = advertiserLookupDto.Display;
+        }
+
+        private void _SetPostPrimaryAudienceImpressions(PostDto post)
+        {
+            var postImpressionsData = _GetPostImpressionsData(post.ContractId, post.GuaranteedAudienceId);
+
+            foreach (var impressionData in postImpressionsData)
+            {
+                if (post.PostType == SchedulePostType.NTI)
+                    post.PrimaryAudienceDeliveredImpressions += _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
+                else
+                    post.PrimaryAudienceDeliveredImpressions += impressionData.Impressions;
+            }
+        }
+
+        private void _SetPostHouseholdImpressions(PostDto post)
+        {
+            var defaultAudience = _AudiencesCache.GetDefaultAudience();
+
+            var postImpressionsData = _GetPostImpressionsData(post.ContractId, defaultAudience.Id);
+
+            foreach (var impressionData in postImpressionsData)
+            {
+                if (post.PostType == SchedulePostType.NTI)
+                    post.HouseholdDeliveredImpressions += _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
+                else
+                    post.HouseholdDeliveredImpressions += impressionData.Impressions;
+            }
+        }
+
+        private List<PostImpressionsDataDto> _GetPostImpressionsData(int contractId, int maestroAudienceId)
+        {
+            var ratingsAudiencesIds = _BroadcastAudienceRepository.
+                GetRatingsAudiencesByMaestroAudience(new List<int> { maestroAudienceId }).
                 Select(x => x.rating_audience_id).
                 ToList();
 
-            post.PrimaryAudienceImpressions = _PostRepository.GetPostImpressions(post.ContractId, ratingsAudiencesIds);
+            return _PostRepository.GetPostImpressionsData(contractId, ratingsAudiencesIds);
+        }
+
+        private double _CalculateNtiImpressions(double impressions, double ntiConversionFactor)
+        {
+            return impressions * (1 - ntiConversionFactor);
         }
 
         /// <summary>

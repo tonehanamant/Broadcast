@@ -50,6 +50,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPostsTestWithNtiAdjustments()
+        {
+            var result = _AffidavitScrubbingService.GetPosts();
+            var contract = result.Posts.First(x => x.ContractId == 26011);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PostDto), "Id");
+            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(contract, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPostsTestWithoutNtiAdjustments()
+        {
+            var result = _AffidavitScrubbingService.GetPosts();
+            var contract = result.Posts.First(x => x.ContractId == 26012);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PostDto), "Id");
+            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(contract, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposal()
         {
             using (new TransactionScopeWrapper())

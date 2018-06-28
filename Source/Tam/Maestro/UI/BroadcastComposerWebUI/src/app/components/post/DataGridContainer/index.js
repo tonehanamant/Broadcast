@@ -145,17 +145,22 @@ export class DataGridContainer extends Component {
 
     const columns = [
       {
-          name: 'Contract',
-          dataIndex: 'ContractName',
-          width: '20%',
+        name: 'Contract',
+        dataIndex: 'ContractName',
+        width: '15%',
       },
       {
-          name: 'Contract Id',
-          dataIndex: 'ContractId',
-          width: '15%',
+        name: 'Contract Id',
+        dataIndex: 'ContractId',
+        width: '10%',
       },
       {
-        name: 'Upload Date',
+        name: 'Advertiser',
+        dataIndex: 'Advertiser',
+        width: '15%',
+      },
+      {
+        name: 'Affidavit Upload Date',
         dataIndex: 'UploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
@@ -164,7 +169,7 @@ export class DataGridContainer extends Component {
         ),
       },
       {
-        name: 'Spots in Spec',
+        name: 'Impressions in Spec',
         dataIndex: 'SpotsInSpec',
         width: '15%',
       },
@@ -174,11 +179,41 @@ export class DataGridContainer extends Component {
         width: '15%',
       },
       {
-        name: 'Primary Demo Imp',
-        dataIndex: 'PrimaryAudienceImpressions',
-        width: '20%',
+        name: 'Primary Demo Booked',
+        dataIndex: 'PrimaryAudienceBookedImpressions',
+        width: '15%',
         renderer: ({ row }) => (
-          row.PrimaryAudienceImpressions ? numeral(row.PrimaryAudienceImpressions / 1000).format('0,0.[000]') : '-'
+          row.PrimaryAudienceBookedImpressions ? numeral(row.PrimaryAudienceBookedImpressions / 1000).format('0,0.[000]') : '-'
+        ),
+      },
+      {
+        // name: 'Primary Demo Imp',
+        name: 'Primary Demo Delivered',
+        dataIndex: 'PrimaryAudienceDeliveredImpressions',
+        width: '15%',
+        renderer: ({ row }) => (
+          row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-'
+        ),
+      },
+      {
+        name: 'Primary Demo % Delivery',
+        dataIndex: 'PrimaryAudienceDelivery',
+        width: '15%',
+        // renderer: ({ row }) => (
+        //   // row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0%') : '-'
+        //   row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]%') : '-'
+        // ),
+        renderer: ({ row }) => {
+          const val = row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]') : false;
+          return val ? `${val}%` : '-';
+        },
+      },
+      {
+        name: 'Household Delivered',
+        dataIndex: 'HouseholdDeliveredImpressions',
+        width: '15%',
+        renderer: ({ row }) => (
+          row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-'
         ),
       },
     ];
