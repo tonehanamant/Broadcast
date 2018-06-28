@@ -7,7 +7,7 @@
     "Market": null,
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
-    "Station": "WNBC",
+    "Station": "WNBC-TV",
     "TimeAired": 31400
   }
 ]
