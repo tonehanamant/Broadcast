@@ -8,7 +8,7 @@
     "Market": null,
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
-    "Station": "WNBC",
+    "Station": "WNBC-TV",
     "TimeAired": 32400
   },
   {
@@ -20,7 +20,7 @@
     "Market": "New York",
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
-    "Station": "WNBC",
+    "Station": "WNBC-TV",
     "TimeAired": 32400
   },
   {
@@ -44,7 +44,7 @@
     "Market": null,
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
-    "Station": "WNBC",
+    "Station": "WNBC-TV",
     "TimeAired": 31400
   }
 ]
