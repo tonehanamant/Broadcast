@@ -64,6 +64,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public PostReportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -71,7 +72,8 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IProjectionBooksService projectionBooksService,
-            IMyEventsReportNamingEngine myEventsReportNamingEngine)
+            IMyEventsReportNamingEngine myEventsReportNamingEngine,
+            IStationProcessingEngine stationProcessingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -84,6 +86,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalService = proposalService;
             _ProjectionBooksService = projectionBooksService;
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
+            _StationProcessingEngine = stationProcessingEngine;
             _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(_SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
         }
 
@@ -130,7 +133,7 @@ namespace Services.Broadcast.ApplicationServices
             var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
-                .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => s.Station).Distinct().ToList())
+                .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => _StationProcessingEngine.StripStationSuffix(s.Station)).Distinct().ToList())
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
             var nsiMarketRankings = _GetMarketRankingsByPostingBook(inspecSpots);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;

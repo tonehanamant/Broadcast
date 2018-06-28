@@ -246,6 +246,7 @@
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="FileService.cs" />
+    <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
     <Compile Include="FtpService.cs" />
     <Compile Include="Entities\AffidavitFileProblems.cs" />
     <Compile Include="Entities\AffidavitSaveResult.cs" />

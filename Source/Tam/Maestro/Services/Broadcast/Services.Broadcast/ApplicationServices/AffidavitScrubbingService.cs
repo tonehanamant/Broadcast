@@ -11,6 +11,7 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -72,13 +73,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         private readonly IProposalService _ProposalService;
         private readonly IProjectionBooksService _ProjectionBooksService;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IProjectionBooksService postingBooksService)
+            IProjectionBooksService postingBooksService,
+            IStationProcessingEngine stationProcessingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -87,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _ProposalService = proposalService;
             _ProjectionBooksService = postingBooksService;
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         /// <summary>
@@ -164,6 +168,8 @@ namespace Services.Broadcast.ApplicationServices
                 if (clientScrubs == null)
                     clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter);
 
+                _SetClientScrubsMarketAndAffiliate(clientScrubs);
+
                 //load ClientScrubs
                 result.Details.ForEach(x =>
                 {
@@ -198,6 +204,24 @@ namespace Services.Broadcast.ApplicationServices
                     TimeAiredEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.TimeAired).OrderBy(x => x).Last() : (int?)null
                 };
                 return result;
+            }
+        }
+
+        private void _SetClientScrubsMarketAndAffiliate(List<ProposalDetailPostScrubbingDto> clientScrubs)
+        {
+            var stationNameList = clientScrubs.Select(s => _StationProcessingEngine.StripStationSuffix(s.Station)).ToList();
+
+            var stationList = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStationListByLegacyCallLetters(stationNameList);
+
+            foreach(var scrub in clientScrubs)
+            {
+                var scrubStationName = _StationProcessingEngine.StripStationSuffix(scrub.Station);
+                var station = stationList.Where(s => s.LegacyCallLetters.Equals(scrubStationName)).SingleOrDefault();
+                if(station != null)
+                {
+                    scrub.Market = station.OriginMarket;
+                    scrub.Affiliate = station.Affiliation;
+                }
             }
         }
 
