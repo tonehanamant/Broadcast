@@ -26,7 +26,7 @@
       "Sequence": 1,
       "ShowTypeName": "",
       "SpotLength": 30,
-      "Station": "WNBC",
+      "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
       "TimeAired": 32400,
@@ -55,7 +55,7 @@
       "Sequence": 1,
       "ShowTypeName": "",
       "SpotLength": 30,
-      "Station": "WNBC",
+      "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
       "TimeAired": 32400,
@@ -84,7 +84,7 @@
       "Sequence": 1,
       "ShowTypeName": "",
       "SpotLength": 30,
-      "Station": "WNBC",
+      "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
       "TimeAired": 32400,
@@ -113,7 +113,7 @@
       "Sequence": 1,
       "ShowTypeName": "",
       "SpotLength": 15,
-      "Station": "WNBC",
+      "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
       "TimeAired": 32400,
@@ -142,7 +142,7 @@
       "Sequence": 2,
       "ShowTypeName": "",
       "SpotLength": 30,
-      "Station": "WNBC",
+      "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
       "TimeAired": 32400,
@@ -245,7 +245,7 @@
       30
     ],
     "DistinctStations": [
-      "WNBC"
+      "WNBC-TV"
     ],
     "DistinctWeekStarts": [
       "2016-05-30T00:00:00",

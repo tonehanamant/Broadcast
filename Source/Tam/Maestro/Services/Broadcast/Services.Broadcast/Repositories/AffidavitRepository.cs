@@ -330,17 +330,6 @@ namespace Services.Broadcast.Repositories
                     var posts = new List<ProposalDetailPostScrubbingDto>();
                     posts.AddRange(queryData.Select(x =>
                         {
-                            var marketStation = (from stations in context.stations
-                                where stations.legacy_call_letters.Equals(x.affidavitDetails.station)
-                                select new {markets = stations.market, stations}).SingleOrDefault();
-
-                            var aff = marketStation?.stations.affiliation;
-                            var market = marketStation?.markets.geography_name;
-                            if (marketStation == null)
-                            {
-                                market = x.affidavitDetails.market;
-                                aff = x.affidavitDetails.affiliate;
-                            }
 
                             return new ProposalDetailPostScrubbingDto()
                             {
@@ -349,8 +338,6 @@ namespace Services.Broadcast.Repositories
                                 Station = x.affidavitDetails.station,
                                 ISCI = x.affidavitDetails.isci,
                                 ProgramName = x.affidavitFileScrub.effective_program_name,
-                                Market = market,
-                                Affiliate = aff,
                                 SpotLength = spotLengths.Single(y => y.id == x.affidavitDetails.spot_length_id).length,
                                 TimeAired = x.affidavitDetails.air_time,
                                 DateAired = x.affidavitDetails.original_air_date,
@@ -432,6 +419,7 @@ namespace Services.Broadcast.Repositories
                         Units = x.proposalVersionWeeks.units,
                         ProposalWeekId = x.proposalVersionWeeks.id,
                         ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id,
+                        ProposalDetailSpotLengthId = x.proposalVersionDetail.spot_length_id,
                         Adu = x.proposalVersionDetail.adu
                     }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ToList();
 
