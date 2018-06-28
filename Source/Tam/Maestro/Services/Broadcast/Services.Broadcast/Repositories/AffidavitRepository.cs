@@ -419,6 +419,7 @@ namespace Services.Broadcast.Repositories
                         Units = x.proposalVersionWeeks.units,
                         ProposalWeekId = x.proposalVersionWeeks.id,
                         ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id,
+                        ProposalDetailSpotLengthId = x.proposalVersionDetail.spot_length_id,
                         Adu = x.proposalVersionDetail.adu
                     }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ToList();
 

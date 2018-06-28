@@ -58,6 +58,7 @@ namespace Services.Broadcast.Entities
             public double ProposalWeekImpressionsGoal { get; set; }
             public int ProposalWeekUnits { get; set; }
             public int ProposalWeekId { get; set; }
+            public int ProposalDetailSpotLength { get; set; }
             public bool Adu { get; set; }
         }
 
@@ -160,6 +161,7 @@ namespace Services.Broadcast.Entities
                             ProposalWeekUnits = r.Units,
                             ProposalWeekCPM = r.ProposalWeekCPM,
                             ProposalWeekId = r.ProposalWeekId,
+                            ProposalDetailSpotLength = spotLengthMappings[r.ProposalDetailSpotLengthId],
                             Adu = r.Adu
                         };
                     }).ToList()
@@ -174,16 +176,16 @@ namespace Services.Broadcast.Entities
                         TableRows = tab.TabRows.GroupBy(x => new
                         {
                             x.DaypartName,
-                            x.SpotLength,
+                            x.ProposalDetailSpotLength,
                             x.WeekStart,
                             x.Adu
-                        }).OrderBy(x => x.Key.WeekStart).ThenBy(x => x.Key.SpotLength).ThenBy(x => x.Key.Adu).Select(x =>
+                        }).OrderBy(x => x.Key.WeekStart).ThenBy(x => x.Key.ProposalDetailSpotLength).ThenBy(x => x.Key.Adu).Select(x =>
                              {
                                  var items = x.ToList();
                                  var row = new NsiPostReportQuarterSummaryTableRow
                                  {
                                      Contract = x.Key.DaypartName,
-                                     SpotLength = x.Key.SpotLength,
+                                     SpotLength = x.Key.ProposalDetailSpotLength,
                                      WeekStartDate = x.Key.WeekStart,
                                      Spots = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekUnits }).Select(y => y.Key.ProposalWeekUnits).Sum(),
                                      ActualImpressions = items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
