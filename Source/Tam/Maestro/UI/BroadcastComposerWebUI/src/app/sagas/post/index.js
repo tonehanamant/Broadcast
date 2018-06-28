@@ -249,7 +249,10 @@ export function* requestPostClientScrubbing({ payload: params }) {
       });
       throw new Error();
     }
-    data.Data.filterKey = params.filterKey; // set for ref in store
+    if (params.filterKey) {
+      data.Data.filterKey = params.filterKey; // set for ref in store
+    }
+    // console.log('request post scrubbing>>>>>>>', params, data.Data);
     yield put({
       type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
       data,
@@ -517,7 +520,7 @@ export function* requestOverrideStatus({ payload: params }) {
       });
       // change All for BE to NULL; fix so does not override initial params ReturnStatusFilter
     const adjustParams = (params.ReturnStatusFilter === 'All') ? Object.assign({}, params, { ReturnStatusFilter: null }) : params;
-    // console.log('adjustParams>>>>>>>>>>>>>', params, adjustParams);
+    //  console.log('adjustParams>>>>>>>>>>>>>', params, adjustParams);
     const response = yield overrideStatus(adjustParams);
     const { status, data } = response;
     const hasActiveScrubbingFilters = yield select(state => state.post.hasActiveScrubbingFilters);
@@ -574,6 +577,8 @@ export function* requestOverrideStatus({ payload: params }) {
     } else {
       // clear the data so grid registers as update
       yield call(requestClearScrubbingDataFiltersList);
+      // as currently stands need to reset the filter key on data or is removed : TODO REVISE
+      data.Data.filterKey = yield select(state => state.post.activeFilterKey);
       yield put({
         type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
         data,

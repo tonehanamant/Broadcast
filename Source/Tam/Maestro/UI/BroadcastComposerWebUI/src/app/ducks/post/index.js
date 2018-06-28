@@ -351,7 +351,7 @@ export default function reducer(state = initialState, action) {
       // console.log('after prepare filter options', activeFilters, state);
       return {
         ...state,
-        activeFilterKey: data.Data.filterKey,
+        activeFilterKey: data.Data.filterKey ? data.Data.filterKey : state.activeFilterKey,
         hasActiveScrubbingFilters: false,
         proposalHeader: {
           scrubbingData: data.Data,
