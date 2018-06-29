@@ -121,7 +121,17 @@ export const generateGridConfig = (props, tabName) => {
         width: '9%',
         renderer: ({ row }) => (<span>{row.Station || '-'}</span>),
       },
-		];
+    ];
+
+    const reasonCol = {
+      name: 'Unlinked Reason',
+      dataIndex: 'UnlinkedReason',
+      width: '15%',
+    };
+
+    if (tabName === 'unlinked') {
+      columns.splice(1, 0, reasonCol);
+    }
 
 		const plugins = {
 			COLUMN_MANAGER: {

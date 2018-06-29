@@ -4,12 +4,14 @@
     {
         UnlinkedIsci = 1,
         UnmarriedOnMultipleContracts = 2,
-        ArchivedIsci = 3
+        ArchivedIsci = 3,
+        MarriedAndUnmarried =4
     }
 
     public class AffidavitFileDetailProblem
     {
         public AffidavitFileDetailProblemTypeEnum Type { get; set; }
         public string Description { get; set; }
+        public long DetailId { get; set; }
     }
 }

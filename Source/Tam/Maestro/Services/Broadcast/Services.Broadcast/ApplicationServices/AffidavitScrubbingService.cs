@@ -282,9 +282,45 @@ namespace Services.Broadcast.ApplicationServices
         public List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived)
         {
             var spotsLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            var iscis = archived ? _PostRepository.GetArchivedIscis() : _PostRepository.GetUnlinkedIscis();
-            iscis.ForEach(x => x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key);
+            List<UnlinkedIscisDto> iscis = new List<UnlinkedIscisDto>();
+            List<AffidavitFileDetailProblem> isciProblems = new List<AffidavitFileDetailProblem>();
+            
+            if (archived)
+            {
+                iscis = _PostRepository.GetArchivedIscis();
+            }
+            else
+            {
+                iscis = _PostRepository.GetUnlinkedIscis();
+                isciProblems = _PostRepository.GetIsciProblems(iscis.Select(x => x.FileDetailId).ToList());
+            }
+
+            iscis.ForEach(x =>
+            {
+                x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key;
+                x.UnlinkedReason = archived 
+                    ? null 
+                    : isciProblems.Any(y=>y.DetailId == x.FileDetailId) 
+                            ? _GetAffidavitDetailProblemDescription(isciProblems.First(y => y.DetailId == x.FileDetailId)) 
+                            : null;
+            });
+
             return iscis;
+        }
+
+        private string _GetAffidavitDetailProblemDescription(AffidavitFileDetailProblem affidavitFileDetailProblem)
+        {
+            switch (affidavitFileDetailProblem.Type)
+            {
+                case AffidavitFileDetailProblemTypeEnum.UnlinkedIsci:
+                    return "Not in system";
+                case AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts:
+                    return "Multiple Proposals";
+                case AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried:
+                    return "Married and Unmarried";
+                default:
+                    return null;
+            }
         }
 
         public ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides)

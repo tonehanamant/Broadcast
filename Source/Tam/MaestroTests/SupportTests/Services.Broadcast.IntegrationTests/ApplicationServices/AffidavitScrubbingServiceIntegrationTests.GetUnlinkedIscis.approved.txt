@@ -8,7 +8,8 @@
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
     "Station": "WNBC-TV",
-    "TimeAired": 32400
+    "TimeAired": 32400,
+    "UnlinkedReason": null
   },
   {
     "Affiliate": null,
@@ -19,7 +20,8 @@
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
     "Station": "WNBC-TV",
-    "TimeAired": 32400
+    "TimeAired": 32400,
+    "UnlinkedReason": "Not in system"
   },
   {
     "Affiliate": null,
@@ -30,6 +32,7 @@
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
     "Station": "WNBC",
-    "TimeAired": 32400
+    "TimeAired": 32400,
+    "UnlinkedReason": "Married and Unmarried"
   }
 ]

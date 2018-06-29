@@ -88,11 +88,18 @@ namespace Services.Broadcast.Repositories
         Dictionary<string, string> LoadIsciMappings(List<string> iscis);
 
         /// <summary>
+        /// Gets all the affidavit file detail problems for specific details
+        /// </summary>
+        /// <param name="fileDetailIds">List of affidavit file detail ids</param>
+        /// <returns>List of AffidavitFileDetailProblem objects</returns>
+        List<AffidavitFileDetailProblem> GetIsciProblems(List<long> fileDetailIds);
+        
+        /// <summary>
         /// Removes iscis from blacklist table
         /// </summary>
         /// <param name="iscisToRemove">Isci list to remove</param>
         void RemoveIscisFromBlacklistTable(List<string> iscisToRemove);
-
+        
         /// <summary>
         /// Removes not a cadent entries for specific affidavit file details
         /// </summary>
@@ -199,6 +206,28 @@ namespace Services.Broadcast.Repositories
                 {
                     var iscis = _GetUnlinkedIscisQuery(context);
                     return _MapUnlinkedOrArchiveIsci(iscis);
+                });
+        }
+
+        /// <summary>
+        /// Gets all the affidavit file detail problems for specific details
+        /// </summary>
+        /// <param name="fileDetailIds">List of affidavit file detail ids</param>
+        /// <returns>List of AffidavitFileDetailProblem objects</returns>
+        public List<AffidavitFileDetailProblem> GetIsciProblems(List<long> fileDetailIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.affidavit_file_detail_problems
+                    .Where(x => fileDetailIds.Contains(x.affidavit_file_detail_id) && x.problem_type != (int)AffidavitFileDetailProblemTypeEnum.ArchivedIsci)
+                    .ToList()
+                    .Select(x => new AffidavitFileDetailProblem()
+                    {
+                        Type = (AffidavitFileDetailProblemTypeEnum)x.problem_type,
+                        Description = x.problem_description,
+                        DetailId = x.affidavit_file_detail_id
+                    }).ToList();
                 });
         }
 
