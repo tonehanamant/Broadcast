@@ -258,8 +258,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
         {
-            var affidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            var myEventsReportDataList = affidavitRepository.GetMyEventsReportData(proposalId);
+            var myEventsReportDataList = _AffidavitRepository.GetMyEventsReportData(proposalId);
             var spotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
 
             foreach (var report in myEventsReportDataList)
@@ -267,7 +266,7 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var line in report.Lines)
                 {
                     var advertiser = _SmsClient.FindAdvertiserById(line.AdvertiserId);
-
+                    
                     line.Advertiser = advertiser.Display;
                     line.SpotLength = spotLengths[line.SpotLengthId];
                 }
@@ -277,7 +276,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return myEventsReportDataList;
         }
-
+        
         private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
         {
             var grouped = myEventsReportDataList.GroupBy(x => x.StationCallLetters);
