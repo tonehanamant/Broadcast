@@ -9,7 +9,7 @@ namespace Services.Broadcast.ReportGenerators
     {
         private const string Delimiter = "\t";
         private const string DateFormat = "MM/dd/yyyy";
-        private const string TimeFormat = "hh:mm:tt";
+        private const string TimeFormat = "hh:mm tt";
         private const string FileExtension = ".txt";
         private const string DoubleDelimiter = Delimiter + Delimiter;
 
