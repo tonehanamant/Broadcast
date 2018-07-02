@@ -190,7 +190,7 @@ namespace Services.Broadcast.BusinessEngines
 
                 foreach (var proposalDetailWeek in proposalDetail)
                 {
-                    proposalDetailWeek.DateMatch = _IsDateMatch(affidavitDetail.OriginalAirDate.Date, result, proposalDetail);
+                    proposalDetailWeek.DateMatch = _IsDateMatch(affidavitDetail.OriginalAirDate.Date, result, proposalDetailWeek);
 
                     if (proposalDetailWeek.TimeMatch || proposalDetailWeek.DateMatch)
                         result.Add(proposalDetailWeek);
@@ -200,19 +200,11 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private bool _IsDateMatch(DateTime affidavitDetailAirDate, List<AffidavitMatchingProposalWeek> result, IGrouping<int, AffidavitMatchingProposalWeek> proposalDetail)
+        private bool _IsDateMatch(DateTime affidavitDetailAirDate, List<AffidavitMatchingProposalWeek> result, AffidavitMatchingProposalWeek proposalDetailWeek)
         {
-            foreach (var proposalWeek in proposalDetail)
-            {
-                if (affidavitDetailAirDate >= proposalWeek.ProposalVersionDetailWeekStart &&
-                    affidavitDetailAirDate <= proposalWeek.ProposalVersionDetailWeekEnd &&
-                     proposalWeek.Spots != 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return affidavitDetailAirDate >= proposalDetailWeek.ProposalVersionDetailWeekStart &&
+                   affidavitDetailAirDate <= proposalDetailWeek.ProposalVersionDetailWeekEnd &&
+                   proposalDetailWeek.Spots != 0;
         }
     }
 }

@@ -473,6 +473,62 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
+        private AffidavitSaveRequest _SetupAffidavitWithSameIsciForTwoSpots()
+        {
+            AffidavitSaveRequest request = new AffidavitSaveRequest
+            {
+                FileHash = "abc123",
+                Source = (int)AffidaviteFileSourceEnum.Strata,
+                FileName = "test.file",
+                Details = new List<AffidavitSaveRequestDetail>()
+                {
+                    new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("12/23/2018 6:15"),
+                        Isci = "BCOP3282",
+                        ProgramName = ProgramName1,
+                        SpotLength = 15,
+                        Genre = Genre1.Display,
+                        Station = "WWSB",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    },
+                    new AffidavitSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse("12/31/2018 6:15"),
+                        Isci = "BCOP3282",
+                        ProgramName = ProgramName1,
+                        SpotLength = 15,
+                        Genre = Genre1.Display,
+                        Station = "WWSB",
+                        LeadInEndTime = DateTime.Parse("06/29/2017 8:31AM"),
+                        LeadOutStartTime = DateTime.Parse("06/29/2017 8:02AM"),
+                        ShowType = "News",
+                        LeadInShowType = "Comedy",
+                        LeadOutShowType = "Documentary",
+                        LeadInGenre = "News",
+                        LeadOutProgramName = "LeadOutProgramName",
+                        LeadInProgramName = "LeadInProgramName",
+                        InventorySource = AffidaviteFileSourceEnum.Strata,
+                        LeadOutGenre = "LeadOutGenre",
+                        Affiliate = "Affiate",
+                        Market = "market"
+                    }
+                }
+            };
+            return request;
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Affidavit_Station_Market_Scrub()
@@ -1019,5 +1075,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteServiceSameIsciInSameDetailWithDifferentWeeks()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavitWithSameIsciForTwoSpots();
+                var postingDate = new DateTime(2018, 7, 2);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+
+                VerifyAffidavit(result);
+            }
+        }
     }
 }
