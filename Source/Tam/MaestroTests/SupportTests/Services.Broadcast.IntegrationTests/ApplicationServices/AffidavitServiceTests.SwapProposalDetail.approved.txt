@@ -97,7 +97,7 @@
           "EffectiveProgramName": "Program Names R us",
           "EffectiveShowType": "",
           "LeadIn": false,
-          "MatchDate": true,
+          "MatchDate": false,
           "MatchGenre": true,
           "MatchIsci": false,
           "MatchIsciDays": false,
@@ -250,7 +250,7 @@
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
           "ProposalVersionDetailId": 9954,
-          "ProposalVersionDetailQuarterWeekId": 29,
+          "ProposalVersionDetailQuarterWeekId": 30,
           "Status": 1
         }
       ],
