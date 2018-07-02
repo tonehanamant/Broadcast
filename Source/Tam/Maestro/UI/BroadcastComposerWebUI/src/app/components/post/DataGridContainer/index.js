@@ -15,6 +15,7 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
+const stateKey = 'gridPostMain';
 
 const mapStateToProps = ({ post: { postGridData }, grid, dataSource, menu }) => ({
   postGridData,
@@ -42,6 +43,8 @@ export class DataGridContainer extends Component {
 		super(props, context);
     this.context = context;
     this.showscrubbingModal = this.showscrubbingModal.bind(this);
+    this.deselectAll = this.deselectAll.bind(this);
+    this.selectRow = this.selectRow.bind(this);
   }
 
   componentWillMount() {
@@ -77,11 +80,12 @@ export class DataGridContainer extends Component {
   showContextMenu(ref) {
     this.props.showMenu(ref);
   }
-  selectRow(ref) {
-    this.props.selectRow(ref);
+  selectRow(rowId) {
+    this.deselectAll();
+    this.props.selectRow({ rowId, stateKey });
   }
-  deselectAll(ref) {
-    this.props.deselectAll(ref);
+  deselectAll() {
+    this.props.deselectAll({ stateKey });
   }
   showscrubbingModal(Id) {
     // change to params
@@ -89,7 +93,6 @@ export class DataGridContainer extends Component {
   }
 
   render() {
-    const stateKey = 'gridPostMain';
     const menuItems = [
       {
         text: 'NSI Post Report',
@@ -255,6 +258,7 @@ export class DataGridContainer extends Component {
             {...rowData}
             menuItems={menuItems}
             stateKey={stateKey}
+            beforeOpenMenu={this.selectRow}
           >
             {cells}
           </ContextMenuRow>),
@@ -263,7 +267,7 @@ export class DataGridContainer extends Component {
 
     const events = {
       HANDLE_BEFORE_SORT: () => {
-        this.deselectAll({ stateKey });
+        this.deselectAll();
       },
       HANDLE_ROW_DOUBLE_CLICK: (row) => {
           const Id = row.row.ContractId;

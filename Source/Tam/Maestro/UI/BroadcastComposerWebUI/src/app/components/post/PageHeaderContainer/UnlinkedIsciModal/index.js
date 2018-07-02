@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
-import { Grid } from 'react-redux-grid';
+import { Grid, Actions } from 'react-redux-grid';
 import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, undoArchivedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
 import { generateGridConfig } from './util';
 import MapUnlinkedIsciModal from '../MapUnlinkedIsciModal/index';
 
+const { SelectionActions: { deselectAll, selectRow } } = Actions;
 
 const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } }, grid, selection, dataSource }) => ({
   modal,
@@ -23,6 +24,8 @@ const mapDispatchToProps = dispatch => (
     archiveIscis: archiveUnlinkedIscis,
     undoArchive: undoArchivedIscis,
     toggleTab: toggleUnlinkedTab,
+    deselectAll,
+    selectRow,
   }, dispatch)
 );
 
@@ -57,7 +60,6 @@ export class UnlinkedIsciModal extends Component {
     const { modal, unlinkedIscis } = this.props;
     const { activeTab } = this.state;
     const grid = generateGridConfig(this.props, activeTab);
-    // console.log('grid config', grid);
 
     return (
       <div>

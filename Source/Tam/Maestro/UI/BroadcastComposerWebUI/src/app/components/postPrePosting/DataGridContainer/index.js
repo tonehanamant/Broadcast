@@ -17,6 +17,8 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
+const stateKey = 'gridPostPrePostingMain';
+
 /* ////////////////////////////////// */
 /* // MAPPING STATE AND DISPATCH
 /* ////////////////////////////////// */
@@ -60,6 +62,8 @@ export class DataGridContainer extends Component {
     this.context = context;
     this.contextMenuDeleteAction = this.contextMenuDeleteAction.bind(this);
     this.contextMenuFileSettingsAction = this.contextMenuFileSettingsAction.bind(this);
+    this.deselectAll = this.deselectAll.bind(this);
+    this.selectRow = this.selectRow.bind(this);
   }
 
   /* ////////////////////////////////// */
@@ -129,11 +133,13 @@ export class DataGridContainer extends Component {
   showContextMenu(ref) {
     this.props.showMenu(ref);
   }
-  selectRow(ref) {
-    this.props.selectRow(ref);
+
+  selectRow(rowId) {
+    this.deselectAll();
+    this.props.selectRow({ rowId, stateKey });
   }
-  deselectAll(ref) {
-    this.props.deselectAll(ref);
+  deselectAll() {
+    this.props.deselectAll({ stateKey });
   }
 
   /* ////////////////////////////////// */
@@ -143,7 +149,6 @@ export class DataGridContainer extends Component {
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
-    const stateKey = 'gridPostPrePostingMain';
 
     /* GRID RENDERERS */
     // const renderers = {
@@ -248,6 +253,7 @@ export class DataGridContainer extends Component {
               {...rowData}
               menuItems={menuItems}
               stateKey={stateKey}
+              beforeOpenMenu={this.selectRow}
             >
               {cells}
             </ContextMenuRow>
@@ -258,8 +264,7 @@ export class DataGridContainer extends Component {
     /* GRID EVENT HANDLERS */
     const events = {
       HANDLE_BEFORE_SORT: () => {
-        this.deselectAll({ stateKey });
-        this.hideContextMenu({ stateKey });
+        this.deselectAll();
       },
     };
 

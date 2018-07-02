@@ -15,8 +15,9 @@ const generateMenuItems = row => map(({ key, text, EVENT_HANDLER }) => (
   <Item key={key} onClick={onClick} data={{ EVENT_HANDLER, row }}>{text}</Item>
 ));
 
+
 const ContextMenuRow = (props) => {
-  const { rowProps, row, menuItems, isRender, stateKey } = props;
+  const { rowProps, row, menuItems, isRender, stateKey, beforeOpenMenu } = props;
 
   if (!(isRender && menuItems)) {
     return (
@@ -36,15 +37,22 @@ const ContextMenuRow = (props) => {
       <ContextMenuProvider
         id={menuId}
         storeRef={false}
-        render={({ children, ...rest }) => (
-          <tr
-            {...rowProps}
-            {...rest}
-            className={rowProps.className}
-          >
-            {children}
-          </tr>
-        )}
+        render={({ children, ...rest }) => {
+          const onContextMenu = (e) => {
+            rest.onContextMenu(e);
+            beforeOpenMenu(rowId);
+          };
+          return (
+            <tr
+              {...rowProps}
+              {...rest}
+              onContextMenu={onContextMenu}
+              className={rowProps.className}
+            >
+              {children}
+            </tr>
+          );
+        }}
       >
           { props.children }
       </ContextMenuProvider>
@@ -58,6 +66,7 @@ const ContextMenuRow = (props) => {
 ContextMenuRow.defaultProps = {
   isRender: true,
   menuItems: undefined,
+  beforeOpenMenu: () => {},
 };
 
 ContextMenuRow.propTypes = {
@@ -67,6 +76,7 @@ ContextMenuRow.propTypes = {
   row: PropTypes.any.isRequired,
   stateKey: PropTypes.string.isRequired,
   isRender: PropTypes.bool,
+  beforeOpenMenu: PropTypes.func,
 };
 
 export default ContextMenuRow;

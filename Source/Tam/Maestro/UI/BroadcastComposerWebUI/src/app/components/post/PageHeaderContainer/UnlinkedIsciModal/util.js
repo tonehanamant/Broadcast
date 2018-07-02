@@ -4,8 +4,6 @@ import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
 
 
-// export const stateKey = 'unlinked-isci-modal';
-
 const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis, toggleModal }) => ([
     {
       text: 'Not a Cadent ISCI',
@@ -53,21 +51,35 @@ const generateArchivedMenuitems = ({ selection, dataSource, undoArchive }) => ([
       undoArchive(activeSelections);
     },
   },
-]
-);
+]);
+
+const archiveAdditionaProps = (props, stateKey) => {
+  const selectedIds = props.selection.getIn([stateKey, 'indexes']);
+  return {
+    isRender: !!(selectedIds && selectedIds.size),
+  };
+};
+
+const unlinkedAdditionaProps = (props, stateKey) => ({
+  beforeOpenMenu: (rowId) => {
+    props.deselectAll({ stateKey });
+    props.selectRow({ rowId, stateKey });
+  },
+});
 
 const tabInfo = {
   unlinked: {
     generateMenuitems: generateUnlinkedMenuitems,
+    additionalRowProps: unlinkedAdditionaProps,
   },
   archived: {
-    generateMenuitems: generateArchivedMenuitems, // () => {},
+    generateMenuitems: generateArchivedMenuitems,
+    additionalRowProps: archiveAdditionaProps,
   },
 };
 
 
 export const generateGridConfig = (props, tabName) => {
-  // console.log('generate grid config', props, tabName);
   const stateKey = `${tabName}_grid`;
   const columns = [
 			{
@@ -144,7 +156,6 @@ export const generateGridConfig = (props, tabName) => {
       },
       SELECTION_MODEL: {
         mode: (tabName === 'archived') ? 'multi' : 'single', // config takes but grids do not change
-        // mode: 'multi',
         enabled: true,
         allowDeselect: true,
         activeCls: 'active',
@@ -153,19 +164,15 @@ export const generateGridConfig = (props, tabName) => {
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
-          const menuItems = tabInfo[tabName].generateMenuitems(props);
-          // const stateKey = 'archived_grid';
-          let isShowContextMenu = true;
-          if (tabName === 'archived') {
-            const selectedIds = props.selection.get(stateKey).get('indexes');
-            isShowContextMenu = !!(selectedIds && selectedIds.size);
-          }
+          const { [tabName]: { generateMenuitems, additionalRowProps } } = tabInfo;
+          const menuItems = generateMenuitems(props);
+          const additionaProps = additionalRowProps(props, stateKey);
           return (
             <ContextMenuRow
               {...rowData}
+              {...additionaProps}
               menuItems={menuItems}
               stateKey={stateKey}
-              isRender={isShowContextMenu}
             >
               {cells}
             </ContextMenuRow>
