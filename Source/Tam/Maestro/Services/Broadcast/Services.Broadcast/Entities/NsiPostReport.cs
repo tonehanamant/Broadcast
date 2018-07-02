@@ -205,7 +205,7 @@ namespace Services.Broadcast.Entities
             _ApplyAduAdjustments(QuarterTables);
 
             FlightDates = _GetFormattedFlights(flights, QuarterTables);
-            SpotLengthsDisplay = string.Join(" & ", QuarterTabs.SelectMany(x => x.TabRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
+            SpotLengthsDisplay = string.Join(" & ", QuarterTables.SelectMany(x => x.TableRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
             if (Equivalized)
             {
                 SpotLengthsDisplay += " (Equivalized)";
