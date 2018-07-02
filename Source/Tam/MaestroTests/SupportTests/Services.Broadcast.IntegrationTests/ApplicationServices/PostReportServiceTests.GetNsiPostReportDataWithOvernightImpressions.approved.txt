@@ -191,6 +191,6 @@
     }
   ],
   "ReportName": "Proposal Test - Test Advertiser 9 - Cadent Network 2Q16 Post Report with Overnights.xlsx",
-  "SpotLengthsDisplay": ":15s & :30s (Equivalized)",
+  "SpotLengthsDisplay": ":30s (Equivalized)",
   "WithOvernightImpressions": true
 }
