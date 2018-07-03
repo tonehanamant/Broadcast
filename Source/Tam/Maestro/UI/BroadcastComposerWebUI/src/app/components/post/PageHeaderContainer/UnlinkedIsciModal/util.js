@@ -160,7 +160,10 @@ export const generateGridConfig = (props, tabName) => {
         allowDeselect: true,
         activeCls: 'active',
         selectionEvent: 'singleclick',
-    },
+      },
+      PAGER: {
+        enabled: false,
+      },
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
