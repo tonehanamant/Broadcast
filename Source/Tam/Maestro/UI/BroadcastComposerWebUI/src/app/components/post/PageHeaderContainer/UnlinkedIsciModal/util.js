@@ -109,6 +109,9 @@ export const generateGridConfig = (props, tabName) => {
 						method: 'local',
 				},
       },
+      PAGER: {
+        enabled: false,
+      },
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {

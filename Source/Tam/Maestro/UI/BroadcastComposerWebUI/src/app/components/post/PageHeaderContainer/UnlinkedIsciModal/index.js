@@ -52,6 +52,8 @@ export class UnlinkedIsciModal extends Component {
     const { modal, unlinkedIscis } = this.props;
     const { activeTab } = this.state;
     const grid = generateGridConfig(this.props, activeTab);
+    grid.pageSize = unlinkedIscis.length;
+    grid.infinite = true;
 
     return (
       <div>
