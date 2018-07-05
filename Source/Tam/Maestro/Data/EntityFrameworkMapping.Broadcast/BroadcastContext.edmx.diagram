@@ -165,7 +165,7 @@
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_demographics" Width="1.5" PointX="24.875" PointY="5.25" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="26" PointY="12.875" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="26.875" PointY="12.875" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />

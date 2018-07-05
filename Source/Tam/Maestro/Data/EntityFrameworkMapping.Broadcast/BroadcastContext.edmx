@@ -43,7 +43,7 @@
           <Property Name="match_isci_days" Type="bit" Nullable="false" />
           <Property Name="match_date" Type="bit" Nullable="false" />
           <Property Name="effective_program_name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="effective_genre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="effective_genre" Type="varchar" MaxLength="255" />
           <Property Name="effective_show_type" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="match_show_type" Type="bit" Nullable="false" />
           <Property Name="status_override" Type="bit" Nullable="false" />
@@ -893,7 +893,7 @@
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_codefreeze_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -5270,16 +5270,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="match_isci_days" Type="Boolean" Nullable="false" />
           <Property Name="match_date" Type="Boolean" Nullable="false" />
           <Property Name="effective_program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="effective_genre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="effective_genre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="effective_show_type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="match_show_type" Type="Boolean" Nullable="false" />
           <Property Name="status_override" Type="Boolean" Nullable="false" />
           <Property Name="effective_isci" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="match_isci" Type="Boolean" Nullable="false" />
+          <Property Name="effective_client_isci" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="affidavit_client_scrub_audiences" Relationship="BroadcastModel.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="affidavit_client_scrub_audiences" />
           <NavigationProperty Name="affidavit_file_details" Relationship="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="affidavit_file_details" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="proposal_version_detail_quarter_weeks" />
-          <Property Name="effective_client_isci" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_affidavit_client_scrub_audiences_affidavit_client_scrubs">
           <End Type="BroadcastModel.affidavit_client_scrubs" Role="affidavit_client_scrubs" Multiplicity="1">
