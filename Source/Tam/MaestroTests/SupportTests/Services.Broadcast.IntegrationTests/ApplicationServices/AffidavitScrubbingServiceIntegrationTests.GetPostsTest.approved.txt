@@ -227,6 +227,20 @@
     {
       "Advertiser": "Test Advertiser 9",
       "AdvertiserId": 37444,
+      "ContractName": "MyEvents Date Sorting",
+      "GuaranteedAudienceId": 34,
+      "HouseholdDeliveredImpressions": 0.0,
+      "PostType": 1,
+      "PrimaryAudienceBookedImpressions": 200000.0,
+      "PrimaryAudienceDeliveredImpressions": 0.0,
+      "PrimaryAudienceDelivery": 0.0,
+      "SpotsInSpec": 4,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
+      "Advertiser": "Test Advertiser 9",
+      "AdvertiserId": 37444,
       "ContractName": "Proposal Test 5",
       "GuaranteedAudienceId": 31,
       "HouseholdDeliveredImpressions": 0.0,

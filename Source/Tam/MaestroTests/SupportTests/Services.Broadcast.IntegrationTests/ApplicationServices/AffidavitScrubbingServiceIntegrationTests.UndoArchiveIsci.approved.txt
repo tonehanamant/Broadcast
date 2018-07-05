@@ -29,7 +29,7 @@
     "Affiliate": null,
     "DateAired": "2016-06-03T00:00:00",
     "FileDetailId": 1007,
-    "Genre": "Do It Yourself",
+    "Genre": null,
     "ISCI": "SomeISCI3",
     "Market": "New York",
     "ProgramName": "Program Names R us",
