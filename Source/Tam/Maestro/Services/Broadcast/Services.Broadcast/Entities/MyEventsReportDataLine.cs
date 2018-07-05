@@ -8,25 +8,8 @@ namespace Services.Broadcast.Entities
         public string Advertiser { get; set; }
         public string DaypartCode { get; set; }
         public int SpotLength { get; set; }
-        public DateTime ScheduleStartDate
-        {
-            get
-            {
-                var differenceToMonday = (LineupStartDate.DayOfWeek - DayOfWeek.Monday);
-
-                if (differenceToMonday < 0)
-                    differenceToMonday += 7;
-
-                return LineupStartDate.AddDays(-differenceToMonday);
-            }
-        }
-        public DateTime ScheduleEndDate
-        {
-            get
-            {
-                return ScheduleStartDate.AddDays(6);
-            }
-        }
+        public DateTime ScheduleStartDate { get; set;}
+        public DateTime ScheduleEndDate { get; set; }
         public string StationCallLetters { get; set; }
         public char LineupPOT { get { return 'O'; } }
         public string LineupDOW

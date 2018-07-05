@@ -3,6 +3,20 @@
     {
       "Advertiser": "Test Advertiser 9",
       "AdvertiserId": 37674,
+      "ContractName": "BCOP-3296",
+      "GuaranteedAudienceId": 31,
+      "HouseholdDeliveredImpressions": 301517.35,
+      "PostType": 1,
+      "PrimaryAudienceBookedImpressions": 46002.0,
+      "PrimaryAudienceDeliveredImpressions": 301517.35,
+      "PrimaryAudienceDelivery": 655.44400243,
+      "SpotsInSpec": 6,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-07-05T09:32:44.957"
+    },
+    {
+      "Advertiser": "Test Advertiser 9",
+      "AdvertiserId": 37674,
       "ContractName": "BCOP-3282 II",
       "GuaranteedAudienceId": 31,
       "HouseholdDeliveredImpressions": 0.0,

@@ -196,6 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 @".\Files\" + expectedReportNames[0],
                 @".\Files\" + expectedReportNames[1],
             };
+
             var myEventsReport = _PostReportService.GenerateMyEventsReport(26001);
 
             using (var zip = new ZipArchive(myEventsReport.Stream, ZipArchiveMode.Read))
@@ -296,6 +297,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateNsiReportWithStationWithoutMarketRank()
+        {
+            var result = _PostReportService.GetNsiPostReportData(3134);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }
