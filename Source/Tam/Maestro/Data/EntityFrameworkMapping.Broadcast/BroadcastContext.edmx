@@ -43,7 +43,7 @@
           <Property Name="match_isci_days" Type="bit" Nullable="false" />
           <Property Name="match_date" Type="bit" Nullable="false" />
           <Property Name="effective_program_name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="effective_genre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="effective_genre" Type="varchar" MaxLength="255" />
           <Property Name="effective_show_type" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="match_show_type" Type="bit" Nullable="false" />
           <Property Name="status_override" Type="bit" Nullable="false" />
@@ -4909,7 +4909,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="match_isci_days" Type="Boolean" Nullable="false" />
           <Property Name="match_date" Type="Boolean" Nullable="false" />
           <Property Name="effective_program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="effective_genre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="effective_genre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="effective_show_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="match_show_type" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" FromRole="affidavit_client_scrubs" ToRole="proposal_version_detail_quarter_weeks" />

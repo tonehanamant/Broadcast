@@ -307,5 +307,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReportWithSorting()
+        {
+            var result = _PostReportService.GetMyEventsReportData(26013);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }
