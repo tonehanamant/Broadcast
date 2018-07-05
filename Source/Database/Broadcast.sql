@@ -52,13 +52,13 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-*************************************** START BCOP-3297 ***************************************************************
-IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_genre' AND object_id = OBJECT_ID('affidavit_client_scrubs')
+/*************************************** START BCOP-3297 ***************************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_genre' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
 BEGIN
-       ALTER TABLE dbo.affidavit_client_scrubs ALTER COLUMN effective_genre VARCHAR(255) NULL
+	ALTER TABLE dbo.affidavit_client_scrubs ALTER COLUMN effective_genre VARCHAR(255) NULL
 END
 GO
-*************************************** END BCOP-3297 ***************************************************************
+/*************************************** END BCOP-3297 ***************************************************************/
 
 /*************************************** START BCOP-3029 ***************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'match_isci' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
