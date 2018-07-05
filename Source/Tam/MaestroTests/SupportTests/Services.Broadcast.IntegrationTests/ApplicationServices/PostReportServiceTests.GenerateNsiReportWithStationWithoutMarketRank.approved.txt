@@ -1,0 +1,280 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Daypart": null,
+  "Equivalized": false,
+  "FlightDates": [
+    "3Q'17: 4 weeks - 7/10, 7/17, 7/24, 7/31"
+  ],
+  "GuaranteedDemo": "House Holds",
+  "ProposalAudiences": [
+    {
+      "Display": "HH",
+      "Id": 31
+    }
+  ],
+  "ProposalId": 3134,
+  "QuarterTables": [
+    {
+      "TableName": "3Q'17",
+      "TableRows": [
+        {
+          "ActualImpressions": 486.9,
+          "Adu": false,
+          "Contract": "EMN",
+          "DeliveredImpressionsPercentage": 0.04869,
+          "HHRating": 0,
+          "ProposalWeekCost": 100.0000,
+          "ProposalWeekCPM": 10.0000,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 100.0000,
+          "ProposalWeekTotalImpressionsGoal": 10000.0,
+          "SpotLength": 15,
+          "Spots": 1,
+          "WeekStartDate": "2017-07-10T00:00:00"
+        },
+        {
+          "ActualImpressions": 84.55,
+          "Adu": false,
+          "Contract": "EMN",
+          "DeliveredImpressionsPercentage": 0.011028260869565217,
+          "HHRating": 0,
+          "ProposalWeekCost": 460.0000,
+          "ProposalWeekCPM": 59.999999999999973913043478300,
+          "ProposalWeekImpressionsGoal": 7666.666666666667,
+          "ProposalWeekTotalCost": 460.0000,
+          "ProposalWeekTotalImpressionsGoal": 7666.666666666667,
+          "SpotLength": 15,
+          "Spots": 1,
+          "WeekStartDate": "2017-07-17T00:00:00"
+        },
+        {
+          "ActualImpressions": 41651.149999999994,
+          "Adu": true,
+          "Contract": "ADU",
+          "DeliveredImpressionsPercentage": null,
+          "HHRating": 0,
+          "ProposalWeekCost": null,
+          "ProposalWeekCPM": null,
+          "ProposalWeekImpressionsGoal": null,
+          "ProposalWeekTotalCost": null,
+          "ProposalWeekTotalImpressionsGoal": null,
+          "SpotLength": 15,
+          "Spots": 1,
+          "WeekStartDate": "2017-07-17T00:00:00"
+        },
+        {
+          "ActualImpressions": 0.0,
+          "Adu": false,
+          "Contract": "EMN",
+          "DeliveredImpressionsPercentage": 0.0,
+          "HHRating": 0,
+          "ProposalWeekCost": 460.0000,
+          "ProposalWeekCPM": 59.999999999999973913043478300,
+          "ProposalWeekImpressionsGoal": 7666.666666666667,
+          "ProposalWeekTotalCost": 460.0000,
+          "ProposalWeekTotalImpressionsGoal": 7666.666666666667,
+          "SpotLength": 15,
+          "Spots": 1,
+          "WeekStartDate": "2017-07-24T00:00:00"
+        },
+        {
+          "ActualImpressions": 0.0,
+          "Adu": false,
+          "Contract": "EMN",
+          "DeliveredImpressionsPercentage": 0.0,
+          "HHRating": 0,
+          "ProposalWeekCost": 460.1200,
+          "ProposalWeekCPM": 59.999999999999973919846996400,
+          "ProposalWeekImpressionsGoal": 7668.666666666667,
+          "ProposalWeekTotalCost": 460.1200,
+          "ProposalWeekTotalImpressionsGoal": 7668.666666666667,
+          "SpotLength": 15,
+          "Spots": 1,
+          "WeekStartDate": "2017-07-31T00:00:00"
+        },
+        {
+          "ActualImpressions": 259294.75000000003,
+          "Adu": true,
+          "Contract": "ADU",
+          "DeliveredImpressionsPercentage": null,
+          "HHRating": 0,
+          "ProposalWeekCost": null,
+          "ProposalWeekCPM": null,
+          "ProposalWeekImpressionsGoal": null,
+          "ProposalWeekTotalCost": null,
+          "ProposalWeekTotalImpressionsGoal": null,
+          "SpotLength": 15,
+          "Spots": 1,
+          "WeekStartDate": "2017-07-31T00:00:00"
+        }
+      ]
+    }
+  ],
+  "QuarterTabs": [
+    {
+      "TabName": "Spot Detail 3Q17",
+      "TabRows": [
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 486.9
+          },
+          "DateAired": "2017-07-10T00:00:00",
+          "DaypartName": "EMN",
+          "Isci": "BCOP3296VI",
+          "Market": "Detroit",
+          "NetworkAffiliate": "IND",
+          "ProgramName": "Middle",
+          "ProposalDetailSpotLength": 15,
+          "ProposalWeekCost": 100.0000,
+          "ProposalWeekCPM": 10.0000,
+          "ProposalWeekId": 3937,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 100.0000,
+          "ProposalWeekTotalImpressionsGoal": 10000.0,
+          "ProposalWeekUnits": 1,
+          "Rank": 13,
+          "SpotLength": 15,
+          "Station": "CBET",
+          "TimeAired": 4500,
+          "WeekStart": "2017-07-10T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 84.55
+          },
+          "DateAired": "2017-07-17T00:00:00",
+          "DaypartName": "EMN",
+          "Isci": "BCOP3296II",
+          "Market": "South Bend-Elkhart",
+          "NetworkAffiliate": "PBS",
+          "ProgramName": "Middle",
+          "ProposalDetailSpotLength": 15,
+          "ProposalWeekCost": 460.0000,
+          "ProposalWeekCPM": 59.999999999999973913043478300,
+          "ProposalWeekId": 3928,
+          "ProposalWeekImpressionsGoal": 7666.66666667,
+          "ProposalWeekTotalCost": 460.0000,
+          "ProposalWeekTotalImpressionsGoal": 7666.66666667,
+          "ProposalWeekUnits": 1,
+          "Rank": 96,
+          "SpotLength": 15,
+          "Station": "DNIT",
+          "TimeAired": 72000,
+          "WeekStart": "2017-07-17T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0
+          },
+          "DateAired": "2017-07-27T00:00:00",
+          "DaypartName": "EMN",
+          "Isci": "BCOP3296III",
+          "Market": "Bakersfield",
+          "NetworkAffiliate": "ETV",
+          "ProgramName": "Middle",
+          "ProposalDetailSpotLength": 15,
+          "ProposalWeekCost": 460.0000,
+          "ProposalWeekCPM": 59.999999999999973913043478300,
+          "ProposalWeekId": 3929,
+          "ProposalWeekImpressionsGoal": 7666.66666667,
+          "ProposalWeekTotalCost": 460.0000,
+          "ProposalWeekTotalImpressionsGoal": 7666.66666667,
+          "ProposalWeekUnits": 1,
+          "Rank": 126,
+          "SpotLength": 15,
+          "Station": "KBBV",
+          "TimeAired": 18000,
+          "WeekStart": "2017-07-24T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0
+          },
+          "DateAired": "2017-08-02T00:00:00",
+          "DaypartName": "EMN",
+          "Isci": "BCOP3296IV",
+          "Market": "Juneau",
+          "NetworkAffiliate": "PBS",
+          "ProgramName": "Middle",
+          "ProposalDetailSpotLength": 15,
+          "ProposalWeekCost": 460.1200,
+          "ProposalWeekCPM": 59.999999999999973919846996400,
+          "ProposalWeekId": 3930,
+          "ProposalWeekImpressionsGoal": 7668.66666667,
+          "ProposalWeekTotalCost": 460.1200,
+          "ProposalWeekTotalImpressionsGoal": 7668.66666667,
+          "ProposalWeekUnits": 1,
+          "Rank": 0,
+          "SpotLength": 15,
+          "Station": "OTOO",
+          "TimeAired": 18000,
+          "WeekStart": "2017-07-31T00:00:00"
+        },
+        {
+          "Adu": true,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 259294.75
+          },
+          "DateAired": "2017-08-02T00:00:00",
+          "DaypartName": "ADU",
+          "Isci": "BCOP3296V",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Middle",
+          "ProposalDetailSpotLength": 15,
+          "ProposalWeekCost": 0.0000,
+          "ProposalWeekCPM": 0.0000,
+          "ProposalWeekId": 3931,
+          "ProposalWeekImpressionsGoal": 5000.0,
+          "ProposalWeekTotalCost": 0.0000,
+          "ProposalWeekTotalImpressionsGoal": 5000.0,
+          "ProposalWeekUnits": 1,
+          "Rank": 1,
+          "SpotLength": 15,
+          "Station": "WNBC",
+          "TimeAired": 72000,
+          "WeekStart": "2017-07-31T00:00:00"
+        },
+        {
+          "Adu": true,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 41651.15
+          },
+          "DateAired": "2017-07-17T00:00:00",
+          "DaypartName": "ADU",
+          "Isci": "BCOP3296I",
+          "Market": "Raleigh-Durham (Fayetvlle)",
+          "NetworkAffiliate": "PBS",
+          "ProgramName": "Middle",
+          "ProposalDetailSpotLength": 15,
+          "ProposalWeekCost": 0.0000,
+          "ProposalWeekCPM": 0.0000,
+          "ProposalWeekId": 3927,
+          "ProposalWeekImpressionsGoal": 8000.0,
+          "ProposalWeekTotalCost": 0.0000,
+          "ProposalWeekTotalImpressionsGoal": 8000.0,
+          "ProposalWeekUnits": 1,
+          "Rank": 24,
+          "SpotLength": 15,
+          "Station": "WUNC",
+          "TimeAired": 73500,
+          "WeekStart": "2017-07-17T00:00:00"
+        }
+      ],
+      "Title": "Test Advertiser 9 3Q17 Post Spot Detail"
+    }
+  ],
+  "ReportName": "BCOP-3296 - Test Advertiser 9 - Cadent Network 3Q17 Post Report.xlsx",
+  "SpotLengthsDisplay": ":15s",
+  "WithOvernightImpressions": false
+}

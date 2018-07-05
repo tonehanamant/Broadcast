@@ -139,9 +139,21 @@ namespace Services.Broadcast.Entities
 
                         var foundStation = stationMappings.TryGetValue(stationProcessingEngine.StripStationSuffix(r.Station), out DisplayBroadcastStation currentStation);
 
+                        var rank = 0;
+
+                        if (foundStation && r.ProposalDetailPostingBookId.HasValue)
+                        {
+                            var hasMarketRanksForPostingBook = nsiMarketRankings.TryGetValue(r.ProposalDetailPostingBookId.Value, out Dictionary<int, int> marketRankForPostingBook);
+
+                            if (hasMarketRanksForPostingBook)
+                            {
+                                marketRankForPostingBook.TryGetValue(currentStation.MarketCode, out rank);
+                            }
+                        }
+
                         return new NsiPostReportQuarterTabRow()
                         {
-                            Rank = foundStation && r.ProposalDetailPostingBookId.HasValue ? nsiMarketRankings[r.ProposalDetailPostingBookId.Value][currentStation.MarketCode] : 0,
+                            Rank = rank,
                             Market = foundStation ? currentStation.OriginMarket : "",
                             Station = r.Station,
                             NetworkAffiliate = foundStation ? currentStation.Affiliation : "",

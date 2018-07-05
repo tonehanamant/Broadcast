@@ -1,6 +1,14 @@
 ﻿{
   "Posts": [
     {
+      "ContractName": "BCOP-3296",
+      "GuaranteedAudienceId": 31,
+      "PrimaryAudienceImpressions": 301517.35,
+      "SpotsInSpec": 6,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-07-05T09:32:44.957"
+    },
+    {
       "ContractName": "BCOP-3282 II",
       "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,

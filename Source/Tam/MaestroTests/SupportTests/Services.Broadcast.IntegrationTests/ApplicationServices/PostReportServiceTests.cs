@@ -297,5 +297,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateNsiReportWithStationWithoutMarketRank()
+        {
+            var result = _PostReportService.GetNsiPostReportData(3134);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }
