@@ -196,6 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 @".\Files\" + expectedReportNames[0],
                 @".\Files\" + expectedReportNames[1],
             };
+
             var myEventsReport = _PostReportService.GenerateMyEventsReport(26001);
 
             using (var zip = new ZipArchive(myEventsReport.Stream, ZipArchiveMode.Read))
