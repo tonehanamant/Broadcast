@@ -113,6 +113,14 @@
       "UploadDate": "2018-02-08T12:57:39.693"
     },
     {
+      "ContractName": "MyEvents Date Sorting",
+      "GuaranteedAudienceId": 34,
+      "PrimaryAudienceImpressions": 0.0,
+      "SpotsInSpec": 4,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
       "ContractName": "Proposal Test 5",
       "GuaranteedAudienceId": 31,
       "PrimaryAudienceImpressions": 0.0,
