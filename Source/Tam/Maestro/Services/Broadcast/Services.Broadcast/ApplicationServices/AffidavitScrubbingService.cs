@@ -62,6 +62,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="name">User requesting the undo operation</param>
         /// <returns>True or false</returns>
         bool UndoArchiveUnlinkedIsci(List<long> fileDetailsIds, DateTime currentDateTime, string name);
+        
+        /// <summary>
+        /// Undo the overriding of an affidavit client scrub status
+        /// </summary>
+        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
+        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -331,6 +338,26 @@ namespace Services.Broadcast.ApplicationServices
             ProposalScrubbingRequest filter =
                 new ProposalScrubbingRequest() { ScrubbingStatusFilter = scrubStatusOverrides.ReturnStatusFilter };
             return GetClientScrubbingForProposal(scrubStatusOverrides.ProposalId, filter);
+        }
+
+        /// <summary>
+        /// Undo the overriding of an affidavit client scrub status
+        /// </summary>
+        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
+        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        public ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request)
+        {
+            var affidavitClientScrubs = _AffidavitRepository.GetAffidavitClientScrubsByIds(request.ScrubIds);
+            affidavitClientScrubs.ForEach(x =>
+            {
+                x.status = (x.match_station && x.match_market && x.match_genre && x.match_program && x.match_time && x.match_isci_days && x.match_date && x.match_show_type)
+                        ? (int)ScrubbingStatus.InSpec
+                        : (int)ScrubbingStatus.OutOfSpec;
+                x.status_override = false;
+            });
+            _AffidavitRepository.SaveScrubsStatus(affidavitClientScrubs);
+
+            return GetClientScrubbingForProposal(request.ProposalId, new ProposalScrubbingRequest() { ScrubbingStatusFilter = request.ReturnStatusFilter });
         }
 
         /// <summary>

@@ -6,7 +6,8 @@ import * as appActions from 'Ducks/app/actionTypes';
 import * as postActions from 'Ducks/post/actionTypes';
 import { setOverlayLoading, toggleModal } from 'Ducks/app';
 import { selectModal } from 'Ducks/app/selectors';
-import { getPost } from 'Ducks/post';
+import { selectActiveScrubs, selectActiveFilterKey } from 'Ducks/post/selectors';
+import { getPost, saveActiveScrubData } from 'Ducks/post';
 import api from '../api';
 import sagaWrapper from '../wrapper';
 
@@ -751,6 +752,45 @@ export function* closeUnlinkedIsciModal({ modalPrams }) {
   yield put(getPost());
 }
 
+
+const filterMap = {
+  InSpec: 2,
+  OutOfSpec: 1,
+};
+
+export function* undoScrubStatus(payload) {
+  const { undoScrubStatus } = api.post;
+  const activeFilterKey = yield select(selectActiveFilterKey);
+  let params = payload;
+  if (activeFilterKey !== 'All') {
+    params = { ...payload, ReturnStatusFilter: filterMap[activeFilterKey] };
+  }
+  try {
+    yield put(setOverlayLoading({ id: 'undoScrubStatus', loading: true }));
+    return yield undoScrubStatus(params);
+  } finally {
+    yield put(setOverlayLoading({ id: 'undoScrubStatus', loading: false }));
+  }
+}
+
+export function* undoScrubStatusSuccess({ data: { Data }, payload: { ScrubIds } }) {
+  const { ClientScrubs } = Data;
+  const activeScrubData = yield select(selectActiveScrubs);
+  const updatedScrubs = ScrubIds
+    .map(id => ClientScrubs.find(({ ScrubbingClientId }) => ScrubbingClientId === id))
+    .filter(it => it);
+  const newClientScrubs = activeScrubData.ClientScrubs
+    .filter(it => ClientScrubs.find(originalIt => it.ScrubbingClientId === originalIt.ScrubbingClientId))
+    .map((it) => {
+      if (ScrubIds.includes(it.ScrubbingClientId)) {
+        const newItem = updatedScrubs.find(({ ScrubbingClientId }) => ScrubbingClientId === it.ScrubbingClientId);
+        return { ...it, ...newItem };
+      }
+      return it;
+    });
+  yield put(saveActiveScrubData({ ...activeScrubData, ClientScrubs: newClientScrubs }, Data));
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -841,4 +881,12 @@ export function* watchMapUnlinkedIsciSuccess() {
 
 export function* watchUndoArchivedIscis() {
   yield takeEvery(ACTIONS.UNDO_ARCHIVED_ISCI.request, sagaWrapper(undoArchivedIscis, ACTIONS.UNDO_ARCHIVED_ISCI));
+}
+
+export function* watchUndoScrubStatus() {
+  yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.request, sagaWrapper(undoScrubStatus, ACTIONS.UNDO_SCRUB_STATUS));
+}
+
+export function* watchUndoScrubStatusSuccess() {
+  yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
 }

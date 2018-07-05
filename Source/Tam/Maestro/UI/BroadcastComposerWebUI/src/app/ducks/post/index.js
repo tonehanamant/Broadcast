@@ -237,7 +237,7 @@ const initialState = {
 
 // Reducer
 export default function reducer(state = initialState, action) {
-  const { type, data } = action;
+  const { type, data, payload } = action;
 
   switch (type) {
     case ACTIONS.RECEIVE_POST:
@@ -451,6 +451,16 @@ export default function reducer(state = initialState, action) {
         loadingValidIscis: false,
       };
 
+    case ACTIONS.SAVE_NEW_CLIENT_SCRUBS:
+      return {
+        ...state,
+        proposalHeader: {
+          ...state.proposalHeader,
+          activeScrubbingData: payload.Data,
+          scrubbingData: payload.FullData,
+        },
+      };
+
     default:
       return state;
   }
@@ -545,4 +555,18 @@ export const rescrubUnlinkedIscis = isci => ({
 export const closeUnlinkedIsciModal = modalPrams => ({
   type: ACTIONS.CLOSE_UNLINKED_ISCI_MODAL,
   payload: { modalPrams },
+});
+
+
+export const undoScrubStatus = (proposalId, scrubIds) => ({
+  type: ACTIONS.UNDO_SCRUB_STATUS.request,
+  payload: {
+    ProposalId: proposalId,
+    ScrubIds: scrubIds,
+  },
+});
+
+export const saveActiveScrubData = (newData, fullList) => ({
+  type: ACTIONS.SAVE_NEW_CLIENT_SCRUBS,
+  payload: { Data: newData, FullData: fullList },
 });

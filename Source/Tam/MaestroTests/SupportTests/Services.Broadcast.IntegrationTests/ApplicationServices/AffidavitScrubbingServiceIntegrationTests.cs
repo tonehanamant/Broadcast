@@ -432,7 +432,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [UseReporter(typeof(DiffReporter))]
         [Test]
-        public void ClientScrubbingOverrides_Exclude_Existing_Status_Overrides()
+        public void ClientScrubbingOverrides_Override_Ignoring_Current_Status()
         {
             using (new TransactionScopeWrapper())
             {
@@ -449,6 +449,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     OverrideStatus = ScrubbingStatus.InSpec // the current status of this record is InSpec, so this will not cause override.
                 };
                 var result = _AffidavitScrubbingService.OverrideScrubbingStatus(overrides);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [UseReporter(typeof(DiffReporter))]
+        [Test]
+        public void ClientScrubbing_UndoOverride()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var scrubIds = new List<int>() { 1010, 5614 };
+
+                ScrubStatusOverrideRequest overrides = new ScrubStatusOverrideRequest()
+                {
+                    ProposalId = 26000,
+                    ScrubIds = scrubIds
+                };
+                var result = _AffidavitScrubbingService.UndoOverrideScrubbingStatus(overrides);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");

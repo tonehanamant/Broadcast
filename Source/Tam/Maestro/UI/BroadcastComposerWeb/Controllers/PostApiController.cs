@@ -157,6 +157,15 @@ namespace BroadcastComposerWeb.Controllers
                 () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().OverrideScrubbingStatus(request));
         }
 
+        [HttpPut]
+        [Route("UndoOverrideStatus")]
+        public BaseResponse<ClientPostScrubbingProposalDto> UndoOverrideScrubStatus(ScrubStatusOverrideRequest request)
+        {
+            return
+            _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().UndoOverrideScrubbingStatus(request));
+        }
+        
         [HttpPost]
         [Route("SwapProposalDetail")]
         public BaseResponse<bool> SwapProposalDetail(SwapProposalDetailRequest requestData)

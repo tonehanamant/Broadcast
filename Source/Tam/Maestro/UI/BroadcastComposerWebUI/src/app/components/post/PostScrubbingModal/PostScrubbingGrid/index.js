@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Grid, Actions } from 'react-redux-grid';
-import { overrideStatus } from 'Ducks/post';
+import { overrideStatus, undoScrubStatus } from 'Ducks/post';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
 
 import SwapDetailModal from './SwapDetailModal';
@@ -30,6 +30,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     showMenu,
     hideMenu,
     overrideStatus,
+    undoScrubStatus,
   }, dispatch)
 );
 
@@ -131,6 +132,16 @@ export class PostScrubbingGrid extends Component {
               // todo process as just Ids? or need to handle response
               const selections = this.getScrubbingSelections();
               this.openSwapDetailModal(selections);
+            },
+          },
+          {
+            text: 'Undo',
+            key: 'menu-post-undo',
+            EVENT_HANDLER: () => {
+              const { activeScrubbingData } = this.props;
+              const selections = this.getScrubbingSelections();
+              const selectedIds = selections.map(it => it.ScrubbingClientId);
+              this.props.undoScrubStatus(activeScrubbingData.Id, selectedIds);
             },
           },
         ];
@@ -357,8 +368,8 @@ export class PostScrubbingGrid extends Component {
 
         return (
             <div>
-            <Grid {...grid} data={ClientScrubs} store={this.context.store} height={340} />
-            <SwapDetailModal details={details} />
+              <Grid {...grid} data={ClientScrubs} store={this.context.store} height={340} />
+              <SwapDetailModal details={details} />
             </div>
         );
     }
@@ -367,9 +378,7 @@ export class PostScrubbingGrid extends Component {
 PostScrubbingGrid.propTypes = {
     grid: PropTypes.object.isRequired,
     dataSource: PropTypes.object.isRequired,
-    // ClientScrubs: PropTypes.object.isRequired,
     activeScrubbingData: PropTypes.object.isRequired,
-    // setOverlayLoading: PropTypes.func.isRequired,
     selection: PropTypes.object.isRequired,
     selectRow: PropTypes.func.isRequired,
     deselectAll: PropTypes.func.isRequired,
@@ -379,6 +388,7 @@ PostScrubbingGrid.propTypes = {
     overrideStatus: PropTypes.func.isRequired,
     details: PropTypes.array.isRequired,
     toggleModal: PropTypes.func.isRequired,
+    undoScrubStatus: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingGrid);

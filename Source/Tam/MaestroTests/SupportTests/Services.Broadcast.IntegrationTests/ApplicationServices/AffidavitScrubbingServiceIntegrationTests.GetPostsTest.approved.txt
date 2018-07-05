@@ -38,7 +38,7 @@
       "PrimaryAudienceBookedImpressions": 200000.0,
       "PrimaryAudienceDeliveredImpressions": 2442.0,
       "PrimaryAudienceDelivery": 1.221,
-      "SpotsInSpec": 4,
+      "SpotsInSpec": 5,
       "SpotsOutOfSpec": 0,
       "UploadDate": "2018-02-08T12:57:39.693"
     },
