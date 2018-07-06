@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.proposal_version_details1 = new HashSet<proposal_version_details>();
             this.proposal_version_details2 = new HashSet<proposal_version_details>();
+            this.proposal_version_details3 = new HashSet<proposal_version_details>();
         }
     
         public int id { get; set; }
@@ -40,5 +41,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details1 { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details2 { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details3 { get; set; }
     }
 }

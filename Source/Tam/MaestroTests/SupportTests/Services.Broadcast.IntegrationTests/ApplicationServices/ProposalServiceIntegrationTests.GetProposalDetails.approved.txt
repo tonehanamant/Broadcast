@@ -2,17 +2,17 @@
   "Adu": false,
   "Daypart": null,
   "DaypartCode": null,
-  "DefaultPostingBooks": {
+  "DefaultProjectionBooks": {
     "DefaultHutBook": {
       "HasWarning": true,
-      "PostingBookId": 413,
+      "PostingBookId": 418,
       "WarningMessage": "The hut book for the last year's quarter is not available, the default has been set as the latest possible book"
     },
     "DefaultPlaybackType": 4,
     "DefaultShareBook": {
-      "HasWarning": true,
-      "PostingBookId": 416,
-      "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
+      "HasWarning": false,
+      "PostingBookId": 422,
+      "WarningMessage": null
     }
   },
   "FlightEdited": false,
@@ -20,9 +20,12 @@
   "FlightStartDate": "2016-12-05T00:00:00",
   "FlightWeeks": [],
   "GenreCriteria": [],
-  "HutPostingBookId": null,
-  "PlaybackType": 0,
+  "HasPostingDataChanged": false,
+  "HutProjectionBookId": null,
+  "PostingBookId": null,
+  "PostingPlaybackType": null,
   "ProgramCriteria": [],
+  "ProjectionPlaybackType": 0,
   "ProposalFlightWeeks": [],
   "Quarters": [
     {
@@ -39,6 +42,7 @@
           "Iscis": [],
           "IsHiatus": true,
           "MediaWeekId": 676,
+          "MyEventsReportName": null,
           "StartDate": "2016-12-05T00:00:00",
           "Units": 0,
           "Week": "12/5/2016"
@@ -50,6 +54,7 @@
           "Iscis": [],
           "IsHiatus": false,
           "MediaWeekId": 677,
+          "MyEventsReportName": null,
           "StartDate": "2016-12-12T00:00:00",
           "Units": 1,
           "Week": "12/12/2016"
@@ -61,6 +66,7 @@
           "Iscis": [],
           "IsHiatus": false,
           "MediaWeekId": 678,
+          "MyEventsReportName": null,
           "StartDate": "2016-12-19T00:00:00",
           "Units": 1,
           "Week": "12/19/2016"
@@ -70,9 +76,9 @@
     }
   ],
   "Sequence": null,
-  "SharePostingBookId": null,
+  "ShareProjectionBookId": null,
   "ShowTypeCriteria": [],
-  "SinglePostingBookId": null,
+  "SingleProjectionBookId": null,
   "SpotLengthId": 0,
   "TotalCost": 0.0,
   "TotalImpressions": 0.0,

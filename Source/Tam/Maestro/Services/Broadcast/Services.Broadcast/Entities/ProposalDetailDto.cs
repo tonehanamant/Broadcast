@@ -26,11 +26,14 @@ namespace Services.Broadcast.Entities
         public bool Adu { get; set; }
         public List<ProposalQuarterDto> Quarters { get; set; }
         public bool FlightEdited { get; set; }
-        public int? SinglePostingBookId { get; set; }
-        public int? SharePostingBookId { get; set; }
-        public int? HutPostingBookId { get; set; }
-        public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
-        public DefaultPostingBooksDto DefaultPostingBooks { get; set; }        
+        public int? SingleProjectionBookId { get; set; }
+        public int? ShareProjectionBookId { get; set; }
+        public int? HutProjectionBookId { get; set; }
+        public ProposalEnums.ProposalPlaybackType ProjectionPlaybackType { get; set; }
+        public DefaultProjectionBooksDto DefaultProjectionBooks { get; set; }        
         public int? Sequence { get; set; }
+        public int? PostingBookId { get; set; }
+        public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
+        public bool HasPostingDataChanged { get; set; }
     }
 }

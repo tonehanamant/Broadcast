@@ -1,0 +1,34 @@
+﻿{
+  "ValidationResults": [
+    {
+      "ErrorMessage": "is required",
+      "InvalidField": "Station",
+      "InvalidLine": 1
+    },
+    {
+      "ErrorMessage": "is required",
+      "InvalidField": "Affiliate",
+      "InvalidLine": 1
+    },
+    {
+      "ErrorMessage": "must be valid broadcast spot length: 15,30,60,120,180,300",
+      "InvalidField": "SpotLength",
+      "InvalidLine": 2
+    },
+    {
+      "ErrorMessage": "is required",
+      "InvalidField": "Isci",
+      "InvalidLine": 2
+    },
+    {
+      "ErrorMessage": "is required",
+      "InvalidField": "ShowType",
+      "InvalidLine": 3
+    },
+    {
+      "ErrorMessage": "is required",
+      "InvalidField": "LeadInShowType",
+      "InvalidLine": 3
+    }
+  ]
+}

@@ -19,7 +19,7 @@
         "wed": true
       },
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -32,8 +32,10 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": 410,
-      "PlaybackType": 4,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": 410,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 2,
@@ -42,6 +44,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -58,6 +61,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": null,
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"
@@ -67,9 +71,9 @@
         }
       ],
       "Sequence": null,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": null,
+      "SingleProjectionBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 50.0000,
       "TotalImpressions": 1000000.0,
@@ -90,7 +94,7 @@
         "wed": true
       },
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -103,9 +107,12 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": 410,
-      "PlaybackType": 4,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": 410,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -122,6 +129,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": null,
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"
@@ -131,9 +139,9 @@
         }
       ],
       "Sequence": null,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": null,
+      "SingleProjectionBookId": null,
       "SpotLengthId": 1,
       "TotalCost": 50.0000,
       "TotalImpressions": 1000000.0,

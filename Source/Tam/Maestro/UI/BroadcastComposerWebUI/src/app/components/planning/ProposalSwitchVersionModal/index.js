@@ -128,34 +128,11 @@ export class ProposalSwitchVersionModal extends Component {
 			LOADER: {
 				enabled: false,
 			},
-			// SELECTION_MODEL: {
-			// 	mode: 'single',
-			// 	enabled: true,
-			// 	allowDeselect: true,
-			// 	activeCls: 'active',
-			// 	selectionEvent: 'singleclick',
-			// },
 			ROW: {
 				enabled: true,
-				renderer: ({ rowProps, cells }) => {
-					// const stateKey = cells[0].props.stateKey;
-					// const rowId = cells[0].props.rowId;
-					const updatedRowProps = { ...rowProps,
-						onClick: (e) => {
-							rowProps.onClick(e);
-						},
-						onContextMenu: (e) => {
-							e.preventDefault();
-							rowProps.onClick(e);
-							// this.deselectAll({ stateKey });
-							// this.selectRow({ rowId, stateKey });
-							// this.showContextMenu({ id: rowId, stateKey });
-						},
-					};
-					return (
-						<tr {...updatedRowProps}>{ cells }</tr>
-					);
-				},
+				renderer: ({ rowProps, cells }) => (
+						<tr {...rowProps}>{ cells }</tr>
+					),
 			},
 		};
 
@@ -200,7 +177,6 @@ ProposalSwitchVersionModal.defaultProps = {
   },
 };
 
-/* eslint-disable react/no-unused-prop-types */
 ProposalSwitchVersionModal.propTypes = {
 	modal: PropTypes.object,
 	selection: PropTypes.object.isRequired,

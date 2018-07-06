@@ -8,16 +8,19 @@
       "Adu": false,
       "Daypart": null,
       "DaypartCode": null,
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "0001-01-01T00:00:00",
       "FlightStartDate": "0001-01-01T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
       "Id": 0,
-      "PlaybackType": 0,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 0,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -36,6 +39,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 732,
+              "MyEventsReportName": null,
               "StartDate": "2018-01-01T00:00:00",
               "Units": 0,
               "Week": "1/1/2018"
@@ -48,6 +52,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 733,
+              "MyEventsReportName": null,
               "StartDate": "2018-01-08T00:00:00",
               "Units": 0,
               "Week": "1/8/2018"
@@ -60,6 +65,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 734,
+              "MyEventsReportName": null,
               "StartDate": "2018-01-15T00:00:00",
               "Units": 0,
               "Week": "1/15/2018"
@@ -83,6 +89,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 745,
+              "MyEventsReportName": null,
               "StartDate": "2018-04-02T00:00:00",
               "Units": 0,
               "Week": "4/2/2018"
@@ -95,6 +102,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 746,
+              "MyEventsReportName": null,
               "StartDate": "2018-04-09T00:00:00",
               "Units": 0,
               "Week": "4/9/2018"
@@ -107,6 +115,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 747,
+              "MyEventsReportName": null,
               "StartDate": "2018-04-16T00:00:00",
               "Units": 0,
               "Week": "4/16/2018"
@@ -116,9 +125,9 @@
         }
       ],
       "Sequence": null,
-      "SharePostingBookId": null,
+      "ShareProjectionBookId": null,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": null,
+      "SingleProjectionBookId": null,
       "SpotLengthId": 0,
       "TotalCost": 0.0,
       "TotalImpressions": 0.0,

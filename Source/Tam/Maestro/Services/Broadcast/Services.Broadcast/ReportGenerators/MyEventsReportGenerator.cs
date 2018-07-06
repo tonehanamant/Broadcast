@@ -9,7 +9,7 @@ namespace Services.Broadcast.ReportGenerators
     {
         private const string Delimiter = "\t";
         private const string DateFormat = "MM/dd/yyyy";
-        private const string TimeFormat = "hh:mm:tt";
+        private const string TimeFormat = "hh:mm tt";
         private const string FileExtension = ".txt";
         private const string DoubleDelimiter = Delimiter + Delimiter;
 
@@ -38,7 +38,7 @@ namespace Services.Broadcast.ReportGenerators
             stringBuilder.Append(_BuildReportLineWithDelimiter(data.ReportableName));
             stringBuilder.Append(_BuildReportLineWithDelimiter(data.ScheduleStartDate.ToString(DateFormat)));
             stringBuilder.Append(_BuildReportLineWithDelimiter(data.ScheduleEndDate.ToString(DateFormat)));
-            stringBuilder.Append(_BuildReportLineWithDelimiter(data.CallLetter));
+            stringBuilder.Append(_BuildReportLineWithDelimiter(data.StationCallLetters));
             stringBuilder.Append(_BuildReportLineWithDoubleDelimiter(data.LineupPOT));
             stringBuilder.Append(_BuildReportLineWithDoubleDelimiter(data.LineupDOW));
             stringBuilder.Append(_BuildReportLineWithDoubleDelimiter(data.OffAir));

@@ -19,7 +19,7 @@
         "wed": true
       },
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2017-04-09T00:00:00",
       "FlightStartDate": "2017-03-13T00:00:00",
@@ -63,8 +63,10 @@
           }
         }
       ],
-      "HutPostingBookId": null,
-      "PlaybackType": 3,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 2,
@@ -79,6 +81,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -96,6 +99,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 690,
+              "MyEventsReportName": null,
               "StartDate": "2017-03-13T00:00:00",
               "Units": 1,
               "Week": "3/13/2017"
@@ -107,6 +111,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 691,
+              "MyEventsReportName": null,
               "StartDate": "2017-03-20T00:00:00",
               "Units": 1,
               "Week": "3/20/2017"
@@ -129,6 +134,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 692,
+              "MyEventsReportName": null,
               "StartDate": "2017-03-27T00:00:00",
               "Units": 1,
               "Week": "3/27/2017"
@@ -140,6 +146,7 @@
               "Iscis": [],
               "IsHiatus": true,
               "MediaWeekId": 693,
+              "MyEventsReportName": null,
               "StartDate": "2017-04-03T00:00:00",
               "Units": 0,
               "Week": "4/3/2017"
@@ -149,7 +156,7 @@
         }
       ],
       "Sequence": 1,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [
         {
           "Contain": 2,
@@ -164,7 +171,7 @@
           }
         }
       ],
-      "SinglePostingBookId": 413,
+      "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 5241609.21,
       "TotalImpressions": 18089000.0,
@@ -185,7 +192,7 @@
         "wed": true
       },
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -204,9 +211,12 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
-      "PlaybackType": 3,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -224,6 +234,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 717,
+              "MyEventsReportName": null,
               "StartDate": "2017-09-18T00:00:00",
               "Units": 1,
               "Week": "9/18/2017"
@@ -246,6 +257,7 @@
               "Iscis": [],
               "IsHiatus": true,
               "MediaWeekId": 718,
+              "MyEventsReportName": null,
               "StartDate": "2017-09-25T00:00:00",
               "Units": 0,
               "Week": "9/25/2017"
@@ -255,9 +267,9 @@
         }
       ],
       "Sequence": 2,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": 413,
+      "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 757800.00,
       "TotalImpressions": 9000000.0,

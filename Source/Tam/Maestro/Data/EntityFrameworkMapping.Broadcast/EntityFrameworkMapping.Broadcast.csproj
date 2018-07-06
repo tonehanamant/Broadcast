@@ -342,16 +342,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="affidavit_blacklist.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="affidavit_client_scrubs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="affidavit_client_scrub_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_file_details.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="affidavit_file_detail_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="affidavit_file_detail_demographics.cs">
@@ -420,6 +423,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_sources.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="isci_mapping.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="market.cs">
@@ -573,7 +579,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="BroadcastContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BroadcastContext.Designer.cs</LastGenOutput>

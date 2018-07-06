@@ -49,14 +49,14 @@ export class PostPrePostingFileEditModal extends Component {
 
   save() {
     if (this.checkValid()) {
+      const { Id, Equivalized, PostingBookId, PlaybackType, Demos } = this.props.fileEditFormValues;
       const ret = {
-        FileId: this.props.fileEditFormValues.Id,
-        Equivalized: this.props.fileEditFormValues.Equivalized,
-        PostingBookId: this.props.fileEditFormValues.PostingBookId,
-        PlaybackType: this.props.fileEditFormValues.PlaybackType,
-        Audiences: this.props.fileEditFormValues.Demos,
+        FileId: Id,
+        Audiences: Demos,
+        Equivalized,
+        PostingBookId,
+        PlaybackType,
       };
-    // console.log('save posting', ret);
       this.props.savePostPrePostingFileEdit(ret);
     }
   }
@@ -64,7 +64,6 @@ export class PostPrePostingFileEditModal extends Component {
   onChangeEquivalized() {
     // e.target.checked not reliable
     this.props.updateEquivalized(!this.props.fileEditFormValues.Equivalized);
-    // console.log('onChangeEquivalized', !this.props.fileEditFormValues.Equivalized);
   }
 
   onChangePostingBook(value) {
@@ -72,21 +71,18 @@ export class PostPrePostingFileEditModal extends Component {
     const val = value ? value.Id : null;
     this.props.updatePostingBook(val); // actioncreator
     this.setValidationState('postingBookInvalid', val ? null : 'error');
-    // console.log('onChangePostingBook', val, this.props.fileEditFormValues);
   }
 
   onChangePlaybackType(value) {
     const val = value ? value.Id : null;
     this.props.updatePlaybackType(val); // actioncreator
     this.setValidationState('playbackTypeInvalid', val ? null : 'error');
-    // console.log('onChangePlaybackType', val, this.props.fileEditFormValues);
   }
 
   onChangeDemos(value) {
     const convert = value.map(item => item.Id);
     this.props.updateDemos(convert); // actioncreator
     this.setValidationState('demosInvalid', value.length ? null : 'error');
-    // console.log('onChangeDemos', value, convert, this.props.fileEditFormValues);
   }
 
   checkValid() {
@@ -116,50 +112,59 @@ export class PostPrePostingFileEditModal extends Component {
   }
 
   render() {
+    const { postingBookInvalid, playbackTypeInvalid, demosInvalid } = this.state;
+    const { fileEditFormValues, modal, formOptions } = this.props;
+    const { FileName, Equivalized, PostingBookId, PlaybackType } = fileEditFormValues;
+    const { PostingBooks, PlaybackTypes } = formOptions;
+
     return (
-      <Modal show={this.props.modal.active} onHide={this.close}>
+      <Modal show={modal.active} onHide={this.close}>
         <Modal.Header>
           <Modal.Title style={{ display: 'inline-block' }}>Post File Edit</Modal.Title>
-          <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
+          <Button
+            className="close"
+            bsStyle="link"
+            onClick={this.close}
+            style={{ display: 'inline-block', float: 'right' }}
+          >
             <span>&times;</span>
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <p>{this.props.fileEditFormValues.FileName}</p>
+          <p>{FileName}</p>
           <form>
             <FormGroup controlId="equivalized">
               <Checkbox
-                checked={this.props.fileEditFormValues.Equivalized}
+                checked={Equivalized}
                 onChange={this.onChangeEquivalized}
               >
               <strong>Equivalized</strong>
               </Checkbox>
             </FormGroup>
-            <FormGroup controlId="postingBook" validationState={this.state.postingBookInvalid} >
+            <FormGroup controlId="postingBook" validationState={postingBookInvalid} >
               <ControlLabel><strong>Posting Book</strong></ControlLabel>
               <Select
                 name="postingBook"
-                value={this.props.fileEditFormValues.PostingBookId}
+                value={PostingBookId}
                 placeholder="Choose Posting..."
-                // className="form-control"
-                options={this.props.formOptions.PostingBooks}
+                options={PostingBooks}
                 labelKey="Display"
                 valueKey="Id"
                 onChange={this.onChangePostingBook}
               />
-              {this.state.postingBookInvalid != null &&
+              {postingBookInvalid != null &&
               <HelpBlock>
                 <p className="text-danger">Required</p>
               </HelpBlock>
               }
             </FormGroup>
-            <FormGroup controlId="playbackType" validationState={this.state.playbackTypeInvalid}>
+            <FormGroup controlId="playbackType" validationState={playbackTypeInvalid}>
               <ControlLabel><strong>Playback Type</strong></ControlLabel>
               <Select
                 name="playbackType"
-                value={this.props.fileEditFormValues.PlaybackType}
+                value={PlaybackType}
                 placeholder="Choose Playback Type..."
-                options={this.props.formOptions.PlaybackTypes}
+                options={PlaybackTypes}
                 labelKey="Display"
                 valueKey="Id"
                 onChange={this.onChangePlaybackType}
@@ -170,21 +175,21 @@ export class PostPrePostingFileEditModal extends Component {
               </HelpBlock>
               }
             </FormGroup>
-            <FormGroup controlId="demos" validationState={this.state.demosInvalid}>
+            <FormGroup controlId="demos" validationState={demosInvalid}>
               <ControlLabel><strong>Demos</strong></ControlLabel>
               <Select
                 name="demos"
-                value={this.props.fileEditFormValues.Demos}
+                value={fileEditFormValues.Demos}
                 placeholder="Choose Demo..."
                 multi
-                options={this.props.formOptions.Demos}
+                options={formOptions.Demos}
                 labelKey="Display"
                 valueKey="Id"
                 closeOnSelect
                 // simpleValue
                 onChange={this.onChangeDemos}
               />
-              {this.state.demosInvalid != null &&
+              {demosInvalid != null &&
               <HelpBlock>
                 <p className="text-danger">Required</p>
               </HelpBlock>
@@ -217,7 +222,6 @@ PostPrePostingFileEditModal.defaultProps = {
   },
 };
 
-/* eslint-disable react/no-unused-prop-types */
 PostPrePostingFileEditModal.propTypes = {
   formOptions: PropTypes.object.isRequired,
   fileEditFormValues: PropTypes.object.isRequired,

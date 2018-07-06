@@ -1,0 +1,97 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "ClientScrubs": [],
+  "Details": [
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-06T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        }
+      ],
+      "Genres": [],
+      "Id": 14,
+      "Programs": [],
+      "Sequence": 1,
+      "SpotLength": "30"
+    },
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        }
+      ],
+      "Genres": [],
+      "Id": 15,
+      "Programs": [],
+      "Sequence": 2,
+      "SpotLength": "30"
+    },
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [],
+      "Genres": [],
+      "Id": 10799,
+      "Programs": [],
+      "Sequence": 3,
+      "SpotLength": "30"
+    }
+  ],
+  "Filters": {
+    "DateAiredEnd": null,
+    "DateAiredStart": null,
+    "DistinctAffiliates": [],
+    "DistinctClientIscis": [],
+    "DistinctDayOfWeek": [],
+    "DistinctGenres": [],
+    "DistinctHouseIscis": [],
+    "DistinctMarkets": [],
+    "DistinctPrograms": [],
+    "DistinctSequences": [],
+    "DistinctShowTypes": [],
+    "DistinctSpotLengths": [],
+    "DistinctStations": [],
+    "DistinctWeekStarts": [],
+    "TimeAiredEnd": null,
+    "TimeAiredStart": null,
+    "WeekEnd": null,
+    "WeekStart": null
+  },
+  "GuaranteedDemo": "House Holds",
+  "Id": 253,
+  "MarketGroupId": 100,
+  "Markets": [],
+  "Name": "Proposal Test",
+  "Notes": null,
+  "SecondaryDemos": [
+    "Females 15-17",
+    "Females 18-20"
+  ]
+}

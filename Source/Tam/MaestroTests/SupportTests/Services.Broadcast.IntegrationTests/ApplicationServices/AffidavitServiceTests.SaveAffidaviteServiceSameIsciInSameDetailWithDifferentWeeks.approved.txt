@@ -1,0 +1,289 @@
+﻿{
+  "AffidavitFileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "AffidavitClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 526.375
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 498.125
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 0.0
+            }
+          ],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "BCOP3282",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "News",
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": true,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": true,
+          "MatchStation": true,
+          "MatchTime": true,
+          "ModifiedBy": "test user",
+          "PostingBookId": 430,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 3248,
+          "ProposalVersionDetailQuarterWeekId": 3916,
+          "Status": 1
+        }
+      ],
+      "AffidavitFileDetailProblems": [],
+      "Affiliate": "Affiate",
+      "AirTime": 22500,
+      "Archived": false,
+      "Demographics": [],
+      "EstimateId": null,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "BCOP3282",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "MappedIsci": null,
+      "Market": "Tampa-St. Pete (Sarasota)",
+      "OriginalAirDate": "2018-12-23T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ShowType": "News",
+      "SpotCost": null,
+      "SpotLengthId": 3,
+      "Station": "WWSB"
+    },
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "AffidavitClientScrubs": [
+        {
+          "AffidavitClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 114.2
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 125.25
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 1067.95
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 1123.15
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 425.3
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 817.95
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 2989.9
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 132.4
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 0.0
+            }
+          ],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "BCOP3282",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "News",
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": true,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": true,
+          "MatchStation": true,
+          "MatchTime": true,
+          "ModifiedBy": "test user",
+          "PostingBookId": 430,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 3248,
+          "ProposalVersionDetailQuarterWeekId": 3917,
+          "Status": 2
+        }
+      ],
+      "AffidavitFileDetailProblems": [],
+      "Affiliate": "Affiate",
+      "AirTime": 22500,
+      "Archived": false,
+      "Demographics": [],
+      "EstimateId": null,
+      "Genre": "Do It Yourself",
+      "InventorySource": 1,
+      "Isci": "BCOP3282",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Comedy",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Documentary",
+      "LeadOutStartTime": 28920,
+      "MappedIsci": null,
+      "Market": "Tampa-St. Pete (Sarasota)",
+      "OriginalAirDate": "2018-12-31T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ShowType": "News",
+      "SpotCost": null,
+      "SpotLengthId": 3,
+      "Station": "WWSB"
+    }
+  ],
+  "AffidavitFileProblems": [],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "SourceId": 1,
+  "Status": 1
+}

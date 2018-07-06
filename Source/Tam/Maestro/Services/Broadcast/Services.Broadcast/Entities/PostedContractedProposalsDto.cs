@@ -16,6 +16,7 @@ namespace Services.Broadcast.Entities
         public DateTime? UploadDate { get; set; }
         public int SpotsInSpec { get; set; }
         public int SpotsOutOfSpec { get; set; }
-        public double? PrimaryAudienceImpressions { get; set; }
+        public double PrimaryAudienceImpressions { get; set; }
+        public int GuaranteedAudienceId { get; set; }
     }
 }

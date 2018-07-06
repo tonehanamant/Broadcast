@@ -60,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "AirTime");
 
             Assert.AreEqual("AirTime", result.InvalidField);
-            Assert.AreEqual("'AirTime' must be a valid date", result.ErrorMessage);
+            Assert.AreEqual("must be a valid date", result.ErrorMessage);
         }
 
 
@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "Station");
 
             Assert.AreEqual("Station", result.InvalidField);
-            Assert.AreEqual("'Station' is required", result.ErrorMessage);
+            Assert.AreEqual("is required", result.ErrorMessage);
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "SpotLength");
 
             Assert.AreEqual("SpotLength", result.InvalidField);
-            Assert.AreEqual("'SpotLength' must be valid broadcast spot length: 15,30,60,120,180,300", result.ErrorMessage);
+            Assert.AreEqual("must be valid broadcast spot length: 15,30,60,120,180,300", result.ErrorMessage);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "Isci");
 
             Assert.AreEqual("Isci", result.InvalidField);
-            Assert.AreEqual("'Isci' is required", result.ErrorMessage);
+            Assert.AreEqual("is required", result.ErrorMessage);
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "ShowType");
 
             Assert.AreEqual("ShowType", result.InvalidField);
-            Assert.AreEqual("'ShowType' is required",result.ErrorMessage);
+            Assert.AreEqual("is required",result.ErrorMessage);
         }
         [Test]
         public void ValidateAffidavitRecordInvalidLeadInShowTypeTest()
@@ -130,7 +130,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "LeadInShowType");
 
             Assert.AreEqual("LeadInShowType", result.InvalidField);
-            Assert.AreEqual("'LeadInShowType' is required", result.ErrorMessage);
+            Assert.AreEqual("is required", result.ErrorMessage);
         }
         [Test]
         public void ValidateAffidavitRecordInvalidLeadOutShowTypeTest()
@@ -143,7 +143,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "LeadOutShowType");
 
             Assert.AreEqual("LeadOutShowType", result.InvalidField);
-            Assert.AreEqual("'LeadOutShowType' is required", result.ErrorMessage);
+            Assert.AreEqual("is required", result.ErrorMessage);
         }
         
         [Test]
@@ -157,7 +157,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = results.First(r => r.InvalidField == "Affiliate");
 
             Assert.AreEqual("Affiliate", result.InvalidField);
-            Assert.AreEqual("'Affiliate' is required",result.ErrorMessage);
+            Assert.AreEqual("is required",result.ErrorMessage);
         }
     }
 }

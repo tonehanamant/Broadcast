@@ -10,6 +10,8 @@ namespace Services.Broadcast.Entities
     {
         public int ProposalVersionId { get; set; }
         public int ProposalVersionDetailId { get; set; }
+        public int? ProposalVersionDetailPostingBookId { get; set; }
+        public ProposalEnums.ProposalPlaybackType? ProposalVersionDetailPostingPlaybackType { get; set; }
         public int ProposalVersionDetailQuarterWeekId { get; set; }
         public DateTime ProposalVersionDetailWeekStart { get; set; }
         public DateTime ProposalVersionDetailWeekEnd { get; set; }

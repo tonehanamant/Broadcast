@@ -25,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SetProprietaryInventoryDaypartAndWeekInfo_Throws_When_ShareHutSweepsBook_Null()
         {
             var sut = (ProposalProprietaryInventoryService)_ProposalProprietaryInventoryService;
-            Assert.That(() => sut._SetProprietaryInventoryDaypartAndWeekInfo(new ProposalDetailProprietaryInventoryDto { SharePostingBookId = null, HutPostingBookId = null, SinglePostingBookId = null, GuaranteedAudience = 1 }, 0), Throws.Exception.With.Message.EqualTo(BaseProposalInventoryService.MissingBooksErrorMessage));
+            Assert.That(() => sut._SetProprietaryInventoryDaypartAndWeekInfo(new ProposalDetailProprietaryInventoryDto { ShareProjectionBookId = null, HutProjectionBookId = null, SingleProjectionBookId = null, GuaranteedAudience = 1 }, 0), Throws.Exception.With.Message.EqualTo(BaseProposalInventoryService.MissingBooksErrorMessage));
         }
 
         [Test]

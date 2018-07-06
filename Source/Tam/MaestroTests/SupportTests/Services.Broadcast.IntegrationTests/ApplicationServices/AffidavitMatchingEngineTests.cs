@@ -26,7 +26,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void UnmatchedIsci()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123"
             };
@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void MultipleUnmarriedIscisOnSeparateProposals()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123"
             };
@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void MarriedAndUnmarriedIscisOnSeparateProposals()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123"
             };
@@ -107,7 +107,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void MultipleUnmarriedIscisOnSameProposal()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123"
             };
@@ -141,10 +141,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksAirtimeMatch()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-05T07:00:00")
+                OriginalAirDate = DateTime.Parse("2018-01-05T07:00:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T07:00:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -182,10 +183,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailMatchDateOnly()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-05T01:00:00")
+                OriginalAirDate = DateTime.Parse("2018-01-05T01:00:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T01:00:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -223,10 +225,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailMatchTimeOnly()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-08T09:00:00")
+                OriginalAirDate = DateTime.Parse("2018-01-08T09:00:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-08T09:00:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -264,10 +267,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksAirtimeMatchWithLeadIn()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-05T08:58:00")
+                OriginalAirDate = DateTime.Parse("2018-01-05T08:58:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T08:58:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -305,10 +309,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksFirstIfBothMatchAirtime()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-05T07:00:00")
+                OriginalAirDate = DateTime.Parse("2018-01-05T07:00:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T07:00:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -346,10 +351,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksFirstIfNoneMatchAirtime()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-08T05:00:00")
+                OriginalAirDate = DateTime.Parse("2018-01-08T05:00:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-08T05:00:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -387,10 +393,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitMatchingEngine_IncludeDatepartEndtime()
         {
-            var affidavitDetail = new AffidavitSaveRequestDetail
+            var affidavitDetail = new AffidavitFileDetail
             {
                 Isci = "ABC123",
-                AirTime = DateTime.Parse("2018-01-07T09:00:00")
+                OriginalAirDate = DateTime.Parse("2018-01-07T09:00:00"),
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-07T09:00:00").TimeOfDay.TotalSeconds)
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>

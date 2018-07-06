@@ -13,6 +13,7 @@ using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System.Collections.Generic;
+using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -35,7 +36,6 @@ namespace Services.Broadcast.ApplicationServices
                         _instance = new UnityContainer();
 
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
-                        _instance.RegisterType<IServiceSecurityContextWrapper, ServiceSecurityContextWrapper>();
                         _instance.RegisterType<ILockingManagerApplicationService, LockingManagerApplicationService>();
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 
@@ -96,10 +96,11 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
-			unityContainer.RegisterType<IPostingBooksService, PostingBooksService>();
+			unityContainer.RegisterType<IProjectionBooksService, ProjectionBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
+            unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
 
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
@@ -112,8 +113,22 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitProgramScrubbingEngine, AffidavitProgramScrubbingEngine>();
             unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
             unityContainer.RegisterType<IAffidavitScrubbingService, AffidavitScrubbingService>();
-            unityContainer.RegisterType<IAffidavitEmailSenderService, AffidavitEmailSenderService>();
+            unityContainer.RegisterType<IAffidavitEmailProcessorService, AffidavitEmailProcessorService>();
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
+            unityContainer.RegisterType<IPostReportService, PostReportService>();
+            unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();
+
+            unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
+
+            unityContainer.RegisterType<IEmailerService, EmailerService>();
+
+            unityContainer.RegisterType<IWWTVFtpHelper, WWTVFtpHelper>();
+            unityContainer.RegisterType<IFtpService, FtpService>();
+
+            unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
+            unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
+
+            unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

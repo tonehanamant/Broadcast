@@ -1,8 +1,8 @@
 ﻿namespace Services.Broadcast.Entities
 {
-    public class AffidavitFileDetailAudience
+    public class AffidavitClientScrubAudience
     {
-        public long AffidavitFileDetailId { get; set; }
+        public long AffidavitClientScrubId { get; set; }
         public int AudienceId { get; set; }
         public double Impressions { get; set; }
     }

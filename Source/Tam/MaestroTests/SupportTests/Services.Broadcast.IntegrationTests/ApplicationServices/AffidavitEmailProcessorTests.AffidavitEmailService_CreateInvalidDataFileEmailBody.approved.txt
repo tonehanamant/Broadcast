@@ -1,0 +1,7 @@
+﻿File eula.1028.txt failed validation for WWTV upload
+
+Error 1
+Error 2
+Error3
+
+File located in \FilePath

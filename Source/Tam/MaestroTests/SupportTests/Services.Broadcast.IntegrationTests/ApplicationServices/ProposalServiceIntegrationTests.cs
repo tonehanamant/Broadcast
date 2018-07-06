@@ -61,9 +61,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Daypart = new DaypartDto() { mon = true, tue = true },
                 SpotLengthId = 1,
                 DaypartCode = "NAV",
-                SharePostingBookId = 413,
-                HutPostingBookId = 410,
-                PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                ShareProjectionBookId = 413,
+                HutProjectionBookId = 410,
+                ProjectionPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
                 GenreCriteria = new List<GenreCriteria>()
                 {
                     new GenreCriteria
@@ -649,6 +649,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalDto), "Markets");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
             jsonResolver.Ignore(typeof(GenreCriteria), "Id");
             jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
             jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
@@ -1161,6 +1162,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
@@ -1309,15 +1311,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposal.Details.Add(detail);
 
-                detail.HutPostingBookId = null;
-                detail.SharePostingBookId = shareBookMonthId;
+                detail.HutProjectionBookId = null;
+                detail.ShareProjectionBookId = shareBookMonthId;
 
                 var resultProposal = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
                 var resultProposalDetail = resultProposal.Details.First();
 
-                Assert.AreEqual(shareBookMonthId, resultProposalDetail.SinglePostingBookId);
-                Assert.AreEqual(shareBookMonthId, resultProposalDetail.SharePostingBookId);
-                Assert.Null(resultProposalDetail.HutPostingBookId);
+                Assert.AreEqual(shareBookMonthId, resultProposalDetail.SingleProjectionBookId);
+                Assert.AreEqual(shareBookMonthId, resultProposalDetail.ShareProjectionBookId);
+                Assert.Null(resultProposalDetail.HutProjectionBookId);
             }
         }
 
@@ -1330,8 +1332,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = _ProposalService.GetProposalById(251);
                 var firstDetail = proposal.Details.First();
 
-                Assert.AreEqual(413, firstDetail.SharePostingBookId);
-                Assert.Null(firstDetail.HutPostingBookId);
+                Assert.AreEqual(413, firstDetail.ShareProjectionBookId);
+                Assert.Null(firstDetail.HutProjectionBookId);
             }
         }
 
@@ -2232,5 +2234,148 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.AreEqual(410, ratingBook);
         }
 
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanUpdatePostingDataForProposal()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26006);
+                var firstDetail = proposal.Details.First();
+
+                firstDetail.PostingBookId = 430;
+                firstDetail.PostingPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus7;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot set posting data before uploading affadavit file", MatchType = MessageMatch.Contains)]
+        public void CannotUpdatePostingDataForProposalBeforeAffidavitDataIsLoaded()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(250);
+                var firstDetail = proposal.Details.First();
+
+                firstDetail.PostingBookId = 430;
+                firstDetail.PostingPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus7;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanRecalculateImpressionsWhenPostingBookIsChanged()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var affidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                .GetDataRepository<IAffidavitRepository>();
+                var proposal = _ProposalService.GetProposalById(26006);
+                var firstDetail = proposal.Details.First();
+
+                firstDetail.PostingBookId = 430;
+
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var affidavitFile = affidavitRepository.GetAffidavit(167, true);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(affidavitFile));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveMyEventsReportName()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposal = _ProposalService.GetProposalById(251);
+                var firstDetail = proposal.Details.First();
+                var firstWeek = firstDetail.Quarters.First().Weeks.First();
+
+                firstWeek.MyEventsReportName = "Testing 2";
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveMyEventsReportDefaultValue()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposal = _ProposalService.GetProposalById(251);
+                var firstDetail = proposal.Details.First();
+                var firstWeek = firstDetail.Quarters.First().Weeks.First();
+
+                firstWeek.MyEventsReportName = null;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
 }

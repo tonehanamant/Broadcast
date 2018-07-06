@@ -12,13 +12,12 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class affidavit_file_detail_audiences
+    public partial class isci_mapping
     {
-        public long affidavit_file_detail_id { get; set; }
-        public int audience_id { get; set; }
-        public double impressions { get; set; }
-    
-        public virtual audience audience { get; set; }
-        public virtual affidavit_file_details affidavit_file_details { get; set; }
+        public int id { get; set; }
+        public string original_isci { get; set; }
+        public string effective_isci { get; set; }
+        public System.DateTime created_date { get; set; }
+        public string created_by { get; set; }
     }
 }

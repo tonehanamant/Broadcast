@@ -4,6 +4,7 @@ import AppBody from 'Components/body/AppBody';
 import PageTitle from 'Components/shared/PageTitle';
 import PageHeaderContainer from 'Components/post/PageHeaderContainer';
 import DataGridContainer from 'Components/post/DataGridContainer';
+import PostScrubbingModal from 'Components/post/PostScrubbingModal';
 
 import styles from './index.style.scss';
 
@@ -14,6 +15,7 @@ export const SectionPost = () => (
         <PageHeaderContainer />
         <DataGridContainer />
     </AppBody>
+    <PostScrubbingModal />
   </div>
 );
 

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using Common.Services;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -27,41 +28,37 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="filepathList">List of filepaths</param>
         /// <param name="userName">User processing the files</param>
         /// <returns>List of OutboundAffidavitFileValidationResultDto objects</returns>
-        List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName);
+        List<OutboundAffidavitFileValidationResultDto> ProcessFiles(string userName);
         List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName);
-
-        /// <summary>
-        /// Creates and uploads a zip archive to WWTV FTP server
-        /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files);
-
         void ProcessErrorFiles();
-
-
-        /// <summary>
-        /// Move invalid files to invalid files folder. Notify users about failed files
-        /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> files);
     }
 
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
     {
         internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
 
-        public readonly string _ValidStrataExtension = ".xlsx";
-        public readonly string _ValidStrataTabName = "PostAnalRep_ExportDetail";
+        public const string _ValidStrataExtension = ".xlsx";
+        public const string _ValidStrataTabName = "PostAnalRep_ExportDetail";
 
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IAffidavitEmailSenderService _AffidavitEmailSenderService;
-        
-        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IAffidavitEmailSenderService affidavitEmailSenderService)
+        private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
+        private readonly IEmailerService _EmailerService;
+        private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
+
+        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
+                                                IAffidavitEmailProcessorService affidavitEmailProcessorService,
+                                                IWWTVFtpHelper WWTVFtpHelper,
+                                                IWWTVSharedNetworkHelper WWTVSharedNetworkHelper,
+                                                IEmailerService emailerService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            _AffidavitEmailSenderService = affidavitEmailSenderService;
+            _affidavitEmailProcessorService = affidavitEmailProcessorService;
+            _WWTVFtpHelper = WWTVFtpHelper;
+            _EmailerService = emailerService;
+            _WWTVSharedNetworkHelper = WWTVSharedNetworkHelper;
         }
 
         /// <summary>
@@ -70,45 +67,64 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="filepathList">List of filepaths</param>
         /// <param name="userName">User processing the files</param>
         /// <returns>List of ValidationFileResponseDto objects</returns>
-        public List<OutboundAffidavitFileValidationResultDto> ProcessFiles(List<string> filepathList, string userName)
+        public List<OutboundAffidavitFileValidationResultDto> ProcessFiles(string userName)
         {
-            List<OutboundAffidavitFileValidationResultDto> validationList = ValidateFiles(filepathList, userName);
-            _AffidavitRepository.SaveValidationObject(validationList);
-            var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
-                                                .ToList();
-            if (validFileList.Any())
+            List<string> filepathList;
+            List<OutboundAffidavitFileValidationResultDto> validationList = new List<OutboundAffidavitFileValidationResultDto>();
+            _WWTVSharedNetworkHelper.Impersonate(delegate 
             {
-                this.CreateAndUploadZipArchiveToWWTV(validFileList);
-            }
-            ProcessInvalidFiles(validationList);
+                filepathList = GetDropFolderFileList();
+                validationList = ValidateFiles(filepathList, userName);
+                _AffidavitRepository.SaveValidationObject(validationList);
+                var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
+                    .ToList();
+                if (validFileList.Any())
+                {
+                    this._CreateAndUploadZipArchiveToWWTV(validFileList);
+                }
+
+                _affidavitEmailProcessorService.ProcessAndSendInvalidDataFiles(validationList);
+                DeleteSuccessfulFiles(validationList);
+            });
+
             return validationList;
         }
 
-        /// <summary>
-        /// Move invalid files to invalid files folder. Notify users about failed files
-        /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        public void ProcessInvalidFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
+        private static List<string> GetDropFolderFileList()
         {
-            var invalidFiles = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Invalid);
-
-            foreach (var invalidFile in invalidFiles)
+            List<string> filepathList;
+            try
             {
-                var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
-
-                var emailBody = _CreateInvalidFileEmailBody(invalidFile, invalidFilePath);
-
-                _AffidavitEmailSenderService.Send(emailBody);
+                var dropFolder = WWTVSharedNetworkHelper.GetLocalDropFolder();
+                filepathList = Directory.GetFiles(dropFolder).ToList();
             }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Could not find WWTV_SharedFolder.  Please check it is created.", e);
+            }
+
+            return filepathList;
         }
+
+        private static void DeleteSuccessfulFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
+        {
+            validationList.ForEach(r =>
+            {
+                if (r.Status == AffidaviteFileProcessingStatus.Valid)
+                {
+                    File.Delete(r.FilePath);
+                }
+            });
+        }
+
 
         /// <summary>
         /// Creates and uploads a zip archive to WWTV FTP server
         /// </summary>
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        public void CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files)
+        private void _CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files)
         {
-            string zipFileName = Path.GetTempPath();
+            string zipFileName = WWTVSharedNetworkHelper.GetLocalErrorFolder();
             if (!zipFileName.EndsWith("\\"))
                 zipFileName += "\\";
             zipFileName += "Post_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
@@ -120,42 +136,18 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private string _CreateInvalidFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath)
-        {
-            var mailBody = new StringBuilder();
-
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", invalidFile.FileName);
-
-            foreach (var errorMessage in invalidFile.ErrorMessages)
-            {
-                mailBody.Append(string.Format("{0}\n",errorMessage));
-            }
-
-            mailBody.AppendFormat("\nFile located in {0}\n", invalidFilePath);
-
-            return mailBody.ToString();
-        }
-
-        private string _MoveInvalidFileToArchiveFolder(OutboundAffidavitFileValidationResultDto invalidFile)
-        {
-            var combinedFilePath = Path.Combine(BroadcastServiceSystemParameter.WWTV_FailedFolder, Path.GetFileName(invalidFile.FilePath));
-
-            if (File.Exists(combinedFilePath))
-                File.Delete(combinedFilePath);
-            File.Move(invalidFile.FilePath, combinedFilePath);
-
-            return combinedFilePath;
-        }
 
         public void ProcessErrorFiles()
         {
-            var remoteFTPPath =
-                $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpErrorFolder}";
+            _WWTVSharedNetworkHelper.Impersonate(delegate
+            {
+                var files = _WWTVFtpHelper.GetFtpErrorFileList();
+                var localPaths = new List<string>();
+                var remoteFTPPath = _WWTVFtpHelper.GetErrorPath();
 
-            var files = GetFTPFileList(remoteFTPPath);
-            var localPaths = new List<string>();
-            var completedFiles = DownloadFTPFiles(files,remoteFTPPath,ref localPaths);
-            EmailFTPErrorFiles(localPaths);
+                var completedFiles = _DownloadFTPFiles(files, remoteFTPPath, ref localPaths);
+                EmailFTPErrorFiles(localPaths);
+            });
         }
 
         private void EmailFTPErrorFiles(List<string> filePaths)
@@ -169,60 +161,33 @@ namespace Services.Broadcast.ApplicationServices
                 var subject = "Error files from WWTV";
                 var from = BroadcastServiceSystemParameter.EmailUsername;
                 var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
-                Emailer.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
+                _EmailerService.QuickSend(true, body, subject, MailPriority.Normal,from , Tos, new List<string>() {filePath });
             });
-            
         }
 
-        private List<string> DownloadFTPFiles(List<string> files, string remoteFTPPath,ref List<string> localFilePaths)
+        private List<string> _DownloadFTPFiles(List<string> files, string remoteFtpPath,ref List<string> localFilePaths)
         {
             var local = new List<string>();
             List<string> completedFiles = new List<string>();
-            using (var ftpClient = new WebClient())
+            using (var ftpClient = _WWTVFtpHelper.EnsureFtpClient())
             {
-                ftpClient.Credentials = GetFtpClientCredentials();
-
+                var localFolder = WWTVSharedNetworkHelper.GetLocalErrorFolder();
                 files.ForEach(filePath =>
                 {
-                    var path = remoteFTPPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
-                    var transferPath = BroadcastServiceSystemParameter.WWTV_LocalFtpErrorFolder + @"\" +
-                                        filePath.Replace(@"/", @"\");
-                    if (File.Exists(transferPath))
-                        File.Delete(transferPath);
+                    var path = remoteFtpPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
+                    var localPath = localFolder + @"\" + filePath.Replace(@"/", @"\");
+                    if (File.Exists(localPath))
+                        File.Delete(localPath);
 
-                    ftpClient.DownloadFile(path, transferPath);
-                    local.Add(transferPath);
-                    DeleteFTPFile(path);
+                    _WWTVFtpHelper.DownloadFileFromClient(ftpClient,path, localPath);
+                    local.Add(localPath);
+                    _WWTVFtpHelper.DeleteFile(path);
                     completedFiles.Add(path);
                 });
             }
 
             localFilePaths = local;
             return completedFiles;
-        }
-
-        private static List<string> GetFTPFileList(string remoteFTPPath)
-        {
-            var request = (FtpWebRequest) WebRequest.Create(remoteFTPPath);
-
-            request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.Credentials = GetFtpClientCredentials();
-
-            FtpWebResponse response = (FtpWebResponse) request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-            List<string> files = new List<string>();
-
-            using (StreamReader reader = new StreamReader(responseStream))
-            {
-                var line = reader.ReadLine();
-
-                while (!string.IsNullOrEmpty(line))
-                {
-                    files.Add(line);
-                    line = reader.ReadLine();
-                }
-            }
-            return files;
         }
 
 
@@ -238,14 +203,11 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _UploadZipToWWTV(string zipFilePath)
+        private void _UploadZipToWWTV(string zipFileName)
         {
-            using (var ftpClient = new WebClient())
-            {
-                ftpClient.Credentials = GetFtpClientCredentials();
-                var uploadUrl = $"ftp://{BroadcastServiceSystemParameter.WWTV_FtpHost}/{BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder}/{Path.GetFileName(zipFilePath)}";
-                ftpClient.UploadFile(uploadUrl,zipFilePath);
-            }
+            var sharedFolder = _WWTVFtpHelper.GetOutboundPath();
+            var uploadUrl = $"{sharedFolder}/{Path.GetFileName(zipFileName)}";
+            _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl,File.Delete); 
         }
 
         public List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
@@ -382,23 +344,5 @@ namespace Services.Broadcast.ApplicationServices
 
             return true;
         }
-
-        private void DeleteFTPFile(string remoteFTPPath)
-        {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(remoteFTPPath);
-
-            request.Method = WebRequestMethods.Ftp.DeleteFile;
-            request.Credentials = GetFtpClientCredentials();
-            request.Proxy = null;
-
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            response.Close();
-        }
-        private static NetworkCredential GetFtpClientCredentials()
-        {
-            return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
-                BroadcastServiceSystemParameter.WWTV_FtpPassword);
-        }
-
     }
 }

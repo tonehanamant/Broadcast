@@ -8,11 +8,11 @@ namespace Services.Broadcast.ApplicationServices
     {
         public static int GetBookId(IHaveSingleSharedPostingBooks proposalDetail)
         {
-            if (proposalDetail.SharePostingBookId.HasValue)
-                return proposalDetail.SharePostingBookId.Value;
+            if (proposalDetail.ShareProjectionBookId.HasValue)
+                return proposalDetail.ShareProjectionBookId.Value;
 
-            if (proposalDetail.SinglePostingBookId.HasValue)
-                return proposalDetail.SinglePostingBookId.Value;
+            if (proposalDetail.SingleProjectionBookId.HasValue)
+                return proposalDetail.SingleProjectionBookId.Value;
 
             throw new Exception("Proposal detail is missing a valid ratings book");
         }
