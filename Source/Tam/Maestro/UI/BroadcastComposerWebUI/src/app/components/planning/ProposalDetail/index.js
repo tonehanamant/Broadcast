@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import Select from 'react-select';
-import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
+import { Well, Form, FormGroup, InputGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
 import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
@@ -30,6 +30,7 @@ export class ProposalDetail extends Component {
     this.onChangeSpotLength = this.onChangeSpotLength.bind(this);
     this.onChangeDaypartCode = this.onChangeDaypartCode.bind(this);
     this.onChangeAdu = this.onChangeAdu.bind(this);
+    this.onChangeNti = this.onChangeNti.bind(this);
     this.onDeleteProposalDetail = this.onDeleteProposalDetail.bind(this);
 
     this.flightPickerApply = this.flightPickerApply.bind(this);
@@ -39,6 +40,7 @@ export class ProposalDetail extends Component {
     this.checkValidSpotLength = this.checkValidSpotLength.bind(this);
     this.checkValidDaypart = this.checkValidDaypart.bind(this);
     this.checkValidDaypartCode = this.checkValidDaypartCode.bind(this);
+    // this.checkValidNti = this.checkValidNti.bind(this);
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
 
@@ -49,6 +51,7 @@ export class ProposalDetail extends Component {
         DaypartCode: null,
         DaypartCode_Alphanumeric: null,
         DaypartCode_MaxChar: null,
+        wholeNti: 0,
       },
     };
   }
@@ -90,10 +93,20 @@ export class ProposalDetail extends Component {
     this.checkValidDaypartCode(val);
   }
 
+  onChangeNti(event) {
+    const val = event.target.value >= 0 ? event.target.value : this.props.detail.NtiConversionFactor;
+    // const val = event.target.value;
+    console.log(val);
+    const re = /^[0-9]+$/i; // check numeric
+    // const re = /^\d+$/;
+    const newVal = (!re.test(event.target.value) || event.target.value === '') ? '' : val / 100;
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
+  }
+
   onChangeAdu(event) {
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'Adu', value: event.target.checked });
     this.props.onUpdateProposal();
-    console.log('onChangeAdu', event.target.value, event.target.checked, this.props.detail);
+    // console.log('onChangeAdu', event.target.value, event.target.checked, this.props.detail);
   }
 
   onDeleteProposalDetail() {
@@ -279,7 +292,7 @@ export class ProposalDetail extends Component {
               {detail &&
                 <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>
                   <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
-                  <FormControl type="text" style={{ width: '100px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
+                  <FormControl type="text" style={{ width: '60px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
                   {this.state.validationStates.DaypartCode != null &&
                   <HelpBlock style={{ margin: '0 0 0 16px' }}>
                     <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
@@ -295,6 +308,22 @@ export class ProposalDetail extends Component {
                     <span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 10 characters.</span>
                   </HelpBlock>
                   }
+                </FormGroup>
+              }
+              {detail &&
+                <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor">
+                  <ControlLabel style={{ margin: '0 10px 0 10px' }}>NTI</ControlLabel>
+                  <InputGroup>
+                    <FormControl
+                      type="text"
+                      maxLength={3}
+                      style={{ width: '65px' }}
+                      value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
+                      onChange={this.onChangeNti}
+                      // disabled={isReadOnly}
+                    />
+                    <InputGroup.Addon>%</InputGroup.Addon>
+                  </InputGroup>
                 </FormGroup>
               }
               {detail &&

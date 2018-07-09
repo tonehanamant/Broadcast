@@ -43,8 +43,8 @@ namespace EntityFrameworkMapping.Broadcast
         public bool match_isci { get; set; }
         public string effective_client_isci { get; set; }
     
+        public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
         public virtual ICollection<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
         public virtual affidavit_file_details affidavit_file_details { get; set; }
-        public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
     }
 }

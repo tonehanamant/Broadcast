@@ -40,11 +40,24 @@ namespace Services.Broadcast.Repositories
         void SaveScrubbedFileDetails(List<AffidavitFileDetail> affidavitFileDetails);
 
         /// <summary>
+        /// Undo the override status
+        /// </summary>
+        /// <param name="scrubIds">List of affidavit client scrubs to undo the override status</param>
+        void SaveScrubsStatus(List<affidavit_client_scrubs> scrubs);
+
+        /// <summary>
         /// Gets all the affidavit details based on affidavit client scubs ids
         /// </summary>
         /// <param name="affidavitScrubbingIds">Affidavit Client scrubs ids</param>
         /// <returns>List of AffidavitFileDetail objects</returns>
         List<AffidavitFileDetail> GetAffidavitDetailsByClientScrubIds(List<int> affidavitScrubbingIds);
+
+        /// <summary>
+        /// Gets all override affidavit client scrubs based on ids
+        /// </summary>
+        /// <param name="scrubIds">List of affidavit client scrub ids</param>
+        /// <returns>List of override affidavit_client_scrubs objects</returns>
+        List<affidavit_client_scrubs> GetAffidavitClientScrubsByIds(List<int> scrubIds);
     }
 
     public class AffidavitRepository : BroadcastRepositoryBase, IAffidavitRepository
@@ -76,7 +89,7 @@ namespace Services.Broadcast.Repositories
                 file_hash = affidavitFile.FileHash,
                 file_name = affidavitFile.FileName,
                 source_id = affidavitFile.SourceId,
-                status = (int) affidavitFile.Status,
+                status = (int)affidavitFile.Status,
                 media_month_id = affidavitFile.MediaMonthId,
                 affidavit_file_problems = affidavitFile.AffidavitFileProblems.Select(p => new affidavit_file_problems()
                 {
@@ -217,7 +230,7 @@ namespace Services.Broadcast.Repositories
                 FileName = affidavitFile.file_name,
                 FileHash = affidavitFile.file_hash,
                 SourceId = affidavitFile.source_id,
-                Status = (AffidaviteFileProcessingStatus) affidavitFile.status,
+                Status = (AffidaviteFileProcessingStatus)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
                 MediaMonthId = affidavitFile.media_month_id,
                 AffidavitFileProblems = affidavitFile.affidavit_file_problems.Select(p => new AffidavitFileProblem()
@@ -275,7 +288,7 @@ namespace Services.Broadcast.Repositories
                         EffectiveProgramName = a.effective_program_name,
                         EffectiveGenre = a.effective_genre,
                         EffectiveShowType = a.effective_show_type,
-                        Status = (ScrubbingStatus) a.status,
+                        Status = (ScrubbingStatus)a.status,
                         Comment = a.comment,
                         ModifiedBy = a.modified_by,
                         ModifiedDate = a.modified_date,
@@ -285,7 +298,7 @@ namespace Services.Broadcast.Repositories
                             .proposal_version_detail_quarters.proposal_version_details.id,
                         PostingBookId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
                             .proposal_version_details.posting_book_id,
-                        PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?) a
+                        PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)a
                             .proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
                             .proposal_version_details.posting_playback_type,
                         AffidavitClientScrubAudiences = a.affidavit_client_scrub_audiences.Select(sa =>
@@ -306,22 +319,22 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var query = (from proposalVersions in context.proposal_versions
-                        from proposalVersionDetail in proposalVersions.proposal_version_details
-                        from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                        from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                        from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                        let affidavitDetails = affidavitFileScrub.affidavit_file_details
-                        where proposalVersions.proposal_id == proposalId
-                        select new
-                        {
-                            proposalDetailId = proposalVersionDetail.id,
-                            affidavitDetails,
-                            affidavitFileScrub,
-                            proposalVersionWeeks
-                        });
+                                 from proposalVersionDetail in proposalVersions.proposal_version_details
+                                 from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                 from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                 from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                 let affidavitDetails = affidavitFileScrub.affidavit_file_details
+                                 where proposalVersions.proposal_id == proposalId
+                                 select new
+                                 {
+                                     proposalDetailId = proposalVersionDetail.id,
+                                     affidavitDetails,
+                                     affidavitFileScrub,
+                                     proposalVersionWeeks
+                                 });
                     if (status.HasValue)
                     {
-                        query = query.Where(s => s.affidavitFileScrub.status == (int) status);
+                        query = query.Where(s => s.affidavitFileScrub.status == (int)status);
                     }
 
                     var queryData = query.ToList();
@@ -355,7 +368,7 @@ namespace Services.Broadcast.Repositories
                                 WeekStart = x.proposalVersionWeeks.start_date,
                                 ShowTypeName = x.affidavitFileScrub.effective_show_type,
                                 StatusOverride = x.affidavitFileScrub.status_override,
-                                Status = (ScrubbingStatus) x.affidavitFileScrub.status,
+                                Status = (ScrubbingStatus)x.affidavitFileScrub.status,
                                 MatchShowType = x.affidavitFileScrub.match_show_type
                             };
                         }
@@ -375,27 +388,27 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var inSpecDetails = (from proposal in context.proposals
-                            from proposalVersion in proposal.proposal_versions
-                            from proposalVersionDetail in proposalVersion.proposal_version_details
-                            from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                            from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                            from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
-                            let AffidavitClientScrubAudiences =
-                                affidavitClientScrub.affidavit_client_scrub_audiences.DefaultIfEmpty()
-                            let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
-                            where proposal.id == proposalId &&
-                                  affidavitClientScrub.status == (int) ScrubbingStatus.InSpec
-                            select new
-                            {
-                                affidavitFileDetails,
-                                proposalVersionQuarters,
-                                proposalVersionDetail,
-                                proposalVersion,
-                                proposal,
-                                proposalVersionWeeks,
-                                affidavitClientScrub,
-                                AffidavitClientScrubAudiences
-                            })
+                                         from proposalVersion in proposal.proposal_versions
+                                         from proposalVersionDetail in proposalVersion.proposal_version_details
+                                         from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                         from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                         from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                         let AffidavitClientScrubAudiences =
+                                             affidavitClientScrub.affidavit_client_scrub_audiences.DefaultIfEmpty()
+                                         let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
+                                         where proposal.id == proposalId &&
+                                               affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
+                                         select new
+                                         {
+                                             affidavitFileDetails,
+                                             proposalVersionQuarters,
+                                             proposalVersionDetail,
+                                             proposalVersion,
+                                             proposal,
+                                             proposalVersionWeeks,
+                                             affidavitClientScrub,
+                                             AffidavitClientScrubAudiences
+                                         })
                         .ToList();
 
                     var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
@@ -442,7 +455,7 @@ namespace Services.Broadcast.Repositories
                         file_hash = item.FileHash,
                         file_name = item.FileName,
                         source_id = item.SourceId,
-                        status = (int) item.Status,
+                        status = (int)item.Status,
                         created_by = item.CreatedBy,
                         affidavit_outbound_file_problems = item.ErrorMessages.Select(y =>
                             new affidavit_outbound_file_problems()
@@ -462,16 +475,16 @@ namespace Services.Broadcast.Repositories
                     var myEventsReportDataList = new List<MyEventsReportData>();
 
                     var affidavitData = (from proposal in context.proposals
-                            from proposalVersion in proposal.proposal_versions
-                            from proposalVersionDetail in proposalVersion.proposal_version_details
-                            from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                            from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                            from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
-                            let affidavitFileDetail = affidavitClientScrub.affidavit_file_details
-                            where proposalVersionDetail.proposal_versions.proposal_id == proposalId &&
-                                  affidavitClientScrub.status == (int) ScrubbingStatus.InSpec &&
-                                  proposalVersionWeeks.myevents_report_name != null
-                            select new {affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail, proposalVersionWeeks})
+                                         from proposalVersion in proposal.proposal_versions
+                                         from proposalVersionDetail in proposalVersion.proposal_version_details
+                                         from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                         from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                         from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                         let affidavitFileDetail = affidavitClientScrub.affidavit_file_details
+                                         where proposalVersionDetail.proposal_versions.proposal_id == proposalId &&
+                                               affidavitClientScrub.status == (int)ScrubbingStatus.InSpec &&
+                                               proposalVersionWeeks.myevents_report_name != null
+                                         select new { affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail, proposalVersionWeeks })
                         .ToList();
 
                     var affidavitDataGroupedByReportName = affidavitData.
@@ -514,14 +527,55 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var scrubs = context.affidavit_client_scrubs.Where(s => ClientScrubIds.Contains(s.id) 
-                                                                            && s.status != (int)overrideToStatus);
+                    var scrubs = context.affidavit_client_scrubs.Where(s => ClientScrubIds.Contains(s.id));
                     if (scrubs.Any())
                     {
                         scrubs.ForEach(s =>
                         {
-                            s.status = (int) overrideToStatus;
+                            s.status = (int)overrideToStatus;
                             s.status_override = true;
+                        });
+                        context.SaveChanges();
+                    }
+                }
+            );
+        }
+
+        /// <summary>
+        /// Gets all override affidavit client scrubs based on ids
+        /// </summary>
+        /// <param name="scrubIds">List of affidavit client scrub ids</param>
+        /// <returns>List of override affidavit_client_scrubs objects</returns>
+        public List<affidavit_client_scrubs> GetAffidavitClientScrubsByIds(List<int> scrubIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.affidavit_client_scrubs
+                            .Where(s => scrubIds.Contains(s.id) && s.status_override == true)
+                            .ToList();
+                }
+            );
+        }
+
+        /// <summary>
+        /// Undo the override status
+        /// </summary>
+        /// <param name="scrubs">List of affidavit client scrubs to undo the override status</param>
+        public void SaveScrubsStatus(List<affidavit_client_scrubs> scrubs)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var scrubIds = scrubs.Select(x => x.id).ToList();
+                    var overrideScrubs = context.affidavit_client_scrubs.Where(s => scrubIds.Contains(s.id));
+                    if (overrideScrubs.Any())
+                    {
+                        overrideScrubs.ForEach(s =>
+                        {
+                            var scrub = scrubs.Where(x => x.id == s.id).First();
+                            s.status = scrub.status;
+                            s.status_override = scrub.status_override;
                         });
                         context.SaveChanges();
                     }
@@ -535,11 +589,11 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var affidavitDetails = (from proposalVersionDetail in context.proposal_version_details
-                        from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                        from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                        from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                        where proposalVersionDetail.id == proposalDetailId
-                        select affidavitFileScrub.affidavit_file_details);
+                                            from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                            from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                                            from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                            where proposalVersionDetail.id == proposalDetailId
+                                            select affidavitFileScrub.affidavit_file_details);
 
                     return affidavitDetails.Select(d => new AffidavitFileDetail
                     {
@@ -584,7 +638,7 @@ namespace Services.Broadcast.Repositories
                             EffectiveProgramName = a.effective_program_name,
                             EffectiveGenre = a.effective_genre,
                             EffectiveShowType = a.effective_show_type,
-                            Status = (ScrubbingStatus) a.status,
+                            Status = (ScrubbingStatus)a.status,
                             Comment = a.comment,
                             ModifiedBy = a.modified_by,
                             ModifiedDate = a.modified_date,
@@ -593,7 +647,7 @@ namespace Services.Broadcast.Repositories
                                 .proposal_version_detail_quarters.proposal_version_details.id,
                             PostingBookId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
                                 .proposal_version_details.posting_book_id,
-                            PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?) a
+                            PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)a
                                 .proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
                                 .proposal_version_details.posting_playback_type
                         }).ToList()
@@ -648,7 +702,7 @@ namespace Services.Broadcast.Repositories
         }
 
         public List<AffidavitFileDetail> GetUnlinkedAffidavitDetailsByIsci(string isci)
-        { 
+        {
             return _InReadUncommitedTransaction(
                 context =>
                 {
@@ -657,7 +711,7 @@ namespace Services.Broadcast.Repositories
                                             && !affidavitFileDetail.affidavit_client_scrubs.Any()
                                             select affidavitFileDetail).ToList();
 
-                    return _MapToAffidavitDetail(affidavitDetails);                    
+                    return _MapToAffidavitDetail(affidavitDetails);
                 });
         }
 

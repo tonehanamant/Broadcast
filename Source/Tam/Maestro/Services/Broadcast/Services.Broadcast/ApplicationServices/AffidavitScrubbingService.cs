@@ -52,7 +52,23 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="isci">Isci filter</param>
         /// <returns>List of valid iscis</returns>
-        List<string> FindValidIscis(string isci);        
+        List<string> FindValidIscis(string isci);
+
+        /// <summary>
+        /// Undo the archive process of a list of iscis
+        /// </summary>
+        /// <param name="fileDetailsIds">List of affidavit file detail ids</param>
+        /// <param name="currentDateTime">Current date and time</param>
+        /// <param name="name">User requesting the undo operation</param>
+        /// <returns>True or false</returns>
+        bool UndoArchiveUnlinkedIsci(List<long> fileDetailsIds, DateTime currentDateTime, string name);
+        
+        /// <summary>
+        /// Undo the overriding of an affidavit client scrub status
+        /// </summary>
+        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
+        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request);
     }
 
     public class AffidavitScrubbingService : IAffidavitScrubbingService
@@ -65,6 +81,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalService _ProposalService;
         private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
+        private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -82,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalService = proposalService;
             _ProjectionBooksService = postingBooksService;
             _StationProcessingEngine = stationProcessingEngine;
+            _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
         }
 
         /// <summary>
@@ -94,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var post in postedProposals)
             {
-                _SetPrimaryAudienceImpressions(post);
+                _SetPostData(post);
             }
 
             return new PostedContractedProposalsDto()
@@ -104,17 +122,64 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void _SetPrimaryAudienceImpressions(PostDto post)
+        private void _SetPostData(PostDto post)
         {
-            var broadcastAudienceRepository = _BroadcastDataRepositoryFactory
-                .GetDataRepository<IBroadcastAudienceRepository>();
+            _SetPostAdvertiser(post);
 
-            var ratingsAudiencesIds = broadcastAudienceRepository.
-                GetRatingsAudiencesByMaestroAudience(new List<int> { post.GuaranteedAudienceId }).
+            _SetPostPrimaryAudienceImpressions(post);
+
+            _SetPostHouseholdImpressions(post);
+
+            post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
+        }
+
+        private void _SetPostAdvertiser(PostDto post)
+        {
+            var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
+            post.Advertiser = advertiserLookupDto.Display;
+        }
+
+        private void _SetPostPrimaryAudienceImpressions(PostDto post)
+        {
+            var postImpressionsData = _GetPostImpressionsData(post.ContractId, post.GuaranteedAudienceId);
+
+            foreach (var impressionData in postImpressionsData)
+            {
+                if (post.PostType == SchedulePostType.NTI)
+                    post.PrimaryAudienceDeliveredImpressions += _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
+                else
+                    post.PrimaryAudienceDeliveredImpressions += impressionData.Impressions;
+            }
+        }
+
+        private void _SetPostHouseholdImpressions(PostDto post)
+        {
+            var defaultAudience = _AudiencesCache.GetDefaultAudience();
+
+            var postImpressionsData = _GetPostImpressionsData(post.ContractId, defaultAudience.Id);
+
+            foreach (var impressionData in postImpressionsData)
+            {
+                if (post.PostType == SchedulePostType.NTI)
+                    post.HouseholdDeliveredImpressions += _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
+                else
+                    post.HouseholdDeliveredImpressions += impressionData.Impressions;
+            }
+        }
+
+        private List<PostImpressionsDataDto> _GetPostImpressionsData(int contractId, int maestroAudienceId)
+        {
+            var ratingsAudiencesIds = _BroadcastAudienceRepository.
+                GetRatingsAudiencesByMaestroAudience(new List<int> { maestroAudienceId }).
                 Select(x => x.rating_audience_id).
                 ToList();
 
-            post.PrimaryAudienceImpressions = _PostRepository.GetPostImpressions(post.ContractId, ratingsAudiencesIds);
+            return _PostRepository.GetPostImpressionsData(contractId, ratingsAudiencesIds);
+        }
+
+        private double _CalculateNtiImpressions(double impressions, double ntiConversionFactor)
+        {
+            return impressions * (1 - ntiConversionFactor);
         }
 
         /// <summary>
@@ -177,7 +242,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
                     DistinctGenres = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.GenreName)).Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList() ,
+                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
                     WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
                     WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
                     DateAiredStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.DateAired).OrderBy(x => x).First() : (DateTime?)null,
@@ -224,9 +289,45 @@ namespace Services.Broadcast.ApplicationServices
         public List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived)
         {
             var spotsLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            var iscis = archived ? _PostRepository.GetArchivedIscis() : _PostRepository.GetUnlinkedIscis();
-            iscis.ForEach(x => x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key);
+            List<UnlinkedIscisDto> iscis = new List<UnlinkedIscisDto>();
+            List<AffidavitFileDetailProblem> isciProblems = new List<AffidavitFileDetailProblem>();
+            
+            if (archived)
+            {
+                iscis = _PostRepository.GetArchivedIscis();
+            }
+            else
+            {
+                iscis = _PostRepository.GetUnlinkedIscis();
+                isciProblems = _PostRepository.GetIsciProblems(iscis.Select(x => x.FileDetailId).ToList());
+            }
+
+            iscis.ForEach(x =>
+            {
+                x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key;
+                x.UnlinkedReason = archived 
+                    ? null 
+                    : isciProblems.Any(y=>y.DetailId == x.FileDetailId) 
+                            ? _GetAffidavitDetailProblemDescription(isciProblems.First(y => y.DetailId == x.FileDetailId)) 
+                            : null;
+            });
+
             return iscis;
+        }
+
+        private string _GetAffidavitDetailProblemDescription(AffidavitFileDetailProblem affidavitFileDetailProblem)
+        {
+            switch (affidavitFileDetailProblem.Type)
+            {
+                case AffidavitFileDetailProblemTypeEnum.UnlinkedIsci:
+                    return "Not in system";
+                case AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts:
+                    return "Multiple Proposals";
+                case AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried:
+                    return "Married and Unmarried";
+                default:
+                    return null;
+            }
         }
 
         public ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides)
@@ -240,6 +341,26 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
+        /// Undo the overriding of an affidavit client scrub status
+        /// </summary>
+        /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
+        /// <returns>ClientPostScrubbingProposalDto object</returns>
+        public ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request)
+        {
+            var affidavitClientScrubs = _AffidavitRepository.GetAffidavitClientScrubsByIds(request.ScrubIds);
+            affidavitClientScrubs.ForEach(x =>
+            {
+                x.status = (x.match_station && x.match_market && x.match_genre && x.match_program && x.match_time && x.match_isci_days && x.match_date && x.match_show_type)
+                        ? (int)ScrubbingStatus.InSpec
+                        : (int)ScrubbingStatus.OutOfSpec;
+                x.status_override = false;
+            });
+            _AffidavitRepository.SaveScrubsStatus(affidavitClientScrubs);
+
+            return GetClientScrubbingForProposal(request.ProposalId, new ProposalScrubbingRequest() { ScrubbingStatusFilter = request.ReturnStatusFilter });
+        }
+
+        /// <summary>
         /// Archives an isci from the unlinked isci list
         /// </summary>
         /// <param name="fileDetailIds">Iscis to archive</param>
@@ -249,14 +370,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
             List<string> iscisToArchive = fileDetailList.Select(x => x.Isci).Distinct().ToList();
+            List<long> fileDetailIdsToProcess = fileDetailList.Select(x => x.Id).ToList();
 
             if (!_PostRepository.IsIsciBlacklisted(iscisToArchive))
             {
                 using (var transaction = new TransactionScopeWrapper()) //Ensure all db requests succeed or fail
                 {
                     _PostRepository.ArchiveIsci(iscisToArchive, username);
-                    _PostRepository.AddNotACadentIsciProblem(fileDetailList);
-                    _PostRepository.ArchiveFileDetailRecord(iscisToArchive);
+                    _PostRepository.AddNotACadentIsciProblem(fileDetailIdsToProcess);
+                    _PostRepository.SetArchivedFlag(fileDetailIdsToProcess, true);
                     transaction.Complete();
                 }
             }
@@ -265,6 +387,29 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("There are already blacklisted iscis in your list");
             }
 
+            return true;
+        }
+
+        /// <summary>
+        /// Undo the archive process of a list of iscis
+        /// </summary>
+        /// <param name="fileDetailIds">List of affidavit file detail ids</param>
+        /// <param name="currentDateTime">Current date and time</param>
+        /// <param name="username">User requesting the undo operation</param>
+        /// <returns>True or false</returns>
+        public bool UndoArchiveUnlinkedIsci(List<long> fileDetailIds, DateTime currentDateTime, string username)
+        {
+            List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
+            List<string> iscisToUndo = fileDetailList.Select(x => x.Isci).Distinct().ToList();
+            List<long> fileDetailIdsToProcess = fileDetailList.Select(x => x.Id).ToList();
+
+            using (var transaction = new TransactionScopeWrapper()) //Ensure all db requests succeed or fail
+            {
+                _PostRepository.RemoveIscisFromBlacklistTable(iscisToUndo);
+                _PostRepository.RemoveNotACadentIsciProblems(fileDetailIdsToProcess);
+                _PostRepository.SetArchivedFlag(fileDetailIdsToProcess, false);
+                transaction.Complete();
+            }
             return true;
         }
 
@@ -280,14 +425,14 @@ namespace Services.Broadcast.ApplicationServices
             var distinctIscis = iscis.Select(x => x.HouseIsci).Distinct().ToList();
             foreach (var isci in distinctIscis)
             {
-                if (groupedIscis.Where(x => x.Key.HouseIsci.Equals(isci)).Count() > 1 
-                    && iscis.Any(x=>x.HouseIsci.Equals(isci) && x.Married == false))
+                if (groupedIscis.Where(x => x.Key.HouseIsci.Equals(isci)).Count() > 1
+                    && iscis.Any(x => x.HouseIsci.Equals(isci) && x.Married == false))
                 {
                     iscis.RemoveAll(x => x.HouseIsci.Equals(isci));
                 }
             }
-            
-            return iscis.Select(x=>x.HouseIsci).ToList();
+
+            return iscis.Select(x => x.HouseIsci).ToList();
         }
     }
 }

@@ -338,6 +338,7 @@ namespace Services.Broadcast.Repositories
                     projection_playback_type = (byte)proposalDetail.ProjectionPlaybackType,
                     posting_book_id = proposalDetail.PostingBookId,
                     posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
+                    nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -449,6 +450,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.posting_book_id = detail.PostingBookId;
                     updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
+                    updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -840,6 +842,7 @@ namespace Services.Broadcast.Repositories
                     ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)version.projection_playback_type,
                     PostingBookId = version.posting_book_id,
                     PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
+                    NtiConversionFactor = version.nti_conversion_factor,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,

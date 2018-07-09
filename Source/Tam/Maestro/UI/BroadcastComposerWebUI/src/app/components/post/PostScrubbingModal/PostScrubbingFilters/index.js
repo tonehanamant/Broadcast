@@ -86,6 +86,57 @@ export class PostScrubbingFilters extends Component {
         ),
       },
       {
+        name: 'Market',
+        dataIndex: 'Market',
+        width: 150,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
+          />
+        ),
+      },
+      {
+        name: 'Station',
+        dataIndex: 'Station',
+        width: 75,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
+        ),
+      },
+      {
+        name: 'Affiliate',
+        dataIndex: 'Affiliate',
+        width: 75,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
+        ),
+      },
+      {
         name: 'Week Start',
         dataIndex: 'WeekStart',
         width: 100,
@@ -101,6 +152,24 @@ export class PostScrubbingFilters extends Component {
           applyFilter={this.applyFilter}
           />
         ),
+      },
+      {
+        name: 'Day',
+        dataIndex: 'DayOfWeek',
+        width: 80,
+        // renderer: ({ value, row }) => {
+        renderer: ({ value }) => (
+            <FilterPopoverWrapper
+              filterDisplay={value.filterDisplay}
+              filterKey={value.filterKey}
+              hasTextSearch={false}
+              hasMatchSpec={value.hasMatchSpec}
+              matchOptions={value.matchOptions}
+              filterOptions={value.filterOptions}
+              filterActive={value.active}
+              applyFilter={this.applyFilter}
+            />
+          ),
       },
       {
         name: 'Date',
@@ -132,75 +201,6 @@ export class PostScrubbingFilters extends Component {
           filterOptions={value.filterOptions}
           filterActive={value.active}
           filterType="timeInput"
-          applyFilter={this.applyFilter}
-          />
-        ),
-      },
-      {
-        name: 'Day',
-        dataIndex: 'DayOfWeek',
-        width: 80,
-        // renderer: ({ value, row }) => {
-        renderer: ({ value }) => (
-            <FilterPopoverWrapper
-              filterDisplay={value.filterDisplay}
-              filterKey={value.filterKey}
-              hasTextSearch={false}
-              hasMatchSpec={value.hasMatchSpec}
-              matchOptions={value.matchOptions}
-              filterOptions={value.filterOptions}
-              filterActive={value.active}
-              applyFilter={this.applyFilter}
-            />
-          ),
-      },
-      {
-        name: 'Ad Length',
-        dataIndex: 'SpotLength',
-        width: 95,
-        renderer: ({ value }) => (
-          <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch={false}
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
-          />
-        ),
-      },
-      {
-        name: 'House ISCI',
-        dataIndex: 'ISCI',
-        width: 150,
-        renderer: ({ value }) => (
-          <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
-          />
-        ),
-      },
-      {
-        name: 'Client ISCI',
-        dataIndex: 'ClientISCI',
-        width: 150,
-        renderer: ({ value }) => (
-          <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
           applyFilter={this.applyFilter}
           />
         ),
@@ -257,9 +257,26 @@ export class PostScrubbingFilters extends Component {
         ),
       },
       {
-        name: 'Affiliate',
-        dataIndex: 'Affiliate',
-        width: 75,
+        name: 'Spot Length',
+        dataIndex: 'SpotLength',
+        width: 95,
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+          filterDisplay={value.filterDisplay}
+          filterKey={value.filterKey}
+          hasTextSearch={false}
+          hasMatchSpec={value.hasMatchSpec}
+          matchOptions={value.matchOptions}
+          filterOptions={value.filterOptions}
+          filterActive={value.active}
+          applyFilter={this.applyFilter}
+          />
+        ),
+      },
+      {
+        name: 'House ISCI',
+        dataIndex: 'ISCI',
+        width: 150,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
           filterDisplay={value.filterDisplay}
@@ -274,26 +291,9 @@ export class PostScrubbingFilters extends Component {
         ),
       },
       {
-        name: 'Market',
-        dataIndex: 'Market',
+        name: 'Client ISCI',
+        dataIndex: 'ClientISCI',
         width: 150,
-        renderer: ({ value }) => (
-          <FilterPopoverWrapper
-            filterDisplay={value.filterDisplay}
-            filterKey={value.filterKey}
-            hasTextSearch
-            hasMatchSpec={value.hasMatchSpec}
-            matchOptions={value.matchOptions}
-            filterOptions={value.filterOptions}
-            filterActive={value.active}
-            applyFilter={this.applyFilter}
-          />
-        ),
-      },
-      {
-        name: 'Station',
-        dataIndex: 'Station',
-        width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
           filterDisplay={value.filterDisplay}

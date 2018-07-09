@@ -70,7 +70,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
-                    Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
+                    Type = AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried,
                     Description = String.Format("Isci {0} exists as married and unmarried", affidavitFileDetail.Isci)
                 });
                 return _MatchingProposalWeeks;

@@ -124,6 +124,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IWWTVFtpHelper, WWTVFtpHelper>();
             unityContainer.RegisterType<IFtpService, FtpService>();
+            unityContainer.RegisterType<IFileService, FileService>();
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
             unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();

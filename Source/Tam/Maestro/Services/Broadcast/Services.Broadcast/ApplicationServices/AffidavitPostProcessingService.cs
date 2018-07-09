@@ -24,12 +24,22 @@ using TimeSpan = Tam.Maestro.Services.ContractInterfaces.InventoryBusinessObject
 
 namespace Services.Broadcast.ApplicationServices
 {
+    public class DownloadAndProcessWWTVFilesResponse
+    {
+        public List<string> FilesFoundToProcess { get; set; } = new List<string>();
+        public List<string> FailedDownloads { get; set; } = new List<string>();
+        public Dictionary<string, List<AffidavitValidationResult>> ValidationErrors { get; set; } = new Dictionary<string, List<AffidavitValidationResult>>();
+        public List<AffidavitSaveResult> AffidavitSaveResults { get; set; } = new List<AffidavitSaveResult>();
+    }
+
+
+
     public interface IAffidavitPostProcessingService : IApplicationService
     {
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// </summary>
-        void DownloadAndProcessWWTVFiles(string userName);
+        DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName);
 
         AffidavitSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
     }
@@ -43,7 +53,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
-        private const string HTTP_ACCEPT_HEADER = "application/json";
 
 
         public AffidavitPostProcessingService(
@@ -60,15 +69,16 @@ namespace Services.Broadcast.ApplicationServices
         }
 
 
-
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// return true if download success, false if download fails (use for loggin)
         /// This involves FTP 
         /// </summary>
-        public void DownloadAndProcessWWTVFiles(string userName)
+        public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
         {
             List<string> filesToProcess;
+            var response = new DownloadAndProcessWWTVFilesResponse();
+
             try
             {
                 filesToProcess = _GetWWTVFTPFileNames();
@@ -79,9 +89,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
 
+            response.FilesFoundToProcess.AddRange(filesToProcess);
             if (!filesToProcess.Any())
             {
-                return;
+                return response;
             }
 
             var inboundFtpPath = _WWTVFtpHelper.GetInboundPath();
@@ -97,6 +108,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception e)
                 {
                     failedDownloads.Add(filePath + " Reason: " + e);
+                    response.FailedDownloads.AddRange(failedDownloads);
                     continue; // skip to next file 
                 }
                 string fileName = Path.GetFileName(filePath);
@@ -114,12 +126,19 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 var result = ProcessFileContents(userName, fileName, fileContents);
-
+                response.AffidavitSaveResults.Add(result);
                 if (result.ValidationResults.Any())
-                    _affidavitEmailProcessorService.ProcessAndSendValidationErrors(fileName, result.ValidationResults,fileContents);
+                {
+                    _affidavitEmailProcessorService.ProcessAndSendValidationErrors(fileName, result.ValidationResults,
+                        fileContents);
+
+                    response.ValidationErrors.Add(fileName, result.ValidationResults);
+                }
             }
 
             _affidavitEmailProcessorService.ProcessAndSendFailedFiles(failedDownloads,inboundFtpPath);
+
+            return response;
         }
 
         public AffidavitSaveResult ProcessFileContents(string userName, string fileName, string fileContents)

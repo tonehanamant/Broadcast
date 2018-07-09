@@ -51,6 +51,7 @@
       ],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -187,6 +188,7 @@
       ],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -323,6 +325,7 @@
       ],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [

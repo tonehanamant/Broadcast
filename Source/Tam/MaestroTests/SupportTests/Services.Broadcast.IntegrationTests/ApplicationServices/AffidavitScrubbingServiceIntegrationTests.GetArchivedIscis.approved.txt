@@ -8,6 +8,7 @@
     "ProgramName": "Program Names R us",
     "SpotLength": 30,
     "Station": "WNBC-TV",
-    "TimeAired": 31400
+    "TimeAired": 31400,
+    "UnlinkedReason": null
   }
 ]

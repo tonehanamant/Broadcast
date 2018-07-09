@@ -4,8 +4,6 @@ import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
 
 
-export const stateKey = 'unlinked-isci-modal';
-
 const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis, toggleModal }) => ([
     {
       text: 'Not a Cadent ISCI',
@@ -35,18 +33,55 @@ const generateUnlinkedMenuitems = ({ archiveIscis, rescrubIscis, toggleModal }) 
   ]
 );
 
+const generateArchivedMenuitems = ({ selection, dataSource, undoArchive }) => ([
+  {
+    text: 'Undo Archive',
+    key: 'menu-undo-archive',
+    EVENT_HANDLER: () => {
+      // note: as is selections undefined as multi select not taking on this grid
+      const stateKey = 'archived_grid';
+      const selectedIds = selection.get(stateKey).get('indexes');
+      const rowData = dataSource.get(stateKey).toJSON(); // currentRecords or data - array
+      const activeSelections = [];
+      // get just slected data FileDetailId for each for API call
+      selectedIds.forEach((idx) => {
+        activeSelections.push(rowData.data[idx].FileDetailId);
+      });
+      // console.log('undo archive selections', activeSelections, selectedIds, rowData, metaData);
+      undoArchive(activeSelections);
+    },
+  },
+]);
+
+const archiveAdditionaProps = (props, stateKey) => {
+  const selectedIds = props.selection.getIn([stateKey, 'indexes']);
+  return {
+    isRender: !!(selectedIds && selectedIds.size),
+  };
+};
+
+const unlinkedAdditionaProps = (props, stateKey) => ({
+  beforeOpenMenu: (rowId) => {
+    props.deselectAll({ stateKey });
+    props.selectRow({ rowId, stateKey });
+  },
+});
+
 const tabInfo = {
   unlinked: {
     generateMenuitems: generateUnlinkedMenuitems,
+    additionalRowProps: unlinkedAdditionaProps,
   },
   archived: {
-    generateMenuitems: () => {},
+    generateMenuitems: generateArchivedMenuitems,
+    additionalRowProps: archiveAdditionaProps,
   },
 };
 
 
 export const generateGridConfig = (props, tabName) => {
-		const columns = [
+  const stateKey = `${tabName}_grid`;
+  const columns = [
 			{
 				name: 'ISCI',
 				dataIndex: 'ISCI',
@@ -98,7 +133,17 @@ export const generateGridConfig = (props, tabName) => {
         width: '9%',
         renderer: ({ row }) => (<span>{row.Station || '-'}</span>),
       },
-		];
+    ];
+
+    const reasonCol = {
+      name: 'Unlinked Reason',
+      dataIndex: 'UnlinkedReason',
+      width: '15%',
+    };
+
+    if (tabName === 'unlinked') {
+      columns.splice(1, 0, reasonCol);
+    }
 
 		const plugins = {
 			COLUMN_MANAGER: {
@@ -109,16 +154,26 @@ export const generateGridConfig = (props, tabName) => {
 						method: 'local',
 				},
       },
+      SELECTION_MODEL: {
+        mode: (tabName === 'archived') ? 'multi' : 'single', // config takes but grids do not change
+        enabled: true,
+        allowDeselect: true,
+        activeCls: 'active',
+        selectionEvent: 'singleclick',
+      },
       PAGER: {
         enabled: false,
       },
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
-          const menuItems = tabInfo[tabName].generateMenuitems(props);
+          const { [tabName]: { generateMenuitems, additionalRowProps } } = tabInfo;
+          const menuItems = generateMenuitems(props);
+          const additionaProps = additionalRowProps(props, stateKey);
           return (
             <ContextMenuRow
               {...rowData}
+              {...additionaProps}
               menuItems={menuItems}
               stateKey={stateKey}
             >

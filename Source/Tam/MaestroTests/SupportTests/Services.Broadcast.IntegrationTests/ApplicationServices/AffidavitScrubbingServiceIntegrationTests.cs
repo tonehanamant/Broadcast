@@ -50,6 +50,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPostsTestWithNtiAdjustments()
+        {
+            var result = _AffidavitScrubbingService.GetPosts();
+            var contract = result.Posts.First(x => x.ContractId == 26011);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PostDto), "Id");
+            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(contract, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPostsTestWithoutNtiAdjustments()
+        {
+            var result = _AffidavitScrubbingService.GetPosts();
+            var contract = result.Posts.First(x => x.ContractId == 26012);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PostDto), "Id");
+            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(contract, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposal()
         {
             using (new TransactionScopeWrapper())
@@ -229,6 +269,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UndoArchiveIsci()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _AffidavitScrubbingService.UndoArchiveUnlinkedIsci(new List<long>() { 4286 }, DateTime.Now, "ApprovedTest");
+                var result = _AffidavitScrubbingService.GetUnlinkedIscis(false);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
         [UseReporter(typeof(DiffReporter))]
         public void GetClientScrubbingForProposalMultipleGenres()
         {
@@ -380,7 +432,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [UseReporter(typeof(DiffReporter))]
         [Test]
-        public void ClientScrubbingOverrides_Exclude_Existing_Status_Overrides()
+        public void ClientScrubbingOverrides_Override_Ignoring_Current_Status()
         {
             using (new TransactionScopeWrapper())
             {
@@ -397,6 +449,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     OverrideStatus = ScrubbingStatus.InSpec // the current status of this record is InSpec, so this will not cause override.
                 };
                 var result = _AffidavitScrubbingService.OverrideScrubbingStatus(overrides);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [UseReporter(typeof(DiffReporter))]
+        [Test]
+        public void ClientScrubbing_UndoOverride()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var scrubIds = new List<int>() { 1010, 5614 };
+
+                ScrubStatusOverrideRequest overrides = new ScrubStatusOverrideRequest()
+                {
+                    ProposalId = 26000,
+                    ScrubIds = scrubIds
+                };
+                var result = _AffidavitScrubbingService.UndoOverrideScrubbingStatus(overrides);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");

@@ -422,6 +422,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 _SetProposalDefaultValues(proposalDto);
+                _SetProposalDetailsDefaultValues(proposalDto);
                 _SetISCIWeekDays(proposalDto);
                 _SetProposalDetailSequenceNumbers(proposalDto);
 
@@ -497,29 +498,27 @@ namespace Services.Broadcast.ApplicationServices
             // set target and default margin that are nullable when first creating a proposal
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
-
-            _SetMyEventsReporDefaultValue(proposalDto);
         }
 
-        private void _SetMyEventsReporDefaultValue(ProposalDto proposalDto)
+        private void _SetProposalDetailsDefaultValues(ProposalDto proposalDto)
         {
             var advertiser = _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
 
-            foreach (var detail in proposalDto.Details)
-            {
-                var spotLength = _SpotLengthRepository.GetSpotLengthById(detail.SpotLengthId);
+            var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
+            proposalDto.Details.ForEach(detail => {
+                //set default value for NTI Conversion factor
+                detail.NtiConversionFactor = detail.NtiConversionFactor == null 
+                        ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
+                        : Math.Round(detail.NtiConversionFactor.Value, 2, MidpointRounding.AwayFromZero);
 
-                foreach (var quarter in detail.Quarters)
-                {
-                    foreach(var week in quarter.Weeks)
-                    {
-                        if (string.IsNullOrWhiteSpace(week.MyEventsReportName))
-                        {
-                            week.MyEventsReportName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(detail.DaypartCode, spotLength, week.StartDate, advertiser.Display);
-                        }
+                //set default value for My Events Report Name
+                detail.Quarters.ForEach(y => y.Weeks.ForEach(week => {
+                    if (string.IsNullOrWhiteSpace(week.MyEventsReportName))
+                    {   
+                        week.MyEventsReportName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(detail.DaypartCode, spotLengths.First(l => l.Value == detail.SpotLengthId).Key, week.StartDate, advertiser.Display);
                     }
-                }
-            }
+                }));                
+            });            
         }
 
         private void _DeleteAnyOpenMarketAllocations(ProposalDto proposalDto)
@@ -1069,7 +1068,8 @@ namespace Services.Broadcast.ApplicationServices
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
-                DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate)
+                DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate),
+                NtiConversionFactor =  Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
             };
 
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);

@@ -17,6 +17,7 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "Id": 0,
+      "NtiConversionFactor": 0.0,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [],

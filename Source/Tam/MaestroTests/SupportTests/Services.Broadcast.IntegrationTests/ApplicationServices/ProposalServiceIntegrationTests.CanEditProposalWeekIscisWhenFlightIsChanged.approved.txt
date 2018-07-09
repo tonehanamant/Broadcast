@@ -34,6 +34,7 @@
       "GenreCriteria": [],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -153,7 +154,6 @@
       "ShowTypeCriteria": [
         {
           "Contain": 1,
-          "Id": 2359,
           "ShowType": {
             "Display": "Mini-Movie"
           }
@@ -195,6 +195,7 @@
       "GenreCriteria": [],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -298,7 +299,6 @@
       "ShowTypeCriteria": [
         {
           "Contain": 2,
-          "Id": 2360,
           "ShowType": {
             "Display": "Movie"
           }
@@ -321,6 +321,7 @@
       "GenreCriteria": [],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],

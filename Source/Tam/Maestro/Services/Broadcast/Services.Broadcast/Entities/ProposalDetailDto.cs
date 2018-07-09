@@ -35,5 +35,6 @@ namespace Services.Broadcast.Entities
         public int? PostingBookId { get; set; }
         public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
         public bool HasPostingDataChanged { get; set; }
+        public double? NtiConversionFactor { get; set; }
     }
 }
