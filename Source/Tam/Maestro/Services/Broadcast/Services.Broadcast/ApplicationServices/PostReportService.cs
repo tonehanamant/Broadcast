@@ -129,7 +129,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposalAudiences = _BroadcastAudienceRepository.GetAudienceDtosById(proposalAudienceIds)
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
-            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthsById();
+            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthAndIds();
             var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
@@ -259,7 +259,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
         {
             var myEventsReportDataList = _AffidavitRepository.GetMyEventsReportData(proposalId);
-            var spotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
+            var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
 
             foreach (var report in myEventsReportDataList)
             {
@@ -268,7 +268,7 @@ namespace Services.Broadcast.ApplicationServices
                     var advertiser = _SmsClient.FindAdvertiserById(line.AdvertiserId);
                     
                     line.Advertiser = advertiser.Display;
-                    line.SpotLength = spotLengths[line.SpotLengthId];
+                    line.SpotLength = spotLengths.Single(x=>x.Value == line.SpotLengthId).Key;
                 }
 
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);

@@ -13,11 +13,27 @@ namespace Services.Broadcast.Repositories
 {
     public interface ISpotLengthRepository : IDataRepository
     {
+        /// <summary>
+        /// Gets the spot length by spot id
+        /// </summary>
+        /// <param name="spotLengthId">Spot id to filter by</param>
+        /// <returns>Spot length value</returns>
         int GetSpotLengthById(int spotLengthId);
+
         List<LookupDto> GetSpotLengths();
-        List<LookupDto> GetSpotLengthsByLength(List<int> lengthList);
+
+        /// <summary>
+        /// Returns the spot lengths  based on a list of spot length values
+        /// </summary>
+        /// <param name="lengthList">Spot length values</param>
+        /// <returns>List of LookupDto objects</returns>
+        List<LookupDto> GetSpotLengthsByLengths(List<int> lengthList);
+
+        /// <summary>
+        /// Returns a dictionary of lengths where key is the length and value is the Id
+        /// </summary>
         Dictionary<int, int> GetSpotLengthAndIds();
-        Dictionary<int, int> GetSpotLengthsById();
+        
         Dictionary<int, double> GetSpotLengthMultipliers();
         Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers();
     }
@@ -30,10 +46,15 @@ namespace Services.Broadcast.Repositories
         }
 
         private static Dictionary<int, int> _SpotLengthDictionary = new Dictionary<int, int>();
+
+        /// <summary>
+        /// Gets the spot length by spot id
+        /// </summary>
+        /// <param name="spotLengthId">Spot id to filter by</param>
+        /// <returns>Spot length value</returns>
         public int GetSpotLengthById(int spotLengthId)
         {
-            int spotLength;
-            if (_SpotLengthDictionary.TryGetValue(spotLengthId, out spotLength))
+            if (_SpotLengthDictionary.TryGetValue(spotLengthId, out int spotLength))
                 return spotLength;
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -69,7 +90,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <summary>
-        /// Returns dictionary where key is the length, the value is the Id
+        /// Returns a dictionary of lengths where key is the length and value is the Id
         /// </summary>
         public Dictionary<int, int> GetSpotLengthAndIds()
         {
@@ -80,16 +101,12 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public Dictionary<int, int> GetSpotLengthsById()
-        {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(
-                    context => context.spot_lengths.ToDictionary(y => y.id, x => x.length));
-            }
-        }
-
-        public List<LookupDto> GetSpotLengthsByLength(List<int> lengthList)
+        /// <summary>
+        /// Returns the spot lengths  based on a list of spot length values
+        /// </summary>
+        /// <param name="lengthList">Spot length values</param>
+        /// <returns>List of LookupDto objects</returns>
+        public List<LookupDto> GetSpotLengthsByLengths(List<int> lengthList)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {

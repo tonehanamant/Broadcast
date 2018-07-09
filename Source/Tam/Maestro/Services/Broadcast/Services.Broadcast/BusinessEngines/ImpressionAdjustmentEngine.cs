@@ -18,10 +18,13 @@ namespace Services.Broadcast.BusinessEngines
     public class ImpressionAdjustmentEngine : IImpressionAdjustmentEngine
     {
         private readonly Lazy<Dictionary<int, double>> _SpotLengthMultipliers;
+        private readonly Lazy<Dictionary<int, int>> _SpotLengths;
         private readonly Lazy<Dictionary<int, RatingAdjustmentsDto>> _RatingAdjustments;
+        private int spotLength;
 
         public ImpressionAdjustmentEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
+            _SpotLengths = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds());
             _SpotLengthMultipliers = new Lazy<Dictionary<int, double>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers());
             _RatingAdjustments = new Lazy<Dictionary<int, RatingAdjustmentsDto>>(() => broadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments().ToDictionary(ra => ra.MediaMonthId));
         }
@@ -52,8 +55,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (isEquivilized == true)
             {
-                double multiplier;
-                if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out multiplier))
+                if (_SpotLengthMultipliers.Value.TryGetValue(spotLength , out double multiplier))
                 {
                     return result * multiplier;
                 }
@@ -68,8 +70,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             if (isEquivalized == true)
             {
-                double multiplier;
-                if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out multiplier))
+                if (_SpotLengthMultipliers.Value.TryGetValue(spotLength, out double multiplier))
                 {
                     return impression * multiplier;
                 }

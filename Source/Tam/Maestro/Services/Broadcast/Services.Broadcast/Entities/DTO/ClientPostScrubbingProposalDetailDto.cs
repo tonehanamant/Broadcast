@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.DTO
 {
     public class ClientPostScrubbingProposalDetailDto
     {

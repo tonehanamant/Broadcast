@@ -23,9 +23,8 @@ namespace Services.Broadcast.Converters.RateImport
         protected IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         protected IBroadcastAudiencesCache _AudiencesCache;
         protected Dictionary<int, double> _SpotLengthMultipliers;
-
-        private Dictionary<int, int> _SpotLengthIdsByLength;
-        private Dictionary<int, int> _SpotLengthsById;
+        
+        private Dictionary<int, int> _SpotLengths;
         private string _fileHash;
         private List<InventoryFileProblem> _FileProblems = new List<InventoryFileProblem>();
 
@@ -56,28 +55,19 @@ namespace Services.Broadcast.Converters.RateImport
         {
             set { _AudiencesCache = value; }
         }
-
-        public Dictionary<int, int> SpotLengthIdsByLength
+        
+        /// <summary>
+        /// Spot lengths dictionary where key is the length and value is the id
+        /// </summary>
+        public Dictionary<int, int> SpotLengths
         {
             get
             {
-                if (_SpotLengthIdsByLength == null)
+                if (_SpotLengths == null)
                 {
-                    _SpotLengthIdsByLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+                    _SpotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
                 }
-                return _SpotLengthIdsByLength;
-            }
-        }
-
-        public Dictionary<int, int> SpotLengthsById
-        {
-            get
-            {
-                if (_SpotLengthsById == null)
-                {
-                    _SpotLengthsById = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
-                }
-                return _SpotLengthsById;
+                return _SpotLengths;
             }
         }
 
@@ -97,7 +87,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             Request = request;
             _fileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.RatesStream));
-            _SpotLengthMultipliers = GetSpotLengthAndMultipliers();
+            _SpotLengthMultipliers = _GetSpotLengthAndMultipliers();
         }
 
         public string FileHash
@@ -130,15 +120,12 @@ namespace Services.Broadcast.Converters.RateImport
             InventoryFile inventoryFile,
             DateTime effectiveDate);
 
-        private Dictionary<int, double> GetSpotLengthAndMultipliers()
+        private Dictionary<int, double> _GetSpotLengthAndMultipliers()
         {
-            // load the list of spots and ids
-            var spotLengthIds = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-
             // load spot lenght ids and multipliers
             var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
 
-            return (from c in spotLengthIds
+            return (from c in SpotLengths
                     join d in spotMultipliers on c.Value equals d.Key
                     select new { c.Key, d.Value }).ToDictionary(x => x.Key, y => y.Value);
 
@@ -148,11 +135,13 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var manifestRates = new List<StationInventoryManifestRate>();
 
-            foreach (var spotLength in _SpotLengthIdsByLength)
+            foreach (var spotLength in SpotLengths)
             {
-                var manifestRate = new StationInventoryManifestRate();
-                manifestRate.SpotLengthId = _SpotLengthIdsByLength[spotLength.Key];
-                manifestRate.Rate = periodRate * (decimal) _SpotLengthMultipliers[spotLength.Key];
+                var manifestRate = new StationInventoryManifestRate
+                {
+                    SpotLengthId = spotLength.Value,
+                    Rate = periodRate * (decimal)_SpotLengthMultipliers[spotLength.Key]
+                };
                 manifestRates.Add(manifestRate);
             }
 
@@ -161,9 +150,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         protected DisplayDaypart ParseStringToDaypart(string daypartText, string station)
         {
-            DisplayDaypart displayDaypart;
-
-            if (!TryParse(daypartText, out displayDaypart))
+            if (!TryParse(daypartText, out DisplayDaypart displayDaypart))
                 throw new Exception(string.Format("Invalid daypart '{0}' on Station {1}.", daypartText, station));
             if (displayDaypart == null || (displayDaypart != null && !displayDaypart.IsValid))
                 throw new Exception(string.Format("Invalid daypart '{0}' on Station {1}.", daypartText, station));

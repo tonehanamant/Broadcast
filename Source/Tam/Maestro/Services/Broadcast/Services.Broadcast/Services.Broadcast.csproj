@@ -245,6 +245,7 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
     <Compile Include="FtpService.cs" />
@@ -291,7 +292,7 @@
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
     <Compile Include="Entities\PostedContractedProposalsDto.cs" />
-    <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
+    <Compile Include="Entities\DTO\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHaveSingleSharedPostingBooks.cs" />
@@ -308,10 +309,10 @@
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
     <Compile Include="Entities\DefaultProjectionBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
-    <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
+    <Compile Include="Entities\DTO\ClientPostScrubbingProposalDetailDto.cs" />
     <Compile Include="Entities\ProgramSearchRequest.cs" />
     <Compile Include="Entities\ProposalChangeRequest.cs" />
-    <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />

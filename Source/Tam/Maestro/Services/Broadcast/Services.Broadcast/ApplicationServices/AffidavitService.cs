@@ -111,8 +111,10 @@ namespace Services.Broadcast.ApplicationServices
 
             var problems = _MapValidationErrorToAffidavitFileProblem((affidavitValidationResults));
             affidavitFile.AffidavitFileProblems.AddRange(problems);
-            var result = new AffidavitSaveResult();
-            result.ValidationResults = affidavitValidationResults;
+            var result = new AffidavitSaveResult
+            {
+                ValidationResults = affidavitValidationResults
+            };
             affidavitFile.Status = affidavitValidationResults.Any() ? AffidaviteFileProcessingStatus.Invalid : AffidaviteFileProcessingStatus.Valid;
 
             if (affidavitValidationResults.Any())
