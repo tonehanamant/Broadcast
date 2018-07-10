@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
