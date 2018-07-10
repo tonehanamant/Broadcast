@@ -224,7 +224,7 @@ namespace Services.Broadcast.Aggregates
 
         public int GetDeliveredCountFromScheduleWeeks(IEnumerable<int> scheduleWeekIds)
         {
-            return _BvsFileDetails.Count(b => b.status == (int)TrackingStatus.InSpec 
+            return _BvsFileDetails.Count(b => b.status == (int)TrackingStatus.InSpec
                                                 && b.schedule_detail_week_id.HasValue
                                                 && scheduleWeekIds.Contains(b.schedule_detail_week_id.Value));
         }
@@ -441,7 +441,5 @@ namespace Services.Broadcast.Aggregates
         public string AudienceName { get; set; }
         public int Rank { get; set; }
         public int Population { get; set; }
-
-        public bool IsHouseHold { get { return AudienceId == BroadcastConstants.HouseHoldAudienceId; } }
     }
 }

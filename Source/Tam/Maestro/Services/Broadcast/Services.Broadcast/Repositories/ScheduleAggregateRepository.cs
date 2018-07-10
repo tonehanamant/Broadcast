@@ -14,7 +14,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IScheduleAggregateRepository : IDataRepository
     {
-        SchedulesAggregate Find(int scheduleId, List<DisplayMediaWeek> mediaWeeks);
+        SchedulesAggregate Find(int scheduleId, List<DisplayMediaWeek> mediaWeeks, int HouseHoldAudienceId);
     }
 
     public class ScheduleAggregateRepository : BroadcastRepositoryBase, IScheduleAggregateRepository
@@ -27,7 +27,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public SchedulesAggregate Find(int scheduleId, List<DisplayMediaWeek> mediaWeeks)
+        public SchedulesAggregate Find(int scheduleId, List<DisplayMediaWeek> mediaWeeks, int HouseHoldAudienceId)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -50,7 +50,7 @@ namespace Services.Broadcast.Repositories
                                                                 Rank = sa.rank,
                                                                 Population = sa.population
                                                             })
-                                                        .OrderByDescending(a => a.IsHouseHold)
+                                                        .OrderByDescending(a => a.AudienceId == HouseHoldAudienceId)
                                                         .ThenBy(a => a.Rank)
                                                         .ToList();
 

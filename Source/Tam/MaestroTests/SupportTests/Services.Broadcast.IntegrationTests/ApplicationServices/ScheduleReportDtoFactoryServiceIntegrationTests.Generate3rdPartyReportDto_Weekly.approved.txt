@@ -840,14 +840,12 @@
     {
       "AudienceId": 31,
       "AudienceName": "HH",
-      "IsHouseHold": true,
       "Population": 7368320,
       "Rank": 1
     },
     {
       "AudienceId": 33,
       "AudienceName": "A18-49",
-      "IsHouseHold": false,
       "Population": 8485887,
       "Rank": 2
     }

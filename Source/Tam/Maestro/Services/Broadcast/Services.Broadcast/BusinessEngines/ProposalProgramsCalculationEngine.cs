@@ -42,6 +42,13 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
     {
+        private readonly IBroadcastAudiencesCache _AudienceCache;
+
+        public ProposalProgramsCalculationEngine(IBroadcastAudiencesCache audienceCache)
+        {
+            _AudienceCache = audienceCache;
+        }
+
         public List<ProposalProgramDto> CalculateIndividualProposalSchedule(List<ProposalProgramDto> programsList,
             NsiUniverseData nsiData, ProposalDto proposal)
         {
@@ -59,7 +66,7 @@ namespace Services.Broadcast.BusinessEngines
                 RATING of the program by the demographic chosen * market coverage universe (provided by Nielsen) = Target Impressions per Spot.
 
              */
-
+            var houseHoldAudienceId = _AudienceCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
             foreach (var programDetails in programsList)
             {
                 int spotsForCalculation;
@@ -84,7 +91,7 @@ namespace Services.Broadcast.BusinessEngines
                 programDetails.TRP = ProposalMath.CalculateTRP_GRP(targetImpressions, nsiData.TotalDemoUniverse);
 
                 //household specific calculation (only if user didn't select HH as target)
-                if (proposal.GuaranteedDemoId != BroadcastConstants.HouseHoldAudienceId)
+                if (proposal.GuaranteedDemoId != houseHoldAudienceId)
                 {
                     var hhImpressions = programDetails.HouseHoldRating * programDetails.HouseHoldMarketSubscribers * spotsForCalculation;
 
