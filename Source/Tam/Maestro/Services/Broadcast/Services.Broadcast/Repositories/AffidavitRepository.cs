@@ -18,7 +18,7 @@ namespace Services.Broadcast.Repositories
     {
         int SaveAffidavitFile(AffidavitFile affidavitFile);
         AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
-        List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalId, ScrubbingStatus? status);
+        List<ProposalDetailPostScrubbing> GetProposalDetailPostScrubbing(int proposalId, ScrubbingStatus? status);
 
         /// <summary>
         /// Gets the data for the NSI Post Report
@@ -313,7 +313,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        public List<ProposalDetailPostScrubbingDto> GetProposalDetailPostScrubbing(int proposalId, ScrubbingStatus? status)
+        public List<ProposalDetailPostScrubbing> GetProposalDetailPostScrubbing(int proposalId, ScrubbingStatus? status)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -338,20 +338,19 @@ namespace Services.Broadcast.Repositories
                     }
 
                     var queryData = query.ToList();
-                    var spotLengths = (from sl in context.spot_lengths select sl).ToList();
-
-                    var posts = new List<ProposalDetailPostScrubbingDto>();
+                    
+                    var posts = new List<ProposalDetailPostScrubbing>();
                     posts.AddRange(queryData.Select(x =>
                         {
 
-                            return new ProposalDetailPostScrubbingDto()
+                            return new ProposalDetailPostScrubbing()
                             {
                                 ScrubbingClientId = x.affidavitFileScrub.id,
                                 ProposalDetailId = x.proposalDetailId,
                                 Station = x.affidavitDetails.station,
                                 ISCI = x.affidavitDetails.isci,
                                 ProgramName = x.affidavitFileScrub.effective_program_name,
-                                SpotLength = spotLengths.Single(y => y.id == x.affidavitDetails.spot_length_id).length,
+                                SpotLengthId = x.affidavitDetails.spot_length_id,
                                 TimeAired = x.affidavitDetails.air_time,
                                 DateAired = x.affidavitDetails.original_air_date,
                                 DayOfWeek = x.affidavitDetails.original_air_date.DayOfWeek,

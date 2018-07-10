@@ -375,8 +375,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         private int _ParseSpotLength(string length, DisplayBroadcastStation station)
         {
-            int spotLength;
-
             int spaceIndex = length.IndexOf(" ");
             if (spaceIndex>=0)
                 length = length.Substring(0, spaceIndex);
@@ -384,7 +382,7 @@ namespace Services.Broadcast.Converters.RateImport
             string stationName = string.Empty;
             if (station!=null) stationName = station.LegacyCallLetters;
             
-            if (!int.TryParse(length, out spotLength))
+            if (!int.TryParse(length, out int spotLength))
                 _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
             if (!_IsValidSpotLenght(spotLength))
                 _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));

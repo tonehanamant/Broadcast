@@ -1026,9 +1026,11 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailOpenMarketInventoryDto();
-                dto.Margin = pv.proposal_versions.margin;
-                SetBaseFields(pv, dto);
+                var dto = new ProposalDetailOpenMarketInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin
+                };
+                _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
@@ -1411,10 +1413,12 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailProprietaryInventoryDto();
-                dto.Margin = pv.proposal_versions.margin;
+                var dto = new ProposalDetailProprietaryInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin
+                };
 
-                SetBaseFields(pv, dto);
+                _SetBaseFields(pv, dto);
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
                              orderby week.start_date
@@ -1432,7 +1436,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static void SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
+        private static void _SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;

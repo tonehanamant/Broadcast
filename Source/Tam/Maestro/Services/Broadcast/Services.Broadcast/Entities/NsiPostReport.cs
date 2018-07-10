@@ -134,7 +134,7 @@ namespace Services.Broadcast.Entities
                         }
                         if (Equivalized)
                         {
-                            _EquivalizeImpressions(spotLengthMultipliers[spotLengthMappings[r.SpotLengthId]], ref audienceImpressions);
+                            _EquivalizeImpressions(spotLengthMultipliers[spotLengthMappings.Single(x=>x.Value == r.SpotLengthId).Key], ref audienceImpressions);
                         }
 
                         var foundStation = stationMappings.TryGetValue(stationProcessingEngine.StripStationSuffix(r.Station), out DisplayBroadcastStation currentStation);
@@ -162,7 +162,7 @@ namespace Services.Broadcast.Entities
                             Isci = r.Isci,
                             TimeAired = r.AirTime,
                             DateAired = r.AirDate,
-                            SpotLength = spotLengthMappings[r.SpotLengthId],
+                            SpotLength = spotLengthMappings.Single(x => x.Value == r.SpotLengthId).Key,
                             Advertiser = advertiser.Display,
                             DaypartName = r.Adu ? "ADU" : r.DaypartName,
                             AudienceImpressions = audienceImpressions,
@@ -173,7 +173,7 @@ namespace Services.Broadcast.Entities
                             ProposalWeekUnits = r.Units,
                             ProposalWeekCPM = r.ProposalWeekCPM,
                             ProposalWeekId = r.ProposalWeekId,
-                            ProposalDetailSpotLength = spotLengthMappings[r.ProposalDetailSpotLengthId],
+                            ProposalDetailSpotLength = spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key,
                             Adu = r.Adu
                         };
                     }).ToList()

@@ -6,12 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using Newtonsoft.Json;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Clients;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.DTO;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -62,7 +61,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="name">User requesting the undo operation</param>
         /// <returns>True or false</returns>
         bool UndoArchiveUnlinkedIsci(List<long> fileDetailsIds, DateTime currentDateTime, string name);
-        
+
         /// <summary>
         /// Undo the overriding of an affidavit client scrub status
         /// </summary>
@@ -82,6 +81,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
+        private readonly ISpotLengthRepository _SpotLegthRepository;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -94,6 +94,7 @@ namespace Services.Broadcast.ApplicationServices
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
+            _SpotLegthRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _AudiencesCache = audiencesCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
@@ -103,17 +104,14 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Returns a list of the posts and unlinked iscis in the system
+        /// Returns a list of the posts and unlinked iscis count in the system
         /// </summary>
         /// <returns>List of PostDto objects</returns>
         public PostedContractedProposalsDto GetPosts()
         {
             var postedProposals = _PostRepository.GetAllPostedProposals();
 
-            foreach (var post in postedProposals)
-            {
-                _SetPostData(post);
-            }
+            _SetPostData(postedProposals);
 
             return new PostedContractedProposalsDto()
             {
@@ -122,15 +120,18 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void _SetPostData(PostDto post)
+        private void _SetPostData(List<PostDto> postedProposals)
         {
-            _SetPostAdvertiser(post);
+            foreach (var post in postedProposals)
+            {
+                _SetPostAdvertiser(post);
 
-            _SetPostPrimaryAudienceImpressions(post);
+                _SetPostPrimaryAudienceImpressions(post);
 
-            _SetPostHouseholdImpressions(post);
+                _SetPostHouseholdImpressions(post);
 
-            post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
+                post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
+            }
         }
 
         private void _SetPostAdvertiser(PostDto post)
@@ -169,10 +170,10 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<PostImpressionsDataDto> _GetPostImpressionsData(int contractId, int maestroAudienceId)
         {
-            var ratingsAudiencesIds = _BroadcastAudienceRepository.
-                GetRatingsAudiencesByMaestroAudience(new List<int> { maestroAudienceId }).
-                Select(x => x.rating_audience_id).
-                ToList();
+            var ratingsAudiencesIds = _BroadcastAudienceRepository
+                .GetRatingsAudiencesByMaestroAudience(new List<int> { maestroAudienceId })
+                .Select(x => x.rating_audience_id)
+                .ToList();
 
             return _PostRepository.GetPostImpressionsData(contractId, ratingsAudiencesIds);
         }
@@ -187,7 +188,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="proposalId">Proposal id to filter by</param>
         /// <returns>ClientPostScrubbingProposalDto object containing the post scrubbing information</returns>
-        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> scrubs = null)
+        public ClientPostScrubbingProposalDto GetClientScrubbingForProposal(int proposalId, ProposalScrubbingRequest proposalScrubbingRequest, List<ProposalDetailPostScrubbingDto> clientScrubs = null)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -203,30 +204,22 @@ namespace Services.Broadcast.ApplicationServices
                     MarketGroupId = proposal.MarketGroupId,
                     BlackoutMarketGroup = proposal.BlackoutMarketGroup,
                     BlackoutMarketGroupId = proposal.BlackoutMarketGroupId,
-                    Details = proposal.Details.Select(x => new ClientPostScrubbingProposalDetailDto
-                    {
-                        Id = x.Id,
-                        FlightStartDate = x.FlightStartDate,
-                        FlightEndDate = x.FlightEndDate,
-                        FlightWeeks = x.FlightWeeks,
-                        SpotLength = proposal.SpotLengths.First(y => y.Id == x.SpotLengthId).Display,
-                        DayPart = x.Daypart.Text,
-                        Programs = x.ProgramCriteria,
-                        Genres = x.GenreCriteria,
-                        Sequence = x.Sequence,
-                    }).OrderBy(x => x.Sequence).ToList(),
+                    Details = _MapToProposalDetailDto(proposal.Details, proposal.SpotLengths),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
                     SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
                 };
 
-                var clientScrubs = scrubs;
+                ///Load all Client Scrubs
                 if (clientScrubs == null)
-                    clientScrubs = _AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter);
+                {
+                    clientScrubs = _MapClientScrubDataToDto(
+                        _AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter),
+                        _SpotLegthRepository.GetSpotLengthAndIds());
+                    _SetClientScrubsMarketAndAffiliate(clientScrubs);
+                }
 
-                _SetClientScrubsMarketAndAffiliate(clientScrubs);
-
-                //load ClientScrubs
+                //Set Sequence and ProposalDetailId
                 result.Details.ForEach(x =>
                 {
                     var detailClientScrubs = clientScrubs.Where(cs => cs.ProposalDetailId == x.Id.Value).ToList();
@@ -237,30 +230,88 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     result.ClientScrubs.AddRange(detailClientScrubs);
                 });
-                //load filters
-                result.Filters = new FilterOptions
-                {
-                    DistinctDayOfWeek = result.ClientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
-                    DistinctGenres = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.GenreName)).Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctPrograms = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
-                    WeekStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
-                    WeekEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
-                    DateAiredStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.DateAired).OrderBy(x => x).First() : (DateTime?)null,
-                    DateAiredEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.DateAired).OrderBy(x => x).Last() : (DateTime?)null,
-                    DistinctMarkets = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Market)).Select(x => x.Market).Distinct().OrderBy(x => x).ToList(),
-                    DistinctClientIscis = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ClientISCI)).Select(x => x.ClientISCI).Distinct().OrderBy(x => x).ToList(),
-                    DistinctHouseIscis = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ISCI)).Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
-                    DistinctSpotLengths = result.ClientScrubs.Select(x => x.SpotLength).Distinct().OrderBy(x => x).ToList(),
-                    DistinctAffiliates = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Affiliate)).Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
-                    DistinctStations = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Station)).Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
-                    DistinctWeekStarts = result.ClientScrubs.Select(x => x.WeekStart).Distinct().OrderBy(x => x).ToList(),
-                    DistinctShowTypes = result.ClientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ShowTypeName)).Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList(),
-                    DistinctSequences = result.ClientScrubs.Where(x => x.Sequence.HasValue).Select(x => x.Sequence.Value).Distinct().OrderBy(x => x).ToList(),
-                    TimeAiredStart = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.TimeAired).OrderBy(x => x).First() : (int?)null,
-                    TimeAiredEnd = result.ClientScrubs.Any() ? result.ClientScrubs.Select(x => x.TimeAired).OrderBy(x => x).Last() : (int?)null
-                };
+
+                ///Load Filters
+                result.Filters = _LoadFilters(result.ClientScrubs);
+
                 return result;
             }
+        }
+
+        private List<ClientPostScrubbingProposalDetailDto> _MapToProposalDetailDto(List<ProposalDetailDto> details, List<LookupDto> spotLengths)
+        {
+            return details.Select(x => new ClientPostScrubbingProposalDetailDto
+            {
+                Id = x.Id,
+                FlightStartDate = x.FlightStartDate,
+                FlightEndDate = x.FlightEndDate,
+                FlightWeeks = x.FlightWeeks,
+                SpotLength = spotLengths.First(y => y.Id == x.SpotLengthId).Display,
+                DayPart = x.Daypart.Text,
+                Programs = x.ProgramCriteria,
+                Genres = x.GenreCriteria,
+                Sequence = x.Sequence,
+            }).OrderBy(x => x.Sequence).ToList();
+        }
+
+        private FilterOptions _LoadFilters(List<ProposalDetailPostScrubbingDto> clientScrubs)
+        {
+            return new FilterOptions
+            {
+                DistinctDayOfWeek = clientScrubs.Select(x => x.DayOfWeek).Distinct().OrderBy(x => x).ToList(),
+                DistinctGenres = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.GenreName)).Select(x => x.GenreName).Distinct().OrderBy(x => x).ToList(),
+                DistinctPrograms = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)).Select(x => x.ProgramName).Distinct().OrderBy(x => x).ToList(),
+                WeekStart = clientScrubs.Any() ? clientScrubs.Select(x => x.WeekStart).OrderBy(x => x).First() : (DateTime?)null,
+                WeekEnd = clientScrubs.Any() ? clientScrubs.Select(x => x.WeekStart).OrderBy(x => x).Last().AddDays(7) : (DateTime?)null,
+                DateAiredStart = clientScrubs.Any() ? clientScrubs.Select(x => x.DateAired).OrderBy(x => x).First() : (DateTime?)null,
+                DateAiredEnd = clientScrubs.Any() ? clientScrubs.Select(x => x.DateAired).OrderBy(x => x).Last() : (DateTime?)null,
+                DistinctMarkets = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Market)).Select(x => x.Market).Distinct().OrderBy(x => x).ToList(),
+                DistinctClientIscis = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ClientISCI)).Select(x => x.ClientISCI).Distinct().OrderBy(x => x).ToList(),
+                DistinctHouseIscis = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ISCI)).Select(x => x.ISCI).Distinct().OrderBy(x => x).ToList(),
+                DistinctSpotLengths = clientScrubs.Select(x => x.SpotLength).Distinct().OrderBy(x => x).ToList(),
+                DistinctAffiliates = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Affiliate)).Select(x => x.Affiliate).Distinct().OrderBy(x => x).ToList(),
+                DistinctStations = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.Station)).Select(x => x.Station).Distinct().OrderBy(x => x).ToList(),
+                DistinctWeekStarts = clientScrubs.Select(x => x.WeekStart).Distinct().OrderBy(x => x).ToList(),
+                DistinctShowTypes = clientScrubs.Where(x => !string.IsNullOrWhiteSpace(x.ShowTypeName)).Select(x => x.ShowTypeName).Distinct().OrderBy(x => x).ToList(),
+                DistinctSequences = clientScrubs.Where(x => x.Sequence.HasValue).Select(x => x.Sequence.Value).Distinct().OrderBy(x => x).ToList(),
+                TimeAiredStart = clientScrubs.Any() ? clientScrubs.Select(x => x.TimeAired).OrderBy(x => x).First() : (int?)null,
+                TimeAiredEnd = clientScrubs.Any() ? clientScrubs.Select(x => x.TimeAired).OrderBy(x => x).Last() : (int?)null
+            };
+        }
+
+        private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData, Dictionary<int, int> spotsLengths)
+        {
+            return clientScrubsData.Select(x => new ProposalDetailPostScrubbingDto()
+            {
+                SpotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key,
+                Affiliate = x.Affiliate,
+                ClientISCI = x.ClientISCI,
+                Comments = x.Comments,
+                DateAired = x.DateAired,
+                DayOfWeek = x.DayOfWeek,
+                GenreName = x.GenreName,
+                ISCI = x.ISCI,
+                Market = x.Market,
+                MatchDate = x.MatchDate,
+                MatchGenre = x.MatchGenre,
+                MatchIsci = x.MatchIsci,
+                MatchIsciDays = x.MatchIsciDays,
+                MatchMarket = x.MatchMarket,
+                MatchProgram = x.MatchProgram,
+                MatchShowType = x.MatchShowType,
+                MatchStation = x.MatchStation,
+                MatchTime = x.MatchTime,
+                ProgramName = x.ProgramName,
+                ProposalDetailId = x.ProposalDetailId,
+                ScrubbingClientId = x.ScrubbingClientId,
+                Sequence = x.Sequence,
+                ShowTypeName = x.ShowTypeName,
+                Station = x.Station,
+                Status = x.Status,
+                StatusOverride = x.StatusOverride,
+                TimeAired = x.TimeAired,
+                WeekStart = x.WeekStart
+            }).ToList();
         }
 
         private void _SetClientScrubsMarketAndAffiliate(List<ProposalDetailPostScrubbingDto> clientScrubs)
@@ -269,11 +320,11 @@ namespace Services.Broadcast.ApplicationServices
 
             var stationList = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStationListByLegacyCallLetters(stationNameList);
 
-            foreach(var scrub in clientScrubs)
+            foreach (var scrub in clientScrubs)
             {
                 var scrubStationName = _StationProcessingEngine.StripStationSuffix(scrub.Station);
                 var station = stationList.Where(s => s.LegacyCallLetters.Equals(scrubStationName)).SingleOrDefault();
-                if(station != null)
+                if (station != null)
                 {
                     scrub.Market = station.OriginMarket;
                     scrub.Affiliate = station.Affiliation;
@@ -288,10 +339,10 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of UnlinkedIscisDto objects</returns>
         public List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived)
         {
-            var spotsLength = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            var spotsLength = _SpotLegthRepository.GetSpotLengthAndIds();
             List<UnlinkedIscisDto> iscis = new List<UnlinkedIscisDto>();
             List<AffidavitFileDetailProblem> isciProblems = new List<AffidavitFileDetailProblem>();
-            
+
             if (archived)
             {
                 iscis = _PostRepository.GetArchivedIscis();
@@ -305,10 +356,10 @@ namespace Services.Broadcast.ApplicationServices
             iscis.ForEach(x =>
             {
                 x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key;
-                x.UnlinkedReason = archived 
-                    ? null 
-                    : isciProblems.Any(y=>y.DetailId == x.FileDetailId) 
-                            ? _GetAffidavitDetailProblemDescription(isciProblems.First(y => y.DetailId == x.FileDetailId)) 
+                x.UnlinkedReason = archived
+                    ? null
+                    : isciProblems.Any(y => y.DetailId == x.FileDetailId)
+                            ? _GetAffidavitDetailProblemDescription(isciProblems.First(y => y.DetailId == x.FileDetailId))
                             : null;
             });
 

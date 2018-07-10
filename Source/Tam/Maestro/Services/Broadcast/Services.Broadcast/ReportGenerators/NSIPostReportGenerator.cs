@@ -49,7 +49,7 @@ namespace Services.Broadcast.ReportGenerators
         private const string TOTAL_COST = "Total Cost";
         private const string HH_RATING = "HH Rating";
         private const string DEMO = "Demo (000)";
-        private const string TOTAL_DEMO = "Total Demo Impressions";
+        private const string TOTAL_DEMO = "Total Demo Impressions (000)";
         private const string CPM = "CPM";
 
         private const string RANK = "Rank";
