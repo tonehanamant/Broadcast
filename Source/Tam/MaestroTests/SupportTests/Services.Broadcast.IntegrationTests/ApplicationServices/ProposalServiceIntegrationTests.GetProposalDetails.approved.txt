@@ -1,4 +1,7 @@
 ﻿{
+  "AdjustmentInflation": null,
+  "AdjustmentMargin": null,
+  "AdjustmentRate": null,
   "Adu": false,
   "Daypart": null,
   "DaypartCode": null,
@@ -20,6 +23,8 @@
   "FlightStartDate": "2016-12-05T00:00:00",
   "FlightWeeks": [],
   "GenreCriteria": [],
+  "GoalBudget": null,
+  "GoalImpression": null,
   "HasPostingDataChanged": false,
   "HutProjectionBookId": null,
   "NtiConversionFactor": 0.2,

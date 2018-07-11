@@ -544,6 +544,11 @@
           <Property Name="posting_book_id" Type="int" />
           <Property Name="posting_playback_type" Type="tinyint" />
           <Property Name="nti_conversion_factor" Type="float" Nullable="false" />
+          <Property Name="adjustment_margin" Type="float" />
+          <Property Name="adjustment_rate" Type="float" />
+          <Property Name="adjustment_inflation" Type="float" />
+          <Property Name="goal_impression" Type="float" />
+          <Property Name="goal_budget" Type="money" />
         </EntityType>
         <EntityType Name="proposal_version_flight_weeks">
           <Key>
@@ -5156,6 +5161,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
+          <Property Name="adjustment_margin" Type="Double" />
+          <Property Name="adjustment_rate" Type="Double" />
+          <Property Name="adjustment_inflation" Type="Double" />
+          <Property Name="goal_impression" Type="Double" />
+          <Property Name="goal_budget" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -6260,6 +6270,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_version_details">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_details">
               <MappingFragment StoreEntitySet="proposal_version_details">
+                <ScalarProperty Name="goal_budget" ColumnName="goal_budget" />
+                <ScalarProperty Name="goal_impression" ColumnName="goal_impression" />
+                <ScalarProperty Name="adjustment_inflation" ColumnName="adjustment_inflation" />
+                <ScalarProperty Name="adjustment_rate" ColumnName="adjustment_rate" />
+                <ScalarProperty Name="adjustment_margin" ColumnName="adjustment_margin" />
                 <ScalarProperty Name="nti_conversion_factor" ColumnName="nti_conversion_factor" />
                 <ScalarProperty Name="posting_playback_type" ColumnName="posting_playback_type" />
                 <ScalarProperty Name="posting_book_id" ColumnName="posting_book_id" />

@@ -9,6 +9,9 @@
   "CanDelete": true,
   "Details": [
     {
+      "AdjustmentInflation": 2.0,
+      "AdjustmentMargin": 3.0,
+      "AdjustmentRate": 1.0,
       "Adu": false,
       "Daypart": {
         "endTime": 86400,
@@ -49,6 +52,8 @@
           }
         }
       ],
+      "GoalBudget": 100.0000,
+      "GoalImpression": 10000.0,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
