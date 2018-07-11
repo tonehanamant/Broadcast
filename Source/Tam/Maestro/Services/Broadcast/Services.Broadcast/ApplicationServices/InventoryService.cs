@@ -806,8 +806,7 @@ namespace Services.Broadcast.ApplicationServices
                     SpotsPerWeek = manifest.SpotsPerWeek,
                     Rate15 = _GetSpotRateFromManifestRates(15, manifest.ManifestRates),
                     Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
-                    HouseHoldImpressions =
-                        _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
+                    HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
                     Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
                     FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate)
                 }).ToList();
@@ -848,8 +847,9 @@ namespace Services.Broadcast.ApplicationServices
         private StationInventoryManifestAudience _GetHouseHoldAudienceFromManifestAudiences(
             List<StationInventoryManifestAudience> list)
         {
-            return list != null && list.Any()
-                ? list.SingleOrDefault(c => c.Audience.Id == BroadcastConstants.HouseHoldAudienceId)
+            var houseHoldAudienceId = _AudiencesCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
+            return list.Any()
+                ? list.Single(c => c.Audience.Id == houseHoldAudienceId)
                 : null;
         }
 

@@ -299,7 +299,7 @@
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
-    <Compile Include="Entities\NsiPostReport.cs" />
+    <Compile Include="Entities\DTO\NsiPostReport.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />

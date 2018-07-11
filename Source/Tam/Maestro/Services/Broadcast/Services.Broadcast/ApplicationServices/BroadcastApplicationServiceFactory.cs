@@ -17,6 +17,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.ApplicationServices
 {
