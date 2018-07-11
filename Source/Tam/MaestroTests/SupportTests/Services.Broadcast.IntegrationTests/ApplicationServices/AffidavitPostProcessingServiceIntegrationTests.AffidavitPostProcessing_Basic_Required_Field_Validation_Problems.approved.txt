@@ -22,7 +22,6 @@
   ],
   "FileHash": "59-D7-D7-68-5D-DA-87-01-59-1E-24-06-CF-1D-40-41-EE-78-8D-37",
   "FileName": "WWTV_Basic_Required_Validation.txt",
-  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 2
 }

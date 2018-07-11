@@ -172,7 +172,6 @@
   "FileHash": "abc123",
   "FileName": "test.file",
   "Id": 167,
-  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
 }

@@ -90,7 +90,6 @@ namespace Services.Broadcast.Repositories
                 file_name = affidavitFile.FileName,
                 source_id = affidavitFile.SourceId,
                 status = (int)affidavitFile.Status,
-                media_month_id = affidavitFile.MediaMonthId,
                 affidavit_file_problems = affidavitFile.AffidavitFileProblems.Select(p => new affidavit_file_problems()
                 {
                     id = p.Id,
@@ -232,7 +231,6 @@ namespace Services.Broadcast.Repositories
                 SourceId = affidavitFile.source_id,
                 Status = (AffidaviteFileProcessingStatus)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
-                MediaMonthId = affidavitFile.media_month_id,
                 AffidavitFileProblems = affidavitFile.affidavit_file_problems.Select(p => new AffidavitFileProblem()
                 {
                     Id = p.id,

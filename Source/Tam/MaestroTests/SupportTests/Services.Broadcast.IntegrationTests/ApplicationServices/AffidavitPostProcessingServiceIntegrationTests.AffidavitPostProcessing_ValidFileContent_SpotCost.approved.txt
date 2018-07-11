@@ -76,7 +76,6 @@
   "AffidavitFileProblems": [],
   "FileHash": "9A-91-E2-51-83-9E-E5-CB-8B-28-36-F1-88-C8-ED-04-C5-31-E1-4C",
   "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
-  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
 }

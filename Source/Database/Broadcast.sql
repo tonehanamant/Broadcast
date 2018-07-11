@@ -70,6 +70,364 @@ GO
 /*************************************** END BCOP-2800 ***************************************************************/
 
 
+
+
+IF EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_files_media_month_id')   
+BEGIN
+	DROP INDEX IX_affidavit_files_media_month_id 	ON affidavit_files  
+END
+GO  
+
+
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'media_month_id'
+          AND Object_ID = Object_ID(N'affidavit_files'))
+BEGIN
+    ALTER TABLE affidavit_files DROP COLUMN media_month_id;  
+END
+
+
+--affidavit_files
+--    Should create FK/Index on media_month_id
+--IF NOT EXISTS (SELECT * FROM sys.foreign_keys
+--            WHERE name = N'FK_affidavit_files_media_month_id')   
+--BEGIN
+--	ALTER TABLE affidavit_files
+--	ADD CONSTRAINT FK_affidavit_files_media_month_id FOREIGN KEY (media_month_id)     
+--		REFERENCES media_months (id)     
+--		ON DELETE CASCADE ;    
+--END
+--GO
+
+
+
+/************************* START BCOP-3228 **********************************************/
+
+--affidavit_file_detail_demographics
+--    audience_id
+--    affidavit_file_detail_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_detail_demographics_audience_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_detail_demographics_audience_id
+		ON affidavit_file_detail_demographics  (audience_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_detail_demographics_affidavit_file_detail_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_detail_demographics_affidavit_file_detail_id
+		ON affidavit_file_detail_demographics  (affidavit_file_detail_id);   
+END
+GO  
+
+
+--affidavit_file_detail_problems
+--    affidavit_file_detail_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_detail_problems_affidavit_file_detail_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_detail_problems_affidavit_file_detail_id
+		ON affidavit_file_detail_problems  (affidavit_file_detail_id);   
+END
+GO  
+
+
+
+
+
+--affidavit_file_problems
+--    affidavit_file_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_problems_affidavit_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_problems_affidavit_file_id 
+		ON affidavit_file_problems  (affidavit_file_id);   
+END
+GO  
+
+--affidavit_blacklist
+--    ISCI (text)
+--    ISCI is used in searches, might be easy index.
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_blacklist_ISCI')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_blacklist_ISCI
+		ON affidavit_blacklist  (ISCI);   
+END
+GO  
+
+
+--affidavit_outbound_file_problems
+--    affidavit_outbound_file_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_outbound_file_problems_affidavit_outbound_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_outbound_file_problems_affidavit_outbound_file_id 
+		ON affidavit_outbound_file_problems  (affidavit_outbound_file_id);   
+END
+GO  
+
+
+--station_contacts
+--    station_code
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_contacts_station_code')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_contacts_station_code 
+		ON station_contacts  (station_code);   
+END
+GO  
+
+
+
+--station_inventory_group
+--    inventory_source_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_group_inventory_source_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_group_inventory_source_id 
+		ON station_inventory_group  (inventory_source_id);   
+END
+GO  
+
+
+--station_inventory_manifest
+--    station_code
+--    spot_length_id
+--    inventory_source_id
+--    station_inventory_group_id
+--    file_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_station_code')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_station_code
+		ON station_inventory_manifest  (station_code);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_spot_length_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_spot_length_id
+		ON station_inventory_manifest  (spot_length_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_inventory_source_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_inventory_source_id
+		ON station_inventory_manifest  (inventory_source_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_station_inventory_group_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_station_inventory_group_id
+		ON station_inventory_manifest  (station_inventory_group_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_file_id 
+		ON station_inventory_manifest  (file_id);   
+END
+GO  
+
+--station_inventory_manifest_audiences
+--    audience_id
+--    station_inventory_manifest_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_audiences_audience_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_audiences_audience_id
+		ON station_inventory_manifest_audiences  (audience_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_audiences_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_audiences_station_inventory_manifest_id
+		ON station_inventory_manifest_audiences  (station_inventory_manifest_id);   
+END
+GO  
+
+
+--station_inventory_manifest_dayparts
+--    daypart_id
+--    station_inventory_manifest_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_dayparts_daypart_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_dayparts_daypart_id 
+		ON station_inventory_manifest_dayparts  (daypart_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_dayparts_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_dayparts_station_inventory_manifest_id 
+		ON station_inventory_manifest_dayparts  (station_inventory_manifest_id);   
+END
+GO  
+
+
+
+--station_inventory_manifest_generation
+--    station_inventory_manifest_id
+--    media_week_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_generation_station_inventory_manifest_id')   
+BEGIN
+	CREATE  NONCLUSTERED INDEX IX_station_inventory_manifest_generation_station_inventory_manifest_id
+		ON station_inventory_manifest_generation  (station_inventory_manifest_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_generation_media_week_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_generation_media_week_id
+		ON station_inventory_manifest_generation  (media_week_id);   
+END
+GO  
+
+--station_inventory_manifest_rates
+--    station_inventory_manifest_id
+--    spot_length_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_rates_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_rates_station_inventory_manifest_id
+		ON station_inventory_manifest_rates  (station_inventory_manifest_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_rates_spot_length_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_rates_spot_length_id 
+		ON station_inventory_manifest_rates  (spot_length_id);   
+END
+GO  
+
+
+
+--station_inventory_spots
+--    proposal_version_detail_quarter_week_id
+--    station_inventory_manifest_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_spots_proposal_version_detail_quarter_week_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_spots_proposal_version_detail_quarter_week_id
+		ON station_inventory_spots  (proposal_version_detail_quarter_week_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_spots_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_spots_station_inventory_manifest_id 
+		ON station_inventory_spots  (station_inventory_manifest_id);   
+END
+GO  
+
+
+--inventory_files
+--    sweep_book_id
+--    inventory_source_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_inventory_files_sweep_book_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_inventory_files_sweep_book_id
+		ON inventory_files  (sweep_book_id);   
+END
+GO  
+
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_inventory_files_inventory_source_id')
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_inventory_files_inventory_source_id 
+		ON inventory_files  (inventory_source_id);   
+END
+GO
+
+
+--media_weeks
+--    media_month_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_media_weeks_media_month_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_media_weeks_media_month_id 
+		ON media_weeks  (media_month_id);   
+END
+GO  
+
+
+--post_file_details
+--    post_file_id
+--    spot_length_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_post_file_details_post_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_post_file_details_post_file_id 
+		ON post_file_details  (post_file_id);   
+
+END
+
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_post_file_details_spot_length_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_post_file_details_spot_length_id 
+		ON post_file_details  (spot_length_id);   
+
+END
+
+GO  
+
+
+--post_files
+--    posting_book_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_post_files_posting_book_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_post_files_posting_book_id 
+		ON post_files  (posting_book_id);   
+
+END
+
+GO  
+
+
+--program_name
+--  program_names
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_program_names_program_name')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_program_names_program_name 
+		ON program_names  ([program_name]);   
+
+END
+
+GO  
+
+/************************* END BCOP-3228 **********************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

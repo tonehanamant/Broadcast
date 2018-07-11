@@ -76,7 +76,6 @@
   "AffidavitFileProblems": [],
   "FileHash": "0C-11-C6-8A-22-5D-F9-EB-D0-89-7B-22-D2-1B-6A-33-C8-12-DB-02",
   "FileName": "WWTV_Affidavit_Decimal_Overnight_Impressions.txt",
-  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
 }
