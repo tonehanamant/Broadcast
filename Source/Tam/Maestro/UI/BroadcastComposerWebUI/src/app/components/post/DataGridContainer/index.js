@@ -172,7 +172,7 @@ export class DataGridContainer extends Component {
         ),
       },
       {
-        name: 'Impressions in Spec',
+        name: 'Spots in Spec',
         dataIndex: 'SpotsInSpec',
         width: '15%',
       },
