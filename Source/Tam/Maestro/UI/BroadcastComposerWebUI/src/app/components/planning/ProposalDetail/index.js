@@ -345,7 +345,7 @@ export class ProposalDetail extends Component {
                     /> */}
                     <MaskedInput
                       mask={numberMask}
-                      // className="form-control"
+                      className="form-control"
                       guide={false}
                       style={{ width: '65px' }}
                       value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
