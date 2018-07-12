@@ -105,8 +105,9 @@ export class ProposalDetail extends Component {
 
   onChangeNti(event) {
     const val = event.target.value >= 0 ? event.target.value : this.props.detail.NtiConversionFactor;
-    const newVal = val / 100;
-    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
+    console.log(val);
+    // const newVal = val / 100;
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: val });
   }
 
   onChangeAdu(event) {
@@ -320,19 +321,13 @@ export class ProposalDetail extends Component {
                 <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor">
                   <ControlLabel style={{ margin: '0 10px 0 10px' }}>NTI</ControlLabel>
                   <InputGroup>
-                    {/* <FormControl
-                      type="tel"
-                      maxlength={5}
-                      style={{ width: '65px' }}
-                      value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
-                      onChange={this.onChangeNti}
-                    /> */}
                     <MaskedInput
                       mask={numberMask}
                       className="form-control"
                       guide={false}
                       style={{ width: '65px' }}
-                      value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
+                      // value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
+                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor : null}
                       // onBlur={() => {}}
                       onChange={this.onChangeNti}
                     />
