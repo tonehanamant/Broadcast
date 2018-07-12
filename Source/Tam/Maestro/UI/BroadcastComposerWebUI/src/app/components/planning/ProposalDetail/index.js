@@ -105,23 +105,7 @@ export class ProposalDetail extends Component {
 
   onChangeNti(event) {
     const val = event.target.value >= 0 ? event.target.value : this.props.detail.NtiConversionFactor;
-    console.log(event);
-    console.log(val);
-    // const re = /^[0-9]*$/i; // check numeric
-    // const re = /^\d+$/;
-    // const re = /^[1-9]\d*(\.\d+)?$/i;
-    // const re = /^[0-9]{0,2}(\.[0-9]{1,2})?$/i;
-    // const re = /^[0-9]?[0-9]?(\.[0-9]{1,2}?)?/g;
-    // const re = /^[0-9]{0,2}(?:\.\d{1,2})?$/g;
-    const re = /^[0-9]{0,2}(\.\d{1,2})?$/g;
-    // only allow 2 digit whole numbers, but if a decimal allow 2 places
-    // const re = /^([0-9]+[\.]?[0-9]?[0-9]?|[0-9]+)$/g;
-    console.log(re.test(val));
-    // const newVal = (!re.test(event.target.value) || event.target.value === '') ? '' : val / 100;
     const newVal = val / 100;
-    // const newVal = !re.test(val) ? 0 : val / 100;
-    console.log(newVal);
-    // const newVal = (isNaN(x) || x < 0 || x > 100 || event.target.value === '') ? '' : x / 100;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
   }
 
