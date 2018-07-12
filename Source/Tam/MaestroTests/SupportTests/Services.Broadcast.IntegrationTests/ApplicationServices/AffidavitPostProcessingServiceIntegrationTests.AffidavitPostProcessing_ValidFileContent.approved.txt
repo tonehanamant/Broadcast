@@ -76,7 +76,6 @@
   "AffidavitFileProblems": [],
   "FileHash": "12-E4-DE-79-96-CD-D6-6E-B3-65-83-15-45-C3-4C-CB-8C-E0-F7-BB",
   "FileName": "WWTV_AffidavitValidFile.txt",
-  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
 }

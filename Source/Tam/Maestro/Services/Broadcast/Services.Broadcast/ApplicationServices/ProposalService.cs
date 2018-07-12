@@ -1160,6 +1160,7 @@ namespace Services.Broadcast.ApplicationServices
                         weekDto.Cost = week.Cost;
                         weekDto.Units = week.Units;
                         weekDto.Iscis = week.Iscis;
+                        weekDto.MyEventsReportName = week.MyEventsReportName;
                     }
                 }
 

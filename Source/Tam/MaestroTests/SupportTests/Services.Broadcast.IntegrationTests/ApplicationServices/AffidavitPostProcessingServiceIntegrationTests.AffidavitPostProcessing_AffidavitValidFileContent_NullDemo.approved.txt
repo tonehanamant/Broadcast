@@ -69,7 +69,6 @@
   "AffidavitFileProblems": [],
   "FileHash": "16-65-D5-83-95-78-71-05-3C-83-98-D2-90-B8-8E-1B-42-54-30-D3",
   "FileName": "WWTV_AffidavitValidFileContent_NullDemo.txt",
-  "MediaMonthId": 0,
   "SourceId": 1,
   "Status": 1
 }
