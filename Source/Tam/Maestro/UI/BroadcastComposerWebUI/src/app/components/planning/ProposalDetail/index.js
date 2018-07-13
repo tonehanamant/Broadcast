@@ -106,8 +106,8 @@ export class ProposalDetail extends Component {
   onChangeNti(event) {
     const val = event.target.value >= 0 ? event.target.value : this.props.detail.NtiConversionFactor;
     console.log(val);
-    // const newVal = val / 100;
-    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: val });
+    const newVal = val / 100;
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
   }
 
   onChangeAdu(event) {
@@ -326,8 +326,8 @@ export class ProposalDetail extends Component {
                       className="form-control"
                       guide={false}
                       style={{ width: '65px' }}
-                      // value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
-                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor : null}
+                      value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
+                      // value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor : null}
                       // onBlur={() => {}}
                       onChange={this.onChangeNti}
                     />
