@@ -1,0 +1,14 @@
+
+#proposal_secondary_demo {
+  .Select-arrow-zone {
+      display: none !important;
+  }
+
+  .Select.is-disabled>.Select-control {
+    background-color: unset !important;
+  }
+
+  .Select-control {
+    border: none !important;
+  }
+}

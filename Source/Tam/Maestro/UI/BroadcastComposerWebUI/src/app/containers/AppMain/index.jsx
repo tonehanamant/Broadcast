@@ -9,6 +9,7 @@ import AppFooter from 'Components/footer/AppFooter';
 import SectionPostPrePosting from 'Containers/SectionPostPrePosting';
 import SectionPost from 'Containers/SectionPost';
 import SectionPlanning from 'Containers/SectionPlanning';
+import SectionTracker from 'Containers/SectionTracker';
 // import SectionRates from 'Containers/SectionRates';
 import Toast from 'Components/shared/Toast';
 import ErrorModal from 'Components/shared/ErrorModal';
@@ -31,6 +32,7 @@ export const AppMain = ({ match: { path } }) => (
       <Route path={`${path}/post`} component={SectionPost} />
       <Route path={`${path}/post-pre-posting`} component={SectionPostPrePosting} />
       <Route path={`${path}/planning`} component={SectionPlanning} />
+      <Route path={`${path}/tracker`} component={SectionTracker} />
     </Switch>
     <AppFooter />
   </div>
