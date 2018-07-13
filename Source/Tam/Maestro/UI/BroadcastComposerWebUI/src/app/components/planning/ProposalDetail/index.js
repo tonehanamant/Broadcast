@@ -105,24 +105,9 @@ export class ProposalDetail extends Component {
 
   onChangeNti(event) {
     const val = event.target.value >= 0 ? event.target.value : this.props.detail.NtiConversionFactor;
-    console.log(event);
     console.log(val);
-    // const re = /^[0-9]*$/i; // check numeric
-    // const re = /^\d+$/;
-    // const re = /^[1-9]\d*(\.\d+)?$/i;
-    // const re = /^[0-9]{0,2}(\.[0-9]{1,2})?$/i;
-    // const re = /^[0-9]?[0-9]?(\.[0-9]{1,2}?)?/g;
-    // const re = /^[0-9]{0,2}(?:\.\d{1,2})?$/g;
-    const re = /^[0-9]{0,2}(\.\d{1,2})?$/g;
-    // only allow 2 digit whole numbers, but if a decimal allow 2 places
-    // const re = /^([0-9]+[\.]?[0-9]?[0-9]?|[0-9]+)$/g;
-    console.log(re.test(val));
-    // const newVal = (!re.test(event.target.value) || event.target.value === '') ? '' : val / 100;
-    const newVal = val / 100;
-    // const newVal = !re.test(val) ? 0 : val / 100;
-    console.log(newVal);
-    // const newVal = (isNaN(x) || x < 0 || x > 100 || event.target.value === '') ? '' : x / 100;
-    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
+    // const newVal = val / 100;
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: val });
   }
 
   onChangeAdu(event) {
@@ -336,19 +321,13 @@ export class ProposalDetail extends Component {
                 <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor">
                   <ControlLabel style={{ margin: '0 10px 0 10px' }}>NTI</ControlLabel>
                   <InputGroup>
-                    {/* <FormControl
-                      type="tel"
-                      maxlength={5}
-                      style={{ width: '65px' }}
-                      value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
-                      onChange={this.onChangeNti}
-                    /> */}
                     <MaskedInput
                       mask={numberMask}
                       className="form-control"
                       guide={false}
                       style={{ width: '65px' }}
-                      value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
+                      // value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
+                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor : null}
                       // onBlur={() => {}}
                       onChange={this.onChangeNti}
                     />

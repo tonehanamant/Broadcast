@@ -49,7 +49,6 @@ export class UnlinkedIsciModal extends Component {
   onTabSelect(nextTab) {
     const { activeTab } = this.state;
     const { toggleTab } = this.props;
-    // console.log('tab select grid', this.props.grid.get('unlinked_grid'));
     if (activeTab !== nextTab) {
       this.setState({ activeTab: nextTab });
       toggleTab(nextTab);
@@ -60,8 +59,8 @@ export class UnlinkedIsciModal extends Component {
     const { modal, unlinkedIscis } = this.props;
     const { activeTab } = this.state;
     const grid = generateGridConfig(this.props, activeTab);
-    grid.pageSize = unlinkedIscis.length;
-    grid.infinite = true;
+    // grid.pageSize = unlinkedIscis.length;
+    // grid.infinite = true;
 
     return (
       <div>
@@ -77,12 +76,13 @@ export class UnlinkedIsciModal extends Component {
                 <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
                 <NavItem eventKey="archived">Archived ISCIs</NavItem>
             </Nav>
-            {activeTab === 'unlinked' &&
-              <Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
-            }
-            {activeTab === 'archived' &&
-              <Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
-            }
+            <Grid
+              {...grid}
+              key={activeTab}
+              data={unlinkedIscis}
+              store={this.context.store}
+              height={460}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>
