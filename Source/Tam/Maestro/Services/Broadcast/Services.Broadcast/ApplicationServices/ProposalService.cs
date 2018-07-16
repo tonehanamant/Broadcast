@@ -508,8 +508,8 @@ namespace Services.Broadcast.ApplicationServices
             proposalDto.Details.ForEach(detail => {
                 //set default value for NTI Conversion factor
                 detail.NtiConversionFactor = detail.NtiConversionFactor == null 
-                        ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
-                        : Math.Round(detail.NtiConversionFactor.Value, 2, MidpointRounding.AwayFromZero);
+                        ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 4, MidpointRounding.AwayFromZero)
+                        : Math.Round(detail.NtiConversionFactor.Value, 4, MidpointRounding.AwayFromZero);
 
                 //set default value for My Events Report Name
                 detail.Quarters.ForEach(y => y.Weeks.ForEach(week => {
