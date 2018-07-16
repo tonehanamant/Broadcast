@@ -5,6 +5,9 @@
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "Daypart": null,
       "DaypartCode": null,
@@ -14,6 +17,8 @@
       "FlightStartDate": "0001-01-01T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "Id": 0,
