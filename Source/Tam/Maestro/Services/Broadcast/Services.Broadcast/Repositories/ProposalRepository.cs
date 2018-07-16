@@ -339,6 +339,11 @@ namespace Services.Broadcast.Repositories
                     posting_book_id = proposalDetail.PostingBookId,
                     posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
                     nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
+                    adjustment_inflation = proposalDetail.AdjustmentInflation,
+                    adjustment_margin = proposalDetail.AdjustmentMargin,
+                    adjustment_rate = proposalDetail.AdjustmentRate,
+                    goal_budget = proposalDetail.GoalBudget,
+                    goal_impression = proposalDetail.GoalImpression,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -451,6 +456,11 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
                     updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
+                    updatedDetail.adjustment_inflation = detail.AdjustmentInflation;
+                    updatedDetail.adjustment_margin = detail.AdjustmentMargin;
+                    updatedDetail.adjustment_rate = detail.AdjustmentRate;
+                    updatedDetail.goal_budget = detail.GoalBudget;
+                    updatedDetail.goal_impression = detail.GoalImpression;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -843,6 +853,11 @@ namespace Services.Broadcast.Repositories
                     PostingBookId = version.posting_book_id,
                     PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
                     NtiConversionFactor = version.nti_conversion_factor,
+                    GoalBudget = version.goal_budget,
+                    GoalImpression = version.goal_impression,
+                    AdjustmentInflation = version.adjustment_inflation,
+                    AdjustmentMargin = version.adjustment_margin,
+                    AdjustmentRate = version.adjustment_rate,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1102,6 +1117,11 @@ namespace Services.Broadcast.Repositories
                     ShareProjectionBookId = proposalDetail.share_projection_book_id,
                     HutProjectionBookId = proposalDetail.hut_projection_book_id,
                     ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.projection_playback_type,
+                    GoalImpression = proposalDetail.goal_impression,
+                    GoalBudget = proposalDetail.goal_budget,
+                    AdjustmentInflation = proposalDetail.adjustment_inflation,
+                    AdjustmentMargin =  proposalDetail.adjustment_margin,
+                    AdjustmentRate = proposalDetail.adjustment_rate,
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,

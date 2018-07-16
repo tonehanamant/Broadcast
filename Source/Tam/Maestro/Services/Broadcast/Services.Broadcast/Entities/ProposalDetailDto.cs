@@ -36,5 +36,12 @@ namespace Services.Broadcast.Entities
         public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
         public bool HasPostingDataChanged { get; set; }
         public double? NtiConversionFactor { get; set; }
+        public double? AdjustmentInflation { get; set; }
+        public double? AdjustmentRate { get; set; }
+        public double? AdjustmentMargin { get; set; }
+        public double? GoalImpression { get; set; }
+        public decimal? GoalBudget { get; set; }
+
+
     }
 }
