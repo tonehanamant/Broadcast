@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
+import CustomPager from 'Components/shared/CustomPager';
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
 
 
@@ -163,6 +164,10 @@ export const generateGridConfig = (props, tabName) => {
       },
       PAGER: {
         enabled: false,
+        pagingType: 'local',
+        pagerComponent: (
+            <CustomPager stateKey={stateKey} idProperty="FileDetailId" />
+        ),
       },
       ROW: {
         enabled: true,
