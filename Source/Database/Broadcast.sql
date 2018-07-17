@@ -421,6 +421,36 @@ GO
 
 
 
+/*************************************** START BCOP-3280 & BCOP-3336 ***************************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_margin' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [adjustment_margin] FLOAT 
+END
+GO
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_rate' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [adjustment_rate] FLOAT 
+END
+GO
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_inflation' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [adjustment_inflation] FLOAT 
+END
+GO
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_impression' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [goal_impression] FLOAT 
+END
+GO
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_budget' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [goal_budget] money 
+END
+GO
+
+/*************************************** END BCOP-3280 & BCOP-3336 ***************************************************************/
+
 
 
 

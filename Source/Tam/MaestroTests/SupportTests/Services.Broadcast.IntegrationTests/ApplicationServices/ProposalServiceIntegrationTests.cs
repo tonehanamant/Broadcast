@@ -64,6 +64,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareProjectionBookId = 413,
                 HutProjectionBookId = 410,
                 ProjectionPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                AdjustmentRate = 1,
+                AdjustmentMargin = 3,
+                AdjustmentInflation = 2,
+                GoalImpression = 10000,
+                GoalBudget = 100,
                 GenreCriteria = new List<GenreCriteria>()
                 {
                     new GenreCriteria
