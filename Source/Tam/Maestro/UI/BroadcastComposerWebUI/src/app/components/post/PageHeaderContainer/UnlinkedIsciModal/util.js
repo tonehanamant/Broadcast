@@ -161,9 +161,9 @@ export const generateGridConfig = (props, tabName) => {
         activeCls: 'active',
         selectionEvent: 'singleclick',
       },
-      // PAGER: {
-      //   enabled: false,
-      // },
+      PAGER: {
+        enabled: false,
+      },
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
