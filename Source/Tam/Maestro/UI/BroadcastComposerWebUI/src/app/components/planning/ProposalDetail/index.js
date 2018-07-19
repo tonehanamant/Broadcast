@@ -326,9 +326,7 @@ export class ProposalDetail extends Component {
                       className="form-control"
                       guide={false}
                       style={{ width: '65px' }}
-                      // value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
-                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : null}
-                      // onBlur={() => {}}
+                      value={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
                       onChange={this.onChangeNti}
                     />
                     <InputGroup.Addon>%</InputGroup.Addon>
