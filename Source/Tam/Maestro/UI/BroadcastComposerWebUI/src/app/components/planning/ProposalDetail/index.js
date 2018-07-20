@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 // import numeral from 'numeral';
-import MaskedInput from 'react-text-mask';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import { InputNumber } from 'antd';
 import { Well, Form, FormGroup, InputGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
 import DayPartPicker from 'Components/shared/DayPartPicker';
@@ -19,13 +18,6 @@ const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited }
   routing,
   isISCIEdited,
   isGridCellEdited,
-});
-
-const numberMask = createNumberMask({
-  allowDecimal: true,
-  prefix: '',
-  decimalLimit: 2,
-  integerLimit: 2,
 });
 
 /* const mapDispatchToProps = dispatch => (
@@ -103,8 +95,8 @@ export class ProposalDetail extends Component {
     this.checkValidDaypartCode(val);
   }
 
-  onChangeNti(event) {
-    const val = event.target.value >= 0 ? event.target.value : this.props.detail.NtiConversionFactor;
+  onChangeNti(value) {
+    const val = value >= 0 ? value : this.props.detail.NtiConversionFactor;
     console.log(val);
     const newVal = val / 100;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
@@ -321,14 +313,13 @@ export class ProposalDetail extends Component {
                 <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor">
                   <ControlLabel style={{ margin: '0 10px 0 10px' }}>NTI</ControlLabel>
                   <InputGroup>
-                    <MaskedInput
-                      mask={numberMask}
+                    <InputNumber
+                      min={0}
+                      max={99.99}
                       className="form-control"
-                      guide={false}
-                      style={{ width: '65px' }}
-                      // value={detail && detail.NtiConversionFactor ? Math.round(detail.NtiConversionFactor * 100) : null}
-                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : null}
-                      // onBlur={() => {}}
+                      style={{ width: '75px' }}
+                      precision={2}
+                      defaultValue={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
                       onChange={this.onChangeNti}
                     />
                     <InputGroup.Addon>%</InputGroup.Addon>
