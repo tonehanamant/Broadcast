@@ -14,8 +14,7 @@ class MarketSelector extends Component {
     this.onMarketExcluded = this.onMarketExcluded.bind(this);
     this.onClearMarketList = this.onClearMarketList.bind(this);
 
-    const { marketGroups, markets } = this.props;
-    this.typeaheadOptions = marketGroups.concat(markets);
+    this.typeaheadOptions = this.props.markets;
   }
 
   // clear typeahead and update parent state (market groups are placed in the beginning)
@@ -106,12 +105,6 @@ class MarketSelector extends Component {
 MarketSelector.propTypes = {
   name: PropTypes.string.isRequired,
 
-  marketGroups: PropTypes.arrayOf(PropTypes.shape({
-    Id: PropTypes.number,
-    Display: PropTypes.string,
-    Count: PropTypes.number,
-  })),
-
   markets: PropTypes.arrayOf(PropTypes.shape({
     Id: PropTypes.number,
     Display: PropTypes.string,
@@ -126,7 +119,6 @@ MarketSelector.propTypes = {
 };
 
 MarketSelector.defaultProps = {
-  marketGroups: [],
   markets: [],
   selectedMarkets: [],
   onMarketsSelectionChange: null,

@@ -414,13 +414,6 @@ GO
 /************************* END BCOP-3228 **********************************************/
 
 
-
-
-
-
-
-
-
 /*************************************** START BCOP-3280 & BCOP-3336 ***************************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_margin' AND object_id = OBJECT_ID('proposal_version_details'))
@@ -452,9 +445,71 @@ GO
 /*************************************** END BCOP-3280 & BCOP-3336 ***************************************************************/
 
 
-
-
-
+/*************************************** START BCOP-3324 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'market_coverage' AND object_id = OBJECT_ID('proposal_versions'))
+BEGIN
+	ALTER TABLE dbo.proposal_versions ADD [market_coverage] FLOAT CONSTRAINT DF_proposal_versions_market_coverage DEFAULT(0.8) NULL;
+	ALTER TABLE dbo.proposal_version_details DROP CONSTRAINT DF_proposal_versions_market_coverage
+END
+GO
+ALTER TABLE dbo.proposal_versions ALTER COLUMN markets TINYINT NULL
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE WHERE blackout_markets = 0)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = 1
+	WHERE blackout_markets = 0
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 100)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = 1
+	WHERE blackout_markets = 100
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 50)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = 1
+	WHERE blackout_markets = 50
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 255)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = null
+	WHERE blackout_markets = 255
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 0)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = 1
+	WHERE markets = 0
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 100)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = 1
+	WHERE markets = 100
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 50)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = 1
+	WHERE markets = 50
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 255)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = null
+	WHERE markets = 255
+END
+/*************************************** END BCOP-3324 ***************************************************************/
 
 
 

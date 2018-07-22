@@ -154,8 +154,9 @@ namespace Services.Broadcast.Repositories
                 start_date = proposalDto.FlightStartDate,
                 end_date = proposalDto.FlightEndDate,
                 guaranteed_audience_id = proposalDto.GuaranteedDemoId,
-                markets = (byte)proposalDto.MarketGroupId,
+                markets = (byte?)proposalDto.MarketGroupId,
                 blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId,
+                market_coverage = proposalDto.MarketCoverage,
                 created_by = userName,
                 created_date = timestamp,
                 modified_by = userName,
@@ -256,6 +257,7 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.guaranteed_audience_id = proposalDto.GuaranteedDemoId;
             dbProposalVersion.markets = (byte)proposalDto.MarketGroupId;
             dbProposalVersion.blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId;
+            dbProposalVersion.market_coverage = proposalDto.MarketCoverage;
             dbProposalVersion.modified_by = userName;
             dbProposalVersion.modified_date = timestamp;
             dbProposalVersion.target_budget = proposalDto.TargetBudget;
@@ -794,8 +796,9 @@ namespace Services.Broadcast.Repositories
                 FlightEndDate = proposalVersion.end_date,
                 FlightStartDate = proposalVersion.start_date,
                 GuaranteedDemoId = proposalVersion.guaranteed_audience_id,
-                MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets,
+                MarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.markets,
                 BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets,
+                MarketCoverage = proposalVersion.market_coverage,
                 Markets = proposalVersion.proposal_version_markets
                 .Where(q => q.proposal_version_id == proposalVersion.id).Select(f => new ProposalMarketDto
                 {
@@ -944,7 +947,8 @@ namespace Services.Broadcast.Repositories
             proposalVersion.GuaranteedAudienceId = x.guaranteed_audience_id;
             proposalVersion.LastModifiedBy = x.modified_by;
             proposalVersion.LastModifiedDate = x.modified_date;
-            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups)x.markets;
+            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups?)x.markets;
+            proposalVersion.BlackoutMarkets = (ProposalEnums.ProposalMarketGroups?)x.blackout_markets;
             proposalVersion.TargetUnits = x.target_units;
             proposalVersion.TargetImpressions = x.target_impressions;
             proposalVersion.Notes = x.notes;

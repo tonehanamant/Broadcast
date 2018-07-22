@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AdvertiserId = 37444,
                 ProposalName = "Proposal Test",
                 GuaranteedDemoId = 31,
-                MarketGroupId = ProposalEnums.ProposalMarketGroups.Top100,
+                MarketGroupId = ProposalEnums.ProposalMarketGroups.All,
                 BlackoutMarketGroupId = ProposalEnums.ProposalMarketGroups.All,
                 Markets = new List<ProposalMarketDto>()
                 {
@@ -192,6 +192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDto), "Id");
             jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
             jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+            jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
             jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
@@ -470,7 +471,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposalDto = _ProposalService.GetProposalById(249);
                 proposalDto.ProposalName = "Edited Proposal Test";
-                proposalDto.MarketGroupId = ProposalEnums.ProposalMarketGroups.Top50;
+                proposalDto.MarketGroupId = ProposalEnums.ProposalMarketGroups.All;
                 proposalDto.Equivalized = true;
                 proposalDto.PostType = SchedulePostType.NTI;
 
@@ -1350,8 +1351,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = _ProposalService.GetProposalById(250);
 
-                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.Top100, proposal.MarketGroupId);
-                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.Top50, proposal.BlackoutMarketGroupId);
+                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.All, proposal.MarketGroupId);
+                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.All, proposal.BlackoutMarketGroupId);
                 Assert.AreEqual(2, proposal.Markets.Count);
             }
         }
@@ -2402,6 +2403,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalChangeRequest.Details.Add(firstDetail);
 
                 var result = _ProposalService.CalculateProposalChanges(proposalChangeRequest);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveMarketCoverage()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto()
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    MarketCoverage = 0.5555
+                };
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
             }

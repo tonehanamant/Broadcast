@@ -8,12 +8,12 @@
   "FlightStartDate": "2016-05-30T00:00:00",
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": {
-    "Count": 100,
-    "Display": "Top 100",
-    "Id": 100
+    "Display": "All",
+    "Id": 1
   },
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Markets": [],
   "Notes": null,
   "PostType": 1,

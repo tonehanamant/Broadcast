@@ -62,7 +62,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
         public virtual ICollection<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
         public virtual ICollection<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
-        public virtual proposal_versions proposal_versions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual proposal_versions proposal_versions { get; set; }
     }
 }

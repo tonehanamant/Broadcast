@@ -7,17 +7,8 @@ namespace Services.Broadcast.Entities
 
         public enum ProposalMarketGroups
         {
-            [Description("Top 100")]
-            Top100 = 100,
-
-            [Description("Top 50")]
-            Top50 = 50,
-
             [Description("All")]
-            All = 0,
-
-            [Description("Custom")]
-            Custom = 255
+            All = 1
         }
 
         public enum ProposalStatusType

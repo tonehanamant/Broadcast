@@ -430,8 +430,17 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentHelper.GetPropertyValue<float>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
         }
-	 
-		public static string EmailFrom  
+
+        public static float DefaultMarketCoverage
+        {
+            get
+            {
+                return SystemComponentHelper.GetPropertyValue<float>
+                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.DefaultMarketCoverage);
+            }
+        }
+
+        public static string EmailFrom  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailFrom); }

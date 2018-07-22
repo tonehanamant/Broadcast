@@ -107,12 +107,12 @@
   ],
   "GuaranteedDemoId": 34,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": {
-    "Count": 100,
-    "Display": "Top 100",
-    "Id": 100
+    "Display": "All",
+    "Id": 1
   },
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Markets": [],
   "Notes": null,
   "PostType": 1,

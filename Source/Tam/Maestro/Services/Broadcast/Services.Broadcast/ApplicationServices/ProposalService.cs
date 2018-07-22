@@ -498,6 +498,8 @@ namespace Services.Broadcast.ApplicationServices
             // set target and default margin that are nullable when first creating a proposal
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
+            if (proposalDto.MarketCoverage.HasValue)
+                proposalDto.MarketCoverage = Math.Round(proposalDto.MarketCoverage.Value, 4, MidpointRounding.AwayFromZero);
         }
 
         private void _SetProposalDetailsDefaultValues(ProposalDto proposalDto)
@@ -1184,7 +1186,8 @@ namespace Services.Broadcast.ApplicationServices
                     .Cast<SchedulePostType>()
                     .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
                     .ToList(),
-                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList()
+                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList(),
+                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4, MidpointRounding.AwayFromZero)
             };
 
             result.MarketGroups = _GetMarketGroupList(result.Markets.Count);
@@ -1208,60 +1211,27 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<MarketGroupDto> _GetMarketGroupList(int totalMarkets)
         {
-            //Assumes Enum ID corresponds to the number of markets (except for ALL)
             var marketGroups =
                 EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>().Select(
                     g => new MarketGroupDto()
                     {
                         Display = g.Display,
                         Id = g.Id,
-                        Count = g.Id
                     }).ToList();
-
-            var totalMarketsGroup =
-                marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.All).Single();
-            totalMarketsGroup.Count = totalMarkets;
-
-            var customGroup = marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.Custom).Single();
-            customGroup.Count = 0;
 
             return marketGroups;
         }
 
         private MarketGroupDto _GetMarketGroupDto(ProposalEnums.ProposalMarketGroups? marketGroup)
         {
-            if (marketGroup == null || marketGroup == ProposalEnums.ProposalMarketGroups.Custom)
+            if (marketGroup == null)
                 return null;
-
-            var marketCount = _GetCountForMarketGroup(marketGroup.Value);
 
             return new MarketGroupDto
             {
-                Count = marketCount,
-                Display = marketGroup.Description(),
-                Id = (int)marketGroup
+                Id = (int)marketGroup,
+                Display = marketGroup.Description()
             };
-        }
-
-        private int _GetCountForMarketGroup(ProposalEnums.ProposalMarketGroups marketGroup)
-        {
-            int marketCount;
-
-            if (marketGroup == ProposalEnums.ProposalMarketGroups.All)
-            {
-                marketCount =
-                    _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().Count;
-            }
-            else if (marketGroup == ProposalEnums.ProposalMarketGroups.Custom)
-            {
-                marketCount = 0;
-            }
-            else
-            {
-                marketCount = (int)marketGroup;
-            }
-
-            return marketCount;
         }
 
         public List<DisplayProposalVersion> GetProposalVersionsByProposalId(int proposalId)

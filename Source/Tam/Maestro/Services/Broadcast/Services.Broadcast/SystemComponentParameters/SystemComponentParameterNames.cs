@@ -396,8 +396,13 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "DefaultNtiConversionFactor"; }
         }
-	 
-		public static string EmailFrom  
+
+        public static string DefaultMarketCoverage
+        {
+            get { return "DefaultMarketCoverage"; }
+        }
+
+        public static string EmailFrom  
 		{
             get { return "EmailFrom"; }
         }

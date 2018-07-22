@@ -199,6 +199,7 @@
       "Id": 348
     }
   ],
+  "DefaultMarketCoverage": 0.8,
   "ForecastDefaults": {
     "CrunchedMonths": [
       {
@@ -275,24 +276,8 @@
   },
   "MarketGroups": [
     {
-      "Count": 210,
       "Display": "All",
-      "Id": 0
-    },
-    {
-      "Count": 50,
-      "Display": "Top 50",
-      "Id": 50
-    },
-    {
-      "Count": 100,
-      "Display": "Top 100",
-      "Id": 100
-    },
-    {
-      "Count": 0,
-      "Display": "Custom",
-      "Id": 255
+      "Id": 1
     }
   ],
   "Markets": [

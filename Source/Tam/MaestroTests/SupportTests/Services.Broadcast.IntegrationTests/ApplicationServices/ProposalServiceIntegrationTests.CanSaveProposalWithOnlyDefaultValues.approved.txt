@@ -10,12 +10,9 @@
   "FlightWeeks": [],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
-  "MarketGroup": {
-    "Count": 210,
-    "Display": "All",
-    "Id": 0
-  },
-  "MarketGroupId": 0,
+  "MarketCoverage": null,
+  "MarketGroup": null,
+  "MarketGroupId": null,
   "Markets": [],
   "Notes": null,
   "PostType": 1,
