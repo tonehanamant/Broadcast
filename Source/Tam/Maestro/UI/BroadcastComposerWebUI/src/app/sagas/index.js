@@ -60,5 +60,6 @@ export default function* rootSaga() {
     planningSaga.watchRequestPrograms(),
     planningSaga.watchRequestShowTypes(),
     planningSaga.watchDeleteProposalDetail(),
+    planningSaga.watchRequestPlanningFiltered(),
   ];
 }

@@ -66,7 +66,7 @@ export default class ProposalActions extends Component {
       this.props.getProposalUnlock(this.props.proposal.Id);
     }
     setTimeout(() => {
-      window.location = '/broadcast/planning';
+      window.location = '/broadcastreact/planning';
     }, 500);
   }
 
