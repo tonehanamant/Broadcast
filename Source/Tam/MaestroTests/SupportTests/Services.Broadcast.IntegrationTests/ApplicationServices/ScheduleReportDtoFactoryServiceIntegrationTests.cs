@@ -276,11 +276,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var fileName = "BVS Load For Various Tests.xlsx";
 
             var bvsRequest = new BvsSaveRequest();
-            bvsRequest.UserName = "LoadBvsFile User";
-            bvsRequest.BvsFiles.Add(new BvsFile() {BvsFileName = fileName, BvsStream = stream});
+            bvsRequest.BvsFiles.Add(new BvsFileRequest() {BvsFileName = fileName, BvsStream = stream});
             ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
-            sut.SaveBvsFiles(bvsRequest);
+            sut.SaveBvsFiles(bvsRequest, "LoadBvsFile User");
         }
 
         private int _CreateBlankScheduleWithRelatedSchedules()
@@ -572,40 +571,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileName = "BVS Load For Various Tests NTI NSI Adjustments.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "LoadBvsFile User";
-                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest() { BvsFileName = fileName, BvsStream = stream });
                 ITrackerService trackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
-                trackerService.SaveBvsFiles(bvsRequest);
+                trackerService.SaveBvsFiles(bvsRequest, "LoadBvsFile User");
 
                 ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
                 var saveRequest = new ScheduleSaveRequest();
-                var schedule = new ScheduleDTO();
-
-                schedule.AdvertiserId = 39279;
-                schedule.EstimateId = estimateId;
-                schedule.PostingBookId = 413;
-                schedule.ScheduleName = "SCX File For Various tests NTI NSI.scx";
-                schedule.UserName = "SCX User";
-                schedule.FileName = @"SCX File For Various tests NTI NSI.scx";
-                schedule.FileStream = new FileStream(@".\Files\SCX File For Various tests NTI NSI.scx", FileMode.Open,FileAccess.Read);
-
-                schedule.MarketRestrictions = new List<int>();
-                schedule.DaypartRestriction = new DaypartDto()
+                var schedule = new ScheduleDTO
                 {
-                    startTime = 0,endTime = 86400 - 1,
-                    mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,sun = true
-                };
-                schedule.Equivalized = true;
-                schedule.ISCIs = new List<IsciDto>
+                    AdvertiserId = 39279,
+                    EstimateId = estimateId,
+                    PostingBookId = 413,
+                    ScheduleName = "SCX File For Various tests NTI NSI.scx",
+                    UserName = "SCX User",
+                    FileName = @"SCX File For Various tests NTI NSI.scx",
+                    FileStream = new FileStream(@".\Files\SCX File For Various tests NTI NSI.scx", FileMode.Open, FileAccess.Read),
+
+                    MarketRestrictions = new List<int>(),
+                    DaypartRestriction = new DaypartDto()
+                    {
+                        startTime = 0,
+                        endTime = 86400 - 1,
+                        mon = true,
+                        tue = true,
+                        wed = true,
+                        thu = true,
+                        fri = true,
+                        sat = true,
+                        sun = true
+                    },
+                    Equivalized = true,
+                    ISCIs = new List<IsciDto>
                 {
                     new IsciDto {House = "AAABBB", Client = "cl_AAABBB"},
                     new IsciDto {House = "CCCDDD", Client = "cl_CCCDDD"}
-                };
+                },
 
-                schedule.PostType = SchedulePostType.NTI;
-                schedule.InventorySource = InventorySourceEnum.OpenMarket;
+                    PostType = SchedulePostType.NTI,
+                    InventorySource = InventorySourceEnum.OpenMarket
+                };
                 saveRequest.Schedule = schedule;
                 int scheduleId = sut.SaveSchedule(saveRequest);
 

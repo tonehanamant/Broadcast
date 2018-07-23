@@ -462,6 +462,15 @@
     <None Include="Files\SCX Overlapping Fields.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\SigmaImport.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SigmaImportRequiredColumnMissing.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SigmaImportRequiredFieldEmpty.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\StrataSBMSInvoicePostExportInvalidColumnName.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

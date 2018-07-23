@@ -17,13 +17,14 @@ using Moq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Converters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class TrackerServiceIntegrationTests
     {
-        private ITrackerService _Sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+        private ITrackerService _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
         private readonly ITrackingEngine _SutEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackingEngine>();
 
@@ -269,7 +270,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var actual = _Sut.GetSchedulesByDate(new DateTime(2000, 1, 1), new DateTime(2016, 01, 01));
+                var actual = _TrackerService.GetSchedulesByDate(new DateTime(2000, 1, 1), new DateTime(2016, 01, 01));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplaySchedule), "Id");
@@ -305,7 +306,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
 
-                var response = _Sut.GetBvsScrubbingData(3417);
+                var response = _TrackerService.GetBvsScrubbingData(3417);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -424,7 +425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
 
-                var response = _Sut.GetBvsScrubbingData(3416);
+                var response = _TrackerService.GetBvsScrubbingData(3416);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -460,7 +461,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetScheduleDetailsByEstimateId(3417);
+                var response = _TrackerService.GetScheduleDetailsByEstimateId(3417);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -472,7 +473,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetScheduleHeader(3417);
+                var response = _TrackerService.GetScheduleHeader(3417);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -484,7 +485,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetScheduleStations(69);
+                var response = _TrackerService.GetScheduleStations(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -504,7 +505,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetSchedulePrograms(69);
+                var response = _TrackerService.GetSchedulePrograms(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -564,7 +565,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                _Sut.SaveSchedule(saveRequest);
+                _TrackerService.SaveSchedule(saveRequest);
 
                 var response = _ScheduleRepository.GetScheduleTrackingDetails(3390);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -578,9 +579,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(json);
             }
         }
-
-       
-
+        
         [Test]
         public void LoadBvs()
         {
@@ -592,9 +591,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
-                _Sut.SaveBvsFiles(bvsRequest);
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                _TrackerService.SaveBvsFiles(bvsRequest, "User");
             }
         }
 
@@ -609,11 +607,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS Bad Campaign.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
                 try
                 {
-                    _Sut.SaveBvsFiles(bvsRequest);
+                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
                 }
                 catch (Exception e)
                 {
@@ -635,11 +632,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS Beiersdorf_Hersheys Empty Rank.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
                 try
                 {
-                    _Sut.SaveBvsFiles(bvsRequest);
+                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
                 }
                 catch (Exception e)
                 {
@@ -651,6 +647,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Invalid spot length", MatchType = MessageMatch.Contains)]
         public void LoadBvs_Bad_Spot_Length_Lookup()
         {
             using (new TransactionScopeWrapper())
@@ -660,10 +657,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS Beiersdorf_Hersheys Bad Spot Length.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
-                Assert.Throws<Exception>(() => _Sut.SaveBvsFiles(bvsRequest));
+                _TrackerService.SaveBvsFiles(bvsRequest, "User");
             }
         }
 
@@ -677,23 +673,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileName = "BVS Beiersdorf_Hersheys Bad Spot Length.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
                 stream = new FileStream(@".\Files\BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx", FileMode.Open,
                     FileAccess.Read);
                 fileName = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx";
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
                 stream = new FileStream(@".\Files\BVS Beiersdorf_Hersheys Empty Rank.xlsx", FileMode.Open,
                     FileAccess.Read);
                 fileName = "BVS Beiersdorf_Hersheys Empty Rank.xlsx";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
                 try
                 {
-                    _Sut.SaveBvsFiles(bvsRequest);
+                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
                 }
                 catch (Exception e)
                 {
@@ -717,12 +711,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS empty file.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
                 try
                 {
-                    _Sut.SaveBvsFiles(bvsRequest);
+                    _TrackerService.SaveBvsFiles(bvsRequest, "User");
                 }
                 catch (Exception e)
                 {
@@ -732,8 +725,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
             throw new Exception("Expected empty file error but didn't happen");
         }
-
-
+        
         [Test]
         [Ignore]
         public void LoadFtp()
@@ -742,7 +734,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             string msg;
             using (new TransactionScopeWrapper())
             {
-                msg = _Sut.SaveBvsViaFtp("test_user");
+                msg = _TrackerService.SaveBvsViaFtp("test_user");
             }
             Console.WriteLine(msg);
         }
@@ -753,7 +745,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.ScheduleExists(3417);
+                var response = _TrackerService.ScheduleExists(3417);
 
                 Assert.AreEqual(response, true);
             }
@@ -765,7 +757,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.ScheduleExists(876165456);
+                var response = _TrackerService.ScheduleExists(876165456);
 
                 Assert.AreEqual(response, false);
             }
@@ -778,7 +770,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var response = _Sut.GetBvsScrubbingData(3417);
+                var response = _TrackerService.GetBvsScrubbingData(3417);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -798,7 +790,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetScheduleStations(69);
+                var response = _TrackerService.GetScheduleStations(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -818,7 +810,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetSchedulePrograms(69);
+                var response = _TrackerService.GetSchedulePrograms(69);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 var jsonSettings = new JsonSerializerSettings
@@ -842,7 +834,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             scrub.DetailIds.Add(9629);
 
-            _Sut.SaveScrubbingMapping(scrub);
+            _TrackerService.SaveScrubbingMapping(scrub);
         }
 
         [Test]
@@ -852,7 +844,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetScheduleAudiences(3417);
+                var response = _TrackerService.GetScheduleAudiences(3417);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -864,7 +856,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetBvsMapByType("Program");
+                var response = _TrackerService.GetBvsMapByType("Program");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -876,7 +868,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
 
-                var response = _Sut.GetBvsMapByType("Station");
+                var response = _TrackerService.GetBvsMapByType("Station");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -892,8 +884,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     BvsValue = "10 NEWS 6PM SATURDAY",
                     ScheduleValue = "10 NEWS 6P SAT"
                 };
-                _Sut.DeleteMapping("Program", mapping);
-                var response = _Sut.GetBvsMapByType("Program");
+                _TrackerService.DeleteMapping("Program", mapping);
+                var response = _TrackerService.GetBvsMapByType("Program");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -909,8 +901,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     BvsValue = "ADSM",
                     ScheduleValue = "ADSM+S2"
                 };
-                _Sut.DeleteMapping("Station", mapping);
-                var response = _Sut.GetBvsMapByType("Station");
+                _TrackerService.DeleteMapping("Station", mapping);
+                var response = _TrackerService.GetBvsMapByType("Station");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
             }
         }
@@ -921,7 +913,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var response = _Sut.GetBvsLoadData(new DateTime(2017, 05, 05));
+                var response = _TrackerService.GetBvsLoadData(new DateTime(2017, 05, 05));
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(Quarter), "Id");
                 jsonResolver.Ignore(typeof(BvsLoadDto), "CurrentQuarter");
@@ -970,7 +962,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
-                _Sut.SaveSchedule(saveRequest);
+                _TrackerService.SaveSchedule(saveRequest);
 
             }
             finally
@@ -988,13 +980,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var stream = new FileStream(@".\Files\Checkers BVS Report - Estimate4401.DAT", FileMode.Open,
                 FileAccess.Read);
-            bvsRequest.BvsFiles.Add(new BvsFile
+            bvsRequest.BvsFiles.Add(new BvsFileRequest
             {
-                BvsStream = stream,
-                BvsFileName = "User"
+                BvsStream = stream
             });
 
-            _Sut.SaveBvsFiles(bvsRequest);
+            _TrackerService.SaveBvsFiles(bvsRequest, "User");
         }
 
         private const int TRACKER_TEST_ESTIMATE_ID = 121220;
@@ -1011,10 +1002,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS_Data_For_Tracking.DAT";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
-                _Sut.SaveBvsFiles(bvsRequest);
+                _TrackerService.SaveBvsFiles(bvsRequest, "User");
 
                 var saveRequest = new ScheduleSaveRequest();
                 var schedule = new ScheduleDTO();
@@ -1062,7 +1052,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                _Sut.SaveSchedule(saveRequest);
+                _TrackerService.SaveSchedule(saveRequest);
                 var actual = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                     .GetDataRepository<IBvsRepository>()
                     .GetBvsTrackingDetailsByEstimateId(TRACKER_TEST_ESTIMATE_ID);
@@ -1112,7 +1102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.InventorySource = InventorySourceEnum.OpenMarket;
                 schedule.PostType = SchedulePostType.NSI;
                 saveRequest.Schedule = schedule;
-                var scheduleId = _Sut.SaveSchedule(saveRequest);
+                var scheduleId = _TrackerService.SaveSchedule(saveRequest);
 
                 var reportService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
 
@@ -1184,7 +1174,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                var scheduleId = _Sut.SaveSchedule(saveRequest);
+                var scheduleId = _TrackerService.SaveSchedule(saveRequest);
                 var actual = _ScheduleRepository.GetDisplayScheduleById(scheduleId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1243,7 +1233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                var scheduleId = _Sut.SaveSchedule(saveRequest);
+                var scheduleId = _TrackerService.SaveSchedule(saveRequest);
 
                 Console.WriteLine(scheduleId);
                 tran.Complete();
@@ -1259,9 +1249,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = "BVS Quick Load.xlsx";
 
             var bvsRequest = new BvsSaveRequest();
-            bvsRequest.UserName = "User";
-            bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
-            _Sut.SaveBvsFiles(bvsRequest);
+            bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+            _TrackerService.SaveBvsFiles(bvsRequest, "User");
         }
 
         /// <summary>
@@ -1327,7 +1316,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                var scheduleId1 = _Sut.SaveSchedule(saveRequest);
+                var scheduleId1 = _TrackerService.SaveSchedule(saveRequest);
 
                 // create second schedule contain one of the 2 ISCIS from the first schedule and one of the 2 audiences
                 saveRequest = new ScheduleSaveRequest();
@@ -1371,11 +1360,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                var scheduleId2 = _Sut.SaveSchedule(saveRequest);
+                var scheduleId2 = _TrackerService.SaveSchedule(saveRequest);
 
                 // now we assert results
                 // first schedule
-                var efSchedule = _Sut.GetDisplayScheduleById(scheduleId1);
+                var efSchedule = _TrackerService.GetDisplayScheduleById(scheduleId1);
                 var estimates = _BvsRepository.GetEstimateIdsByIscis(efSchedule.Iscis.Select(ib => ib.House).ToList());
                 var actual = new List<BvsPostDetailAudience>();
 
@@ -1391,7 +1380,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 // second schedule
-                efSchedule = _Sut.GetDisplayScheduleById(scheduleId2);
+                efSchedule = _TrackerService.GetDisplayScheduleById(scheduleId2);
 
                 estimates = _BvsRepository.GetEstimateIdsByIscis(efSchedule.Iscis.Select(ib => ib.House).ToList());
                 //actual = new List<BvsPostDetailAudience>();
@@ -1448,7 +1437,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                _Sut.SaveSchedule(saveRequest);
+                _TrackerService.SaveSchedule(saveRequest);
             }
         }
 
@@ -1495,7 +1484,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 saveRequest.Schedule = schedule;
 
-                _Sut.SaveSchedule(saveRequest);
+                _TrackerService.SaveSchedule(saveRequest);
             }
         }
 
@@ -1554,7 +1543,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             saveRequest.Schedule = schedule;
 
-            _Sut.SaveSchedule(saveRequest);
+            _TrackerService.SaveSchedule(saveRequest);
         }
 
         [Test]
@@ -1562,7 +1551,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetScheduleSettings()
         {
             var schedule = _ScheduleRepository.GetScheduleDtoByEstimateId(3910);
-            var displaySchedule = _Sut.GetDisplayScheduleById(schedule.Id);
+            var displaySchedule = _TrackerService.GetDisplayScheduleById(schedule.Id);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplaySchedule), "Id");
@@ -1632,7 +1621,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             saveRequest.Schedule = schedule;
 
-            _Sut.SaveSchedule(saveRequest);
+            _TrackerService.SaveSchedule(saveRequest);
         }
 
         [Test]
@@ -1689,7 +1678,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     schedule.InventorySource = InventorySourceEnum.OpenMarket;
 
                     saveRequest.Schedule = schedule;
-                    _Sut.SaveSchedule(saveRequest);
+                    _TrackerService.SaveSchedule(saveRequest);
 
                     var scheduleId = _ScheduleRepository.GetScheduleDtoByEstimateId(estimateId).Id;
                     var response = _ScheduleRepository.GetDisplayScheduleById(scheduleId);
@@ -1754,9 +1743,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
-                _Sut.SaveBvsFiles(bvsRequest);
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                _TrackerService.SaveBvsFiles(bvsRequest, "User");
 
 
                 var stream2 = new FileStream(@".\Files\BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle2.xlsx",
@@ -1764,9 +1752,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName2 = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle2.xlsx";
 
                 var bvsRequest2 = new BvsSaveRequest();
-                bvsRequest2.UserName = "User";
-                bvsRequest2.BvsFiles.Add(new BvsFile { BvsFileName = fileName2, BvsStream = stream2 });
-                var dontIgnore = _Sut.SaveBvsFiles(bvsRequest2).Item2;
+                bvsRequest2.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName2, BvsStream = stream2 });
+                var dontIgnore = _TrackerService.SaveBvsFiles(bvsRequest2, "User").Item2;
 
                 const string correctMessage =
                     @"<p>The following line(s) were previously imported and were ignored:</p><ul><li>Line 10: Station KTVK, Date 3/13/2017 12:00:00 AM, Time Aired 19302, ISCI 38VA45BK95H, Spot Length 30, Campaign 3638, Advertiser BEIERS HERSHEY</li><li>Line 11: Station KPLR, Date 3/13/2017 12:00:00 AM, Time Aired 20217, ISCI 38VA45BK95H, Spot Length 30, Campaign 3638, Advertiser BEIERS HERSHEY</li><li>Line 12: Station WAXN, Date 3/13/2017 12:00:00 AM, Time Aired 19770, ISCI 38VA45BK95H, Spot Length 30, Campaign 3638, Advertiser BEIERS HERSHEY</li><li>Line 14: Station KCWI, Date 3/13/2017 12:00:00 AM, Time Aired 21515, ISCI 38VA45BK95H, Spot Length 30, Campaign 3638, Advertiser BEIERS HERSHEY</li><li>Line 15: Station WGMB, Date 3/13/2017 12:00:00 AM, Time Aired 21541, ISCI 38VA45BK95H, Spot Length 30, Campaign 3638, Advertiser BEIERS HERSHEY</li></ul><p>The following line(s) were previously imported and were updated with new program name:</p><ul><li>Line 9: Station WMOR, Date 3/13/2017 12:00:00 AM, Time Aired 18532, ISCI 38VA49CE08, Spot Length 30, Campaign 3638, Advertiser BEIERS HERSHEY, Program Name JUDGE ALEXNEWPROGRAMNAME</li></ul>";
@@ -1779,9 +1766,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var stream = new FileStream(@".\Files\" + fileName, FileMode.Open, FileAccess.Read);
 
             var bvsRequest = new BvsSaveRequest();
-            bvsRequest.UserName = "INT Test User";
-            bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
-            _Sut.SaveBvsFiles(bvsRequest);
+            bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+            _TrackerService.SaveBvsFiles(bvsRequest, "INT Test User");
         }
 
         private static int _ImportOvernightSchedule()
@@ -1888,17 +1874,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 map.ScheduleProgram = "VARIOUS";
                 map.DetailIds = new List<int> { 86438 };
 
-                var trackingDetails = _Sut.SaveScrubbingMapping(map).First();
+                var trackingDetails = _TrackerService.SaveScrubbingMapping(map).First();
 
                 // ensure it mapped properly
                 Assert.AreEqual(TrackingStatus.InSpec, trackingDetails.Status, "Test failed due to bad mapping");
                 // remove map
-                _Sut.DeleteMapping("Program", new TrackingMapValue { BvsValue = "GOOD MORNING ARIZONA 5AM", ScheduleValue = "VARIOUS" });
+                _TrackerService.DeleteMapping("Program", new TrackingMapValue { BvsValue = "GOOD MORNING ARIZONA 5AM", ScheduleValue = "VARIOUS" });
 
-                _Sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+                _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
                 // retract and ensure the bvs detail status is back to outofspec
-                _Sut.TrackSchedule(3420);
+                _TrackerService.TrackSchedule(3420);
 
                 detail = _BvsRepository.GetBvsTrackingDetailsByDetailIds(new List<int> { 86438 }).First();
                 Assert.AreEqual(TrackingStatus.OutOfSpec, detail.Status);
@@ -1915,11 +1901,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string fileName = "BVS Load For Various Tests.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "LoadBvsFile User";
-                bvsRequest.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
-                var bvsFileId = sut.SaveBvsFiles(bvsRequest).Item1.First();
+                var bvsFileId = sut.SaveBvsFiles(bvsRequest, "LoadBvsFile User").Item1.First();
 
                 sut.DeleteBvsFile(bvsFileId);
                 var bvsFiles = sut.GetBvsFileSummaries().ToList();
@@ -1941,10 +1926,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileName = "BVS For Overlapping Fields.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = "BVS For Overlapping Fields";
-                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest() { BvsFileName = fileName, BvsStream = stream });
                 
-                int bvsFileId = _Sut.SaveBvsFiles(bvsRequest).Item1.First();
+                int bvsFileId = _TrackerService.SaveBvsFiles(bvsRequest, "BVS For Overlapping Fields").Item1.First();
 
                 var saveRequest = new ScheduleSaveRequest();
                 var schedule = new ScheduleDTO();
@@ -1971,7 +1955,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
-                _Sut.SaveSchedule(saveRequest);
+                _TrackerService.SaveSchedule(saveRequest);
 
                 var output = _BvsRepository.GetBvsTrackingDetailsByEstimateId(estimate_id);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2003,10 +1987,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var bvsFileName = "BVS Load For Various Tests.xlsx";
 
                 var bvsRequest = new BvsSaveRequest();
-                bvsRequest.UserName = bvsFileName;
-                bvsRequest.BvsFiles.Add(new BvsFile() { BvsFileName = bvsFileName, BvsStream = stream });
+                bvsRequest.BvsFiles.Add(new BvsFileRequest() { BvsFileName = bvsFileName, BvsStream = stream });
 
-                int bvsFileId = _Sut.SaveBvsFiles(bvsRequest).Item1.First();
+                int bvsFileId = _TrackerService.SaveBvsFiles(bvsRequest, bvsFileName).Item1.First();
 
                 var saveRequest = new ScheduleSaveRequest();
                 var schedule = new ScheduleDTO();
@@ -2027,7 +2010,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.PostType = SchedulePostType.NTI;
                 saveRequest.Schedule = schedule;
 
-                var scheduleId = _Sut.SaveSchedule(saveRequest);
+                var scheduleId = _TrackerService.SaveSchedule(saveRequest);
 
 
                 var trackingDetails = _BvsRepository.GetBvsTrackingDetailsByEstimateId(estimate_id);
@@ -2123,5 +2106,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void LoadSigmaFile()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImport.csv", FileMode.Open, FileAccess.Read);
+
+                var bvsRequest = new BvsSaveRequest();
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = "SigmaImport.csv", BvsStream = stream });
+                var result =  _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
     }
 }
