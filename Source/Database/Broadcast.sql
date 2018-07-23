@@ -454,7 +454,7 @@ END
 GO
 ALTER TABLE dbo.proposal_versions ALTER COLUMN markets TINYINT NULL
 GO
-IF EXISTS(SELECT * FROM proposal_versions WHERE WHERE blackout_markets = 0)
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 0)
 BEGIN
 	UPDATE proposal_versions
 	SET blackout_markets = 1
