@@ -109,6 +109,7 @@
   "Margin": 20.0,
   "MarketCoverage": null,
   "MarketGroup": {
+    "Count": 0,
     "Display": "All",
     "Id": 1
   },

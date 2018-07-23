@@ -4,11 +4,18 @@ namespace Services.Broadcast.Entities
 {
     public class ProposalEnums
     {
-
         public enum ProposalMarketGroups
         {
             [Description("All")]
-            All = 1
+            OldAll = 0,
+            [Description("All")]
+            All = 1,
+            [Description("Top 50")]
+            Top50 = 50,
+            [Description("Top 100")]
+            Top100 = 100,
+            [Description("All")]
+            Custom = 255
         }
 
         public enum ProposalStatusType
