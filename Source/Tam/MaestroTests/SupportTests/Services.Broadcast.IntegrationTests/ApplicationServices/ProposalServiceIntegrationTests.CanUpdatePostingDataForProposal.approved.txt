@@ -138,6 +138,5 @@
   "TotalImpressionsMarginAchieved": false,
   "TotalImpressionsPercent": 0.0,
   "ValidationWarning": null,
-  "Version": 1,
-  "VersionId": 26006
+  "Version": 1
 }
