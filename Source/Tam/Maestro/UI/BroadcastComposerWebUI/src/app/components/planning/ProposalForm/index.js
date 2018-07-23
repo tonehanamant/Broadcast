@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Label, FormGroup, InputGroup, ControlLabel, FormControl, HelpBlock, Tooltip, Glyphicon, Button, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
+import { InputNumber } from 'antd';
 
 import moment from 'moment';
 
@@ -21,13 +22,12 @@ export default class ProposalForm extends Component {
     this.onChangeAdvertiserId = this.onChangeAdvertiserId.bind(this);
     this.onChangeGuaranteedDemoId = this.onChangeGuaranteedDemoId.bind(this);
     this.onChangeSecondaryDemos = this.onChangeSecondaryDemos.bind(this);
+    this.onChangeCoverage = this.onChangeCoverage.bind(this);
     this.onChangeNotes = this.onChangeNotes.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
 
-    this.onMarketGroupChange = this.onMarketGroupChange.bind(this);
-    this.marketSelectorOptionRenderer = this.marketSelectorOptionRenderer.bind(this);
-    this.marketSelectorValueRenderer = this.marketSelectorValueRenderer.bind(this);
+    this.onOpenMarketList = this.onOpenMarketList.bind(this);
     this.updateMarketCount = this.updateMarketCount.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
@@ -51,27 +51,17 @@ export default class ProposalForm extends Component {
     this.checkValidProposalName(val);
   }
 
-  onMarketGroupChange(selectedMarketGroup) {
-    const { initialdata, updateProposalEditForm } = this.props;
+  onOpenMarketList() {
+    this.props.toggleModal({
+      modal: 'marketSelectorModal',
+      active: true,
+    });
+  }
 
-    let option = selectedMarketGroup;
-    if (selectedMarketGroup.Count) {
-      option = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === selectedMarketGroup.Id);
-    }
-
-    if (option.Id === -1) {
-      option = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === 255);
-      this.props.toggleModal({
-        modal: 'marketSelectorModal',
-        active: true,
-      });
-    } else {
-      updateProposalEditForm({ key: 'Markets', value: null });
-      updateProposalEditForm({ key: 'MarketGroupId', value: option.Id });
-      updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: null });
-    }
-
-    this.setState({ selectedMarketGroup: option });
+  onChangeCoverage(value) {
+    const val = value ? value / 100 : null;
+    // console.log('change coverage', val, value, this.props.proposalEditForm.MarketCoverage);
+    this.props.updateProposalEditForm({ key: 'MarketCoverage', value: val });
   }
 
   onChangePostType(value) {
@@ -103,39 +93,6 @@ export default class ProposalForm extends Component {
   onChangeNotes(event) {
     const val = event.target.value;
     this.props.updateProposalEditForm({ key: 'Notes', value: val });
-  }
-
-  marketSelectorOptionRenderer(option) {
-    let count = option.Count;
-    const divStyle = { overflow: 'hidden' };
-    const countStyle = { color: '#c0c0c0' };
-
-    // custom
-    if (option.Id === 255) {
-      count = this.state.customMarketCount;
-    }
-
-    // select custom
-    const isOpenCustomOption = option.Id === -1;
-    if (isOpenCustomOption) {
-      countStyle.Display = 'none';
-    }
-
-    return (
-      <div style={divStyle} href="">
-        {isOpenCustomOption ? <hr style={{ margin: '8px' }} /> : null}
-        <span className="pull-left">{option.Display}</span>
-        <span className="pull-right" style={countStyle}>{count}</span>
-      </div>
-    );
-  }
-
-  marketSelectorValueRenderer() {
-    return (
-      <div style={{ overflow: 'hidden' }} href="">
-        <span className="pull-left ">{this.state.selectedMarketGroup.Display}</span>
-      </div>
-    );
   }
 
   updateMarketCount(customMarketCount) {
@@ -210,18 +167,12 @@ export default class ProposalForm extends Component {
   }
 
   render() {
-    const { initialdata, proposalEditForm, isReadOnly } = this.props;
+    const { initialdata, proposalEditForm, isReadOnly, isEdit } = this.props;
+    // const { MarketCoverage } = proposalEditForm;
 
     // update custom count
     const customIndex = initialdata.MarketGroups.findIndex(marketGroup => marketGroup.Id === 255);
     initialdata.MarketGroups[customIndex].Count = this.state.customMarketCount;
-
-    // add 'Edit Custom Market List' option
-    const marketOptions = initialdata.MarketGroups.filter(marketGroup => marketGroup.Count > 0);
-    marketOptions.push({ Id: -1, Display: 'Edit Custom Market List' });
-
-    // selected market group
-    const selectedMarketGroup = this.state.selectedMarketGroup || marketOptions[0];
 
     //  handle hiatus flights tips display
     let hasTip = false;
@@ -241,6 +192,11 @@ export default class ProposalForm extends Component {
       );
     };
     const tooltip = checkFlightWeeksTip(this.props.proposalEditForm.FlightWeeks);
+
+    // default coverage from initialData if create (not isEdit)
+    // console.log('COVERAGE>>>>>>>>>>>>>>>>>', proposalEditForm.MarketCoverage, isEdit);
+    const rawCoverage = isEdit ? proposalEditForm.MarketCoverage : initialdata.DefaultMarketCoverage;
+    const initialCoverage = rawCoverage ? rawCoverage * 100 : null;
 
     return (
       <div id="proposal-form">
@@ -291,19 +247,24 @@ export default class ProposalForm extends Component {
 									</Col>
 									<Col md={3}>
                     <FormGroup controlId="proposalMarket">
-                      <ControlLabel><strong>Market</strong></ControlLabel>
-                      <Select
-                        name="marketGroup"
-                        placeholder="Choose a market..."
-                        value={selectedMarketGroup}
-                        onChange={this.onMarketGroupChange}
-                        options={marketOptions}
-                        optionRenderer={this.marketSelectorOptionRenderer}
-                        valueRenderer={this.marketSelectorValueRenderer}
-                        clearable={false}
-                        disabled={isReadOnly}
-                        valueKey="Id"
-                      />
+                      <ControlLabel><strong>Coverage</strong></ControlLabel>
+                      <InputGroup style={{ maxWidth: '65%' }}>
+                        <InputGroup.Addon>%</InputGroup.Addon>
+                          <InputNumber
+                            style={{ height: '34px' }}
+                            min={1}
+                            max={100}
+                            precision={2}
+                            defaultValue={initialCoverage}
+                            // formatter={value => `${value}%`}
+                            // parser={value => value.replace('%', '')}
+                            disabled={isReadOnly}
+                            onChange={this.onChangeCoverage}
+                          />
+                        <InputGroup.Button>
+                          <Button onClick={this.onOpenMarketList}>...</Button>
+                        </InputGroup.Button>
+                      </InputGroup>
                     </FormGroup>
                   </Col>
 									<Col md={2}>
@@ -503,7 +464,7 @@ ProposalForm.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
-
+  isEdit: PropTypes.bool.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
 };
 

@@ -16,7 +16,7 @@ namespace Services.Broadcast.Entities.DTO
 
         public MarketGroupDto BlackoutMarketGroup { get; set; }
 
-        public ProposalEnums.ProposalMarketGroups MarketGroupId { get; set; }
+        public ProposalEnums.ProposalMarketGroups? MarketGroupId { get; set; }
 
         public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
 

@@ -230,7 +230,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filteredProgram =
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).ToList();
 
-                Assert.IsTrue(1 == filteredProgram.Count());
+                Assert.IsTrue(14 == filteredProgram.Count());
             }
         }
 
@@ -299,7 +299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filtereddaypartCount =
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
 
-                Assert.IsTrue(filtereddaypartCount == 1);
+                Assert.IsTrue(filtereddaypartCount == 2);
             }
         }
 

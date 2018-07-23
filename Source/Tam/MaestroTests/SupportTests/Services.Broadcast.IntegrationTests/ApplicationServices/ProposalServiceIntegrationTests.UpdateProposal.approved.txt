@@ -1,7 +1,7 @@
 ﻿{
   "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
-  "BlackoutMarketGroupId": 50,
+  "BlackoutMarketGroupId": 1,
   "CanDelete": false,
   "Details": [
     {
@@ -332,8 +332,9 @@
   "GuaranteedDemoId": 31,
   "Id": 250,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "PrimaryVersionId": 50,

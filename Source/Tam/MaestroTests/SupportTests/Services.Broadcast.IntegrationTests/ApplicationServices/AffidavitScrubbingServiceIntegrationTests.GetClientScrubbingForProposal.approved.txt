@@ -258,7 +258,7 @@
   },
   "GuaranteedDemo": "House Holds",
   "Id": 253,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Markets": [],
   "Name": "Proposal Test",
   "Notes": null,

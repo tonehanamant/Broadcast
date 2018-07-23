@@ -140,8 +140,9 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Markets": [],
   "Notes": null,
   "PostType": 1,
@@ -167,6 +168,5 @@
   "TotalImpressionsMarginAchieved": false,
   "TotalImpressionsPercent": 0.0,
   "ValidationWarning": null,
-  "Version": 1,
-  "VersionId": 51
+  "Version": 1
 }

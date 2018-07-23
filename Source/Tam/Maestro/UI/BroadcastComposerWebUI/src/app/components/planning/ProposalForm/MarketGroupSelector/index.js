@@ -142,7 +142,7 @@ class MarketGroupSelector extends Component {
     const { initialdata, modal } = this.props;
     const { currentSelectedMarkets, currentBlackoutMarkets } = this.state;
 
-    const marketGroups = initialdata.MarketGroups.filter(market => (market.Id !== -1) && (market.Id !== 255));
+    const marketGroup = initialdata.MarketGroups.find(market => market.Id === 0);
 
     return (
       <Modal show={modal && modal.active} bsSize="large">
@@ -155,8 +155,7 @@ class MarketGroupSelector extends Component {
             <Col md={6}>
               <MarketSelector
                 name="Markets"
-                marketGroups={marketGroups}
-                markets={initialdata.Markets}
+                markets={[marketGroup, ...initialdata.Markets]}
                 selectedMarkets={currentSelectedMarkets}
                 onMarketsSelectionChange={this.onMarketsSelectionChange}
               />
@@ -165,8 +164,7 @@ class MarketGroupSelector extends Component {
             <Col md={6}>
               <MarketSelector
                 name="Blackout Markets"
-                marketGroups={marketGroups}
-                markets={initialdata.Markets}
+                markets={[marketGroup, ...initialdata.Markets]}
                 selectedMarkets={currentBlackoutMarkets}
                 onMarketsSelectionChange={this.onMarketsSelectionChange}
               />

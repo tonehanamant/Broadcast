@@ -105,7 +105,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     endTime = 86399
                 };
 
-                proposal.MarketGroupId = ProposalEnums.ProposalMarketGroups.Top50;
+                proposal.MarketGroupId = ProposalEnums.ProposalMarketGroups.All;
 
                 _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _TestDateTime);
 

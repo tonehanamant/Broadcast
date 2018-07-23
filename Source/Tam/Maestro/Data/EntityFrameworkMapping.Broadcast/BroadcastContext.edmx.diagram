@@ -66,14 +66,8 @@
         <AssociationConnector Association="BroadcastModel.FK_schedules_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_detail_weeks_media_weeks" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_versions" Width="1.5" PointX="3.375" PointY="14.375" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_proposal_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_proposal_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_versions_proposals" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_audiences" Width="1.5" PointX="5.875" PointY="10.125" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_audiences_proposal_versions" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarters" Width="1.5" PointX="7.625" PointY="25.25" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_quarter_weeks" Width="1.5" PointX="9.75" PointY="25.125" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" />
@@ -166,9 +160,15 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_criteria_programs_proposal_version_criterias" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_show_types" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.isci_mapping" Width="1.5" PointX="13.375" PointY="9.75" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_versions" Width="1.5" PointX="3" PointY="13.5" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_audiences_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_flight_weeks_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_versions_proposals" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

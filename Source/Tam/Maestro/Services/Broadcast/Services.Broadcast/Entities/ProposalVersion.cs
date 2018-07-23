@@ -11,7 +11,8 @@ namespace Services.Broadcast.Entities
         public DateTime? EndDate { get; set; }
         public int AdvertiserId { get; set; }
         public int? GuaranteedAudienceId { get; set; }
-        public ProposalEnums.ProposalMarketGroups Markets { get; set; }
+        public ProposalEnums.ProposalMarketGroups? Markets { get; set; }
+        public ProposalEnums.ProposalMarketGroups? BlackoutMarkets { get; set; }
         public int? SweepMonthId { get; set; }
         public decimal? Budget { get; set; }
         public int? TargetUnits { get; set; }

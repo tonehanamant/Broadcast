@@ -96,7 +96,7 @@ export class ProposalDetail extends Component {
   }
 
   onChangeNti(value) {
-    const val = value >= 0 ? value : this.props.detail.NtiConversionFactor;
+    const val = value != null || '' ? value : this.props.detail.NtiConversionFactor;
     console.log(val);
     const newVal = val / 100;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
@@ -320,6 +320,7 @@ export class ProposalDetail extends Component {
                       style={{ width: '75px' }}
                       precision={2}
                       defaultValue={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
+                      // value={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
                       onChange={this.onChangeNti}
                     />
                     <InputGroup.Addon>%</InputGroup.Addon>
