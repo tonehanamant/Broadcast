@@ -171,15 +171,7 @@ export class PlanningGrid extends Component {
       // Need a way to hide the actions on each row but not the columns
       GRID_ACTIONS: {
         iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'Menu Item',
-              key: 'menu-item-key',
-              EVENT_HANDLER: () => {
-                  alert('Im a menu Item Action');
-              },
-          },
-        ],
+        menu: [],
       },
       // BULK_ACTIONS: {
       //   iconCls: 'action-icon',
