@@ -16,11 +16,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class BvsConverterTests
     {
-        private readonly IBvsConverter _Sut;
+        private readonly IBvsConverter _IBvsConverter;
 
         public BvsConverterTests()
         {
-            _Sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IBvsConverter>();
+            _IBvsConverter = IntegrationTestApplicationServiceFactory.GetApplicationService<IBvsConverter>();
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var date = new DateTime(2016, 11, 7);
             var airTime = new TimeSpan(1, 30, 0);
 
-            var result = _Sut.ConvertToNSITime(date, airTime);
+            var result = _IBvsConverter.ConvertToNSITime(date, airTime);
 
             Assert.AreEqual(result.Day, 6);
         }
@@ -40,31 +40,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var date = new DateTime(2016, 11, 7);
             var airTime = new TimeSpan(3, 30, 0);
 
-            var result = _Sut.ConvertToNSITime(date, airTime);
+            var result = _IBvsConverter.ConvertToNSITime(date, airTime);
 
             Assert.AreEqual(result.Day, 7);
         }
-
-
+        
         [Test]
         public void Should_Convert_To_NTI_Time()
         {
             var date = new DateTime(2016, 11, 7);
             var airTime = new TimeSpan(2, 30, 0);
 
-            var result = _Sut.ConvertToNTITime(date, airTime);
+            var result = _IBvsConverter.ConvertToNTITime(date, airTime);
 
             Assert.AreEqual(result.Day, 6);
         }
-
-
+        
         [Test]
         public void Should_Not_Convert_To_NTI_Time()
         {
             var date = new DateTime(2016, 11, 7);
             var airTime = new TimeSpan(3, 30, 0);
 
-            var result = _Sut.ConvertToNTITime(date, airTime);
+            var result = _IBvsConverter.ConvertToNTITime(date, airTime);
 
             Assert.AreEqual(result.Day, 7);
         }
@@ -80,8 +78,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var userName = "Tests_BvsConverter";
                 string message = string.Empty;
 
-                Dictionary<BvsFileDetailKey, int> line;
-                var bvsFile = _Sut.ExtractBvsData(stream, "hash", userName, fileName, out message, out line);
+                var bvsFile = _IBvsConverter.ExtractBvsData(stream, "hash", userName, fileName, out message, out Dictionary<BvsFileDetailKey, int> line);
+                
                 _VerifyBvsFile(bvsFile);
             }
         }
@@ -97,25 +95,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var userName = "Tests_BvsConverter";
                 string message = string.Empty;
 
-                Dictionary<BvsFileDetailKey, int> line;
-                var bvsFile = _Sut.ExtractBvsData(stream, "hash", userName, fileName, out message, out line);
+                var bvsFile = _IBvsConverter.ExtractBvsData(stream, "hash", userName, fileName, out message, out Dictionary<BvsFileDetailKey, int> line);
                 int counter = 8;
-                foreach (var detail in bvsFile.bvs_file_details)
+                foreach (var detail in bvsFile.BvsFileDetails)
                 {
                     counter++;
                     Assert.That(line[new BvsFileDetailKey(detail)], Is.EqualTo(counter));
                 }
 
-                Assert.That(line.Count == bvsFile.bvs_file_details.Count);
-
+                Assert.That(line.Count == bvsFile.BvsFileDetails.Count);
             }
         }
 
-        private static void _VerifyBvsFile(bvs_files bvsFileInfo)
+        private static void _VerifyBvsFile(BvsFile bvsFileInfo)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(bvs_files), "created_date");
-            jsonResolver.Ignore(typeof(bvs_files), "id");
+            jsonResolver.Ignore(typeof(BvsFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(BvsFile), "Id");
+            jsonResolver.Ignore(typeof(BvsFileDetail), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -124,6 +121,59 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var json = IntegrationTestHelper.ConvertToJson(bvsFileInfo, jsonSettings);
             Approvals.Verify(json);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Required field IDENTIFIER 1 is null or empty", MatchType = MessageMatch.Contains)]
+        public void BvsConverter_SigmaFile_RequiredFieldEmpty()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImportRequiredFieldEmpty.csv", FileMode.Open, FileAccess.Read);
+                var fileName = "SigmaImportRequiredFieldEmpty.csv";
+                var userName = "BvsConverter_SigmaFile";
+                string message = string.Empty;
+
+                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
+
+                _VerifyBvsFile(sigmaFile);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Could not find required column IDENTIFIER 1.", MatchType = MessageMatch.Contains)]
+        public void BvsConverter_SigmaFile_RequiredColumnMissing()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImportRequiredColumnMissing.csv", FileMode.Open, FileAccess.Read);
+                var fileName = "SigmaImportRequiredColumnMissing.csv";
+                var userName = "BvsConverter_SigmaFile";
+                string message = string.Empty;
+
+                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
+
+                _VerifyBvsFile(sigmaFile);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BvsConverter_SigmaFile()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImport.csv", FileMode.Open, FileAccess.Read);
+                var fileName = "SigmaImport.csv";
+                var userName = "BvsConverter_SigmaFile";
+                string message = string.Empty;
+
+                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
+
+                _VerifyBvsFile(sigmaFile);
+            }
         }
     }
 }

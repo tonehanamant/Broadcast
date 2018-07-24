@@ -241,9 +241,9 @@ export class DataGridContainer extends Component {
             <CustomPager stateKey={stateKey} idProperty="ContractId" />
         ),
       },
-      LOADER: {
-        enabled: false,
-      },
+      // LOADER: {
+      //   enabled: false,
+      // },
       SELECTION_MODEL: {
         mode: 'single',
         enabled: true,
@@ -266,9 +266,9 @@ export class DataGridContainer extends Component {
     };
 
     const events = {
-      HANDLE_BEFORE_SORT: () => {
-        this.deselectAll();
-      },
+      // HANDLE_BEFORE_SORT: () => {
+      //   this.deselectAll();
+      // },
       HANDLE_ROW_DOUBLE_CLICK: (row) => {
           const Id = row.row.ContractId;
           this.showscrubbingModal(Id);

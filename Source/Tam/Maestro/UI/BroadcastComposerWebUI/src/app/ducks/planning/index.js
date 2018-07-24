@@ -7,6 +7,8 @@ import * as ACTIONS from './actionTypes.js';
 
 const initialState = {
   initialdata: {},
+  planningProposals: [],
+  filteredPlanningProposals: [],
   proposalLock: {},
   proposal: {
     AdvertiserId: 37674,
@@ -73,6 +75,20 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
+     // PLANNING PROPOSALS  DATA
+     case ACTIONS.RECEIVE_PROPOSALS:
+     return {
+       ...state,
+       planningProposals: data.Data,
+       filteredPlanningProposals: data.Data,
+     };
+
+     case ACTIONS.FILTERED_PLANNING_PROPOSALS.success:
+     return {
+       ...state,
+       planningProposals: data,
+     };
+
     // PROPOSAL INITIAL DATA
     case ACTIONS.RECEIVE_PROPOSAL_INITIALDATA:
       return {
@@ -331,6 +347,16 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action Creators
+export const getPlanningFiltered = query => ({
+  type: ACTIONS.FILTERED_PLANNING_PROPOSALS.request,
+  payload: query,
+});
+
+export const receiveFilteredPlanning = data => ({
+  type: ACTIONS.FILTERED_PLANNING_PROPOSALS.success,
+  data,
+});
+
 export const getProposalInitialData = () => ({
   type: ACTIONS.REQUEST_PROPOSAL_INITIALDATA,
   payload: {},

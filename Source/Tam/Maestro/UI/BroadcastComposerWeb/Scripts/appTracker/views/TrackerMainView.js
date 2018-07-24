@@ -54,6 +54,12 @@ var TrackerMainView = BaseView.extend({
 
     },
 
+    //process SIGMA - passed from upload manager
+    processUploadSigmaFileRequest: function (sigmaRequest) {
+        this.controller.apiUploadSigmaFile(sigmaRequest);
+
+    },
+
     //fileRequest now single object
     processUploadScheduleFileRequest: function (fileRequest) {
         this.setScheduleModal('upload', fileRequest);

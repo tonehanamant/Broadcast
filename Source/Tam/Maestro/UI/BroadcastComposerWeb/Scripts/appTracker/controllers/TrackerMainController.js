@@ -136,6 +136,29 @@ var TrackerMainController = BaseController.extend({
     //    $('#ftpUploadButton').removeAttr("disabled");
     //},
 
+    //upload SIGMA file
+    apiUploadSigmaFile: function (sigmaFileRequest) {
+        var url = baseUrl + 'api/Tracker/UploadSigmaFile ';
+        var jsonObj = JSON.stringify(sigmaFileRequest);
+        //console.log('apiupload sigma', jsonObj);
+        httpService.post(url,
+            this.onApiUploadSigmaFile.bind(this),
+            null,
+            jsonObj,
+            {
+                $ViewElement: $('#schedule_view'),
+                ErrorMessage: 'Error Uploading File',
+                TitleErrorMessage: 'File Not Uploaded',
+                StatusMessage: 'Upload Sigma File'
+            });
+    },
+
+    //handle Sigma upload return
+    onApiUploadSigmaFile: function (data) {
+        util.notify("Sigma File Uploaded");
+        this.refreshApiLoadSchedules();
+    },
+
     //upload BVS file
     apiUploadBVSFile: function (bvsFileRequest) {
         var url = baseUrl + 'api/Tracker/UploadBvsFile';

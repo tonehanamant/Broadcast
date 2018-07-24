@@ -14,7 +14,10 @@ namespace Services.Broadcast.Converters
 {
     public interface IBvsConverter : IApplicationService
     {
-        bvs_files ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo);
+        BvsFile ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo);
+
+
+        BvsFile ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo);
 
         /// <summary>
         /// 3a-3a rule
@@ -111,32 +114,29 @@ namespace Services.Broadcast.Converters
             ,"Advertiser"
         };
 
-        private static readonly List<string> CsvFileHeaders = new List<string>()
+        private static readonly List<string> RequiredSigmaFields = new List<string>()
         {
-            "Encoding Id",
-            "Market",
-            "Rank", // int
-            "Station",
-            "Channel",
-            "Affiliate",
-            "Start Date", // DateTime
-            "Start Time",
-            "Stop Date",
-            "Stop Time",
-            "Start Second",
-            "Stop Second",
-            "Seconds",  // int
-            "Program",
-            "ISCI-20",
-            "Campaign",
-            "Advertiser",
-            "Product Name",
-            "Module Code",
-            "Phone Number",
-            "Length",   // int
-            "Donovan Agency Estimate Code",
-            "Donovan Agency Advertiser Code",
-            "Donovan Agency Product Code",
+             "IDENTIFIER 1",
+             "STATION",
+             "DATE AIRED",
+             "AIR START TIME",
+             "ISCI/AD-ID"
+        };
+
+        private static readonly List<string> SigmaFileHeaders = new List<string>()
+        {
+            "IDENTIFIER 1",
+            "RANK",
+            "DMA",
+            "STATION",
+            "AFFILIATION",
+            "DATE AIRED",
+            "AIR START TIME",
+            "PROGRAM NAME",
+            "DURATION",
+            "ISCI/AD-ID",
+            "PRODUCT",
+            "RELEASE NAME"
         };
 
         private TextFieldParser _SetupCSVParser(Stream rawStream)
@@ -153,110 +153,136 @@ namespace Services.Broadcast.Converters
         }
 
         //public Dictionary<BvsFileDetailKey, int> FileDetailLineInfo { get; set; }
-        public bvs_files ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
+        public BvsFile ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
         {
             //return ExtractBvsDataCsv(rawStream,hash,userName,bvsFileName);
             return ExtractBvsDataXls(rawStream, hash, userName, bvsFileName, out message, out lineInfo);
         }
 
-        public bvs_files ExtractBvsDataCsv(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo)
+        public BvsFile ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo)
+        {
+            //return ExtractBvsDataCsv(rawStream,hash,userName,bvsFileName);
+            return ExtractSigmaDataCsv(rawStream, hash, userName, bvsFileName, out lineInfo);
+        }
+
+        public BvsFile ExtractSigmaDataCsv(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo)
         {
             lineInfo = new Dictionary<BvsFileDetailKey, int>();
-            Dictionary<int, int> spotLengthDict = null;
-            var bvsFile = new bvs_files();
+            var bvsFile = new BvsFile();
 
-            int row = 0;
-            int cableTvCount = 0;
+            int rowNumber = 0;
             using (var parser = _SetupCSVParser(rawStream))
             {
-                var headers = _ValidateAndSetupHeaders(parser);
+                Dictionary<string, int> headers = _ValidateAndSetupHeaders(parser);
                 while (!parser.EndOfData)
                 {
                     var fields = parser.ReadFields();
-                    row++;
+                    _ValidateSigmaFieldData(fields, headers);
 
-                    var bvsDetail = new bvs_file_details();
-                    bvsDetail.market = fields[headers["Market"]].Trim().ToUpper();
-                    if (string.IsNullOrEmpty(bvsDetail.market))
-                    {
-                        throw new ExtractBvsException("'Market' field is missing.", row);
-                    }
-
-                    var rankNumber = 0;
-                    var cellContent = fields[headers["Rank"]].Trim();
-                    if (!EnsureRank(cellContent, bvsDetail, row, ref cableTvCount))
-                        continue; // do nothing and continue since we don't want cable
-
-                    bvsDetail.station = fields[headers["Station"]].Trim().ToUpper();
-                    bvsDetail.affiliate = fields[headers["Affiliate"]].Trim().ToUpper();
-
-                    var rawDate = fields[headers["Start Date"]].Trim();
-                    var rawAiredDateTime = fields[headers["Start Time"]].Trim().ToUpper();
-                    DateTime parsedDate;
-                    if (!DateTime.TryParseExact(rawDate + " " + rawAiredDateTime, "yyyyMMdd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
-                        throw new ExtractBvsException("Invalid 'start date' or 'start time'", row);
-                    bvsDetail.date_aired = parsedDate.Date;
-                    var time = parsedDate.TimeOfDay;
-                    bvsDetail.time_aired = (int)time.TotalSeconds;
-                    bvsDetail.nsi_date = ConvertToNSITime(bvsDetail.date_aired, time);
-                    bvsDetail.nti_date = ConvertToNSITime(bvsDetail.date_aired, time);
-
-                    bvsDetail.program_name = fields[headers["Program"]].Trim().ToUpper(); //"Program Name
-                    var spot_length = fields[headers["Length"]].Trim();
-                    GetSpotlength(bvsDetail, spot_length, ref spotLengthDict);
-                    bvsDetail.isci = fields[headers["ISCI-20"]].Trim().ToUpper();
-
-                    int estimateId;
-                    if (!int.TryParse(fields[headers["Campaign"]].Trim(), out estimateId))
-                    {
-                        throw new ExtractBvsException("Campaign field in row invalid.", row);
-                    }
-                    bvsDetail.estimate_id = estimateId;
-                    lineInfo[new BvsFileDetailKey(bvsDetail)] = row;
-                    bvsFile.bvs_file_details.Add(bvsDetail);
+                    rowNumber++;
+                    BvsFileDetail bvsDetail = _LoadBvsFileDetail(fields, headers, rowNumber);
+                    lineInfo[new BvsFileDetailKey(bvsDetail)] = rowNumber;
+                    bvsFile.BvsFileDetails.Add(bvsDetail);
                 }
             }
 
-            if (!bvsFile.bvs_file_details.Any())
+            if (!bvsFile.BvsFileDetails.Any())
             {
-                if (row == cableTvCount) // if entire file is made of cable tv record, treat as empty.
-                    throw new ExtractBvsExceptionCableTv();
-
                 throw new ExtractBvsExceptionEmptyFiles();
             }
-            bvsFile.name = bvsFileName;
-            bvsFile.created_by = userName;
-            bvsFile.created_date = DateTime.Now;
-            bvsFile.file_hash = hash;
-            bvsFile.start_date = bvsFile.bvs_file_details.Min(x => x.date_aired).Date;
-            bvsFile.end_date = bvsFile.bvs_file_details.Max(x => x.date_aired).Date;
+            bvsFile.Name = bvsFileName;
+            bvsFile.CreatedBy = userName;
+            bvsFile.CreatedDate = DateTime.Now;
+            bvsFile.FileHash = hash;
+            bvsFile.StartDate = bvsFile.BvsFileDetails.Min(x => x.DateAired).Date;
+            bvsFile.EndDate = bvsFile.BvsFileDetails.Max(x => x.DateAired).Date;
 
             return bvsFile;
         }
 
-        private void GetSpotlength(bvs_file_details bvsDetail, string spot_length, ref Dictionary<int, int> spotLengthDict)
+        private BvsFileDetail _LoadBvsFileDetail(string[] fields, Dictionary<string, int> headers, int row)
+        {
+            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            if (!int.TryParse(fields[headers["RANK"]].Trim(), out int rankNumber))
+            {
+                throw new ExtractBvsException("Invalid 'rank'", row);
+            }
+            var rawDate = fields[headers["DATE AIRED"]].Trim();
+            var rawAiredDateTime = fields[headers["AIR START TIME"]].Trim().ToUpper();
+            string someDate = rawDate + " " + rawAiredDateTime;
+            if (!DateTime.TryParseExact(someDate, "M/dd/yy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                throw new ExtractBvsException("Invalid 'date aired' or 'air start time'", row);
+            var time = parsedDate.TimeOfDay;
+
+            if (!int.TryParse(fields[headers["IDENTIFIER 1"]].Trim(), out int estimateId))
+            {
+                throw new ExtractBvsException("Invalid 'identifier 1'", row);
+            }
+
+            BvsFileDetail bvsDetail = new BvsFileDetail()
+            {
+                Advertiser = fields[headers["PRODUCT"]].Trim().ToUpper(),
+                Market = fields[headers["DMA"]].Trim().ToUpper(),
+                Rank = rankNumber,
+                Station = fields[headers["STATION"]].Trim().ToUpper(),
+                Affiliate = fields[headers["AFFILIATION"]].Trim().ToUpper(),
+                DateAired = parsedDate.Date,
+                TimeAired = (int)time.TotalSeconds,
+                NsiDate = ConvertToNSITime(parsedDate.Date, time),
+                NtiDate = ConvertToNSITime(parsedDate.Date, time),
+                ProgramName = fields[headers["PROGRAM NAME"]].Trim().ToUpper(),
+                Isci = fields[headers["ISCI/AD-ID"]].Trim().ToUpper(),
+                EstimateId = estimateId
+            };
+
+
+        var spot_length = fields[headers["DURATION"]].Trim();
+            _SetSpotLengths(bvsDetail, spot_length, spotLengthDict);
+
+            return bvsDetail;
+        }
+
+        private void _ValidateSigmaFieldData(string[] fields, Dictionary<string, int> headers)
+        {
+            foreach (string field in RequiredSigmaFields)
+            {
+                if (string.IsNullOrWhiteSpace(fields[headers[field]]))
+                {
+                    throw new ExtractBvsException($"Required field {field} is null or empty ");
+                }
+            }
+        }
+
+        private void _SetSpotLengths(BvsFileDetail bvsDetail, string spot_length, Dictionary<int, int> spotLengthDict)
         {
             spot_length = spot_length.Trim().Replace(":", "");
 
-            int spotLength = int.Parse(spot_length);
-            bvsDetail.spot_length = spotLength;
-
-            if (spotLengthDict == null)
-                spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            if (!int.TryParse(spot_length, out int spotLength))
+            {
+                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+            }
 
             if (!spotLengthDict.ContainsKey(spotLength))
                 throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
 
-            bvsDetail.spot_length_id = spotLengthDict[spotLength];
+            bvsDetail.SpotLength = spotLength;
+            bvsDetail.SpotLengthId = spotLengthDict[spotLength];
         }
 
         private Dictionary<string, int> _ValidateAndSetupHeaders(TextFieldParser parser)
         {
             var fields = parser.ReadFields().ToList();
+
+            //skip the first row if it's the copyright one
+            if (fields.Any() && fields[0].Contains("Copyright"))
+            {
+                fields = parser.ReadFields().ToList();
+            }
+
             var validationErrors = new List<string>();
             Dictionary<string, int> headerDict = new Dictionary<string, int>();
 
-            foreach (var header in CsvFileHeaders)
+            foreach (var header in SigmaFileHeaders)
             {
                 int headerItemIndex = fields.IndexOf(header);
                 if (headerItemIndex >= 0)
@@ -271,7 +297,7 @@ namespace Services.Broadcast.Converters
             {
                 string message = "";
                 validationErrors.ForEach(err => message += err + Environment.NewLine);
-                throw new Exception(message);
+                throw new ExtractBvsException(message);
             }
             return headerDict;
         }
@@ -283,12 +309,13 @@ namespace Services.Broadcast.Converters
                     return false;
             return true;
         }
-        public bvs_files ExtractBvsDataXls(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
+
+        public BvsFile ExtractBvsDataXls(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
         {
             lineInfo = new Dictionary<BvsFileDetailKey, int>();
 
-            Dictionary<int, int> spotLengthDict = null;
-            var bvsFile = new bvs_files();
+            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            BvsFile bvsFile = new BvsFile();
             int row;
             int cableTvCount = 0;
             message = string.Empty;
@@ -303,10 +330,11 @@ namespace Services.Broadcast.Converters
                     if (_IsEmptyRow(row))
                         break;  // empty row, done!
 
-                    var bvsDetail = new bvs_file_details();
-
-                    bvsDetail.market = _GetCellValue(row, "Market").ToUpper();
-                    if (string.IsNullOrEmpty(bvsDetail.market))
+                    var bvsDetail = new BvsFileDetail
+                    {
+                        Market = _GetCellValue(row, "Market").ToUpper()
+                    };
+                    if (string.IsNullOrEmpty(bvsDetail.Market))
                     {
                         throw new ExtractBvsException("'Market' field is missing.", row);
                     }
@@ -314,74 +342,71 @@ namespace Services.Broadcast.Converters
                     var cellContent = _GetCellValue(row, "Rank");
                     if (string.IsNullOrEmpty(cellContent))
                         continue;
-                    int rankNumber;
-                    if (!int.TryParse(cellContent, out rankNumber))
+                    if (!int.TryParse(cellContent, out int rankNumber))
                     {
                         throw new ExtractBvsException(string.Format("Invalid rank value \"{0}\".", cellContent), row);
                     }
-                    bvsDetail.rank = rankNumber;
-                    bvsDetail.station = _GetCellValue(row, "Station").ToUpper();
-                    bvsDetail.affiliate = _GetCellValue(row, "Affiliate").ToUpper();
+                    bvsDetail.Rank = rankNumber;
+                    bvsDetail.Station = _GetCellValue(row, "Station").ToUpper();
+                    bvsDetail.Affiliate = _GetCellValue(row, "Affiliate").ToUpper();
 
 
                     var extractedDate = _GetAirTime(row);
-                    bvsDetail.date_aired = extractedDate.Date;
+                    bvsDetail.DateAired = extractedDate.Date;
 
                     var time = extractedDate.TimeOfDay;
-                    bvsDetail.time_aired = (int)time.TotalSeconds;
-                    bvsDetail.nsi_date = ConvertToNSITime(bvsDetail.date_aired, time);
-                    bvsDetail.nti_date = ConvertToNTITime(bvsDetail.date_aired, time);
+                    bvsDetail.TimeAired = (int)time.TotalSeconds;
+                    bvsDetail.NsiDate = ConvertToNSITime(bvsDetail.DateAired, time);
+                    bvsDetail.NtiDate = ConvertToNTITime(bvsDetail.DateAired, time);
 
-                    bvsDetail.program_name = _GetCellValue(row, "Program Name").ToUpper();
+                    bvsDetail.ProgramName = _GetCellValue(row, "Program Name").ToUpper();
 
-                    bvsDetail.spot_length = int.Parse(_GetCellValue(row, "Length"));
+                    bvsDetail.SpotLength = int.Parse(_GetCellValue(row, "Length"));
                     var spot_length = _GetCellValue(row, "Length");
-                    GetSpotlength(bvsDetail, spot_length, ref spotLengthDict);
+                    _SetSpotLengths(bvsDetail, spot_length, spotLengthDict);
 
-                    bvsDetail.isci = _GetCellValue(row, "ISCI").ToUpper();
-                    bvsDetail.advertiser = _GetCellValue(row, "Advertiser").ToUpper();
+                    bvsDetail.Isci = _GetCellValue(row, "ISCI").ToUpper();
+                    bvsDetail.Advertiser = _GetCellValue(row, "Advertiser").ToUpper();
                     int estimateId;
                     if (!int.TryParse(_GetCellValue(row, "Campaign"), out estimateId))
                     {
                         message += string.Format("Invalid campaign field in row={0}, skipping. <br />", row);
                         continue;   // go to next line
                     }
-                    bvsDetail.estimate_id = estimateId;
+                    bvsDetail.EstimateId = estimateId;
                     lineInfo[new BvsFileDetailKey(bvsDetail)] = row;
-                    bvsFile.bvs_file_details.Add(bvsDetail);
+                    bvsFile.BvsFileDetails.Add(bvsDetail);
                 }
             }
-            if (!bvsFile.bvs_file_details.Any())
+            if (!bvsFile.BvsFileDetails.Any())
             {
                 if (row == cableTvCount) // if entire file is made of cable tv record, treat as empty.
                     throw new ExtractBvsExceptionCableTv();
 
                 throw new ExtractBvsExceptionEmptyFiles();
             }
-            bvsFile.name = bvsFileName;
-            bvsFile.created_by = userName;
-            bvsFile.created_date = DateTime.Now;
-            bvsFile.file_hash = hash;
-            bvsFile.start_date = bvsFile.bvs_file_details.Min(x => x.date_aired).Date;
-            bvsFile.end_date = bvsFile.bvs_file_details.Max(x => x.date_aired).Date;
+            bvsFile.Name = bvsFileName;
+            bvsFile.CreatedBy = userName;
+            bvsFile.CreatedDate = DateTime.Now;
+            bvsFile.FileHash = hash;
+            bvsFile.StartDate = bvsFile.BvsFileDetails.Min(x => x.DateAired).Date;
+            bvsFile.EndDate = bvsFile.BvsFileDetails.Max(x => x.DateAired).Date;
 
             return bvsFile;
         }
 
-        private static bool EnsureRank(string cellContent, bvs_file_details bvsDetail, int row, ref int cableTvCount)
+        private static bool EnsureRank(string cellContent, BvsFileDetail bvsDetail, int row)
         {
-            int rankNumber = 0;
-            var numTestResult = int.TryParse(cellContent, out rankNumber);
+            var numTestResult = int.TryParse(cellContent, out int rankNumber);
             if (!numTestResult)
             {
-                if (bvsDetail.market == CABLE_TV || bvsDetail.market == NETWORK_TV)
+                if (bvsDetail.Market == CABLE_TV || bvsDetail.Market == NETWORK_TV)
                 {
-                    cableTvCount++;
                     return true;
                 }
                 throw new ExtractBvsException("Rank field required for non-CABLE TV and non-Netowrk TV records.", row);
             }
-            bvsDetail.rank = rankNumber;
+            bvsDetail.Rank = rankNumber;
             return false;
         }
 

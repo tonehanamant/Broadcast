@@ -41,7 +41,7 @@ export class NavigationBar extends Component {
             <Navbar.Collapse>
               <Nav>
                 <MenuItem href="/broadcast/rates">Rate Cards</MenuItem>
-                <MenuItem href="/broadcast/planning">Planning</MenuItem>
+                <MenuItem href="/broadcastreact/planning" active={this.props.routing.location.pathname === '/broadcastreact/planning'}>Planning</MenuItem>
                 <MenuItem href="/broadcast/traffic">Traffic</MenuItem>
                 <MenuItem href="/broadcastreact/tracker" active={this.props.routing.location.pathname === '/broadcastreact/tracker'}>Tracker</MenuItem>
                 <MenuItem href="/broadcast/Home/TrackerPrePosting">Tracker Pre Posting</MenuItem>

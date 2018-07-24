@@ -245,6 +245,8 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Entities\BvsFile.cs" />
+    <Compile Include="Entities\BvsFileDetail.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />

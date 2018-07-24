@@ -87,10 +87,11 @@ export class SectionPlanningProposal extends Component {
           titleText: 'Proposal Locked',
           bodyText: `This Proposal is currently in use by ${this.props.proposalLock.LockedUserName}. Please try again later.`,
           closeButtonText: 'Cancel',
-          actionButtonText: 'Okay',
+          closeButtonDisabled: true,
+          actionButtonText: 'Ok',
           actionButtonBsStyle: 'primary',
-          action: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
-          dismiss: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
+          action: () => window.open(`${window.location.origin}/broadcastreact/planning`, '_self'),
+          dismiss: () => window.open(`${window.location.origin}/broadcastreact/planning`, '_self'),
         },
       });
     }
