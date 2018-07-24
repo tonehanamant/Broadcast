@@ -12,6 +12,7 @@ import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
 import PostingBook from './PostingBook';
+import PricingGuide from './PricingGuide';
 // import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
@@ -345,6 +346,7 @@ export class ProposalDetail extends Component {
               {detail &&
                 <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
                   <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
+                      <MenuItem eventKey="pricingGuide" onSelect={this.openModal}>Pricing Guide</MenuItem>
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
                       <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
@@ -381,6 +383,14 @@ export class ProposalDetail extends Component {
         }
 
         <Sweeps
+          toggleModal={this.props.toggleModal}
+          updateProposalEditFormDetail={updateProposalEditFormDetail}
+          initialdata={initialdata}
+          detail={detail}
+          isReadOnly={isReadOnly}
+        />
+
+        <PricingGuide
           toggleModal={this.props.toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
