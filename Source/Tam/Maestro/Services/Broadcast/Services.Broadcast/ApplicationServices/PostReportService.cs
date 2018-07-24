@@ -261,15 +261,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             var myEventsReportDataList = _AffidavitRepository.GetMyEventsReportData(proposalId);
             var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
-
+            
             foreach (var report in myEventsReportDataList)
             {
                 foreach (var line in report.Lines)
                 {
                     var advertiser = _SmsClient.FindAdvertiserById(line.AdvertiserId);
-                    
+                    var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(new List<DateTime>() { line.LineupStartDate });
+
                     line.Advertiser = advertiser.Display;
-                    line.SpotLength = spotLengths.Single(x=>x.Value == line.SpotLengthId).Key;
+                    line.SpotLength = spotLengths.Single(x => x.Value == line.SpotLengthId).Key;
+                    line.ScheduleStartDate = mediaWeeks[line.LineupStartDate].StartDate;
+                    line.ScheduleEndDate = mediaWeeks[line.LineupStartDate].EndDate;
                 }
 
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);

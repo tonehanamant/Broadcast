@@ -317,5 +317,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReportWithOverriddenStatusAndNonMatchingWeek()
+        {
+            var result = _PostReportService.GetMyEventsReportData(26014);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }

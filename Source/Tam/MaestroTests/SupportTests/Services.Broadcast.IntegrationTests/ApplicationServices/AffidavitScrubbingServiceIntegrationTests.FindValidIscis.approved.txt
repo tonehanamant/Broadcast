@@ -49,6 +49,7 @@
   "MYRS6",
   "MYRS7",
   "MYRS8",
+  "MYSSD1",
   "NSI1",
   "NSI2",
   "NSI3",
