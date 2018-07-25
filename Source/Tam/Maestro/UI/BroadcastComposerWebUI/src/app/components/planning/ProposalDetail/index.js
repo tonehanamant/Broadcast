@@ -48,13 +48,13 @@ export class ProposalDetail extends Component {
     this.openModal = this.openModal.bind(this);
 
     this.state = {
+      // wholeNti: 0,
       validationStates: {
         SpotLengthId: null,
         Daypart: null,
         DaypartCode: null,
         DaypartCode_Alphanumeric: null,
         DaypartCode_MaxChar: null,
-        wholeNti: 0,
       },
     };
   }
@@ -97,7 +97,6 @@ export class ProposalDetail extends Component {
   }
 
   onChangeNti(value) {
-    // console.log(value, typeof value);
     const val = value !== null ? value : this.props.detail.NtiConversionFactor;
     // const val = value === null || value === undefined || value === '' ? 0 : value;
     // console.log(val);
@@ -239,6 +238,9 @@ export class ProposalDetail extends Component {
     if (nextProps.proposalValidationStates.DetailInvalid === true) {
       this.onSaveShowValidation(nextProps);
     }
+    // this.setState({
+    //   wholeNti: nextProps.detail.NtiConversionFactor * 100,
+    // });
   }
 
   render() {
@@ -323,13 +325,16 @@ export class ProposalDetail extends Component {
                       style={{ width: '75px' }}
                       precision={2}
                       // value={detail && detail.NtiConversionFactor ? numeral(detail.NtiConversionFactor).multiply(100).format('0.[00]') : 0}
-                      defaultValue={0}
+                      // defaultValue={0}
+                      defaultValue={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
+                      // value={0}
+                      // value={this.state.wholeNti}
                       // value={numeral(detail.NtiConversionFactor).multiply(100).format('0.[00]')}
                       // value={numeral(detail.NtiConversionFactor * 100).format('0,0.[00]')}
                       // defaultValue={detail.NtiConversionFactor !== undefined || detail.NtiConversionFactor !== null || detail.NtiConversionFactor !== '' ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
                       // defaultValue={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
                       // value={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
-                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
+                      // value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
                       // value={detail && detail.NtiConversionFactor ? numeral(detail.NtiConversionFactor * 100).format('0[.]00') : 0}
                       onChange={this.onChangeNti}
                     />
