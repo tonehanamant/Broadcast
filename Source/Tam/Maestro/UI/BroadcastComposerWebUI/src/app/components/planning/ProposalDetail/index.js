@@ -98,8 +98,6 @@ export class ProposalDetail extends Component {
 
   onChangeNti(value) {
     const val = value !== null ? value : this.props.detail.NtiConversionFactor;
-    // const val = value === null || value === undefined || value === '' ? 0 : value;
-    // console.log(val);
     const newVal = val / 100;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
   }
@@ -324,18 +322,7 @@ export class ProposalDetail extends Component {
                       className="form-control"
                       style={{ width: '75px' }}
                       precision={2}
-                      // value={detail && detail.NtiConversionFactor ? numeral(detail.NtiConversionFactor).multiply(100).format('0.[00]') : 0}
-                      // defaultValue={0}
                       defaultValue={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
-                      // value={0}
-                      // value={this.state.wholeNti}
-                      // value={numeral(detail.NtiConversionFactor).multiply(100).format('0.[00]')}
-                      // value={numeral(detail.NtiConversionFactor * 100).format('0,0.[00]')}
-                      // defaultValue={detail.NtiConversionFactor !== undefined || detail.NtiConversionFactor !== null || detail.NtiConversionFactor !== '' ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
-                      // defaultValue={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
-                      // value={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
-                      // value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
-                      // value={detail && detail.NtiConversionFactor ? numeral(detail.NtiConversionFactor * 100).format('0[.]00') : 0}
                       onChange={this.onChangeNti}
                     />
                     <InputGroup.Addon>%</InputGroup.Addon>
