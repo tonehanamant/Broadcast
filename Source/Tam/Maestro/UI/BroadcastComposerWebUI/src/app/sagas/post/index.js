@@ -141,7 +141,9 @@ export function* requestPostFiltered({ payload: query }) {
     })
   ));
 
-  const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
+  const keys = ['ContractId', 'ContractName', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec'];
+  // Removing date search like original
+  // const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
   const searcher = new FuzzySearch(postListUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
