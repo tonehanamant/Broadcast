@@ -69,7 +69,46 @@ END
 GO
 /*************************************** END BCOP-2800 ***************************************************************/
 
+/*************************************** START BCOP-3318 ***************************************************************/
 
+IF OBJECT_ID('postlog_outbound_files', 'U') IS NULL
+BEGIN
+    CREATE TABLE postlog_outbound_files(
+		id INT IDENTITY(1,1) NOT NULL,
+		file_name VARCHAR(255) NOT NULL,
+		file_hash VARCHAR(63) NOT NULL,
+		source_id INT NOT NULL,
+		status INT NOT NULL,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		CONSTRAINT [PK_postlog_outbound_files] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+END
+
+IF OBJECT_ID('postlog_outbound_file_problems', 'U') IS NULL
+BEGIN
+	CREATE TABLE postlog_outbound_file_problems(
+		id INT IDENTITY(1,1) NOT NULL,
+		postlog_outbound_file_id  INT,
+		problem_description VARCHAR(255) NOT NULL,		
+		CONSTRAINT [PK_postlog_outbound_file_problems] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files] 
+	FOREIGN KEY(postlog_outbound_file_id)
+	REFERENCES [dbo].[postlog_outbound_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] CHECK CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files]
+END
+
+/*************************************** END BCOP-3318 ***************************************************************/
 
 
 IF EXISTS (SELECT name FROM sys.indexes  
@@ -413,7 +452,6 @@ GO
 
 /************************* END BCOP-3228 **********************************************/
 
-
 /*************************************** START BCOP-3280 & BCOP-3336 ***************************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_margin' AND object_id = OBJECT_ID('proposal_version_details'))
@@ -444,6 +482,43 @@ GO
 
 /*************************************** END BCOP-3280 & BCOP-3336 ***************************************************************/
 
+/************************* START BCOP-3318 **********************************************/
+IF OBJECT_ID('postlog_outbound_files', 'U') IS NULL
+BEGIN
+    CREATE TABLE postlog_outbound_files(
+		id INT IDENTITY(1,1) NOT NULL,
+		file_name VARCHAR(255) NOT NULL,
+		file_hash VARCHAR(63) NOT NULL,
+		source_id INT NOT NULL,
+		status INT NOT NULL,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		CONSTRAINT [PK_postlog_outbound_files] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+END
+
+IF OBJECT_ID('postlog_outbound_file_problems', 'U') IS NULL
+BEGIN
+	CREATE TABLE postlog_outbound_file_problems(
+		id INT IDENTITY(1,1) NOT NULL,
+		postlog_outbound_file_id  INT,
+		problem_description VARCHAR(255) NOT NULL,		
+		CONSTRAINT [PK_postlog_outbound_file_problems] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files] 
+	FOREIGN KEY(postlog_outbound_file_id)
+	REFERENCES [dbo].[postlog_outbound_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] CHECK CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files]
+END
+/************************* END BCOP-3318 **********************************************/
 
 /*************************************** START BCOP-3324 ***************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'market_coverage' AND object_id = OBJECT_ID('proposal_versions'))
@@ -510,8 +585,6 @@ BEGIN
 	WHERE markets = 255
 END
 /*************************************** END BCOP-3324 ***************************************************************/
-
-
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

@@ -222,6 +222,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsService.cs" />
+    <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
     <Compile Include="ApplicationServices\WWTVFtpHelper.cs" />
@@ -245,8 +246,12 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\BvsFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
+    <Compile Include="Entities\OutboundPostLogFileValidationResult.cs" />
+    <Compile Include="Entities\PostLogFileSourceEnum.cs" />
+    <Compile Include="Entities\PostLogProcessingStatusEnum.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
@@ -509,6 +514,7 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
+    <Compile Include="Repositories\PostLogRepository.cs" />
     <Compile Include="Repositories\ShowTypeRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />

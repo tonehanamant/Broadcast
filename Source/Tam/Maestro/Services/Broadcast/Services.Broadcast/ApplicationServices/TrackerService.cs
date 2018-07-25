@@ -379,7 +379,7 @@ namespace Services.Broadcast.ApplicationServices
                     //check if file has already been loaded
                     if (bvsRepo.GetBvsFileIdByHash(hash) > 0)
                     {
-                        throw new ApplicationException("Unable to load BVS file. The BVS file selected has already been loaded.");
+                        throw new ApplicationException("Unable to load post log file. The selected post log file has already been loaded.");
                     }
 
                     //we made it this far, it must be a new file - persist the file

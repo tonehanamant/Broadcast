@@ -85,10 +85,12 @@ namespace Services.Broadcast.Converters
     public class BvsConverter : IBvsConverter
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
+        private readonly ISigmaConverter _SigmaConverter;
 
         public BvsConverter(IDataRepositoryFactory dataRepositoryFactory)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
+            _SigmaConverter = new SigmaConverter();
         }
 
         const string CABLE_TV = "CABLE TV";
@@ -114,44 +116,6 @@ namespace Services.Broadcast.Converters
             ,"Advertiser"
         };
 
-        private static readonly List<string> RequiredSigmaFields = new List<string>()
-        {
-             "IDENTIFIER 1",
-             "STATION",
-             "DATE AIRED",
-             "AIR START TIME",
-             "ISCI/AD-ID"
-        };
-
-        private static readonly List<string> SigmaFileHeaders = new List<string>()
-        {
-            "IDENTIFIER 1",
-            "RANK",
-            "DMA",
-            "STATION",
-            "AFFILIATION",
-            "DATE AIRED",
-            "AIR START TIME",
-            "PROGRAM NAME",
-            "DURATION",
-            "ISCI/AD-ID",
-            "PRODUCT",
-            "RELEASE NAME"
-        };
-
-        private TextFieldParser _SetupCSVParser(Stream rawStream)
-        {
-            var parser = new TextFieldParser(rawStream);
-            if (parser.EndOfData)
-            {
-                throw new ExtractBvsExceptionEmptyFiles();
-            }
-
-            parser.SetDelimiters(new string[] { "," });
-
-            return parser;
-        }
-
         //public Dictionary<BvsFileDetailKey, int> FileDetailLineInfo { get; set; }
         public BvsFile ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
         {
@@ -171,15 +135,15 @@ namespace Services.Broadcast.Converters
             var bvsFile = new BvsFile();
 
             int rowNumber = 0;
-            using (var parser = _SetupCSVParser(rawStream))
+            using (var parser = _SigmaConverter.SetupCSVParser(rawStream))
             {
-                Dictionary<string, int> headers = _ValidateAndSetupHeaders(parser);
+                Dictionary<string, int> headers = _SigmaConverter.ValidateAndSetupHeaders(parser);
                 while (!parser.EndOfData)
                 {
-                    var fields = parser.ReadFields();
-                    _ValidateSigmaFieldData(fields, headers);
-
                     rowNumber++;
+                    var fields = parser.ReadFields();
+                    _SigmaConverter.ValidateSigmaFieldData(fields, headers, rowNumber);
+
                     BvsFileDetail bvsDetail = _LoadBvsFileDetail(fields, headers, rowNumber);
                     lineInfo[new BvsFileDetailKey(bvsDetail)] = rowNumber;
                     bvsFile.BvsFileDetails.Add(bvsDetail);
@@ -210,7 +174,7 @@ namespace Services.Broadcast.Converters
             var rawDate = fields[headers["DATE AIRED"]].Trim();
             var rawAiredDateTime = fields[headers["AIR START TIME"]].Trim().ToUpper();
             string someDate = rawDate + " " + rawAiredDateTime;
-            if (!DateTime.TryParseExact(someDate, "M/dd/yy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+            if (!DateTime.TryParseExact(someDate, "M/dd/yy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                 throw new ExtractBvsException("Invalid 'date aired' or 'air start time'", row);
             var time = parsedDate.TimeOfDay;
 
@@ -242,17 +206,6 @@ namespace Services.Broadcast.Converters
             return bvsDetail;
         }
 
-        private void _ValidateSigmaFieldData(string[] fields, Dictionary<string, int> headers)
-        {
-            foreach (string field in RequiredSigmaFields)
-            {
-                if (string.IsNullOrWhiteSpace(fields[headers[field]]))
-                {
-                    throw new ExtractBvsException($"Required field {field} is null or empty ");
-                }
-            }
-        }
-
         private void _SetSpotLengths(BvsFileDetail bvsDetail, string spot_length, Dictionary<int, int> spotLengthDict)
         {
             spot_length = spot_length.Trim().Replace(":", "");
@@ -267,39 +220,6 @@ namespace Services.Broadcast.Converters
 
             bvsDetail.SpotLength = spotLength;
             bvsDetail.SpotLengthId = spotLengthDict[spotLength];
-        }
-
-        private Dictionary<string, int> _ValidateAndSetupHeaders(TextFieldParser parser)
-        {
-            var fields = parser.ReadFields().ToList();
-
-            //skip the first row if it's the copyright one
-            if (fields.Any() && fields[0].Contains("Copyright"))
-            {
-                fields = parser.ReadFields().ToList();
-            }
-
-            var validationErrors = new List<string>();
-            Dictionary<string, int> headerDict = new Dictionary<string, int>();
-
-            foreach (var header in SigmaFileHeaders)
-            {
-                int headerItemIndex = fields.IndexOf(header);
-                if (headerItemIndex >= 0)
-                {
-                    headerDict.Add(header, headerItemIndex);
-                    continue;
-                }
-                validationErrors.Add(string.Format("Could not find required column {0}.<br />", header));
-            }
-
-            if (validationErrors.Any())
-            {
-                string message = "";
-                validationErrors.ForEach(err => message += err + Environment.NewLine);
-                throw new ExtractBvsException(message);
-            }
-            return headerDict;
         }
 
         private bool _IsEmptyRow(int row)

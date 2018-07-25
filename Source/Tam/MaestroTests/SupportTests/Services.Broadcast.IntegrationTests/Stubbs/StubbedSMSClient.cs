@@ -163,6 +163,15 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_SharedFolder":
                     result = "C:\\WWTV\\WWTVData";
                     break;
+                case "WWTV_PostLogDropFolder":
+                    result = @"E:\temp\wwtv\PostLogPreprocessing";
+                    break;
+                case "WWTV_PostLogErrorFolder":
+                    result = @"E:\temp\wwtv\WWTVErrors\PostLogPreprocessing";
+                    break;
+                case "WWTV_PostLogFtpOutboundFolder":
+                    result = "InPrePost";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
