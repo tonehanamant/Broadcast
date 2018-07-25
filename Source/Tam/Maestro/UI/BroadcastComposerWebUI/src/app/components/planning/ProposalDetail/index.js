@@ -12,6 +12,7 @@ import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
 import PostingBook from './PostingBook';
+import PricingGuide from './PricingGuide';
 // import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
@@ -96,8 +97,10 @@ export class ProposalDetail extends Component {
   }
 
   onChangeNti(value) {
-    const val = value != null || '' ? value : this.props.detail.NtiConversionFactor;
-    console.log(val);
+    // console.log(value, typeof value);
+    const val = value !== null ? value : this.props.detail.NtiConversionFactor;
+    // const val = value === null || value === undefined || value === '' ? 0 : value;
+    // console.log(val);
     const newVal = val / 100;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
   }
@@ -319,8 +322,15 @@ export class ProposalDetail extends Component {
                       className="form-control"
                       style={{ width: '75px' }}
                       precision={2}
-                      defaultValue={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
+                      // value={detail && detail.NtiConversionFactor ? numeral(detail.NtiConversionFactor).multiply(100).format('0.[00]') : 0}
+                      defaultValue={0}
+                      // value={numeral(detail.NtiConversionFactor).multiply(100).format('0.[00]')}
+                      // value={numeral(detail.NtiConversionFactor * 100).format('0,0.[00]')}
+                      // defaultValue={detail.NtiConversionFactor !== undefined || detail.NtiConversionFactor !== null || detail.NtiConversionFactor !== '' ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
+                      // defaultValue={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
                       // value={detail && detail.NtiConversionFactor ? (detail.NtiConversionFactor * 100).toPrecision(4) : 0}
+                      value={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
+                      // value={detail && detail.NtiConversionFactor ? numeral(detail.NtiConversionFactor * 100).format('0[.]00') : 0}
                       onChange={this.onChangeNti}
                     />
                     <InputGroup.Addon>%</InputGroup.Addon>
@@ -336,6 +346,7 @@ export class ProposalDetail extends Component {
               {detail &&
                 <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
                   <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
+                      <MenuItem eventKey="pricingGuide" onSelect={this.openModal}>Pricing Guide</MenuItem>
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
                       <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
@@ -372,6 +383,14 @@ export class ProposalDetail extends Component {
         }
 
         <Sweeps
+          toggleModal={this.props.toggleModal}
+          updateProposalEditFormDetail={updateProposalEditFormDetail}
+          initialdata={initialdata}
+          detail={detail}
+          isReadOnly={isReadOnly}
+        />
+
+        <PricingGuide
           toggleModal={this.props.toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}

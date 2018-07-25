@@ -498,8 +498,6 @@ namespace Services.Broadcast.Repositories
                             {
                                 ReportableName = affidavit.proposalVersionWeeks.myevents_report_name,
                                 StationCallLetters = affidavit.affidavitFileDetail.station,
-                                ScheduleStartDate = affidavit.proposalVersionWeeks.start_date,
-                                ScheduleEndDate = affidavit.proposalVersionWeeks.end_date,
                                 LineupStartDate = affidavit.affidavitFileDetail.original_air_date,
                                 LineupStartTime = new DateTime().AddSeconds(affidavit.affidavitFileDetail.air_time),
                                 AirDate = affidavit.affidavitFileDetail.original_air_date.AddSeconds(affidavit
