@@ -1,0 +1,11 @@
+﻿[
+  {
+    "CreatedBy": "PostLogPreprocessing_User",
+    "ErrorMessages": [],
+    "FileHash": "A7-B1-74-80-41-67-BC-ED-67-B2-B0-C5-A6-13-0F-8D-D8-05-39-1F",
+    "FileName": "C786.Sigma.ValidFile.csv",
+    "FilePath": ".\\Files\\C786.Sigma.ValidFile.csv",
+    "Source": 1,
+    "Status": 1
+  }
+]

@@ -255,7 +255,7 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.start_date = proposalDto.FlightStartDate;
             dbProposalVersion.end_date = proposalDto.FlightEndDate;
             dbProposalVersion.guaranteed_audience_id = proposalDto.GuaranteedDemoId;
-            dbProposalVersion.markets = (byte)proposalDto.MarketGroupId;
+            dbProposalVersion.markets = (byte?)proposalDto.MarketGroupId;
             dbProposalVersion.blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId;
             dbProposalVersion.market_coverage = proposalDto.MarketCoverage;
             dbProposalVersion.modified_by = userName;

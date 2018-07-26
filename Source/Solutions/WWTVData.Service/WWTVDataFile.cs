@@ -45,12 +45,10 @@ namespace WWTVData.Service
             _LastRun = DateTime.Now;
             //BaseWindowsService.LogServiceEvent("Checking WWTV OutPost files. . .");
 
-            int filesProcessed = 0;
-            int filesFailed = 0;
             try
             {
-                var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
-                service.ProcessFiles(ServiceName);
+                ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>().ProcessFiles(ServiceName);
+                ApplicationServiceFactory.GetApplicationService<IPostLogPreprocessingService>().ProcessFiles(ServiceName);
             }
             catch (Exception e)
             {

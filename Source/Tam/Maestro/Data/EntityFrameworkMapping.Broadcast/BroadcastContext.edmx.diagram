@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="84">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_file_details" Width="1.5" PointX="15" PointY="35" />
@@ -162,6 +162,9 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.isci_mapping" Width="1.5" PointX="13.375" PointY="9.75" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_outbound_file_problems" Width="1.5" PointX="29.125" PointY="27.375" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_outbound_files" Width="1.5" PointX="26.875" PointY="27" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_outbound_file_problems_postlog_outbound_files" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_versions" Width="1.5" PointX="3" PointY="13.5" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_audiences_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_details_proposal_versions" />

@@ -119,6 +119,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostReportService, PostReportService>();
             unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();
 
+            unityContainer.RegisterType<IPostLogPreprocessingService, PostLogPreprocessingService>();
+
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 
             unityContainer.RegisterType<IEmailerService, EmailerService>();
