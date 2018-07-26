@@ -6,8 +6,10 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Transactions;
+using Common.Services;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -25,7 +27,6 @@ namespace Services.Broadcast.ApplicationServices
     public class RatingForecastService : IRatingForecastService
     {
         private readonly IRatingForecastRepository _RatingForecastRepository;
-        private readonly IRatingsRepository _ExternalRatingRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBroadcastAudienceRepository _AudienceRepository;
         internal static string IdenticalHutAndShareMessage = "Hut and Share Media Month {0} cannot be identical";
@@ -36,7 +37,6 @@ namespace Services.Broadcast.ApplicationServices
         public RatingForecastService(IDataRepositoryFactory dataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _RatingForecastRepository = dataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            _ExternalRatingRepository = dataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _AudienceRepository = dataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
@@ -49,17 +49,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses()
         {
-            var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
-
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                var nielsonMarkets = _ExternalRatingRepository.GetNielsonMarkets(sweepsMonths);
-                var forecastDetails = _RatingForecastRepository.GetForecastDetails(sweepsMonths);
-                return forecastDetails.Select(s =>
-                        new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
-                    .OrderByDescending(d => d.MediaMonth.Id)
-                    .ToList();
-            }
+            return MediaMonthCrunchCache.Instance.GetMediaMonthCrunchStatuses();
         }
 
         public RatingForecastResponse ForecastRatings(RatingForecastRequest forecastRequest)
