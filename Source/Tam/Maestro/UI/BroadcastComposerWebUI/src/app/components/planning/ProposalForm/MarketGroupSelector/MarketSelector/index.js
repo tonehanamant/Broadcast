@@ -46,6 +46,7 @@ class MarketSelector extends Component {
   }
 
   render() {
+    const { isReadOnly } = this.props;
     let marketCount = 0;
     const marketList = this.props.selectedMarkets.map((market) => {
       if (market) {
@@ -56,6 +57,7 @@ class MarketSelector extends Component {
             <Button
               className="close pull-left"
               style={{ marginRight: '5px' }}
+              disabled={isReadOnly}
               onClick={() => this.onMarketExcluded(market.Id)}
             >
               <span aria-hidden="true">&times;</span>
@@ -68,12 +70,12 @@ class MarketSelector extends Component {
 
       return market;
     });
-
     return (
       <div>
         <Button
           className={`pull-right ${styles.trash}`}
           bsStyle="link"
+          disabled={isReadOnly}
           onClick={() => this.onClearMarketList()}
         >
           <span className="glyphicon glyphicon-trash pull-right" />
@@ -87,6 +89,7 @@ class MarketSelector extends Component {
             ref={(ref) => { this.typeahead = ref; }}
             placeholder="Type to add..."
             options={this.typeaheadOptions}
+            disabled={isReadOnly}
             labelKey="Display"
             onChange={this.onMarketSelected}
           />
@@ -116,12 +119,14 @@ MarketSelector.propTypes = {
   })),
 
   onMarketsSelectionChange: PropTypes.func,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 MarketSelector.defaultProps = {
   markets: [],
   selectedMarkets: [],
   onMarketsSelectionChange: null,
+  isReadOnly: false,
 };
 
 export default CSSModules(MarketSelector, styles);

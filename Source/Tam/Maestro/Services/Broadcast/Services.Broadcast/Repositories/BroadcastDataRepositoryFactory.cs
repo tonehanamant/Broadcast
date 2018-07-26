@@ -71,6 +71,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
             instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
             instance.RegisterType<IPostRepository, PostRepository>();
+            instance.RegisterType<IPostLogRepository, PostLogRepository>();
 
             WasRegistered = true;
         }

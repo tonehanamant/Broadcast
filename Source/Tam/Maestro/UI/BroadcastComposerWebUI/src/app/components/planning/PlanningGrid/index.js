@@ -31,6 +31,7 @@ export class PlanningGrid extends Component {
 		super(props, context);
     this.context = context;
     this.showProposalDetail = this.showProposalDetail.bind(this);
+    this.deselectAll = this.deselectAll.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -58,6 +59,11 @@ export class PlanningGrid extends Component {
     // this.props.history.push(`/proposal/${id}`);
     const url = `planning/proposal/${id}`;
     window.location.assign(url);
+  }
+
+
+  deselectAll() {
+    this.props.deselectAll('gridPlanningHome');
   }
 
   render() {
@@ -171,15 +177,7 @@ export class PlanningGrid extends Component {
       // Need a way to hide the actions on each row but not the columns
       GRID_ACTIONS: {
         iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'Menu Item',
-              key: 'menu-item-key',
-              EVENT_HANDLER: () => {
-                  alert('Im a menu Item Action');
-              },
-          },
-        ],
+        menu: [],
       },
       // BULK_ACTIONS: {
       //   iconCls: 'action-icon',

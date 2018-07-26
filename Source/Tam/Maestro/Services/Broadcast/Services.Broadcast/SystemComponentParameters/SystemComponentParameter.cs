@@ -113,6 +113,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.Inventory); }
         }
 	 
+		public static string LockingService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.LockingService); }
+        }
+	 
 		public static string Maestro  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -171,6 +177,480 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_Resource_AbdulSystemParameter 
+	{ 
+		public static string Broadcast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.Broadcast); }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.BroadcastForecast); }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.CableTrack); }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.ExternalRating); }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.Inventory); }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.Maestro); }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.MaestroAnalysis); }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.NielsenCable); }
+        }
+	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.NsiStaging); }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.PostLogAnalysis); }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.PostlogStaging); }
+        }
+	 
+		public static string Programs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.Programs); }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.Rentrak); }
+        }
+	 
+		public static string SalesApi  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.SalesApi); }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_AbdulSystemParameterNames.ComponentID , AppSettings_Resource_AbdulSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_Resource_PrabaSystemParameter 
+	{ 
+		public static string Broadcast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.Broadcast); }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.BroadcastForecast); }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.CableTrack); }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.ExternalRating); }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.Inventory); }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.Maestro); }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.MaestroAnalysis); }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.NielsenCable); }
+        }
+	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.NsiStaging); }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.PostLogAnalysis); }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.PostlogStaging); }
+        }
+	 
+		public static string Programs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.Programs); }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.Rentrak); }
+        }
+	 
+		public static string SalesApi  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.SalesApi); }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PrabaSystemParameterNames.ComponentID , AppSettings_Resource_PrabaSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_Resource_PraveenSystemParameter 
+	{ 
+		public static string Broadcast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.Broadcast); }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.BroadcastForecast); }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.CableTrack); }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.ExternalRating); }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.Inventory); }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.Maestro); }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.MaestroAnalysis); }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.NielsenCable); }
+        }
+	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.NsiStaging); }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.PostLogAnalysis); }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.PostlogStaging); }
+        }
+	 
+		public static string Programs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.Programs); }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.Rentrak); }
+        }
+	 
+		public static string SalesApi  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.SalesApi); }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_PraveenSystemParameterNames.ComponentID , AppSettings_Resource_PraveenSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_Resource_SenthilSystemParameter 
+	{ 
+		public static string Broadcast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.Broadcast); }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.BroadcastForecast); }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.CableTrack); }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.ExternalRating); }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.Inventory); }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.Maestro); }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.MaestroAnalysis); }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.NielsenCable); }
+        }
+	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.NsiStaging); }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.PostLogAnalysis); }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.PostlogStaging); }
+        }
+	 
+		public static string Programs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.Programs); }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.Rentrak); }
+        }
+	 
+		public static string SalesApi  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.SalesApi); }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_SenthilSystemParameterNames.ComponentID , AppSettings_Resource_SenthilSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_Resource_UmaSystemParameter 
+	{ 
+		public static string Broadcast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.Broadcast); }
+        }
+	 
+		public static string BroadcastForecast  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.BroadcastForecast); }
+        }
+	 
+		public static string CableTrack  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.CableTrack); }
+        }
+	 
+		public static string ExternalRating  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.ExternalRating); }
+        }
+	 
+		public static string Inventory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.Inventory); }
+        }
+	 
+		public static string Maestro  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.Maestro); }
+        }
+	 
+		public static string MaestroAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.MaestroAnalysis); }
+        }
+	 
+		public static string NielsenCable  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.NielsenCable); }
+        }
+	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.NsiStaging); }
+        }
+	 
+		public static string PostLogAnalysis  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.PostLogAnalysis); }
+        }
+	 
+		public static string PostlogStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.PostlogStaging); }
+        }
+	 
+		public static string Programs  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.Programs); }
+        }
+	 
+		public static string Rentrak  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.Rentrak); }
+        }
+	 
+		public static string SalesApi  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.SalesApi); }
+        }
+	 
+		public static string SystemSettings  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Resource_UmaSystemParameterNames.ComponentID , AppSettings_Resource_UmaSystemParameterNames.SystemSettings); }
+        }
+	}
+	 
+	public static class AppSettings_SenthilServiceSystemParameter 
+	{ 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_SenthilServiceSystemParameterNames.ComponentID , AppSettings_SenthilServiceSystemParameterNames.DES); }
         }
 	}
 	 
@@ -318,6 +798,741 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(AppSettings_ServiceSystemParameterNames.ComponentID , AppSettings_ServiceSystemParameterNames.TCS); }
+        }
+	}
+	 
+	public static class AppSettings_Service_AbdulSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_AbdulSystemParameterNames.ComponentID , AppSettings_Service_AbdulSystemParameterNames.TCS); }
+        }
+	}
+	 
+	public static class AppSettings_Service_PrabaSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PrabaSystemParameterNames.ComponentID , AppSettings_Service_PrabaSystemParameterNames.TCS); }
+        }
+	}
+	 
+	public static class AppSettings_Service_PraveenSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_PraveenSystemParameterNames.ComponentID , AppSettings_Service_PraveenSystemParameterNames.TCS); }
+        }
+	}
+	 
+	public static class AppSettings_Service_SenthilSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.TCS); }
+        }
+	}
+	 
+	public static class AppSettings_Service_UmaSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_UmaSystemParameterNames.ComponentID , AppSettings_Service_UmaSystemParameterNames.TCS); }
         }
 	}
 	 
@@ -627,6 +1842,27 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.CacheTest); }
+        }
+	}
+	 
+	public static class ConfigurationServiceSystemParameter 
+	{ 
+		public static string CacheTest  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.CacheTest); }
+        }
+	 
+		public static string UseSecurityService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.UseSecurityService); }
+        }
+	 
+		public static string UseSMSClient  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.UseSMSClient); }
         }
 	}
 	 
@@ -1785,6 +3021,15 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(SystemComposerSystemParameterNames.ComponentID , SystemComposerSystemParameterNames.ZoneToDmaMultiplicity); }
+        }
+	}
+	 
+	public static class Test_ParameterSystemParameter 
+	{ 
+		public static string Cache  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(Test_ParameterSystemParameterNames.ComponentID , Test_ParameterSystemParameterNames.Cache); }
         }
 	}
 	 

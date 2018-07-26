@@ -240,6 +240,7 @@
     <Compile Include="ApplicationServices\MyEventsReportNamingEngineTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceTests.cs" />
+    <Compile Include="ApplicationServices\PostLogPreprocessingServiceTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitScrubbingServiceIntegrationTests.cs" />
@@ -304,6 +305,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="EnvironmentSpecificSettings.config.release">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\C786.Sigma.MissingColumns.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\C786.Sigma.MissingData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\C786.Sigma.ValidFile.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\CNNAMPMBarterObligations_AllBadDayparts.xlsx">

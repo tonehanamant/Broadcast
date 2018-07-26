@@ -28,7 +28,7 @@ export default class ProposalForm extends Component {
     this.setValidationState = this.setValidationState.bind(this);
 
     this.onOpenMarketList = this.onOpenMarketList.bind(this);
-    this.updateMarketCount = this.updateMarketCount.bind(this);
+    // this.updateMarketCount = this.updateMarketCount.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
     this.onSaveShowValidation = this.onSaveShowValidation.bind(this);
@@ -95,7 +95,7 @@ export default class ProposalForm extends Component {
     this.props.updateProposalEditForm({ key: 'Notes', value: val });
   }
 
-  updateMarketCount(customMarketCount) {
+  /* updateMarketCount(customMarketCount) {
     // if selector was cleared, assign the first option from initialData (i.e. 'All')
     let selectedMarketGroup = this.props.initialdata.MarketGroups.find(marketgGroup => marketgGroup.Id === 255);
     if (customMarketCount === 0) {
@@ -106,7 +106,7 @@ export default class ProposalForm extends Component {
       selectedMarketGroup,
       customMarketCount,
     });
-  }
+  } */
 
   setValidationState(type, state) {
     this.setState(prevState => ({
@@ -138,7 +138,7 @@ export default class ProposalForm extends Component {
     this.setValidationState('AdvertiserId', val ? null : 'error');
   }
 
-  componentWillMount() {
+  /* componentWillMount() {
     const { initialdata, proposalEditForm } = this.props;
     const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
     let selectedMarketGroup = MarketGroup;
@@ -158,7 +158,7 @@ export default class ProposalForm extends Component {
       customMarketCount,
       selectedMarketGroup,
     });
-  }
+  } */
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.proposalValidationStates.FormInvalid === true) {
@@ -171,8 +171,8 @@ export default class ProposalForm extends Component {
     // const { MarketCoverage } = proposalEditForm;
 
     // update custom count
-    const customIndex = initialdata.MarketGroups.findIndex(marketGroup => marketGroup.Id === 255);
-    initialdata.MarketGroups[customIndex].Count = this.state.customMarketCount;
+    // const customIndex = initialdata.MarketGroups.findIndex(marketGroup => marketGroup.Id === 255);
+    // initialdata.MarketGroups[customIndex].Count = this.state.customMarketCount;
 
     //  handle hiatus flights tips display
     let hasTip = false;
@@ -197,6 +197,7 @@ export default class ProposalForm extends Component {
     // console.log('COVERAGE>>>>>>>>>>>>>>>>>', proposalEditForm.MarketCoverage, isEdit);
     const rawCoverage = isEdit ? proposalEditForm.MarketCoverage : initialdata.DefaultMarketCoverage;
     const initialCoverage = rawCoverage ? rawCoverage * 100 : null;
+    // if (!isEdit) this.props.updateProposalEditForm({ key: 'MarketCoverage', rawCoverage });
 
     return (
       <div id="proposal-form">
@@ -446,7 +447,8 @@ export default class ProposalForm extends Component {
             initialdata={initialdata}
             proposalEditForm={proposalEditForm}
             updateProposalEditForm={this.props.updateProposalEditForm}
-            updateMarketCount={this.updateMarketCount}
+            // updateMarketCount={this.updateMarketCount}
+            isReadOnly={isReadOnly}
           />
 			</div>
     );
