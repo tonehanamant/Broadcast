@@ -98,7 +98,7 @@ export class SectionPlanningProposalCreate extends Component {
 
       const validNti = (value) => {
         const valid = {
-          required: isNaN(value),
+          required: !isNaN(value),
         };
         return valid.required;
       };
