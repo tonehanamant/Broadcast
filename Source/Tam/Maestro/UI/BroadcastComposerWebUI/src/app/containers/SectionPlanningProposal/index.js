@@ -103,13 +103,13 @@ export class SectionPlanningProposal extends Component {
 
     // Proposal Form
     const validProposalName = (value) => {
-      const alphanumeric = /^[A-Za-z0-9- ]+$/i;
+      // const alphanumeric = /^[A-Za-z0-9- ]+$/i;
       const valid = {
         required: (value !== '' || null),
-        alphaNumeric: (alphanumeric.test(value) || value === ''),
+        // alphaNumeric: (alphanumeric.test(value) || value === ''),
         maxChar100: (value && value.length <= 100),
       };
-      return valid.required && valid.alphaNumeric && valid.maxChar100;
+      return valid.required && valid.maxChar100;
     };
 
     const validAdvertiserId = (value) => {
