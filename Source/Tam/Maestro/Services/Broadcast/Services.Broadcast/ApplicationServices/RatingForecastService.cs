@@ -21,6 +21,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         RatingForecastResponse ForecastRatings(RatingForecastRequest forecastRequest);
         List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses();
+        void ClearMediaMonthCrunchCache();
         void CrunchMediaMonth(short mediaMonthId);
     }
 
@@ -47,6 +48,10 @@ namespace Services.Broadcast.ApplicationServices
             _RatingForecastRepository.CrunchMonth(mediaMonthId, mm.StartDate, mm.EndDate);
         }
 
+        public void ClearMediaMonthCrunchCache()
+        {
+            MediaMonthCrunchCache.Instance.ClearMediaMonthCache();
+        }
         public List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses()
         {
             return MediaMonthCrunchCache.Instance.GetMediaMonthCrunchStatuses();
