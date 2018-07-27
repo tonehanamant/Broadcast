@@ -43,18 +43,18 @@ export class ProposalDetail extends Component {
     this.checkValidSpotLength = this.checkValidSpotLength.bind(this);
     this.checkValidDaypart = this.checkValidDaypart.bind(this);
     this.checkValidDaypartCode = this.checkValidDaypartCode.bind(this);
-    // this.checkValidNti = this.checkValidNti.bind(this);
+    this.checkValidNtiLength = this.checkValidNtiLength.bind(this);
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
 
     this.state = {
-      // wholeNti: 0,
       validationStates: {
         SpotLengthId: null,
         Daypart: null,
         DaypartCode: null,
         DaypartCode_Alphanumeric: null,
         DaypartCode_MaxChar: null,
+        NtiLength: null,
       },
     };
   }
@@ -100,6 +100,7 @@ export class ProposalDetail extends Component {
     const val = value !== null ? value : this.props.detail.NtiConversionFactor;
     const newVal = val / 100;
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
+    this.checkValidNtiLength(value);
   }
 
   onChangeAdu(event) {
@@ -160,10 +161,11 @@ export class ProposalDetail extends Component {
   }
 
   onSaveShowValidation(nextProps) {
-    const { SpotLengthId, Daypart, DaypartCode } = nextProps.detail;
+    const { SpotLengthId, Daypart, DaypartCode, NtiConversionFactor } = nextProps.detail;
     this.checkValidSpotLength(SpotLengthId);
     this.checkValidDaypart(Daypart);
     this.checkValidDaypartCode(DaypartCode);
+    this.checkValidNtiLength(NtiConversionFactor);
   }
 
   checkValidSpotLength(value) {
@@ -182,6 +184,11 @@ export class ProposalDetail extends Component {
     const re = /^[a-z0-9]+$/i; // check alphanumeric
     this.setValidationState('DaypartCode_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
     this.setValidationState('DaypartCode_MaxChar', val.length <= 10 ? null : 'error');
+  }
+
+  checkValidNtiLength(value) {
+    const val = value;
+    this.setValidationState('NtiLength', val ? null : 'error');
   }
 
   openInventory(type) {
@@ -236,9 +243,6 @@ export class ProposalDetail extends Component {
     if (nextProps.proposalValidationStates.DetailInvalid === true) {
       this.onSaveShowValidation(nextProps);
     }
-    // this.setState({
-    //   wholeNti: nextProps.detail.NtiConversionFactor * 100,
-    // });
   }
 
   render() {
@@ -313,7 +317,7 @@ export class ProposalDetail extends Component {
                 </FormGroup>
               }
               {detail &&
-                <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor">
+                <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor" validationState={this.state.validationStates.NtiLength}>
                   <ControlLabel style={{ margin: '0 10px 0 10px' }}>NTI</ControlLabel>
                   <InputGroup>
                     <InputNumber
@@ -327,6 +331,11 @@ export class ProposalDetail extends Component {
                     />
                     <InputGroup.Addon>%</InputGroup.Addon>
                   </InputGroup>
+                  {this.state.validationStates.NtiLength != null &&
+                  <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                    <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+                  </HelpBlock>
+                  }
                 </FormGroup>
               }
               {detail &&

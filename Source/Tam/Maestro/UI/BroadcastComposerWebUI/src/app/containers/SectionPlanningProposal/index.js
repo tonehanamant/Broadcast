@@ -153,7 +153,14 @@ export class SectionPlanningProposal extends Component {
         return valid.required && valid.alphaNumeric && valid.maxChar10;
       };
 
-      const validDetail = validSpothLength(detail.SpothLengthId) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
+      const validNti = (value) => {
+        const valid = {
+          required: isNaN(value),
+        };
+        return valid.required;
+      };
+
+      const validDetail = validSpothLength(detail.SpothLengthId) && validNti(detail.NtiConversionFactor) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
       validDetails.push(validDetail);
     });
     // console.log('VALID DETAILS', validDetails);
