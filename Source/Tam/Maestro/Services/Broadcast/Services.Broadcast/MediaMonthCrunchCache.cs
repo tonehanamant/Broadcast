@@ -52,16 +52,9 @@ namespace Common.Services
             _DataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregate = mediaMonthAndWeekAggregateCache;
 
-            try
-            {
-                _CacheTimeoutInSeconds = Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
-                if (_CacheTimeoutInSeconds <= 0)
-                    throw new ApplicationException(string.Format("The value of the DaypartCacheSlidingExpirationSeconds is {0}.  It must be greater than zero.", _CacheTimeoutInSeconds));
-            }
-            catch (Exception ex)
-            {   //use a default
-                _CacheTimeoutInSeconds = 24*60*60; //24 hours;
-            }
+            _CacheTimeoutInSeconds = Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
+            if (_CacheTimeoutInSeconds <= 0)
+                _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
         }
 
         public void SetCacheTimeout(int timeoutSeconds)
@@ -76,10 +69,10 @@ namespace Common.Services
 
         public List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses()
         {
-            if (_Cache.Contains(MediaMonthCacheKey))
-            {
-                return (List<MediaMonthCrunchStatus>)_Cache.Get(MediaMonthCacheKey);
-            }
+            //if (_Cache.Contains(MediaMonthCacheKey))
+            //{
+            //    return (List<MediaMonthCrunchStatus>)_Cache.Get(MediaMonthCacheKey);
+            //}
 
             var ratingForecastRepository = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var externalRatingRepository = _DataRepositoryFactory.GetDataRepository<IRatingsRepository>();
@@ -90,11 +83,20 @@ namespace Common.Services
             {
                 var nielsonMarkets = externalRatingRepository.GetNielsonMarkets(sweepsMonths);
                 var forecastDetails = ratingForecastRepository.GetForecastDetails(sweepsMonths);
-                _Cache[MediaMonthCacheKey] = forecastDetails.Select(s =>
+                var results = forecastDetails.Select(s =>
                         new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
                     .OrderByDescending(d => d.MediaMonth.Id)
                     .ToList();
-                return (List<MediaMonthCrunchStatus>)_Cache.Get(MediaMonthCacheKey);
+
+                //_Cache.Add(
+                //    MediaMonthCacheKey,
+                //    results,
+                //    new CacheItemPolicy
+                //    {
+                //        SlidingExpiration = new TimeSpan(0, 0, _CacheTimeoutInSeconds)
+                //    });
+
+                return results;
             }
         }
 
