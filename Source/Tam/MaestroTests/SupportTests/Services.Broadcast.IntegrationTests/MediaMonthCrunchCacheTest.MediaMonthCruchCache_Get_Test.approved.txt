@@ -1,0 +1,930 @@
+﻿[
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2018-05-27T00:00:00",
+      "_Id": 440,
+      "_MediaMonthX": "0518",
+      "_Month": 5,
+      "_StartDate": "2018-04-30T00:00:00",
+      "_Year": 2018,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2018-02-25T00:00:00",
+      "_Id": 437,
+      "_MediaMonthX": "0218",
+      "_Month": 2,
+      "_StartDate": "2018-01-29T00:00:00",
+      "_Year": 2018,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 210,
+    "UsageMarkets": 210,
+    "ViewerMarkets": 210
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2017-11-26T00:00:00",
+      "_Id": 434,
+      "_MediaMonthX": "1117",
+      "_Month": 11,
+      "_StartDate": "2017-10-30T00:00:00",
+      "_Year": 2017,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 210,
+    "UsageMarkets": 210,
+    "ViewerMarkets": 210
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2017-07-30T00:00:00",
+      "_Id": 430,
+      "_MediaMonthX": "0717",
+      "_Month": 7,
+      "_StartDate": "2017-06-26T00:00:00",
+      "_Year": 2017,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 207,
+    "UniverseMarkets": 207,
+    "UsageMarkets": 207,
+    "ViewerMarkets": 207
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2017-05-28T00:00:00",
+      "_Id": 428,
+      "_MediaMonthX": "0517",
+      "_Month": 5,
+      "_StartDate": "2017-05-01T00:00:00",
+      "_Year": 2017,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 209,
+    "UniverseMarkets": 209,
+    "UsageMarkets": 209,
+    "ViewerMarkets": 209
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2017-02-26T00:00:00",
+      "_Id": 425,
+      "_MediaMonthX": "0217",
+      "_Month": 2,
+      "_StartDate": "2017-01-30T00:00:00",
+      "_Year": 2017,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 209,
+    "UniverseMarkets": 209,
+    "UsageMarkets": 209,
+    "ViewerMarkets": 209
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2016-11-27T00:00:00",
+      "_Id": 422,
+      "_MediaMonthX": "1116",
+      "_Month": 11,
+      "_StartDate": "2016-10-31T00:00:00",
+      "_Year": 2016,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 209,
+    "UniverseMarkets": 209,
+    "UsageMarkets": 209,
+    "ViewerMarkets": 209
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2016-07-31T00:00:00",
+      "_Id": 418,
+      "_MediaMonthX": "0716",
+      "_Month": 7,
+      "_StartDate": "2016-06-27T00:00:00",
+      "_Year": 2016,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 207,
+    "UniverseMarkets": 207,
+    "UsageMarkets": 207,
+    "ViewerMarkets": 207
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2016-05-29T00:00:00",
+      "_Id": 416,
+      "_MediaMonthX": "0516",
+      "_Month": 5,
+      "_StartDate": "2016-04-25T00:00:00",
+      "_Year": 2016,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 210,
+    "UsageMarkets": 210,
+    "ViewerMarkets": 210
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2016-02-28T00:00:00",
+      "_Id": 413,
+      "_MediaMonthX": "0216",
+      "_Month": 2,
+      "_StartDate": "2016-02-01T00:00:00",
+      "_Year": 2016,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 202,
+    "UniverseMarkets": 202,
+    "UsageMarkets": 202,
+    "ViewerMarkets": 202
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2015-11-29T00:00:00",
+      "_Id": 410,
+      "_MediaMonthX": "1115",
+      "_Month": 11,
+      "_StartDate": "2015-10-26T00:00:00",
+      "_Year": 2015,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2015-07-26T00:00:00",
+      "_Id": 406,
+      "_MediaMonthX": "0715",
+      "_Month": 7,
+      "_StartDate": "2015-06-29T00:00:00",
+      "_Year": 2015,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 206,
+    "UniverseMarkets": 206,
+    "UsageMarkets": 206,
+    "ViewerMarkets": 206
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2015-05-31T00:00:00",
+      "_Id": 404,
+      "_MediaMonthX": "0515",
+      "_Month": 5,
+      "_StartDate": "2015-04-27T00:00:00",
+      "_Year": 2015,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 210,
+    "UsageMarkets": 210,
+    "ViewerMarkets": 210
+  },
+  {
+    "Crunched": 0,
+    "MediaMonth": {
+      "_EndDate": "2015-02-22T00:00:00",
+      "_Id": 401,
+      "_MediaMonthX": "0215",
+      "_Month": 2,
+      "_StartDate": "2015-01-26T00:00:00",
+      "_Year": 2015,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 210,
+    "UsageMarkets": 210,
+    "ViewerMarkets": 210
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2014-11-30T00:00:00",
+      "_Id": 398,
+      "_MediaMonthX": "1114",
+      "_Month": 11,
+      "_StartDate": "2014-10-27T00:00:00",
+      "_Year": 2014,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 210,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2014-07-27T00:00:00",
+      "_Id": 394,
+      "_MediaMonthX": "0714",
+      "_Month": 7,
+      "_StartDate": "2014-06-30T00:00:00",
+      "_Year": 2014,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 207,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2014-05-25T00:00:00",
+      "_Id": 392,
+      "_MediaMonthX": "0514",
+      "_Month": 5,
+      "_StartDate": "2014-04-28T00:00:00",
+      "_Year": 2014,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 201,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2014-02-23T00:00:00",
+      "_Id": 389,
+      "_MediaMonthX": "0214",
+      "_Month": 2,
+      "_StartDate": "2014-01-27T00:00:00",
+      "_Year": 2014,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 201,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2013-11-24T00:00:00",
+      "_Id": 386,
+      "_MediaMonthX": "1113",
+      "_Month": 11,
+      "_StartDate": "2013-10-28T00:00:00",
+      "_Year": 2013,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 201,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2013-07-28T00:00:00",
+      "_Id": 382,
+      "_MediaMonthX": "0713",
+      "_Month": 7,
+      "_StartDate": "2013-07-01T00:00:00",
+      "_Year": 2013,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 207,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2013-05-26T00:00:00",
+      "_Id": 380,
+      "_MediaMonthX": "0513",
+      "_Month": 5,
+      "_StartDate": "2013-04-29T00:00:00",
+      "_Year": 2013,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 207,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 1,
+    "MediaMonth": {
+      "_EndDate": "2013-02-24T00:00:00",
+      "_Id": 377,
+      "_MediaMonthX": "0213",
+      "_Month": 2,
+      "_StartDate": "2013-01-28T00:00:00",
+      "_Year": 2013,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 201,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2012-11-25T00:00:00",
+      "_Id": 374,
+      "_MediaMonthX": "1112",
+      "_Month": 11,
+      "_StartDate": "2012-10-29T00:00:00",
+      "_Year": 2012,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2012-07-29T00:00:00",
+      "_Id": 370,
+      "_MediaMonthX": "0712",
+      "_Month": 7,
+      "_StartDate": "2012-06-25T00:00:00",
+      "_Year": 2012,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2012-05-27T00:00:00",
+      "_Id": 368,
+      "_MediaMonthX": "0512",
+      "_Month": 5,
+      "_StartDate": "2012-04-30T00:00:00",
+      "_Year": 2012,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2012-02-26T00:00:00",
+      "_Id": 365,
+      "_MediaMonthX": "0212",
+      "_Month": 2,
+      "_StartDate": "2012-01-30T00:00:00",
+      "_Year": 2012,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2011-11-27T00:00:00",
+      "_Id": 362,
+      "_MediaMonthX": "1111",
+      "_Month": 11,
+      "_StartDate": "2011-10-31T00:00:00",
+      "_Year": 2011,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2011-07-31T00:00:00",
+      "_Id": 358,
+      "_MediaMonthX": "0711",
+      "_Month": 7,
+      "_StartDate": "2011-06-27T00:00:00",
+      "_Year": 2011,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2011-05-29T00:00:00",
+      "_Id": 356,
+      "_MediaMonthX": "0511",
+      "_Month": 5,
+      "_StartDate": "2011-04-25T00:00:00",
+      "_Year": 2011,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2011-02-27T00:00:00",
+      "_Id": 353,
+      "_MediaMonthX": "0211",
+      "_Month": 2,
+      "_StartDate": "2011-01-31T00:00:00",
+      "_Year": 2011,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2010-11-28T00:00:00",
+      "_Id": 348,
+      "_MediaMonthX": "1110",
+      "_Month": 11,
+      "_StartDate": "2010-11-01T00:00:00",
+      "_Year": 2010,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2010-07-25T00:00:00",
+      "_Id": 344,
+      "_MediaMonthX": "0710",
+      "_Month": 7,
+      "_StartDate": "2010-06-28T00:00:00",
+      "_Year": 2010,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2010-05-30T00:00:00",
+      "_Id": 342,
+      "_MediaMonthX": "0510",
+      "_Month": 5,
+      "_StartDate": "2010-04-26T00:00:00",
+      "_Year": 2010,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2010-02-28T00:00:00",
+      "_Id": 339,
+      "_MediaMonthX": "0210",
+      "_Month": 2,
+      "_StartDate": "2010-02-01T00:00:00",
+      "_Year": 2010,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2009-11-29T00:00:00",
+      "_Id": 72,
+      "_MediaMonthX": "1109",
+      "_Month": 11,
+      "_StartDate": "2009-10-26T00:00:00",
+      "_Year": 2009,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2009-07-26T00:00:00",
+      "_Id": 68,
+      "_MediaMonthX": "0709",
+      "_Month": 7,
+      "_StartDate": "2009-06-29T00:00:00",
+      "_Year": 2009,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2009-05-31T00:00:00",
+      "_Id": 66,
+      "_MediaMonthX": "0509",
+      "_Month": 5,
+      "_StartDate": "2009-04-27T00:00:00",
+      "_Year": 2009,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2009-02-22T00:00:00",
+      "_Id": 62,
+      "_MediaMonthX": "0209",
+      "_Month": 2,
+      "_StartDate": "2009-01-26T00:00:00",
+      "_Year": 2009,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2008-11-30T00:00:00",
+      "_Id": 59,
+      "_MediaMonthX": "1108",
+      "_Month": 11,
+      "_StartDate": "2008-10-27T00:00:00",
+      "_Year": 2008,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2008-07-27T00:00:00",
+      "_Id": 55,
+      "_MediaMonthX": "0708",
+      "_Month": 7,
+      "_StartDate": "2008-06-30T00:00:00",
+      "_Year": 2008,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2008-05-25T00:00:00",
+      "_Id": 53,
+      "_MediaMonthX": "0508",
+      "_Month": 5,
+      "_StartDate": "2008-04-28T00:00:00",
+      "_Year": 2008,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2008-02-24T00:00:00",
+      "_Id": 50,
+      "_MediaMonthX": "0208",
+      "_Month": 2,
+      "_StartDate": "2008-01-28T00:00:00",
+      "_Year": 2008,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2007-11-25T00:00:00",
+      "_Id": 47,
+      "_MediaMonthX": "1107",
+      "_Month": 11,
+      "_StartDate": "2007-10-29T00:00:00",
+      "_Year": 2007,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2007-07-29T00:00:00",
+      "_Id": 43,
+      "_MediaMonthX": "0707",
+      "_Month": 7,
+      "_StartDate": "2007-06-25T00:00:00",
+      "_Year": 2007,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2007-05-27T00:00:00",
+      "_Id": 41,
+      "_MediaMonthX": "0507",
+      "_Month": 5,
+      "_StartDate": "2007-04-30T00:00:00",
+      "_Year": 2007,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2007-02-25T00:00:00",
+      "_Id": 38,
+      "_MediaMonthX": "0207",
+      "_Month": 2,
+      "_StartDate": "2007-01-29T00:00:00",
+      "_Year": 2007,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2006-11-26T00:00:00",
+      "_Id": 35,
+      "_MediaMonthX": "1106",
+      "_Month": 11,
+      "_StartDate": "2006-10-30T00:00:00",
+      "_Year": 2006,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2006-07-30T00:00:00",
+      "_Id": 31,
+      "_MediaMonthX": "0706",
+      "_Month": 7,
+      "_StartDate": "2006-06-26T00:00:00",
+      "_Year": 2006,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2006-05-28T00:00:00",
+      "_Id": 29,
+      "_MediaMonthX": "0506",
+      "_Month": 5,
+      "_StartDate": "2006-05-01T00:00:00",
+      "_Year": 2006,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2006-02-26T00:00:00",
+      "_Id": 26,
+      "_MediaMonthX": "0206",
+      "_Month": 2,
+      "_StartDate": "2006-01-30T00:00:00",
+      "_Year": 2006,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2005-11-27T00:00:00",
+      "_Id": 23,
+      "_MediaMonthX": "1105",
+      "_Month": 11,
+      "_StartDate": "2005-10-31T00:00:00",
+      "_Year": 2005,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2005-07-31T00:00:00",
+      "_Id": 19,
+      "_MediaMonthX": "0705",
+      "_Month": 7,
+      "_StartDate": "2005-06-27T00:00:00",
+      "_Year": 2005,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2005-05-29T00:00:00",
+      "_Id": 17,
+      "_MediaMonthX": "0505",
+      "_Month": 5,
+      "_StartDate": "2005-04-25T00:00:00",
+      "_Year": 2005,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2005-02-27T00:00:00",
+      "_Id": 14,
+      "_MediaMonthX": "0205",
+      "_Month": 2,
+      "_StartDate": "2005-01-31T00:00:00",
+      "_Year": 2005,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2004-11-28T00:00:00",
+      "_Id": 11,
+      "_MediaMonthX": "1104",
+      "_Month": 11,
+      "_StartDate": "2004-11-01T00:00:00",
+      "_Year": 2004,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2004-07-25T00:00:00",
+      "_Id": 7,
+      "_MediaMonthX": "0704",
+      "_Month": 7,
+      "_StartDate": "2004-06-28T00:00:00",
+      "_Year": 2004,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2004-05-30T00:00:00",
+      "_Id": 5,
+      "_MediaMonthX": "0504",
+      "_Month": 5,
+      "_StartDate": "2004-04-26T00:00:00",
+      "_Year": 2004,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  },
+  {
+    "Crunched": 3,
+    "MediaMonth": {
+      "_EndDate": "2004-02-29T00:00:00",
+      "_Id": 2,
+      "_MediaMonthX": "0204",
+      "_Month": 2,
+      "_StartDate": "2004-01-26T00:00:00",
+      "_Year": 2004,
+      "IsDirty": true
+    },
+    "NielsonMarkets": 0,
+    "UniverseMarkets": 0,
+    "UsageMarkets": 0,
+    "ViewerMarkets": 0
+  }
+]
