@@ -14,9 +14,9 @@ namespace Services.Broadcast.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            var dmy = IntegrationTestApplicationServiceFactory.Instance;
+            //var dmy = IntegrationTestApplicationServiceFactory.Instance;
         }
-
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MediaMonthCruchCache_Get_Test()
