@@ -79,7 +79,7 @@ class PricingGuide extends Component {
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;
     const { updateDetail, detail } = this.props;
 
-    updateDetail({ id: detail.Id, key: 'GoalImpression', value: impression * 1000 });
+    updateDetail({ id: detail.Id, key: 'GoalImpression', value: impression });
     updateDetail({ id: detail.Id, key: 'GoalBudget', value: budget });
     updateDetail({ id: detail.Id, key: 'AdjustmentMargin', value: margin });
     updateDetail({ id: detail.Id, key: 'AdjustmentRate', value: rateInflation });
@@ -133,7 +133,7 @@ class PricingGuide extends Component {
                       min={0}
                       precision={2}
                       style={{ width: '100%' }}
-                      onChange={(value) => { this.handleChange('impression', value); }}
+                      onChange={(value) => { this.handleChange('impression', value * 1000); }}
                     />
                   </FormItem>
                   <FormItem label="Budget" style={{ marginBottom: 0 }}>
