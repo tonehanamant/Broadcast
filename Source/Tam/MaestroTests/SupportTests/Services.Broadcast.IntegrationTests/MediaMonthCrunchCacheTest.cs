@@ -14,7 +14,7 @@ namespace Services.Broadcast.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            //var dmy = IntegrationTestApplicationServiceFactory.Instance;
+            var dmy = IntegrationTestApplicationServiceFactory.Instance;
         }
         [Ignore]
         [Test]
@@ -22,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests
         public void MediaMonthCruchCache_Get_Test()
         {
 
+            var d = DaypartCache.Instance.GetDisplayDaypart(12);
             MediaMonthCrunchCache.Instance.GetMediaMonthCrunchStatuses();
             var status = MediaMonthCrunchCache.Instance.GetMediaMonthCrunchStatuses();
 

@@ -24,7 +24,7 @@ namespace Common.Services
     public class MediaMonthCrunchCache : IMediaMonthCrunchCache
     {
         private const string MediaMonthCacheKey = "MediaMonthCacheKey";
-        private const string MediaMonthCacheInstanceName = "MediaMonthCacheKey";
+        private const string MediaMonthCacheInstanceName = "MediaMonthCacheInstance";
 
         public static IMediaMonthCrunchCache MediaMonthCrunchCacheInstance;
 
@@ -32,8 +32,7 @@ namespace Common.Services
         private int _CacheTimeoutInSeconds;
 
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregate;
-
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
 
         private static readonly Lazy<IMediaMonthCrunchCache> _Lazy = new Lazy<IMediaMonthCrunchCache>(
@@ -41,20 +40,29 @@ namespace Common.Services
             {
                 if (MediaMonthCrunchCacheInstance == null)
                 {
-                    MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(new BroadcastDataDataRepositoryFactory(), BroadcastApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>());
+                    throw new Exception("Do not access instance before accessing BroadcastApplicationServiceFactory");
                 }
                 return MediaMonthCrunchCacheInstance;
             });
 
         //This is only public so that the class can be tested.
-        public MediaMonthCrunchCache(IDataRepositoryFactory dataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        public MediaMonthCrunchCache(IDataRepositoryFactory dataRepositoryFactory,IMediaMonthAndWeekAggregateCache cache)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
-            _MediaMonthAndWeekAggregate = mediaMonthAndWeekAggregateCache;
+            _MediaMonthAndWeekAggregateCache = cache;
 
-            _CacheTimeoutInSeconds = Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
-            if (_CacheTimeoutInSeconds <= 0)
+            try
+            {
+                _CacheTimeoutInSeconds =
+                    Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
+                if (_CacheTimeoutInSeconds <= 0)
+                    _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
+            }
+            catch (Exception ex)
+            {
+                //use a default
                 _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
+            }
         }
 
         public void SetCacheTimeout(int timeoutSeconds)
@@ -69,15 +77,14 @@ namespace Common.Services
 
         public List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses()
         {
-            //if (_Cache.Contains(MediaMonthCacheKey))
-            //{
-            //    return (List<MediaMonthCrunchStatus>)_Cache.Get(MediaMonthCacheKey);
-            //}
-
+            if (_Cache.Contains(MediaMonthCacheKey))
+            {
+                return (List<MediaMonthCrunchStatus>)_Cache.Get(MediaMonthCacheKey);
+            }
             var ratingForecastRepository = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var externalRatingRepository = _DataRepositoryFactory.GetDataRepository<IRatingsRepository>();
 
-            var sweepsMonths = _MediaMonthAndWeekAggregate.GetAllSweepsMonthsBeforeCurrentMonth();
+            var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -88,13 +95,13 @@ namespace Common.Services
                     .OrderByDescending(d => d.MediaMonth.Id)
                     .ToList();
 
-                //_Cache.Add(
-                //    MediaMonthCacheKey,
-                //    results,
-                //    new CacheItemPolicy
-                //    {
-                //        SlidingExpiration = new TimeSpan(0, 0, _CacheTimeoutInSeconds)
-                //    });
+                _Cache.Add(
+                    MediaMonthCacheKey,
+                    results,
+                    new CacheItemPolicy
+                    {
+                        SlidingExpiration = new TimeSpan(0, 0, _CacheTimeoutInSeconds)
+                    });
 
                 return results;
             }

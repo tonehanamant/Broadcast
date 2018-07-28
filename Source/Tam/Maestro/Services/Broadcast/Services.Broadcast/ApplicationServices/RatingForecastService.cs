@@ -31,17 +31,22 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingsRepository _ExternalRatingRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBroadcastAudienceRepository _AudienceRepository;
+        private readonly IMediaMonthCrunchCache _MediaMonthCrunchCache;
+
         internal static string IdenticalHutAndShareMessage = "Hut and Share Media Month {0} cannot be identical";
         internal static string HutMediaMonthMustBeEarlierLessThanThanShareMediaMonth = "Hut Media Month {0} must be earlier (less than) than Share Media Month {1}";
         internal static string NoSelectedDaysMessage = "The following programs have dayparts with no selected days:\n {0}";
         internal static string DuplicateProgramsMessage = "The following programs are duplicates:\n {0} ";
 
-        public RatingForecastService(IDataRepositoryFactory dataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        public RatingForecastService(IDataRepositoryFactory dataRepositoryFactory
+                                    , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+                                    , IMediaMonthCrunchCache mediaMonthCrunchCache)
         {
             _RatingForecastRepository = dataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             _ExternalRatingRepository = dataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _AudienceRepository = dataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _MediaMonthCrunchCache = mediaMonthCrunchCache;
         }
 
         public void CrunchMediaMonth(short mediaMonthId)
@@ -56,18 +61,18 @@ namespace Services.Broadcast.ApplicationServices
         }
         public List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses()
         {
-//            return MediaMonthCrunchCache.Instance.GetMediaMonthCrunchStatuses();
-            var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
+            return _MediaMonthCrunchCache.GetMediaMonthCrunchStatuses();
+            //var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
 
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                var nielsonMarkets = _ExternalRatingRepository.GetNielsonMarkets(sweepsMonths);
-                var forecastDetails = _RatingForecastRepository.GetForecastDetails(sweepsMonths);
-                return forecastDetails.Select(s =>
-                        new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
-                    .OrderByDescending(d => d.MediaMonth.Id)
-                    .ToList();
-            }
+            //using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            //{
+            //    var nielsonMarkets = _ExternalRatingRepository.GetNielsonMarkets(sweepsMonths);
+            //    var forecastDetails = _RatingForecastRepository.GetForecastDetails(sweepsMonths);
+            //    return forecastDetails.Select(s =>
+            //            new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
+            //        .OrderByDescending(d => d.MediaMonth.Id)
+            //        .ToList();
+            //}
 
         }
 

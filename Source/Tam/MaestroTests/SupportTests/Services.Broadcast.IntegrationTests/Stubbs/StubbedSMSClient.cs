@@ -172,6 +172,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_PostLogFtpOutboundFolder":
                     result = "InPrePost";
                     break;
+                case "MediaMonthCruchCacheSlidingExpirationSeconds":
+                    result = "24";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
