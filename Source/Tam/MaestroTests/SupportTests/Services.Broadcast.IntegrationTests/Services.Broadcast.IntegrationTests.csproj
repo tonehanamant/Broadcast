@@ -254,6 +254,7 @@
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
+    <Compile Include="MediaMonthCrunchCacheTest.cs" />
     <Compile Include="Stubbs\FileServiceStubb.cs" />
     <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
     <Compile Include="Stubbs\FtpServiceStubb.cs" />

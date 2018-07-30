@@ -298,7 +298,7 @@ export default class DayPartPicker extends Component {
 					<ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart</ControlLabel>
 					<InputGroup onClick={this.toggle}>
 						<FormControl
-              style={{ width: '150px' }}
+              style={{ width: '220px' }}
 							type="text"
 							value={this.state.text}
 							onChange={this.props.onApply}

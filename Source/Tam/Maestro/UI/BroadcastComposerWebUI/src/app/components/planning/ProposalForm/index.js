@@ -38,7 +38,7 @@ export default class ProposalForm extends Component {
     this.state = {
       validationStates: {
         Name: null,
-        Name_Alphanumeric: null,
+        // Name_Alphanumeric: null,
         Name_MaxChar: null,
         AdvertiserId: null,
       },
@@ -128,8 +128,8 @@ export default class ProposalForm extends Component {
     const val = value || '';
     this.setValidationState('Name', val !== '' ? null : 'error');
     this.setValidationState('Name', val === '' ? 'error' : null);
-    const re = /^[A-Za-z0-9- ]+$/i; // check alphanumeric
-    this.setValidationState('Name_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
+    // const re = /^[A-Za-z0-9- ]+$/i; // check alphanumeric
+    // this.setValidationState('Name_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
     this.setValidationState('Name_MaxChar', val.length <= 100 ? null : 'error');
   }
 
@@ -206,7 +206,7 @@ export default class ProposalForm extends Component {
 							<Col md={6}>
 								<Row>
 									<Col md={5}>
-										<FormGroup controlId="proposalName" validationState={this.state.validationStates.Name || this.state.validationStates.Name_Alphanumeric || this.state.validationStates.Name_MaxChar} >
+										<FormGroup controlId="proposalName" validationState={this.state.validationStates.Name || this.state.validationStates.Name_MaxChar} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
                       { !proposalEditForm.Id &&
                       <FormControl
@@ -234,11 +234,11 @@ export default class ProposalForm extends Component {
 												<span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
 											</HelpBlock>
                       }
-                      {this.state.validationStates.Name_Alphanumeric != null &&
+                      {/* {this.state.validationStates.Name_Alphanumeric != null &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Please enter only alphanumeric characters.</span>
 											</HelpBlock>
-                      }
+                      } */}
                       {this.state.validationStates.Name_MaxChar != null &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 100 characters.</span>

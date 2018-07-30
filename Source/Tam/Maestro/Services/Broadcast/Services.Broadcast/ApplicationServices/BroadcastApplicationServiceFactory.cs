@@ -139,6 +139,9 @@ namespace Services.Broadcast.ApplicationServices
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
             DaypartCache.DaypartCacheInstance = new DaypartCache(daypartRepo);
             unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);
+
+            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory,unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
+            unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService
