@@ -1,6 +1,7 @@
 ﻿[
   {
     "Affiliate": null,
+    "DateAdded": "2018-06-19T15:38:34.96",
     "DateAired": "2016-06-03T00:00:00",
     "Genre": "Do It Yourself",
     "ISCI": "ToBeArchivedIsci",

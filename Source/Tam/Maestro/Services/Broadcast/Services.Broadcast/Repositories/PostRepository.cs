@@ -93,13 +93,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="fileDetailIds">List of affidavit file detail ids</param>
         /// <returns>List of AffidavitFileDetailProblem objects</returns>
         List<AffidavitFileDetailProblem> GetIsciProblems(List<long> fileDetailIds);
-        
+
         /// <summary>
         /// Removes iscis from blacklist table
         /// </summary>
         /// <param name="iscisToRemove">Isci list to remove</param>
         void RemoveIscisFromBlacklistTable(List<string> iscisToRemove);
-        
+
         /// <summary>
         /// Removes not a cadent entries for specific affidavit file details
         /// </summary>
@@ -154,8 +154,8 @@ namespace Services.Broadcast.Repositories
                             GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
                             PostType = (SchedulePostType)proposalVersion.post_type,
                             PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                                     from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                                     select proposalVersionQuarters.impressions_goal).Sum(),
+                                                                from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                                                select proposalVersionQuarters.impressions_goal).Sum(),
                         });
                     }
 
@@ -205,7 +205,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var iscis = _GetUnlinkedIscisQuery(context);
-                    return _MapUnlinkedOrArchiveIsci(iscis);
+                    return iscis.ToList().Select(x => _MapUnlinkedOrArchiveIsci(x)).OrderBy(x => x.ISCI).ToList();
                 });
         }
 
@@ -240,14 +240,17 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var iscis = _GetArchivedIscisQuery(context);
-                    return _MapUnlinkedOrArchiveIsci(iscis);
+                    var iscis = from fileDetails in context.affidavit_file_details
+                                join blacklist in context.affidavit_blacklist on fileDetails.isci equals blacklist.ISCI
+                                where fileDetails.archived == true
+                                select new { fileDetails, blacklist };
+                    return iscis.ToList().Select(x => _MapUnlinkedOrArchiveIsci(x.fileDetails, x.blacklist)).OrderBy(x => x.ISCI).ToList();
                 });
         }
 
-        private List<UnlinkedIscisDto> _MapUnlinkedOrArchiveIsci(IQueryable<affidavit_file_details> iscis)
+        private UnlinkedIscisDto _MapUnlinkedOrArchiveIsci(affidavit_file_details x, affidavit_blacklist y = null)
         {
-            return iscis.ToList().Select(x => new UnlinkedIscisDto
+            return new UnlinkedIscisDto
             {
                 Affiliate = x.affiliate,
                 Genre = x.genre,
@@ -258,8 +261,9 @@ namespace Services.Broadcast.Repositories
                 Station = x.station,
                 TimeAired = x.air_time,
                 DateAired = x.original_air_date,
-                SpotLength = x.spot_length_id
-            }).OrderBy(x => x.ISCI).ToList();
+                SpotLength = x.spot_length_id,
+                DateAdded = y.created_date
+            };
         }
 
         /// <summary>
@@ -396,13 +400,6 @@ namespace Services.Broadcast.Repositories
                    into dataGroupped
                    from x in dataGroupped.DefaultIfEmpty()
                    where x == null && fileDetails.archived == false
-                   select fileDetails;
-        }
-
-        private IQueryable<affidavit_file_details> _GetArchivedIscisQuery(QueryHintBroadcastContext context)
-        {
-            return from fileDetails in context.affidavit_file_details
-                   where fileDetails.archived == true
                    select fileDetails;
         }
 
