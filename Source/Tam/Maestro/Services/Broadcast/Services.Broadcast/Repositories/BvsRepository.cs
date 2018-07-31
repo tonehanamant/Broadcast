@@ -115,6 +115,7 @@ namespace Services.Broadcast.Repositories
                 {
                     return (from bfd in context.bvs_file_details
                             where bfd.estimate_id == estimateId
+                            orderby bfd.id
                             select new BvsTrackingDetail
                             {
                                 NsiDate = bfd.nsi_date
