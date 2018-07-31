@@ -88,7 +88,8 @@ class PricingGuide extends Component {
   }
 
   handleChange(fieldName, value) {
-    this.setState({ [fieldName]: value });
+    const newVal = !isNaN(value) ? value : 0;
+    this.setState({ [fieldName]: newVal });
   }
 
   onCancel() {
