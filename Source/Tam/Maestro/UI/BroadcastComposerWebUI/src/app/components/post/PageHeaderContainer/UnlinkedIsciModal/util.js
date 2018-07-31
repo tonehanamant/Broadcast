@@ -2,6 +2,7 @@
 import React from 'react';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import CustomPager from 'Components/shared/CustomPager';
+import moment from 'moment';
 import { getDateInFormat, getSecondsToTimeString } from '../../../../utils/dateFormatter';
 
 
@@ -142,8 +143,19 @@ export const generateGridConfig = (props, tabName) => {
       width: '15%',
     };
 
+    const dateArchivedCol = {
+      name: 'Date Archived',
+      dataIndex: 'DateAdded',
+      width: '15%',
+      renderer: ({ row }) => (<span>{moment(row.DateAdded).format('MM/DD/YYYY hh:mm:ss A')}</span>),
+    };
+
     if (tabName === 'unlinked') {
       columns.splice(1, 0, reasonCol);
+    }
+
+    if (tabName === 'archived') {
+      columns.push(dateArchivedCol);
     }
 
 		const plugins = {
