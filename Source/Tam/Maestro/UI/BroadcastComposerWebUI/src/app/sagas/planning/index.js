@@ -189,7 +189,10 @@ export function* requestProposals() {
 /* ////////////////////////////////// */
 export function* getPlanningFiltered({ payload: query }) {
   const planningUnfiltered = yield select(state => state.planning.filteredPlanningProposals);
-  const searcher = new FuzzySearch(planningUnfiltered, ['displayId', 'ProposalName', 'displayAdvertiser', 'displayStatus', 'displayFlights', 'Owner', 'displayLastModified'], { caseSensitive: false });
+  // Removing date search like original
+  // const keys = ['displayId', 'ProposalName', 'displayAdvertiser', 'displayStatus', 'displayFlights', 'Owner', 'displayLastModified'];
+  const keys = ['displayId', 'ProposalName', 'displayAdvertiser', 'displayStatus', 'Owner'];
+  const searcher = new FuzzySearch(planningUnfiltered, keys, { caseSensitive: false });
   const planningFiltered = () => searcher.search(query);
   try {
     const filtered = yield planningFiltered();
