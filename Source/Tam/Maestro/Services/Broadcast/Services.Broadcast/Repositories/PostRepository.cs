@@ -262,7 +262,7 @@ namespace Services.Broadcast.Repositories
                 TimeAired = x.air_time,
                 DateAired = x.original_air_date,
                 SpotLength = x.spot_length_id,
-                DateAdded = y.created_date
+                DateAdded = y?.created_date
             };
         }
 

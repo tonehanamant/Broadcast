@@ -1,6 +1,7 @@
 ﻿[
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-05T00:00:00",
     "Genre": "Do It Yourself",
     "ISCI": "AAAAAAAA",
@@ -13,6 +14,7 @@
   },
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-03T00:00:00",
     "Genre": "Do It Yourself",
     "ISCI": "SomeISCI",
@@ -25,6 +27,7 @@
   },
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-03T00:00:00",
     "Genre": null,
     "ISCI": "SomeISCI3",

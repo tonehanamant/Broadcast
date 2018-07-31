@@ -1,6 +1,7 @@
 ﻿[
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-05T00:00:00",
     "FileDetailId": 4287,
     "Genre": "Do It Yourself",
@@ -14,6 +15,7 @@
   },
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-03T00:00:00",
     "FileDetailId": 1003,
     "Genre": "Do It Yourself",
@@ -27,6 +29,7 @@
   },
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-03T00:00:00",
     "FileDetailId": 1007,
     "Genre": null,
@@ -40,6 +43,7 @@
   },
   {
     "Affiliate": null,
+    "DateAdded": null,
     "DateAired": "2016-06-03T00:00:00",
     "FileDetailId": 4286,
     "Genre": "Do It Yourself",
