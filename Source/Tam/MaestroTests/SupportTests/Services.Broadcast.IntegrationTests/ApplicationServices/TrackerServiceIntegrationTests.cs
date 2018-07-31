@@ -2105,8 +2105,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(postDetails, jsonSettings));
             }
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadSigmaFile()
@@ -2119,6 +2118,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = "SigmaImport.csv", BvsStream = stream });
                 var result =  _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
                 
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void LoadSigmaFile_InvalidDates()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImport_BCOP3447.csv", FileMode.Open, FileAccess.Read);
+
+                var bvsRequest = new BvsSaveRequest();
+                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = "SigmaImport_BCOP3447.csv", BvsStream = stream });
+                var result = _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }

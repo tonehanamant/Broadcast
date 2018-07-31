@@ -482,6 +482,9 @@
     <None Include="Files\SigmaImportRequiredFieldEmpty.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\SigmaImport_BCOP3447.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\StrataSBMSInvoicePostExportInvalidColumnName.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
