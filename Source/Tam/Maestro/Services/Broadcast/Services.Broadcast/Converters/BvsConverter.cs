@@ -174,7 +174,7 @@ namespace Services.Broadcast.Converters
             var rawDate = fields[headers["DATE AIRED"]].Trim();
             var rawAiredDateTime = fields[headers["AIR START TIME"]].Trim().ToUpper();
             string someDate = rawDate + " " + rawAiredDateTime;
-            if (!DateTime.TryParseExact(someDate, "M/dd/yy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+            if (!DateTime.TryParse(someDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                 throw new ExtractBvsException("Invalid 'date aired' or 'air start time'", row);
             var time = parsedDate.TimeOfDay;
 
