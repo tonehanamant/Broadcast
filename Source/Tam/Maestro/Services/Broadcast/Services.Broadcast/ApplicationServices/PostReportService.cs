@@ -273,6 +273,9 @@ namespace Services.Broadcast.ApplicationServices
                     line.SpotLength = spotLengths.Single(x => x.Value == line.SpotLengthId).Key;
                     line.ScheduleStartDate = mediaWeeks[line.LineupStartDate].StartDate;
                     line.ScheduleEndDate = mediaWeeks[line.LineupStartDate].EndDate;
+
+                    //remove -xx like endings from the station name
+                    line.StationCallLetters = _StationProcessingEngine.StripStationSuffix(line.StationCallLetters);
                 }
 
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);
