@@ -37,8 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _AffidavitScrubbingService.GetPosts();
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostDto), "Id");
-            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -57,8 +56,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var contract = result.Posts.First(x => x.ContractId == 26011);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostDto), "Id");
-            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContracts), "Id");
+            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -77,8 +76,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var contract = result.Posts.First(x => x.ContractId == 26012);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostDto), "Id");
-            jsonResolver.Ignore(typeof(PostDto), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContracts), "Id");
+            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {

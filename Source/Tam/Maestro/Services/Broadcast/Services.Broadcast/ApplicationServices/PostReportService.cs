@@ -66,6 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
         private readonly IStationProcessingEngine _StationProcessingEngine;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
         public PostReportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -74,7 +75,8 @@ namespace Services.Broadcast.ApplicationServices
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IProjectionBooksService projectionBooksService,
             IMyEventsReportNamingEngine myEventsReportNamingEngine,
-            IStationProcessingEngine stationProcessingEngine)
+            IStationProcessingEngine stationProcessingEngine,
+            IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -89,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
             _StationProcessingEngine = stationProcessingEngine;
             _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(_SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         /// <summary>
@@ -131,17 +134,16 @@ namespace Services.Broadcast.ApplicationServices
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
             var spotLengthMappings = _SpotLengthRepository.GetSpotLengthAndIds();
-            var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => _StationProcessingEngine.StripStationSuffix(s.Station)).Distinct().ToList())
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
             var nsiMarketRankings = _GetMarketRankingsByPostingBook(inspecSpots);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
-
-            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
+            
+            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName);
+                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName, _ImpressionAdjustmentEngine);
         }
         /// <summary>
         /// 

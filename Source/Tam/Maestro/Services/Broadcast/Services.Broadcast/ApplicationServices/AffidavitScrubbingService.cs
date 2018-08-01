@@ -82,6 +82,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly ISpotLengthRepository _SpotLegthRepository;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
         public AffidavitScrubbingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
@@ -89,7 +90,8 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IProjectionBooksService postingBooksService,
-            IStationProcessingEngine stationProcessingEngine)
+            IStationProcessingEngine stationProcessingEngine,
+            IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -101,6 +103,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProjectionBooksService = postingBooksService;
             _StationProcessingEngine = stationProcessingEngine;
             _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         /// <summary>
@@ -110,8 +113,17 @@ namespace Services.Broadcast.ApplicationServices
         public PostedContractedProposalsDto GetPosts()
         {
             var postedProposals = _PostRepository.GetAllPostedProposals();
+            var spotLengthsMap = _SpotLegthRepository.GetSpotLengthAndIds();
 
-            _SetPostData(postedProposals);
+            foreach (var post in postedProposals)
+            {
+                _SetPostAdvertiser(post);
+
+                var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
+                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(post.ContractId, post.PostType, post.GuaranteedAudienceId, spotLengthsMap, post.Equivalized);
+                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(post.ContractId, post.PostType, houseHoldAudienceId, spotLengthsMap, post.Equivalized);
+                post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
+            }
 
             return new PostedContractedProposalsDto()
             {
@@ -120,55 +132,31 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void _SetPostData(List<PostDto> postedProposals)
+        private double _GetImpressionsForAudience(int contractId, SchedulePostType type, int audienceId, Dictionary<int, int> spotLengthsMap, bool equivalized)
         {
-            foreach (var post in postedProposals)
+            var impressionsDataGuaranteed = _GetPostImpressionsData(contractId, audienceId);
+            double deliveredImpressions = 0;
+            foreach (var impressionData in impressionsDataGuaranteed)
             {
-                _SetPostAdvertiser(post);
-
-                _SetPostPrimaryAudienceImpressions(post);
-
-                _SetPostHouseholdImpressions(post);
-
-                post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
+                double impressions = (type == SchedulePostType.NTI)
+                    ? _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor)
+                    : impressionData.Impressions;
+                if (equivalized)
+                {
+                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, true, spotLengthsMap.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                }
+                deliveredImpressions += impressions;
             }
+            return deliveredImpressions;
         }
 
-        private void _SetPostAdvertiser(PostDto post)
+        private void _SetPostAdvertiser(PostedContracts post)
         {
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;
         }
-
-        private void _SetPostPrimaryAudienceImpressions(PostDto post)
-        {
-            var postImpressionsData = _GetPostImpressionsData(post.ContractId, post.GuaranteedAudienceId);
-
-            foreach (var impressionData in postImpressionsData)
-            {
-                if (post.PostType == SchedulePostType.NTI)
-                    post.PrimaryAudienceDeliveredImpressions += _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
-                else
-                    post.PrimaryAudienceDeliveredImpressions += impressionData.Impressions;
-            }
-        }
-
-        private void _SetPostHouseholdImpressions(PostDto post)
-        {
-            var defaultAudience = _AudiencesCache.GetDefaultAudience();
-
-            var postImpressionsData = _GetPostImpressionsData(post.ContractId, defaultAudience.Id);
-
-            foreach (var impressionData in postImpressionsData)
-            {
-                if (post.PostType == SchedulePostType.NTI)
-                    post.HouseholdDeliveredImpressions += _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
-                else
-                    post.HouseholdDeliveredImpressions += impressionData.Impressions;
-            }
-        }
-
-        private List<PostImpressionsDataDto> _GetPostImpressionsData(int contractId, int maestroAudienceId)
+        
+        private List<PostImpressionsData> _GetPostImpressionsData(int contractId, int maestroAudienceId)
         {
             var ratingsAudiencesIds = _BroadcastAudienceRepository
                 .GetRatingsAudiencesByMaestroAudience(new List<int> { maestroAudienceId })

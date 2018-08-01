@@ -12,7 +12,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
-        List<PostDto> GetAllPostedProposals();
+        List<PostedContracts> GetAllPostedProposals();
 
         /// <summary>
         /// Counts all the unlinked iscis
@@ -38,7 +38,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalId">proposal or contract id</param>
         /// <param name="ratingsAudiences">list of rating audiences</param>
         /// <returns></returns>
-        List<PostImpressionsDataDto> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
+        List<PostImpressionsData> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
         /// <summary>
         /// Adds a new record in affidavit_file_detail_problems with status: ArchivedIsci
         /// </summary>
@@ -121,14 +121,15 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<PostDto> GetAllPostedProposals()
+        public List<PostedContracts> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var proposalVersions = context.proposal_versions.Where(p =>
-                        (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted).ToList();
-                    var posts = new List<PostDto>();
+                    var proposalVersions = context.proposal_versions
+                        .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted)
+                        .ToList();
+                    var posts = new List<PostedContracts>();
 
                     foreach (var proposalVersion in proposalVersions)
                     {
@@ -136,11 +137,13 @@ namespace Services.Broadcast.Repositories
                                      from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                      from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                      from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                     let affidavitFileDetail = affidavitFileScrub.affidavit_file_details
                                      select affidavitFileScrub).ToList();
 
-                        posts.Add(new PostDto
+                        posts.Add(new PostedContracts
                         {
                             ContractId = proposalVersion.proposal_id,
+                            Equivalized = proposalVersion.equivalized,                            
                             ContractName = proposalVersion.proposal.name,
                             UploadDate = (from proposalVersionDetail in proposalVersion.proposal_version_details
                                           from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
@@ -163,7 +166,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<PostImpressionsDataDto> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences)
+        public List<PostImpressionsData> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -178,7 +181,12 @@ namespace Services.Broadcast.Repositories
                             where proposal.id == proposalId &&
                                   (ScrubbingStatus)affidavitClientScrub.status == ScrubbingStatus.InSpec &&
                                   ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id)
-                            select new PostImpressionsDataDto { Impressions = affidavitClientScrubAudience.impressions, NtiConversionFactor = proposalVersionDetail.nti_conversion_factor }).ToList();
+                            select new PostImpressionsData
+                            {
+                                Impressions = affidavitClientScrubAudience.impressions,
+                                NtiConversionFactor = proposalVersionDetail.nti_conversion_factor,
+                                SpotLengthId = proposalVersionDetail.spot_length_id
+                            }).ToList();
                 });
         }
 

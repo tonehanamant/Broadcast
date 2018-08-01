@@ -246,6 +246,8 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Entities\PostedContracts.cs" />
+    <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\BvsFile.cs" />
@@ -299,7 +301,7 @@
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
-    <Compile Include="Entities\PostedContractedProposalsDto.cs" />
+    <Compile Include="Entities\DTO\PostedContractedProposalsDto.cs" />
     <Compile Include="Entities\DTO\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />

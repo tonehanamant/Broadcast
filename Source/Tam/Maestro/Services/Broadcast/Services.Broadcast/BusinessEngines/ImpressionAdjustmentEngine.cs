@@ -33,8 +33,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = impression;
 
-            RatingAdjustmentsDto adjustments;
-            if (_RatingAdjustments.Value.TryGetValue(schedulePostingBook, out adjustments))
+            if (_RatingAdjustments.Value.TryGetValue(schedulePostingBook, out RatingAdjustmentsDto adjustments))
             {
                 if (applyAnnualAdjustment)
                 {
