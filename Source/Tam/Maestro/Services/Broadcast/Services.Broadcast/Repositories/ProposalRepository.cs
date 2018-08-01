@@ -758,6 +758,7 @@ namespace Services.Broadcast.Repositories
                                   && p.id == proposalId
                             select new { p, v })
                         .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
+                        .OrderBy(p => p.Id)
                         .Single(string.Format(
                             "The Proposal information you have entered [{0}] does not exist. Please try again.",
                             proposalId));
@@ -836,7 +837,7 @@ namespace Services.Broadcast.Repositories
                 SpotLengths =
                 proposalVersion.proposal_version_spot_length.Select(a => new LookupDto { Id = a.spot_length_id })
                     .ToList(),
-                Details = proposalVersion.proposal_version_details.Select(version => new ProposalDetailDto
+                Details = proposalVersion.proposal_version_details.OrderBy(d => d.id).Select(version => new ProposalDetailDto
                 {
                     Id = version.id,
                     Sequence = version.sequence,

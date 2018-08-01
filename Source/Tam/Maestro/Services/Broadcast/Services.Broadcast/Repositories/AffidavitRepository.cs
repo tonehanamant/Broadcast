@@ -323,6 +323,7 @@ namespace Services.Broadcast.Repositories
                                  from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
                                  let affidavitDetails = affidavitFileScrub.affidavit_file_details
                                  where proposalVersions.proposal_id == proposalId
+                                 orderby proposalVersionDetail.id
                                  select new
                                  {
                                      proposalDetailId = proposalVersionDetail.id,
