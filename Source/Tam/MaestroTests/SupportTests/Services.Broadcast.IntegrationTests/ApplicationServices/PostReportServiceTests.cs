@@ -338,5 +338,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReport_UpdateTimeToNationalClock()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostReportService.GetMyEventsReportData(253);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
     }
 }

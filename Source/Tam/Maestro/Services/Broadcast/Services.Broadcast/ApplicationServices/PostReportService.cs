@@ -280,12 +280,26 @@ namespace Services.Broadcast.ApplicationServices
                     line.StationCallLetters = _StationProcessingEngine.StripStationSuffix(line.StationCallLetters);
                 }
 
-                _UpdateSpotTimesForThreeMinuteWindow(report.Lines);
+                _UpdateToNationalClock(report.Lines);
+                _UpdateSpotTimesForThreeMinuteWindow(report.Lines);                
             }
 
             return myEventsReportDataList;
         }
-        
+
+        private void _UpdateToNationalClock(List<MyEventsReportDataLine> lines)
+        {
+            TimeSpan startTime = new TimeSpan(3, 0, 0);
+            TimeSpan endTime = new TimeSpan(5, 59, 0);
+            foreach (var line in lines)
+            {
+                if(line.LineupStartDate.DayOfWeek != DayOfWeek.Monday && line.LineupStartTime.TimeOfDay >= startTime && line.LineupStartTime.TimeOfDay <= endTime)
+                {
+                    line.LineupStartDate = line.LineupStartDate.AddDays(-1);
+                }
+            }
+        }
+
         private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
         {
             var grouped = myEventsReportDataList.GroupBy(x => x.StationCallLetters);
