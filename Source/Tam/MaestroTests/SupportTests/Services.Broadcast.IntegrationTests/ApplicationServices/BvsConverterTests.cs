@@ -44,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.AreEqual(result.Day, 7);
         }
-        
+
         [Test]
         public void Should_Convert_To_NTI_Time()
         {
@@ -55,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.AreEqual(result.Day, 6);
         }
-        
+
         [Test]
         public void Should_Not_Convert_To_NTI_Time()
         {
@@ -79,7 +79,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 string message = string.Empty;
 
                 var bvsFile = _IBvsConverter.ExtractBvsData(stream, "hash", userName, fileName, out message, out Dictionary<BvsFileDetailKey, int> line);
-                
+
                 _VerifyBvsFile(bvsFile);
             }
         }
@@ -167,41 +167,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var stream = new FileStream(@".\Files\SigmaImport.csv", FileMode.Open, FileAccess.Read);
                 var fileName = "SigmaImport.csv";
-                var userName = "BvsConverter_SigmaFile";
-                string message = string.Empty;
-
-                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
-
-                _VerifyBvsFile(sigmaFile);
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void BvsConverter_SigmaFile_BCOP3463_NullStation()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var stream = new FileStream(@".\Files\SigmaImport_BCOP3463.csv", FileMode.Open, FileAccess.Read);
-                var fileName = "SigmaImport_BCOP3463.csv";
-                var userName = "BvsConverter_SigmaFile";
-                string message = string.Empty;
-
-                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
-
-                _VerifyBvsFile(sigmaFile);
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Required field STATION NAME is null or empty", MatchType = MessageMatch.Contains)]
-        public void BvsConverter_SigmaFile_BCOP3463_NullStationName()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var stream = new FileStream(@".\Files\SigmaImport_BCOP3463NullStationName.csv", FileMode.Open, FileAccess.Read);
-                var fileName = "SigmaImport_BCOP3463NullStationName";
                 var userName = "BvsConverter_SigmaFile";
                 string message = string.Empty;
 

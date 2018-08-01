@@ -188,7 +188,7 @@ namespace Services.Broadcast.Converters
                 Advertiser = fields[headers["PRODUCT"]].Trim().ToUpper(),
                 Market = fields[headers["DMA"]].Trim().ToUpper(),
                 Rank = rankNumber,
-                Station = fields[headers["STATION NAME"]].Trim().ToUpper(),
+                Station = fields[headers["STATION"]].Trim().ToUpper(),
                 Affiliate = fields[headers["AFFILIATION"]].Trim().ToUpper(),
                 DateAired = parsedDate.Date,
                 TimeAired = (int)time.TotalSeconds,
