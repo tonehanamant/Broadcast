@@ -143,6 +143,10 @@
       "Id": 56
     },
     {
+      "Display": "Women 25-49",
+      "Id": 57
+    },
+    {
       "Display": "Women 25-54",
       "Id": 58
     },
@@ -161,6 +165,10 @@
     {
       "Display": "Women 50+",
       "Id": 62
+    },
+    {
+      "Display": "Adults 18-54",
+      "Id": 247
     },
     {
       "Display": "Adults 25-64",
