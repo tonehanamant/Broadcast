@@ -1,7 +1,7 @@
 ﻿File eula.1028.txt failed validation for WWTV upload
 
-Error 1
-Error 2
-Error3
+Required field ISCI/AD-ID is null or empty in row 1
+Required field ISCI/AD-ID is null or empty in row 2
+Required field ISCI/AD-ID is null or empty in row 3
 
 File located in \FilePath
