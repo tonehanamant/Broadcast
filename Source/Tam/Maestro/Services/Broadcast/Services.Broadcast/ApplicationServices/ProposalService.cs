@@ -795,9 +795,12 @@ namespace Services.Broadcast.ApplicationServices
             if (string.IsNullOrWhiteSpace(userName))
                 throw new Exception("Cannot save proposal without specifying a valid username.");
 
+            // Will throw an exception if demo not found.
+            _AudiencesCache.FindDto(proposalDto.GuaranteedDemoId);
+
             _ValidatePreviouslyContractedStatus(proposalDto);
 
-            //Will throw an exception if advertiser not found:
+            // Will throw an exception if advertiser not found.
             _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
 
             _ValidateProposalDetailBeforeSave(proposalDto);
