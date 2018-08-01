@@ -21,7 +21,7 @@ namespace Services.Broadcast.Converters
         private static readonly List<string> _RequiredSigmaFields = new List<string>()
         {
              "IDENTIFIER 1",
-             "STATION",
+             "STATION NAME",
              "DATE AIRED",
              "AIR START TIME",
              "ISCI/AD-ID"
@@ -32,7 +32,7 @@ namespace Services.Broadcast.Converters
             "IDENTIFIER 1",
             "RANK",
             "DMA",
-            "STATION",
+            "STATION NAME",
             "AFFILIATION",
             "DATE AIRED",
             "AIR START TIME",

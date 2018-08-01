@@ -175,5 +175,41 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyBvsFile(sigmaFile);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BvsConverter_SigmaFile_BCOP3463_NullStation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImport_BCOP3463.csv", FileMode.Open, FileAccess.Read);
+                var fileName = "SigmaImport_BCOP3463.csv";
+                var userName = "BvsConverter_SigmaFile";
+                string message = string.Empty;
+
+                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
+
+                _VerifyBvsFile(sigmaFile);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(ExtractBvsException), ExpectedMessage = "Required field STATION NAME is null or empty", MatchType = MessageMatch.Contains)]
+        public void BvsConverter_SigmaFile_BCOP3463_NullStationName()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stream = new FileStream(@".\Files\SigmaImport_BCOP3463NullStationName.csv", FileMode.Open, FileAccess.Read);
+                var fileName = "SigmaImport_BCOP3463NullStationName";
+                var userName = "BvsConverter_SigmaFile";
+                string message = string.Empty;
+
+                var sigmaFile = _IBvsConverter.ExtractSigmaData(stream, "hash", userName, fileName, out Dictionary<BvsFileDetailKey, int> line);
+
+                _VerifyBvsFile(sigmaFile);
+            }
+        }
     }
+
 }

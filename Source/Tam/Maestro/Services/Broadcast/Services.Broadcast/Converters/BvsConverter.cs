@@ -144,7 +144,7 @@ namespace Services.Broadcast.Converters
                     var fields = parser.ReadFields();
                     _SigmaConverter.ValidateSigmaFieldData(fields, headers, rowNumber);
 
-                    BvsFileDetail bvsDetail = _LoadBvsFileDetail(fields, headers, rowNumber);
+                    BvsFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
                     lineInfo[new BvsFileDetailKey(bvsDetail)] = rowNumber;
                     bvsFile.BvsFileDetails.Add(bvsDetail);
                 }
@@ -164,7 +164,7 @@ namespace Services.Broadcast.Converters
             return bvsFile;
         }
 
-        private BvsFileDetail _LoadBvsFileDetail(string[] fields, Dictionary<string, int> headers, int row)
+        private BvsFileDetail _LoadBvsSigmaFileDetail(string[] fields, Dictionary<string, int> headers, int row)
         {
             Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             if (!int.TryParse(fields[headers["RANK"]].Trim(), out int rankNumber))
@@ -188,7 +188,7 @@ namespace Services.Broadcast.Converters
                 Advertiser = fields[headers["PRODUCT"]].Trim().ToUpper(),
                 Market = fields[headers["DMA"]].Trim().ToUpper(),
                 Rank = rankNumber,
-                Station = fields[headers["STATION"]].Trim().ToUpper(),
+                Station = fields[headers["STATION NAME"]].Trim().ToUpper(),
                 Affiliate = fields[headers["AFFILIATION"]].Trim().ToUpper(),
                 DateAired = parsedDate.Date,
                 TimeAired = (int)time.TotalSeconds,
