@@ -28,19 +28,18 @@ export default class ProposalForm extends Component {
     this.setValidationState = this.setValidationState.bind(this);
 
     this.onOpenMarketList = this.onOpenMarketList.bind(this);
-    // this.updateMarketCount = this.updateMarketCount.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
     this.onSaveShowValidation = this.onSaveShowValidation.bind(this);
     this.checkValidProposalName = this.checkValidProposalName.bind(this);
-    this.checkValidAdvertiserId = this.checkValidAdvertiserId.bind(this);
+    this.checkIsNullFields = this.checkIsNullFields.bind(this);
 
     this.state = {
       validationStates: {
         Name: null,
-        // Name_Alphanumeric: null,
         Name_MaxChar: null,
         AdvertiserId: null,
+        GuaranteedDemoId: null,
       },
     };
   }
@@ -60,7 +59,6 @@ export default class ProposalForm extends Component {
 
   onChangeCoverage(value) {
     const val = value ? value / 100 : null;
-    // console.log('change coverage', val, value, this.props.proposalEditForm.MarketCoverage);
     this.props.updateProposalEditForm({ key: 'MarketCoverage', value: val });
   }
 
@@ -77,12 +75,13 @@ export default class ProposalForm extends Component {
   onChangeAdvertiserId(value) {
     const val = value ? value.Id : null;
     this.props.updateProposalEditForm({ key: 'AdvertiserId', value: val });
-    this.checkValidAdvertiserId(val);
+    this.checkIsNullFields(val, 'AdvertiserId');
   }
 
   onChangeGuaranteedDemoId(value) {
     const val = value ? value.Id : null;
     this.props.updateProposalEditForm({ key: 'GuaranteedDemoId', value: val });
+    this.checkIsNullFields(val, 'GuaranteedDemoId');
   }
 
   onChangeSecondaryDemos(value) {
@@ -95,19 +94,6 @@ export default class ProposalForm extends Component {
     this.props.updateProposalEditForm({ key: 'Notes', value: val });
   }
 
-  /* updateMarketCount(customMarketCount) {
-    // if selector was cleared, assign the first option from initialData (i.e. 'All')
-    let selectedMarketGroup = this.props.initialdata.MarketGroups.find(marketgGroup => marketgGroup.Id === 255);
-    if (customMarketCount === 0) {
-      selectedMarketGroup = this.props.initialdata.MarketGroups[0];
-    }
-
-    this.setState({
-      selectedMarketGroup,
-      customMarketCount,
-    });
-  } */
-
   setValidationState(type, state) {
     this.setState(prevState => ({
       ...prevState,
@@ -119,46 +105,21 @@ export default class ProposalForm extends Component {
   }
 
   onSaveShowValidation(nextProps) {
-    const { ProposalName, AdvertiserId } = nextProps.proposalEditForm;
+    const { ProposalName, AdvertiserId, GuaranteedDemoId } = nextProps.proposalEditForm;
     this.checkValidProposalName(ProposalName);
-    this.checkValidAdvertiserId(AdvertiserId);
+    this.checkIsNullFields(AdvertiserId, 'AdvertiserId');
+    this.checkIsNullFields(GuaranteedDemoId, 'GuaranteedDemoId');
   }
 
   checkValidProposalName(value) {
     const val = value || '';
-    this.setValidationState('Name', val !== '' ? null : 'error');
-    this.setValidationState('Name', val === '' ? 'error' : null);
-    // const re = /^[A-Za-z0-9- ]+$/i; // check alphanumeric
-    // this.setValidationState('Name_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
+    this.setValidationState('Name', val || 'error');
     this.setValidationState('Name_MaxChar', val.length <= 100 ? null : 'error');
   }
 
-  checkValidAdvertiserId(value) {
-    const val = value;
-    this.setValidationState('AdvertiserId', val ? null : 'error');
+  checkIsNullFields(value, field) {
+    this.setValidationState(field, value || 'error');
   }
-
-  /* componentWillMount() {
-    const { initialdata, proposalEditForm } = this.props;
-    const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
-    let selectedMarketGroup = MarketGroup;
-    let customMarketCount = 0;
-
-    const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
-    if (isCustom) {
-      customMarketCount = Markets.length;
-      customMarketCount += MarketGroup ? MarketGroup.Count : 0;
-      customMarketCount += BlackoutMarketGroup ? BlackoutMarketGroup.Count : 0;
-
-      selectedMarketGroup = initialdata.MarketGroups.find(marketGroup => marketGroup.Id === 255);
-      selectedMarketGroup.Count = customMarketCount;
-    }
-
-    this.setState({
-      customMarketCount,
-      selectedMarketGroup,
-    });
-  } */
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.proposalValidationStates.FormInvalid === true) {
@@ -168,6 +129,7 @@ export default class ProposalForm extends Component {
 
   render() {
     const { initialdata, proposalEditForm, isReadOnly, isEdit } = this.props;
+    const { AdvertiserId, GuaranteedDemoId } = this.state.validationStates;
     // const { MarketCoverage } = proposalEditForm;
 
     // update custom count
@@ -343,7 +305,7 @@ export default class ProposalForm extends Component {
 							<Col md={7}>
 								<Row>
 									<Col md={4}>
-										<FormGroup controlId="proposalAdvertiser" validationState={this.state.validationStates.AdvertiserId} >
+										<FormGroup controlId="proposalAdvertiser" validationState={AdvertiserId} >
 											<ControlLabel><strong>Advertiser</strong></ControlLabel>
 											<Select
 												name="proposalAdvertiser"
@@ -356,20 +318,18 @@ export default class ProposalForm extends Component {
                         clearable={false}
                         disabled={isReadOnly}
 											/>
-                      {this.state.validationStates.AdvertiserId != null &&
+                      {AdvertiserId &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Required</span>
-											</HelpBlock>
-											}
+											</HelpBlock>}
 										</FormGroup>
 									</Col>
 									<Col md={4}>
-										<FormGroup controlId="proposalGuaranteedDemo">
+										<FormGroup controlId="proposalGuaranteedDemo" validationState={GuaranteedDemoId}>
 											<ControlLabel><strong>Guaranteed Demo</strong></ControlLabel>
 											<Select
 												name="proposalGuaranteedDemo"
 												value={proposalEditForm.GuaranteedDemoId}
-												// placeholder=""
 												options={this.props.initialdata.Audiences}
 												labelKey="Display"
 												valueKey="Id"
@@ -377,6 +337,10 @@ export default class ProposalForm extends Component {
                         clearable={false}
                         disabled={isReadOnly}
 											/>
+                      {GuaranteedDemoId &&
+											<HelpBlock>
+												<span className="text-danger" style={{ fontSize: 11 }}>Required</span>
+											</HelpBlock>}
 										</FormGroup>
 									</Col>
 									<Col md={4}>

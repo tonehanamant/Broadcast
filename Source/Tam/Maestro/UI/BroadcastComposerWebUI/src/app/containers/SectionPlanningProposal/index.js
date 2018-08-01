@@ -99,7 +99,7 @@ export class SectionPlanningProposal extends Component {
 
   isValidProposalForm() {
     const { proposalEditForm } = this.props;
-    const { ProposalName, AdvertiserId } = proposalEditForm;
+    const { ProposalName, AdvertiserId, GuaranteedDemoId } = proposalEditForm;
 
     // Proposal Form
     const validProposalName = (value) => {
@@ -112,14 +112,7 @@ export class SectionPlanningProposal extends Component {
       return valid.required && valid.maxChar100;
     };
 
-    const validAdvertiserId = (value) => {
-      const valid = {
-        required: value !== null,
-      };
-      return valid.required;
-    };
-
-    return validProposalName(ProposalName) && validAdvertiserId(AdvertiserId);
+    return validProposalName(ProposalName) && AdvertiserId && GuaranteedDemoId;
   }
 
   isValidProposalDetails() {

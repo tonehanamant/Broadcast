@@ -2429,5 +2429,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
             }
         }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Could not find Audience with id", MatchType = MessageMatch.Contains)]
+        public void CannotSaveProposalWithoutValidGuaranteedDemo()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto()
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 0,
+                    PostType = SchedulePostType.NSI
+                };
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+            }
+        }
     }
 }
