@@ -64,7 +64,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitProgramScrubbingEngine _AffidavitProgramScrubbingEngine;
         private readonly IProposalService _ProposalService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IProposalRepository _ProposalRepository;
         private readonly IPostRepository _PostRepository;
@@ -81,7 +80,6 @@ namespace Services.Broadcast.ApplicationServices
             IAffidavitProgramScrubbingEngine affidavitProgramScrubbingEngine,
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalService proposalService,
-            IProjectionBooksService projectionBooksService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IAffidavitValidationEngine affidavitValidationEngine,
             INsiPostingBookService nsiPostingBookService,
@@ -93,7 +91,6 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitProgramScrubbingEngine = affidavitProgramScrubbingEngine;
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalService = proposalService;
-            _ProjectionBooksService = projectionBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
@@ -346,10 +343,10 @@ namespace Services.Broadcast.ApplicationServices
         public bool SwapProposalDetails(SwapProposalDetailRequest requestData, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
-            List<AffidavitFileDetail> affidavitDetails = _AffidavitRepository.GetAffidavitDetailsByClientScrubIds(requestData.AffidavitScrubbingIds);            
+            List<AffidavitFileDetail> affidavitDetails = _AffidavitRepository.GetAffidavitDetailsByClientScrubIds(requestData.AffidavitScrubbingIds);
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitDetails, requestData.ProposalDetailId);
             _SetPostingBookData(matchedAffidavitDetails, postingBookId);
-            
+
             //load AffidavitClientScrubs and AffidavitDetailProblems
             _MapToAffidavitFileDetails(matchedAffidavitDetails, currentDateTime, username);
 
@@ -364,7 +361,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             return true;
         }
-        
+
         private List<ProposalDetailPostingData> _GetProposalDetailIdsWithPostingBookId(List<AffidavitFileDetail> affidavitFileDetails)
         {
             var result = affidavitFileDetails.SelectMany(d => d.AffidavitClientScrubs.Select(s => new ProposalDetailPostingData
@@ -420,8 +417,8 @@ namespace Services.Broadcast.ApplicationServices
                         ? proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.Isci, StringComparison.InvariantCultureIgnoreCase))
                         : !string.IsNullOrWhiteSpace(affidavitDetail.MappedIsci) ? proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.MappedIsci, StringComparison.InvariantCultureIgnoreCase))
                                 : null;
-                    
-                    if(proposalWeekIsci == null)
+
+                    if (proposalWeekIsci == null)
                     {
                         scrub.MatchIsci = false;
                     }
@@ -462,7 +459,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             string stationName = _StationProcessingEngine.StripStationSuffix(affidavitDetail.Station);
 
-            if (stations.ContainsKey(stationName)) {
+            if (stations.ContainsKey(stationName))
+            {
                 return stations[stationName];
             }
 
@@ -528,7 +526,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             foreach (var affidavitDetail in affidavitDetails)
             {
-                if(!swappingProposalDetail)
+                if (!swappingProposalDetail)
                 {
                     proposalWeeks = _ProposalRepository.GetAffidavitMatchingProposalWeeksByHouseIsci(affidavitDetail.Isci);
                 }

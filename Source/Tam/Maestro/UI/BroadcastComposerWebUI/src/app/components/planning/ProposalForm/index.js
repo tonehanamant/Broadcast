@@ -128,9 +128,9 @@ export default class ProposalForm extends Component {
   }
 
   render() {
-    const { initialdata, proposalEditForm, isReadOnly, isEdit } = this.props;
+    const { initialdata, proposalEditForm, isReadOnly } = this.props;
     const { AdvertiserId, GuaranteedDemoId } = this.state.validationStates;
-    // const { MarketCoverage } = proposalEditForm;
+    const { MarketCoverage } = proposalEditForm;
 
     // update custom count
     // const customIndex = initialdata.MarketGroups.findIndex(marketGroup => marketGroup.Id === 255);
@@ -156,10 +156,12 @@ export default class ProposalForm extends Component {
     const tooltip = checkFlightWeeksTip(this.props.proposalEditForm.FlightWeeks);
 
     // default coverage from initialData if create (not isEdit)
-    // console.log('COVERAGE>>>>>>>>>>>>>>>>>', proposalEditForm.MarketCoverage, isEdit);
-    const rawCoverage = isEdit ? proposalEditForm.MarketCoverage : initialdata.DefaultMarketCoverage;
+    // ISSUE default vlaue only get sets initial render: use value
+/*     const rawCoverage = isEdit ? MarketCoverage : initialdata.DefaultMarketCoverage;
     const initialCoverage = rawCoverage ? rawCoverage * 100 : null;
-    // if (!isEdit) this.props.updateProposalEditForm({ key: 'MarketCoverage', rawCoverage });
+    console.log('render>>>>>>>>>>>>>>>>', rawCoverage, initialCoverage); */
+
+    const coverage = MarketCoverage ? MarketCoverage * 100 : null;
 
     return (
       <div id="proposal-form">
@@ -218,7 +220,8 @@ export default class ProposalForm extends Component {
                             min={1}
                             max={100}
                             precision={2}
-                            defaultValue={initialCoverage}
+                            // defaultValue={initialCoverage}
+                            value={coverage}
                             // formatter={value => `${value}%`}
                             // parser={value => value.replace('%', '')}
                             disabled={isReadOnly}
@@ -430,7 +433,7 @@ ProposalForm.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
-  isEdit: PropTypes.bool.isRequired,
+  // isEdit: PropTypes.bool.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
 };
 

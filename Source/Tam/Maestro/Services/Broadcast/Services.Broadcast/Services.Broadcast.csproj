@@ -527,7 +527,6 @@
     <Compile Include="Repositories\MediaMonthAndWeekAggregateRepository.cs" />
     <Compile Include="Repositories\NsiMarketRepository.cs" />
     <Compile Include="Repositories\NsiUniverseRepository.cs" />
-    <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Entities\PostFileDetail.cs" />
     <Compile Include="Repositories\ProgramNameRepository.cs" />

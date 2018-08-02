@@ -3,7 +3,6 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Common.Systems.LockTokens;
-using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
@@ -87,6 +86,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProprietarySpotCostCalculationEngine _proprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _stationInventoryGroupService;
         private readonly IInventoryRepository _inventoryRepository;
+        private readonly IRatingForecastService _RatingForecastService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -98,7 +98,8 @@ namespace Services.Broadcast.ApplicationServices
             ILockingManagerApplicationService lockingManager,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IStationInventoryGroupService stationInventoryGroupService,
-            IBroadcastAudiencesCache audiencesCache)
+            IBroadcastAudiencesCache audiencesCache,
+            IRatingForecastService ratingForecastService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -120,6 +121,7 @@ namespace Services.Broadcast.ApplicationServices
             _proprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _stationInventoryGroupService = stationInventoryGroupService;
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _RatingForecastService = ratingForecastService;
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -204,25 +206,25 @@ namespace Services.Broadcast.ApplicationServices
 
             if (conflict.Airtime == null)
                 return hasDateRangeConflict;
-            
+
             var program = _inventoryRepository.GetStationManifest(manifestId);
             var daypart = DaypartDto.ConvertDaypartDto(conflict.Airtime);
-            
+
             daypart.Id = _daypartCache.GetIdByDaypart(daypart);
 
             var hasDaypartConflict = false;
-            
+
             foreach (var manifestDaypart in program.ManifestDayparts)
             {
                 hasDaypartConflict = hasDaypartConflict || DisplayDaypart.Intersects(_daypartCache.GetDisplayDaypart(manifestDaypart.Daypart.Id), daypart);
             }
 
-             var hasConflict = hasDateRangeConflict && hasDaypartConflict;
-            
+            var hasConflict = hasDateRangeConflict && hasDaypartConflict;
+
             return hasConflict;
         }
 
-        private InventoryFileSaveResult _SetFileProblemWarnings(int fileId,List<InventoryFileProblem> fileProblems)
+        private InventoryFileSaveResult _SetFileProblemWarnings(int fileId, List<InventoryFileProblem> fileProblems)
         {
             if (fileProblems.Any())
             {
@@ -356,11 +358,11 @@ namespace Services.Broadcast.ApplicationServices
                     string.Format("Error loading new inventory file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
-            return _SetFileProblemWarnings(inventoryFile.Id,new List<InventoryFileProblem>());
+            return _SetFileProblemWarnings(inventoryFile.Id, new List<InventoryFileProblem>());
         }
 
-    private void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes,
-            List<IDisposable> stationLocks, InventoryFile inventoryFile)
+        private void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes,
+                List<IDisposable> stationLocks, InventoryFile inventoryFile)
         {
             //Lock stations before database operations
             foreach (var fileStation in fileStationsDict)
@@ -406,7 +408,7 @@ namespace Services.Broadcast.ApplicationServices
                         audiencePricing.Select(ap => new StationInventoryManifestAudience()
                         {
                             IsReference = false,
-                            Audience = new DisplayAudience() {Id = ap.AudienceId},
+                            Audience = new DisplayAudience() { Id = ap.AudienceId },
                             Rate = ap.Price
                         })));
         }
@@ -430,7 +432,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             var fileStationCodes = inventoryFile.InventoryManifests.Select(m => m.Station.Code).Distinct().ToList();
-            List<StationContact> existingStationContacts = 
+            List<StationContact> existingStationContacts =
                     _stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 
             var contactsUpdateList =
@@ -442,7 +444,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 updateContact.Id = existingStationContacts.Single(c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
             }
-            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName,inventoryFile.Id);
+            _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName, inventoryFile.Id);
 
             var contactsCreateList =
                 inventoryFile.StationContacts.Except(existingStationContacts, StationContact.StationContactComparer)
@@ -464,7 +466,7 @@ namespace Services.Broadcast.ApplicationServices
             return _stationContactsRepository.GetLatestContactsByName(query);
         }
 
-        public bool SaveProgram(StationProgram stationProgram,string userName)
+        public bool SaveProgram(StationProgram stationProgram, string userName)
         {
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
@@ -551,7 +553,7 @@ namespace Services.Broadcast.ApplicationServices
             else
             {
                 _inventoryRepository.UpdateStationInventoryManifest(manifest);
-            }          
+            }
 
             _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
         }
@@ -566,7 +568,7 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private void _AddNewProgram(StationProgram stationProgram, StationInventoryManifest manifest,string userName)
+        private void _AddNewProgram(StationProgram stationProgram, StationInventoryManifest manifest, string userName)
         {
             _ValidateFlightWeeks(stationProgram.FlightWeeks);
 
@@ -793,23 +795,23 @@ namespace Services.Broadcast.ApplicationServices
             List<StationInventoryManifest> stationManifests)
         {
             return (from manifest in stationManifests
-                select new StationProgram()
-                {
-                    Id = manifest.Id ?? 0,
-                    ProgramNames = manifest.ManifestDayparts.Select(md => md.ProgramName).ToList(),
-                    Airtimes = manifest.ManifestDayparts.Select(md => DaypartDto.ConvertDisplayDaypart(md.Daypart)).ToList(),
-                    AirtimePreviews = manifest.ManifestDayparts.Select(md => md.Daypart.Preview).ToList(),
-                    EffectiveDate = manifest.EffectiveDate,
-                    EndDate = manifest.EndDate,
-                    StationCode = manifest.Station.Code,
-                    SpotLength = _SpotLengthMap.Single(a => a.Value == manifest.SpotLengthId).Key,
-                    SpotsPerWeek = manifest.SpotsPerWeek,
-                    Rate15 = _GetSpotRateFromManifestRates(15, manifest.ManifestRates),
-                    Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
-                    HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
-                    Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
-                    FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate)
-                }).ToList();
+                    select new StationProgram()
+                    {
+                        Id = manifest.Id ?? 0,
+                        ProgramNames = manifest.ManifestDayparts.Select(md => md.ProgramName).ToList(),
+                        Airtimes = manifest.ManifestDayparts.Select(md => DaypartDto.ConvertDisplayDaypart(md.Daypart)).ToList(),
+                        AirtimePreviews = manifest.ManifestDayparts.Select(md => md.Daypart.Preview).ToList(),
+                        EffectiveDate = manifest.EffectiveDate,
+                        EndDate = manifest.EndDate,
+                        StationCode = manifest.Station.Code,
+                        SpotLength = _SpotLengthMap.Single(a => a.Value == manifest.SpotLengthId).Key,
+                        SpotsPerWeek = manifest.SpotsPerWeek,
+                        Rate15 = _GetSpotRateFromManifestRates(15, manifest.ManifestRates),
+                        Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
+                        HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
+                        Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
+                        FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate)
+                    }).ToList();
         }
 
         private List<FlightWeekDto> _GetFlightWeeks(DateTime effectiveDate, DateTime? endDate)
@@ -922,7 +924,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetTransactionManagerField(string fieldName, object value)
         {
-            typeof (TransactionManager).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static)
+            typeof(TransactionManager).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static)
                 .SetValue(null, value);
         }
 
@@ -967,9 +969,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<LookupDto> GetRatingBooks()
         {
-            var postingBooks = _broadcastDataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
-                .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
-
+            var postingBooks = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
             var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
 
             return (from mediaMonth in mediaMonths
@@ -998,10 +998,10 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var costMultiplier = _SpotLengthCostMultipliers[spotLengthId];
-            var result = rateFor30s*(Decimal) costMultiplier;
+            var result = rateFor30s * (Decimal)costMultiplier;
             return result;
         }
-        
+
         private IEnumerable<StationInventoryManifestRate> _GetManifestRatesFromMultipliers(decimal rate, bool has15SecondsRate)
         {
 

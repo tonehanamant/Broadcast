@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
@@ -92,6 +93,25 @@ namespace BroadcastComposerWeb.Controllers
         {
             SMSClient.Handler.ClearSystemComponentParameterCache(BroadcastServiceSystemParameterNames.ComponentID, null);
         }
+
+        [HttpGet]
+        public ActionResult TestFtpAccess()
+        {
+            FtpService srv = new FtpService();
+
+            var userName = "tamguest";
+            var password = "visitor@tam";
+
+            NetworkCredential creds = new NetworkCredential(userName, password);
+            var site = "ftp://ftp.cadentnetwork.com";
+            var list = srv.GetFileList(creds, site);
+
+            ViewBag.Message = "Get file worked w/o error!";
+            return View("Index");
+
+        }
+
+
 
     }
 }

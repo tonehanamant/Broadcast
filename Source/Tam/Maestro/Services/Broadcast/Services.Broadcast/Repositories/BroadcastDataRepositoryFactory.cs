@@ -35,7 +35,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IAudienceRepository, AudienceRepository>();
             instance.RegisterType<IScheduleRepository, ScheduleRepository>();
             instance.RegisterType<IBvsRepository, BvsRepository>();
-            instance.RegisterType<IPostingBookRepository, PostingBookRepository>();
             instance.RegisterType<IRatingsRepository, RatingsRepository>();
             instance.RegisterType<IBvsPostDetailsRepository, BvsPostDetailsRepository>();
             instance.RegisterType<ITrackerMappingRepository, TrackerMappingRepository>();
