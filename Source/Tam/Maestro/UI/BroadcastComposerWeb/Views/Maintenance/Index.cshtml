@@ -60,10 +60,18 @@
         <input type="submit" value="Clear System Param Cache" id="txtClearCache" />
     }
 
-@using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
-{
-    <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
-}
+    @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+    {
+        <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
+    }
+
+
+    <br />
+    <br />
+    @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
+    {
+        <input type="submit" value="Clear Media Month Crunch Cache" id="txtTestFtpAccess" />
+    }
 
     <div>
     </div>
