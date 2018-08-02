@@ -517,6 +517,7 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
+    <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\PostLogRepository.cs" />
     <Compile Include="Repositories\ShowTypeRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
