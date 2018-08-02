@@ -24,7 +24,6 @@ namespace Services.Broadcast
         List<MediaWeek> GetAllMediaWeeksStartAfterDate(DateTime effectiveDate);
         List<MediaWeek> GetAllMediaWeeksEndAfterDate(DateTime effectiveDate);
         List<DisplayMediaWeek> GetDisplayMediaWeekById(List<int> ids);
-        List<MediaMonth> GetAllSweepsMonthsBeforeCurrentMonth();
         List<CustomRatingMediaWeek> GetMediaWeeksForCustomRatings(List<DateTime?> hiatusWeekStartDates, Flight requestFlight);
         List<MediaMonth> GetMediaMonthsBetweenDates(DateTime startDate, DateTime endDate);
         List<MediaMonth> GetMediaMonthsBetweenDatesInclusive(DateTime startDate, DateTime endDate);
@@ -136,11 +135,6 @@ namespace Services.Broadcast
                         MonthEndDate = mm.EndDate,
                         IsHiatus = false
                     }).ToList();
-        }
-
-        public List<MediaMonth> GetAllSweepsMonthsBeforeCurrentMonth()
-        {
-            return _MediaMonths.Where(m => m.EndDate < DateTime.Today && (m.Month == 11 || m.Month == 2 || m.Month == 5 || m.Month == 7)).ToList();
         }
 
         public List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId)

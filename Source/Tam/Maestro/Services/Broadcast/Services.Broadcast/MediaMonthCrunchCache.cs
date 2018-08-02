@@ -84,7 +84,9 @@ namespace Common.Services
             var ratingForecastRepository = _DataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var externalRatingRepository = _DataRepositoryFactory.GetDataRepository<IRatingsRepository>();
 
-            var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
+            var postableMediaMonthIds = _DataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
+                .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
+            var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postableMediaMonthIds);
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
