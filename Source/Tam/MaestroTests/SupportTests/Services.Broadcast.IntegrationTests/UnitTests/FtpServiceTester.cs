@@ -14,6 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
     class FtpServiceTester
     {
+        [Ignore]
         [Test]
         public void TestFileList()
         {
