@@ -78,7 +78,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IProposalService _ProposalService;
-        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly ISpotLengthRepository _SpotLegthRepository;
@@ -89,7 +88,6 @@ namespace Services.Broadcast.ApplicationServices
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IProjectionBooksService postingBooksService,
             IStationProcessingEngine stationProcessingEngine,
             IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
@@ -100,7 +98,6 @@ namespace Services.Broadcast.ApplicationServices
             _AudiencesCache = audiencesCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
-            _ProjectionBooksService = postingBooksService;
             _StationProcessingEngine = stationProcessingEngine;
             _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;

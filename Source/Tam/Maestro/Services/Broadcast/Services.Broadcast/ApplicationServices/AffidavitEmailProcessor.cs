@@ -18,15 +18,15 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IAffidavitEmailProcessorService : IApplicationService
     {
-        int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors,string fileContents);
+        int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors, string fileContents);
         int ProcessAndSendTechError(string filePath, string errorMessage, string fileContents);
         void ProcessAndSendFailedFiles(List<string> filesFailedDownload, string ftpLocation);
         void ProcessAndSendInvalidDataFiles(List<OutboundAffidavitFileValidationResultDto> validationList);
         string CreateValidationErrorEmailBody(List<AffidavitValidationResult> validationErrors, string fileName);
         string CreateTechErrorEmailBody(string errorMessage, string filePath);
         string CreateFailedFTPFileEmailBody(List<string> filesFailedDownload, string ftpLocation);
-        string CreateInvalidDataFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile,string invalidFilePath);
-        void Send(string emailBody,string subject);
+        string CreateInvalidDataFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath);
+        void Send(string emailBody, string subject);
 
         /// <summary>
         /// Logs any errors that happened in DownloadAndProcessWWTV Files and ParseWWTVFile.
@@ -36,7 +36,7 @@ namespace Services.Broadcast.BusinessEngines
 
     }
 
-    public class AffidavitEmailProcessorService :  IAffidavitEmailProcessorService
+    public class AffidavitEmailProcessorService : IAffidavitEmailProcessorService
     {
         private const string _EmailValidationSubject = "WWTV File Failed Validation";
         private readonly IAffidavitRepository _AffidavitRepository;
@@ -54,7 +54,7 @@ namespace Services.Broadcast.BusinessEngines
             var fullPath = WWTVSharedNetworkHelper.BuildLocalErrorPath(fileName);
             File.WriteAllText(fullPath, fileContents);
         }
-        public int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors,string fileContents)
+        public int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors, string fileContents)
         {
             _SaveFileContentsToErrorFolder(Path.GetFileName(filePath), fileContents);
             if (validationErrors == null || !validationErrors.Any())
@@ -66,9 +66,9 @@ namespace Services.Broadcast.BusinessEngines
 
         }
 
-        public int ProcessAndSendTechError(string filePath, string errorMessage,string fileContents)
+        public int ProcessAndSendTechError(string filePath, string errorMessage, string fileContents)
         {
-            _SaveFileContentsToErrorFolder(Path.GetFileName(filePath),fileContents);
+            _SaveFileContentsToErrorFolder(Path.GetFileName(filePath), fileContents);
             var emailBody = CreateTechErrorEmailBody(errorMessage, filePath);
 
             Send(emailBody, "WWTV File Failed");
@@ -197,14 +197,14 @@ namespace Services.Broadcast.BusinessEngines
 
 
 
-        public void Send(string emailBody, string subject )
+        public void Send(string emailBody, string subject)
         {
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return;
 
             var from = new MailAddress(BroadcastServiceSystemParameter.EmailUsername);
-            var to = new List<MailAddress>() {new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail)};
-            _EmailerService.QuickSend(false,emailBody, subject,MailPriority.Normal,from ,to);
+            var to = new List<MailAddress>() { new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail) };
+            _EmailerService.QuickSend(false, emailBody, subject, MailPriority.Normal, from, to);
         }
     }
 }
