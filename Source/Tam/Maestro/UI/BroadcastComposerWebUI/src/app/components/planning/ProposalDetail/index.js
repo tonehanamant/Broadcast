@@ -188,7 +188,7 @@ export class ProposalDetail extends Component {
 
   checkValidNtiLength(value) {
     const val = value;
-    this.setValidationState('NtiLength', val ? null : 'error');
+    this.setValidationState('NtiLength', val !== '' ? null : 'error');
   }
 
   openInventory(type) {
