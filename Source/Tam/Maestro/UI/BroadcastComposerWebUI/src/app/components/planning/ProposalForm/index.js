@@ -128,7 +128,7 @@ export default class ProposalForm extends Component {
   }
 
   render() {
-    const { initialdata, proposalEditForm, isReadOnly } = this.props;
+    const { initialdata, proposalEditForm, isReadOnly, isEdit } = this.props;
     const { AdvertiserId, GuaranteedDemoId } = this.state.validationStates;
     const { MarketCoverage } = proposalEditForm;
 
@@ -211,22 +211,24 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={3}>
-                    <FormGroup controlId="proposalMarket">
+                    <FormGroup controlId="proposalCoverage">
                       <ControlLabel><strong>Coverage</strong></ControlLabel>
                       <InputGroup style={{ maxWidth: '65%' }}>
                         <InputGroup.Addon>%</InputGroup.Addon>
+                        { (!isEdit || proposalEditForm.Id) &&
                           <InputNumber
                             style={{ height: '34px' }}
                             min={1}
                             max={100}
                             precision={2}
-                            // defaultValue={initialCoverage}
-                            value={coverage}
+                            defaultValue={coverage}
+                            // value={coverage}
                             // formatter={value => `${value}%`}
                             // parser={value => value.replace('%', '')}
                             disabled={isReadOnly}
                             onChange={this.onChangeCoverage}
                           />
+                        }
                         <InputGroup.Button>
                           <Button onClick={this.onOpenMarketList}>...</Button>
                         </InputGroup.Button>
@@ -433,7 +435,7 @@ ProposalForm.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
-  // isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
 };
 
