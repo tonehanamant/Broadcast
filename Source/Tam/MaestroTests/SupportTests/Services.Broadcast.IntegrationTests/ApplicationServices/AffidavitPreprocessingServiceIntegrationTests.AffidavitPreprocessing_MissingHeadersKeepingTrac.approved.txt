@@ -1,0 +1,19 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [
+      "Could not find header for column 'Estimate' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+      "Could not find header for column 'Station' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+      "Could not find header for column 'Air Date' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+      "Could not find header for column 'Air Time' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+      "Could not find header for column 'Air ISCI' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+      "Could not find header for column 'Demographic' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+      "Could not find header for column 'Act Impression' in file .\\Files\\KeepingTrac_Test_MissingHeaders.csv"
+    ],
+    "FileHash": "1F-51-1F-75-12-B4-A5-35-3D-4E-7C-CC-75-68-C0-A7-E4-06-49-0F",
+    "FileName": "KeepingTrac_Test_MissingHeaders.csv",
+    "FilePath": ".\\Files\\KeepingTrac_Test_MissingHeaders.csv",
+    "SourceId": 1,
+    "Status": 0
+  }
+]
