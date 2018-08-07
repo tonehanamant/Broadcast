@@ -100,9 +100,21 @@ namespace BroadcastComposerWeb.Controllers
             result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
                 FileName = archive.Item1
-            };
+            };  
 
             return result;
+        }
+
+        [HttpPost]
+        [Route("RerunScrubbing/{proposalId}/{proposalDetailId}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<bool> RerunScrubbing(RescrubProposalDetailRequest request)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IAffidavitService>()
+                            .RescrubProposalDetail(request, Identity.Name, DateTime.Now));
         }
 
         [HttpPost]

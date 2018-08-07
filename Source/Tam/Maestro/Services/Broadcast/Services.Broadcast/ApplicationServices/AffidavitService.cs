@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 
@@ -35,6 +36,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>True or false</returns>
         bool ScrubUnlinkedAffidavitDetailsByIsci(string isci, DateTime currentDateTime, string username);
 
+        bool RescrubProposalDetail(RescrubProposalDetailRequest request, string userName, DateTime changeDate);
+        bool CanRescrubProposalDetail(ProposalDto proposal, ProposalDetailDto proposalDetail);
+
         string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
 
         /// <summary>
@@ -55,8 +59,12 @@ namespace Services.Broadcast.ApplicationServices
         bool MapIsci(MapIsciDto mapIsciDto, DateTime currentDateTime, string name);
     }
 
+
     public class AffidavitService : IAffidavitService
     {
+        public const string ProposalNotContactedMessage = "Proposal must be contracted";
+        public const string ProposalNotScrubbedMessage = "Proposal detail is not currently scrubbed for an affidavit";
+
         const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
 
@@ -263,6 +271,55 @@ namespace Services.Broadcast.ApplicationServices
                 Demographics = d.Demographics
             }).ToList();
             return result;
+        }
+
+        public bool RescrubProposalDetail(RescrubProposalDetailRequest request, string userName, DateTime changeDate)
+        {
+            var proposal = _ProposalService.GetProposalById(request.ProposalId);
+            var proposalDetail = proposal.Details.Single(d => d.Id == request.ProposalDetailId);
+
+            var affidavitDetails = _EnsureProposalDetailIsLinked(proposal,proposalDetail);
+
+            // use swap parameter to keep detail the same.
+            var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitDetails, proposalDetail.Id.Value);
+
+            _MapToAffidavitFileDetails(matchedAffidavitDetails, changeDate, userName);
+            affidavitDetails = matchedAffidavitDetails.Select(ad => ad.AffidavitDetail).ToList();
+
+            _ScrubMatchedAffidavitRecords(affidavitDetails);
+            _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitDetails);
+
+            using (var transaction = new TransactionScopeWrapper()) 
+            {
+                _AffidavitRepository.SaveScrubbedFileDetails(affidavitDetails);
+                transaction.Complete();
+            }
+
+            return true;
+        }
+
+        public bool CanRescrubProposalDetail(ProposalDto proposal, ProposalDetailDto proposalDetail)
+        {
+            if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
+                return false;
+
+            var affidavitDetails = _AffidavitRepository.GetAffidavitDetails(proposalDetail.Id.Value);
+            if (!affidavitDetails.Any())
+                return false;
+
+            return true;
+        }
+
+        private List<AffidavitFileDetail> _EnsureProposalDetailIsLinked(ProposalDto proposal,ProposalDetailDto proposalDetail)
+        {
+            if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
+                throw new InvalidOperationException(ProposalNotContactedMessage);
+
+            var affidavitDetails = _AffidavitRepository.GetAffidavitDetails(proposalDetail.Id.Value);
+            if (!affidavitDetails.Any())
+                throw new InvalidOperationException(ProposalNotScrubbedMessage);
+
+            return affidavitDetails;
         }
 
         /// <summary>

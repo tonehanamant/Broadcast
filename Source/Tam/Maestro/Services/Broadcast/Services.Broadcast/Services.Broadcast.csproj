@@ -247,6 +247,7 @@
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
+    <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />

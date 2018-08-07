@@ -634,6 +634,8 @@ namespace Services.Broadcast.Repositories
                             EffectiveProgramName = a.effective_program_name,
                             EffectiveGenre = a.effective_genre,
                             EffectiveShowType = a.effective_show_type,
+                            EffectiveIsci = a.effective_isci,
+                            EffectiveClientIsci = a.effective_client_isci,
                             Status = (ScrubbingStatus)a.status,
                             Comment = a.comment,
                             ModifiedBy = a.modified_by,

@@ -72,9 +72,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
-        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
-
+        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
+        private readonly IAffidavitService _AffidavitService;
         const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -90,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
             IProposalProprietaryInventoryService proposalProprietaryInventoryService,
             IAffidavitImpressionsService affidavitImpressionsService,
+            IAffidavitService affidavitService,
             IMyEventsReportNamingEngine myEventsReportNamingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -113,6 +114,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
             _ShowTypeReporitory = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             _AffidavitImpressionsService = affidavitImpressionsService;
+            _AffidavitService = affidavitService;
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
         }
 
