@@ -193,7 +193,7 @@ export default class ProposalForm extends Component {
                         </InputGroup.Addon>
 											</InputGroup>
                       }
-											{this.state.validationStates.Name != null &&
+											{!proposalEditForm.ProposalName &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
 											</HelpBlock>
@@ -323,7 +323,7 @@ export default class ProposalForm extends Component {
                         clearable={false}
                         disabled={isReadOnly}
 											/>
-                      {AdvertiserId &&
+                      {!proposalEditForm.AdvertiserId &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Required</span>
 											</HelpBlock>}
@@ -342,7 +342,7 @@ export default class ProposalForm extends Component {
                         clearable={false}
                         disabled={isReadOnly}
 											/>
-                      {GuaranteedDemoId &&
+                      {!proposalEditForm.GuaranteedDemoId &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Required</span>
 											</HelpBlock>}
