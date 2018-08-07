@@ -106,7 +106,7 @@ namespace Common.Services
                     lMessage.Attachments.Add(new Attachment(fileName));
 
             if (pTos == null || pTos.Count == 0)
-                throw new InvalidOperationException("Must contain at least one email fot Tos parameter");
+                throw new InvalidOperationException("Must contain at least one email for Tos parameter");
 
             foreach (MailAddress lMailAddress in pTos)
                 lMessage.To.Add(lMailAddress);
