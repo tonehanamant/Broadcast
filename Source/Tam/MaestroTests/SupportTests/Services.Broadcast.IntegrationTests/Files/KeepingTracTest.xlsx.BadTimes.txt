@@ -1,0 +1,107 @@
+[
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WAGA",
+    "SpotLength": 30,
+    "Time": "081500",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTL010",
+    "Affiliate": "FOX",
+    "Program": "Good Day Atlanta 8am Sunday",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Good Day Atlanta 7am Sunday",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 08:00",
+    "LeadOutProgram": "Georgia Gang, The",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "Informational",
+    "LeadOutStartTime": "03/25/2018 08:30",
+    "Demographics": [
+      {
+        "Demographic": "A35-64",
+        "OvernightRating": 1.45,
+        "OvernightImpressions": 38487
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 2.46,
+        "OvernightImpressions": 60246
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WSB",
+    "SpotLength": 30,
+    "Time": "06:13:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOTB150",
+    "Affiliate": "ABC",
+    "Program": "Channel 2 Action News",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "In Touch with Dr. Charles Stanley",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Religious",
+    "LeadInEndTime": "03/25/2018 06:00",
+    "LeadOutProgram": "Channel 2 Action News",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 07:00",
+    "Demographics": [
+      {
+        "Demographic": "A18-49",
+        "OvernightRating": 0.49,
+        "OvernightImpressions": 13620
+      },
+      {
+        "Demographic": "A25-54",
+        "OvernightRating": 0.61,
+        "OvernightImpressions": 16109
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WSB",
+    "SpotLength": 30,
+    "Time": "07:10:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB005",
+    "Affiliate": "ABC",
+    "Program": "Channel 2 Action News",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Channel 2 Action News",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 07:00",
+    "LeadOutProgram": "Good Morning America Weekend",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 08:00",
+    "Demographics": [
+      {
+        "Demographic": "A18-49",
+        "OvernightRating": 0.84,
+        "OvernightImpressions": 23507
+      },
+      {
+        "Demographic": "A35-64",
+        "OvernightRating": 1.88,
+        "OvernightImpressions": 50065
+      }
+    ]
+  },
+]

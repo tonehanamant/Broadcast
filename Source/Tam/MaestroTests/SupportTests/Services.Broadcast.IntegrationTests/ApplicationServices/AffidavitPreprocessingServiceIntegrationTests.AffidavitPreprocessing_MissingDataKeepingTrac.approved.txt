@@ -1,0 +1,20 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [
+      "Missing 'Estimate' on row 1",
+      "Missing 'Demographic' on row 1",
+      "Missing 'Station' on row 2",
+      "Missing 'Act Ratings' on row 2",
+      "Missing 'Air Date' on row 3",
+      "Missing 'Air Time' on row 3",
+      "Missing 'Act Impression' on row 3",
+      "Missing 'Air ISCI' on row 4"
+    ],
+    "FileHash": "90-35-64-4A-21-46-DB-55-95-7B-F0-2C-A7-D3-D6-2D-30-47-70-CC",
+    "FileName": "KeepingTrac_Test_MissingData.csv",
+    "FilePath": ".\\Files\\KeepingTrac_Test_MissingData.csv",
+    "SourceId": 1,
+    "Status": 0
+  }
+]

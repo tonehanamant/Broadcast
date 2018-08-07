@@ -88,4 +88,110 @@ namespace Services.Broadcast.IntegrationTests
             _FilesCreated.Clear();
         }
     }
+
+
+
+    #region some stubbs for specific tests
+    public class DownloadAndProcessWWTVFiles_Validation_Errors_Stubb : FtpServiceStubb_SingleFile
+    {
+        protected override string GetFileContents()
+        {
+            return
+                @"
+ [ {
+    ""EstimateId"": 3832,
+    ""Market"": ""Boston"",
+    ""Date"": ""11/01/2017"",
+    ""InventorySource"": ""Strata"",
+    ""Station"": ""WBTS-TV"",
+    ""SpotLength"": 30,
+    ""Time"": ""0543A"",
+    ""SpotCost"": 0,
+    ""ISCI"": ""32YO41TC18H"",
+    ""Affiliate"": null,
+    ""Program"": ""NBC Boston Today at 05:30 AM"",
+    ""ShowType"": ""News"",
+    ""Genre"": ""News"",
+    ""LeadInProgram"": ""NBC Boston Today at 04:30 AM"",
+    ""LeadInShowType"": ""News"",
+    ""LeadInGenre"": ""News"",
+    ""LeadInEndTime"": ""11/01/2017 05:00 AM"",
+    ""LeadOutProgram"": ""NBC Boston Today at 06:00 AM"",
+    ""LeadOutShowType"": ""News"",
+    ""LeadOutGenre"": ""News"",
+    ""LeadOutStartTime"": ""11/01/2017 06:00 AM"",
+    ""Demographics"": null
+  }]";
+        }
+    }
+
+
+    public class DownloadAndProcessWWTVFiles_ValidFile_Stubb : FtpServiceStubb_SingleFile
+    {
+        protected override string GetFileContents()
+        {
+            return
+                @"
+ [ {
+    ""EstimateId"": 3832,
+    ""Market"": ""Boston"",
+    ""Date"": ""11/01/2017"",
+    ""InventorySource"": ""Strata"",
+    ""Station"": ""WBTS-TV"",
+    ""SpotLength"": 30,
+    ""Time"": ""0543A"",
+    ""SpotCost"": 0,
+    ""ISCI"": ""32YO41TC18H"",
+    ""Affiliate"": ""Affiliate"",
+    ""Program"": ""NBC Boston Today at 05:30 AM"",
+    ""ShowType"": ""News"",
+    ""Genre"": ""News"",
+    ""LeadInProgram"": ""NBC Boston Today at 04:30 AM"",
+    ""LeadInShowType"": ""News"",
+    ""LeadInGenre"": ""News"",
+    ""LeadInEndTime"": ""11/01/2017 05:00 AM"",
+    ""LeadOutProgram"": ""NBC Boston Today at 06:00 AM"",
+    ""LeadOutShowType"": ""News"",
+    ""LeadOutGenre"": ""News"",
+    ""LeadOutStartTime"": ""11/01/2017 06:00 AM"",
+    ""Demographics"": null
+  }]";
+        }
+    }
+
+    public class FtpServiceStubb_KeepingTrac : FtpServiceStubb_SingleFile
+    {
+        public string KeepingTracFile = ".\\Files\\KeepingTracTest.xlsx.txt";
+        public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)
+        {
+            return new List<string>()
+            {
+                KeepingTracFile
+            };
+        }
+        protected override string GetFileContents()
+        {
+            return File.ReadAllText(KeepingTracFile);
+        }
+
+    }
+
+    public class FtpServiceStubb_KeepingTrac_BadTime : FtpServiceStubb_SingleFile
+    {
+        public string KeepingTracFile = ".\\Files\\KeepingTracTest.xlsx.BadTimes.txt";
+        public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)
+        {
+            return new List<string>()
+            {
+                KeepingTracFile
+            };
+        }
+        protected override string GetFileContents()
+        {
+            return File.ReadAllText(KeepingTracFile);
+        }
+
+    }
+    #endregion
+
 }

@@ -1,0 +1,772 @@
+[
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WAGA",
+    "SpotLength": 30,
+    "Time": "08:15:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTL010",
+    "Affiliate": "FOX",
+    "Program": "Good Day Atlanta 8am Sunday",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Good Day Atlanta 7am Sunday",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 08:00",
+    "LeadOutProgram": "Georgia Gang, The",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "Informational",
+    "LeadOutStartTime": "03/25/2018 08:30",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 1.45,
+        "OvernightImpressions": 38487
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 2.46,
+        "OvernightImpressions": 60246
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WSB",
+    "SpotLength": 30,
+    "Time": "06:13:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOTB150",
+    "Affiliate": "ABC",
+    "Program": "Channel 2 Action News",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "In Touch with Dr. Charles Stanley",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Religious",
+    "LeadInEndTime": "03/25/2018 06:00",
+    "LeadOutProgram": "Channel 2 Action News",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 07:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.49,
+        "OvernightImpressions": 13620
+      },
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 0.61,
+        "OvernightImpressions": 16109
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WSB",
+    "SpotLength": 30,
+    "Time": "07:10:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB005",
+    "Affiliate": "ABC",
+    "Program": "Channel 2 Action News",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Channel 2 Action News",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 07:00",
+    "LeadOutProgram": "Good Morning America Weekend",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 08:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.84,
+        "OvernightImpressions": 23507
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 1.88,
+        "OvernightImpressions": 50065
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WSB",
+    "SpotLength": 30,
+    "Time": "09:54:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOTB150",
+    "Affiliate": "ABC",
+    "Program": "Channel 2 Action News",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Good Morning America Weekend",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 09:00",
+    "LeadOutProgram": "Channel 2 Action News",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 10:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 1.62,
+        "OvernightImpressions": 45330
+      },
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 2.25,
+        "OvernightImpressions": 59619
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Atlanta  GA",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WSB",
+    "SpotLength": 30,
+    "Time": "10:10:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB000",
+    "Affiliate": "ABC",
+    "Program": "Channel 2 Action News",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Channel 2 Action News",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 10:00",
+    "LeadOutProgram": "This Week with George Stephanopoulos",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 11:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 1.46,
+        "OvernightImpressions": 40996
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 2.74,
+        "OvernightImpressions": 72676
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Birmingham (Anniston and Tuscaloosa)  AL",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WBRC",
+    "SpotLength": 30,
+    "Time": "06:24:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB005",
+    "Affiliate": "FOX",
+    "Program": "WBRC FOX6 News Sunday 6am",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "WBRC FOX6 News Sunday 5am",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 06:00",
+    "LeadOutProgram": "WBRC FOX6 News Sunday 7am",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 07:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 1.14,
+        "OvernightImpressions": 7811
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 2.84,
+        "OvernightImpressions": 19358
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCVB",
+    "SpotLength": 30,
+    "Time": "05:12:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB005",
+    "Affiliate": "ABC",
+    "Program": "NewsCenter 5 Weekend EyeOpener",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Chronicle",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 05:00",
+    "LeadOutProgram": "NewsCenter 5 Weekend EyeOpener",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 06:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.12,
+        "OvernightImpressions": 2959
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.47,
+        "OvernightImpressions": 11928
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCVB",
+    "SpotLength": 30,
+    "Time": "05:55:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTL010",
+    "Affiliate": "ABC",
+    "Program": "NewsCenter 5 Weekend EyeOpener",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Chronicle",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 05:00",
+    "LeadOutProgram": "NewsCenter 5 Weekend EyeOpener",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 06:00",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.99,
+        "OvernightImpressions": 24940
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 1.25,
+        "OvernightImpressions": 30216
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCVB",
+    "SpotLength": 30,
+    "Time": "10:11:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB000",
+    "Affiliate": "ABC",
+    "Program": "NewsCenter 5 Weekend EyeOpener",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "This Week with George Stephanopoulos",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 10:00",
+    "LeadOutProgram": "On the Record",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 11:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.35,
+        "OvernightImpressions": 8734
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 1.38,
+        "OvernightImpressions": 34927
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCVB",
+    "SpotLength": 30,
+    "Time": "10:28:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOWE010",
+    "Affiliate": "ABC",
+    "Program": "NewsCenter 5 Weekend EyeOpener",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "This Week with George Stephanopoulos",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 10:00",
+    "LeadOutProgram": "On the Record",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 11:00",
+    "Demographics": [
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 0.6,
+        "OvernightImpressions": 14220
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 2.19,
+        "OvernightImpressions": 53202
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCVB",
+    "SpotLength": 30,
+    "Time": "10:52:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOTB150",
+    "Affiliate": "ABC",
+    "Program": "NewsCenter 5 Weekend EyeOpener",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "This Week with George Stephanopoulos",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 10:00",
+    "LeadOutProgram": "On the Record",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 11:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.37,
+        "OvernightImpressions": 9145
+      },
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 0.47,
+        "OvernightImpressions": 11240
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCVB",
+    "SpotLength": 30,
+    "Time": "11:11:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB000",
+    "Affiliate": "ABC",
+    "Program": "On the Record",
+    "ShowType": "Series",
+    "Genre": "News",
+    "LeadInProgram": "NewsCenter 5 Weekend EyeOpener",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 11:00",
+    "LeadOutProgram": "Matter of Fact",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": null,
+    "LeadOutStartTime": "03/25/2018 11:30",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.29,
+        "OvernightImpressions": 7213
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.61,
+        "OvernightImpressions": 15408
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WHDH",
+    "SpotLength": 30,
+    "Time": "08:21:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOWE010",
+    "Affiliate": "IND",
+    "Program": "7News Today in New England",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Jewish Perspective",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Religious",
+    "LeadInEndTime": "03/25/2018 08:00",
+    "LeadOutProgram": "7News Today in New England",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 09:00",
+    "Demographics": [
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 0.27,
+        "OvernightImpressions": 6504
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 0.78,
+        "OvernightImpressions": 18985
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WHDH",
+    "SpotLength": 30,
+    "Time": "08:44:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTL010",
+    "Affiliate": "IND",
+    "Program": "7News Today in New England",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Jewish Perspective",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Religious",
+    "LeadInEndTime": "03/25/2018 08:00",
+    "LeadOutProgram": "7News Today in New England",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 09:00",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.68,
+        "OvernightImpressions": 17254
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 1.19,
+        "OvernightImpressions": 28825
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WHDH",
+    "SpotLength": 30,
+    "Time": "08:55:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOTB150",
+    "Affiliate": "IND",
+    "Program": "7News Today in New England",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Jewish Perspective",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Religious",
+    "LeadInEndTime": "03/25/2018 08:00",
+    "LeadOutProgram": "7News Today in New England",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 09:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.35,
+        "OvernightImpressions": 8698
+      },
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 0.45,
+        "OvernightImpressions": 10824
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WHDH",
+    "SpotLength": 30,
+    "Time": "09:29:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB000",
+    "Affiliate": "IND",
+    "Program": "7News Today in New England",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "7News Today in New England",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 09:00",
+    "LeadOutProgram": "7News Today in New England",
+    "LeadOutShowType": "News",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 10:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.37,
+        "OvernightImpressions": 9279
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.96,
+        "OvernightImpressions": 24322
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Boston  MA (Manchester  NH)",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WHDH",
+    "SpotLength": 30,
+    "Time": "10:21:00",
+    "SpotCost": null,
+    "ISCI": "2TWNLOWE010",
+    "Affiliate": "IND",
+    "Program": "7News Today in New England",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "7News Today in New England",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 10:00",
+    "LeadOutProgram": "Urban Update",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "03/25/2018 11:00",
+    "Demographics": [
+      {
+        "Demographic": "AD25-54",
+        "OvernightRating": 0.61,
+        "OvernightImpressions": 14418
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 1.5,
+        "OvernightImpressions": 36263
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Buffalo  NY",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WIVB",
+    "SpotLength": 30,
+    "Time": "06:14:00",
+    "SpotCost": null,
+    "ISCI": "2TWNCHTB000",
+    "Affiliate": "CBS",
+    "Program": "Sunday Wake Up",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Empire State Weekly",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 06:00",
+    "LeadOutProgram": "In Touch with Dr. Charles Stanley",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "Religious",
+    "LeadOutStartTime": "03/25/2018 08:00",
+    "Demographics": [
+      {
+        "Demographic": "AD18-49",
+        "OvernightRating": 0.32,
+        "OvernightImpressions": 1690
+      },
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 1.59,
+        "OvernightImpressions": 8822
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Charleston  SC",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "ECIV",
+    "SpotLength": 30,
+    "Time": "23:21:00",
+    "SpotCost": null,
+    "ISCI": "2TWNSLCT015",
+    "Affiliate": "ABC",
+    "Program": "ABC News 4 @ 11",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Deception",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Crime",
+    "LeadInEndTime": "03/25/2018 23:00",
+    "LeadOutProgram": "Gamecock Insider",
+    "LeadOutShowType": "Sports",
+    "LeadOutGenre": "Sports",
+    "LeadOutStartTime": "03/25/2018 23:30",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 1.46,
+        "OvernightImpressions": 4662
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 2.57,
+        "OvernightImpressions": 8260
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Charlotte  NC",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCCB",
+    "SpotLength": 30,
+    "Time": "18:30:00",
+    "SpotCost": null,
+    "ISCI": "2TWNSLCT016",
+    "Affiliate": "CW",
+    "Program": "Mom",
+    "ShowType": "Series",
+    "Genre": "Comedy",
+    "LeadInProgram": "WCCB News @ 6",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 18:30",
+    "LeadOutProgram": "2 Broke Girls",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "Comedy",
+    "LeadOutStartTime": "03/25/2018 19:00",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.44,
+        "OvernightImpressions": 5281
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 0.58,
+        "OvernightImpressions": 6629
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Charlotte  NC",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WCCB",
+    "SpotLength": 30,
+    "Time": "22:42:00",
+    "SpotCost": null,
+    "ISCI": "2TWNSLCT015",
+    "Affiliate": "CW",
+    "Program": "WCCB News Got Game",
+    "ShowType": "Sports",
+    "Genre": "Sports",
+    "LeadInProgram": "WCCB News @ 10",
+    "LeadInShowType": "News",
+    "LeadInGenre": "News",
+    "LeadInEndTime": "03/25/2018 22:35",
+    "LeadOutProgram": "Joel Osteen",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "Religious",
+    "LeadOutStartTime": "03/25/2018 23:00",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 0.62,
+        "OvernightImpressions": 7470
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 0.57,
+        "OvernightImpressions": 6555
+      }
+    ]
+  },
+  {
+    "EstimateId": "2000",
+    "Market": "Chattanooga  TN",
+    "Date": "03/25/2018",
+    "InventorySource":"KeepingTrac",
+    "Station": "WTVC",
+    "SpotLength": 30,
+    "Time": "23:33:00",
+    "SpotCost": null,
+    "ISCI": "2TWNSLCT015",
+    "Affiliate": "ABC",
+    "Program": "NewsChannel 9 at 11",
+    "ShowType": "News",
+    "Genre": "News",
+    "LeadInProgram": "Deception",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Crime",
+    "LeadInEndTime": "03/25/2018 23:00",
+    "LeadOutProgram": "Full Measure with Sharyl Attkisson",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "Investigative",
+    "LeadOutStartTime": "03/25/2018 23:35",
+    "Demographics": [
+      {
+        "Demographic": "AD35-64",
+        "OvernightRating": 1.32,
+        "OvernightImpressions": 4569
+      },
+      {
+        "Demographic": "HH",
+        "OvernightRating": 1.98,
+        "OvernightImpressions": 6653
+      }
+    ]
+  }
+]

@@ -228,7 +228,7 @@
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
-    <Compile Include="ApplicationServices\AffidavitPostProcessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
@@ -446,6 +446,15 @@
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\KeepingTrac_Test_MissingData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\KeepingTrac_Test_Clean.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\KeepingTrac_Test_MissingHeaders.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Master File APR18.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -655,6 +664,9 @@
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\KeepingTracTest.xlsx.BadTimes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Open Market Duplicate Program File1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -673,6 +685,9 @@
     <None Include="Files\Test Adv NAV4 30 05-30-16.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Files\KeepingTracTest.xlsx.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\WWTV_AffidavitValidFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
