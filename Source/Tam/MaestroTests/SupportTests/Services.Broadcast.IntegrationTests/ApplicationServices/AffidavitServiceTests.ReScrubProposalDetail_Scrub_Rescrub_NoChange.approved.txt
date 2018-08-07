@@ -107,8 +107,8 @@
           "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "test user",
-          "PostingBookId": 1,
-          "PostingPlaybackType": 3,
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
           "ProposalVersionDetailId": 8123,
           "ProposalVersionDetailQuarterWeekId": 8522,
           "Status": 1

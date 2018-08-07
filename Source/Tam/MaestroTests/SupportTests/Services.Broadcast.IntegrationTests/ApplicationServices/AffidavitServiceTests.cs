@@ -1306,6 +1306,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = _SetupAffidavit();
                 request.Details.First().Isci = "WAWA";
                 var saveResult = _Sut.SaveAffidavit(request, "test user", postingDate);
+                proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var isci = proposal.Details.First().Quarters.First().Weeks.First().Iscis.First();
                 isci.HouseIsci = "WAWA2";

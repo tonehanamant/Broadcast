@@ -105,14 +105,19 @@ namespace BroadcastComposerWeb.Controllers
             return result;
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("RerunScrubbing/{proposalId}/{proposalDetailId}")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<bool> RerunScrubbing(RescrubProposalDetailRequest request)
+        public BaseResponse<bool> RerunScrubbing(int proposalId,int proposalDetailId)
         {
+            RescrubProposalDetailRequest request = new RescrubProposalDetailRequest()
+            {
+                ProposalId = proposalId,
+                ProposalDetailId = proposalDetailId
+            };
+
             return
-                _ConvertToBaseResponse(
-                    () =>
+                _ConvertToBaseResponse(() =>
                         _ApplicationServiceFactory.GetApplicationService<IAffidavitService>()
                             .RescrubProposalDetail(request, Identity.Name, DateTime.Now));
         }
