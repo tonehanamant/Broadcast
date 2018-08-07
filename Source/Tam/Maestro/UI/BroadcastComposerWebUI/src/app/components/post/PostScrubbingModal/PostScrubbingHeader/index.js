@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, ControlLabel, FormGroup, FormControl, Badge, Button, Glyphicon, Panel, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Row, Col, ControlLabel, FormGroup, FormControl, Button, Glyphicon, Panel, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Grid } from 'react-redux-grid';
 import CSSModules from 'react-css-modules';
 import Select from 'react-select';
@@ -17,15 +17,9 @@ export class PostScrubbingHeader extends Component {
     // this.setState({ dates: dateInProperFormat });
   }
   render() {
-    const { advertiser, guaranteedDemo, Id, marketId, name, notes, secondaryDemo } = this.props;
-    const isCustomMarket = this.props.marketId === 255;
+    const { advertiser, guaranteedDemo, Id, marketGroupId, name, notes, secondaryDemo } = this.props;
     const secondaryDemoOptions = [];
-    let marketLabel;
-    if (isCustomMarket) {
-      marketLabel = 'Custom';
-    } else {
-      marketLabel = marketId === 0 ? 'All' : `Top ${marketId}`;
-    }
+    const marketLabel = marketGroupId === 1 ? 'All' : 'None';
 
     secondaryDemo.forEach((item) => {
       const option = {};
@@ -134,15 +128,6 @@ export class PostScrubbingHeader extends Component {
                   <div style={{ overflow: 'hidden' }} href="">
                     <span className="pull-left "style={{ width: '100%' }} >
                       <FormControl.Static>{marketLabel}</FormControl.Static>
-                      <Badge style={{
-                        display: isCustomMarket ? 'block' : 'none',
-                        position: 'absolute',
-                        left: '50%',
-                        top: '45%',
-                        }}
-                      >
-                      i
-                      </Badge>
                     </span>
                   </div>
                 </FormGroup>
@@ -207,21 +192,28 @@ export class PostScrubbingHeader extends Component {
 
 PostScrubbingHeader.defaultProps = {
   isReadOnly: true,
-  // getProposalDetail: () => { },
+  notes: undefined,
+  secondaryDemo: [],
+  name: '',
+  marketGroupId: null,
+  market: null,
+  Id: undefined,
+  guaranteedDemo: undefined,
+  advertiser: undefined,
+  details: [],
 };
 
 PostScrubbingHeader.propTypes = {
-  advertiser: PropTypes.string.isRequired,
-  details: PropTypes.array.isRequired,
-  guaranteedDemo: PropTypes.string.isRequired,
-  Id: PropTypes.number.isRequired,
+  advertiser: PropTypes.string,
+  details: PropTypes.array,
+  guaranteedDemo: PropTypes.string,
+  Id: PropTypes.number,
   isReadOnly: PropTypes.bool,
-  market: PropTypes.array.isRequired,
-  marketId: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  notes: PropTypes.string.isRequired,
-  secondaryDemo: PropTypes.array.isRequired,
-  // getProposalDetail: PropTypes.func.isRequired,
+  market: PropTypes.array,
+  marketGroupId: PropTypes.number,
+  name: PropTypes.string,
+  notes: PropTypes.string,
+  secondaryDemo: PropTypes.array,
 };
 
 export default CSSModules(PostScrubbingHeader, styles);
