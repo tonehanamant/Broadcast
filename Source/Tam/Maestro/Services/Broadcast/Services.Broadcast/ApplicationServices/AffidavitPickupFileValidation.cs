@@ -78,6 +78,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public AffidavitPickupValidationKeepingTrac(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile) : base(fileInfo, currentFile)
         {
+            currentFile.SourceId = (int) AffidaviteFileSourceEnum.KeepingTrac;
         }
 
         private List<string> _MissingHeaders = new List<string>();
@@ -89,7 +90,7 @@ namespace Services.Broadcast.ApplicationServices
         }
         public override void ValidateFileStruct()
         {
-            var stream = File.Open(_fileInfo.FullName, FileMode.Open);
+            var stream = File.OpenRead(_fileInfo.FullName);
 
             _csvReader = new CsvFileReader(AffidavitFileHeaders);
             _csvReader.OnMissingHeader = _OnMissingHeader;
@@ -135,6 +136,7 @@ namespace Services.Broadcast.ApplicationServices
         public AffidavitPickupValidationStrata(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile) 
             : base(fileInfo, currentFile)
         {
+            currentFile.SourceId = (int) AffidaviteFileSourceEnum.Strata;
         }
 
 
