@@ -39,6 +39,74 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_ValidFileKeepingTrac()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\KeepingTrac_Test_Clean.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_MissingHeadersKeepingTrac()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\KeepingTrac_Test_MissingHeaders.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_MissingDataKeepingTrac()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\KeepingTrac_Test_MissingData.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void AffidavitPreprocessing_InvalidStrataFile()
         {
             using (new TransactionScopeWrapper())
