@@ -19,8 +19,11 @@ using Services.Broadcast.ApplicationServices.Security;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
+    /// <summary>
+    /// AffidavitPostProcessingServiceIntegrationTests
+    /// </summary>
     [TestFixture]
-    public class AffidavitPostProcessingServiceIntegrationTests
+    public class AffPPServiceIntegrationTests
     {
         private readonly IAffidavitPostProcessingService _AffidavitPostProcessingService;
         private readonly IAffidavitRepository _AffidavitRepository;
@@ -28,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private readonly IBroadcastAudiencesCache _AudiencesCache;
 
-        public AffidavitPostProcessingServiceIntegrationTests()
+        public AffPPServiceIntegrationTests()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
@@ -42,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_ValidFileContent()
+        public void AffPP_ValidFileContent()
         {
             using (new TransactionScopeWrapper())
             {
@@ -57,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_ValidFileContent_SpotCost()
+        public void AffPP_ValidFileContent_SpotCost()
         {
             using (new TransactionScopeWrapper())
             {
@@ -71,7 +74,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_AffidavitValidFileContent_NullDemo()
+        public void AffPP_AffidavitValidFileContent_NullDemo()
         {
             using (new TransactionScopeWrapper())
             {
@@ -85,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_File_Error_Date_Time()
+        public void AffPP_File_Error_Date_Time()
         {
             using (new TransactionScopeWrapper())
             {
@@ -109,7 +112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_Basic_Required_Field_Validation_Errors()
+        public void AffPP_Basic_Required_Field_Validation_Errors()
         {
             using (new TransactionScopeWrapper())
             {
@@ -133,13 +136,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         /// <summary>
-        /// similar to AffidavitPostProcessing_Basic_Required_Field_Validation_Errors() 
+        /// similar to AffPP_Basic_Required_Field_Validation_Errors() 
         /// but checks the output of the saved affidavit with validation errors (bascially 
         /// looking at the "Problems" table)
         /// </summary>
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_Basic_Required_Field_Validation_Problems()
+        public void AffPP_Basic_Required_Field_Validation_Problems()
         {
             
             using (new TransactionScopeWrapper())
@@ -156,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_Escaped_DoubleQuotes()
+        public void AffPP_Escaped_DoubleQuotes()
         {
             using (new TransactionScopeWrapper())
             {
@@ -170,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPostProcessing_Overnight_Impressions_With_Decimals()
+        public void AffPP_Overnight_Impressions_With_Decimals()
         {
             using (new TransactionScopeWrapper())
             {
@@ -245,7 +248,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void DownloadAndProcessWWTVFiles_Empty()
+        public void DLAndProcessWWTVFiles_Empty()
         {
             using (var trans = new TransactionScopeWrapper())
             {
@@ -273,7 +276,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void DownloadAndProcessWWTVFiles_Error_InvalidFileFormat()
+        public void DLAndProcessWWTVFiles_Error_InvalidFileFormat()
         {
             using (var trans = new TransactionScopeWrapper())
             {
@@ -307,7 +310,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void DownloadAndProcessWWTVFiles_Validation_Errors()
+        public void DLAndProcessWWTVFiles_Validation_Errors()
         {
             using (var trans = new TransactionScopeWrapper())
             {
@@ -339,13 +342,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void DownloadAndProcessWWTVFiles_Clean()
+        public void DLAndProcessWWTVFiles_Clean()
         {
             using (var trans = new TransactionScopeWrapper())
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
                 IntegrationTestApplicationServiceFactory.Instance
-                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_Clean_Stubb>();
+                    .RegisterType<IFtpService, DownloadAndProcessWWTVFiles_ValidFile_Stubb>();
                 IntegrationTestApplicationServiceFactory.Instance
                     .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
 
@@ -364,74 +367,60 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-    }
 
-    #region some stubbs for specific tests
-    public class DownloadAndProcessWWTVFiles_Validation_Errors_Stubb : FtpServiceStubb_SingleFile
-    {
-        protected override string GetFileContents()
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DLAndProcessWWTVFiles_KeepingTrac_Clean()
         {
-            return
-                @"
- [ {
-    ""EstimateId"": 3832,
-    ""Market"": ""Boston"",
-    ""Date"": ""11/01/2017"",
-    ""InventorySource"": ""Strata"",
-    ""Station"": ""WBTS-TV"",
-    ""SpotLength"": 30,
-    ""Time"": ""0543A"",
-    ""SpotCost"": 0,
-    ""ISCI"": ""32YO41TC18H"",
-    ""Affiliate"": null,
-    ""Program"": ""NBC Boston Today at 05:30 AM"",
-    ""ShowType"": ""News"",
-    ""Genre"": ""News"",
-    ""LeadInProgram"": ""NBC Boston Today at 04:30 AM"",
-    ""LeadInShowType"": ""News"",
-    ""LeadInGenre"": ""News"",
-    ""LeadInEndTime"": ""11/01/2017 05:00 AM"",
-    ""LeadOutProgram"": ""NBC Boston Today at 06:00 AM"",
-    ""LeadOutShowType"": ""News"",
-    ""LeadOutGenre"": ""News"",
-    ""LeadOutStartTime"": ""11/01/2017 06:00 AM"",
-    ""Demographics"": null
-  }]";
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_KeepingTrac>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IAffidavitPostProcessingService>();
+
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DLAndProcessWWTVFiles_KeepingTrac_BadTime()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_KeepingTrac_BadTime>();
+                IntegrationTestApplicationServiceFactory.Instance
+                    .RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IAffidavitPostProcessingService>();
+
+                var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
+                Approvals.Verify(json);
+            }
         }
     }
-
-    public class DownloadAndProcessWWTVFiles_Clean_Stubb : FtpServiceStubb_SingleFile
-    {
-        protected override string GetFileContents()
-        {
-            return
-                @"
- [ {
-    ""EstimateId"": 3832,
-    ""Market"": ""Boston"",
-    ""Date"": ""11/01/2017"",
-    ""InventorySource"": ""Strata"",
-    ""Station"": ""WBTS-TV"",
-    ""SpotLength"": 30,
-    ""Time"": ""0543A"",
-    ""SpotCost"": 0,
-    ""ISCI"": ""32YO41TC18H"",
-    ""Affiliate"": ""Affiliate"",
-    ""Program"": ""NBC Boston Today at 05:30 AM"",
-    ""ShowType"": ""News"",
-    ""Genre"": ""News"",
-    ""LeadInProgram"": ""NBC Boston Today at 04:30 AM"",
-    ""LeadInShowType"": ""News"",
-    ""LeadInGenre"": ""News"",
-    ""LeadInEndTime"": ""11/01/2017 05:00 AM"",
-    ""LeadOutProgram"": ""NBC Boston Today at 06:00 AM"",
-    ""LeadOutShowType"": ""News"",
-    ""LeadOutGenre"": ""News"",
-    ""LeadOutStartTime"": ""11/01/2017 06:00 AM"",
-    ""Demographics"": null
-  }]";
-        }
-    }
-    #endregion
-
 }

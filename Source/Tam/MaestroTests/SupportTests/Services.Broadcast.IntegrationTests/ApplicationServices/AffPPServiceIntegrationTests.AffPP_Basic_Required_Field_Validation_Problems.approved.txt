@@ -20,7 +20,7 @@
       "ProblemDescription": "Record: 3: Field: 'LeadInShowType' is invalid\r\nis required"
     }
   ],
-  "FileHash": "59-D7-D7-68-5D-DA-87-01-59-1E-24-06-CF-1D-40-41-EE-78-8D-37",
+  "FileHash": "22-0B-A7-F6-57-18-42-8B-CE-37-33-9A-C3-B6-46-5D-24-E6-49-23",
   "FileName": "WWTV_Basic_Required_Validation.txt",
   "SourceId": 1,
   "Status": 2
