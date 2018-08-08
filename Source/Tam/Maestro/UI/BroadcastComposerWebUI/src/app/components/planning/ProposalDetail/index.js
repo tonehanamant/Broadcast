@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import Select from 'react-select';
-// import numeral from 'numeral';
 import { InputNumber } from 'antd';
 import { Well, Form, FormGroup, InputGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
 import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
+import { rerunPostScrubing } from 'Ducks/planning/index';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
 import PostingBook from './PostingBook';
@@ -21,9 +21,9 @@ const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited }
   isGridCellEdited,
 });
 
-/* const mapDispatchToProps = dispatch => (
-	bindActionCreators({ toggleEditIsciClass, toggleEditGridCellClass }, dispatch)
-); */
+const mapDispatchToProps = dispatch => (
+	bindActionCreators({ rerunPostScrubing }, dispatch)
+);
 
 export class ProposalDetail extends Component {
   constructor(props) {
@@ -46,6 +46,7 @@ export class ProposalDetail extends Component {
     this.checkValidNtiLength = this.checkValidNtiLength.bind(this);
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.rerunPostScrubing = this.rerunPostScrubing.bind(this);
 
     this.state = {
       validationStates: {
@@ -148,6 +149,11 @@ export class ProposalDetail extends Component {
       active: true,
       properties: { detailId: detail.Id },
     });
+  }
+
+  rerunPostScrubing() {
+    const { detail, proposalEditForm } = this.props;
+    this.props.rerunPostScrubing(proposalEditForm.Id, detail.Id);
   }
 
   setValidationState(type, state) {
@@ -353,6 +359,7 @@ export class ProposalDetail extends Component {
                       <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
                       <MenuItem eventKey="postingBook" onSelect={this.openModal}>Posting Book</MenuItem>
                       <MenuItem eventKey="programGenreModal" onSelect={this.openModal}>Program/Genre/Show Type</MenuItem>
+                      {isReadOnly && <MenuItem eventKey="rerunPostScrubbing" onSelect={this.rerunPostScrubing}>Rerun Post Scrubing</MenuItem>}
                   </DropdownButton>
                 </div>
               }
@@ -437,6 +444,7 @@ ProposalDetail.propTypes = {
   proposalEditForm: PropTypes.object,
   updateProposalEditFormDetail: PropTypes.func,
   updateProposalEditFormDetailGrid: PropTypes.func,
+  rerunPostScrubing: PropTypes.func.isRequired,
   onUpdateProposal: PropTypes.func,
   deleteProposalDetail: PropTypes.func,
   modelNewProposalDetail: PropTypes.func,
@@ -452,4 +460,4 @@ ProposalDetail.propTypes = {
   // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(ProposalDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ProposalDetail);

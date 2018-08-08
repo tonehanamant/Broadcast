@@ -5,10 +5,12 @@ import { takeEvery, put, select } from 'redux-saga/effects';
 import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
-import { deployError } from 'Ducks/app/index';
+import { deployError, setOverlayLoading } from 'Ducks/app/index';
 import { receiveFilteredPlanning } from 'Ducks/planning/index';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
+
+import sagaWrapper from '../wrapper';
 import api from '../api';
 
 const ACTIONS = { ...appActions, ...planningActions };
@@ -1376,6 +1378,16 @@ export function* deleteProposalDetail({ payload: params }) {
   });
 }
 
+export function* rerunPostScrubing({ propId, propdetailid }) {
+  const { rerunPostScrubing } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: 'rerunPostScrubing', loading: true }));
+    return yield rerunPostScrubing(propId, propdetailid);
+  } finally {
+    yield put(setOverlayLoading({ id: 'rerunPostScrubing', loading: false }));
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1450,6 +1462,10 @@ export function* watchRequestShowTypes() {
 
 export function* watchDeleteProposalDetail() {
 	yield takeEvery(ACTIONS.DELETE_PROPOSAL_DETAIL, deleteProposalDetail);
+}
+
+export function* watchRerunPostScrubing() {
+	yield takeEvery(ACTIONS.RERUN_POST_SCRUBING.request, sagaWrapper(rerunPostScrubing, ACTIONS.RERUN_POST_SCRUBING));
 }
 
 // if assign watcher > assign in sagas/index rootSaga also
