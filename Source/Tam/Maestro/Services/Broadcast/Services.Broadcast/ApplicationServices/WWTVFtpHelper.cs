@@ -127,9 +127,10 @@ namespace Services.Broadcast.ApplicationServices
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = GetClientCredentials();
-                StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}"));
-
-                return reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}")))
+                {
+                    return reader.ReadToEnd();
+                }
             }
 
         }
@@ -178,6 +179,6 @@ namespace Services.Broadcast.ApplicationServices
             _FtpService.DeleteFile(GetClientCredentials(), remoteFtpPath);
         }
 
-#endregion
+        #endregion
     }
 }
