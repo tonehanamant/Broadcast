@@ -11,6 +11,7 @@ const initialState = {
   unlinkedIscis: [],
   modals: {},
   unlinkedIscisLength: 0,
+  activeIsciFilterQuery: '',
   scrubbingFiltersList: [],
   activeScrubbingFilters: {},
   activeFilterKey: 'All', // represents global Filter state: 'All', 'InSpec', 'OutOfSpec'
@@ -255,6 +256,26 @@ export default function reducer(state = initialState, action) {
         postGridData: data,
       };
 
+    case ACTIONS.RECEIVE_FILTERED_UNLINKED:
+      return {
+        ...state,
+        unlinkedIscis: data.filteredData,
+        activeIsciFilterQuery: data.query,
+      };
+
+    case ACTIONS.RECEIVE_FILTERED_ARCHIVED:
+      return {
+        ...state,
+        unlinkedIscis: data.filteredData,
+        activeIsciFilterQuery: data.query,
+      };
+
+      case ACTIONS.RECEIVE_CLEAR_ISCI_FILTER:
+      return {
+        ...state,
+        activeIsciFilterQuery: '',
+      };
+
     case ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING: {
       const filtersData = data.Data.Filters;
       const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
@@ -412,12 +433,14 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         unlinkedIscis: data.Data,
+        unlinkedFilteredIscis: data.Data,
       };
     case ACTIONS.UNLINKED_ISCIS_DATA.success:
     return {
       ...state,
       unlinkedIscis: data.Data,
       unlinkedIscisLength: data.Data.length,
+      unlinkedFilteredIscis: data.Data,
     };
 
     case ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST:
@@ -474,6 +497,16 @@ export const getPost = () => ({
 
 export const getPostFiltered = query => ({
   type: ACTIONS.REQUEST_FILTERED_POST,
+  payload: query,
+});
+
+export const getUnlinkedFiltered = query => ({
+  type: ACTIONS.REQUEST_FILTERED_UNLINKED,
+  payload: query,
+});
+
+export const getArchivedFiltered = query => ({
+  type: ACTIONS.REQUEST_FILTERED_ARCHIVED,
   payload: query,
 });
 

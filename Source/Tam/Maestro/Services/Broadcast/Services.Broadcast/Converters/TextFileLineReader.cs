@@ -38,6 +38,8 @@ namespace Services.Broadcast.Converters
             _Headers = headers;
         }
 
+        public Func<string, bool> OnMissingHeader { get; set; }
+
         public abstract IDisposable Initialize(Stream rawStream);
         public abstract bool IsEOF();
         public abstract bool IsEOFOrEmptyRow();
@@ -69,15 +71,36 @@ namespace Services.Broadcast.Converters
             _HeaderDict = new Dictionary<string, int>();
             while (!IsEndOfRow(column))
             {
-                var header = GetCellValue(column);
+                var header = GetCellValue(column).Trim();
+                if (string.IsNullOrEmpty(header))
+                {
+                    // skip empty columns for now.  Add code in the future to not do this.
+                    column++;
+                    continue;
+                }
+
                 _HeaderDict.Add(header, column++);
             }
+            if (validationErrors.Any())
+            {
+                string message = "";
+                validationErrors.ForEach(err => message += err + Environment.NewLine);
+                throw new Exception(message);
+            }
+
 
             foreach (var header in _Headers)
             {
                 if (!_HeaderDict.ContainsKey(header))
                 {
-                    validationErrors.Add(string.Format("Could not find required column {0}.<br />", header));
+                    if (OnMissingHeader != null)
+                    {
+                        OnMissingHeader.Invoke(header);
+                    }
+                    else
+                    {
+                        validationErrors.Add(string.Format("Could not find required column {0}.<br />", header));
+                    }
                 }
             }
 

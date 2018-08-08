@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import SearchInputButton from 'Components/shared/SearchInputButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
+import { Button, Modal, Nav, NavItem, Row, Col } from 'react-bootstrap';
 import { Grid, Actions } from 'react-redux-grid';
-import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, undoArchivedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
+import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, undoArchivedIscis, closeUnlinkedIsciModal, getUnlinkedFiltered, getArchivedFiltered } from 'Ducks/post';
 import { generateGridConfig } from './util';
 import MapUnlinkedIsciModal from '../MapUnlinkedIsciModal/index';
 
@@ -20,6 +21,8 @@ const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } }, gr
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     closeUnlinkedIsciModal,
+    getUnlinkedFiltered,
+    getArchivedFiltered,
     rescrubIscis: rescrubUnlinkedIscis,
     archiveIscis: archiveUnlinkedIscis,
     undoArchive: undoArchivedIscis,
@@ -35,10 +38,30 @@ export class UnlinkedIsciModal extends Component {
 		this.context = context;
     this.close = this.close.bind(this);
     this.onTabSelect = this.onTabSelect.bind(this);
+    this.SearchInputAction = this.SearchInputAction.bind(this);
+    this.SearchSubmitAction = this.SearchSubmitAction.bind(this);
 
     this.state = {
       activeTab: 'unlinked',
     };
+  }
+
+  SearchInputAction() {
+    const { activeTab } = this.state;
+    if (activeTab === 'unlinked') {
+      this.props.getUnlinkedFiltered();
+    } else {
+      this.props.getArchivedFiltered();
+    }
+  }
+
+  SearchSubmitAction(value) {
+    const { activeTab } = this.state;
+    if (activeTab === 'unlinked') {
+      this.props.getUnlinkedFiltered(value);
+    } else {
+      this.props.getArchivedFiltered(value);
+    }
   }
 
   close() {
@@ -52,6 +75,7 @@ export class UnlinkedIsciModal extends Component {
     if (activeTab !== nextTab) {
       this.setState({ activeTab: nextTab });
       toggleTab(nextTab);
+      this.searchInput.clearForm();
     }
   }
 
@@ -72,10 +96,22 @@ export class UnlinkedIsciModal extends Component {
             </Button>
           </Modal.Header>
           <Modal.Body>
-            <Nav style={{ marginBottom: 3 }} bsStyle="tabs" activeKey={activeTab} onSelect={this.onTabSelect}>
-                <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
-                <NavItem eventKey="archived">Archived ISCIs</NavItem>
-            </Nav>
+          <Row>
+            <Col xs={6}>
+              <Nav style={{ marginBottom: 3 }} bsStyle="tabs" activeKey={activeTab} onSelect={this.onTabSelect}>
+                  <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
+                  <NavItem eventKey="archived">Archived ISCIs</NavItem>
+              </Nav>
+            </Col>
+            <Col xs={6}>
+              <SearchInputButton
+                inputAction={this.SearchInputAction}
+                submitAction={this.SearchSubmitAction}
+                fieldPlaceHolder="Filter by ISCI..."
+                ref={(ref) => { this.searchInput = ref; }}
+              />
+            </Col>
+          </Row>
             <Grid
               {...grid}
               key={activeTab}
@@ -113,6 +149,8 @@ UnlinkedIsciModal.propTypes = {
   dataSource: PropTypes.object.isRequired,
   selection: PropTypes.object.isRequired,
   grid: PropTypes.object.isRequired,
+  getUnlinkedFiltered: PropTypes.func.isRequired,
+  getArchivedFiltered: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UnlinkedIsciModal);

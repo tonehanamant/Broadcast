@@ -91,8 +91,9 @@ export function adjustProposals(proposals) {
     proposal.displayId = String(proposal.Id);
     proposal.displayAdvertiser = proposal.Advertiser.Display;
     proposal.displayLastModified = moment(proposal.LastModified).format('MM/DD/YYYY');
-    const start = moment(proposal.FlightStartDate).format('MM/DD/YYYY');
-    const end = moment(proposal.FlightEndDate).format('MM/DD/YYYY');
+    // handle empty dates
+    const start = proposal.FlightStartDate ? moment(proposal.FlightStartDate).format('MM/DD/YYYY') : '';
+    const end = proposal.FlightEndDate ? moment(proposal.FlightEndDate).format('MM/DD/YYYY') : '';
     proposal.displayFlights = `${start} - ${end}`;
     switch (proposal.Status) {
       case 1:

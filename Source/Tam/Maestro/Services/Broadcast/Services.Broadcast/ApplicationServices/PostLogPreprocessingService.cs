@@ -107,7 +107,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var errorMessage in invalidFile.ErrorMessages)
             {
-                mailBody.Append(string.Format("{0}\n", errorMessage));
+                mailBody.AppendFormat("{0}\n\n", errorMessage);
             }
 
             mailBody.AppendFormat("\nFile located in {0}\n", invalidFilePath);

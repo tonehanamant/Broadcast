@@ -12,6 +12,8 @@ export default function* rootSaga() {
 
     postSaga.watchRequestPost(),
     postSaga.watchRequestPostFiltered(),
+    postSaga.watchRequestUnlinkedFiltered(),
+    postSaga.watchRequestArchivedFiltered(),
     postSaga.watchRequestAssignPostDisplay(),
     postSaga.watchRequestPostClientScrubbing(),
     postSaga.watchRequestUniqueIscis(),
@@ -21,6 +23,7 @@ export default function* rootSaga() {
     postSaga.watchSwapProposalDetail(),
     postSaga.watchArchiveUnlinkedIsci(),
     postSaga.watchRequestUniqueIscisSuccess(),
+    postSaga.watchRequestArchivedIscisSuccess(),
     postSaga.watchLoadArchivedIscis(),
     postSaga.watchLoadValidIscis(),
     postSaga.watchMapUnlinkedIsci(),

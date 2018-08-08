@@ -163,6 +163,76 @@ export function* requestPostFiltered({ payload: query }) {
   }
 }
 
+export function* requestUnlinkedFiltered({ payload: query }) {
+  const unlinkedListUnfiltered = yield select(state => state.post.unlinkedFilteredIscis);
+
+  // for each post, convert all properties to string to enable use on FuzzySearch object
+  unlinkedListUnfiltered.map(post => (
+    Object.keys(post).map((key) => {
+      if (post[key] !== null && post[key] !== undefined) {
+        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
+      }
+      return post[key];
+    })
+  ));
+
+  const keys = ['ISCI'];
+  const searcher = new FuzzySearch(unlinkedListUnfiltered, keys, { caseSensitive: false });
+  const unlinkedFiltered = () => searcher.search(query);
+
+  try {
+    const filtered = yield unlinkedFiltered();
+    yield put({
+      type: ACTIONS.RECEIVE_FILTERED_UNLINKED,
+      data: { query, filteredData: filtered },
+    });
+  } catch (e) {
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
+export function* requestArchivedFiltered({ payload: query }) {
+  const archivedListUnfiltered = yield select(state => state.post.unlinkedFilteredIscis);
+
+  // for each post, convert all properties to string to enable use on FuzzySearch object
+  archivedListUnfiltered.map(post => (
+    Object.keys(post).map((key) => {
+      if (post[key] !== null && post[key] !== undefined) {
+        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
+      }
+      return post[key];
+    })
+  ));
+
+  const keys = ['ISCI'];
+  const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
+  const archivedFiltered = () => searcher.search(query);
+
+  try {
+    const filtered = yield archivedFiltered();
+    yield put({
+      type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
+      data: { query, filteredData: filtered },
+    });
+  } catch (e) {
+    if (e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 /* ////////////////////////////////// */
 /* REQUEST CLEAR SCRUBBING FILTER LIST - so grid will update object data */
 /* ////////////////////////////////// */
@@ -418,6 +488,8 @@ export function* requestUnlinkedIscis() {
 }
 
 export function* unlinkedIscisSuccess() {
+  const activeQuery = yield select(state => state.post.activeIsciFilterQuery);
+  // console.log('unlinked isci active query success>>>>>>>', activeQuery);
   const modal = select(selectModal, 'postUnlinkedIsciModal');
   if (modal && !modal.active) {
     yield put(toggleModal({
@@ -428,6 +500,17 @@ export function* unlinkedIscisSuccess() {
         bodyText: 'Isci Details',
       },
     }));
+  }
+  if (activeQuery.length) {
+    yield call(requestUnlinkedFiltered, { payload: activeQuery });
+  }
+}
+
+export function* archivedIscisSuccess() {
+  const activeQuery = yield select(state => state.post.activeIsciFilterQuery);
+  // console.log('archived isci active query success>>>>>>>', activeQuery);
+  if (activeQuery.length) {
+    yield call(requestArchivedFiltered, { payload: activeQuery });
   }
 }
 
@@ -744,6 +827,9 @@ export function* mapUnlinkedIsciSuccess() {
 }
 
 export function* closeUnlinkedIsciModal({ modalPrams }) {
+  yield put({
+    type: ACTIONS.RECEIVE_CLEAR_ISCI_FILTER,
+  });
   yield put(toggleModal({
     modal: 'postUnlinkedIsciModal',
     active: false,
@@ -807,6 +893,14 @@ export function* watchRequestPostFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
 }
 
+export function* watchRequestUnlinkedFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
+}
+
+export function* watchRequestArchivedFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
+}
+
 export function* watchRequestPostClientScrubbing() {
   yield takeEvery(ACTIONS.REQUEST_POST_CLIENT_SCRUBBING, requestPostClientScrubbing);
 }
@@ -832,6 +926,10 @@ export function* watchRequestUniqueIscis() {
 
 export function* watchRequestUniqueIscisSuccess() {
   yield takeEvery(ACTIONS.UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
+}
+
+export function* watchRequestArchivedIscisSuccess() {
+  yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.success, archivedIscisSuccess);
 }
 
 export function* watchArchiveUnlinkedIsci() {

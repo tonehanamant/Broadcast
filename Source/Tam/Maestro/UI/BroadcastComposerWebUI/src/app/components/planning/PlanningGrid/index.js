@@ -23,6 +23,8 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
   {
     deselectAll,
     doLocalSort,
+    // showMenu,
+    // hideMenu,
   }, dispatch)
 );
 
@@ -60,7 +62,6 @@ export class PlanningGrid extends Component {
     const url = `planning/proposal/${id}`;
     window.location.assign(url);
   }
-
 
   deselectAll() {
     this.props.deselectAll('gridPlanningHome');
@@ -176,7 +177,8 @@ export class PlanningGrid extends Component {
       // when you have GRID_Actions enabled as done below
       // Need a way to hide the actions on each row but not the columns
       GRID_ACTIONS: {
-        iconCls: 'action-icon',
+        iconCls: 'action-iconnone', // set to bugus hides
+        // iconCls: 'action-icon',
         menu: [],
       },
       // BULK_ACTIONS: {
@@ -221,7 +223,7 @@ export class PlanningGrid extends Component {
       stateKey,
     };
     return (
-      <Grid {...grid} data={this.props.planningProposals} store={this.context.store} height={460} />
+      <Grid {...grid} data={this.props.planningProposals} store={this.context.store} id="grid1" height={460} />
     );
   }
 }

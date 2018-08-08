@@ -17,6 +17,7 @@ namespace Services.Broadcast
         List<LookupDto> GetAllLookups();
         DisplayAudience GetDisplayAudienceById(int id);
         DisplayAudience GetDisplayAudienceByCode(string audienceCode);
+        bool IsValidAudienceCode(string audienceCode);
         IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge);
         BroadcastAudience GetDefaultAudience();
         LookupDto FindDto(int id);
@@ -58,6 +59,11 @@ namespace Services.Broadcast
                     Id = id,
                     AudienceString = a.Name
                 }).SingleOrDefault();
+        }
+
+        public bool IsValidAudienceCode(string audienceCode)
+        {
+            return _Audiences.Any(a => a.Code == audienceCode);
         }
 
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)

@@ -25,8 +25,6 @@ export default class ProposalForm extends Component {
     this.onChangeCoverage = this.onChangeCoverage.bind(this);
     this.onChangeNotes = this.onChangeNotes.bind(this);
 
-    this.setValidationState = this.setValidationState.bind(this);
-
     this.onOpenMarketList = this.onOpenMarketList.bind(this);
 
     this.setValidationState = this.setValidationState.bind(this);
@@ -37,7 +35,7 @@ export default class ProposalForm extends Component {
     this.state = {
       validationStates: {
         Name: null,
-        Name_MaxChar: null,
+        NameMaxChar: null,
         AdvertiserId: null,
         GuaranteedDemoId: null,
       },
@@ -112,13 +110,12 @@ export default class ProposalForm extends Component {
   }
 
   checkValidProposalName(value) {
-    const val = value || '';
-    this.setValidationState('Name', val || 'error');
-    this.setValidationState('Name_MaxChar', val.length <= 100 ? null : 'error');
+    this.setValidationState('Name', value ? null : 'error');
+    this.setValidationState('NameMaxChar', value.length <= 100 ? null : 'error');
   }
 
   checkIsNullFields(value, field) {
-    this.setValidationState(field, value || 'error');
+    this.setValidationState(field, value ? null : 'error');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -128,8 +125,8 @@ export default class ProposalForm extends Component {
   }
 
   render() {
-    const { initialdata, proposalEditForm, isReadOnly } = this.props;
-    const { AdvertiserId, GuaranteedDemoId } = this.state.validationStates;
+    const { initialdata, proposalEditForm, isReadOnly, isEdit } = this.props;
+    const { AdvertiserId, GuaranteedDemoId, Name, NameMaxChar } = this.state.validationStates;
     const { MarketCoverage } = proposalEditForm;
 
     // update custom count
@@ -170,7 +167,7 @@ export default class ProposalForm extends Component {
 							<Col md={6}>
 								<Row>
 									<Col md={5}>
-										<FormGroup controlId="proposalName" validationState={this.state.validationStates.Name || this.state.validationStates.Name_MaxChar} >
+										<FormGroup controlId="proposalName" validationState={Name || NameMaxChar} >
 											<ControlLabel><strong>Proposal Name</strong></ControlLabel>
                       { !proposalEditForm.Id &&
                       <FormControl
@@ -193,17 +190,12 @@ export default class ProposalForm extends Component {
                         </InputGroup.Addon>
 											</InputGroup>
                       }
-											{this.state.validationStates.Name != null &&
+											{Name &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
 											</HelpBlock>
                       }
-                      {/* {this.state.validationStates.Name_Alphanumeric != null &&
-											<HelpBlock>
-												<span className="text-danger" style={{ fontSize: 11 }}>Please enter only alphanumeric characters.</span>
-											</HelpBlock>
-                      } */}
-                      {this.state.validationStates.Name_MaxChar != null &&
+                      {NameMaxChar &&
 											<HelpBlock>
 												<span className="text-danger" style={{ fontSize: 11 }}>Please enter no more than 100 characters.</span>
 											</HelpBlock>
@@ -211,22 +203,24 @@ export default class ProposalForm extends Component {
 										</FormGroup>
 									</Col>
 									<Col md={3}>
-                    <FormGroup controlId="proposalMarket">
+                    <FormGroup controlId="proposalCoverage">
                       <ControlLabel><strong>Coverage</strong></ControlLabel>
                       <InputGroup style={{ maxWidth: '65%' }}>
                         <InputGroup.Addon>%</InputGroup.Addon>
+                        { (!isEdit || proposalEditForm.Id) &&
                           <InputNumber
                             style={{ height: '34px' }}
                             min={1}
                             max={100}
                             precision={2}
-                            // defaultValue={initialCoverage}
-                            value={coverage}
+                            defaultValue={coverage}
+                            // value={coverage}
                             // formatter={value => `${value}%`}
                             // parser={value => value.replace('%', '')}
                             disabled={isReadOnly}
                             onChange={this.onChangeCoverage}
                           />
+                        }
                         <InputGroup.Button>
                           <Button onClick={this.onOpenMarketList}>...</Button>
                         </InputGroup.Button>
@@ -433,7 +427,7 @@ ProposalForm.propTypes = {
   updateProposalEditForm: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func,
-  // isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
 };
 

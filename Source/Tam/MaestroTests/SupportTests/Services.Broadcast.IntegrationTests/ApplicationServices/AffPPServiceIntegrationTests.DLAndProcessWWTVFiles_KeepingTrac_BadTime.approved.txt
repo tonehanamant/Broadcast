@@ -1,0 +1,26 @@
+﻿{
+  "AffidavitSaveResults": [
+    {
+      "ValidationResults": [
+        {
+          "ErrorMessage": "is invalid date or time.",
+          "InvalidField": "Time",
+          "InvalidLine": 0
+        }
+      ]
+    }
+  ],
+  "FailedDownloads": [],
+  "FilesFoundToProcess": [
+    ".\\Files\\KeepingTracTest.xlsx.BadTimes.txt"
+  ],
+  "ValidationErrors": {
+    "KeepingTracTest.xlsx.BadTimes.txt": [
+      {
+        "ErrorMessage": "is invalid date or time.",
+        "InvalidField": "Time",
+        "InvalidLine": 0
+      }
+    ]
+  }
+}
