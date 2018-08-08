@@ -1575,7 +1575,11 @@ namespace Services.Broadcast.Repositories
                                 ClientIsci = i.client_isci,
                                 HouseIsci = i.house_isci,
                                 MarriedHouseIsci = i.married_house_iscii,
-                                Brand = i.brand
+                                Brand = i.brand,
+                                SpotLengthId = i.proposal_version_detail_quarter_weeks
+                                                .proposal_version_detail_quarters
+                                                .proposal_version_details
+                                                .spot_length_id
                             }).ToList();
                     return weeks;
                 });
@@ -1612,7 +1616,8 @@ namespace Services.Broadcast.Repositories
                                ClientIsci = i.isci.client_isci,
                                HouseIsci = i.isci.house_isci,
                                MarriedHouseIsci = i.isci.married_house_iscii,
-                               Brand = i.isci.brand
+                               Brand = i.isci.brand,
+                               SpotLengthId = i.detail.spot_length_id
                            }).ToList();                   
                });
         }
