@@ -63,7 +63,6 @@ namespace Services.Broadcast.ApplicationServices
     public class AffidavitService : IAffidavitService
     {
         public const string ProposalNotContactedMessage = "Proposal must be contracted";
-        public const string ProposalNotScrubbedMessage = "Proposal detail is not currently scrubbed for an affidavit";
 
         const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
@@ -278,10 +277,13 @@ namespace Services.Broadcast.ApplicationServices
             var proposal = _ProposalService.GetProposalById(request.ProposalId);
             var proposalDetail = proposal.Details.Single(d => d.Id == request.ProposalDetailId);
 
-            var affidavitDetails = _EnsureProposalDetailIsLinked(proposal,proposalDetail);
+            EnsureProposalContracted(proposal,proposalDetail);
+
+            var affidavitDetails = _AffidavitRepository.GetAffidavitDetails(proposalDetail.Id.Value);
 
             // use swap parameter to keep detail the same.
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitDetails, proposalDetail.Id.Value);
+            _SetPostingBookData(matchedAffidavitDetails, proposalDetail.PostingBookId.Value,proposalDetail.PostingPlaybackType);
 
             _MapToAffidavitFileDetails(matchedAffidavitDetails, changeDate, userName);
             affidavitDetails = matchedAffidavitDetails.Select(ad => ad.AffidavitDetail).ToList();
@@ -310,16 +312,10 @@ namespace Services.Broadcast.ApplicationServices
             return true;
         }
 
-        private List<AffidavitFileDetail> _EnsureProposalDetailIsLinked(ProposalDto proposal,ProposalDetailDto proposalDetail)
+        private void EnsureProposalContracted(ProposalDto proposal,ProposalDetailDto proposalDetail)
         {
             if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
                 throw new InvalidOperationException(ProposalNotContactedMessage);
-
-            var affidavitDetails = _AffidavitRepository.GetAffidavitDetails(proposalDetail.Id.Value);
-            if (!affidavitDetails.Any())
-                throw new InvalidOperationException(ProposalNotScrubbedMessage);
-
-            return affidavitDetails;
         }
 
         /// <summary>
@@ -431,7 +427,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private void _SetPostingBookData(List<AffidavitMatchingDetail> matchedAffidavitDetails, int postingBookId)
+        private void _SetPostingBookData(List<AffidavitMatchingDetail> matchedAffidavitDetails, int postingBookId, ProposalEnums.ProposalPlaybackType? playbackType = null)
         {
             foreach (var proposalDetailWeek in matchedAffidavitDetails.SelectMany(d => d.ProposalDetailWeeks))
             {
@@ -442,7 +438,14 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (!proposalDetailWeek.ProposalVersionDetailPostingPlaybackType.HasValue)
                 {
-                    proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = DefaultPlaybackType;
+                    if (playbackType == null)
+                    {
+                        proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = DefaultPlaybackType;
+                    }
+                    else
+                    {
+                        proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = playbackType.Value;
+                    }
                 }
             }
         }

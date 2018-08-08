@@ -1347,37 +1347,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = AffidavitService.ProposalNotScrubbedMessage, MatchType = MessageMatch.Exact)]
-        public void ReScrubProposalDetail_Proposal_Not_Scrubbed()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var proposal = new ProposalDto();
-                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
-                var postingDate = new DateTime(2016, 4, 20);
-
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
-                    .GetDataRepository<IProposalRepository>();
-                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 413, 416);
-
-                proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
-                {
-                    new ProposalWeekIsciDto()
-                    {
-                        Brand = "WAWA",
-                        ClientIsci = "WAWA",
-                        HouseIsci = "WAWA",
-                        Days = "M|T|W|TH|F|SA|SU"
-                    }
-                };
-                proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-                _ProposalService.SaveProposal(proposal, "test user", postingDate);
-
-                _Sut.RescrubProposalDetail(new RescrubProposalDetailRequest() { ProposalId = proposal.Id.Value, ProposalDetailId = proposalDetailId }, "test user", postingDate);
-            }
-        }
-
-        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ReScrubProposalDetail_Basic_Changes()
         {
