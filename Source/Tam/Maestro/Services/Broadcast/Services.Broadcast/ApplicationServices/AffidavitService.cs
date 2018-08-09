@@ -62,7 +62,7 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AffidavitService : IAffidavitService
     {
-        public const string ProposalNotContactedMessage = "Proposal must be contracted";
+        public const string ProposalNotContractedMessage = "Proposal must be contracted";
 
         const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
@@ -315,7 +315,7 @@ namespace Services.Broadcast.ApplicationServices
         private void EnsureProposalContracted(ProposalDto proposal,ProposalDetailDto proposalDetail)
         {
             if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
-                throw new InvalidOperationException(ProposalNotContactedMessage);
+                throw new InvalidOperationException(ProposalNotContractedMessage);
         }
 
         /// <summary>
