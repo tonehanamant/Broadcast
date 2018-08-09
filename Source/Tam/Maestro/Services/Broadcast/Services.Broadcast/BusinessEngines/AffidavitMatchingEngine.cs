@@ -48,7 +48,7 @@ namespace Services.Broadcast.BusinessEngines
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
                     Type = AffidavitFileDetailProblemTypeEnum.UnlinkedIsci,
-                    Description = String.Format("Isci not found: {0}", affidavitFileDetail.Isci)
+                    Description = $"Isci not found: {affidavitFileDetail.Isci}"
                 });
 
                 return _MatchingProposalWeeks;
@@ -60,7 +60,7 @@ namespace Services.Broadcast.BusinessEngines
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
                     Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
-                    Description = String.Format("Unmarried Isci {0} exists on multiple proposals", affidavitFileDetail.Isci)
+                    Description = $"Unmarried Isci {affidavitFileDetail.Isci} exists on multiple proposals"
                 });
                 return _MatchingProposalWeeks;
             }
@@ -71,7 +71,18 @@ namespace Services.Broadcast.BusinessEngines
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
                     Type = AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried,
-                    Description = String.Format("Isci {0} exists as married and unmarried", affidavitFileDetail.Isci)
+                    Description = $"Isci {affidavitFileDetail.Isci} exists as married and unmarried"
+                });
+                return _MatchingProposalWeeks;
+            }
+
+            proposalWeeks = proposalWeeks.Where(x => x.SpotLengthId == affidavitFileDetail.SpotLengthId).ToList();
+            if (!proposalWeeks.Any())
+            {
+                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                {
+                    Type = AffidavitFileDetailProblemTypeEnum.UnmatchedSpotLength,
+                    Description = $"Unmatched Spot length for isci {affidavitFileDetail.Isci}"
                 });
                 return _MatchingProposalWeeks;
             }
@@ -82,8 +93,7 @@ namespace Services.Broadcast.BusinessEngines
                 var singleProposalWeeks = singleProposalWeeksByProposal.Select(w => w);
                 var proposalWeeksByProposalDetail = singleProposalWeeks.GroupBy(g => g.ProposalVersionDetailId);
                 AffidavitMatchingProposalWeek matchedProposalDetailWeek;
-                var airtimeMatchingProposalDetailWeeks =
-                    _GetAirtimeMatchingProposalDetailWeeks(proposalWeeksByProposalDetail, affidavitFileDetail);
+                var airtimeMatchingProposalDetailWeeks = _GetAirtimeMatchingProposalDetailWeeks(proposalWeeksByProposalDetail, affidavitFileDetail);
                 var dateAndTimeMatchs = airtimeMatchingProposalDetailWeeks.Where(a => a.TimeMatch && a.DateMatch);
                 var dateMatch = airtimeMatchingProposalDetailWeeks.Where(a => a.DateMatch);
                 var timeMatch = airtimeMatchingProposalDetailWeeks.Where(a => a.TimeMatch);

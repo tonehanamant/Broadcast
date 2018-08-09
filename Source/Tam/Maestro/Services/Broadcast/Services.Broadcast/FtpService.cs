@@ -32,7 +32,6 @@ namespace Common.Services
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             response.Close();
-
         }
 
         public void DownloadFile(WebClient webClient, string path, string localPath)
@@ -67,9 +66,9 @@ namespace Common.Services
             request.Credentials = credentials;
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
             List<string> files = new List<string>();
 
+            using (Stream responseStream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(responseStream))
             {
                 var line = reader.ReadLine();

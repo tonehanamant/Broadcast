@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Entities
 {
@@ -24,5 +20,6 @@ namespace Services.Broadcast.Entities
         public bool IsLeadInMatch { get; set; }
         public bool DateMatch { get; set; }
         public bool TimeMatch { get; set; }
+        public int SpotLengthId { get; set; }
     }
 }
