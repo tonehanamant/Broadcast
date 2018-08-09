@@ -1319,7 +1319,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException),ExpectedMessage = AffidavitService.ProposalNotContactedMessage, MatchType = MessageMatch.Exact)]
+        [ExpectedException(typeof(InvalidOperationException),ExpectedMessage = AffidavitService.ProposalNotContractedMessage, MatchType = MessageMatch.Exact)]
         public void ReScrubProposalDetail_Proposal_Not_Contracted()
         {
             using (new TransactionScopeWrapper())
