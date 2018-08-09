@@ -55,6 +55,20 @@ INSERT INTO #previous_version
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+
+/******************* START BCOP-3501 *****************************************************************************/
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_nsi_usages_medi_month_id' AND object_id = OBJECT_ID('nsi.usages'))
+BEGIN
+	create nonclustered index IX_nsi_usages_medi_month_id on nsi.usages ([media_month_id]) include (market_code)
+	--drop index IX_nsi_usages_medi_month_id  on nsi.usages 
+END
+
+
+go
+/******************* END BCOP-3501 *****************************************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
