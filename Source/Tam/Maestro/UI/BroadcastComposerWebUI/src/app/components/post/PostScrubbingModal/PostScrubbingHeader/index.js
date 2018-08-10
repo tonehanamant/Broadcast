@@ -9,6 +9,13 @@ import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
 import styles from './index.scss';
 import { getDateInFormat } from '../../../../utils/dateFormatter';
 
+const generateMarketLabael = (marketGroupId, markets) => {
+  if (marketGroupId === 1) {
+    return 'All';
+  }
+  return markets.length ? 'Custom' : 'None';
+};
+
 export class PostScrubbingHeader extends Component {
   componentDidMount() {
     // const { date } = this.props;
@@ -17,9 +24,9 @@ export class PostScrubbingHeader extends Component {
     // this.setState({ dates: dateInProperFormat });
   }
   render() {
-    const { advertiser, guaranteedDemo, Id, marketGroupId, name, notes, secondaryDemo } = this.props;
+    const { advertiser, guaranteedDemo, Id, marketGroupId, name, notes, secondaryDemo, market } = this.props;
     const secondaryDemoOptions = [];
-    const marketLabel = marketGroupId === 1 ? 'All' : 'None';
+    const marketLabel = generateMarketLabael(marketGroupId, market);
 
     secondaryDemo.forEach((item) => {
       const option = {};
