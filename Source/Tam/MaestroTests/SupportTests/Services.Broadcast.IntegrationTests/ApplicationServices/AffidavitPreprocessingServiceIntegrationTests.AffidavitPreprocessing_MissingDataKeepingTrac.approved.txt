@@ -15,6 +15,6 @@
     "FileName": "KeepingTrac_Test_MissingData.csv",
     "FilePath": ".\\Files\\KeepingTrac_Test_MissingData.csv",
     "SourceId": 2,
-    "Status": 0
+    "Status": 2
   }
 ]
