@@ -112,6 +112,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (string.IsNullOrEmpty(_csvReader.GetCellValue(header)))
                     {
                         _currentFile.ErrorMessages.Add($"Missing '{header}' on row {row}");
+                        _currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
                     }
                 }
                 row++;
