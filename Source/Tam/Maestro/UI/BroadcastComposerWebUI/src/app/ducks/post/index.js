@@ -8,7 +8,8 @@ const initialState = {
   post: {},
   postGridData: [],
   proposalHeader: {},
-  unlinkedIscis: [],
+  unlinkedIscisData: [],
+  archivedIscisData: [],
   modals: {},
   unlinkedIscisLength: 0,
   activeIsciFilterQuery: '',
@@ -259,14 +260,14 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.RECEIVE_FILTERED_UNLINKED:
       return {
         ...state,
-        unlinkedIscis: data.filteredData,
+        unlinkedIscisData: data.filteredData,
         activeIsciFilterQuery: data.query,
       };
 
     case ACTIONS.RECEIVE_FILTERED_ARCHIVED:
       return {
         ...state,
-        unlinkedIscis: data.filteredData,
+        archivedIscisData: data.filteredData,
         activeIsciFilterQuery: data.query,
       };
 
@@ -432,14 +433,14 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.LOAD_ARCHIVED_ISCI.success:
       return {
         ...state,
-        unlinkedIscis: data.Data,
+        archivedIscisData: data.Data,
         unlinkedFilteredIscis: data.Data,
       };
     case ACTIONS.UNLINKED_ISCIS_DATA.success:
     return {
       ...state,
-      unlinkedIscis: data.Data,
-      unlinkedIscisLength: data.Data.length,
+      unlinkedIscisData: data.Data,
+      // unlinkedIscisLength: data.Data.length,
       unlinkedFilteredIscis: data.Data,
     };
 

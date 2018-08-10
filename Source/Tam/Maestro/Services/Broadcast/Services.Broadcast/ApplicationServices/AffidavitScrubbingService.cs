@@ -32,19 +32,24 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns a list of unlinked iscis
         /// </summary>
-        /// <param name="archived">Switch for the archived iscis</param>
         /// <returns>List of UnlinkedIscisDto objects</returns>
-        List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived);
+        List<UnlinkedIscisDto> GetUnlinkedIscis();
+
+        /// <summary>
+        /// Returns a list of archived iscis
+        /// </summary>
+        /// <returns>List of ArchivedIscisDto objects</returns>
+        List<ArchivedIscisDto> GetArchivedIscis();
 
         ClientPostScrubbingProposalDto OverrideScrubbingStatus(ScrubStatusOverrideRequest scrubStatusOverrides);
 
         /// <summary>
         /// Archives an isci from the unlinked isci list
         /// </summary>
-        /// <param name="fileDetailIds">Iscis to archive</param>
+        /// <param name="iscis">Iscis to archive</param>
         /// <param name="username">User requesting the change</param>
         /// <returns>True or false based on the errors</returns>
-        bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username);
+        bool ArchiveUnlinkedIsci(List<string> iscis, string username);
 
         /// <summary>
         /// Finds all the valid iscis based on the filter
@@ -152,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;
         }
-        
+
         private List<PostImpressionsData> _GetPostImpressionsData(int contractId, int maestroAudienceId)
         {
             var ratingsAudiencesIds = _BroadcastAudienceRepository
@@ -320,40 +325,41 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns a list of unlinked iscis
         /// </summary>
-        /// <param name="archived">Switch for the archived iscis</param>
         /// <returns>List of UnlinkedIscisDto objects</returns>
-        public List<UnlinkedIscisDto> GetUnlinkedIscis(bool archived)
+        public List<UnlinkedIscisDto> GetUnlinkedIscis()
         {
             var spotsLength = _SpotLegthRepository.GetSpotLengthAndIds();
-            List<UnlinkedIscisDto> iscis = new List<UnlinkedIscisDto>();
-            List<AffidavitFileDetailProblem> isciProblems = new List<AffidavitFileDetailProblem>();
+            List<UnlinkedIscis> iscis = _PostRepository.GetUnlinkedIscis();
 
-            if (archived)
+            return iscis.Select(x => new UnlinkedIscisDto()
             {
-                iscis = _PostRepository.GetArchivedIscis();
-            }
-            else
-            {
-                iscis = _PostRepository.GetUnlinkedIscis();
-                isciProblems = _PostRepository.GetIsciProblems(iscis.Select(x => x.FileDetailId).ToList());
-            }
+                Count = x.Count,
+                ISCI = x.ISCI,
+                SpotLength = spotsLength.Single(y => y.Value == x.SpotLengthId).Key,
+                UnlinkedReason = _GetAffidavitDetailProblemDescription(x.ProblemType)
+            }).ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of unlinked iscis
+        /// </summary>
+        /// <returns>List of UnlinkedIscisDto objects</returns>
+        public List<ArchivedIscisDto> GetArchivedIscis()
+        {
+            var spotsLength = _SpotLegthRepository.GetSpotLengthAndIds();
+            List<ArchivedIscisDto> iscis = _PostRepository.GetArchivedIscis();
 
             iscis.ForEach(x =>
             {
                 x.SpotLength = spotsLength.Single(y => y.Value == x.SpotLength).Key;
-                x.UnlinkedReason = archived
-                    ? null
-                    : isciProblems.Any(y => y.DetailId == x.FileDetailId)
-                            ? _GetAffidavitDetailProblemDescription(isciProblems.First(y => y.DetailId == x.FileDetailId))
-                            : null;
             });
 
             return iscis;
         }
 
-        private string _GetAffidavitDetailProblemDescription(AffidavitFileDetailProblem affidavitFileDetailProblem)
+        private string _GetAffidavitDetailProblemDescription(AffidavitFileDetailProblemTypeEnum problemType)
         {
-            switch (affidavitFileDetailProblem.Type)
+            switch (problemType)
             {
                 case AffidavitFileDetailProblemTypeEnum.UnlinkedIsci:
                     return "Not in system";
@@ -399,13 +405,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Archives an isci from the unlinked isci list
         /// </summary>
-        /// <param name="fileDetailIds">Iscis to archive</param>
+        /// <param name="iscis">Iscis to archive</param>
         /// <param name="username">User requesting the change</param>
         /// <returns>True or false based on the errors</returns>
-        public bool ArchiveUnlinkedIsci(List<long> fileDetailIds, string username)
+        public bool ArchiveUnlinkedIsci(List<string> iscis, string username)
         {
-            List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIds(fileDetailIds);
-            List<string> iscisToArchive = fileDetailList.Select(x => x.Isci).Distinct().ToList();
+            List<string> iscisToArchive = iscis.Distinct().ToList();
+
+            List<AffidavitFileDetail> fileDetailList = _PostRepository.LoadFileDetailsByIscis(iscisToArchive);
             List<long> fileDetailIdsToProcess = fileDetailList.Select(x => x.Id).ToList();
 
             if (!_PostRepository.IsIsciBlacklisted(iscisToArchive))

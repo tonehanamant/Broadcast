@@ -8,8 +8,9 @@ import { Row, Col, Button } from 'react-bootstrap';
 import SearchInputButton from 'Components/shared/SearchInputButton';
 import UnlinkedIsciModal from './UnlinkedIsciModal';
 
-const mapStateToProps = ({ post: { unlinkedIscis, unlinkedIscisLength } }) => ({
-  unlinkedIscis,
+const mapStateToProps = ({ post: { unlinkedIscisData, archivedIscisData, unlinkedIscisLength } }) => ({
+  unlinkedIscisData,
+  archivedIscisData,
   unlinkedIscisLength,
 });
 
@@ -62,7 +63,8 @@ export class PageHeaderContainer extends Component {
 			</Row>
       <UnlinkedIsciModal
         toggleModal={this.props.toggleModal}
-        unlinkedIscis={this.props.unlinkedIscis}
+        unlinkedIscisData={this.props.unlinkedIscisData}
+        archivedIscisData={this.props.archivedIscisData}
       />
     </div>
     );
@@ -73,7 +75,8 @@ PageHeaderContainer.propTypes = {
   getPostFiltered: PropTypes.func.isRequired,
   getUnlinkedIscis: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
-	unlinkedIscis: PropTypes.array.isRequired,
+  unlinkedIscisData: PropTypes.array.isRequired,
+  archivedIscisData: PropTypes.array.isRequired,
 	unlinkedIscisLength: PropTypes.number.isRequired,
 };
 

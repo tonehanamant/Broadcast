@@ -247,9 +247,11 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
+    <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\BvsFile.cs" />
@@ -286,7 +288,6 @@
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\ScrubIsciRequest.cs" />
     <Compile Include="Entities\ScrubStatusOverrideRequest.cs" />
-    <Compile Include="Entities\ArchivedIscisDto.cs" />
     <Compile Include="Entities\MapIsciDto.cs" />
     <Compile Include="Entities\ProposalDetailPostingData.cs" />
     <Compile Include="Entities\ProposalScrubbingRequest.cs" />
@@ -362,7 +363,7 @@
     <Compile Include="Entities\SwapProposalDetailRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\OutboundAffidavitFileValidationResultDto.cs" />
-    <Compile Include="Entities\UnlinkedIscisDto.cs" />
+    <Compile Include="Entities\DTO\UnlinkedIscisDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Entities\ValidIsciDto.cs" />
     <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />

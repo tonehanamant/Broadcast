@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.DTO
 {
-    public class UnlinkedIscisDto
+    public class ArchivedIscisDto
     {
         public long FileDetailId { get; set; }
         public string ISCI { get; set; }
@@ -14,7 +14,6 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public string Market { get; set; }
         public string Affiliate { get; set; }
-        public string UnlinkedReason { get; set; }
         public DateTime? DateAdded { get; set; }
     }
 }

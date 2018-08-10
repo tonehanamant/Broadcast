@@ -121,7 +121,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var scrubbingRequest = new ProposalScrubbingRequest() {ScrubbingStatusFilter = ScrubbingStatus.InSpec};
+                var scrubbingRequest = new ProposalScrubbingRequest() { ScrubbingStatusFilter = ScrubbingStatus.InSpec };
                 var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253, scrubbingRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -149,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var scrubbingRequest =
-                    new ProposalScrubbingRequest() {ScrubbingStatusFilter = ScrubbingStatus.OutOfSpec};
+                    new ProposalScrubbingRequest() { ScrubbingStatusFilter = ScrubbingStatus.OutOfSpec };
                 var result = _AffidavitScrubbingService.GetClientScrubbingForProposal(253, scrubbingRequest);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -208,18 +208,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetUnlinkedIscis(false);
+                var result = _AffidavitScrubbingService.GetUnlinkedIscis();
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(UnlinkedIscisDto), "FileDetailId");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
 
@@ -229,10 +220,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.GetUnlinkedIscis(true);
+                var result = _AffidavitScrubbingService.GetArchivedIscis();
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(UnlinkedIscisDto), "FileDetailId");
+                jsonResolver.Ignore(typeof(ArchivedIscisDto), "FileDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -250,7 +241,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() { 1003 }, "ApprovedTest");
+                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<string>() { "SomeISCI" }, "ApprovedTest");
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -264,8 +255,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() {4286}, "ApprovedTest");
-                _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<long>() {4286}, "ApprovedTest");
+                var result = _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<string>() { "ToBeArchivedIsci" }, "ApprovedTest");
+                _AffidavitScrubbingService.ArchiveUnlinkedIsci(new List<string>() { "ToBeArchivedIsci" }, "ApprovedTest");
             }
         }
 
@@ -276,7 +267,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 _AffidavitScrubbingService.UndoArchiveUnlinkedIsci(new List<long>() { 4286 }, DateTime.Now, "ApprovedTest");
-                var result = _AffidavitScrubbingService.GetUnlinkedIscis(false);
+                var result = _AffidavitScrubbingService.GetUnlinkedIscis();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -317,7 +308,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AffidavitSaveRequest affidavitSaveRequest = new AffidavitSaveRequest
                 {
                     FileHash = "abc123",
-                    Source = (int) AffidaviteFileSourceEnum.Strata,
+                    Source = (int)AffidaviteFileSourceEnum.Strata,
                     FileName = "test.file",
                     Details = new List<AffidavitSaveRequestDetail>()
                     {
@@ -380,7 +371,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 // grab second item and override it
                 var scrubIds =
-                    new System.Collections.Generic.List<int>() {scrubs.ClientScrubs.First().ScrubbingClientId};
+                    new System.Collections.Generic.List<int>() { scrubs.ClientScrubs.First().ScrubbingClientId };
 
                 ScrubStatusOverrideRequest overrides = new ScrubStatusOverrideRequest()
                 {
@@ -408,7 +399,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 253,
                     ScrubIds = scrubIds,
-                    OverrideStatus = ScrubbingStatus.OutOfSpec  
+                    OverrideStatus = ScrubbingStatus.OutOfSpec
                 };
                 var result = _AffidavitScrubbingService.OverrideScrubbingStatus(overrides);
 

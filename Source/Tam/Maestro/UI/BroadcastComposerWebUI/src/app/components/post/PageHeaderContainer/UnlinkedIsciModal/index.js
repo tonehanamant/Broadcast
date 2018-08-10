@@ -4,18 +4,13 @@ import SearchInputButton from 'Components/shared/SearchInputButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, Nav, NavItem, Row, Col } from 'react-bootstrap';
-import { Grid, Actions } from 'react-redux-grid';
 import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, undoArchivedIscis, closeUnlinkedIsciModal, getUnlinkedFiltered, getArchivedFiltered } from 'Ducks/post';
-import { generateGridConfig } from './util';
+import UnlinkedIsciGrid from './unlinkedIsciGrid';
+import ArchivedIsciGrid from './archivedIsciGrid';
 import MapUnlinkedIsciModal from '../MapUnlinkedIsciModal/index';
 
-const { SelectionActions: { deselectAll, selectRow } } = Actions;
-
-const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } }, grid, selection, dataSource }) => ({
+const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } } }) => ({
   modal,
-  selection,
-  dataSource,
-  grid,
 });
 
 const mapDispatchToProps = dispatch => (
@@ -27,8 +22,6 @@ const mapDispatchToProps = dispatch => (
     archiveIscis: archiveUnlinkedIscis,
     undoArchive: undoArchivedIscis,
     toggleTab: toggleUnlinkedTab,
-    deselectAll,
-    selectRow,
   }, dispatch)
 );
 
@@ -80,11 +73,8 @@ export class UnlinkedIsciModal extends Component {
   }
 
   render() {
-    const { modal, unlinkedIscis } = this.props;
+    const { modal, unlinkedIscisData, archivedIscisData, rescrubIscis, archiveIscis, undoArchive, toggleModal } = this.props;
     const { activeTab } = this.state;
-    const grid = generateGridConfig(this.props, activeTab);
-    grid.pageSize = unlinkedIscis.length;
-    grid.infinite = true;
 
     return (
       <div>
@@ -112,13 +102,20 @@ export class UnlinkedIsciModal extends Component {
               />
             </Col>
           </Row>
-            <Grid
-              {...grid}
-              key={activeTab}
-              data={unlinkedIscis}
-              store={this.context.store}
-              height={460}
-            />
+            {activeTab === 'unlinked' &&
+              <UnlinkedIsciGrid
+              rescrubIscis={rescrubIscis}
+              unlinkedIscisData={unlinkedIscisData}
+              archiveIscis={archiveIscis}
+              toggleModal={toggleModal}
+              />
+            }
+            {activeTab === 'archived' &&
+              <ArchivedIsciGrid
+              archivedIscisData={archivedIscisData}
+              undoArchive={undoArchive}
+              />
+            }
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>
@@ -141,14 +138,12 @@ UnlinkedIsciModal.propTypes = {
 	modal: PropTypes.object,
 	toggleModal: PropTypes.func.isRequired,
 	rescrubIscis: PropTypes.func.isRequired,
-  unlinkedIscis: PropTypes.array.isRequired,
+  unlinkedIscisData: PropTypes.array.isRequired,
+  archivedIscisData: PropTypes.array.isRequired,
   toggleTab: PropTypes.func.isRequired,
   archiveIscis: PropTypes.func.isRequired,
   undoArchive: PropTypes.func.isRequired,
   closeUnlinkedIsciModal: PropTypes.func.isRequired,
-  dataSource: PropTypes.object.isRequired,
-  selection: PropTypes.object.isRequired,
-  grid: PropTypes.object.isRequired,
   getUnlinkedFiltered: PropTypes.func.isRequired,
   getArchivedFiltered: PropTypes.func.isRequired,
 };
