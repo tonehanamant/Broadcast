@@ -92,7 +92,7 @@ export class PostScrubbingModal extends Component {
 							marketGroupId={MarketGroupId}
 							name={Name}
 							notes={Notes}
-              secondaryDemo={SecondaryDemos}
+							secondaryDemo={SecondaryDemos}
 						/>
 						<PostScrubbingDetail
               activeScrubbingData={activeScrubbingData}

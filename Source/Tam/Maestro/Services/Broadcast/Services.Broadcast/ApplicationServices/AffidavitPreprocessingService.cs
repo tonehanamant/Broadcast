@@ -229,27 +229,30 @@ namespace Services.Broadcast.ApplicationServices
 
                 var fileInfo = new FileInfo(filepath);
 
-                var affidavitPickupValidationService = AffidavitPickupFileValidation.GetAffidavitValidationService(fileInfo,currentFile);
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                using (var affidavitPickupValidationService =
+                    AffidavitPickupFileValidation.GetAffidavitValidationService(fileInfo, currentFile))
+                {
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                //check if tab exists
-                affidavitPickupValidationService.ValidateFileStruct();
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                    //check if tab exists
+                    affidavitPickupValidationService.ValidateFileStruct();
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                //check column headers
-                affidavitPickupValidationService.ValidateHeaders();
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                    //check column headers
+                    affidavitPickupValidationService.ValidateHeaders();
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                //check required data fields
-                affidavitPickupValidationService.HasMissingData();
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                    //check required data fields
+                    affidavitPickupValidationService.HasMissingData();
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                if (!currentFile.ErrorMessages.Any())
-                    currentFile.Status = AffidaviteFileProcessingStatus.Valid;
+                    if (!currentFile.ErrorMessages.Any())
+                        currentFile.Status = AffidaviteFileProcessingStatus.Valid;
+                }
             }
 
             return result;

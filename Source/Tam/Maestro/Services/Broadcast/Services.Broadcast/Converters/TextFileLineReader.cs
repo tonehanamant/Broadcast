@@ -19,7 +19,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.Converters
 {
 
-    public abstract class TextFileLineReader
+    public abstract class TextFileLineReader : IDisposable
     {
         protected bool IsInitilized;
         protected List<string> _Headers;
@@ -111,6 +111,8 @@ namespace Services.Broadcast.Converters
                 throw new Exception(message);
             }
         }
+
+        public abstract void Dispose();
     }
     public class CsvFileReader : TextFileLineReader
     {
@@ -170,6 +172,11 @@ namespace Services.Broadcast.Converters
                 return string.Empty;
 
             return _CurrentRow[col].Trim();
+        }
+
+        public override void Dispose()
+        {
+            _Parser.Dispose();
         }
 
         public override string GetCellValue(string columnName)
