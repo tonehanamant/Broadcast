@@ -21,7 +21,7 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface IAffidavitPickupFileValidation
+    public interface IAffidavitPickupFileValidation : IDisposable
     {
         List<string> ErrorMessages { get; set; }
 
@@ -69,6 +69,8 @@ namespace Services.Broadcast.ApplicationServices
             currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
             return null;
         }
+
+        public abstract void Dispose();
     }
 
     class AffidavitPickupValidationKeepingTrac : AffidavitPickupFileValidation
@@ -95,6 +97,11 @@ namespace Services.Broadcast.ApplicationServices
             _csvReader = new CsvFileReader(AffidavitFileHeaders);
             _csvReader.OnMissingHeader = _OnMissingHeader;
             _csvReader.Initialize(stream);
+        }
+
+        public override void Dispose()
+        {
+            _csvReader.Dispose();
         }
 
         public override void HasMissingData()
@@ -181,6 +188,8 @@ namespace Services.Broadcast.ApplicationServices
                 _currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
             }
         }
+
+        public override void Dispose() { }
 
         public override void ValidateHeaders()
         {

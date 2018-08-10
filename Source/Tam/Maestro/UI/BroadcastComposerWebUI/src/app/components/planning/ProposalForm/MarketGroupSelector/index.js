@@ -113,11 +113,9 @@ class MarketGroupSelector extends Component {
     });
   }
 
-  componentWillMount() {
+  componentWillReceiveProps() {
     const { proposalEditForm } = this.props;
     const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
-
-
     const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
     if (isCustom) {
       const selectedMarkets = Markets.filter(market => !market.IsBlackout);
