@@ -66,7 +66,16 @@
                 <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
             }
         </div>
-    <div>
-    </div>
+        <div>
+
+            <br />
+            <br />
+            @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
+             {
+                    <input type="submit" value="Test FTP" id="txtTestFtpAccess" />
+               }
+
+
+        </div>
 </body>
 </html>

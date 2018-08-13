@@ -93,5 +93,25 @@ namespace BroadcastComposerWeb.Controllers
         {
             SMSClient.Handler.ClearSystemComponentParameterCache(BroadcastServiceSystemParameterNames.ComponentID, null);
         }
+
+
+        [HttpGet]
+        public ActionResult TestFtpAccess()
+        {
+            FtpService srv = new FtpService();
+
+            WWTVFtpHelper helper = new WWTVFtpHelper(srv);
+
+            NetworkCredential creds = helper.GetClientCredentials();
+            var site = "ftp://" + helper.Host;
+            var list = srv.GetFileList(creds, site);
+
+            ViewBag.Message = "Get file worked w/o error!\r\n";
+            list.ForEach(f => ViewBag.Message += f + "\r\n");
+            return View("Index");
+
+        }
+
+
     }
 }
