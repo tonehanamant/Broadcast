@@ -82,6 +82,7 @@ export class PlanningGrid extends Component {
       {
         name: 'Id',
         dataIndex: 'Id',
+        hideable: false, // make not hideable as grid menu has bug where menu disapears if all columns hidden
         defaultSortDirection: 'ASC',
         width: '5%',
       },
