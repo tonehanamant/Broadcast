@@ -105,12 +105,7 @@ namespace BroadcastComposerWeb.Controllers
             ViewBag.Message = "Get file worked w/o error!\r\n";
             list.ForEach(f => ViewBag.Message += f + "\r\n");
             return View("Index");
-        }
-
-            list.ForEach(f => ViewBag.Message += f + "\r\n");
-            return View("Index");
-
-        }
+ }
 
 
     }
