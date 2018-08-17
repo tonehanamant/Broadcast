@@ -81,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             string fileName = "FileNameCausingError";
 
-            var body = _AffidavitEmailProcessorService.CreateValidationErrorEmailBody(validationErrors,fileName);
+            var body = _AffidavitEmailProcessorService.CreateValidationErrorEmailBody(validationErrors, fileName);
 
             Approvals.Verify(body);
         }
@@ -122,13 +122,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Status = AffidaviteFileProcessingStatus.Invalid,
                 FilePath = @"E:\Users\broadcast-ftp\eula.1028.txt",
                 FileName = "eula.1028.txt",
-                ErrorMessages = new List<string>() { "Error 1","Error 2","Error3"}
+                ErrorMessages = new List<string>() {
+                    "Required field ISCI/AD-ID is null or empty in row 1",
+                    "Required field ISCI/AD-ID is null or empty in row 2",
+                    "Required field ISCI/AD-ID is null or empty in row 3"
+                }
             };
 
-            var body = _AffidavitEmailProcessorService.CreateInvalidDataFileEmailBody(validationError,"\\FilePath");
+            var body = _AffidavitEmailProcessorService.CreateInvalidDataFileEmailBody(validationError, "\\FilePath");
             Approvals.Verify(body);
-        }
-
-
+        }        
     }
 }

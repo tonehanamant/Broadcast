@@ -1,10 +1,13 @@
 ﻿{
   "AdvertiserId": 37444,
   "BlackoutMarketGroup": null,
-  "BlackoutMarketGroupId": 50,
+  "BlackoutMarketGroupId": 1,
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "Daypart": {
         "endTime": 36000,
@@ -63,8 +66,11 @@
           }
         }
       ],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -178,6 +184,9 @@
       "TotalUnits": 3
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "Daypart": {
         "endTime": 36000,
@@ -211,8 +220,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [],
@@ -320,8 +332,9 @@
   "GuaranteedDemoId": 31,
   "Id": 250,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "PrimaryVersionId": 50,

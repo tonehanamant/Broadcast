@@ -15,6 +15,7 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
+const stateKey = 'gridPostMain';
 
 const mapStateToProps = ({ post: { postGridData }, grid, dataSource, menu }) => ({
   postGridData,
@@ -42,6 +43,8 @@ export class DataGridContainer extends Component {
 		super(props, context);
     this.context = context;
     this.showscrubbingModal = this.showscrubbingModal.bind(this);
+    this.deselectAll = this.deselectAll.bind(this);
+    this.selectRow = this.selectRow.bind(this);
   }
 
   componentWillMount() {
@@ -77,11 +80,12 @@ export class DataGridContainer extends Component {
   showContextMenu(ref) {
     this.props.showMenu(ref);
   }
-  selectRow(ref) {
-    this.props.selectRow(ref);
+  selectRow(rowId) {
+    this.deselectAll();
+    this.props.selectRow({ rowId, stateKey });
   }
-  deselectAll(ref) {
-    this.props.deselectAll(ref);
+  deselectAll() {
+    this.props.deselectAll({ stateKey });
   }
   showscrubbingModal(Id) {
     // change to params
@@ -89,7 +93,6 @@ export class DataGridContainer extends Component {
   }
 
   render() {
-    const stateKey = 'gridPostMain';
     const menuItems = [
       {
         text: 'NSI Post Report',
@@ -145,17 +148,22 @@ export class DataGridContainer extends Component {
 
     const columns = [
       {
-          name: 'Contract',
-          dataIndex: 'ContractName',
-          width: '20%',
+        name: 'Contract',
+        dataIndex: 'ContractName',
+        width: '15%',
       },
       {
-          name: 'Contract Id',
-          dataIndex: 'ContractId',
-          width: '15%',
+        name: 'Contract Id',
+        dataIndex: 'ContractId',
+        width: '10%',
       },
       {
-        name: 'Upload Date',
+        name: 'Advertiser',
+        dataIndex: 'Advertiser',
+        width: '15%',
+      },
+      {
+        name: 'Affidavit Upload Date',
         dataIndex: 'UploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
@@ -174,11 +182,41 @@ export class DataGridContainer extends Component {
         width: '15%',
       },
       {
-        name: 'Primary Demo Imp',
-        dataIndex: 'PrimaryAudienceImpressions',
-        width: '20%',
+        name: 'Primary Demo Booked',
+        dataIndex: 'PrimaryAudienceBookedImpressions',
+        width: '15%',
         renderer: ({ row }) => (
-          row.PrimaryAudienceImpressions ? numeral(row.PrimaryAudienceImpressions / 1000).format('0,0.[000]') : '-'
+          row.PrimaryAudienceBookedImpressions ? numeral(row.PrimaryAudienceBookedImpressions / 1000).format('0,0.[000]') : '-'
+        ),
+      },
+      {
+        // name: 'Primary Demo Imp',
+        name: 'Primary Demo Delivered',
+        dataIndex: 'PrimaryAudienceDeliveredImpressions',
+        width: '15%',
+        renderer: ({ row }) => (
+          row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-'
+        ),
+      },
+      {
+        name: 'Primary Demo % Delivery',
+        dataIndex: 'PrimaryAudienceDelivery',
+        width: '15%',
+        // renderer: ({ row }) => (
+        //   // row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0%') : '-'
+        //   row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]%') : '-'
+        // ),
+        renderer: ({ row }) => {
+          const val = row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]') : false;
+          return val ? `${val}%` : '-';
+        },
+      },
+      {
+        name: 'Household Delivered',
+        dataIndex: 'HouseholdDeliveredImpressions',
+        width: '15%',
+        renderer: ({ row }) => (
+          row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-'
         ),
       },
     ];
@@ -203,9 +241,9 @@ export class DataGridContainer extends Component {
             <CustomPager stateKey={stateKey} idProperty="ContractId" />
         ),
       },
-      LOADER: {
-        enabled: false,
-      },
+      // LOADER: {
+      //   enabled: false,
+      // },
       SELECTION_MODEL: {
         mode: 'single',
         enabled: true,
@@ -220,6 +258,7 @@ export class DataGridContainer extends Component {
             {...rowData}
             menuItems={menuItems}
             stateKey={stateKey}
+            beforeOpenMenu={this.selectRow}
           >
             {cells}
           </ContextMenuRow>),
@@ -227,9 +266,9 @@ export class DataGridContainer extends Component {
     };
 
     const events = {
-      HANDLE_BEFORE_SORT: () => {
-        this.deselectAll({ stateKey });
-      },
+      // HANDLE_BEFORE_SORT: () => {
+      //   this.deselectAll();
+      // },
       HANDLE_ROW_DOUBLE_CLICK: (row) => {
           const Id = row.row.ContractId;
           this.showscrubbingModal(Id);

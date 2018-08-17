@@ -25,7 +25,7 @@
 	"EstimateId": 456,
 	"Market": "Philadelphia",
 	"Date": "12/15/2017",
-	"InventorySource": "KeepingTrac",
+	"InventorySource": "Strata",
 	"Station": "WKYW",
 	"SpotLength": 30,
 	"Time": "0922A",

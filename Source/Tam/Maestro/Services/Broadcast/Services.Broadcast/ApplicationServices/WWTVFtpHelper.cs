@@ -110,7 +110,7 @@ namespace Services.Broadcast.ApplicationServices
             if (webClient == null)
                 throw new InvalidEnumArgumentException("WebClient parameter must not be null");
 
-            _FtpService.DownloadFileFromWebClient(webClient,path, localPath);
+            _FtpService.DownloadFile(webClient,path, localPath);
         }
 
         public void UploadFile(string sourceFilePath, string destPath, Action<string> OnSuccessfulUpload = null)
@@ -127,7 +127,8 @@ namespace Services.Broadcast.ApplicationServices
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = GetClientCredentials();
-                StreamReader reader = new StreamReader(ftpClient.OpenRead($"{shareFolder}/{fileName}"));
+                StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}"));
+
                 return reader.ReadToEnd();
             }
 

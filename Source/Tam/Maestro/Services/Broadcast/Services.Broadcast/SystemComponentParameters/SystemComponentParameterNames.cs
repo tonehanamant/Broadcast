@@ -392,6 +392,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastMatchingBuffer"; }
         }
 	 
+		public static string DefaultMarketCoverage  
+		{
+            get { return "DefaultMarketCoverage"; }
+        }
+	 
 		public static string DefaultNtiConversionFactor  
 		{
             get { return "DefaultNtiConversionFactor"; }
@@ -425,6 +430,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string EmailWhiteList  
 		{
             get { return "EmailWhiteList"; }
+        }
+	 
+		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
+		{
+            get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
         }
 	 
 		public static string ProgramSearchApiUrl  
@@ -482,6 +492,21 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "WWTV_NotificationEmail"; }
         }
 	 
+		public static string WWTV_PostLogDropFolder  
+		{
+            get { return "WWTV_PostLogDropFolder"; }
+        }
+	 
+		public static string WWTV_PostLogErrorFolder  
+		{
+            get { return "WWTV_PostLogErrorFolder"; }
+        }
+	 
+		public static string WWTV_PostLogFtpOutboundFolder  
+		{
+            get { return "WWTV_PostLogFtpOutboundFolder"; }
+        }
+	 
 		public static string WWTV_SecondsBetweenRuns  
 		{
             get { return "WWTV_SecondsBetweenRuns"; }
@@ -533,6 +558,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string PythonFilePath  
 		{
             get { return "PythonFilePath"; }
+        }
+	}
+	 
+	public static class ConfigurationServiceSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "ConfigurationService" ; }
+        }
+	  
+		public static string CacheTest  
+		{
+            get { return "CacheTest"; }
         }
 	}
 	 

@@ -46,13 +46,13 @@ export class SectionPlanningProposalCreate extends Component {
 
     // Proposal Form
     const validProposalName = (value) => {
-      const alphanumeric = /^[A-Za-z0-9- ]+$/i;
+      // const alphanumeric = /^[A-Za-z0-9- ]+$/i;
       const valid = {
         required: (value !== '' || null),
-        alphaNumeric: (alphanumeric.test(value) || value === ''),
+        // alphaNumeric: (alphanumeric.test(value) || value === ''),
         maxChar100: (value && value.length <= 100),
       };
-      return valid.required && valid.alphaNumeric && valid.maxChar100;
+      return valid.required && valid.maxChar100;
     };
 
     const validAdvertiserId = (value) => {
@@ -96,7 +96,14 @@ export class SectionPlanningProposalCreate extends Component {
         return valid.required && valid.alphaNumeric && valid.maxChar10;
       };
 
-      const validDetail = validSpothLength(detail.SpothLengthId) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
+      const validNti = (value) => {
+        const valid = {
+          required: !isNaN(value),
+        };
+        return valid.required;
+      };
+
+      const validDetail = validSpothLength(detail.SpothLengthId) && validNti(detail.NtiConversionFactor) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
       validDetails.push(validDetail);
     });
     // console.log('VALID DETAILS', validDetails);

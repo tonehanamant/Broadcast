@@ -11,6 +11,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using ApprovalTests;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -35,8 +36,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems()));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
 
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems(), jsonSettings));
         }
 
         [Test]
@@ -68,7 +77,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems()));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems(), jsonSettings));
         }
 
         [Test]
@@ -100,7 +118,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems()));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems(), jsonSettings));
         }
 
         [Test]

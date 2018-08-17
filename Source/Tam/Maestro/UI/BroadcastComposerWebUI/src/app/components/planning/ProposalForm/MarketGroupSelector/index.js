@@ -47,15 +47,18 @@ class MarketGroupSelector extends Component {
     }
   }
 
+  //  change to map to new BE - no custom/ no count: All or single selections
   save() {
-    const { updateProposalEditForm, updateMarketCount, initialdata } = this.props;
+    const { updateProposalEditForm } = this.props;
     let { currentSelectedMarkets, currentBlackoutMarkets } = this.state;
 
-    let marketGroup;
+    let marketGroup = null;
     const simpleMarkets = [];
     currentSelectedMarkets = currentSelectedMarkets.filter(m => m !== null);
+    // console.log('currentSelectedMarkets', currentSelectedMarkets);
     currentSelectedMarkets.map((market) => {
-      if (market.Count) {
+      // if (market.Count) {
+      if (market.Display === 'All') {
         marketGroup = market.Id;
       } else {
         simpleMarkets.push({
@@ -67,10 +70,11 @@ class MarketGroupSelector extends Component {
       return market;
     });
 
-    let blackoutMarketGroup;
+    let blackoutMarketGroup = null;
     currentBlackoutMarkets = currentBlackoutMarkets.filter(m => m !== null);
     currentBlackoutMarkets.map((market) => {
-      if (market.Count) {
+      // if (market.Count) {
+      if (market.Display === 'All') {
         blackoutMarketGroup = market.Id;
       } else {
         simpleMarkets.push({
@@ -83,17 +87,19 @@ class MarketGroupSelector extends Component {
     });
 
     // total markets selected for custom option
-    const customMarketCount = currentSelectedMarkets.concat(currentBlackoutMarkets).reduce((sum, market) => sum + (market.Count || 1), 0);
+    // const customMarketCount = currentSelectedMarkets.concat(currentBlackoutMarkets).reduce((sum, market) => sum + (market.Count || 1), 0);
 
     // updates values for BE
-    const customGroup = initialdata.MarketGroups.find(m => m.Display === 'Custom');
+    // const customGroup = initialdata.MarketGroups.find(m => m.Display === 'Custom');
     updateProposalEditForm({ key: 'Markets', value: simpleMarkets });
     updateProposalEditForm({ key: 'MarketGroup', value: null });
-    updateProposalEditForm({ key: 'MarketGroupId', value: (marketGroup === undefined) || (marketGroup === null) ? customGroup.Id : marketGroup });
+    // updateProposalEditForm({ key: 'MarketGroupId', value: (marketGroup === undefined) || (marketGroup === null) ? customGroup.Id : marketGroup });
+    updateProposalEditForm({ key: 'MarketGroupId', value: marketGroup });
     updateProposalEditForm({ key: 'BlackoutMarketGroup', value: null });
-    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: (blackoutMarketGroup === undefined) || (blackoutMarketGroup === null) ? customGroup.Id : blackoutMarketGroup });
+    // updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: (blackoutMarketGroup === undefined) || (blackoutMarketGroup === null) ? customGroup.Id : blackoutMarketGroup });
+    updateProposalEditForm({ key: 'BlackoutMarketGroupId', value: blackoutMarketGroup });
 
-    updateMarketCount(customMarketCount);
+    // updateMarketCount(customMarketCount);
 
     this.setState({
       selectedMarkets: currentSelectedMarkets,
@@ -107,11 +113,9 @@ class MarketGroupSelector extends Component {
     });
   }
 
-  componentWillMount() {
+  componentWillReceiveProps() {
     const { proposalEditForm } = this.props;
     const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
-
-
     const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
     if (isCustom) {
       const selectedMarkets = Markets.filter(market => !market.IsBlackout);
@@ -139,10 +143,10 @@ class MarketGroupSelector extends Component {
   }
 
   render() {
-    const { initialdata, modal } = this.props;
+    const { initialdata, modal, isReadOnly } = this.props;
     const { currentSelectedMarkets, currentBlackoutMarkets } = this.state;
 
-    const marketGroups = initialdata.MarketGroups.filter(market => (market.Id !== -1) && (market.Id !== 255));
+    const marketGroup = initialdata.MarketGroups.find(market => market.Id === 1);
 
     return (
       <Modal show={modal && modal.active} bsSize="large">
@@ -155,20 +159,20 @@ class MarketGroupSelector extends Component {
             <Col md={6}>
               <MarketSelector
                 name="Markets"
-                marketGroups={marketGroups}
-                markets={initialdata.Markets}
+                markets={[marketGroup, ...initialdata.Markets]}
                 selectedMarkets={currentSelectedMarkets}
                 onMarketsSelectionChange={this.onMarketsSelectionChange}
+                isReadOnly={isReadOnly}
               />
             </Col>
 
             <Col md={6}>
               <MarketSelector
                 name="Blackout Markets"
-                marketGroups={marketGroups}
-                markets={initialdata.Markets}
+                markets={[marketGroup, ...initialdata.Markets]}
                 selectedMarkets={currentBlackoutMarkets}
                 onMarketsSelectionChange={this.onMarketsSelectionChange}
+                isReadOnly={isReadOnly}
               />
             </Col>
           </Row>
@@ -176,7 +180,7 @@ class MarketGroupSelector extends Component {
 
         <Modal.Footer>
           <Button onClick={this.cancel} bsStyle="danger">Cancel</Button>
-          <Button onClick={this.save} bsStyle="success">Save</Button>
+          <Button onClick={this.save} disabled={isReadOnly} bsStyle="success">Save</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -189,7 +193,8 @@ MarketGroupSelector.propTypes = {
   initialdata: PropTypes.object,
   proposalEditForm: PropTypes.object,
   updateProposalEditForm: PropTypes.func,
-  updateMarketCount: PropTypes.func,
+  // updateMarketCount: PropTypes.func,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 MarketGroupSelector.defaultProps = {
@@ -198,7 +203,8 @@ MarketGroupSelector.defaultProps = {
   initialdata: null,
   proposalEditForm: null,
   updateProposalEditForm: null,
-  updateMarketCount: () => {},
+  // updateMarketCount: () => {},
+  isReadOnly: false,
 };
 
 const styledComponent = CSSModules(MarketGroupSelector, styles);

@@ -154,8 +154,9 @@ namespace Services.Broadcast.Repositories
                 start_date = proposalDto.FlightStartDate,
                 end_date = proposalDto.FlightEndDate,
                 guaranteed_audience_id = proposalDto.GuaranteedDemoId,
-                markets = (byte)proposalDto.MarketGroupId,
+                markets = (byte?)proposalDto.MarketGroupId,
                 blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId,
+                market_coverage = proposalDto.MarketCoverage,
                 created_by = userName,
                 created_date = timestamp,
                 modified_by = userName,
@@ -254,8 +255,9 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.start_date = proposalDto.FlightStartDate;
             dbProposalVersion.end_date = proposalDto.FlightEndDate;
             dbProposalVersion.guaranteed_audience_id = proposalDto.GuaranteedDemoId;
-            dbProposalVersion.markets = (byte)proposalDto.MarketGroupId;
+            dbProposalVersion.markets = (byte?)proposalDto.MarketGroupId;
             dbProposalVersion.blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId;
+            dbProposalVersion.market_coverage = proposalDto.MarketCoverage;
             dbProposalVersion.modified_by = userName;
             dbProposalVersion.modified_date = timestamp;
             dbProposalVersion.target_budget = proposalDto.TargetBudget;
@@ -338,6 +340,12 @@ namespace Services.Broadcast.Repositories
                     projection_playback_type = (byte)proposalDetail.ProjectionPlaybackType,
                     posting_book_id = proposalDetail.PostingBookId,
                     posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
+                    nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
+                    adjustment_inflation = proposalDetail.AdjustmentInflation,
+                    adjustment_margin = proposalDetail.AdjustmentMargin,
+                    adjustment_rate = proposalDetail.AdjustmentRate,
+                    goal_budget = proposalDetail.GoalBudget,
+                    goal_impression = proposalDetail.GoalImpression,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -449,6 +457,12 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.posting_book_id = detail.PostingBookId;
                     updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
+                    updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
+                    updatedDetail.adjustment_inflation = detail.AdjustmentInflation;
+                    updatedDetail.adjustment_margin = detail.AdjustmentMargin;
+                    updatedDetail.adjustment_rate = detail.AdjustmentRate;
+                    updatedDetail.goal_budget = detail.GoalBudget;
+                    updatedDetail.goal_impression = detail.GoalImpression;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -782,8 +796,9 @@ namespace Services.Broadcast.Repositories
                 FlightEndDate = proposalVersion.end_date,
                 FlightStartDate = proposalVersion.start_date,
                 GuaranteedDemoId = proposalVersion.guaranteed_audience_id,
-                MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets,
+                MarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.markets,
                 BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets,
+                MarketCoverage = proposalVersion.market_coverage,
                 Markets = proposalVersion.proposal_version_markets
                 .Where(q => q.proposal_version_id == proposalVersion.id).Select(f => new ProposalMarketDto
                 {
@@ -840,6 +855,12 @@ namespace Services.Broadcast.Repositories
                     ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)version.projection_playback_type,
                     PostingBookId = version.posting_book_id,
                     PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
+                    NtiConversionFactor = version.nti_conversion_factor,
+                    GoalBudget = version.goal_budget,
+                    GoalImpression = version.goal_impression,
+                    AdjustmentInflation = version.adjustment_inflation,
+                    AdjustmentMargin = version.adjustment_margin,
+                    AdjustmentRate = version.adjustment_rate,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -926,7 +947,8 @@ namespace Services.Broadcast.Repositories
             proposalVersion.GuaranteedAudienceId = x.guaranteed_audience_id;
             proposalVersion.LastModifiedBy = x.modified_by;
             proposalVersion.LastModifiedDate = x.modified_date;
-            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups)x.markets;
+            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups?)x.markets;
+            proposalVersion.BlackoutMarkets = (ProposalEnums.ProposalMarketGroups?)x.blackout_markets;
             proposalVersion.TargetUnits = x.target_units;
             proposalVersion.TargetImpressions = x.target_impressions;
             proposalVersion.Notes = x.notes;
@@ -1023,9 +1045,11 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailOpenMarketInventoryDto();
-                dto.Margin = pv.proposal_versions.margin;
-                SetBaseFields(pv, dto);
+                var dto = new ProposalDetailOpenMarketInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin
+                };
+                _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
@@ -1097,6 +1121,11 @@ namespace Services.Broadcast.Repositories
                     ShareProjectionBookId = proposalDetail.share_projection_book_id,
                     HutProjectionBookId = proposalDetail.hut_projection_book_id,
                     ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.projection_playback_type,
+                    GoalImpression = proposalDetail.goal_impression,
+                    GoalBudget = proposalDetail.goal_budget,
+                    AdjustmentInflation = proposalDetail.adjustment_inflation,
+                    AdjustmentMargin =  proposalDetail.adjustment_margin,
+                    AdjustmentRate = proposalDetail.adjustment_rate,
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1408,10 +1437,12 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailProprietaryInventoryDto();
-                dto.Margin = pv.proposal_versions.margin;
+                var dto = new ProposalDetailProprietaryInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin
+                };
 
-                SetBaseFields(pv, dto);
+                _SetBaseFields(pv, dto);
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
                              orderby week.start_date
@@ -1429,7 +1460,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static void SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
+        private static void _SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;

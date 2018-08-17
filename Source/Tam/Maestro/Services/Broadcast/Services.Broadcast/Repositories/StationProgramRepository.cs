@@ -34,7 +34,7 @@ namespace Services.Broadcast.Repositories
         }
 
         public List<ProposalProgramDto> GetStationProgramsForProposalDetail(DateTime flightStart, DateTime flightEnd,
-            int spotLength, int rateSource, List<short> proposalMarketIds, int proposalDetailId)
+            int spotLengthId, int rateSource, List<short> proposalMarketIds, int proposalDetailId)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -56,8 +56,6 @@ namespace Services.Broadcast.Repositories
                         if (proposalMarketIds != null & proposalMarketIds.Count > 0)
                             manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
 
-                        var spotLengthId = context.spot_lengths.Where(l => l.length == spotLength).Select(l => l.id).Single();
-
                         return (manifests.Select(m =>
                             new ProposalProgramDto()
                             {
@@ -70,7 +68,7 @@ namespace Services.Broadcast.Repositories
                                 }).ToList(),
                                 StartDate = m.effective_date,
                                 EndDate = m.end_date,
-                                SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select( r => r.rate).SingleOrDefault(),
+                                SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.rate).SingleOrDefault(),
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {
@@ -85,11 +83,11 @@ namespace Services.Broadcast.Repositories
                                     Display = m.station.market.geography_name
                                 },
                                 Allocations = m.station_inventory_spots.Select(r => new StationInventorySpots
-                                    {
-                                        ManifestId = r.station_inventory_manifest_id,
-                                        ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
-                                        MediaWeekId = r.media_week_id
-                                    }).ToList()
+                                {
+                                    ManifestId = r.station_inventory_manifest_id,
+                                    ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
+                                    MediaWeekId = r.media_week_id
+                                }).ToList()
                                 // todo : still undefined
                                 //Genres = 
                             }).ToList());

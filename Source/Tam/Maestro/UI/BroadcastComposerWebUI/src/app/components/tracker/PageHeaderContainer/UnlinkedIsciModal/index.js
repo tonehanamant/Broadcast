@@ -1,0 +1,118 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
+import { Grid, Actions } from 'react-redux-grid';
+import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, undoArchivedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
+import { generateGridConfig } from './util';
+import MapUnlinkedIsciModal from '../MapUnlinkedIsciModal/index';
+
+const { SelectionActions: { deselectAll, selectRow } } = Actions;
+
+const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } }, grid, selection, dataSource }) => ({
+  modal,
+  selection,
+  dataSource,
+  grid,
+});
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    closeUnlinkedIsciModal,
+    rescrubIscis: rescrubUnlinkedIscis,
+    archiveIscis: archiveUnlinkedIscis,
+    undoArchive: undoArchivedIscis,
+    toggleTab: toggleUnlinkedTab,
+    deselectAll,
+    selectRow,
+  }, dispatch)
+);
+
+export class UnlinkedIsciModal extends Component {
+  constructor(props, context) {
+		super(props, context);
+		this.context = context;
+    this.close = this.close.bind(this);
+    this.onTabSelect = this.onTabSelect.bind(this);
+
+    this.state = {
+      activeTab: 'unlinked',
+    };
+  }
+
+  close() {
+    this.props.closeUnlinkedIsciModal(this.props.modal.properties);
+    this.setState({ activeTab: 'unlinked' });
+  }
+
+  onTabSelect(nextTab) {
+    const { activeTab } = this.state;
+    const { toggleTab } = this.props;
+    // console.log('tab select grid', this.props.grid.get('unlinked_grid'));
+    if (activeTab !== nextTab) {
+      this.setState({ activeTab: nextTab });
+      toggleTab(nextTab);
+    }
+  }
+
+  render() {
+    const { modal, unlinkedIscis } = this.props;
+    const { activeTab } = this.state;
+    const grid = generateGridConfig(this.props, activeTab);
+    grid.pageSize = unlinkedIscis.length;
+    grid.infinite = true;
+
+    return (
+      <div>
+        <Modal show={modal.active} onHide={this.close} dialogClassName="large-80-modal">
+          <Modal.Header>
+            <Modal.Title style={{ display: 'inline-block' }}>Unlinked ISCIs</Modal.Title>
+            <Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
+              <span>&times;</span>
+            </Button>
+          </Modal.Header>
+          <Modal.Body>
+            <Nav style={{ marginBottom: 3 }} bsStyle="tabs" activeKey={activeTab} onSelect={this.onTabSelect}>
+                <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
+                <NavItem eventKey="archived">Archived ISCIs</NavItem>
+            </Nav>
+            {activeTab === 'unlinked' &&
+              <Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
+            }
+            {activeTab === 'archived' &&
+              <Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
+            }
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+        <MapUnlinkedIsciModal />
+      </div>
+    );
+  }
+}
+
+UnlinkedIsciModal.defaultProps = {
+  modal: {
+    active: false,
+    properties: {},
+  },
+};
+
+UnlinkedIsciModal.propTypes = {
+	modal: PropTypes.object,
+	toggleModal: PropTypes.func.isRequired,
+	rescrubIscis: PropTypes.func.isRequired,
+  unlinkedIscis: PropTypes.array.isRequired,
+  toggleTab: PropTypes.func.isRequired,
+  archiveIscis: PropTypes.func.isRequired,
+  undoArchive: PropTypes.func.isRequired,
+  closeUnlinkedIsciModal: PropTypes.func.isRequired,
+  dataSource: PropTypes.object.isRequired,
+  selection: PropTypes.object.isRequired,
+  grid: PropTypes.object.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UnlinkedIsciModal);

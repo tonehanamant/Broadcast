@@ -1,0 +1,22 @@
+.map-unlinked-isci-modal {
+
+    .mapping-section {
+        display: flex;
+        flex-direction: column;
+
+        > div {
+            margin: 5px 10px 5px 10px;
+        }
+
+        .typeahead-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .typeahead-element {
+                width: 100%;
+                margin-left: 10px;
+            }
+        }
+    }
+}

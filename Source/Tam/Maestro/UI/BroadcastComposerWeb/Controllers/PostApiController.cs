@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -109,7 +110,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("ArchivedIscis")]
-        public BaseResponse<List<UnlinkedIscisDto>> GetArchivedIsciss()
+        public BaseResponse<List<UnlinkedIscisDto>> GetArchivedIscis()
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis(true));
@@ -121,6 +122,15 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => 
             _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(FileDetailsIds, Identity.Name));
+        }
+
+
+        [HttpPost]
+        [Route("UndoArchiveIsci")]
+        public BaseResponse<bool> UndoArchiveUnlinkedIsci(List<long> FileDetailsIds)
+        {
+            return _ConvertToBaseResponse(() =>
+            _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().UndoArchiveUnlinkedIsci(FileDetailsIds, DateTime.Now, Identity.Name));
         }
 
         [HttpGet]
@@ -148,6 +158,15 @@ namespace BroadcastComposerWeb.Controllers
                 () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().OverrideScrubbingStatus(request));
         }
 
+        [HttpPut]
+        [Route("UndoOverrideStatus")]
+        public BaseResponse<ClientPostScrubbingProposalDto> UndoOverrideScrubStatus(ScrubStatusOverrideRequest request)
+        {
+            return
+            _ConvertToBaseResponse(
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().UndoOverrideScrubbingStatus(request));
+        }
+        
         [HttpPost]
         [Route("SwapProposalDetail")]
         public BaseResponse<bool> SwapProposalDetail(SwapProposalDetailRequest requestData)

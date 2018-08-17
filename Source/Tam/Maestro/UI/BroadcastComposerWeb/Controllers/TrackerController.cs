@@ -65,8 +65,20 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
-            bvsRequest.UserName = Identity.Name;
-            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest));
+            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name));
+        }
+
+        [HttpPost]
+        [Route("UploadSigmaFile")]
+        public BaseResponse<List<int>> UploadSigmaFile(HttpRequestMessage saveRequest)
+        {
+            if (saveRequest == null)
+            {
+                throw new Exception("No Sigma file data received.");
+            }
+
+            BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name, true));
         }
 
         [HttpPost]

@@ -35,15 +35,12 @@ namespace Services.Broadcast.ApplicationServices
 
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
     {
-        internal List<string> AffidavitFileHeaders = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
-
-        public const string _ValidStrataExtension = ".xlsx";
-        public const string _ValidStrataTabName = "PostAnalRep_ExportDetail";
-
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
         private readonly IEmailerService _EmailerService;
+        private readonly IFileService _FileService;
+
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
         private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
 
@@ -51,7 +48,8 @@ namespace Services.Broadcast.ApplicationServices
                                                 IAffidavitEmailProcessorService affidavitEmailProcessorService,
                                                 IWWTVFtpHelper WWTVFtpHelper,
                                                 IWWTVSharedNetworkHelper WWTVSharedNetworkHelper,
-                                                IEmailerService emailerService)
+                                                IEmailerService emailerService,
+                                                IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -59,6 +57,7 @@ namespace Services.Broadcast.ApplicationServices
             _WWTVFtpHelper = WWTVFtpHelper;
             _EmailerService = emailerService;
             _WWTVSharedNetworkHelper = WWTVSharedNetworkHelper;
+            _FileService = fileService;
         }
 
         /// <summary>
@@ -90,13 +89,13 @@ namespace Services.Broadcast.ApplicationServices
             return validationList;
         }
 
-        private static List<string> GetDropFolderFileList()
+        private List<string> GetDropFolderFileList()
         {
             List<string> filepathList;
             try
             {
                 var dropFolder = WWTVSharedNetworkHelper.GetLocalDropFolder();
-                filepathList = Directory.GetFiles(dropFolder).ToList();
+                filepathList = _FileService.GetFiles(dropFolder).ToList();
             }
             catch (Exception e)
             {
@@ -176,8 +175,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var path = remoteFtpPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
                     var localPath = localFolder + @"\" + filePath.Replace(@"/", @"\");
-                    if (File.Exists(localPath))
-                        File.Delete(localPath);
+                    if (_FileService.Exists(localPath))
+                        _FileService.Delete(localPath);
 
                     _WWTVFtpHelper.DownloadFileFromClient(ftpClient,path, localPath);
                     local.Add(localPath);
@@ -210,6 +209,7 @@ namespace Services.Broadcast.ApplicationServices
             _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl,File.Delete); 
         }
 
+
         public List<OutboundAffidavitFileValidationResultDto> ValidateFiles(List<string> filepathList, string userName)
         {
             List<OutboundAffidavitFileValidationResultDto> result = new List<OutboundAffidavitFileValidationResultDto>();
@@ -229,120 +229,33 @@ namespace Services.Broadcast.ApplicationServices
 
                 var fileInfo = new FileInfo(filepath);
 
-                //check if valid extension                
-                _ValidateStrataFileExtension(currentFile);
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                using (var affidavitPickupValidationService =
+                    AffidavitPickupFileValidation.GetAffidavitValidationService(fileInfo, currentFile))
+                {
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                //check if tab exists
-                ExcelWorksheet tab = _ValidateWorksheetName(fileInfo, currentFile);
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                    //check if tab exists
+                    affidavitPickupValidationService.ValidateFileStruct();
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                //check column headers
-                Dictionary<string, int> headers = _ValidateHeaders(currentFile, tab);
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                    //check column headers
+                    affidavitPickupValidationService.ValidateHeaders();
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                //check required data fields
-                _HasMissingData(tab, headers, currentFile);
-                if (currentFile.ErrorMessages.Any())
-                    continue;
+                    //check required data fields
+                    affidavitPickupValidationService.HasMissingData();
+                    if (currentFile.ErrorMessages.Any())
+                        continue;
 
-                if (!currentFile.ErrorMessages.Any())
-                    currentFile.Status = AffidaviteFileProcessingStatus.Valid;
+                    if (!currentFile.ErrorMessages.Any())
+                        currentFile.Status = AffidaviteFileProcessingStatus.Valid;
+                }
             }
 
             return result;
-        }
-
-        private void _HasMissingData(ExcelWorksheet tab, Dictionary<string, int> headers, OutboundAffidavitFileValidationResultDto currentFile)
-        {
-            var hasMissingData = false;
-            for (var row = 2; row <= tab.Dimension.End.Row; row++)
-            {
-                if (_IsEmptyRow(row, tab))
-                {
-                    continue;
-                }
-                foreach (string name in AffidavitFileHeaders)
-                {
-                    if (string.IsNullOrWhiteSpace(tab.Cells[row, headers[name]].Value?.ToString()))
-                    {
-                        currentFile.ErrorMessages.Add($"Missing {name} on row {row}");
-                        hasMissingData = true;
-                    }
-                }
-            }
-            if (hasMissingData)
-            {
-                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
-            }
-        }
-
-        private Dictionary<string, int> _ValidateHeaders(OutboundAffidavitFileValidationResultDto currentFile, ExcelWorksheet tab)
-        {
-            var headers = new Dictionary<string, int>();
-            foreach (var header in AffidavitFileHeaders)
-            {
-                for (var column = 1; column <= tab.Dimension.End.Column; column++)
-                {
-                    var cellValue = (string)tab.Cells[1, column].Value;
-
-                    if (!cellValue.Trim().Equals(header, StringComparison.InvariantCultureIgnoreCase))
-                        continue;
-
-                    headers.Add(header, column);
-                    break;
-                }
-
-                if (!headers.ContainsKey(header))
-                {
-                    currentFile.ErrorMessages.Add(string.Format("Could not find header for column {0} in file {1}", header, currentFile.FilePath));
-                }
-            }
-            if (headers.Count != AffidavitFileHeaders.Count)
-            {
-                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
-            }
-            return headers;
-        }
-
-        private ExcelWorksheet _ValidateWorksheetName(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile)
-        {
-            ExcelWorksheet tab = null;
-            var package = new ExcelPackage(fileInfo, true);
-            foreach (var worksheet in package.Workbook.Worksheets)
-            {
-                if (worksheet.Name.Equals(_ValidStrataTabName))
-                {
-                    tab = worksheet;
-                }
-            }
-            if (tab == null)
-            {
-                currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidStrataTabName, currentFile.FilePath));
-                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
-            }
-            return tab;
-        }
-
-        private void _ValidateStrataFileExtension(OutboundAffidavitFileValidationResultDto currentFile)
-        {
-            if (!Path.GetExtension(currentFile.FilePath).Equals(_ValidStrataExtension, StringComparison.InvariantCultureIgnoreCase))
-            {
-                currentFile.ErrorMessages.Add($"Invalid extension for file {currentFile.FilePath}");
-                currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
-            }
-        }
-
-        private bool _IsEmptyRow(int row, ExcelWorksheet excelWorksheet)
-        {
-            for (var c = 1; c < excelWorksheet.Dimension.End.Column; c++)
-                if (!string.IsNullOrWhiteSpace(excelWorksheet.Cells[row, c].Text))
-                    return false;
-
-            return true;
         }
     }
 }

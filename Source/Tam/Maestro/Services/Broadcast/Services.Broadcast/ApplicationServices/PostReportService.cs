@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
@@ -129,7 +130,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposalAudiences = _BroadcastAudienceRepository.GetAudienceDtosById(proposalAudienceIds)
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
-            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthsById();
+            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthAndIds();
             var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
@@ -138,7 +139,7 @@ namespace Services.Broadcast.ApplicationServices
             var nsiMarketRankings = _GetMarketRankingsByPostingBook(inspecSpots);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
 
-            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
+            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
                                                 withOvernightImpressions, proposal.Equivalized, proposal.ProposalName);
         }
@@ -259,16 +260,19 @@ namespace Services.Broadcast.ApplicationServices
         public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
         {
             var myEventsReportDataList = _AffidavitRepository.GetMyEventsReportData(proposalId);
-            var spotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsById();
-
+            var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
+            
             foreach (var report in myEventsReportDataList)
             {
                 foreach (var line in report.Lines)
                 {
                     var advertiser = _SmsClient.FindAdvertiserById(line.AdvertiserId);
-                    
+                    var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(new List<DateTime>() { line.LineupStartDate });
+
                     line.Advertiser = advertiser.Display;
-                    line.SpotLength = spotLengths[line.SpotLengthId];
+                    line.SpotLength = spotLengths.Single(x => x.Value == line.SpotLengthId).Key;
+                    line.ScheduleStartDate = mediaWeeks[line.LineupStartDate].StartDate;
+                    line.ScheduleEndDate = mediaWeeks[line.LineupStartDate].EndDate;
                 }
 
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);

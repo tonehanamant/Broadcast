@@ -89,11 +89,10 @@ export class PostScrubbingModal extends Component {
 							guaranteedDemo={GuaranteedDemo}
 							Id={Id}
 							market={Markets}
-							marketId={MarketGroupId}
+							marketGroupId={MarketGroupId}
 							name={Name}
 							notes={Notes}
 							secondaryDemo={SecondaryDemos}
-							// getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
 						<PostScrubbingDetail
               activeScrubbingData={activeScrubbingData}

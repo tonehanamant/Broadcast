@@ -24,7 +24,7 @@ namespace Services.Broadcast.ApplicationServices
         LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate);
         BvsLoadDto GetBvsLoadData(DateTime currentDateTime);
         int SaveSchedule(ScheduleSaveRequest request);
-        Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request);
+        Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request, string username, bool isSigmaUpload = false);
         string SaveBvsViaFtp(string userName);
         bool ScheduleExists(int estimateIds);
         BvsScrubbingDto GetBvsScrubbingData(int estimateId);
@@ -130,37 +130,31 @@ namespace Services.Broadcast.ApplicationServices
 
         public BvsLoadDto GetBvsLoadData(DateTime currentDateTime)
         {
-            var ret = new BvsLoadDto();
-            ret.Advertisers = _SmsClient.GetActiveAdvertisers();
-            ret.Quarters = GetQuarters();
-            ret.CurrentQuarter =
-                ret.Quarters.Find(
-                    x =>
-                        x.StartDate.Month <= currentDateTime.Month && x.EndDate.Month >= currentDateTime.Month &&
-                        x.StartDate.Year == currentDateTime.Year);
-            ret.PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths();
-
-            ret.InventorySources =
-                Enum.GetValues(typeof(InventorySourceEnum))
+            var ret = new BvsLoadDto
+            {
+                Advertisers = _SmsClient.GetActiveAdvertisers(),
+                Quarters = GetQuarters(),
+                PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths(),
+                InventorySources = Enum.GetValues(typeof(InventorySourceEnum))
                     .Cast<InventorySourceEnum>()
                     .Where(e => e != InventorySourceEnum.Blank)
                     .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                    .ToList();
-
-            ret.SchedulePostTypes =
-                Enum.GetValues(typeof(SchedulePostType))
+                    .ToList(),
+                SchedulePostTypes = Enum.GetValues(typeof(SchedulePostType))
                     .Cast<SchedulePostType>()
                     .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                    .ToList();
-
-            ret.Markets =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>()
+                    .ToList(),
+                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>()
                     .GetMarkets()
                     .Select(m => new LookupDto { Display = m.geography_name, Id = m.market_code })
-                    .ToList();
-
-            ret.Audiences = _AudiencesCache.GetAllLookups();
-
+                    .ToList(),
+                Audiences = _AudiencesCache.GetAllLookups()
+            };
+            ret.CurrentQuarter = ret.Quarters.Find(
+                    x =>
+                        x.StartDate.Month <= currentDateTime.Month && x.EndDate.Month >= currentDateTime.Month &&
+                        x.StartDate.Year == currentDateTime.Year);
+            
             return ret;
         }
 
@@ -364,7 +358,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns bvsID.
         /// </summary>
-        public Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request)
+        public Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request, string username, bool isSigmaUpload = false)
         {
             var duplicateMessage = string.Empty;
 
@@ -385,13 +379,22 @@ namespace Services.Broadcast.ApplicationServices
                     //check if file has already been loaded
                     if (bvsRepo.GetBvsFileIdByHash(hash) > 0)
                     {
-                        throw new ApplicationException("Unable to load BVS file. The BVS file selected has already been loaded.");
+                        throw new ApplicationException("Unable to load post log file. The selected post log file has already been loaded.");
                     }
 
-                    string message;
                     //we made it this far, it must be a new file - persist the file
-                    Dictionary<BvsFileDetailKey, int> lineInfo;
-                    var bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.BvsStream, hash, request.UserName, requestBvsFile.BvsFileName, out message, out lineInfo);
+                    string message = string.Empty;
+                    BvsFile bvsFile = new BvsFile();
+                    Dictionary<BvsFileDetailKey, int> lineInfo = new Dictionary<BvsFileDetailKey, int>();
+
+                    if (isSigmaUpload)
+                    {
+                        bvsFile = _BvsConverter.ExtractSigmaData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out lineInfo);
+                    }
+                    else
+                    {
+                        bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out message, out lineInfo);
+                    }                    
 
                     if (!string.IsNullOrEmpty(message))
                     {
@@ -399,8 +402,8 @@ namespace Services.Broadcast.ApplicationServices
                         hasErrors = true;
                     }
 
-                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.bvs_file_details.ToList());
-                    bvsFile.bvs_file_details = filterResult.New;
+                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.BvsFileDetails.ToList());
+                    bvsFile.BvsFileDetails = filterResult.New;
 
                     if (filterResult.Ignored.Any())
                     {
@@ -408,7 +411,7 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Ignored)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}</li>",
-                                lineInfo[new BvsFileDetailKey(file)], file.station, file.date_aired, file.time_aired, file.isci, file.spot_length, file.estimate_id, file.advertiser);
+                                lineInfo[new BvsFileDetailKey(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
                         }
 
                         duplicateMessage += "</ul>";
@@ -420,7 +423,7 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Updated)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}, Program Name {8}</li>",
-                                lineInfo[new BvsFileDetailKey(file)], file.station, file.date_aired, file.time_aired, file.isci, file.spot_length, file.estimate_id, file.advertiser, file.program_name);
+                                lineInfo[new BvsFileDetailKey(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
                         }
 
                         duplicateMessage += "</ul>";
@@ -447,7 +450,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             if (hasErrors)
-                throw new Exception(errorMessage);
+                throw new ExtractBvsException(errorMessage);
 
             return Tuple.Create(bvsIds, duplicateMessage);
         }
@@ -513,11 +516,10 @@ namespace Services.Broadcast.ApplicationServices
                         try
                         {
                             var request = new BvsSaveRequest();
-                            request.UserName = userName;
-                            request.BvsFiles.Add(new BvsFile { BvsFileName = fileName, BvsStream = stream });
+                            request.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
 
                             //Requirements are to ignore this for FTP for now
-                            SaveBvsFiles(request);
+                            SaveBvsFiles(request, userName);
 
                             successFiles += fileName + Environment.NewLine;
                         }

@@ -9,7 +9,7 @@ import PageHeaderContainer from 'Components/postPrePosting/PageHeaderContainer';
 import DataGridContainer from 'Components/postPrePosting/DataGridContainer';
 import PostPrePostingFileEditModal from 'Components/postPrePosting/PostPrePostingFileEditModal';
 import PostPrePostingFileUploadModal from 'Components/postPrePosting/PostPrePostingFileUploadModal';
-import Dropzone from 'Components/shared/Dropzone';
+// import Dropzone from 'Components/shared/Dropzone';
 
 import { getPostPrePostingInitialData, getPostPrePosting } from 'Ducks/postPrePosting';
 
@@ -18,7 +18,6 @@ import styles from './index.style.scss';
 
 export class SectionPost extends Component {
   componentWillMount() {
-    console.warn('SectionPost');
     this.props.getPostPrePostingInitialData();
     this.props.getPostPrePosting();
   }
@@ -26,7 +25,7 @@ export class SectionPost extends Component {
   render() {
     return (
       <div id="post-section">
-        <Dropzone
+        {/* <Dropzone
           acceptedMimeTypes="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           fileType="Excel"
           fileTypeExtension=".xlsx"
@@ -36,15 +35,15 @@ export class SectionPost extends Component {
               active: true,
             },
           }}
-        >
-          <AppBody>
-              <PageTitle title="Post Pre Posting" />
-              <PageHeaderContainer />
-              <DataGridContainer />
-              <PostPrePostingFileEditModal />
-              <PostPrePostingFileUploadModal />
-          </AppBody>
-        </Dropzone>
+        > */}
+        <AppBody>
+            <PageTitle title="Post Pre Posting" />
+            <PageHeaderContainer />
+            <DataGridContainer />
+            <PostPrePostingFileEditModal />
+            <PostPrePostingFileUploadModal />
+        </AppBody>
+        {/* </Dropzone> */}
       </div>
     );
   }

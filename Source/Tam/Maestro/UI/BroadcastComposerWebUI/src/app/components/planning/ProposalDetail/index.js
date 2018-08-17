@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import Select from 'react-select';
-import { Well, Form, FormGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
+// import numeral from 'numeral';
+import { InputNumber } from 'antd';
+import { Well, Form, FormGroup, InputGroup, ControlLabel, Row, Col, FormControl, Button, DropdownButton, MenuItem, Checkbox, Glyphicon, HelpBlock } from 'react-bootstrap';
 import FlightPicker from 'Components/shared/FlightPicker';
 import DayPartPicker from 'Components/shared/DayPartPicker';
 import ProposalDetailGrid from 'Components/planning/ProposalDetailGrid';
 import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
 import PostingBook from './PostingBook';
+import PricingGuide from './PricingGuide';
 // import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
@@ -30,6 +33,7 @@ export class ProposalDetail extends Component {
     this.onChangeSpotLength = this.onChangeSpotLength.bind(this);
     this.onChangeDaypartCode = this.onChangeDaypartCode.bind(this);
     this.onChangeAdu = this.onChangeAdu.bind(this);
+    this.onChangeNti = this.onChangeNti.bind(this);
     this.onDeleteProposalDetail = this.onDeleteProposalDetail.bind(this);
 
     this.flightPickerApply = this.flightPickerApply.bind(this);
@@ -39,6 +43,7 @@ export class ProposalDetail extends Component {
     this.checkValidSpotLength = this.checkValidSpotLength.bind(this);
     this.checkValidDaypart = this.checkValidDaypart.bind(this);
     this.checkValidDaypartCode = this.checkValidDaypartCode.bind(this);
+    this.checkValidNtiLength = this.checkValidNtiLength.bind(this);
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
 
@@ -49,6 +54,7 @@ export class ProposalDetail extends Component {
         DaypartCode: null,
         DaypartCode_Alphanumeric: null,
         DaypartCode_MaxChar: null,
+        NtiLength: null,
       },
     };
   }
@@ -90,10 +96,17 @@ export class ProposalDetail extends Component {
     this.checkValidDaypartCode(val);
   }
 
+  onChangeNti(value) {
+    const val = value !== null ? value : this.props.detail.NtiConversionFactor;
+    const newVal = val / 100;
+    this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'NtiConversionFactor', value: newVal });
+    this.checkValidNtiLength(value);
+  }
+
   onChangeAdu(event) {
     this.props.updateProposalEditFormDetail({ id: this.props.detail.Id, key: 'Adu', value: event.target.checked });
     this.props.onUpdateProposal();
-    console.log('onChangeAdu', event.target.value, event.target.checked, this.props.detail);
+    // console.log('onChangeAdu', event.target.value, event.target.checked, this.props.detail);
   }
 
   onDeleteProposalDetail() {
@@ -148,10 +161,11 @@ export class ProposalDetail extends Component {
   }
 
   onSaveShowValidation(nextProps) {
-    const { SpotLengthId, Daypart, DaypartCode } = nextProps.detail;
+    const { SpotLengthId, Daypart, DaypartCode, NtiConversionFactor } = nextProps.detail;
     this.checkValidSpotLength(SpotLengthId);
     this.checkValidDaypart(Daypart);
     this.checkValidDaypartCode(DaypartCode);
+    this.checkValidNtiLength(NtiConversionFactor);
   }
 
   checkValidSpotLength(value) {
@@ -170,6 +184,11 @@ export class ProposalDetail extends Component {
     const re = /^[a-z0-9]+$/i; // check alphanumeric
     this.setValidationState('DaypartCode_Alphanumeric', (re.test(val) || val === '') ? null : 'error');
     this.setValidationState('DaypartCode_MaxChar', val.length <= 10 ? null : 'error');
+  }
+
+  checkValidNtiLength(value) {
+    const val = value;
+    this.setValidationState('NtiLength', !isNaN(val) && val !== '' && val !== null ? null : 'error');
   }
 
   openInventory(type) {
@@ -279,7 +298,7 @@ export class ProposalDetail extends Component {
               {detail &&
                 <FormGroup controlId="proposalDetailDaypartCode" validationState={this.state.validationStates.DaypartCode || this.state.validationStates.DaypartCode_Alphanumeric || this.state.validationStates.DaypartCode_MaxChar}>
                   <ControlLabel style={{ margin: '0 10px 0 16px' }}>Daypart Code</ControlLabel>
-                  <FormControl type="text" style={{ width: '100px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
+                  <FormControl type="text" style={{ width: '60px' }} value={detail.DaypartCode ? detail.DaypartCode : ''} onChange={this.onChangeDaypartCode} disabled={isReadOnly} />
                   {this.state.validationStates.DaypartCode != null &&
                   <HelpBlock style={{ margin: '0 0 0 16px' }}>
                     <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
@@ -298,6 +317,28 @@ export class ProposalDetail extends Component {
                 </FormGroup>
               }
               {detail &&
+                <FormGroup style={{ margin: '0 0 0 10px' }} controlId="proposalDetailNtiConversionFactor" validationState={this.state.validationStates.NtiLength}>
+                  <ControlLabel style={{ margin: '0 10px 0 10px' }}>NTI</ControlLabel>
+                  <InputGroup>
+                    <InputNumber
+                      min={0}
+                      max={99.99}
+                      className="form-control"
+                      style={{ width: '75px' }}
+                      precision={2}
+                      defaultValue={detail && detail.NtiConversionFactor ? detail.NtiConversionFactor * 100 : 0}
+                      onChange={this.onChangeNti}
+                    />
+                    <InputGroup.Addon>%</InputGroup.Addon>
+                  </InputGroup>
+                  {this.state.validationStates.NtiLength != null &&
+                  <HelpBlock style={{ margin: '0 0 0 16px' }}>
+                    <span className="text-danger" style={{ fontSize: 11 }}>Required.</span>
+                  </HelpBlock>
+                  }
+                </FormGroup>
+              }
+              {detail &&
                 <FormGroup style={{ margin: '0 0 0 12px' }} controlId="proposalDetailADU">
                   <Checkbox checked={detail.Adu} onChange={this.onChangeAdu} disabled={isReadOnly} />
                   <ControlLabel style={{ margin: '0 0 0 6px' }}>ADU</ControlLabel>
@@ -306,6 +347,7 @@ export class ProposalDetail extends Component {
               {detail &&
                 <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
                   <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
+                      <MenuItem eventKey="pricingGuide" onSelect={this.openModal}>Pricing Guide</MenuItem>
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
                       <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
@@ -342,6 +384,14 @@ export class ProposalDetail extends Component {
         }
 
         <Sweeps
+          toggleModal={this.props.toggleModal}
+          updateProposalEditFormDetail={updateProposalEditFormDetail}
+          initialdata={initialdata}
+          detail={detail}
+          isReadOnly={isReadOnly}
+        />
+
+        <PricingGuide
           toggleModal={this.props.toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}

@@ -1,14 +1,16 @@
 ﻿{
   "AdvertiserId": 37444,
   "BlackoutMarketGroup": {
-    "Count": 210,
     "Display": "All",
-    "Id": 0
+    "Id": 1
   },
-  "BlackoutMarketGroupId": 0,
+  "BlackoutMarketGroupId": 1,
   "CanDelete": true,
   "Details": [
     {
+      "AdjustmentInflation": 2.0,
+      "AdjustmentMargin": 3.0,
+      "AdjustmentRate": 1.0,
       "Adu": false,
       "Daypart": {
         "endTime": 86400,
@@ -49,8 +51,11 @@
           }
         }
       ],
+      "GoalBudget": 100.0000,
+      "GoalImpression": 10000.0,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -145,6 +150,9 @@
       "TotalUnits": 0
     },
     {
+      "AdjustmentInflation": 2.0,
+      "AdjustmentMargin": 3.0,
+      "AdjustmentRate": 1.0,
       "Adu": false,
       "Daypart": {
         "endTime": 86400,
@@ -185,8 +193,11 @@
           }
         }
       ],
+      "GoalBudget": 100.0000,
+      "GoalImpression": 10000.0,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -281,6 +292,9 @@
       "TotalUnits": 0
     },
     {
+      "AdjustmentInflation": 2.0,
+      "AdjustmentMargin": 3.0,
+      "AdjustmentRate": 1.0,
       "Adu": false,
       "Daypart": {
         "endTime": 86400,
@@ -321,8 +335,11 @@
           }
         }
       ],
+      "GoalBudget": 100.0000,
+      "GoalImpression": 10000.0,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -430,12 +447,12 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": {
-    "Count": 100,
-    "Display": "Top 100",
-    "Id": 100
+    "Display": "All",
+    "Id": 1
   },
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Markets": [
     {
       "Display": "Portland-Auburn",

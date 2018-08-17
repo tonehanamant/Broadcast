@@ -5,6 +5,9 @@
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": {
@@ -32,8 +35,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -139,7 +145,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
-              "MyEventsReportName": null,
+              "MyEventsReportName": "Test Adve NAV 30 05-30-16",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"
@@ -153,7 +159,6 @@
       "ShowTypeCriteria": [
         {
           "Contain": 1,
-          "Id": 2359,
           "ShowType": {
             "Display": "Mini-Movie"
           }
@@ -166,6 +171,9 @@
       "TotalUnits": 10
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
@@ -193,8 +201,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -298,7 +309,6 @@
       "ShowTypeCriteria": [
         {
           "Contain": 2,
-          "Id": 2360,
           "ShowType": {
             "Display": "Movie"
           }
@@ -311,6 +321,9 @@
       "TotalUnits": 30
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
@@ -319,8 +332,11 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -366,8 +382,9 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "ProposalName": "Proposal Test",

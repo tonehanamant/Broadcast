@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 AdvertiserId = 37444,
                 ProposalName = "Proposal Test",
                 GuaranteedDemoId = 31,
-                MarketGroupId = ProposalEnums.ProposalMarketGroups.Top100,
+                MarketGroupId = ProposalEnums.ProposalMarketGroups.All,
                 BlackoutMarketGroupId = ProposalEnums.ProposalMarketGroups.All,
                 Markets = new List<ProposalMarketDto>()
                 {
@@ -64,6 +64,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareProjectionBookId = 413,
                 HutProjectionBookId = 410,
                 ProjectionPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                AdjustmentRate = 1,
+                AdjustmentMargin = 3,
+                AdjustmentInflation = 2,
+                GoalImpression = 10000,
+                GoalBudget = 100,
                 GenreCriteria = new List<GenreCriteria>()
                 {
                     new GenreCriteria
@@ -179,18 +184,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             inventoryService.SaveInventoryAllocations(request);
         }
 
+        private static JsonSerializerSettings _SetupJsonSerializerSettingsIgnoreIds()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
+            jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
+            jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
+            jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
+            jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            return jsonSettings;
+        }
+
         [Test]
         public void CanAddProposal()
         {
             using (new TransactionScopeWrapper())
             {
                 var proposalDto = _setupProposalDto();
-
+                
                 var result = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
                 Assert.IsTrue(result.Id.Value > 0);
             }
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanAddProposalWithSecondaryDemos()
@@ -313,6 +342,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Ignore]
         public void CanLoadInitialProposalData()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -442,7 +472,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposalDto = _ProposalService.GetProposalById(249);
                 proposalDto.ProposalName = "Edited Proposal Test";
-                proposalDto.MarketGroupId = ProposalEnums.ProposalMarketGroups.Top50;
+                proposalDto.MarketGroupId = ProposalEnums.ProposalMarketGroups.All;
                 proposalDto.Equivalized = true;
                 proposalDto.PostType = SchedulePostType.NTI;
 
@@ -648,6 +678,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+            jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+            jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+            jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+            jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedProposalDto, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UpdateProposal_UseDefaultNTIConversionFactor()
+        {
+            var proposalDto = _ProposalService.GetProposalById(253);
+
+            proposalDto.Details[0].NtiConversionFactor = null;
+            var updatedProposalDto = _ProposalService.SaveProposal(proposalDto, "Integration Test User", DateTime.Now);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
             jsonResolver.Ignore(typeof(GenreCriteria), "Id");
@@ -1171,8 +1229,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "Markets");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+                jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -1218,6 +1277,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
@@ -1292,8 +1352,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = _ProposalService.GetProposalById(250);
 
-                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.Top100, proposal.MarketGroupId);
-                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.Top50, proposal.BlackoutMarketGroupId);
+                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.All, proposal.MarketGroupId);
+                Assert.AreEqual(ProposalEnums.ProposalMarketGroups.All, proposal.BlackoutMarketGroupId);
                 Assert.AreEqual(2, proposal.Markets.Count);
             }
         }
@@ -2249,25 +2309,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
-                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
-                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
-                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
             }
         }
 
@@ -2322,24 +2364,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
-                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
-                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
-                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
             }
         }
 
@@ -2357,24 +2382,69 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(LookupDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalProgramDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
-                jsonResolver.Ignore(typeof(ProposalDto), "CacheGuid");
-                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
-                jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
-                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
 
-                var jsonSettings = new JsonSerializerSettings()
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanUpdateProposalDetailAndKeepMyEventsReportName()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposal = _ProposalService.GetProposalById(251);
+                var firstDetail = proposal.Details.First();
+                var firstWeek = firstDetail.Quarters.First().Weeks.First();
+                firstWeek.MyEventsReportName = "Test AAA 2018-07-11";
+                var proposalChangeRequest = new ProposalChangeRequest
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
+                    Id = 251,
+                    Details = new List<ProposalDetailDto>()
+                };
+                proposalChangeRequest.Details.Add(firstDetail);
+
+                var result = _ProposalService.CalculateProposalChanges(proposalChangeRequest);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveMarketCoverage()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto()
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    MarketCoverage = 0.5555
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Could not find Audience with id", MatchType = MessageMatch.Contains)]
+        public void CannotSaveProposalWithoutValidGuaranteedDemo()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto()
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 0,
+                    PostType = SchedulePostType.NSI
+                };
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
             }
         }
     }

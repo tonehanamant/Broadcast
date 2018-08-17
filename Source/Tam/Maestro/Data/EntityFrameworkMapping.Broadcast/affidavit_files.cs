@@ -25,7 +25,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string file_hash { get; set; }
         public int source_id { get; set; }
         public System.DateTime created_date { get; set; }
-        public int media_month_id { get; set; }
         public int status { get; set; }
     
         public virtual ICollection<affidavit_file_problems> affidavit_file_problems { get; set; }

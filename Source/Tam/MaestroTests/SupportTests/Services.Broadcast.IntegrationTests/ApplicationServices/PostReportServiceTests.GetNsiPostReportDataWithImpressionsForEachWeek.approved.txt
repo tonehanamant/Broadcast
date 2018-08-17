@@ -178,6 +178,32 @@
           "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
+            "31": 0.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV1",
+          "Isci": "NSI3",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalDetailSpotLength": 30,
+          "ProposalWeekCost": 5.0000,
+          "ProposalWeekCPM": 50.0000,
+          "ProposalWeekId": 29,
+          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekTotalCost": 50.0000,
+          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
             "31": 777.0
           },
           "DateAired": "2016-06-08T00:00:00",

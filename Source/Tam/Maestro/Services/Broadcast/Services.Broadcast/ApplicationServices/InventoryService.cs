@@ -159,8 +159,7 @@ namespace Services.Broadcast.ApplicationServices
                 stationCode, startDate, endDate);
             _SetDisplayDaypartForInventoryManifest(stationManifests);
             _SetAudienceForInventoryManifest(stationManifests);
-            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);            
-            return programs;
+            return _GetStationProgramsFromStationInventoryManifest(stationManifests);
         }
 
         public List<StationProgram> GetStationPrograms(string inventorySourceString, int stationCode, string timeFrame,
@@ -191,8 +190,7 @@ namespace Services.Broadcast.ApplicationServices
                 stationCode);
             _SetDisplayDaypartForInventoryManifest(stationManifests);
             _SetAudienceForInventoryManifest(stationManifests);
-            var programs = _GetStationProgramsFromStationInventoryManifest(stationManifests);
-            return programs;
+            return _GetStationProgramsFromStationInventoryManifest(stationManifests);
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -224,7 +222,7 @@ namespace Services.Broadcast.ApplicationServices
             return hasConflict;
         }
 
-        private InventoryFileSaveResult SetFileProblemWarnings(int fileId,List<InventoryFileProblem> fileProblems)
+        private InventoryFileSaveResult _SetFileProblemWarnings(int fileId,List<InventoryFileProblem> fileProblems)
         {
             if (fileProblems.Any())
             {
@@ -237,6 +235,7 @@ namespace Services.Broadcast.ApplicationServices
             };
             return ret;
         }
+
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request)
         {
             if (request.EffectiveDate == DateTime.MinValue)
@@ -269,7 +268,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (fileImporter.FileProblems.Any())
                 {
-                    return SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
+                    return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
 
                 if ((inventoryFile.InventoryGroups == null || inventoryFile.InventoryGroups.Count == 0 ||
@@ -289,7 +288,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (fileImporter.FileProblems.Any())
                 {
-                    return SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
+                    return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
 
                 startTime = DateTime.Now;
@@ -357,7 +356,7 @@ namespace Services.Broadcast.ApplicationServices
                     string.Format("Error loading new inventory file: {0}", e.Message),
                     inventoryFile.Id, e);
             }
-            return SetFileProblemWarnings(inventoryFile.Id,new List<InventoryFileProblem>());
+            return _SetFileProblemWarnings(inventoryFile.Id,new List<InventoryFileProblem>());
         }
 
     private void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes,
@@ -807,8 +806,7 @@ namespace Services.Broadcast.ApplicationServices
                     SpotsPerWeek = manifest.SpotsPerWeek,
                     Rate15 = _GetSpotRateFromManifestRates(15, manifest.ManifestRates),
                     Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
-                    HouseHoldImpressions =
-                        _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
+                    HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
                     Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
                     FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate)
                 }).ToList();
@@ -816,7 +814,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<FlightWeekDto> _GetFlightWeeks(DateTime effectiveDate, DateTime? endDate)
         {
-            var nonNullableEndDate = endDate.HasValue ? endDate.Value : effectiveDate.AddYears(1);
+            var nonNullableEndDate = endDate ?? effectiveDate.AddYears(1);
 
             var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(effectiveDate, nonNullableEndDate);
 
@@ -849,8 +847,9 @@ namespace Services.Broadcast.ApplicationServices
         private StationInventoryManifestAudience _GetHouseHoldAudienceFromManifestAudiences(
             List<StationInventoryManifestAudience> list)
         {
-            return list != null && list.Any()
-                ? list.SingleOrDefault(c => c.Audience.Id == BroadcastConstants.HouseHoldAudienceId)
+            var houseHoldAudienceId = _AudiencesCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
+            return list.Any()
+                ? list.Single(c => c.Audience.Id == houseHoldAudienceId)
                 : null;
         }
 

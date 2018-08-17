@@ -27,6 +27,9 @@ export default function* rootSaga() {
     postSaga.watchMapUnlinkedIsciSuccess(),
     postSaga.watchRescrubUnlinkedIsci(),
     postSaga.watchCloseUnlinkedIsciModal(),
+    postSaga.watchUndoArchivedIscis(),
+    postSaga.watchUndoScrubStatus(),
+    postSaga.watchUndoScrubStatusSuccess(),
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),
@@ -57,5 +60,6 @@ export default function* rootSaga() {
     planningSaga.watchRequestPrograms(),
     planningSaga.watchRequestShowTypes(),
     planningSaga.watchDeleteProposalDetail(),
+    planningSaga.watchRequestPlanningFiltered(),
   ];
 }

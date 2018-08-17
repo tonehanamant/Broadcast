@@ -87,10 +87,11 @@ export class SectionPlanningProposal extends Component {
           titleText: 'Proposal Locked',
           bodyText: `This Proposal is currently in use by ${this.props.proposalLock.LockedUserName}. Please try again later.`,
           closeButtonText: 'Cancel',
-          actionButtonText: 'Okay',
+          closeButtonDisabled: true,
+          actionButtonText: 'Ok',
           actionButtonBsStyle: 'primary',
-          action: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
-          dismiss: () => window.open(`${window.location.origin}/broadcast/planning`, '_self'),
+          action: () => window.open(`${window.location.origin}/broadcastreact/planning`, '_self'),
+          dismiss: () => window.open(`${window.location.origin}/broadcastreact/planning`, '_self'),
         },
       });
     }
@@ -98,27 +99,20 @@ export class SectionPlanningProposal extends Component {
 
   isValidProposalForm() {
     const { proposalEditForm } = this.props;
-    const { ProposalName, AdvertiserId } = proposalEditForm;
+    const { ProposalName, AdvertiserId, GuaranteedDemoId } = proposalEditForm;
 
     // Proposal Form
     const validProposalName = (value) => {
-      const alphanumeric = /^[A-Za-z0-9- ]+$/i;
+      // const alphanumeric = /^[A-Za-z0-9- ]+$/i;
       const valid = {
         required: (value !== '' || null),
-        alphaNumeric: (alphanumeric.test(value) || value === ''),
+        // alphaNumeric: (alphanumeric.test(value) || value === ''),
         maxChar100: (value && value.length <= 100),
       };
-      return valid.required && valid.alphaNumeric && valid.maxChar100;
+      return valid.required && valid.maxChar100;
     };
 
-    const validAdvertiserId = (value) => {
-      const valid = {
-        required: value !== null,
-      };
-      return valid.required;
-    };
-
-    return validProposalName(ProposalName) && validAdvertiserId(AdvertiserId);
+    return validProposalName(ProposalName) && AdvertiserId && GuaranteedDemoId;
   }
 
   isValidProposalDetails() {
@@ -152,7 +146,14 @@ export class SectionPlanningProposal extends Component {
         return valid.required && valid.alphaNumeric && valid.maxChar10;
       };
 
-      const validDetail = validSpothLength(detail.SpothLengthId) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
+      const validNti = (value) => {
+        const valid = {
+          required: !isNaN(value) && value !== '' && value !== null,
+        };
+        return valid.required;
+      };
+
+      const validDetail = validSpothLength(detail.SpothLengthId) && validNti(detail.NtiConversionFactor) && validDaypart(detail.Daypart) && validDaypartCode(detail.DaypartCode);
       validDetails.push(validDetail);
     });
     // console.log('VALID DETAILS', validDetails);

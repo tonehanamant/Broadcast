@@ -5,6 +5,9 @@
   "CanDelete": true,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "Daypart": {
         "endTime": 36000,
@@ -32,8 +35,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -80,6 +86,9 @@
       "TotalUnits": 200
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "Daypart": {
         "endTime": 36000,
@@ -107,8 +116,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [],
@@ -162,12 +174,12 @@
   "GuaranteedDemoId": 31,
   "Id": 248,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": {
-    "Count": 100,
-    "Display": "Top 100",
-    "Id": 100
+    "Display": "All",
+    "Id": 1
   },
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Markets": [],
   "Notes": null,
   "PostType": 1,

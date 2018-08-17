@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, Nav, NavItem } from 'react-bootstrap';
-import { Grid } from 'react-redux-grid';
-import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
+import { Grid, Actions } from 'react-redux-grid';
+import { archiveUnlinkedIscis, toggleUnlinkedTab, rescrubUnlinkedIscis, undoArchivedIscis, closeUnlinkedIsciModal } from 'Ducks/post';
 import { generateGridConfig } from './util';
 import MapUnlinkedIsciModal from '../MapUnlinkedIsciModal/index';
 
+const { SelectionActions: { deselectAll, selectRow } } = Actions;
 
-const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } } }) => ({
-	modal,
+const mapStateToProps = ({ app: { modals: { postUnlinkedIsciModal: modal } }, grid, selection, dataSource }) => ({
+  modal,
+  selection,
+  dataSource,
+  grid,
 });
 
 const mapDispatchToProps = dispatch => (
@@ -18,7 +22,10 @@ const mapDispatchToProps = dispatch => (
     closeUnlinkedIsciModal,
     rescrubIscis: rescrubUnlinkedIscis,
     archiveIscis: archiveUnlinkedIscis,
+    undoArchive: undoArchivedIscis,
     toggleTab: toggleUnlinkedTab,
+    deselectAll,
+    selectRow,
   }, dispatch)
 );
 
@@ -69,7 +76,13 @@ export class UnlinkedIsciModal extends Component {
                 <NavItem eventKey="unlinked">Unlinked ISCIs</NavItem>
                 <NavItem eventKey="archived">Archived ISCIs</NavItem>
             </Nav>
-            <Grid {...grid} data={unlinkedIscis} store={this.context.store} height={460} />
+            <Grid
+              {...grid}
+              key={activeTab}
+              data={unlinkedIscis}
+              store={this.context.store}
+              height={460}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>
@@ -95,7 +108,11 @@ UnlinkedIsciModal.propTypes = {
   unlinkedIscis: PropTypes.array.isRequired,
   toggleTab: PropTypes.func.isRequired,
   archiveIscis: PropTypes.func.isRequired,
+  undoArchive: PropTypes.func.isRequired,
   closeUnlinkedIsciModal: PropTypes.func.isRequired,
+  dataSource: PropTypes.object.isRequired,
+  selection: PropTypes.object.isRequired,
+  grid: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UnlinkedIsciModal);

@@ -24,12 +24,22 @@ using TimeSpan = Tam.Maestro.Services.ContractInterfaces.InventoryBusinessObject
 
 namespace Services.Broadcast.ApplicationServices
 {
+    public class DownloadAndProcessWWTVFilesResponse
+    {
+        public List<string> FilesFoundToProcess { get; set; } = new List<string>();
+        public List<string> FailedDownloads { get; set; } = new List<string>();
+        public Dictionary<string, List<AffidavitValidationResult>> ValidationErrors { get; set; } = new Dictionary<string, List<AffidavitValidationResult>>();
+        public List<AffidavitSaveResult> AffidavitSaveResults { get; set; } = new List<AffidavitSaveResult>();
+    }
+
+
+
     public interface IAffidavitPostProcessingService : IApplicationService
     {
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// </summary>
-        void DownloadAndProcessWWTVFiles(string userName);
+        DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName);
 
         AffidavitSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
     }
@@ -43,7 +53,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
-        private const string HTTP_ACCEPT_HEADER = "application/json";
 
 
         public AffidavitPostProcessingService(
@@ -60,15 +69,16 @@ namespace Services.Broadcast.ApplicationServices
         }
 
 
-
         /// <summary>
         /// Downloads the WWTV processed files and calls the affidavit processing service
         /// return true if download success, false if download fails (use for loggin)
         /// This involves FTP 
         /// </summary>
-        public void DownloadAndProcessWWTVFiles(string userName)
+        public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
         {
             List<string> filesToProcess;
+            var response = new DownloadAndProcessWWTVFilesResponse();
+
             try
             {
                 filesToProcess = _GetWWTVFTPFileNames();
@@ -79,9 +89,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
 
+            response.FilesFoundToProcess.AddRange(filesToProcess);
             if (!filesToProcess.Any())
             {
-                return;
+                return response;
             }
 
             var inboundFtpPath = _WWTVFtpHelper.GetInboundPath();
@@ -97,6 +108,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception e)
                 {
                     failedDownloads.Add(filePath + " Reason: " + e);
+                    response.FailedDownloads.AddRange(failedDownloads);
                     continue; // skip to next file 
                 }
                 string fileName = Path.GetFileName(filePath);
@@ -114,12 +126,19 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 var result = ProcessFileContents(userName, fileName, fileContents);
-
+                response.AffidavitSaveResults.Add(result);
                 if (result.ValidationResults.Any())
-                    _affidavitEmailProcessorService.ProcessAndSendValidationErrors(fileName, result.ValidationResults,fileContents);
+                {
+                    _affidavitEmailProcessorService.ProcessAndSendValidationErrors(fileName, result.ValidationResults,
+                        fileContents);
+
+                    response.ValidationErrors.Add(fileName, result.ValidationResults);
+                }
             }
 
             _affidavitEmailProcessorService.ProcessAndSendFailedFiles(failedDownloads,inboundFtpPath);
+
+            return response;
         }
 
         public AffidavitSaveResult ProcessFileContents(string userName, string fileName, string fileContents)
@@ -191,7 +210,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Deals with fact that time comes in 2 formats  HHMMTT and HMMTT 
         /// (single and double digit hour which is not supported properly by .NET library)
         /// </summary>
-        private static System.TimeSpan ExtractTimeHacky(string timeToParse, List<AffidavitValidationResult> validationErrors, string fieldName, int recordNumber)
+        private static System.TimeSpan ExtractStrataTime(string timeToParse, List<AffidavitValidationResult> validationErrors, string fieldName, int recordNumber)
         {
             Regex regExp = new Regex(@"^(?<hours>(([0][1-9]|[1][0-2]|[0-9])))(?<minutes>([0-5][0-9]))(?<ampm>A|P)$");
             var match = regExp.Match(timeToParse);
@@ -219,6 +238,11 @@ namespace Services.Broadcast.ApplicationServices
             return result.TimeOfDay;
         }
 
+        private System.TimeSpan ExtractKeepingTracTime(string timeToParse,List<AffidavitValidationResult> validationErrors, string fieldName, int recordNumber)
+        {
+            return ExtractDateTime(timeToParse, validationErrors, fieldName, recordNumber);
+        }
+
         private System.TimeSpan ExtractDateTime(string datetime, List<AffidavitValidationResult> validationErrors, string fieldName, int recordNumber)
         {
             if (!DateTime.TryParse(datetime, out DateTime parsedTime))
@@ -236,7 +260,6 @@ namespace Services.Broadcast.ApplicationServices
         }
         private AffidavitSaveRequest _MapWWTVFileToAffidavitFile(string fileContents,  AffidavitSaveRequest affidavitSaveRequest, List<AffidavitValidationResult> validationErrors)
         {
-            affidavitSaveRequest.Source = (int) AffidaviteFileSourceEnum.Strata;
             affidavitSaveRequest.Details = new List<AffidavitSaveRequestDetail>();
 
             WhosWatchingTVPostProcessingFile jsonFile;
@@ -255,15 +278,12 @@ namespace Services.Broadcast.ApplicationServices
                 return affidavitSaveRequest;
             }
 
+            AffidaviteFileSourceEnum inventorySource;
             for (var recordNumber = 0; recordNumber < jsonFile.Details.Count; recordNumber++)
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
-                var airTime = jsonDetail.Date.Add(ExtractTimeHacky(jsonDetail.Time, validationErrors, "Time", recordNumber));
-                var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, validationErrors, "LeadInEndTime", recordNumber));
-                var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, validationErrors, "LeadOutStartTime", recordNumber));
-
-                if (!Enum.TryParse(jsonDetail.InventorySource, out AffidaviteFileSourceEnum inventorySource))
+                if (!Enum.TryParse(jsonDetail.InventorySource, out inventorySource))
                 {
                     validationErrors.Add(new AffidavitValidationResult()
                     {
@@ -272,6 +292,23 @@ namespace Services.Broadcast.ApplicationServices
                         InvalidLine = recordNumber
                     });
                 }
+                else
+                {
+                    affidavitSaveRequest.Source = (int)inventorySource;
+                }
+
+                DateTime airTime = DateTime.Now;
+
+                if (affidavitSaveRequest.Source == (int) AffidaviteFileSourceEnum.Strata)
+                {
+                    airTime = jsonDetail.Date.Add(ExtractStrataTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
+                }
+                else if (affidavitSaveRequest.Source == (int)AffidaviteFileSourceEnum.KeepingTrac)
+                {
+                    airTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
+                }
+                var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, validationErrors, "LeadInEndTime", recordNumber));
+                var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, validationErrors, "LeadOutStartTime", recordNumber));
 
                 var affidavitSaveRequestDetail = new AffidavitSaveRequestDetail()
                 {
@@ -299,11 +336,19 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (jsonDetail.Demographics != null)
                 {
-                    affidavitSaveRequestDetail.Demographics = jsonDetail.Demographics.Select(y => new AffidavitDemographics()
+                    affidavitSaveRequestDetail.Demographics = jsonDetail.Demographics.Select(y =>
                     {
-                        AudienceId = _AudienceCache.GetDisplayAudienceByCode(y.Demographic).Id,
-                        OvernightImpressions = y.OvernightImpressions,
-                        OvernightRating = y.OvernightRating
+                        string xtransformedCode;
+                        if (_ValidationAffidavitDemo(validationErrors, y, recordNumber, inventorySource,out xtransformedCode))
+                            return null;
+                        var audienceId = _AudienceCache.GetDisplayAudienceByCode(xtransformedCode).Id;
+
+                        return new AffidavitDemographics()
+                        {
+                            AudienceId = audienceId,
+                            OvernightImpressions = y.OvernightImpressions,
+                            OvernightRating = y.OvernightRating
+                        };
                     }).ToList();
 
                 }
@@ -311,6 +356,34 @@ namespace Services.Broadcast.ApplicationServices
                 affidavitSaveRequest.Details.Add(affidavitSaveRequestDetail);
             }
             return affidavitSaveRequest;
+        }
+
+        private bool _ValidationAffidavitDemo(List<AffidavitValidationResult> validationErrors, AffidavitDemographics demo, int recordNumber, AffidaviteFileSourceEnum inventorySource,out string xtransformedCode)
+        {
+            xtransformedCode = demo.Demographic;
+            if (inventorySource == AffidaviteFileSourceEnum.KeepingTrac)
+            {
+                if (xtransformedCode.StartsWith("ad",StringComparison.CurrentCultureIgnoreCase))
+                {
+                    xtransformedCode = "A" + xtransformedCode.Substring(2);
+                }
+                else if (xtransformedCode.StartsWith("C", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    xtransformedCode = "K" + xtransformedCode.Substring(2);
+                }
+            }
+            if (!_AudienceCache.IsValidAudienceCode(xtransformedCode))
+            {
+                validationErrors.Add(new AffidavitValidationResult()
+                {
+                    ErrorMessage = "is invalid demo/audience code," + demo.Demographic + ".",
+                    InvalidField = "Demographic Code",
+                    InvalidLine = recordNumber
+                });
+                return true;
+            }
+
+            return false;
         }
 
         private string _DownloadFileFromWWTVFtpToString(string fileName)

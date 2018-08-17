@@ -85,13 +85,9 @@ namespace Services.Broadcast.BusinessEngines
             Dictionary<int, int> marketRankings,
             List<LookupDto> finalProposalMarkets)
         {
-            if (proposal.BlackoutMarketGroupId != null && proposal.BlackoutMarketGroupId != ProposalEnums.ProposalMarketGroups.Custom)
+            if (proposal.BlackoutMarketGroupId == ProposalEnums.ProposalMarketGroups.All)
             {
-                var excludedMarketGroup = _GetMarketListByGroup(
-                    allMarkets,
-                    marketRankings,
-                    proposal.BlackoutMarketGroupId.Value);
-                finalProposalMarkets.RemoveAll(m => excludedMarketGroup.Select(e => e.Id).ToList().Contains(m.Id));
+                finalProposalMarkets.RemoveAll(m => allMarkets.Select(e => e.Id).ToList().Contains(m.Id));
             }
         }
 
@@ -116,24 +112,10 @@ namespace Services.Broadcast.BusinessEngines
             List<LookupDto> allMarkets,
             Dictionary<int, int> marketRankings)
         {
-            if (proposal.MarketGroupId != ProposalEnums.ProposalMarketGroups.Custom)
+            if (proposal.MarketGroupId == ProposalEnums.ProposalMarketGroups.All)
             {
-                finalProposalMarkets.AddRange(_GetMarketListByGroup(allMarkets, marketRankings, proposal.MarketGroupId));
+                finalProposalMarkets.AddRange(allMarkets);
             }
-        }
-
-        private IEnumerable<LookupDto> _GetMarketListByGroup(List<LookupDto> allMarkets, Dictionary<int, int> marketRankings, ProposalEnums.ProposalMarketGroups proposalMarketsGroup)
-        {
-            if (proposalMarketsGroup == ProposalEnums.ProposalMarketGroups.All)
-            {
-                return allMarkets;
-            }
-
-            var sortedMarkets = allMarkets.Where(m => marketRankings.Select(r => r.Key).Contains(m.Id)).OrderBy(m => marketRankings[m.Id]).ToList();
-
-            var applicableMarkets = sortedMarkets.Take((int) proposalMarketsGroup).ToList();
-
-            return applicableMarkets;
         }
     }
 }

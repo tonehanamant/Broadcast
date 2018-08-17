@@ -25,12 +25,12 @@ namespace Services.Broadcast.Converters.RateImport
         {
             try
             {
-                var message = DeserializeAaaaMessage(rawStream);
+                var message = _DeserializeAaaaMessage(rawStream);
 
                 System.Diagnostics.Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
                 var resultFile = BuildRatesFile(message, inventoryFile);
-                resultFile.StationContacts = ExtractContactData(message);
+                resultFile.StationContacts = _ExtractContactData(message);
             }
             catch (Exception e)
             {
@@ -45,16 +45,16 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.StartDate = message.Proposal.startDate;
             inventoryFile.EndDate = message.Proposal.endDate;
 
-            inventoryFile.InventoryManifests.AddRange(BuildStationProgramList(message.Proposal));
+            inventoryFile.InventoryManifests.AddRange(_BuildStationProgramList(message.Proposal));
 
             return inventoryFile;
         }
 
-            private List<StationInventoryManifest> BuildStationProgramList(AAAAMessageProposal proposal)
+            private List<StationInventoryManifest> _BuildStationProgramList(AAAAMessageProposal proposal)
             {
                 List<StationInventoryManifest> manifests = new List<StationInventoryManifest>();
 
-                var audienceMap = GetAudienceMap(proposal.AvailList.DemoCategories);
+                var audienceMap = _GetAudienceMap(proposal.AvailList.DemoCategories);
 
                 List<string> invalidStations = new List<string>();
                 var validStations = _GetValidStations(proposal.Outlets.Select(o => o.callLetters).ToList(),invalidStations);
@@ -161,7 +161,7 @@ namespace Services.Broadcast.Converters.RateImport
                             continue;
                         }
 
-                        var spotLengthId = SpotLengthIdsByLength[spotLength];
+                        var spotLengthId = SpotLengths[spotLength];
 
                         if (availLine.Periods != null && availLine.Periods.Count() > 0)
                         {
@@ -169,12 +169,12 @@ namespace Services.Broadcast.Converters.RateImport
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
-                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLinePeriod.Rate, programName, callLetters, fileProblems);
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
 
                                 var manifestAudiences = _GetManifestAudienceListForAvailLine(
                                     proposal,
                                     audienceMap,
-                                    ToDemoValueDict(availLinePeriod.DemoValues));
+                                    _ToDemoValueDict(availLinePeriod.DemoValues));
 
                                 var periodManifest = new StationInventoryManifest()
                                 {
@@ -210,7 +210,7 @@ namespace Services.Broadcast.Converters.RateImport
                 AAAAMessageProposalAvailListAvailLineWithPeriods availLine, string stationCallLetters, List<InventoryFileProblem> fileProblems)
             {
                 var manifestRates = new List<StationInventoryManifestRate>();
-                var spotLength = SpotLengthsById[spotLengthId];
+                var spotLength = SpotLengths.Single(x=>x.Value == spotLengthId).Key;
 
                 var availLineRate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
 
@@ -242,29 +242,18 @@ namespace Services.Broadcast.Converters.RateImport
 
         private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
         {
-            if (!SpotLengthIdsByLength.ContainsKey(spotLength))
+            return !SpotLengths.ContainsKey(spotLength) ? new InventoryFileProblem()
             {
-                return 
-                new InventoryFileProblem()
-                {
-                    ProblemDescription =
-                        string.Format(
-                            "Unknown spot length found: {0}",
-                            spotLength),
-                    ProgramName = programName,
-                    StationLetters = stationLetters
-                };
-            }
-
-            return null;
+                ProblemDescription = $"Unknown spot length found: {spotLength}",
+                ProgramName = programName,
+                StationLetters = stationLetters
+            } : null;
         }
 
-            private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId,
+            private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId, int spotLength,
                 string linePeriodRate, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
             {
                 var manifestRates = new List<StationInventoryManifestRate>();
-                var spotLength = SpotLengthsById[spotLengthId];
-
                 var availLineRate = string.IsNullOrEmpty(linePeriodRate) ? 0 : decimal.Parse(linePeriodRate);
 
                 if (spotLength == 30)
@@ -321,19 +310,19 @@ namespace Services.Broadcast.Converters.RateImport
                             continue;
                         }
 
-                        var spotLengthId = SpotLengthIdsByLength[spotLength];
+                        var spotLengthId = SpotLengths[spotLength];
 
                         var manifestAudiences = _GetManifestAudienceListForAvailLine(
                             proposal,
                             audienceMap,
-                            ToDemoValueDict(availLine.DemoValues));
+                            _ToDemoValueDict(availLine.DemoValues));
 
                         if (availLine.Periods != null && availLine.Periods.Count() > 0)
                         {
                             //create a manifest for each period
                             foreach (var availLinePeriod in availLine.Periods)
                             {
-                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, availLine.Rate, programName, callLetters, fileProblems);
+                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLine.Rate, programName, callLetters, fileProblems);
 
                                 var periodManifest = new StationInventoryManifest()
                                 {
@@ -410,7 +399,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var programName = availLine.AvailName;
 
-            var daypart = GetDisplayDaypartForProgram(availLine);
+            var daypart = _GetDisplayDaypartForProgram(availLine);
             var manifestDaypart = new StationInventoryManifestDaypart()
             {
                 Daypart = daypart,
@@ -427,7 +416,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var programName = availLine.AvailName;
 
-            var daypart = GetDisplayDaypartForProgram(availLine);
+            var daypart = _GetDisplayDaypartForProgram(availLine);
             var manifestDaypart = new StationInventoryManifestDaypart()
             {
                 Daypart = daypart,
@@ -440,7 +429,7 @@ namespace Services.Broadcast.Converters.RateImport
             };
         }
 
-        private Dictionary<string, decimal> ToDemoValueDict(AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] periodsDemoValues)
+        private Dictionary<string, decimal> _ToDemoValueDict(AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] periodsDemoValues)
             {
                 var demoValues = new Dictionary<string, decimal>();
                 foreach (var demo in periodsDemoValues)
@@ -450,7 +439,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return demoValues;
             }
 
-            private Dictionary<string, decimal> ToDemoValueDict(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriodDemoValue[] detailedPeriodDemoValues)
+            private Dictionary<string, decimal> _ToDemoValueDict(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriodDemoValue[] detailedPeriodDemoValues)
             {
                 var demoValues = new Dictionary<string, decimal>();
                 foreach (var demo in detailedPeriodDemoValues)
@@ -460,7 +449,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return demoValues;
             }
 
-            private Dictionary<string, DisplayAudience> GetAudienceMap(AAAAMessageProposalAvailListDemoCategory[] demos)
+            private Dictionary<string, DisplayAudience> _GetAudienceMap(AAAAMessageProposalAvailListDemoCategory[] demos)
             {
                 var result = new Dictionary<string, DisplayAudience>();
 
@@ -471,13 +460,13 @@ namespace Services.Broadcast.Converters.RateImport
 
                 foreach (var demo in demos)
                 {
-                    result.Add(demo.DemoId, GetAudienceForDemo(demo));
+                    result.Add(demo.DemoId, _GetAudienceForDemo(demo));
                 }
 
                 return result;
             }
 
-            private DisplayAudience GetAudienceForDemo(AAAAMessageProposalAvailListDemoCategory demo)
+            private DisplayAudience _GetAudienceForDemo(AAAAMessageProposalAvailListDemoCategory demo)
             {
                 string audienceSubcategory = null;
                 switch (demo.Group.ToString())
@@ -518,7 +507,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return result;
             }
 
-            private DisplayDaypart GetDisplayDaypartForProgram(AAAAMessageProposalAvailListAvailLineWithDetailedPeriods availLine)
+            private DisplayDaypart _GetDisplayDaypartForProgram(AAAAMessageProposalAvailListAvailLineWithDetailedPeriods availLine)
             {
                 DisplayDaypart daypart = new DisplayDaypart();
 
@@ -531,10 +520,10 @@ namespace Services.Broadcast.Converters.RateImport
                 daypart.Saturday = availLine.DayTimes.DayTime.Days.Saturday.ToUpper().Equals("Y");
                 daypart.Sunday = availLine.DayTimes.DayTime.Days.Sunday.ToUpper().Equals("Y");
 
-                daypart.StartTime = GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
+                daypart.StartTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
 
                 //We substract 1 second because the end is not included in the daypart/timespan
-                daypart.EndTime = GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
+                daypart.EndTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
                 if (daypart.EndTime < 0)
                 {
                     daypart.EndTime += AssemblyImportHelper.SecondsPerDay;
@@ -545,7 +534,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return daypart;
             }
 
-            private DisplayDaypart GetDisplayDaypartForProgram(AAAAMessageProposalAvailListAvailLineWithPeriods availLine)
+            private DisplayDaypart _GetDisplayDaypartForProgram(AAAAMessageProposalAvailListAvailLineWithPeriods availLine)
             {
                 DisplayDaypart daypart = new DisplayDaypart();
 
@@ -558,10 +547,10 @@ namespace Services.Broadcast.Converters.RateImport
                 daypart.Saturday = availLine.DayTimes.DayTime.Days.Saturday.ToUpper().Equals("Y");
                 daypart.Sunday = availLine.DayTimes.DayTime.Days.Sunday.ToUpper().Equals("Y");
 
-                daypart.StartTime = GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
+                daypart.StartTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
 
                 //We substract 1 second because the end is not included in the daypart/timespan
-                daypart.EndTime = GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
+                daypart.EndTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
                 if (daypart.EndTime < 0)
                 {
                     daypart.EndTime += AssemblyImportHelper.SecondsPerDay;
@@ -572,14 +561,14 @@ namespace Services.Broadcast.Converters.RateImport
                 return daypart;
             }
 
-            private int GetTimeInSecondsFrom24HourTimeString(string timeString) // "24:30" => 1800
+            private int _GetTimeInSecondsFrom24HourTimeString(string timeString) // "24:30" => 1800
             {
                 var hour = System.Convert.ToInt32(timeString.Substring(0, 2)) % 24;
                 var minutes = System.Convert.ToInt32(timeString.Substring(3, 2));
                 return hour *AssemblyImportHelper.SecondsPerHour + minutes *AssemblyImportHelper.SecondsPerMinute; //in seconds
             }
 
-            private AAAAMessage DeserializeAaaaMessage(Stream stream)
+            private AAAAMessage _DeserializeAaaaMessage(Stream stream)
             {
                 AAAAMessage message;
 
@@ -591,7 +580,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return message;
             }
 
-            private List<StationContact> ExtractContactData(AAAAMessage message)
+            private List<StationContact> _ExtractContactData(AAAAMessage message)
             {
                 var contacts = new List<StationContact>();
                 var stationLetters = message.Proposal.Outlets.Select(s => s.callLetters).ToList();
@@ -631,7 +620,7 @@ namespace Services.Broadcast.Converters.RateImport
                     {
                         stationContact.Type = StationContact.StationContactType.Station;
                     }
-                    else if (IsContactARep(repTeamNames, stationContact))
+                    else if (_IsContactARep(repTeamNames, stationContact))
                     {
                         stationContact.Type = StationContact.StationContactType.Rep;
                     }
@@ -646,7 +635,7 @@ namespace Services.Broadcast.Converters.RateImport
                 return contacts;
             }
 
-            private static bool IsContactARep(List<string> repTeamNames, StationContact stationContact)
+            private static bool _IsContactARep(List<string> repTeamNames, StationContact stationContact)
             {
                 return repTeamNames.Where(rt => stationContact.Company.ToUpper().Contains(rt.ToUpper())).Count() > 0;
             }

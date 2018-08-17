@@ -28,12 +28,82 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public AffidavitPreprocessingServiceIntegrationTests()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
 
-            _AffidavitPreprocessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
-            _WWTVSharedNetworkHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IWWTVSharedNetworkHelper>();
+            _AffidavitPreprocessingService = IntegrationTestApplicationServiceFactory
+                .GetApplicationService<IAffidavitPreprocessingService>();
+            _WWTVSharedNetworkHelper =
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IWWTVSharedNetworkHelper>();
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_ValidFileKeepingTrac()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\KeepingTrac_Test_Clean.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_MissingHeadersKeepingTrac()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\KeepingTrac_Test_MissingHeaders.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_MissingDataKeepingTrac()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\KeepingTrac_Test_MissingData.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -130,7 +200,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var fileNames = new List<string>() { @".\Files\StrataSBMSInvoicePostExportValid.xlsx", @".\Files\StrataSBMSInvoicePostExportValid.xlsx" };
+                var fileNames = new List<string>()
+                {
+                    @".\Files\StrataSBMSInvoicePostExportValid.xlsx",
+                    @".\Files\StrataSBMSInvoicePostExportValid.xlsx"
+                };
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -147,18 +221,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-
         [UseReporter(typeof(DiffReporter))]
         [Test]
         // use for manual testing and not automated running 
-        public void Test_ProcessErrorFiles() //Errors returned from WWTV
+        public void Test_ProcessErrorFiles_Empty() //Errors returned from WWTV
         {
-            FtpServiceStubb.ResponseFromGetFileList = new List<string>()
-            {
-                "Special_Ftp_Phantom_File.txt"
-            };
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
 
-            _AffidavitPreprocessingService.ProcessErrorFiles();
+            var srv = IntegrationTestApplicationServiceFactory
+                .GetApplicationService<IAffidavitPreprocessingService>();
+
+            srv.ProcessErrorFiles();
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(MailMessage), "Attachments");
@@ -170,29 +245,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             try
             {
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated, jsonSettings));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated,
+                    jsonSettings));
             }
             finally
             {
                 EmailerServiceStubb.ClearLastMessage();
-                FtpServiceStubb.CleanUpCreatedFiles();
             }
         }
 
-        [Ignore]
-        [Test]
-        public void Testerester()
-        {
-            var src = "ddr.txt";
-            string  dest = "\\\\Cadfs10\\tbn\\WWTVErrors\\ddr.txt";
-            string share = "\\\\Cadfs10\\tbn\\WWTVErrors";
-            string result = "svc_wwtvdata@crossmw.com";
-            result = "78!ttwG&Dc$4fB2xZ94x";
 
-            using (WWTVSharedNetworkHelper.GetConnection(share))
+        [UseReporter(typeof(DiffReporter))]
+        [Test]
+        // use for manual testing and not automated running 
+        public void Test_ProcessErrorFiles_SingleFile() //Errors returned from WWTV
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+            var srv = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
+
+            srv.ProcessErrorFiles();
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(MailMessage), "Attachments");
+
+            var jsonSettings = new JsonSerializerSettings()
             {
-                File.Copy(src, dest);
-                File.Delete(dest);
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            try
+            {
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(EmailerServiceStubb.LastMailMessageGenerated,
+                    jsonSettings));
+            }
+            finally
+            {
+                EmailerServiceStubb.ClearLastMessage();
             }
         }
     }

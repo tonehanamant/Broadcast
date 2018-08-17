@@ -5,6 +5,9 @@
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
@@ -20,8 +23,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -153,6 +159,9 @@
       "TotalUnits": 10
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
@@ -180,8 +189,11 @@
         }
       ],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -297,6 +309,9 @@
       "TotalUnits": 30
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
@@ -305,8 +320,11 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
+      "GoalBudget": null,
+      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -352,8 +370,9 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "ProposalName": "Proposal Test",

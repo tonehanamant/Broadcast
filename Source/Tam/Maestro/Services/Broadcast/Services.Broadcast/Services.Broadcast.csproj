@@ -222,6 +222,8 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsService.cs" />
+    <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
+    <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
     <Compile Include="ApplicationServices\WWTVFtpHelper.cs" />
@@ -245,6 +247,15 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="MediaMonthCrunchCache.cs" />
+    <Compile Include="Converters\SigmaConverter.cs" />
+    <Compile Include="Entities\BvsFile.cs" />
+    <Compile Include="Entities\BvsFileDetail.cs" />
+    <Compile Include="Entities\OutboundPostLogFileValidationResult.cs" />
+    <Compile Include="Entities\PostLogFileSourceEnum.cs" />
+    <Compile Include="Entities\PostLogProcessingStatusEnum.cs" />
+    <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
+    <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
     <Compile Include="FtpService.cs" />
     <Compile Include="Entities\AffidavitFileProblems.cs" />
@@ -290,14 +301,14 @@
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
     <Compile Include="Entities\PostedContractedProposalsDto.cs" />
-    <Compile Include="Entities\ClientPostScrubbingProposalDto.cs" />
+    <Compile Include="Entities\DTO\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHaveSingleSharedPostingBooks.cs" />
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
-    <Compile Include="Entities\NsiPostReport.cs" />
+    <Compile Include="Entities\DTO\NsiPostReport.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
@@ -307,10 +318,10 @@
     <Compile Include="Entities\OpenMarketRefineProgramsRequest.cs" />
     <Compile Include="Entities\DefaultProjectionBooksDto.cs" />
     <Compile Include="Entities\PostingBookResultDto.cs" />
-    <Compile Include="Entities\ClientPostScrubbingProposalDetailDto.cs" />
+    <Compile Include="Entities\DTO\ClientPostScrubbingProposalDetailDto.cs" />
     <Compile Include="Entities\ProgramSearchRequest.cs" />
     <Compile Include="Entities\ProposalChangeRequest.cs" />
-    <Compile Include="Entities\ProposalDetailPostScrubbingDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailPostScrubbingDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
     <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
@@ -505,6 +516,7 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
+    <Compile Include="Repositories\PostLogRepository.cs" />
     <Compile Include="Repositories\ShowTypeRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\MarketDmaMapRepository.cs" />

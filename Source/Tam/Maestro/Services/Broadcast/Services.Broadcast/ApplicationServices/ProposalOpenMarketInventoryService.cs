@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
@@ -8,7 +7,6 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
-using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -32,6 +30,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalProgramsCalculationEngine _ProposalProgramsCalculationEngine;
         private readonly IProposalOpenMarketsTotalsCalculationEngine _ProposalOpenMarketsTotalsCalculationEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly ISpotLengthRepository _SpotLegthRepository;
 
         internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
 
@@ -49,6 +48,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _SpotLegthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
         }
 
         public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId)
@@ -292,16 +292,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _PopulateMarkets(ProposalDetailOpenMarketInventoryDto dto, bool ignoreExistingAllocation)
         {
-            _SetProposalInventoryDetailSpotLength(dto);
             _SetProposalInventoryDetailDaypart(dto);
+            _SetProposalInventoryDetailSpotLength(dto);
 
-            var proposalMarketIds =
-                ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion,
+            var proposalMarketIds = ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion,
                     dto.DetailId).Select(m => (short)m.Id).ToList();
-
             var programs = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>()
                 .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate, dto.DetailFlightEndDate,
-                    dto.DetailSpotLength, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, dto.DetailId);
+                    dto.DetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, dto.DetailId);
 
             _SetFlightWeeks(dto, programs);
 

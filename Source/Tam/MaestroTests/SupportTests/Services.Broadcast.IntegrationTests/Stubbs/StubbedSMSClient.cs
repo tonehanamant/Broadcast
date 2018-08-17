@@ -157,7 +157,24 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_SharedFolder_Password":
                     result = "password";
                     break;
-                    
+                case "DefaultNtiConversionFactor":
+                   result = "0.2";
+                   break;   
+                case "WWTV_SharedFolder":
+                    result = "C:\\WWTV\\WWTVData";
+                    break;
+                case "WWTV_PostLogDropFolder":
+                    result = @"E:\temp\wwtv\PostLogPreprocessing";
+                    break;
+                case "WWTV_PostLogErrorFolder":
+                    result = @"E:\temp\wwtv\WWTVErrors\PostLogPreprocessing";
+                    break;
+                case "WWTV_PostLogFtpOutboundFolder":
+                    result = "InPrePost";
+                    break;
+                case "MediaMonthCruchCacheSlidingExpirationSeconds":
+                    result = "24";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

@@ -49,6 +49,7 @@
   "MYRS6",
   "MYRS7",
   "MYRS8",
+  "MYSSD1",
   "NSI1",
   "NSI2",
   "NSI3",
@@ -57,5 +58,9 @@
   "NSIADU2",
   "NSIADU3",
   "NSIADU4",
+  "NTIA1",
+  "NTIA2",
+  "NTIA3",
+  "NTIA4",
   "PIT1"
 ]

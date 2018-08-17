@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
@@ -78,10 +79,32 @@ namespace BroadcastComposerWeb.Controllers
             ViewBag.Message = "Cache cleared, good luck with that!";
             return View("Index");
         }
+        [HttpPost]
+        public ActionResult ClearMediaMonthCrunchCache()
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
+            service.ClearMediaMonthCrunchCache();
+
+            ViewBag.Message = "Media Month Crunch Cache cleared, good luck!";
+            return View("Index");
+        }
 
         public void ClearSystemParameterCache()
         {
             SMSClient.Handler.ClearSystemComponentParameterCache(BroadcastServiceSystemParameterNames.ComponentID, null);
+        }
+
+        [HttpGet]
+        public ActionResult TestFtpAccess()
+        {
+            FtpService srv = new FtpService();
+            WWTVFtpHelper helper = new WWTVFtpHelper(srv);
+            NetworkCredential creds = helper.GetClientCredentials();
+            var site = "ftp://" + helper.Host;
+            var list = srv.GetFileList(creds, site);
+            ViewBag.Message = "Get file worked w/o error!\r\n";
+            list.ForEach(f => ViewBag.Message += f + "\r\n");
+            return View("Index");
         }
 
     }

@@ -7,16 +7,10 @@ namespace Services.Broadcast.Entities
     [Serializable]
     public class BvsSaveRequest
     {
-        public string UserName { get; set; }
-        public List<BvsFile> BvsFiles { get; set; }
-
-        public BvsSaveRequest()
-        {
-            BvsFiles = new List<BvsFile>();
-        }
+        public List<BvsFileRequest> BvsFiles { get; set; } = new List<BvsFileRequest>();
     }
 
-    public class BvsFile
+    public class BvsFileRequest
     {
         private Stream _BvsStream;
         public string BvsFileName { get; set; }

@@ -14,8 +14,10 @@
         <div id="broadcast_navbar_navs" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Rates" ? "active" : "")">@Html.ActionLink("Rate Cards", "Index", "Rates")</li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Planning" ? "active" : "")">@Html.ActionLink("Planning", "Index", "Planning")</li>
+                @*<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Planning" ? "active" : "")">@Html.ActionLink("Planning", "Index", "Planning")</li>*@
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Planning" ? "active" : "")"><a href="/broadcastreact/planning">Planning</a></li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")"><a href="/broadcastreact/tracker">Tracker</a></li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Tracker Pre Posting", "TrackerPrePosting", "Home")</li>
                 <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Post" ? "active" : "")">@Html.ActionLink("Post", "Index", "Post")</li>-->
                 <!--<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "LegacyPost" ? "active" : "")">@Html.ActionLink("Post", "Index", "PostPrePosting")</li>-->

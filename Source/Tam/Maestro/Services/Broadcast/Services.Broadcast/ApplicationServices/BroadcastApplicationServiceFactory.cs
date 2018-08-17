@@ -17,6 +17,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -118,12 +119,15 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostReportService, PostReportService>();
             unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();
 
+            unityContainer.RegisterType<IPostLogPreprocessingService, PostLogPreprocessingService>();
+
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 
             unityContainer.RegisterType<IEmailerService, EmailerService>();
 
             unityContainer.RegisterType<IWWTVFtpHelper, WWTVFtpHelper>();
             unityContainer.RegisterType<IFtpService, FtpService>();
+            unityContainer.RegisterType<IFileService, FileService>();
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
             unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
@@ -135,6 +139,9 @@ namespace Services.Broadcast.ApplicationServices
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
             DaypartCache.DaypartCacheInstance = new DaypartCache(daypartRepo);
             unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);
+
+            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory,unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
+            unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService
