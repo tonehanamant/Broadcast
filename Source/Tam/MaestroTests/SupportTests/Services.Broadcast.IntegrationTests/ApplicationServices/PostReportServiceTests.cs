@@ -125,8 +125,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetNsiPostReportDataWithAduNoAdjustments()
@@ -326,6 +325,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PostReportService.GetMyEventsReportData(26014);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReport_SimplifiedStationName()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostReportService.GetMyEventsReportData(253);
+                
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenerateMyEventsReport_UpdateTimeToNationalClock()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostReportService.GetMyEventsReportData(253);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
         }
     }
 }

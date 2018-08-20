@@ -134,6 +134,9 @@ const planning = {
   getShowTypes: query => (
     call(GET, `${apiBase}Proposals/FindShowType/${query}`, {})
   ),
+  rerunPostScrubing: (propId, propdetailid) => (
+    call(PUT, `${apiBase}Proposals/RerunScrubbing/${propId}/${propdetailid}`)
+  ),
 };
 
 // Calls

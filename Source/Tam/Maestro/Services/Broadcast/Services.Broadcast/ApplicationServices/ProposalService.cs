@@ -72,9 +72,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
-        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
-
+        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
         const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -127,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var ad = advertisers.Find(q => q.Id == p.Advertiser.Id);
                     if (ad != null)
-                        p.Advertiser.Display = ad.Display;                    
+                        p.Advertiser.Display = ad.Display;
                 }
 
                 return proposals;
@@ -201,7 +200,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CheckIfPostingDataHasChanged(ProposalDto saveRequest, ProposalDto proposal)
         {
-            foreach(var newDetail in saveRequest.Details)
+            foreach (var newDetail in saveRequest.Details)
             {
                 if (!newDetail.Id.HasValue)
                     continue;
@@ -455,7 +454,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _RecalculateAffidavitImpressions(ProposalDto proposalDto)
         {
-            foreach(var detail in proposalDto.Details)
+            foreach (var detail in proposalDto.Details)
             {
                 if (detail.Id.HasValue && detail.HasPostingDataChanged)
                 {
@@ -467,7 +466,7 @@ namespace Services.Broadcast.ApplicationServices
         private static void _SetProposalDetailSequenceNumbers(ProposalDto proposalDto)
         {
             var sequence = 1;
-            foreach(var detail in proposalDto.Details)
+            foreach (var detail in proposalDto.Details)
             {
                 detail.Sequence = sequence;
                 sequence++;
@@ -507,20 +506,22 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
 
             var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
-            proposalDto.Details.ForEach(detail => {
+            proposalDto.Details.ForEach(detail =>
+            {
                 //set default value for NTI Conversion factor
-                detail.NtiConversionFactor = detail.NtiConversionFactor == null 
+                detail.NtiConversionFactor = detail.NtiConversionFactor == null
                         ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 4, MidpointRounding.AwayFromZero)
                         : Math.Round(detail.NtiConversionFactor.Value, 4, MidpointRounding.AwayFromZero);
 
                 //set default value for My Events Report Name
-                detail.Quarters.ForEach(y => y.Weeks.ForEach(week => {
+                detail.Quarters.ForEach(y => y.Weeks.ForEach(week =>
+                {
                     if (string.IsNullOrWhiteSpace(week.MyEventsReportName))
-                    {   
+                    {
                         week.MyEventsReportName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(detail.DaypartCode, spotLengths.First(l => l.Value == detail.SpotLengthId).Key, week.StartDate, advertiser.Display);
                     }
-                }));                
-            });            
+                }));
+            });
         }
 
         private void _DeleteAnyOpenMarketAllocations(ProposalDto proposalDto)
@@ -953,7 +954,7 @@ namespace Services.Broadcast.ApplicationServices
                 isciDto.Days = $"{isciDto.Days}Sa";
             }
 
-            isciDto.Days = isciDto.Days.EndsWith( ISCI_DAYS_DELIMITER.ToString()) ? isciDto.Days.Remove(isciDto.Days.Length - 1) : isciDto.Days;
+            isciDto.Days = isciDto.Days.EndsWith(ISCI_DAYS_DELIMITER.ToString()) ? isciDto.Days.Remove(isciDto.Days.Length - 1) : isciDto.Days;
             if (string.IsNullOrWhiteSpace(isciDto.Days))
                 isciDto.Days = null;
         }
@@ -1074,7 +1075,7 @@ namespace Services.Broadcast.ApplicationServices
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
                 DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate),
-                NtiConversionFactor =  Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
+                NtiConversionFactor = Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
             };
 
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);

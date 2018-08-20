@@ -46,6 +46,7 @@ export class PageHeaderContainer extends Component {
         {!!unlinkedIscisLength &&
           <Button
             bsStyle="success"
+            disabled
             onClick={this.openUnlinkedIscis}
             bsSize="small"
           >

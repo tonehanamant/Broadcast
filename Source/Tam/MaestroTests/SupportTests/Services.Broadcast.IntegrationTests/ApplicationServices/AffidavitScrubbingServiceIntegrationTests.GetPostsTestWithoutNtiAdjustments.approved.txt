@@ -2,6 +2,7 @@
   "Advertiser": "Test Advertiser 9",
   "AdvertiserId": 37444,
   "ContractName": "NTI Adjustment Post Test 2",
+  "Equivalized": false,
   "GuaranteedAudienceId": 34,
   "HouseholdDeliveredImpressions": 2000.0,
   "PostType": 1,

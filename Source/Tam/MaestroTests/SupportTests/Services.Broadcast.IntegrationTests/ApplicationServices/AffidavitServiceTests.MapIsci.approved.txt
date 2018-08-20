@@ -281,7 +281,7 @@
       ],
       "AffidavitFileDetailProblems": [],
       "Affiliate": null,
-      "AirTime": 32400,
+      "AirTime": 10900,
       "Archived": false,
       "Demographics": [],
       "EstimateId": null,

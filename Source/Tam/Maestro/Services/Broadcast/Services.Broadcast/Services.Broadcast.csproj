@@ -247,6 +247,11 @@
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
+    <Compile Include="Entities\PostedContracts.cs" />
+    <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
+    <Compile Include="Entities\PostImpressionsData.cs" />
+    <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\BvsFile.cs" />
@@ -283,7 +288,6 @@
     <Compile Include="Entities\AffidavitClientScrub.cs" />
     <Compile Include="Entities\ScrubIsciRequest.cs" />
     <Compile Include="Entities\ScrubStatusOverrideRequest.cs" />
-    <Compile Include="Entities\ArchivedIscisDto.cs" />
     <Compile Include="Entities\MapIsciDto.cs" />
     <Compile Include="Entities\ProposalDetailPostingData.cs" />
     <Compile Include="Entities\ProposalScrubbingRequest.cs" />
@@ -300,7 +304,7 @@
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
-    <Compile Include="Entities\PostedContractedProposalsDto.cs" />
+    <Compile Include="Entities\DTO\PostedContractedProposalsDto.cs" />
     <Compile Include="Entities\DTO\ClientPostScrubbingProposalDto.cs" />
     <Compile Include="Entities\DaypartDto.cs" />
     <Compile Include="Entities\FlightWeekGroup.cs" />
@@ -359,7 +363,7 @@
     <Compile Include="Entities\SwapProposalDetailRequest.cs" />
     <Compile Include="Entities\TrafficDisplayDto.cs" />
     <Compile Include="Entities\OutboundAffidavitFileValidationResultDto.cs" />
-    <Compile Include="Entities\UnlinkedIscisDto.cs" />
+    <Compile Include="Entities\DTO\UnlinkedIscisDto.cs" />
     <Compile Include="Entities\ValidationWarningDto.cs" />
     <Compile Include="Entities\ValidIsciDto.cs" />
     <Compile Include="Entities\WhosWatchingTvSearchResult.cs" />
@@ -516,6 +520,7 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
+    <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\PostLogRepository.cs" />
     <Compile Include="Repositories\ShowTypeRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
@@ -526,7 +531,6 @@
     <Compile Include="Repositories\MediaMonthAndWeekAggregateRepository.cs" />
     <Compile Include="Repositories\NsiMarketRepository.cs" />
     <Compile Include="Repositories\NsiUniverseRepository.cs" />
-    <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Entities\PostFileDetail.cs" />
     <Compile Include="Repositories\ProgramNameRepository.cs" />

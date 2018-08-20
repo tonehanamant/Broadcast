@@ -12,7 +12,6 @@ using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
-using ControllerBase = Tam.Maestro.Web.Common.ControllerBase;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -103,5 +102,5 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().GetInitialData());
         }
-        }
+    }
 }

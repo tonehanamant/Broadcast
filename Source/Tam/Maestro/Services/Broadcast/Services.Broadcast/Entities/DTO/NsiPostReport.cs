@@ -87,13 +87,13 @@ namespace Services.Broadcast.Entities.DTO
                             string advertiser, List<LookupDto> proposalAudiences,
                             Dictionary<int, List<int>> audienceMappings,
                             Dictionary<int, int> spotLengthMappings,
-                            Dictionary<int, double> spotLengthMultipliers,
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, Dictionary<int, int>> nsiMarketRankings,
                             string guaranteedDemo, int guaranteedDemoId,
                             List<Tuple<DateTime, DateTime>> flights,
-                            bool withOvernightImpressions, bool equivalized, string proposalName)
+                            bool withOvernightImpressions, bool equivalized, string proposalName,
+                            IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             ProposalId = proposalId;
             WithOvernightImpressions = withOvernightImpressions;
@@ -117,14 +117,9 @@ namespace Services.Broadcast.Entities.DTO
                         .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.AudienceImpressions
                             .Where(i => audienceMappings.Where(m => m.Key == proposalAudience.Id).SelectMany(m => m.Value).Contains(i.Key))
                             .Select(i => i.Value).Sum());
-                        if (WithOvernightImpressions)
-                        {
-                            _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
-                        }
-                        if (Equivalized)
-                        {
-                            _EquivalizeImpressions(spotLengthMultipliers[spotLengthMappings.Single(x => x.Value == r.SpotLengthId).Key], ref audienceImpressions);
-                        }
+
+                        _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
+                        _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.SpotLengthId).Key, ref audienceImpressions);
 
                         return _MapNsiPostReportQuarterTabRow(advertiser, spotLengthMappings, mediaWeekMappings, r, audienceImpressions, stationMappings, nsiMarketRankings);
                     }).ToList()
@@ -147,7 +142,7 @@ namespace Services.Broadcast.Entities.DTO
 
         private string _GetFormattedSpotLengths(List<NsiPostReportQuarterSummaryTable> quarterTables, bool equivalized)
         {
-            string result =  string.Join(" & ", quarterTables.SelectMany(x => x.TableRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
+            string result = string.Join(" & ", quarterTables.SelectMany(x => x.TableRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
             if (equivalized)
             {
                 result += " (Equivalized)";
@@ -163,7 +158,7 @@ namespace Services.Broadcast.Entities.DTO
                                     Dictionary<string, DisplayBroadcastStation> stationMappings,
                                     Dictionary<int, Dictionary<int, int>> nsiMarketRankings)
         {
-            var foundStation = stationMappings.TryGetValue(new StationProcessingEngine().StripStationSuffix(inspecAffidavitDetailFile.Station), 
+            var foundStation = stationMappings.TryGetValue(new StationProcessingEngine().StripStationSuffix(inspecAffidavitDetailFile.Station),
                 out DisplayBroadcastStation currentStation);
 
             var rank = _CalculateRank(nsiMarketRankings, inspecAffidavitDetailFile.ProposalDetailPostingBookId, foundStation, currentStation);
@@ -294,29 +289,35 @@ namespace Services.Broadcast.Entities.DTO
             }
         }
 
-        private void _EquivalizeImpressions(double spotLengthMutiplier, ref Dictionary<int, double> audienceImpressions)
+        private void _EquivalizeImpressions(IImpressionAdjustmentEngine impressionAdjustmentEngine, int spotLength, ref Dictionary<int, double> audienceImpressions)
         {
-            foreach (var key in audienceImpressions.Keys.ToArray())
+            if (Equivalized)
             {
-                audienceImpressions[key] = audienceImpressions[key] * spotLengthMutiplier;
+                foreach (var key in audienceImpressions.Keys.ToArray())
+                {
+                    audienceImpressions[key] = impressionAdjustmentEngine.AdjustImpression(audienceImpressions[key], true, spotLength);
+                }
             }
         }
 
         private void _ApplyOvernightImpressions(Dictionary<int, double> audienceImpressions, Dictionary<int, double> overnightImpressions)
         {
-            if (audienceImpressions.Any())
+            if (WithOvernightImpressions)
             {
-                foreach (var audienceKey in overnightImpressions.Keys)
+                if (audienceImpressions.Any())
                 {
-                    if (audienceImpressions.Keys.Contains(audienceKey))
+                    foreach (var audienceKey in overnightImpressions.Keys)
                     {
-                        audienceImpressions[audienceKey] = overnightImpressions[audienceKey];
+                        if (audienceImpressions.Keys.Contains(audienceKey))
+                        {
+                            audienceImpressions[audienceKey] = overnightImpressions[audienceKey];
+                        }
                     }
                 }
-            }
-            else
-            {
-                audienceImpressions = overnightImpressions;
+                else
+                {
+                    audienceImpressions = overnightImpressions;
+                }
             }
         }
 

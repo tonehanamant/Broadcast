@@ -66,11 +66,6 @@ namespace Services.Broadcast
             return _MediaMonthAndWeekAggregate.GetDisplayMediaWeekById(ids);
         }
 
-        public List<MediaMonth> GetAllSweepsMonthsBeforeCurrentMonth()
-        {
-            return _MediaMonthAndWeekAggregate.GetAllSweepsMonthsBeforeCurrentMonth();
-        }
-
         public List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId)
         {
             return _MediaMonthAndWeekAggregate.GetMediaWeeksByMediaMonth(mediaMonthId);

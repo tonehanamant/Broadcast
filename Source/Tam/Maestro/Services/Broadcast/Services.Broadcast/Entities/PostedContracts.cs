@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class PostedContractedProposalsDto
-    {
-        public List<PostDto> Posts { get; set; }
-        public int UnlinkedIscis { get; set; }
-    }
-
-    public class PostDto
+    public class PostedContracts
     {
         public int ContractId { get; set; }
         public string ContractName { get; set; }
@@ -24,11 +17,6 @@ namespace Services.Broadcast.Entities
         public int AdvertiserId { get; set; }
         public string Advertiser { get; set; }
         public SchedulePostType PostType { get; set; }
-    }
-
-    public class PostImpressionsDataDto
-    {
-        public double Impressions { get; set; }
-        public double NtiConversionFactor { get; set; }
+        public bool Equivalized { get; set; }
     }
 }

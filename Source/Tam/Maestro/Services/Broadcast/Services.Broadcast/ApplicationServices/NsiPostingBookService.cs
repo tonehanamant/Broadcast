@@ -1,12 +1,8 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -22,17 +18,19 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        public NsiPostingBookService(IDataRepositoryFactory dataRepositoryFactory, 
-                                    IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        private readonly IRatingForecastService _RatingForecastService;
+
+        public NsiPostingBookService(IDataRepositoryFactory dataRepositoryFactory,
+                                    IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                    IRatingForecastService ratingForecastService)
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
+            _RatingForecastService = ratingForecastService;
         }
         public List<LookupDto> GetNsiPostingBookMonths()
         {
-            var postingBooks =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
-                    .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
+            var postingBooks = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
 
             var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
 
@@ -47,9 +45,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<MediaMonth> GetNsiPostingMediaMonths()
         {
-            var postingBooks =
-                _BroadcastDataRepositoryFactory.GetDataRepository<IPostingBookRepository>()
-                    .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
+            var postingBooks = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
 
             return _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
         }
@@ -59,21 +55,19 @@ namespace Services.Broadcast.ApplicationServices
             var selectedMediaMonth = _MediaMonthAndWeekAggregateCache
                                         .GetMediaMonthContainingDate(selectedDateTime);
 
-            var postingBookIds = _BroadcastDataRepositoryFactory
-                                    .GetDataRepository<IPostingBookRepository>()
-                                    .GetPostableMediaMonths(BroadcastConstants.PostableMonthMarketThreshold);
+            var postingBookIds = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
             var postingBookMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBookIds);
 
             var postingBookMonth = postingBookMonths
-                                    .Where(m => m.Quarter == selectedMediaMonth.Quarter 
+                                    .Where(m => m.Quarter == selectedMediaMonth.Quarter
                                          && m.Year == selectedMediaMonth.Year)
                                     .OrderByDescending(m => m.Month).FirstOrDefault();
             if (postingBookMonth == null)
-            {                
+            {
                 //if not found, try last year same quarter
                 postingBookMonth = postingBookMonths
-                                    .Where(m => m.Quarter == selectedMediaMonth.Quarter 
-                                        && m.Year == selectedMediaMonth.Year-1)
+                                    .Where(m => m.Quarter == selectedMediaMonth.Quarter
+                                        && m.Year == selectedMediaMonth.Year - 1)
                                     .OrderByDescending(m => m.Month).FirstOrDefault();
             }
 

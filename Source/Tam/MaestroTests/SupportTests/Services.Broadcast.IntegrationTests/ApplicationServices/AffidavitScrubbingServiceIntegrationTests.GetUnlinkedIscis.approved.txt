@@ -1,38 +1,14 @@
 ﻿[
   {
-    "Affiliate": null,
-    "DateAired": "2016-06-05T00:00:00",
-    "Genre": "Do It Yourself",
-    "ISCI": "AAAAAAAA",
-    "Market": null,
-    "ProgramName": "Program Names R us",
-    "SpotLength": 30,
-    "Station": "WNBC-TV",
-    "TimeAired": 32400,
-    "UnlinkedReason": null
-  },
-  {
-    "Affiliate": null,
-    "DateAired": "2016-06-03T00:00:00",
-    "Genre": "Do It Yourself",
+    "Count": 1,
     "ISCI": "SomeISCI",
-    "Market": "New York",
-    "ProgramName": "Program Names R us",
     "SpotLength": 30,
-    "Station": "WNBC-TV",
-    "TimeAired": 32400,
     "UnlinkedReason": "Not in system"
   },
   {
-    "Affiliate": null,
-    "DateAired": "2016-06-03T00:00:00",
-    "Genre": null,
+    "Count": 1,
     "ISCI": "SomeISCI3",
-    "Market": "New York",
-    "ProgramName": "Program Names R us",
     "SpotLength": 30,
-    "Station": "WNBC",
-    "TimeAired": 32400,
     "UnlinkedReason": "Married and Unmarried"
   }
 ]

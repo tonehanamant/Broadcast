@@ -35,7 +35,7 @@ export default class ProposalForm extends Component {
     this.state = {
       validationStates: {
         Name: null,
-        Name_MaxChar: null,
+        NameMaxChar: null,
         AdvertiserId: null,
         GuaranteedDemoId: null,
       },

@@ -96,7 +96,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<UnlinkedIscisDto>> GetUnlinkedIscis()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis(false));
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis());
         }
 
         [HttpPost]
@@ -110,18 +110,18 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("ArchivedIscis")]
-        public BaseResponse<List<UnlinkedIscisDto>> GetArchivedIscis()
+        public BaseResponse<List<ArchivedIscisDto>> GetArchivedIscis()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis(true));
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetArchivedIscis());
         }
 
         [HttpPost]
         [Route("ArchiveUnlinkedIsci")]
-        public BaseResponse<bool> ArchiveUnlinkedIsci(List<long> FileDetailsIds)
+        public BaseResponse<bool> ArchiveUnlinkedIsci(List<string> iscis)
         {
             return _ConvertToBaseResponse(() => 
-            _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(FileDetailsIds, Identity.Name));
+            _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(iscis, Identity.Name));
         }
 
 

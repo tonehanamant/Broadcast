@@ -70,7 +70,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var stationDetails = new List<StationDetailPointInTime>();
                 var ctr = 1;
-                var affidavitDetailsForPostingBook = details.Where(d => d.AffidavitClientScrubs.Any(s => s.PostingBookId == postingData.PostingBookId && 
+                var affidavitDetailsForPostingBook = details.Where(d => d.AffidavitClientScrubs.Any(s => s.PostingBookId == postingData.PostingBookId &&
                                                                                                          s.PostingPlaybackType == postingData.PostingPlaybackType)).ToList();
                 foreach (var affidavitFileDetail in affidavitDetailsForPostingBook)
                 {
@@ -95,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var imps = impressionsPointInTime.Where(i => i.id == ctr).ToList();
 
-                    affidavitFileDetail.AffidavitClientScrubs.Where(s => s.PostingBookId == postingData.PostingBookId && 
+                    affidavitFileDetail.AffidavitClientScrubs.Where(s => s.PostingBookId == postingData.PostingBookId &&
                                                                          s.PostingPlaybackType == postingData.PostingPlaybackType)
                         .ForEach(s => s.AffidavitClientScrubAudiences = imps.Select(imp => new AffidavitClientScrubAudience
                         {

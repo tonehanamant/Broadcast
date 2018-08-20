@@ -465,17 +465,8 @@ export const getPrograms = params => ({
   payload: params,
 });
 
-export const getShowTypes = query => ({
-  type: ACTIONS.REQUEST_SHOWTYPES,
-  payload: query,
+export const rerunPostScrubing = (propId, propdetailid) => ({
+  type: ACTIONS.RERUN_POST_SCRUBING.request,
+  payload: { propId, propdetailid },
 });
 
-/* export const toggleEditIsciClass = bool => ({
-  type: ACTIONS.TOGGLE_EDIT_ISCI_CLASS,
-  data: bool,
-});
-
-export const toggleEditGridCellClass = bool => ({
-  type: ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS,
-  data: bool,
-}); */

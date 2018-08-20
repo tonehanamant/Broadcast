@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
-        List<PostDto> GetAllPostedProposals();
+        List<PostedContracts> GetAllPostedProposals();
 
         /// <summary>
         /// Counts all the unlinked iscis
@@ -23,14 +24,14 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Gets the unlinked iscis
         /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
-        List<UnlinkedIscisDto> GetUnlinkedIscis();
+        /// <returns>List of UnlinkedIscis objects</returns>
+        List<UnlinkedIscis> GetUnlinkedIscis();
 
         /// <summary>
         /// Gets the archived iscis
         /// </summary>
         /// <returns>List of UnlinkedIscisDto objects</returns>
-        List<UnlinkedIscisDto> GetArchivedIscis();
+        List<ArchivedIscisDto> GetArchivedIscis();
 
         /// <summary>
         /// Gets the impressions and NTI conversion factor for a contract and rating audiences
@@ -38,7 +39,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalId">proposal or contract id</param>
         /// <param name="ratingsAudiences">list of rating audiences</param>
         /// <returns></returns>
-        List<PostImpressionsDataDto> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
+        List<PostImpressionsData> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
         /// <summary>
         /// Adds a new record in affidavit_file_detail_problems with status: ArchivedIsci
         /// </summary>
@@ -60,9 +61,16 @@ namespace Services.Broadcast.Repositories
         bool IsIsciBlacklisted(List<string> isci);
 
         /// <summary>
+        /// Loads all the file details records for the specified isci list
+        /// </summary>
+        /// <param name="iscis">List of iscis</param>
+        /// <returns>List of AffidavitFileDetail objects</returns>
+        List<AffidavitFileDetail> LoadFileDetailsByIscis(List<string> iscis);
+
+        /// <summary>
         /// Loads all the file details records for the specified id list
         /// </summary>
-        /// <param name="fileDetailIds">List of file detail id</param>
+        /// <param name="fileDetailIds">List of ids</param>
         /// <returns>List of AffidavitFileDetail objects</returns>
         List<AffidavitFileDetail> LoadFileDetailsByIds(List<long> fileDetailIds);
 
@@ -93,13 +101,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="fileDetailIds">List of affidavit file detail ids</param>
         /// <returns>List of AffidavitFileDetailProblem objects</returns>
         List<AffidavitFileDetailProblem> GetIsciProblems(List<long> fileDetailIds);
-        
+
         /// <summary>
         /// Removes iscis from blacklist table
         /// </summary>
         /// <param name="iscisToRemove">Isci list to remove</param>
         void RemoveIscisFromBlacklistTable(List<string> iscisToRemove);
-        
+
         /// <summary>
         /// Removes not a cadent entries for specific affidavit file details
         /// </summary>
@@ -121,14 +129,15 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<PostDto> GetAllPostedProposals()
+        public List<PostedContracts> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var proposalVersions = context.proposal_versions.Where(p =>
-                        (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted).ToList();
-                    var posts = new List<PostDto>();
+                    var proposalVersions = context.proposal_versions
+                        .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted)
+                        .ToList();
+                    var posts = new List<PostedContracts>();
 
                     foreach (var proposalVersion in proposalVersions)
                     {
@@ -136,11 +145,13 @@ namespace Services.Broadcast.Repositories
                                      from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                      from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                      from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
+                                     let affidavitFileDetail = affidavitFileScrub.affidavit_file_details
                                      select affidavitFileScrub).ToList();
 
-                        posts.Add(new PostDto
+                        posts.Add(new PostedContracts
                         {
                             ContractId = proposalVersion.proposal_id,
+                            Equivalized = proposalVersion.equivalized,
                             ContractName = proposalVersion.proposal.name,
                             UploadDate = (from proposalVersionDetail in proposalVersion.proposal_version_details
                                           from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
@@ -154,8 +165,8 @@ namespace Services.Broadcast.Repositories
                             GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
                             PostType = (SchedulePostType)proposalVersion.post_type,
                             PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                                     from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                                     select proposalVersionQuarters.impressions_goal).Sum(),
+                                                                from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                                                                select proposalVersionQuarters.impressions_goal).Sum(),
                         });
                     }
 
@@ -163,7 +174,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<PostImpressionsDataDto> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences)
+        public List<PostImpressionsData> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -178,7 +189,12 @@ namespace Services.Broadcast.Repositories
                             where proposal.id == proposalId &&
                                   (ScrubbingStatus)affidavitClientScrub.status == ScrubbingStatus.InSpec &&
                                   ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id)
-                            select new PostImpressionsDataDto { Impressions = affidavitClientScrubAudience.impressions, NtiConversionFactor = proposalVersionDetail.nti_conversion_factor }).ToList();
+                            select new PostImpressionsData
+                            {
+                                Impressions = affidavitClientScrubAudience.impressions,
+                                NtiConversionFactor = proposalVersionDetail.nti_conversion_factor,
+                                SpotLengthId = proposalVersionDetail.spot_length_id
+                            }).ToList();
                 });
         }
 
@@ -198,14 +214,24 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Gets the unlinked iscis
         /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
-        public List<UnlinkedIscisDto> GetUnlinkedIscis()
+        /// <returns>List of UnlinkedIscis objects</returns>
+        public List<UnlinkedIscis> GetUnlinkedIscis()
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var iscis = _GetUnlinkedIscisQuery(context);
-                    return _MapUnlinkedOrArchiveIsci(iscis);
+                    var iscis = from detail in _GetUnlinkedIscisQuery(context)
+                             from problem in detail.affidavit_file_detail_problems
+                             group detail by new { detail.isci, detail.spot_length_id, problem.problem_type } into g
+                             select new { g.Key.spot_length_id, g.Key.problem_type, g.Key.isci, count = g.Count() };
+
+                    return iscis.ToList().Select(x => new UnlinkedIscis
+                    {
+                        ISCI = x.isci,
+                        SpotLengthId = x.spot_length_id,
+                        Count = x.count,
+                        ProblemType = (AffidavitFileDetailProblemTypeEnum)x.problem_type
+                    }).OrderByDescending(x => x.Count).ToList();
                 });
         }
 
@@ -234,32 +260,31 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Gets the archived iscis
         /// </summary>
-        /// <returns>List of UnlinkedIscisDto objects</returns>
-        public List<UnlinkedIscisDto> GetArchivedIscis()
+        /// <returns>List of ArchivedIscisDto objects</returns>
+        public List<ArchivedIscisDto> GetArchivedIscis()
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var iscis = _GetArchivedIscisQuery(context);
-                    return _MapUnlinkedOrArchiveIsci(iscis);
+                    var iscis = from fileDetails in context.affidavit_file_details
+                                join blacklist in context.affidavit_blacklist on fileDetails.isci equals blacklist.ISCI
+                                where fileDetails.archived == true
+                                select new { fileDetails, blacklist };
+                    return iscis.ToList().Select(x => new ArchivedIscisDto
+                    {
+                        Affiliate = x.fileDetails.affiliate,
+                        Genre = x.fileDetails.genre,
+                        FileDetailId = x.fileDetails.id,
+                        ISCI = x.fileDetails.isci,
+                        Market = x.fileDetails.market,
+                        ProgramName = x.fileDetails.program_name,
+                        Station = x.fileDetails.station,
+                        TimeAired = x.fileDetails.air_time,
+                        DateAired = x.fileDetails.original_air_date,
+                        SpotLength = x.fileDetails.spot_length_id,
+                        DateAdded = x.blacklist.created_date
+                    }).OrderBy(x => x.ISCI).ToList();
                 });
-        }
-
-        private List<UnlinkedIscisDto> _MapUnlinkedOrArchiveIsci(IQueryable<affidavit_file_details> iscis)
-        {
-            return iscis.ToList().Select(x => new UnlinkedIscisDto
-            {
-                Affiliate = x.affiliate,
-                Genre = x.genre,
-                FileDetailId = x.id,
-                ISCI = x.isci,
-                Market = x.market,
-                ProgramName = x.program_name,
-                Station = x.station,
-                TimeAired = x.air_time,
-                DateAired = x.original_air_date,
-                SpotLength = x.spot_length_id
-            }).OrderBy(x => x.ISCI).ToList();
         }
 
         /// <summary>
@@ -347,18 +372,17 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <summary>
-        /// Loads all the file details records for the specified id list
+        /// Loads all the file details records for the specified isci list
         /// </summary>
-        /// <param name="fileDetailIds">List of file detail id</param>
+        /// <param name="iscis">List of iscis</param>
         /// <returns>List of AffidavitFileDetail objects</returns>
-        public List<AffidavitFileDetail> LoadFileDetailsByIds(List<long> fileDetailIds)
+        public List<AffidavitFileDetail> LoadFileDetailsByIscis(List<string> iscis)
         {
             return _InReadUncommitedTransaction(
                context =>
                {
-                   var iscisOnFileDetails = context.affidavit_file_details.Where(x => fileDetailIds.Contains(x.id)).Select(x => x.isci).ToList();
                    return context.affidavit_file_details
-                                    .Where(x => iscisOnFileDetails.Contains(x.isci))
+                                    .Where(x => iscis.Contains(x.isci))
                                     .Select(
                                        x => new AffidavitFileDetail
                                        {
@@ -366,6 +390,22 @@ namespace Services.Broadcast.Repositories
                                            Isci = x.isci
                                        }).ToList();
                });
+        }
+
+        /// <summary>
+        /// Loads all the file details records for the specified id list
+        /// </summary>
+        /// <param name="fileDetailIds">List of ids</param>
+        /// <returns>List of AffidavitFileDetail objects</returns>
+        public List<AffidavitFileDetail> LoadFileDetailsByIds(List<long> fileDetailIds)
+        {
+            List<string> iscis = new List<string>();
+            _InReadUncommitedTransaction(
+               context =>
+               {
+                   iscis = context.affidavit_file_details.Where(x => fileDetailIds.Contains(x.id)).Select(x => x.isci).Distinct().ToList();
+               });
+            return LoadFileDetailsByIscis(iscis);
         }
 
         /// <summary>
@@ -396,13 +436,6 @@ namespace Services.Broadcast.Repositories
                    into dataGroupped
                    from x in dataGroupped.DefaultIfEmpty()
                    where x == null && fileDetails.archived == false
-                   select fileDetails;
-        }
-
-        private IQueryable<affidavit_file_details> _GetArchivedIscisQuery(QueryHintBroadcastContext context)
-        {
-            return from fileDetails in context.affidavit_file_details
-                   where fileDetails.archived == true
                    select fileDetails;
         }
 
