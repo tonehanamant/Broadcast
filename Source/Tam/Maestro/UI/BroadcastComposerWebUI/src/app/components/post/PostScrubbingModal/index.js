@@ -75,7 +75,7 @@ export class PostScrubbingModal extends Component {
 		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
 
 		return (
-			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal" enforceFocus={false} onExited={this.refreshPost}>
+			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="large-wide-modal" enforceFocus={false} onExited={this.refreshPost}>
 					<Modal.Header>
             <Modal.Title style={{ display: 'inline-block' }}>Scrubbing Screen</Modal.Title>
 						<Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
