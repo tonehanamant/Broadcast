@@ -143,6 +143,20 @@
               <DemoValue demoRef="DM1">0.2</DemoValue>
             </DemoValues>
           </DetailedPeriod>
+          <DayDetailedPeriod endDate="2016-12-25" startDate="2016-10-24">
+            <Rate></Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.5</DemoValue>
+              <DemoValue demoRef="DM1">0.2</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+          <DayDetailedPeriod endDate="2016-12-25" startDate="2016-10-24">
+            <Rate>20.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.5</DemoValue>
+              <DemoValue demoRef="DM1">0.2</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
         </Periods>
       </AvailLineWithDetailedPeriods>
       <AvailLineWithDetailedPeriods>

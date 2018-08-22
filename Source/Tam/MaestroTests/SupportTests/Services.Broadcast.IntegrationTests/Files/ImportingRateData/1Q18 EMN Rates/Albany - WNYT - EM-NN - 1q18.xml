@@ -1,0 +1,525 @@
+<?xml version="1.0"?>
+<AAAA-Message xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+  <AAAA-Values>
+    <SchemaName>SpotTVCableProposal</SchemaName>
+    <SchemaVersion>0.3.0.5A</SchemaVersion>
+    <Media>SpotTV</Media>
+    <BusinessObject>Proposal</BusinessObject>
+    <Action>New</Action>
+    <UniqueMessageID>COXREPS75</UniqueMessageID>
+  </AAAA-Values>
+  <Proposal startDate="2018-01-01" endDate="2018-03-25" uniqueIdentifier="eb927a26-677a-40ef-ae12-9b85514afbc9" version="1" sendDateTime="2017-11-21T17:19:24" weekStartDay="Mo">
+    <Seller companyName="WNYT">
+      <Salesperson name="Ryan Eddins" />
+    </Seller>
+    <Buyer buyingCompanyName="Agency" />
+    <Advertiser name="Any advertiser">
+      <Product name="Political Spot Rates" />
+    </Advertiser>
+    <Name>WNYT</Name>
+    <Outlets>
+      <TelevisionStation callLetters="WNYT" parentPlus="N" outletId="OUT0" />
+    </Outlets>
+    <AvailList startDate="2018-01-01" endDate="2018-03-25" identifier="AL1" isPackage="N">
+      <Name>General List</Name>
+      <OutletReferences>
+        <OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0" />
+      </OutletReferences>
+      <DemoCategories>
+        <DemoCategory DemoId="DM0">
+          <tvb:DemoType>Rating</tvb:DemoType>
+          <tvb:Group>Homes</tvb:Group>
+          <tvb:AgeFrom>0</tvb:AgeFrom>
+          <tvb:AgeTo>99</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM1">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Homes</tvb:Group>
+          <tvb:AgeFrom>0</tvb:AgeFrom>
+          <tvb:AgeTo>99</tvb:AgeTo>
+        </DemoCategory>
+      </DemoCategories>
+      <TargetDemo demoRef="DM0" />
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>28:30</StartTime>
+            <EndTime>28:59</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NBC EARLY TODAY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-23">
+            <Rate>35</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">1.2</DemoValue>
+              <DemoValue demoRef="DM1">7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>05:00</StartTime>
+            <EndTime>05:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 EARLY TODAY-5A</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-23">
+            <Rate>85</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">3.5</DemoValue>
+              <DemoValue demoRef="DM1">19.9</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>05:30</StartTime>
+            <EndTime>06:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 EARLY TODAY-530A</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-23">
+            <Rate>150</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.9</DemoValue>
+              <DemoValue demoRef="DM1">30.3</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>06:00</StartTime>
+            <EndTime>07:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 EARLY TODAY-6A</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-23">
+            <Rate>300</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">7.6</DemoValue>
+              <DemoValue demoRef="DM1">44.4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>07:00</StartTime>
+            <EndTime>09:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>TODAY SHOW</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-23">
+            <Rate>250</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">6.2</DemoValue>
+              <DemoValue demoRef="DM1">36.4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>05:30</StartTime>
+            <EndTime>06:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>ON THE MONEY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-24">
+            <Rate>25</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.9</DemoValue>
+              <DemoValue demoRef="DM1">7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>06:00</StartTime>
+            <EndTime>07:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 TODAY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-24">
+            <Rate>40</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.8</DemoValue>
+              <DemoValue demoRef="DM1">4.7</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>07:00</StartTime>
+            <EndTime>08:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>SAT TODAY SHOW - HR 1</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-24">
+            <Rate>100</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">2.9</DemoValue>
+              <DemoValue demoRef="DM1">18.1</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>08:00</StartTime>
+            <EndTime>09:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 TODAY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-24">
+            <Rate>135</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">3.9</DemoValue>
+              <DemoValue demoRef="DM1">22.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>09:00</StartTime>
+            <EndTime>10:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>SAT TODAY SHOW - HR 2</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-24">
+            <Rate>150</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">3.2</DemoValue>
+              <DemoValue demoRef="DM1">18.2</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>06:00</StartTime>
+            <EndTime>06:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>FORUM 13</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+            <Rate>15</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.4</DemoValue>
+              <DemoValue demoRef="DM1">2.2</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>07:00</StartTime>
+            <EndTime>08:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 TODAY SUN-7A</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+            <Rate>100</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">3.2</DemoValue>
+              <DemoValue demoRef="DM1">19.1</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>08:00</StartTime>
+            <EndTime>09:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 TODAY SUN-8A</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+            <Rate>135</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.3</DemoValue>
+              <DemoValue demoRef="DM1">25.2</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>09:00</StartTime>
+            <EndTime>10:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>SUNDAY TODAY</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+            <Rate>150</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.8</DemoValue>
+              <DemoValue demoRef="DM1">30.4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>10:00</StartTime>
+            <EndTime>11:00</EndTime>
+            <Days>
+              <tvb-tp:Monday>N</tvb-tp:Monday>
+              <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>N</tvb-tp:Thursday>
+              <tvb-tp:Friday>N</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>MEET THE PRESS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+            <Rate>200</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.3</DemoValue>
+              <DemoValue demoRef="DM1">28.5</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>12:00</StartTime>
+            <EndTime>12:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>N</tvb-tp:Saturday>
+              <tvb-tp:Sunday>N</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>EARLY MORNING/NOON NEWS</DaypartName>
+        <AvailName>NEWSCHANNEL 13 LIVE AT NOON</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+            <Rate>75</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">4.1</DemoValue>
+              <DemoValue demoRef="DM1">24.8</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+    </AvailList>
+  </Proposal>
+</AAAA-Message>

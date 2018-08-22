@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>IDA2YB3C</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="12117324" version="1" sendDateTime="2017-11-21T21:29:13" weekStartDay="Mo" startDate="2018-01-01" endDate="2018-03-25">
+		<Seller companyName="N/A">
+			<Salesperson name="N/A"/>
+		</Seller>
+		<Buyer buyingCompanyName="N/A"/>
+		<Advertiser name="Cadent Network">
+			<Product name="1Q18 CADENT"/>
+		</Advertiser>
+		<Name>1Q18 CADENT-KOKH</Name>
+		<SellerReference>12117324</SellerReference>
+		<Outlets>
+			<TelevisionStation callLetters="KOKH" parentPlus="N" outletId="OUT0"/>
+			<TelevisionStation callLetters="KOCB" parentPlus="N" outletId="OUT1"/>
+		</Outlets>
+		<AvailList startDate="2018-01-01" endDate="2018-03-25" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - Oklahoma City Mar17 DMA Nielsen Live+SD</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+				<OutletReference outletFromProposalRef="OUT1" outletForListId="OUL1"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:00</StartTime>
+						<EndTime>17:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 News @ 5P</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EN</DaypartName>
+				<AvailName>FOX 25 News @ 5P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>110.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.2</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>17:30</StartTime>
+						<EndTime>18:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 News @ 530P</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EN</DaypartName>
+				<AvailName>FOX 25 News @ 530P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>110.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.3</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>21:45</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 Primetime News @ 9P</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 Primetime News @ 9P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>185.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.5</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:45</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 Sports Wrap Up</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 Sports Wrap Up</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>185.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.8</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:00</StartTime>
+						<EndTime>22:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 News Late Edition</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 News Late Edition</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>120.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.3</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>21:45</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 Primetime News @ 9P</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 Primetime News @ 9P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>125.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.0</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:45</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 Sports Wrap Up</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 Sports Wrap Up</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>125.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.4</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:00</StartTime>
+						<EndTime>21:45</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 Primetime News @ 9P</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 Primetime News @ 9P</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>185.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.5</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>21:45</StartTime>
+						<EndTime>22:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>FOX 25 Sports Wrap Up</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>FOX 25 Sports Wrap Up</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>185.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.7</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>22:30</StartTime>
+						<EndTime>23:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News: Full Measure</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>News: Full Measure</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>50.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.6</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL1"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>24:00</StartTime>
+						<EndTime>25:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Fox 25 Primetime News @ 9/Sports Wrap Up (Late Edtion Encore News)</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>LN</DaypartName>
+				<AvailName>Fox 25 Primetime News @ 9/Sports Wrap Up (Late Edtion Encore News)</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>40.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.5</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>

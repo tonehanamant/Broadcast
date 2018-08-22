@@ -252,6 +252,7 @@
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
+    <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\BvsFile.cs" />
