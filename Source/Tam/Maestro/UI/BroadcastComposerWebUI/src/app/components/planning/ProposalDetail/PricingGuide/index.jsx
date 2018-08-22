@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Modal, Button, Panel, Table, Label, FormControl, Glyphicon, Row, Col, FormGroup, ControlLabel } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { InputNumber } from 'antd';
+import numeral from 'numeral';
 
 import { toggleModal } from 'Ducks/app';
 import { updateProposalEditFormDetail } from 'Ducks/planning';
@@ -38,6 +39,7 @@ class PricingGuide extends Component {
     this.cancelInventory = this.cancelInventory.bind(this);
 
     this.state = {
+      // goals/adjustments - editing version separate state to cancel/save individually
       impression: '',
       budget: '',
       margin: '',
@@ -185,7 +187,7 @@ class PricingGuide extends Component {
             <Panel.Heading>
               <Row>
                 <Col sm={6}>
-                  <Panel.Title toggle><Glyphicon glyph="chevron-up" /> GOALS & ADJUSTMENTS</Panel.Title>
+                  <Panel.Title toggle><Glyphicon glyph="chevron-up" /> GOAL & ADJUSTMENTS</Panel.Title>
               </Col>
              </Row>
             </Panel.Heading>
@@ -221,7 +223,7 @@ class PricingGuide extends Component {
                     />
                   }
                   {!isInventoryEditing &&
-                    <FormControl.Static>{(impression / 1000).toFixed(2)}</FormControl.Static>
+                    <FormControl.Static>{impression ? numeral(impression / 1000).format('0,0.[000]') : '-'}</FormControl.Static>
                   }
                   </FormGroup>
                   </Col>
@@ -241,7 +243,7 @@ class PricingGuide extends Component {
                     />
                     }
                     {!isInventoryEditing &&
-                    <FormControl.Static>${budget ? budget.toFixed(2) : null}</FormControl.Static>
+                    <FormControl.Static>${budget ? numeral(budget).format('0,0.[00]') : ' -'}</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -269,7 +271,7 @@ class PricingGuide extends Component {
                     />
                     }
                     {!isInventoryEditing &&
-                    <FormControl.Static>{margin ? margin.toFixed(2) : null}%</FormControl.Static>
+                    <FormControl.Static>{margin ? numeral(margin).format('0,0.[00]') : '- '}%</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -290,7 +292,7 @@ class PricingGuide extends Component {
                     />
                     }
                     {!isInventoryEditing &&
-                    <FormControl.Static>{rateInflation ? rateInflation.toFixed(2) : null}%</FormControl.Static>
+                    <FormControl.Static>{rateInflation ? numeral(rateInflation).format('0,0.[00]') : '- '}%</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -311,7 +313,7 @@ class PricingGuide extends Component {
                     />
                     }
                      {!isInventoryEditing &&
-                    <FormControl.Static>{impressionInflation ? impressionInflation.toFixed(2) : null}%</FormControl.Static>
+                    <FormControl.Static>{impressionInflation ? numeral(impressionInflation).format('0,0.[00]') : '- '}%</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
