@@ -1,0 +1,1522 @@
+﻿[
+  {
+    "AirtimePreviews": [
+      "M-F 4:30AM-4:59AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 17940,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 16200,
+        "sun": false,
+        "Text": "M-F 4:30AM-4:59AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-23T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 7000.0,
+    "ProgramNames": [
+      "NBC EARLY TODAY"
+    ],
+    "Rate15": 22.7500,
+    "Rate30": 35.0000,
+    "RateSource": null,
+    "Rating": 1.2,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 5AM-5:30AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 19800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 18000,
+        "sun": false,
+        "Text": "M-F 5AM-5:30AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-23T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 19900.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 EARLY TODAY-5A"
+    ],
+    "Rate15": 55.2500,
+    "Rate30": 85.0000,
+    "RateSource": null,
+    "Rating": 3.5,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 5:30AM-6AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 21600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 19800,
+        "sun": false,
+        "Text": "M-F 5:30AM-6AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-23T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 30300.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 EARLY TODAY-530A"
+    ],
+    "Rate15": 97.5000,
+    "Rate30": 150.0000,
+    "RateSource": null,
+    "Rating": 4.9,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 6AM-7AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 25200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 21600,
+        "sun": false,
+        "Text": "M-F 6AM-7AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-23T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 44400.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 EARLY TODAY-6A"
+    ],
+    "Rate15": 195.0000,
+    "Rate30": 300.0000,
+    "RateSource": null,
+    "Rating": 7.6,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 7AM-9AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 32400,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 25200,
+        "sun": false,
+        "Text": "M-F 7AM-9AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-23T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 36400.0,
+    "ProgramNames": [
+      "TODAY SHOW"
+    ],
+    "Rate15": 162.5000,
+    "Rate30": 250.0000,
+    "RateSource": null,
+    "Rating": 6.2,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 5:30AM-6AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 21600,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 19800,
+        "sun": false,
+        "Text": "SA 5:30AM-6AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-24T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 7000.0,
+    "ProgramNames": [
+      "ON THE MONEY"
+    ],
+    "Rate15": 16.2500,
+    "Rate30": 25.0000,
+    "RateSource": null,
+    "Rating": 0.9,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 6AM-7AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 25200,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 21600,
+        "sun": false,
+        "Text": "SA 6AM-7AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-24T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 4700.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 TODAY"
+    ],
+    "Rate15": 26.0000,
+    "Rate30": 40.0000,
+    "RateSource": null,
+    "Rating": 0.8,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 7AM-8AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 28800,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 25200,
+        "sun": false,
+        "Text": "SA 7AM-8AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-24T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 18100.0,
+    "ProgramNames": [
+      "SAT TODAY SHOW - HR 1"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": 2.9,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 8AM-9AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 32400,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 28800,
+        "sun": false,
+        "Text": "SA 8AM-9AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-24T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 22500.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 TODAY"
+    ],
+    "Rate15": 87.7500,
+    "Rate30": 135.0000,
+    "RateSource": null,
+    "Rating": 3.9,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 9AM-10AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 36000,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "SA 9AM-10AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-24T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 18200.0,
+    "ProgramNames": [
+      "SAT TODAY SHOW - HR 2"
+    ],
+    "Rate15": 97.5000,
+    "Rate30": 150.0000,
+    "RateSource": null,
+    "Rating": 3.2,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 6AM-6:30AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 23400,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 21600,
+        "sun": true,
+        "Text": "SU 6AM-6:30AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 2200.0,
+    "ProgramNames": [
+      "FORUM 13"
+    ],
+    "Rate15": 9.7500,
+    "Rate30": 15.0000,
+    "RateSource": null,
+    "Rating": 0.4,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 7AM-8AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 28800,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 25200,
+        "sun": true,
+        "Text": "SU 7AM-8AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 19100.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 TODAY SUN-7A"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": 3.2,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 8AM-9AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 32400,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 28800,
+        "sun": true,
+        "Text": "SU 8AM-9AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 25200.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 TODAY SUN-8A"
+    ],
+    "Rate15": 87.7500,
+    "Rate30": 135.0000,
+    "RateSource": null,
+    "Rating": 4.3,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 9AM-10AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 36000,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 32400,
+        "sun": true,
+        "Text": "SU 9AM-10AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 30400.0,
+    "ProgramNames": [
+      "SUNDAY TODAY"
+    ],
+    "Rate15": 97.5000,
+    "Rate30": 150.0000,
+    "RateSource": null,
+    "Rating": 4.8,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 10AM-11AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 39600,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 36000,
+        "sun": true,
+        "Text": "SU 10AM-11AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 28500.0,
+    "ProgramNames": [
+      "MEET THE PRESS"
+    ],
+    "Rate15": 130.0000,
+    "Rate30": 200.0000,
+    "RateSource": null,
+    "Rating": 4.3,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 12PM-12:30PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 45000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 43200,
+        "sun": false,
+        "Text": "M-F 12PM-12:30PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": 24800.0,
+    "ProgramNames": [
+      "NEWSCHANNEL 13 LIVE AT NOON"
+    ],
+    "Rate15": 48.7500,
+    "Rate30": 75.0000,
+    "RateSource": null,
+    "Rating": 4.1,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  }
+]

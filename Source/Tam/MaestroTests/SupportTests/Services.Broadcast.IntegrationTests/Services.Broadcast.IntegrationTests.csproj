@@ -664,6 +664,21 @@
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\1Q18 EMN Rates\ALBANY WTEN EM-NN.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\1Q18 EMN Rates\Cinncinnati WSTR EM.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\1Q18 ENLN Rates\OKC.KOKH-KOCB.EN-LN.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\1Q18 ENT-SYN Rates\Buffalo WBBZ SYN.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\KeepingTracTest.xlsx.BadTimes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

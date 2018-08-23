@@ -851,7 +851,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var houseHoldAudienceId = _AudiencesCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
             return list.Any()
-                ? list.Single(c => c.Audience.Id == houseHoldAudienceId)
+                ? list.SingleOrDefault(c => c.Audience.Id == houseHoldAudienceId)
                 : null;
         }
 

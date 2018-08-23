@@ -1,5 +1,4 @@
-﻿
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
 using IntegrationTests.Common;
@@ -17,7 +16,6 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -30,13 +28,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private static InventorySource _ttnwInventorySource;
         private static InventorySource _cnnInventorySource;
+        private static InventorySource _openMarketInventorySource;
 
         public InventoryFileServiceIntegrationTests()
         {
-            var inventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-
-            _ttnwInventorySource = inventoryRepository.GetInventorySourceByName("TTNW");
-            _cnnInventorySource = inventoryRepository.GetInventorySourceByName("CNN");
+            _ttnwInventorySource = _InventoryRepository.GetInventorySourceByName("TTNW");
+            _cnnInventorySource = _InventoryRepository.GetInventorySourceByName("CNN");
+            _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("OpenMarket");
         }
 
         [Ignore]
@@ -974,35 +972,204 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new InventoryFileSaveRequest
-                {
-                    RatesStream = new FileStream(
-                        @".\Files\1Chicago WLS Syn 4Q16.xml",
-                        FileMode.Open,
-                        FileAccess.Read),
-                    UserName = "IntegrationTestUser",
-                    RatingBook = 416
-                };
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationProgram), "Id");
-                jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
+                var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16.xml");
+                var jsonSettings = _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson();
                 int stationCode = 5060; // for station WLS
+
                 _InventoryFileService.SaveInventoryFile(request);
 
                 var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
-
             }
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFile_WithDayDetailedPeriodAttribute()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml");
+                var jsonSettings = _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson();
+                int stationCode = 5491; // for station WNYT
 
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
+                Approvals.Verify(json);
+            }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFile_WithProgramNameLengthLongerThan63Symbols()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 ENLN Rates\OKC.KOKH-KOCB.EN-LN.xml");
+                int stationCode = 6820; // for station KOCB
+
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var resultsHaveProgramWithNameLengthLongerThan63Symbols = results.Any(x => x.ProgramNames.Any(p => p.Length > 63));
+
+                Assert.True(resultsHaveProgramWithNameLengthLongerThan63Symbols);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFile_WhenStationHasNoAudiences()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Buffalo WBBZ SYN.xml");
+                var stationCode = 7397; // for station WBBZ
+
+                _InventoryFileService.SaveInventoryFile(request);
+                
+                var stationManifests = _InventoryRepository.GetStationManifestsBySourceAndStationCode(_openMarketInventorySource, stationCode);
+                var stationManifestsDoNotHaveManifestAudiencesReferences = stationManifests.All(x => x.ManifestAudiencesReferences.Count == 0);
+
+                Assert.IsTrue(stationManifestsDoNotHaveManifestAudiencesReferences);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFile_WithStationsDuplicated()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 EMN Rates\Cinncinnati WSTR EM.xml");
+                var jsonSettings = _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson();
+                var stationCode = 6826; // for station WSTR
+
+                _InventoryFileService.SaveInventoryFile(request);
+                
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+        // This test can be usefull to check if there is exceptions during saving all the XML files from specific folder
+        [Test]
+        [Ignore]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFile_CheckAllFilesInSpecificDirectories_ForExceptions()
+        {
+            var directories = new string[]
+            {
+                //"1Q18 EMN Rates",
+                //"1Q18 ENLN Rates",
+                //"1Q18 ENT-SYN Rates"
+            };
+
+            var excludedFiles = new[]
+            {
+                // Cannot save the invalid Daypart:  4:30AM-4:59AM (28:30AM - 28:59AM) - OK
+                @".\Files\ImportingRateData\1Q18 EMN Rates\COLUMBIA-WIS-EM-NN.xml",
+                @".\Files\ImportingRateData\1Q18 ENLN Rates\COLUMBIA-WIS-EN-LN.xml",
+
+                // Invalid station: EPRI - OK
+                @".\Files\ImportingRateData\1Q18 EMN Rates\PROVIDENCE WPRI EPRI EM NN.xml",
+                @".\Files\ImportingRateData\1Q18 ENLN Rates\PROVIDENCE WPRI EPRI EN LN.xml",
+                @".\Files\ImportingRateData\1Q18 ENT-SYN Rates\PROVIDENCE WPRI EPRI DA EF LF.xml",
+
+                // There are no known stations in the file - OK
+                @".\Files\ImportingRateData\1Q18 EMN Rates\Colorado Springs, QRDO, EM-NN.xml",
+                @".\Files\ImportingRateData\1Q18 EMN Rates\Madison ETVW EM-NN 1q18 rates 11-22-17.xml",
+                @".\Files\ImportingRateData\1Q18 EMN Rates\Madison WIFS EM-NN.xml",
+                @".\Files\ImportingRateData\1Q18 EMN Rates\Sarasota WSNN EM-NN.xml",
+                @".\Files\ImportingRateData\1Q18 ENLN Rates\Madison WIFS EN-LN.xml",
+                @".\Files\ImportingRateData\1Q18 ENLN Rates\Sarasota WSNN EN-LN.xml",
+                @".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Colorado Springs, QRDO, SYN (DA-EF-LF).xml",
+                @".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Madison ETVW SYN 1q18 rates 11-22-17.xml",
+                @".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Madison WIFS SYN.xml",
+                @".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Sarasota WSNN SYN.xml",
+                @".\Files\ImportingRateData\1Q18 ENT-SYN Rates\Savannah-FSAV-SYN.xml"
+            };
+
+            var withError = new List<string>();
+
+            foreach(var directory in directories)
+            {
+                var allFiles = Directory.GetFiles($@".\Files\ImportingRateData\{directory}\", "*.xml", SearchOption.TopDirectoryOnly);
+                var filesForChecking = allFiles.Except(excludedFiles);
+
+                foreach(var file in filesForChecking)
+                {
+                    try
+                    {
+                        using (new TransactionScopeWrapper())
+                        {
+                            Console.WriteLine($"Checking file: {file}");
+
+                            var request = _GetInventoryFileSaveRequest(file);
+
+                            _InventoryFileService.SaveInventoryFile(request);
+
+                            Console.WriteLine($"File: {file} was checked");
+                        }
+                    }
+                    catch
+                    {
+                        withError.Add(file);
+                    }
+                }
+            }
+
+            Console.WriteLine("With Errors");
+
+            foreach (var file in withError)
+            {
+                Console.WriteLine(file);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFile_WithDetailedPeriodAttribute()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\ImportingRateData\1Q18 EMN Rates\ALBANY WTEN EM-NN.xml");
+                var jsonSettings = _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson();
+                int stationCode = 428; // for station WTEN
+
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var results = _InventoryFileService.GetAllStationPrograms("OpenMarket", stationCode);
+                var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
+                Approvals.Verify(json);
+            }
+        }
+
+        private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
+        {
+            return new InventoryFileSaveRequest
+            {
+                RatesStream = new FileStream(filePath, FileMode.Open, FileAccess.Read),
+                UserName = "IntegrationTestUser",
+                RatingBook = 416
+            };
+        }
+
+        private JsonSerializerSettings _GetJsonSerializerSettingsForConvertingAllStationProgramsToJson()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationProgram), "Id");
+            jsonResolver.Ignore(typeof(FlightWeekDto), "Id");
+
+            return new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+        }
 
         [Ignore]
         [Test]

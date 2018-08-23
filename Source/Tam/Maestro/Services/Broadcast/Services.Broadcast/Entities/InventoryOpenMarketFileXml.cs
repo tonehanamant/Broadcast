@@ -1,1797 +1,1998 @@
-﻿namespace Services.Broadcast.Entities.InventoryOpenMarketFileXml
+﻿
+// NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+[System.Xml.Serialization.XmlRootAttribute("AAAA-Message", Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal", IsNullable = false)]
+public partial class AAAAMessage
 {
 
+    private AAAAMessageAAAAValues aAAAValuesField;
+
+    private AAAAMessageProposal proposalField;
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    [System.Xml.Serialization.XmlRootAttribute("AAAA-Message", Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal", IsNullable = false)]
-    public partial class AAAAMessage
+    [System.Xml.Serialization.XmlElementAttribute("AAAA-Values")]
+    public AAAAMessageAAAAValues AAAAValues
     {
-
-        private AAAAMessageAAAAValues aAAAValuesField;
-
-        private AAAAMessageProposal proposalField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AAAA-Values")]
-        public AAAAMessageAAAAValues AAAAValues
+        get
         {
-            get
-            {
-                return this.aAAAValuesField;
-            }
-            set
-            {
-                this.aAAAValuesField = value;
-            }
+            return this.aAAAValuesField;
         }
-
-        /// <remarks/>
-        public AAAAMessageProposal Proposal
+        set
         {
-            get
-            {
-                return this.proposalField;
-            }
-            set
-            {
-                this.proposalField = value;
-            }
+            this.aAAAValuesField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageAAAAValues
+    public AAAAMessageProposal Proposal
     {
-
-        private string schemaNameField;
-
-        private string schemaVersionField;
-
-        private string mediaField;
-
-        private string businessObjectField;
-
-        private string actionField;
-
-        private string uniqueMessageIDField;
-
-        /// <remarks/>
-        public string SchemaName
+        get
         {
-            get
-            {
-                return this.schemaNameField;
-            }
-            set
-            {
-                this.schemaNameField = value;
-            }
+            return this.proposalField;
         }
-
-        /// <remarks/>
-        public string SchemaVersion
+        set
         {
-            get
-            {
-                return this.schemaVersionField;
-            }
-            set
-            {
-                this.schemaVersionField = value;
-            }
+            this.proposalField = value;
         }
+    }
+}
 
-        /// <remarks/>
-        public string Media
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageAAAAValues
+{
+
+    private string schemaNameField;
+
+    private string schemaVersionField;
+
+    private string mediaField;
+
+    private string businessObjectField;
+
+    private string actionField;
+
+    private string uniqueMessageIDField;
+
+    /// <remarks/>
+    public string SchemaName
+    {
+        get
         {
-            get
-            {
-                return this.mediaField;
-            }
-            set
-            {
-                this.mediaField = value;
-            }
+            return this.schemaNameField;
         }
-
-        /// <remarks/>
-        public string BusinessObject
+        set
         {
-            get
-            {
-                return this.businessObjectField;
-            }
-            set
-            {
-                this.businessObjectField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string Action
-        {
-            get
-            {
-                return this.actionField;
-            }
-            set
-            {
-                this.actionField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string UniqueMessageID
-        {
-            get
-            {
-                return this.uniqueMessageIDField;
-            }
-            set
-            {
-                this.uniqueMessageIDField = value;
-            }
+            this.schemaNameField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposal
+    public string SchemaVersion
     {
-
-        private AAAAMessageProposalSeller sellerField;
-
-        private AAAAMessageProposalBuyer buyerField;
-
-        private AAAAMessageProposalAdvertiser advertiserField;
-
-        private string nameField;
-
-        private AAAAMessageProposalTelevisionStation[] outletsField;
-
-        private AAAAMessageProposalAvailList availListField;
-
-        private System.DateTime endDateField;
-
-        private System.DateTime sendDateTimeField;
-
-        private System.DateTime startDateField;
-
-        private string uniqueIdentifierField;
-
-        private byte versionField;
-
-        private string weekStartDayField;
-
-        /// <remarks/>
-        public AAAAMessageProposalSeller Seller
+        get
         {
-            get
-            {
-                return this.sellerField;
-            }
-            set
-            {
-                this.sellerField = value;
-            }
+            return this.schemaVersionField;
         }
-
-        /// <remarks/>
-        public AAAAMessageProposalBuyer Buyer
+        set
         {
-            get
-            {
-                return this.buyerField;
-            }
-            set
-            {
-                this.buyerField = value;
-            }
-        }
-
-        /// <remarks/>
-        public AAAAMessageProposalAdvertiser Advertiser
-        {
-            get
-            {
-                return this.advertiserField;
-            }
-            set
-            {
-                this.advertiserField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string Name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("TelevisionStation", IsNullable = false)]
-        public AAAAMessageProposalTelevisionStation[] Outlets
-        {
-            get
-            {
-                return this.outletsField;
-            }
-            set
-            {
-                this.outletsField = value;
-            }
-        }
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailList AvailList
-        {
-            get
-            {
-                return this.availListField;
-            }
-            set
-            {
-                this.availListField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime endDate
-        {
-            get
-            {
-                return this.endDateField;
-            }
-            set
-            {
-                this.endDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public System.DateTime sendDateTime
-        {
-            get
-            {
-                return this.sendDateTimeField;
-            }
-            set
-            {
-                this.sendDateTimeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime startDate
-        {
-            get
-            {
-                return this.startDateField;
-            }
-            set
-            {
-                this.startDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string uniqueIdentifier
-        {
-            get
-            {
-                return this.uniqueIdentifierField;
-            }
-            set
-            {
-                this.uniqueIdentifierField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte version
-        {
-            get
-            {
-                return this.versionField;
-            }
-            set
-            {
-                this.versionField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string weekStartDay
-        {
-            get
-            {
-                return this.weekStartDayField;
-            }
-            set
-            {
-                this.weekStartDayField = value;
-            }
+            this.schemaVersionField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalSeller
+    public string Media
     {
-
-        private AAAAMessageProposalSellerSalesperson salespersonField;
-
-        private string companyNameField;
-
-        /// <remarks/>
-        public AAAAMessageProposalSellerSalesperson Salesperson
+        get
         {
-            get
-            {
-                return this.salespersonField;
-            }
-            set
-            {
-                this.salespersonField = value;
-            }
+            return this.mediaField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string companyName
+        set
         {
-            get
-            {
-                return this.companyNameField;
-            }
-            set
-            {
-                this.companyNameField = value;
-            }
+            this.mediaField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalSellerSalesperson
+    public string BusinessObject
     {
-
-        private AAAAMessageProposalSellerSalespersonPhone[] phoneField;
-
-        private AAAAMessageProposalSellerSalespersonEmail[] emailField;
-
-        private string nameField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Phone")]
-        public AAAAMessageProposalSellerSalespersonPhone[] Phone
+        get
         {
-            get
-            {
-                return this.phoneField;
-            }
-            set
-            {
-                this.phoneField = value;
-            }
+            return this.businessObjectField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Email")]
-        public AAAAMessageProposalSellerSalespersonEmail[] Email
+        set
         {
-            get
-            {
-                return this.emailField;
-            }
-            set
-            {
-                this.emailField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
+            this.businessObjectField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalSellerSalespersonPhone
+    public string Action
     {
-
-        private string typeField;
-
-        private string valueField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string type
+        get
         {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
+            return this.actionField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value
+        set
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
+            this.actionField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalSellerSalespersonEmail
+    public string UniqueMessageID
     {
-
-        private string typeField;
-
-        private string valueField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string type
+        get
         {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
+            return this.uniqueMessageIDField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public string Value
+        set
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
+            this.uniqueMessageIDField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposal
+{
+
+    private AAAAMessageProposalSeller sellerField;
+
+    private AAAAMessageProposalBuyer buyerField;
+
+    private AAAAMessageProposalAdvertiser advertiserField;
+
+    private string nameField;
+
+    private AAAAMessageProposalTelevisionStation[] outletsField;
+
+    private AAAAMessageProposalAvailList availListField;
+
+    private System.DateTime endDateField;
+
+    private System.DateTime sendDateTimeField;
+
+    private System.DateTime startDateField;
+
+    private string uniqueIdentifierField;
+
+    private byte versionField;
+
+    private string weekStartDayField;
+
+    /// <remarks/>
+    public AAAAMessageProposalSeller Seller
+    {
+        get
+        {
+            return this.sellerField;
+        }
+        set
+        {
+            this.sellerField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalBuyer
+    public AAAAMessageProposalBuyer Buyer
     {
-
-        private string buyerNameField;
-
-        private string buyingCompanyNameField;
-
-        /// <remarks/>
-        public string BuyerName
+        get
         {
-            get
-            {
-                return this.buyerNameField;
-            }
-            set
-            {
-                this.buyerNameField = value;
-            }
+            return this.buyerField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string buyingCompanyName
+        set
         {
-            get
-            {
-                return this.buyingCompanyNameField;
-            }
-            set
-            {
-                this.buyingCompanyNameField = value;
-            }
+            this.buyerField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAdvertiser
+    public AAAAMessageProposalAdvertiser Advertiser
     {
-
-        private AAAAMessageProposalAdvertiserProduct productField;
-
-        private string nameField;
-
-        /// <remarks/>
-        public AAAAMessageProposalAdvertiserProduct Product
+        get
         {
-            get
-            {
-                return this.productField;
-            }
-            set
-            {
-                this.productField = value;
-            }
+            return this.advertiserField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string name
+        set
         {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
+            this.advertiserField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAdvertiserProduct
+    public string Name
     {
-
-        private string nameField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string name
+        get
         {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
+            return this.nameField;
+        }
+        set
+        {
+            this.nameField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalTelevisionStation
+    [System.Xml.Serialization.XmlArrayItemAttribute("TelevisionStation", IsNullable = false)]
+    public AAAAMessageProposalTelevisionStation[] Outlets
     {
-
-        private string callLettersField;
-
-        private string outletIdField;
-
-        private string parentPlusField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string callLetters
+        get
         {
-            get
-            {
-                return this.callLettersField;
-            }
-            set
-            {
-                this.callLettersField = value;
-            }
+            return this.outletsField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string outletId
+        set
         {
-            get
-            {
-                return this.outletIdField;
-            }
-            set
-            {
-                this.outletIdField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string parentPlus
-        {
-            get
-            {
-                return this.parentPlusField;
-            }
-            set
-            {
-                this.parentPlusField = value;
-            }
+            this.outletsField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailList
+    public AAAAMessageProposalAvailList AvailList
     {
-
-        private string nameField;
-
-        private AAAAMessageProposalAvailListOutletReference[] outletReferencesField;
-
-        private AAAAMessageProposalAvailListDemoCategory[] demoCategoriesField;
-
-        private AAAAMessageProposalAvailListTargetDemo targetDemoField;
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriods[] availLineWithPeriodsField;
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriods[] availLineWithDetailedPeriodsField;
-
-        private System.DateTime endDateField;
-
-        private string identifierField;
-
-        private string isPackageField;
-
-        private System.DateTime startDateField;
-
-        /// <remarks/>
-        public string Name
+        get
         {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
+            return this.availListField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("OutletReference", IsNullable = false)]
-        public AAAAMessageProposalAvailListOutletReference[] OutletReferences
+        set
         {
-            get
-            {
-                return this.outletReferencesField;
-            }
-            set
-            {
-                this.outletReferencesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("DemoCategory", IsNullable = false)]
-        public AAAAMessageProposalAvailListDemoCategory[] DemoCategories
-        {
-            get
-            {
-                return this.demoCategoriesField;
-            }
-            set
-            {
-                this.demoCategoriesField = value;
-            }
-        }
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListTargetDemo TargetDemo
-        {
-            get
-            {
-                return this.targetDemoField;
-            }
-            set
-            {
-                this.targetDemoField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AvailLineWithPeriods")]
-        public AAAAMessageProposalAvailListAvailLineWithPeriods[] AvailLineWithPeriods
-        {
-            get
-            {
-                return this.availLineWithPeriodsField;
-            }
-            set
-            {
-                this.availLineWithPeriodsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AvailLineWithDetailedPeriods")]
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriods[] AvailLineWithDetailedPeriods
-        {
-            get
-            {
-                return this.availLineWithDetailedPeriodsField;
-            }
-            set
-            {
-                this.availLineWithDetailedPeriodsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime endDate
-        {
-            get
-            {
-                return this.endDateField;
-            }
-            set
-            {
-                this.endDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string identifier
-        {
-            get
-            {
-                return this.identifierField;
-            }
-            set
-            {
-                this.identifierField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string isPackage
-        {
-            get
-            {
-                return this.isPackageField;
-            }
-            set
-            {
-                this.isPackageField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime startDate
-        {
-            get
-            {
-                return this.startDateField;
-            }
-            set
-            {
-                this.startDateField = value;
-            }
+            this.availListField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListOutletReference
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime endDate
     {
-
-        private string outletForListIdField;
-
-        private string outletFromProposalRefField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string outletForListId
+        get
         {
-            get
-            {
-                return this.outletForListIdField;
-            }
-            set
-            {
-                this.outletForListIdField = value;
-            }
+            return this.endDateField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string outletFromProposalRef
+        set
         {
-            get
-            {
-                return this.outletFromProposalRefField;
-            }
-            set
-            {
-                this.outletFromProposalRefField = value;
-            }
+            this.endDateField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListDemoCategory
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public System.DateTime sendDateTime
     {
-
-        private string demoTypeField;
-
-        private string groupField;
-
-        private byte ageFromField;
-
-        private byte ageToField;
-
-        private string demoIdField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
-        public string DemoType
+        get
         {
-            get
-            {
-                return this.demoTypeField;
-            }
-            set
-            {
-                this.demoTypeField = value;
-            }
+            return this.sendDateTimeField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
-        public string Group
+        set
         {
-            get
-            {
-                return this.groupField;
-            }
-            set
-            {
-                this.groupField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
-        public byte AgeFrom
-        {
-            get
-            {
-                return this.ageFromField;
-            }
-            set
-            {
-                this.ageFromField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
-        public byte AgeTo
-        {
-            get
-            {
-                return this.ageToField;
-            }
-            set
-            {
-                this.ageToField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string DemoId
-        {
-            get
-            {
-                return this.demoIdField;
-            }
-            set
-            {
-                this.demoIdField = value;
-            }
+            this.sendDateTimeField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListTargetDemo
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime startDate
     {
-
-        private string demoRefField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string demoRef
+        get
         {
-            get
-            {
-                return this.demoRefField;
-            }
-            set
-            {
-                this.demoRefField = value;
-            }
+            return this.startDateField;
+        }
+        set
+        {
+            this.startDateField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriods
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string uniqueIdentifier
     {
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference outletReferenceField;
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes dayTimesField;
-
-        private string daypartNameField;
-
-        private string availNameField;
-
-        private System.DateTime spotLengthField;
-
-        private string rateField;
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] demoValuesField;
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod[] periodsField;
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference OutletReference
+        get
         {
-            get
-            {
-                return this.outletReferenceField;
-            }
-            set
-            {
-                this.outletReferenceField = value;
-            }
+            return this.uniqueIdentifierField;
         }
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes DayTimes
+        set
         {
-            get
-            {
-                return this.dayTimesField;
-            }
-            set
-            {
-                this.dayTimesField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string DaypartName
-        {
-            get
-            {
-                return this.daypartNameField;
-            }
-            set
-            {
-                this.daypartNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string AvailName
-        {
-            get
-            {
-                return this.availNameField;
-            }
-            set
-            {
-                this.availNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "time")]
-        public System.DateTime SpotLength
-        {
-            get
-            {
-                return this.spotLengthField;
-            }
-            set
-            {
-                this.spotLengthField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string Rate
-        {
-            get
-            {
-                return this.rateField;
-            }
-            set
-            {
-                this.rateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("DemoValue", IsNullable = false)]
-        public AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] DemoValues
-        {
-            get
-            {
-                return this.demoValuesField;
-            }
-            set
-            {
-                this.demoValuesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Period", IsNullable = false)]
-        public AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod[] Periods
-        {
-            get
-            {
-                return this.periodsField;
-            }
-            set
-            {
-                this.periodsField = value;
-            }
+            this.uniqueIdentifierField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public byte version
     {
-
-        private string outletFromListRefField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string outletFromListRef
+        get
         {
-            get
-            {
-                return this.outletFromListRefField;
-            }
-            set
-            {
-                this.outletFromListRefField = value;
-            }
+            return this.versionField;
+        }
+        set
+        {
+            this.versionField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string weekStartDay
     {
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime dayTimeField;
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime DayTime
+        get
         {
-            get
-            {
-                return this.dayTimeField;
-            }
-            set
-            {
-                this.dayTimeField = value;
-            }
+            return this.weekStartDayField;
+        }
+        set
+        {
+            this.weekStartDayField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalSeller
+{
+
+    private AAAAMessageProposalSellerSalesperson salespersonField;
+
+    private string companyNameField;
+
+    /// <remarks/>
+    public AAAAMessageProposalSellerSalesperson Salesperson
+    {
+        get
+        {
+            return this.salespersonField;
+        }
+        set
+        {
+            this.salespersonField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string companyName
     {
-
-        private string startTimeField;
-
-        private string endTimeField;
-
-        private AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays daysField;
-
-        /// <remarks/>
-        public string StartTime
+        get
         {
-            get
-            {
-                return this.startTimeField;
-            }
-            set
-            {
-                this.startTimeField = value;
-            }
+            return this.companyNameField;
         }
-
-        /// <remarks/>
-        public string EndTime
+        set
         {
-            get
-            {
-                return this.endTimeField;
-            }
-            set
-            {
-                this.endTimeField = value;
-            }
+            this.companyNameField = value;
         }
+    }
+}
 
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays Days
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalSellerSalesperson
+{
+
+    private AAAAMessageProposalSellerSalespersonPhone[] phoneField;
+
+    private AAAAMessageProposalSellerSalespersonEmail[] emailField;
+
+    private string nameField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("Phone")]
+    public AAAAMessageProposalSellerSalespersonPhone[] Phone
+    {
+        get
         {
-            get
-            {
-                return this.daysField;
-            }
-            set
-            {
-                this.daysField = value;
-            }
+            return this.phoneField;
+        }
+        set
+        {
+            this.phoneField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays
+    [System.Xml.Serialization.XmlElementAttribute("Email")]
+    public AAAAMessageProposalSellerSalespersonEmail[] Email
     {
-
-        private string mondayField;
-
-        private string tuesdayField;
-
-        private string wednesdayField;
-
-        private string thursdayField;
-
-        private string fridayField;
-
-        private string saturdayField;
-
-        private string sundayField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Monday
+        get
         {
-            get
-            {
-                return this.mondayField;
-            }
-            set
-            {
-                this.mondayField = value;
-            }
+            return this.emailField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Tuesday
+        set
         {
-            get
-            {
-                return this.tuesdayField;
-            }
-            set
-            {
-                this.tuesdayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Wednesday
-        {
-            get
-            {
-                return this.wednesdayField;
-            }
-            set
-            {
-                this.wednesdayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Thursday
-        {
-            get
-            {
-                return this.thursdayField;
-            }
-            set
-            {
-                this.thursdayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Friday
-        {
-            get
-            {
-                return this.fridayField;
-            }
-            set
-            {
-                this.fridayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Saturday
-        {
-            get
-            {
-                return this.saturdayField;
-            }
-            set
-            {
-                this.saturdayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Sunday
-        {
-            get
-            {
-                return this.sundayField;
-            }
-            set
-            {
-                this.sundayField = value;
-            }
+            this.emailField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name
     {
-
-        private string demoRefField;
-
-        private decimal valueField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string demoRef
+        get
         {
-            get
-            {
-                return this.demoRefField;
-            }
-            set
-            {
-                this.demoRefField = value;
-            }
+            return this.nameField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public decimal Value
+        set
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
+            this.nameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalSellerSalespersonPhone
+{
+
+    private string typeField;
+
+    private string valueField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string type
+    {
+        get
+        {
+            return this.typeField;
+        }
+        set
+        {
+            this.typeField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public string Value
     {
-
-        private System.DateTime startDateField;
-
-        private System.DateTime endDateField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime startDate
+        get
         {
-            get
-            {
-                return this.startDateField;
-            }
-            set
-            {
-                this.startDateField = value;
-            }
+            return this.valueField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime endDate
+        set
         {
-            get
-            {
-                return this.endDateField;
-            }
-            set
-            {
-                this.endDateField = value;
-            }
+            this.valueField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalSellerSalespersonEmail
+{
+
+    private string typeField;
+
+    private string valueField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string type
+    {
+        get
+        {
+            return this.typeField;
+        }
+        set
+        {
+            this.typeField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriods
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public string Value
     {
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference outletReferenceField;
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes dayTimesField;
-
-        private string daypartNameField;
-
-        private string availNameField;
-
-        private System.DateTime spotLengthField;
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod[] periodsField;
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference OutletReference
+        get
         {
-            get
-            {
-                return this.outletReferenceField;
-            }
-            set
-            {
-                this.outletReferenceField = value;
-            }
+            return this.valueField;
         }
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes DayTimes
+        set
         {
-            get
-            {
-                return this.dayTimesField;
-            }
-            set
-            {
-                this.dayTimesField = value;
-            }
+            this.valueField = value;
         }
+    }
+}
 
-        /// <remarks/>
-        public string DaypartName
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalBuyer
+{
+
+    private string buyerNameField;
+
+    private string buyingCompanyNameField;
+
+    /// <remarks/>
+    public string BuyerName
+    {
+        get
         {
-            get
-            {
-                return this.daypartNameField;
-            }
-            set
-            {
-                this.daypartNameField = value;
-            }
+            return this.buyerNameField;
         }
-
-        /// <remarks/>
-        public string AvailName
+        set
         {
-            get
-            {
-                return this.availNameField;
-            }
-            set
-            {
-                this.availNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "time")]
-        public System.DateTime SpotLength
-        {
-            get
-            {
-                return this.spotLengthField;
-            }
-            set
-            {
-                this.spotLengthField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("DetailedPeriod", IsNullable = false)]
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod[] Periods
-        {
-            get
-            {
-                return this.periodsField;
-            }
-            set
-            {
-                this.periodsField = value;
-            }
+            this.buyerNameField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string buyingCompanyName
     {
-
-        private string outletFromListRefField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string outletFromListRef
+        get
         {
-            get
-            {
-                return this.outletFromListRefField;
-            }
-            set
-            {
-                this.outletFromListRefField = value;
-            }
+            return this.buyingCompanyNameField;
+        }
+        set
+        {
+            this.buyingCompanyNameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAdvertiser
+{
+
+    private AAAAMessageProposalAdvertiserProduct productField;
+
+    private string nameField;
+
+    /// <remarks/>
+    public AAAAMessageProposalAdvertiserProduct Product
+    {
+        get
+        {
+            return this.productField;
+        }
+        set
+        {
+            this.productField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name
     {
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime dayTimeField;
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime DayTime
+        get
         {
-            get
-            {
-                return this.dayTimeField;
-            }
-            set
-            {
-                this.dayTimeField = value;
-            }
+            return this.nameField;
+        }
+        set
+        {
+            this.nameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAdvertiserProduct
+{
+
+    private string nameField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name
+    {
+        get
+        {
+            return this.nameField;
+        }
+        set
+        {
+            this.nameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalTelevisionStation
+{
+
+    private string callLettersField;
+
+    private string outletIdField;
+
+    private string parentPlusField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string callLetters
+    {
+        get
+        {
+            return this.callLettersField;
+        }
+        set
+        {
+            this.callLettersField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string outletId
     {
-
-        private string startTimeField;
-
-        private string endTimeField;
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays daysField;
-
-        /// <remarks/>
-        public string StartTime
+        get
         {
-            get
-            {
-                return this.startTimeField;
-            }
-            set
-            {
-                this.startTimeField = value;
-            }
+            return this.outletIdField;
         }
-
-        /// <remarks/>
-        public string EndTime
+        set
         {
-            get
-            {
-                return this.endTimeField;
-            }
-            set
-            {
-                this.endTimeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays Days
-        {
-            get
-            {
-                return this.daysField;
-            }
-            set
-            {
-                this.daysField = value;
-            }
+            this.outletIdField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string parentPlus
     {
-
-        private string mondayField;
-
-        private string tuesdayField;
-
-        private string wednesdayField;
-
-        private string thursdayField;
-
-        private string fridayField;
-
-        private string saturdayField;
-
-        private string sundayField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Monday
+        get
         {
-            get
-            {
-                return this.mondayField;
-            }
-            set
-            {
-                this.mondayField = value;
-            }
+            return this.parentPlusField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Tuesday
+        set
         {
-            get
-            {
-                return this.tuesdayField;
-            }
-            set
-            {
-                this.tuesdayField = value;
-            }
+            this.parentPlusField = value;
         }
+    }
+}
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Wednesday
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailList
+{
+
+    private string nameField;
+
+    private AAAAMessageProposalAvailListOutletReference[] outletReferencesField;
+
+    private AAAAMessageProposalAvailListDemoCategory[] demoCategoriesField;
+
+    private AAAAMessageProposalAvailListTargetDemo targetDemoField;
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriods[] availLineWithPeriodsField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriods[] availLineWithDetailedPeriodsField;
+
+    private System.DateTime endDateField;
+
+    private string identifierField;
+
+    private string isPackageField;
+
+    private System.DateTime startDateField;
+
+    /// <remarks/>
+    public string Name
+    {
+        get
         {
-            get
-            {
-                return this.wednesdayField;
-            }
-            set
-            {
-                this.wednesdayField = value;
-            }
+            return this.nameField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Thursday
+        set
         {
-            get
-            {
-                return this.thursdayField;
-            }
-            set
-            {
-                this.thursdayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Friday
-        {
-            get
-            {
-                return this.fridayField;
-            }
-            set
-            {
-                this.fridayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Saturday
-        {
-            get
-            {
-                return this.saturdayField;
-            }
-            set
-            {
-                this.saturdayField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
-        public string Sunday
-        {
-            get
-            {
-                return this.sundayField;
-            }
-            set
-            {
-                this.sundayField = value;
-            }
+            this.nameField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriod
+    [System.Xml.Serialization.XmlArrayItemAttribute("OutletReference", IsNullable = false)]
+    public AAAAMessageProposalAvailListOutletReference[] OutletReferences
     {
-
-        private string rateField;
-
-        private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriodDemoValue[] demoValuesField;
-
-        private System.DateTime endDateField;
-
-        private System.DateTime startDateField;
-
-        /// <remarks/>
-        public string Rate
+        get
         {
-            get
-            {
-                return this.rateField;
-            }
-            set
-            {
-                this.rateField = value;
-            }
+            return this.outletReferencesField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("DemoValue", IsNullable = false)]
-        public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriodDemoValue[] DemoValues
+        set
         {
-            get
-            {
-                return this.demoValuesField;
-            }
-            set
-            {
-                this.demoValuesField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime endDate
-        {
-            get
-            {
-                return this.endDateField;
-            }
-            set
-            {
-                this.endDateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-        public System.DateTime startDate
-        {
-            get
-            {
-                return this.startDateField;
-            }
-            set
-            {
-                this.startDateField = value;
-            }
+            this.outletReferencesField = value;
         }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
-    public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDetailedPeriodDemoValue
+    [System.Xml.Serialization.XmlArrayItemAttribute("DemoCategory", IsNullable = false)]
+    public AAAAMessageProposalAvailListDemoCategory[] DemoCategories
     {
-
-        private string demoRefField;
-
-        private decimal valueField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string demoRef
+        get
         {
-            get
-            {
-                return this.demoRefField;
-            }
-            set
-            {
-                this.demoRefField = value;
-            }
+            return this.demoCategoriesField;
         }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public decimal Value
+        set
         {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
+            this.demoCategoriesField = value;
         }
     }
 
+    /// <remarks/>
+    public AAAAMessageProposalAvailListTargetDemo TargetDemo
+    {
+        get
+        {
+            return this.targetDemoField;
+        }
+        set
+        {
+            this.targetDemoField = value;
+        }
+    }
 
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("AvailLineWithPeriods")]
+    public AAAAMessageProposalAvailListAvailLineWithPeriods[] AvailLineWithPeriods
+    {
+        get
+        {
+            return this.availLineWithPeriodsField;
+        }
+        set
+        {
+            this.availLineWithPeriodsField = value;
+        }
+    }
 
-    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("AvailLineWithDetailedPeriods")]
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriods[] AvailLineWithDetailedPeriods
+    {
+        get
+        {
+            return this.availLineWithDetailedPeriodsField;
+        }
+        set
+        {
+            this.availLineWithDetailedPeriodsField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime endDate
+    {
+        get
+        {
+            return this.endDateField;
+        }
+        set
+        {
+            this.endDateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string identifier
+    {
+        get
+        {
+            return this.identifierField;
+        }
+        set
+        {
+            this.identifierField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string isPackage
+    {
+        get
+        {
+            return this.isPackageField;
+        }
+        set
+        {
+            this.isPackageField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime startDate
+    {
+        get
+        {
+            return this.startDateField;
+        }
+        set
+        {
+            this.startDateField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListOutletReference
+{
+
+    private string outletForListIdField;
+
+    private string outletFromProposalRefField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string outletForListId
+    {
+        get
+        {
+            return this.outletForListIdField;
+        }
+        set
+        {
+            this.outletForListIdField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string outletFromProposalRef
+    {
+        get
+        {
+            return this.outletFromProposalRefField;
+        }
+        set
+        {
+            this.outletFromProposalRefField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListDemoCategory
+{
+
+    private string demoTypeField;
+
+    private string groupField;
+
+    private byte ageFromField;
+
+    private byte ageToField;
+
+    private string demoIdField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
+    public string DemoType
+    {
+        get
+        {
+            return this.demoTypeField;
+        }
+        set
+        {
+            this.demoTypeField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
+    public string Group
+    {
+        get
+        {
+            return this.groupField;
+        }
+        set
+        {
+            this.groupField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
+    public byte AgeFrom
+    {
+        get
+        {
+            return this.ageFromField;
+        }
+        set
+        {
+            this.ageFromField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/spotTV")]
+    public byte AgeTo
+    {
+        get
+        {
+            return this.ageToField;
+        }
+        set
+        {
+            this.ageToField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string DemoId
+    {
+        get
+        {
+            return this.demoIdField;
+        }
+        set
+        {
+            this.demoIdField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListTargetDemo
+{
+
+    private string demoRefField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string demoRef
+    {
+        get
+        {
+            return this.demoRefField;
+        }
+        set
+        {
+            this.demoRefField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriods
+{
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference outletReferenceField;
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes dayTimesField;
+
+    private string daypartNameField;
+
+    private string availNameField;
+
+    private System.DateTime spotLengthField;
+
+    private string rateField;
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] demoValuesField;
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod[] periodsField;
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference OutletReference
+    {
+        get
+        {
+            return this.outletReferenceField;
+        }
+        set
+        {
+            this.outletReferenceField = value;
+        }
+    }
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes DayTimes
+    {
+        get
+        {
+            return this.dayTimesField;
+        }
+        set
+        {
+            this.dayTimesField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string DaypartName
+    {
+        get
+        {
+            return this.daypartNameField;
+        }
+        set
+        {
+            this.daypartNameField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string AvailName
+    {
+        get
+        {
+            return this.availNameField;
+        }
+        set
+        {
+            this.availNameField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(DataType = "time")]
+    public System.DateTime SpotLength
+    {
+        get
+        {
+            return this.spotLengthField;
+        }
+        set
+        {
+            this.spotLengthField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string Rate
+    {
+        get
+        {
+            return this.rateField;
+        }
+        set
+        {
+            this.rateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("DemoValue", IsNullable = false)]
+    public AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] DemoValues
+    {
+        get
+        {
+            return this.demoValuesField;
+        }
+        set
+        {
+            this.demoValuesField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("Period", IsNullable = false)]
+    public AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod[] Periods
+    {
+        get
+        {
+            return this.periodsField;
+        }
+        set
+        {
+            this.periodsField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference
+{
+
+    private string outletFromListRefField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string outletFromListRef
+    {
+        get
+        {
+            return this.outletFromListRefField;
+        }
+        set
+        {
+            this.outletFromListRefField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes
+{
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime dayTimeField;
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime DayTime
+    {
+        get
+        {
+            return this.dayTimeField;
+        }
+        set
+        {
+            this.dayTimeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime
+{
+
+    private string startTimeField;
+
+    private string endTimeField;
+
+    private AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays daysField;
+
+    /// <remarks/>
+    public string StartTime
+    {
+        get
+        {
+            return this.startTimeField;
+        }
+        set
+        {
+            this.startTimeField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string EndTime
+    {
+        get
+        {
+            return this.endTimeField;
+        }
+        set
+        {
+            this.endTimeField = value;
+        }
+    }
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays Days
+    {
+        get
+        {
+            return this.daysField;
+        }
+        set
+        {
+            this.daysField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays
+{
+
+    private string mondayField;
+
+    private string tuesdayField;
+
+    private string wednesdayField;
+
+    private string thursdayField;
+
+    private string fridayField;
+
+    private string saturdayField;
+
+    private string sundayField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Monday
+    {
+        get
+        {
+            return this.mondayField;
+        }
+        set
+        {
+            this.mondayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Tuesday
+    {
+        get
+        {
+            return this.tuesdayField;
+        }
+        set
+        {
+            this.tuesdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Wednesday
+    {
+        get
+        {
+            return this.wednesdayField;
+        }
+        set
+        {
+            this.wednesdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Thursday
+    {
+        get
+        {
+            return this.thursdayField;
+        }
+        set
+        {
+            this.thursdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Friday
+    {
+        get
+        {
+            return this.fridayField;
+        }
+        set
+        {
+            this.fridayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Saturday
+    {
+        get
+        {
+            return this.saturdayField;
+        }
+        set
+        {
+            this.saturdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Sunday
+    {
+        get
+        {
+            return this.sundayField;
+        }
+        set
+        {
+            this.sundayField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue
+{
+
+    private string demoRefField;
+
+    private decimal valueField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string demoRef
+    {
+        get
+        {
+            return this.demoRefField;
+        }
+        set
+        {
+            this.demoRefField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public decimal Value
+    {
+        get
+        {
+            return this.valueField;
+        }
+        set
+        {
+            this.valueField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod
+{
+
+    private System.DateTime startDateField;
+
+    private System.DateTime endDateField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime startDate
+    {
+        get
+        {
+            return this.startDateField;
+        }
+        set
+        {
+            this.startDateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime endDate
+    {
+        get
+        {
+            return this.endDateField;
+        }
+        set
+        {
+            this.endDateField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriods
+{
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference outletReferenceField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes dayTimesField;
+
+    private string daypartNameField;
+
+    private string availNameField;
+
+    private System.DateTime spotLengthField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriods periodsField;
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference OutletReference
+    {
+        get
+        {
+            return this.outletReferenceField;
+        }
+        set
+        {
+            this.outletReferenceField = value;
+        }
+    }
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes DayTimes
+    {
+        get
+        {
+            return this.dayTimesField;
+        }
+        set
+        {
+            this.dayTimesField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string DaypartName
+    {
+        get
+        {
+            return this.daypartNameField;
+        }
+        set
+        {
+            this.daypartNameField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string AvailName
+    {
+        get
+        {
+            return this.availNameField;
+        }
+        set
+        {
+            this.availNameField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(DataType = "time")]
+    public System.DateTime SpotLength
+    {
+        get
+        {
+            return this.spotLengthField;
+        }
+        set
+        {
+            this.spotLengthField = value;
+        }
+    }
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriods Periods
+    {
+        get
+        {
+            return this.periodsField;
+        }
+        set
+        {
+            this.periodsField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference
+{
+
+    private string outletFromListRefField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string outletFromListRef
+    {
+        get
+        {
+            return this.outletFromListRefField;
+        }
+        set
+        {
+            this.outletFromListRefField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes
+{
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime dayTimeField;
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime DayTime
+    {
+        get
+        {
+            return this.dayTimeField;
+        }
+        set
+        {
+            this.dayTimeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime
+{
+
+    private string startTimeField;
+
+    private string endTimeField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays daysField;
+
+    /// <remarks/>
+    public string StartTime
+    {
+        get
+        {
+            return this.startTimeField;
+        }
+        set
+        {
+            this.startTimeField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string EndTime
+    {
+        get
+        {
+            return this.endTimeField;
+        }
+        set
+        {
+            this.endTimeField = value;
+        }
+    }
+
+    /// <remarks/>
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays Days
+    {
+        get
+        {
+            return this.daysField;
+        }
+        set
+        {
+            this.daysField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays
+{
+
+    private string mondayField;
+
+    private string tuesdayField;
+
+    private string wednesdayField;
+
+    private string thursdayField;
+
+    private string fridayField;
+
+    private string saturdayField;
+
+    private string sundayField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Monday
+    {
+        get
+        {
+            return this.mondayField;
+        }
+        set
+        {
+            this.mondayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Tuesday
+    {
+        get
+        {
+            return this.tuesdayField;
+        }
+        set
+        {
+            this.tuesdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Wednesday
+    {
+        get
+        {
+            return this.wednesdayField;
+        }
+        set
+        {
+            this.wednesdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Thursday
+    {
+        get
+        {
+            return this.thursdayField;
+        }
+        set
+        {
+            this.thursdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Friday
+    {
+        get
+        {
+            return this.fridayField;
+        }
+        set
+        {
+            this.fridayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Saturday
+    {
+        get
+        {
+            return this.saturdayField;
+        }
+        set
+        {
+            this.saturdayField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.AAAA.org/schemas/TVBGeneralTypes")]
+    public string Sunday
+    {
+        get
+        {
+            return this.sundayField;
+        }
+        set
+        {
+            this.sundayField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriods
+{
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriod[] detailedPeriodField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDayDetailedPeriod[] dayDetailedPeriodField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("DetailedPeriod")]
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriod[] DetailedPeriod
+    {
+        get
+        {
+            return this.detailedPeriodField;
+        }
+        set
+        {
+            this.detailedPeriodField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("DayDetailedPeriod")]
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDayDetailedPeriod[] DayDetailedPeriod
+    {
+        get
+        {
+            return this.dayDetailedPeriodField;
+        }
+        set
+        {
+            this.dayDetailedPeriodField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriod
+{
+
+    private string rateField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriodDemoValue[] demoValuesField;
+
+    private System.DateTime endDateField;
+
+    private System.DateTime startDateField;
+
+    /// <remarks/>
+    public string Rate
+    {
+        get
+        {
+            return this.rateField;
+        }
+        set
+        {
+            this.rateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("DemoValue", IsNullable = false)]
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriodDemoValue[] DemoValues
+    {
+        get
+        {
+            return this.demoValuesField;
+        }
+        set
+        {
+            this.demoValuesField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime endDate
+    {
+        get
+        {
+            return this.endDateField;
+        }
+        set
+        {
+            this.endDateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime startDate
+    {
+        get
+        {
+            return this.startDateField;
+        }
+        set
+        {
+            this.startDateField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriodDemoValue
+{
+
+    private string demoRefField;
+
+    private decimal valueField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string demoRef
+    {
+        get
+        {
+            return this.demoRefField;
+        }
+        set
+        {
+            this.demoRefField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public decimal Value
+    {
+        get
+        {
+            return this.valueField;
+        }
+        set
+        {
+            this.valueField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDayDetailedPeriod
+{
+
+    private string rateField;
+
+    private AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDayDetailedPeriodDemoValue[] demoValuesField;
+
+    private System.DateTime endDateField;
+
+    private System.DateTime startDateField;
+
+    /// <remarks/>
+    public string Rate
+    {
+        get
+        {
+            return this.rateField;
+        }
+        set
+        {
+            this.rateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("DemoValue", IsNullable = false)]
+    public AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDayDetailedPeriodDemoValue[] DemoValues
+    {
+        get
+        {
+            return this.demoValuesField;
+        }
+        set
+        {
+            this.demoValuesField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime endDate
+    {
+        get
+        {
+            return this.endDateField;
+        }
+        set
+        {
+            this.endDateField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+    public System.DateTime startDate
+    {
+        get
+        {
+            return this.startDateField;
+        }
+        set
+        {
+            this.startDateField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.SerializableAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.AAAA.org/schemas/spotTVCableProposal")]
+public partial class AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDayDetailedPeriodDemoValue
+{
+
+    private string demoRefField;
+
+    private decimal valueField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string demoRef
+    {
+        get
+        {
+            return this.demoRefField;
+        }
+        set
+        {
+            this.demoRefField = value;
+        }
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public decimal Value
+    {
+        get
+        {
+            return this.valueField;
+        }
+        set
+        {
+            this.valueField = value;
+        }
+    }
 }
 
