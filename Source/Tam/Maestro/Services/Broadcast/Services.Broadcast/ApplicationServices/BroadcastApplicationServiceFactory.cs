@@ -18,6 +18,8 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.ApplicationServices.Helpers;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -128,6 +130,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IWWTVFtpHelper, WWTVFtpHelper>();
             unityContainer.RegisterType<IFtpService, FtpService>();
             unityContainer.RegisterType<IFileService, FileService>();
+            unityContainer.RegisterType<IFileTransferEmailHelper, FileTransferEmailHelper>();
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
             unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();

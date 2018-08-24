@@ -1,8 +1,10 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -34,19 +36,22 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly string _SigmaFileExtension = ".csv";
 
         public PostLogPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                            IWWTVSharedNetworkHelper WWTVSharedNetworkHelper,
                                            IEmailerService emailerService,
                                            IFileService fileService,
-                                           IWWTVFtpHelper ftpHelper)
+                                           IWWTVFtpHelper ftpHelper,
+                                           IFileTransferEmailHelper emailHelper)
         {
             _DataRepositoryFactory = broadcastDataRepositoryFactory;
             _WWTVSharedNetworkHelper = WWTVSharedNetworkHelper;
             _EmailerService = emailerService;
             _FileService = fileService;
             _WWTVFtpHelper = ftpHelper;
+            _EmailHelper = emailHelper;
         }
         public void ProcessFiles(string username)
         {
@@ -69,70 +74,22 @@ namespace Services.Broadcast.ApplicationServices
                     _MoveToErrorFolderAndSendNotification(invalidFileList);
                 }
 
-                _DeleteFiles(validFileList);
+                _FileService.Delete(validFileList.Select(x=>x.FilePath).ToArray());
             });
         }
 
         private void _MoveToErrorFolderAndSendNotification(List<OutboundPostLogFileValidationResult> invalidFileList)
         {
-
             foreach (var invalidFile in invalidFileList)
             {
-                var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
+                var invalidFilePath = _FileService.Move(invalidFile.FilePath, BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
 
-                var emailBody = _CreateInvalidDataFileEmailBody(invalidFile, invalidFilePath);
+                var emailBody =  _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
 
-                _Send(emailBody, "Error Preprocessing");
+                _EmailHelper.SendEmail(emailBody, "Error Preprocessing");
             }
         }
-
-        private string _MoveInvalidFileToArchiveFolder(OutboundPostLogFileValidationResult invalidFile)
-        {
-            var errorFolder = BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder;
-            var destinationPath = Path.Combine(errorFolder, Path.GetFileName(invalidFile.FilePath));
-
-            if (File.Exists(destinationPath))
-                File.Delete(destinationPath);
-
-            File.Move(invalidFile.FilePath, destinationPath);
-
-            return destinationPath;
-        }
-
-        private string _CreateInvalidDataFileEmailBody(OutboundPostLogFileValidationResult invalidFile, string invalidFilePath)
-        {
-            var mailBody = new StringBuilder();
-
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", invalidFile.FileName);
-
-            foreach (var errorMessage in invalidFile.ErrorMessages)
-            {
-                mailBody.AppendFormat("{0}\n\n", errorMessage);
-            }
-
-            mailBody.AppendFormat("\nFile located in {0}\n", invalidFilePath);
-
-            return mailBody.ToString();
-        }
-
-        private void _Send(string emailBody, string subject)
-        {
-            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
-                return;
-
-            var from = new MailAddress(BroadcastServiceSystemParameter.EmailUsername);
-            var to = new List<MailAddress>() { new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail) };
-            _EmailerService.QuickSend(false, emailBody, subject, MailPriority.Normal, from, to);
-        }
-
-        private static void _DeleteFiles(List<OutboundPostLogFileValidationResult> validationList)
-        {
-            validationList.ForEach(r =>
-            {
-                    File.Delete(r.FilePath);
-            });
-        }
-
+        
         private void _CreateAndUploadZipArchiveToWWTV(List<OutboundPostLogFileValidationResult> files)
         {
             string zipFileName = BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder;
@@ -213,7 +170,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<string> _GetDropFolderFileList()
         {
-            var dropFolder = "";
+            var dropFolder = string.Empty;
             List<string> filepathList;
             try
             {

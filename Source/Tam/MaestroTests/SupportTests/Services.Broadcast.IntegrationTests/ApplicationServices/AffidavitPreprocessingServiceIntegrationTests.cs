@@ -6,14 +6,12 @@ using NUnit.Framework;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Net.Mail;
 using Common.Services;
 using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.ApplicationServices.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

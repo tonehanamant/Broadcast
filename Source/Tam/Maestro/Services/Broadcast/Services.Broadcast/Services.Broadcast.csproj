@@ -226,9 +226,7 @@
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
-    <Compile Include="ApplicationServices\WWTVFtpHelper.cs" />
     <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
-    <Compile Include="ApplicationServices\WWTVNetworkHelper.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
@@ -252,7 +250,10 @@
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
+    <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
+    <Compile Include="Helpers\WWTVFtpHelper.cs" />
+    <Compile Include="Helpers\WWTVNetworkHelper.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\BvsFile.cs" />
