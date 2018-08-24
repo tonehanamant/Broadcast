@@ -367,6 +367,8 @@ namespace Services.Broadcast.ApplicationServices
                     return "Multiple Proposals";
                 case AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried:
                     return "Married and Unmarried";
+                case AffidavitFileDetailProblemTypeEnum.UnmatchedSpotLength:
+                    return "Unmatched Spot length";
                 default:
                     return null;
             }
