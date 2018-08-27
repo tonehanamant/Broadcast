@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.Broadcast.Entities
+﻿namespace Services.Broadcast.Entities
 {
     public enum AffidavitFileDetailProblemTypeEnum
     {
         UnlinkedIsci = 1,
-        UnmarriedOnMultipleContracts = 2
+        UnmarriedOnMultipleContracts = 2,
+        ArchivedIsci = 3,
+        MarriedAndUnmarried =4
     }
 
     public class AffidavitFileDetailProblem
     {
         public AffidavitFileDetailProblemTypeEnum Type { get; set; }
         public string Description { get; set; }
+        public long DetailId { get; set; }
     }
 }

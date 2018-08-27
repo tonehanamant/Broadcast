@@ -42,7 +42,7 @@ export default class GridIsciCell extends Component {
   onChangeIscis(event) {
     const val = event.target.value;
     this.setState({ iscisValue: val, isChanged: true });
-    // this.props.toggleEditIsciClass(true);
+    // this.prosetStateps.toggleEditIsciClass(true);
   }
 
   // display/edit conversion - both for popover and edit house display/tips
@@ -243,7 +243,7 @@ export default class GridIsciCell extends Component {
     );
     // revise to show house display if edit mode with tip
     const button = isEdit ? <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><div className="truncate-iscis">{this.state.iscisDisplay.join(' | ')}</div></Button> :
-      <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><Glyphicon style={{ marginRight: '6px' }} glyph="plus" />Add Isci</Button>;
+      <Button bsStyle="link" style={{ padding: '2px', fontSize: '11px' }}><Glyphicon style={{ marginRight: '6px' }} glyph="plus" />Add ISCIs</Button>;
       const tooltip = <Tooltip id="Iscistooltip"><span style={{ fontSize: '9px' }}>ISCIs <br />{this.state.iscisValue}</span></Tooltip>;
       // const touchedClass = (this.state.isChanged && isISCIEdited) ? 'editable-cell-changed' : '';
       const touchedClass = '';

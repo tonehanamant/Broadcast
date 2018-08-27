@@ -62,6 +62,7 @@ export default class ProposalHeader extends Component {
                 toggleModal={toggleModal}
                 isReadOnly={this.props.isReadOnly}
                 proposalValidationStates={proposalValidationStates}
+                isEdit={isEdit}
               />
             </Panel.Body>
           </Panel.Collapse>

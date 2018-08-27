@@ -14,5 +14,6 @@ namespace Services.Broadcast.Entities
         public List<LookupDto> SchedulePostTypes { get; set; }
         public List<LookupDto> Statuses { get; set; }
         public ForecastRatingsDefaultsDto ForecastDefaults { get; set; }
+        public double DefaultMarketCoverage { get; set; }
     }
 }

@@ -18433,14 +18433,12 @@
     {
       "AudienceId": 31,
       "AudienceName": "HH",
-      "IsHouseHold": true,
       "Population": 7368320,
       "Rank": 1
     },
     {
       "AudienceId": 42,
       "AudienceName": "A50+",
-      "IsHouseHold": false,
       "Population": 7099429,
       "Rank": 2
     }

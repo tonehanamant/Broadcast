@@ -58,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!proposalDetailInventory.GuaranteedAudience.HasValue)
                 throw new ApplicationException(MissingGuaranteedAudienceErorMessage);
 
-            if (!proposalDetailInventory.HutPostingBookId.HasValue && !proposalDetailInventory.SharePostingBookId.HasValue && !proposalDetailInventory.SinglePostingBookId.HasValue)
+            if (!proposalDetailInventory.HutProjectionBookId.HasValue && !proposalDetailInventory.ShareProjectionBookId.HasValue && !proposalDetailInventory.SingleProjectionBookId.HasValue)
                 throw new ApplicationException(MissingBooksErrorMessage);
 
             var daypartGroupings = new Dictionary<string, ProposalInventoryDaypartDto>();

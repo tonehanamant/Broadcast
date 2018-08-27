@@ -226,7 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\AffidavitPostProcessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\AffidavitImpressionsServiceTests.cs" />
+    <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
+    <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
@@ -235,11 +237,14 @@
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\MyEventsReportNamingEngineTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceTests.cs" />
+    <Compile Include="ApplicationServices\PostLogPreprocessingServiceTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitScrubbingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\PostReportServiceTests.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
@@ -249,13 +254,19 @@
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
+    <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Stubbs\FileServiceStubb.cs" />
+    <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
+    <Compile Include="Stubbs\FtpServiceStubb.cs" />
     <Compile Include="Repositories\ProposalInventoryRepositoryIntegrationTests.cs" />
     <Compile Include="Repositories\ProposalRepositoryTests.cs" />
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
-    <Compile Include="StubbedSMSClient.cs" />
-    <Compile Include="EmailerTests.cs" />
+    <Compile Include="Stubbs\EmailerServicedStubb.cs" />
+    <Compile Include="Stubbs\StubbedSMSClient.cs" />
+    <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitProgramScrubbingEngineTests.cs" />
+    <Compile Include="UnitTests\FtpServiceTester.cs" />
     <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileRow.cs" />
@@ -289,11 +300,21 @@
     <None Include="app.config" />
     <None Include="EnvironmentSpecificSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="EnvironmentSpecificSettings.config.development">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="EnvironmentSpecificSettings.config.release">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\C786.Sigma.MissingColumns.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\C786.Sigma.MissingData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\C786.Sigma.ValidFile.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\CNNAMPMBarterObligations_AllBadDayparts.xlsx">
@@ -425,6 +446,18 @@
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\KeepingTrac_Test_MissingData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\KeepingTrac_Test_Clean.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\KeepingTrac_Test_MissingHeaders.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Master File APR18.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\MASTER_CONTACT_LIST.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -449,6 +482,18 @@
     </None>
     <None Include="Files\SCX Overlapping Fields.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SigmaImport.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SigmaImportRequiredColumnMissing.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SigmaImportRequiredFieldEmpty.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\SigmaImport_BCOP3447.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\StrataSBMSInvoicePostExportInvalidColumnName.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -619,6 +664,9 @@
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\KeepingTracTest.xlsx.BadTimes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\Open Market Duplicate Program File1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -637,8 +685,8 @@
     <None Include="Files\Test Adv NAV4 30 05-30-16.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Files\WWTV_AffidavitInValidFileContent.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Files\KeepingTracTest.xlsx.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_AffidavitValidFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -649,10 +697,13 @@
     <Content Include="Files\WWTV_AffidavitValidFileContent_SpotCost.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\WWTV_Bad_File.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Files\WWTV_Affidavit_Decimal_Overnight_Impressions.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_Bad_File_times.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_Basic_Required_Validation.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_Escaped_DoubleQuotes.txt">

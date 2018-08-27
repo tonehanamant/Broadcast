@@ -125,6 +125,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "NielsenCable"; }
         }
 	 
+		public static string NsiStaging  
+		{
+            get { return "NsiStaging"; }
+        }
+	 
 		public static string PostLogAnalysis  
 		{
             get { return "PostLogAnalysis"; }
@@ -306,11 +311,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "EnableNewRatingsService"; }
         }
 	 
-		public static string EnableNsiFolderMonitor  
-		{
-            get { return "EnableNsiFolderMonitor"; }
-        }
-	 
 		public static string EnableProcessIncompleteRatingsLoadJobsCheck  
 		{
             get { return "EnableProcessIncompleteRatingsLoadJobsCheck"; }
@@ -334,26 +334,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string NoOfThreadsForRatingRequest  
 		{
             get { return "NoOfThreadsForRatingRequest"; }
-        }
-	 
-		public static string NsiDropBoxDirectory  
-		{
-            get { return "NsiDropBoxDirectory"; }
-        }
-	 
-		public static string NsiNotificationEmailAddresses  
-		{
-            get { return "NsiNotificationEmailAddresses"; }
-        }
-	 
-		public static string NsiOtherDirectory  
-		{
-            get { return "NsiOtherDirectory"; }
-        }
-	 
-		public static string NsiRatingsDirectory  
-		{
-            get { return "NsiRatingsDirectory"; }
         }
 	 
 		public static string NumMonthsToCacheForNewRatingsService  
@@ -412,6 +392,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastMatchingBuffer"; }
         }
 	 
+		public static string DefaultMarketCoverage  
+		{
+            get { return "DefaultMarketCoverage"; }
+        }
+	 
+		public static string DefaultNtiConversionFactor  
+		{
+            get { return "DefaultNtiConversionFactor"; }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return "EmailFrom"; }
@@ -440,6 +430,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string EmailWhiteList  
 		{
             get { return "EmailWhiteList"; }
+        }
+	 
+		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
+		{
+            get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
         }
 	 
 		public static string ProgramSearchApiUrl  
@@ -497,6 +492,21 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "WWTV_NotificationEmail"; }
         }
 	 
+		public static string WWTV_PostLogDropFolder  
+		{
+            get { return "WWTV_PostLogDropFolder"; }
+        }
+	 
+		public static string WWTV_PostLogErrorFolder  
+		{
+            get { return "WWTV_PostLogErrorFolder"; }
+        }
+	 
+		public static string WWTV_PostLogFtpOutboundFolder  
+		{
+            get { return "WWTV_PostLogFtpOutboundFolder"; }
+        }
+	 
 		public static string WWTV_SecondsBetweenRuns  
 		{
             get { return "WWTV_SecondsBetweenRuns"; }
@@ -505,6 +515,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string WWTV_SharedFolder  
 		{
             get { return "WWTV_SharedFolder"; }
+        }
+	 
+		public static string WWTV_SharedFolder_Password  
+		{
+            get { return "WWTV_SharedFolder_Password"; }
+        }
+	 
+		public static string WWTV_SharedFolder_UserName  
+		{
+            get { return "WWTV_SharedFolder_UserName"; }
         }
 	 
 		public static string WWTV_WhenToCheckDataFiles  
@@ -538,6 +558,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string PythonFilePath  
 		{
             get { return "PythonFilePath"; }
+        }
+	}
+	 
+	public static class ConfigurationServiceSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "ConfigurationService" ; }
+        }
+	  
+		public static string CacheTest  
+		{
+            get { return "CacheTest"; }
         }
 	}
 	 
@@ -1404,6 +1437,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DefaultEmailGroupTo"; }
         }
 	 
+		public static string InnovarXmlPath  
+		{
+            get { return "InnovarXmlPath"; }
+        }
+	 
 		public static string MaxTrafficBreakdownThreads  
 		{
             get { return "MaxTrafficBreakdownThreads"; }
@@ -1475,6 +1513,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "FourAsDisclaimer"; }
         }
 	 
+		public static string MarriedTrafficReportDirectory  
+		{
+            get { return "MarriedTrafficReportDirectory"; }
+        }
+	 
 		public static string MaxLoaderThreads  
 		{
             get { return "MaxLoaderThreads"; }
@@ -1536,6 +1579,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string InternalSalesWebApiUri  
 		{
             get { return "InternalSalesWebApiUri"; }
+        }
+	 
+		public static string OrderingApiApprovedEmailAddresses  
+		{
+            get { return "OrderingApiApprovedEmailAddresses"; }
         }
 	}
 	 

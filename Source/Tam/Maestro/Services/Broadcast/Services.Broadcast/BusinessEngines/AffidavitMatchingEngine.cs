@@ -13,7 +13,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IAffidavitMatchingEngine : IApplicationService
     {
         List<AffidavitMatchingProposalWeek> Match(
-            AffidavitSaveRequestDetail requestDetail,
+            AffidavitFileDetail affidavitFileDetail,
             List<AffidavitMatchingProposalWeek> proposalWeeks);
         List<AffidavitFileDetailProblem> MatchingProblems();
     }
@@ -37,7 +37,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public List<AffidavitMatchingProposalWeek> Match(
-            AffidavitSaveRequestDetail requestDetail,
+            AffidavitFileDetail affidavitFileDetail,
             List<AffidavitMatchingProposalWeek> proposalWeeks)
         {
             _MatchingProposalWeeks = new List<AffidavitMatchingProposalWeek>();
@@ -48,7 +48,7 @@ namespace Services.Broadcast.BusinessEngines
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
                     Type = AffidavitFileDetailProblemTypeEnum.UnlinkedIsci,
-                    Description = String.Format("Isci not found: {0}", requestDetail.Isci)
+                    Description = String.Format("Isci not found: {0}", affidavitFileDetail.Isci)
                 });
 
                 return _MatchingProposalWeeks;
@@ -60,7 +60,7 @@ namespace Services.Broadcast.BusinessEngines
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
                     Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
-                    Description = String.Format("Unmarried Isci {0} exists on multiple proposals", requestDetail.Isci)
+                    Description = String.Format("Unmarried Isci {0} exists on multiple proposals", affidavitFileDetail.Isci)
                 });
                 return _MatchingProposalWeeks;
             }
@@ -70,8 +70,8 @@ namespace Services.Broadcast.BusinessEngines
             {
                 _MatchingProblems.Add(new AffidavitFileDetailProblem()
                 {
-                    Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
-                    Description = String.Format("Isci {0} exists as married and unmarried", requestDetail.Isci)
+                    Type = AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried,
+                    Description = String.Format("Isci {0} exists as married and unmarried", affidavitFileDetail.Isci)
                 });
                 return _MatchingProposalWeeks;
             }
@@ -83,7 +83,7 @@ namespace Services.Broadcast.BusinessEngines
                 var proposalWeeksByProposalDetail = singleProposalWeeks.GroupBy(g => g.ProposalVersionDetailId);
                 AffidavitMatchingProposalWeek matchedProposalDetailWeek;
                 var airtimeMatchingProposalDetailWeeks =
-                    _GetAirtimeMatchingProposalDetailWeeks(proposalWeeksByProposalDetail, requestDetail);
+                    _GetAirtimeMatchingProposalDetailWeeks(proposalWeeksByProposalDetail, affidavitFileDetail);
                 var dateAndTimeMatchs = airtimeMatchingProposalDetailWeeks.Where(a => a.TimeMatch && a.DateMatch);
                 var dateMatch = airtimeMatchingProposalDetailWeeks.Where(a => a.DateMatch);
                 var timeMatch = airtimeMatchingProposalDetailWeeks.Where(a => a.TimeMatch);
@@ -113,7 +113,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private List<AffidavitMatchingProposalWeek> _GetAirtimeMatchingProposalDetailWeeks
     (System.Collections.Generic.IEnumerable<IGrouping<int, AffidavitMatchingProposalWeek>> proposalWeeksByProposalDetail
-    , AffidavitSaveRequestDetail affidavitDetail)
+    , AffidavitFileDetail affidavitDetail)
         {
             var result = new List<AffidavitMatchingProposalWeek>();
             var dayparts = _DaypartCache.GetDisplayDayparts(proposalWeeksByProposalDetail.Select(d => d.First().ProposalVersionDetailDaypartId));
@@ -131,7 +131,7 @@ namespace Services.Broadcast.BusinessEngines
                 if (isOvernight)
                 {
                     // some of these "if" can be combined, but will be harder to maintain and negligably performant
-                    if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= actualStartTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= actualEndTime)
+                    if (affidavitDetail.AirTime >= actualStartTime && affidavitDetail.AirTime >= actualEndTime)
                     {   // covers airtime before midnight
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
@@ -141,7 +141,7 @@ namespace Services.Broadcast.BusinessEngines
                                 proposalDetailWeek.TimeMatch = true;
                         }
                     }
-                    else if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= adjustedStartTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= actualEndTime)
+                    else if (affidavitDetail.AirTime >= adjustedStartTime && affidavitDetail.AirTime >= actualEndTime)
                     {   // covers lead in time
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
@@ -153,7 +153,7 @@ namespace Services.Broadcast.BusinessEngines
                             }
                         }
                     }
-                    else if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualEndTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualStartTime)
+                    else if (affidavitDetail.AirTime <= actualEndTime && affidavitDetail.AirTime <= actualStartTime)
                     {   // covers airtime after midnight
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
@@ -166,7 +166,7 @@ namespace Services.Broadcast.BusinessEngines
                 }
                 else
                 {
-                    if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= actualStartTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualEndTime)
+                    if (affidavitDetail.AirTime >= actualStartTime && affidavitDetail.AirTime <= actualEndTime)
                     {
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
@@ -176,7 +176,7 @@ namespace Services.Broadcast.BusinessEngines
                                 proposalDetailWeek.TimeMatch = true;
                         }
                     }
-                    else if (affidavitDetail.AirTime.TimeOfDay.TotalSeconds >= adjustedStartTime && affidavitDetail.AirTime.TimeOfDay.TotalSeconds <= actualEndTime)
+                    else if (affidavitDetail.AirTime >= adjustedStartTime && affidavitDetail.AirTime <= actualEndTime)
                     {
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
@@ -190,7 +190,7 @@ namespace Services.Broadcast.BusinessEngines
 
                 foreach (var proposalDetailWeek in proposalDetail)
                 {
-                    proposalDetailWeek.DateMatch = _IsDateMatch(affidavitDetail, result, proposalDetail);
+                    proposalDetailWeek.DateMatch = _IsDateMatch(affidavitDetail.OriginalAirDate.Date, result, proposalDetailWeek);
 
                     if (proposalDetailWeek.TimeMatch || proposalDetailWeek.DateMatch)
                         result.Add(proposalDetailWeek);
@@ -200,19 +200,11 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private bool _IsDateMatch(AffidavitSaveRequestDetail affidavitDetail, List<AffidavitMatchingProposalWeek> result, IGrouping<int, AffidavitMatchingProposalWeek> proposalDetail)
+        private bool _IsDateMatch(DateTime affidavitDetailAirDate, List<AffidavitMatchingProposalWeek> result, AffidavitMatchingProposalWeek proposalDetailWeek)
         {
-            foreach (var proposalWeek in proposalDetail)
-            {
-                if (affidavitDetail.AirTime.Date >= proposalWeek.ProposalVersionDetailWeekStart &&
-                    affidavitDetail.AirTime.Date <= proposalWeek.ProposalVersionDetailWeekEnd &&
-                     proposalWeek.Spots != 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return affidavitDetailAirDate >= proposalDetailWeek.ProposalVersionDetailWeekStart &&
+                   affidavitDetailAirDate <= proposalDetailWeek.ProposalVersionDetailWeekEnd &&
+                   proposalDetailWeek.Spots != 0;
         }
     }
 }

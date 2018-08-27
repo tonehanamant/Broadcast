@@ -54,13 +54,6 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-/* START: BCOP-2757, BCOP-2764, BCOP-2765 */
-IF EXISTS (SELECT * FROM sys.objects where object_id = OBJECT_ID(N'[nsi].[hwc_universes]') AND type in (N'U'))
-BEGIN
-	DROP TABLE [nsi].[hwc_universes];
-END
-GO
-/* END: BCOP-2757, BCOP-2764, BCOP-2765 */
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
@@ -68,7 +61,7 @@ GO
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.05.1' -- Current release version
+SET parameter_value = '18.08.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -79,8 +72,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.04.1' -- Previous release version
-		OR [version] = '18.05.1') -- Current release version
+		WHERE [version] = '18.06.1' -- Previous release version
+		OR [version] = '18.08.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

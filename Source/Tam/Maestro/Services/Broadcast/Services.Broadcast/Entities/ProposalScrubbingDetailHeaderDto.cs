@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.DTO;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities

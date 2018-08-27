@@ -1,0 +1,252 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "ClientScrubs": [
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": null,
+      "DateAired": "2016-06-03T00:00:00",
+      "DayOfWeek": 5,
+      "GenreName": "Do It Yourself",
+      "ISCI": "NSI1",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 9953,
+      "Sequence": null,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-05-30T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": null,
+      "DateAired": "2016-06-08T00:00:00",
+      "DayOfWeek": 3,
+      "GenreName": "Do It Yourself",
+      "ISCI": "NSI2",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 9953,
+      "Sequence": null,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-06-07T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": null,
+      "DateAired": "2016-06-03T00:00:00",
+      "DayOfWeek": 5,
+      "GenreName": "Do It Yourself",
+      "ISCI": "NSI3",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 9954,
+      "Sequence": null,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-05-30T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": null,
+      "DateAired": "2016-06-03T00:00:00",
+      "DayOfWeek": 5,
+      "GenreName": "Do It Yourself",
+      "ISCI": "NSI3",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": false,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": false,
+      "MatchProgram": false,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": false,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 9954,
+      "Sequence": null,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 1,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-05-30T00:00:00"
+    },
+    {
+      "Affiliate": "NBC",
+      "ClientISCI": null,
+      "Comments": null,
+      "DateAired": "2016-06-08T00:00:00",
+      "DayOfWeek": 3,
+      "GenreName": "Do It Yourself",
+      "ISCI": "NSI4",
+      "Market": "New York",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": true,
+      "ProgramName": "Program Names R us",
+      "ProposalDetailId": 9954,
+      "Sequence": null,
+      "ShowTypeName": "",
+      "SpotLength": 30,
+      "Station": "WNBC",
+      "Status": 2,
+      "StatusOverride": false,
+      "TimeAired": 32400,
+      "WeekStart": "2016-06-07T00:00:00"
+    }
+  ],
+  "Details": [
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-06T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        }
+      ],
+      "Genres": [],
+      "Id": 9953,
+      "Programs": [],
+      "Sequence": null,
+      "SpotLength": "30"
+    },
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2016-06-06T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-06T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
+        }
+      ],
+      "Genres": [],
+      "Id": 9954,
+      "Programs": [],
+      "Sequence": null,
+      "SpotLength": "30"
+    }
+  ],
+  "Filters": {
+    "DateAiredEnd": "2016-06-08T00:00:00",
+    "DateAiredStart": "2016-06-03T00:00:00",
+    "DistinctAffiliates": [
+      "NBC"
+    ],
+    "DistinctClientIscis": [],
+    "DistinctDayOfWeek": [
+      3,
+      5
+    ],
+    "DistinctGenres": [
+      "Do It Yourself"
+    ],
+    "DistinctHouseIscis": [
+      "NSI1",
+      "NSI2",
+      "NSI3",
+      "NSI4"
+    ],
+    "DistinctMarkets": [
+      "New York"
+    ],
+    "DistinctPrograms": [
+      "Program Names R us"
+    ],
+    "DistinctSequences": [],
+    "DistinctShowTypes": [],
+    "DistinctSpotLengths": [
+      30
+    ],
+    "DistinctStations": [
+      "WNBC"
+    ],
+    "DistinctWeekStarts": [
+      "2016-05-30T00:00:00",
+      "2016-06-07T00:00:00"
+    ],
+    "TimeAiredEnd": 32400,
+    "TimeAiredStart": 32400,
+    "WeekEnd": "2016-06-14T00:00:00",
+    "WeekStart": "2016-05-30T00:00:00"
+  },
+  "GuaranteedDemo": "House Holds",
+  "Id": 26000,
+  "MarketGroupId": 1,
+  "Markets": [],
+  "Name": "NSI Report Test",
+  "Notes": null,
+  "SecondaryDemos": []
+}

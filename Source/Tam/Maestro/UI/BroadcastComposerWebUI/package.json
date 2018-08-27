@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "animatewithsass": "^3.2.1",
-    "antd": "^3.0.3",
+    "antd": "^3.6.1",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-stage-0": "^6.24.1",
@@ -32,7 +32,9 @@
     "react-bootstrap": "0.32.0",
     "react-bootstrap-typeahead": "^2.0.2",
     "react-bs-notifier": "^4.4.4",
+    "react-contexify": "^3.0.1",
     "react-css-modules": "^4.7.1",
+    "react-datepicker": "^1.5.0",
     "react-dates": "15.1.0",
     "react-dom": "^16.0.0",
     "react-dropzone": "^4.2.1",
@@ -46,10 +48,10 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-select": "1.2.1",
     "react-text-mask": "^5.0.2",
+    "text-mask-addons": "^3.7.2",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.15.4",
-    "text-mask-addons": "^3.7.1"
+    "redux-saga": "^0.15.4"
   },
   "devDependencies": {
     "@types/react": "^16.0.5",

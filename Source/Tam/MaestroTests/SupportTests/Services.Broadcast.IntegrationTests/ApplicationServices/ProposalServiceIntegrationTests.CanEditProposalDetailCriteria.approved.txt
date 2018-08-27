@@ -5,9 +5,12 @@
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2017-06-04T00:00:00",
       "FlightStartDate": "2017-05-15T00:00:00",
@@ -40,8 +43,13 @@
           "Id": null
         }
       ],
-      "HutPostingBookId": null,
-      "PlaybackType": 3,
+      "GoalBudget": null,
+      "GoalImpression": null,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -51,6 +59,7 @@
           }
         }
       ],
+      "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -67,6 +76,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 699,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-15T00:00:00",
               "Units": 1,
               "Week": "5/15/2017"
@@ -78,6 +88,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 700,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-22T00:00:00",
               "Units": 1,
               "Week": "5/22/2017"
@@ -89,6 +100,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 701,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-29T00:00:00",
               "Units": 1,
               "Week": "5/29/2017"
@@ -98,9 +110,9 @@
         }
       ],
       "Sequence": 1,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": 413,
+      "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 226655.17,
       "TotalImpressions": 18089000.0,
@@ -132,8 +144,9 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "ProposalName": "Proposal Calculation Test 2",

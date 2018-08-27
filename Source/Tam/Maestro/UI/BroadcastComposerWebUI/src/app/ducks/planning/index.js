@@ -7,6 +7,8 @@ import * as ACTIONS from './actionTypes.js';
 
 const initialState = {
   initialdata: {},
+  planningProposals: [],
+  filteredPlanningProposals: [],
   proposalLock: {},
   proposal: {
     AdvertiserId: 37674,
@@ -22,8 +24,11 @@ const initialState = {
     GuaranteedDemoId: 31,
     Id: null,
     Margin: null,
-    MarketGroup: { Id: 100, Display: 'Top 100', Count: 100 },
-    MarketGroupId: 100,
+    // MarketGroup: { Id: 100, Display: 'Top 100', Count: 100 },
+    // MarketGroupId: 100,
+    MarketGroup: null,
+    MarketGroupId: null,
+    MarketCoverage: 0.8,
     Markets: [],
     Notes: null,
     PostType: 1,
@@ -60,6 +65,8 @@ const initialState = {
   isGenresLoading: false,
   programs: [],
   isProgramsLoading: false,
+  showTypes: [],
+  isShowTypesLoading: false,
   isISCIEdited: false,
   isGridCellEdited: false,
 };
@@ -71,6 +78,20 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
+     // PLANNING PROPOSALS  DATA
+     case ACTIONS.RECEIVE_PROPOSALS:
+     return {
+       ...state,
+       planningProposals: data.Data,
+       filteredPlanningProposals: data.Data,
+     };
+
+     case ACTIONS.FILTERED_PLANNING_PROPOSALS.success:
+     return {
+       ...state,
+       planningProposals: data,
+     };
+
     // PROPOSAL INITIAL DATA
     case ACTIONS.RECEIVE_PROPOSAL_INITIALDATA:
       return {
@@ -295,6 +316,20 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case ACTIONS.TOGGLE_SHOWTYPES_LOADING: {
+      return {
+        ...state,
+        isShowTypesLoading: !state.isShowTypesLoading,
+      };
+    }
+
+    case ACTIONS.RECEIVE_SHOWTYPES: {
+      return {
+        ...state,
+        showTypes: payload,
+      };
+    }
+
    /*  case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
       return {
         ...state,
@@ -315,6 +350,16 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action Creators
+export const getPlanningFiltered = query => ({
+  type: ACTIONS.FILTERED_PLANNING_PROPOSALS.request,
+  payload: query,
+});
+
+export const receiveFilteredPlanning = data => ({
+  type: ACTIONS.FILTERED_PLANNING_PROPOSALS.success,
+  data,
+});
+
 export const getProposalInitialData = () => ({
   type: ACTIONS.REQUEST_PROPOSAL_INITIALDATA,
   payload: {},
@@ -418,6 +463,11 @@ export const getGenres = query => ({
 export const getPrograms = params => ({
   type: ACTIONS.REQUEST_PROGRAMS,
   payload: params,
+});
+
+export const getShowTypes = query => ({
+  type: ACTIONS.REQUEST_SHOWTYPES,
+  payload: query,
 });
 
 /* export const toggleEditIsciClass = bool => ({

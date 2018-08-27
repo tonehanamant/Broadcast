@@ -5,9 +5,12 @@
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": {
+      "DefaultProjectionBooks": {
         "DefaultHutBook": {
           "HasWarning": false,
           "PostingBookId": 416,
@@ -15,9 +18,9 @@
         },
         "DefaultPlaybackType": 4,
         "DefaultShareBook": {
-          "HasWarning": true,
-          "PostingBookId": 416,
-          "WarningMessage": "The share book for the current quarter is not available, the default share book is the latest available"
+          "HasWarning": false,
+          "PostingBookId": 428,
+          "WarningMessage": null
         }
       },
       "FlightEdited": false,
@@ -44,9 +47,15 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
-      "PlaybackType": 3,
+      "GoalBudget": null,
+      "GoalImpression": null,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -63,6 +72,7 @@
               "Iscis": [],
               "IsHiatus": true,
               "MediaWeekId": 699,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-15T00:00:00",
               "Units": 0,
               "Week": "5/15/2017"
@@ -74,6 +84,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 700,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-22T00:00:00",
               "Units": 1,
               "Week": "5/22/2017"
@@ -85,6 +96,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 701,
+              "MyEventsReportName": null,
               "StartDate": "2017-05-29T00:00:00",
               "Units": 1,
               "Week": "5/29/2017"
@@ -94,9 +106,9 @@
         }
       ],
       "Sequence": 1,
-      "SharePostingBookId": 413,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": 413,
+      "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
       "TotalCost": 0.0,
       "TotalImpressions": 13589000.0,
@@ -128,8 +140,9 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "ProposalName": "Proposal Calculation Test 2",

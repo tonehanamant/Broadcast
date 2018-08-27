@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public affidavit_files()
         {
-            this.affidavit_file_details = new HashSet<affidavit_file_details>();
             this.affidavit_file_problems = new HashSet<affidavit_file_problems>();
+            this.affidavit_file_details = new HashSet<affidavit_file_details>();
         }
     
         public int id { get; set; }
@@ -25,10 +25,9 @@ namespace EntityFrameworkMapping.Broadcast
         public string file_hash { get; set; }
         public int source_id { get; set; }
         public System.DateTime created_date { get; set; }
-        public int media_month_id { get; set; }
         public int status { get; set; }
     
-        public virtual ICollection<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual ICollection<affidavit_file_problems> affidavit_file_problems { get; set; }
+        public virtual ICollection<affidavit_file_details> affidavit_file_details { get; set; }
     }
 }

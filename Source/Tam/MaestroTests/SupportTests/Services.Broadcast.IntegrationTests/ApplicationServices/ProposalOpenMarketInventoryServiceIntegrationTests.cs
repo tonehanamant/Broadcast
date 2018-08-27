@@ -230,7 +230,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filteredProgram =
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).ToList();
 
-                Assert.IsTrue(1 == filteredProgram.Count());
+                Assert.IsTrue(14 == filteredProgram.Count());
             }
         }
 
@@ -299,7 +299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filtereddaypartCount =
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs)).Count();
 
-                Assert.IsTrue(filtereddaypartCount == 1);
+                Assert.IsTrue(filtereddaypartCount == 2);
             }
         }
 
@@ -383,16 +383,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventoryWithHutAndShareBooks()
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(2102);
+                var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "ManifestId");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -405,18 +412,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventoryWithSingleBookOnly()
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-                proposalRepository.UpdateProposalDetailSweepsBook(14, 413);
+                //var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                //proposalRepository.UpdateProposalDetailSweepsBook(14, 413);
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(14);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "Genres");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketFilter), "SpotFilter");
+                jsonResolver.Ignore(typeof(ProposalDetailOpenMarketInventoryDto), "RefineFilterPrograms");
+                jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "ManifestId");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
                 {

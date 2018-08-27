@@ -1,13 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Common.Services;
 using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Tam.Maestro.Common.SystemComponentParameter;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -37,7 +40,8 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         public ActionResult TestEmail(string test_email)
         {
-            Emailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
+            var quickEmailer = _ApplicationServiceFactory.GetApplicationService<IEmailerService>();
+            quickEmailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
                 MailPriority.Normal, "test@test.com", new string[] {"test_email@test.com"});
             ViewBag.Message = "Test email sent.";
            return View("Index");
@@ -75,10 +79,32 @@ namespace BroadcastComposerWeb.Controllers
             ViewBag.Message = "Cache cleared, good luck with that!";
             return View("Index");
         }
+        [HttpPost]
+        public ActionResult ClearMediaMonthCrunchCache()
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
+            service.ClearMediaMonthCrunchCache();
+
+            ViewBag.Message = "Media Month Crunch Cache cleared, good luck!";
+            return View("Index");
+        }
 
         public void ClearSystemParameterCache()
         {
-            SMSClient.Handler.ClearSystemComponentParameterCache(null, null);
+            SMSClient.Handler.ClearSystemComponentParameterCache(BroadcastServiceSystemParameterNames.ComponentID, null);
+        }
+
+        [HttpGet]
+        public ActionResult TestFtpAccess()
+        {
+            FtpService srv = new FtpService();
+            WWTVFtpHelper helper = new WWTVFtpHelper(srv);
+            NetworkCredential creds = helper.GetClientCredentials();
+            var site = "ftp://" + helper.Host;
+            var list = srv.GetFileList(creds, site);
+            ViewBag.Message = "Get file worked w/o error!\r\n";
+            list.ForEach(f => ViewBag.Message += f + "\r\n");
+            return View("Index");
         }
 
     }

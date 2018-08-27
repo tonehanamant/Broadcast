@@ -13,11 +13,19 @@ namespace Services.Broadcast.Entities
         public DateTime AirDate { get; set; }
         public string DaypartName { get; set; }
         public Dictionary<int, double> AudienceImpressions { get; set; }
+        public Dictionary<int, double> OvernightImpressions { get; set; }
         public int Quarter { get; set; }
         public int Year { get; set; }
         public int AdvertiserId { get; set; }
+        public decimal ProposalWeekTotalCost { get; set; }
         public decimal ProposalWeekCost { get; set; }
+        public double ProposalWeekTotalImpressionsGoal { get; set; }
         public double ProposalWeekImpressionsGoal { get; set; }
+        public int ProposalDetailSpotLengthId { get; set; }
+        public decimal ProposalWeekCPM { get; set; }
         public int Units { get; set; }
+        public int? ProposalDetailPostingBookId { get; set; }
+        public int ProposalWeekId { get; set; }
+        public bool Adu { get; internal set; }
     }
 }

@@ -110,7 +110,7 @@ namespace Services.Broadcast.Repositories
                         inventoryGroups.Where(g => g.Id == null).Select(inventoryGroup => new station_inventory_group()
                         {
                             daypart_code = inventoryGroup.DaypartCode,
-                        inventory_source_id = inventoryFile.InventorySource.Id,
+                            inventory_source_id = inventoryFile.InventorySource.Id,
                             name = inventoryGroup.Name,
                             slot_number = (byte) inventoryGroup.SlotNumber,
                             start_date = inventoryGroup.StartDate,

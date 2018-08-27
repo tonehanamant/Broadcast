@@ -1,0 +1,30 @@
+﻿[
+  {
+    "Lines": [
+      {
+        "Advertiser": "Test Advertiser 9",
+        "AdvertiserId": 37444,
+        "AirDate": "2016-05-29T09:00:00",
+        "CVT": "SUN",
+        "DaypartCode": "NTIA3",
+        "Duration": 3,
+        "LineupAiringNumber": 1,
+        "LineupCashOnly": "N",
+        "LineupDOW": "------S",
+        "LineupMultiBarter": 1,
+        "LineupNumberOfWeeks": 1,
+        "LineupPOT": "O",
+        "LineupStartDate": "2016-05-29T00:00:00",
+        "LineupStartTime": "0001-01-01T09:00:00",
+        "MOP": 1,
+        "OffAir": "N",
+        "ReportableName": "MyEventsReport 1",
+        "ScheduleEndDate": "2016-05-29T00:00:00",
+        "ScheduleStartDate": "2016-05-23T00:00:00",
+        "SpotLength": 30,
+        "SpotLengthId": 1,
+        "StationCallLetters": "KAPP"
+      }
+    ]
+  }
+]

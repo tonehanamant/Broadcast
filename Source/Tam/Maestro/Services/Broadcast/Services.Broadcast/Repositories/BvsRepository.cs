@@ -2,6 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
@@ -13,19 +14,19 @@ namespace Services.Broadcast.Repositories
     public interface IBvsRepository : IDataRepository
     {
         int GetBvsFileIdByHash(string hash);
-        int SaveBvsFile(bvs_files file);
+        int SaveBvsFile(BvsFile file);
         List<BvsPostDetail> GetBvsPostDetailsByEstimateId(int estimateId);
         List<BvsPostDetailAudience> GetBvsPostDetailAudienceByEstimateId(int estimateId);
         List<BvsTrackingDetail> GetBvsTrackingDetailsByEstimateId(int estimateId);
         List<BvsTrackingDetail> GetBvsTrackingDetailsByDetailIds(List<int> bvsDetailIds);
         BvsTrackingDetail GetBvsTrackingDetailById(int bvsDetailId);
-        List<bvs_file_details> GetBvsFileDetailsByIds(List<int> bvsFileIds);
+        List<BvsFileDetail> GetBvsFileDetailsByIds(List<int> bvsFileIds);
         void PersistBvsDetails(List<BvsTrackingDetail> bvsItems);
         void ClearTrackingDetailsByEstimateId(int scheduleEstimateId);
         List<int> GetEstimateIdsWithSchedulesByFileIds(List<int> fileIds);
 
         List<int> GetEstimateIdsByIscis(List<string> iscis);
-        BvsFileDetailFilterResult FilterOutExistingDetails(List<bvs_file_details> newDetails);
+        BvsFileDetailFilterResult FilterOutExistingDetails(List<BvsFileDetail> newDetails);
         List<BvsFileSummary> GetBvsFileSummaries();
         void DeleteById(int bvsFileId);
     }
@@ -48,15 +49,30 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public int SaveBvsFile(bvs_files file)
+        public int SaveBvsFile(BvsFile file)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    context.bvs_files.Add(file);
+                    context.bvs_files.Add(_MapToBvsFile(file));
                     context.SaveChanges();
                 });
-            return file.id;
+            return file.Id;
+        }
+
+        private bvs_files _MapToBvsFile(BvsFile file)
+        {
+            return new bvs_files
+            {
+                bvs_file_details = _MapToBvsFileDetail(file.BvsFileDetails),
+                created_by = file.CreatedBy,
+                created_date = file.CreatedDate,
+                end_date = file.EndDate,
+                file_hash = file.FileHash,
+                id = file.Id,
+                name = file.Name,
+                start_date = file.StartDate
+            };
         }
 
         public List<BvsPostDetail> GetBvsPostDetailsByEstimateId(int estimateId)
@@ -68,7 +84,7 @@ namespace Services.Broadcast.Repositories
                             where x.estimate_id == estimateId
                             select new BvsPostDetail
                             {
-                                BvsDetailId = x.id,
+                                BvsFileDetailId = x.id,
                                 NsiDate = x.nsi_date,
                                 TimeAired = x.time_aired,
                                 Station = x.station
@@ -99,6 +115,7 @@ namespace Services.Broadcast.Repositories
                 {
                     return (from bfd in context.bvs_file_details
                             where bfd.estimate_id == estimateId
+                            orderby bfd.id
                             select new BvsTrackingDetail
                             {
                                 NsiDate = bfd.nsi_date
@@ -282,9 +299,13 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<bvs_file_details> GetBvsFileDetailsByIds(List<int> bvsFileIds)
+        public List<BvsFileDetail> GetBvsFileDetailsByIds(List<int> bvsFileIds)
         {
-            return _InReadUncommitedTransaction(context => context.bvs_file_details.Where(f => bvsFileIds.Contains(f.id)).ToList());
+            return _InReadUncommitedTransaction(context =>
+            {
+                var bvsFileDetails = context.bvs_file_details.Where(f => bvsFileIds.Contains(f.id)).ToList();
+                return bvsFileDetails.Select(x => _MapFromBvsFileDetail(x)).ToList();
+            });
         }
 
         public void PersistBvsDetails(List<BvsTrackingDetail> bvsItems)
@@ -356,14 +377,14 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public BvsFileDetailFilterResult FilterOutExistingDetails(List<bvs_file_details> newDetails)
+        public BvsFileDetailFilterResult FilterOutExistingDetails(List<BvsFileDetail> newDetails)
         {
-            return _InReadUncommitedTransaction(c =>
+            return _InReadUncommitedTransaction(context =>
             {
-                var iscis = newDetails.Select(bfd => bfd.isci).ToList();
+                var iscis = newDetails.Select(bfd => bfd.Isci).ToList();
 
-                var relevantFileDetails = c.bvs_file_details.Where(fd => iscis.Contains(fd.isci)).ToList();
-                var groupJoin = from newDetail in newDetails
+                var relevantFileDetails = context.bvs_file_details.Where(fd => iscis.Contains(fd.isci)).ToList();
+                var groupJoin = from newDetail in _MapToBvsFileDetail(newDetails)
                                 join bfd in relevantFileDetails
                                 on new
                                 {
@@ -389,31 +410,103 @@ namespace Services.Broadcast.Repositories
                                     existingDetail = gb
                                 };
 
-                var ret = new BvsFileDetailFilterResult();
+                var result = new BvsFileDetailFilterResult();
                 foreach (var pair in groupJoin)
                 {
                     foreach (var existingDetail in pair.existingDetail.DefaultIfEmpty())
                     {
                         if (existingDetail == null)
                         {
-                            ret.New.Add(pair.newDetail);
+                            result.New.Add(_MapFromBvsFileDetail(pair.newDetail));
                         }
                         else if (existingDetail.program_name == pair.newDetail.program_name)
                         {
-                            ret.Ignored.Add(pair.newDetail);
+                            result.Ignored.Add(_MapFromBvsFileDetail(pair.newDetail));
                         }
                         else if (existingDetail.program_name != pair.newDetail.program_name)
                         {
                             existingDetail.program_name = pair.newDetail.program_name;
-                            ret.Updated.Add(pair.newDetail);
+                            result.Updated.Add(_MapFromBvsFileDetail(pair.newDetail));
                         }
+                        context.SaveChanges();
                     }
                 }
 
-                c.SaveChanges();
+                context.SaveChanges();
 
-                return ret;
+                return result;
             });
+        }
+
+        private List<bvs_file_details> _MapToBvsFileDetail(List<BvsFileDetail> newDetails)
+        {
+            return newDetails.Select(x => new bvs_file_details
+            {
+                advertiser = x.Advertiser,
+                affiliate = x.Affiliate,
+                date_aired = x.DateAired,
+                estimate_id = x.EstimateId,
+                id = x.Id,
+                isci = x.Isci,
+                linked_to_block = x.LinkedToBlock,
+                has_lead_in_schedule_matches = x.HasLeadInScheduleMatches,
+                market = x.Market,
+                linked_to_leadin = x.LinkedToLeadin,
+                match_airtime = x.MatchAirtime,
+                match_isci = x.MatchIsci,
+                match_program = x.MatchProgram,
+                match_spot_length = x.MatchSpotLength,
+                match_station = x.MatchStation,
+                nsi_date = x.NsiDate,
+                nti_date = x.NtiDate,
+                program_name = x.ProgramName,
+                rank = x.Rank,
+                schedule_detail_week_id = x.ScheduleDetailWeekId,
+                spot_length = x.SpotLength,
+                spot_length_id = x.SpotLengthId,
+                station = x.Station,
+                status = x.Status,
+                time_aired = x.TimeAired
+            }).ToList();
+        }
+
+        private BvsFileDetail _MapFromBvsFileDetail(bvs_file_details detail)
+        {
+            return new BvsFileDetail
+            {
+                Advertiser = detail.advertiser,
+                Affiliate = detail.affiliate,
+                DateAired = detail.date_aired,
+                EstimateId = detail.estimate_id,
+                Id = detail.id,
+                Isci = detail.isci,
+                LinkedToBlock = detail.linked_to_block,
+                HasLeadInScheduleMatches = detail.has_lead_in_schedule_matches,
+                BvsPostDetails = detail.bvs_post_details.Select(y => new BvsPostDetail
+                {
+                    AudienceId = y.audience_id,
+                    AudienceRank = y.audience_rank,
+                    BvsFileDetailId = y.bvs_file_detail_id,
+                    Delivery = y.delivery
+                }).ToList(),
+                Market = detail.market,
+                LinkedToLeadin = detail.linked_to_leadin,
+                MatchAirtime = detail.match_airtime,
+                MatchIsci = detail.match_isci,
+                MatchProgram = detail.match_program,
+                MatchSpotLength = detail.match_spot_length,
+                MatchStation = detail.match_station,
+                NsiDate = detail.nsi_date,
+                NtiDate = detail.nti_date,
+                ProgramName = detail.program_name,
+                Rank = detail.rank,
+                ScheduleDetailWeekId = detail.schedule_detail_week_id,
+                SpotLength = detail.spot_length,
+                SpotLengthId = detail.spot_length_id,
+                Station = detail.station,
+                Status = detail.status,
+                TimeAired = detail.time_aired
+            };
         }
 
         public List<BvsFileSummary> GetBvsFileSummaries()

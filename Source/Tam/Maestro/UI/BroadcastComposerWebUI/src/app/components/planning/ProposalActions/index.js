@@ -38,7 +38,7 @@ export default class ProposalActions extends Component {
 	checkValid() {
 		const formValid = this.props.isValidProposalForm();
 		const detailValid = this.props.isValidProposalDetails();
-		const detailGridsValid = this.props.isValidProposalDetailGrids();
+    const detailGridsValid = this.props.isValidProposalDetailGrids();
 
 		this.props.setProposalValidationState({ type: 'FormInvalid', state: !formValid });
 		this.props.setProposalValidationState({ type: 'DetailInvalid', state: !detailValid });
@@ -66,7 +66,7 @@ export default class ProposalActions extends Component {
       this.props.getProposalUnlock(this.props.proposal.Id);
     }
     setTimeout(() => {
-      window.location = '/broadcast/planning';
+      window.location = '/broadcastreact/planning';
     }, 500);
   }
 

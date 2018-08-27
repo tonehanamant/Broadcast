@@ -6,10 +6,8 @@ import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
 import { getPostPrePostingInitialData, getPostPrePosting, getPostPrePostingFiltered, deletePostPrePosting, getPostPrePostingFileEdit } from 'Ducks/postPrePosting';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
+import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import Sorter from 'Utils/react-redux-grid-sorter';
-
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 
 /* ////////////////////////////////// */
 /* // REACT-REDUX-GRID ACTIONS
@@ -18,6 +16,8 @@ const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
+
+const stateKey = 'gridPostPrePostingMain';
 
 /* ////////////////////////////////// */
 /* // MAPPING STATE AND DISPATCH
@@ -62,16 +62,13 @@ export class DataGridContainer extends Component {
     this.context = context;
     this.contextMenuDeleteAction = this.contextMenuDeleteAction.bind(this);
     this.contextMenuFileSettingsAction = this.contextMenuFileSettingsAction.bind(this);
+    this.deselectAll = this.deselectAll.bind(this);
+    this.selectRow = this.selectRow.bind(this);
   }
 
   /* ////////////////////////////////// */
   /* LIFE-CYCLE METHODS */
   /* ////////////////////////////////// */
-  componentWillMount() {
-    console.warn('!!!!!!!!!!!!!!!!!!!!!!!!!!!!M PPP GRID');
-    // this.props.getPostPrePostingInitialData();
-    // this.props.getPostPrePosting();
-  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.post !== this.props.post) {
@@ -136,11 +133,13 @@ export class DataGridContainer extends Component {
   showContextMenu(ref) {
     this.props.showMenu(ref);
   }
-  selectRow(ref) {
-    this.props.selectRow(ref);
+
+  selectRow(rowId) {
+    this.deselectAll();
+    this.props.selectRow({ rowId, stateKey });
   }
-  deselectAll(ref) {
-    this.props.deselectAll(ref);
+  deselectAll() {
+    this.props.deselectAll({ stateKey });
   }
 
   /* ////////////////////////////////// */
@@ -150,7 +149,6 @@ export class DataGridContainer extends Component {
     /* ////////////////////////////////// */
     /* // REACT-REDUX-GRID CONFIGURATION
     /* ////////////////////////////////// */
-    const stateKey = 'gridPostPrePostingMain';
 
     /* GRID RENDERERS */
     // const renderers = {
@@ -179,7 +177,7 @@ export class DataGridContainer extends Component {
           dataIndex: 'UploadDate',
           defaultSortDirection: 'ASC',
           width: '20%',
-          renderer: ({ value, row }) => (
+          renderer: ({ row }) => (
             <span>{row.DisplayUploadDate}</span>
           ),
       },
@@ -187,9 +185,33 @@ export class DataGridContainer extends Component {
           name: 'Last Modified',
           dataIndex: 'ModifiedDate',
           width: '20%',
-          renderer: ({ value, row }) => (
+          renderer: ({ row }) => (
             <span>{row.DisplayModifiedDate}</span>
           ),
+      },
+    ];
+
+    const menuItems = [
+      {
+        text: 'File Settings',
+        key: 'menu-file-settings',
+        EVENT_HANDLER: ({ metaData }) => {
+          this.contextMenuFileSettingsAction(metaData.rowData.Id);
+        },
+      },
+      {
+        text: 'Post Report',
+        key: 'menu-post-report',
+        EVENT_HANDLER: ({ metaData }) => {
+          window.open(`${window.location.origin}/broadcast/api/PostPrePosting/Report/${metaData.rowData.Id}`, '_blank');
+        },
+      },
+      {
+        text: 'Delete',
+        key: 'menu-delete',
+        EVENT_HANDLER: ({ metaData }) => {
+          this.contextMenuDeleteAction(metaData.rowData);
+        },
       },
     ];
 
@@ -224,66 +246,25 @@ export class DataGridContainer extends Component {
         activeCls: 'active',
         selectionEvent: 'singleclick',
       },
-      GRID_ACTIONS: {
-        iconCls: 'action-icon',
-        menu: [
-          {
-            text: 'File Settings',
-            key: 'menu-file-settings',
-            EVENT_HANDLER: ({ metaData }) => {
-              this.contextMenuFileSettingsAction(metaData.rowData.Id);
-            },
-          },
-          {
-            text: 'Post Report',
-            key: 'menu-post-report',
-            EVENT_HANDLER: ({ metaData }) => {
-              window.open(`${window.location.origin}/broadcast/api/PostPrePosting/Report/${metaData.rowData.Id}`, '_blank');
-            },
-          },
-          {
-            text: 'Delete',
-            key: 'menu-delete',
-            EVENT_HANDLER: ({ metaData }) => {
-              this.contextMenuDeleteAction(metaData.rowData);
-            },
-          },
-        ],
-      },
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
-          const stateKey = cells[0].props.stateKey;
-          const rowId = cells[0].props.rowId;
-          const updatedRowProps = { ...rowProps,
-            onClick: (e) => {
-              rowProps.onClick(e);
-              this.hideContextMenu({ stateKey });
-            },
-            onContextMenu: (e) => {
-              e.preventDefault();
-
-              const rowElement = e.target.closest('.react-grid-row');
-              const contextMenuContainer = rowElement.querySelector('.react-grid-action-icon');
-              contextMenuContainer.setAttribute('style', `right: ${(rowElement.clientWidth - e.clientX) - 102}px`); // 102 contextMenu width
-
-              this.deselectAll({ stateKey });
-              this.selectRow({ rowId, stateKey });
-              this.showContextMenu({ id: rowId, stateKey });
-            },
-          };
-          return (
-            <tr {...updatedRowProps}>{ cells }</tr>
-          );
-        },
+        renderer: ({ cells, ...rowData }) => (
+            <ContextMenuRow
+              {...rowData}
+              menuItems={menuItems}
+              stateKey={stateKey}
+              beforeOpenMenu={this.selectRow}
+            >
+              {cells}
+            </ContextMenuRow>
+          ),
       },
     };
 
     /* GRID EVENT HANDLERS */
     const events = {
       HANDLE_BEFORE_SORT: () => {
-        this.deselectAll({ stateKey });
-        this.hideContextMenu({ stateKey });
+        this.deselectAll();
       },
     };
 

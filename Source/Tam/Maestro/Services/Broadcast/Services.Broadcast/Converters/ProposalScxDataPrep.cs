@@ -82,13 +82,13 @@ namespace Services.Broadcast.Converters
 
         private void _SetMarketSurveyData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var bookingMediaMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId.Value;
+            var bookingMediaMonthId = proposalDetailDto.HutProjectionBookId ?? proposalDetailDto.SingleProjectionBookId.Value;
 
             var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             var mediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
             string mediaMonthInfo = mediaMonth.Abbreviation + mediaMonth.Year.ToString().Substring(2);
 
-            var rawData = repo.GetPlaybackForMarketBy(bookingMediaMonthId, proposalDetailDto.PlaybackType);
+            var rawData = repo.GetPlaybackForMarketBy(bookingMediaMonthId, proposalDetailDto.ProjectionPlaybackType);
             data.MarketPlaybackTypes = rawData.Where(d => data.MarketIds.Contains(d.market_code)).ToList();
             data.SurveyData = rawData.ToDictionary(
                 k => k.MarketId,
@@ -133,9 +133,9 @@ namespace Services.Broadcast.Converters
 
         private void _GetDemoUniverseData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var postingBookMonthId = proposalDetailDto.HutPostingBookId ?? proposalDetailDto.SinglePostingBookId;
+            var postingBookMonthId = proposalDetailDto.HutProjectionBookId ?? proposalDetailDto.SingleProjectionBookId;
             if (postingBookMonthId == null)
-                postingBookMonthId = proposalDetailDto.SharePostingBookId.Value;
+                postingBookMonthId = proposalDetailDto.ShareProjectionBookId.Value;
 
             foreach (var demo in data.Demos)
             {
@@ -167,10 +167,10 @@ namespace Services.Broadcast.Converters
 
         private void _GetDemoImpressionData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var playbackType = proposalDetailDto.PlaybackType;
+            var playbackType = proposalDetailDto.ProjectionPlaybackType;
 
             var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-            bool isSingleBook = proposalDetailDto.SinglePostingBookId.HasValue;
+            bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;
 
             var programIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
                 .SelectMany(w => w.InventoryWeek.Markets)
@@ -199,7 +199,7 @@ namespace Services.Broadcast.Converters
                 var audienceIds = demo.RatingAudienceIds;
                 if (isSingleBook)
                 {
-                    stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SinglePostingBookId.Value
+                    stationImpressions = repo.GetImpressionsDaypart(proposalDetailDto.SingleProjectionBookId.Value
                                                ,audienceIds
                                                ,stations
                                                ,playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions)
@@ -208,8 +208,8 @@ namespace Services.Broadcast.Converters
                 }
                 else
                 {
-                    stationImpressions = repo.GetImpressionsDaypart((short)proposalDetailDto.HutPostingBookId.Value
-                                                , (short)proposalDetailDto.SharePostingBookId.Value
+                    stationImpressions = repo.GetImpressionsDaypart((short)proposalDetailDto.HutProjectionBookId.Value
+                                                , (short)proposalDetailDto.ShareProjectionBookId.Value
                                                 , audienceIds
                                                 , stations
                                                 , playbackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);

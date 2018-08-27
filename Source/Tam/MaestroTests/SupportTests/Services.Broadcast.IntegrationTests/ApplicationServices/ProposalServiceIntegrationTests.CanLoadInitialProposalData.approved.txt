@@ -199,8 +199,37 @@
       "Id": 348
     }
   ],
+  "DefaultMarketCoverage": 0.8,
   "ForecastDefaults": {
     "CrunchedMonths": [
+      {
+        "Display": "February 2018",
+        "Id": 437
+      },
+      {
+        "Display": "November 2017",
+        "Id": 434
+      },
+      {
+        "Display": "July 2017",
+        "Id": 430
+      },
+      {
+        "Display": "May 2017",
+        "Id": 428
+      },
+      {
+        "Display": "February 2017",
+        "Id": 425
+      },
+      {
+        "Display": "November 2016",
+        "Id": 422
+      },
+      {
+        "Display": "July 2016",
+        "Id": 418
+      },
       {
         "Display": "May 2016",
         "Id": 416
@@ -247,24 +276,8 @@
   },
   "MarketGroups": [
     {
-      "Count": 210,
       "Display": "All",
-      "Id": 0
-    },
-    {
-      "Count": 50,
-      "Display": "Top 50",
-      "Id": 50
-    },
-    {
-      "Count": 100,
-      "Display": "Top 100",
-      "Id": 100
-    },
-    {
-      "Count": 0,
-      "Display": "Custom",
-      "Id": 255
+      "Id": 1
     }
   ],
   "Markets": [

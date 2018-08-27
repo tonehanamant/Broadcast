@@ -4,13 +4,102 @@
       "AdjustedAirDate": "0001-01-01T00:00:00",
       "AffidavitClientScrubs": [
         {
+          "AffidavitClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 2826.05
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 2803.75
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 2151.45
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 189.65
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 703.25
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 9141.6
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 233.95
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 128.75
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 446.4
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 343.6
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 0.0
+            }
+          ],
           "Comment": null,
+          "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "WAWA",
           "EffectiveProgramName": "Program Names R us",
           "EffectiveShowType": "News",
           "LeadIn": false,
           "MatchDate": true,
           "MatchGenre": true,
+          "MatchIsci": true,
           "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
@@ -18,99 +107,17 @@
           "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "test user",
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 8123,
           "ProposalVersionDetailQuarterWeekId": 8522,
-          "Status": 0
-        }
-      ],
-      "AffidavitFileDetailAudiences": [
-        {
-          "AudienceId": 4,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 5,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 6,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 7,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 13,
-          "Impressions": 2826.05
-        },
-        {
-          "AudienceId": 14,
-          "Impressions": 2803.75
-        },
-        {
-          "AudienceId": 15,
-          "Impressions": 2151.45
-        },
-        {
-          "AudienceId": 19,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 20,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 21,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 22,
-          "Impressions": 189.65
-        },
-        {
-          "AudienceId": 28,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 29,
-          "Impressions": 703.25
-        },
-        {
-          "AudienceId": 30,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 31,
-          "Impressions": 9141.6
-        },
-        {
-          "AudienceId": 46,
-          "Impressions": 233.95
-        },
-        {
-          "AudienceId": 284,
-          "Impressions": 0.0
-        },
-        {
-          "AudienceId": 290,
-          "Impressions": 128.75
-        },
-        {
-          "AudienceId": 339,
-          "Impressions": 446.4
-        },
-        {
-          "AudienceId": 347,
-          "Impressions": 343.6
-        },
-        {
-          "AudienceId": 348,
-          "Impressions": 0.0
+          "Status": 1
         }
       ],
       "AffidavitFileDetailProblems": [],
       "Affiliate": "Affiate",
       "AirTime": 29040,
+      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
       "Genre": "Do It Yourself",
@@ -124,6 +131,7 @@
       "LeadoutProgramName": "LeadOutProgramName",
       "LeadOutShowType": "Documentary",
       "LeadOutStartTime": 28920,
+      "MappedIsci": null,
       "Market": "Tampa-St. Pete (Sarasota)",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",

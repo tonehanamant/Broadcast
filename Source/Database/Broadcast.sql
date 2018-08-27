@@ -52,149 +52,28 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-/*************************************** START BCOP-2755 *****************************************************/
-
-IF OBJECT_ID('show_types', 'U') IS NULL
+/*************************************** START BCOP-3297 ***************************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_genre' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
 BEGIN
-	CREATE TABLE [dbo].[show_types](
-		[id] [int] IDENTITY(1,1) NOT NULL,
-		[name] [varchar](127) NOT NULL,
-		[created_by] [varchar](63) NOT NULL,
-		[created_date] [datetime] NOT NULL,
-		[modified_by] [varchar](63) NOT NULL,
-		[modified_date] [datetime] NOT NULL,
-	 CONSTRAINT [PK_show_types] PRIMARY KEY CLUSTERED 
-	(
-		[id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Mini-Movie', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Miscellaneous', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Movie', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('News', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Off Air', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Paid Programming', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Series', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Special', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Special Event', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('Sports', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('TBA Movie', 'System', current_timestamp, 'System', current_timestamp)
-	INSERT INTO show_types (name, created_by, created_date, modified_by, modified_date) values ('To Be Announced', 'System', current_timestamp, 'System', current_timestamp)
+	ALTER TABLE dbo.affidavit_client_scrubs ALTER COLUMN effective_genre VARCHAR(255) NULL
 END
 GO
+/*************************************** END BCOP-3297 ***************************************************************/
 
-IF OBJECT_ID('proposal_version_detail_criteria_show_types', 'U') IS NULL
+/*************************************** START BCOP-2800 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'nti_conversion_factor' AND object_id = OBJECT_ID('proposal_version_details'))
 BEGIN
-	CREATE TABLE [dbo].[proposal_version_detail_criteria_show_types](
-		[id] [int] IDENTITY(1,1) NOT NULL,
-		[proposal_version_detail_id] [INT] NOT NULL,
-		[contain_type] [TINYINT] NOT NULL,
-		[show_type_id] [INT] NOT NULL
-	 CONSTRAINT [PK_proposal_version_detail_criteria_show_types] PRIMARY KEY CLUSTERED 
-	(
-		[id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-	
-	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] 
-	WITH CHECK ADD CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types] 
-	FOREIGN KEY(show_type_id)
-	REFERENCES [dbo].[show_types] ([id])
-	ON DELETE CASCADE
-	
-	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] CHECK CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types]
-	
-	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] 
-	WITH CHECK ADD CONSTRAINT [FK_proposal_version_details_show_types] 
-	FOREIGN KEY(proposal_version_detail_id)
-	REFERENCES [dbo].[proposal_version_details] ([id])
-	ON DELETE CASCADE
-	
-	ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] CHECK CONSTRAINT [FK_proposal_version_details_show_types]
+	ALTER TABLE dbo.proposal_version_details ADD [nti_conversion_factor] FLOAT CONSTRAINT DF_proposal_version_details_nti_conversion_factor DEFAULT(0.2) NOT NULL;
+	ALTER TABLE dbo.proposal_version_details DROP CONSTRAINT DF_proposal_version_details_nti_conversion_factor
 END
 GO
+/*************************************** END BCOP-2800 ***************************************************************/
 
+/*************************************** START BCOP-3318 ***************************************************************/
 
-/*************************************** END BCOP-2755 *****************************************************/
-
-/*************************************** START BCOP-2755/2971 *****************************************************/
-IF (OBJECT_ID('FK_proposal_version_detail_criteria_show_types_show_types', 'F') IS NOT NULL)
+IF OBJECT_ID('postlog_outbound_files', 'U') IS NULL
 BEGIN
-    ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] DROP CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types]
-
-    ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] 
-    WITH CHECK ADD CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types] 
-    FOREIGN KEY(show_type_id)
-    REFERENCES [dbo].[show_types] ([id])
-    ON DELETE NO ACTION
-    
-    ALTER TABLE [dbo].[proposal_version_detail_criteria_show_types] CHECK CONSTRAINT [FK_proposal_version_detail_criteria_show_types_show_types]
-END
-/*************************************** END BCOP-2755/2971 *****************************************************/
-
-/*************************************** START BCOP-2665 *********************************************************/
-IF EXISTS(SELECT 1 FROM sys.columns 
-              WHERE name = 'order' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
-BEGIN
-    EXEC sp_rename 'proposal_version_details.order', 'sequence', 'COLUMN';
-END
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE name = 'sequence' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
-BEGIN
-	ALTER TABLE [proposal_version_details] 
-	ADD [sequence] INT
-END
-/*************************************** END BCOP-2665 ***********************************************************/
-
-/*************************************** START BCOP-2449 *********************************************************/
-IF OBJECT_ID('affidavit_file_detail_demographics', 'U') IS NULL
-BEGIN
-	CREATE TABLE [affidavit_file_detail_demographics](
-		id INT IDENTITY(1,1) NOT NULL,
-		audience_id INT,
-		affidavit_file_detail_id BIGINT,
-		overnight_rating FLOAT,
-		overnight_impressions INT		
-		CONSTRAINT [PK_affidavit_file_detail_demographics] PRIMARY KEY CLUSTERED
-		(
-			id ASC
-		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
-	)
-	ALTER TABLE [dbo].[affidavit_file_detail_demographics] 
-	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_demographics_audiences] 
-	FOREIGN KEY(audience_id)
-	REFERENCES [dbo].[audiences] ([id])
-	ON DELETE CASCADE
-
-	ALTER TABLE [dbo].[affidavit_file_detail_demographics] CHECK CONSTRAINT [FK_affidavit_file_detail_demographics_audiences]
-
-	ALTER TABLE [dbo].[affidavit_file_detail_demographics] 
-	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_detail_demographics_affidavit_file_details] 
-	FOREIGN KEY([affidavit_file_detail_id])
-	REFERENCES [dbo].[affidavit_file_details] ([id])
-	ON DELETE CASCADE
-	
-	ALTER TABLE [dbo].[affidavit_file_detail_demographics] CHECK CONSTRAINT [FK_affidavit_file_detail_demographics_affidavit_file_details]
-END
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-              WHERE (name = 'estimate_id' OR name = 'inventory_source' OR name = 'spot_cost' OR name = 'affiliate')
-              AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
-BEGIN
-    ALTER TABLE [affidavit_file_details] 
-	ADD estimate_id INT, 
-		inventory_source INT, 
-		spot_cost FLOAT, 
-		affiliate VARCHAR(15)
-END
-
-/*************************************** END BCOP-2517 ***********************************************************/
-
-/*************************************** START BCOP-2517 *********************************************************/
-IF OBJECT_ID('affidavit_outbound_files', 'U') IS NULL
-BEGIN
-    CREATE TABLE affidavit_outbound_files(
+    CREATE TABLE postlog_outbound_files(
 		id INT IDENTITY(1,1) NOT NULL,
 		file_name VARCHAR(255) NOT NULL,
 		file_hash VARCHAR(63) NOT NULL,
@@ -202,274 +81,510 @@ BEGIN
 		status INT NOT NULL,
 		created_date DATETIME NOT NULL,
 		created_by VARCHAR(63) NOT NULL,
-		CONSTRAINT [PK_affidavit_outbound_files] PRIMARY KEY CLUSTERED
+		CONSTRAINT [PK_postlog_outbound_files] PRIMARY KEY CLUSTERED
 		(
 			id ASC
 		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 	)
 END
 
-IF OBJECT_ID('affidavit_outbound_file_problems', 'U') IS NULL
+IF OBJECT_ID('postlog_outbound_file_problems', 'U') IS NULL
 BEGIN
-	CREATE TABLE affidavit_outbound_file_problems(
+	CREATE TABLE postlog_outbound_file_problems(
 		id INT IDENTITY(1,1) NOT NULL,
-		affidavit_outbound_file_id  INT,
+		postlog_outbound_file_id  INT,
 		problem_description VARCHAR(255) NOT NULL,		
-		CONSTRAINT [PK_affidavit_outbound_file_problems] PRIMARY KEY CLUSTERED
+		CONSTRAINT [PK_postlog_outbound_file_problems] PRIMARY KEY CLUSTERED
 		(
 			id ASC
 		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
 	)
-	ALTER TABLE [dbo].[affidavit_outbound_file_problems] 
-	WITH CHECK ADD CONSTRAINT [FK_affidavit_outbound_file_problems_affidavit_outbound_files] 
-	FOREIGN KEY(affidavit_outbound_file_id)
-	REFERENCES [dbo].[affidavit_outbound_files] ([id])
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files] 
+	FOREIGN KEY(postlog_outbound_file_id)
+	REFERENCES [dbo].[postlog_outbound_files] ([id])
 	ON DELETE CASCADE
 
-	ALTER TABLE [dbo].[affidavit_outbound_file_problems] CHECK CONSTRAINT [FK_affidavit_outbound_file_problems_affidavit_outbound_files]
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] CHECK CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files]
 END
 
-/*************************************** END BCOP-2517 ***********************************************************/
+/*************************************** END BCOP-3318 ***************************************************************/
 
-/*************************************** BCOP-2745 ***************************************************************/
 
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'leadin_end_time' AND 
-		object_id = OBJECT_ID('affidavit_file_details'))
+IF EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_files_media_month_id')   
 BEGIN
-	ALTER TABLE affidavit_file_details
-	ADD leadin_end_time INT NULL
+	DROP INDEX IX_affidavit_files_media_month_id 	ON affidavit_files  
+END
+GO  
 
-	EXEC('UPDATE affidavit_file_details
-	      SET leadin_end_time = air_time')
 
-	ALTER TABLE affidavit_file_details
-	ALTER COLUMN leadin_end_time INT NOT NULL
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'media_month_id'
+          AND Object_ID = Object_ID(N'affidavit_files'))
+BEGIN
+    ALTER TABLE affidavit_files DROP COLUMN media_month_id;  
+END
+
+
+--affidavit_files
+--    Should create FK/Index on media_month_id
+--IF NOT EXISTS (SELECT * FROM sys.foreign_keys
+--            WHERE name = N'FK_affidavit_files_media_month_id')   
+--BEGIN
+--	ALTER TABLE affidavit_files
+--	ADD CONSTRAINT FK_affidavit_files_media_month_id FOREIGN KEY (media_month_id)     
+--		REFERENCES media_months (id)     
+--		ON DELETE CASCADE ;    
+--END
+--GO
+
+
+
+/************************* START BCOP-3228 **********************************************/
+
+--affidavit_file_detail_demographics
+--    audience_id
+--    affidavit_file_detail_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_detail_demographics_audience_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_detail_demographics_audience_id
+		ON affidavit_file_detail_demographics  (audience_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_detail_demographics_affidavit_file_detail_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_detail_demographics_affidavit_file_detail_id
+		ON affidavit_file_detail_demographics  (affidavit_file_detail_id);   
+END
+GO  
+
+
+--affidavit_file_detail_problems
+--    affidavit_file_detail_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_detail_problems_affidavit_file_detail_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_detail_problems_affidavit_file_detail_id
+		ON affidavit_file_detail_problems  (affidavit_file_detail_id);   
+END
+GO  
+
+
+
+
+
+--affidavit_file_problems
+--    affidavit_file_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_file_problems_affidavit_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_file_problems_affidavit_file_id 
+		ON affidavit_file_problems  (affidavit_file_id);   
+END
+GO  
+
+--affidavit_blacklist
+--    ISCI (text)
+--    ISCI is used in searches, might be easy index.
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_blacklist_ISCI')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_blacklist_ISCI
+		ON affidavit_blacklist  (ISCI);   
+END
+GO  
+
+
+--affidavit_outbound_file_problems
+--    affidavit_outbound_file_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_affidavit_outbound_file_problems_affidavit_outbound_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_affidavit_outbound_file_problems_affidavit_outbound_file_id 
+		ON affidavit_outbound_file_problems  (affidavit_outbound_file_id);   
+END
+GO  
+
+
+--station_contacts
+--    station_code
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_contacts_station_code')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_contacts_station_code 
+		ON station_contacts  (station_code);   
+END
+GO  
+
+
+
+--station_inventory_group
+--    inventory_source_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_group_inventory_source_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_group_inventory_source_id 
+		ON station_inventory_group  (inventory_source_id);   
+END
+GO  
+
+
+--station_inventory_manifest
+--    station_code
+--    spot_length_id
+--    inventory_source_id
+--    station_inventory_group_id
+--    file_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_station_code')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_station_code
+		ON station_inventory_manifest  (station_code);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_spot_length_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_spot_length_id
+		ON station_inventory_manifest  (spot_length_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_inventory_source_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_inventory_source_id
+		ON station_inventory_manifest  (inventory_source_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_station_inventory_group_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_station_inventory_group_id
+		ON station_inventory_manifest  (station_inventory_group_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_file_id 
+		ON station_inventory_manifest  (file_id);   
+END
+GO  
+
+--station_inventory_manifest_audiences
+--    audience_id
+--    station_inventory_manifest_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_audiences_audience_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_audiences_audience_id
+		ON station_inventory_manifest_audiences  (audience_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_audiences_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_audiences_station_inventory_manifest_id
+		ON station_inventory_manifest_audiences  (station_inventory_manifest_id);   
+END
+GO  
+
+
+--station_inventory_manifest_dayparts
+--    daypart_id
+--    station_inventory_manifest_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_dayparts_daypart_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_dayparts_daypart_id 
+		ON station_inventory_manifest_dayparts  (daypart_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_dayparts_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_dayparts_station_inventory_manifest_id 
+		ON station_inventory_manifest_dayparts  (station_inventory_manifest_id);   
+END
+GO  
+
+
+
+--station_inventory_manifest_generation
+--    station_inventory_manifest_id
+--    media_week_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_generation_station_inventory_manifest_id')   
+BEGIN
+	CREATE  NONCLUSTERED INDEX IX_station_inventory_manifest_generation_station_inventory_manifest_id
+		ON station_inventory_manifest_generation  (station_inventory_manifest_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_generation_media_week_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_generation_media_week_id
+		ON station_inventory_manifest_generation  (media_week_id);   
+END
+GO  
+
+--station_inventory_manifest_rates
+--    station_inventory_manifest_id
+--    spot_length_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_rates_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_rates_station_inventory_manifest_id
+		ON station_inventory_manifest_rates  (station_inventory_manifest_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_manifest_rates_spot_length_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_manifest_rates_spot_length_id 
+		ON station_inventory_manifest_rates  (spot_length_id);   
+END
+GO  
+
+
+
+--station_inventory_spots
+--    proposal_version_detail_quarter_week_id
+--    station_inventory_manifest_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_spots_proposal_version_detail_quarter_week_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_spots_proposal_version_detail_quarter_week_id
+		ON station_inventory_spots  (proposal_version_detail_quarter_week_id);   
+END
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_station_inventory_spots_station_inventory_manifest_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_station_inventory_spots_station_inventory_manifest_id 
+		ON station_inventory_spots  (station_inventory_manifest_id);   
+END
+GO  
+
+
+--inventory_files
+--    sweep_book_id
+--    inventory_source_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_inventory_files_sweep_book_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_inventory_files_sweep_book_id
+		ON inventory_files  (sweep_book_id);   
+END
+GO  
+
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_inventory_files_inventory_source_id')
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_inventory_files_inventory_source_id 
+		ON inventory_files  (inventory_source_id);   
 END
 GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'leadout_start_time' AND 
-		object_id = OBJECT_ID('affidavit_file_details'))
+
+
+--media_weeks
+--    media_month_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_media_weeks_media_month_id')   
 BEGIN
-	ALTER TABLE affidavit_file_details
-	ADD leadout_start_time INT NULL
+	CREATE NONCLUSTERED INDEX IX_media_weeks_media_month_id 
+		ON media_weeks  (media_month_id);   
+END
+GO  
 
-	EXEC('UPDATE affidavit_file_details
-	      SET leadout_start_time = air_time')
 
-	ALTER TABLE affidavit_file_details
-	ALTER COLUMN leadout_start_time INT NOT NULL
+--post_file_details
+--    post_file_id
+--    spot_length_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_post_file_details_post_file_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_post_file_details_post_file_id 
+		ON post_file_details  (post_file_id);   
+
+END
+
+GO  
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_post_file_details_spot_length_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_post_file_details_spot_length_id 
+		ON post_file_details  (spot_length_id);   
+
+END
+
+GO  
+
+
+--post_files
+--    posting_book_id
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_post_files_posting_book_id')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_post_files_posting_book_id 
+		ON post_files  (posting_book_id);   
+
+END
+
+GO  
+
+
+--program_name
+--  program_names
+IF NOT EXISTS (SELECT name FROM sys.indexes  
+            WHERE name = N'IX_program_names_program_name')   
+BEGIN
+	CREATE NONCLUSTERED INDEX IX_program_names_program_name 
+		ON program_names  ([program_name]);   
+
+END
+
+GO  
+
+/************************* END BCOP-3228 **********************************************/
+
+/*************************************** START BCOP-3280 & BCOP-3336 ***************************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_margin' AND object_id = OBJECT_ID('proposal_version_details'))
+BEGIN
+	ALTER TABLE dbo.proposal_version_details ADD [adjustment_margin] FLOAT 
 END
 GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'program_show_type' AND 
-		object_id = OBJECT_ID('affidavit_file_details'))
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_rate' AND object_id = OBJECT_ID('proposal_version_details'))
 BEGIN
-	ALTER TABLE affidavit_file_details
-	ADD program_show_type VARCHAR(255) NULL
-
-	EXEC('UPDATE affidavit_file_details
-	      SET program_show_type = ''''')
-
-	ALTER TABLE affidavit_file_details
-	ALTER COLUMN program_show_type VARCHAR(255) NOT NULL
+	ALTER TABLE dbo.proposal_version_details ADD [adjustment_rate] FLOAT 
 END
 GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'leadin_show_type' AND 
-		object_id = OBJECT_ID('affidavit_file_details'))
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_inflation' AND object_id = OBJECT_ID('proposal_version_details'))
 BEGIN
-	ALTER TABLE affidavit_file_details
-	ADD leadin_show_type VARCHAR(255) NULL
-
-	EXEC('UPDATE affidavit_file_details
-	      SET leadin_show_type = ''''')
-
-	ALTER TABLE affidavit_file_details
-	ALTER COLUMN leadin_show_type VARCHAR(255) NOT NULL
+	ALTER TABLE dbo.proposal_version_details ADD [adjustment_inflation] FLOAT 
 END
 GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'leadout_show_type' AND 
-		object_id = OBJECT_ID('affidavit_file_details'))
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_impression' AND object_id = OBJECT_ID('proposal_version_details'))
 BEGIN
-	ALTER TABLE affidavit_file_details
-	ADD leadout_show_type VARCHAR(255) NULL
-
-	EXEC('UPDATE affidavit_file_details
-	      SET leadout_show_type = ''''')
-
-	ALTER TABLE affidavit_file_details
-	ALTER COLUMN leadout_show_type VARCHAR(255) NOT NULL
+	ALTER TABLE dbo.proposal_version_details ADD [goal_impression] FLOAT 
 END
 GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'match_date' AND 
-		object_id = OBJECT_ID('affidavit_client_scrubs'))
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_budget' AND object_id = OBJECT_ID('proposal_version_details'))
 BEGIN
-	ALTER TABLE affidavit_client_scrubs
-	ADD match_date BIT NULL
-
-	EXEC('UPDATE affidavit_client_scrubs
-		  SET match_date = match_time')
-
-	ALTER TABLE affidavit_client_scrubs
-	ALTER COLUMN match_date BIT NOT NULL
-END
-GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'effective_program_name' AND 
-		object_id = OBJECT_ID('affidavit_client_scrubs'))
-BEGIN
-	ALTER TABLE affidavit_client_scrubs
-	ADD effective_program_name  VARCHAR(255) NULL
-
-	EXEC('UPDATE acs
-		  SET acs.effective_program_name = afd.program_name
-		  FROM affidavit_client_scrubs acs
-	      JOIN affidavit_file_details afd ON affidavit_file_detail_id = afd.id')
-
-	ALTER TABLE affidavit_client_scrubs
-	ALTER COLUMN effective_program_name VARCHAR(255) NOT NULL
-END
-GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'effective_genre' AND 
-		object_id = OBJECT_ID('affidavit_client_scrubs'))
-BEGIN
-	ALTER TABLE affidavit_client_scrubs
-	ADD effective_genre VARCHAR(255) NULL
-
-	EXEC('UPDATE acs
-		  SET acs.effective_genre = afd.genre
-		  FROM affidavit_client_scrubs acs
-	      JOIN affidavit_file_details afd ON affidavit_file_detail_id = afd.id')
-
-	ALTER TABLE affidavit_client_scrubs
-	ALTER COLUMN effective_genre VARCHAR(255) NOT NULL
-END
-GO
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'effective_show_type' AND 
-		object_id = OBJECT_ID('affidavit_client_scrubs'))
-BEGIN
-	ALTER TABLE affidavit_client_scrubs
-	ADD effective_show_type VARCHAR(255) NULL
-
-	EXEC('UPDATE acs
-		  SET acs.effective_show_type = afd.program_show_type
-		  FROM affidavit_client_scrubs acs
-	      JOIN affidavit_file_details afd ON affidavit_file_detail_id = afd.id')
-
-	ALTER TABLE affidavit_client_scrubs
-	ALTER COLUMN effective_show_type VARCHAR(255) NOT NULL
-END
-
-/*************************************** END - BCOP-2745 *********************************************************/
-
-/*************************************** START - BCOP-2631 *********************************************************/
-
-IF NOT EXISTS(
-	SELECT *
-	FROM sys.columns 
-	WHERE 
-		name      = 'match_show_type' AND 
-		object_id = OBJECT_ID('affidavit_client_scrubs'))
-BEGIN
-	ALTER TABLE affidavit_client_scrubs
-	ADD match_show_type BIT NULL
-
-	EXEC('UPDATE affidavit_client_scrubs
-		  SET match_show_type = 1')
-
-	ALTER TABLE affidavit_client_scrubs
-	ALTER COLUMN match_show_type BIT NOT NULL
+	ALTER TABLE dbo.proposal_version_details ADD [goal_budget] money 
 END
 GO
 
-/*************************************** END - BCOP-2631 *********************************************************/
+/*************************************** END BCOP-3280 & BCOP-3336 ***************************************************************/
 
-
-/*************************************** START - BCOP-2894 *********************************************************/
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N'status'
-          AND Object_ID = Object_ID(N'dbo.affidavit_files'))
+/************************* START BCOP-3318 **********************************************/
+IF OBJECT_ID('postlog_outbound_files', 'U') IS NULL
 BEGIN
-	ALTER TABLE affidavit_files
-	  ADD [status] int ;
-
-  
+    CREATE TABLE postlog_outbound_files(
+		id INT IDENTITY(1,1) NOT NULL,
+		file_name VARCHAR(255) NOT NULL,
+		file_hash VARCHAR(63) NOT NULL,
+		source_id INT NOT NULL,
+		status INT NOT NULL,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		CONSTRAINT [PK_postlog_outbound_files] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
 END
 
-GO 
-
-if  exists (
-	SELECT *
-	from Affidavit_files
-	where [status] is null)
+IF OBJECT_ID('postlog_outbound_file_problems', 'U') IS NULL
 BEGIN
-
-	UPDATE affidavit_files
-	SET [Status] = 1	-- VALID
-	WHERE [status] is null
-
-	ALTER TABLE [affidavit_files] ALTER COLUMN [status] int NOT NULL
-
-END
-
-IF OBJECT_ID('affidavit_file_problems', 'U') IS NULL
-BEGIN
-	CREATE TABLE [dbo].[affidavit_file_problems](
-		[id] bigint IDENTITY(1,1) NOT NULL,
-		[affidavit_file_id] [int] NOT NULL,
-		[problem_description] [nvarchar](max) NOT NULL,
-	 CONSTRAINT [PK_affidavit_file_problems] PRIMARY KEY CLUSTERED 
-	(
-		[id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-	) ON [PRIMARY]
-
-	ALTER TABLE [dbo].[affidavit_file_problems] 
-	WITH CHECK ADD CONSTRAINT [FK_affidavit_file_problems_affidiavit_file_id_affidavit_id] 
-	FOREIGN KEY(affidavit_file_id)
-	REFERENCES [dbo].[affidavit_files] ([id])
+	CREATE TABLE postlog_outbound_file_problems(
+		id INT IDENTITY(1,1) NOT NULL,
+		postlog_outbound_file_id  INT,
+		problem_description VARCHAR(255) NOT NULL,		
+		CONSTRAINT [PK_postlog_outbound_file_problems] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] 
+	WITH CHECK ADD CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files] 
+	FOREIGN KEY(postlog_outbound_file_id)
+	REFERENCES [dbo].[postlog_outbound_files] ([id])
 	ON DELETE CASCADE
-
-
+	ALTER TABLE [dbo].[postlog_outbound_file_problems] CHECK CONSTRAINT [FK_postlog_outbound_file_problems_postlog_outbound_files]
 END
+/************************* END BCOP-3318 **********************************************/
 
-GO 
-
-
-/*************************************** END - BCOP-2894 *********************************************************/
+/*************************************** START BCOP-3324 ***************************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'market_coverage' AND object_id = OBJECT_ID('proposal_versions'))
+BEGIN
+	ALTER TABLE dbo.proposal_versions ADD [market_coverage] FLOAT CONSTRAINT DF_proposal_versions_market_coverage DEFAULT(0.8) NULL;
+	ALTER TABLE dbo.proposal_versions DROP CONSTRAINT DF_proposal_versions_market_coverage
+END
+GO
+ALTER TABLE dbo.proposal_versions ALTER COLUMN markets TINYINT NULL
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 0)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = 1
+	WHERE blackout_markets = 0
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 100)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = 1
+	WHERE blackout_markets = 100
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 50)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = 1
+	WHERE blackout_markets = 50
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE blackout_markets = 255)
+BEGIN
+	UPDATE proposal_versions
+	SET blackout_markets = null
+	WHERE blackout_markets = 255
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 0)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = 1
+	WHERE markets = 0
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 100)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = 1
+	WHERE markets = 100
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 50)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = 1
+	WHERE markets = 50
+END
+GO
+IF EXISTS(SELECT * FROM proposal_versions WHERE markets = 255)
+BEGIN
+	UPDATE proposal_versions
+	SET markets = null
+	WHERE markets = 255
+END
+/*************************************** END BCOP-3324 ***************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
@@ -477,7 +592,7 @@ GO
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.05.1' -- Current release version
+SET parameter_value = '18.08.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -488,8 +603,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.04.1' -- Previous release version
-		OR [version] = '18.05.1') -- Current release version
+		WHERE [version] = '18.06.1' -- Previous release version
+		OR [version] = '18.08.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

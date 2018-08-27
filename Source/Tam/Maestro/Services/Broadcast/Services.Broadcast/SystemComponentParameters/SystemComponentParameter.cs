@@ -131,6 +131,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.NielsenCable); }
         }
 	 
+		public static string NsiStaging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_ResourceSystemParameterNames.ComponentID , AppSettings_ResourceSystemParameterNames.NsiStaging); }
+        }
+	 
 		public static string PostLogAnalysis  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -335,12 +341,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.EnableNewRatingsService); }
         }
 	 
-		public static bool EnableNsiFolderMonitor  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<bool>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.EnableNsiFolderMonitor); }
-        }
-	 
 		public static bool EnableProcessIncompleteRatingsLoadJobsCheck  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -369,30 +369,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
 					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NoOfThreadsForRatingRequest); }
-        }
-	 
-		public static string NsiDropBoxDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiDropBoxDirectory); }
-        }
-	 
-		public static string NsiNotificationEmailAddresses  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiNotificationEmailAddresses); }
-        }
-	 
-		public static string NsiOtherDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiOtherDirectory); }
-        }
-	 
-		public static string NsiRatingsDirectory  
-		{
-            get { return SystemComponentHelper.GetPropertyValue<string>
-					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiRatingsDirectory); }
         }
 	 
 		public static int NumMonthsToCacheForNewRatingsService  
@@ -449,6 +425,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
         }
 	 
+		public static float DefaultMarketCoverage  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<float>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultMarketCoverage); }
+        }
+	 
+		public static float DefaultNtiConversionFactor  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<float>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -483,6 +471,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EmailWhiteList); }
+        }
+	 
+		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.MediaMonthCruchCacheSlidingExpirationSeconds); }
         }
 	 
 		public static string ProgramSearchApiUrl  
@@ -551,6 +545,24 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_NotificationEmail); }
         }
 	 
+		public static string WWTV_PostLogDropFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_PostLogDropFolder); }
+        }
+	 
+		public static string WWTV_PostLogErrorFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_PostLogErrorFolder); }
+        }
+	 
+		public static string WWTV_PostLogFtpOutboundFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_PostLogFtpOutboundFolder); }
+        }
+	 
 		public static int WWTV_SecondsBetweenRuns  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -561,6 +573,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder); }
+        }
+	 
+		public static string WWTV_SharedFolder_Password  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder_Password); }
+        }
+	 
+		public static string WWTV_SharedFolder_UserName  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_SharedFolder_UserName); }
         }
 	 
 		public static string WWTV_WhenToCheckDataFiles  
@@ -594,6 +618,15 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(CommonSystemParameterNames.ComponentID , CommonSystemParameterNames.PythonFilePath); }
+        }
+	}
+	 
+	public static class ConfigurationServiceSystemParameter 
+	{ 
+		public static string CacheTest  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.CacheTest); }
         }
 	}
 	 
@@ -1547,6 +1580,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.DefaultEmailGroupTo); }
         }
 	 
+		public static string InnovarXmlPath  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.InnovarXmlPath); }
+        }
+	 
 		public static int MaxTrafficBreakdownThreads  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -1619,6 +1658,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(ReportingServiceSystemParameterNames.ComponentID , ReportingServiceSystemParameterNames.FourAsDisclaimer); }
         }
 	 
+		public static string MarriedTrafficReportDirectory  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ReportingServiceSystemParameterNames.ComponentID , ReportingServiceSystemParameterNames.MarriedTrafficReportDirectory); }
+        }
+	 
 		public static int MaxLoaderThreads  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -1686,6 +1731,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.InternalSalesWebApiUri); }
+        }
+	 
+		public static string OrderingApiApprovedEmailAddresses  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.OrderingApiApprovedEmailAddresses); }
         }
 	}
 	 

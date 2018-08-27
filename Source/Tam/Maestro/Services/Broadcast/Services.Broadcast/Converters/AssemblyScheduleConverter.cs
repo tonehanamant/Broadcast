@@ -235,7 +235,7 @@ namespace Services.Broadcast.Converters
             if (!Int32.TryParse(spot_length_string,out spotLength))
                 throw new Exception(string.Format("Cannot convert spot length, {0}, to number", spot_length_string));
 
-            var spotLengths = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsByLength(new List<int>() {spotLength});
+            var spotLengths = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthsByLengths(new List<int>() {spotLength});
 
             return spotLengths.First().Id;
         }

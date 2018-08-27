@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class affidavit_client_scrubs
     {
+        public affidavit_client_scrubs()
+        {
+            this.affidavit_client_scrub_audiences = new HashSet<affidavit_client_scrub_audiences>();
+        }
+    
         public int id { get; set; }
         public long affidavit_file_detail_id { get; set; }
         public int proposal_version_detail_quarter_week_id { get; set; }
@@ -33,8 +38,13 @@ namespace EntityFrameworkMapping.Broadcast
         public string effective_genre { get; set; }
         public string effective_show_type { get; set; }
         public bool match_show_type { get; set; }
+        public bool status_override { get; set; }
+        public string effective_isci { get; set; }
+        public bool match_isci { get; set; }
+        public string effective_client_isci { get; set; }
     
-        public virtual affidavit_file_details affidavit_file_details { get; set; }
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
+        public virtual ICollection<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
+        public virtual affidavit_file_details affidavit_file_details { get; set; }
     }
 }

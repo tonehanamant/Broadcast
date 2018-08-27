@@ -1,0 +1,196 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Daypart": null,
+  "Equivalized": true,
+  "FlightDates": [
+    "2Q'16: 1 week - 5/30"
+  ],
+  "GuaranteedDemo": "House Holds",
+  "ProposalAudiences": [
+    {
+      "Display": "HH",
+      "Id": 31
+    },
+    {
+      "Display": "F15-17",
+      "Id": 5
+    },
+    {
+      "Display": "F18-20",
+      "Id": 6
+    }
+  ],
+  "QuarterTables": [
+    {
+      "TableName": "2Q'16",
+      "TableRows": [
+        {
+          "ActualImpressions": 315116.80000000005,
+          "Adu": false,
+          "Contract": "NAV",
+          "DeliveredImpressionsPercentage": 3.1199683168316836,
+          "HHRating": 0,
+          "ProposalWeekCost": 3.7500,
+          "ProposalWeekCPM": 0.7425742574257425742574257000,
+          "ProposalWeekImpressionsGoal": 5050.0,
+          "ProposalWeekTotalCost": 75.0000,
+          "ProposalWeekTotalImpressionsGoal": 101000.0,
+          "SpotLength": 30,
+          "Spots": 20,
+          "WeekStartDate": "2016-05-30T00:00:00"
+        }
+      ]
+    }
+  ],
+  "QuarterTabs": [
+    {
+      "TabName": "Spot Detail 2Q16",
+      "TabRows": [
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 157433.4,
+            "5": 1802.85,
+            "6": 833.3
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "AAAAAAAA",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalDetailSpotLength": 30,
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekId": 18,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC-TV",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 157433.4,
+            "5": 1802.85,
+            "6": 833.3
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "AAAAAAAA",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalDetailSpotLength": 30,
+          "ProposalWeekCost": 5.0000,
+          "ProposalWeekCPM": 50.0000,
+          "ProposalWeekId": 11199,
+          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekTotalCost": 50.0000,
+          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC-TV",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "BBBBBBBBB",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalDetailSpotLength": 30,
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekId": 18,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC-TV",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 250.0,
+            "5": 250.0,
+            "6": 250.0
+          },
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "CCCCCCC",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalDetailSpotLength": 30,
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekId": 18,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 15,
+          "Station": "WNBC-TV",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        },
+        {
+          "Adu": false,
+          "Advertiser": "Test Advertiser 9",
+          "AudienceImpressions": {
+            "31": 0.0,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "DateAired": "2016-06-05T00:00:00",
+          "DaypartName": "NAV",
+          "Isci": "AAAAAAAA",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
+          "ProgramName": "Program Names R us",
+          "ProposalDetailSpotLength": 30,
+          "ProposalWeekCost": 2.5000,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekId": 18,
+          "ProposalWeekImpressionsGoal": 10000.0,
+          "ProposalWeekTotalCost": 25.0000,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
+          "ProposalWeekUnits": 10,
+          "Rank": 1,
+          "SpotLength": 30,
+          "Station": "WNBC-TV",
+          "TimeAired": 32400,
+          "WeekStart": "2016-05-30T00:00:00"
+        }
+      ],
+      "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
+    }
+  ],
+  "ReportName": "Proposal Test - Test Advertiser 9 - Cadent Network 2Q16 Post Report with Overnights.xlsx",
+  "SpotLengthsDisplay": ":30s (Equivalized)",
+  "WithOvernightImpressions": true
+}

@@ -5,9 +5,12 @@
   "CanDelete": false,
   "Details": [
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": {
+      "DefaultProjectionBooks": {
         "DefaultHutBook": {
           "HasWarning": false,
           "PostingBookId": 404,
@@ -32,9 +35,15 @@
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
-      "PlaybackType": 4,
+      "GoalBudget": null,
+      "GoalImpression": null,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
+      "PostingBookId": 416,
+      "PostingPlaybackType": 4,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -136,6 +145,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
+              "MyEventsReportName": "Test Adve NAV 30 05-30-16",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"
@@ -145,26 +155,28 @@
         }
       ],
       "Sequence": 1,
-      "SharePostingBookId": 410,
+      "ShareProjectionBookId": 410,
       "ShowTypeCriteria": [
         {
           "Contain": 1,
-          "Id": 1,
           "ShowType": {
             "Display": "Mini-Movie"
           }
         }
       ],
-      "SinglePostingBookId": 410,
+      "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 2000.00,
       "TotalImpressions": 100000.0,
       "TotalUnits": 10
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -180,18 +192,30 @@
           "IsHiatus": false,
           "MediaWeekId": 650,
           "StartDate": "2016-06-07T00:00:00"
+        },
+        {
+          "EndDate": "2016-06-14T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 650,
+          "StartDate": "2016-06-07T00:00:00"
         }
       ],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
-      "PlaybackType": 4,
+      "GoalBudget": null,
+      "GoalImpression": null,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
+      "PostingBookId": 416,
+      "PostingPlaybackType": 4,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
           "DistributeGoals": false,
-          "ImpressionGoal": 2000.0,
+          "ImpressionGoal": 3000.0,
           "Quarter": 2,
           "QuarterText": "2016 Q2",
           "Weeks": [
@@ -217,6 +241,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 650,
+              "MyEventsReportName": "Test Adve NAV 30 06-07-16",
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -225,9 +250,52 @@
               "Cost": 20.00,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
-              "Iscis": [],
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "FFFFFF",
+                  "Days": "Su-M-T-W-Th-F-Sa",
+                  "Friday": true,
+                  "HouseIsci": "FFFFFF",
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": true,
+                  "Sunday": true,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
+                }
+              ],
               "IsHiatus": false,
               "MediaWeekId": 650,
+              "MyEventsReportName": "Test Adve NAV 30 06-07-16",
+              "StartDate": "2016-06-07T00:00:00",
+              "Units": 10,
+              "Week": "6/7/2016"
+            },
+            {
+              "Cost": 20.00,
+              "EndDate": "2016-06-14T00:00:00",
+              "Impressions": 1000.0,
+              "Iscis": [
+                {
+                  "Brand": null,
+                  "ClientIsci": "FFFFFF",
+                  "Days": "Su-M-T-W-Th-F-Sa",
+                  "Friday": true,
+                  "HouseIsci": "FFFFFF",
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": true,
+                  "Sunday": true,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
+                }
+              ],
+              "IsHiatus": false,
+              "MediaWeekId": 650,
+              "MyEventsReportName": "Test Adve NAV 30 06-07-16",
               "StartDate": "2016-06-07T00:00:00",
               "Units": 10,
               "Week": "6/7/2016"
@@ -237,34 +305,42 @@
         }
       ],
       "Sequence": 2,
-      "SharePostingBookId": 410,
+      "ShareProjectionBookId": 410,
       "ShowTypeCriteria": [
         {
           "Contain": 2,
-          "Id": 2,
           "ShowType": {
             "Display": "Movie"
           }
         }
       ],
-      "SinglePostingBookId": 410,
+      "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 40.00,
-      "TotalImpressions": 2000.0,
-      "TotalUnits": 20
+      "TotalCost": 60.00,
+      "TotalImpressions": 3000.0,
+      "TotalUnits": 30
     },
     {
+      "AdjustmentInflation": null,
+      "AdjustmentMargin": null,
+      "AdjustmentRate": null,
       "Adu": false,
       "DaypartCode": "NAV",
-      "DefaultPostingBooks": null,
+      "DefaultProjectionBooks": null,
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
-      "HutPostingBookId": null,
-      "PlaybackType": 4,
+      "GoalBudget": null,
+      "GoalImpression": null,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": null,
+      "NtiConversionFactor": 0.2,
+      "PostingBookId": 416,
+      "PostingPlaybackType": 4,
       "ProgramCriteria": [],
+      "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "Quarters": [
         {
@@ -278,16 +354,16 @@
         }
       ],
       "Sequence": 3,
-      "SharePostingBookId": 410,
+      "ShareProjectionBookId": 410,
       "ShowTypeCriteria": [],
-      "SinglePostingBookId": 410,
+      "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
       "TotalCost": 0.0,
       "TotalImpressions": 0.0,
       "TotalUnits": 0
     }
   ],
-  "Equivalized": false,
+  "Equivalized": true,
   "FlightEndDate": "2016-06-06T00:00:00",
   "FlightStartDate": "2016-05-30T00:00:00",
   "FlightWeeks": [
@@ -306,8 +382,9 @@
   ],
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
+  "MarketCoverage": null,
   "MarketGroup": null,
-  "MarketGroupId": 100,
+  "MarketGroupId": 1,
   "Notes": null,
   "PostType": 1,
   "ProposalName": "Proposal Test",
@@ -321,10 +398,10 @@
     }
   ],
   "Status": 3,
-  "TargetBudget": 2040.00,
+  "TargetBudget": 2060.00,
   "TargetCPM": 20.00,
-  "TargetImpressions": 102000.0,
-  "TargetUnits": 30,
+  "TargetImpressions": 103000.0,
+  "TargetUnits": 40,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,

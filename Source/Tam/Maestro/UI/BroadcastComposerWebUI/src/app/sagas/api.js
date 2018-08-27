@@ -26,11 +26,44 @@ const post = {
   getPosts: () => (
     call(GET, `${apiBase}Post`, {})
   ),
-  getPostScrubbingHeader: proposalID => (
-    call(GET, `${apiBase}/Post/ClientScrubbingProposal/${proposalID}`, {})
-  ),
+ /*  getPostClientScrubbing: params => (
+    call(GET, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}`, {})
+  ), */
+  getPostClientScrubbing: (params) => {
+    const sendStatus = params.filterKey.length && (params.filterKey !== 'All');
+    const statusParams = sendStatus ? { ScrubbingStatusFilter: params.filterKey } : {};
+    // return call(GET, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}${sendStatus ? `?status=${params.filterKey}` : ''}`, {});
+    return call(POST, `${apiBase}/Post/ClientScrubbingProposal/${params.proposalId}`, statusParams);
+  },
   getUnlinkedIscis: () => (
     call(GET, `${apiBase}Post/UnlinkedIscis `, {})
+  ),
+  overrideStatus: params => (
+    call(PUT, `${apiBase}Post/OverrideStatus`, params)
+  ),
+  getArchivedIscis: () => (
+    call(GET, `${apiBase}Post/ArchivedIscis `, {})
+  ),
+  archiveUnlinkedIscis: isciIds => (
+    call(POST, `${apiBase}Post/ArchiveUnlinkedIsci`, isciIds)
+  ),
+  undoArchivedIscis: isciIds => (
+    call(POST, `${apiBase}Post/UndoArchiveIsci `, isciIds)
+  ),
+  getValidIscis: query => (
+    call(GET, `${apiBase}Post/FindValidIscis/${query}`)
+  ),
+  rescrubUnlinkedIscis: isci => (
+    call(POST, `${apiBase}Post/ScrubUnlinkedIsci`, { Isci: isci })
+  ),
+  mapUnlinkedIscis: ({ OriginalIsci, EffectiveIsci }) => (
+    call(POST, `${apiBase}Post/MapIsci`, { OriginalIsci, EffectiveIsci })
+  ),
+  swapProposalDetail: params => (
+    call(POST, `${apiBase}Post/SwapProposalDetail`, params)
+  ),
+  undoScrubStatus: params => (
+    call(PUT, `${apiBase}Post/UndoOverrideStatus`, params)
   ),
 };
 
@@ -97,6 +130,9 @@ const planning = {
   ),
   getPrograms: params => (
     call(POST, `${apiBase}Proposals/FindPrograms`, params)
+  ),
+  getShowTypes: query => (
+    call(GET, `${apiBase}Proposals/FindShowType/${query}`, {})
   ),
 };
 

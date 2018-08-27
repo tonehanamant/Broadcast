@@ -68,10 +68,12 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramNameRepository _ProgramNameRepository;
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IProposalScxConverter _ProposalScxConverter;
-        private readonly IPostingBooksService _PostingBooksService;
+        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
+        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
+        private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
 
         const char ISCI_DAYS_DELIMITER = '-';
 
@@ -83,10 +85,12 @@ namespace Services.Broadcast.ApplicationServices
             IProposalCalculationEngine proposalCalculationEngine,
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalScxConverter proposalScxConverter,
-            IPostingBooksService postingBooksService,
+            IProjectionBooksService postingBooksService,
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
-            IProposalProprietaryInventoryService proposalProprietaryInventoryService)
+            IProposalProprietaryInventoryService proposalProprietaryInventoryService,
+            IAffidavitImpressionsService affidavitImpressionsService,
+            IMyEventsReportNamingEngine myEventsReportNamingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -103,11 +107,13 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalScxConverter = proposalScxConverter;
-            _PostingBooksService = postingBooksService;
+            _ProjectionBooksService = postingBooksService;
             _RatingForecastService = ratingForecastService;
             _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
             _ProposalProprietaryInventoryService = proposalProprietaryInventoryService;
             _ShowTypeReporitory = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
+            _AffidavitImpressionsService = affidavitImpressionsService;
+            _MyEventsReportNamingEngine = myEventsReportNamingEngine;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -141,7 +147,9 @@ namespace Services.Broadcast.ApplicationServices
                     if (proposal.Status == ProposalEnums.ProposalStatusType.Proposed && saveRequest.Status == ProposalEnums.ProposalStatusType.Contracted)
                         throw new Exception("Cannot change proposal status from Proposed to Contracted");
 
-                    EnsureContractedOnHoldStatus(saveRequest, proposal);
+                    _EnsureContractedOnHoldStatus(saveRequest, proposal);
+
+                    _CheckIfPostingDataHasChanged(saveRequest, proposal);
 
                     if (proposal.Status == ProposalEnums.ProposalStatusType.AgencyOnHold && saveRequest.Status == ProposalEnums.ProposalStatusType.Proposed)
                     {
@@ -164,7 +172,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
-                    EnsureContractedOnHoldStatus(saveRequest);
+                    _EnsureContractedOnHoldStatus(saveRequest);
                 }
 
                 // set flightweeks id and dayparts
@@ -188,6 +196,32 @@ namespace Services.Broadcast.ApplicationServices
                 return saveRequest.Version.HasValue
                     ? GetProposalByIdWithVersion(proposalId, saveRequest.Version.Value)
                     : GetProposalById(proposalId);
+            }
+        }
+
+        private void _CheckIfPostingDataHasChanged(ProposalDto saveRequest, ProposalDto proposal)
+        {
+            foreach(var newDetail in saveRequest.Details)
+            {
+                if (!newDetail.Id.HasValue)
+                    continue;
+
+                var previousDetail = proposal.Details.First(x => x.Id == newDetail.Id);
+                var newPostingBook = newDetail.PostingBookId;
+                var newPlaybackType = newDetail.PostingPlaybackType;
+                var previousPostingBook = previousDetail.PostingBookId;
+                var previousPlaybackType = previousDetail.PostingPlaybackType;
+
+                if ((previousPostingBook == null && newPostingBook != null) ||
+                    (previousPlaybackType == null && newPlaybackType != null))
+                {
+                    throw new Exception("Cannot set posting data before uploading affadavit file");
+                }
+
+                if (previousPostingBook != newPostingBook || previousPlaybackType != newPlaybackType)
+                {
+                    newDetail.HasPostingDataChanged = true;
+                }
             }
         }
 
@@ -244,7 +278,7 @@ namespace Services.Broadcast.ApplicationServices
                     proposalVersionQuarterWeeksIds);
         }
 
-        private void EnsureContractedOnHoldStatus(ProposalDto saveRequest, ProposalDto proposal = null)
+        private void _EnsureContractedOnHoldStatus(ProposalDto saveRequest, ProposalDto proposal = null)
         {
             if (saveRequest.Id == null)
                 return;
@@ -369,16 +403,16 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var proposalDetailDto in saveRequest.Details)
             {
-                if (proposalDetailDto.HutPostingBookId == null &&
-                    proposalDetailDto.SharePostingBookId != null)
+                if (proposalDetailDto.HutProjectionBookId == null &&
+                    proposalDetailDto.ShareProjectionBookId != null)
                 {
-                    proposalDetailDto.SinglePostingBookId = proposalDetailDto.SharePostingBookId;
-                    proposalDetailDto.HutPostingBookId = null;
-                    proposalDetailDto.SharePostingBookId = null;
+                    proposalDetailDto.SingleProjectionBookId = proposalDetailDto.ShareProjectionBookId;
+                    proposalDetailDto.HutProjectionBookId = null;
+                    proposalDetailDto.ShareProjectionBookId = null;
                 }
                 else
                 {
-                    proposalDetailDto.SinglePostingBookId = null;
+                    proposalDetailDto.SingleProjectionBookId = null;
                 }
             }
         }
@@ -388,6 +422,7 @@ namespace Services.Broadcast.ApplicationServices
             using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 _SetProposalDefaultValues(proposalDto);
+                _SetProposalDetailsDefaultValues(proposalDto);
                 _SetISCIWeekDays(proposalDto);
                 _SetProposalDetailSequenceNumbers(proposalDto);
 
@@ -404,6 +439,8 @@ namespace Services.Broadcast.ApplicationServices
 
                     // handle proposal detail updates
                     _ProposalRepository.UpdateProposal(proposalDto, userName);
+
+                    _RecalculateAffidavitImpressions(proposalDto);
                 }
                 else
                 {
@@ -413,6 +450,17 @@ namespace Services.Broadcast.ApplicationServices
                 transaction.Complete();
 
                 return proposalDto.Id.Value;
+            }
+        }
+
+        private void _RecalculateAffidavitImpressions(ProposalDto proposalDto)
+        {
+            foreach(var detail in proposalDto.Details)
+            {
+                if (detail.Id.HasValue && detail.HasPostingDataChanged)
+                {
+                    _AffidavitImpressionsService.RecalculateAffidavitImpressionsForProposalDetail(detail.Id.Value);
+                }
             }
         }
 
@@ -450,7 +498,29 @@ namespace Services.Broadcast.ApplicationServices
             // set target and default margin that are nullable when first creating a proposal
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
+            if (proposalDto.MarketCoverage.HasValue)
+                proposalDto.MarketCoverage = Math.Round(proposalDto.MarketCoverage.Value, 4, MidpointRounding.AwayFromZero);
+        }
 
+        private void _SetProposalDetailsDefaultValues(ProposalDto proposalDto)
+        {
+            var advertiser = _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
+
+            var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
+            proposalDto.Details.ForEach(detail => {
+                //set default value for NTI Conversion factor
+                detail.NtiConversionFactor = detail.NtiConversionFactor == null 
+                        ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 4, MidpointRounding.AwayFromZero)
+                        : Math.Round(detail.NtiConversionFactor.Value, 4, MidpointRounding.AwayFromZero);
+
+                //set default value for My Events Report Name
+                detail.Quarters.ForEach(y => y.Weeks.ForEach(week => {
+                    if (string.IsNullOrWhiteSpace(week.MyEventsReportName))
+                    {   
+                        week.MyEventsReportName = _MyEventsReportNamingEngine.GetDefaultMyEventsReportName(detail.DaypartCode, spotLengths.First(l => l.Value == detail.SpotLengthId).Key, week.StartDate, advertiser.Display);
+                    }
+                }));                
+            });            
         }
 
         private void _DeleteAnyOpenMarketAllocations(ProposalDto proposalDto)
@@ -725,9 +795,12 @@ namespace Services.Broadcast.ApplicationServices
             if (string.IsNullOrWhiteSpace(userName))
                 throw new Exception("Cannot save proposal without specifying a valid username.");
 
+            // Will throw an exception if demo not found.
+            _AudiencesCache.FindDto(proposalDto.GuaranteedDemoId);
+
             _ValidatePreviouslyContractedStatus(proposalDto);
 
-            //Will throw an exception if advertiser not found:
+            // Will throw an exception if advertiser not found.
             _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
 
             _ValidateProposalDetailBeforeSave(proposalDto);
@@ -773,16 +846,16 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
-        private void _ValidateProposalRatingsBooks(ProposalDetailDto proposalDetailDto)
+        private void _ValidateProposalProjectionBooks(ProposalDetailDto proposalDetailDto)
         {
-            if (proposalDetailDto.SharePostingBookId == null)
+            if (proposalDetailDto.ShareProjectionBookId == null)
                 throw new Exception("Cannot save proposal without specifying a Share Book");
 
-            if (proposalDetailDto.PlaybackType == null)
+            if (proposalDetailDto.ProjectionPlaybackType == null)
                 throw new Exception("Cannot save proposal without specifying a Playback Type");
 
-            if (proposalDetailDto.SharePostingBookId == proposalDetailDto.HutPostingBookId ||
-                proposalDetailDto.HutPostingBookId > proposalDetailDto.SharePostingBookId)
+            if (proposalDetailDto.ShareProjectionBookId == proposalDetailDto.HutProjectionBookId ||
+                proposalDetailDto.HutProjectionBookId > proposalDetailDto.ShareProjectionBookId)
                 throw new Exception("Hut Media Month must be earlier (less than) the Share Media Month");
         }
 
@@ -792,7 +865,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var detail in proposalDto.Details)
             {
-                _ValidateProposalRatingsBooks(detail);
+                _ValidateProposalProjectionBooks(detail);
 
                 if (detail.FlightEndDate == default(DateTime) || detail.FlightStartDate == default(DateTime))
                     throw new Exception("Cannot save proposal detail without specifying flight start/end date.");
@@ -900,9 +973,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var proposalDetailDto in proposal.Details)
             {
-                if (proposalDetailDto.SinglePostingBookId != null)
+                if (proposalDetailDto.SingleProjectionBookId != null)
                 {
-                    proposalDetailDto.SharePostingBookId = proposalDetailDto.SinglePostingBookId;
+                    proposalDetailDto.ShareProjectionBookId = proposalDetailDto.SingleProjectionBookId;
                 }
             }
         }
@@ -1000,7 +1073,8 @@ namespace Services.Broadcast.ApplicationServices
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
-                DefaultPostingBooks = _PostingBooksService.GetDefaultPostingBooks(proposalDetailRequestDto.StartDate)
+                DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate),
+                NtiConversionFactor =  Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
             };
 
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);
@@ -1058,7 +1132,7 @@ namespace Services.Broadcast.ApplicationServices
                                     }).ToList()
                     });
 
-                editedDetail.DefaultPostingBooks = newProposalDetail.DefaultPostingBooks;
+                editedDetail.DefaultProjectionBooks = newProposalDetail.DefaultProjectionBooks;
 
                 // deal with quarters - new quarters will be dealt by user.
                 foreach (var newQuarterDto in newProposalDetail.Quarters)
@@ -1091,6 +1165,7 @@ namespace Services.Broadcast.ApplicationServices
                         weekDto.Cost = week.Cost;
                         weekDto.Units = week.Units;
                         weekDto.Iscis = week.Iscis;
+                        weekDto.MyEventsReportName = week.MyEventsReportName;
                     }
                 }
 
@@ -1114,7 +1189,8 @@ namespace Services.Broadcast.ApplicationServices
                     .Cast<SchedulePostType>()
                     .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
                     .ToList(),
-                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList()
+                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList(),
+                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4, MidpointRounding.AwayFromZero)
             };
 
             result.MarketGroups = _GetMarketGroupList(result.Markets.Count);
@@ -1138,60 +1214,27 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<MarketGroupDto> _GetMarketGroupList(int totalMarkets)
         {
-            //Assumes Enum ID corresponds to the number of markets (except for ALL)
             var marketGroups =
                 EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>().Select(
                     g => new MarketGroupDto()
                     {
                         Display = g.Display,
                         Id = g.Id,
-                        Count = g.Id
                     }).ToList();
-
-            var totalMarketsGroup =
-                marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.All).Single();
-            totalMarketsGroup.Count = totalMarkets;
-
-            var customGroup = marketGroups.Where(g => g.Id == (int)ProposalEnums.ProposalMarketGroups.Custom).Single();
-            customGroup.Count = 0;
 
             return marketGroups;
         }
 
         private MarketGroupDto _GetMarketGroupDto(ProposalEnums.ProposalMarketGroups? marketGroup)
         {
-            if (marketGroup == null || marketGroup == ProposalEnums.ProposalMarketGroups.Custom)
+            if (marketGroup == null)
                 return null;
-
-            var marketCount = _GetCountForMarketGroup(marketGroup.Value);
 
             return new MarketGroupDto
             {
-                Count = marketCount,
-                Display = marketGroup.Description(),
-                Id = (int)marketGroup
+                Id = (int)marketGroup,
+                Display = marketGroup.Description()
             };
-        }
-
-        private int _GetCountForMarketGroup(ProposalEnums.ProposalMarketGroups marketGroup)
-        {
-            int marketCount;
-
-            if (marketGroup == ProposalEnums.ProposalMarketGroups.All)
-            {
-                marketCount =
-                    _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().Count;
-            }
-            else if (marketGroup == ProposalEnums.ProposalMarketGroups.Custom)
-            {
-                marketCount = 0;
-            }
-            else
-            {
-                marketCount = (int)marketGroup;
-            }
-
-            return marketCount;
         }
 
         public List<DisplayProposalVersion> GetProposalVersionsByProposalId(int proposalId)

@@ -58,7 +58,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<system_component_parameters> system_component_parameters { get; set; }
         public virtual DbSet<timespan> timespans { get; set; }
         public virtual DbSet<vw_ccc_daypart> vw_ccc_daypart { get; set; }
-        public virtual DbSet<proposal_versions> proposal_versions { get; set; }
         public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual DbSet<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
         public virtual DbSet<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
@@ -81,19 +80,24 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_spots> station_inventory_spots { get; set; }
         public virtual DbSet<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
         public virtual DbSet<affidavit_files> affidavit_files { get; set; }
-        public virtual DbSet<affidavit_file_detail_audiences> affidavit_file_detail_audiences { get; set; }
         public virtual DbSet<nsi_component_audiences> nsi_component_audiences { get; set; }
         public virtual DbSet<affidavit_file_detail_problems> affidavit_file_detail_problems { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
         public virtual DbSet<program_names> program_names { get; set; }
         public virtual DbSet<affidavit_outbound_file_problems> affidavit_outbound_file_problems { get; set; }
         public virtual DbSet<affidavit_outbound_files> affidavit_outbound_files { get; set; }
-        public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
-        public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
-        public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
         public virtual DbSet<show_types> show_types { get; set; }
         public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_file_problems> affidavit_file_problems { get; set; }
+        public virtual DbSet<affidavit_blacklist> affidavit_blacklist { get; set; }
+        public virtual DbSet<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
+        public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
+        public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
+        public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
+        public virtual DbSet<isci_mapping> isci_mapping { get; set; }
+        public virtual DbSet<postlog_outbound_file_problems> postlog_outbound_file_problems { get; set; }
+        public virtual DbSet<postlog_outbound_files> postlog_outbound_files { get; set; }
+        public virtual DbSet<proposal_versions> proposal_versions { get; set; }
     }
 }

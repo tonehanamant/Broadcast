@@ -1,0 +1,58 @@
+﻿[
+  {
+    "Lines": [
+      {
+        "ReportableName": "MyEventsReport 15 05 30",
+        "Advertiser": "Test Advertiser 9",
+        "DaypartCode": "MYE1",
+        "SpotLength": 30,
+        "ScheduleStartDate": "2016-05-30T00:00:00",
+        "ScheduleEndDate": "2016-06-05T00:00:00",
+        "CallLetter": "KAPP",
+        "LineupPOT": "O",
+        "LineupDOW": "-T-----",
+        "OffAir": "N",
+        "LineupStartDate": "2016-05-31T00:00:00",
+        "LineupNumberOfWeeks": 1,
+        "LineupStartTime": "0001-01-01T09:00:00",
+        "Duration": 3,
+        "MOP": 1,
+        "CVT": "SUN",
+        "LineupMultiBarter": 1,
+        "LineupCashOnly": "N",
+        "LineupAiringNumber": 1,
+        "AdvertiserId": 37444,
+        "SpotLengthId": 1,
+        "AirDate": "2016-05-31T09:00:00"
+      }
+    ]
+  },
+  {
+    "Lines": [
+      {
+        "ReportableName": "MyEventsReport 15 06 06",
+        "Advertiser": "Test Advertiser 9",
+        "DaypartCode": "MYE2",
+        "SpotLength": 30,
+        "ScheduleStartDate": "2016-05-30T00:00:00",
+        "ScheduleEndDate": "2016-06-05T00:00:00",
+        "CallLetter": "KAPP",
+        "LineupPOT": "O",
+        "LineupDOW": "----F--",
+        "OffAir": "N",
+        "LineupStartDate": "2016-06-03T00:00:00",
+        "LineupNumberOfWeeks": 1,
+        "LineupStartTime": "0001-01-01T09:00:00",
+        "Duration": 3,
+        "MOP": 1,
+        "CVT": "SUN",
+        "LineupMultiBarter": 1,
+        "LineupCashOnly": "N",
+        "LineupAiringNumber": 1,
+        "AdvertiserId": 37444,
+        "SpotLengthId": 1,
+        "AirDate": "2016-06-03T09:00:00"
+      }
+    ]
+  }
+]

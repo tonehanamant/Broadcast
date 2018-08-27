@@ -1,17 +1,14 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.OpenMarketInventory;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
-using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities.OpenMarketInventory;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -67,6 +64,14 @@ namespace Services.Broadcast.Repositories
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
         ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
+        void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> list);
+
+        /// <summary>
+        /// Gets all weeks for a proposal detail
+        /// </summary>
+        /// <param name="proposalDetailId">Proposal detail id to filter by</param>
+        /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
+        List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -149,8 +154,9 @@ namespace Services.Broadcast.Repositories
                 start_date = proposalDto.FlightStartDate,
                 end_date = proposalDto.FlightEndDate,
                 guaranteed_audience_id = proposalDto.GuaranteedDemoId,
-                markets = (byte)proposalDto.MarketGroupId,
+                markets = (byte?)proposalDto.MarketGroupId,
                 blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId,
+                market_coverage = proposalDto.MarketCoverage,
                 created_by = userName,
                 created_date = timestamp,
                 modified_by = userName,
@@ -249,8 +255,9 @@ namespace Services.Broadcast.Repositories
             dbProposalVersion.start_date = proposalDto.FlightStartDate;
             dbProposalVersion.end_date = proposalDto.FlightEndDate;
             dbProposalVersion.guaranteed_audience_id = proposalDto.GuaranteedDemoId;
-            dbProposalVersion.markets = (byte)proposalDto.MarketGroupId;
+            dbProposalVersion.markets = (byte?)proposalDto.MarketGroupId;
             dbProposalVersion.blackout_markets = (byte?)proposalDto.BlackoutMarketGroupId;
+            dbProposalVersion.market_coverage = proposalDto.MarketCoverage;
             dbProposalVersion.modified_by = userName;
             dbProposalVersion.modified_date = timestamp;
             dbProposalVersion.target_budget = proposalDto.TargetBudget;
@@ -327,10 +334,18 @@ namespace Services.Broadcast.Repositories
                     end_date = proposalDetail.FlightEndDate,
                     daypart_id = proposalDetail.DaypartId,
                     adu = proposalDetail.Adu,
-                    single_posting_book_id = proposalDetail.SinglePostingBookId,
-                    hut_posting_book_id = proposalDetail.HutPostingBookId,
-                    share_posting_book_id = proposalDetail.SharePostingBookId,
-                    playback_type = (byte)proposalDetail.PlaybackType,
+                    single_projection_book_id = proposalDetail.SingleProjectionBookId,
+                    hut_projection_book_id = proposalDetail.HutProjectionBookId,
+                    share_projection_book_id = proposalDetail.ShareProjectionBookId,
+                    projection_playback_type = (byte)proposalDetail.ProjectionPlaybackType,
+                    posting_book_id = proposalDetail.PostingBookId,
+                    posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
+                    nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
+                    adjustment_inflation = proposalDetail.AdjustmentInflation,
+                    adjustment_margin = proposalDetail.AdjustmentMargin,
+                    adjustment_rate = proposalDetail.AdjustmentRate,
+                    goal_budget = proposalDetail.GoalBudget,
+                    goal_impression = proposalDetail.GoalImpression,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -364,6 +379,7 @@ namespace Services.Broadcast.Repositories
                                         media_week_id = quarterWeek.MediaWeekId,
                                         end_date = quarterWeek.EndDate,
                                         start_date = quarterWeek.StartDate,
+                                        myevents_report_name = quarterWeek.MyEventsReportName,
                                         proposal_version_detail_quarter_week_iscis = quarterWeek.Iscis.Select(isic =>
                                             new proposal_version_detail_quarter_week_iscis
                                             {
@@ -434,11 +450,19 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.end_date = detail.FlightEndDate;
                     updatedDetail.daypart_id = detail.DaypartId;
                     updatedDetail.adu = detail.Adu;
-                    updatedDetail.single_posting_book_id = detail.SinglePostingBookId;
-                    updatedDetail.hut_posting_book_id = detail.HutPostingBookId;
-                    updatedDetail.share_posting_book_id = detail.SharePostingBookId;
-                    updatedDetail.playback_type = (byte)detail.PlaybackType;
+                    updatedDetail.single_projection_book_id = detail.SingleProjectionBookId;
+                    updatedDetail.hut_projection_book_id = detail.HutProjectionBookId;
+                    updatedDetail.share_projection_book_id = detail.ShareProjectionBookId;
+                    updatedDetail.projection_playback_type = (byte)detail.ProjectionPlaybackType;
+                    updatedDetail.posting_book_id = detail.PostingBookId;
+                    updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
+                    updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
+                    updatedDetail.adjustment_inflation = detail.AdjustmentInflation;
+                    updatedDetail.adjustment_margin = detail.AdjustmentMargin;
+                    updatedDetail.adjustment_rate = detail.AdjustmentRate;
+                    updatedDetail.goal_budget = detail.GoalBudget;
+                    updatedDetail.goal_impression = detail.GoalImpression;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -541,6 +565,7 @@ namespace Services.Broadcast.Repositories
                                     quarterWeek.units = detatilQuarterWeek.Units;
                                     quarterWeek.impressions_goal = detatilQuarterWeek.Impressions;
                                     quarterWeek.cost = detatilQuarterWeek.Cost;
+                                    quarterWeek.myevents_report_name = detatilQuarterWeek.MyEventsReportName;
 
                                     _UpdateProposalWeekIscis(context, detatilQuarterWeek, quarterWeek);
                                 }
@@ -771,8 +796,9 @@ namespace Services.Broadcast.Repositories
                 FlightEndDate = proposalVersion.end_date,
                 FlightStartDate = proposalVersion.start_date,
                 GuaranteedDemoId = proposalVersion.guaranteed_audience_id,
-                MarketGroupId = (ProposalEnums.ProposalMarketGroups)proposalVersion.markets,
+                MarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.markets,
                 BlackoutMarketGroupId = (ProposalEnums.ProposalMarketGroups?)proposalVersion.blackout_markets,
+                MarketCoverage = proposalVersion.market_coverage,
                 Markets = proposalVersion.proposal_version_markets
                 .Where(q => q.proposal_version_id == proposalVersion.id).Select(f => new ProposalMarketDto
                 {
@@ -823,10 +849,18 @@ namespace Services.Broadcast.Repositories
                     FlightStartDate = version.start_date,
                     DaypartId = version.daypart_id,
                     Adu = version.adu,
-                    SinglePostingBookId = version.single_posting_book_id,
-                    SharePostingBookId = version.share_posting_book_id,
-                    HutPostingBookId = version.hut_posting_book_id,
-                    PlaybackType = (ProposalEnums.ProposalPlaybackType)version.playback_type,
+                    SingleProjectionBookId = version.single_projection_book_id,
+                    ShareProjectionBookId = version.share_projection_book_id,
+                    HutProjectionBookId = version.hut_projection_book_id,
+                    ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)version.projection_playback_type,
+                    PostingBookId = version.posting_book_id,
+                    PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
+                    NtiConversionFactor = version.nti_conversion_factor,
+                    GoalBudget = version.goal_budget,
+                    GoalImpression = version.goal_impression,
+                    AdjustmentInflation = version.adjustment_inflation,
+                    AdjustmentMargin = version.adjustment_margin,
+                    AdjustmentRate = version.adjustment_rate,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -867,6 +901,7 @@ namespace Services.Broadcast.Repositories
                             Units = week.units,
                             MediaWeekId = week.media_week_id,
                             Week = week.start_date.ToShortDateString(),
+                            MyEventsReportName = week.myevents_report_name,
                             Iscis = week.proposal_version_detail_quarter_week_iscis.Select(isci => new ProposalWeekIsciDto
                             {
                                 Id = isci.id,
@@ -912,7 +947,8 @@ namespace Services.Broadcast.Repositories
             proposalVersion.GuaranteedAudienceId = x.guaranteed_audience_id;
             proposalVersion.LastModifiedBy = x.modified_by;
             proposalVersion.LastModifiedDate = x.modified_date;
-            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups)x.markets;
+            proposalVersion.Markets = (ProposalEnums.ProposalMarketGroups?)x.markets;
+            proposalVersion.BlackoutMarkets = (ProposalEnums.ProposalMarketGroups?)x.blackout_markets;
             proposalVersion.TargetUnits = x.target_units;
             proposalVersion.TargetImpressions = x.target_impressions;
             proposalVersion.Notes = x.notes;
@@ -1009,9 +1045,11 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailOpenMarketInventoryDto();
-                dto.Margin = pv.proposal_versions.margin;
-                SetBaseFields(pv, dto);
+                var dto = new ProposalDetailOpenMarketInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin
+                };
+                _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
@@ -1079,10 +1117,15 @@ namespace Services.Broadcast.Repositories
                     FlightStartDate = proposalDetail.start_date,
                     DaypartId = proposalDetail.daypart_id,
                     Adu = proposalDetail.adu,
-                    SinglePostingBookId = proposalDetail.single_posting_book_id,
-                    SharePostingBookId = proposalDetail.share_posting_book_id,
-                    HutPostingBookId = proposalDetail.hut_posting_book_id,
-                    PlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.playback_type,
+                    SingleProjectionBookId = proposalDetail.single_projection_book_id,
+                    ShareProjectionBookId = proposalDetail.share_projection_book_id,
+                    HutProjectionBookId = proposalDetail.hut_projection_book_id,
+                    ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.projection_playback_type,
+                    GoalImpression = proposalDetail.goal_impression,
+                    GoalBudget = proposalDetail.goal_budget,
+                    AdjustmentInflation = proposalDetail.adjustment_inflation,
+                    AdjustmentMargin =  proposalDetail.adjustment_margin,
+                    AdjustmentRate = proposalDetail.adjustment_rate,
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1300,8 +1343,8 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(c =>
             {
                 var detail = c.proposal_version_details.Find(proposalDetailId);
-                detail.hut_posting_book_id = hutBook;
-                detail.share_posting_book_id = shareBook;
+                detail.hut_projection_book_id = hutBook;
+                detail.share_projection_book_id = shareBook;
                 c.SaveChanges();
             });
         }
@@ -1311,7 +1354,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(c =>
             {
                 var detail = c.proposal_version_details.Find(proposalDetailId);
-                detail.single_posting_book_id = book;
+                detail.single_projection_book_id = book;
                 c.SaveChanges();
             });
         }
@@ -1394,10 +1437,12 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailProprietaryInventoryDto();
-                dto.Margin = pv.proposal_versions.margin;
+                var dto = new ProposalDetailProprietaryInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin
+                };
 
-                SetBaseFields(pv, dto);
+                _SetBaseFields(pv, dto);
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
                              orderby week.start_date
@@ -1415,7 +1460,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static void SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
+        private static void _SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
@@ -1453,10 +1498,10 @@ namespace Services.Broadcast.Repositories
                         IsHiatus = week.is_hiatus,
                         MediaWeekId = week.media_week_id
                     })).OrderBy(w => w.StartDate).ToList();
-            baseDto.SinglePostingBookId = pvd.single_posting_book_id;
-            baseDto.SharePostingBookId = pvd.share_posting_book_id;
-            baseDto.HutPostingBookId = pvd.hut_posting_book_id;
-            baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.playback_type;
+            baseDto.SingleProjectionBookId = pvd.single_projection_book_id;
+            baseDto.ShareProjectionBookId = pvd.share_projection_book_id;
+            baseDto.HutProjectionBookId = pvd.hut_projection_book_id;
+            baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
         }
 
         public void DeleteProposal(int proposalId)
@@ -1513,6 +1558,12 @@ namespace Services.Broadcast.Repositories
                                 ProposalVersionDetailId = i.proposal_version_detail_quarter_weeks
                                                         .proposal_version_detail_quarters
                                                         .proposal_version_detail_id,
+                                ProposalVersionDetailPostingBookId = i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_details.posting_book_id,
+                                ProposalVersionDetailPostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)i.proposal_version_detail_quarter_weeks
+                                                        .proposal_version_detail_quarters
+                                                        .proposal_version_details.posting_playback_type,
                                 ProposalVersionDetailWeekStart = i.proposal_version_detail_quarter_weeks.start_date,
                                 ProposalVersionDetailWeekEnd = i.proposal_version_detail_quarter_weeks.end_date,
                                 Spots = i.proposal_version_detail_quarter_weeks.units,
@@ -1527,6 +1578,59 @@ namespace Services.Broadcast.Repositories
                             }).ToList();
                     return weeks;
                 });
+        }
+
+        /// <summary>
+        /// Gets all weeks for a proposal detail
+        /// </summary>
+        /// <param name="proposalDetailId">Proposal detail id to filter by</param>
+        /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
+        public List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+                   var weeks = (from detail in context.proposal_version_details
+                               from quarter in detail.proposal_version_detail_quarters
+                               from week in quarter.proposal_version_detail_quarter_weeks
+                               from isci in week.proposal_version_detail_quarter_week_iscis
+                               where detail.id == proposalDetailId
+                               select new { detail, quarter, week, isci }).ToList();
+                   return weeks.Select(
+                           i => new AffidavitMatchingProposalWeek()
+                           {
+                               ProposalVersionId = i.detail.proposal_version_id,
+                               ProposalVersionDetailId = i.detail.id,
+                               ProposalVersionDetailPostingBookId = i.detail.posting_book_id,
+                               ProposalVersionDetailPostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)i.detail.posting_playback_type,
+                               ProposalVersionDetailWeekStart = i.week.start_date,
+                               ProposalVersionDetailWeekEnd = i.week.end_date,
+                               Spots = i.week.units,
+                               ProposalVersionDetailDaypartId = i.detail.daypart_id,
+                               ProposalVersionDetailQuarterWeekId = i.isci.proposal_version_detail_quarter_week_id,
+                               ClientIsci = i.isci.client_isci,
+                               HouseIsci = i.isci.house_isci,
+                               MarriedHouseIsci = i.isci.married_house_iscii,
+                               Brand = i.isci.brand
+                           }).ToList();                   
+               });
+        }
+
+        public void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> detailPostingData)
+        {
+            _InReadUncommitedTransaction(c =>
+            {
+                foreach(var detailData in detailPostingData)
+                {
+                    var detail = c.proposal_version_details.Find(detailData.ProposalVersionDetailId);
+                    if(detail.posting_book_id == null)
+                    {
+                        detail.posting_book_id = detailData.PostingBookId;
+                        detail.posting_playback_type = (byte)detailData.PostingPlaybackType.Value;
+                        c.SaveChanges();
+                    }                    
+                }                
+            });
         }
     }
 }

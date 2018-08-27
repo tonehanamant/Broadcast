@@ -63,6 +63,10 @@ var TrackerUploadManager = UploadManager.extend({
             UserName: "user",
             BvsFiles: []
         };
+        var sigmaRequestList = {
+            UserName: "user",
+            BvsFiles: []
+        };
 
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
@@ -97,6 +101,18 @@ var TrackerUploadManager = UploadManager.extend({
                             }
                             break;
                         case 'csv':
+                            var sigmaRequest = {
+                                BvsFileName: file.name,
+                                RawData: b64,
+                                BvsStream: null
+                            }
+
+                            sigmaRequestList.BvsFiles.push(sigmaRequest);
+
+                            if (sigmaRequestList.BvsFiles.length >= files.length) {
+                                me.view.processUploadSigmaFileRequest(sigmaRequestList);
+                            }
+                            break;
                         case 'scx':
                             var scheduleFileData = {
                                 FileName: file.name,

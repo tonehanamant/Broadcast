@@ -15,9 +15,13 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IBroadcastAudiencesCache _AudienceCache;
 
-        public ScheduleAggregateFactoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        public ScheduleAggregateFactoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IBroadcastAudiencesCache audienceCache)
         {
+            _AudienceCache = audienceCache;
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
@@ -26,8 +30,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             var schedule = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetById(scheduleId);
             var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(schedule.start_date, schedule.end_date);
+            var houseHoldAudienceId = _AudienceCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
 
-            return _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleAggregateRepository>().Find(scheduleId, mediaWeeks);
+            return _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleAggregateRepository>().Find(scheduleId, mediaWeeks, houseHoldAudienceId);
         }
         
     }

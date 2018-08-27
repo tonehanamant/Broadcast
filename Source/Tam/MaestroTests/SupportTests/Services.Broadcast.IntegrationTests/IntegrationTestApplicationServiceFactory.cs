@@ -6,6 +6,7 @@ using Moq;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Repositories;
 using System;
+using Common.Services;
 using IntegrationTests.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;

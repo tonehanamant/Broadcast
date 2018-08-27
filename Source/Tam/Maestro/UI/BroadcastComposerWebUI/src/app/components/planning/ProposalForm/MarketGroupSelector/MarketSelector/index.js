@@ -14,8 +14,7 @@ class MarketSelector extends Component {
     this.onMarketExcluded = this.onMarketExcluded.bind(this);
     this.onClearMarketList = this.onClearMarketList.bind(this);
 
-    const { marketGroups, markets } = this.props;
-    this.typeaheadOptions = marketGroups.concat(markets);
+    this.typeaheadOptions = this.props.markets;
   }
 
   // clear typeahead and update parent state (market groups are placed in the beginning)
@@ -47,6 +46,7 @@ class MarketSelector extends Component {
   }
 
   render() {
+    const { isReadOnly } = this.props;
     let marketCount = 0;
     const marketList = this.props.selectedMarkets.map((market) => {
       if (market) {
@@ -57,6 +57,7 @@ class MarketSelector extends Component {
             <Button
               className="close pull-left"
               style={{ marginRight: '5px' }}
+              disabled={isReadOnly}
               onClick={() => this.onMarketExcluded(market.Id)}
             >
               <span aria-hidden="true">&times;</span>
@@ -69,12 +70,12 @@ class MarketSelector extends Component {
 
       return market;
     });
-
     return (
       <div>
         <Button
           className={`pull-right ${styles.trash}`}
           bsStyle="link"
+          disabled={isReadOnly}
           onClick={() => this.onClearMarketList()}
         >
           <span className="glyphicon glyphicon-trash pull-right" />
@@ -88,6 +89,7 @@ class MarketSelector extends Component {
             ref={(ref) => { this.typeahead = ref; }}
             placeholder="Type to add..."
             options={this.typeaheadOptions}
+            disabled={isReadOnly}
             labelKey="Display"
             onChange={this.onMarketSelected}
           />
@@ -106,12 +108,6 @@ class MarketSelector extends Component {
 MarketSelector.propTypes = {
   name: PropTypes.string.isRequired,
 
-  marketGroups: PropTypes.arrayOf(PropTypes.shape({
-    Id: PropTypes.number,
-    Display: PropTypes.string,
-    Count: PropTypes.number,
-  })),
-
   markets: PropTypes.arrayOf(PropTypes.shape({
     Id: PropTypes.number,
     Display: PropTypes.string,
@@ -123,13 +119,14 @@ MarketSelector.propTypes = {
   })),
 
   onMarketsSelectionChange: PropTypes.func,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 MarketSelector.defaultProps = {
-  marketGroups: [],
   markets: [],
   selectedMarkets: [],
   onMarketsSelectionChange: null,
+  isReadOnly: false,
 };
 
 export default CSSModules(MarketSelector, styles);

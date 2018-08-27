@@ -23,6 +23,7 @@ namespace Services.Broadcast.Repositories
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
+        List<DisplayBroadcastStation> GetBroadcastStations();
         List<DisplayBroadcastStation> GetBroadcastStationsByDate(int inventorySourceId, DateTime date, bool isIncluded);
         List<DisplayBroadcastStation> GetBroadcastStationListByStationCode(List<int> fileStationCodes);
         int GetBroadcastStationCodeByContactId(int stationContactId);
@@ -205,6 +206,22 @@ namespace Services.Broadcast.Repositories
                                 ModifiedDate = s.modified_date
                             }).ToList();
                 });
+        }
+
+        public List<DisplayBroadcastStation> GetBroadcastStations()
+        {
+            return _InReadUncommitedTransaction(
+                context => (from s in context.stations
+                    select new DisplayBroadcastStation
+                    {
+                        Code = s.station_code,
+                        Affiliation = s.affiliation,
+                        CallLetters = s.station_call_letters,
+                        LegacyCallLetters = s.legacy_call_letters,
+                        OriginMarket = s.market.geography_name,
+                        MarketCode = s.market_code,
+                        ModifiedDate = s.modified_date
+                    }).ToList());
         }
 
 

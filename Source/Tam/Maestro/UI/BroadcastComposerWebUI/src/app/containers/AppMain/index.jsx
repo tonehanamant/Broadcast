@@ -9,12 +9,12 @@ import AppFooter from 'Components/footer/AppFooter';
 import SectionPostPrePosting from 'Containers/SectionPostPrePosting';
 import SectionPost from 'Containers/SectionPost';
 import SectionPlanning from 'Containers/SectionPlanning';
+import SectionTracker from 'Containers/SectionTracker';
 // import SectionRates from 'Containers/SectionRates';
 import Toast from 'Components/shared/Toast';
 import ErrorModal from 'Components/shared/ErrorModal';
 import ConfirmModal from 'Components/shared/ConfirmModal';
 import Overlay from 'Components/shared/Overlay';
-import PostScrubbingModal from 'Components/post/PostScrubbingModal';
 
 import styles from './index.style.scss';
 
@@ -24,7 +24,6 @@ export const AppMain = ({ match: { path } }) => (
     <Toast />
     <ErrorModal />
     <ConfirmModal />
-    <PostScrubbingModal />
     <AppHeader />
     <Overlay type="loading" />
     <Overlay type="processing" />
@@ -33,6 +32,7 @@ export const AppMain = ({ match: { path } }) => (
       <Route path={`${path}/post`} component={SectionPost} />
       <Route path={`${path}/post-pre-posting`} component={SectionPostPrePosting} />
       <Route path={`${path}/planning`} component={SectionPlanning} />
+      <Route path={`${path}/tracker`} component={SectionTracker} />
     </Switch>
     <AppFooter />
   </div>

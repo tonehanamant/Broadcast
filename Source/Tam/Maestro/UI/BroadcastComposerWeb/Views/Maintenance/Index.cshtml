@@ -54,13 +54,29 @@
     {
         <input type="submit" value="test email" id="test_email" />
     }
+    <br/>
+        <div>
+            @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
+            {
+                <input type="submit" value="Clear System Param Cache" id="txtClearCache" />
+            }
 
-    @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
+            @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+            {
+                <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
+            }
+        </div>
+<div>
+    			
+    <br />
+    <br />
+    @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
     {
-        <input type="submit" value="Clear Param Cache" id="txtClearCache" />
+        <input type="submit" value="Test FTP" id="txtTestFtpAccess" />
     }
 
-    <div>
-    </div>
+</div>
+
+
 </body>
 </html>

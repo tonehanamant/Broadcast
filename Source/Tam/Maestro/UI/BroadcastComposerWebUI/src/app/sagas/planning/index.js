@@ -2,8 +2,11 @@
 // import { delay } from 'redux-saga';
 import { takeEvery, put, select } from 'redux-saga/effects';
 // import { push } from 'react-router-redux';
+import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
+import { deployError } from 'Ducks/app/index';
+import { receiveFilteredPlanning } from 'Ducks/planning/index';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
 import api from '../api';
@@ -77,6 +80,40 @@ export function* requestProposalInitialData() {
     }
   }
 }
+/* ////////////////////////////////// */
+/* Adjust PROPOSALS Data return */
+/* ////////////////////////////////// */
+export function adjustProposals(proposals) {
+  const adjustProposals = proposals.map((item) => {
+    const proposal = item;
+    proposal.displayId = String(proposal.Id);
+    proposal.displayAdvertiser = proposal.Advertiser.Display;
+    proposal.displayLastModified = moment(proposal.LastModified).format('MM/DD/YYYY');
+    // handle empty dates
+    const start = proposal.FlightStartDate ? moment(proposal.FlightStartDate).format('MM/DD/YYYY') : '';
+    const end = proposal.FlightEndDate ? moment(proposal.FlightEndDate).format('MM/DD/YYYY') : '';
+    proposal.displayFlights = `${start} - ${end}`;
+    switch (proposal.Status) {
+      case 1:
+        proposal.displayStatus = 'Proposed';
+        break;
+      case 2:
+        proposal.displayStatus = 'Agency on Hold';
+        break;
+      case 3:
+        proposal.displayStatus = 'Contracted';
+        break;
+      case 4:
+        proposal.displayStatus = 'Previously Contracted';
+        break;
+      default:
+        proposal.displayStatus = 'Undefined';
+        break;
+    }
+    return proposal;
+  });
+  return adjustProposals;
+}
 
 /* ////////////////////////////////// */
 /* REQUEST PROPOSALS */
@@ -120,6 +157,8 @@ export function* requestProposals() {
       });
       throw new Error();
     }
+    // adjust the data for grid handling
+    data.Data = yield adjustProposals(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSALS,
       data,
@@ -142,6 +181,26 @@ export function* requestProposals() {
           message: e.message,
         },
       });
+    }
+  }
+}
+
+/* ////////////////////////////////// */
+/* PLANNING FILTERED */
+/* ////////////////////////////////// */
+export function* getPlanningFiltered({ payload: query }) {
+  const planningUnfiltered = yield select(state => state.planning.filteredPlanningProposals);
+  // Removing date search like original
+  // const keys = ['displayId', 'ProposalName', 'displayAdvertiser', 'displayStatus', 'displayFlights', 'Owner', 'displayLastModified'];
+  const keys = ['displayId', 'ProposalName', 'displayAdvertiser', 'displayStatus', 'Owner'];
+  const searcher = new FuzzySearch(planningUnfiltered, keys, { caseSensitive: false });
+  const planningFiltered = () => searcher.search(query);
+  try {
+    const filtered = yield planningFiltered();
+    yield put(receiveFilteredPlanning(filtered));
+  } catch (e) {
+    if (e.message) {
+      yield put(deployError({ message: e.message }));
     }
   }
 }
@@ -736,7 +795,7 @@ export function* saveProposalAsVersion({ payload: params }) {
           closeButtonBsStyle: 'success',
           actionButtonText: 'Exit',
           actionButtonBsStyle: 'default',
-          action: () => window.location.assign('/broadcast/planning'),
+          action: () => window.location.assign('/broadcastreact/planning'),
           dismiss: () => {},
         },
       },
@@ -824,7 +883,7 @@ export function* deleteProposalById({ payload: id }) {
     //  yield call(delay, 2000);
     // yield put(push('/broadcast/planning'));
     setTimeout(() => {
-      window.location = '/broadcast/planning';
+      window.location = '/broadcastreact/planning';
     }, 1000);
   } catch (e) {
     if (e.response) {
@@ -987,21 +1046,21 @@ export function* modelNewProposalDetail({ payload: params }) {
     const Detail = { ...payload };
     let warnings = [];
     if (Detail) {
-      if (Detail.DefaultPostingBooks &&
-          Detail.DefaultPostingBooks.DefautlHutBook &&
-          Detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
-          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+      if (Detail.DefaultProjectionBooks &&
+          Detail.DefaultProjectionBooks.DefaultHutBook &&
+          Detail.DefaultProjectionBooks.DefaultHutBook.HasWarning) {
+          warnings.push(Detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
           warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-          payload.DefaultPostingBooksDefautlHutBook.HasWarning = false; // Unset to stop repeat unless BE explicit changes
+          payload.DefaultProjectionBooks.DefaultHutBook.HasWarning = false; // Unset to stop repeat unless BE explicit changes
       }
-      if (Detail.DefaultPostingBooks &&
-          Detail.DefaultPostingBooks.DefaultShareBook &&
-          Detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
-          warnings.push(Detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+      if (Detail.DefaultProjectionBooks &&
+          Detail.DefaultProjectionBooks.DefaultShareBook &&
+          Detail.DefaultProjectionBooks.DefaultShareBook.HasWarning) {
+          warnings.push(Detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
           warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-          payload.DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+          payload.DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
       }
     }
     yield put({
@@ -1100,21 +1159,21 @@ export function* updateProposal() { // { payload: params }
     let warnings = [];
     if (Details) {
       Details.forEach((detail, index) => {
-        if (detail.DefaultPostingBooks &&
-            detail.DefaultPostingBooks.DefautlHutBook &&
-            detail.DefaultPostingBooksDefautlHutBook.HasWarning) {
-            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        if (detail.DefaultProjectionBooks &&
+            detail.DefaultProjectionBooks.DefaultHutBook &&
+            detail.DefaultProjectionBooks.DefaultHutBook.HasWarning) {
+            warnings.push(detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
             warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+            data.Data.Details[index].DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
         }
-        if (detail.DefaultPostingBooks &&
-            detail.DefaultPostingBooks.DefaultShareBook &&
-            detail.DefaultPostingBooks.DefaultShareBook.HasWarning) {
-            warnings.push(detail.DefaultPostingBooks.DefaultShareBook.WarningMessage);
+        if (detail.DefaultProjectionBooks &&
+            detail.DefaultProjectionBooks.DefaultShareBook &&
+            detail.DefaultProjectionBooks.DefaultShareBook.HasWarning) {
+            warnings.push(detail.DefaultProjectionBooks.DefaultShareBook.WarningMessage);
             warnings = Array.from(new Set(warnings)); // ES6 removes duplicates
 
-            data.Data.Details[index].DefaultPostingBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
+            data.Data.Details[index].DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
         }
       });
     }
@@ -1258,6 +1317,54 @@ export function* requestPrograms({ payload: params }) {
 	}
 }
 
+export function* requestShowTypes({ payload: query }) {
+	const { getShowTypes } = api.planning;
+
+	try {
+    yield put({
+      type: ACTIONS.TOGGLE_SHOWTYPES_LOADING,
+      payload: {},
+		});
+
+		const response = yield getShowTypes(query);
+		const { data } = response;
+		yield put({
+      type: ACTIONS.RECEIVE_SHOWTYPES,
+      payload: data.Data || [],
+    });
+
+    yield put({
+      type: ACTIONS.TOGGLE_SHOWTYPES_LOADING,
+      payload: {},
+		});
+	} catch (e) {
+		if (e.response) {
+      yield put({
+        type: ACTIONS.TOGGLE_SHOWTYPES_LOADING,
+        payload: {},
+      });
+
+			yield put({
+				type: ACTIONS.DEPLOY_ERROR,
+				error: {
+					error: 'No show types data returned.',
+					message: 'The server encountered an error processing the request (show types). Please try again or contact your administrator to review error logs.',
+					exception: e.response.data.ExceptionMessage || '',
+				},
+			});
+		}
+
+		if (!e.response && e.message) {
+			yield put({
+					type: ACTIONS.DEPLOY_ERROR,
+					error: {
+					message: e.message,
+				},
+			});
+		}
+	}
+}
+
 export function* deleteProposalDetail({ payload: params }) {
   yield put({
     type: ACTIONS.PROPOSAL_DETAIL_DELETED,
@@ -1273,6 +1380,11 @@ export function* deleteProposalDetail({ payload: params }) {
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
+
+export function* watchRequestPlanningFiltered() {
+  yield takeEvery(ACTIONS.FILTERED_PLANNING_PROPOSALS.request, getPlanningFiltered);
+}
+
 export function* watchRequestProposalInitialData() {
   yield takeEvery(ACTIONS.REQUEST_PROPOSAL_INITIALDATA, requestProposalInitialData);
 }
@@ -1331,6 +1443,10 @@ export function* watchRequestGenres() {
 
 export function* watchRequestPrograms() {
 	yield takeEvery(ACTIONS.REQUEST_PROGRAMS, requestPrograms);
+}
+
+export function* watchRequestShowTypes() {
+	yield takeEvery(ACTIONS.REQUEST_SHOWTYPES, requestShowTypes);
 }
 
 export function* watchDeleteProposalDetail() {

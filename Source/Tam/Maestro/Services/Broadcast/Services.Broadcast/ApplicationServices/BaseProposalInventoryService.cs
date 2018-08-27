@@ -34,13 +34,13 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<StationImpressions> impressions = null;
 
-            if (proposalDetailInventory.SharePostingBookId.HasValue && proposalDetailInventory.HutPostingBookId.HasValue)
+            if (proposalDetailInventory.ShareProjectionBookId.HasValue && proposalDetailInventory.HutProjectionBookId.HasValue)
             {
-                impressions = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart((short)proposalDetailInventory.HutPostingBookId.Value, (short)proposalDetailInventory.SharePostingBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
+                impressions = BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart((short)proposalDetailInventory.HutProjectionBookId.Value, (short)proposalDetailInventory.ShareProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
             }
-            else if (proposalDetailInventory.SinglePostingBookId.HasValue)
+            else if (proposalDetailInventory.SingleProjectionBookId.HasValue)
             {
-                impressions = new List<StationImpressions>(BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart(proposalDetailInventory.SinglePostingBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions));
+                impressions = new List<StationImpressions>(BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>().GetImpressionsDaypart(proposalDetailInventory.SingleProjectionBookId.Value, ratingAudiences, impressionRequests, proposalDetailInventory.PlaybackType, BroadcastComposerWebSystemParameter.UseDayByDayImpressions));
             }
 
             if (impressions != null)
@@ -58,10 +58,10 @@ namespace Services.Broadcast.ApplicationServices
         internal static int GetRatingAdjustmentMonth(ProposalDetailInventoryBase proposalDetailInventory)
         {
             int ratingAdjustmentMonth;
-            if (proposalDetailInventory.HutPostingBookId.HasValue && proposalDetailInventory.SharePostingBookId.HasValue)
-                ratingAdjustmentMonth = proposalDetailInventory.HutPostingBookId.Value;
+            if (proposalDetailInventory.HutProjectionBookId.HasValue && proposalDetailInventory.ShareProjectionBookId.HasValue)
+                ratingAdjustmentMonth = proposalDetailInventory.HutProjectionBookId.Value;
             else
-                ratingAdjustmentMonth = proposalDetailInventory.SinglePostingBookId.Value;
+                ratingAdjustmentMonth = proposalDetailInventory.SingleProjectionBookId.Value;
             return ratingAdjustmentMonth;
         }
 

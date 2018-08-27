@@ -1,0 +1,29 @@
+﻿{
+  "ValidationResults": [
+    {
+      "ErrorMessage": "is invalid time.  Please use format \"HHMMA|P\".",
+      "InvalidField": "Time",
+      "InvalidLine": 0
+    },
+    {
+      "ErrorMessage": "is invalid date or time.",
+      "InvalidField": "LeadInEndTime",
+      "InvalidLine": 0
+    },
+    {
+      "ErrorMessage": "is invalid date or time.",
+      "InvalidField": "LeadOutStartTime",
+      "InvalidLine": 0
+    },
+    {
+      "ErrorMessage": "is invalid time.  Please use format \"HHMMA|P\".",
+      "InvalidField": "Time",
+      "InvalidLine": 2
+    },
+    {
+      "ErrorMessage": "is invalid time.  Please use format \"HHMMA|P\".",
+      "InvalidField": "Time",
+      "InvalidLine": 4
+    }
+  ]
+}

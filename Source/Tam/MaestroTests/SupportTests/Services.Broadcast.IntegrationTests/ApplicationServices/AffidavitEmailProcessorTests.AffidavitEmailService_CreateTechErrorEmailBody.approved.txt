@@ -1,0 +1,7 @@
+﻿File FileName could not be properly processed.  Including technical information to help figure out the issue.
+
+File located in .\Files\FileName
+
+Technical Information:
+
+An error occured, this message should follow known email format standards.

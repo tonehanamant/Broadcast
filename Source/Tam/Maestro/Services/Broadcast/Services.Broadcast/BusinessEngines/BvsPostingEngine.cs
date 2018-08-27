@@ -105,7 +105,7 @@ namespace Services.Broadcast.BusinessEngines
                 var stationDetail =  new StationDetailPointInTime
                 {
                     LegacyCallLetters= bvsPostDetail.Station,
-                    Id = bvsPostDetail.BvsDetailId,
+                    Id = bvsPostDetail.BvsFileDetailId,
                     DayOfWeek = bvsPostDetail.NsiDate.DayOfWeek,
                     TimeAired = bvsPostDetail.TimeAired
                 };
@@ -140,14 +140,14 @@ namespace Services.Broadcast.BusinessEngines
                     //var delivery = aggregate.GetDelivery(audience.Value, bvsDetail.TimeAired, bvsDetail.Station, IsWeekEnd(bvsDetail.NsiDate) ? 1 : 0);
                     List<StationImpressionsWithAudience> detailRatingList;
                     double delivery = 0;
-                    if (ratingsDict.TryGetValue(bvsDetail.BvsDetailId, out detailRatingList))
+                    if (ratingsDict.TryGetValue(bvsDetail.BvsFileDetailId, out detailRatingList))
                     {
                         delivery = detailRatingList
                                             .Where(r => customAudienceMappings[audience.Value]
                                                             .Contains(r.audience_id))
                                             .Sum(r => r.impressions);
                     }
-                    yield return new BvsPostDetailAudience(bvsDetail.BvsDetailId, audience.Key, audience.Value, delivery);
+                    yield return new BvsPostDetailAudience(bvsDetail.BvsFileDetailId, audience.Key, audience.Value, delivery);
                 }
             }
         }

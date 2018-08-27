@@ -21,6 +21,7 @@
     "no-console": 0,
     "no-alert": 0,
     "react/sort-comp": 0,
-    "no-shadow": 0
+    "no-shadow": 0,
+    "import/prefer-default-export": 0
   }
 }

@@ -1,0 +1,17 @@
+﻿[
+  {
+    "CreatedBy": "PostLogPreprocessing_User",
+    "ErrorMessages": [
+      "Required field IDENTIFIER 1 is null or empty in row 1",
+      "Required field IDENTIFIER 1 is null or empty in row 2",
+      "Required field DATE AIRED is null or empty in row 2",
+      "Required field AIR START TIME is null or empty in row 2",
+      "Required field ISCI/AD-ID is null or empty in row 2"
+    ],
+    "FileHash": "19-BA-76-D5-98-ED-62-BF-23-0A-01-CC-A1-C6-D4-9F-32-17-A6-84",
+    "FileName": "C786.Sigma.MissingData.csv",
+    "FilePath": ".\\Files\\C786.Sigma.MissingData.csv",
+    "Source": 1,
+    "Status": 2
+  }
+]

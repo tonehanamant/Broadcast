@@ -14,5 +14,6 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public string Market { get; set; }
         public string Affiliate { get; set; }
+        public string UnlinkedReason { get; set; }
     }
 }

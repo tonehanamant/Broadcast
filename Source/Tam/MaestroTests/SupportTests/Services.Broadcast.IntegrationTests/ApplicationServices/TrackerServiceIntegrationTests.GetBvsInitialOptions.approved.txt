@@ -143,6 +143,10 @@
       "Id": 56
     },
     {
+      "Display": "Women 25-49",
+      "Id": 57
+    },
+    {
       "Display": "Women 25-54",
       "Id": 58
     },
@@ -161,6 +165,10 @@
     {
       "Display": "Women 50+",
       "Id": 62
+    },
+    {
+      "Display": "Adults 18-54",
+      "Id": 247
     },
     {
       "Display": "Adults 25-64",
@@ -1127,6 +1135,26 @@
     {
       "Display": "1116",
       "Id": 422
+    },
+    {
+      "Display": "0217",
+      "Id": 425
+    },
+    {
+      "Display": "0517",
+      "Id": 428
+    },
+    {
+      "Display": "0717",
+      "Id": 430
+    },
+    {
+      "Display": "1117",
+      "Id": 434
+    },
+    {
+      "Display": "0218",
+      "Id": 437
     }
   ],
   "Quarters": [

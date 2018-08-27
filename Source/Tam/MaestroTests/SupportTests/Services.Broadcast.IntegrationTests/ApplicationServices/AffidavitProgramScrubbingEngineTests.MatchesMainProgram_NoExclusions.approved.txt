@@ -1,13 +1,17 @@
 ﻿{
+  "AffidavitClientScrubAudiences": [],
   "AffidavitFileDetailId": 0,
   "Comment": null,
+  "EffectiveClientIsci": null,
   "EffectiveGenre": null,
+  "EffectiveIsci": null,
   "EffectiveProgramName": null,
   "EffectiveShowType": null,
   "Id": 0,
   "LeadIn": false,
   "MatchDate": false,
   "MatchGenre": true,
+  "MatchIsci": false,
   "MatchIsciDays": false,
   "MatchMarket": false,
   "MatchProgram": true,
@@ -16,6 +20,9 @@
   "MatchTime": false,
   "ModifiedBy": null,
   "ModifiedDate": null,
+  "PostingBookId": null,
+  "PostingPlaybackType": null,
+  "ProposalVersionDetailId": 0,
   "ProposalVersionDetailQuarterWeekId": 0,
   "Status": 0
 }

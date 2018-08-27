@@ -61,7 +61,7 @@
       }
     }
 
-    .react-grid-action-container {
+    /* .react-grid-action-container {
       width: 0px !important;
       // border-left: 1px solid #c5c5c5 !important;
 
@@ -74,7 +74,7 @@
           right: -11px !important;
         }
       }
-    }
+    } */
 
     .react-grid-sort-handle {
       cursor: pointer;
@@ -155,7 +155,7 @@
 
   }
 
-  .react-grid-action-container {
+  /* .react-grid-action-container {
     // border-left: 1px solid #c5c5c5 !important;
     border-bottom: none !important;
 
@@ -168,17 +168,17 @@
         // right: -11px !important;
       }
     }
-  }
+  } */
 
-  .react-grid-action-menu-selected {
+  /* .react-grid-action-menu-selected {
     .react-grid-action-icon {
       &:before {
         background-color: transparent !important;
       }
     }
-  }
+  } */
 
-  .react-grid-action-menu-container {
+  /* .react-grid-action-menu-container {
     top: auto !important;
     box-shadow: 1px 2px 10px rgba(0,0,0,0.20) !important;
     border: 2px solid #c5c5c5 !important;
@@ -189,20 +189,14 @@
         background-color: rgba(214,231,255,.5) !important;
       }
     }
-  }
+  } */
 
-  .react-grid-top {
+  /* .react-grid-top {
     .react-grid-action-menu-container {
       bottom: -14px !important;
       // right: -6px !important;
     }
-  }
-
-  .react-grid-bottom {
-    .react-grid-action-menu-container {
-      // right: -6px !important;
-    }
-  }
+  } */
 
   .react-grid-pager-toolbar {
     box-shadow: 0px -1px 4px #dddddd;
@@ -222,4 +216,3 @@
   }
 
 }
-

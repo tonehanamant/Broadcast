@@ -6,7 +6,7 @@ import { Actions } from 'react-redux-grid';
 
 import { Button, Modal } from 'react-bootstrap';
 import { toggleModal, setOverlayLoading } from 'Ducks/app';
-// import { getPostScrubbingDetail, clearPostScrubbingDetail } from 'Ducks/post'; //  ?
+import { getPost, getPostClientScrubbing } from 'Ducks/post';
 
 import PostScrubbingHeader from './PostScrubbingHeader';
 import PostScrubbingDetail from './PostScrubbingDetail';
@@ -15,11 +15,11 @@ const { SelectionActions, GridActions } = Actions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-/* eslint-disable */
-const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [] }, grid, dataSource }) => ({
+const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [], hasActiveScrubbingFilters }, grid, dataSource }) => ({
 	modal,
   proposalHeader,
   scrubbingFiltersList,
+  hasActiveScrubbingFilters,
 	grid,
   dataSource,
 });
@@ -27,7 +27,9 @@ const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post:
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		// clearPostScrubbingDetail,
-		// getPostScrubbingDetail,
+    // getPostScrubbingDetail,
+    getPostClientScrubbing,
+    getPost,
 		toggleModal,
 		selectRow,
 		deselectAll,
@@ -41,7 +43,8 @@ export class PostScrubbingModal extends Component {
 	constructor(props) {
 		super(props);
 		this.close = this.close.bind(this);
-		this.dismiss = this.dismiss.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.refreshPost = this.refreshPost.bind(this);
 	}
 
 	close() {
@@ -57,46 +60,53 @@ export class PostScrubbingModal extends Component {
 	dismiss() {
 		this.props.modal.properties.dismiss();
 		this.close();
-	}
+  }
+
+  refreshPost() {
+    this.props.getPost();
+  }
 
 	render() {
 	// const { getPostScrubbingDetail } = this.props;
-		const { proposalHeader, scrubbingFiltersList } = this.props;
+		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing, hasActiveScrubbingFilters, toggleModal } = this.props;
 		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
 		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
 		const { grid, dataSource } = this.props;
 		const { selectRow, deselectAll, doLocalSort, setOverlayLoading } = this.props;
 
 		return (
-			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal" enforceFocus={false}>
+			<Modal ref={this.setWrapperRef} show={this.props.modal.active} dialogClassName="post-scrubbing-modal" enforceFocus={false} onExited={this.refreshPost}>
 					<Modal.Header>
             <Modal.Title style={{ display: 'inline-block' }}>Scrubbing Screen</Modal.Title>
 						<Button className="close" bsStyle="link" onClick={this.close} style={{ display: 'inline-block', float: 'right' }}>
 							<span>&times;</span>
 						</Button>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={{ overflowX: 'auto', paddingBottom: 0 }}>
 						<PostScrubbingHeader
 							advertiser={Advertiser}
 							details={Details}
 							guaranteedDemo={GuaranteedDemo}
 							Id={Id}
 							market={Markets}
-							marketId={MarketGroupId}
+							marketGroupId={MarketGroupId}
 							name={Name}
 							notes={Notes}
 							secondaryDemo={SecondaryDemos}
-							// getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
 						<PostScrubbingDetail
               activeScrubbingData={activeScrubbingData}
               scrubbingFiltersList={scrubbingFiltersList}
+              getPostClientScrubbing={getPostClientScrubbing}
+              hasActiveScrubbingFilters={hasActiveScrubbingFilters}
+              details={Details}
 							grid={grid}
 							dataSource={dataSource}
 							selectRow={selectRow}
 							deselectAll={deselectAll}
 							doLocalSort={doLocalSort}
-							setOverlayLoading={setOverlayLoading}
+              setOverlayLoading={setOverlayLoading}
+              toggleModal={toggleModal}
 						/>
 					</Modal.Body>
 					<Modal.Footer>
@@ -125,13 +135,16 @@ PostScrubbingModal.defaultProps = {
 
 PostScrubbingModal.propTypes = {
 	modal: PropTypes.object.isRequired,
-	toggleModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  getPostClientScrubbing: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
 	grid: PropTypes.object.isRequired,
 	dataSource: PropTypes.object.isRequired,
 	proposalHeader: PropTypes.object.isRequired,
   scrubbingFiltersList: PropTypes.array.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,
+  hasActiveScrubbingFilters: PropTypes.bool.isRequired,
   deselectAll: PropTypes.func.isRequired,
   doLocalSort: PropTypes.func.isRequired,
 };

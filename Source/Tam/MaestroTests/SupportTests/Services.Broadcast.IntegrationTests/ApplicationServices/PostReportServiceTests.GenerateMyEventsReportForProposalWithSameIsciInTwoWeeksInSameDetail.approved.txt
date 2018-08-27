@@ -1,0 +1,30 @@
+﻿[
+  {
+    "Lines": [
+      {
+        "ReportableName": "samiscidiffweek",
+        "Advertiser": "Test Advertiser 9",
+        "DaypartCode": "EN",
+        "SpotLength": 15,
+        "ScheduleStartDate": "2018-12-31T00:00:00",
+        "ScheduleEndDate": "2019-01-06T00:00:00",
+        "StationCallLetters": "WUNC",
+        "LineupPOT": "O",
+        "LineupDOW": "M------",
+        "OffAir": "N",
+        "LineupStartDate": "2018-12-31T00:00:00",
+        "LineupNumberOfWeeks": 1,
+        "LineupStartTime": "0001-01-01T06:15:00",
+        "Duration": 3,
+        "MOP": 1,
+        "CVT": "SUN",
+        "LineupMultiBarter": 1,
+        "LineupCashOnly": "N",
+        "LineupAiringNumber": 1,
+        "AdvertiserId": 37674,
+        "SpotLengthId": 3,
+        "AirDate": "2018-12-31T06:15:00"
+      }
+    ]
+  }
+]
