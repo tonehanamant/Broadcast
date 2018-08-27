@@ -14,6 +14,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.Entities;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -21,14 +22,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class AffidavitEmailProcessorTests
     {
         private readonly IAffidavitEmailProcessorService _AffidavitEmailProcessorService;
+        private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IAffidavitRepository _AffidavitRepository;
         private const string _UserName = "Test User";
-
-        private readonly IBroadcastAudiencesCache _AudiencesCache;
-
+        
         public AffidavitEmailProcessorTests()
         {
             _AffidavitEmailProcessorService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitEmailProcessorService>();
+            _EmailHelper = IntegrationTestApplicationServiceFactory.GetApplicationService<IFileTransferEmailHelper>();
             _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
         private void VerifyAffidavit(int affidavitId)
@@ -129,7 +130,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var body = _AffidavitEmailProcessorService.CreateInvalidDataFileEmailBody(validationError, "\\FilePath");
+            var body = _EmailHelper.CreateInvalidDataFileEmailBody(validationError.ErrorMessages, "\\FilePath", validationError.FileName);
             Approvals.Verify(body);
         }        
     }
