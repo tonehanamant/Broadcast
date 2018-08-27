@@ -163,34 +163,30 @@ namespace Services.Broadcast.Converters.RateImport
                     var spotLengthId = SpotLengths[spotLength];
                     var periods = availLine.Periods.GetAllPeriods();
                 
-                    if (periods.Count() > 0)
+                    //create a manifest for each period
+                    foreach (var availLinePeriod in periods)
                     {
+                        var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
 
-                        //create a manifest for each period
-                        foreach (var availLinePeriod in periods)
+                        var manifestAudiences = _GetManifestAudienceListForAvailLine(
+                            proposal,
+                            audienceMap,
+                            _ToDemoValueDict(availLinePeriod.DemoValues));
+
+                        var periodManifest = new StationInventoryManifest()
                         {
-                            var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
+                            Station = station,
+                            DaypartCode = availLine.DaypartName,
+                            SpotsPerWeek = null,
+                            SpotLengthId = spotLengthId,
+                            ManifestDayparts = _GetDaypartsListForAvailLineWithDetailedPeriods(availLine),
+                            ManifestAudiencesReferences = manifestAudiences,
+                            ManifestRates = manifestRates,
+                            EffectiveDate = availLinePeriod.startDate,
+                            EndDate = availLinePeriod.endDate
+                        };
 
-                            var manifestAudiences = _GetManifestAudienceListForAvailLine(
-                                proposal,
-                                audienceMap,
-                                _ToDemoValueDict(availLinePeriod.DemoValues));
-
-                            var periodManifest = new StationInventoryManifest()
-                            {
-                                Station = station,
-                                DaypartCode = availLine.DaypartName,
-                                SpotsPerWeek = null,
-                                SpotLengthId = spotLengthId,
-                                ManifestDayparts = _GetDaypartsListForAvailLineWithDetailedPeriods(availLine),
-                                ManifestAudiencesReferences = manifestAudiences,
-                                ManifestRates = manifestRates,
-                                EffectiveDate = availLinePeriod.startDate,
-                                EndDate = availLinePeriod.endDate
-                            };
-
-                            manifests.Add(periodManifest);
-                        }
+                        manifests.Add(periodManifest);
                     }
                 }
                 catch (Exception e)
