@@ -52,10 +52,6 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
--- BEGIN BCOP-3509
-ALTER TABLE [dbo].[station_inventory_manifest_dayparts]
-ALTER COLUMN [program_name] varchar(255) NULL
--- END BCOP-3509
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
@@ -63,7 +59,7 @@ ALTER COLUMN [program_name] varchar(255) NULL
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.09.1' -- Current release version
+SET parameter_value = '18.10.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -74,8 +70,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.08.1' -- Previous release version
-		OR [version] = '18.09.1') -- Current release version
+		WHERE [version] = '18.09.1' -- Previous release version
+		OR [version] = '18.10.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION
