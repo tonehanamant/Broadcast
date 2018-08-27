@@ -1,0 +1,192 @@
+﻿[
+  {
+    "AirtimePreviews": [
+      "M-F 7AM-8AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 28800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 25200,
+        "sun": false,
+        "Text": "M-F 7AM-8AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": null,
+    "ProgramNames": [
+      "Good Morning Cincinnati at 7a"
+    ],
+    "Rate15": 52.0000,
+    "Rate30": 80.0000,
+    "RateSource": null,
+    "Rating": 1.7,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 6826
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 8AM-9AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 32400,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 28800,
+        "sun": false,
+        "Text": "M-F 8AM-9AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-25T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-01-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-01-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-01-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-02-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-02-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-03-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-03-19T00:00:00"
+      }
+    ],
+    "HouseHoldImpressions": null,
+    "ProgramNames": [
+      "Good Morning Cincinnati at 8a"
+    ],
+    "Rate15": 52.0000,
+    "Rate30": 80.0000,
+    "RateSource": null,
+    "Rating": 1.9,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 6826
+  }
+]

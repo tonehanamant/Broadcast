@@ -56,6 +56,10 @@ INSERT INTO #previous_version
 IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_genre' AND object_id = OBJECT_ID('affidavit_client_scrubs'))
 BEGIN
 	ALTER TABLE dbo.affidavit_client_scrubs ALTER COLUMN effective_genre VARCHAR(255) NULL
+-- BEGIN BCOP-3509
+ALTER TABLE [dbo].[station_inventory_manifest_dayparts]
+ALTER COLUMN [program_name] varchar(255) NULL
+-- END BCOP-3509
 END
 GO
 /*************************************** END BCOP-3297 ***************************************************************/
@@ -585,6 +589,14 @@ BEGIN
 	WHERE markets = 255
 END
 /*************************************** END BCOP-3324 ***************************************************************/
+
+
+-- BEGIN BCOP-3509
+ALTER TABLE [dbo].[station_inventory_manifest_dayparts]
+ALTER COLUMN [program_name] varchar(255) NULL
+-- END BCOP-3509
+
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

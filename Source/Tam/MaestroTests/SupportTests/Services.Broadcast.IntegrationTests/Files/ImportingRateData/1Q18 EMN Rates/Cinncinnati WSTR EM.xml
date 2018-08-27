@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>IDAMCWDD</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="10587321" version="1" sendDateTime="2017-11-17T22:19:05" weekStartDay="Mo" startDate="2018-01-01" endDate="2018-03-25">
+		<Seller companyName="MILLENNIUM SALES &amp; MARKETING">
+			<Salesperson name="LAURA RAYMOND"/>
+		</Seller>
+		<Buyer buyingCompanyName="N/A"/>
+		<Advertiser name="Cadent Network">
+			<Product name="EKRC WSTR 1Q18 Cadent"/>
+		</Advertiser>
+		<Name>EKRC WSTR 1Q18 Cadent-EKRC</Name>
+		<SellerReference>10587321</SellerReference>
+		<Outlets>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT0"/>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT1"/>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT2"/>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT3"/>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT4"/>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT5"/>
+			<TelevisionStation callLetters="WSTR" parentPlus="N" outletId="OUT6"/>
+		</Outlets>
+		<AvailList startDate="2018-01-01" endDate="2018-03-25" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - Cincinnati Feb18 Proj. (Feb17 HUT, May17 SHR) DMA Rentrak Live Only</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+				<OutletReference outletFromProposalRef="OUT1" outletForListId="OUL1"/>
+				<OutletReference outletFromProposalRef="OUT2" outletForListId="OUL2"/>
+				<OutletReference outletFromProposalRef="OUT3" outletForListId="OUL3"/>
+				<OutletReference outletFromProposalRef="OUT4" outletForListId="OUL4"/>
+				<OutletReference outletFromProposalRef="OUT5" outletForListId="OUL5"/>
+				<OutletReference outletFromProposalRef="OUT6" outletForListId="OUL6"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>08:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Good Morning Cincinnati at 7a</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>Good Morning Cincinnati at 7a</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>80.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.7</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>08:00</StartTime>
+						<EndTime>09:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Good Morning Cincinnati at 8a</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>Good Morning Cincinnati at 8a</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>80.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.9</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>
