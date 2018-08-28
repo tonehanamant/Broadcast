@@ -38,6 +38,14 @@ class PricingGuide extends Component {
     this.saveInventory = this.saveInventory.bind(this);
     this.cancelInventory = this.cancelInventory.bind(this);
 
+    this.saveProprietaryPricingDetail = this.saveProprietaryPricingDetail.bind(this);
+    this.setProprietaryPricing = this.setProprietaryPricing.bind(this);
+    this.toggleProprietaryEditing = this.toggleProprietaryEditing.bind(this);
+    this.saveProprietary = this.saveProprietary.bind(this);
+    this.cancelProprietary = this.cancelProprietary.bind(this);
+
+    this.onModalShow = this.onModalShow.bind(this);
+
     this.state = {
       // goals/adjustments - editing version separate state to cancel/save individually
       impression: '',
@@ -51,6 +59,20 @@ class PricingGuide extends Component {
       editingMargin: '',
       editingRateInflation: '',
       editingImpressionInflation: '',
+      // proprietary based on array - break down here (uses hard coded values for CPM for now)
+      isProprietaryEditing: false,
+      propCpmCNN: 8.00,
+      propCpmSinclair: 10.00,
+      propCpmTTNW: 12.00,
+      propCpmTVB: 14.00,
+      propImpressionsCNN: 0,
+      propImpressionsSinclair: 0,
+      propImpressionsTTNW: 0,
+      propImpressionsTVB: 0,
+      editingPropImpressionsCNN: 0,
+      editingPropImpressionsSinclair: 0,
+      editingPropImpressionsTTNW: 0,
+      editingPropImpressionsTVB: 0,
     };
   }
 
@@ -81,6 +103,14 @@ class PricingGuide extends Component {
     }
   }
 
+  onModalShow() {
+    // console.log('MODAL SHOW>>>>>>>>>', this.props.detail);
+    this.setProprietaryPricing(this.props.detail);
+    // process proprietary pricing just once on open
+  }
+
+  // INVENTORY Goals and Adjustments
+
   toggleInventoryEditing() {
     this.setState({ isInventoryEditing: !this.state.isInventoryEditing });
   }
@@ -107,6 +137,69 @@ class PricingGuide extends Component {
     this.toggleInventoryEditing();
   }
 
+
+  // PROPRIETARY
+
+  // set states from detail ProprietaryPricing array - NOT using CPM from BE as hard coded
+  // todo - possible compare with initial data id/objects?
+  // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
+  setProprietaryPricing(detail) {
+    // console.log('set pricing', detail.ProprietaryPricing, this);
+    if (detail.ProprietaryPricing && detail.ProprietaryPricing.length) {
+      const toUpdate = {};
+      detail.ProprietaryPricing.forEach((item) => {
+        const bal = item.ImpressionsBalance;
+        if (bal) {
+          const src = item.InventorySource;
+          if (src === 3) {
+            toUpdate.propImpressionsTVB = bal;
+            toUpdate.editingPropImpressionsTVB = bal;
+          }
+          if (src === 4) {
+            toUpdate.propImpressionsTTNW = bal;
+            toUpdate.editingPropImpressionsTTNW = bal;
+          }
+          if (src === 5) {
+            toUpdate.propImpressionsCNN = bal;
+            toUpdate.editingPropImpressionsCNN = bal;
+          }
+          if (src === 6) {
+            toUpdate.propImpressionsSinclair = bal;
+            toUpdate.editingPropImpressionsSinclair = bal;
+          }
+        }
+      });
+      this.setState(toUpdate);
+      // console.log('set proprietary', toUpdate);
+    }
+  }
+
+  toggleProprietaryEditing() {
+    this.setState({ isProprietaryEditing: !this.state.isProprietaryEditing });
+  }
+
+  saveProprietary() {
+    // only dealing with Impresions Balances for now - not CPM
+    this.setState({
+      propImpressionsCNN: this.state.editingPropImpressionsCNN,
+      propImpressionsSinclair: this.state.editingPropImpressionsSinclair,
+      propImpressionsTTNW: this.state.editingPropImpressionsTTNW,
+      propImpressionsTVB: this.state.editingPropImpressionsTVB,
+     });
+    this.toggleProprietaryEditing();
+  }
+
+  cancelProprietary() {
+    // only dealing with Impresions Balances for now - not CPM
+    this.setState({
+      editingPropImpressionsCNN: this.state.propImpressionsCNN,
+      editingPropImpressionsSinclair: this.state.propImpressionsSinclair,
+      editingPropImpressionsTTNW: this.state.propImpressionsTTNW,
+      editingPropImpressionsTVB: this.state.propImpressionsTVB,
+     });
+    this.toggleProprietaryEditing();
+  }
+
   clearState() {
     this.setState({
       editingImpression: '',
@@ -120,19 +213,63 @@ class PricingGuide extends Component {
       editingImpressionInflation: '',
       impressionInflation: '',
       isInventoryEditing: false,
+      isProprietaryEditing: false,
+      // propCpmCNN: 8.00,
+      // propCpmSinclair: 10.00,
+      // propCpmTTNW: 12.00,
+      // propCpmTVB: 14.00,
+      propImpressionsCNN: 0,
+      propImpressionsSinclair: 0,
+      propImpressionsTTNW: 0,
+      propImpressionsTVB: 0,
+      editingPropImpressionsCNN: 0,
+      editingPropImpressionsSinclair: 0,
+      editingPropImpressionsTTNW: 0,
+      editingPropImpressionsTVB: 0,
     });
   }
 
   onSave() {
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;
     const { updateDetail, detail } = this.props;
-
+    this.saveProprietaryPricingDetail();
     updateDetail({ id: detail.Id, key: 'GoalImpression', value: impression });
     updateDetail({ id: detail.Id, key: 'GoalBudget', value: budget });
     updateDetail({ id: detail.Id, key: 'AdjustmentMargin', value: margin });
     updateDetail({ id: detail.Id, key: 'AdjustmentRate', value: rateInflation });
     updateDetail({ id: detail.Id, key: 'AdjustmentInflation', value: impressionInflation });
     this.onCancel();
+  }
+
+  // update detail - with proprietary pricing states (CPM set for future but is harcoded)
+  // // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
+  saveProprietaryPricingDetail() {
+    const { updateDetail, detail } = this.props;
+    const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
+    const { propImpressionsCNN, propImpressionsSinclair, propImpressionsTTNW, propImpressionsTVB } = this.state;
+    const proprietaryPricing = [
+      {
+        InventorySource: 3,
+        ImpressionsBalance: propImpressionsTVB,
+        Cpm: propCpmTVB,
+      },
+      {
+        InventorySource: 4,
+        ImpressionsBalance: propImpressionsTTNW,
+        Cpm: propCpmTTNW,
+      },
+      {
+        InventorySource: 5,
+        ImpressionsBalance: propImpressionsCNN,
+        Cpm: propCpmCNN,
+      },
+      {
+        InventorySource: 6,
+        ImpressionsBalance: propImpressionsSinclair,
+        Cpm: propCpmSinclair,
+      },
+    ];
+    updateDetail({ id: detail.Id, key: 'ProprietaryPricing', value: proprietaryPricing });
   }
 
   handleChange(fieldName, value) {
@@ -152,14 +289,24 @@ class PricingGuide extends Component {
     const { modal, detail, isReadOnly } = this.props;
     const show = isActiveDialog(detail, modal);
     // const labelStyle = { fontSize: '11px', fontWeight: 'normal', color: '#333' };
-    const isInventoryEditing = this.state.isInventoryEditing;
+    const { isInventoryEditing, isProprietaryEditing } = this.state;
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;
     const { editingImpression, editingBudget, editingMargin, editingRateInflation, editingImpressionInflation } = this.state;
+    const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
+    const { propImpressionsCNN, propImpressionsSinclair, propImpressionsTTNW, propImpressionsTVB } = this.state;
+    const { editingPropImpressionsCNN, editingPropImpressionsSinclair, editingPropImpressionsTTNW, editingPropImpressionsTVB } = this.state;
 
+    const balanceSum = editingPropImpressionsCNN + editingPropImpressionsSinclair + editingPropImpressionsTTNW + editingPropImpressionsTVB;
+    const isBalanceWarning = balanceSum > 1;
+    const CNNActive = (propImpressionsCNN > 0) ? 'tag-label active' : 'tag-label inactive';
+    const sinclairActive = (propImpressionsSinclair > 0) ? 'tag-label active' : 'tag-label inactive';
+    const TTNWActive = (propImpressionsTTNW > 0) ? 'tag-label active' : 'tag-label inactive';
+    const TVBActive = (propImpressionsTVB > 0) ? 'tag-label active' : 'tag-label inactive';
     return (
       <div>
         <Modal
           show={show}
+          onEntered={this.onModalShow}
           dialogClassName="large-wide-modal"
         >
           <Modal.Header>
@@ -176,8 +323,12 @@ class PricingGuide extends Component {
               <Modal.Title>Pricing Guide</Modal.Title>
               </Col>
               <Col sm={6}>
-               {/*  <div style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'right' }}>82% $9.23 805,201 $23,940</div> */}
-                <div style={{ border: '1px solid #eee', height: '40px', padding: '8px' }}>Summary Placeholder</div>
+                <div className="summary-bar" style={{ marginRight: '32px' }}>
+                  <div className="summary-item"><div className="summary-tag">--%</div><div className="summary-display">--%</div><div className="summary-label">MARKET COVERAGE</div></div>
+                  <div className="summary-item"><div className="summary-tag">--%</div><div className="summary-display">$--</div><div className="summary-label">CPM</div></div>
+                  <div className="summary-item"><div className="summary-tag">--%</div><div className="summary-display">--</div><div className="summary-label">IMPRESSIONS</div></div>
+                  <div className="summary-item"><div className="summary-tag">--%</div><div className="summary-display">$--</div><div className="summary-label">TOTAL COST</div></div>
+                </div>
               </Col>
             </Row>
           </Modal.Header>
@@ -223,7 +374,7 @@ class PricingGuide extends Component {
                     />
                   }
                   {!isInventoryEditing &&
-                    <FormControl.Static>{impression ? numeral(impression / 1000).format('0,0.[000]') : '-'}</FormControl.Static>
+                    <FormControl.Static>{impression ? numeral(impression / 1000).format('0,0.[000]') : '--'}</FormControl.Static>
                   }
                   </FormGroup>
                   </Col>
@@ -243,7 +394,7 @@ class PricingGuide extends Component {
                     />
                     }
                     {!isInventoryEditing &&
-                    <FormControl.Static>${budget ? numeral(budget).format('0,0.[00]') : ' -'}</FormControl.Static>
+                    <FormControl.Static>${budget ? numeral(budget).format('0,0.[00]') : '--'}</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -271,7 +422,7 @@ class PricingGuide extends Component {
                     />
                     }
                     {!isInventoryEditing &&
-                    <FormControl.Static>{margin ? numeral(margin).format('0,0.[00]') : '- '}%</FormControl.Static>
+                    <FormControl.Static>{margin ? numeral(margin).format('0,0.[00]') : '--'}%</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -292,7 +443,7 @@ class PricingGuide extends Component {
                     />
                     }
                     {!isInventoryEditing &&
-                    <FormControl.Static>{rateInflation ? numeral(rateInflation).format('0,0.[00]') : '- '}%</FormControl.Static>
+                    <FormControl.Static>{rateInflation ? numeral(rateInflation).format('0,0.[00]') : '--'}%</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -313,7 +464,7 @@ class PricingGuide extends Component {
                     />
                     }
                      {!isInventoryEditing &&
-                    <FormControl.Static>{impressionInflation ? numeral(impressionInflation).format('0,0.[00]') : '- '}%</FormControl.Static>
+                    <FormControl.Static>{impressionInflation ? numeral(impressionInflation).format('0,0.[00]') : '--'}%</FormControl.Static>
                     }
                   </FormGroup>
                   </Col>
@@ -324,50 +475,163 @@ class PricingGuide extends Component {
               </Panel.Body>
             </Panel.Collapse>
           </Panel>
-          DISPLAY ONLY TESTING UX
           <Panel id="pricing_proprietary_panel" defaultExpanded className="panelCard">
             <Panel.Heading>
             <Panel.Title toggle><Glyphicon glyph="chevron-up" /> PROPRIETARY</Panel.Title>
               <Row>
-                <Col sm={6}>
-                <div><span style={{ fontSize: '40px', fontWeight: 'bold' }}>81% </span>{' '}<Label style={{ backgroundColor: '#ccc' }}>CNN</Label>{' '}<Label>TTWN</Label>{' '}<Label>TTWN</Label></div>
+                <Col sm={1}>
+                <div className="summary-item single"><div className="summary-display">--%</div></div>
+                </Col>
+                <Col sm={5}>
+                <div style={{ marginTop: '22px' }}>
+                <Label className={CNNActive}>CNN</Label>
+                <Label className={sinclairActive}> SINCLAIR</Label>
+                <Label className={TTNWActive}>TTWN</Label>
+                <Label className={TVBActive}>TVB</Label>
+                </div>
               </Col>
               <Col sm={6}>
-                <div style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'right' }}>$6.89 612,814 $10,925</div>
+                <div className="summary-bar">
+                  <div className="summary-item"><div className="summary-display">$--</div><div className="summary-label">CPM</div></div>
+                  <div className="summary-item"><div className="summary-display">--</div><div className="summary-label">IMPRESSIONS</div></div>
+                  <div className="summary-item"><div className="summary-display">$--</div><div className="summary-label">TOTAL COST</div></div>
+                </div>
               </Col>
              </Row>
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-              <Button style={{ padding: '0px 0px 6px 0px' }} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
+              <div className="formEditToggle">
+                  { !isProprietaryEditing &&
+                  <Button onClick={this.toggleProprietaryEditing} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
+                  }
+                  { isProprietaryEditing &&
+                  <div>
+                  <Button onClick={this.saveProprietary} bsStyle="link" disabled={isBalanceWarning}><Glyphicon glyph="save" /> Save</Button>
+                  <Button className="cancel" onClick={this.cancelProprietary} bsStyle="link"><Glyphicon glyph="remove" /> Cancel</Button>
+                  </div>
+                  }
+                </div>
               <Row>
                 <Col sm={4}>
               <Table condensed>
                 <thead>
                   <tr>
                     <th className="cardLabel">SOURCE</th>
-                    <th className="cardLabel">IMPRESSIONS</th>
+                    <th className="cardLabel">BALANCE</th>
                     <th className="cardLabel">CPM</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>CNN</td>
-                    <td>--</td>
-                    <td>--</td>
+                    <td>
+                    {!isProprietaryEditing &&
+                    <FormControl.Static>{propImpressionsCNN ? numeral(propImpressionsCNN * 100).format('0,0.[00]') : '--'}%</FormControl.Static>
+                    }
+                    {isProprietaryEditing &&
+                    <InputNumber
+                      defaultValue={editingPropImpressionsCNN * 100}
+                      disabled={isReadOnly}
+                      min={0}
+                      max={100}
+                      precision={2}
+                      // style={{ width: '100px' }}
+                      formatter={value => `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value.replace(/%\s?|(,*)/g, '')}
+                      onChange={(value) => { this.handleChange('editingPropImpressionsCNN', value / 100); }}
+                    />
+                    }
+                    </td>
+                    <td>
+                   {/*  {!isProprietaryEditing &&
+                    <FormControl.Static>${propCpmCNN ? numeral(propCpmCNN).format('0,0.[00]') : '--'}</FormControl.Static>
+                    } */}
+                    <FormControl.Static>${propCpmCNN ? numeral(propCpmCNN).format('0,0.[00]') : '--'}</FormControl.Static>
+                    </td>
                   </tr>
                   <tr>
-                    <td>TTWN</td>
-                    <td>50%</td>
-                    <td>$5.43</td>
+                    <td>SINCLAIR</td>
+                    <td>
+                    {!isProprietaryEditing &&
+                    <FormControl.Static>{propImpressionsSinclair ? numeral(propImpressionsSinclair * 100).format('0,0.[00]') : '--'}%</FormControl.Static>
+                    }
+                    {isProprietaryEditing &&
+                    <InputNumber
+                      defaultValue={editingPropImpressionsSinclair * 100}
+                      disabled={isReadOnly}
+                      min={0}
+                      max={100}
+                      precision={2}
+                      // style={{ width: '100px' }}
+                      formatter={value => `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value.replace(/%\s?|(,*)/g, '')}
+                      onChange={(value) => { this.handleChange('editingPropImpressionsSinclair', value / 100); }}
+                    />
+                    }
+                    </td>
+                    <td>
+                    <FormControl.Static>${propCpmSinclair ? numeral(propCpmSinclair).format('0,0.[00]') : '--'}</FormControl.Static>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>TTNW</td>
+                    <td>
+                    {!isProprietaryEditing &&
+                    <FormControl.Static>{propImpressionsTTNW ? numeral(propImpressionsTTNW * 100).format('0,0.[00]') : '--'}%</FormControl.Static>
+                    }
+                    {isProprietaryEditing &&
+                    <InputNumber
+                      defaultValue={editingPropImpressionsTTNW * 100}
+                      disabled={isReadOnly}
+                      min={0}
+                      max={100}
+                      precision={2}
+                      // style={{ width: '100px' }}
+                      formatter={value => `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value.replace(/%\s?|(,*)/g, '')}
+                      onChange={(value) => { this.handleChange('editingPropImpressionsTTNW', value / 100); }}
+                    />
+                    }
+                    </td>
+                    <td>
+                    <FormControl.Static>${propCpmTTNW ? numeral(propCpmTTNW).format('0,0.[00]') : '--'}</FormControl.Static>
+                    </td>
                   </tr>
                   <tr>
                     <td>TVB</td>
-                    <td>31%</td>
-                    <td>$8.35</td>
+                    <td>
+                    {!isProprietaryEditing &&
+                    <FormControl.Static>{propImpressionsTVB ? numeral(propImpressionsTVB * 100).format('0,0.[00]') : '--'}%</FormControl.Static>
+                    }
+                    {isProprietaryEditing &&
+                    <InputNumber
+                      defaultValue={editingPropImpressionsTVB * 100}
+                      disabled={isReadOnly}
+                      min={0}
+                      max={100}
+                      precision={2}
+                      // style={{ width: '100px' }}
+                      formatter={value => `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      parser={value => value.replace(/%\s?|(,*)/g, '')}
+                      onChange={(value) => { this.handleChange('editingPropImpressionsTVB', value / 100); }}
+                    />
+                    }
+                    </td>
+                    <td>
+                    <FormControl.Static>${propCpmTVB ? numeral(propCpmTVB).format('0,0.[00]') : '--'}</FormControl.Static>
+                    </td>
                   </tr>
+                  <tr>
+                    <td><strong>TOTALS</strong></td>
+                    <td><strong>{numeral(balanceSum * 100).format('0,0.[00]')}%</strong></td>
+                    <td><strong>&nbsp;</strong></td>
+                    </tr>
                 </tbody>
               </Table>
+              {isBalanceWarning &&
+              <div style={{ color: 'red', textAlign: 'center' }}><Glyphicon glyph="alert" /> Balance Entries Over 100%</div>
+              }
               </Col>
               </Row>
               </Panel.Body>
@@ -376,7 +640,7 @@ class PricingGuide extends Component {
 
          {/*  <Panel id="pricing_openmarket_panel" defaultExpanded className="panelCard">
             <Panel.Heading>
-            <Panel.Title toggle><Glyphicon glyph="chevron-up" /> OPEN MARKEtS</Panel.Title>
+            <Panel.Title toggle><Glyphicon glyph="chevron-up" /> OPEN MARKETS</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>

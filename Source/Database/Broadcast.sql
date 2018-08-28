@@ -53,6 +53,33 @@ INSERT INTO #previous_version
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** BCOP-3515 *****************************************************/
+
+IF OBJECT_ID('proposal_version_detail_proprietary_pricing', 'U') IS NULL
+BEGIN
+	CREATE TABLE proposal_version_detail_proprietary_pricing
+	(
+		proposal_version_detail_id INT NOT NULL,
+		inventory_source TINYINT NOT NULL,
+		impressions_balance FLOAT NOT NULL,
+		cpm MONEY NOT NULL,
+		CONSTRAINT [PK_proposal_version_detail_proprietary_pricing] PRIMARY KEY CLUSTERED
+		(
+			proposal_version_detail_id, inventory_source ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+
+	ALTER TABLE [dbo].[proposal_version_detail_proprietary_pricing]
+	WITH CHECK ADD CONSTRAINT [FK_proposal_version_detail_proprietary_pricing_proposal_version_details] 
+	FOREIGN KEY(proposal_version_detail_id)
+	REFERENCES [dbo].[proposal_version_details] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_version_detail_proprietary_pricing] CHECK CONSTRAINT [FK_proposal_version_detail_proprietary_pricing_proposal_version_details]
+END
+
+/*************************************** BCOP-3515 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

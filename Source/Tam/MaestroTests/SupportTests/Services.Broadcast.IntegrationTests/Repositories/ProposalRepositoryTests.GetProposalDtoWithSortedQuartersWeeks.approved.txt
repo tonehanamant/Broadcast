@@ -28,6 +28,7 @@
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 0,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 0.0,

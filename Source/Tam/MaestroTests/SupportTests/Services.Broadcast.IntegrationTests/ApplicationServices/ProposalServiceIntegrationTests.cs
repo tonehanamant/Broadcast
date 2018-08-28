@@ -198,6 +198,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+            jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+            jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+            jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -2445,6 +2448,174 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveNewProposalWithProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 0.3,
+                    Cpm = 99.99m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TTNW,
+                    ImpressionsBalance = 0.25,
+                    Cpm = 12.42m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TVB,
+                    ImpressionsBalance = 0.25,
+                    Cpm = 45
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.Sinclair,
+                    ImpressionsBalance = 0.2,
+                    Cpm = 2000m
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalWithProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(249);
+
+                proposalDto.ProposalName = "Edited Proposal Test";
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 99.99m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TTNW,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 12.42m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TVB,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 45
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.Sinclair,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 2000m
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains invalid inventory source for proprietary pricing", MatchType = MessageMatch.Contains)]
+        public void CannotSaveProposalDetailWithInvalidProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.OpenMarket,
+                    ImpressionsBalance = 1,
+                    Cpm = 99.99m
+                });               
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data", MatchType = MessageMatch.Contains)]
+        public void CannotSaveProposalDetailWithDuplicatdProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 1,
+                    Cpm = 99.99m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 1,
+                    Cpm = 99.99m
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
             }
         }
     }

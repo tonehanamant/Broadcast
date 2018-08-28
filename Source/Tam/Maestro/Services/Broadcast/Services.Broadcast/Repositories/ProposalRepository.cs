@@ -361,6 +361,12 @@ namespace Services.Broadcast.Repositories
                         program_name_id = p.Program.Id,
                         contain_type = (byte)p.Contain
                     }).ToList(),
+                    proposal_version_detail_proprietary_pricing = proposalDetail.ProprietaryPricing.Select(g => new proposal_version_detail_proprietary_pricing()
+                    {
+                        inventory_source = (byte)g.InventorySource,
+                        impressions_balance = g.ImpressionsBalance,
+                        cpm = g.Cpm
+                    }).ToList(),
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
@@ -503,7 +509,21 @@ namespace Services.Broadcast.Repositories
                                     contain_type = (byte)p.Contain,
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
-                    
+
+                    //update proposal detail proprietary pricing
+                    context.proposal_version_detail_proprietary_pricing.RemoveRange(
+                        context.proposal_version_detail_proprietary_pricing.Where(g => g.proposal_version_detail_id == detail.Id));
+                    if (detail.ProprietaryPricing != null && detail.ProprietaryPricing.Any())
+                        context.proposal_version_detail_proprietary_pricing.AddRange(
+                            detail.ProprietaryPricing.Select(
+                                p => new proposal_version_detail_proprietary_pricing()
+                                {
+                                    proposal_version_detail_id = detail.Id.Value,
+                                    inventory_source = (byte)p.InventorySource,
+                                    impressions_balance = p.ImpressionsBalance,
+                                    cpm = p.Cpm
+                                }));
+
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail
                     var deletedQuartersIds =
@@ -882,6 +902,12 @@ namespace Services.Broadcast.Repositories
                             Id = p.program_name_id,
                             Display = p.program_name
                         }
+                    }).ToList(),
+                    ProprietaryPricing =  version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                    {
+                        InventorySource = (InventorySourceEnum)p.inventory_source,
+                        ImpressionsBalance = p.impressions_balance,
+                        Cpm = p.cpm
                     }).ToList(),
                     Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                     {

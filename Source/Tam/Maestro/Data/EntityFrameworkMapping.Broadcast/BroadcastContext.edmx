@@ -489,6 +489,16 @@
           <Property Name="contain_type" Type="tinyint" Nullable="false" />
           <Property Name="show_type_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="proposal_version_detail_proprietary_pricing">
+          <Key>
+            <PropertyRef Name="proposal_version_detail_id" />
+            <PropertyRef Name="inventory_source" />
+          </Key>
+          <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source" Type="tinyint" Nullable="false" />
+          <Property Name="impressions_balance" Type="float" Nullable="false" />
+          <Property Name="cpm" Type="money" Nullable="false" />
+        </EntityType>
         <EntityType Name="proposal_version_detail_quarter_week_iscis">
           <Key>
             <PropertyRef Name="id" />
@@ -1431,6 +1441,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proposal_version_detail_proprietary_pricing_proposal_version_details">
+          <End Role="proposal_version_details" Type="Self.proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="proposal_version_detail_proprietary_pricing" Type="Self.proposal_version_detail_proprietary_pricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_proprietary_pricing">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks">
           <End Role="proposal_version_detail_quarter_weeks" Type="Self.proposal_version_detail_quarter_weeks" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2225,6 +2249,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposal_version_detail_criteria_genres" EntityType="Self.proposal_version_detail_criteria_genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_criteria_programs" EntityType="Self.proposal_version_detail_criteria_programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_criteria_show_types" EntityType="Self.proposal_version_detail_criteria_show_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proposal_version_detail_proprietary_pricing" EntityType="Self.proposal_version_detail_proprietary_pricing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_quarter_week_iscis" EntityType="Self.proposal_version_detail_quarter_week_iscis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_quarter_weeks" EntityType="Self.proposal_version_detail_quarter_weeks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposal_version_detail_quarters" EntityType="Self.proposal_version_detail_quarters" Schema="dbo" store:Type="Tables" />
@@ -2425,6 +2450,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_version_detail_criteria_show_types_show_types" Association="Self.FK_proposal_version_detail_criteria_show_types_show_types">
             <End Role="show_types" EntitySet="show_types" />
             <End Role="proposal_version_detail_criteria_show_types" EntitySet="proposal_version_detail_criteria_show_types" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_version_detail_proprietary_pricing_proposal_version_details" Association="Self.FK_proposal_version_detail_proprietary_pricing_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_proprietary_pricing" EntitySet="proposal_version_detail_proprietary_pricing" />
           </AssociationSet>
           <AssociationSet Name="FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks" Association="Self.FK_proposal_version_detail_quarter_week_iscis_proposal_version_detail_quarter_weeks">
             <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
@@ -3109,6 +3138,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_versions_proposals" Association="BroadcastModel.FK_proposal_versions_proposals">
             <End Role="proposal" EntitySet="proposals" />
             <End Role="proposal_versions" EntitySet="proposal_versions" />
+          </AssociationSet>
+          <EntitySet Name="proposal_version_detail_proprietary_pricing" EntityType="BroadcastModel.proposal_version_detail_proprietary_pricing" />
+          <AssociationSet Name="FK_proposal_version_detail_proprietary_pricing_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="proposal_version_detail_proprietary_pricing" EntitySet="proposal_version_detail_proprietary_pricing" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -5109,6 +5143,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="goal_impression" Type="Double" />
           <Property Name="goal_budget" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
+          <NavigationProperty Name="proposal_version_detail_proprietary_pricing" Relationship="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_proprietary_pricing" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -5414,6 +5449,31 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="proposal_versions">
               <PropertyRef Name="proposal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="proposal_version_detail_proprietary_pricing">
+          <Key>
+            <PropertyRef Name="proposal_version_detail_id" />
+            <PropertyRef Name="inventory_source" />
+          </Key>
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source" Type="Byte" Nullable="false" />
+          <Property Name="impressions_balance" Type="Double" Nullable="false" />
+          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details" FromRole="proposal_version_detail_proprietary_pricing" ToRole="proposal_version_details" />
+        </EntityType>
+        <Association Name="FK_proposal_version_detail_proprietary_pricing_proposal_version_details">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.proposal_version_detail_proprietary_pricing" Role="proposal_version_detail_proprietary_pricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_version_detail_proprietary_pricing">
+              <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6416,6 +6476,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="proposal_version" ColumnName="proposal_version" />
                 <ScalarProperty Name="proposal_id" ColumnName="proposal_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposal_version_detail_proprietary_pricing">
+            <EntityTypeMapping TypeName="BroadcastModel.proposal_version_detail_proprietary_pricing">
+              <MappingFragment StoreEntitySet="proposal_version_detail_proprietary_pricing">
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="impressions_balance" ColumnName="impressions_balance" />
+                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

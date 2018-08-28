@@ -6679,9 +6679,9 @@ react-styleguidist@^6.0.24:
     webpack-dev-server "^2.9.7"
     webpack-merge "^4.1.1"
 
-react-text-mask@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.4.2.tgz#6c9ecce97d354698557d14699963081f9621e997"
+react-text-mask@^5.0.2:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.4.3.tgz#991efb4299e30c2e6c2c46d13f617169463e0d2d"
   dependencies:
     prop-types "^15.5.6"
 

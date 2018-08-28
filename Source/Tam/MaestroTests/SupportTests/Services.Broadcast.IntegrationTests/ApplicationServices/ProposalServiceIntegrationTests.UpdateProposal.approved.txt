@@ -89,6 +89,7 @@
       ],
       "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 12.5300,
@@ -230,6 +231,7 @@
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 3,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 84.2000,

@@ -489,6 +489,9 @@
     <Compile Include="proposal_version_detail_criteria_show_types.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proposal_version_detail_proprietary_pricing.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proposal_version_detail_quarters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

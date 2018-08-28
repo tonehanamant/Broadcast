@@ -172,6 +172,8 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_versions_proposals" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_proprietary_pricing" Width="1.5" PointX="31.25" PointY="14" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

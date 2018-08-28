@@ -868,6 +868,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _ValidateProposalProjectionBooks(detail);
 
+                _ValidateProprietaryPricing(detail);
+
                 if (detail.FlightEndDate == default(DateTime) || detail.FlightStartDate == default(DateTime))
                     throw new Exception("Cannot save proposal detail without specifying flight start/end date.");
 
@@ -890,6 +892,23 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
+            }
+        }
+
+        private void _ValidateProprietaryPricing(ProposalDetailDto detail)
+        {
+            var proprietaryInventorySources = _GetProprietaryInventorySources();
+
+            foreach (var proprietaryPricingDto in detail.ProprietaryPricing)
+            {
+                if (!proprietaryInventorySources.Contains(proprietaryPricingDto.InventorySource))
+                    throw new Exception($"Cannot save proposal detail that contains invalid inventory source for proprietary pricing: {proprietaryPricingDto.InventorySource}");
+            }
+
+            foreach (var proprietaryPricingInventorySource in proprietaryInventorySources)
+            {
+                if (detail.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
+                    throw new Exception("Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data");
             }
         }
 
@@ -1186,44 +1205,37 @@ namespace Services.Broadcast.ApplicationServices
                 Audiences = _AudiencesCache.GetAllLookups(),
                 SpotLengths = _SpotLengthRepository.GetSpotLengths(),
                 SchedulePostTypes =
-                Enum.GetValues(typeof(SchedulePostType))
-                    .Cast<SchedulePostType>()
-                    .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                    .ToList(),
-                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList(),
-                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4, MidpointRounding.AwayFromZero)
+                    Enum.GetValues(typeof(SchedulePostType))
+                        .Cast<SchedulePostType>()
+                        .Select(e => new LookupDto {Display = e.ToString(), Id = (int) e})
+                        .ToList(),
+                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
+                    .OrderBy(m => m.Display).ToList(),
+                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4,
+                    MidpointRounding.AwayFromZero),
+                ProprietaryPricingInventorySources = _GetProprietaryInventorySources().Select(p => new LookupDto
+                {
+                    Id = (int)p,
+                    Display = p.Description()
+                }).ToList(),
+                ForecastDefaults = new ForecastRatingsDefaultsDto
+                {
+                    PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
+                    CrunchedMonths = _RatingForecastService.GetMediaMonthCrunchStatuses()
+                        .Where(a => a.Crunched == CrunchStatus.Crunched)
+                        .Select(
+                            m => new LookupDto
+                            {
+                                Display = m.MediaMonth.LongMonthNameAndYear,
+                                Id = m.MediaMonth.Id
+                            })
+                        .ToList()
+                },
+                Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>(),
+                MarketGroups = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>()
             };
-
-            result.MarketGroups = _GetMarketGroupList(result.Markets.Count);
-            result.ForecastDefaults = new ForecastRatingsDefaultsDto
-            {
-                PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
-                CrunchedMonths = _RatingForecastService.GetMediaMonthCrunchStatuses()
-                    .Where(a => a.Crunched == CrunchStatus.Crunched)
-                    .Select(
-                        m => new LookupDto()
-                        {
-                            Display = m.MediaMonth.LongMonthNameAndYear,
-                            Id = m.MediaMonth.Id
-                        })
-                    .ToList()
-            };
-            result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();
 
             return result;
-        }
-
-        private List<MarketGroupDto> _GetMarketGroupList(int totalMarkets)
-        {
-            var marketGroups =
-                EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>().Select(
-                    g => new MarketGroupDto()
-                    {
-                        Display = g.Display,
-                        Id = g.Id,
-                    }).ToList();
-
-            return marketGroups;
         }
 
         private MarketGroupDto _GetMarketGroupDto(ProposalEnums.ProposalMarketGroups? marketGroup)
@@ -1454,6 +1466,17 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (request.Start < 1) request.Start = 1;
             return _ProgramNameRepository.FindPrograms(request.Name, request.Start, request.Limit);
+        }
+
+        private List<InventorySourceEnum> _GetProprietaryInventorySources()
+        {
+            var inventorySources = Enum.GetValues(typeof(InventorySourceEnum)).Cast<InventorySourceEnum>().ToList();
+
+            inventorySources.Remove(InventorySourceEnum.Blank);
+            inventorySources.Remove(InventorySourceEnum.Assembly);
+            inventorySources.Remove(InventorySourceEnum.OpenMarket);
+
+            return inventorySources;
         }
     }
 }
