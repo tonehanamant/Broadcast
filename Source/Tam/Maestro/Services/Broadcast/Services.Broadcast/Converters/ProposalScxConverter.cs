@@ -236,13 +236,6 @@ namespace Services.Broadcast.Converters
             //lEndTime = lEndTime.Add(new TimeSpan(0, 0, 0, daypart.EndTime+1, 0)); // add one second to bring the time up to full hour/half-hour/etc
             detLine.endTime = lEndTime;
             detLine.dayOfWeek = new dayOfWeek();
-//            detLine.dayOfWeek.Monday    = daypart.Monday ? "Y" : "N";
-//            detLine.dayOfWeek.Tuesday   = daypart.Tuesday ? "Y" : "N";
-//            detLine.dayOfWeek.Wednesday = daypart.Wednesday ? "Y" : "N";
-//            detLine.dayOfWeek.Thursday  = daypart.Thursday ? "Y" : "N";
-//            detLine.dayOfWeek.Friday    = daypart.Friday ? "Y" : "N";
-//            detLine.dayOfWeek.Saturday  = daypart.Saturday ? "Y" : "N";
-//            detLine.dayOfWeek.Sunday    = daypart.Sunday ? "Y" : "N";
 
             detLine.daypartCode = daypartCode;
         }

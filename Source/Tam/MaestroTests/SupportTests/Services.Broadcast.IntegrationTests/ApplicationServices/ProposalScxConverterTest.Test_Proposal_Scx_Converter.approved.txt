@@ -275,7 +275,6 @@
                   }
                 ],
                 "detailLineID": 0,
-                "endTime": "2018-08-20T00:00:00",
                 "length": "PT15S",
                 "network": [
                   {
@@ -331,7 +330,6 @@
                   "Value": 6.5000
                 },
                 "startDay": 0,
-                "startTime": "2018-08-20T00:00:00",
                 "totals": {
                   "cost": {
                     "currency": "USD",
@@ -371,7 +369,6 @@
                   }
                 ],
                 "detailLineID": 0,
-                "endTime": "2018-08-20T00:00:00",
                 "length": "PT15S",
                 "network": [
                   {
@@ -427,7 +424,6 @@
                   "Value": 6.5000
                 },
                 "startDay": 0,
-                "startTime": "2018-08-20T00:00:00",
                 "totals": {
                   "cost": {
                     "currency": "USD",
@@ -776,7 +772,6 @@
                   }
                 ],
                 "detailLineID": 0,
-                "endTime": "2018-08-20T00:00:00",
                 "length": "PT15S",
                 "network": [
                   {
@@ -832,7 +827,6 @@
                   "Value": 6.5000
                 },
                 "startDay": 0,
-                "startTime": "2018-08-20T00:00:00",
                 "totals": {
                   "cost": {
                     "currency": "USD",

@@ -12,6 +12,7 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -74,6 +75,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _ProposalScxConverter.BuildFromProposalDetail(proposal,proposal.Details.First());
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                // remove start/end times because they are current date dependant
+                jsonResolver.Ignore(typeof(detailLine), "startTime");
+                jsonResolver.Ignore(typeof(detailLine), "endTime");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -84,7 +88,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-
-
     }
 }
