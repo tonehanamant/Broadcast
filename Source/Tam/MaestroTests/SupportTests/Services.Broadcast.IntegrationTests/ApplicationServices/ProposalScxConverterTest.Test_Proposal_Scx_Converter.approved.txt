@@ -1004,7 +1004,6 @@
     }
   },
   "document": {
-    "date": "2018-08-20T00:00:00-04:00",
     "documentCode": "",
     "documentType": "",
     "mediaType": 0,

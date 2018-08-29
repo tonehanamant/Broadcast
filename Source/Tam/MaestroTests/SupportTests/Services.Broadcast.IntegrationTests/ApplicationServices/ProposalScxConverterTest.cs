@@ -78,6 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // remove start/end times because they are current date dependant
                 jsonResolver.Ignore(typeof(detailLine), "startTime");
                 jsonResolver.Ignore(typeof(detailLine), "endTime");
+                jsonResolver.Ignore(typeof(document), "date");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
