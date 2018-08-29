@@ -25,10 +25,10 @@
       "TableName": "2Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 315116.80000000005,
+          "ActualImpressions": 315366.80000000005,
           "Adu": false,
           "Contract": "NAV",
-          "DeliveredImpressionsPercentage": 3.1199683168316836,
+          "DeliveredImpressionsPercentage": 3.1224435643564359,
           "HHRating": 0,
           "ProposalWeekCost": 3.7500,
           "ProposalWeekCPM": 0.7425742574257425742574257000,
@@ -134,9 +134,9 @@
           "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
-            "31": 250.0,
-            "5": 250.0,
-            "6": 250.0
+            "31": 500.0,
+            "5": 500.0,
+            "6": 500.0
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
