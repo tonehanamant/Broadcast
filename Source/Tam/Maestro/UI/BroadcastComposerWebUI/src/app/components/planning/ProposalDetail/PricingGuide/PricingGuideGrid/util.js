@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
+import { isNil } from 'lodash';
 
 const rowTypes = {
   TITLE: 'TITLE',
@@ -56,6 +57,16 @@ const generateData = (markets) => {
   return data;
 };
 
+const NumberCell = ({ value }) => {
+  if (isNil(value)) return '';
+  return value !== 0 ? numeral(value).format('0,0.[00]') : '-';
+};
+
+const DollarCell = ({ value }) => {
+  if (isNil(value)) return '';
+  return value !== 0 ? numeral(value).format('$0,0.[00]') : '-';
+};
+
 const GroupingCell = ({ original: { rowType }, value }) => {
   const fontWeight = (boldRowTypes.includes(rowType)) ? 'bold' : '300';
   return (<div style={{ fontWeight }}>{value}</div>);
@@ -76,27 +87,27 @@ const columns = [{
 }, {
   Header: 'CPM',
   accessor: 'CPM',
-  Cell: ({ value }) => (value && numeral(value).format('$0,0.[00]')),
+  Cell: DollarCell,
 }, {
   Header: 'Spots',
   accessor: 'Spots',
-  Cell: ({ value }) => (value !== 0 ? numeral(value).format('0,0.[00]') : '-'),
+  Cell: NumberCell,
 }, {
   Header: 'Impressions(OOO)',
   accessor: 'Impressions',
-  Cell: ({ value }) => (value !== 0 ? numeral(value).format('0,0.[00]') : '-'),
+  Cell: NumberCell,
 }, {
   Header: 'Station Impressions',
   accessor: 'StationImpressions',
-  Cell: ({ value }) => (value !== 0 ? numeral(value).format('0,0.[00]') : '-'),
+  Cell: NumberCell,
 }, {
   Header: 'Overnight Impressions',
   accessor: 'OvernightImpressions',
-  Cell: ({ value }) => (value !== 0 ? numeral(value).format('0,0.[00]') : '-'),
+  Cell: NumberCell,
 }, {
   Header: 'Cost',
   accessor: 'Cost',
-  Cell: ({ value }) => (value && numeral(value).format('$0,0.[00]')),
+  Cell: DollarCell,
 }];
 
 export { columns, generateData, rowColors, rowTypes };
