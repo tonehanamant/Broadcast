@@ -250,7 +250,6 @@
     <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuidGridRequestDto.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />
-    <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\ProprietaryPricingDto.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
