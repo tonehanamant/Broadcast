@@ -119,7 +119,7 @@ namespace Services.Broadcast.Entities.DTO
                             .Select(i => i.Value).Sum());
 
                         _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
-                        _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.SpotLengthId).Key, ref audienceImpressions);
+                        _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key, ref audienceImpressions);
 
                         return _MapNsiPostReportQuarterTabRow(advertiser, spotLengthMappings, mediaWeekMappings, r, audienceImpressions, stationMappings, nsiMarketRankings);
                     }).ToList()
