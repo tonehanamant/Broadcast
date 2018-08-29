@@ -28,7 +28,7 @@ var webpackConfig = {
   },
 
   devServer: {
-    port: 9020,
+    // port: 9020,
     hot: true,
     contentBase: resolve(__dirname, '../src'),
     publicPath: '/broadcastreact',
