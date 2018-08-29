@@ -7,21 +7,27 @@ import { InputNumber } from 'antd';
 import numeral from 'numeral';
 
 import { toggleModal } from 'Ducks/app';
-import { updateProposalEditFormDetail } from 'Ducks/planning';
+import { updateProposalEditFormDetail, loadOpenMarketData, clearOpenMarketData } from 'Ducks/planning';
+import PricingGuideGrid from './PricingGuideGrid';
 import './index.scss';
 
 const isActiveDialog = (detail, modal) => (
   modal && detail && modal.properties.detailId === detail.Id && modal.active
 );
 
-const mapStateToProps = ({ app: { modals: { pricingGuide: modal } }, planning: { proposalEditForm } }) => ({
+const mapStateToProps = ({ app: { modals: { pricingGuide: modal } }, planning: { proposalEditForm, openMarketData, openMarketLoading, openMarketLoaded } }) => ({
   modal,
   proposalEditForm,
+  openMarketData,
+  openMarketLoading,
+  openMarketLoaded,
 });
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
       toggleModal,
+      loadOpenMarketData,
+      clearOpenMarketData,
       updateDetail: updateProposalEditFormDetail,
     }, dispatch)
   );
@@ -37,6 +43,7 @@ class PricingGuide extends Component {
     this.toggleInventoryEditing = this.toggleInventoryEditing.bind(this);
     this.saveInventory = this.saveInventory.bind(this);
     this.cancelInventory = this.cancelInventory.bind(this);
+    this.onRunDistribution = this.onRunDistribution.bind(this);
 
     this.saveProprietaryPricingDetail = this.saveProprietaryPricingDetail.bind(this);
     this.setProprietaryPricing = this.setProprietaryPricing.bind(this);
@@ -229,6 +236,11 @@ class PricingGuide extends Component {
     });
   }
 
+  onRunDistribution() {
+    const { detail, proposalEditForm } = this.props;
+    this.props.loadOpenMarketData(proposalEditForm.Id, detail.Id);
+  }
+
   onSave() {
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;
     const { updateDetail, detail } = this.props;
@@ -283,10 +295,11 @@ class PricingGuide extends Component {
       active: false,
       properties: { detailId: this.props.detail.Id },
     });
+    this.props.clearOpenMarketData();
   }
 
   render() {
-    const { modal, detail, isReadOnly } = this.props;
+    const { modal, detail, isReadOnly, openMarketData, openMarketLoading, openMarketLoaded } = this.props;
     const show = isActiveDialog(detail, modal);
     // const labelStyle = { fontSize: '11px', fontWeight: 'normal', color: '#333' };
     const { isInventoryEditing, isProprietaryEditing } = this.state;
@@ -638,25 +651,25 @@ class PricingGuide extends Component {
             </Panel.Collapse>
           </Panel>
 
-         {/*  <Panel id="pricing_openmarket_panel" defaultExpanded className="panelCard">
+          <Panel id="pricing_openmarket_panel" defaultExpanded className="panelCard">
             <Panel.Heading>
             <Panel.Title toggle><Glyphicon glyph="chevron-up" /> OPEN MARKETS</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-              <Button style={{ padding: '0px 0px 6px 0px' }} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
-              <Row>
-                <Col sm={6}>
-                    Form/Display
-                </Col>
-                <Col sm={6}>
-                    Button
-                </Col>
-              </Row>
-                <div> GRID </div>
+                <Button style={{ padding: '0px 0px 6px 0px' }} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
+                <Row>
+                  <Col sm={6}> Form/Display </Col>
+                  <Col sm={6}> <Button onClick={this.onRunDistribution}>Run Distribution</Button> </Col>
+                </Row>
+                {openMarketLoaded && openMarketData &&
+                  <PricingGuideGrid
+                    openMarketData={openMarketData}
+                    openMarketLoading={openMarketLoading}
+                  />}
               </Panel.Body>
             </Panel.Collapse>
-          </Panel> */}
+          </Panel>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
@@ -680,12 +693,19 @@ PricingGuide.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool,
   updateDetail: PropTypes.func.isRequired,
+  clearOpenMarketData: PropTypes.func.isRequired,
+  loadOpenMarketData: PropTypes.func.isRequired,
   detail: PropTypes.object.isRequired,
+  proposalEditForm: PropTypes.object.isRequired,
+  openMarketData: PropTypes.object,
+  openMarketLoading: PropTypes.bool.isRequired,
+  openMarketLoaded: PropTypes.bool.isRequired,
 };
 
 PricingGuide.defaultProps = {
   modal: null,
   isReadOnly: false,
+  openMarketData: undefined,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PricingGuide);

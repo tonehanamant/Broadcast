@@ -15,12 +15,14 @@ namespace Services.Broadcast.Converters
     public interface IProposalScxConverter : IApplicationService
     {
         List<ScxFile> ConvertProposal(ProposalDto proposal);
+        adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail);
     }
 
     public class ScxFile
     {
         public Stream ScxStream { get; set; }
         public ProposalDetailDto ProposalDetailDto { get; set; }
+
     }
 
     public class ProposalScxConverter : IProposalScxConverter
@@ -44,11 +46,10 @@ namespace Services.Broadcast.Converters
             List<ScxFile> scxFiles = new List<ScxFile>();
             foreach (var propDetail in proposal.Details)
             {
-                var data = _proposalScxDataPrep.GetDataFromProposalDetail(proposal,  propDetail);
-                if (data.MarketIds.IsNullOrEmpty())
-                    continue;
+                adx a = BuildFromProposalDetail(proposal, propDetail);
 
-                adx a = CreateProposalScx(data);
+                if (a == null)
+                    continue;
 
                 string xml = a.Serialize();
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
@@ -61,6 +62,15 @@ namespace Services.Broadcast.Converters
             }
 
             return scxFiles;
+        }
+
+        public adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail)
+        {
+            var data = _proposalScxDataPrep.GetDataFromProposalDetail(proposal, propDetail);
+            if (data.MarketIds.IsNullOrEmpty())
+                return null;
+
+            return CreateProposalScx(data);
         }
 
         public adx CreateProposalScx(ScxData data)
@@ -251,8 +261,8 @@ namespace Services.Broadcast.Converters
                 var ratingDisplay = string.Empty;
                 if (demo.Ratings.Any())
                 {
-                    //ratingValue = demo.Ratings.Single(r => r.DaypartId == programInfo.Daypart.Id && r.StationCode == stationCode);
-                    //ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
+                    ratingValue = demo.Ratings.Single(r => programInfo.Dayparts.Any(dp => dp.Id ==  r.DaypartId) && r.StationCode == stationCode);
+                    ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
                 }
 
                 string imp = string.Empty;

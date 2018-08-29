@@ -8,6 +8,9 @@ import * as ACTIONS from './actionTypes.js';
 const initialState = {
   initialdata: {},
   planningProposals: [],
+  openMarketData: undefined,
+  openMarketLoading: false,
+  openMarketLoaded: false,
   filteredPlanningProposals: [],
   proposalLock: {},
   proposal: {
@@ -330,19 +333,37 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-   /*  case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
+    case ACTIONS.LOAD_OPEN_MARKET_DATA.request: {
       return {
         ...state,
-        isISCIEdited: data,
+        openMarketLoading: true,
       };
     }
 
-    case ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS: {
+    case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
       return {
         ...state,
-        isGridCellEdited: data,
+        openMarketData: data.Data,
+        openMarketLoading: false,
+        openMarketLoaded: true,
       };
-    } */
+    }
+
+    case ACTIONS.LOAD_OPEN_MARKET_DATA.failure: {
+      return {
+        ...state,
+        openMarketLoading: false,
+      };
+    }
+
+    case ACTIONS.CLEAR_OPEN_MARKET_DATA: {
+      return {
+        ...state,
+        openMarketLoading: false,
+        openMarketLoaded: false,
+        openMarketData: undefined,
+      };
+    }
 
     default:
       return state;
@@ -468,5 +489,14 @@ export const getPrograms = params => ({
 export const rerunPostScrubing = (propId, propdetailid) => ({
   type: ACTIONS.RERUN_POST_SCRUBING.request,
   payload: { propId, propdetailid },
+});
+
+export const loadOpenMarketData = (propId, propdetailid) => ({
+  type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
+  payload: { propId, propdetailid },
+});
+
+export const clearOpenMarketData = () => ({
+  type: ACTIONS.CLEAR_OPEN_MARKET_DATA,
 });
 

@@ -137,6 +137,9 @@ const planning = {
   rerunPostScrubing: (propId, propdetailid) => (
     call(PUT, `${apiBase}Proposals/RerunScrubbing/${propId}/${propdetailid}`)
   ),
+  loadOpenMarketData: (propId, propdetailid) => (
+    call(GET, `${apiBase}Inventory/Detail/PricingGuide/Grid/${propId}/${propdetailid}`)
+  ),
 };
 
 // Calls

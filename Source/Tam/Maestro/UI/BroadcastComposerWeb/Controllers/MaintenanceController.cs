@@ -103,8 +103,8 @@ namespace BroadcastComposerWeb.Controllers
             NetworkCredential creds = helper.GetClientCredentials();
             var site = "ftp://" + helper.Host;
             var list = srv.GetFileList(creds, site);
+        
             ViewBag.Message = "Get file worked w/o error!\r\n";
-            list.ForEach(f => ViewBag.Message += f + "\r\n");
             return View("Index");
  }
 

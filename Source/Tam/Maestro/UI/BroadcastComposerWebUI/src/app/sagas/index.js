@@ -65,5 +65,6 @@ export default function* rootSaga() {
     planningSaga.watchDeleteProposalDetail(),
     planningSaga.watchRequestPlanningFiltered(),
     planningSaga.watchRerunPostScrubing(),
+    planningSaga.watchLoadOpenMarketData(),
   ];
 }
