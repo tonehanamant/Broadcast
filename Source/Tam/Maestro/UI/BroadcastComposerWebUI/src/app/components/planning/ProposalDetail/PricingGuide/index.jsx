@@ -358,7 +358,7 @@ class PricingGuide extends Component {
             <Panel.Collapse>
               <Panel.Body>
                 <div className="formEditToggle">
-                  { !isInventoryEditing &&
+                  { !isReadOnly && !isInventoryEditing &&
                   <Button onClick={this.toggleInventoryEditing} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
                   }
                   { isInventoryEditing &&
@@ -515,7 +515,7 @@ class PricingGuide extends Component {
             <Panel.Collapse>
               <Panel.Body>
               <div className="formEditToggle">
-                  { !isProprietaryEditing &&
+                  { !isReadOnly && !isProprietaryEditing &&
                   <Button onClick={this.toggleProprietaryEditing} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
                   }
                   { isProprietaryEditing &&
