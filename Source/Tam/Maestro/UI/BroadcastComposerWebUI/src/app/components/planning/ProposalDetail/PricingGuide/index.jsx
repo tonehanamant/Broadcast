@@ -462,7 +462,7 @@ class PricingGuide extends Component {
                   </Col>
                   <Col sm={4}>
                   <FormGroup>
-                    <ControlLabel>IMPRESSION INFLATION</ControlLabel>
+                    <ControlLabel>IMPRESSIONS LOSS</ControlLabel>
                     {isInventoryEditing &&
                     <InputNumber
                       defaultValue={editingImpressionInflation || null}
