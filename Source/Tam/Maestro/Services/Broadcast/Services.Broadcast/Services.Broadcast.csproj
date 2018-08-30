@@ -222,6 +222,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsService.cs" />
+    <Compile Include="ApplicationServices\LogoService.cs" />
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />

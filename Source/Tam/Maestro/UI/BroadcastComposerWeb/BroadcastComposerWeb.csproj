@@ -231,10 +231,12 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Attributes\CacheWebApiAttribute.cs" />
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
