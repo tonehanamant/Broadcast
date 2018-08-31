@@ -52,6 +52,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public static void RegisterApplicationServices(UnityContainer unityContainer)
         {
+            unityContainer.RegisterType<ILogoService, LogoService>();
             unityContainer.RegisterType<ITransactionHelper, TransactionHelper>();
             unityContainer.RegisterType<ITrackerService, TrackerService>();
             unityContainer.RegisterType<IBvsPostingEngine, BvsBvsPostingEngine>();
