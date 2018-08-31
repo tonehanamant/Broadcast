@@ -16,7 +16,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public static double CalculateCpmPercent(decimal totalCost, double totalImpression, decimal targetBudget, double targetImpression, double margin)
         {
-            if (totalImpression == 0 || targetImpression == 0) return 0;
+            if (totalImpression == 0 || targetImpression == 0 || targetBudget == 0) return 0;
 
             // working cpm with margin
             var workingCpm = (totalCost + (totalCost * ((decimal)margin / 100))) / (decimal)(totalImpression);
