@@ -1534,6 +1534,50 @@ namespace Services.Broadcast.Repositories
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
         }
 
+        private static void _SetBaseFields(proposal_version_details pvd, PricingGuideOpenMarketDto baseDto)
+        {
+            var pv = pvd.proposal_versions;
+            //baseDto.ProposalVersionId = pv.id;
+            baseDto.ProposalDetailId = pvd.id;
+            //baseDto.PostType = (SchedulePostType?)pv.post_type;
+            //baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
+            //baseDto.Equivalized = pv.equivalized;
+            baseDto.ProposalId = pv.proposal.id;
+            baseDto.ProposalVersion = pv.proposal_version;
+            //baseDto.ProposalName = pv.proposal.name;
+            //baseDto.ProposalFlightEndDate = pv.end_date;
+            //baseDto.ProposalFlightStartDate = pv.start_date;
+            //baseDto.ProposalFlightWeeks = pv.proposal_version_flight_weeks.Where(q => q.proposal_version_id == pv.id)
+            //    .Select(f => new ProposalFlightWeek
+            //    {
+            //        EndDate = f.end_date,
+            //        IsHiatus = !f.active,
+            //        StartDate = f.start_date,
+            //        MediaWeekId = f.media_week_id
+            //    }).OrderBy(w => w.StartDate).ToList();
+
+            //baseDto.DetailDaypartId = pvd.daypart_id;
+            baseDto.ProposalDetailSpotLengthId = pvd.spot_length_id;
+            //baseDto.DetailTargetImpressions = pvd.impressions_total;
+            //baseDto.DetailTargetBudget = pvd.cost_total;
+            //baseDto.DetailCpm = ProposalMath.CalculateCpm(pvd.cost_total ?? 0, pvd.impressions_total);
+            baseDto.ProposalDetailFlightEndDate = pvd.end_date;
+            baseDto.ProposalDetailFlightStartDate = pvd.start_date;
+            //baseDto.DetailFlightWeeks = pvd.proposal_version_detail_quarters.SelectMany(quarter => quarter
+            //    .proposal_version_detail_quarter_weeks.Select(week =>
+            //        new ProposalFlightWeek
+            //        {
+            //            EndDate = week.end_date,
+            //            StartDate = week.start_date,
+            //            IsHiatus = week.is_hiatus,
+            //            MediaWeekId = week.media_week_id
+            //        })).OrderBy(w => w.StartDate).ToList();
+            baseDto.SingleProjectionBookId = pvd.single_projection_book_id;
+            baseDto.ShareProjectionBookId = pvd.share_projection_book_id;
+            //baseDto.HutProjectionBookId = pvd.hut_projection_book_id;
+            //baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
+        }
+
         public void DeleteProposal(int proposalId)
         {
             _InReadUncommitedTransaction(context =>
@@ -1670,7 +1714,53 @@ namespace Services.Broadcast.Repositories
 
         public PricingGuideOpenMarketDto GetPricingGuideRepresentionalWeek(int proposalDetailId)
         {
-            return null;
+            return _InReadUncommitedTransaction(context =>
+            {
+                var pv = context.proposal_version_details
+                    .Include(pvd => pvd.proposal_versions.proposal)
+                    .Include(pvd =>
+                        pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
+                    .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_programs)
+                    .Single(d => d.id == proposalDetailId,
+                        $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
+
+                var dto = new PricingGuideOpenMarketDto
+                {
+                    //Margin = pv.proposal_versions.margin
+                };
+
+                _SetBaseFields(pv, dto);
+
+                //dto.Criteria = new OpenMarketCriterion
+                //{
+                //    CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
+                //        new CpmCriteria { Id = c.id, MinMax = (MinMaxEnum)c.min_max, Value = c.value }).ToList(),
+                //    GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
+                //            new GenreCriteria()
+                //            {
+                //                Id = c.id,
+                //                Contain = (ContainTypeEnum)c.contain_type,
+                //                Genre = new LookupDto(c.genre_id, c.genre.name)
+                //            })
+                //        .ToList(),
+                //    ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
+                //        new ProgramCriteria
+                //        {
+                //            Id = c.id,
+                //            Contain = (ContainTypeEnum)c.contain_type,
+                //            Program = new LookupDto
+                //            {
+                //                Id = c.program_name_id,
+                //                Display = c.program_name
+                //            }
+                //        }).ToList()
+                //};             
+
+                return dto;
+            });
         }
     }
 }

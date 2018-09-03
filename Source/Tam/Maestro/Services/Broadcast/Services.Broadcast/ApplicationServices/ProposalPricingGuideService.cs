@@ -26,7 +26,7 @@ namespace Services.Broadcast.ApplicationServices
         public DateTime ProposalDetailFlightStartDate { get; set; }
         public DateTime ProposalDetailFlightEndDate { get; set; }
         public int ProposalDetailSpotLengthId { get; set; }
-        public List<PricingGuideMarket> Markets { get; set; }
+        public List<PricingGuideMarket> Markets { get; set; } = new List<PricingGuideMarket>();
         public int? SingleProjectionBookId { get; set; }
         public int? ShareProjectionBookId { get; set; }
     }
@@ -67,11 +67,19 @@ namespace Services.Broadcast.ApplicationServices
     {
         protected readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         protected readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IProposalProgramsCalculationEngine _ProposalProgramsCalculationEngine;
 
-        public ProposalPricingGuideGuideService(IDataRepositoryFactory broadcastDataRepositoryFactory, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine)
+        public ProposalPricingGuideGuideService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IProposalProgramsCalculationEngine proposalProgramsCalculationEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
+
         }
 
         public PricingGuideOpenMarketDto GetPricingGuideOpenMarketInventory(int proposalDetailId)
@@ -87,6 +95,10 @@ namespace Services.Broadcast.ApplicationServices
                 .GetStationProgramsForProposalDetail(pricingGuideDto.ProposalDetailFlightStartDate, pricingGuideDto.ProposalDetailFlightEndDate,
                     pricingGuideDto.ProposalDetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, pricingGuideDto.ProposalDetailId);
 
+            _SetFlightWeeks(programs);
+
+            _ProposalProgramsCalculationEngine.CalculateBlendedCpmForPrograms(programs, pricingGuideDto.ProposalDetailSpotLengthId);
+
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
             var postingBook = PropoeralsServiceHelper.GetBookId(pricingGuideDto);
 
@@ -96,6 +108,46 @@ namespace Services.Broadcast.ApplicationServices
 
             return pricingGuideDto;
         }
+
+        private void _SetFlightWeeks(IEnumerable<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.FlightWeeks = _GetFlightWeeks(program);
+            }
+        }
+
+        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto)
+        {
+            var nonNullableEndDate = programDto.EndDate ?? programDto.StartDate.AddYears(1);
+
+            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate);
+
+            var flighWeeks = new List<ProposalProgramFlightWeek>();
+
+            foreach (var displayMediaWeek in displayFlighWeeks)
+            {
+                var totalSpotsAllocated = programDto.Allocations.Count(x => x.MediaWeekId == displayMediaWeek.Id);
+                flighWeeks.Add(new ProposalProgramFlightWeek
+                {
+                    StartDate = displayMediaWeek.WeekStartDate,
+                    EndDate = displayMediaWeek.WeekEndDate,
+                    MediaWeekId = displayMediaWeek.Id,
+                    Rate = programDto.SpotCost,
+                    Allocations = new List<OpenMarketAllocationDto>
+                    {
+                        new OpenMarketAllocationDto
+                        {
+                            MediaWeekId = displayMediaWeek.Id,
+                            Spots = totalSpotsAllocated
+                        }
+                    }
+                });
+            }
+
+            return flighWeeks;
+        }
+
         private void _ApplyInventoryMarketRankings(int mediaMonthId, IEnumerable<PricingGuideMarket> inventoryMarkets)
         {
             var marketRankings =

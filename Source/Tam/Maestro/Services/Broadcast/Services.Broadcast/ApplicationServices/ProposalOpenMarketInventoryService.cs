@@ -395,7 +395,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyDaypartNames(programs);
             _ApplyProgramImpressions(programs, dto);
-            _ProposalProgramsCalculationEngine.ApplyBlendedCpmForEachProgram(programs, dto.DetailSpotLength);
+            _ProposalProgramsCalculationEngine.CalculateCpmForPrograms(programs, dto.DetailSpotLength);
 
             filteredProgramsWithAllocations.Clear();
             // todo: fix allocations
@@ -441,7 +441,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto)
         {
-            var nonNullableEndDate = programDto.EndDate.HasValue ? programDto.EndDate.Value : programDto.StartDate.AddYears(1);
+            var nonNullableEndDate = programDto.EndDate ?? programDto.StartDate.AddYears(1);
 
             var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate);
 

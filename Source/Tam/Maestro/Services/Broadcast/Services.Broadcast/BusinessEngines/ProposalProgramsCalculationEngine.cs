@@ -32,12 +32,21 @@ namespace Services.Broadcast.BusinessEngines
             int? targetUnit);
 
         /// <summary>
+        /// Calculates CPM for a list of programs
+        /// </summary>
+        /// <param name="programs"></param>
+        /// <param name="spotLength"></param>
+        /// <returns></returns>
+        void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
+
+
+        /// <summary>
         /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week.
         /// </summary>
         /// <param name="programs"></param>
         /// <param name="spotLength"></param>
         /// <returns></returns>
-        void ApplyBlendedCpmForEachProgram(List<ProposalProgramDto> programs, int spotLength);
+        void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
     }
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
@@ -253,15 +262,23 @@ namespace Services.Broadcast.BusinessEngines
             return total;
         }
 
-        public void ApplyBlendedCpmForEachProgram(List<ProposalProgramDto> programs, int spotLength)
+        public void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength)
         {
             foreach (var program in programs)
             {
-/*                var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
-                var totalCost = activeWeeks.Sum(w => w.Rate);
-                var totalImpressions = program.UnitImpressions * activeWeeks.Count;*/
+                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, program.UnitImpressions);
+            }
+        }
 
-                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, program.UnitImpressions); ;
+        public void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+                var totalImpressions = program.UnitImpressions * activeWeeks.Count;
+
+                program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
             }
         }
     }
