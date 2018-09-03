@@ -54,7 +54,7 @@ namespace Services.Broadcast.Repositories
                                         || (a.effective_date < flightStart.Date && a.end_date > flightEnd.Date))
                             .ToList();
 
-                        if (proposalMarketIds != null & proposalMarketIds.Count > 0)
+                        if (proposalMarketIds != null && proposalMarketIds.Count > 0)
                             manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
 
                         return (manifests.Select(m =>

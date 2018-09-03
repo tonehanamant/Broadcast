@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -72,6 +73,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalDetailId">Proposal detail id to filter by</param>
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
+
+        PricingGuideOpenMarketDto GetPricingGuideRepresentionalWeek(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1663,6 +1666,11 @@ namespace Services.Broadcast.Repositories
                     }                    
                 }                
             });
+        }
+
+        public PricingGuideOpenMarketDto GetPricingGuideRepresentionalWeek(int proposalDetailId)
+        {
+            return null;
         }
     }
 }
