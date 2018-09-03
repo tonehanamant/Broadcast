@@ -883,6 +883,14 @@
           <Property Name="calculated_impressions" Type="float" />
           <Property Name="calculated_rate" Type="money" />
         </EntityType>
+        <EntityType Name="station_inventory_spot_genres">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="station_inventory_spot_id" Type="int" Nullable="false" />
+          <Property Name="genre_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="station_inventory_spots">
           <Key>
             <PropertyRef Name="id" />
@@ -2167,6 +2175,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_station_inventory_spot_genres_genres">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="station_inventory_spot_genres" Type="Self.station_inventory_spot_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_spot_genres">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_spot_genres_station_inventory_spots">
+          <End Role="station_inventory_spots" Type="Self.station_inventory_spots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="station_inventory_spot_genres" Type="Self.station_inventory_spot_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_spots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_spot_genres">
+              <PropertyRef Name="station_inventory_spot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_station_inventory_spots_proposal_version_detail_quarter_weeks">
           <End Role="proposal_version_detail_quarter_weeks" Type="Self.proposal_version_detail_quarter_weeks" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -2280,6 +2314,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="station_inventory_manifest_generation" EntityType="Self.station_inventory_manifest_generation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_rates" EntityType="Self.station_inventory_manifest_rates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spot_audiences" EntityType="Self.station_inventory_spot_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="station_inventory_spot_genres" EntityType="Self.station_inventory_spot_genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spots" EntityType="Self.station_inventory_spots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
@@ -2674,6 +2709,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_station_inventory_spot_audiences_station_inventory_spots" Association="Self.FK_station_inventory_spot_audiences_station_inventory_spots">
             <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
             <End Role="station_inventory_spot_audiences" EntitySet="station_inventory_spot_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_spot_genres_genres" Association="Self.FK_station_inventory_spot_genres_genres">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_spot_genres_station_inventory_spots" Association="Self.FK_station_inventory_spot_genres_station_inventory_spots">
+            <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
+            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
           </AssociationSet>
           <AssociationSet Name="FK_station_inventory_spots_proposal_version_detail_quarter_weeks" Association="Self.FK_station_inventory_spots_proposal_version_detail_quarter_weeks">
             <End Role="proposal_version_detail_quarter_weeks" EntitySet="proposal_version_detail_quarter_weeks" />
@@ -3143,6 +3186,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_version_detail_proprietary_pricing_proposal_version_details" Association="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="proposal_version_detail_proprietary_pricing" EntitySet="proposal_version_detail_proprietary_pricing" />
+          </AssociationSet>
+          <EntitySet Name="station_inventory_spot_genres" EntityType="BroadcastModel.station_inventory_spot_genres" />
+          <AssociationSet Name="FK_station_inventory_spot_genres_genres" Association="BroadcastModel.FK_station_inventory_spot_genres_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_spot_genres_station_inventory_spots" Association="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots">
+            <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
+            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -4080,6 +4132,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
+          <NavigationProperty Name="station_inventory_spot_genres" Relationship="BroadcastModel.FK_station_inventory_spot_genres_genres" FromRole="genre" ToRole="station_inventory_spot_genres" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_cpm">
           <Key>
@@ -4637,6 +4690,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_station_inventory_spots_proposal_version_detail_quarter_weeks" FromRole="station_inventory_spots" ToRole="proposal_version_detail_quarter_weeks" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_spots_station_inventory_manifest" FromRole="station_inventory_spots" ToRole="station_inventory_manifest" />
           <NavigationProperty Name="station_inventory_spot_audiences" Relationship="BroadcastModel.FK_station_inventory_spot_audiences_station_inventory_spots" FromRole="station_inventory_spots" ToRole="station_inventory_spot_audiences" />
+          <NavigationProperty Name="station_inventory_spot_genres" Relationship="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots" FromRole="station_inventory_spots" ToRole="station_inventory_spot_genres" />
         </EntityType>
         <Association Name="FK_station_inventory_spot_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1">
@@ -5474,6 +5528,42 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="proposal_version_detail_proprietary_pricing">
               <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="station_inventory_spot_genres">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="station_inventory_spot_id" Type="Int32" Nullable="false" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_station_inventory_spot_genres_genres" FromRole="station_inventory_spot_genres" ToRole="genre" />
+          <NavigationProperty Name="station_inventory_spots" Relationship="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots" FromRole="station_inventory_spot_genres" ToRole="station_inventory_spots" />
+        </EntityType>
+        <Association Name="FK_station_inventory_spot_genres_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_spot_genres" Role="station_inventory_spot_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_spot_genres">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_spot_genres_station_inventory_spots">
+          <End Type="BroadcastModel.station_inventory_spots" Role="station_inventory_spots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.station_inventory_spot_genres" Role="station_inventory_spot_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_spots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_spot_genres">
+              <PropertyRef Name="station_inventory_spot_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6486,6 +6576,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="impressions_balance" ColumnName="impressions_balance" />
                 <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
                 <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_inventory_spot_genres">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_spot_genres">
+              <MappingFragment StoreEntitySet="station_inventory_spot_genres">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="station_inventory_spot_id" ColumnName="station_inventory_spot_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

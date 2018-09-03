@@ -34,7 +34,20 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
-      "GenreCriteria": [],
+      "GenreCriteria": [
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Comedy"
+          }
+        },
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Crime"
+          }
+        }
+      ],
       "GoalBudget": null,
       "GoalImpression": null,
       "HasPostingDataChanged": false,
@@ -47,6 +60,12 @@
           "Contain": 2,
           "Program": {
             "Display": "Open Market Program"
+          }
+        },
+        {
+          "Contain": 2,
+          "Program": {
+            "Display": "Test Program"
           }
         }
       ],

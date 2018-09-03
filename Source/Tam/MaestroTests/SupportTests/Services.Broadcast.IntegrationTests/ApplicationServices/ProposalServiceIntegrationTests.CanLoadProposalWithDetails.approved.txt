@@ -34,7 +34,36 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
-      "GenreCriteria": [],
+      "GenreCriteria": [
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Comedy"
+          },
+          "Id": 7115
+        },
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Crime"
+          },
+          "Id": 7116
+        },
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Entertainment"
+          },
+          "Id": 7117
+        },
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Entertainment"
+          },
+          "Id": 7118
+        }
+      ],
       "GoalBudget": null,
       "GoalImpression": null,
       "HasPostingDataChanged": false,
@@ -47,6 +76,12 @@
           "Contain": 2,
           "Program": {
             "Display": "Open Market Program"
+          }
+        },
+        {
+          "Contain": 2,
+          "Program": {
+            "Display": "Test Program"
           }
         }
       ],

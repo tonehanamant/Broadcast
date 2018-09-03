@@ -109,7 +109,6 @@ namespace Services.Broadcast.Converters
                 rowValidationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
                 throw new ExtractBvsException(message);
             }
-            
         }
 
         private List<string> _GetRowValidationResults(string[] fields, Dictionary<string, int> headers, int rowNumber)

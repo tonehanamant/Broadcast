@@ -100,5 +100,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<postlog_outbound_files> postlog_outbound_files { get; set; }
         public virtual DbSet<proposal_versions> proposal_versions { get; set; }
         public virtual DbSet<proposal_version_detail_proprietary_pricing> proposal_version_detail_proprietary_pricing { get; set; }
+        public virtual DbSet<station_inventory_spot_genres> station_inventory_spot_genres { get; set; }
     }
 }

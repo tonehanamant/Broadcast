@@ -409,6 +409,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDto = _ProposalService.GetProposalById(248);
                 //setting to null should create proposal version 2
                 proposalDto.Version = null;
+                proposalDto.Details[0].GenreCriteria.RemoveAll(x=>x.Contain == ContainTypeEnum.Include); //proposal cannot have include and exclude genres at the same time
 
                 var newProposal = _ProposalService.SaveProposal(proposalDto, "Integration Test", _CurrentDateTime);
 

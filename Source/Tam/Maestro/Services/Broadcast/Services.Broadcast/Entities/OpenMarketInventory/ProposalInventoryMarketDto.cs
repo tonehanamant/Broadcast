@@ -5,50 +5,32 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
 {
     public class ProposalInventoryMarketDto
     {
-        public ProposalInventoryMarketDto()
-        {
-            Stations = new List<InventoryMarketStation>();
-        }
-
         public string MarketName { get; set; }
         public int MarketId { get; set; }
         public double MarketSubscribers { get; set; }
         public int MarketRank { get; set; }
-        public List<InventoryMarketStation> Stations { get; set; }
+        public List<InventoryMarketStation> Stations { get; set; } = new List<InventoryMarketStation>();
 
         public class InventoryMarketStation
         {
-            public InventoryMarketStation()
-            {
-                Programs = new List<InventoryMarketStationProgram>();
-            }
-
             public int StationCode { get; set; }
             public string CallLetters { get; set; }
             public string LegacyCallLetters { get; set; }
             public string Affiliation { get; set; }
-            public List<InventoryMarketStationProgram> Programs { get; set; } 
-            
+            public List<InventoryMarketStationProgram> Programs { get; set; } = new List<InventoryMarketStationProgram>();
         }
 
         public class InventoryMarketStationProgram
-        {
-            public InventoryMarketStationProgram()
-            {
-                Genres = new List<LookupDto>();
-                FlightWeeks = new List<ProposalProgramFlightWeek>();
-                ProgramNames = new List<string>();
-                Dayparts = new List<LookupDto>();
-            } 
+        {            
             public int ProgramId { get; set; }
-            public List<string> ProgramNames { get; set; }
-            public List<LookupDto> Dayparts { get; set; }
+            public List<string> ProgramNames { get; set; } = new List<string>();
+            public List<LookupDto> Dayparts { get; set; } = new List<LookupDto>();
             public decimal TargetCpm { get; set; }
             public double TargetImpressions { get; set; }
             public double UnitImpressions { get; set; }
-            public List<LookupDto> Genres { get; set; }
+            public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
             public int Spots { get; set; }
-            public List<ProposalProgramFlightWeek> FlightWeeks { get; set; }
+            public List<ProposalProgramFlightWeek> FlightWeeks { get; set; } = new List<ProposalProgramFlightWeek>();
             public short StationCode { get; set; }
         }
     }

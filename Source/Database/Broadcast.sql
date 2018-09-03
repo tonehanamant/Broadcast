@@ -80,6 +80,35 @@ END
 
 /*************************************** BCOP-3515 - END *****************************************************/
 
+/*************************************** START BCOP-3517 *****************************************************/
+IF OBJECT_ID('station_inventory_spot_genres', 'U') IS NULL
+BEGIN
+	CREATE TABLE [station_inventory_spot_genres](
+		id INT IDENTITY(1,1) NOT NULL,
+		station_inventory_spot_id INT NOT NULL,
+		genre_id INT NOT NULL
+		CONSTRAINT [PK_station_inventory_spot_genres] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+
+	ALTER TABLE [dbo].[station_inventory_spot_genres]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_spot_genres_station_inventory_spots] FOREIGN KEY([station_inventory_spot_id])
+	REFERENCES [dbo].[station_inventory_spots] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[station_inventory_spot_genres] CHECK CONSTRAINT [FK_station_inventory_spot_genres_station_inventory_spots]
+
+	ALTER TABLE [dbo].[station_inventory_spot_genres]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_spot_genres_genres] FOREIGN KEY([genre_id])
+	REFERENCES [dbo].[genres] ([id])
+	ALTER TABLE [dbo].[station_inventory_spot_genres] CHECK CONSTRAINT [FK_station_inventory_spot_genres_genres]
+
+	CREATE INDEX IX_station_inventory_spot_genres_genre_id ON [station_inventory_spot_genres] ([genre_id]);
+	CREATE INDEX IX_station_inventory_spot_genres_station_inventory_spot_id ON [station_inventory_spot_genres] ([station_inventory_spot_id]);
+END
+GO
+
+/*************************************** END BCOP-3517 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

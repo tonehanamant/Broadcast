@@ -1086,7 +1086,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 Id = c.id,
                                 Contain = (ContainTypeEnum)c.contain_type,
-                                Genre = new LookupDto(c.genre_id, "")
+                                Genre = new LookupDto(c.genre_id, c.genre.name)
                             })
                         .ToList(),
                     ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>

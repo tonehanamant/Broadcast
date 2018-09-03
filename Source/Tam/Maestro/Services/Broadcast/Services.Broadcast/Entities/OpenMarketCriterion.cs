@@ -5,16 +5,9 @@ namespace Services.Broadcast.Entities
 {
     public class OpenMarketCriterion
     {
-        public OpenMarketCriterion()
-        {
-            ProgramNameSearchCriteria = new List<ProgramCriteria>();
-            GenreSearchCriteria = new List<GenreCriteria>();
-            CpmCriteria = new List<CpmCriteria>();
-        }
-
-        public List<CpmCriteria> CpmCriteria { get; set; }
-        public List<ProgramCriteria> ProgramNameSearchCriteria { get; set; }
-        public List<GenreCriteria> GenreSearchCriteria { get; set; }
+        public List<CpmCriteria> CpmCriteria { get; set; } = new List<CpmCriteria>();
+        public List<ProgramCriteria> ProgramNameSearchCriteria { get; set; } = new List<ProgramCriteria>();
+        public List<GenreCriteria> GenreSearchCriteria { get; set; } = new List<GenreCriteria>();
     }
 
     public class ProgramCriteria

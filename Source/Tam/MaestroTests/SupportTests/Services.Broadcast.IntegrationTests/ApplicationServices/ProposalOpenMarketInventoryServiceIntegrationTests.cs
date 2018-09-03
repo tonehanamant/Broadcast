@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
-                jsonResolver.Ignore(typeof (ProposalProgramDto), "ManifestId");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "ManifestId");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
@@ -209,7 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
 
-                Assert.IsTrue(filteredDto.Markets.Count == 1) ;
+                Assert.IsTrue(filteredDto.Markets.Count == 1);
             }
         }
 
@@ -335,12 +335,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
                 var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416,413 );
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
-                
-                AllocationProgram(proposalDetailId, programId,proposal.FlightWeeks.First().MediaWeekId);
+
+                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
 
                 dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
 
@@ -354,7 +354,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private void AllocationProgram(int proposalDetailId, int programId,int mediaWeekId)
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventory_Refined()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                int proposalDetailId = 7;
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+                                
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(dto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventory_RefineOnlyIncludeGenre()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    Criteria = new OpenMarketCriterion
+                    {
+                        GenreSearchCriteria = new List<GenreCriteria> { new GenreCriteria { Contain = ContainTypeEnum.Include, Genre = new LookupDto { Id = 15 } } }
+                    },
+                    ProposalDetailId = 7
+                };
+                var dto = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(dto, jsonSettings));
+            }
+        }
+
+        private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {
             var request = new OpenMarketAllocationSaveRequest
             {
@@ -655,7 +712,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 };
-                
+
                 var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
                 // get allocations before filter
                 var rawAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>().GetProposalDetailAllocations(request.ProposalDetailId);
@@ -774,7 +831,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null,  null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -869,7 +926,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ClearExistingCriteria_Deletes_OldGenreCriteria_And_AddNewGenreCriteria()
         {
             var deleteCriteriaIds = new List<int> { 420 };
-            var newCriteria = new List<GenreCriteria>(123) { new GenreCriteria { Contain = ContainTypeEnum.Include} };
+            var newCriteria = new List<GenreCriteria>(123) { new GenreCriteria { Contain = ContainTypeEnum.Include } };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
             mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(),
@@ -1148,7 +1205,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                const int programId = 26684;
+                const int programId = 46003;
 
                 var request = new OpenMarketAllocationSaveRequest
                 {
@@ -1180,7 +1237,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var firstAllocation = allocations.First();
 
-                Assert.AreEqual(10, allocations.Count);
+                Assert.AreEqual(11, allocations.Count);
                 Assert.AreEqual(programId, firstAllocation.ManifestId);
             }
         }
@@ -1317,7 +1374,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = ProposalTestHelper.CreateProposal();
-                
+
                 // this has 3 allocation with dayparts: M 8PM-9PM;  TU 8PM - 10PM; SA 5:30PM - 9PM
                 // the proposal detail has daypart  M-SU 8AM-11PM.
                 // if we update the proposal to M-SU 9PM-11PM, that should remove allocation for SA 5:30PM - 9PM and M 8PM-9PM; 
@@ -1334,7 +1391,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailQuarterWeekId");
                 jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailId");
-                
+
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
