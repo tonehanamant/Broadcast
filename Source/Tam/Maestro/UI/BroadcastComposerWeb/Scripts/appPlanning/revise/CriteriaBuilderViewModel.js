@@ -23,7 +23,6 @@
 //REVISED version for open from React - remove ProposalView dependencies
 function CriteriaBuilderViewModel(inventoryView) {
     var $scope = this;
-
     /*** PROPERTIES ***/
 
     $scope.Controller = inventoryView.PlanningController;
@@ -45,7 +44,8 @@ function CriteriaBuilderViewModel(inventoryView) {
 
     $scope.Genres = ko.observableArray();
     $scope.ProgramNamesOptions = ko.observableArray();
-    $scope.Options = ko.observableArray(['Program Name', 'CPM', 'Genre']);
+    //$scope.Options = ko.observableArray(['Program Name', 'CPM', 'Genre']);
+    $scope.Options = ko.observableArray(['CPM']);
     $scope.SelectedOption = ko.observable();
     $scope.SelectedOption.subscribe(function (option) {
         if (option && option != 'none') {
