@@ -48,7 +48,7 @@ export class ErrorModal extends Component {
                     <h4 id="default_error_text" className="zone-red-bold">{errors[error].error}</h4>
                   }
                   {errors[error].message &&
-                    <p>{errors[error].message}</p>
+                    <div dangerouslySetInnerHTML={{ __html: errors[error].message }} />
                   }
                   {errors[error].exception &&
                     <p>{errors[error].exception}</p>

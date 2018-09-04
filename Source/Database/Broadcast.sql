@@ -52,6 +52,76 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** BEGIN BCOP-3510 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('spot_tracker_files'))
+BEGIN
+	CREATE TABLE [spot_tracker_files](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [varchar](127) NOT NULL,
+		[start_date] [date] NOT NULL,
+		[end_date] [date] NOT NULL,
+		[file_hash] [varchar](63) NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+	 CONSTRAINT [PK_spot_tracker_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('spot_tracker_file_details'))
+BEGIN
+	CREATE TABLE [dbo].[spot_tracker_file_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[spot_tracker_file_id] [int] NOT NULL,
+		[client] [varchar](15) NULL,
+		[client_name] [varchar](63) NULL,
+		[advertiser] [varchar](63) NULL,
+		[release_name] [varchar](63),
+		[isci] [varchar](63) NOT NULL,
+		[spot_length_id] [int] NULL,
+		[spot_length] [int] NOT NULL,
+		[country] [varchar](63) NULL,
+		[rank] [int] NULL,
+		[market] [varchar](63),
+		[market_code] [int] NULL,
+		[station] [varchar](15) NOT NULL,
+		[station_name] [varchar](64) NULL,
+		[affiliate] [varchar](15) NULL,
+		[date_aired] [date] NOT NULL,
+		[day_of_week] [varchar](2),
+		[daypart] [varchar](10),
+		[time_aired] [int] NOT NULL,
+		[program_name] [varchar](255),
+		[encode_date] [date] NULL,
+		[encode_time] [int] NULL,
+		[rel_type] [varchar](15),
+		[estimate_id] [int] NOT NULL,
+		[identifier_2] [int] NULL,
+		[identifier_3] [int] NULL,
+		[sid] [int] NULL,
+		[discid] [int] NULL	
+	 CONSTRAINT [PK_spot_tracker_file_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[spot_tracker_file_details]  WITH CHECK ADD  CONSTRAINT [FK_spot_tracker_file_spot_tracker_file_details] FOREIGN KEY([spot_tracker_file_id])
+	REFERENCES [dbo].[spot_tracker_files] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[spot_tracker_file_details] CHECK CONSTRAINT [FK_spot_tracker_file_spot_tracker_file_details]
+
+	ALTER TABLE [dbo].[spot_tracker_file_details]  WITH CHECK ADD  CONSTRAINT [FK_spot_tracker_file_details_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[spot_tracker_file_details] CHECK CONSTRAINT [FK_spot_tracker_file_details_spot_lengths]
+END
+/*************************************** END BCOP-3510 *****************************************************/
+
 
 /*************************************** BCOP-3515 *****************************************************/
 

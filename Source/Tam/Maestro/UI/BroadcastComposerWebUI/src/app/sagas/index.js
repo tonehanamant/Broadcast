@@ -2,6 +2,7 @@ import * as appSaga from './app';
 import * as postSaga from './post';
 import * as postPrePostingSaga from './postPrePosting';
 import * as planningSaga from './planning';
+import * as trackerSaga from './tracker';
 
 export default function* rootSaga() {
   yield [
@@ -66,5 +67,6 @@ export default function* rootSaga() {
     planningSaga.watchRequestPlanningFiltered(),
     planningSaga.watchRerunPostScrubing(),
     planningSaga.watchLoadOpenMarketData(),
+    trackerSaga.watchUploadTrackerFile(),
   ];
 }

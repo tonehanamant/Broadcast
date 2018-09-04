@@ -72,6 +72,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
             instance.RegisterType<IPostRepository, PostRepository>();
             instance.RegisterType<IPostLogRepository, PostLogRepository>();
+            instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
 
             WasRegistered = true;
         }

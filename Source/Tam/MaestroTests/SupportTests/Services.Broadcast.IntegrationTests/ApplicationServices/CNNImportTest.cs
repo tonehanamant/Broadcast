@@ -53,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                RatesStream = stream,
+                StreamData = stream,
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
@@ -110,7 +110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                RatesStream = stream,                
+                StreamData = stream,                
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
@@ -153,7 +153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                RatesStream = stream,
+                StreamData = stream,
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
@@ -199,7 +199,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                RatesStream = stream,
+                StreamData = stream,
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
             importer.LoadFromSaveRequest(request);
@@ -222,7 +222,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new InventoryFileSaveRequest()
             {
                 FileName = filename,
-                RatesStream = stream,
+                StreamData = stream,
                 EffectiveDate = new DateTime(2016, 10, 31)
             };
 
@@ -268,7 +268,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest()
                 {
                     FileName = filename,
-                    RatesStream = stream,
+                    StreamData = stream,
                     EffectiveDate = new DateTime(2016, 10, 31)
                 };
                 importer.LoadFromSaveRequest(request);

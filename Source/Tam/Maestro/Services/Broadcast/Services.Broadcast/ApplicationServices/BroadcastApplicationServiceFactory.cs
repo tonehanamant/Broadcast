@@ -56,9 +56,11 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ITransactionHelper, TransactionHelper>();
             unityContainer.RegisterType<ITrackerService, TrackerService>();
             unityContainer.RegisterType<IBvsPostingEngine, BvsBvsPostingEngine>();
+            unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
             unityContainer.RegisterType<IScxConverter, ScxConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
+            unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
@@ -121,6 +123,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
             unityContainer.RegisterType<IPostReportService, PostReportService>();
             unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();
+            unityContainer.RegisterType<ISpotTrackerService, SpotTrackerService>();
 
             unityContainer.RegisterType<IPostLogPreprocessingService, PostLogPreprocessingService>();
 

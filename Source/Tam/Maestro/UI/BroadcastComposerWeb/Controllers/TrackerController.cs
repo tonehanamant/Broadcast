@@ -64,7 +64,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No BVS file data received.");
             }
 
-            BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name));
         }
 
@@ -77,7 +77,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No Sigma file data received.");
             }
 
-            BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name, true));
         }
 

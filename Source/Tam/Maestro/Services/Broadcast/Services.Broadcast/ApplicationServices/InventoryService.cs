@@ -262,7 +262,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var startTime = DateTime.Now;
 
-                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate);
+                fileImporter.ExtractFileData(request.StreamData, inventoryFile, request.EffectiveDate);
 
                 var endTime = DateTime.Now;
 

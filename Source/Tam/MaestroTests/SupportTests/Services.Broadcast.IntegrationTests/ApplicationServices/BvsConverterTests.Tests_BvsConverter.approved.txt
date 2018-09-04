@@ -1,5 +1,7 @@
 ﻿{
-  "BvsFileDetails": [
+  "CreatedBy": "Tests_BvsConverter",
+  "EndDate": "2017-03-13T00:00:00",
+  "FileDetails": [
     {
       "Advertiser": "BEIERS HERSHEY",
       "Affiliate": "IND",
@@ -7,6 +9,7 @@
       "DateAired": "2017-03-13T00:00:00",
       "EstimateId": 333444,
       "HasLeadInScheduleMatches": false,
+      "Id": 0,
       "Isci": "AAABBB",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
@@ -34,6 +37,7 @@
       "DateAired": "2017-03-13T00:00:00",
       "EstimateId": 555666,
       "HasLeadInScheduleMatches": false,
+      "Id": 0,
       "Isci": "CCCDDD",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
@@ -61,6 +65,7 @@
       "DateAired": "2017-03-13T00:00:00",
       "EstimateId": 333444,
       "HasLeadInScheduleMatches": false,
+      "Id": 0,
       "Isci": "AAABBB",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
@@ -88,6 +93,7 @@
       "DateAired": "2017-03-13T00:00:00",
       "EstimateId": 555666,
       "HasLeadInScheduleMatches": false,
+      "Id": 0,
       "Isci": "CCCDDD",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
@@ -115,6 +121,7 @@
       "DateAired": "2017-03-13T00:00:00",
       "EstimateId": 333444,
       "HasLeadInScheduleMatches": false,
+      "Id": 0,
       "Isci": "AAABBB",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
@@ -142,6 +149,7 @@
       "DateAired": "2017-03-13T00:00:00",
       "EstimateId": 333444,
       "HasLeadInScheduleMatches": false,
+      "Id": 0,
       "Isci": "AAABBB",
       "LinkedToBlock": false,
       "LinkedToLeadin": false,
@@ -163,8 +171,6 @@
       "TimeAired": 34617
     }
   ],
-  "CreatedBy": "Tests_BvsConverter",
-  "EndDate": "2017-03-13T00:00:00",
   "FileHash": "hash",
   "Name": "BVS Load For Various Tests.xlsx",
   "StartDate": "2017-03-13T00:00:00"

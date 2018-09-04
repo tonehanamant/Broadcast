@@ -22,6 +22,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_detail_criteria_show_types = new HashSet<proposal_version_detail_criteria_show_types>();
             this.proposal_version_detail_quarters = new HashSet<proposal_version_detail_quarters>();
             this.proposal_version_detail_proprietary_pricing = new HashSet<proposal_version_detail_proprietary_pricing>();
+            this.proposal_buy_files = new HashSet<proposal_buy_files>();
         }
     
         public int id { get; set; }
@@ -66,5 +67,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }
         public virtual ICollection<proposal_version_detail_proprietary_pricing> proposal_version_detail_proprietary_pricing { get; set; }
+        public virtual ICollection<proposal_buy_files> proposal_buy_files { get; set; }
     }
 }
