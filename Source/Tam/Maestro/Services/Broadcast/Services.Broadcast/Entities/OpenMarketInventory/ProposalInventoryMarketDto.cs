@@ -3,12 +3,19 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.OpenMarketInventory
 {
-    public class ProposalInventoryMarketDto
+    public interface IInventoryMarket
+    {
+        int MarketId { get; set; }
+        int MarketRank { get; set; }
+    }
+
+
+    public class ProposalInventoryMarketDto : IInventoryMarket
     {
         public string MarketName { get; set; }
         public int MarketId { get; set; }
-        public double MarketSubscribers { get; set; }
         public int MarketRank { get; set; }
+        public double MarketSubscribers { get; set; }
         public List<InventoryMarketStation> Stations { get; set; } = new List<InventoryMarketStation>();
 
         public class InventoryMarketStation

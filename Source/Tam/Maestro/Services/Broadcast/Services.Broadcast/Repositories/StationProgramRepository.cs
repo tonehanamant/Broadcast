@@ -1,21 +1,15 @@
-﻿using System.Data.Common;
-using System.Data.Entity;
-using System.IO.Compression;
-using System.Management.Automation;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -158,12 +152,5 @@ namespace Services.Broadcast.Repositories
                     });
             }
         }
-    }
-
-    public class StationInventorySpots
-    {
-        public int ManifestId { get; set; }
-        public int MediaWeekId { get; set; }
-        public int? ProposalVersionDetailQuarterWeekId { get; set; }
     }
 }

@@ -91,15 +91,10 @@ namespace BroadcastComposerWeb.Controllers
         }
         [HttpGet]
         [Route("Detail/PricingGuide/Grid/{proposalId}/{detailId}")]
-        public BaseResponse<ProposalDetailPricingGuideGridDto> GetOpenMarketPricingGuideGrid(int proposalId,int detailId)
+        public BaseResponse<ProposalDetailPricingGuideGridDto> GetOpenMarketPricingGuideGrid(ProposalDetailPricingGuidGridRequestDto request)
         {
-            var request = new ProposalDetailPricingGuidGridRequestDto()
-            {
-                ProposalId = proposalId,
-                ProposalDetailId = detailId
-            };
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>()
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
                     .GetProposalDetailPricingGuideGridDto(request));
         }
     }

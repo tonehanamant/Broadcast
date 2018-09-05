@@ -23,6 +23,8 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailOpenMarketInventoryDto UpdateOpenMarketInventoryTotals(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
+        ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(ProposalDetailPricingGuidGridRequestDto request);
+        PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -55,8 +57,8 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId)
         {
-            ProposalDetailDto proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
-            OpenMarketRefineProgramsRequest request = new OpenMarketRefineProgramsRequest
+            var proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
+            var request = new OpenMarketRefineProgramsRequest
             {
                 ProposalDetailId = proposalDetailId,
                 Criteria = new OpenMarketCriterion
@@ -66,7 +68,6 @@ namespace Services.Broadcast.ApplicationServices
                 }
             };
             return RefinePrograms(request);
-
         }
 
         private static void _SetProposalOpenMarketDisplayFilters(ProposalDetailOpenMarketInventoryDto dto)
@@ -126,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ApplyProgramAndGenreFilter(ProposalDetailOpenMarketInventoryDto dto, OpenMarketRefineProgramsRequest request)
         {
-            List<ProposalInventoryMarketDto.InventoryMarketStationProgram> programsToExclude = new List<ProposalInventoryMarketDto.InventoryMarketStationProgram>();
+            var programsToExclude = new List<ProposalInventoryMarketDto.InventoryMarketStationProgram>();
             var programNamesToExclude = request.Criteria.ProgramNameSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Program.Display).ToList();
             var genreIdsToInclude = request.Criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Include).Select(x => x.Genre.Id).ToList();
             var genreIdsToExclude = request.Criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Genre.Id).ToList();
@@ -134,7 +135,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 foreach (var id in genreIdsToInclude)
                 {
-                    if (!program.Genres.Any(x => x.Id == id))
+                    if (program.Genres.All(x => x.Id != id))
                     {
                         programsToExclude.Add(program);
                     }
@@ -146,7 +147,7 @@ namespace Services.Broadcast.ApplicationServices
                         programsToExclude.Add(program);
                     }
                 }
-                foreach (string name in programNamesToExclude)
+                foreach (var name in programNamesToExclude)
                 {
                     if (program.ProgramNames.Any(x=> x.Equals(name)))
                     {
@@ -349,7 +350,7 @@ namespace Services.Broadcast.ApplicationServices
                 .GetStationProgramsForProposalDetail(dto.DetailFlightStartDate, dto.DetailFlightEndDate,
                     dto.DetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, dto.DetailId);
 
-            _SetFlightWeeks(dto, programs);
+            _SetFlightWeeks(programs);
 
             //// represents the actual program names before any refine is applied
             dto.RefineFilterPrograms = programs.Where(l => l != null).SelectMany(z => z.ManifestDayparts.Select(md => md.ProgramName))
@@ -422,7 +423,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
-            var postingBook = PropoeralsServiceHelper.GetBookId(dto);
+            var postingBook = ProposalServiceHelper.GetBookId(dto);
             _ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
             _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
 
@@ -431,7 +432,7 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyDefaultSorting(dto);
         }
 
-        private void _SetFlightWeeks(ProposalDetailOpenMarketInventoryDto dto, IEnumerable<ProposalProgramDto> programs)
+        private void _SetFlightWeeks(IEnumerable<ProposalProgramDto> programs)
         {
             foreach (var program in programs)
             {
@@ -674,7 +675,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _ApplyInventoryMarketRankings(int mediaMonthId, IEnumerable<ProposalInventoryMarketDto> inventoryMarkets)
+        private void _ApplyInventoryMarketRankings(int mediaMonthId, IEnumerable<IInventoryMarket> inventoryMarkets)
         {
             var marketRankings =
                 BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
@@ -682,8 +683,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var inventoryMarket in inventoryMarkets)
             {
-                int rank;
-                marketRankings.TryGetValue(inventoryMarket.MarketId, out rank);
+                marketRankings.TryGetValue(inventoryMarket.MarketId, out var rank);
                 inventoryMarket.MarketRank = rank;
             }
         }
@@ -868,6 +868,324 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return allocationsToRemove;
+        }
+
+        public ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(ProposalDetailPricingGuidGridRequestDto request)
+        {
+            // return mock data for now
+            var result = new ProposalDetailPricingGuideGridDto()
+            {
+                ProposalId = request.ProposalId,
+                ProposalDetailId = request.ProposalDetailId,
+                OpenMarkets = new List<ProposalDetailPricingGuideGridDto.OpenMarket>()
+                {
+                    new ProposalDetailPricingGuideGridDto.OpenMarket()
+                    {
+                        MarketName = "New York (Big Apple)",
+                        MarketRank = 1,
+                        MarketId = 123,
+                        Stations = new List<ProposalDetailPricingGuideGridDto.OpenMarketStation>()
+                        {
+                            new ProposalDetailPricingGuideGridDto.OpenMarketStation()
+                            {
+                                CallLetters = "WNBC-TV",
+                                LegacyCallLetters = "WNBC",
+                                StationCode = 123,
+                                Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
+                                {
+                                    new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
+                                    {
+                                        ProgramName = "Tonight Show",
+                                        Spots = 2,
+                                        Impressions = 1029333,
+                                        OvernightImpressions = 131999,
+                                        CPM = 10.34M,
+                                        Cost = Convert.ToDecimal(2*10.34),
+                                        Daypart = new LookupDto()
+                                            {
+                                                Display = "M-F 10PM - 11AM",
+                                                Id = 123
+                                            },
+                                        ProgramId = 1233,
+                                    },
+                                    new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
+                                    {
+                                    ProgramName = "Late Show",
+                                    Spots = 1,
+                                    Impressions = 1029333,
+                                    OvernightImpressions = 131999,
+                                    CPM = 8.34M,
+                                    Cost = Convert.ToDecimal(1*8.34),
+
+                                    Daypart = new LookupDto()
+                                    {
+                                        Display = "M-F 11AM - 12AM",
+                                        Id = 124
+                                    },
+                                    ProgramId = 1233,
+                                }
+                                }
+                            },
+                            new ProposalDetailPricingGuideGridDto.OpenMarketStation()
+                            {
+                                CallLetters = "WKEW",
+                                LegacyCallLetters = "WKEW-TV",
+                                StationCode = 123,
+                                Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
+                                {
+                                    new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
+                                    {
+                                        ProgramName = "Mid-day Drama",
+                                        Spots = 3,
+                                        Impressions = 29333,
+                                        OvernightImpressions = 1999,
+                                        CPM = 5.34M,
+                                        Cost = Convert.ToDecimal(3*5.34),
+                                        Daypart = new LookupDto()
+                                            {
+                                                Display = "M-F 1PM - 2:30AM",
+                                                Id = 123
+                                            },
+                                        ProgramId = 145,
+                                    }
+                                }
+                            }
+
+                        }
+                    },
+                                        new ProposalDetailPricingGuideGridDto.OpenMarket()
+                    {
+                        MarketName = "Los Angelas",
+                        MarketRank = 2,
+                        MarketId = 124,
+                        Stations = new List<ProposalDetailPricingGuideGridDto.OpenMarketStation>()
+                        {
+                            new ProposalDetailPricingGuideGridDto.OpenMarketStation()
+                            {
+                                CallLetters = "KTLA-TV",
+                                LegacyCallLetters = "KTLA",
+                                StationCode = 136,
+                                Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
+                                {
+                                    new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
+                                    {
+                                        ProgramName = "Conan",
+                                        Spots = 4,
+                                        Impressions = 3027333,
+                                        OvernightImpressions = 13199,
+                                        CPM = 15.34M,
+                                        Cost = Convert.ToDecimal(4*15.34M),
+                                        Daypart = new LookupDto()
+                                            {
+                                                Display = "M-F 10PM - 11AM",
+                                                Id = 1234
+                                            },
+                                        ProgramId = 1233,
+                                    },
+                                    new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
+                                    {
+                                    ProgramName = "After conana",
+                                    Spots = 1,
+                                    Impressions = 1029333,
+                                    OvernightImpressions = 131999,
+                                    CPM = 8.34M,
+                                    Cost = Convert.ToDecimal(1*8.34),
+
+                                    Daypart = new LookupDto()
+                                    {
+                                        Display = "M-F 11AM - 12AM",
+                                        Id = 1246
+                                    },
+                                    ProgramId = 1233,
+                                }
+                                }
+                            },
+                            new ProposalDetailPricingGuideGridDto.OpenMarketStation()
+                            {
+                                CallLetters = "KABC-TV",
+                                LegacyCallLetters = "KABC",
+                                StationCode = 123,
+                                Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
+                                {
+                                    new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
+                                    {
+                                        ProgramName = "Mid-day Drama",
+                                        Spots = 3,
+                                        Impressions = 29333,
+                                        OvernightImpressions = 1999,
+                                        CPM = 5.34M,
+                                        Cost = Convert.ToDecimal(3*5.34),
+                                        Daypart = new LookupDto()
+                                            {
+                                                Display = "M-F 1PM - 2:30AM",
+                                                Id = 123
+                                            },
+                                        ProgramId = 145,
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            };
+
+            result.OpenMarkets.ForEach(m => m.Cost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
+            result.OpenMarkets.ForEach(m => m.Spots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
+            result.OpenMarkets.ForEach(m => m.Impressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
+            result.OpenMarkets.ForEach(m => m.OvernightImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.OvernightImpressions)));
+            result.OpenMarkets.ForEach(m => m.StationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
+
+            // grand total
+            result.Spots = result.OpenMarkets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Sum(p => p.Spots);
+            result.Cost = result.OpenMarkets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Sum(p => p.Cost);
+            result.Impressions = result.OpenMarkets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Sum(p => p.Impressions);
+            result.OvernightImpressions = result.OpenMarkets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Sum(p => p.OvernightImpressions);
+            result.StationImpressions = result.OpenMarkets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Sum(p => p.StationImpressions);
+
+            return result;
+        }
+
+        private List<PricingGuideMarket> _GroupProgramsByMarketAndStationForPricingGuide(IEnumerable<ProposalProgramDto> programs)
+        {
+            var programsByMarket = programs.GroupBy(p => p.Market.Id);
+            var inventoryMarkets = programsByMarket.Select(
+                g => new PricingGuideMarket
+                {
+                    MarketId = g.Key,
+                    MarketName = g.First().Market.Display,
+                    Stations = g.GroupBy(p => p.Station.StationCode).Select(s => new PricingGuideStation
+                    {
+                        Affiliation = s.First().Station.Affiliation,
+                        CallLetters = s.First().Station.CallLetters,
+                        LegacyCallLetters = s.First().Station.LegacyCallLetters,
+                        StationCode = s.First().Station.StationCode,
+                        Programs = s.Select(p => new PricingGuideProgram
+                        {
+                            ProgramId = p.ManifestId,
+                            ProgramNames = p.ManifestDayparts.Select(md => md.ProgramName).ToList(),
+                            Cpm = p.TargetCpm,
+                            UnitImpressions = p.UnitImpressions,
+                            TargetImpressions = p.TargetImpressions,
+                            Dayparts = p.DayParts,
+                            Spots = p.TotalSpots,
+                            FlightWeeks = p.FlightWeeks,
+                            Genres = p.Genres,
+                            StationCode = p.Station.StationCode
+                        }).ToList()
+                    }).ToList()
+                }).ToList();
+
+            return inventoryMarkets;
+        }
+
+        private static void _ApplyDefaultSortingForPricingGuide(PricingGuideOpenMarketInventory proposalInventory)
+        {
+            var sortedMarkets = proposalInventory.Markets.OrderBy(m => m.MarketRank).ToList();
+
+            foreach (var market in sortedMarkets)
+            {
+                market.Stations = market.Stations.OrderBy(s => s.Programs.Min(p => p.Cpm)).ThenBy(s => s.LegacyCallLetters).ToList();
+                foreach (var station in market.Stations)
+                {
+                    station.Programs = station.Programs.OrderBy(p => p.Cpm).ToList();
+                }
+            }
+
+            proposalInventory.Markets = sortedMarkets;
+        }
+
+        private void _ApplyProgramAndGenreFilterForPricingGuide(PricingGuideOpenMarketInventory dto, OpenMarketRefineProgramsRequest request)
+        {
+            var programsToExclude = new List<PricingGuideProgram>();
+            var programNamesToExclude = request.Criteria.ProgramNameSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Program.Display).ToList();
+            var genreIdsToInclude = request.Criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Include).Select(x => x.Genre.Id).ToList();
+            var genreIdsToExclude = request.Criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Genre.Id).ToList();
+            dto.Markets.ForEach(market => market.Stations.ForEach(station => station.Programs.ForEach(program =>
+            {
+                foreach (var id in genreIdsToInclude)
+                {
+                    if (program.Genres.All(x => x.Id != id))
+                    {
+                        programsToExclude.Add(program);
+                    }
+                }
+                foreach (var id in genreIdsToExclude)
+                {
+                    if (program.Genres.Any(x => x.Id == id))
+                    {
+                        programsToExclude.Add(program);
+                    }
+                }
+                foreach (var name in programNamesToExclude)
+                {
+                    if (program.ProgramNames.Any(x => x.Equals(name)))
+                    {
+                        programsToExclude.Add(program);
+                    }
+                }
+            })));
+
+            dto.Markets.ForEach(x => x.Stations.ForEach(y => y.Programs.RemoveAll(z => programsToExclude.Contains(z))));
+        }
+
+        public PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId)
+        {
+            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            var stationProgramRepository =
+                BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+            var proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
+            var pricingGuideDto = proposalRepository.GetPricingGuideRepresentionalWeek(proposalDetailId);
+            var proposalMarketIds = ProposalMarketsCalculationEngine
+                .GetProposalMarketsList(pricingGuideDto.ProposalId, pricingGuideDto.ProposalVersion, pricingGuideDto.ProposalDetailId)
+                .Select(m => (short)m.Id).ToList();
+            var programs = stationProgramRepository
+                .GetStationProgramsForProposalDetail(pricingGuideDto.ProposalDetailFlightStartDate, pricingGuideDto.ProposalDetailFlightEndDate,
+                    pricingGuideDto.ProposalDetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, pricingGuideDto.ProposalDetailId);
+
+            _SetFlightWeeks(programs);
+
+            var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(pricingGuideDto.ProposalDetailDaypartId);
+
+            programs.RemoveAll(p =>
+            {
+                return
+                    p.ManifestDayparts.All(
+                        d => !DaypartCache.GetDisplayDaypart(d.DaypartId).Intersects(proposalDetailDaypart));
+
+            });
+
+            if (!programs.Any())
+            {
+                return pricingGuideDto;
+            }
+
+            _ApplyDaypartNames(programs);
+            _ApplyProgramImpressions(programs, pricingGuideDto);
+            _ProposalProgramsCalculationEngine.CalculateBlendedCpmForPrograms(programs, pricingGuideDto.ProposalDetailSpotLengthId);
+
+            var inventoryMarkets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
+            var postingBook = ProposalServiceHelper.GetBookId(pricingGuideDto);
+
+            _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
+
+            pricingGuideDto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
+
+            _ApplyDefaultSortingForPricingGuide(pricingGuideDto);
+
+            var request = new OpenMarketRefineProgramsRequest
+            {
+                ProposalDetailId = proposalDetailId,
+                Criteria = new OpenMarketCriterion
+                {
+                    GenreSearchCriteria = proposalDetail.GenreCriteria,
+                    ProgramNameSearchCriteria = proposalDetail.ProgramCriteria,
+                }
+            };
+
+            _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideDto, request);
+
+            return pricingGuideDto;
         }
     }
 }

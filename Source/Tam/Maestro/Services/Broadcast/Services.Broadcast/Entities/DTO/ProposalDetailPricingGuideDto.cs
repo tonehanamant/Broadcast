@@ -29,7 +29,6 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public string MarketName { get; set; }
             public int MarketRank { get; set; }
             public int MarketId { get; set; }
-
             public List<OpenMarketStation> Stations { get; set; }
             public int Spots { get; set; }
             public decimal Cost { get; set; }

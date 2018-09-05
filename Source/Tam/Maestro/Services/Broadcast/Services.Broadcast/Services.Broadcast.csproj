@@ -248,6 +248,7 @@
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventory.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuidGridRequestDto.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="Entities\ProprietaryPricingDto.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
+    <Compile Include="Entities\StationInventorySpots.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />

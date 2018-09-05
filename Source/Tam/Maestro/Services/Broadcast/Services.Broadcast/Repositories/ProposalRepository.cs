@@ -74,7 +74,7 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
 
-        PricingGuideOpenMarketDto GetPricingGuideRepresentionalWeek(int proposalDetailId);
+        PricingGuideOpenMarketInventory GetPricingGuideRepresentionalWeek(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1534,16 +1534,16 @@ namespace Services.Broadcast.Repositories
             baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
         }
 
-        private static void _SetBaseFields(proposal_version_details pvd, PricingGuideOpenMarketDto baseDto)
+        private static void _SetBaseFields(proposal_version_details pvd, PricingGuideOpenMarketInventory baseInventory)
         {
             var pv = pvd.proposal_versions;
             //baseDto.ProposalVersionId = pv.id;
-            baseDto.ProposalDetailId = pvd.id;
+            baseInventory.ProposalDetailId = pvd.id;
             //baseDto.PostType = (SchedulePostType?)pv.post_type;
-            //baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
+            baseInventory.GuaranteedAudience = pv.guaranteed_audience_id;
             //baseDto.Equivalized = pv.equivalized;
-            baseDto.ProposalId = pv.proposal.id;
-            baseDto.ProposalVersion = pv.proposal_version;
+            baseInventory.ProposalId = pv.proposal.id;
+            baseInventory.ProposalVersion = pv.proposal_version;
             //baseDto.ProposalName = pv.proposal.name;
             //baseDto.ProposalFlightEndDate = pv.end_date;
             //baseDto.ProposalFlightStartDate = pv.start_date;
@@ -1556,13 +1556,13 @@ namespace Services.Broadcast.Repositories
             //        MediaWeekId = f.media_week_id
             //    }).OrderBy(w => w.StartDate).ToList();
 
-            //baseDto.DetailDaypartId = pvd.daypart_id;
-            baseDto.ProposalDetailSpotLengthId = pvd.spot_length_id;
+            baseInventory.ProposalDetailDaypartId = pvd.daypart_id;
+            baseInventory.ProposalDetailSpotLengthId = pvd.spot_length_id;
             //baseDto.DetailTargetImpressions = pvd.impressions_total;
             //baseDto.DetailTargetBudget = pvd.cost_total;
             //baseDto.DetailCpm = ProposalMath.CalculateCpm(pvd.cost_total ?? 0, pvd.impressions_total);
-            baseDto.ProposalDetailFlightEndDate = pvd.end_date;
-            baseDto.ProposalDetailFlightStartDate = pvd.start_date;
+            baseInventory.ProposalDetailFlightEndDate = pvd.end_date;
+            baseInventory.ProposalDetailFlightStartDate = pvd.start_date;
             //baseDto.DetailFlightWeeks = pvd.proposal_version_detail_quarters.SelectMany(quarter => quarter
             //    .proposal_version_detail_quarter_weeks.Select(week =>
             //        new ProposalFlightWeek
@@ -1572,10 +1572,10 @@ namespace Services.Broadcast.Repositories
             //            IsHiatus = week.is_hiatus,
             //            MediaWeekId = week.media_week_id
             //        })).OrderBy(w => w.StartDate).ToList();
-            baseDto.SingleProjectionBookId = pvd.single_projection_book_id;
-            baseDto.ShareProjectionBookId = pvd.share_projection_book_id;
-            //baseDto.HutProjectionBookId = pvd.hut_projection_book_id;
-            //baseDto.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
+            baseInventory.SingleProjectionBookId = pvd.single_projection_book_id;
+            baseInventory.ShareProjectionBookId = pvd.share_projection_book_id;
+            baseInventory.HutProjectionBookId = pvd.hut_projection_book_id;
+            baseInventory.PlaybackType = (ProposalEnums.ProposalPlaybackType?)pvd.projection_playback_type;
         }
 
         public void DeleteProposal(int proposalId)
@@ -1712,7 +1712,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PricingGuideOpenMarketDto GetPricingGuideRepresentionalWeek(int proposalDetailId)
+        public PricingGuideOpenMarketInventory GetPricingGuideRepresentionalWeek(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1727,7 +1727,7 @@ namespace Services.Broadcast.Repositories
                     .Single(d => d.id == proposalDetailId,
                         $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
 
-                var dto = new PricingGuideOpenMarketDto
+                var dto = new PricingGuideOpenMarketInventory
                 {
                     //Margin = pv.proposal_versions.margin
                 };
