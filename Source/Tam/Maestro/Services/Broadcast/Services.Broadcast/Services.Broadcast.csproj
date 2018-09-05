@@ -254,7 +254,7 @@
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketPricing.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
-    <Compile Include="Entities\ProposalDetailPricingGuidGridRequestDto.cs" />
+    <Compile Include="Entities\PricingGuideOpenMarketInventoryRequestDto.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />
     <Compile Include="Entities\ProprietaryPricingDto.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />

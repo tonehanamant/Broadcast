@@ -94,7 +94,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Detail/PricingGuide/Grid/{proposalId}/{detailId}")]
         public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuideGrid(int proposalId, int detailId)
         {
-            var request = new ProposalDetailPricingGuidGridRequestDto
+            var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalDetailId = detailId,
                 ProposalId = proposalId

@@ -1438,7 +1438,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
-                var request = new ProposalDetailPricingGuidGridRequestDto
+                var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
                     ProposalId = proposal.Id.Value,
                     ProposalDetailId = proposalDetailId

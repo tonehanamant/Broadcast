@@ -24,8 +24,8 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailOpenMarketInventoryDto UpdateOpenMarketInventoryTotals(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
-        ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(ProposalDetailPricingGuidGridRequestDto request);
-        PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(ProposalDetailPricingGuidGridRequestDto request);
+        ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(PricingGuideOpenMarketInventoryRequestDto request);
+        PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -868,7 +868,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         // TO BE REMOVED.
-        public ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(ProposalDetailPricingGuidGridRequestDto request)
+        public ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(PricingGuideOpenMarketInventoryRequestDto request)
         {
             // return mock data for now
             var result = new ProposalDetailPricingGuideGridDto()
@@ -1125,7 +1125,7 @@ namespace Services.Broadcast.ApplicationServices
             dto.Markets.ForEach(x => x.Stations.ForEach(y => y.Programs.RemoveAll(z => programsToExclude.Contains(z))));
         }
 
-        public PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(ProposalDetailPricingGuidGridRequestDto request)
+        public PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request)
         {
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             var stationProgramRepository =
