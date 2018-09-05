@@ -185,7 +185,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 engine.Setup(e => e.AdjustImpression(displaySchedule.PrimaryDemoDelivered, displaySchedule.PostType, displaySchedule.PostingBookId, false)).Returns(99999);
 
                 var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
                 
                 var actual = sut.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
@@ -222,7 +222,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.Equivalized, bvsTrackingDetail.SpotLength, dto.PostType, dto.PostingBookId, true)).Returns(9999);
 
                 var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null,null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
@@ -256,7 +256,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), nsiPostingBookService);
+                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, null, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), nsiPostingBookService);
                 var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
@@ -590,8 +590,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 const string fileName = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
                 _TrackerService.SaveBvsFiles(bvsRequest, "User");
             }
         }
@@ -606,8 +606,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 const string fileName = "BVS Bad Campaign.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
                 try
                 {
                     _TrackerService.SaveBvsFiles(bvsRequest, "User");
@@ -631,8 +631,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 const string fileName = "BVS Beiersdorf_Hersheys Empty Rank.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
                 try
                 {
                     _TrackerService.SaveBvsFiles(bvsRequest, "User");
@@ -656,8 +656,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 const string fileName = "BVS Beiersdorf_Hersheys Bad Spot Length.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                 _TrackerService.SaveBvsFiles(bvsRequest, "User");
             }
@@ -672,18 +672,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileAccess.Read);
                 var fileName = "BVS Beiersdorf_Hersheys Bad Spot Length.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                 stream = new FileStream(@".\Files\BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx", FileMode.Open,
                     FileAccess.Read);
                 fileName = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx";
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                 stream = new FileStream(@".\Files\BVS Beiersdorf_Hersheys Empty Rank.xlsx", FileMode.Open,
                     FileAccess.Read);
                 fileName = "BVS Beiersdorf_Hersheys Empty Rank.xlsx";
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                 try
                 {
@@ -710,8 +710,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stream = new FileStream(@".\Files\BVS empty file.xlsx", FileMode.Open, FileAccess.Read);
                 const string fileName = "BVS empty file.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                 try
                 {
@@ -976,13 +976,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void LoadScheduleBvsDataForTestingClientReport()
         {
 
-            var bvsRequest = new BvsSaveRequest();
+            var bvsRequest = new FileSaveRequest();
 
             var stream = new FileStream(@".\Files\Checkers BVS Report - Estimate4401.DAT", FileMode.Open,
                 FileAccess.Read);
-            bvsRequest.BvsFiles.Add(new BvsFileRequest
+            bvsRequest.Files.Add(new FileRequest
             {
-                BvsStream = stream
+                StreamData = stream
             });
 
             _TrackerService.SaveBvsFiles(bvsRequest, "User");
@@ -1001,8 +1001,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 const string fileName = "BVS_Data_For_Tracking.DAT";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                 _TrackerService.SaveBvsFiles(bvsRequest, "User");
 
@@ -1248,8 +1248,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FileAccess.Read);
             const string fileName = "BVS Quick Load.xlsx";
 
-            var bvsRequest = new BvsSaveRequest();
-            bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+            var bvsRequest = new FileSaveRequest();
+            bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
             _TrackerService.SaveBvsFiles(bvsRequest, "User");
         }
 
@@ -1742,8 +1742,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open, FileAccess.Read);
                 const string fileName = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
                 _TrackerService.SaveBvsFiles(bvsRequest, "User");
 
 
@@ -1751,8 +1751,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileMode.Open, FileAccess.Read);
                 const string fileName2 = "BVS Beiersdorf_Hersheys Week of 3_6 BVS Test FIle2.xlsx";
 
-                var bvsRequest2 = new BvsSaveRequest();
-                bvsRequest2.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName2, BvsStream = stream2 });
+                var bvsRequest2 = new FileSaveRequest();
+                bvsRequest2.Files.Add(new FileRequest { FileName = fileName2, StreamData = stream2 });
                 var dontIgnore = _TrackerService.SaveBvsFiles(bvsRequest2, "User").Item2;
 
                 const string correctMessage =
@@ -1765,8 +1765,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var stream = new FileStream(@".\Files\" + fileName, FileMode.Open, FileAccess.Read);
 
-            var bvsRequest = new BvsSaveRequest();
-            bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+            var bvsRequest = new FileSaveRequest();
+            bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
             _TrackerService.SaveBvsFiles(bvsRequest, "INT Test User");
         }
 
@@ -1900,8 +1900,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stream = new FileStream(@".\Files\BVS Load For Various Tests.xlsx", FileMode.Open, FileAccess.Read);
                 const string fileName = "BVS Load For Various Tests.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
                 var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
                 var bvsFileId = sut.SaveBvsFiles(bvsRequest, "LoadBvsFile User").Item1.First();
@@ -1925,8 +1925,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stream = new FileStream(@".\Files\BVS For Overlapping Fields.xlsx", FileMode.Open, FileAccess.Read);
                 var fileName = "BVS For Overlapping Fields.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest() { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest() { FileName = fileName, StreamData = stream });
                 
                 int bvsFileId = _TrackerService.SaveBvsFiles(bvsRequest, "BVS For Overlapping Fields").Item1.First();
 
@@ -1986,8 +1986,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stream = new FileStream(@".\Files\BVS Load For Various Tests.xlsx", FileMode.Open, FileAccess.Read);
                 var bvsFileName = "BVS Load For Various Tests.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest() { BvsFileName = bvsFileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest() { FileName = bvsFileName, StreamData = stream });
 
                 int bvsFileId = _TrackerService.SaveBvsFiles(bvsRequest, bvsFileName).Item1.First();
 
@@ -2114,8 +2114,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var stream = new FileStream(@".\Files\SigmaImport.csv", FileMode.Open, FileAccess.Read);
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = "SigmaImport.csv", BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = "SigmaImport.csv", StreamData = stream });
                 var result =  _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
                 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -2130,8 +2130,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var stream = new FileStream(@".\Files\SigmaImport_BCOP3447.csv", FileMode.Open, FileAccess.Read);
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest { BvsFileName = "SigmaImport_BCOP3447.csv", BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest { FileName = "SigmaImport_BCOP3447.csv", StreamData = stream });
                 var result = _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

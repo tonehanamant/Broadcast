@@ -23,7 +23,7 @@ namespace Services.Broadcast.ApplicationServices
         LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate);
         BvsLoadDto GetBvsLoadData(DateTime currentDateTime);
         int SaveSchedule(ScheduleSaveRequest request);
-        Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request, string username, bool isSigmaUpload = false);
+        Tuple<List<int>, string> SaveBvsFiles(FileSaveRequest request, string username, bool isSigmaUpload = false);
         string SaveBvsViaFtp(string userName);
         bool ScheduleExists(int estimateIds);
         BvsScrubbingDto GetBvsScrubbingData(int estimateId);
@@ -53,6 +53,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ITrackingEngine _TrackingEngine;
         private readonly IScxConverter _ScxConverter;
         private readonly IBvsConverter _BvsConverter;
+        private readonly ISigmaConverter _SigmaConverter;
         private readonly IAssemblyScheduleConverter _AssemblyFileConverter;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
@@ -64,7 +65,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
 
         public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBvsPostingEngine bvsPostingEngine,
-            ITrackingEngine trackingEngine, IScxConverter scxConverter, IBvsConverter bvsConverter,
+            ITrackingEngine trackingEngine, IScxConverter scxConverter, IBvsConverter bvsConverter, ISigmaConverter sigmaConverter,
             IAssemblyScheduleConverter assemblyFileConverter,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
             IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
@@ -76,6 +77,7 @@ namespace Services.Broadcast.ApplicationServices
             _TrackingEngine = trackingEngine;
             _ScxConverter = scxConverter;
             _BvsConverter = bvsConverter;
+            _SigmaConverter = sigmaConverter;
             _AssemblyFileConverter = assemblyFileConverter;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _AudiencesCache = audiencesCache;
@@ -357,7 +359,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns bvsID.
         /// </summary>
-        public Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request, string username, bool isSigmaUpload = false)
+        public Tuple<List<int>, string> SaveBvsFiles(FileSaveRequest request, string username, bool isSigmaUpload = false)
         {
             var duplicateMessage = string.Empty;
 
@@ -366,14 +368,14 @@ namespace Services.Broadcast.ApplicationServices
             var errorMessage = string.Empty;
             var hasErrors = false;
 
-            foreach (var requestBvsFile in request.BvsFiles)
+            foreach (var requestBvsFile in request.Files)
             {
                 try
                 {
-                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestBvsFile.BvsFileName);
+                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestBvsFile.FileName);
 
                     //compute file hash to check against duplicate files being loaded
-                    var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestBvsFile.BvsStream));
+                    var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestBvsFile.StreamData));
 
                     //check if file has already been loaded
                     if (bvsRepo.GetBvsFileIdByHash(hash) > 0)
@@ -383,16 +385,16 @@ namespace Services.Broadcast.ApplicationServices
 
                     //we made it this far, it must be a new file - persist the file
                     string message = string.Empty;
-                    BvsFile bvsFile = new BvsFile();
-                    Dictionary<BvsFileDetailKey, int> lineInfo = new Dictionary<BvsFileDetailKey, int>();
+                    TrackerFile<BvsFileDetail> bvsFile = new TrackerFile<BvsFileDetail>();
+                    Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
 
                     if (isSigmaUpload)
                     {
-                        bvsFile = _BvsConverter.ExtractSigmaData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out lineInfo);
+                        bvsFile = _SigmaConverter.ExtractSigmaData(requestBvsFile.StreamData, hash, username, requestBvsFile.FileName, out lineInfo);
                     }
                     else
                     {
-                        bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out message, out lineInfo);
+                        bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.StreamData, hash, username, requestBvsFile.FileName, out message, out lineInfo);
                     }
 
                     if (!string.IsNullOrEmpty(message))
@@ -401,8 +403,8 @@ namespace Services.Broadcast.ApplicationServices
                         hasErrors = true;
                     }
 
-                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.BvsFileDetails.ToList());
-                    bvsFile.BvsFileDetails = filterResult.New;
+                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.FileDetails.ToList());
+                    bvsFile.FileDetails = filterResult.New;
 
                     if (filterResult.Ignored.Any())
                     {
@@ -410,7 +412,7 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Ignored)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}</li>",
-                                lineInfo[new BvsFileDetailKey(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
+                                lineInfo[new TrackerFileDetailKey<BvsFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
                         }
 
                         duplicateMessage += "</ul>";
@@ -422,19 +424,19 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Updated)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}, Program Name {8}</li>",
-                                lineInfo[new BvsFileDetailKey(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
+                                lineInfo[new TrackerFileDetailKey<BvsFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
                         }
 
                         duplicateMessage += "</ul>";
                     }
 
                     bvsIds.Add(bvsRepo.SaveBvsFile(bvsFile));
-                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestBvsFile.BvsFileName);
+                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestBvsFile.FileName);
                 }
                 catch (Exception e)
                 {
                     hasErrors = true;
-                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestBvsFile.BvsFileName, e.Message);
+                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestBvsFile.FileName, e.Message);
                 }
             }
 
@@ -514,8 +516,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         try
                         {
-                            var request = new BvsSaveRequest();
-                            request.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                            var request = new FileSaveRequest();
+                            request.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                             //Requirements are to ignore this for FTP for now
                             SaveBvsFiles(request, userName);

@@ -61,11 +61,11 @@ var TrackerUploadManager = UploadManager.extend({
         var scheduleRequestList = [];//store as array but only process first
         var bvsRequestList = {
             UserName: "user",
-            BvsFiles: []
+            Files: []
         };
         var sigmaRequestList = {
             UserName: "user",
-            BvsFiles: []
+            Files: []
         };
 
         for (var i = 0; i < files.length; i++) {
@@ -89,27 +89,25 @@ var TrackerUploadManager = UploadManager.extend({
                         case 'xls':
                         case 'xlsx':
                             var bvsRequest = {
-                                BvsFileName: file.name,
+                                FileName: file.name,
                                 RawData: b64,
-                                BvsStream: null
                             }
 
-                            bvsRequestList.BvsFiles.push(bvsRequest);
+                            bvsRequestList.Files.push(bvsRequest);
 
-                            if (bvsRequestList.BvsFiles.length >= files.length) {
+                            if (bvsRequestList.Files.length >= files.length) {
                                 me.view.processUploadBvsFileRequest(bvsRequestList);
                             }
                             break;
                         case 'csv':
                             var sigmaRequest = {
-                                BvsFileName: file.name,
-                                RawData: b64,
-                                BvsStream: null
+                                FileName: file.name,
+                                RawData: b64
                             }
 
-                            sigmaRequestList.BvsFiles.push(sigmaRequest);
+                            sigmaRequestList.Files.push(sigmaRequest);
 
-                            if (sigmaRequestList.BvsFiles.length >= files.length) {
+                            if (sigmaRequestList.Files.length >= files.length) {
                                 me.view.processUploadSigmaFileRequest(sigmaRequestList);
                             }
                             break;

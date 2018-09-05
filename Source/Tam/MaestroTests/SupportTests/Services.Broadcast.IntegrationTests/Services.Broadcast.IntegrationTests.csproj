@@ -234,6 +234,7 @@
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionAdjustmentEngineIntegrationTests.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="ApplicationServices\ProposalScxConverterTest.cs" />
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
+    <Compile Include="ApplicationServices\SpotTrackerServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
@@ -439,6 +441,18 @@
     </None>
     <None Include="Files\Checkers BVS Report_noMarket_Field.DAT">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ExtendedSigmaImport_MissingRequiredField.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ExtendedSigmaImport_RequiredFieldIsNullOrEmpty.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ExtendedSigmaImport_ValidFile.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ExtendedSigmaImport_ValidFile_DuplicatedMessages.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\InventoryCrunch.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

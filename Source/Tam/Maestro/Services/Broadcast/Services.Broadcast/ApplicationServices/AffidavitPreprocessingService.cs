@@ -224,7 +224,8 @@ namespace Services.Broadcast.ApplicationServices
                     SourceId = (int)AffidaviteFileSourceEnum.Strata,
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
-                    FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filepath))
+                    FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filepath)),
+                    Status = AffidaviteFileProcessingStatus.Invalid
                 };
                 result.Add(currentFile);
 
@@ -252,7 +253,9 @@ namespace Services.Broadcast.ApplicationServices
                         continue;
 
                     if (!currentFile.ErrorMessages.Any())
+                    {
                         currentFile.Status = AffidaviteFileProcessingStatus.Valid;
+                    }
                 }
             }
 

@@ -2619,5 +2619,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveNewProposalWithOpenMarketPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = _setupProposalDetailDto();
+
+                proposalDetailDto.OpenMarketPricing.CpmMin = 9.99m;
+                proposalDetailDto.OpenMarketPricing.CpmMax = 55.99m;
+                proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 100;
+                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Max;
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalWithOpenMarketPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(251);
+
+                proposalDto.ProposalName = "Edited Proposal Test";
+
+                var proposalDetailDto = proposalDto.Details.First();
+
+                proposalDetailDto.OpenMarketPricing.CpmMin = 123.99m;
+                proposalDetailDto.OpenMarketPricing.CpmMax = 200m;
+                proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 10;
+                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Avg;
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
     }
 }

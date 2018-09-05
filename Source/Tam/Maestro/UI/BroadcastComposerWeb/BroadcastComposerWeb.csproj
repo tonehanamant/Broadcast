@@ -239,6 +239,7 @@
     <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\SpotTrackerController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />
     <Compile Include="Controllers\PostPrePostingController.cs" />

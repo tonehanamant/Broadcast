@@ -13,7 +13,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -25,10 +24,6 @@ namespace Services.Broadcast.ApplicationServices
         List<OutboundPostLogFileValidationResult> ValidateFiles(List<string> filePathList, string userName);
     }
 
-    public interface IPostLogPreprocessingValidator
-    {
-        List<string> GetValidationResults(string filePath);
-    }
     class PostLogPreprocessingService: IPostLogPreprocessingService
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
@@ -36,6 +31,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly ISigmaConverter _SigmaConverter;
+
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly string _SigmaFileExtension = ".csv";
 
@@ -44,6 +41,7 @@ namespace Services.Broadcast.ApplicationServices
                                            IEmailerService emailerService,
                                            IFileService fileService,
                                            IWWTVFtpHelper ftpHelper,
+                                           ISigmaConverter sigmaConverter,
                                            IFileTransferEmailHelper emailHelper)
         {
             _DataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -51,6 +49,7 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _FileService = fileService;
             _WWTVFtpHelper = ftpHelper;
+            _SigmaConverter = sigmaConverter;
             _EmailHelper = emailHelper;
         }
         public void ProcessFiles(string username)
@@ -89,7 +88,7 @@ namespace Services.Broadcast.ApplicationServices
                 _EmailHelper.SendEmail(emailBody, "Error Preprocessing");
             }
         }
-        
+
         private void _CreateAndUploadZipArchiveToWWTV(List<OutboundPostLogFileValidationResult> files)
         {
             string zipFileName = BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder;
@@ -130,7 +129,6 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var filePath in filePathList)
             {
-                IPostLogPreprocessingValidator postLogValidator = null;
                 OutboundPostLogFileValidationResult currentFileResult = new OutboundPostLogFileValidationResult()
                 {
                     FilePath = filePath,
@@ -148,16 +146,11 @@ namespace Services.Broadcast.ApplicationServices
                 if (fileInfo.Extension.Equals(_SigmaFileExtension, StringComparison.InvariantCultureIgnoreCase))
                 {
                     currentFileResult.Source = PostLogFileSourceEnum.Sigma;
-                    postLogValidator = new SigmaConverter();
-                }
-
-                if(postLogValidator == null)
-                {
-                    currentFileResult.ErrorMessages.Add($"Unknown PostLog file type for file: {filePath}");
+                    currentFileResult.ErrorMessages.AddRange(_SigmaConverter.GetValidationResults(filePath));
                 }
                 else
                 {
-                    currentFileResult.ErrorMessages.AddRange(postLogValidator.GetValidationResults(filePath));
+                    currentFileResult.ErrorMessages.Add($"Unknown PostLog file type for file: {filePath}");
                 }
 
                 if (currentFileResult.ErrorMessages.Any())

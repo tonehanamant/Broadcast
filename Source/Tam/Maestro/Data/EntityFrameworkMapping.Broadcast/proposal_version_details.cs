@@ -22,6 +22,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_detail_criteria_show_types = new HashSet<proposal_version_detail_criteria_show_types>();
             this.proposal_version_detail_quarters = new HashSet<proposal_version_detail_quarters>();
             this.proposal_version_detail_proprietary_pricing = new HashSet<proposal_version_detail_proprietary_pricing>();
+            this.proposal_buy_files = new HashSet<proposal_buy_files>();
         }
     
         public int id { get; set; }
@@ -52,6 +53,10 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> adjustment_inflation { get; set; }
         public Nullable<double> goal_impression { get; set; }
         public Nullable<decimal> goal_budget { get; set; }
+        public Nullable<decimal> open_market_cpm_min { get; set; }
+        public Nullable<decimal> open_market_cpm_max { get; set; }
+        public Nullable<int> open_market_unit_cap_per_station { get; set; }
+        public Nullable<byte> open_market_cpm_target { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual media_months media_months { get; set; }
@@ -66,5 +71,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }
         public virtual ICollection<proposal_version_detail_proprietary_pricing> proposal_version_detail_proprietary_pricing { get; set; }
+        public virtual ICollection<proposal_buy_files> proposal_buy_files { get; set; }
     }
 }

@@ -227,7 +227,7 @@
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
-    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
+    <Compile Include="ApplicationServices\SpotTrackerService.cs" />    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
@@ -245,16 +245,21 @@
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
+    <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
     <Compile Include="Entities\DTO\PricingGuideOpenMarketInventory.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
+    <Compile Include="Entities\OpenMarketCpmTarget.cs" />
+    <Compile Include="Entities\OpenMarketPricing.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuidGridRequestDto.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />
     <Compile Include="Entities\ProprietaryPricingDto.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
+    <Compile Include="Entities\SpotTrackerFileDetail.cs" />
+    <Compile Include="Entities\TrackerFileDetail.cs" />
     <Compile Include="Entities\StationInventorySpots.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
@@ -263,7 +268,7 @@
     <Compile Include="Helpers\WWTVNetworkHelper.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
-    <Compile Include="Entities\BvsFile.cs" />
+    <Compile Include="Entities\TrackerFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
     <Compile Include="Entities\OutboundPostLogFileValidationResult.cs" />
     <Compile Include="Entities\PostLogFileSourceEnum.cs" />
@@ -348,7 +353,7 @@
     <Compile Include="ApplicationServices\PostPrePostingService.cs" />
     <Compile Include="ApplicationServices\ProposalProprietaryInventoryService.cs" />
     <Compile Include="BusinessEngines\ThirdPartySpotCostCalculationEngine.cs" />
-    <Compile Include="Entities\BvsFileDetailKey.cs" />
+    <Compile Include="Entities\TrackerFileDetailKey.cs" />
     <Compile Include="Entities\ProposalDetailInventoryBase.cs" />
     <Compile Include="Entities\OpenMarketInventory\ProposalDetailOpenMarketInventoryDto.cs" />
     <Compile Include="Entities\ProposalProprietaryInventoryWeekDto.cs" />
@@ -490,7 +495,7 @@
     <Compile Include="Entities\BvsMap.cs" />
     <Compile Include="Entities\BvsPostDetail.cs" />
     <Compile Include="Entities\BvsPostDetailAudience.cs" />
-    <Compile Include="Entities\BvsSaveRequest.cs" />
+    <Compile Include="Entities\FileSaveRequest.cs" />
     <Compile Include="Entities\BvsTrackingDetail.cs" />
     <Compile Include="Entities\BvsScrubbingDto.cs" />
     <Compile Include="Entities\DisplaySchedule.cs" />
@@ -522,6 +527,7 @@
     <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
+    <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\BvsRepository.cs" />
     <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />

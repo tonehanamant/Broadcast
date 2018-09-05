@@ -88,6 +88,12 @@ const postPrePosting = {
   ),
 };
 
+const tracker = {
+  uploadTracker: params => (
+    call(POST, `${apiBase}SpotTracker/UploadExtendedSigmaFile`, params)
+  ),
+};
+
 const planning = {
   getProposalInitialData: () => (
     call(GET, `${apiBase}Proposals/InitialData`, {})
@@ -148,6 +154,7 @@ const api = {
   post,
   postPrePosting,
   planning,
+  tracker,
 };
 
 export default api;

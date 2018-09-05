@@ -1,12 +1,10 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
-using Microsoft.VisualBasic.FileIO;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -14,26 +12,7 @@ namespace Services.Broadcast.Converters
 {
     public interface IBvsConverter : IApplicationService
     {
-        BvsFile ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo);
-
-
-        BvsFile ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo);
-
-        /// <summary>
-        /// 3a-3a rule
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="airTime"></param>
-        /// <returns></returns>
-        DateTime ConvertToNSITime(DateTime date, TimeSpan airTime);
-
-        /// <summary>
-        /// 6a-6a Rule
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="airTime"></param>
-        /// <returns></returns>
-        DateTime ConvertToNTITime(DateTime date, TimeSpan airTime);
+        TrackerFile<BvsFileDetail> ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo);        
     }
 
     public class ExtractBvsException : Exception
@@ -80,17 +59,16 @@ namespace Services.Broadcast.Converters
             }
         }
     }
-
-
+    
     public class BvsConverter : IBvsConverter
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
-        private readonly ISigmaConverter _SigmaConverter;
+        private readonly IDateAdjustmentEngine _DateAdjustmentEngine;
 
-        public BvsConverter(IDataRepositoryFactory dataRepositoryFactory)
+        public BvsConverter(IDataRepositoryFactory dataRepositoryFactory, IDateAdjustmentEngine dateAdjustment)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
-            _SigmaConverter = new SigmaConverter();
+            _DateAdjustmentEngine = dateAdjustment;
         }
 
         const string CABLE_TV = "CABLE TV";
@@ -117,95 +95,12 @@ namespace Services.Broadcast.Converters
         };
 
         //public Dictionary<BvsFileDetailKey, int> FileDetailLineInfo { get; set; }
-        public BvsFile ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
+        public TrackerFile<BvsFileDetail> ExtractBvsData(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
         {
             //return ExtractBvsDataCsv(rawStream,hash,userName,bvsFileName);
             return ExtractBvsDataXls(rawStream, hash, userName, bvsFileName, out message, out lineInfo);
         }
-
-        public BvsFile ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo)
-        {
-            //return ExtractBvsDataCsv(rawStream,hash,userName,bvsFileName);
-            return ExtractSigmaDataCsv(rawStream, hash, userName, bvsFileName, out lineInfo);
-        }
-
-        public BvsFile ExtractSigmaDataCsv(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<BvsFileDetailKey, int> lineInfo)
-        {
-            lineInfo = new Dictionary<BvsFileDetailKey, int>();
-            var bvsFile = new BvsFile();
-
-            int rowNumber = 0;
-            using (var parser = _SigmaConverter.SetupCSVParser(rawStream))
-            {
-                Dictionary<string, int> headers = _SigmaConverter.ValidateAndSetupHeaders(parser);
-                while (!parser.EndOfData)
-                {
-                    rowNumber++;
-                    var fields = parser.ReadFields();
-                    _SigmaConverter.ValidateSigmaFieldData(fields, headers, rowNumber);
-
-                    BvsFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
-                    lineInfo[new BvsFileDetailKey(bvsDetail)] = rowNumber;
-                    bvsFile.BvsFileDetails.Add(bvsDetail);
-                }
-            }
-
-            if (!bvsFile.BvsFileDetails.Any())
-            {
-                throw new ExtractBvsExceptionEmptyFiles();
-            }
-            bvsFile.Name = bvsFileName;
-            bvsFile.CreatedBy = userName;
-            bvsFile.CreatedDate = DateTime.Now;
-            bvsFile.FileHash = hash;
-            bvsFile.StartDate = bvsFile.BvsFileDetails.Min(x => x.DateAired).Date;
-            bvsFile.EndDate = bvsFile.BvsFileDetails.Max(x => x.DateAired).Date;
-
-            return bvsFile;
-        }
-
-        private BvsFileDetail _LoadBvsSigmaFileDetail(string[] fields, Dictionary<string, int> headers, int row)
-        {
-            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            if (!int.TryParse(fields[headers["RANK"]].Trim(), out int rankNumber))
-            {
-                throw new ExtractBvsException("Invalid 'rank'", row);
-            }
-            var rawDate = fields[headers["DATE AIRED"]].Trim();
-            var rawAiredDateTime = fields[headers["AIR START TIME"]].Trim().ToUpper();
-            string someDate = rawDate + " " + rawAiredDateTime;
-            if (!DateTime.TryParse(someDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
-                throw new ExtractBvsException("Invalid 'date aired' or 'air start time'", row);
-            var time = parsedDate.TimeOfDay;
-
-            if (!int.TryParse(fields[headers["IDENTIFIER 1"]].Trim(), out int estimateId))
-            {
-                throw new ExtractBvsException("Invalid 'identifier 1'", row);
-            }
-
-            BvsFileDetail bvsDetail = new BvsFileDetail()
-            {
-                Advertiser = fields[headers["PRODUCT"]].Trim().ToUpper(),
-                Market = fields[headers["DMA"]].Trim().ToUpper(),
-                Rank = rankNumber,
-                Station = fields[headers["STATION"]].Trim().ToUpper(),
-                Affiliate = fields[headers["AFFILIATION"]].Trim().ToUpper(),
-                DateAired = parsedDate.Date,
-                TimeAired = (int)time.TotalSeconds,
-                NsiDate = ConvertToNSITime(parsedDate.Date, time),
-                NtiDate = ConvertToNSITime(parsedDate.Date, time),
-                ProgramName = fields[headers["PROGRAM NAME"]].Trim().ToUpper(),
-                Isci = fields[headers["ISCI/AD-ID"]].Trim().ToUpper(),
-                EstimateId = estimateId
-            };
-
-
-        var spot_length = fields[headers["DURATION"]].Trim();
-            _SetSpotLengths(bvsDetail, spot_length, spotLengthDict);
-
-            return bvsDetail;
-        }
-
+        
         private void _SetSpotLengths(BvsFileDetail bvsDetail, string spot_length, Dictionary<int, int> spotLengthDict)
         {
             spot_length = spot_length.Trim().Replace(":", "");
@@ -230,12 +125,12 @@ namespace Services.Broadcast.Converters
             return true;
         }
 
-        public BvsFile ExtractBvsDataXls(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<BvsFileDetailKey, int> lineInfo)
+        public TrackerFile<BvsFileDetail> ExtractBvsDataXls(Stream rawStream, string hash, string userName, string bvsFileName, out string message, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
         {
-            lineInfo = new Dictionary<BvsFileDetailKey, int>();
+            lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
 
             Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-            BvsFile bvsFile = new BvsFile();
+            TrackerFile<BvsFileDetail> bvsFile = new TrackerFile<BvsFileDetail>();
             int row;
             int cableTvCount = 0;
             message = string.Empty;
@@ -276,8 +171,8 @@ namespace Services.Broadcast.Converters
 
                     var time = extractedDate.TimeOfDay;
                     bvsDetail.TimeAired = (int)time.TotalSeconds;
-                    bvsDetail.NsiDate = ConvertToNSITime(bvsDetail.DateAired, time);
-                    bvsDetail.NtiDate = ConvertToNTITime(bvsDetail.DateAired, time);
+                    bvsDetail.NsiDate = _DateAdjustmentEngine.ConvertToNSITime(bvsDetail.DateAired, time);
+                    bvsDetail.NtiDate = _DateAdjustmentEngine.ConvertToNTITime(bvsDetail.DateAired, time);
 
                     bvsDetail.ProgramName = _GetCellValue(row, "Program Name").ToUpper();
 
@@ -294,11 +189,11 @@ namespace Services.Broadcast.Converters
                         continue;   // go to next line
                     }
                     bvsDetail.EstimateId = estimateId;
-                    lineInfo[new BvsFileDetailKey(bvsDetail)] = row;
-                    bvsFile.BvsFileDetails.Add(bvsDetail);
+                    lineInfo[new TrackerFileDetailKey<BvsFileDetail>(bvsDetail)] = row;
+                    bvsFile.FileDetails.Add(bvsDetail);
                 }
             }
-            if (!bvsFile.BvsFileDetails.Any())
+            if (!bvsFile.FileDetails.Any())
             {
                 if (row == cableTvCount) // if entire file is made of cable tv record, treat as empty.
                     throw new ExtractBvsExceptionCableTv();
@@ -309,8 +204,8 @@ namespace Services.Broadcast.Converters
             bvsFile.CreatedBy = userName;
             bvsFile.CreatedDate = DateTime.Now;
             bvsFile.FileHash = hash;
-            bvsFile.StartDate = bvsFile.BvsFileDetails.Min(x => x.DateAired).Date;
-            bvsFile.EndDate = bvsFile.BvsFileDetails.Max(x => x.DateAired).Date;
+            bvsFile.StartDate = bvsFile.FileDetails.Min(x => x.DateAired).Date;
+            bvsFile.EndDate = bvsFile.FileDetails.Max(x => x.DateAired).Date;
 
             return bvsFile;
         }
@@ -386,33 +281,6 @@ namespace Services.Broadcast.Converters
                 throw new Exception(message);
             }
             return headerDict;
-        }
-
-        /// <summary>
-        /// 3a-3a rule
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="airTime"></param>
-        /// <returns></returns>
-        public DateTime ConvertToNSITime(DateTime date, TimeSpan airTime)
-        {
-            if (airTime.TotalSeconds <= new TimeSpan(3, 0, 0).TotalSeconds)
-            {
-                return date.AddDays(-1);
-            }
-
-            return date;
-        }
-
-        /// <summary>
-        /// Uses ConvertToNSITime
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="airTime"></param>
-        /// <returns></returns>
-        public DateTime ConvertToNTITime(DateTime date, TimeSpan airTime)
-        {
-            return ConvertToNSITime(date, airTime);
         }
     }
 }

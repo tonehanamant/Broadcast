@@ -275,8 +275,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var stream = new FileStream(@".\Files\BVS Load For Various Tests.xlsx", FileMode.Open, FileAccess.Read);
             var fileName = "BVS Load For Various Tests.xlsx";
 
-            var bvsRequest = new BvsSaveRequest();
-            bvsRequest.BvsFiles.Add(new BvsFileRequest() {BvsFileName = fileName, BvsStream = stream});
+            var bvsRequest = new FileSaveRequest();
+            bvsRequest.Files.Add(new FileRequest() {FileName = fileName, StreamData = stream});
             ITrackerService sut = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
             sut.SaveBvsFiles(bvsRequest, "LoadBvsFile User");
@@ -570,8 +570,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stream = new FileStream(@".\Files\BVS Load For Various Tests NTI NSI Adjustments.xlsx", FileMode.Open, FileAccess.Read);
                 var fileName = "BVS Load For Various Tests NTI NSI Adjustments.xlsx";
 
-                var bvsRequest = new BvsSaveRequest();
-                bvsRequest.BvsFiles.Add(new BvsFileRequest() { BvsFileName = fileName, BvsStream = stream });
+                var bvsRequest = new FileSaveRequest();
+                bvsRequest.Files.Add(new FileRequest() { FileName = fileName, StreamData = stream });
                 ITrackerService trackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
 
                 trackerService.SaveBvsFiles(bvsRequest, "LoadBvsFile User");

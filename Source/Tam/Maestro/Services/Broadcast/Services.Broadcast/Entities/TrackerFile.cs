@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class BvsFile
+    public class TrackerFile<T> where T : class
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -13,6 +13,6 @@ namespace Services.Broadcast.Entities
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public List<BvsFileDetail> BvsFileDetails { get; set; } = new List<BvsFileDetail>();
+        public List<T> FileDetails { get; set; } = new List<T>();
     }
 }
