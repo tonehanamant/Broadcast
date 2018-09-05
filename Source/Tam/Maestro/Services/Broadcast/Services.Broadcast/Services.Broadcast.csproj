@@ -249,6 +249,8 @@
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
+    <Compile Include="Entities\OpenMarketCpmTarget.cs" />
+    <Compile Include="Entities\OpenMarketPricing.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuidGridRequestDto.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Button, Panel, Table, Label, FormControl, Glyphicon, Row, Col, FormGroup, ControlLabel } from 'react-bootstrap';
+import { Modal, Button, Panel, Table, Label, FormControl, Glyphicon, Row, Col, FormGroup, ControlLabel, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { InputNumber } from 'antd';
 import numeral from 'numeral';
@@ -51,6 +51,13 @@ class PricingGuide extends Component {
     this.saveProprietary = this.saveProprietary.bind(this);
     this.cancelProprietary = this.cancelProprietary.bind(this);
 
+    this.saveOpenMarketPricingDetail = this.saveOpenMarketPricingDetail.bind(this);
+    this.setOpenMarketPricing = this.setOpenMarketPricing.bind(this);
+    this.toggleOpenMarketEditing = this.toggleOpenMarketEditing.bind(this);
+    this.saveOpenMarket = this.saveOpenMarket.bind(this);
+    this.cancelOpenMarket = this.cancelOpenMarket.bind(this);
+    this.handleCpmTargetChange = this.handleCpmTargetChange.bind(this);
+
     this.onModalShow = this.onModalShow.bind(this);
 
     this.state = {
@@ -80,6 +87,16 @@ class PricingGuide extends Component {
       editingPropImpressionsSinclair: 0,
       editingPropImpressionsTTNW: 0,
       editingPropImpressionsTVB: 0,
+      // open market
+      isOpenMarketEditing: false,
+      openCpmMin: null,
+      openCpmMax: null,
+      openUnitCap: null,
+      openCpmTarget: 1,
+      editingOpenCpmMin: null,
+      editingOpenCpmMax: null,
+      editingOpenUnitCap: null,
+      editingOpenCpmTarget: 1,
     };
   }
 
@@ -112,8 +129,9 @@ class PricingGuide extends Component {
 
   onModalShow() {
     // console.log('MODAL SHOW>>>>>>>>>', this.props.detail);
+    // process proprietary pricing/ open market just once on open
     this.setProprietaryPricing(this.props.detail);
-    // process proprietary pricing just once on open
+    this.setOpenMarketPricing(this.props.detail);
   }
 
   // INVENTORY Goals and Adjustments
@@ -207,6 +225,53 @@ class PricingGuide extends Component {
     this.toggleProprietaryEditing();
   }
 
+  toggleOpenMarketEditing() {
+    this.setState({ isOpenMarketEditing: !this.state.isOpenMarketEditing });
+  }
+
+  setOpenMarketPricing(detail) {
+    if (detail.OpenMarketPricing) {
+      const openData = detail.OpenMarketPricing;
+      const target = openData.CpmTarget || 1;
+      this.setState({
+        openCpmMax: openData.CpmMax,
+        openCpmMin: openData.CpmMin,
+        openCpmTarget: target,
+        openUnitCap: openData.UnitCapPerStation,
+      });
+      this.setState({
+        editingOpenCpmMax: openData.CpmMax,
+        editingOpenCpmMin: openData.CpmMin,
+        editingOpenCpmTarget: target,
+        editingOpenUnitCap: openData.UnitCapPerStation,
+      });
+    }
+  }
+
+  saveOpenMarket() {
+    this.setState({
+      openCpmMax: this.state.editingOpenCpmMax,
+      openCpmMin: this.state.editingOpenCpmMin,
+      openCpmTarget: this.state.editingOpenCpmTarget,
+      openUnitCap: this.state.editingOpenUnitCap,
+     });
+    this.toggleOpenMarketEditing();
+  }
+
+  cancelOpenMarket() {
+    this.setState({
+      editingOpenCpmMin: this.state.openCpmMin,
+      editingOpenCpmMax: this.state.openCpmMax,
+      editingOpenCpmTarget: this.state.openCpmTarget,
+      editingOpenUnitCap: this.state.openUnitCap,
+     });
+    this.toggleOpenMarketEditing();
+  }
+
+  handleCpmTargetChange(val) {
+    this.setState({ editingOpenCpmTarget: val });
+  }
+
   clearState() {
     this.setState({
       editingImpression: '',
@@ -233,6 +298,16 @@ class PricingGuide extends Component {
       editingPropImpressionsSinclair: 0,
       editingPropImpressionsTTNW: 0,
       editingPropImpressionsTVB: 0,
+
+      isOpenMarketEditing: false,
+      openCpmMin: null,
+      openCpmMax: null,
+      openUnitCap: null,
+      openCpmTarget: 1,
+      editingOpenCpmMin: null,
+      editingOpenCpmMax: null,
+      editingOpenUnitCap: null,
+      editingOpenCpmTarget: 1,
     });
   }
 
@@ -245,6 +320,7 @@ class PricingGuide extends Component {
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;
     const { updateDetail, detail } = this.props;
     this.saveProprietaryPricingDetail();
+    this.saveOpenMarketPricingDetail();
     updateDetail({ id: detail.Id, key: 'GoalImpression', value: impression });
     updateDetail({ id: detail.Id, key: 'GoalBudget', value: budget });
     updateDetail({ id: detail.Id, key: 'AdjustmentMargin', value: margin });
@@ -284,6 +360,18 @@ class PricingGuide extends Component {
     updateDetail({ id: detail.Id, key: 'ProprietaryPricing', value: proprietaryPricing });
   }
 
+  saveOpenMarketPricingDetail() {
+    const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
+    const { updateDetail, detail } = this.props;
+    const openData = {
+      CpmMax: openCpmMax,
+      CpmMin: openCpmMin,
+      CpmTarget: openCpmTarget,
+      UnitCapPerStation: openUnitCap,
+    };
+    updateDetail({ id: detail.Id, key: 'OpenMarketPricing', value: openData });
+  }
+
   handleChange(fieldName, value) {
     const newVal = !isNaN(value) ? value : 0;
     this.setState({ [fieldName]: newVal });
@@ -302,7 +390,7 @@ class PricingGuide extends Component {
     const { modal, detail, isReadOnly, openMarketData, openMarketLoading, openMarketLoaded } = this.props;
     const show = isActiveDialog(detail, modal);
     // const labelStyle = { fontSize: '11px', fontWeight: 'normal', color: '#333' };
-    const { isInventoryEditing, isProprietaryEditing } = this.state;
+    const { isInventoryEditing, isProprietaryEditing, isOpenMarketEditing } = this.state;
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;
     const { editingImpression, editingBudget, editingMargin, editingRateInflation, editingImpressionInflation } = this.state;
     const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
@@ -315,6 +403,12 @@ class PricingGuide extends Component {
     const sinclairActive = (propImpressionsSinclair > 0) ? 'tag-label active' : 'tag-label inactive';
     const TTNWActive = (propImpressionsTTNW > 0) ? 'tag-label active' : 'tag-label inactive';
     const TVBActive = (propImpressionsTVB > 0) ? 'tag-label active' : 'tag-label inactive';
+
+    const { openCpmMin, openCpmMax, openUnitCap, openCpmTarget } = this.state;
+    const { editingOpenCpmMin, editingOpenCpmMax, editingOpenUnitCap, editingOpenCpmTarget } = this.state;
+    const TargetMinActive = (openCpmTarget === 1) ? 'tag-label active' : 'tag-label inactive';
+    const TargetAvgActive = (openCpmTarget === 2) ? 'tag-label active' : 'tag-label inactive';
+    const TargetMaxActive = (openCpmTarget === 3) ? 'tag-label active' : 'tag-label inactive';
     return (
       <div>
         <Modal
@@ -496,11 +590,11 @@ class PricingGuide extends Component {
                 <div className="summary-item single"><div className="summary-display">--%</div></div>
                 </Col>
                 <Col sm={5}>
-                <div style={{ marginTop: '22px' }}>
-                <Label className={CNNActive}>CNN</Label>
-                <Label className={sinclairActive}> SINCLAIR</Label>
-                <Label className={TTNWActive}>TTWN</Label>
-                <Label className={TVBActive}>TVB</Label>
+                <div style={{ marginTop: '12px' }}>
+                  <Label className={CNNActive}>CNN</Label>
+                  <Label className={sinclairActive}>SINCLAIR</Label>
+                  <Label className={TTNWActive}>TTWN</Label>
+                  <Label className={TVBActive}>TVB</Label>
                 </div>
               </Col>
               <Col sm={6}>
@@ -514,7 +608,7 @@ class PricingGuide extends Component {
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-              <div className="formEditToggle">
+                <div className="formEditToggle">
                   { !isReadOnly && !isProprietaryEditing &&
                   <Button onClick={this.toggleProprietaryEditing} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
                   }
@@ -654,13 +748,132 @@ class PricingGuide extends Component {
           <Panel id="pricing_openmarket_panel" defaultExpanded className="panelCard">
             <Panel.Heading>
             <Panel.Title toggle><Glyphicon glyph="chevron-up" /> OPEN MARKETS</Panel.Title>
+            <Row>
+              <Col sm={6}>
+                <div className="summary-item single"><div className="summary-display">--%</div></div>
+                </Col>
+              <Col sm={6}>
+                <div className="summary-bar">
+                  <div className="summary-item"><div className="summary-display">--%</div><div className="summary-label">MARKET COVERAGE</div></div>
+                  <div className="summary-item"><div className="summary-display">$--</div><div className="summary-label">CPM</div></div>
+                  <div className="summary-item"><div className="summary-display">--</div><div className="summary-label">IMPRESSIONS</div></div>
+                  <div className="summary-item"><div className="summary-display">$--</div><div className="summary-label">TOTAL COST</div></div>
+                </div>
+              </Col>
+             </Row>
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-                <Button style={{ padding: '0px 0px 6px 0px' }} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
+                <div className="formEditToggle">
+                  { !isReadOnly && !isOpenMarketEditing &&
+                  <Button onClick={this.toggleOpenMarketEditing} bsStyle="link"><Glyphicon glyph="edit" /> Edit</Button>
+                  }
+                  { isOpenMarketEditing &&
+                  <div>
+                  <Button onClick={this.saveOpenMarket} bsStyle="link"><Glyphicon glyph="save" /> Save</Button>
+                  <Button className="cancel" onClick={this.cancelOpenMarket} bsStyle="link"><Glyphicon glyph="remove" /> Cancel</Button>
+                  </div>
+                  }
+                </div>
                 <Row>
-                  <Col sm={6}> Form/Display </Col>
-                  <Col sm={6}> <Button onClick={this.onRunDistribution}>Run Distribution</Button> </Col>
+                  <Col sm={8}>
+                    <form className="formCard">
+                    <Row>
+                    <Col sm={2}>
+                      <FormGroup>
+                        <ControlLabel>CPM MIN</ControlLabel>
+                        {isOpenMarketEditing &&
+                          <InputNumber
+                            defaultValue={editingOpenCpmMin || null}
+                            disabled={isReadOnly}
+                            min={0}
+                            max={1000}
+                            precision={2}
+                            style={{ width: '100%' }}
+                            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                            onChange={(value) => { this.handleChange('editingOpenCpmMin', value); }}
+                          />
+                        }
+                        {!isOpenMarketEditing &&
+                          <FormControl.Static>${openCpmMin ? numeral(openCpmMin).format('0,0.[00]') : '--'}</FormControl.Static>
+                        }
+                      </FormGroup>
+                    </Col>
+                    <Col sm={2}>
+                      <FormGroup>
+                        <ControlLabel>CPM MAX</ControlLabel>
+                        {isOpenMarketEditing &&
+                        <InputNumber
+                          defaultValue={editingOpenCpmMax || null}
+                          disabled={isReadOnly}
+                          min={0}
+                          max={1000}
+                          precision={2}
+                          style={{ width: '100%' }}
+                          formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                          onChange={(value) => { this.handleChange('editingOpenCpmMax', value); }}
+                        />
+                        }
+                        {!isOpenMarketEditing &&
+                        <FormControl.Static>${openCpmMax ? numeral(openCpmMax).format('0,0.[00]') : '--'}</FormControl.Static>
+                        }
+                      </FormGroup>
+                    </Col>
+                    <Col sm={2}>
+                      <FormGroup>
+                      <ControlLabel>STATION UNIT CAP</ControlLabel>
+                      {isOpenMarketEditing &&
+                        <InputNumber
+                          defaultValue={editingOpenUnitCap || null}
+                          disabled={isReadOnly}
+                          min={0}
+                          max={1000}
+                          precision={0}
+                          style={{ width: '100%' }}
+                          onChange={(value) => { this.handleChange('editingOpenUnitCap', value); }}
+                        />
+                      }
+                      {!isOpenMarketEditing &&
+                        <FormControl.Static>{openUnitCap ? numeral(openUnitCap).format('0,0.[000]') : '--'}</FormControl.Static>
+                      }
+                      </FormGroup>
+                    </Col>
+                    <Col sm={4}>
+                      <FormGroup>
+                      <ControlLabel>CPM TARGET</ControlLabel>
+                      {isOpenMarketEditing &&
+                      <div>
+                      <ToggleButtonGroup
+                        type="radio"
+                        value={editingOpenCpmTarget}
+                        name="editingOpenCpmTarget"
+                        onChange={this.handleCpmTargetChange}
+                      >
+                        <ToggleButton value={1}>MIN</ToggleButton>
+                        <ToggleButton value={2}>AVG</ToggleButton>
+                        <ToggleButton value={3}>MAX</ToggleButton>
+                      </ToggleButtonGroup>
+                      </div>
+                      }
+                      {!isOpenMarketEditing &&
+                      <div style={{ marginTop: '6px' }}>
+                        <Label className={TargetMinActive}>MIN</Label>
+                        <Label className={TargetAvgActive}>AVG</Label>
+                        <Label className={TargetMaxActive}>MAX</Label>
+                      </div>
+                      }
+                      </FormGroup>
+                    </Col>
+                    </Row>
+                  </form >
+                  </Col>
+                  <Col sm={4}>
+                  <div style={{ textAlign: 'right', marginTop: '20px' }}>
+                  <Button bsStyle="primary" onClick={this.onRunDistribution}>Run Distribution</Button>
+                  </div>
+                  </Col>
                 </Row>
                 {openMarketLoaded && openMarketData &&
                   <PricingGuideGrid

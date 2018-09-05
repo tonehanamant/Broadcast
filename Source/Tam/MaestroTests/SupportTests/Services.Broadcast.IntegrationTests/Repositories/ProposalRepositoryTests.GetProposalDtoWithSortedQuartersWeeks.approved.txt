@@ -23,6 +23,12 @@
       "HutProjectionBookId": null,
       "Id": 0,
       "NtiConversionFactor": 0.0,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [],

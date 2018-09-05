@@ -40,6 +40,12 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -206,6 +212,12 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -351,6 +363,12 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],

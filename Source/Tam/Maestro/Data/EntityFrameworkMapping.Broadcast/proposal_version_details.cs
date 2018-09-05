@@ -53,6 +53,10 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> adjustment_inflation { get; set; }
         public Nullable<double> goal_impression { get; set; }
         public Nullable<decimal> goal_budget { get; set; }
+        public Nullable<decimal> open_market_cpm_min { get; set; }
+        public Nullable<decimal> open_market_cpm_max { get; set; }
+        public Nullable<int> open_market_unit_cap_per_station { get; set; }
+        public Nullable<byte> open_market_cpm_target { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual media_months media_months { get; set; }

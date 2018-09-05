@@ -54,10 +54,10 @@
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
       "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "CpmTarget": null,
-        "UnitCapPerStation": null
+        "CpmMax": 55.9900,
+        "CpmMin": 9.9900,
+        "CpmTarget": 3,
+        "UnitCapPerStation": 100
       },
       "PostingBookId": null,
       "PostingPlaybackType": null,
@@ -77,28 +77,7 @@
       ],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [
-        {
-          "Cpm": 45.0000,
-          "ImpressionsBalance": 0.33,
-          "InventorySource": 3
-        },
-        {
-          "Cpm": 12.4200,
-          "ImpressionsBalance": 0.33,
-          "InventorySource": 4
-        },
-        {
-          "Cpm": 99.9900,
-          "ImpressionsBalance": 0.33,
-          "InventorySource": 5
-        },
-        {
-          "Cpm": 2000.0000,
-          "ImpressionsBalance": 0.33,
-          "InventorySource": 6
-        }
-      ],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 21.1300,
@@ -189,26 +168,23 @@
   "GuaranteedDemoId": 31,
   "Margin": 20.0,
   "MarketCoverage": null,
-  "MarketGroup": {
-    "Display": "All",
-    "Id": 1
-  },
-  "MarketGroupId": 1,
+  "MarketGroup": null,
+  "MarketGroupId": null,
   "Markets": [],
-  "Notes": "third",
+  "Notes": null,
   "PostType": 1,
-  "ProposalName": "Edited Proposal Test",
+  "ProposalName": "Proposal Test",
   "SecondaryDemos": [],
   "SpotLengths": [
     {
       "Display": "30"
     }
   ],
-  "Status": 1,
-  "TargetBudget": 3000.0000,
+  "Status": 0,
+  "TargetBudget": null,
   "TargetCPM": 0.0000,
-  "TargetImpressions": 300000.0,
-  "TargetUnits": 30,
+  "TargetImpressions": 0.0,
+  "TargetUnits": null,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,
@@ -219,5 +195,5 @@
   "TotalImpressionsMarginAchieved": false,
   "TotalImpressionsPercent": 0.0,
   "ValidationWarning": null,
-  "Version": 3
+  "Version": 1
 }

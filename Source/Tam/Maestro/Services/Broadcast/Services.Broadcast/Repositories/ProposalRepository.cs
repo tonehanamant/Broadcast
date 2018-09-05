@@ -346,6 +346,10 @@ namespace Services.Broadcast.Repositories
                     adjustment_rate = proposalDetail.AdjustmentRate,
                     goal_budget = proposalDetail.GoalBudget,
                     goal_impression = proposalDetail.GoalImpression,
+                    open_market_cpm_min =  proposalDetail.OpenMarketPricing.CpmMin,
+                    open_market_cpm_max = proposalDetail.OpenMarketPricing.CpmMax,
+                    open_market_unit_cap_per_station = proposalDetail.OpenMarketPricing.UnitCapPerStation,
+                    open_market_cpm_target = (byte?)proposalDetail.OpenMarketPricing.CpmTarget,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -469,6 +473,10 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.adjustment_rate = detail.AdjustmentRate;
                     updatedDetail.goal_budget = detail.GoalBudget;
                     updatedDetail.goal_impression = detail.GoalImpression;
+                    updatedDetail.open_market_cpm_min = detail.OpenMarketPricing.CpmMin;
+                    updatedDetail.open_market_cpm_max = detail.OpenMarketPricing.CpmMax;
+                    updatedDetail.open_market_unit_cap_per_station = detail.OpenMarketPricing.UnitCapPerStation;
+                    updatedDetail.open_market_cpm_target = (byte?)detail.OpenMarketPricing.CpmTarget;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -882,6 +890,13 @@ namespace Services.Broadcast.Repositories
                     AdjustmentInflation = version.adjustment_inflation,
                     AdjustmentMargin = version.adjustment_margin,
                     AdjustmentRate = version.adjustment_rate,
+                    OpenMarketPricing = new OpenMarketPricing
+                    {
+                        CpmMin = version.open_market_cpm_min,
+                        CpmMax = version.open_market_cpm_max,
+                        UnitCapPerStation = version.open_market_unit_cap_per_station,
+                        CpmTarget = (OpenMarketCpmTarget?)version.open_market_cpm_target,
+                    },
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,

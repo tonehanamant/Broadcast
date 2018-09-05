@@ -626,6 +626,10 @@
           <Property Name="adjustment_inflation" Type="float" />
           <Property Name="goal_impression" Type="float" />
           <Property Name="goal_budget" Type="money" />
+          <Property Name="open_market_cpm_min" Type="money" />
+          <Property Name="open_market_cpm_max" Type="money" />
+          <Property Name="open_market_unit_cap_per_station" Type="int" />
+          <Property Name="open_market_cpm_target" Type="tinyint" />
         </EntityType>
         <EntityType Name="proposal_version_flight_weeks">
           <Key>
@@ -5538,6 +5542,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
           <NavigationProperty Name="proposal_version_detail_proprietary_pricing" Relationship="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_proprietary_pricing" />
           <NavigationProperty Name="proposal_buy_files" Relationship="BroadcastModel.FK_proposal_buy_files_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_buy_files" />
+          <Property Name="open_market_cpm_min" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="open_market_cpm_max" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="open_market_unit_cap_per_station" Type="Int32" />
+          <Property Name="open_market_cpm_target" Type="Byte" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -7063,6 +7071,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_version_details">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_details">
               <MappingFragment StoreEntitySet="proposal_version_details">
+                <ScalarProperty Name="open_market_cpm_target" ColumnName="open_market_cpm_target" />
+                <ScalarProperty Name="open_market_unit_cap_per_station" ColumnName="open_market_unit_cap_per_station" />
+                <ScalarProperty Name="open_market_cpm_max" ColumnName="open_market_cpm_max" />
+                <ScalarProperty Name="open_market_cpm_min" ColumnName="open_market_cpm_min" />
                 <ScalarProperty Name="goal_budget" ColumnName="goal_budget" />
                 <ScalarProperty Name="goal_impression" ColumnName="goal_impression" />
                 <ScalarProperty Name="adjustment_inflation" ColumnName="adjustment_inflation" />

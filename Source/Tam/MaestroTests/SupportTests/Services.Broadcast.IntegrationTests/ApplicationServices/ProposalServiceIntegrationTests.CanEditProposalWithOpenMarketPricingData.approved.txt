@@ -53,10 +53,10 @@
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
       "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "CpmTarget": null,
-        "UnitCapPerStation": null
+        "CpmMax": 200.0000,
+        "CpmMin": 123.9900,
+        "CpmTarget": 2,
+        "UnitCapPerStation": 10
       },
       "PostingBookId": null,
       "PostingPlaybackType": null,
@@ -79,7 +79,7 @@
               "Iscis": [],
               "IsHiatus": false,
               "MediaWeekId": 699,
-              "MyEventsReportName": "Testing 2",
+              "MyEventsReportName": "Test Adve NAV 30 05-15-17",
               "StartDate": "2017-05-15T00:00:00",
               "Units": 1,
               "Week": "5/15/2017"
@@ -156,7 +156,7 @@
   "Markets": [],
   "Notes": null,
   "PostType": 1,
-  "ProposalName": "Proposal Calculation Test 2",
+  "ProposalName": "Edited Proposal Test",
   "SecondaryDemos": [],
   "SpotLengths": [
     {

@@ -179,6 +179,39 @@ GO
 
 /*************************************** END BCOP-3517 *****************************************************/
 
+/*************************************** BCOP-3516 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_cpm_min' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_cpm_min MONEY NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_cpm_max' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_cpm_max MONEY NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_unit_cap_per_station' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_unit_cap_per_station INT NULL
+END
+
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_cpm_target' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_cpm_target TINYINT NULL
+END
+
+/*************************************** BCOP-3516 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
