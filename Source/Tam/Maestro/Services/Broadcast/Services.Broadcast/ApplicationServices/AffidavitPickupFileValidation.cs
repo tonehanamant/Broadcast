@@ -88,15 +88,27 @@ namespace Services.Broadcast.ApplicationServices
         private bool _OnMissingHeader(string headerName)
         {
             _MissingHeaders.Add(headerName);
+            _currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
+
             return true;
         }
         public override void ValidateFileStruct()
         {
-            var stream = File.OpenRead(_fileInfo.FullName);
+            try
+            {
+                var stream = File.OpenRead(_fileInfo.FullName);
 
-            _csvReader = new CsvFileReader(AffidavitFileHeaders);
-            _csvReader.OnMissingHeader = _OnMissingHeader;
-            _csvReader.Initialize(stream);
+                _csvReader = new CsvFileReader(AffidavitFileHeaders);
+                _csvReader.OnMissingHeader = _OnMissingHeader;
+                _csvReader.Initialize(stream);
+
+            }
+            catch (Exception e)
+            {
+                _currentFile.ErrorMessages.Add(e.ToString());
+                _currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
+                throw;
+            }
         }
 
         public override void Dispose()
