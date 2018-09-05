@@ -1128,12 +1128,9 @@ namespace Services.Broadcast.ApplicationServices
         public PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request)
         {
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-            var stationProgramRepository =
-                BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
-
-            var pricingGuideOpenMarketInventoryDto = proposalRepository.GetPricingGuideOpenMarketInventory(request.ProposalDetailId);
-
-            var programs = _PopulatePrograms(pricingGuideOpenMarketInventoryDto, stationProgramRepository);
+            var pricingGuideOpenMarketInventoryDto =
+                proposalRepository.GetPricingGuideOpenMarketInventory(request.ProposalDetailId);
+            var programs = _PopulatePrograms(pricingGuideOpenMarketInventoryDto);
 
             _FilterProgramsByDaypart(pricingGuideOpenMarketInventoryDto, programs);
 
@@ -1202,9 +1199,10 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private List<ProposalProgramDto> _PopulatePrograms(ProposalDetailInventoryBase pricingGuideOpenMarketDto,
-            IStationProgramRepository stationProgramRepository)
+        private List<ProposalProgramDto> _PopulatePrograms(ProposalDetailInventoryBase pricingGuideOpenMarketDto)
         {
+            var stationProgramRepository =
+                BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             var proposalMarketIds = ProposalMarketsCalculationEngine
                 .GetProposalMarketsList(pricingGuideOpenMarketDto.ProposalId, pricingGuideOpenMarketDto.ProposalVersion,
                     pricingGuideOpenMarketDto.DetailId)
