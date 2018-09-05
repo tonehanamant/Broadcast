@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
@@ -91,11 +92,17 @@ namespace BroadcastComposerWeb.Controllers
         }
         [HttpGet]
         [Route("Detail/PricingGuide/Grid/{proposalId}/{detailId}")]
-        public BaseResponse<ProposalDetailPricingGuideGridDto> GetOpenMarketPricingGuideGrid(ProposalDetailPricingGuidGridRequestDto request)
+        public BaseResponse<PricingGuideOpenMarketInventory> GetOpenMarketPricingGuideGrid(int proposalId, int detailId)
         {
+            var request = new ProposalDetailPricingGuidGridRequestDto
+            {
+                ProposalDetailId = detailId,
+                ProposalId = proposalId
+            };
+
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .GetProposalDetailPricingGuideGridDto(request));
+                    .GetPricingGuideOpenMarketInventory(request));
         }
     }
 }

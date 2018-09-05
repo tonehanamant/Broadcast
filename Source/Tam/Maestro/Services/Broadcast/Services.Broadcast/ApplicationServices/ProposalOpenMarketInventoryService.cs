@@ -7,6 +7,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -24,7 +25,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
         ProposalDetailPricingGuideGridDto GetProposalDetailPricingGuideGridDto(ProposalDetailPricingGuidGridRequestDto request);
-        PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId);
+        PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(ProposalDetailPricingGuidGridRequestDto request);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -32,10 +33,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalProgramsCalculationEngine _ProposalProgramsCalculationEngine;
         private readonly IProposalOpenMarketsTotalsCalculationEngine _ProposalOpenMarketsTotalsCalculationEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly ISpotLengthRepository _SpotLegthRepository;
         private readonly IProposalRepository _ProposalRepository;
-
-        internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
 
         private const string HOUSEHOLD_AUDIENCE_CODE = "HH";
 
@@ -51,7 +49,6 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProgramsCalculationEngine = proposalProgramsCalculationEngine;
             _ProposalOpenMarketsTotalsCalculationEngine = proposalOpenMarketsTotalsCalculationEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _SpotLegthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _ProposalRepository = broadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
         }
 
@@ -149,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 foreach (var name in programNamesToExclude)
                 {
-                    if (program.ProgramNames.Any(x=> x.Equals(name)))
+                    if (program.ProgramNames.Any(x=> x != null && x.Equals(name)))
                     {
                         programsToExclude.Add(program);
                     }
@@ -1129,31 +1126,17 @@ namespace Services.Broadcast.ApplicationServices
             dto.Markets.ForEach(x => x.Stations.ForEach(y => y.Programs.RemoveAll(z => programsToExclude.Contains(z))));
         }
 
-        public PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId)
+        public PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(ProposalDetailPricingGuidGridRequestDto request)
         {
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             var stationProgramRepository =
                 BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
-            var proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
-            var pricingGuideDto = proposalRepository.GetPricingGuideRepresentionalWeek(proposalDetailId);
-            var proposalMarketIds = ProposalMarketsCalculationEngine
-                .GetProposalMarketsList(pricingGuideDto.ProposalId, pricingGuideDto.ProposalVersion, pricingGuideDto.ProposalDetailId)
-                .Select(m => (short)m.Id).ToList();
-            var programs = stationProgramRepository
-                .GetStationProgramsForProposalDetail(pricingGuideDto.ProposalDetailFlightStartDate, pricingGuideDto.ProposalDetailFlightEndDate,
-                    pricingGuideDto.ProposalDetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds, pricingGuideDto.ProposalDetailId);
 
-            _SetFlightWeeks(programs);
+            var pricingGuideDto = proposalRepository.GetPricingGuideRepresentionalWeek(request.ProposalDetailId);
 
-            var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(pricingGuideDto.ProposalDetailDaypartId);
+            var programs = _PopulatePrograms(pricingGuideDto, stationProgramRepository);
 
-            programs.RemoveAll(p =>
-            {
-                return
-                    p.ManifestDayparts.All(
-                        d => !DaypartCache.GetDisplayDaypart(d.DaypartId).Intersects(proposalDetailDaypart));
-
-            });
+            _FilterProgramsByDaypart(pricingGuideDto, programs);
 
             if (!programs.Any())
             {
@@ -1173,6 +1156,15 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyDefaultSortingForPricingGuide(pricingGuideDto);
 
+            _FilterByProgramAndGenre(request.ProposalDetailId, pricingGuideDto);
+
+            return pricingGuideDto;
+        }
+
+        private void _FilterByProgramAndGenre(int proposalDetailId, PricingGuideOpenMarketInventory pricingGuideDto)
+        {
+            var proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
+
             var request = new OpenMarketRefineProgramsRequest
             {
                 ProposalDetailId = proposalDetailId,
@@ -1184,8 +1176,36 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideDto, request);
+        }
 
-            return pricingGuideDto;
+        private void _FilterProgramsByDaypart(PricingGuideOpenMarketInventory pricingGuideDto, List<ProposalProgramDto> programs)
+        {
+            var proposalDetailDaypart = DaypartCache.GetDisplayDaypart(pricingGuideDto.ProposalDetailDaypartId);
+
+            programs.RemoveAll(p =>
+            {
+                return
+                    p.ManifestDayparts.All(
+                        d => !DaypartCache.GetDisplayDaypart(d.DaypartId).Intersects(proposalDetailDaypart));
+            });
+        }
+
+        private List<ProposalProgramDto> _PopulatePrograms(PricingGuideOpenMarketInventory pricingGuideDto,
+            IStationProgramRepository stationProgramRepository)
+        {
+            var proposalMarketIds = ProposalMarketsCalculationEngine
+                .GetProposalMarketsList(pricingGuideDto.ProposalId, pricingGuideDto.ProposalVersion,
+                    pricingGuideDto.ProposalDetailId)
+                .Select(m => (short) m.Id).ToList();
+            var programs = stationProgramRepository
+                .GetStationProgramsForProposalDetail(pricingGuideDto.ProposalDetailFlightStartDate,
+                    pricingGuideDto.ProposalDetailFlightEndDate,
+                    pricingGuideDto.ProposalDetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds,
+                    pricingGuideDto.ProposalDetailId);
+
+            _SetFlightWeeks(programs);
+
+            return programs;
         }
     }
 }

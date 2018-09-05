@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;

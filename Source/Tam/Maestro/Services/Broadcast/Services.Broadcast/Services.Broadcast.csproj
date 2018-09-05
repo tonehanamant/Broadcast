@@ -226,7 +226,6 @@
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
-    <Compile Include="ApplicationServices\ProposalPricingGuideService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
     <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />

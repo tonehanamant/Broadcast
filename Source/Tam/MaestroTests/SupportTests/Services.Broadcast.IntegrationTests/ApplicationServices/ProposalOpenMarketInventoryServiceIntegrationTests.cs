@@ -1438,7 +1438,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
-                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(proposalDetailId);
+                var request = new ProposalDetailPricingGuidGridRequestDto
+                {
+                    ProposalId = proposal.Id.Value,
+                    ProposalDetailId = proposalDetailId
+                };
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
             }
