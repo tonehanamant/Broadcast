@@ -227,7 +227,8 @@
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
-    <Compile Include="ApplicationServices\SpotTrackerService.cs" />    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
+    <Compile Include="ApplicationServices\SpotTrackerService.cs" />
+    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
@@ -248,7 +249,7 @@
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
-    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventory.cs" />
+    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventoryDto.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketPricing.cs" />

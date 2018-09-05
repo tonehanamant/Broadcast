@@ -92,7 +92,7 @@ namespace BroadcastComposerWeb.Controllers
         }
         [HttpGet]
         [Route("Detail/PricingGuide/Grid/{proposalId}/{detailId}")]
-        public BaseResponse<PricingGuideOpenMarketInventory> GetOpenMarketPricingGuideGrid(int proposalId, int detailId)
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuideGrid(int proposalId, int detailId)
         {
             var request = new ProposalDetailPricingGuidGridRequestDto
             {
