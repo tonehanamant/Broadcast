@@ -1730,7 +1730,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PricingGuideOpenMarketInventory
                 {
-                    //Margin = pv.proposal_versions.margin
+                    Margin = pv.proposal_versions.margin
                 };
 
                 _SetBaseFields(pv, dto);
