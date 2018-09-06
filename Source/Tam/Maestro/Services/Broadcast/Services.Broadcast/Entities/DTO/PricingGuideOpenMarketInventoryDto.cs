@@ -44,7 +44,6 @@ namespace Services.Broadcast.Entities.DTO
                     public decimal CostPerSpot { get; set; }
                     public decimal Cost { get; set; }
                     public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
-                    public List<ProposalProgramFlightWeek> FlightWeeks { get; set; } = new List<ProposalProgramFlightWeek>();
                 }
             }
         }

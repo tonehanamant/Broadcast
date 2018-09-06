@@ -1068,9 +1068,7 @@ namespace Services.Broadcast.ApplicationServices
                             CostPerSpot = p.SpotCost,
                             Cost = p.TotalCost,
                             Impressions = p.TotalImpressions,
-                            Spots = p.TotalSpots,
-                            FlightWeeks = p.FlightWeeks,
-                            Genres = p.Genres                            
+                            Spots = p.TotalSpots,                        
                         }).ToList()
                     }).ToList()
                 }).ToList();
