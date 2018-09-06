@@ -28,6 +28,7 @@ namespace Services.Broadcast.Entities.DTO
                 public string CallLetters { get; set; }
                 public string LegacyCallLetters { get; set; }
                 public string Affiliation { get; set; }
+                public double TotalStationImpressions { get; set; }
                 public List<PricingGuideProgram> Programs { get; set; } = new List<PricingGuideProgram>();
 
                 public class PricingGuideProgram
@@ -39,7 +40,6 @@ namespace Services.Broadcast.Entities.DTO
                     public int Spots { get; set; }
                     public double ImpressionsPerSpot { get; set; }
                     public double Impressions { get; set; }
-                    public double StationImpressions { get; set; }
                     public double OvernightImpressions { get; set; }
                     public decimal CostPerSpot { get; set; }
                     public decimal Cost { get; set; }

@@ -1181,6 +1181,7 @@ namespace Services.Broadcast.ApplicationServices
             pricingGuideOpenMarketDto.Markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
             pricingGuideOpenMarketDto.Markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
             pricingGuideOpenMarketDto.Markets.ForEach(m => m.TotalOvernightImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.OvernightImpressions)));
+            pricingGuideOpenMarketDto.Markets.ForEach(m => m.TotalOvernightImpressions = m.Stations.ForEach(s => s.TotalStationImpressions = s.Programs.Sum(p => p.Impressions)));
         }
 
         private void _FilterProgramsByDaypart(ProposalDetailInventoryBase pricingGuideOpenMarketDto, List<ProposalProgramDto> programs)
