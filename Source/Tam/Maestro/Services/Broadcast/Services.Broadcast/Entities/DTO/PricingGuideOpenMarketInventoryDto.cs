@@ -19,7 +19,7 @@ namespace Services.Broadcast.Entities.DTO
             public int TotalSpots { get; set; }
             public double TotalImpressions { get; set; }
             public double TotalOvernightImpressions { get; set; }
-            public double TotalCost { get; set; }
+            public decimal TotalCost { get; set; }
             public List<PricingGuideStation> Stations { get; set; } = new List<PricingGuideStation>();
 
             public class PricingGuideStation
@@ -41,8 +41,8 @@ namespace Services.Broadcast.Entities.DTO
                     public double Impressions { get; set; }
                     public double StationImpressions { get; set; }
                     public double OvernightImpressions { get; set; }
-                    public double CostPerSpot { get; set; }
-                    public double Cost { get; set; }
+                    public decimal CostPerSpot { get; set; }
+                    public decimal Cost { get; set; }
                     public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
                     public List<ProposalProgramFlightWeek> FlightWeeks { get; set; } = new List<ProposalProgramFlightWeek>();
                 }

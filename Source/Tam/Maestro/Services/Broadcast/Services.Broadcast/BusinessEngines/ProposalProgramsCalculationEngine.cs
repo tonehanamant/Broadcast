@@ -39,7 +39,6 @@ namespace Services.Broadcast.BusinessEngines
         /// <returns></returns>
         void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
 
-
         /// <summary>
         /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week.
         /// </summary>
@@ -47,6 +46,10 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="spotLength"></param>
         /// <returns></returns>
         void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
+
+        void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
+
+        void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
     }
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
@@ -279,6 +282,31 @@ namespace Services.Broadcast.BusinessEngines
                 var totalImpressions = program.UnitImpressions * activeWeeks.Count;
 
                 program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
+            }
+        }
+
+        public void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+
+                if (activeWeeks.Count == 0)
+                    program.SpotCost = 0;
+                else
+                    program.SpotCost = totalCost / activeWeeks.Count;
+            }
+        }
+
+        public void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+
+                program.TotalCost = totalCost * program.TotalSpots;
             }
         }
     }
