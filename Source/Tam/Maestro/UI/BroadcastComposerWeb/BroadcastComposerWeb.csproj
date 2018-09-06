@@ -238,6 +238,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
+    <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\SpotTrackerController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
@@ -360,6 +361,9 @@
     <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
     <Content Include="Styles\fonts\FontAwesome.otf" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="App_Data\Market coverages.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\QA %28OnDeck%29.pubxml" />
     <None Include="Properties\PublishProfiles\QA.pubxml" />
     <Content Include="Scripts\library\bootstrap-tagsinput\bootstrap-tagsinput.css" />

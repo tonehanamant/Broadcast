@@ -15,6 +15,12 @@ namespace Services.Broadcast.Repositories
         List<market> GetMarkets();
         List<market> GetMarketsByMarketCodes(List<int> marketCodes);
         List<LookupDto> GetMarketDtos();
+
+        /// <summary>
+        /// Returns a list of markets which are filtered by their geography names
+        /// </summary>
+        /// <param name="geographyNames">Geography names of markets</param>
+        List<market> GetMarketsByGeographyNames(IEnumerable<string> geographyNames);
     }
 
     public class MarketRepository: BroadcastRepositoryBase, IMarketRepository
@@ -47,6 +53,15 @@ namespace Services.Broadcast.Repositories
                 context =>
                     (from m in context.markets
                      where marketCodes.Contains(m.market_code)
+                     select m).ToList());
+        }
+
+        public List<market> GetMarketsByGeographyNames(IEnumerable<string> geographyNames)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                    (from m in context.markets
+                     where geographyNames.Contains(m.geography_name)
                      select m).ToList());
         }
     }    

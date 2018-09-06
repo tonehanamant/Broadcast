@@ -54,6 +54,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<INsiMarketRepository, NsiMarketRepository>();
             instance.RegisterType<IRatingForecastRepository, RatingForecastRepository>();
             instance.RegisterType<IMarketRepository, MarketRepository>();
+            instance.RegisterType<IMarketCoverageRepository, MarketCoverageRepository>();
             instance.RegisterType<IMarketDmaMapRepository, MarketDmaMapRepository>();
             instance.RegisterType<IBroadcastAudienceRepository, BroadcastAudienceRepository>();
             instance.RegisterType<IRatingAdjustmentsRepository, RatingAdjustmentsRepository>();

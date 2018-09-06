@@ -194,6 +194,8 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_stations" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_buy_files_proposal_version_details" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots" />
+        <EntityTypeShape EntityType="BroadcastModel.market_coverages" Width="1.5" PointX="5.375" PointY="18.75" />
+        <AssociationConnector Association="BroadcastModel.FK_market_coverages_markets" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

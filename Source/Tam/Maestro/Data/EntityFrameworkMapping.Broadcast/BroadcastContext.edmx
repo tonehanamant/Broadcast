@@ -311,6 +311,16 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="market_coverages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="tv_homes" Type="int" Nullable="false" />
+          <Property Name="percentage_of_us" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="market_dma_map">
           <Key>
             <PropertyRef Name="market_code" />
@@ -1319,6 +1329,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_files">
               <PropertyRef Name="sweep_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_market_coverages_markets">
+          <End Role="markets" Type="Self.markets" Multiplicity="1" />
+          <End Role="market_coverages" Type="Self.market_coverages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markets">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="market_coverages">
+              <PropertyRef Name="market_code" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2503,6 +2525,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_files" EntityType="Self.inventory_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_sources" EntityType="Self.inventory_sources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="isci_mapping" EntityType="Self.isci_mapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="market_coverages" EntityType="Self.market_coverages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="market_dma_map" EntityType="Self.market_dma_map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="markets" EntityType="Self.markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
@@ -2660,6 +2683,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_files_media_months" Association="Self.FK_inventory_files_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="inventory_files" EntitySet="inventory_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_market_coverages_markets" Association="Self.FK_market_coverages_markets">
+            <End Role="markets" EntitySet="markets" />
+            <End Role="market_coverages" EntitySet="market_coverages" />
           </AssociationSet>
           <AssociationSet Name="FK_market_dma_map_market_code" Association="Self.FK_market_dma_map_market_code">
             <End Role="markets" EntitySet="markets" />
@@ -3533,6 +3560,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
             <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
           </AssociationSet>
+          <EntitySet Name="market_coverages" EntityType="BroadcastModel.market_coverages" />
+          <AssociationSet Name="FK_market_coverages_markets" Association="BroadcastModel.FK_market_coverages_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="market_coverages" EntitySet="market_coverages" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -3688,6 +3720,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_markets" Relationship="BroadcastModel.FK_proposal_version_markets_markets" FromRole="market" ToRole="proposal_version_markets" />
           <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
+          <NavigationProperty Name="market_coverages" Relationship="BroadcastModel.FK_market_coverages_markets" FromRole="market" ToRole="market_coverages" />
         </EntityType>
         <EntityType Name="media_months">
           <Key>
@@ -6163,6 +6196,29 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="market_coverages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="tv_homes" Type="Int32" Nullable="false" />
+          <Property Name="percentage_of_us" Type="Double" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_market_coverages_markets" FromRole="market_coverages" ToRole="market" />
+        </EntityType>
+        <Association Name="FK_market_coverages_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
+          <End Type="BroadcastModel.market_coverages" Role="market_coverages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="market_coverages">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7283,6 +7339,17 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="station_inventory_spot_genres">
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="station_inventory_spot_id" ColumnName="station_inventory_spot_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="market_coverages">
+            <EntityTypeMapping TypeName="BroadcastModel.market_coverages">
+              <MappingFragment StoreEntitySet="market_coverages">
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="percentage_of_us" ColumnName="percentage_of_us" />
+                <ScalarProperty Name="tv_homes" ColumnName="tv_homes" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

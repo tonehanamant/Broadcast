@@ -223,6 +223,7 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsService.cs" />
     <Compile Include="ApplicationServices\LogoService.cs" />
+    <Compile Include="ApplicationServices\MarketService.cs" />
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
@@ -242,12 +243,14 @@
     <Compile Include="ApplicationServices\ProposalServiceHelper.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
     <Compile Include="ApplicationServices\AffidavitEmailProcessor.cs" />
+    <Compile Include="Attributes\ExcelColumnAttribute.cs" />
     <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
+    <Compile Include="Entities\MarketCoverage.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketPricing.cs" />
@@ -260,6 +263,7 @@
     <Compile Include="Entities\SpotTrackerFileDetail.cs" />
     <Compile Include="Entities\TrackerFileDetail.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
+    <Compile Include="Extensions\ExcelWorksheetExtensions.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
@@ -532,6 +536,7 @@
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />
     <Compile Include="Entities\InventoryDetailSlotProposalDto.cs" />
     <Compile Include="Repositories\AffidavitRepository.cs" />
+    <Compile Include="Repositories\MarketCoverageRepository.cs" />
     <Compile Include="Repositories\PostingBookRepository.cs" />
     <Compile Include="Repositories\PostLogRepository.cs" />
     <Compile Include="Repositories\ShowTypeRepository.cs" />

@@ -107,5 +107,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<proposal_buy_file_details> proposal_buy_file_details { get; set; }
         public virtual DbSet<proposal_buy_files> proposal_buy_files { get; set; }
         public virtual DbSet<station_inventory_spot_genres> station_inventory_spot_genres { get; set; }
+        public virtual DbSet<market_coverages> market_coverages { get; set; }
     }
 }

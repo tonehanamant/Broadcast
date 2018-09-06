@@ -212,6 +212,30 @@ END
 
 /*************************************** BCOP-3516 - END *****************************************************/
 
+/*************************************** BCOP-3561 *****************************************************/
+
+IF OBJECT_ID('market_coverages', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[market_coverages]
+	(  
+		[id] int IDENTITY(1,1) NOT NULL,
+		[rank] int NOT NULL,
+		[market_code] smallint NOT NULL,
+		[tv_homes] int NOT NULL,
+		[percentage_of_us] float NOT NULL
+		CONSTRAINT [PK_market_coverages] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+	ALTER TABLE [dbo].[market_coverages]  WITH CHECK ADD  CONSTRAINT [FK_market_coverages_markets] 
+	FOREIGN KEY([market_code]) REFERENCES [dbo].[markets] ([market_code])
+
+	ALTER TABLE [dbo].[market_coverages] CHECK CONSTRAINT [FK_market_coverages_markets]
+END
+
+/*************************************** BCOP-3561 - END *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
