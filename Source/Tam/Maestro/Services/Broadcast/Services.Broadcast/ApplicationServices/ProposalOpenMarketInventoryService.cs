@@ -1066,6 +1066,8 @@ namespace Services.Broadcast.ApplicationServices
                             ImpressionsPerSpot = p.UnitImpressions,
                             Dayparts = p.DayParts,
                             CostPerSpot = p.SpotCost,
+                            Cost = p.TotalCost,
+                            Impressions = p.TotalImpressions,
                             Spots = p.TotalSpots,
                             FlightWeeks = p.FlightWeeks,
                             Genres = p.Genres                            
@@ -1131,6 +1133,9 @@ namespace Services.Broadcast.ApplicationServices
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             var pricingGuideOpenMarketInventoryDto =
                 proposalRepository.GetPricingGuideOpenMarketInventory(request.ProposalDetailId);
+
+            _SetProposalInventoryDetailSpotLength(pricingGuideOpenMarketInventoryDto);
+
             var programs = _PopulatePrograms(pricingGuideOpenMarketInventoryDto);
 
             _FilterProgramsByDaypart(pricingGuideOpenMarketInventoryDto, programs);
@@ -1167,6 +1172,7 @@ namespace Services.Broadcast.ApplicationServices
                 pricingGuideOpenMarketInventoryDto.DetailSpotLengthId);
             _ProposalProgramsCalculationEngine.CalculateAvgCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
+            _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
         }
 
         private void _SumTotalsForMarkets(PricingGuideOpenMarketInventoryDto pricingGuideOpenMarketDto)

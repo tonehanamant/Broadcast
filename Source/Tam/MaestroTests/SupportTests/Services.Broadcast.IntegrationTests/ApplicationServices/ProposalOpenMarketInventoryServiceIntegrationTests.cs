@@ -1443,6 +1443,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = proposal.Id.Value,
                     ProposalDetailId = proposalDetailId
                 };
+
                 var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));

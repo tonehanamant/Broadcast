@@ -50,6 +50,7 @@ namespace Services.Broadcast.BusinessEngines
         void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
 
         void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
+        void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
     }
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
@@ -303,10 +304,21 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
-                var totalCost = activeWeeks.Sum(w => w.Rate);
+                if (program.TotalSpots == 0)
+                    program.TotalCost = program.SpotCost;
+                else
+                    program.TotalCost = program.SpotCost * program.TotalSpots;
+            }
+        }
 
-                program.TotalCost = totalCost * program.TotalSpots;
+        public void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                if (program.TotalSpots == 0)
+                    program.TotalImpressions = program.UnitImpressions;
+                else
+                    program.TotalImpressions = program.UnitImpressions * program.TotalSpots;
             }
         }
     }

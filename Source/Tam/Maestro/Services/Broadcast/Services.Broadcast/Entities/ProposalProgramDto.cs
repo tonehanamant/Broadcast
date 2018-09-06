@@ -37,6 +37,7 @@ namespace Services.Broadcast.Entities
         public bool IsOverlapping { get; set; }
         public double UnitImpressions { get; set; }
         public List<StationInventorySpots> Allocations { get; set; }
+        public double TotalImpressions { get; set; }
 
         public ProposalProgramDto()
         {
