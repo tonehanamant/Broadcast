@@ -247,13 +247,13 @@
               {
                 "comment": " ",
                 "dayOfWeek": {
-                  "Friday": null,
-                  "Monday": null,
-                  "Saturday": null,
-                  "Sunday": null,
-                  "Thursday": null,
-                  "Tuesday": null,
-                  "Wednesday": null
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
                 },
                 "daypartCode": "bb",
                 "demoValue": [
@@ -307,7 +307,7 @@
                     "name": "KCWQ-TV"
                   }
                 ],
-                "program": null,
+                "program": "King Of The Hill",
                 "spot": [
                   {
                     "id": null,
@@ -341,13 +341,13 @@
               {
                 "comment": " ",
                 "dayOfWeek": {
-                  "Friday": null,
-                  "Monday": null,
-                  "Saturday": null,
-                  "Sunday": null,
-                  "Thursday": null,
-                  "Tuesday": null,
-                  "Wednesday": null
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
                 },
                 "daypartCode": "bb",
                 "demoValue": [
@@ -401,7 +401,7 @@
                     "name": "KCWQ-TV"
                   }
                 ],
-                "program": null,
+                "program": "Steve Wilkos Show",
                 "spot": [
                   {
                     "id": null,
@@ -431,9 +431,7 @@
                   },
                   "spots": "3"
                 }
-              },
-              null,
-              null
+              }
             ],
             "key": [
               {
@@ -491,10 +489,7 @@
             "affiliateSplit": 0.0,
             "breakoutMonth": null,
             "comment": "OK",
-            "detailLine": [
-              null,
-              null
-            ],
+            "detailLine": null,
             "key": [
               {
                 "codeDescription": "UseZonePop",
@@ -619,9 +614,7 @@
             "affiliateSplit": 0.0,
             "breakoutMonth": null,
             "comment": "OK",
-            "detailLine": [
-              null
-            ],
+            "detailLine": null,
             "key": [
               {
                 "codeDescription": "UseZonePop",
@@ -678,12 +671,7 @@
             "affiliateSplit": 0.0,
             "breakoutMonth": null,
             "comment": "OK",
-            "detailLine": [
-              null,
-              null,
-              null,
-              null
-            ],
+            "detailLine": null,
             "key": [
               {
                 "codeDescription": "UseZonePop",
@@ -744,13 +732,13 @@
               {
                 "comment": " ",
                 "dayOfWeek": {
-                  "Friday": null,
-                  "Monday": null,
-                  "Saturday": null,
-                  "Sunday": null,
-                  "Thursday": null,
-                  "Tuesday": null,
-                  "Wednesday": null
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
                 },
                 "daypartCode": "bb",
                 "demoValue": [
@@ -804,7 +792,7 @@
                     "name": "NHQA-TV"
                   }
                 ],
-                "program": null,
+                "program": "KHQA THIS MORNING",
                 "spot": [
                   {
                     "id": null,
@@ -834,12 +822,7 @@
                   },
                   "spots": "2"
                 }
-              },
-              null,
-              null,
-              null,
-              null,
-              null
+              }
             ],
             "key": [
               {
@@ -897,15 +880,7 @@
             "affiliateSplit": 0.0,
             "breakoutMonth": null,
             "comment": "OK",
-            "detailLine": [
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null
-            ],
+            "detailLine": null,
             "key": [
               {
                 "codeDescription": "UseZonePop",
@@ -966,22 +941,7 @@
           },
           "spots": "2"
         }
-      },
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null
+      }
     ],
     "populations": [
       {

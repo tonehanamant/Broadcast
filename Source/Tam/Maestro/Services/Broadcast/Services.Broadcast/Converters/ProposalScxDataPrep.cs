@@ -48,6 +48,9 @@ namespace Services.Broadcast.Converters
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
         }
 
+        /// <summary>
+        /// fyi: open market inventory are assumed to have 1 daypart and 1 program name.  Any more or less will throw exception.
+        /// </summary>
         public ScxData GetDataFromProposalDetail(ProposalDto dto, ProposalDetailDto proposalDetailDto)
         {
             var proposalDetailInventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailDto.Id.Value);
@@ -311,7 +314,7 @@ namespace Services.Broadcast.Converters
     
                 var demoRating = new Ratingdata();
 
-                demoRating.DaypartId = program.Dayparts.First().Id;
+                demoRating.DaypartId = program.Dayparts.Single().Id;
                 demoRating.StationCode = program.StationCode;
                 var impressions = demo.Impressions
                     .Where(i => i.id == program.ProgramId)
