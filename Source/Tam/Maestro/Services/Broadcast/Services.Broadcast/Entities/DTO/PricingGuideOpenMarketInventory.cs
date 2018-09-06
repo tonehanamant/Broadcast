@@ -14,6 +14,7 @@ namespace Services.Broadcast.Entities.DTO
     {
         public OpenMarketCriterion Criteria { get; set; }
         public List<PricingGuideMarket> Markets { get; set; } = new List<PricingGuideMarket>();
+        public double? MarketCoverage { get; set; }
 
         public class PricingGuideMarket : IInventoryMarket
         {

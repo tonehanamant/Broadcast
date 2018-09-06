@@ -1116,7 +1116,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 foreach (var name in programNamesToExclude)
                 {
-                    if (program.ProgramNames.Any(x => x.Equals(name)))
+                    if (program.ProgramNames.Any(x => x != null && x.Equals(name)))
                     {
                         programsToExclude.Add(program);
                     }

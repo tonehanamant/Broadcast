@@ -1091,10 +1091,8 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailOpenMarketInventoryDto
-                {
-                    Margin = pv.proposal_versions.margin
-                };
+                var dto = new ProposalDetailOpenMarketInventoryDto();
+
                 _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
@@ -1483,12 +1481,10 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailProprietaryInventoryDto
-                {
-                    Margin = pv.proposal_versions.margin
-                };
+                var dto = new ProposalDetailProprietaryInventoryDto();
 
                 _SetBaseFields(pv, dto);
+
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
                              orderby week.start_date
@@ -1510,7 +1506,7 @@ namespace Services.Broadcast.Repositories
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
-            baseDto.DetailId = pvd.id;
+            baseDto.Margin = pv.margin;
             baseDto.PostType = (SchedulePostType?)pv.post_type;
             baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
             baseDto.Equivalized = pv.equivalized;
@@ -1527,7 +1523,7 @@ namespace Services.Broadcast.Repositories
                     StartDate = f.start_date,
                     MediaWeekId = f.media_week_id
                 }).OrderBy(w => w.StartDate).ToList();
-
+            baseDto.DetailId = pvd.id;
             baseDto.DetailDaypartId = pvd.daypart_id;
             baseDto.DetailSpotLengthId = pvd.spot_length_id;
             baseDto.DetailTargetImpressions = pvd.impressions_total;
@@ -1701,7 +1697,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PricingGuideOpenMarketInventory
                 {
-                    Margin = pv.proposal_versions.margin
+                    MarketCoverage = pv.proposal_versions.market_coverage
                 };
 
                 _SetBaseFields(pv, dto);
