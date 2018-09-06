@@ -75,7 +75,7 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
 
-        PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(int proposalDetailId);
+        PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1684,7 +1684,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(int proposalDetailId)
+        public PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1699,7 +1699,7 @@ namespace Services.Broadcast.Repositories
                     .Single(d => d.id == proposalDetailId,
                         $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
 
-                var dto = new PricingGuideOpenMarketInventoryDto
+                var dto = new PricingGuideOpenMarketInventory
                 {
                     Margin = pv.proposal_versions.margin
                 };

@@ -1,58 +1,4 @@
 ﻿{
-  "Criteria": {
-    "CpmCriteria": [],
-    "GenreSearchCriteria": [],
-    "ProgramNameSearchCriteria": []
-  },
-  "DetailBudgetMarginAchieved": false,
-  "DetailBudgetPercent": 0.0,
-  "DetailCpm": 12.00,
-  "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 0.0,
-  "DetailDaypart": null,
-  "DetailDaypartId": 49308,
-  "DetailFlightEndDate": "2017-07-23T00:00:00",
-  "DetailFlightStartDate": "2017-06-26T00:00:00",
-  "DetailFlightWeeks": [
-    {
-      "EndDate": "2017-07-02T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 705,
-      "StartDate": "2017-06-26T00:00:00"
-    },
-    {
-      "EndDate": "2017-07-09T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 706,
-      "StartDate": "2017-07-03T00:00:00"
-    },
-    {
-      "EndDate": "2017-07-16T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 707,
-      "StartDate": "2017-07-10T00:00:00"
-    },
-    {
-      "EndDate": "2017-07-23T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 708,
-      "StartDate": "2017-07-17T00:00:00"
-    }
-  ],
-  "DetailId": 8123,
-  "DetailImpressionsMarginAchieved": false,
-  "DetailImpressionsPercent": 0.0,
-  "DetailSpotLength": 30,
-  "DetailSpotLengthId": 1,
-  "DetailTargetBudget": 204.0000,
-  "DetailTargetImpressions": 17000.0,
-  "DetailTotalBudget": 0.0,
-  "DetailTotalCpm": 0.0,
-  "DetailTotalImpressions": 0.0,
-  "Equivalized": true,
-  "GuaranteedAudience": 31,
-  "HutProjectionBookId": 413,
-  "Margin": 20.0,
   "Markets": [
     {
       "MarketCoverage": 0.0,
@@ -2597,41 +2543,5 @@
       "TotalOvernightImpressions": 0.0,
       "TotalSpots": 0
     }
-  ],
-  "PlaybackType": 4,
-  "PostType": 1,
-  "ProposalFlightEndDate": "2017-07-23T00:00:00",
-  "ProposalFlightStartDate": "2017-06-26T00:00:00",
-  "ProposalFlightWeeks": [
-    {
-      "EndDate": "2017-07-02T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 705,
-      "StartDate": "2017-06-26T00:00:00"
-    },
-    {
-      "EndDate": "2017-07-09T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 706,
-      "StartDate": "2017-07-03T00:00:00"
-    },
-    {
-      "EndDate": "2017-07-16T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 707,
-      "StartDate": "2017-07-10T00:00:00"
-    },
-    {
-      "EndDate": "2017-07-23T00:00:00",
-      "IsHiatus": false,
-      "MediaWeekId": 708,
-      "StartDate": "2017-07-17T00:00:00"
-    }
-  ],
-  "ProposalId": 24425,
-  "ProposalName": "Pickle Rick Test",
-  "ProposalVersion": 1,
-  "ProposalVersionId": 28613,
-  "ShareProjectionBookId": 416,
-  "SingleProjectionBookId": null
+  ]
 }

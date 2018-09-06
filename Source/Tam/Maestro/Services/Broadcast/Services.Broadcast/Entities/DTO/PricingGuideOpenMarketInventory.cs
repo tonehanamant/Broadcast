@@ -5,7 +5,12 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.DTO
 {
-    public class PricingGuideOpenMarketInventoryDto : ProposalDetailInventoryBase
+    public class PricingGuideOpenMarketInventoryDto 
+    {
+        public List<PricingGuideOpenMarketInventory.PricingGuideMarket> Markets { get; set; } = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>();
+    }
+
+    public class PricingGuideOpenMarketInventory : ProposalDetailInventoryBase
     {
         public OpenMarketCriterion Criteria { get; set; }
         public List<PricingGuideMarket> Markets { get; set; } = new List<PricingGuideMarket>();

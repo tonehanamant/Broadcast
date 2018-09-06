@@ -249,7 +249,7 @@
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
-    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventoryDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventory.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketPricing.cs" />
