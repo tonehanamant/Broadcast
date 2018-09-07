@@ -275,7 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
 
                 Assert.IsTrue(1 == filteredProgram.Count());
-                Assert.IsTrue(filteredProgram.First().ProgramNames.Count() == 2);
+                Assert.IsTrue(filteredProgram.First().ProgramNames.Count() == 1);
             }
         }
 

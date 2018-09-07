@@ -14,9 +14,6 @@
             "Dayparts": [
               {
                 "Display": "M-F 9AM-10AM"
-              },
-              {
-                "Display": "M-F 6AM-8AM"
               }
             ],
             "FlightWeeks": [
@@ -48,8 +45,7 @@
               }
             ],
             "ProgramNames": [
-              "Test Program",
-              "Test Program On Separate Daypart"
+              "Test Program"
             ],
             "Spots": 0,
             "StationCode": 5013,

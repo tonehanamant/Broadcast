@@ -40,8 +40,8 @@ namespace Services.Broadcast.Entities.DTO
                 public class PricingGuideProgram
                 {
                     public int ProgramId { get; set; }
-                    public List<LookupDto> Dayparts { get; set; } = new List<LookupDto>();
-                    public List<string> ProgramNames { get; set; } = new List<string>();
+                    public LookupDto Daypart { get; set; } = new LookupDto();
+                    public string ProgramName { get; set; } 
                     public decimal BlendedCpm { get; set; }
                     public int Spots { get; set; }
                     public double ImpressionsPerSpot { get; set; }

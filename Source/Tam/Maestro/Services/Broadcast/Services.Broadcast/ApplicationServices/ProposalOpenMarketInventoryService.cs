@@ -1061,10 +1061,10 @@ namespace Services.Broadcast.ApplicationServices
                         Programs = s.Select(p => new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram
                         {
                             ProgramId = p.ManifestId,
-                            ProgramNames = p.ManifestDayparts.Select(md => md.ProgramName).ToList(),
+                            ProgramName = p.ManifestDayparts.Single().ProgramName,
                             BlendedCpm = p.TargetCpm,
                             ImpressionsPerSpot = p.UnitImpressions,
-                            Dayparts = p.DayParts,
+                            Daypart = p.DayParts.Single(),
                             CostPerSpot = p.SpotCost,
                             Cost = p.TotalCost,
                             Impressions = p.TotalImpressions,
@@ -1116,7 +1116,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 foreach (var name in programNamesToExclude)
                 {
-                    if (program.ProgramNames.Any(x => x != null && x.Equals(name)))
+                    if (program.ProgramName.Equals(name))
                     {
                         programsToExclude.Add(program);
                     }
