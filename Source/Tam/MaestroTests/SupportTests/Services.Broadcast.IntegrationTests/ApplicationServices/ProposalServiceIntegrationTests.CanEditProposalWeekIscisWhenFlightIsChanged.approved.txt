@@ -9,6 +9,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": {
         "DefaultHutBook": {
@@ -182,6 +183,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -339,6 +341,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,

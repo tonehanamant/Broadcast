@@ -24,8 +24,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
             this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
-            this.spot_tracker_file_details = new HashSet<spot_tracker_file_details>();
             this.proposal_buy_file_details = new HashSet<proposal_buy_file_details>();
+            this.spot_tracker_file_details = new HashSet<spot_tracker_file_details>();
         }
     
         public int id { get; set; }
@@ -42,7 +42,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
-        public virtual ICollection<spot_tracker_file_details> spot_tracker_file_details { get; set; }
         public virtual ICollection<proposal_buy_file_details> proposal_buy_file_details { get; set; }
+        public virtual ICollection<spot_tracker_file_details> spot_tracker_file_details { get; set; }
     }
 }

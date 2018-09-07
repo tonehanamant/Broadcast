@@ -21,6 +21,7 @@
 
 
 //REVISED version for open from React - remove ProposalView dependencies
+//REVISE: only can change CPM - but maintain Genre/Name for BE
 function CriteriaBuilderViewModel(inventoryView) {
     var $scope = this;
     /*** PROPERTIES ***/
@@ -53,6 +54,11 @@ function CriteriaBuilderViewModel(inventoryView) {
         }
     });
 
+    //hold for save - no editing
+    $scope.GenresToPersist = ko.observableArray([]);
+    $scope.ProgramNamesToPersist = ko.observableArray([]);
+
+
     /*** METHODS ***/
 
     $scope.Open = function () {
@@ -64,33 +70,33 @@ function CriteriaBuilderViewModel(inventoryView) {
 
             if (criteria) {
                 /** Program Name Criteria **/
-                if (!_.isEmpty(criteria.ProgramNameSearchCriteria)) {
-                    var programNamesToInclude = criteria.ProgramNameSearchCriteria.reduce(function (result, program) {
-                        if (program.Contain == $scope.INCLUDE_ENUM()) {
-                            result.push(program.ProgramName);
-                        }
+                //if (!_.isEmpty(criteria.ProgramNameSearchCriteria)) {
+                //    var programNamesToInclude = criteria.ProgramNameSearchCriteria.reduce(function (result, program) {
+                //        if (program.Contain == $scope.INCLUDE_ENUM()) {
+                //            result.push(program.ProgramName);
+                //        }
 
-                        return result;
-                    }, []);
+                //        return result;
+                //    }, []);
 
-                    if (!_.isEmpty(programNamesToInclude)) {
-                        var includeProgramCriterion = new Criterion('Program Name', $scope.INCLUDE_ENUM(), programNamesToInclude);
-                        $scope.CriteriaList.push(includeProgramCriterion);
-                    }
+                //    if (!_.isEmpty(programNamesToInclude)) {
+                //        var includeProgramCriterion = new Criterion('Program Name', $scope.INCLUDE_ENUM(), programNamesToInclude);
+                //        $scope.CriteriaList.push(includeProgramCriterion);
+                //    }
 
-                    var programNamesToExclude = criteria.ProgramNameSearchCriteria.reduce(function (result, program) {
-                        if (program.Contain == $scope.EXCLUDE_ENUM()) {
-                            result.push(program.ProgramName);
-                        }
+                //    var programNamesToExclude = criteria.ProgramNameSearchCriteria.reduce(function (result, program) {
+                //        if (program.Contain == $scope.EXCLUDE_ENUM()) {
+                //            result.push(program.ProgramName);
+                //        }
 
-                        return result;
-                    }, []);
+                //        return result;
+                //    }, []);
 
-                    if (!_.isEmpty(programNamesToExclude)) {
-                        var excludeProgramCriterion = new Criterion('Program Name', $scope.EXCLUDE_ENUM(), programNamesToExclude);
-                        $scope.CriteriaList.push(excludeProgramCriterion);
-                    }
-                }
+                //    if (!_.isEmpty(programNamesToExclude)) {
+                //        var excludeProgramCriterion = new Criterion('Program Name', $scope.EXCLUDE_ENUM(), programNamesToExclude);
+                //        $scope.CriteriaList.push(excludeProgramCriterion);
+                //    }
+                //}
 
                 /** CPM Criteria **/
                 if (!_.isEmpty(criteria.CpmCriteria)) {
@@ -103,33 +109,36 @@ function CriteriaBuilderViewModel(inventoryView) {
                 }
 
                 /** Genre Criteria **/
-                if (!_.isEmpty(criteria.GenreSearchCriteria)) {
-                    var genresToInclude = criteria.GenreSearchCriteria.reduce(function (result, genres) {
-                        if (genres.Contain == $scope.INCLUDE_ENUM()) {
-                            result.push({ Id: genres.GenreId });
-                        }
+                //if (!_.isEmpty(criteria.GenreSearchCriteria)) {
+                //    var genresToInclude = criteria.GenreSearchCriteria.reduce(function (result, genres) {
+                //        if (genres.Contain == $scope.INCLUDE_ENUM()) {
+                //            result.push({ Id: genres.GenreId });
+                //        }
 
-                        return result;
-                    }, []);
+                //        return result;
+                //    }, []);
 
-                    if (!_.isEmpty(genresToInclude)) {
-                        var includeGenreCriterion = new Criterion('Genre', $scope.INCLUDE_ENUM(), genresToInclude);
-                        $scope.CriteriaList.push(includeGenreCriterion);
-                    }
+                //    if (!_.isEmpty(genresToInclude)) {
+                //        var includeGenreCriterion = new Criterion('Genre', $scope.INCLUDE_ENUM(), genresToInclude);
+                //        $scope.CriteriaList.push(includeGenreCriterion);
+                //    }
 
-                    var genresToExclude = criteria.GenreSearchCriteria.reduce(function (result, genres) {
-                        if (genres.Contain == $scope.EXCLUDE_ENUM()) {
-                            result.push({ Id: genres.GenreId });
-                        }
+                //    var genresToExclude = criteria.GenreSearchCriteria.reduce(function (result, genres) {
+                //        if (genres.Contain == $scope.EXCLUDE_ENUM()) {
+                //            result.push({ Id: genres.GenreId });
+                //        }
 
-                        return result;
-                    }, []);
+                //        return result;
+                //    }, []);
 
-                    if (!_.isEmpty(genresToExclude)) {
-                        var excludeGenreCriterion = new Criterion('Genre', $scope.EXCLUDE_ENUM(), genresToExclude);
-                        $scope.CriteriaList.push(excludeGenreCriterion);
-                    }
-                }
+                //    if (!_.isEmpty(genresToExclude)) {
+                //        var excludeGenreCriterion = new Criterion('Genre', $scope.EXCLUDE_ENUM(), genresToExclude);
+                //        $scope.CriteriaList.push(excludeGenreCriterion);
+                //    }
+                //}
+
+                $scope.GenresToPersist(criteria.GenreSearchCriteria);
+                $scope.ProgramNamesToPersist(criteria.ProgramNameSearchCriteria);
             }
         });
     };
@@ -220,6 +229,7 @@ function CriteriaBuilderViewModel(inventoryView) {
         return validCpm;
     }
 
+    //only sendind CPM changes
     $scope.Apply = function () {
         if ($scope.IsValid() && !$scope.IsProcessing()) {
             $scope.IsProcessing(true);
@@ -266,9 +276,9 @@ function CriteriaBuilderViewModel(inventoryView) {
             var request = {
                 ProposalDetailId: $scope.activeDetailId,
                 Criteria: {
-                    ProgramNameSearchCriteria: programNameSearchCriteria,
+                    ProgramNameSearchCriteria: $scope.ProgramNamesToPersist(), //programNameSearchCriteria,
                     CpmCriteria: cpmSearchCriteria,
-                    GenreSearchCriteria: genreSearchCriteria,
+                    GenreSearchCriteria: $scope.GenresToPersist() //genreSearchCriteria,
                 },
                 IgnoreExistingAllocation: false
             };

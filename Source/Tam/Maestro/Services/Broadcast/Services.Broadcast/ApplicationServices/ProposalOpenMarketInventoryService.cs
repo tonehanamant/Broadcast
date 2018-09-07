@@ -17,8 +17,8 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IProposalOpenMarketInventoryService : IApplicationService
     {
-        ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId);
-        ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request);
+        ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId, ProposalOpenMarketFilter openMarketFilter = null);
+        ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request, ProposalOpenMarketFilter openMarketFilter = null);
         ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request);
         ProposalDetailOpenMarketInventoryDto UpdateOpenMarketInventoryTotals(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
@@ -53,7 +53,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalRepository = broadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
         }
 
-        public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId)
+        public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId, ProposalOpenMarketFilter openMarketFilter = null)
         {
             ProposalDetailDto proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
             OpenMarketRefineProgramsRequest request = new OpenMarketRefineProgramsRequest
@@ -63,9 +63,10 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     GenreSearchCriteria = proposalDetail.GenreCriteria,
                     ProgramNameSearchCriteria = proposalDetail.ProgramCriteria,
+                    CpmCriteria = proposalDetail.CpmCriteria
                 }
             };
-            return RefinePrograms(request);
+            return RefinePrograms(request, openMarketFilter);
 
         }
 
@@ -107,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
-        public ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request)
+        public ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request, ProposalOpenMarketFilter openMarketFilter)
         {
             if (request.Criteria.CpmCriteria.GroupBy(c => c.MinMax).Any(g => g.Count() > 1))
             {
@@ -117,19 +118,23 @@ namespace Services.Broadcast.ApplicationServices
             var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(request.ProposalDetailId);
             UpdateCriteria(dto, request.Criteria);
             _PopulateMarkets(dto, request.IgnoreExistingAllocation);
-            _ApplyProgramAndGenreFilter(dto, request);
+            _ApplyProgramAndGenreFilter(dto, request.Criteria);
             _PopulateInventoryWeeks(dto);
             _SetProposalOpenMarketDisplayFilters(dto);
             _CalculateOpenMarketTotals(dto);
+
+            if (openMarketFilter != null)
+                dto.Filter = openMarketFilter;
+
             return dto;
         }
 
-        private void _ApplyProgramAndGenreFilter(ProposalDetailOpenMarketInventoryDto dto, OpenMarketRefineProgramsRequest request)
+        private void _ApplyProgramAndGenreFilter(ProposalDetailOpenMarketInventoryDto dto, OpenMarketCriterion criteria)
         {
             List<ProposalInventoryMarketDto.InventoryMarketStationProgram> programsToExclude = new List<ProposalInventoryMarketDto.InventoryMarketStationProgram>();
-            var programNamesToExclude = request.Criteria.ProgramNameSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Program.Display).ToList();
-            var genreIdsToInclude = request.Criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Include).Select(x => x.Genre.Id).ToList();
-            var genreIdsToExclude = request.Criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Genre.Id).ToList();
+            var programNamesToExclude = criteria.ProgramNameSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Program.Display).ToList();
+            var genreIdsToInclude = criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Include).Select(x => x.Genre.Id).ToList();
+            var genreIdsToExclude = criteria.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Genre.Id).ToList();
             dto.Markets.ForEach(market => market.Stations.ForEach(station => station.Programs.ForEach(program =>
             {
                 foreach (var id in genreIdsToInclude)
@@ -148,7 +153,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 foreach (string name in programNamesToExclude)
                 {
-                    if (program.ProgramNames.Any(x=> x.Equals(name)))
+                    if (program.ProgramNames.Any(x=> name.Equals(x)))
                     {
                         programsToExclude.Add(program);
                     }
@@ -189,7 +194,7 @@ namespace Services.Broadcast.ApplicationServices
             // there is a requirement where if user is editing spot with filter on (programs without spots), FE needs to maintain the edited grid line
             // Be does not know about it (the state) and would filter and calculte whatever comes down. The user filter allows calculate without considering the filter
             // Also, when editing spots, the "active" grid is sent down.
-            // the flag below ignores the spot filter and mantain the structure to do the calculation 
+            // the flag below ignores the spot filter and mantain the structure to do the calculation
             if (!useFilters)
                 dto.Filter.Clear();
 
@@ -767,7 +772,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 openMarketInventoryRepository.AddAllocations(allocationToAdd, guaranteedAudienceId);
 
-                var inventoryDto = _GetProposalDetailOpenMarketInventoryDto(request.ProposalVersionDetailId, null);
+                var inventoryDto = GetInventory(request.ProposalVersionDetailId, null);
 
                 _ProposalOpenMarketsTotalsCalculationEngine.CalculatePartialOpenMarketTotals(inventoryDto);
 
@@ -785,7 +790,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 transaction.Complete();
 
-                return _GetProposalDetailOpenMarketInventoryDto(request.ProposalVersionDetailId, request.Filter);
+                return GetInventory(request.ProposalVersionDetailId, request.Filter);
             }
         }
 
@@ -808,19 +813,6 @@ namespace Services.Broadcast.ApplicationServices
                 TotalCost = inventoryDto.DetailTotalBudget,
                 TotalImpressions = inventoryDto.DetailTotalImpressions
             };
-        }
-
-        private ProposalDetailOpenMarketInventoryDto _GetProposalDetailOpenMarketInventoryDto(int proposalInventoryDetailId, ProposalOpenMarketFilter openMarketFilter)
-        {
-            var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetOpenMarketProposalDetailInventory(proposalInventoryDetailId);
-            _PopulateMarkets(dto, true);
-            _PopulateInventoryWeeks(dto);
-            _SetProposalOpenMarketDisplayFilters(dto);
-            if (openMarketFilter != null)
-                dto.Filter = openMarketFilter;
-            _ApplyProposalOpenMarketFilter(dto, true);
-            _CalculateOpenMarketTotals(dto);
-            return dto;
         }
 
         private static List<OpenMarketInventoryAllocation> _GetAllocationsToCreate(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)

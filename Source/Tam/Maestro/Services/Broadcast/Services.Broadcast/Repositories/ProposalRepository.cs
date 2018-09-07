@@ -1190,6 +1190,12 @@ namespace Services.Broadcast.Repositories
                             Id = p.program_name_id,
                             Display = p.program_name
                         }
+                    }).ToList(),
+                    CpmCriteria = proposalDetail.proposal_version_detail_criteria_cpm.Select(x => new CpmCriteria
+                    {
+                        Id = x.id,
+                        MinMax = (MinMaxEnum)x.min_max,
+                        Value = x.value
                     }).ToList()
                 };
 

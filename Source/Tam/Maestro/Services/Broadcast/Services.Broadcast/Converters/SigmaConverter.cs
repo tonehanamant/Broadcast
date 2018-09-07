@@ -156,8 +156,8 @@ namespace Services.Broadcast.Converters
                     BvsFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
                     lineInfo[new TrackerFileDetailKey<BvsFileDetail>(bvsDetail)] = rowNumber;
                     bvsFile.FileDetails.Add(bvsDetail);
-                }
-            }
+    }
+}
 
             if (!bvsFile.FileDetails.Any())
             {
