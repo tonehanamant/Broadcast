@@ -232,6 +232,8 @@ BEGIN
 	FOREIGN KEY([market_code]) REFERENCES [dbo].[markets] ([market_code])
 
 	ALTER TABLE [dbo].[market_coverages] CHECK CONSTRAINT [FK_market_coverages_markets]
+
+	CREATE INDEX IX_market_coverages_market_code ON [market_coverages] ([market_code])
 END
 
 /*************************************** BCOP-3561 - END *****************************************************/
