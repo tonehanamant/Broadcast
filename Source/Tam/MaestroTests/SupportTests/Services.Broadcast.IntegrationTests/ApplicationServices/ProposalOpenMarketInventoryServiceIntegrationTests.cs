@@ -10,6 +10,7 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
@@ -24,6 +25,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+        private readonly IProposalRepository _ProposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+        private readonly IStationProgramRepository _StationProgramRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+        private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMarketsCalculationEngine>();
 
         [TestCase(MinMaxEnum.Min)]
         [TestCase(MinMaxEnum.Max)]
@@ -1428,6 +1432,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations, jsonSettings));
             }
+        }
+
+        [Test]
+        public void ProposalOpenMarketService_CanGetInventory()
+        {
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);
+            var inventoryJson = IntegrationTestHelper.ConvertToJson(inventory);
+
+            Approvals.Verify(inventoryJson);
+        }
+
+        [Test]
+        public void ProposalOpenMarketService_UseStationImpressions()
+        {
+            var proposalDetailId = 10799;
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
+            var dto = _ProposalRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
+            var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => (short)m.Id).ToList();
+            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(
+                dto.DetailFlightStartDate, 
+                dto.DetailFlightEndDate, 
+                dto.DetailSpotLengthId, 
+                BroadcastConstants.OpenMarketSourceId, 
+                proposalMarketIds, 
+                dto.DetailId);
+
+            var programWithStationImpressionsExcpected = programs.First(x => x.ManifestAudiences.Any(ma => ma.Impressions != null));
+            var manifestAudiencesExpected = programWithStationImpressionsExcpected.ManifestAudiences.First(ma => ma.Impressions != null);
+            var allProgramsResult = inventory.Markets
+                .SelectMany(x => x.Stations)
+                .SelectMany(x => x.Programs);
+            var programWithStationImpressionsExists = allProgramsResult.Any(x => 
+                x.ProgramId == programWithStationImpressionsExcpected.ManifestId && 
+                x.UnitImpressions == manifestAudiencesExpected.Impressions);
+
+            Assert.IsTrue(programWithStationImpressionsExists);
         }
     }
 }

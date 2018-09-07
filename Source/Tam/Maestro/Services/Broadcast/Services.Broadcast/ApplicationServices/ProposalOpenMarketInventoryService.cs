@@ -650,13 +650,23 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var program in programs)
             {
-                var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
-                var programDaypartImpressions =
-                    manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
-                var daypartCount = programManifestDaypartIds.Count;
-                if (daypartCount > 0)
+                var manifestAudienceForProposal = program.ManifestAudiences.SingleOrDefault(x => x.AudienceId == proposalDetail.GuaranteedAudience);
+
+                // if station impressions are provided we use them
+                if (manifestAudienceForProposal != null && manifestAudienceForProposal.Impressions.HasValue)
                 {
-                    program.UnitImpressions = programDaypartImpressions.Sum(i => i.Value) / daypartCount;
+                    program.UnitImpressions = manifestAudienceForProposal.Impressions.Value;
+                }
+                else
+                {
+                    var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
+                    var programDaypartImpressions =
+                        manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
+                    var daypartCount = programManifestDaypartIds.Count;
+                    if (daypartCount > 0)
+                    {
+                        program.UnitImpressions = programDaypartImpressions.Sum(i => i.Value) / daypartCount;
+                    }
                 }
             }
         }

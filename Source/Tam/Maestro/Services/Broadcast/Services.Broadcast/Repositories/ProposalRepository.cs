@@ -1089,7 +1089,8 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new ProposalDetailOpenMarketInventoryDto
                 {
-                    Margin = pv.proposal_versions.margin
+                    Margin = pv.proposal_versions.margin,
+                    GuaranteedAudience = pv.proposal_versions.guaranteed_audience_id
                 };
                 _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
