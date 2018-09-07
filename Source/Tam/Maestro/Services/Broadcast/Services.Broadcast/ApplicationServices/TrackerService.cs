@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Tam.Maestro.Common;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -69,7 +68,7 @@ namespace Services.Broadcast.ApplicationServices
             IAssemblyScheduleConverter assemblyFileConverter,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
             IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
-            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient, 
+            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient,
             IImpressionAdjustmentEngine impressionAdjustmentEngine, INsiPostingBookService nsiPostingBookService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -98,7 +97,7 @@ namespace Services.Broadcast.ApplicationServices
             ret.Advertisers = _SmsClient.GetActiveAdvertisers().Where(a => scheduleAdvertisers.Contains(a.Id)).ToList();
 
             var nsiPostingBooks = _NsiPostingBookService.GetNsiPostingMediaMonths();
-            ret.PostingBooks = nsiPostingBooks.Select(d => new LookupDto() {Id = d.Id, Display = d.MediaMonthX}).ToList();
+            ret.PostingBooks = nsiPostingBooks.Select(d => new LookupDto() { Id = d.Id, Display = d.MediaMonthX }).ToList();
             foreach (var schedule in ret.Schedules)
             {
                 var advertiser = ret.Advertisers.FirstOrDefault(a => a.Id == schedule.AdvertiserId);
@@ -115,7 +114,7 @@ namespace Services.Broadcast.ApplicationServices
         internal List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
         {
             var displaySchedules = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDisplaySchedules(startDate, endDate);
-            
+
             foreach (var schedule in displaySchedules)
             {
                 foreach (var trackingDetails in schedule.DeliveryDetails)
@@ -154,7 +153,7 @@ namespace Services.Broadcast.ApplicationServices
                     x =>
                         x.StartDate.Month <= currentDateTime.Month && x.EndDate.Month >= currentDateTime.Month &&
                         x.StartDate.Year == currentDateTime.Year);
-            
+
             return ret;
         }
 
@@ -394,7 +393,7 @@ namespace Services.Broadcast.ApplicationServices
                     else
                     {
                         bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out message, out lineInfo);
-                    }                    
+                    }
 
                     if (!string.IsNullOrEmpty(message))
                     {
@@ -663,7 +662,7 @@ namespace Services.Broadcast.ApplicationServices
         internal List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
         {
             var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
-            
+
             foreach (var detail in details)
             {
                 if (detail.Impressions.HasValue)

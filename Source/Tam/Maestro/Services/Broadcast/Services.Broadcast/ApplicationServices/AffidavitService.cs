@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 
@@ -35,6 +36,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>True or false</returns>
         bool ScrubUnlinkedAffidavitDetailsByIsci(string isci, DateTime currentDateTime, string username);
 
+        bool RescrubProposalDetail(RescrubProposalDetailRequest request, string userName, DateTime changeDate);
+        bool CanRescrubProposalDetail(ProposalDto proposal, ProposalDetailDto proposalDetail);
+
         string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
 
         /// <summary>
@@ -55,8 +59,11 @@ namespace Services.Broadcast.ApplicationServices
         bool MapIsci(MapIsciDto mapIsciDto, DateTime currentDateTime, string name);
     }
 
+
     public class AffidavitService : IAffidavitService
     {
+        public const string ProposalNotContractedMessage = "Proposal must be contracted";
+
         const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
 
@@ -64,7 +71,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitProgramScrubbingEngine _AffidavitProgramScrubbingEngine;
         private readonly IProposalService _ProposalService;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IProposalRepository _ProposalRepository;
         private readonly IPostRepository _PostRepository;
@@ -81,7 +87,6 @@ namespace Services.Broadcast.ApplicationServices
             IAffidavitProgramScrubbingEngine affidavitProgramScrubbingEngine,
             IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
             IProposalService proposalService,
-            IProjectionBooksService projectionBooksService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IAffidavitValidationEngine affidavitValidationEngine,
             INsiPostingBookService nsiPostingBookService,
@@ -93,7 +98,6 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitProgramScrubbingEngine = affidavitProgramScrubbingEngine;
             _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
             _ProposalService = proposalService;
-            _ProjectionBooksService = projectionBooksService;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
             _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _PostRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();
@@ -268,6 +272,52 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        public bool RescrubProposalDetail(RescrubProposalDetailRequest request, string userName, DateTime changeDate)
+        {
+            var proposal = _ProposalService.GetProposalById(request.ProposalId);
+            var proposalDetail = proposal.Details.Single(d => d.Id == request.ProposalDetailId);
+
+            EnsureProposalContracted(proposal,proposalDetail);
+
+            var affidavitDetails = _AffidavitRepository.GetAffidavitDetails(proposalDetail.Id.Value);
+
+            // use swap parameter to keep detail the same.
+            var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitDetails, proposalDetail.Id.Value);
+            _SetPostingBookData(matchedAffidavitDetails, proposalDetail.PostingBookId.Value,proposalDetail.PostingPlaybackType);
+
+            _MapToAffidavitFileDetails(matchedAffidavitDetails, changeDate, userName);
+            affidavitDetails = matchedAffidavitDetails.Select(ad => ad.AffidavitDetail).ToList();
+
+            _ScrubMatchedAffidavitRecords(affidavitDetails);
+            _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitDetails);
+
+            using (var transaction = new TransactionScopeWrapper()) 
+            {
+                _AffidavitRepository.SaveScrubbedFileDetails(affidavitDetails);
+                transaction.Complete();
+            }
+
+            return true;
+        }
+
+        public bool CanRescrubProposalDetail(ProposalDto proposal, ProposalDetailDto proposalDetail)
+        {
+            if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
+                return false;
+
+            var affidavitDetails = _AffidavitRepository.GetAffidavitDetails(proposalDetail.Id.Value);
+            if (!affidavitDetails.Any())
+                return false;
+
+            return true;
+        }
+
+        private void EnsureProposalContracted(ProposalDto proposal,ProposalDetailDto proposalDetail)
+        {
+            if (proposal.Status != ProposalEnums.ProposalStatusType.Contracted)
+                throw new InvalidOperationException(ProposalNotContractedMessage);
+        }
+
         /// <summary>
         /// Scrubs an affidavit detail by an isci
         /// </summary>
@@ -346,10 +396,10 @@ namespace Services.Broadcast.ApplicationServices
         public bool SwapProposalDetails(SwapProposalDetailRequest requestData, DateTime currentDateTime, string username)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
-            List<AffidavitFileDetail> affidavitDetails = _AffidavitRepository.GetAffidavitDetailsByClientScrubIds(requestData.AffidavitScrubbingIds);            
+            List<AffidavitFileDetail> affidavitDetails = _AffidavitRepository.GetAffidavitDetailsByClientScrubIds(requestData.AffidavitScrubbingIds);
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitDetails, requestData.ProposalDetailId);
             _SetPostingBookData(matchedAffidavitDetails, postingBookId);
-            
+
             //load AffidavitClientScrubs and AffidavitDetailProblems
             _MapToAffidavitFileDetails(matchedAffidavitDetails, currentDateTime, username);
 
@@ -364,7 +414,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             return true;
         }
-        
+
         private List<ProposalDetailPostingData> _GetProposalDetailIdsWithPostingBookId(List<AffidavitFileDetail> affidavitFileDetails)
         {
             var result = affidavitFileDetails.SelectMany(d => d.AffidavitClientScrubs.Select(s => new ProposalDetailPostingData
@@ -377,7 +427,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private void _SetPostingBookData(List<AffidavitMatchingDetail> matchedAffidavitDetails, int postingBookId)
+        private void _SetPostingBookData(List<AffidavitMatchingDetail> matchedAffidavitDetails, int postingBookId, ProposalEnums.ProposalPlaybackType? playbackType = null)
         {
             foreach (var proposalDetailWeek in matchedAffidavitDetails.SelectMany(d => d.ProposalDetailWeeks))
             {
@@ -388,7 +438,14 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (!proposalDetailWeek.ProposalVersionDetailPostingPlaybackType.HasValue)
                 {
-                    proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = DefaultPlaybackType;
+                    if (playbackType == null)
+                    {
+                        proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = DefaultPlaybackType;
+                    }
+                    else
+                    {
+                        proposalDetailWeek.ProposalVersionDetailPostingPlaybackType = playbackType.Value;
+                    }
                 }
             }
         }
@@ -420,8 +477,8 @@ namespace Services.Broadcast.ApplicationServices
                         ? proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.Isci, StringComparison.InvariantCultureIgnoreCase))
                         : !string.IsNullOrWhiteSpace(affidavitDetail.MappedIsci) ? proposalWeek.Iscis.First(i => i.HouseIsci.Equals(affidavitDetail.MappedIsci, StringComparison.InvariantCultureIgnoreCase))
                                 : null;
-                    
-                    if(proposalWeekIsci == null)
+
+                    if (proposalWeekIsci == null)
                     {
                         scrub.MatchIsci = false;
                     }
@@ -462,7 +519,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             string stationName = _StationProcessingEngine.StripStationSuffix(affidavitDetail.Station);
 
-            if (stations.ContainsKey(stationName)) {
+            if (stations.ContainsKey(stationName))
+            {
                 return stations[stationName];
             }
 
@@ -528,7 +586,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             foreach (var affidavitDetail in affidavitDetails)
             {
-                if(!swappingProposalDetail)
+                if (!swappingProposalDetail)
                 {
                     proposalWeeks = _ProposalRepository.GetAffidavitMatchingProposalWeeksByHouseIsci(affidavitDetail.Isci);
                 }

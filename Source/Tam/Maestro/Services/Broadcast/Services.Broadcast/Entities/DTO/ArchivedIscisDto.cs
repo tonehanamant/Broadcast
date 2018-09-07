@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.DTO
 {
     public class ArchivedIscisDto
     {
@@ -14,5 +14,6 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public string Market { get; set; }
         public string Affiliate { get; set; }
+        public DateTime? DateAdded { get; set; }
     }
 }

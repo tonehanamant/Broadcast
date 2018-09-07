@@ -1,0 +1,42 @@
+.modalBodyScroll {
+    overflow-y: auto;
+    max-height: calc(100vh - 180px);
+}
+
+.panelCard {
+    .panel-heading {
+        background-color: transparent !important;
+        background-image:  none !important;
+    }
+    .panel-title {
+        font-weight: bold;
+    }
+}
+
+.formEditToggle {
+    .btn.btn-link {
+        padding: 0px 0px 6px;
+    }
+    .cancel.btn.btn-link {
+        padding: 0px 0px 6px 12px;
+        color: red;
+    }
+}
+
+.formCard {
+    .control-label {
+        font-size: 11px;
+        font-weight: normal;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 4px;
+    }
+}
+
+.cardLabel {
+    font-size: 11px;
+    font-weight: normal;
+    color: #333;
+}

@@ -15,14 +15,14 @@ namespace Common.Services
 {
     public interface IEmailerService : IApplicationService
     {
-        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject,MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null);
-        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject,MailPriority pPriority, MailAddress from, List<MailAddress> pTos, List<string> attachFileNames = null);
+        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null);
+        bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, MailAddress from, List<MailAddress> pTos, List<string> attachFileNames = null);
     }
 
 
     public class EmailerService : IEmailerService
     {
-        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject,MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null)
+        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string from, string[] pTos, List<string> attachFileNames = null)
         {
             List<MailAddress> lTos = new List<MailAddress>();
             foreach (string lTo in pTos)
@@ -32,7 +32,7 @@ namespace Common.Services
             return QuickSend(pIsHtmlBody, pBody, pSubject, pPriority, fm, lTos, attachFileNames);
         }
 
-        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject,MailPriority pPriority, MailAddress from, List<MailAddress> pTos, List<string> attachFileNames = null)
+        public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, MailAddress from, List<MailAddress> pTos, List<string> attachFileNames = null)
         {
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return false;
@@ -67,7 +67,7 @@ namespace Common.Services
                                 lMessage.Subject);
 
                             lMessage.To.Clear();
-                            string[] lTos = whiteList.Split(new char[] {';'});
+                            string[] lTos = whiteList.Split(new char[] { ';' });
                             foreach (string lTo in lTos)
                                 lMessage.To.Add(new MailAddress(lTo));
 
@@ -86,12 +86,12 @@ namespace Common.Services
             }
         }
 
-        public static MailMessage BuildEmailMessage(bool pIsHtmlBody, 
-                                                        string pBody, 
-                                                        string pSubject, 
+        public static MailMessage BuildEmailMessage(bool pIsHtmlBody,
+                                                        string pBody,
+                                                        string pSubject,
                                                         MailPriority pPriority,
-                                                        MailAddress @from, 
-                                                        List<MailAddress> pTos, 
+                                                        MailAddress @from,
+                                                        List<MailAddress> pTos,
                                                         List<string> attachFileNames)
         {
             MailMessage lMessage = new MailMessage();

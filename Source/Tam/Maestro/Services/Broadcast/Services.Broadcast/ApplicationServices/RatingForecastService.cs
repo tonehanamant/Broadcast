@@ -6,14 +6,12 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Caching;
 using System.Threading.Tasks;
-using System.Transactions;
 using Common.Services;
 using Tam.Maestro.Common;
-using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -23,6 +21,12 @@ namespace Services.Broadcast.ApplicationServices
         List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses();
         void ClearMediaMonthCrunchCache();
         void CrunchMediaMonth(short mediaMonthId);
+
+        /// <summary>
+        /// Returns posting books
+        /// </summary>
+        /// <returns>List of LookupDto objects containing posting books</returns>
+        List<LookupDto> GetPostingBooks();
     }
 
     public class RatingForecastService : IRatingForecastService
@@ -74,6 +78,17 @@ namespace Services.Broadcast.ApplicationServices
             //        .ToList();
             //}
 
+        }
+
+        /// <summary>
+        /// Returns posting books
+        /// </summary>
+        /// <returns>List of LookupDto objects containing posting books</returns>
+        public List<LookupDto> GetPostingBooks()
+        {
+            return _MediaMonthCrunchCache.GetMediaMonthCrunchStatuses()
+                .Where(m => m.Crunched == CrunchStatus.Crunched).Select(m => new LookupDto(m.MediaMonth.Id, m.MediaMonth.MediaMonthX))
+                .ToList();
         }
 
         public RatingForecastResponse ForecastRatings(RatingForecastRequest forecastRequest)

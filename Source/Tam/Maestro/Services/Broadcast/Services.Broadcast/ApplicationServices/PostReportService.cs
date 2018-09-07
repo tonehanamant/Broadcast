@@ -62,19 +62,19 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalService _ProposalService;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly Lazy<Image> _LogoImage;
-        private readonly IProjectionBooksService _ProjectionBooksService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
         private readonly IStationProcessingEngine _StationProcessingEngine;
+        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
 
         public PostReportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISMSClient smsClient,
             IProposalService proposalService,
             IBroadcastAudiencesCache audiencesCache,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IProjectionBooksService projectionBooksService,
             IMyEventsReportNamingEngine myEventsReportNamingEngine,
-            IStationProcessingEngine stationProcessingEngine)
+            IStationProcessingEngine stationProcessingEngine,
+            IImpressionAdjustmentEngine impressionAdjustmentEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -85,10 +85,10 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _SmsClient = smsClient;
             _ProposalService = proposalService;
-            _ProjectionBooksService = projectionBooksService;
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
             _StationProcessingEngine = stationProcessingEngine;
             _LogoImage = new Lazy<Image>(() => Image.FromStream(new MemoryStream(_SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData)));
+            _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Services.Broadcast.ApplicationServices
         public NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
-            
+
             var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepository.GetInSpecSpotsForProposal(proposalId);
 
@@ -131,7 +131,6 @@ namespace Services.Broadcast.ApplicationServices
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
             var spotLengthMappings = _SpotLengthRepository.GetSpotLengthAndIds();
-            var spotLengthMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => _StationProcessingEngine.StripStationSuffix(s.Station)).Distinct().ToList())
@@ -139,9 +138,9 @@ namespace Services.Broadcast.ApplicationServices
             var nsiMarketRankings = _GetMarketRankingsByPostingBook(inspecSpots);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
 
-            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings, spotLengthMultipliers,
+            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName);
+                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName, _ImpressionAdjustmentEngine);
         }
         /// <summary>
         /// 
@@ -152,12 +151,12 @@ namespace Services.Broadcast.ApplicationServices
         {
             var result = new Dictionary<int, Dictionary<int, int>>();
             var postingBooksFromProposalDetails = inspecSpots.Select(s => s.ProposalDetailPostingBookId.Value).Distinct().ToList();
-            foreach(var postingBookId in postingBooksFromProposalDetails)
+            foreach (var postingBookId in postingBooksFromProposalDetails)
             {
                 var marketRankings = _NsiMarketRepository.GetMarketRankingsByMediaMonth(postingBookId);
                 result.Add(postingBookId, marketRankings);
             }
-            return result;            
+            return result;
         }
 
         private List<Tuple<DateTime, DateTime>> _GetFlightsRange(List<ProposalDetailDto> details)
@@ -211,7 +210,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return flightRanges;
         }
-        
+
         /// <summary>
         /// Generates My Events report
         /// </summary>
@@ -261,7 +260,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var myEventsReportDataList = _AffidavitRepository.GetMyEventsReportData(proposalId);
             var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
-            
+
             foreach (var report in myEventsReportDataList)
             {
                 foreach (var line in report.Lines)
@@ -273,19 +272,36 @@ namespace Services.Broadcast.ApplicationServices
                     line.SpotLength = spotLengths.Single(x => x.Value == line.SpotLengthId).Key;
                     line.ScheduleStartDate = mediaWeeks[line.LineupStartDate].StartDate;
                     line.ScheduleEndDate = mediaWeeks[line.LineupStartDate].EndDate;
+
+                    //remove -xx like endings from the station name
+                    line.StationCallLetters = _StationProcessingEngine.StripStationSuffix(line.StationCallLetters);
                 }
 
+                _UpdateToNationalClock(report.Lines);
                 _UpdateSpotTimesForThreeMinuteWindow(report.Lines);
             }
 
             return myEventsReportDataList;
         }
-        
+
+        private void _UpdateToNationalClock(List<MyEventsReportDataLine> lines)
+        {
+            TimeSpan startTime = new TimeSpan(3, 0, 0);
+            TimeSpan endTime = new TimeSpan(5, 59, 0);
+            foreach (var line in lines)
+            {
+                if (line.LineupStartDate.DayOfWeek != DayOfWeek.Monday && line.LineupStartTime.TimeOfDay >= startTime && line.LineupStartTime.TimeOfDay <= endTime)
+                {
+                    line.LineupStartDate = line.LineupStartDate.AddDays(-1);
+                }
+            }
+        }
+
         private void _UpdateSpotTimesForThreeMinuteWindow(List<MyEventsReportDataLine> myEventsReportDataList)
         {
             var grouped = myEventsReportDataList.GroupBy(x => x.StationCallLetters);
 
-            foreach(var group in grouped)
+            foreach (var group in grouped)
             {
                 var sorted = group.OrderBy(x => x.AirDate).ToArray();
 

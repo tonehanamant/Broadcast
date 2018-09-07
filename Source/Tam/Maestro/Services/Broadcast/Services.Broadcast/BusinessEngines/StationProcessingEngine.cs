@@ -10,8 +10,11 @@ namespace Services.Broadcast.BusinessEngines
     {
         public string StripStationSuffix(string stationLetters)
         {
-            var result = stationLetters.Split('-')[0];
-            return result;
+            if (stationLetters.Contains("-"))
+            {
+                return stationLetters.Substring(0, stationLetters.Length - stationLetters.LastIndexOf("-") + 1);
+            }
+            return stationLetters;
         }
 
     }

@@ -68,12 +68,12 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     equivalized = request.Equivalized,
                     posting_book_id = request.PostingBookId,
-                    playback_type = (byte) request.PlaybackType,
+                    playback_type = (byte)request.PlaybackType,
                     file_name = request.FileName,
                     upload_date = DateTime.Now,
                     modified_date = DateTime.Now,
                     post_file_details = postFileDetails,
-                    post_file_demos = request.Audiences.Select(a => new post_file_demos {demo = a}).ToList()
+                    post_file_demos = request.Audiences.Select(a => new post_file_demos { demo = a }).ToList()
                 };
 
                 var id = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().SavePost(postFile);
@@ -126,11 +126,12 @@ namespace Services.Broadcast.ApplicationServices
 
         public PostPrePostingDto GetInitialData()
         {
-            var dto = new PostPrePostingDto();
-            dto.PostingBooks = _RatingForecastService.GetMediaMonthCrunchStatuses().Where(m => m.Crunched == CrunchStatus.Crunched).Select(m => new LookupDto(m.MediaMonth.Id, m.MediaMonth.MediaMonthX)).ToList();
-            dto.PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>();
-            dto.Demos = _AudiencesCache.GetAllLookups();
-            return dto;
+            return new PostPrePostingDto
+            {
+                PostingBooks = _RatingForecastService.GetPostingBooks(),
+                PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
+                Demos = _AudiencesCache.GetAllLookups()
+            };
         }
 
         public ReportOutput GenerateReportWithImpression(int id)

@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 using Services.Broadcast.ApplicationServices.Security;
-using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
-namespace Services.Broadcast.ApplicationServices
+namespace Services.Broadcast.ApplicationServices.Helpers
 {
     public interface IWWTVSharedNetworkHelper
     {
@@ -33,9 +27,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _ImpersonateUser.Impersonate("", userName, password, actionToExecute);
         }
-
-
-
+                
         #region Local Paths and network shared connections
         public static string GetLocalDropFolder()
         {
@@ -55,11 +47,11 @@ namespace Services.Broadcast.ApplicationServices
 
         public static SharedNetworkConnection GetLocalDropfolderConnection()
         {
-            return WWTVSharedNetworkHelper.GetConnection(WWTVSharedNetworkHelper.GetLocalDropFolder());
+            return GetConnection(GetLocalDropFolder());
         }
         public static SharedNetworkConnection GetLocalErrorFolderConnection()
         {
-            return WWTVSharedNetworkHelper.GetConnection(WWTVSharedNetworkHelper.GetLocalErrorFolder());
+            return GetConnection(GetLocalErrorFolder());
         }
 
         #endregion

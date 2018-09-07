@@ -58,7 +58,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "TimeAired": 32400,
+      "TimeAired": 10900,
       "WeekStart": "2016-05-30T00:00:00"
     },
     {
@@ -174,7 +174,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "TimeAired": 32400,
+      "TimeAired": 10900,
       "WeekStart": "2016-05-30T00:00:00"
     },
     {
@@ -398,7 +398,7 @@
       "2016-06-07T00:00:00"
     ],
     "TimeAiredEnd": 32400,
-    "TimeAiredStart": 32400,
+    "TimeAiredStart": 10900,
     "WeekEnd": "2016-06-14T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"
   },

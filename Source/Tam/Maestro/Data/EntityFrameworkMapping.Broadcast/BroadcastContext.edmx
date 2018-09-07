@@ -844,7 +844,7 @@
           <Property Name="daypart_id" Type="int" Nullable="false" />
           <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="program_name" Type="varchar" MaxLength="63" />
+          <Property Name="program_name" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_generation">
           <Key>
@@ -4333,7 +4333,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_id" Type="Int32" Nullable="false" />
           <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="program_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="station_inventory_manifest_dayparts" ToRole="daypart" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest_dayparts" ToRole="station_inventory_manifest" />
         </EntityType>

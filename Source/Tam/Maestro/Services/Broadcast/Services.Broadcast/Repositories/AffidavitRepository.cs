@@ -323,6 +323,7 @@ namespace Services.Broadcast.Repositories
                                  from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
                                  let affidavitDetails = affidavitFileScrub.affidavit_file_details
                                  where proposalVersions.proposal_id == proposalId
+                                 orderby proposalVersionDetail.id
                                  select new
                                  {
                                      proposalDetailId = proposalVersionDetail.id,
@@ -633,6 +634,8 @@ namespace Services.Broadcast.Repositories
                             EffectiveProgramName = a.effective_program_name,
                             EffectiveGenre = a.effective_genre,
                             EffectiveShowType = a.effective_show_type,
+                            EffectiveIsci = a.effective_isci,
+                            EffectiveClientIsci = a.effective_client_isci,
                             Status = (ScrubbingStatus)a.status,
                             Comment = a.comment,
                             ModifiedBy = a.modified_by,

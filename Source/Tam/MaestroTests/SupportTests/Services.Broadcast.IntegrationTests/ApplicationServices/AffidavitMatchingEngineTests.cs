@@ -172,34 +172,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T07:00:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T07:00:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T07:00:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
             {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 5,
-                ProposalVersionDetailQuarterWeekId = 1,
-                ProposalVersionDetailDaypartId = 9,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
-            {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 4,
-                ProposalVersionDetailQuarterWeekId = 2,
-                ProposalVersionDetailDaypartId = 1,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 9,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                },
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 4,
+                    ProposalVersionDetailQuarterWeekId = 2,
+                    ProposalVersionDetailDaypartId = 1,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                }
+            };
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
@@ -214,34 +219,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T01:00:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T01:00:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T01:00:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
             {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 5,
-                ProposalVersionDetailQuarterWeekId = 1,
-                ProposalVersionDetailDaypartId = 9,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
-            {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 4,
-                ProposalVersionDetailQuarterWeekId = 2,
-                ProposalVersionDetailDaypartId = 1,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 9,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                },
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 4,
+                    ProposalVersionDetailQuarterWeekId = 2,
+                    ProposalVersionDetailDaypartId = 1,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                }
+            };
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
@@ -256,34 +266,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-08T09:00:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-08T09:00:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-08T09:00:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
             {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 5,
-                ProposalVersionDetailQuarterWeekId = 1,
-                ProposalVersionDetailDaypartId = 9,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
-            {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 4,
-                ProposalVersionDetailQuarterWeekId = 2,
-                ProposalVersionDetailDaypartId = 1,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 9,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                },
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 4,
+                    ProposalVersionDetailQuarterWeekId = 2,
+                    ProposalVersionDetailDaypartId = 1,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                }
+            };
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
@@ -298,34 +313,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T08:58:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T08:58:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T08:58:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
             {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 5,
-                ProposalVersionDetailQuarterWeekId = 1,
-                ProposalVersionDetailDaypartId = 15,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
-            {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 4,
-                ProposalVersionDetailQuarterWeekId = 2,
-                ProposalVersionDetailDaypartId = 9,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 15,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                },
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 4,
+                    ProposalVersionDetailQuarterWeekId = 2,
+                    ProposalVersionDetailDaypartId = 9,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                }
+            };
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
@@ -340,34 +360,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T07:00:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T07:00:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-05T07:00:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
             {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 5,
-                ProposalVersionDetailQuarterWeekId = 1,
-                ProposalVersionDetailDaypartId = 2,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
-            {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 4,
-                ProposalVersionDetailQuarterWeekId = 2,
-                ProposalVersionDetailDaypartId = 1,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 2,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                },
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 4,
+                    ProposalVersionDetailQuarterWeekId = 2,
+                    ProposalVersionDetailDaypartId = 1,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                }
+            };
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
@@ -382,34 +407,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-08T05:00:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-08T05:00:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-08T05:00:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
             {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 5,
-                ProposalVersionDetailQuarterWeekId = 1,
-                ProposalVersionDetailDaypartId = 2,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
-            {
-                ProposalVersionId = 1,
-                ProposalVersionDetailId = 4,
-                ProposalVersionDetailQuarterWeekId = 2,
-                ProposalVersionDetailDaypartId = 1,
-                ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
-                ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
-                HouseIsci = "ABC123",
-                MarriedHouseIsci = false,
-                Spots = 1
-            });
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 5,
+                    ProposalVersionDetailQuarterWeekId = 1,
+                    ProposalVersionDetailDaypartId = 2,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                },
+                new AffidavitMatchingProposalWeek()
+                {
+                    ProposalVersionId = 1,
+                    ProposalVersionDetailId = 4,
+                    ProposalVersionDetailQuarterWeekId = 2,
+                    ProposalVersionDetailDaypartId = 1,
+                    ProposalVersionDetailWeekStart = DateTime.Parse("2018-01-01"),
+                    ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
+                    HouseIsci = "ABC123",
+                    MarriedHouseIsci = false,
+                    Spots = 1,
+                    SpotLengthId = 1
+                }
+            };
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
@@ -424,7 +454,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-07T09:00:00"),
-                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-07T09:00:00").TimeOfDay.TotalSeconds)
+                AirTime = Convert.ToInt32(DateTime.Parse("2018-01-07T09:00:00").TimeOfDay.TotalSeconds),
+                SpotLengthId = 1
             };
 
             var proposalWeeks = new List<AffidavitMatchingProposalWeek>
@@ -439,7 +470,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalVersionDetailWeekEnd = DateTime.Parse("2018-01-07"),
                     HouseIsci = "ABC123",
                     MarriedHouseIsci = false,
-                    Spots = 1
+                    Spots = 1,
+                    SpotLengthId = 1
                 }
             };
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);

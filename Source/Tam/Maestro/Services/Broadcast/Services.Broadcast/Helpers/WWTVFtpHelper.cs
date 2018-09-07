@@ -4,16 +4,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using System.Web.Mvc;
 using Common.Services;
-using EntityFrameworkMapping.Broadcast;
-using OfficeOpenXml.FormulaParsing.Exceptions;
-using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
-namespace Services.Broadcast.ApplicationServices
+namespace Services.Broadcast.ApplicationServices.Helpers
 {
     public interface IWWTVFtpHelper
     {
@@ -127,9 +121,10 @@ namespace Services.Broadcast.ApplicationServices
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = GetClientCredentials();
-                StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}"));
-
-                return reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}")))
+                {
+                    return reader.ReadToEnd();
+                }
             }
 
         }
@@ -178,6 +173,6 @@ namespace Services.Broadcast.ApplicationServices
             _FtpService.DeleteFile(GetClientCredentials(), remoteFtpPath);
         }
 
-#endregion
+        #endregion
     }
 }

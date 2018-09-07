@@ -2,31 +2,29 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.BusinessEngines
 {
     public interface IAffidavitEmailProcessorService : IApplicationService
     {
-        int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors,string fileContents);
+        int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors, string fileContents);
         int ProcessAndSendTechError(string filePath, string errorMessage, string fileContents);
         void ProcessAndSendFailedFiles(List<string> filesFailedDownload, string ftpLocation);
         void ProcessAndSendInvalidDataFiles(List<OutboundAffidavitFileValidationResultDto> validationList);
         string CreateValidationErrorEmailBody(List<AffidavitValidationResult> validationErrors, string fileName);
         string CreateTechErrorEmailBody(string errorMessage, string filePath);
         string CreateFailedFTPFileEmailBody(List<string> filesFailedDownload, string ftpLocation);
-        string CreateInvalidDataFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile,string invalidFilePath);
-        void Send(string emailBody,string subject);
 
         /// <summary>
         /// Logs any errors that happened in DownloadAndProcessWWTV Files and ParseWWTVFile.
@@ -36,16 +34,19 @@ namespace Services.Broadcast.BusinessEngines
 
     }
 
-    public class AffidavitEmailProcessorService :  IAffidavitEmailProcessorService
+    public class AffidavitEmailProcessorService : IAffidavitEmailProcessorService
     {
         private const string _EmailValidationSubject = "WWTV File Failed Validation";
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IEmailerService _EmailerService;
+        private readonly IFileTransferEmailHelper _EmailHelper;
 
         public AffidavitEmailProcessorService(IEmailerService emailerService,
-                                                IDataRepositoryFactory broadcastDataRepositoryFactory)
+                                                IDataRepositoryFactory broadcastDataRepositoryFactory,
+                                                IFileTransferEmailHelper emailHelper)
         {
             _EmailerService = emailerService;
+            _EmailHelper = emailHelper;
             _AffidavitRepository = broadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
 
@@ -54,24 +55,24 @@ namespace Services.Broadcast.BusinessEngines
             var fullPath = WWTVSharedNetworkHelper.BuildLocalErrorPath(fileName);
             File.WriteAllText(fullPath, fileContents);
         }
-        public int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors,string fileContents)
+        public int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors, string fileContents)
         {
             _SaveFileContentsToErrorFolder(Path.GetFileName(filePath), fileContents);
             if (validationErrors == null || !validationErrors.Any())
                 return -1;
 
             var emailBody = CreateValidationErrorEmailBody(validationErrors, filePath);
-            Send(emailBody, _EmailValidationSubject);
+            _EmailHelper.SendEmail(emailBody, _EmailValidationSubject);
             return LogAffidavitError(filePath, emailBody);
 
         }
 
-        public int ProcessAndSendTechError(string filePath, string errorMessage,string fileContents)
+        public int ProcessAndSendTechError(string filePath, string errorMessage, string fileContents)
         {
-            _SaveFileContentsToErrorFolder(Path.GetFileName(filePath),fileContents);
+            _SaveFileContentsToErrorFolder(Path.GetFileName(filePath), fileContents);
             var emailBody = CreateTechErrorEmailBody(errorMessage, filePath);
 
-            Send(emailBody, "WWTV File Failed");
+            _EmailHelper.SendEmail(emailBody, "WWTV File Failed");
 
             return LogAffidavitError(filePath, errorMessage);
         }
@@ -82,7 +83,7 @@ namespace Services.Broadcast.BusinessEngines
                 return;
 
             var emailBody = CreateFailedFTPFileEmailBody(filesFailedDownload, ftpLocation);
-            Send(emailBody, "WWTV File Failed");
+            _EmailHelper.SendEmail(emailBody, "WWTV File Failed");
         }
 
 
@@ -98,9 +99,9 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
 
-                var emailBody = CreateInvalidDataFileEmailBody(invalidFile, invalidFilePath);
+                var emailBody = _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
 
-                Send(emailBody, "Error Preprocessing");
+                _EmailHelper.SendEmail(emailBody, "Error Preprocessing");
             }
         }
 
@@ -115,8 +116,6 @@ namespace Services.Broadcast.BusinessEngines
 
             return combinedFilePath;
         }
-
-
 
         public string CreateFailedFTPFileEmailBody(List<string> filesFailedDownload, string ftpLocation)
         {
@@ -159,52 +158,22 @@ namespace Services.Broadcast.BusinessEngines
             return emailBody.ToString();
         }
 
-        public string CreateInvalidDataFileEmailBody(OutboundAffidavitFileValidationResultDto invalidFile, string invalidFilePath)
-        {
-            var mailBody = new StringBuilder();
-
-            mailBody.AppendFormat("File {0} failed validation for WWTV upload\n\n", invalidFile.FileName);
-
-            foreach (var errorMessage in invalidFile.ErrorMessages)
-            {
-                mailBody.AppendFormat("{0}\n", errorMessage);
-            }
-
-            mailBody.AppendFormat("\nFile located in {0}", invalidFilePath);
-
-            return mailBody.ToString();
-        }
-
-
         public int LogAffidavitError(string filePath, string errorMessage)
         {
-            var affidavitFile = new AffidavitFile();
-            affidavitFile.FileName = Path.GetFileName(filePath);
-            affidavitFile.Status = AffidaviteFileProcessingStatus.Invalid;
-            affidavitFile.FileHash = HashGenerator.ComputeHash(filePath.ToByteArray()); // just so there is something
-            affidavitFile.CreatedDate = DateTime.Now;
-            affidavitFile.SourceId = (int)AffidaviteFileSourceEnum.Strata;
+            var affidavitFile = new AffidavitFile
+            {
+                FileName = Path.GetFileName(filePath),
+                Status = AffidaviteFileProcessingStatus.Invalid,
+                FileHash = HashGenerator.ComputeHash(filePath.ToByteArray()), // just so there is something
+                CreatedDate = DateTime.Now,
+                SourceId = (int)AffidaviteFileSourceEnum.Strata
+            };
 
-            var problem = new AffidavitFileProblem();
-            problem.ProblemDescription = errorMessage;
-
-            affidavitFile.AffidavitFileProblems.Add(problem);
-            var id = _AffidavitRepository.SaveAffidavitFile(affidavitFile);
-
-            return id;
-        }
-
-
-
-
-        public void Send(string emailBody, string subject )
-        {
-            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
-                return;
-
-            var from = new MailAddress(BroadcastServiceSystemParameter.EmailUsername);
-            var to = new List<MailAddress>() {new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail)};
-            _EmailerService.QuickSend(false,emailBody, subject,MailPriority.Normal,from ,to);
+            affidavitFile.AffidavitFileProblems.Add(new AffidavitFileProblem
+            {
+                ProblemDescription = errorMessage
+            });
+            return _AffidavitRepository.SaveAffidavitFile(affidavitFile);
         }
     }
 }

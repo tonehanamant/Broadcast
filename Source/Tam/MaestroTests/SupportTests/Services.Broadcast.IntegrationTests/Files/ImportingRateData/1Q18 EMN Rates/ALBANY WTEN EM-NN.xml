@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAAA-Message xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+	<AAAA-Values>
+		<SchemaName>SpotTVCableProposal</SchemaName>
+		<SchemaVersion>0.3.0.5A</SchemaVersion>
+		<Media>SpotTV</Media>
+		<BusinessObject>Proposal</BusinessObject>
+		<Action>New</Action>
+		<UniqueMessageID>IDAJS3GF</UniqueMessageID>
+	</AAAA-Values>
+	<Proposal uniqueIdentifier="UNWIRED-WTEN" version="1" sendDateTime="2017-11-13T15:18:19" weekStartDay="Mo" startDate="2018-01-01" endDate="2018-03-25">
+		<Seller companyName="KATZ TV GROUP">
+			<Salesperson name="RICH DIFALCO"/>
+		</Seller>
+		<Buyer buyingCompanyName="N/A"/>
+		<Advertiser name="Cadent Network">
+			<Product name="UNWIRED"/>
+		</Advertiser>
+		<Name>UNWIRED-WTEN</Name>
+		<Outlets>
+			<TelevisionStation callLetters="WTEN" parentPlus="Y" outletId="OUT0"/>
+		</Outlets>
+		<AvailList startDate="2018-01-01" endDate="2018-03-25" identifier="AL001" isPackage="N">
+			<Name>Television Schedule - Albany-Schenectady-Troy Feb18 Proj. (Feb17 HUT, May17 SHR) DMA Nielsen Live+SD</Name>
+			<OutletReferences>
+				<OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0"/>
+			</OutletReferences>
+			<DemoCategories>
+				<DemoCategory DemoId="DM0">
+					<tvb:DemoType>Rating</tvb:DemoType>
+					<tvb:Group>Homes</tvb:Group>
+					<tvb:AgeFrom>0</tvb:AgeFrom>
+					<tvb:AgeTo>99</tvb:AgeTo>
+				</DemoCategory>
+			</DemoCategories>
+			<TargetDemo demoRef="DM0"/>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>28:00</StartTime>
+						<EndTime>28:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>America This Morning</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>America This Morning</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>25.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.57</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>28:30</StartTime>
+						<EndTime>29:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 at 4:30am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 at 4:30am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>35.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">0.89</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>05:00</StartTime>
+						<EndTime>05:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 in the Morning</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 in the Morning</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>65.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.09</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>05:30</StartTime>
+						<EndTime>06:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 in the Morning</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 in the Morning</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>75.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.69</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>06:00</StartTime>
+						<EndTime>07:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 in the Morning</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 in the Morning</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>150.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.17</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>09:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Good Morning America</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>Good Morning America</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>115.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.59</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>06:00</StartTime>
+						<EndTime>07:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ 6am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 @ 6am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>65.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.44</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>08:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ 7am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 @ 7am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>125.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.59</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>08:00</StartTime>
+						<EndTime>09:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Good Morning America Saturday</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>Good Morning America Saturday</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>150.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.87</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>09:00</StartTime>
+						<EndTime>10:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>Y</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ 9am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 @ 9am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>125.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.73</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>06:00</StartTime>
+						<EndTime>07:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ 6am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 @ 6am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>65.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.88</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>07:00</StartTime>
+						<EndTime>08:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ 7am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 @ 7am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.86</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>08:00</StartTime>
+						<EndTime>09:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Good Morning America Sunday</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>Good Morning America Sunday</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>150.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">3.66</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>09:00</StartTime>
+						<EndTime>10:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ 9am</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>News 10 @ 9am</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.32</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>10:00</StartTime>
+						<EndTime>11:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>This Week</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>This Week</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">2.05</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>11:00</StartTime>
+						<EndTime>11:30</EndTime>
+						<Days>
+							<tvb-tp:Monday>N</tvb-tp:Monday>
+							<tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>N</tvb-tp:Thursday>
+							<tvb-tp:Friday>N</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>Y</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>Capital Political Program</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>EM</DaypartName>
+				<AvailName>Capital Political Program</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>100.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">1.22</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+			<AvailLineWithDetailedPeriods>
+				<OutletReference outletFromListRef="OUL0"/>
+				<DayTimes>
+					<DayTime>
+						<StartTime>12:00</StartTime>
+						<EndTime>13:00</EndTime>
+						<Days>
+							<tvb-tp:Monday>Y</tvb-tp:Monday>
+							<tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+							<tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+							<tvb-tp:Thursday>Y</tvb-tp:Thursday>
+							<tvb-tp:Friday>Y</tvb-tp:Friday>
+							<tvb-tp:Saturday>N</tvb-tp:Saturday>
+							<tvb-tp:Sunday>N</tvb-tp:Sunday>
+						</Days>
+						<ProgramName>News 10 @ Noon</ProgramName>
+					</DayTime>
+				</DayTimes>
+				<DaypartName>DY</DaypartName>
+				<AvailName>News 10 @ Noon</AvailName>
+				<SpotLength>00:00:30</SpotLength>
+				<Periods>
+					<DetailedPeriod startDate="2018-01-01" endDate="2018-03-25">
+						<Rate>75.00</Rate>
+						<DemoValues>
+							<DemoValue demoRef="DM0">4.62</DemoValue>
+						</DemoValues>
+					</DetailedPeriod>
+				</Periods>
+			</AvailLineWithDetailedPeriods>
+		</AvailList>
+	</Proposal>
+</AAAA-Message>

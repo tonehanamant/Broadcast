@@ -21,6 +21,8 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces;
 using TimeSpan = Tam.Maestro.Services.ContractInterfaces.InventoryBusinessObjects.TimeSpan;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.ApplicationServices.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -51,6 +53,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitEmailProcessorService _affidavitEmailProcessorService;
         private readonly IAffidavitService _AffidavidService;
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly IFileTransferEmailHelper _EmailHelper;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -60,7 +63,8 @@ namespace Services.Broadcast.ApplicationServices
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IAffidavitEmailProcessorService affidavitEmailProcessorService,
             IAffidavitService affidavidService,
-            IWWTVFtpHelper ftpHelper)
+            IWWTVFtpHelper ftpHelper,
+            IFileTransferEmailHelper emailHelper)
         {
             _AudienceCache = audienceCache;
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
@@ -171,7 +175,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var emailBody =
                 "There was an error reading from or connecting to the FTP server. \n\nHere is some technical information." + e;
-            _affidavitEmailProcessorService.Send(emailBody,"WWTV FTP Error");
+            _EmailHelper.SendEmail(emailBody,"WWTV FTP Error");
         }
 
 

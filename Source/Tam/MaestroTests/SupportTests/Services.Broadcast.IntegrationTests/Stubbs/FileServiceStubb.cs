@@ -19,8 +19,13 @@ namespace Services.Broadcast.IntegrationTests
             return true;
         }
 
-        public virtual void Delete(string path)
+        public virtual void Delete(params string[] path)
         {
+        }
+
+        public virtual string Move(string filePath, string destinationFolderPath)
+        {
+            return string.Empty;
         }
     }
     public class FileServiceSingleFileStubb : FileServiceStubb
