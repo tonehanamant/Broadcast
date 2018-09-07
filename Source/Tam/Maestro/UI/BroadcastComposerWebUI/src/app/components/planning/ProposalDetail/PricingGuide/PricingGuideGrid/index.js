@@ -8,7 +8,7 @@ import { generateData, rowColors, columns } from './util';
 class PricingGuideGrid extends Component {
   render() {
     const { openMarketData, openMarketLoading } = this.props;
-    const data = generateData(openMarketData.OpenMarkets);
+    const data = generateData(openMarketData.Markets);
     return (
       <Table
         data={data}

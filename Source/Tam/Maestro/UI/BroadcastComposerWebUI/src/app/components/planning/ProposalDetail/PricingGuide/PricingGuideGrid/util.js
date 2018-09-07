@@ -23,17 +23,19 @@ const boldRowTypes = [
 
 const generateData = (markets) => {
   const data = [];
+  // should add Ids for future?
   markets.forEach((market) => {
     data.push({
       rowType: rowTypes.TITLE,
       AiringTime: `${market.MarketRank}. ${market.MarketName}`,
-      Spots: market.Spots,
-      Impressions: market.Impressions,
-      StationImpressions: market.StationImpressions,
-      OvernightImpressions: market.OvernightImpressions,
-      Cost: market.Cost,
+      Spots: market.TotalSpots,
+      Impressions: market.TotalImpressions,
+      StationImpressions: null, // market.StationImpressions,
+      OvernightImpressions: market.TotalOvernightImpressions,
+      Cost: market.TotalCost,
     });
     market.Stations.forEach((station) => {
+      // station TotalStationImpressions?
       data.push({ rowType: rowTypes.SUB_TITLE, AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})` });
 
       station.Programs.forEach((program) => {
@@ -41,10 +43,10 @@ const generateData = (markets) => {
           rowType: rowTypes.DATA_ROW,
           AiringTime: program.Daypart.Display,
           Program: program.ProgramName,
-          CPM: program.CPM,
+          CPM: program.BlendedCpm,
           Spots: program.Spots,
           Impressions: program.Impressions,
-          StationImpressions: program.StationImpressions,
+          StationImpressions: null, // program.StationImpressions,
           OvernightImpressions: program.OvernightImpressions,
           Cost: program.Cost,
         });
