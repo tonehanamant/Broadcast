@@ -19,6 +19,7 @@ namespace Services.Broadcast
         DisplayAudience GetDisplayAudienceByCode(string audienceCode);
         bool IsValidAudienceCode(string audienceCode);
         IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge);
+        IEnumerable<BroadcastAudience> FindByAgeRangeAndSubcategory(int fromAge, int toAge, string subcategory);
         BroadcastAudience GetDefaultAudience();
         LookupDto FindDto(int id);
     }
@@ -80,6 +81,11 @@ namespace Services.Broadcast
         public IEnumerable<BroadcastAudience> FindByAgeRange(int fromAge, int toAge)
         {
             return _Audiences.Where(a => a.RangeStart == fromAge && a.RangeEnd == toAge);
+        }
+
+        public IEnumerable<BroadcastAudience> FindByAgeRangeAndSubcategory(int fromAge, int toAge, string subcategory)
+        {
+            return _Audiences.Where(a => a.RangeStart == fromAge && a.RangeEnd == toAge && a.SubCategoryCode.Equals(subcategory, System.StringComparison.InvariantCultureIgnoreCase));
         }
 
         public BroadcastAudience GetDefaultAudience()

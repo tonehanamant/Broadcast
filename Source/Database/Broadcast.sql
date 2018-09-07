@@ -235,6 +235,131 @@ BEGIN
 END
 
 /*************************************** BCOP-3561 - END *****************************************************/
+-- BEGIN BCOP-3509
+ALTER TABLE [dbo].[station_inventory_manifest_dayparts]
+ALTER COLUMN [program_name] varchar(255) NULL
+-- END BCOP-3509
+/*************************************** START BCOP-3476 *****************************************************/
+
+IF OBJECT_ID('proposal_buy_files', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_files](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [varchar](255) NOT NULL,
+		[file_hash] [varchar](63) NOT NULL,
+		[estimate_id] [int] NULL,
+		[proposal_version_detail_id] [int] NOT NULL,
+		[start_date] [date] NOT NULL,
+		[end_date] [date] NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		CONSTRAINT [PK_proposal_buy_files] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+	ALTER TABLE [dbo].[proposal_buy_files]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_files_proposal_version_details] 
+	FOREIGN KEY([proposal_version_detail_id]) REFERENCES [dbo].[proposal_version_details] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_files] CHECK CONSTRAINT [FK_proposal_buy_files_proposal_version_details]
+END
+GO
+
+
+IF OBJECT_ID('proposal_buy_file_details', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_file_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_buy_file_id] [int] NOT NULL,
+		[station_code] [smallint] NOT NULL,
+		[total_spots] [int] NOT NULL,
+		[spot_cost] [decimal](10, 2) NOT NULL,
+		[total_cost] [decimal](10, 2) NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[daypart_id] [int] NOT NULL,
+		 CONSTRAINT [PK_proposal_buy_file_details] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_proposal_buy_files]
+	FOREIGN KEY([proposal_buy_file_id]) REFERENCES [dbo].[proposal_buy_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_buy_file_details] CHECK CONSTRAINT [FK_proposal_buy_file_details_proposal_buy_files]
+
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_stations]
+	FOREIGN KEY([station_code]) REFERENCES [dbo].[stations] ([station_code])
+
+	ALTER TABLE [dbo].[proposal_buy_file_details] CHECK CONSTRAINT [FK_proposal_buy_file_details_stations]
+
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_spot_lengths]
+	FOREIGN KEY([spot_length_id]) REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_file_details] CHECK CONSTRAINT [FK_proposal_buy_file_details_spot_lengths]
+
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_dayparts]
+	FOREIGN KEY([daypart_id]) REFERENCES [dbo].[dayparts] ([id])
+
+END
+GO
+
+IF OBJECT_ID('proposal_buy_file_detail_weeks', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_file_detail_weeks](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_buy_file_detail_id] [int] NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[spots] [int] NOT NULL,
+		 CONSTRAINT [PK_proposal_buy_file_detail_weeks] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_weeks_proposal_buy_file_details]
+	FOREIGN KEY([proposal_buy_file_detail_id]) REFERENCES [dbo].[proposal_buy_file_details] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks] CHECK CONSTRAINT [FK_proposal_buy_file_detail_weeks_proposal_buy_file_details]
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_weeks_media_weeks]
+	FOREIGN KEY([media_week_id]) REFERENCES [dbo].[media_weeks] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks] CHECK CONSTRAINT [FK_proposal_buy_file_detail_weeks_media_weeks]
+END
+GO
+
+IF OBJECT_ID('proposal_buy_file_detail_audiences', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_file_detail_audiences](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_buy_file_detail_id] [int] NOT NULL,
+		[audience_id] [int] NOT NULL,
+		[audience_rank] [int] NOT NULL,
+		[audience_population] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		 CONSTRAINT [PK_proposal_buy_file_detail_audiences] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_audiences_proposal_buy_file_details]
+	FOREIGN KEY([proposal_buy_file_detail_id]) REFERENCES [dbo].[proposal_buy_file_details] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences] CHECK CONSTRAINT [FK_proposal_buy_file_detail_audiences_proposal_buy_file_details]
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_audiences_audiences]
+	FOREIGN KEY([audience_id]) REFERENCES [dbo].[audiences] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences] CHECK CONSTRAINT [FK_proposal_buy_file_detail_audiences_audiences]
+END
+GO
+
+/*************************************** END BCOP-3476 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

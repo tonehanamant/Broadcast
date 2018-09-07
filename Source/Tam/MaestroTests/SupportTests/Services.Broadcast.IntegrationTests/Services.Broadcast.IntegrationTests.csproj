@@ -320,6 +320,12 @@
     <None Include="Files\C786.Sigma.ValidFile.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Checkers 2Q16 SYN - ProposalBuy.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Checkers 2Q16 SYN - ProposalBuyWithErrors.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\CNNAMPMBarterObligations_AllBadDayparts.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

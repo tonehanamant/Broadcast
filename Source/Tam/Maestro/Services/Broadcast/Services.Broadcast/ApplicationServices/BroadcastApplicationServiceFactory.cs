@@ -58,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IBvsPostingEngine, BvsBvsPostingEngine>();
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
-            unityContainer.RegisterType<IScxConverter, ScxConverter>();
+            unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();

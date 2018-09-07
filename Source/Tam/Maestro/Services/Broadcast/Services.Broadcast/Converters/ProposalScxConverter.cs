@@ -14,11 +14,11 @@ namespace Services.Broadcast.Converters
 {
     public interface IProposalScxConverter : IApplicationService
     {
-        List<ScxFile> ConvertProposal(ProposalDto proposal);
+        List<ProposalScxFile> ConvertProposal(ProposalDto proposal);
         adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail);
     }
 
-    public class ScxFile
+    public class ProposalScxFile
     {
         public Stream ScxStream { get; set; }
         public ProposalDetailDto ProposalDetailDto { get; set; }
@@ -41,9 +41,9 @@ namespace Services.Broadcast.Converters
             _DaypartCache = daypartCache;
         }
 
-        public List<ScxFile> ConvertProposal(ProposalDto proposal)
+        public List<ProposalScxFile> ConvertProposal(ProposalDto proposal)
         {
-            List<ScxFile> scxFiles = new List<ScxFile>();
+            List<ProposalScxFile> scxFiles = new List<ProposalScxFile>();
             foreach (var propDetail in proposal.Details)
             {
                 adx a = BuildFromProposalDetail(proposal, propDetail);
@@ -53,7 +53,7 @@ namespace Services.Broadcast.Converters
 
                 string xml = a.Serialize();
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
-                var scxFile = new ScxFile()
+                var scxFile = new ProposalScxFile()
                 {
                     ProposalDetailDto = propDetail,
                     ScxStream = stream

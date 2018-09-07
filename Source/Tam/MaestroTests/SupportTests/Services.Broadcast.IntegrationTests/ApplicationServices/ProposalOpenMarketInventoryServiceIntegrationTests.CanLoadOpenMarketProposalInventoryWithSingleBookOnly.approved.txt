@@ -13,6 +13,49 @@
           {
             "Dayparts": [
               {
+                "Display": "M-SU 6AM-12AM"
+              }
+            ],
+            "FlightWeeks": [
+              {
+                "Allocations": [
+                  {
+                    "MediaWeekId": 649,
+                    "Spots": 1
+                  }
+                ],
+                "EndDate": "2016-06-05T00:00:00",
+                "IsHiatus": false,
+                "MediaWeekId": 649,
+                "Rate": 0.0,
+                "StartDate": "2016-05-30T00:00:00"
+              },
+              {
+                "Allocations": [
+                  {
+                    "MediaWeekId": 650,
+                    "Spots": 0
+                  }
+                ],
+                "EndDate": "2016-06-12T00:00:00",
+                "IsHiatus": false,
+                "MediaWeekId": 650,
+                "Rate": 0.0,
+                "StartDate": "2016-06-06T00:00:00"
+              }
+            ],
+            "ProgramNames": [
+              "New Program Name"
+            ],
+            "Spots": 0,
+            "StationCode": 5013,
+            "TargetCpm": 0.0,
+            "TargetImpressions": 0.0,
+            "UnitImpressions": 0.0
+          },
+          {
+            "Dayparts": [
+              {
                 "Display": "M-F 9AM-10AM"
               },
               {
@@ -53,52 +96,9 @@
             ],
             "Spots": 0,
             "StationCode": 5013,
-            "TargetCpm": 0.0,
+            "TargetCpm": 7.37,
             "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
-          },
-          {
-            "Dayparts": [
-              {
-                "Display": "M-SU 6AM-12AM"
-              }
-            ],
-            "FlightWeeks": [
-              {
-                "Allocations": [
-                  {
-                    "MediaWeekId": 649,
-                    "Spots": 1
-                  }
-                ],
-                "EndDate": "2016-06-05T00:00:00",
-                "IsHiatus": false,
-                "MediaWeekId": 649,
-                "Rate": 0.0,
-                "StartDate": "2016-05-30T00:00:00"
-              },
-              {
-                "Allocations": [
-                  {
-                    "MediaWeekId": 650,
-                    "Spots": 0
-                  }
-                ],
-                "EndDate": "2016-06-12T00:00:00",
-                "IsHiatus": false,
-                "MediaWeekId": 650,
-                "Rate": 0.0,
-                "StartDate": "2016-06-06T00:00:00"
-              }
-            ],
-            "ProgramNames": [
-              "New Program Name"
-            ],
-            "Spots": 0,
-            "StationCode": 5013,
-            "TargetCpm": 0.0,
-            "TargetImpressions": 0.0,
-            "UnitImpressions": 0.0
+            "UnitImpressions": 1357.0
           }
         ],
         "StationCode": 5013

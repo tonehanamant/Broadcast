@@ -18,6 +18,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Converters;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -25,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class TrackerServiceIntegrationTests
     {
         private ITrackerService _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+        private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
 
         private readonly ITrackingEngine _SutEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackingEngine>();
 
@@ -33,6 +35,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IRatingAdjustmentsRepository _RatingAdjustmentsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>();
 
         private readonly IBvsRepository _BvsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+
+        private readonly DateTime _CurrentDateTime = new DateTime(2016, 02, 15);
 
         [Test]
         [Ignore]
@@ -2136,6 +2140,68 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
+        }
+
+        [Test]
+        public void TrackerService_GeneratesEmptyReport_ForProposal_WithoutBuys()
+        {
+            var newProposalDto = ProposalServiceIntegrationTests.SetupProposalDto();
+            var newProposalDetailDto = ProposalServiceIntegrationTests.SetupProposalDetailDto();
+            newProposalDto.Details.Add(newProposalDetailDto);
+            var newProposal = _ProposalService.SaveProposal(newProposalDto, "IntegrationTestUser", _CurrentDateTime);
+
+            _TrackerService.GenerateSpotTrackerReport(newProposal.Id.Value);
+
+            var jsonSettings = _GetJsonSerializerSettingsForSpotTrackerReport();
+            var spotTrackerReportData = _TrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
+            var spotTrackerReportDataJson = IntegrationTestHelper.ConvertToJson(spotTrackerReportData, jsonSettings);
+            Approvals.Verify(spotTrackerReportDataJson);
+        }
+
+        [Test]
+        public void TrackerService_GeneratesSpotTrackerReport_WithoutErrors_WithValidData()
+        {
+            var newProposalDto = ProposalServiceIntegrationTests.SetupProposalDto();
+            var newProposalDetailDto = ProposalServiceIntegrationTests.SetupProposalDetailDto();
+            newProposalDto.Details.Add(newProposalDetailDto);
+            var newProposal = _ProposalService.SaveProposal(newProposalDto, "IntegrationTestUser", _CurrentDateTime);
+            var newBuyRequest = _CreateSuccessfullProposalBuySaveRequestDto(newProposal.Details.First().Id.Value);
+            _ProposalService.SaveProposalBuy(newBuyRequest);
+
+            _TrackerService.GenerateSpotTrackerReport(newProposal.Id.Value);
+            
+            var jsonSettings = _GetJsonSerializerSettingsForSpotTrackerReport();
+            var spotTrackerReportData = _TrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
+            var spotTrackerReportDataJson = IntegrationTestHelper.ConvertToJson(spotTrackerReportData, jsonSettings);
+            Approvals.Verify(spotTrackerReportDataJson);
+        }
+
+        private JsonSerializerSettings _GetJsonSerializerSettingsForSpotTrackerReport()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(SpotTrackerReport), "Id");
+            jsonResolver.Ignore(typeof(SpotTrackerReport.Detail), "Id");
+            jsonResolver.Ignore(typeof(SpotTrackerReport.Detail), "ProposalBuyFile");
+
+            return new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+        }
+
+        private ProposalBuySaveRequestDto _CreateSuccessfullProposalBuySaveRequestDto(int detailId)
+        {
+            return new ProposalBuySaveRequestDto
+            {
+                EstimateId = 3909,
+                FileName = "Checkers 2Q16 SYN - ProposalBuy.scx",
+                Username = "test-user",
+                ProposalVersionDetailId = detailId,
+                FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - ProposalBuy.scx",
+                        FileMode.Open,
+                        FileAccess.Read)
+            };
         }
     }
 }
