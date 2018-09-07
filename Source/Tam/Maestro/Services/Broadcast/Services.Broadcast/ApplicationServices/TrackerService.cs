@@ -44,6 +44,8 @@ namespace Services.Broadcast.ApplicationServices
         List<BvsFileSummary> GetBvsFileSummaries();
         bool TrackSchedule(int scheduleId);
         bool DeleteBvsFile(int bvsFileId);
+        List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate);
+        List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);
 
         /// <summary>
         /// Generates spot tracker report for requested proposal 
@@ -79,18 +81,28 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly INsiPostingBookService _NsiPostingBookService;
+        private readonly IFileService _FileService;
         private readonly IProposalRepository _ProposalRepository;
         private readonly IProposalBuyRepository _ProposalBuyRepository;
         private readonly IBvsRepository _BvsRepository;
         private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
 
-        public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBvsPostingEngine bvsPostingEngine,
-            ITrackingEngine trackingEngine, IScxScheduleConverter scxConverter, IBvsConverter bvsConverter, ISigmaConverter sigmaConverter,
-            IAssemblyScheduleConverter assemblyFileConverter,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
-            IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
-            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient,
-            IImpressionAdjustmentEngine impressionAdjustmentEngine, INsiPostingBookService nsiPostingBookService)
+        private readonly string _CsvFileExtension = ".csv";
+
+        public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory
+            , IBvsPostingEngine bvsPostingEngine
+            , ITrackingEngine trackingEngine
+            , IScxScheduleConverter scxConverter
+            , IBvsConverter bvsConverter
+            , ISigmaConverter sigmaConverter
+            , IAssemblyScheduleConverter assemblyFileConverter
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IBroadcastAudiencesCache audiencesCache, IDefaultScheduleConverter defaultScheduleConverter
+            , IDaypartCache dayPartCache, IQuarterCalculationEngine quarterCalculationEngine
+            , ISMSClient smsClient
+            , IImpressionAdjustmentEngine impressionAdjustmentEngine
+            , INsiPostingBookService nsiPostingBookService
+            , IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BvsPostingEngine = bvsPostingEngine;
@@ -107,6 +119,7 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _NsiPostingBookService = nsiPostingBookService;
+            _FileService = fileService;
             _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _ProposalBuyRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
             _BvsRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
@@ -137,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
             return ret;
         }
 
-        internal List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
+        public List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
         {
             var displaySchedules = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDisplaySchedules(startDate, endDate);
 
@@ -685,7 +698,7 @@ namespace Services.Broadcast.ApplicationServices
             return scrubbingDto;
         }
 
-        internal List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
+        public List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
         {
             var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
 
@@ -851,7 +864,7 @@ namespace Services.Broadcast.ApplicationServices
             var spotTrackerReportData = GetSpotTrackerReportDataForProposal(proposalId);
             var reportGenerator = new SpotTrackerReportGenerator();
             return reportGenerator.Generate(spotTrackerReportData);
-        }
+    }
 
         public SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId)
         {
@@ -875,7 +888,7 @@ namespace Services.Broadcast.ApplicationServices
             _SetSpotsData(report);
 
             return report;
-        }
+}
 
         private void _SetReportDetailBuys(SpotTrackerReport report)
         {

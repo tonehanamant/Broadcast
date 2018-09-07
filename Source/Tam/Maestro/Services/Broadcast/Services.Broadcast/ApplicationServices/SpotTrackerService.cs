@@ -1,13 +1,18 @@
-﻿using Common.Services.ApplicationServices;
+using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Tam.Maestro.Common;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -19,20 +24,27 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileSaveRequest">FileSaveRequest object</param>
         /// <param name="username">User requesting the file load</param>
         /// <returns>List of duplicated messages</returns>
-        List<string> SaveSigmaFile(FileSaveRequest fileSaveRequest, string username);
+        List<string> SaveSigmaFile(FileSaveRequest fileSaveRequest, string username);        
     }
 
     public class SpotTrackerService : ISpotTrackerService
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly ISigmaConverter _SigmaConverter;
-
-        public SpotTrackerService(IDataRepositoryFactory repositoryFactory, ISigmaConverter sigmaCOnverter)
+        private readonly ISigmaConverter _SigmaConverter;        
+        private readonly ISpotTrackerRepository _SpotTrackerRepository;
+        private readonly IFileService _FileService;
+        
+        public SpotTrackerService(IDataRepositoryFactory repositoryFactory
+            , ISigmaConverter sigmaConverter
+            , IWWTVSharedNetworkHelper wwtvSharedNetworkHelper
+            , IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = repositoryFactory;
-            _SigmaConverter = sigmaCOnverter;
+            _SigmaConverter = sigmaConverter;
+            _SpotTrackerRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotTrackerRepository>();
+            _FileService = fileService;
         }
-
+        
         /// <summary>
         /// Saves A to AA columns from a sigma file
         /// </summary>
@@ -43,7 +55,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<string> duplicateMessages = new List<string>();
             
-            var spotTrackerRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotTrackerRepository>();
             StringBuilder errorMessages = new StringBuilder();
             var hasErrors = false;
 
@@ -55,7 +66,7 @@ namespace Services.Broadcast.ApplicationServices
                     var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestFile.StreamData));
 
                     //check if file has already been loaded
-                    if (spotTrackerRepository.GetSigmaFileIdByHash(hash) > 0)
+                    if (_SpotTrackerRepository.GetSigmaFileIdByHash(hash) > 0)
                     {
                         throw new ApplicationException("Unable to load spot tracker file. The selected file has already been loaded.");
                     }
@@ -74,13 +85,13 @@ namespace Services.Broadcast.ApplicationServices
                         hasErrors = true;
                     }
 
-                    var filterResult = spotTrackerRepository.FilterOutExistingDetails(sigmaFile.FileDetails);
+                    var filterResult = _SpotTrackerRepository.FilterOutExistingDetails(sigmaFile.FileDetails);
                     sigmaFile.FileDetails = filterResult.New;
 
                     duplicateMessages.AddRange(_CreateDuplicateMessages(lineInfo, filterResult.Ignored, "The following line(s) were previously imported and were ignored"));
                     duplicateMessages.AddRange(_CreateDuplicateMessages(lineInfo, filterResult.Updated, "The following line(s) were previously imported and were updated with new program name"));
-                    
-                    spotTrackerRepository.SaveSpotTrackerFile(sigmaFile);
+
+                    _SpotTrackerRepository.SaveSpotTrackerFile(sigmaFile);
 
                     errorMessages.AppendLine($"File '{requestFile.FileName}' uploaded successfully.<br />");
                 }
@@ -97,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return duplicateMessages;
         }
-
+        
         private IEnumerable<string> _CreateDuplicateMessages(Dictionary<TrackerFileDetailKey<SpotTrackerFileDetail>, int> lineInfo, List<SpotTrackerFileDetail> list, string title)
         {
             var duplicateMessages = new List<string>();

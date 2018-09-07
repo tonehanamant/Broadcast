@@ -14,7 +14,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostLogRepository : IDataRepository
     {
-        void SavePreprocessingValidationResults(List<OutboundPostLogFileValidationResult> validationResults);
+        void SavePreprocessingValidationResults(List<FileValidationResult> validationResults);
     }
     public class PostLogRepository : BroadcastRepositoryBase, IPostLogRepository
     {
@@ -25,7 +25,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public void SavePreprocessingValidationResults(List<OutboundPostLogFileValidationResult> validationResults)
+        public void SavePreprocessingValidationResults(List<FileValidationResult> validationResults)
         {
             _InReadUncommitedTransaction(context =>
             {

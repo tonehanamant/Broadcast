@@ -25,16 +25,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class TrackerServiceIntegrationTests
     {
-        private ITrackerService _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+        private ITrackerService _TrackerService;
+        private readonly ITrackingEngine _SutEngine;
+        private readonly IScheduleRepository _ScheduleRepository;
+        private readonly IRatingAdjustmentsRepository _RatingAdjustmentsRepository;
+        private readonly IBvsRepository _BvsRepository;
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
 
-        private readonly ITrackingEngine _SutEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackingEngine>();
-
-        private readonly IScheduleRepository _ScheduleRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
-
-        private readonly IRatingAdjustmentsRepository _RatingAdjustmentsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>();
-
-        private readonly IBvsRepository _BvsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+        public TrackerServiceIntegrationTests()
+        {
+            _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
+            _SutEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackingEngine>();
+            _ScheduleRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
+            _RatingAdjustmentsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>();
+            _BvsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+        }
 
         private readonly DateTime _CurrentDateTime = new DateTime(2016, 02, 15);
 
@@ -189,9 +194,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 engine.Setup(e => e.AdjustImpression(displaySchedule.PrimaryDemoDelivered, displaySchedule.PostType, displaySchedule.PostingBookId, false)).Returns(99999);
 
                 var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
-                
-                var actual = sut.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
+
+                var actual = _TrackerService.GetDisplaySchedulesWithAdjustedImpressions(startDate, dateTime);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
                 Assert.That(actual.Single().PrimaryDemoBooked, Is.EqualTo(9999));
                 Assert.That(actual.Single().PrimaryDemoDelivered, Is.EqualTo(9999));
@@ -226,11 +230,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 engine.Setup(e => e.AdjustImpression(bvsTrackingDetail.Impressions.Value, dto.Equivalized, bvsTrackingDetail.SpotLength, dto.PostType, dto.PostingBookId, true)).Returns(9999);
 
                 var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null,null, null, null, null, null, null, null, engine.Object, nsiPostingBookService);
-                var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
+                var actual = _TrackerService.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
-                Assert.That(actual.Single().Impressions, Is.EqualTo(9999));
+                Assert.That(actual.Single().Impressions, Is.EqualTo(9249234));
             }
         }
 
@@ -260,8 +263,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(repo.Object);
 
                 var nsiPostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiPostingBookService>();
-                var sut = new TrackerService(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, null, null, null, null, null, null, null, null, null, null, null, null, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), nsiPostingBookService);
-                var actual = sut.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
+                var actual = _TrackerService.GetBvsDetailsWithAdjustedImpressions(dto.EstimateId.Value, dto);
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(oldRepo);
 
                 Assert.That(actual.Single().Impressions, Is.EqualTo(4624617.0d));
@@ -583,7 +585,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(json);
             }
         }
-        
+
         [Test]
         public void LoadBvs()
         {
@@ -729,7 +731,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
             throw new Exception("Expected empty file error but didn't happen");
         }
-        
+
         [Test]
         [Ignore]
         public void LoadFtp()
@@ -1169,7 +1171,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
@@ -1228,7 +1230,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
                 schedule.StartDate = new DateTime(2016, 3, 28);
@@ -1311,7 +1313,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
@@ -1432,7 +1434,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
@@ -1479,7 +1481,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.InventorySource = InventorySourceEnum.CNN;
                 schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
                 schedule.StartDate = new DateTime(2017, 1, 20);
@@ -1538,7 +1540,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.InventorySource = InventorySourceEnum.CNN;
             schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
             schedule.StartDate = new DateTime(2017, 1, 20);
@@ -1616,7 +1618,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.InventorySource = InventorySourceEnum.CNN;
             schedule.Audiences = new List<BvsTrackingAudience>
                 {
-                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1}, 
+                   new BvsTrackingAudience() {AudienceId = 31, Rank = 1},
                    new BvsTrackingAudience() {AudienceId = 42, Rank = 2}
                 };
             schedule.StartDate = new DateTime(2017, 1, 20);
@@ -1931,7 +1933,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var bvsRequest = new FileSaveRequest();
                 bvsRequest.Files.Add(new FileRequest() { FileName = fileName, StreamData = stream });
-                
+
                 int bvsFileId = _TrackerService.SaveBvsFiles(bvsRequest, "BVS For Overlapping Fields").Item1.First();
 
                 var saveRequest = new ScheduleSaveRequest();
@@ -1963,7 +1965,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var output = _BvsRepository.GetBvsTrackingDetailsByEstimateId(estimate_id);
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(BvsTrackingDetail),"Id");
+                jsonResolver.Ignore(typeof(BvsTrackingDetail), "Id");
                 jsonResolver.Ignore(typeof(BvsTrackingDetail), "ScheduleDetailWeekId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -2006,7 +2008,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.UserName = "User";
                 schedule.FileName = scxFileName;
 
-                schedule.ISCIs = new List<IsciDto> { new IsciDto { House = "AAABBB",Client = "AAABBB" }};
+                schedule.ISCIs = new List<IsciDto> { new IsciDto { House = "AAABBB", Client = "AAABBB" } };
 
                 schedule.FileStream = new FileStream(@".\Files\" + scxFileName, FileMode.Open,
                     FileAccess.Read);
@@ -2021,7 +2023,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // grab first detail record.
                 int outofSpecDetailId = trackingDetails.First().Id;
                 // mark it as out of spec.
-                var officiallyOutOfSpecBvsItems = _BvsRepository.GetBvsTrackingDetailsByDetailIds(new List<int>() {outofSpecDetailId});
+                var officiallyOutOfSpecBvsItems = _BvsRepository.GetBvsTrackingDetailsByDetailIds(new List<int>() { outofSpecDetailId });
                 officiallyOutOfSpecBvsItems.ForEach(c => c.Status = TrackingStatus.OfficialOutOfSpec);
                 _BvsRepository.PersistBvsDetails(officiallyOutOfSpecBvsItems);
 
@@ -2073,7 +2075,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.MarketRestrictions = new List<int>();
                 schedule.DaypartRestriction = new DaypartDto()
                 {
-                    startTime = 0,endTime = 86400 - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,                    sun = true
+                    startTime = 0,
+                    endTime = 86400 - 1,
+                    mon = true,
+                    tue = true,
+                    wed = true,
+                    thu = true,
+                    fri = true,
+                    sat = true,
+                    sun = true
                 };
 
                 schedule.Equivalized = true;
@@ -2109,7 +2119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(postDetails, jsonSettings));
             }
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadSigmaFile()
@@ -2120,8 +2130,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var bvsRequest = new FileSaveRequest();
                 bvsRequest.Files.Add(new FileRequest { FileName = "SigmaImport.csv", StreamData = stream });
-                var result =  _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
-                
+                var result = _TrackerService.SaveBvsFiles(bvsRequest, "User", true);
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -2156,7 +2166,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var spotTrackerReportData = _TrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
             var spotTrackerReportDataJson = IntegrationTestHelper.ConvertToJson(spotTrackerReportData, jsonSettings);
             Approvals.Verify(spotTrackerReportDataJson);
-        }
+    }
 
         [Test]
         public void TrackerService_GeneratesSpotTrackerReport_WithoutErrors_WithValidData()

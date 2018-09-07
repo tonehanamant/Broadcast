@@ -1,19 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Newtonsoft.Json;
-using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Text;
 using Common.Services;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -73,69 +67,40 @@ namespace Services.Broadcast.ApplicationServices
             List<OutboundAffidavitFileValidationResultDto> validationList = new List<OutboundAffidavitFileValidationResultDto>();
             _WWTVSharedNetworkHelper.Impersonate(delegate 
             {
-                filepathList = GetDropFolderFileList();
+                filepathList = _FileService.GetFiles(WWTVSharedNetworkHelper.GetLocalDropFolder());
                 validationList = ValidateFiles(filepathList, userName);
                 _AffidavitRepository.SaveValidationObject(validationList);
                 var validFileList = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Valid)
                     .ToList();
                 if (validFileList.Any())
                 {
-                    this._CreateAndUploadZipArchiveToWWTV(validFileList);
+                    _CreateAndUploadZipArchiveToWWTV(validFileList.Select(x => x.FilePath).ToList());
                 }
 
                 _affidavitEmailProcessorService.ProcessAndSendInvalidDataFiles(validationList);
-                DeleteSuccessfulFiles(validationList);
+                _FileService.Delete(validationList.Where(x=> x.Status == AffidaviteFileProcessingStatus.Valid).Select(x=>x.FilePath).ToArray());
             });
 
             return validationList;
         }
-
-        private List<string> GetDropFolderFileList()
-        {
-            List<string> filepathList;
-            try
-            {
-                var dropFolder = WWTVSharedNetworkHelper.GetLocalDropFolder();
-                filepathList = _FileService.GetFiles(dropFolder).ToList();
-            }
-            catch (Exception e)
-            {
-                throw new InvalidOperationException("Could not find WWTV_SharedFolder.  Please check it is created.", e);
-            }
-
-            return filepathList;
-        }
-
-        private static void DeleteSuccessfulFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
-        {
-            validationList.ForEach(r =>
-            {
-                if (r.Status == AffidaviteFileProcessingStatus.Valid)
-                {
-                    File.Delete(r.FilePath);
-                }
-            });
-        }
-
-
+       
         /// <summary>
         /// Creates and uploads a zip archive to WWTV FTP server
         /// </summary>
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
-        private void _CreateAndUploadZipArchiveToWWTV(List<OutboundAffidavitFileValidationResultDto> files)
+        private void _CreateAndUploadZipArchiveToWWTV(List<string> filePaths)
         {
             string zipFileName = WWTVSharedNetworkHelper.GetLocalErrorFolder();
             if (!zipFileName.EndsWith("\\"))
                 zipFileName += "\\";
             zipFileName += "Post_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
-            _CreateZipArchive(files, zipFileName);
-            if (File.Exists(zipFileName))
+            _FileService.CreateZipArchive(filePaths, zipFileName);
+            if (_FileService.Exists(zipFileName))
             {
                 _UploadZipToWWTV(zipFileName);
-                File.Delete(zipFileName);
+                _FileService.Delete(zipFileName);
             }
         }
-
 
         public void ProcessErrorFiles()
         {
@@ -189,20 +154,7 @@ namespace Services.Broadcast.ApplicationServices
             localFilePaths = local;
             return completedFiles;
         }
-
-
-        private static void _CreateZipArchive(List<OutboundAffidavitFileValidationResultDto> files, string zipFileName)
-        {
-            using (ZipArchive zip = ZipFile.Open(zipFileName, ZipArchiveMode.Create))
-            {
-                foreach (var file in files)
-                {
-                    // Add the entry for each file
-                    zip.CreateEntryFromFile(file.FilePath, Path.GetFileName(file.FilePath), System.IO.Compression.CompressionLevel.NoCompression);
-                }
-            }
-        }
-
+        
         private void _UploadZipToWWTV(string zipFileName)
         {
             var sharedFolder = _WWTVFtpHelper.GetOutboundPath();

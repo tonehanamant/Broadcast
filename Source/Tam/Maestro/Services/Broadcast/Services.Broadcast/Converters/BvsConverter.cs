@@ -35,7 +35,6 @@ namespace Services.Broadcast.Converters
                 _Message = message;
             }
         }
-
     }
 
     public class ExtractBvsExceptionEmptyFiles : Exception

@@ -467,6 +467,15 @@
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\KeepingTrac-BCOP3553.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\KeepingTrac-BCOP3553_RequiredColumnMissing.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\KeepingTrac_Test_MissingData.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

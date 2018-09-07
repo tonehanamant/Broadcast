@@ -59,8 +59,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
             unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
+            unityContainer.RegisterType<IPostLogBaseFileConverter, PostLogBaseFileConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
+            unityContainer.RegisterType<IKeepingTracConverter, KeepingTracConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();

@@ -23,9 +23,9 @@ namespace WWTVData.Service
 
             List<ScheduledServiceMethod> servicesToRun = new List<ScheduledServiceMethod>()
             {
-                new WWTVDataFile(),
-                new WWTVErrorFiles(),
-                new WWTVDownloadFromWWTV()
+                new WWTVDataFile(),             //ProcessFiles & 
+                new WWTVErrorFiles(),           //ProcessErrorFiles
+                new WWTVDownloadFromWWTV()      //DownloadAndProcessWWTVFiles
             }; 
 
             var rc = HostFactory.Run(x =>

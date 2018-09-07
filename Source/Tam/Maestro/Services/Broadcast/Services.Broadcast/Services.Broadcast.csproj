@@ -228,7 +228,8 @@
     <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
-    <Compile Include="ApplicationServices\SpotTrackerService.cs" />    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
+    <Compile Include="ApplicationServices\SpotTrackerService.cs" />
+    <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
     <Compile Include="ApplicationServices\AffidavitPostProcessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingService.cs" />
     <Compile Include="ApplicationServices\AffidavitService.cs" />
@@ -249,6 +250,9 @@
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
+    <Compile Include="Converters\KeepingTracConverter.cs" />
+    <Compile Include="Converters\PostLogBaseFileConverter.cs" />
+    <Compile Include="Entities\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
     <Compile Include="Entities\MarketCoverage.cs" />
@@ -279,9 +283,9 @@
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\TrackerFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
-    <Compile Include="Entities\OutboundPostLogFileValidationResult.cs" />
-    <Compile Include="Entities\PostLogFileSourceEnum.cs" />
-    <Compile Include="Entities\PostLogProcessingStatusEnum.cs" />
+    <Compile Include="Entities\FileValidationResult.cs" />
+    <Compile Include="Entities\FileSourceEnum.cs" />
+    <Compile Include="Entities\ProcessingStatusEnum.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />

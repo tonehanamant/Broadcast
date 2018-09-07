@@ -1,7 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Microsoft.VisualBasic.FileIO;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
@@ -10,8 +9,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Converters
 {
@@ -42,8 +39,8 @@ namespace Services.Broadcast.Converters
              "AIR START TIME",
              "ISCI/AD-ID"
         };
-
-        private static readonly List<string> _BvsSigmaFileFields = new List<string>()
+        
+        private static readonly List<string> _SigmaFileFields = new List<string>()
         {
             "IDENTIFIER 1",
             "RANK",
@@ -91,125 +88,17 @@ namespace Services.Broadcast.Converters
 
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDateAdjustmentEngine _DateAdjustmentEngine;
-        private readonly Dictionary<int, int> _SpotLengthsAndIds;
+        private readonly IPostLogBaseFileConverter _PostLogBaseFileConverter;
 
-        public SigmaConverter(IDataRepositoryFactory dataRepositoryFactory, IDateAdjustmentEngine dateAdjustmentEngine)
+        public SigmaConverter(IDataRepositoryFactory dataRepositoryFactory
+            , IDateAdjustmentEngine dateAdjustmentEngine
+            , IPostLogBaseFileConverter postLogBaseFileConverter)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
-            _DateAdjustmentEngine = dateAdjustmentEngine;
-            _SpotLengthsAndIds = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _DateAdjustmentEngine = dateAdjustmentEngine;            
+            _PostLogBaseFileConverter = postLogBaseFileConverter;
         }
-
-        private Dictionary<string, int> _ValidateAndSetupHeaders(TextFieldParser parser, List<string> fileFields)
-        {
-            var fileColumns = _GetFileHeader(parser);
-
-            var validationErrors = _GetColumnValidationResults(fileColumns);
-
-            if (validationErrors.Any())
-            {
-                string message = "";
-                validationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
-                throw new ExtractBvsException(message);
-            }            
-
-            return _GetHeaderDictionary(fileColumns, fileFields);
-        }
-
-        private Dictionary<string, int> _GetHeaderDictionary(List<string> fileColumns, List<string> fileFields)
-        {
-            var headerDict = new Dictionary<string, int>();
-
-            foreach (var header in fileFields)
-            {
-                int headerItemIndex = fileColumns.IndexOf(header);
-                if (headerItemIndex >= 0)
-                {
-                    headerDict.Add(header, headerItemIndex);
-                    continue;
-                }
-            }
-
-            return headerDict;
-        }
-
-        private List<string> _GetColumnValidationResults(List<string> fileColumns)
-        {
-            var validationErrors = new List<string>();
-            Dictionary<string, int> headerDict = new Dictionary<string, int>();
-
-            var missingColumns = _RequiredSigmaFields.Where(f => !fileColumns.Contains(f)).ToList();
-
-            validationErrors.AddRange(missingColumns.Select(c => $"Could not find required column {c}."));
-
-            return validationErrors;
-        }
-
-        private List<string> _GetFileHeader(TextFieldParser parser)
-        {
-            var fileColumns = parser.ReadFields().ToList();
-
-            //skip the first row if it's the copyright one
-            if (fileColumns.Any() && fileColumns[0].Contains("Copyright"))
-            {
-                fileColumns = parser.ReadFields().ToList();
-            }
-
-            return fileColumns;
-        }
-
-        private void _ValidateSigmaFieldData(string[] fields, Dictionary<string, int> headers, int rowNumber)
-        {
-            var rowValidationErrors = _GetRowValidationResults(fields, headers, rowNumber);
-            if (rowValidationErrors.Any())
-            {
-                string message = "";
-                rowValidationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
-                throw new ExtractBvsException(message);
-            }            
-        }
-
-        private List<string> _GetRowValidationResults(string[] fields, Dictionary<string, int> headers, int rowNumber)
-        {
-            var rowValidationErrors = new List<string>();
-
-            foreach (string field in _RequiredSigmaFields)
-            {
-                if (string.IsNullOrWhiteSpace(fields[headers[field]]))
-                {
-                    rowValidationErrors.Add($"Required field {field} is null or empty in row {rowNumber}");
-                }
-            }
-
-            return rowValidationErrors;
-        }
-
-        private TextFieldParser _SetupCSVParser(Stream rawStream)
-        {
-            var parser = new TextFieldParser(rawStream);
-            if (parser.EndOfData)
-            {
-                throw new Exception("File does not contain valid Sigma detail data.");
-            }
-
-            parser.SetDelimiters(new string[] { "," });
-
-            return parser;
-        }
-
-        private TextFieldParser _SetupCSVParser (string filePath)
-        {
-            var parser = new TextFieldParser(filePath);
-            if (parser.EndOfData)
-            {
-                throw new ApplicationException($"No data found in file {filePath}");
-            }
-
-            parser.SetDelimiters(new string[] { "," });
-
-            return parser;
-        }
-
+        
         public List<string> GetValidationResults(string filePath)
         {
             var validationResults = new List<string>();
@@ -217,23 +106,22 @@ namespace Services.Broadcast.Converters
 
             try
             {
-                parser = _SetupCSVParser(filePath);
-                var fileColumns = _GetFileHeader(parser);
-                validationResults.AddRange(_GetColumnValidationResults(fileColumns));
+                parser = _PostLogBaseFileConverter.SetupCSVParser(filePath);
+                var fileColumns = _PostLogBaseFileConverter.GetFileHeader(parser);
+                validationResults.AddRange(_PostLogBaseFileConverter.GetColumnValidationResults(fileColumns, _RequiredSigmaFields));
                 if (validationResults.Any())
                 {
                     return validationResults;
                 }
                 int rowNumber = 1;
-                var headers = _GetHeaderDictionary(fileColumns, _BvsSigmaFileFields);
+                var headers = _PostLogBaseFileConverter.GetHeaderDictionary(fileColumns, _SigmaFileFields);
                 while (!parser.EndOfData)
                 {
                     var fields = parser.ReadFields();
-                    var rowValidationErrors = _GetRowValidationResults(fields, headers, rowNumber);
+                    var rowValidationErrors = _PostLogBaseFileConverter.GetRowValidationResults(fields, headers, _RequiredSigmaFields, rowNumber);
                     validationResults.AddRange(rowValidationErrors);
                     rowNumber++;
                 }
-
             }
             catch(Exception e)
             {
@@ -256,14 +144,14 @@ namespace Services.Broadcast.Converters
             var bvsFile = new TrackerFile<BvsFileDetail>();
 
             int rowNumber = 0;
-            using (var parser = _SetupCSVParser(rawStream))
+            using (var parser = _PostLogBaseFileConverter.SetupCSVParser(rawStream))
             {
-                Dictionary<string, int> headers = _ValidateAndSetupHeaders(parser, _BvsSigmaFileFields);
+                Dictionary<string, int> headers = _PostLogBaseFileConverter.ValidateAndSetupHeaders(parser, _SigmaFileFields, _RequiredSigmaFields);
                 while (!parser.EndOfData)
                 {
                     rowNumber++;
                     var fields = parser.ReadFields();
-                    _ValidateSigmaFieldData(fields, headers, rowNumber);
+                    _PostLogBaseFileConverter.ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
 
                     BvsFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
                     lineInfo[new TrackerFileDetailKey<BvsFileDetail>(bvsDetail)] = rowNumber;
@@ -297,36 +185,36 @@ namespace Services.Broadcast.Converters
         public TrackerFile<SpotTrackerFileDetail> ExtractSigmaDataExtended(Stream streamData, string hash, string username, string fileName, out Dictionary<TrackerFileDetailKey<SpotTrackerFileDetail>, int> lineInfo)
         {
             lineInfo = new Dictionary<TrackerFileDetailKey<SpotTrackerFileDetail>, int>();
-            var bvsFile = new TrackerFile<SpotTrackerFileDetail>();
+            var spotTrackerFile = new TrackerFile<SpotTrackerFileDetail>();
 
             int rowNumber = 0;
-            using (var parser = _SetupCSVParser(streamData))
+            using (var parser = _PostLogBaseFileConverter.SetupCSVParser(streamData))
             {
-                Dictionary<string, int> headers = _ValidateAndSetupHeaders(parser, _SpotTrackerFileFields);
+                Dictionary<string, int> headers = _PostLogBaseFileConverter.ValidateAndSetupHeaders(parser, _SpotTrackerFileFields, _RequiredSigmaFields);
                 while (!parser.EndOfData)
                 {
                     rowNumber++;
                     var fields = parser.ReadFields();
-                    _ValidateSigmaFieldData(fields, headers, rowNumber);
+                    _PostLogBaseFileConverter.ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
 
                     SpotTrackerFileDetail fileDetail = _LoadExtendedSigmaFileDetail(fields, headers, rowNumber);
                     lineInfo[new TrackerFileDetailKey<SpotTrackerFileDetail>(fileDetail)] = rowNumber;
-                    bvsFile.FileDetails.Add(fileDetail);
+                    spotTrackerFile.FileDetails.Add(fileDetail);
                 }
             }
 
-            if (!bvsFile.FileDetails.Any())
+            if (!spotTrackerFile.FileDetails.Any())
             {
                 throw new ExtractBvsExceptionEmptyFiles();
             }
-            bvsFile.Name = fileName;
-            bvsFile.CreatedBy = username;
-            bvsFile.CreatedDate = DateTime.Now;
-            bvsFile.FileHash = hash;
-            bvsFile.StartDate = bvsFile.FileDetails.Min(x => x.DateAired).Date;
-            bvsFile.EndDate = bvsFile.FileDetails.Max(x => x.DateAired).Date;
+            spotTrackerFile.Name = fileName;
+            spotTrackerFile.CreatedBy = username;
+            spotTrackerFile.CreatedDate = DateTime.Now;
+            spotTrackerFile.FileHash = hash;
+            spotTrackerFile.StartDate = spotTrackerFile.FileDetails.Min(x => x.DateAired).Date;
+            spotTrackerFile.EndDate = spotTrackerFile.FileDetails.Max(x => x.DateAired).Date;
 
-            return bvsFile;
+            return spotTrackerFile;
         }
 
         private BvsFileDetail _LoadBvsSigmaFileDetail(string[] fields, Dictionary<string, int> headers, int row)
@@ -366,7 +254,7 @@ namespace Services.Broadcast.Converters
 
 
             var spot_length = fields[headers["DURATION"]].Trim();
-            _SetSpotLengths(bvsDetail, spot_length);
+            _PostLogBaseFileConverter.SetSpotLengths(bvsDetail, spot_length);
 
             return bvsDetail;
         }
@@ -421,25 +309,9 @@ namespace Services.Broadcast.Converters
 
 
             var spot_length = fields[headers["DURATION"]].Trim();
-            _SetSpotLengths(fileDetail, spot_length);
+            _PostLogBaseFileConverter.SetSpotLengths(fileDetail, spot_length);
 
             return fileDetail;
-        }
-
-        private void _SetSpotLengths(TrackerFileDetail detail, string spot_length)
-        {
-            spot_length = spot_length.Trim().Replace(":", "");
-
-            if (!int.TryParse(spot_length, out int spotLength))
-            {
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
-            }
-
-            if (!_SpotLengthsAndIds.ContainsKey(spotLength))
-                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
-
-            detail.SpotLength = spotLength;
-            detail.SpotLengthId = _SpotLengthsAndIds[spotLength];
-        }               
+        }         
     }
 }

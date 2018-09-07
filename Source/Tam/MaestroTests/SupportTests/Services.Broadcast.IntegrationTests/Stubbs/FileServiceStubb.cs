@@ -27,6 +27,11 @@ namespace Services.Broadcast.IntegrationTests
         {
             return string.Empty;
         }
+
+        public void CreateZipArchive(List<string> filePaths, string zipFileName)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class FileServiceSingleFileStubb : FileServiceStubb
     {
