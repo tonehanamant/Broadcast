@@ -66,9 +66,10 @@ namespace Services.Broadcast.Entities
                     Details.Add(new ProposalBuyFileDetail(scxDetail, this));
                 }catch(ApplicationException e)
                 {
-                    this.Errors.Add(e.Message);
+                    Errors.Add(e.Message);
                 }
             }
+            Errors = Errors.GroupBy(e => e).Select(e => e.Key + $" ({e.Count()})").ToList();
 
         }
 

@@ -4,30 +4,28 @@ import { connect } from 'react-redux';
 import { Modal, Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import UploadButton from 'Components/shared/UploadButton';
-// import Select from 'react-select';
 
-import { toggleModal } from 'Ducks/app';
-import { updateProposalEditFormDetail } from 'Ducks/planning';
+import { toggleModal, clearFile, storeFile, deployError, readFileB64 } from 'Ducks/app';
+import { uploadSCXFile } from 'Ducks/planning';
 
-const findValue = (options, id) => (options.find(option => option.Id === id));
-
-const isActiveDialog = (detail, modal) => (
-  modal && detail && modal.properties.detailId === detail.Id && modal.active
-);
-
-const mapStateToProps = ({ app: { modals: { uploadBuy: modal } }, planning: { initialdata, proposalEditForm } }) => ({
+const mapStateToProps = ({ app: { modals: { uploadBuy: modal }, file } }) => ({
   modal,
-  initialdata,
-  proposalEditForm,
+  file,
 });
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
       toggleModal,
-      updateDetail: updateProposalEditFormDetail,
+      readFileB64,
+      deployError,
+      clearFile,
+      storeFile,
+      uploadSCXFile,
     }, dispatch)
   );
-
+// Notes:  need to revise to use adjusted upload button
+// as is cannot use existing upload button mechanism as dependent on mime
+// temporary override the buttons actions here - storeFile, readFileB64 - then clearFile (on close)
 class UploadBuy extends Component {
   constructor(props) {
     super(props);
@@ -35,98 +33,95 @@ class UploadBuy extends Component {
     this.onSave = this.onSave.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.clearState = this.clearState.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.showConfirmation = this.showConfirmation.bind(this);
-    this.hideConfirmation = this.hideConfirmation.bind(this);
+    this.onChangeEstimateId = this.onChangeEstimateId.bind(this);
+    this.processFile = this.processFile.bind(this);
+    this.onModalHide = this.onModalHide.bind(this);
 
     this.state = {
-      uploadBuy: null,
-      playbackType: null,
-      showConfirmation: false,
-      fileName: 'test_file_name.scx',
+      estimateId: '',
+      activeFile: false,
+      fileName: null,
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const { modal, detail } = this.props;
-    const prevActiveDialog = isActiveDialog(prevProps.detail, prevProps.modal);
-    const activeDialog = isActiveDialog(detail, modal);
-    // clear local state if modal window are closing
-    if (prevActiveDialog && !activeDialog) {
-      this.clearState();
+  componentWillReceiveProps(nextProps) {
+    if (this.state.activeFile) return;
+    if (nextProps.file && nextProps.file.base64 && nextProps.file.base64.length) {
+      // console.log('recieve file', this, nextProps.file);
+      this.setState({
+        fileName: nextProps.file.raw.name,
+        activeFile: true,
+      });
     }
+  }
+
+  onModalHide() {
+    this.clearState();
+    this.props.clearFile();
   }
 
   clearState() {
     this.setState({
-      uploadBuy: null,
-      playbackType: null,
-      showConfirmation: false,
+      estimateId: '',
+      activeFile: false,
+      fileName: null,
     });
   }
 
-  showConfirmation() {
-    this.setState({ showConfirmation: true });
-  }
-
-  hideConfirmation() {
-    this.setState({ showConfirmation: false });
-  }
-
   onSave() {
-    const { uploadBuy, playbackType } = this.state;
-    const { updateDetail, detail, initialdata } = this.props;
-    const { CrunchedMonths, PlaybackTypes } = initialdata.ForecastDefaults;
-    const selectedPlayback = playbackType || findValue(PlaybackTypes, detail.PostingPlaybackType);
-    const selectedPostingBook = uploadBuy || findValue(CrunchedMonths, detail.PostingBookId);
-    updateDetail({ id: detail.Id, key: 'PostingBookId', value: selectedPostingBook.Id });
-    updateDetail({ id: detail.Id, key: 'PostingPlaybackType', value: selectedPlayback.Id });
-    this.onCancel();
+   // this.props.uploadBuyFile(this.state.FileRequest);
+    const ret = {
+      EstimateId: parseInt(this.state.estimateId, 10),
+      ProposalVersionDetailId: this.props.modal.properties.detailId, // just get from modal props
+      FileName: this.state.fileName,
+      RawData: this.props.file.base64,
+      UserName: 'user',
+    };
+    console.log('onSave file', ret);
+   // should not cancel until success - do in duck
+    // this.onCancel();
+    this.props.uploadSCXFile(ret);
   }
 
-  onChange(fieldName, value) {
-    this.setState({ [fieldName]: value });
+  onChangeEstimateId(event) {
+    const estimateId = event.target.value;
+    if (estimateId.length && estimateId !== '0') {
+      // console.log(event.target.value);
+      this.setState({ estimateId });
+    } else {
+      this.setState({ estimateId: '' });
+    }
   }
 
   onCancel() {
     this.props.toggleModal({
       modal: 'uploadBuy',
       active: false,
-      properties: { detailId: this.props.detail.Id },
+      properties: this.props.modal.properties,
     });
   }
 
   processFile(acceptedFiles, rejectedFiles) {
-    console.log(this, acceptedFiles, rejectedFiles);
-    // if (rejectedFiles.length > 0) {
-    //   this.props.deployError({ message: `Invalid file format. Please provide a ${this.props.fileTypeExtension} file.` });
-    // } else if (acceptedFiles.length > 0) {
-    //   this.props.storeFile(acceptedFiles[0]);
-    //   this.props.readFileB64(acceptedFiles[0]);
-    //   if (this.props.postProcessFiles.toggleModal) {
-    //     const toggleModalObj = {
-    //       ...this.props.postProcessFiles.toggleModal,
-    //       properties: {},
-    //     };
-    //     this.props.toggleModal(toggleModalObj);
-    //   }
-    // }
+    this.setState({ activeFile: false });
+    // console.log(this, acceptedFiles, rejectedFiles);
+    if (rejectedFiles.length > 0) {
+      this.props.deployError({ message: 'Invalid file format. Please provide a SCX file.' });
+    } else if (acceptedFiles.length > 0) {
+      if (acceptedFiles[0].name.indexOf('.scx') === -1) {
+        this.props.deployError({ message: 'Invalid file format. Please provide a SCX file.' });
+      } else {
+        this.props.readFileB64(acceptedFiles[0]);
+        this.props.storeFile(acceptedFiles[0]);
+      }
+    }
   }
 
   render() {
-    const { modal, detail } = this.props;
-    const { showConfirmation } = this.state;
-    const show = isActiveDialog(detail, modal);
-    // const { CrunchedMonths, PlaybackTypes } = initialdata.ForecastDefaults;
-    // const originalPlayback = findValue(PlaybackTypes, detail.PostingPlaybackType);
-    // const originalPostingBook = findValue(CrunchedMonths, detail.PostingBookId);
-    // const selectedPlayback = playbackType || originalPlayback;
-    // const selectedPostingBook = postingBook || originalPostingBook;
-    // const isDisableForm = !originalPlayback && !originalPostingBook;
-
+    const { activeFile, estimateId } = this.state;
+    const valid = estimateId.length && activeFile;
     return (
       <div>
-        <Modal show={show}>
+        <Modal show={this.props.modal.active} onExit={this.onModalHide}>
           <Modal.Header>
             <Button
                 className="close"
@@ -136,26 +131,16 @@ class UploadBuy extends Component {
             >
                 <span>&times;</span>
             </Button>
-            <Modal.Title>Upload Buy File</Modal.Title>
+            <Modal.Title>Upload SCX File</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <Form horizontal>
               <FormGroup controlId="shareBook">
                 <Col componentClass={ControlLabel} sm={3}>
-                  Choose File
+                  Choose File <span style={{ color: 'red' }}>*</span>
                 </Col>
                 <Col sm={2}>
-                  {/* <Select
-                    value={selectedPostingBook}
-                    onChange={(value) => { this.onChange('postingBook', value); }}
-                    placeholder="Select..."
-                    options={CrunchedMonths}
-                    labelKey="Display"
-                    valueKey="Id"
-                    clearable={false}
-                    disabled={isDisableForm}
-                  /> */}
                   <UploadButton
                     text="Upload"
                     bsStyle="success"
@@ -171,25 +156,17 @@ class UploadBuy extends Component {
                 </Col>
               </FormGroup>
 
-              <FormGroup controlId="playbackType">
+              <FormGroup controlId="estimate_id">
                 <Col componentClass={ControlLabel} sm={3}>
-                  File ID
+                  Estimate ID <span style={{ color: 'red' }}>*</span>
                 </Col>
                 <Col sm={9}>
-                  {/* <Select
-                    value={selectedPlayback}
-                    onChange={(value) => { this.onChange('playbackType', value); }}
-                    options={PlaybackTypes}
-                    labelKey="Display"
-                    valueKey="Id"
-                    clearable={false}
-                    disabled={isDisableForm}
-                  /> */}
                   <FormControl
-                    type="text"
-                    value={this.state.value}
-                    placeholder="Enter text"
-                    onChange={this.handleChange}
+                    type="number"
+                    min="1"
+                    value={this.state.estimateId}
+                    placeholder="Enter Id"
+                    onChange={this.onChangeEstimateId}
                   />
                 </Col>
               </FormGroup>
@@ -199,35 +176,12 @@ class UploadBuy extends Component {
           <Modal.Footer>
             <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
               <Button
-                // disabled={isDisableForm}
-                onClick={this.showConfirmation}
+                disabled={!valid}
+                onClick={this.onSave}
                 bsStyle="success"
               >
               Save
               </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal show={showConfirmation}>
-          <Modal.Header>
-            <Button
-              className="close"
-              bsStyle="link"
-              onClick={this.hideConfirmation}
-              style={{ display: 'inline-block', float: 'right' }}
-            >
-              <span>&times;</span>
-            </Button>
-            <Modal.Title>Are you sure?</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-            Changes to Posting book may affect Affidavit data impressions.
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button onClick={this.hideConfirmation} bsStyle="default">Cancel</Button>
-            <Button onClick={this.onSave} bsStyle="success">Save</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -238,14 +192,24 @@ class UploadBuy extends Component {
 UploadBuy.propTypes = {
   modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
-  updateDetail: PropTypes.func.isRequired,
-  initialdata: PropTypes.object.isRequired,
-  detail: PropTypes.object.isRequired,
+  clearFile: PropTypes.func.isRequired,
+  storeFile: PropTypes.func.isRequired,
+  readFileB64: PropTypes.func.isRequired,
+  deployError: PropTypes.func.isRequired,
+  file: PropTypes.object.isRequired,
+  uploadSCXFile: PropTypes.func.isRequired,
 };
 
 UploadBuy.defaultProps = {
-  modal: null,
-  isReadOnly: false,
+  modal: {
+    active: false, // modal closed by default
+    properties: {},
+  },
+  file: {
+    raw: {
+      name: 'No File',
+    },
+  },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadBuy);

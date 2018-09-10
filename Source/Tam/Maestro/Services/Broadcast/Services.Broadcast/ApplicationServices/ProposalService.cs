@@ -1490,5 +1490,6 @@ namespace Services.Broadcast.ApplicationServices
 
             return inventorySources;
         }
+
     }
 }

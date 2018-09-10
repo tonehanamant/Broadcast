@@ -262,15 +262,15 @@
     <Compile Include="Entities\SpotTrackerReport.cs" />
     <Compile Include="Entities\DTO\ProposalBuySaveRequestDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
+    <Compile Include="Entities\ProposalBuyFile.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuidGridRequestDto.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />
     <Compile Include="Entities\ProprietaryPricingDto.cs" />
-    <Compile Include="Entities\ProposalBuyFile.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
+    <Compile Include="Entities\ScxFile.cs" />
     <Compile Include="Entities\SpotTrackerFileDetail.cs" />
     <Compile Include="Entities\TrackerFileDetail.cs" />
-    <Compile Include="Entities\ScxFile.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
