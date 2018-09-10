@@ -28,7 +28,7 @@ namespace Services.Broadcast.Repositories
 
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
     {
-        public StationProgramRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
+        public StationProgramRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
@@ -45,6 +45,7 @@ namespace Services.Broadcast.Repositories
                             .Include(a => a.station_inventory_manifest_dayparts)
                             .Include(b => b.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_rates)
+                            .Include(m => m.station_inventory_spots)
                             .Include(s => s.station)
                             .Include(i => i.inventory_sources)
                             .Where(p => p.inventory_source_id == rateSource)
@@ -65,6 +66,11 @@ namespace Services.Broadcast.Repositories
                                     Id = md.id,
                                     DaypartId = md.daypart_id,
                                     ProgramName = md.program_name
+                                }).ToList(),
+                                ManifestAudiences = m.station_inventory_manifest_audiences.Select(ma => new ProposalProgramDto.ManifestAudienceDto
+                                {
+                                    AudienceId = ma.audience_id,
+                                    Impressions = ma.impressions
                                 }).ToList(),
                                 StartDate = m.effective_date,
                                 EndDate = m.end_date,
@@ -87,9 +93,8 @@ namespace Services.Broadcast.Repositories
                                     ManifestId = r.station_inventory_manifest_id,
                                     ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
                                     MediaWeekId = r.media_week_id
-                                }).ToList()
-                                // todo : still undefined
-                                //Genres = 
+                                }).ToList(),
+                                Genres = m.station_inventory_spots.SelectMany(x => x.station_inventory_spot_genres.Select(genre => new LookupDto() { Id = genre.genre_id })).Distinct().ToList()
                             }).ToList());
 
                         /*
@@ -158,8 +163,6 @@ namespace Services.Broadcast.Repositories
                     });
             }
         }
-
-        
     }
 
     public class StationInventorySpots

@@ -26,16 +26,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private int _Setup(string testName)
         {
-            var request = new InventoryFileSaveRequest();
-
-
-            request.RatesStream = new FileStream(
+            var request = new InventoryFileSaveRequest
+            {
+                StreamData = new FileStream(
                 @".\Files\multi-quarter_program_rate_file_wvtm.xml",
                 FileMode.Open,
-                FileAccess.Read);
-            request.UserName = "IntegrationTestUser";
-            request.FileName = testName;
-            request.RatingBook = 416;
+                FileAccess.Read),
+                UserName = "IntegrationTestUser",
+                FileName = testName,
+                RatingBook = 416
+            };
 
             var result = _inventoryService.SaveInventoryFile(request);
             return result.FileId;

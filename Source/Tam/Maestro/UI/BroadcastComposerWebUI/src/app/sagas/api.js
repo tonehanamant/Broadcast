@@ -88,6 +88,12 @@ const postPrePosting = {
   ),
 };
 
+const tracker = {
+  uploadTracker: params => (
+    call(POST, `${apiBase}SpotTracker/UploadExtendedSigmaFile`, params)
+  ),
+};
+
 const planning = {
   getProposalInitialData: () => (
     call(GET, `${apiBase}Proposals/InitialData`, {})
@@ -137,6 +143,9 @@ const planning = {
   rerunPostScrubing: (propId, propdetailid) => (
     call(PUT, `${apiBase}Proposals/RerunScrubbing/${propId}/${propdetailid}`)
   ),
+  loadOpenMarketData: (propId, propdetailid) => (
+    call(GET, `${apiBase}Inventory/Detail/PricingGuide/Grid/${propId}/${propdetailid}`)
+  ),
 };
 
 // Calls
@@ -145,6 +154,7 @@ const api = {
   post,
   postPrePosting,
   planning,
+  tracker,
 };
 
 export default api;

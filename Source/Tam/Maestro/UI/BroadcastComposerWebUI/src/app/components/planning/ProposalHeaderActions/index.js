@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,7 @@ export default class ProposalHeaderActions extends Component {
     this.onSwitchVersions = this.onSwitchVersions.bind(this);
     this.onDeleteProposal = this.onDeleteProposal.bind(this);
     this.onUnorder = this.onUnorder.bind(this);
+    this.onGenerateSCX = this.onGenerateSCX.bind(this);
   }
 
   onChangeStatus(value) {
@@ -59,12 +61,33 @@ export default class ProposalHeaderActions extends Component {
     });
   }
 
+  onGenerateSCX() {
+    const { proposal, toggleModal } = this.props;
+    toggleModal({
+      modal: 'confirmModal',
+      active: true,
+      properties: {
+        titleText: 'Generate SCX file',
+        bodyText: 'Operation will produce SCX files for all Open Market Inventory in each Proposal Detail.',
+        bodyList: [
+          'Select Continue to proceed',
+          'Select Cancel to cancel',
+        ],
+        closeButtonText: 'Cancel',
+        actionButtonText: 'Continue',
+        actionButtonBsStyle: 'success',
+        href: `${__API__}Proposals/generate_scx_archive/${proposal.Id}`,
+        action: () => {},
+        dismiss: () => {},
+      },
+    });
+  }
+
   render() {
-    // console.log('ProposalHeaderActions', this.props);
-    const { initialdata, proposalEditForm } = this.props;
+    const { initialdata, proposalEditForm, isReadOnly } = this.props;
     const copyStatuses = [...initialdata.Statuses];
     const statusOptions = (proposalEditForm.Status !== 4) ? copyStatuses.filter(item => item.Id !== 4) : copyStatuses;
-    // console.log('header actions read only', this.props.isReadOnly);
+
     return (
       <Row>
         <Col md={10}>
@@ -78,7 +101,6 @@ export default class ProposalHeaderActions extends Component {
                   name="proposalStatus"
                   disabled={this.props.isReadOnly}
                   value={proposalEditForm.Status}
-                  // placeholder=""
                   options={statusOptions}
                   labelKey="Display"
                   valueKey="Id"
@@ -91,7 +113,7 @@ export default class ProposalHeaderActions extends Component {
         </Col>
         <Col md={2}>
           <div style={{ float: 'right' }}>
-            { !this.props.isReadOnly &&
+            { !isReadOnly &&
               <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
                   <MenuItem eventKey="1" onClick={this.onSaveVersion}>Save As Version</MenuItem>
                   <MenuItem eventKey="2" onClick={this.onSwitchVersions}>Switch Version</MenuItem>
@@ -99,11 +121,11 @@ export default class ProposalHeaderActions extends Component {
 
               </DropdownButton>
             }
-            { this.props.isReadOnly &&
+            { isReadOnly &&
               <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
                   <MenuItem eventKey="1" onClick={this.onSwitchVersions}>Switch Version</MenuItem>
                   <MenuItem eventKey="2" onClick={this.onUnorder}>Unorder</MenuItem>
-                  <MenuItem eventKey="3" onClick={this.onGenerateSCX} disabled>Generate SCX</MenuItem>
+                  <MenuItem eventKey="3" onClick={this.onGenerateSCX}>Generate SCX</MenuItem>
               </DropdownButton>
             }
           </div>
@@ -117,8 +139,8 @@ ProposalHeaderActions.defaultProps = {
   // isReadOnly: false,
 };
 
-/* eslint-disable react/no-unused-prop-types */
 ProposalHeaderActions.propTypes = {
+  proposal: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   updateProposalEditForm: PropTypes.func.isRequired,

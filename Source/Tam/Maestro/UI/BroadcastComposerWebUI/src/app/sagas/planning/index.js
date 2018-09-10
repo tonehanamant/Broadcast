@@ -1389,6 +1389,11 @@ export function* rerunPostScrubing({ propId, propdetailid }) {
   }
 }
 
+export function* loadOpenMarketData({ propId, propdetailid }) {
+  const { loadOpenMarketData } = api.planning;
+  return yield loadOpenMarketData(propId, propdetailid);
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1467,6 +1472,10 @@ export function* watchDeleteProposalDetail() {
 
 export function* watchRerunPostScrubing() {
 	yield takeEvery(ACTIONS.RERUN_POST_SCRUBING.request, sagaWrapper(rerunPostScrubing, ACTIONS.RERUN_POST_SCRUBING));
+}
+
+export function* watchLoadOpenMarketData() {
+	yield takeEvery(ACTIONS.LOAD_OPEN_MARKET_DATA.request, sagaWrapper(loadOpenMarketData, ACTIONS.LOAD_OPEN_MARKET_DATA));
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

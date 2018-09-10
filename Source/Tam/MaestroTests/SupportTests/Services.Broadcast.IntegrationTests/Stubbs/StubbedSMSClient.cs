@@ -169,6 +169,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_PostLogErrorFolder":
                     result = @"E:\temp\wwtv\WWTVErrors\PostLogPreprocessing";
                     break;
+                case "WWTV_SpotTrackerDropFolder":
+                    result = @"D:\temp\wwtv\SpotTrackerDropFolder";
+                    break;
                 case "WWTV_PostLogFtpOutboundFolder":
                     result = "InPrePost";
                     break;

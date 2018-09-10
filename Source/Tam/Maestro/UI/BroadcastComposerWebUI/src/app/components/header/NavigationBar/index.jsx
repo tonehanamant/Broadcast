@@ -6,9 +6,19 @@ import { Navbar, Nav, Row, Col, MenuItem } from 'react-bootstrap';
 
 import UserEnvironment from 'Components/header/UserEnvironment';
 
-import Logo from 'Assets/images/cad_logo_sm.png';
+// import Logo from 'Assets/images/cad_logo_sm.png';
 
 import styles from './index.style.scss';
+
+/* let hostname = window.location.hostname;
+const ports = window.location.port;
+const url = ports !== '' ? hostname += `:${ports}` : '';
+
+const host = `http://${url}/api/images/logo.png`; */
+
+/* eslint-disable no-undef */
+const apiBase = __API__;
+const imgSrc = `${apiBase}images/logo.png`;
 
 /* eslint-disable react/prefer-stateless-function */
 export class NavigationBar extends Component {
@@ -24,7 +34,7 @@ export class NavigationBar extends Component {
             <Navbar.Header>
               <Navbar.Brand>
                 <a href="http://cadentnetwork.com/" styleName="navigation-brand">
-                  <img alt="Cadent Network" src={Logo} className="img-responsive" />
+                  <img alt="Cadent Network" src={imgSrc} className="img-responsive" />
                 </a>
               </Navbar.Brand>
               <Navbar.Toggle />

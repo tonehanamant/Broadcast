@@ -39,8 +39,8 @@ export class UploadButton extends Component {
 
   // this seems to be never called and of no use
   closeFileDialog() {
-    console.log('closeFileDialog called?', this.props);
-    // this.props.toggleDisabledDropzones();
+    // console.log('closeFileDialog called?', this.props);
+    this.props.toggleDisabledDropzones();
   }
 
   processFiles(acceptedFiles, rejectedFiles) {
@@ -60,12 +60,13 @@ export class UploadButton extends Component {
   }
 
   render() {
-    const { text, bsStyle, bsSize, onFilesSelected, acceptedMimeTypes } = this.props;
+    const { text, bsStyle, style, bsSize, onFilesSelected, acceptedMimeTypes } = this.props;
 
     return (
       <div>
         <Button
           bsStyle={bsStyle}
+          style={style}
           bsSize={bsSize}
           onClick={this.openFileDialog}
         >{text}
@@ -87,6 +88,7 @@ UploadButton.defaultProps = {
   text: 'Upload',
   bsStyle: 'default',
   bsSize: 'small',
+  style: {},
   onFilesSelected: null,
   fileTypeExtension: '.xlsx',
   postProcessFiles: {
@@ -100,6 +102,7 @@ UploadButton.defaultProps = {
 UploadButton.propTypes = {
   text: PropTypes.string,
   bsStyle: PropTypes.string,
+  style: PropTypes.object,
   bsSize: PropTypes.string,
   onFilesSelected: PropTypes.func,
   postProcessFiles: PropTypes.object,
@@ -109,7 +112,7 @@ UploadButton.propTypes = {
   acceptedMimeTypes: PropTypes.string,
   storeFile: PropTypes.func.isRequired,
   readFileB64: PropTypes.func.isRequired,
-  // toggleDisabledDropzones: PropTypes.func.isRequired,
+  toggleDisabledDropzones: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(CSSModules(UploadButton, styles));

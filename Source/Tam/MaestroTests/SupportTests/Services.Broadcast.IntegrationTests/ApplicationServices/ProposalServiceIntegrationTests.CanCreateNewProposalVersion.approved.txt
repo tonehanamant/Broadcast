@@ -9,6 +9,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "Daypart": {
         "endTime": 36000,
         "fri": true,
@@ -34,12 +35,31 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
-      "GenreCriteria": [],
+      "GenreCriteria": [
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Comedy"
+          }
+        },
+        {
+          "Contain": 2,
+          "Genre": {
+            "Display": "Crime"
+          }
+        }
+      ],
       "GoalBudget": null,
       "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -48,10 +68,17 @@
           "Program": {
             "Display": "Open Market Program"
           }
+        },
+        {
+          "Contain": 2,
+          "Program": {
+            "Display": "Test Program"
+          }
         }
       ],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -90,6 +117,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "Daypart": {
         "endTime": 36000,
         "fri": true,
@@ -121,11 +149,18 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,

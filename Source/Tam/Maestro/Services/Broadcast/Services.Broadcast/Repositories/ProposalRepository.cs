@@ -346,6 +346,10 @@ namespace Services.Broadcast.Repositories
                     adjustment_rate = proposalDetail.AdjustmentRate,
                     goal_budget = proposalDetail.GoalBudget,
                     goal_impression = proposalDetail.GoalImpression,
+                    open_market_cpm_min =  proposalDetail.OpenMarketPricing.CpmMin,
+                    open_market_cpm_max = proposalDetail.OpenMarketPricing.CpmMax,
+                    open_market_unit_cap_per_station = proposalDetail.OpenMarketPricing.UnitCapPerStation,
+                    open_market_cpm_target = (byte?)proposalDetail.OpenMarketPricing.CpmTarget,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -360,6 +364,12 @@ namespace Services.Broadcast.Repositories
                         program_name = p.Program.Display,
                         program_name_id = p.Program.Id,
                         contain_type = (byte)p.Contain
+                    }).ToList(),
+                    proposal_version_detail_proprietary_pricing = proposalDetail.ProprietaryPricing.Select(g => new proposal_version_detail_proprietary_pricing()
+                    {
+                        inventory_source = (byte)g.InventorySource,
+                        impressions_balance = g.ImpressionsBalance,
+                        cpm = g.Cpm
                     }).ToList(),
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
@@ -463,6 +473,10 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.adjustment_rate = detail.AdjustmentRate;
                     updatedDetail.goal_budget = detail.GoalBudget;
                     updatedDetail.goal_impression = detail.GoalImpression;
+                    updatedDetail.open_market_cpm_min = detail.OpenMarketPricing.CpmMin;
+                    updatedDetail.open_market_cpm_max = detail.OpenMarketPricing.CpmMax;
+                    updatedDetail.open_market_unit_cap_per_station = detail.OpenMarketPricing.UnitCapPerStation;
+                    updatedDetail.open_market_cpm_target = (byte?)detail.OpenMarketPricing.CpmTarget;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -503,7 +517,21 @@ namespace Services.Broadcast.Repositories
                                     contain_type = (byte)p.Contain,
                                     proposal_version_detail_id = detail.Id.Value
                                 }));
-                    
+
+                    //update proposal detail proprietary pricing
+                    context.proposal_version_detail_proprietary_pricing.RemoveRange(
+                        context.proposal_version_detail_proprietary_pricing.Where(g => g.proposal_version_detail_id == detail.Id));
+                    if (detail.ProprietaryPricing != null && detail.ProprietaryPricing.Any())
+                        context.proposal_version_detail_proprietary_pricing.AddRange(
+                            detail.ProprietaryPricing.Select(
+                                p => new proposal_version_detail_proprietary_pricing()
+                                {
+                                    proposal_version_detail_id = detail.Id.Value,
+                                    inventory_source = (byte)p.InventorySource,
+                                    impressions_balance = p.ImpressionsBalance,
+                                    cpm = p.Cpm
+                                }));
+
                     // deal with quarters that have been deleted 
                     // scenario where user maintain the detail but change completely the flight generating new quarters for this particular detail
                     var deletedQuartersIds =
@@ -862,6 +890,13 @@ namespace Services.Broadcast.Repositories
                     AdjustmentInflation = version.adjustment_inflation,
                     AdjustmentMargin = version.adjustment_margin,
                     AdjustmentRate = version.adjustment_rate,
+                    OpenMarketPricing = new OpenMarketPricing
+                    {
+                        CpmMin = version.open_market_cpm_min,
+                        CpmMax = version.open_market_cpm_max,
+                        UnitCapPerStation = version.open_market_unit_cap_per_station,
+                        CpmTarget = (OpenMarketCpmTarget?)version.open_market_cpm_target,
+                    },
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -882,6 +917,12 @@ namespace Services.Broadcast.Repositories
                             Id = p.program_name_id,
                             Display = p.program_name
                         }
+                    }).ToList(),
+                    ProprietaryPricing =  version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                    {
+                        InventorySource = (InventorySourceEnum)p.inventory_source,
+                        ImpressionsBalance = p.impressions_balance,
+                        Cpm = p.cpm
                     }).ToList(),
                     Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                     {
@@ -1048,7 +1089,8 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new ProposalDetailOpenMarketInventoryDto
                 {
-                    Margin = pv.proposal_versions.margin
+                    Margin = pv.proposal_versions.margin,
+                    GuaranteedAudience = pv.proposal_versions.guaranteed_audience_id
                 };
                 _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
@@ -1060,7 +1102,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 Id = c.id,
                                 Contain = (ContainTypeEnum)c.contain_type,
-                                Genre = new LookupDto(c.genre_id, "")
+                                Genre = new LookupDto(c.genre_id, c.genre.name)
                             })
                         .ToList(),
                     ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
@@ -1148,6 +1190,12 @@ namespace Services.Broadcast.Repositories
                             Id = p.program_name_id,
                             Display = p.program_name
                         }
+                    }).ToList(),
+                    CpmCriteria = proposalDetail.proposal_version_detail_criteria_cpm.Select(x => new CpmCriteria
+                    {
+                        Id = x.id,
+                        MinMax = (MinMaxEnum)x.min_max,
+                        Value = x.value
                     }).ToList()
                 };
 

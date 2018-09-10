@@ -55,27 +55,13 @@ INSERT INTO #previous_version
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
-
-/******************* START BCOP-3501 *****************************************************************************/
-
-IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_nsi_usages_medi_month_id' AND object_id = OBJECT_ID('nsi.usages'))
-BEGIN
-	create nonclustered index IX_nsi_usages_medi_month_id on nsi.usages ([media_month_id]) include (market_code)
-	--drop index IX_nsi_usages_medi_month_id  on nsi.usages 
-END
-
-
-go
-/******************* END BCOP-3501 *****************************************************************************/
-
-
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.09.1' -- Current release version
+SET parameter_value = '18.10.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -86,8 +72,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.08.1' -- Previous release version
-		OR [version] = '18.09.1') -- Current release version
+		WHERE [version] = '18.09.1' -- Previous release version
+		OR [version] = '18.10.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

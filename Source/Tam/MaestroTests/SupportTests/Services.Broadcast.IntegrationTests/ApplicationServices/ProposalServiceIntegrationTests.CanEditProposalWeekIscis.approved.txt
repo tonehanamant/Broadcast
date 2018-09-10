@@ -9,6 +9,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -28,11 +29,18 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -163,6 +171,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -194,11 +203,18 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -313,6 +329,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "DaypartCode": "NAV",
       "DefaultProjectionBooks": null,
       "FlightEdited": false,
@@ -325,11 +342,18 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,

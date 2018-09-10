@@ -24,49 +24,66 @@ export class ConfirmModal extends Component {
   }
 
   close() {
-    this.props.toggleModal({
+    const { modal: { properties }, toggleModal } = this.props;
+
+    toggleModal({
       modal: 'confirmModal',
       active: false,
-      properties: this.props.modal.properties,
+      properties,
     });
   }
 
   action() {
-    this.props.modal.properties.action();
+    const { modal: { properties } } = this.props;
+    properties.action();
     this.close();
   }
 
   dismiss() {
-    this.props.modal.properties.dismiss();
+    const { modal: { properties } } = this.props;
+    properties.dismiss();
     this.close();
   }
 
   render() {
+    const { modal: { properties, active } } = this.props;
     return (
-      <Modal show={this.props.modal.active} onHide={this.dismiss}>
+      <Modal show={active} onHide={this.dismiss}>
         <Modal.Header>
-          <Modal.Title style={{ display: 'inline-block' }}>{this.props.modal.properties.titleText}</Modal.Title>
-          <Button className="close" bsStyle="link" onClick={this.dismiss} style={{ display: 'inline-block', float: 'right' }}>
+          <Modal.Title style={{ display: 'inline-block' }}>{properties.titleText}</Modal.Title>
+          <Button
+            className="close"
+            bsStyle="link"
+            onClick={this.dismiss}
+            style={{ display: 'inline-block', float: 'right' }}
+          >
             <span>&times;</span>
           </Button>
         </Modal.Header>
         <Modal.Body>
-          {this.props.modal.properties.bodyText &&
-            <p>{this.props.modal.properties.bodyText}</p>
-          }
-          {this.props.modal.properties.bodyList &&
+          {properties.bodyText && <p>{properties.bodyText}</p>}
+          {properties.bodyList &&
             <ul>
-              {this.props.modal.properties.bodyList.map(item => (
+              {properties.bodyList.map(item => (
                 <li key={item}>{item}</li>
               ))}
-            </ul>
-          }
+            </ul>}
         </Modal.Body>
         <Modal.Footer>
-          {!this.props.modal.properties.closeButtonDisabled &&
-            <Button onClick={this.dismiss} bsStyle={this.props.modal.properties.closeButtonBsStyle || 'default'}>{this.props.modal.properties.closeButtonText}</Button>
-          }
-          <Button bsStyle={this.props.modal.properties.actionButtonBsStyle} onClick={this.action}>{this.props.modal.properties.actionButtonText}</Button>
+          {!properties.closeButtonDisabled &&
+            <Button
+              onClick={this.dismiss}
+              bsStyle={properties.closeButtonBsStyle || 'default'}
+            >
+            {properties.closeButtonText}
+            </Button>}
+          <Button
+            bsStyle={properties.actionButtonBsStyle}
+            onClick={this.action}
+            href={properties.href}
+          >
+          {properties.actionButtonText}
+          </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -85,6 +102,7 @@ ConfirmModal.defaultProps = {
       closeButtonDisabled: false,
       actionButtonText: 'Action',
       actionButtonBsStyle: 'warning',
+      href: undefined,
       action: () => {},
       dismiss: () => {},
     },

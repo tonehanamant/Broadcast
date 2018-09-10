@@ -336,6 +336,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "NoOfThreadsForRatingRequest"; }
         }
 	 
+		public static string NsiLoadedNoficationEmailAddresses  
+		{
+            get { return "NsiLoadedNoficationEmailAddresses"; }
+        }
+	 
 		public static string NumMonthsToCacheForNewRatingsService  
 		{
             get { return "NumMonthsToCacheForNewRatingsService"; }
@@ -482,6 +487,21 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "WWTV_FtpUsername"; }
         }
 	 
+		public static string WWTV_KeepingTracDropFolder  
+		{
+            get { return "WWTV_KeepingTracDropFolder"; }
+        }
+	 
+		public static string WWTV_KeepingTracErrorFolder  
+		{
+            get { return "WWTV_KeepingTracErrorFolder"; }
+        }
+	 
+		public static string WWTV_KeepingTracFtpOutboundFolder  
+		{
+            get { return "WWTV_KeepingTracFtpOutboundFolder"; }
+        }
+	 
 		public static string WWTV_LocalFtpErrorFolder  
 		{
             get { return "WWTV_LocalFtpErrorFolder"; }
@@ -571,6 +591,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string CacheTest  
 		{
             get { return "CacheTest"; }
+        }
+	 
+		public static string Test  
+		{
+            get { return "Test"; }
         }
 	}
 	 
@@ -783,6 +808,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ServiceDownMinutesThreshold  
 		{
             get { return "ServiceDownMinutesThreshold"; }
+        }
+	}
+	 
+	public static class MaestroAdminSecuritySystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "MaestroAdminSecurity" ; }
+        }
+	  
+		public static string CrossMWDomainName  
+		{
+            get { return "CrossMWDomainName"; }
         }
 	}
 	 
@@ -1686,6 +1724,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string DeliveryInsightUrl  
 		{
             get { return "DeliveryInsightUrl"; }
+        }
+	 
+		public static string IndexRecommendModelApiResource  
+		{
+            get { return "IndexRecommendModelApiResource"; }
+        }
+	 
+		public static string IndexRecommendModelApiUrl  
+		{
+            get { return "IndexRecommendModelApiUrl"; }
+        }
+	 
+		public static string IndexRecommendModelLogging  
+		{
+            get { return "IndexRecommendModelLogging"; }
+        }
+	 
+		public static string IndexRecommendModelLogsFilePath  
+		{
+            get { return "IndexRecommendModelLogsFilePath"; }
         }
 	}
 	 

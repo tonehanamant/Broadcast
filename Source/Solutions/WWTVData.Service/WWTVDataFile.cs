@@ -47,8 +47,8 @@ namespace WWTVData.Service
 
             try
             {
-                ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>().ProcessFiles(ServiceName);
-                ApplicationServiceFactory.GetApplicationService<IPostLogPreprocessingService>().ProcessFiles(ServiceName);
+                ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>().ProcessFiles(ServiceName);  // Affidavit Files
+                ApplicationServiceFactory.GetApplicationService<IPostLogPreprocessingService>().ProcessFiles(ServiceName);  // Sigma and KeepingTrac files   
             }
             catch (Exception e)
             {

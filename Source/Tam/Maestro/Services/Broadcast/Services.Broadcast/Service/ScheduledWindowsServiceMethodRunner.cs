@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Timers;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Services
 {
@@ -26,8 +25,7 @@ namespace Services.Broadcast.Services
             _ServicesToRun = servicesToRun;
             _ServicesToRun.ForEach(s => s.BaseWindowsService = this);
         }
-
-
+        
         protected void _Timer_check_for_WWT_files(object sender, ElapsedEventArgs args)
         {
             _Timer.Stop();
@@ -67,12 +65,9 @@ namespace Services.Broadcast.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Error stopping {0}. Error : {1}  .", this.ServiceName != null ? this.ServiceName : string.Empty, ex.ToString()));
-                LogServiceError(this.ServiceName, ex.Message, ex);
+                Console.WriteLine(string.Format("Error stopping {0}. Error : {1}  .", ServiceName != null ? ServiceName : string.Empty, ex.ToString()));
+                LogServiceError(ServiceName, ex.Message, ex);
             }
-
         }
-
     }
-
 }
