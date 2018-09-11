@@ -371,6 +371,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NoOfThreadsForRatingRequest); }
         }
 	 
+		public static string NsiLoadedNoficationEmailAddresses  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AudienceAndRatingsServiceSystemParameterNames.ComponentID , AudienceAndRatingsServiceSystemParameterNames.NsiLoadedNoficationEmailAddresses); }
+        }
+	 
 		public static int NumMonthsToCacheForNewRatingsService  
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
@@ -533,6 +539,24 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_FtpUsername); }
         }
 	 
+		public static string WWTV_KeepingTracDropFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_KeepingTracDropFolder); }
+        }
+	 
+		public static string WWTV_KeepingTracErrorFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_KeepingTracErrorFolder); }
+        }
+	 
+		public static string WWTV_KeepingTracFtpOutboundFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_KeepingTracFtpOutboundFolder); }
+        }
+	 
 		public static string WWTV_LocalFtpErrorFolder  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -627,6 +651,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.CacheTest); }
+        }
+	 
+		public static string Test  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ConfigurationServiceSystemParameterNames.ComponentID , ConfigurationServiceSystemParameterNames.Test); }
         }
 	}
 	 
@@ -855,6 +885,15 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
 					(MaestroAdministrationServiceSystemParameterNames.ComponentID , MaestroAdministrationServiceSystemParameterNames.ServiceDownMinutesThreshold); }
+        }
+	}
+	 
+	public static class MaestroAdminSecuritySystemParameter 
+	{ 
+		public static string CrossMWDomainName  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(MaestroAdminSecuritySystemParameterNames.ComponentID , MaestroAdminSecuritySystemParameterNames.CrossMWDomainName); }
         }
 	}
 	 
@@ -1833,6 +1872,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.DeliveryInsightUrl); }
+        }
+	 
+		public static string IndexRecommendModelApiResource  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelApiResource); }
+        }
+	 
+		public static string IndexRecommendModelApiUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelApiUrl); }
+        }
+	 
+		public static bool IndexRecommendModelLogging  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelLogging); }
+        }
+	 
+		public static string IndexRecommendModelLogsFilePath  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelLogsFilePath); }
         }
 	}
 	 

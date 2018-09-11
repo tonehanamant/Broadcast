@@ -1091,8 +1091,11 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailOpenMarketInventoryDto();
-
+                var dto = new ProposalDetailOpenMarketInventoryDto
+                {
+                    Margin = pv.proposal_versions.margin,
+                    GuaranteedAudience = pv.proposal_versions.guaranteed_audience_id
+                };
                 _SetBaseFields(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
@@ -1191,6 +1194,12 @@ namespace Services.Broadcast.Repositories
                             Id = p.program_name_id,
                             Display = p.program_name
                         }
+                    }).ToList(),
+                    CpmCriteria = proposalDetail.proposal_version_detail_criteria_cpm.Select(x => new CpmCriteria
+                    {
+                        Id = x.id,
+                        MinMax = (MinMaxEnum)x.min_max,
+                        Value = x.value
                     }).ToList()
                 };
 

@@ -12,7 +12,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
-using System.Collections.Generic;
 using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -52,15 +51,18 @@ namespace Services.Broadcast.ApplicationServices
 
         public static void RegisterApplicationServices(UnityContainer unityContainer)
         {
+            unityContainer.RegisterType<IMarketService, MarketService>();
             unityContainer.RegisterType<ILogoService, LogoService>();
             unityContainer.RegisterType<ITransactionHelper, TransactionHelper>();
             unityContainer.RegisterType<ITrackerService, TrackerService>();
             unityContainer.RegisterType<IBvsPostingEngine, BvsBvsPostingEngine>();
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
-            unityContainer.RegisterType<IScxConverter, ScxConverter>();
+            unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
+            unityContainer.RegisterType<IPostLogBaseFileConverter, PostLogBaseFileConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
+            unityContainer.RegisterType<IKeepingTracConverter, KeepingTracConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();

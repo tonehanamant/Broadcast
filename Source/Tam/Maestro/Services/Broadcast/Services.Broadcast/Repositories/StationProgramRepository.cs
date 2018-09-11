@@ -61,6 +61,11 @@ namespace Services.Broadcast.Repositories
                                     DaypartId = md.daypart_id,
                                     ProgramName = md.program_name
                                 }).ToList(),
+                                ManifestAudiences = m.station_inventory_manifest_audiences.Select(ma => new ProposalProgramDto.ManifestAudienceDto
+                                {
+                                    AudienceId = ma.audience_id,
+                                    Impressions = ma.impressions
+                                }).ToList(),
                                 StartDate = m.effective_date,
                                 EndDate = m.end_date,
                                 SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.rate).SingleOrDefault(),

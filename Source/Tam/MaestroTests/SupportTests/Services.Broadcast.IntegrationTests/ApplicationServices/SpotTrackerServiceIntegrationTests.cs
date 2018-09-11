@@ -7,6 +7,7 @@ using System.IO;
 using Tam.Maestro.Common.DataLayer;
 using ApprovalTests;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -93,6 +94,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Approvals.Verify(IntegrationTestHelper.ConvertToJson(messages));
                 }
             }
-        }
+        }        
     }
 }

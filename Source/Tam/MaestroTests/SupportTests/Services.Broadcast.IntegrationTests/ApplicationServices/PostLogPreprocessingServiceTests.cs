@@ -42,10 +42,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\C786.Sigma.ValidFile.csv" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundPostLogFileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -64,10 +64,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\C786.Sigma.MissingData.csv" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundPostLogFileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -87,10 +87,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\C786.Sigma.MissingColumns.csv" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundPostLogFileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -109,10 +109,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\StrataSBMSInvoicePostExportInvalidData.xlsx" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Unknown);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundPostLogFileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -134,11 +134,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_Empty>();
             //for testing real upload: IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpService>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-
-            var srv = IntegrationTestApplicationServiceFactory
-                .GetApplicationService<IPostLogPreprocessingService>();
-
-            srv.ProcessFiles("PostLogPreprocessingTest");
+            
+            _PostLogPreprocessingService.ProcessFiles("PostLogPreprocessingTest");
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(MailMessage), "Attachments");
@@ -159,6 +156,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProcessKeepingTracFiles()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var userName = "Test_ProcessKeepingTracFiles";
+
+                var result = _PostLogPreprocessingService.ValidateFiles(
+                    new List<string>
+                    {
+                        @".\Files\KeepingTrac-BCOP3553.csv",
+                        @".\Files\KeepingTrac-BCOP3553_RequiredColumnMissing.csv",
+                        @".\Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv"
+                    },
+                    userName, FileSourceEnum.KeepingTrac);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
     
 }

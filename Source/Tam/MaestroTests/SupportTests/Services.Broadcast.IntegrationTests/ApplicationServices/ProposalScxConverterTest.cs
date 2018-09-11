@@ -55,7 +55,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const int proposalId = 270;
 
-            var result = _ProposalService.GenerateScxFileArchive(proposalId);
+            var proposal = ProposalTestHelper.CreateProposal();
+            var result = _ProposalService.GenerateScxFileArchive(proposal.Id.Value);
 
             using (var fileStream = new FileStream(string.Format("c:\\scxFile.zip"), FileMode.OpenOrCreate))
             {

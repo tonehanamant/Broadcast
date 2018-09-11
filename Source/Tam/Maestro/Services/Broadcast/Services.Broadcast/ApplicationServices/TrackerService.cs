@@ -1,9 +1,11 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,22 @@ namespace Services.Broadcast.ApplicationServices
         List<BvsFileSummary> GetBvsFileSummaries();
         bool TrackSchedule(int scheduleId);
         bool DeleteBvsFile(int bvsFileId);
+        List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate);
+        List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);
+
+        /// <summary>
+        /// Generates spot tracker report for requested proposal 
+        /// </summary>
+        /// <param name="proposalId">Proposal Identifier</param>
+        /// <returns>ReportOutput contains spot tracker report file name and the report which is represented as a stream of zip archive</returns>
+        ReportOutput GenerateSpotTrackerReport(int proposalId);
+
+        /// <summary>
+        /// Returns spot tracker report data for requested proposal 
+        /// </summary>
+        /// <param name="proposalId">Proposal Identifier</param>
+        /// <returns>Spot tracker report data model</returns>
+        SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId);
     }
 
     public class TrackerService : ITrackerService
@@ -51,7 +69,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IBvsPostingEngine _BvsPostingEngine;
         private readonly ITrackingEngine _TrackingEngine;
-        private readonly IScxConverter _ScxConverter;
+        private readonly IScxScheduleConverter _ScxConverter;
         private readonly IBvsConverter _BvsConverter;
         private readonly ISigmaConverter _SigmaConverter;
         private readonly IAssemblyScheduleConverter _AssemblyFileConverter;
@@ -63,14 +81,28 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly INsiPostingBookService _NsiPostingBookService;
+        private readonly IFileService _FileService;
+        private readonly IProposalRepository _ProposalRepository;
+        private readonly IProposalBuyRepository _ProposalBuyRepository;
+        private readonly IBvsRepository _BvsRepository;
+        private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
 
-        public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBvsPostingEngine bvsPostingEngine,
-            ITrackingEngine trackingEngine, IScxConverter scxConverter, IBvsConverter bvsConverter, ISigmaConverter sigmaConverter,
-            IAssemblyScheduleConverter assemblyFileConverter,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
-            IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
-            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient,
-            IImpressionAdjustmentEngine impressionAdjustmentEngine, INsiPostingBookService nsiPostingBookService)
+        private readonly string _CsvFileExtension = ".csv";
+
+        public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory
+            , IBvsPostingEngine bvsPostingEngine
+            , ITrackingEngine trackingEngine
+            , IScxScheduleConverter scxConverter
+            , IBvsConverter bvsConverter
+            , ISigmaConverter sigmaConverter
+            , IAssemblyScheduleConverter assemblyFileConverter
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IBroadcastAudiencesCache audiencesCache, IDefaultScheduleConverter defaultScheduleConverter
+            , IDaypartCache dayPartCache, IQuarterCalculationEngine quarterCalculationEngine
+            , ISMSClient smsClient
+            , IImpressionAdjustmentEngine impressionAdjustmentEngine
+            , INsiPostingBookService nsiPostingBookService
+            , IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BvsPostingEngine = bvsPostingEngine;
@@ -87,6 +119,11 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _NsiPostingBookService = nsiPostingBookService;
+            _FileService = fileService;
+            _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            _ProposalBuyRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
+            _BvsRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+            _MediaMonthAndWeekAggregateRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IMediaMonthAndWeekAggregateRepository>();
         }
 
         public LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate)
@@ -113,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
             return ret;
         }
 
-        internal List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
+        public List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
         {
             var displaySchedules = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDisplaySchedules(startDate, endDate);
 
@@ -661,7 +698,7 @@ namespace Services.Broadcast.ApplicationServices
             return scrubbingDto;
         }
 
-        internal List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
+        public List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
         {
             var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
 
@@ -821,6 +858,150 @@ namespace Services.Broadcast.ApplicationServices
             _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().DeleteById(bvsFileId);
             return true;
         }
+
+        public ReportOutput GenerateSpotTrackerReport(int proposalId)
+        {
+            var spotTrackerReportData = GetSpotTrackerReportDataForProposal(proposalId);
+            var reportGenerator = new SpotTrackerReportGenerator();
+            return reportGenerator.Generate(spotTrackerReportData);
     }
+
+        public SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId)
+        {
+            var proposal = _ProposalRepository.GetProposalById(proposalId);
+
+            var report = new SpotTrackerReport
+            {
+                Id = proposal.Id ?? default(int),
+                Name = proposal.ProposalName,
+                Details = proposal.Details.Select(d => new SpotTrackerReport.Detail
+                {
+                    Id = d.Id ?? default(int)
+                }).ToList()
+            };
+
+            _SetReportDetailBuys(report);
+
+            // We generate a report file only for details with proposal buys
+            report.Details = report.Details.Where(x => x.ProposalBuyFile != null).ToList();
+
+            _SetSpotsData(report);
+
+            return report;
 }
 
+        private void _SetReportDetailBuys(SpotTrackerReport report)
+        {
+            var detailIds = report.Details.Select(x => x.Id);
+            var proposalBuys = _ProposalBuyRepository.GetProposalBuyFilesForProposalDetails(detailIds);
+
+            foreach (var reportDetail in report.Details)
+            {
+                reportDetail.ProposalBuyFile = proposalBuys.SingleOrDefault(x => x.ProposalVersionDetailId == reportDetail.Id);
+            }
+        }
+
+        private void _SetSpotsData(SpotTrackerReport report)
+        {
+            var proposalBuys = report.Details.Select(x => x.ProposalBuyFile);
+            var estimateIds = proposalBuys.Select(x => x.EstimateId);
+            var bvsFileDetails = _BvsRepository.GetBvsFileDetailsByEstimateIds(estimateIds);
+
+            foreach (var reportDetail in report.Details)
+            {
+                reportDetail.Weeks = _GetWeeklySpotsDataForReportDetail(reportDetail.ProposalBuyFile, bvsFileDetails);
+            }
+        }
+
+        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForReportDetail(ProposalBuyFile buy, IEnumerable<BvsFileDetail> bvsFileDetails)
+        {
+            var bvsFileDetailsByEstimateId = bvsFileDetails.Where(x => x.EstimateId == buy.EstimateId);
+            var deliveredSpotsData = _GetDeliveredSpotsData(bvsFileDetailsByEstimateId);
+
+            return buy.Details
+                .SelectMany(x => x.Weeks, (detail, week) => new
+                {
+                    detail.Station,
+                    week.MediaWeek,
+                    week.Spots
+                })
+                .GroupBy(x => new { x.MediaWeek.Id, x.MediaWeek.WeekStartDate })
+                .Select(groupingByWeek => new SpotTrackerReport.Detail.Week
+                {
+                    MediaWeekId = groupingByWeek.Key.Id,
+                    StartDate = groupingByWeek.Key.WeekStartDate,
+                    StationSpotsValues = groupingByWeek
+                        .GroupBy(x => new StationGrouping
+                        {
+                            OriginMarket = x.Station.OriginMarket,
+                            Affiliation = x.Station.Affiliation,
+                            LegacyCallLetters = x.Station.LegacyCallLetters
+                        })
+                        .Select(groupingByStation => new SpotTrackerReport.Detail.Week.StationSpotsValue
+                        {
+                            Market = groupingByStation.Key.OriginMarket,
+                            Affiliate = groupingByStation.Key.Affiliation,
+                            Station = groupingByStation.Key.LegacyCallLetters,
+                            SpotsOrdered = groupingByStation.Sum(spots => spots.Spots),
+                            SpotsDelivered = _GetDeliveredSpotsForWeekAndStation(deliveredSpotsData, groupingByWeek.Key.Id, groupingByStation.Key.LegacyCallLetters)
+                        })
+                });
+        }
+
+        private int _GetDeliveredSpotsForWeekAndStation(
+            IEnumerable<DeliveredSpotsValueForStationsForWeek> deliveredSpotsData,
+            int mediaWeekId,
+            string station)
+        {
+            return deliveredSpotsData
+                .SingleOrDefault(x => x.MediaWeekId == mediaWeekId)
+                ?.DeliveredSpotsValueForStations.SingleOrDefault(x => x.Station.Equals(station, StringComparison.InvariantCultureIgnoreCase))?.Spots ?? 0;
+        }
+
+        private IEnumerable<DeliveredSpotsValueForStationsForWeek> _GetDeliveredSpotsData(IEnumerable<BvsFileDetail> bvsFileDetails)
+        {
+            var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
+            var bvsFileDetailsGroupedByMediaWeek = bvsFileDetails.GroupBy(x => mediaMonthAggregate.GetMediaWeekContainingDate(x.DateAired).Id);
+
+            return bvsFileDetailsGroupedByMediaWeek.Select(bvsFileDetailsForMediaWeek => new DeliveredSpotsValueForStationsForWeek
+            {
+                MediaWeekId = bvsFileDetailsForMediaWeek.Key,
+                DeliveredSpotsValueForStations = bvsFileDetailsForMediaWeek
+                        .GroupBy(x => x.Station, StringComparer.InvariantCultureIgnoreCase)
+                        .Select(x => new DeliveredSpotsValueForStationsForWeek.DeliveredSpotsValueForStation
+                        {
+                            Station = x.Key,
+                            Spots = x.Count()
+                        })
+            });
+        }
+
+        // Only for case-insensitive comparison
+        private class StationGrouping
+        {
+            public string OriginMarket { get; set; }
+
+            public string Affiliation { get; set; }
+
+            public string LegacyCallLetters { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                var stationGrouping = obj as StationGrouping;
+
+                return OriginMarket.Equals(stationGrouping.OriginMarket, StringComparison.InvariantCultureIgnoreCase) &&
+                    Affiliation.Equals(stationGrouping.Affiliation, StringComparison.InvariantCultureIgnoreCase) &&
+                    LegacyCallLetters.Equals(stationGrouping.LegacyCallLetters, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            public override int GetHashCode()
+            {
+                var hashCode = 1677836291;
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(OriginMarket);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Affiliation);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LegacyCallLetters);
+                return hashCode;
+            }
+        }
+    }
+}

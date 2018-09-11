@@ -874,7 +874,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-
+    
                 // Daypart that does not include thurday (the airtime for the affidavit).
                 proposal.Details.First().DaypartId = 88;
 

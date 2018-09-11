@@ -9,6 +9,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "Daypart": {
         "endTime": 36000,
         "fri": true,
@@ -195,6 +196,7 @@
       "AdjustmentMargin": null,
       "AdjustmentRate": null,
       "Adu": false,
+      "CpmCriteria": [],
       "Daypart": {
         "endTime": 36000,
         "fri": true,

@@ -23,6 +23,8 @@ using Newtonsoft.Json;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System.Diagnostics;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -49,6 +51,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="showTypeSearchString">Show type to filter by</param>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> FindShowType(string showTypeSearchString);
+
+        List<string> SaveProposalBuy(ProposalBuySaveRequestDto proposalBuyRequest);
     }
 
     public class ProposalService : IProposalService
@@ -1375,7 +1379,8 @@ namespace Services.Broadcast.ApplicationServices
 
             MemoryStream archiveFile = new MemoryStream();
 
-            string proposalName = FormatProposalName(proposal.ProposalName);
+            string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
+
             using (var arch = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
             {
                 int ctr = 1;
@@ -1397,22 +1402,6 @@ namespace Services.Broadcast.ApplicationServices
             archiveFile.Seek(0, SeekOrigin.Begin);
             var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
-        }
-
-        /// <summary>
-        /// Preps the proposal name for using in a file name.
-        /// </summary>
-        private string FormatProposalName(string proposalName)
-        {
-            return proposalName.Replace("\\", string.Empty)
-                                .Replace(":", string.Empty)
-                                .Replace("*", string.Empty)
-                                .Replace("?", string.Empty)
-                                .Replace("/", string.Empty)
-                                .Replace("<", string.Empty)
-                                .Replace(">", string.Empty)
-                                .Replace("|", string.Empty)
-                                .Replace("\"", string.Empty);
         }
 
         private string _FileDateFormat(DateTime date)
@@ -1468,6 +1457,29 @@ namespace Services.Broadcast.ApplicationServices
             return _ProgramNameRepository.FindPrograms(request.Name, request.Start, request.Limit);
         }
 
+        public List<string> SaveProposalBuy(ProposalBuySaveRequestDto request)
+        {
+            var scxFile = new ScxFile(request.FileStream);
+            var allStations = _StationRepository.GetBroadcastStations();
+            var spotLengthsDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+
+            var proposalBuy = new ProposalBuyFile(scxFile, request.EstimateId, request.FileName, request.ProposalVersionDetailId,
+                allStations, _MediaMonthAndWeekAggregateCache, _AudiencesCache, _DaypartCache, spotLengthsDict);
+
+            if (!proposalBuy.Errors.Any())
+            {
+                using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+                {
+                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>().DeleteProposalBuyByProposalDetail(proposalBuy.ProposalVersionDetailId);
+                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>().SaveProposalBuy(proposalBuy, request.Username, DateTime.Now);
+                    transaction.Complete();
+                }
+            }
+
+            return proposalBuy.Errors;
+        }
+
+
         private List<InventorySourceEnum> _GetProprietaryInventorySources()
         {
             var inventorySources = Enum.GetValues(typeof(InventorySourceEnum)).Cast<InventorySourceEnum>().ToList();
@@ -1478,5 +1490,6 @@ namespace Services.Broadcast.ApplicationServices
 
             return inventorySources;
         }
+
     }
 }

@@ -91,27 +91,28 @@ export class DataGridContainer extends Component {
     // change to params
     this.props.getPostClientScrubbing({ proposalId: Id, showModal: true, filterKey: 'All' });
   }
-
+  /* eslint-disable no-undef */
   render() {
     const menuItems = [
       {
-        text: 'NSI Post Report',
-        key: 'menu-post-nsi-report',
+        text: 'Spot Tracker Report',
+        key: 'menu-tracker-spot-tracker-report',
         EVENT_HANDLER: ({ metaData }) => {
-          const inSpec = metaData.rowData.SpotsInSpec !== 0;
-          // console.log('nsi menu', metaData, inSpec);
-          if (inSpec) {
-            window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReport/${metaData.rowData.ContractId}`, '_blank');
+          // window.open(`${window.location.origin}/broadcast/api/Tracker/SpotTrackerReport/${metaData.rowData.ContractId}`, '_blank');
+          window.open(`${__API__}Tracker/SpotTrackerReport/${metaData.rowData.ContractId}`, '_blank');
+          // const inSpec = metaData.rowData.SpotsInSpec !== 0;
+          /* if (inSpec) {
+            window.open(`${window.location.origin}/broadcast/api/proposals/SpotTrackerReport/${metaData.rowData.ContractId}`, '_blank');
           } else {
             this.props.createAlert({
               type: 'warning',
-              headline: 'NSI Report Unavailable',
+              headline: 'Spot Tracker Report Unavailable',
               message: 'There are no in-spec spots for this proposal.',
             });
-          }
+          } */
         },
       },
-      {
+      /* {
         text: 'NSI Post Report with Overnights',
         key: 'menu-post-nsi-report-overnight',
         EVENT_HANDLER: ({ metaData }) => {
@@ -143,7 +144,7 @@ export class DataGridContainer extends Component {
             });
           }
         },
-      },
+      }, */
     ];
 
     const columns = [

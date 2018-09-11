@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Entities
-{
-    public enum AffidaviteFileSourceEnum
-    {
-        Strata = 1,
-        KeepingTrac
-    };
-
+{    
     public class AffidavitSaveRequest
     {
         public string FileName { get; set; }

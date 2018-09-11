@@ -500,3 +500,8 @@ export const clearOpenMarketData = () => ({
   type: ACTIONS.CLEAR_OPEN_MARKET_DATA,
 });
 
+export const uploadSCXFile = params => ({
+  type: ACTIONS.SCX_FILE_UPLOAD.request,
+  payload: params,
+});
+

@@ -13,6 +13,7 @@ import Sweeps from './Sweeps';
 import ProgramGenre from './ProgramGenre';
 import PostingBook from './PostingBook';
 import PricingGuide from './PricingGuide';
+import UploadBuy from './UploadBuy';
 // import { toggleEditIsciClass, toggleEditGridCellClass } from '../../../ducks/planning';
 
 const mapStateToProps = ({ routing, planning: { isISCIEdited, isGridCellEdited } }) => ({
@@ -353,6 +354,7 @@ export class ProposalDetail extends Component {
               {detail &&
                 <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
                   <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
+                      <MenuItem eventKey="uploadBuy" onSelect={this.openModal}>Upload Buy File</MenuItem>
                       <MenuItem eventKey="pricingGuide" onSelect={this.openModal}>Pricing Guide</MenuItem>
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
@@ -360,6 +362,7 @@ export class ProposalDetail extends Component {
                       <MenuItem eventKey="postingBook" onSelect={this.openModal}>Posting Book</MenuItem>
                       <MenuItem eventKey="programGenreModal" onSelect={this.openModal}>Program/Genre/Show Type</MenuItem>
                       {isReadOnly && <MenuItem eventKey="rerunPostScrubbing" onSelect={this.rerunPostScrubing}>Rerun Post Scrubing</MenuItem>}
+                      {isReadOnly && <MenuItem eventKey="uploadBuy" onSelect={this.openModal}>Upload SCX File</MenuItem>}
                   </DropdownButton>
                 </div>
               }
@@ -389,6 +392,14 @@ export class ProposalDetail extends Component {
           </Col>
         </Row>
         }
+
+        <UploadBuy
+          toggleModal={this.props.toggleModal}
+          // updateProposalEditFormDetail={updateProposalEditFormDetail}
+          // initialdata={initialdata}
+          // detail={detail}
+          // isReadOnly={isReadOnly}
+        />
 
         <Sweeps
           toggleModal={this.props.toggleModal}

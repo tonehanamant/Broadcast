@@ -146,6 +146,9 @@ const planning = {
   loadOpenMarketData: (propId, propdetailid) => (
     call(GET, `${apiBase}Inventory/Detail/PricingGuide/Grid/${propId}/${propdetailid}`)
   ),
+  uploadSCXFile: params => (
+    call(POST, `${apiBase}Proposals/UploadProposalDetailBuy`, params)
+  ),
 };
 
 // Calls

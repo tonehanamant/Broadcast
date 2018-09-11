@@ -431,6 +431,9 @@
     <Compile Include="market.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="market_coverages.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="market_dma_map.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

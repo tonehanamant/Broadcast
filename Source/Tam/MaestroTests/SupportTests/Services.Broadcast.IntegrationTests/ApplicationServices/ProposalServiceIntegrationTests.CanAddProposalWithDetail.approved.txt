@@ -12,6 +12,7 @@
       "AdjustmentMargin": 3.0,
       "AdjustmentRate": 1.0,
       "Adu": false,
+      "CpmCriteria": [],
       "Daypart": {
         "endTime": 86400,
         "fri": false,

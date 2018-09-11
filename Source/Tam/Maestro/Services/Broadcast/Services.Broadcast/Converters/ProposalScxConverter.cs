@@ -14,11 +14,11 @@ namespace Services.Broadcast.Converters
 {
     public interface IProposalScxConverter : IApplicationService
     {
-        List<ScxFile> ConvertProposal(ProposalDto proposal);
+        List<ProposalScxFile> ConvertProposal(ProposalDto proposal);
         adx BuildFromProposalDetail(ProposalDto proposal, ProposalDetailDto propDetail);
     }
 
-    public class ScxFile
+    public class ProposalScxFile
     {
         public Stream ScxStream { get; set; }
         public ProposalDetailDto ProposalDetailDto { get; set; }
@@ -41,9 +41,9 @@ namespace Services.Broadcast.Converters
             _DaypartCache = daypartCache;
         }
 
-        public List<ScxFile> ConvertProposal(ProposalDto proposal)
+        public List<ProposalScxFile> ConvertProposal(ProposalDto proposal)
         {
-            List<ScxFile> scxFiles = new List<ScxFile>();
+            List<ProposalScxFile> scxFiles = new List<ProposalScxFile>();
             foreach (var propDetail in proposal.Details)
             {
                 adx a = BuildFromProposalDetail(proposal, propDetail);
@@ -53,7 +53,7 @@ namespace Services.Broadcast.Converters
 
                 string xml = a.Serialize();
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
-                var scxFile = new ScxFile()
+                var scxFile = new ProposalScxFile()
                 {
                     ProposalDetailDto = propDetail,
                     ScxStream = stream
@@ -93,7 +93,7 @@ namespace Services.Broadcast.Converters
             
             int orderIndex = 0;
 
-            camp.order = new order[data.ProposalInventoryMarkets.Count];
+            camp.order = new order[data.MarketIds.Count];
 
             foreach (var marketId in data.MarketIds)
             {   // for each market with slots create campaign.order
@@ -176,15 +176,17 @@ namespace Services.Broadcast.Converters
                 new system() {name = String.Empty, syscode = String.Empty},
             };
 
-            sysOrder.detailLine = new detailLine[station.Programs.Count()];
             int detailIndex = 0;
-
+            detailLine[] detLines = new detailLine[1];
+            
             foreach (var program in station.Programs)
             {
                 if (!_ProgramHasSpots(market.MarketId,station, data.WeekData, program))
                     continue;
                 var detLine = new detailLine();
-                //detLine.program = program.ProgramName;
+                Array.Resize(ref detLines, detailIndex+1);
+
+                detLine.program = program.ProgramNames.Single();
                 _SetDaypartInfo(detLine, program, data.DaypartCode);
                 detLine.length = string.Format("PT{0}S", data.SpotLength);
                 detLine.comment = " ";
@@ -194,8 +196,12 @@ namespace Services.Broadcast.Converters
                 _SetDetailLineTotalsAndCost(detLine, market.MarketId, station, data.WeekData, program);
                 _SetSpotWeekQuantities(market.MarketId,station, data.WeekData, program, detLine);
 
-                sysOrder.detailLine[detailIndex++] = detLine;
+                detLines[detailIndex++] = detLine;
             }
+
+            if (detLines[0] != null)
+                sysOrder.detailLine = detLines;
+
             return sysOrder;
         }
 
@@ -228,14 +234,21 @@ namespace Services.Broadcast.Converters
         private void _SetDaypartInfo(detailLine detLine,ProposalInventoryMarketDto.InventoryMarketStationProgram program,string daypartCode)
         {
             detLine.startDay = detailLineStartDay.M;
-            //var daypart = _DaypartCache.GetDisplayDaypart(program.Daypart.Id);
+            var daypart = _DaypartCache.GetDisplayDaypart(program.Dayparts.Single().Id);
             DateTime lStartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
-            //lStartTime = lStartTime.Add(new TimeSpan(0, 0, 0, daypart.StartTime, 0));
+            lStartTime = lStartTime.Add(new TimeSpan(0, 0, 0, daypart.StartTime, 0));
             detLine.startTime = lStartTime;
             DateTime lEndTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
-            //lEndTime = lEndTime.Add(new TimeSpan(0, 0, 0, daypart.EndTime+1, 0)); // add one second to bring the time up to full hour/half-hour/etc
+            lEndTime = lEndTime.Add(new TimeSpan(0, 0, 0, daypart.EndTime + 1, 0)); // add one second to bring the time up to full hour/half-hour/etc
             detLine.endTime = lEndTime;
             detLine.dayOfWeek = new dayOfWeek();
+            detLine.dayOfWeek.Monday = daypart.Monday ? "Y" : "N";
+            detLine.dayOfWeek.Tuesday = daypart.Tuesday ? "Y" : "N";
+            detLine.dayOfWeek.Wednesday = daypart.Wednesday ? "Y" : "N";
+            detLine.dayOfWeek.Thursday = daypart.Thursday ? "Y" : "N";
+            detLine.dayOfWeek.Friday = daypart.Friday ? "Y" : "N";
+            detLine.dayOfWeek.Saturday = daypart.Saturday ? "Y" : "N";
+            detLine.dayOfWeek.Sunday = daypart.Sunday ? "Y" : "N";
 
             detLine.daypartCode = daypartCode;
         }
