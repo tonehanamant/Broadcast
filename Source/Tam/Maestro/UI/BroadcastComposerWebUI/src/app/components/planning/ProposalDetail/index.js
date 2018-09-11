@@ -362,6 +362,7 @@ export class ProposalDetail extends Component {
                       <MenuItem eventKey="postingBook" onSelect={this.openModal}>Posting Book</MenuItem>
                       <MenuItem eventKey="programGenreModal" onSelect={this.openModal}>Program/Genre/Show Type</MenuItem>
                       {isReadOnly && <MenuItem eventKey="rerunPostScrubbing" onSelect={this.rerunPostScrubing}>Rerun Post Scrubing</MenuItem>}
+                      {isReadOnly && <MenuItem eventKey="uploadBuy" onSelect={this.openModal}>Upload SCX File</MenuItem>}
                   </DropdownButton>
                 </div>
               }
@@ -394,10 +395,10 @@ export class ProposalDetail extends Component {
 
         <UploadBuy
           toggleModal={this.props.toggleModal}
-          updateProposalEditFormDetail={updateProposalEditFormDetail}
-          initialdata={initialdata}
-          detail={detail}
-          isReadOnly={isReadOnly}
+          // updateProposalEditFormDetail={updateProposalEditFormDetail}
+          // initialdata={initialdata}
+          // detail={detail}
+          // isReadOnly={isReadOnly}
         />
 
         <Sweeps

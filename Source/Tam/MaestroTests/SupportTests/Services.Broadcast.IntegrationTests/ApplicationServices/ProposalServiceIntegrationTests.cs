@@ -13,8 +13,8 @@ using System.Transactions;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.Entities.DTO;
 using System.IO;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
