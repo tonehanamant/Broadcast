@@ -701,6 +701,21 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        private void _ApplyInventoryMarketCoverages(IEnumerable<IInventoryMarket> inventoryMarkets)
+        {
+            var marketsList = inventoryMarkets.ToList();
+
+            var marketCoverages =
+                BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>()
+                    .GetMarketCoverages(marketsList.Select(x => x.MarketId));
+
+            foreach (var inventoryMarket in marketsList)
+            {
+                marketCoverages.TryGetValue(inventoryMarket.MarketId, out var coverage);
+                inventoryMarket.MarketCoverage = coverage;
+            }
+        }
+
         private static List<ProposalInventoryMarketDto> _GroupProgramsByMarketAndStation(IEnumerable<ProposalProgramDto> programs)
         {
             var programsByMarket = programs.GroupBy(p => p.Market.Id);
@@ -1154,6 +1169,7 @@ namespace Services.Broadcast.ApplicationServices
             var postingBook = ProposalServiceHelper.GetBookId(pricingGuideOpenMarketInventory);
 
             _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
+            _ApplyInventoryMarketCoverages(inventoryMarkets);
 
             pricingGuideOpenMarketInventory.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
             

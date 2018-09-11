@@ -7,14 +7,15 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
     {
         int MarketId { get; set; }
         int MarketRank { get; set; }
+        double MarketCoverage { get; set; }
     }
-
 
     public class ProposalInventoryMarketDto : IInventoryMarket
     {
         public string MarketName { get; set; }
         public int MarketId { get; set; }
         public int MarketRank { get; set; }
+        public double MarketCoverage { get; set; }
         public double MarketSubscribers { get; set; }
         public List<InventoryMarketStation> Stations { get; set; } = new List<InventoryMarketStation>();
 
