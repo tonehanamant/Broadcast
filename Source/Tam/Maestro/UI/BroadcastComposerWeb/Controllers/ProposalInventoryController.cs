@@ -90,6 +90,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>().GetInventoryTotals(request));
         }
+
         [HttpGet]
         [Route("Detail/PricingGuide/Grid/{proposalId}/{detailId}")]
         public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuideGrid(int proposalId, int detailId)
@@ -100,6 +101,16 @@ namespace BroadcastComposerWeb.Controllers
                 ProposalId = proposalId
             };
 
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .GetPricingGuideOpenMarketInventory(request));
+        }
+
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/Grid/")]
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuide(PricingGuideOpenMarketInventoryRequestDto request)
+        {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
                     .GetPricingGuideOpenMarketInventory(request));
