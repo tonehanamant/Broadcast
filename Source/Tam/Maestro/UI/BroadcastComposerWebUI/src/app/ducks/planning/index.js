@@ -491,9 +491,14 @@ export const rerunPostScrubing = (propId, propdetailid) => ({
   payload: { propId, propdetailid },
 });
 
-export const loadOpenMarketData = (propId, propdetailid) => ({
+/* export const loadOpenMarketData = (propId, propdetailid) => ({
   type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
   payload: { propId, propdetailid },
+}); */
+
+export const loadOpenMarketData = params => ({
+  type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
+  payload: params,
 });
 
 export const clearOpenMarketData = () => ({
