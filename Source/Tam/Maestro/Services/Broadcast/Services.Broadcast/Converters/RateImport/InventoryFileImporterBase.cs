@@ -86,7 +86,7 @@ namespace Services.Broadcast.Converters.RateImport
         public void LoadFromSaveRequest(InventoryFileSaveRequest request)
         {
             Request = request;
-            _fileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.RatesStream));
+            _fileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData));
             _SpotLengthMultipliers = _GetSpotLengthAndMultipliers();
         }
 

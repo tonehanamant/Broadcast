@@ -46,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                         FileMode.Open,
                         FileAccess.Read),
@@ -82,7 +82,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IsHiatus = false
                 });
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IsHiatus = false
                 });
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\CNNAMPMBarterObligations_ForUpdate.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
@@ -167,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var filename = @".\Files\TTNW_06.09.17.xlsx";
                 var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.InventorySource = "TTNW";
@@ -205,19 +205,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (var tran = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
                 var filename = @".\Files\TTNW_06.09.17.xlsx";
-                var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.EffectiveDate = DateTime.Parse("10/1/2017");
-                request.AudiencePricing = new List<AudiencePricingDto>()
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = DateTime.Parse("10/1/2017"),
+                    AudiencePricing = new List<AudiencePricingDto>()
                 {
                     new AudiencePricingDto() { AudienceId = 13, Price = 210 },
                     new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                };
+                },
 
-                request.RatingBook = 416;
+                    RatingBook = 416
+                };
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -236,7 +238,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // first do initial load
                 var filename = @".\Files\TTNW_06.09.17.xlsx";
                 var request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                request.StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 request.FileName = filename;
                 request.UserName = "IntegrationTestUser";
                 request.InventorySource = "TTNW";
@@ -252,19 +254,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 filename = @".\Files\TTNW_UPDATE_06.09.17.xlsx";
-                request = new InventoryFileSaveRequest();
-                request.RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-                request.FileName = filename;
-                request.UserName = "IntegrationTestUser";
-                request.InventorySource = "TTNW";
-                request.EffectiveDate = DateTime.Parse("10/10/2017");
-                request.AudiencePricing = new List<AudiencePricingDto>()
+                request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    FileName = filename,
+                    UserName = "IntegrationTestUser",
+                    InventorySource = "TTNW",
+                    EffectiveDate = DateTime.Parse("10/10/2017"),
+                    AudiencePricing = new List<AudiencePricingDto>()
                 {
                     new AudiencePricingDto() { AudienceId = 13, Price = 210 },
                     new AudiencePricingDto() { AudienceId = 14, Price = 131 }
-                };
+                },
 
-                request.RatingBook = 416;
+                    RatingBook = 416
+                };
 
                 result = _InventoryFileService.SaveInventoryFile(request);
 
@@ -282,7 +286,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest();
                 var request2 = new InventoryFileSaveRequest();
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
@@ -293,7 +297,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
                 _InventoryFileService.SaveInventoryFile(request);
 
-                request2.RatesStream = new FileStream(
+                request2.StreamData = new FileStream(
                     @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
                     FileMode.Open,
                     FileAccess.Read);
@@ -327,7 +331,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stationCode = 5044; //WVTM
                 var request = new InventoryFileSaveRequest();
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\single_program_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -404,7 +408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 int fileId = 0;
                 int stationCodeWVTM = 5044;
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\single_program_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -469,7 +473,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
                 Assert.AreEqual(0, stationContacts.Count); //make sure there are no contacts initially
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\station_contact_new_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -501,7 +505,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\station_contact_new_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -509,7 +513,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatingBook = 416;
 
                 _InventoryFileService.SaveInventoryFile(request);
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\station_contact_update_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -654,7 +658,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest();
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\unknown_station_rate_file_zyxw.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -684,7 +688,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest();
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\known_and_unknown_station_rate_file_zyxw.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -722,7 +726,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest();
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\unknown_spot_length_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -759,7 +763,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest();
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\rate-file-invalid-schema.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -781,7 +785,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\end_program_flight_file_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
@@ -807,7 +811,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\program_rate_over24h_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
@@ -834,7 +838,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\simple_period_rate_file_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
@@ -866,7 +870,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request1 = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\Open Market Duplicate Program File1.xml",
                         FileMode.Open,
                         FileAccess.Read),
@@ -876,7 +880,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request2 = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\Open Market Duplicate Program File2.xml",
                         FileMode.Open,
                         FileAccess.Read),
@@ -909,7 +913,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\station_program_overlapping_flights_wvtm.xml", 
                         FileMode.Open, 
                         FileAccess.Read),
@@ -941,7 +945,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(
+                    StreamData = new FileStream(
                         @".\Files\multi-quarter_program_rate_file_wvtm.xml",
                         FileMode.Open,
                         FileAccess.Read),
@@ -1152,7 +1156,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             return new InventoryFileSaveRequest
             {
-                RatesStream = new FileStream(filePath, FileMode.Open, FileAccess.Read),
+                StreamData = new FileStream(filePath, FileMode.Open, FileAccess.Read),
                 UserName = "IntegrationTestUser",
                 RatingBook = 416
             };
@@ -1180,7 +1184,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest();
                 int stationCodeWVTM = 5044;
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\single_program_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -1224,7 +1228,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest();
                 int stationCodeWVTM = 5044;
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\single_program_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -1253,7 +1257,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest();
                 int stationCodeWVTM = 5044;
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\single_program_rate_file_spot_length_15_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -1289,7 +1293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = new InventoryFileSaveRequest();
                 int stationCodeWVTM = 5044;
 
-                request.RatesStream = new FileStream(
+                request.StreamData = new FileStream(
                     @".\Files\single_program_rate_file_wvtm.xml",
                     FileMode.Open,
                     FileAccess.Read);
@@ -1325,7 +1329,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1358,7 +1362,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1398,7 +1402,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1433,7 +1437,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1475,7 +1479,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1515,7 +1519,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -1556,7 +1560,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\CNNFileLoadTestInvalidCPM.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -1595,7 +1599,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1634,7 +1638,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(firstFileName, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(firstFileName, FileMode.Open, FileAccess.Read),
                     FileName = firstFileName,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1644,7 +1648,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryFileService.SaveInventoryFile(request);
 
-                request.RatesStream = new FileStream(updateFilename, FileMode.Open, FileAccess.Read);
+                request.StreamData = new FileStream(updateFilename, FileMode.Open, FileAccess.Read);
                 request.FileName = updateFilename;
 
                 _InventoryFileService.SaveInventoryFile(request);
@@ -1677,7 +1681,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -1714,7 +1718,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\CNNFileHasDifferentDemos.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -1750,7 +1754,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\CNNFileLoadTest.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -1782,7 +1786,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\CNNFileLoadTestDuplicateStation.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -1823,7 +1827,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -1862,7 +1866,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\CNNFileLoadTestInvalidStation.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -1901,7 +1905,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -1933,7 +1937,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -1973,7 +1977,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\TTNWBFileLoadTestInvalidSpothLenght.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2011,7 +2015,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\TTNWFileLoadTestInvalidStation.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2050,7 +2054,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2073,7 +2077,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2095,7 +2099,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2118,7 +2122,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2158,7 +2162,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2197,7 +2201,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2237,7 +2241,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2261,7 +2265,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2285,7 +2289,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2308,7 +2312,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2331,7 +2335,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2354,7 +2358,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2377,7 +2381,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2400,7 +2404,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2423,7 +2427,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2462,7 +2466,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2503,7 +2507,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2542,7 +2546,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2581,7 +2585,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2620,7 +2624,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2660,7 +2664,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2700,7 +2704,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2736,7 +2740,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2777,7 +2781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2817,7 +2821,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2855,7 +2859,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -2887,7 +2891,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -2919,7 +2923,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const string filename = @".\Files\ThirdPartyFileWithDaypartCodeWithSpace.csv";
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -2964,7 +2968,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     
                     var request = new InventoryFileSaveRequest
                     {
-                        RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                        StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                         FileName = filename,
                         UserName = "IntegrationTestUser",
                         InventorySource = "TTNW",
@@ -2990,7 +2994,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -3022,7 +3026,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -3054,7 +3058,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -3087,7 +3091,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -3119,7 +3123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -3151,7 +3155,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -3182,7 +3186,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",
@@ -3213,7 +3217,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TTNW",
@@ -3245,7 +3249,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
                     FileName = filename,
                     UserName = "IntegrationTestUser",
                     InventorySource = "CNN",
@@ -3276,7 +3280,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var request = new InventoryFileSaveRequest
                 {
-                    RatesStream = new FileStream(path, FileMode.Open, FileAccess.Read),
+                    StreamData = new FileStream(path, FileMode.Open, FileAccess.Read),
                     FileName = path,
                     UserName = "IntegrationTestUser",
                     InventorySource = "TVB",

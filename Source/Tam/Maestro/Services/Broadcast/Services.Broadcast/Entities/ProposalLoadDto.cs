@@ -10,10 +10,11 @@ namespace Services.Broadcast.Entities
         public int SweepMonthId { get; set; }
         public List<LookupDto> SpotLengths { get; set; }
         public List<LookupDto> Markets { get; set; } 
-        public List<MarketGroupDto> MarketGroups { get; set; }
+        public List<LookupDto> MarketGroups { get; set; }
         public List<LookupDto> SchedulePostTypes { get; set; }
         public List<LookupDto> Statuses { get; set; }
         public ForecastRatingsDefaultsDto ForecastDefaults { get; set; }
         public double DefaultMarketCoverage { get; set; }
+        public List<LookupDto> ProprietaryPricingInventorySources { get; set; }
     }
 }

@@ -1,0 +1,224 @@
+﻿{
+  "AdvertiserId": 37444,
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "CanDelete": true,
+  "Details": [
+    {
+      "AdjustmentInflation": 2.0,
+      "AdjustmentMargin": 3.0,
+      "AdjustmentRate": 1.0,
+      "Adu": false,
+      "CpmCriteria": [],
+      "Daypart": {
+        "endTime": 86400,
+        "fri": false,
+        "mon": true,
+        "sat": false,
+        "startTime": 0,
+        "sun": false,
+        "Text": "M-TU 24HR",
+        "thu": false,
+        "tue": true,
+        "wed": false
+      },
+      "DaypartCode": "NAV",
+      "DefaultProjectionBooks": null,
+      "FlightEdited": false,
+      "FlightEndDate": "2016-06-05T00:00:00",
+      "FlightStartDate": "2016-05-30T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-05T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        }
+      ],
+      "GenreCriteria": [
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Competition"
+          }
+        },
+        {
+          "Contain": 1,
+          "Genre": {
+            "Display": "Documentary"
+          }
+        }
+      ],
+      "GoalBudget": 100.0000,
+      "GoalImpression": 10000.0,
+      "HasPostingDataChanged": false,
+      "HutProjectionBookId": 410,
+      "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
+      "PostingBookId": null,
+      "PostingPlaybackType": null,
+      "ProgramCriteria": [
+        {
+          "Contain": 1,
+          "Program": {
+            "Display": "News"
+          }
+        },
+        {
+          "Contain": 1,
+          "Program": {
+            "Display": "Tonight"
+          }
+        }
+      ],
+      "ProjectionPlaybackType": 4,
+      "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [
+        {
+          "Cpm": 45.0000,
+          "ImpressionsBalance": 0.33,
+          "InventorySource": 3
+        },
+        {
+          "Cpm": 12.4200,
+          "ImpressionsBalance": 0.33,
+          "InventorySource": 4
+        },
+        {
+          "Cpm": 99.9900,
+          "ImpressionsBalance": 0.33,
+          "InventorySource": 5
+        },
+        {
+          "Cpm": 2000.0000,
+          "ImpressionsBalance": 0.33,
+          "InventorySource": 6
+        }
+      ],
+      "Quarters": [
+        {
+          "Cpm": 21.1300,
+          "DistributeGoals": false,
+          "ImpressionGoal": 1000.123,
+          "Quarter": 1,
+          "QuarterText": "2016 Q1",
+          "Weeks": [
+            {
+              "Cost": 21.8900,
+              "EndDate": "2016-06-05T00:00:00",
+              "Impressions": 1000.123,
+              "Iscis": [
+                {
+                  "Brand": "Testing",
+                  "ClientIsci": "AAAAAA",
+                  "Days": "F",
+                  "Friday": true,
+                  "HouseIsci": "AAAAAA",
+                  "MarriedHouseIsci": true,
+                  "Monday": false,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": false,
+                  "Tuesday": false,
+                  "Wednesday": false
+                },
+                {
+                  "Brand": "Testing 2",
+                  "ClientIsci": "BBBBBBB",
+                  "Days": "M-T-W-Th",
+                  "Friday": false,
+                  "HouseIsci": "BBBBBBB",
+                  "MarriedHouseIsci": false,
+                  "Monday": true,
+                  "Saturday": false,
+                  "Sunday": false,
+                  "Thursday": true,
+                  "Tuesday": true,
+                  "Wednesday": true
+                }
+              ],
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "MyEventsReportName": "Test Adve NAV 30 05-30-16",
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 3,
+              "Week": "5/30/2016"
+            }
+          ],
+          "Year": 2016
+        }
+      ],
+      "Sequence": 1,
+      "ShareProjectionBookId": 413,
+      "ShowTypeCriteria": [
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Mini-Movie"
+          }
+        },
+        {
+          "Contain": 1,
+          "ShowType": {
+            "Display": "Movie"
+          }
+        }
+      ],
+      "SingleProjectionBookId": null,
+      "SpotLengthId": 1,
+      "TotalCost": 0.0000,
+      "TotalImpressions": 0.0,
+      "TotalUnits": 0
+    }
+  ],
+  "Equivalized": false,
+  "FlightEndDate": "2016-06-05T00:00:00",
+  "FlightStartDate": "2016-05-30T00:00:00",
+  "FlightWeeks": [
+    {
+      "EndDate": "2016-06-05T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
+  "GuaranteedDemoId": 31,
+  "Margin": 20.0,
+  "MarketCoverage": null,
+  "MarketGroup": {
+    "Display": "All",
+    "Id": 1
+  },
+  "MarketGroupId": 1,
+  "Markets": [],
+  "Notes": "third",
+  "PostType": 1,
+  "ProposalName": "Edited Proposal Test",
+  "SecondaryDemos": [],
+  "SpotLengths": [
+    {
+      "Display": "30"
+    }
+  ],
+  "Status": 1,
+  "TargetBudget": 3000.0000,
+  "TargetCPM": 0.0000,
+  "TargetImpressions": 300000.0,
+  "TargetUnits": 30,
+  "TotalCost": 0.0000,
+  "TotalCostMarginAchieved": false,
+  "TotalCostPercent": 0.0,
+  "TotalCPM": 0.0,
+  "TotalCPMMarginAchieved": false,
+  "TotalCPMPercent": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsMarginAchieved": false,
+  "TotalImpressionsPercent": 0.0,
+  "ValidationWarning": null,
+  "Version": 3
+}

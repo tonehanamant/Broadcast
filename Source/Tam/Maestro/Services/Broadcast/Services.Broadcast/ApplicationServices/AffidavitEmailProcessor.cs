@@ -40,14 +40,17 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IAffidavitRepository _AffidavitRepository;
         private readonly IEmailerService _EmailerService;
         private readonly IFileTransferEmailHelper _EmailHelper;
+        private readonly IFileService _FileService;
 
         public AffidavitEmailProcessorService(IEmailerService emailerService,
                                                 IDataRepositoryFactory broadcastDataRepositoryFactory,
-                                                IFileTransferEmailHelper emailHelper)
+                                                IFileTransferEmailHelper emailHelper,
+                                                IFileService fileService)
         {
             _EmailerService = emailerService;
             _EmailHelper = emailHelper;
             _AffidavitRepository = broadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+            _FileService = fileService;
         }
 
         private void _SaveFileContentsToErrorFolder(string fileName, string fileContents)
@@ -90,33 +93,21 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Move invalid files to invalid files folder. Notify users about failed files
         /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
+        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the files to process</param>
         public void ProcessAndSendInvalidDataFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
         {
             var invalidFiles = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Invalid);
 
             foreach (var invalidFile in invalidFiles)
             {
-                var invalidFilePath = _MoveInvalidFileToArchiveFolder(invalidFile);
+                var invalidFilePath = _FileService.Move(invalidFile.FilePath, WWTVSharedNetworkHelper.GetLocalErrorFolder());
 
                 var emailBody = _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
 
                 _EmailHelper.SendEmail(emailBody, "Error Preprocessing");
             }
         }
-
-        private string _MoveInvalidFileToArchiveFolder(OutboundAffidavitFileValidationResultDto invalidFile)
-        {
-            var combinedFilePath = WWTVSharedNetworkHelper.BuildLocalErrorPath(Path.GetFileName(invalidFile.FilePath));
-
-            if (File.Exists(combinedFilePath))
-                File.Delete(combinedFilePath);
-
-            File.Move(invalidFile.FilePath, combinedFilePath);
-
-            return combinedFilePath;
-        }
-
+        
         public string CreateFailedFTPFileEmailBody(List<string> filesFailedDownload, string ftpLocation)
         {
             var emailBody = "The following file(s) could not be downloaded from:\r\n" + ftpLocation + "\n\n";

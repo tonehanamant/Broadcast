@@ -3,7 +3,6 @@
     "CreatedBy": "PostLogPreprocessing_User",
     "ErrorMessages": [
       "Could not find required column AIR START TIME.",
-      "Could not find required column DURATION.",
       "Could not find required column ISCI/AD-ID."
     ],
     "FileHash": "64-D0-EE-4E-4B-CD-92-75-F3-07-3D-EC-C2-B5-AB-52-DF-22-19-6E",

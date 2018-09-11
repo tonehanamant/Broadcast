@@ -1,0 +1,1458 @@
+﻿[
+  {
+    "id": 1,
+    "market_code": 101,
+    "percentage_of_us": 6.309,
+    "rank": 1,
+    "tv_homes": 7074750
+  },
+  {
+    "id": 2,
+    "market_code": 403,
+    "percentage_of_us": 4.743,
+    "rank": 2,
+    "tv_homes": 5318630
+  },
+  {
+    "id": 3,
+    "market_code": 202,
+    "percentage_of_us": 2.942,
+    "rank": 3,
+    "tv_homes": 3299720
+  },
+  {
+    "id": 4,
+    "market_code": 104,
+    "percentage_of_us": 2.559,
+    "rank": 4,
+    "tv_homes": 2869580
+  },
+  {
+    "id": 5,
+    "market_code": 223,
+    "percentage_of_us": 2.362,
+    "rank": 5,
+    "tv_homes": 2648490
+  },
+  {
+    "id": 6,
+    "market_code": 111,
+    "percentage_of_us": 2.222,
+    "rank": 6,
+    "tv_homes": 2492170
+  },
+  {
+    "id": 7,
+    "market_code": 218,
+    "percentage_of_us": 2.2,
+    "rank": 7,
+    "tv_homes": 2467140
+  },
+  {
+    "id": 8,
+    "market_code": 407,
+    "percentage_of_us": 2.186,
+    "rank": 8,
+    "tv_homes": 2451640
+  },
+  {
+    "id": 9,
+    "market_code": 124,
+    "percentage_of_us": 2.184,
+    "rank": 9,
+    "tv_homes": 2449460
+  },
+  {
+    "id": 10,
+    "market_code": 106,
+    "percentage_of_us": 2.163,
+    "rank": 10,
+    "tv_homes": 2425440
+  },
+  {
+    "id": 11,
+    "market_code": 353,
+    "percentage_of_us": 1.712,
+    "rank": 11,
+    "tv_homes": 1919930
+  },
+  {
+    "id": 12,
+    "market_code": 419,
+    "percentage_of_us": 1.677,
+    "rank": 12,
+    "tv_homes": 1880750
+  },
+  {
+    "id": 13,
+    "market_code": 139,
+    "percentage_of_us": 1.676,
+    "rank": 13,
+    "tv_homes": 1879760
+  },
+  {
+    "id": 14,
+    "market_code": 105,
+    "percentage_of_us": 1.587,
+    "rank": 14,
+    "tv_homes": 1779380
+  },
+  {
+    "id": 15,
+    "market_code": 213,
+    "percentage_of_us": 1.543,
+    "rank": 15,
+    "tv_homes": 1730430
+  },
+  {
+    "id": 16,
+    "market_code": 128,
+    "percentage_of_us": 1.496,
+    "rank": 16,
+    "tv_homes": 1677850
+  },
+  {
+    "id": 17,
+    "market_code": 351,
+    "percentage_of_us": 1.417,
+    "rank": 17,
+    "tv_homes": 1589560
+  },
+  {
+    "id": 18,
+    "market_code": 134,
+    "percentage_of_us": 1.365,
+    "rank": 18,
+    "tv_homes": 1531130
+  },
+  {
+    "id": 19,
+    "market_code": 110,
+    "percentage_of_us": 1.291,
+    "rank": 19,
+    "tv_homes": 1447310
+  },
+  {
+    "id": 20,
+    "market_code": 462,
+    "percentage_of_us": 1.26,
+    "rank": 20,
+    "tv_homes": 1412940
+  },
+  {
+    "id": 21,
+    "market_code": 209,
+    "percentage_of_us": 1.061,
+    "rank": 21,
+    "tv_homes": 1189890
+  },
+  {
+    "id": 22,
+    "market_code": 420,
+    "percentage_of_us": 1.053,
+    "rank": 22,
+    "tv_homes": 1180980
+  },
+  {
+    "id": 23,
+    "market_code": 117,
+    "percentage_of_us": 1.021,
+    "rank": 23,
+    "tv_homes": 1145270
+  },
+  {
+    "id": 24,
+    "market_code": 108,
+    "percentage_of_us": 1.018,
+    "rank": 24,
+    "tv_homes": 1141950
+  },
+  {
+    "id": 25,
+    "market_code": 160,
+    "percentage_of_us": 1.01,
+    "rank": 25,
+    "tv_homes": 1133160
+  },
+  {
+    "id": 26,
+    "market_code": 112,
+    "percentage_of_us": 0.988,
+    "rank": 26,
+    "tv_homes": 1108010
+  },
+  {
+    "id": 27,
+    "market_code": 259,
+    "percentage_of_us": 0.919,
+    "rank": 27,
+    "tv_homes": 1030650
+  },
+  {
+    "id": 28,
+    "market_code": 127,
+    "percentage_of_us": 0.915,
+    "rank": 28,
+    "tv_homes": 1026260
+  },
+  {
+    "id": 29,
+    "market_code": 425,
+    "percentage_of_us": 0.894,
+    "rank": 29,
+    "tv_homes": 1002770
+  },
+  {
+    "id": 30,
+    "market_code": 370,
+    "percentage_of_us": 0.846,
+    "rank": 30,
+    "tv_homes": 948840
+  },
+  {
+    "id": 31,
+    "market_code": 241,
+    "percentage_of_us": 0.824,
+    "rank": 31,
+    "tv_homes": 924480
+  },
+  {
+    "id": 32,
+    "market_code": 133,
+    "percentage_of_us": 0.822,
+    "rank": 32,
+    "tv_homes": 921500
+  },
+  {
+    "id": 33,
+    "market_code": 216,
+    "percentage_of_us": 0.803,
+    "rank": 33,
+    "tv_homes": 901020
+  },
+  {
+    "id": 34,
+    "market_code": 135,
+    "percentage_of_us": 0.8,
+    "rank": 34,
+    "tv_homes": 896980
+  },
+  {
+    "id": 35,
+    "market_code": 115,
+    "percentage_of_us": 0.778,
+    "rank": 35,
+    "tv_homes": 871970
+  },
+  {
+    "id": 36,
+    "market_code": 217,
+    "percentage_of_us": 0.774,
+    "rank": 36,
+    "tv_homes": 868500
+  },
+  {
+    "id": 37,
+    "market_code": 148,
+    "percentage_of_us": 0.739,
+    "rank": 37,
+    "tv_homes": 829110
+  },
+  {
+    "id": 38,
+    "market_code": 167,
+    "percentage_of_us": 0.722,
+    "rank": 38,
+    "tv_homes": 809190
+  },
+  {
+    "id": 39,
+    "market_code": 235,
+    "percentage_of_us": 0.706,
+    "rank": 39,
+    "tv_homes": 791480
+  },
+  {
+    "id": 40,
+    "market_code": 439,
+    "percentage_of_us": 0.675,
+    "rank": 40,
+    "tv_homes": 757400
+  },
+  {
+    "id": 41,
+    "market_code": 250,
+    "percentage_of_us": 0.629,
+    "rank": 41,
+    "tv_homes": 705840
+  },
+  {
+    "id": 42,
+    "market_code": 161,
+    "percentage_of_us": 0.625,
+    "rank": 42,
+    "tv_homes": 700890
+  },
+  {
+    "id": 43,
+    "market_code": 163,
+    "percentage_of_us": 0.615,
+    "rank": 43,
+    "tv_homes": 689950
+  },
+  {
+    "id": 44,
+    "market_code": 230,
+    "percentage_of_us": 0.613,
+    "rank": 44,
+    "tv_homes": 687180
+  },
+  {
+    "id": 45,
+    "market_code": 166,
+    "percentage_of_us": 0.609,
+    "rank": 45,
+    "tv_homes": 682460
+  },
+  {
+    "id": 46,
+    "market_code": 390,
+    "percentage_of_us": 0.602,
+    "rank": 46,
+    "tv_homes": 674930
+  },
+  {
+    "id": 47,
+    "market_code": 144,
+    "percentage_of_us": 0.601,
+    "rank": 47,
+    "tv_homes": 673820
+  },
+  {
+    "id": 48,
+    "market_code": 118,
+    "percentage_of_us": 0.6,
+    "rank": 48,
+    "tv_homes": 672650
+  },
+  {
+    "id": 49,
+    "market_code": 129,
+    "percentage_of_us": 0.586,
+    "rank": 49,
+    "tv_homes": 657030
+  },
+  {
+    "id": 50,
+    "market_code": 240,
+    "percentage_of_us": 0.579,
+    "rank": 50,
+    "tv_homes": 649360
+  },
+  {
+    "id": 51,
+    "market_code": 222,
+    "percentage_of_us": 0.569,
+    "rank": 51,
+    "tv_homes": 638020
+  },
+  {
+    "id": 52,
+    "market_code": 121,
+    "percentage_of_us": 0.533,
+    "rank": 52,
+    "tv_homes": 597990
+  },
+  {
+    "id": 53,
+    "market_code": 114,
+    "percentage_of_us": 0.529,
+    "rank": 53,
+    "tv_homes": 592750
+  },
+  {
+    "id": 54,
+    "market_code": 466,
+    "percentage_of_us": 0.512,
+    "rank": 54,
+    "tv_homes": 574610
+  },
+  {
+    "id": 55,
+    "market_code": 156,
+    "percentage_of_us": 0.506,
+    "rank": 55,
+    "tv_homes": 566930
+  },
+  {
+    "id": 56,
+    "market_code": 171,
+    "percentage_of_us": 0.49,
+    "rank": 56,
+    "tv_homes": 549760
+  },
+  {
+    "id": 57,
+    "market_code": 177,
+    "percentage_of_us": 0.467,
+    "rank": 57,
+    "tv_homes": 523450
+  },
+  {
+    "id": 58,
+    "market_code": 293,
+    "percentage_of_us": 0.466,
+    "rank": 58,
+    "tv_homes": 522530
+  },
+  {
+    "id": 59,
+    "market_code": 286,
+    "percentage_of_us": 0.466,
+    "rank": 59,
+    "tv_homes": 522260
+  },
+  {
+    "id": 60,
+    "market_code": 132,
+    "percentage_of_us": 0.465,
+    "rank": 60,
+    "tv_homes": 521820
+  },
+  {
+    "id": 61,
+    "market_code": 157,
+    "percentage_of_us": 0.461,
+    "rank": 61,
+    "tv_homes": 516920
+  },
+  {
+    "id": 62,
+    "market_code": 271,
+    "percentage_of_us": 0.461,
+    "rank": 62,
+    "tv_homes": 516540
+  },
+  {
+    "id": 63,
+    "market_code": 141,
+    "percentage_of_us": 0.41,
+    "rank": 63,
+    "tv_homes": 459300
+  },
+  {
+    "id": 64,
+    "market_code": 142,
+    "percentage_of_us": 0.405,
+    "rank": 64,
+    "tv_homes": 453960
+  },
+  {
+    "id": 65,
+    "market_code": 389,
+    "percentage_of_us": 0.386,
+    "rank": 65,
+    "tv_homes": 433330
+  },
+  {
+    "id": 66,
+    "market_code": 344,
+    "percentage_of_us": 0.374,
+    "rank": 66,
+    "tv_homes": 419540
+  },
+  {
+    "id": 67,
+    "market_code": 278,
+    "percentage_of_us": 0.371,
+    "rank": 67,
+    "tv_homes": 416400
+  },
+  {
+    "id": 68,
+    "market_code": 279,
+    "percentage_of_us": 0.371,
+    "rank": 68,
+    "tv_homes": 416020
+  },
+  {
+    "id": 69,
+    "market_code": 258,
+    "percentage_of_us": 0.371,
+    "rank": 69,
+    "tv_homes": 415890
+  },
+  {
+    "id": 70,
+    "market_code": 173,
+    "percentage_of_us": 0.37,
+    "rank": 70,
+    "tv_homes": 414620
+  },
+  {
+    "id": 71,
+    "market_code": 113,
+    "percentage_of_us": 0.367,
+    "rank": 71,
+    "tv_homes": 411210
+  },
+  {
+    "id": 72,
+    "market_code": 481,
+    "percentage_of_us": 0.366,
+    "rank": 72,
+    "tv_homes": 410900
+  },
+  {
+    "id": 73,
+    "market_code": 164,
+    "percentage_of_us": 0.362,
+    "rank": 73,
+    "tv_homes": 406310
+  },
+  {
+    "id": 74,
+    "market_code": 252,
+    "percentage_of_us": 0.356,
+    "rank": 74,
+    "tv_homes": 399010
+  },
+  {
+    "id": 75,
+    "market_code": 219,
+    "percentage_of_us": 0.348,
+    "rank": 75,
+    "tv_homes": 389750
+  },
+  {
+    "id": 76,
+    "market_code": 138,
+    "percentage_of_us": 0.343,
+    "rank": 76,
+    "tv_homes": 384380
+  },
+  {
+    "id": 77,
+    "market_code": 146,
+    "percentage_of_us": 0.343,
+    "rank": 77,
+    "tv_homes": 384190
+  },
+  {
+    "id": 78,
+    "market_code": 147,
+    "percentage_of_us": 0.338,
+    "rank": 78,
+    "tv_homes": 379120
+  },
+  {
+    "id": 79,
+    "market_code": 100,
+    "percentage_of_us": 0.328,
+    "rank": 79,
+    "tv_homes": 367720
+  },
+  {
+    "id": 80,
+    "market_code": 291,
+    "percentage_of_us": 0.328,
+    "rank": 80,
+    "tv_homes": 367510
+  },
+  {
+    "id": 81,
+    "market_code": 269,
+    "percentage_of_us": 0.327,
+    "rank": 81,
+    "tv_homes": 366690
+  },
+  {
+    "id": 82,
+    "market_code": 232,
+    "percentage_of_us": 0.316,
+    "rank": 82,
+    "tv_homes": 354790
+  },
+  {
+    "id": 83,
+    "market_code": 212,
+    "percentage_of_us": 0.314,
+    "rank": 83,
+    "tv_homes": 352540
+  },
+  {
+    "id": 84,
+    "market_code": 236,
+    "percentage_of_us": 0.314,
+    "rank": 84,
+    "tv_homes": 351810
+  },
+  {
+    "id": 85,
+    "market_code": 155,
+    "percentage_of_us": 0.312,
+    "rank": 85,
+    "tv_homes": 350100
+  },
+  {
+    "id": 86,
+    "market_code": 225,
+    "percentage_of_us": 0.309,
+    "rank": 86,
+    "tv_homes": 346750
+  },
+  {
+    "id": 87,
+    "market_code": 352,
+    "percentage_of_us": 0.307,
+    "rank": 87,
+    "tv_homes": 344250
+  },
+  {
+    "id": 88,
+    "market_code": 248,
+    "percentage_of_us": 0.307,
+    "rank": 88,
+    "tv_homes": 344180
+  },
+  {
+    "id": 89,
+    "market_code": 175,
+    "percentage_of_us": 0.3,
+    "rank": 89,
+    "tv_homes": 336580
+  },
+  {
+    "id": 90,
+    "market_code": 107,
+    "percentage_of_us": 0.293,
+    "rank": 90,
+    "tv_homes": 328860
+  },
+  {
+    "id": 91,
+    "market_code": 237,
+    "percentage_of_us": 0.29,
+    "rank": 91,
+    "tv_homes": 325780
+  },
+  {
+    "id": 92,
+    "market_code": 119,
+    "percentage_of_us": 0.286,
+    "rank": 92,
+    "tv_homes": 320980
+  },
+  {
+    "id": 93,
+    "market_code": 365,
+    "percentage_of_us": 0.284,
+    "rank": 93,
+    "tv_homes": 318260
+  },
+  {
+    "id": 94,
+    "market_code": 316,
+    "percentage_of_us": 0.281,
+    "rank": 94,
+    "tv_homes": 314970
+  },
+  {
+    "id": 95,
+    "market_code": 318,
+    "percentage_of_us": 0.273,
+    "rank": 95,
+    "tv_homes": 306410
+  },
+  {
+    "id": 96,
+    "market_code": 188,
+    "percentage_of_us": 0.265,
+    "rank": 96,
+    "tv_homes": 297680
+  },
+  {
+    "id": 97,
+    "market_code": 123,
+    "percentage_of_us": 0.262,
+    "rank": 97,
+    "tv_homes": 294020
+  },
+  {
+    "id": 98,
+    "market_code": 270,
+    "percentage_of_us": 0.261,
+    "rank": 98,
+    "tv_homes": 292160
+  },
+  {
+    "id": 99,
+    "market_code": 131,
+    "percentage_of_us": 0.259,
+    "rank": 99,
+    "tv_homes": 290530
+  },
+  {
+    "id": 100,
+    "market_code": 145,
+    "percentage_of_us": 0.255,
+    "rank": 100,
+    "tv_homes": 285650
+  },
+  {
+    "id": 101,
+    "market_code": 170,
+    "percentage_of_us": 0.251,
+    "rank": 101,
+    "tv_homes": 281550
+  },
+  {
+    "id": 102,
+    "market_code": 282,
+    "percentage_of_us": 0.248,
+    "rank": 102,
+    "tv_homes": 277950
+  },
+  {
+    "id": 103,
+    "market_code": 249,
+    "percentage_of_us": 0.236,
+    "rank": 103,
+    "tv_homes": 264890
+  },
+  {
+    "id": 104,
+    "market_code": 357,
+    "percentage_of_us": 0.236,
+    "rank": 104,
+    "tv_homes": 264300
+  },
+  {
+    "id": 105,
+    "market_code": 411,
+    "percentage_of_us": 0.235,
+    "rank": 105,
+    "tv_homes": 263990
+  },
+  {
+    "id": 106,
+    "market_code": 322,
+    "percentage_of_us": 0.235,
+    "rank": 106,
+    "tv_homes": 263110
+  },
+  {
+    "id": 107,
+    "market_code": 174,
+    "percentage_of_us": 0.234,
+    "rank": 107,
+    "tv_homes": 262020
+  },
+  {
+    "id": 108,
+    "market_code": 130,
+    "percentage_of_us": 0.23,
+    "rank": 108,
+    "tv_homes": 257570
+  },
+  {
+    "id": 109,
+    "market_code": 309,
+    "percentage_of_us": 0.226,
+    "rank": 109,
+    "tv_homes": 253230
+  },
+  {
+    "id": 110,
+    "market_code": 325,
+    "percentage_of_us": 0.225,
+    "rank": 110,
+    "tv_homes": 252660
+  },
+  {
+    "id": 111,
+    "market_code": 109,
+    "percentage_of_us": 0.222,
+    "rank": 111,
+    "tv_homes": 249130
+  },
+  {
+    "id": 112,
+    "market_code": 120,
+    "percentage_of_us": 0.222,
+    "rank": 112,
+    "tv_homes": 249090
+  },
+  {
+    "id": 113,
+    "market_code": 410,
+    "percentage_of_us": 0.214,
+    "rank": 114,
+    "tv_homes": 239760
+  },
+  {
+    "id": 114,
+    "market_code": 151,
+    "percentage_of_us": 0.213,
+    "rank": 115,
+    "tv_homes": 238990
+  },
+  {
+    "id": 115,
+    "market_code": 143,
+    "percentage_of_us": 0.212,
+    "rank": 116,
+    "tv_homes": 237580
+  },
+  {
+    "id": 116,
+    "market_code": 136,
+    "percentage_of_us": 0.209,
+    "rank": 117,
+    "tv_homes": 234120
+  },
+  {
+    "id": 117,
+    "market_code": 140,
+    "percentage_of_us": 0.208,
+    "rank": 118,
+    "tv_homes": 233370
+  },
+  {
+    "id": 118,
+    "market_code": 401,
+    "percentage_of_us": 0.206,
+    "rank": 119,
+    "tv_homes": 231570
+  },
+  {
+    "id": 119,
+    "market_code": 103,
+    "percentage_of_us": 0.199,
+    "rank": 120,
+    "tv_homes": 222970
+  },
+  {
+    "id": 120,
+    "market_code": 242,
+    "percentage_of_us": 0.198,
+    "rank": 121,
+    "tv_homes": 222450
+  },
+  {
+    "id": 121,
+    "market_code": 275,
+    "percentage_of_us": 0.198,
+    "rank": 122,
+    "tv_homes": 222210
+  },
+  {
+    "id": 122,
+    "market_code": 455,
+    "percentage_of_us": 0.198,
+    "rank": 123,
+    "tv_homes": 222190
+  },
+  {
+    "id": 123,
+    "market_code": 298,
+    "percentage_of_us": 0.195,
+    "rank": 124,
+    "tv_homes": 218740
+  },
+  {
+    "id": 124,
+    "market_code": 428,
+    "percentage_of_us": 0.194,
+    "rank": 125,
+    "tv_homes": 217560
+  },
+  {
+    "id": 125,
+    "market_code": 400,
+    "percentage_of_us": 0.189,
+    "rank": 126,
+    "tv_homes": 212180
+  },
+  {
+    "id": 126,
+    "market_code": 122,
+    "percentage_of_us": 0.184,
+    "rank": 127,
+    "tv_homes": 206520
+  },
+  {
+    "id": 127,
+    "market_code": 200,
+    "percentage_of_us": 0.177,
+    "rank": 128,
+    "tv_homes": 198820
+  },
+  {
+    "id": 128,
+    "market_code": 302,
+    "percentage_of_us": 0.175,
+    "rank": 129,
+    "tv_homes": 196160
+  },
+  {
+    "id": 129,
+    "market_code": 150,
+    "percentage_of_us": 0.171,
+    "rank": 130,
+    "tv_homes": 191440
+  },
+  {
+    "id": 130,
+    "market_code": 234,
+    "percentage_of_us": 0.16,
+    "rank": 131,
+    "tv_homes": 179920
+  },
+  {
+    "id": 131,
+    "market_code": 468,
+    "percentage_of_us": 0.16,
+    "rank": 132,
+    "tv_homes": 179370
+  },
+  {
+    "id": 132,
+    "market_code": 273,
+    "percentage_of_us": 0.154,
+    "rank": 133,
+    "tv_homes": 172520
+  },
+  {
+    "id": 133,
+    "market_code": 305,
+    "percentage_of_us": 0.148,
+    "rank": 134,
+    "tv_homes": 166030
+  },
+  {
+    "id": 134,
+    "market_code": 204,
+    "percentage_of_us": 0.146,
+    "rank": 135,
+    "tv_homes": 163790
+  },
+  {
+    "id": 135,
+    "market_code": 413,
+    "percentage_of_us": 0.146,
+    "rank": 136,
+    "tv_homes": 163600
+  },
+  {
+    "id": 136,
+    "market_code": 228,
+    "percentage_of_us": 0.144,
+    "rank": 137,
+    "tv_homes": 161950
+  },
+  {
+    "id": 137,
+    "market_code": 210,
+    "percentage_of_us": 0.144,
+    "rank": 138,
+    "tv_homes": 161530
+  },
+  {
+    "id": 138,
+    "market_code": 205,
+    "percentage_of_us": 0.144,
+    "rank": 139,
+    "tv_homes": 161010
+  },
+  {
+    "id": 139,
+    "market_code": 276,
+    "percentage_of_us": 0.14,
+    "rank": 140,
+    "tv_homes": 157070
+  },
+  {
+    "id": 140,
+    "market_code": 287,
+    "percentage_of_us": 0.139,
+    "rank": 141,
+    "tv_homes": 156240
+  },
+  {
+    "id": 141,
+    "market_code": 292,
+    "percentage_of_us": 0.139,
+    "rank": 142,
+    "tv_homes": 156020
+  },
+  {
+    "id": 142,
+    "market_code": 176,
+    "percentage_of_us": 0.138,
+    "rank": 143,
+    "tv_homes": 155240
+  },
+  {
+    "id": 143,
+    "market_code": 233,
+    "percentage_of_us": 0.137,
+    "rank": 144,
+    "tv_homes": 153830
+  },
+  {
+    "id": 144,
+    "market_code": 251,
+    "percentage_of_us": 0.137,
+    "rank": 145,
+    "tv_homes": 153370
+  },
+  {
+    "id": 145,
+    "market_code": 404,
+    "percentage_of_us": 0.136,
+    "rank": 146,
+    "tv_homes": 152840
+  },
+  {
+    "id": 146,
+    "market_code": 343,
+    "percentage_of_us": 0.133,
+    "rank": 147,
+    "tv_homes": 149120
+  },
+  {
+    "id": 147,
+    "market_code": 224,
+    "percentage_of_us": 0.129,
+    "rank": 148,
+    "tv_homes": 144180
+  },
+  {
+    "id": 148,
+    "market_code": 227,
+    "percentage_of_us": 0.127,
+    "rank": 149,
+    "tv_homes": 142990
+  },
+  {
+    "id": 149,
+    "market_code": 116,
+    "percentage_of_us": 0.126,
+    "rank": 150,
+    "tv_homes": 141020
+  },
+  {
+    "id": 150,
+    "market_code": 256,
+    "percentage_of_us": 0.123,
+    "rank": 151,
+    "tv_homes": 137830
+  },
+  {
+    "id": 151,
+    "market_code": 203,
+    "percentage_of_us": 0.122,
+    "rank": 152,
+    "tv_homes": 136740
+  },
+  {
+    "id": 152,
+    "market_code": 211,
+    "percentage_of_us": 0.12,
+    "rank": 153,
+    "tv_homes": 134990
+  },
+  {
+    "id": 153,
+    "market_code": 125,
+    "percentage_of_us": 0.12,
+    "rank": 154,
+    "tv_homes": 134510
+  },
+  {
+    "id": 154,
+    "market_code": 181,
+    "percentage_of_us": 0.114,
+    "rank": 155,
+    "tv_homes": 127470
+  },
+  {
+    "id": 155,
+    "market_code": 137,
+    "percentage_of_us": 0.112,
+    "rank": 156,
+    "tv_homes": 125970
+  },
+  {
+    "id": 156,
+    "market_code": 346,
+    "percentage_of_us": 0.111,
+    "rank": 157,
+    "tv_homes": 124130
+  },
+  {
+    "id": 157,
+    "market_code": 154,
+    "percentage_of_us": 0.108,
+    "rank": 158,
+    "tv_homes": 121320
+  },
+  {
+    "id": 158,
+    "market_code": 192,
+    "percentage_of_us": 0.108,
+    "rank": 159,
+    "tv_homes": 121060
+  },
+  {
+    "id": 159,
+    "market_code": 257,
+    "percentage_of_us": 0.107,
+    "rank": 160,
+    "tv_homes": 120100
+  },
+  {
+    "id": 160,
+    "market_code": 102,
+    "percentage_of_us": 0.107,
+    "rank": 161,
+    "tv_homes": 120060
+  },
+  {
+    "id": 161,
+    "market_code": 358,
+    "percentage_of_us": 0.107,
+    "rank": 162,
+    "tv_homes": 119590
+  },
+  {
+    "id": 162,
+    "market_code": 159,
+    "percentage_of_us": 0.106,
+    "rank": 163,
+    "tv_homes": 118520
+  },
+  {
+    "id": 163,
+    "market_code": 362,
+    "percentage_of_us": 0.101,
+    "rank": 164,
+    "tv_homes": 113110
+  },
+  {
+    "id": 164,
+    "market_code": 262,
+    "percentage_of_us": 0.096,
+    "rank": 165,
+    "tv_homes": 107760
+  },
+  {
+    "id": 165,
+    "market_code": 371,
+    "percentage_of_us": 0.094,
+    "rank": 166,
+    "tv_homes": 105690
+  },
+  {
+    "id": 166,
+    "market_code": 356,
+    "percentage_of_us": 0.094,
+    "rank": 167,
+    "tv_homes": 105470
+  },
+  {
+    "id": 167,
+    "market_code": 310,
+    "percentage_of_us": 0.092,
+    "rank": 168,
+    "tv_homes": 102840
+  },
+  {
+    "id": 168,
+    "market_code": 198,
+    "percentage_of_us": 0.087,
+    "rank": 169,
+    "tv_homes": 97020
+  },
+  {
+    "id": 169,
+    "market_code": 364,
+    "percentage_of_us": 0.085,
+    "rank": 170,
+    "tv_homes": 95320
+  },
+  {
+    "id": 170,
+    "market_code": 126,
+    "percentage_of_us": 0.084,
+    "rank": 171,
+    "tv_homes": 93930
+  },
+  {
+    "id": 171,
+    "market_code": 317,
+    "percentage_of_us": 0.084,
+    "rank": 172,
+    "tv_homes": 93920
+  },
+  {
+    "id": 172,
+    "market_code": 206,
+    "percentage_of_us": 0.082,
+    "rank": 173,
+    "tv_homes": 92300
+  },
+  {
+    "id": 173,
+    "market_code": 243,
+    "percentage_of_us": 0.082,
+    "rank": 174,
+    "tv_homes": 91490
+  },
+  {
+    "id": 174,
+    "market_code": 169,
+    "percentage_of_us": 0.077,
+    "rank": 175,
+    "tv_homes": 86700
+  },
+  {
+    "id": 175,
+    "market_code": 165,
+    "percentage_of_us": 0.077,
+    "rank": 176,
+    "tv_homes": 86230
+  },
+  {
+    "id": 176,
+    "market_code": 239,
+    "percentage_of_us": 0.076,
+    "rank": 177,
+    "tv_homes": 85540
+  },
+  {
+    "id": 177,
+    "market_code": 244,
+    "percentage_of_us": 0.073,
+    "rank": 178,
+    "tv_homes": 82270
+  },
+  {
+    "id": 178,
+    "market_code": 149,
+    "percentage_of_us": 0.073,
+    "rank": 179,
+    "tv_homes": 81630
+  },
+  {
+    "id": 179,
+    "market_code": 153,
+    "percentage_of_us": 0.07,
+    "rank": 180,
+    "tv_homes": 78000
+  },
+  {
+    "id": 180,
+    "market_code": 336,
+    "percentage_of_us": 0.069,
+    "rank": 181,
+    "tv_homes": 77360
+  },
+  {
+    "id": 181,
+    "market_code": 334,
+    "percentage_of_us": 0.069,
+    "rank": 182,
+    "tv_homes": 76860
+  },
+  {
+    "id": 182,
+    "market_code": 184,
+    "percentage_of_us": 0.064,
+    "rank": 183,
+    "tv_homes": 72320
+  },
+  {
+    "id": 183,
+    "market_code": 349,
+    "percentage_of_us": 0.063,
+    "rank": 184,
+    "tv_homes": 70980
+  },
+  {
+    "id": 184,
+    "market_code": 354,
+    "percentage_of_us": 0.062,
+    "rank": 185,
+    "tv_homes": 69060
+  },
+  {
+    "id": 185,
+    "market_code": 421,
+    "percentage_of_us": 0.06,
+    "rank": 186,
+    "tv_homes": 67170
+  },
+  {
+    "id": 186,
+    "market_code": 373,
+    "percentage_of_us": 0.06,
+    "rank": 187,
+    "tv_homes": 67150
+  },
+  {
+    "id": 187,
+    "market_code": 182,
+    "percentage_of_us": 0.059,
+    "rank": 188,
+    "tv_homes": 66710
+  },
+  {
+    "id": 188,
+    "market_code": 158,
+    "percentage_of_us": 0.056,
+    "rank": 189,
+    "tv_homes": 62840
+  },
+  {
+    "id": 189,
+    "market_code": 360,
+    "percentage_of_us": 0.056,
+    "rank": 190,
+    "tv_homes": 62360
+  },
+  {
+    "id": 190,
+    "market_code": 311,
+    "percentage_of_us": 0.055,
+    "rank": 191,
+    "tv_homes": 61460
+  },
+  {
+    "id": 191,
+    "market_code": 355,
+    "percentage_of_us": 0.054,
+    "rank": 192,
+    "tv_homes": 60220
+  },
+  {
+    "id": 192,
+    "market_code": 247,
+    "percentage_of_us": 0.052,
+    "rank": 193,
+    "tv_homes": 58410
+  },
+  {
+    "id": 193,
+    "market_code": 197,
+    "percentage_of_us": 0.051,
+    "rank": 194,
+    "tv_homes": 56980
+  },
+  {
+    "id": 194,
+    "market_code": 402,
+    "percentage_of_us": 0.051,
+    "rank": 195,
+    "tv_homes": 56660
+  },
+  {
+    "id": 195,
+    "market_code": 261,
+    "percentage_of_us": 0.048,
+    "rank": 196,
+    "tv_homes": 54100
+  },
+  {
+    "id": 196,
+    "market_code": 367,
+    "percentage_of_us": 0.047,
+    "rank": 198,
+    "tv_homes": 52190
+  },
+  {
+    "id": 197,
+    "market_code": 337,
+    "percentage_of_us": 0.044,
+    "rank": 199,
+    "tv_homes": 49610
+  },
+  {
+    "id": 198,
+    "market_code": 231,
+    "percentage_of_us": 0.038,
+    "rank": 200,
+    "tv_homes": 42990
+  },
+  {
+    "id": 199,
+    "market_code": 238,
+    "percentage_of_us": 0.038,
+    "rank": 201,
+    "tv_homes": 42230
+  },
+  {
+    "id": 200,
+    "market_code": 345,
+    "percentage_of_us": 0.031,
+    "rank": 202,
+    "tv_homes": 35180
+  },
+  {
+    "id": 201,
+    "market_code": 226,
+    "percentage_of_us": 0.028,
+    "rank": 203,
+    "tv_homes": 31380
+  },
+  {
+    "id": 202,
+    "market_code": 196,
+    "percentage_of_us": 0.027,
+    "rank": 204,
+    "tv_homes": 30550
+  },
+  {
+    "id": 203,
+    "market_code": 366,
+    "percentage_of_us": 0.024,
+    "rank": 205,
+    "tv_homes": 27430
+  },
+  {
+    "id": 204,
+    "market_code": 152,
+    "percentage_of_us": 0.023,
+    "rank": 206,
+    "tv_homes": 25480
+  },
+  {
+    "id": 205,
+    "market_code": 347,
+    "percentage_of_us": 0.022,
+    "rank": 207,
+    "tv_homes": 24390
+  },
+  {
+    "id": 206,
+    "market_code": 183,
+    "percentage_of_us": 0.014,
+    "rank": 208,
+    "tv_homes": 15360
+  },
+  {
+    "id": 207,
+    "market_code": 340,
+    "percentage_of_us": 0.012,
+    "rank": 209,
+    "tv_homes": 13640
+  },
+  {
+    "id": 208,
+    "market_code": 398,
+    "percentage_of_us": 0.004,
+    "rank": 210,
+    "tv_homes": 4030
+  }
+]

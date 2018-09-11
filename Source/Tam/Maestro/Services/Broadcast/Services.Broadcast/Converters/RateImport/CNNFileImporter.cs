@@ -307,7 +307,7 @@ namespace Services.Broadcast.Converters.RateImport
                 throw new Exception(string.Format("Unable to parse inventory file: {0}. The name of the file is invalid.",
                     Request.FileName));
 
-            if (Request.RatesStream.Length == 0)
+            if (Request.StreamData.Length == 0)
                 throw new Exception(string.Format("Unable to parse inventory file: {0}. Invalid file size.", Request.FileName));
         }
 

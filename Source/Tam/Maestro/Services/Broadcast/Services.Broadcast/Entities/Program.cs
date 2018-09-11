@@ -3,8 +3,6 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
 {
-    //TODO: FIXME or deleteME 
-    //this needs to go and replaced by something completely different.
     public class Program : IEquatable<Program>
     {
         public readonly short StationCode;

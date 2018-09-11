@@ -1,11 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 // import { delay } from 'redux-saga';
-import { takeEvery, put, select } from 'redux-saga/effects';
+import { takeEvery, put, call, select } from 'redux-saga/effects';
 // import { push } from 'react-router-redux';
 import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
-import { deployError, setOverlayLoading } from 'Ducks/app/index';
+import { deployError, createAlert, toggleModal, setOverlayLoading } from 'Ducks/app/index';
 import { receiveFilteredPlanning } from 'Ducks/planning/index';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
@@ -1389,6 +1389,108 @@ export function* rerunPostScrubing({ propId, propdetailid }) {
   }
 }
 
+export function* loadOpenMarketData({ propId, propdetailid }) {
+  const { loadOpenMarketData } = api.planning;
+  return yield loadOpenMarketData(propId, propdetailid);
+}
+
+/* export function* uploadSCXFile(params) {
+  const { uploadSCXFile } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: 'uploadSCX', loading: true }));
+    return yield uploadSCXFile(params);
+  } finally {
+    yield put(setOverlayLoading({ id: 'uploadSCX', loading: false }));
+  }
+} */
+
+/* ////////////////////////////////// */
+/* UPLOAD SCX - bypass wrapper to handle custom error */
+/* ////////////////////////////////// */
+
+export function* uploadSCXFileSuccess() {
+  yield put(toggleModal({ modal: 'uploadBuy', active: false }));
+  yield put(createAlert({ type: 'success', headline: 'SCX File Uploaded' }));
+}
+
+export function* uploadSCXFile({ payload: params }) {
+  const { uploadSCXFile } = api.planning;
+
+  try {
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'uploadSCX',
+        loading: true },
+      });
+    const response = yield uploadSCXFile(params);
+    const { status, data } = response;
+    yield put({
+      type: ACTIONS.SET_OVERLAY_LOADING,
+      overlay: {
+        id: 'uploadSCX',
+        loading: false,
+      },
+    });
+    if (status !== 200) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No upload SCX data returned.',
+          message: `The server encountered an error processing SCX request upload. Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`,
+        },
+      });
+      throw new Error();
+    }
+    if (!data.Success) {
+      if (data.Data && data.Data.length) {
+        const ret = ['The following Problems Encountered Uploading SCX file:'];
+        data.Data.forEach((item) => {
+            ret.push(item);
+        });
+        const message = ret.join('<br />');
+        yield put({
+          type: ACTIONS.DEPLOY_ERROR,
+          error: {
+            error: 'Upload SCX File Error',
+            message,
+          },
+        });
+        throw new Error();
+      } else {
+        yield put({
+          type: ACTIONS.DEPLOY_ERROR,
+          error: {
+            error: 'Problems Encountered Uploading SCX file',
+            message: data.Message || 'The server encountered an error processing the request (upload SCX). Please try again or contact your administrator to review error logs.',
+          },
+        });
+        throw new Error();
+      }
+    }
+    yield call(uploadSCXFileSuccess);
+  } catch (e) {
+    if (e.response) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          error: 'No upload SCX data returned.',
+          message: 'The server encountered an error processing the request (upload SCX). Please try again or contact your administrator to review error logs.',
+          exception: e.response.data.ExceptionMessage || '',
+        },
+      });
+    }
+    if (!e.response && e.message) {
+      yield put({
+        type: ACTIONS.DEPLOY_ERROR,
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1468,5 +1570,21 @@ export function* watchDeleteProposalDetail() {
 export function* watchRerunPostScrubing() {
 	yield takeEvery(ACTIONS.RERUN_POST_SCRUBING.request, sagaWrapper(rerunPostScrubing, ACTIONS.RERUN_POST_SCRUBING));
 }
+
+export function* watchLoadOpenMarketData() {
+	yield takeEvery(ACTIONS.LOAD_OPEN_MARKET_DATA.request, sagaWrapper(loadOpenMarketData, ACTIONS.LOAD_OPEN_MARKET_DATA));
+}
+
+export function* watchUploadSCXFile() {
+	yield takeEvery(ACTIONS.SCX_FILE_UPLOAD.request, uploadSCXFile);
+}
+
+/* export function* watchUploadSCXFile() {
+	yield takeEvery(ACTIONS.SCX_FILE_UPLOAD.request, sagaWrapper(uploadSCXFile, ACTIONS.SCX_FILE_UPLOAD));
+} */
+
+/* export function* watchUploadSCXFileSuccess() {
+  yield takeEvery(ACTIONS.SCX_FILE_UPLOAD.success, uploadSCXFileSuccess);
+} */
 
 // if assign watcher > assign in sagas/index rootSaga also

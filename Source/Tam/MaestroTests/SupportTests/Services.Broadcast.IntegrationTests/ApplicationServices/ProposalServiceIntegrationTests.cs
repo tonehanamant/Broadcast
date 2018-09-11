@@ -13,6 +13,8 @@ using System.Transactions;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using System.IO;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -23,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly DateTime _CurrentDateTime = new DateTime(2016, 02, 15);
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>();
 
-        private static ProposalDto _setupProposalDto()
+        public static ProposalDto SetupProposalDto()
         {
             return new ProposalDto()
             {
@@ -52,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
         }
 
-        private static ProposalDetailDto _setupProposalDetailDto()
+        public static ProposalDetailDto SetupProposalDetailDto()
         {
             return new ProposalDetailDto
             {
@@ -198,6 +200,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+            jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+            jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+            jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -213,7 +218,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
                 
                 var result = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
                 Assert.IsTrue(result.Id.Value > 0);
@@ -226,7 +231,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
                 proposalDto.SecondaryDemos.Add(3);
                 proposalDto.SecondaryDemos.Add(4);
 
@@ -290,7 +295,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
                 proposalDto.ProposalName = string.Empty;
                 var res = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
                 Assert.IsTrue(res.Id > 0);
@@ -303,7 +308,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
                 proposalDto.AdvertiserId = 0;
                 var res = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
                 Assert.IsTrue(res.Id > 0);
@@ -406,6 +411,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDto = _ProposalService.GetProposalById(248);
                 //setting to null should create proposal version 2
                 proposalDto.Version = null;
+                proposalDto.Details[0].GenreCriteria.RemoveAll(x=>x.Contain == ContainTypeEnum.Include); //proposal cannot have include and exclude genres at the same time
 
                 var newProposal = _ProposalService.SaveProposal(proposalDto, "Integration Test", _CurrentDateTime);
 
@@ -476,7 +482,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalDto.Equivalized = true;
                 proposalDto.PostType = SchedulePostType.NTI;
 
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.FlightStartDate = new DateTime(2016, 05, 30);
                 proposalDetailDto.FlightEndDate = new DateTime(2016, 06, 05);
@@ -728,8 +734,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDto = SetupProposalDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.FlightEndDate = default(DateTime);
 
@@ -745,8 +751,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDto = SetupProposalDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.FlightStartDate = new DateTime(2016, 12, 5);
                 proposalDetailDto.FlightEndDate = new DateTime(2016, 12, 11);
@@ -764,8 +770,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDto = SetupProposalDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.SpotLengthId = 99;
 
@@ -781,8 +787,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDto = SetupProposalDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.DaypartCode = string.Empty;
 
@@ -798,9 +804,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
 
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDto.Details.Add(proposalDetailDto);
 
@@ -840,18 +846,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
 
-                var proposalDetailDto1 = _setupProposalDetailDto();
+                var proposalDetailDto1 = SetupProposalDetailDto();
                 proposalDetailDto1.DaypartCode = "A1";
 
                 proposalDto.Details.Add(proposalDetailDto1);
 
-                var proposalDetailDto2 = _setupProposalDetailDto();
+                var proposalDetailDto2 = SetupProposalDetailDto();
                 proposalDetailDto2.DaypartCode = "A2";
                 proposalDto.Details.Add(proposalDetailDto2);
 
-                var proposalDetailDto3 = _setupProposalDetailDto();
+                var proposalDetailDto3 = SetupProposalDetailDto();
                 proposalDetailDto3.DaypartCode = "A3";
                 proposalDto.Details.Add(proposalDetailDto3);
 
@@ -859,7 +865,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 proposalDto.Details.Remove(proposalDto.Details[1]);
 
-                var proposalDetailDto4 = _setupProposalDetailDto();
+                var proposalDetailDto4 = SetupProposalDetailDto();
                 proposalDetailDto4.DaypartCode = "A4";
                 proposalDto.Details.Add(proposalDetailDto4);
 
@@ -900,9 +906,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
 
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.GenreCriteria.AddRange(new List<GenreCriteria>()
                 {
@@ -954,9 +960,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
 
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.ShowTypeCriteria.AddRange(new List<ShowTypeCriteria>()
                 {
@@ -1008,9 +1014,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalDto = _setupProposalDto();
+                var proposalDto = SetupProposalDto();
 
-                var proposalDetailDto = _setupProposalDetailDto();
+                var proposalDetailDto = SetupProposalDetailDto();
 
                 proposalDetailDto.ProgramCriteria.AddRange(new List<ProgramCriteria>()
                 {
@@ -1366,8 +1372,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const short shareBookMonthId = 413;
 
-                var proposal = _setupProposalDto();
-                var detail = _setupProposalDetailDto();
+                var proposal = SetupProposalDto();
+                var detail = SetupProposalDetailDto();
 
                 proposal.Details.Add(detail);
 
@@ -1403,7 +1409,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var proposal = _setupProposalDto();
+                var proposal = SetupProposalDto();
 
                 proposal.Status = ProposalEnums.ProposalStatusType.Proposed;
 
@@ -1419,7 +1425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var proposal = _setupProposalDto();
+                var proposal = SetupProposalDto();
 
                 proposal.Status = ProposalEnums.ProposalStatusType.AgencyOnHold;
 
@@ -1436,7 +1442,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var proposal = _setupProposalDto();
+                var proposal = SetupProposalDto();
 
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
 
@@ -1942,7 +1948,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var proposal = _setupProposalDto();
+                var proposal = SetupProposalDto();
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
                 var savedProposal = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", _CurrentDateTime);
                 savedProposal.Version = null;
@@ -2109,7 +2115,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
             {
-                var proposal = _setupProposalDto();
+                var proposal = SetupProposalDto();
                 _ProposalService.SaveProposal(proposal, "", _CurrentDateTime);
             }
         }
@@ -2445,6 +2451,271 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveNewProposalWithProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = SetupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 0.3,
+                    Cpm = 99.99m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TTNW,
+                    ImpressionsBalance = 0.25,
+                    Cpm = 12.42m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TVB,
+                    ImpressionsBalance = 0.25,
+                    Cpm = 45
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.Sinclair,
+                    ImpressionsBalance = 0.2,
+                    Cpm = 2000m
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalWithProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(249);
+
+                proposalDto.ProposalName = "Edited Proposal Test";
+
+                var proposalDetailDto = SetupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 99.99m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TTNW,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 12.42m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.TVB,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 45
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.Sinclair,
+                    ImpressionsBalance = 0.33,
+                    Cpm = 2000m
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains invalid inventory source for proprietary pricing", MatchType = MessageMatch.Contains)]
+        public void CannotSaveProposalDetailWithInvalidProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = SetupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.OpenMarket,
+                    ImpressionsBalance = 1,
+                    Cpm = 99.99m
+                });               
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data", MatchType = MessageMatch.Contains)]
+        public void CannotSaveProposalDetailWithDuplicatdProprietaryPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = SetupProposalDetailDto();
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 1,
+                    Cpm = 99.99m
+                });
+
+                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                {
+                    InventorySource = InventorySourceEnum.CNN,
+                    ImpressionsBalance = 1,
+                    Cpm = 99.99m
+                });
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanSaveNewProposalWithOpenMarketPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = new ProposalDto
+                {
+                    AdvertiserId = 37444,
+                    ProposalName = "Proposal Test",
+                    GuaranteedDemoId = 31,
+                    PostType = SchedulePostType.NSI,
+                    Details = new List<ProposalDetailDto>()
+                };
+
+                var proposalDetailDto = SetupProposalDetailDto();
+
+                proposalDetailDto.OpenMarketPricing.CpmMin = 9.99m;
+                proposalDetailDto.OpenMarketPricing.CpmMax = 55.99m;
+                proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 100;
+                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Max;
+
+                proposalDto.Details.Add(proposalDetailDto);
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanEditProposalWithOpenMarketPricingData()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var proposalDto = _ProposalService.GetProposalById(251);
+
+                proposalDto.ProposalName = "Edited Proposal Test";
+
+                var proposalDetailDto = proposalDto.Details.First();
+
+                proposalDetailDto.OpenMarketPricing.CpmMin = 123.99m;
+                proposalDetailDto.OpenMarketPricing.CpmMax = 200m;
+                proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 10;
+                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Avg;
+
+                var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _SetupJsonSerializerSettingsIgnoreIds()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UploadProposalBuyScxFileSuccessfully()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var request = new ProposalBuySaveRequestDto
+                {
+                    EstimateId = 3909,
+                    FileName = "Checkers 2Q16 SYN - ProposalBuy.scx",
+                    Username = "test-user",
+                    ProposalVersionDetailId =  10,
+                    FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - ProposalBuy.scx",
+                        FileMode.Open,
+                        FileAccess.Read)
+                };
+
+                var result = _ProposalService.SaveProposalBuy(request);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UploadProposalBuyScxWithUnknownStationAndSpotLength()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var request = new ProposalBuySaveRequestDto
+                {
+                    EstimateId = 3909,
+                    FileName = "Checkers 2Q16 SYN - ProposalBuyWithErrors.scx",
+                    Username = "test-user",
+                    ProposalVersionDetailId = 10,
+                    FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - ProposalBuyWithErrors.scx",
+                        FileMode.Open,
+                        FileAccess.Read)
+                };
+
+                var result = _ProposalService.SaveProposalBuy(request);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
     }

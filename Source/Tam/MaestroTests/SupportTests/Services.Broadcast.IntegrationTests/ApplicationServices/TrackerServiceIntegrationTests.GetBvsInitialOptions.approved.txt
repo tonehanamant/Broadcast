@@ -227,6 +227,10 @@
     {
       "Display": "CNN",
       "Id": 5
+    },
+    {
+      "Display": "Sinclair",
+      "Id": 6
     }
   ],
   "Markets": [

@@ -64,7 +64,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No BVS file data received.");
             }
 
-            BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name));
         }
 
@@ -77,7 +77,7 @@ namespace BroadcastComposerWeb.Controllers
                 throw new Exception("No Sigma file data received.");
             }
 
-            BvsSaveRequest bvsRequest = JsonConvert.DeserializeObject<BvsSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
+            FileSaveRequest bvsRequest = JsonConvert.DeserializeObject<FileSaveRequest>(saveRequest.Content.ReadAsStringAsync().Result);
             return _ConvertToBaseResponseSuccessWithMessage(() => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().SaveBvsFiles(bvsRequest, Identity.Name, true));
         }
 
@@ -287,6 +287,25 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().DeleteBvsFile(bvsFileId));
+        }
+
+        [HttpGet]
+        [Route("SpotTrackerReport/{proposalId}")]
+        public HttpResponseMessage GenerateSpotTrackerReport(int proposalId)
+        {
+            var report = _ApplicationServiceFactory
+                    .GetApplicationService<ITrackerService>()
+                    .GenerateSpotTrackerReport(proposalId);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
         }
     }
 }

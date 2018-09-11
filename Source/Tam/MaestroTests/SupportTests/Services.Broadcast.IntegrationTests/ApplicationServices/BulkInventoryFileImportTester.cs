@@ -33,7 +33,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         {
                             var request = new InventoryFileSaveRequest();
 
-                            using (request.RatesStream = new FileStream(
+                            using (request.StreamData = new FileStream(
                                 filePath,
                                 FileMode.Open,
                                 FileAccess.Read))

@@ -3,7 +3,11 @@
 }
 
 .navigation-brand { 
-	padding: 0 20px 0 35px !important;
+	/* padding: 0 20px 0 35px !important; */
+	img {
+		margin-left: 10px !important;
+		width: 124px !important;
+	}
 }
 
 .float-right {

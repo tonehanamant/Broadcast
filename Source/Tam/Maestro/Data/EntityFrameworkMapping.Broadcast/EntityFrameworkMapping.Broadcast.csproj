@@ -431,6 +431,9 @@
     <Compile Include="market.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="market_coverages.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="market_dma_map.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -468,6 +471,18 @@
     <Compile Include="proposal.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proposal_buy_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proposal_buy_file_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proposal_buy_file_detail_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proposal_buy_file_detail_weeks.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proposal_versions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -487,6 +502,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="proposal_version_detail_criteria_show_types.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proposal_version_detail_proprietary_pricing.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="proposal_version_detail_quarters.cs">
@@ -544,6 +562,12 @@
     <Compile Include="spot_length_cost_multipliers.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="spot_tracker_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spot_tracker_file_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="station.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -572,6 +596,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_spot_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_spot_genres.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="system_component_parameters.cs">

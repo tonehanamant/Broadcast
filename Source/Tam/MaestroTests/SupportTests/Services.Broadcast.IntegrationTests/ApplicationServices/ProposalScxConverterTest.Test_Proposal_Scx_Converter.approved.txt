@@ -1,0 +1,973 @@
+﻿{
+  "campaign": {
+    "advertiser": {
+      "ID": [
+        {
+          "code": {
+            "codeDescription": null,
+            "codeOwner": "Agency",
+            "Value": ""
+          },
+          "comment": null
+        }
+      ],
+      "name": "Test Advertiser 9"
+    },
+    "buyType": 0,
+    "company": [
+      {
+        "contact": [
+          {
+            "email": [
+              ""
+            ],
+            "firstName": "",
+            "ID": null,
+            "lastName": "",
+            "officeName": null,
+            "phone": [
+              {
+                "country": "US",
+                "type": 1,
+                "Value": ""
+              }
+            ],
+            "role": "AE"
+          }
+        ],
+        "ID": null,
+        "name": " ",
+        "office": [
+          {
+            "address": {
+              "city": "",
+              "country": "US",
+              "postalCode": "00000",
+              "state": {
+                "code": "__",
+                "Value": null
+              },
+              "street": "",
+              "type": "mailing"
+            },
+            "ID": null,
+            "name": " ",
+            "phone": [
+              {
+                "country": "US",
+                "type": 1,
+                "Value": null
+              }
+            ],
+            "role": null,
+            "type": null
+          }
+        ],
+        "role": null,
+        "type": 1,
+        "typeSpecified": true
+      },
+      {
+        "contact": [
+          {
+            "email": [
+              ""
+            ],
+            "firstName": "",
+            "ID": null,
+            "lastName": "",
+            "officeName": null,
+            "phone": [
+              {
+                "country": "US",
+                "type": 1,
+                "Value": ""
+              }
+            ],
+            "role": "Buyer"
+          }
+        ],
+        "ID": [
+          {
+            "code": {
+              "codeDescription": null,
+              "codeOwner": "Agency",
+              "Value": ""
+            },
+            "comment": null
+          }
+        ],
+        "name": " ",
+        "office": null,
+        "role": null,
+        "type": 0,
+        "typeSpecified": true
+      }
+    ],
+    "dateRange": {
+      "endDate": "2017-07-16T00:00:00",
+      "startDate": "2017-06-26T00:00:00"
+    },
+    "demo": [
+      {
+        "ageFrom": "0",
+        "ageTo": "99",
+        "demoRank": 1,
+        "group": 0
+      }
+    ],
+    "estimate": {
+      "desc": "",
+      "ID": {
+        "code": {
+          "codeDescription": null,
+          "codeOwner": "Agency",
+          "Value": "309"
+        },
+        "comment": null
+      }
+    },
+    "key": [
+      {
+        "codeDescription": "CampaignID",
+        "codeOwner": "NCC",
+        "createDateSpecified": false,
+        "id": "",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      },
+      {
+        "codeDescription": "DMA Override",
+        "codeOwner": "Strata",
+        "createDateSpecified": false,
+        "id": "0",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      },
+      {
+        "codeDescription": "Zone Pops",
+        "codeOwner": "Strata",
+        "createDateSpecified": false,
+        "id": "max",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      },
+      {
+        "codeDescription": "CampaignName",
+        "codeOwner": "VIEW32",
+        "createDateSpecified": false,
+        "id": "",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      }
+    ],
+    "makeGoodPolicy": [
+      {
+        "code": {
+          "codeDescription": null,
+          "codeOwner": null,
+          "Value": null
+        },
+        "comment": null
+      }
+    ],
+    "order": [
+      {
+        "breakoutMonth": null,
+        "comment": "",
+        "key": [
+          {
+            "codeDescription": "Market",
+            "codeOwner": "NCC",
+            "createDateSpecified": false,
+            "id": "404",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          },
+          {
+            "codeDescription": "Pops",
+            "codeOwner": "Strata",
+            "createDateSpecified": false,
+            "id": "dma;book",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          },
+          {
+            "codeDescription": "UseBroadcastWeeks",
+            "codeOwner": "Strata",
+            "createDateSpecified": false,
+            "id": "0",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          }
+        ],
+        "market": {
+          "name": "Palm Springs, CA",
+          "nsi_id": 404
+        },
+        "populations": [
+          {
+            "demoRank": 1,
+            "Value": "155430"
+          }
+        ],
+        "survey": {
+          "comment": [
+            {
+              "codeOwner": "Spotcable",
+              "Value": "Feb16 DMA Nielsen Live+3"
+            }
+          ],
+          "geography": "",
+          "profile": "",
+          "PUTBook": "",
+          "ratingService": "",
+          "shareBook": ""
+        },
+        "systemOrder": [
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": [
+              {
+                "comment": " ",
+                "dayOfWeek": {
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
+                },
+                "daypartCode": "bb",
+                "demoValue": [
+                  {
+                    "demoRank": "1",
+                    "override": false,
+                    "value": [
+                      {
+                        "type": 0,
+                        "typeSpecified": true,
+                        "Value": ""
+                      },
+                      {
+                        "type": 1,
+                        "typeSpecified": true,
+                        "Value": ""
+                      }
+                    ]
+                  }
+                ],
+                "detailLineID": 0,
+                "length": "PT15S",
+                "network": [
+                  {
+                    "ID": [
+                      {
+                        "code": {
+                          "codeDescription": "2772",
+                          "codeOwner": "Spotcable",
+                          "Value": "KCWQ"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Station",
+                          "codeOwner": "Strata",
+                          "Value": "KCWQ-TV"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Band",
+                          "codeOwner": "Strata",
+                          "Value": "TV"
+                        },
+                        "comment": null
+                      }
+                    ],
+                    "name": "KCWQ-TV"
+                  }
+                ],
+                "program": "King Of The Hill",
+                "spot": [
+                  {
+                    "id": null,
+                    "quantity": "2",
+                    "weekNumber": "1"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "2"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "3"
+                  }
+                ],
+                "spotCost": {
+                  "currency": "USD",
+                  "Value": 6.5000
+                },
+                "startDay": 0,
+                "totals": {
+                  "cost": {
+                    "currency": "USD",
+                    "Value": 13.0000
+                  },
+                  "spots": "2"
+                }
+              },
+              {
+                "comment": " ",
+                "dayOfWeek": {
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
+                },
+                "daypartCode": "bb",
+                "demoValue": [
+                  {
+                    "demoRank": "1",
+                    "override": false,
+                    "value": [
+                      {
+                        "type": 0,
+                        "typeSpecified": true,
+                        "Value": ""
+                      },
+                      {
+                        "type": 1,
+                        "typeSpecified": true,
+                        "Value": "243"
+                      }
+                    ]
+                  }
+                ],
+                "detailLineID": 0,
+                "length": "PT15S",
+                "network": [
+                  {
+                    "ID": [
+                      {
+                        "code": {
+                          "codeDescription": "2772",
+                          "codeOwner": "Spotcable",
+                          "Value": "KCWQ"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Station",
+                          "codeOwner": "Strata",
+                          "Value": "KCWQ-TV"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Band",
+                          "codeOwner": "Strata",
+                          "Value": "TV"
+                        },
+                        "comment": null
+                      }
+                    ],
+                    "name": "KCWQ-TV"
+                  }
+                ],
+                "program": "Steve Wilkos Show",
+                "spot": [
+                  {
+                    "id": null,
+                    "quantity": "3",
+                    "weekNumber": "1"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "2"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "3"
+                  }
+                ],
+                "spotCost": {
+                  "currency": "USD",
+                  "Value": 6.5000
+                },
+                "startDay": 0,
+                "totals": {
+                  "cost": {
+                    "currency": "USD",
+                    "Value": 19.5000
+                  },
+                  "spots": "3"
+                }
+              }
+            ],
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              },
+              null,
+              null
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "155430"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 32.5000
+              },
+              "spots": "5"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          },
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": null,
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              },
+              null,
+              null
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "155430"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 32.5000
+              },
+              "spots": "5"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          }
+        ],
+        "totals": {
+          "cost": {
+            "currency": "USD",
+            "Value": 32.5000
+          },
+          "spots": "5"
+        }
+      },
+      {
+        "breakoutMonth": null,
+        "comment": "",
+        "key": [
+          {
+            "codeDescription": "Market",
+            "codeOwner": "NCC",
+            "createDateSpecified": false,
+            "id": "317",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          },
+          {
+            "codeDescription": "Pops",
+            "codeOwner": "Strata",
+            "createDateSpecified": false,
+            "id": "dma;book",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          },
+          {
+            "codeDescription": "UseBroadcastWeeks",
+            "codeOwner": "Strata",
+            "createDateSpecified": false,
+            "id": "0",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          }
+        ],
+        "market": {
+          "name": "Quincy",
+          "nsi_id": 317
+        },
+        "populations": [
+          {
+            "demoRank": 1,
+            "Value": "99050"
+          }
+        ],
+        "survey": {
+          "comment": [
+            {
+              "codeOwner": "Spotcable",
+              "Value": "Feb16 DMA Nielsen Live+3"
+            }
+          ],
+          "geography": "",
+          "profile": "",
+          "PUTBook": "",
+          "ratingService": "",
+          "shareBook": ""
+        },
+        "systemOrder": [
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": null,
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              },
+              null,
+              null
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "99050"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 13.0000
+              },
+              "spots": "2"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          },
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": null,
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              },
+              null,
+              null
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "99050"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 13.0000
+              },
+              "spots": "2"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          },
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": [
+              {
+                "comment": " ",
+                "dayOfWeek": {
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
+                },
+                "daypartCode": "bb",
+                "demoValue": [
+                  {
+                    "demoRank": "1",
+                    "override": false,
+                    "value": [
+                      {
+                        "type": 0,
+                        "typeSpecified": true,
+                        "Value": ""
+                      },
+                      {
+                        "type": 1,
+                        "typeSpecified": true,
+                        "Value": "779"
+                      }
+                    ]
+                  }
+                ],
+                "detailLineID": 0,
+                "length": "PT15S",
+                "network": [
+                  {
+                    "ID": [
+                      {
+                        "code": {
+                          "codeDescription": "2279",
+                          "codeOwner": "Spotcable",
+                          "Value": "NHQA"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Station",
+                          "codeOwner": "Strata",
+                          "Value": "NHQA-TV"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Band",
+                          "codeOwner": "Strata",
+                          "Value": "TV"
+                        },
+                        "comment": null
+                      }
+                    ],
+                    "name": "NHQA-TV"
+                  }
+                ],
+                "program": "KHQA THIS MORNING",
+                "spot": [
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "1"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "2",
+                    "weekNumber": "2"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "3"
+                  }
+                ],
+                "spotCost": {
+                  "currency": "USD",
+                  "Value": 6.5000
+                },
+                "startDay": 0,
+                "totals": {
+                  "cost": {
+                    "currency": "USD",
+                    "Value": 13.0000
+                  },
+                  "spots": "2"
+                }
+              }
+            ],
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              },
+              null,
+              null
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "99050"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 13.0000
+              },
+              "spots": "2"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          },
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": null,
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              },
+              null,
+              null
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "99050"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 13.0000
+              },
+              "spots": "2"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          }
+        ],
+        "totals": {
+          "cost": {
+            "currency": "USD",
+            "Value": 13.0000
+          },
+          "spots": "2"
+        }
+      }
+    ],
+    "populations": [
+      {
+        "demoRank": 1,
+        "Value": "155430"
+      }
+    ],
+    "product": {
+      "ID": [
+        {
+          "code": {
+            "codeDescription": null,
+            "codeOwner": "Agency",
+            "Value": ""
+          },
+          "comment": null
+        }
+      ],
+      "name": ""
+    }
+  },
+  "document": {
+    "documentCode": "",
+    "documentType": "",
+    "mediaType": 0,
+    "name": " ",
+    "schemaVersion": "1.0"
+  }
+}

@@ -7,6 +7,7 @@
         Assembly = 2,
         TVB = 3,
         TTNW = 4,
-        CNN = 5
+        CNN = 5,
+        Sinclair = 6,
     }
 }

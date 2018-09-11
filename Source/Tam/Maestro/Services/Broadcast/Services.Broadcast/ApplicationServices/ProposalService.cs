@@ -23,6 +23,8 @@ using Newtonsoft.Json;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System.Diagnostics;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -49,6 +51,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="showTypeSearchString">Show type to filter by</param>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> FindShowType(string showTypeSearchString);
+
+        List<string> SaveProposalBuy(ProposalBuySaveRequestDto proposalBuyRequest);
     }
 
     public class ProposalService : IProposalService
@@ -868,6 +872,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _ValidateProposalProjectionBooks(detail);
 
+                _ValidateProprietaryPricing(detail);
+
                 if (detail.FlightEndDate == default(DateTime) || detail.FlightStartDate == default(DateTime))
                     throw new Exception("Cannot save proposal detail without specifying flight start/end date.");
 
@@ -890,6 +896,23 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
+            }
+        }
+
+        private void _ValidateProprietaryPricing(ProposalDetailDto detail)
+        {
+            var proprietaryInventorySources = _GetProprietaryInventorySources();
+
+            foreach (var proprietaryPricingDto in detail.ProprietaryPricing)
+            {
+                if (!proprietaryInventorySources.Contains(proprietaryPricingDto.InventorySource))
+                    throw new Exception($"Cannot save proposal detail that contains invalid inventory source for proprietary pricing: {proprietaryPricingDto.InventorySource}");
+            }
+
+            foreach (var proprietaryPricingInventorySource in proprietaryInventorySources)
+            {
+                if (detail.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
+                    throw new Exception("Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data");
             }
         }
 
@@ -1186,44 +1209,37 @@ namespace Services.Broadcast.ApplicationServices
                 Audiences = _AudiencesCache.GetAllLookups(),
                 SpotLengths = _SpotLengthRepository.GetSpotLengths(),
                 SchedulePostTypes =
-                Enum.GetValues(typeof(SchedulePostType))
-                    .Cast<SchedulePostType>()
-                    .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
-                    .ToList(),
-                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos().OrderBy(m => m.Display).ToList(),
-                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4, MidpointRounding.AwayFromZero)
+                    Enum.GetValues(typeof(SchedulePostType))
+                        .Cast<SchedulePostType>()
+                        .Select(e => new LookupDto {Display = e.ToString(), Id = (int) e})
+                        .ToList(),
+                Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
+                    .OrderBy(m => m.Display).ToList(),
+                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4,
+                    MidpointRounding.AwayFromZero),
+                ProprietaryPricingInventorySources = _GetProprietaryInventorySources().Select(p => new LookupDto
+                {
+                    Id = (int)p,
+                    Display = p.Description()
+                }).ToList(),
+                ForecastDefaults = new ForecastRatingsDefaultsDto
+                {
+                    PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
+                    CrunchedMonths = _RatingForecastService.GetMediaMonthCrunchStatuses()
+                        .Where(a => a.Crunched == CrunchStatus.Crunched)
+                        .Select(
+                            m => new LookupDto
+                            {
+                                Display = m.MediaMonth.LongMonthNameAndYear,
+                                Id = m.MediaMonth.Id
+                            })
+                        .ToList()
+                },
+                Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>(),
+                MarketGroups = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>()
             };
-
-            result.MarketGroups = _GetMarketGroupList(result.Markets.Count);
-            result.ForecastDefaults = new ForecastRatingsDefaultsDto
-            {
-                PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
-                CrunchedMonths = _RatingForecastService.GetMediaMonthCrunchStatuses()
-                    .Where(a => a.Crunched == CrunchStatus.Crunched)
-                    .Select(
-                        m => new LookupDto()
-                        {
-                            Display = m.MediaMonth.LongMonthNameAndYear,
-                            Id = m.MediaMonth.Id
-                        })
-                    .ToList()
-            };
-            result.Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>();
 
             return result;
-        }
-
-        private List<MarketGroupDto> _GetMarketGroupList(int totalMarkets)
-        {
-            var marketGroups =
-                EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>().Select(
-                    g => new MarketGroupDto()
-                    {
-                        Display = g.Display,
-                        Id = g.Id,
-                    }).ToList();
-
-            return marketGroups;
         }
 
         private MarketGroupDto _GetMarketGroupDto(ProposalEnums.ProposalMarketGroups? marketGroup)
@@ -1363,7 +1379,8 @@ namespace Services.Broadcast.ApplicationServices
 
             MemoryStream archiveFile = new MemoryStream();
 
-            string proposalName = FormatProposalName(proposal.ProposalName);
+            string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
+
             using (var arch = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
             {
                 int ctr = 1;
@@ -1385,22 +1402,6 @@ namespace Services.Broadcast.ApplicationServices
             archiveFile.Seek(0, SeekOrigin.Begin);
             var archiveFileName = string.Format(fileArchiveTemplate, proposalName, proposal.Id);
             return new Tuple<string, Stream>(archiveFileName, archiveFile);
-        }
-
-        /// <summary>
-        /// Preps the proposal name for using in a file name.
-        /// </summary>
-        private string FormatProposalName(string proposalName)
-        {
-            return proposalName.Replace("\\", string.Empty)
-                                .Replace(":", string.Empty)
-                                .Replace("*", string.Empty)
-                                .Replace("?", string.Empty)
-                                .Replace("/", string.Empty)
-                                .Replace("<", string.Empty)
-                                .Replace(">", string.Empty)
-                                .Replace("|", string.Empty)
-                                .Replace("\"", string.Empty);
         }
 
         private string _FileDateFormat(DateTime date)
@@ -1455,5 +1456,40 @@ namespace Services.Broadcast.ApplicationServices
             if (request.Start < 1) request.Start = 1;
             return _ProgramNameRepository.FindPrograms(request.Name, request.Start, request.Limit);
         }
+
+        public List<string> SaveProposalBuy(ProposalBuySaveRequestDto request)
+        {
+            var scxFile = new ScxFile(request.FileStream);
+            var allStations = _StationRepository.GetBroadcastStations();
+            var spotLengthsDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+
+            var proposalBuy = new ProposalBuyFile(scxFile, request.EstimateId, request.FileName, request.ProposalVersionDetailId,
+                allStations, _MediaMonthAndWeekAggregateCache, _AudiencesCache, _DaypartCache, spotLengthsDict);
+
+            if (!proposalBuy.Errors.Any())
+            {
+                using (var transaction = new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+                {
+                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>().DeleteProposalBuyByProposalDetail(proposalBuy.ProposalVersionDetailId);
+                    _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>().SaveProposalBuy(proposalBuy, request.Username, DateTime.Now);
+                    transaction.Complete();
+                }
+            }
+
+            return proposalBuy.Errors;
+        }
+
+
+        private List<InventorySourceEnum> _GetProprietaryInventorySources()
+        {
+            var inventorySources = Enum.GetValues(typeof(InventorySourceEnum)).Cast<InventorySourceEnum>().ToList();
+
+            inventorySources.Remove(InventorySourceEnum.Blank);
+            inventorySources.Remove(InventorySourceEnum.Assembly);
+            inventorySources.Remove(InventorySourceEnum.OpenMarket);
+
+            return inventorySources;
+        }
+
     }
 }

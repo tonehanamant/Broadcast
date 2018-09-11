@@ -273,6 +273,21 @@
     {
       "Advertiser": "Test Advertiser 9",
       "AdvertiserId": 37444,
+      "ContractName": "NSI Report with Equivalized Impressions",
+      "Equivalized": true,
+      "GuaranteedAudienceId": 31,
+      "HouseholdDeliveredImpressions": 4000.0,
+      "PostType": 1,
+      "PrimaryAudienceBookedImpressions": 100000.0,
+      "PrimaryAudienceDeliveredImpressions": 4000.0,
+      "PrimaryAudienceDelivery": 4.0,
+      "SpotsInSpec": 1,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": "2018-02-08T12:57:39.693"
+    },
+    {
+      "Advertiser": "Test Advertiser 9",
+      "AdvertiserId": 37444,
       "ContractName": "Proposal Test 5",
       "Equivalized": false,
       "GuaranteedAudienceId": 31,

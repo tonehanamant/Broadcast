@@ -53,11 +53,11 @@ namespace Services.Broadcast.ApplicationServices
         public abstract void ValidateFileStruct();
 
 
-        public static IAffidavitPickupFileValidation GetAffidavitValidationService(FileInfo fileInfo,OutboundAffidavitFileValidationResultDto currentFile)
+        public static IAffidavitPickupFileValidation GetAffidavitValidationService(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile)
         {
             if (fileInfo.Extension.Equals(".xlsx", StringComparison.InvariantCultureIgnoreCase))
             {
-                return new AffidavitPickupValidationStrata(fileInfo,currentFile);
+                return new AffidavitPickupValidationStrata(fileInfo, currentFile);
             }
             else if (fileInfo.Extension.Equals(".csv", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -75,12 +75,12 @@ namespace Services.Broadcast.ApplicationServices
 
     class AffidavitPickupValidationKeepingTrac : AffidavitPickupFileValidation
     {
-        protected List<string> AffidavitFileHeaders = new List<string>() { "Estimate", "Station", "Air Date", "Air Time", "Air ISCI", "Demographic" ,"Act Ratings","Act Impression"};
+        protected List<string> AffidavitFileHeaders = new List<string>() { "Estimate", "Station", "Air Date", "Air Time", "Air ISCI", "Demographic", "Act Ratings", "Act Impression" };
         private CsvFileReader _csvReader;
 
         public AffidavitPickupValidationKeepingTrac(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile) : base(fileInfo, currentFile)
         {
-            currentFile.SourceId = (int) AffidaviteFileSourceEnum.KeepingTrac;
+            currentFile.SourceId = (int)AffidaviteFileSourceEnum.KeepingTrac;
         }
 
         private List<string> _MissingHeaders = new List<string>();
@@ -88,15 +88,27 @@ namespace Services.Broadcast.ApplicationServices
         private bool _OnMissingHeader(string headerName)
         {
             _MissingHeaders.Add(headerName);
+            _currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
+
             return true;
         }
         public override void ValidateFileStruct()
         {
-            var stream = File.OpenRead(_fileInfo.FullName);
+            try
+            {
+                var stream = File.OpenRead(_fileInfo.FullName);
 
-            _csvReader = new CsvFileReader(AffidavitFileHeaders);
-            _csvReader.OnMissingHeader = _OnMissingHeader;
-            _csvReader.Initialize(stream);
+                _csvReader = new CsvFileReader(AffidavitFileHeaders);
+                _csvReader.OnMissingHeader = _OnMissingHeader;
+                _csvReader.Initialize(stream);
+
+            }
+            catch (Exception e)
+            {
+                _currentFile.ErrorMessages.Add(e.ToString());
+                _currentFile.Status = AffidaviteFileProcessingStatus.Invalid;
+                throw;
+            }
         }
 
         public override void Dispose()
@@ -129,7 +141,7 @@ namespace Services.Broadcast.ApplicationServices
         public override void ValidateHeaders()
         {
             _MissingHeaders.ForEach(header =>
-                _currentFile.ErrorMessages.Add(string.Format("Could not find header for column '{0}' in file {1}", header,_currentFile.FilePath)));
+                _currentFile.ErrorMessages.Add(string.Format("Could not find header for column '{0}' in file {1}", header, _currentFile.FilePath)));
         }
     }
 
@@ -141,10 +153,10 @@ namespace Services.Broadcast.ApplicationServices
 
         private ExcelWorksheet _tab;
 
-        public AffidavitPickupValidationStrata(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile) 
+        public AffidavitPickupValidationStrata(FileInfo fileInfo, OutboundAffidavitFileValidationResultDto currentFile)
             : base(fileInfo, currentFile)
         {
-            currentFile.SourceId = (int) AffidaviteFileSourceEnum.Strata;
+            currentFile.SourceId = (int)AffidaviteFileSourceEnum.Strata;
         }
 
 

@@ -627,7 +627,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var postingDate = new DateTime(2016, 4, 20);
 
-                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
                 {
                     new ProposalWeekIsciDto() {Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA"}
@@ -657,7 +656,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var postingDate = new DateTime(2016, 4, 20);
 
-                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
                 {
                     new ProposalWeekIsciDto() {Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA"}
@@ -734,7 +732,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var postingDate = new DateTime(2016, 4, 20);
 
-                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
                 {
                     new ProposalWeekIsciDto() {Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA"}
@@ -765,7 +762,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var postingDate = new DateTime(2016, 4, 20);
 
-                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
                 {
                     new ProposalWeekIsciDto() {Brand = "WAWA", ClientIsci = "WAWA", HouseIsci = "WAWA"}
@@ -878,7 +874,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 proposal.Status = ProposalEnums.ProposalStatusType.Contracted;
-
+    
                 // Daypart that does not include thurday (the airtime for the affidavit).
                 proposal.Details.First().DaypartId = 88;
 

@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public station_inventory_spots()
         {
             this.station_inventory_spot_audiences = new HashSet<station_inventory_spot_audiences>();
+            this.station_inventory_spot_genres = new HashSet<station_inventory_spot_genres>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
         public virtual ICollection<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
+        public virtual ICollection<station_inventory_spot_genres> station_inventory_spot_genres { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
@@ -26,6 +27,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         public void CalculateCost(decimal cpm, decimal cost, int impressions)
         {
             Assert.That(ProposalMath.CalculateCost(cpm, impressions), Is.EqualTo(cost));
+        }
+
+        [TestCase(312, 0, 0, 0, 0, 0)]
+        [TestCase(312, 12, 0, 0, 0, 0)]
+        [TestCase(312, 0, 4, 0, 0, 0)]
+        [TestCase(312, 0, 0, 6, 0, 0)]
+        [TestCase(4000, 35000, 35000, 40, 0, .01)]
+        [TestCase(4000, 7500, 6000, 54, 0, .48)]
+        public void CalculateCpmPercent(decimal totalCost, double totalImpression, decimal targetBudget, double targetImpression, double margin,decimal percent)
+        {
+            var result =
+                ProposalMath.CalculateCpmPercent(totalCost, totalImpression, targetBudget, targetImpression, margin);
+            Assert.That(Math.Round(result,2), Is.EqualTo(percent));
         }
     }
 }

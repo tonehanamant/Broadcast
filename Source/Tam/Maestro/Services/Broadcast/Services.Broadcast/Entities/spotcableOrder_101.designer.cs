@@ -1449,7 +1449,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         public virtual string Serialize()
         {
             var xml = Serialize(Encoding.UTF8);
-            var x = ScxConverter.OverwriteDateTimeToHoursMinutesSeconds(xml);
+            var x = ScxScheduleConverter.OverwriteDateTimeToHoursMinutesSeconds(xml);
             return x;
 
         }

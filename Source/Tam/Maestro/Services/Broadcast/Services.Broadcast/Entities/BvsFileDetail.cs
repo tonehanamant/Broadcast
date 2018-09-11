@@ -3,20 +3,8 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class BvsFileDetail
-    {
-        public int Id { get; set; }
-        public int Rank { get; set; }
-        public string Market { get; set; }
-        public string Station { get; set; }
-        public string Affiliate { get; set; }
-        public DateTime DateAired{ get; set; }
-        public int TimeAired { get; set; }
-        public string ProgramName { get; set; }
-        public int SpotLength { get; set; }
-        public int? SpotLengthId { get; set; }
-        public string Isci { get; set; }
-        public int EstimateId { get; set; }
+    public class BvsFileDetail : TrackerFileDetail
+    {        
         public int? ScheduleDetailWeekId { get; set; }
         public bool MatchStation { get; set; }
         public bool MatchProgram { get; set; }
@@ -29,11 +17,9 @@ namespace Services.Broadcast.Entities
         public bool LinkedToBlock { get; set; }
         public bool LinkedToLeadin { get; set; }
         public bool MatchSpotLength { get; set; }
-        public string Advertiser { get; set; }
-
+        
         public List<BvsPostDetail> BvsPostDetails { get; set; } = new List<BvsPostDetail>();
-
-
+        
         public bool Equals(BvsFileDetail other)
         {
             return string.Equals(Advertiser, other.Advertiser)
