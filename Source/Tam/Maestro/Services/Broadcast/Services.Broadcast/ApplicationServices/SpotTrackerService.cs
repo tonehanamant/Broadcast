@@ -77,7 +77,6 @@ namespace Services.Broadcast.ApplicationServices
 
                     sigmaFile = _SigmaConverter.ExtractSigmaDataExtended(requestFile.StreamData, hash, username, requestFile.FileName, out lineInfo);
 
-
                     string message = string.Empty;
                     if (!string.IsNullOrEmpty(message))
                     {
@@ -98,7 +97,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception e)
                 {
                     hasErrors = true;
-                    errorMessages.AppendLine($"Error processing file '{requestFile.FileName}'<br />");
+                    errorMessages.AppendLine($"File '{requestFile.FileName}' failed validation for Sigma import<br />");
                     errorMessages.AppendLine($"Message: {e.Message}");
                 }
             }
