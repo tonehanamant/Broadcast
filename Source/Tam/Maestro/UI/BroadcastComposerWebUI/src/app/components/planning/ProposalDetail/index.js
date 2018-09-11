@@ -354,7 +354,6 @@ export class ProposalDetail extends Component {
               {detail &&
                 <div style={{ float: 'right', margin: '4px 0 0 8px' }}>
                   <DropdownButton bsSize="xsmall" bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="detail_actions">
-                      <MenuItem eventKey="uploadBuy" onSelect={this.openModal}>Upload Buy File</MenuItem>
                       <MenuItem eventKey="pricingGuide" onSelect={this.openModal}>Pricing Guide</MenuItem>
                       <MenuItem eventKey="1" onClick={() => this.openInventory('inventory')}>Proprietary Inventory</MenuItem>
                       <MenuItem eventKey="2" onClick={() => this.openInventory('openMarket')}>Open Market Inventory</MenuItem>
