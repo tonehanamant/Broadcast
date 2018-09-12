@@ -141,7 +141,7 @@ export function* requestPostFiltered({ payload: query }) {
     })
   ));
 
-  const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
+  const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
   const searcher = new FuzzySearch(postListUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
@@ -168,12 +168,7 @@ export function* requestUnlinkedFiltered({ payload: query }) {
 
   // for each post, convert all properties to string to enable use on FuzzySearch object
   unlinkedListUnfiltered.map(post => (
-    Object.keys(post).map((key) => {
-      if (post[key] !== null && post[key] !== undefined) {
-        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
-      }
-      return post[key];
-    })
+    Object.keys(post).map(key => post[key])
   ));
 
   const keys = ['ISCI'];
@@ -203,12 +198,7 @@ export function* requestArchivedFiltered({ payload: query }) {
 
   // for each post, convert all properties to string to enable use on FuzzySearch object
   archivedListUnfiltered.map(post => (
-    Object.keys(post).map((key) => {
-      if (post[key] !== null && post[key] !== undefined) {
-        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
-      }
-      return post[key];
-    })
+    Object.keys(post).map(key => post[key])
   ));
 
   const keys = ['ISCI'];
