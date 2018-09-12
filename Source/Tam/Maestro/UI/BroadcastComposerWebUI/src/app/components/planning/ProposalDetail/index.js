@@ -360,7 +360,7 @@ export class ProposalDetail extends Component {
                       <MenuItem eventKey="sweepsModal" onSelect={this.openModal}>Projections Book</MenuItem>
                       <MenuItem eventKey="postingBook" onSelect={this.openModal}>Posting Book</MenuItem>
                       <MenuItem eventKey="programGenreModal" onSelect={this.openModal}>Program/Genre/Show Type</MenuItem>
-                      {isReadOnly && <MenuItem eventKey="rerunPostScrubbing" onSelect={this.rerunPostScrubing}>Rerun Post Scrubing</MenuItem>}
+                      {isReadOnly && <MenuItem eventKey="rerunPostScrubbing" onSelect={this.rerunPostScrubing}>Rerun Post Scrubbing</MenuItem>}
                       {isReadOnly && <MenuItem eventKey="uploadBuy" onSelect={this.openModal}>Upload SCX File</MenuItem>}
                   </DropdownButton>
                 </div>
