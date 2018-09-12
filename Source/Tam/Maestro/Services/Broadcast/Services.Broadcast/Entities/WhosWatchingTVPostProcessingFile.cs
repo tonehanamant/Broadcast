@@ -27,7 +27,7 @@ namespace Services.Broadcast.Entities
         public string LeadInGenre { get; set; }
         public string LeadOutProgram { get; set; }
         public string LeadOutGenre { get; set; }
-        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
+        public List<WWTVDemographics> Demographics { get; set; } = new List<WWTVDemographics>();
         public string LeadInEndTime { get; set; }
         public string LeadOutStartTime { get; set; }
         public string ShowType { get; set; }

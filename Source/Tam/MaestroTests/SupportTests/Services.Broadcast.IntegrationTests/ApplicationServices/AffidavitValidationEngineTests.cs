@@ -13,14 +13,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IAffidavitValidationEngine _AffidavitValidationEngine =
     IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitValidationEngine>();
 
-        private AffidavitSaveRequestDetail _SetupAffidavitSaveRequestDetail()
+        private InboundFileSaveRequestDetail _SetupAffidavitSaveRequestDetail()
         {
-            return new AffidavitSaveRequestDetail()
+            return new InboundFileSaveRequestDetail()
             {
                 Affiliate = "AA",
                 AirTime = new DateTime(2018, 01, 01),
                 Genre = "Comedy",
-                InventorySource = AffidaviteFileSourceEnum.Strata,
+                InventorySource = AffidavitFileSourceEnum.Strata,
                 Isci = "AAAAAAA",
                 LeadInGenre = "Comedy",
                 LeadInProgramName = "Saturday Night Live",

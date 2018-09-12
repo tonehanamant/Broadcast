@@ -11,6 +11,7 @@ using Tam.Maestro.Services.Clients;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -357,17 +358,17 @@ namespace Services.Broadcast.ApplicationServices
             return iscis;
         }
 
-        private string _GetAffidavitDetailProblemDescription(AffidavitFileDetailProblemTypeEnum problemType)
+        private string _GetAffidavitDetailProblemDescription(FileDetailProblemTypeEnum problemType)
         {
             switch (problemType)
             {
-                case AffidavitFileDetailProblemTypeEnum.UnlinkedIsci:
+                case FileDetailProblemTypeEnum.UnlinkedIsci:
                     return "Not in system";
-                case AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts:
+                case FileDetailProblemTypeEnum.UnmarriedOnMultipleContracts:
                     return "Multiple Proposals";
-                case AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried:
+                case FileDetailProblemTypeEnum.MarriedAndUnmarried:
                     return "Married and Unmarried";
-                case AffidavitFileDetailProblemTypeEnum.UnmatchedSpotLength:
+                case FileDetailProblemTypeEnum.UnmatchedSpotLength:
                     return "Unmatched Spot length";
                 default:
                     return null;

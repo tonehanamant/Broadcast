@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Entities
-{    
-    public class AffidavitSaveRequest
+{
+    public class InboundFileSaveRequest
     {
         public string FileName { get; set; }
         public string FileHash { get; set; }
         public int Source { get; set; }
-        public List<AffidavitSaveRequestDetail> Details { get; set; }
+        public List<InboundFileSaveRequestDetail> Details { get; set; }
 
-        public AffidavitSaveRequest()
+        public InboundFileSaveRequest()
         {
-            Details = new List<AffidavitSaveRequestDetail>();
+            Details = new List<InboundFileSaveRequestDetail>();
         }
     }
 
-    public class AffidavitSaveRequestDetail
+    public class InboundFileSaveRequestDetail
     {
         public string Station { get; set; }
         public DateTime AirTime { get; set; }
@@ -31,10 +30,10 @@ namespace Services.Broadcast.Entities
         public string LeadOutGenre { get; set; }
         public string Market { get; set; }
         public int? EstimateId { get; set; }
-        public AffidaviteFileSourceEnum InventorySource { get; set; }
+        public AffidavitFileSourceEnum InventorySource { get; set; }
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
-        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
+        public List<WWTVDemographics> Demographics { get; set; } = new List<WWTVDemographics>();
         public DateTime LeadInEndTime { get; set; }
         public DateTime LeadOutStartTime { get; set; }
         public string ShowType { get; set; }

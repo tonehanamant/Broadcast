@@ -426,6 +426,74 @@
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="playback_type" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="postlog_file_detail_demographics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="audience_id" Type="int" />
+          <Property Name="postlog_file_detail_id" Type="bigint" />
+          <Property Name="overnight_rating" Type="float" />
+          <Property Name="overnight_impressions" Type="float" />
+        </EntityType>
+        <EntityType Name="postlog_file_detail_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postlog_file_detail_id" Type="bigint" Nullable="false" />
+          <Property Name="problem_type" Type="int" Nullable="false" />
+          <Property Name="problem_description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="postlog_file_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postlog_file_id" Type="int" Nullable="false" />
+          <Property Name="station" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="original_air_date" Type="date" Nullable="false" />
+          <Property Name="adjusted_air_date" Type="date" Nullable="false" />
+          <Property Name="air_time" Type="int" Nullable="false" />
+          <Property Name="spot_length_id" Type="int" Nullable="false" />
+          <Property Name="isci" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="program_name" Type="varchar" MaxLength="255" />
+          <Property Name="genre" Type="varchar" MaxLength="255" />
+          <Property Name="leadin_genre" Type="varchar" MaxLength="255" />
+          <Property Name="leadin_program_name" Type="varchar" MaxLength="255" />
+          <Property Name="leadout_genre" Type="varchar" MaxLength="255" />
+          <Property Name="leadout_program_name" Type="varchar" MaxLength="255" />
+          <Property Name="market" Type="varchar" MaxLength="63" />
+          <Property Name="estimate_id" Type="int" />
+          <Property Name="inventory_source" Type="int" />
+          <Property Name="spot_cost" Type="float" />
+          <Property Name="affiliate" Type="varchar" MaxLength="15" />
+          <Property Name="leadin_end_time" Type="int" />
+          <Property Name="leadout_start_time" Type="int" />
+          <Property Name="program_show_type" Type="varchar" MaxLength="255" />
+          <Property Name="leadin_show_type" Type="varchar" MaxLength="255" />
+          <Property Name="leadout_show_type" Type="varchar" MaxLength="255" />
+          <Property Name="archived" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="postlog_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postlog_file_id" Type="int" Nullable="false" />
+          <Property Name="problem_description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="postlog_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="file_hash" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="source_id" Type="int" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="postlog_outbound_file_problems">
           <Key>
             <PropertyRef Name="id" />
@@ -971,6 +1039,14 @@
           <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
           <Property Name="media_week_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="station_inventory_manifest_genres">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
+          <Property Name="genre_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="station_inventory_manifest_rates">
           <Key>
             <PropertyRef Name="id" />
@@ -1457,6 +1533,76 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="post_files">
               <PropertyRef Name="posting_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_detail_demographics_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postlog_file_detail_demographics" Type="Self.postlog_file_detail_demographics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_detail_demographics">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_detail_demographics_postlog_file_details">
+          <End Role="postlog_file_details" Type="Self.postlog_file_details" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postlog_file_detail_demographics" Type="Self.postlog_file_detail_demographics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_file_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_detail_demographics">
+              <PropertyRef Name="postlog_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_detail_problems_postlog_file_details">
+          <End Role="postlog_file_details" Type="Self.postlog_file_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postlog_file_detail_problems" Type="Self.postlog_file_detail_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_file_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_detail_problems">
+              <PropertyRef Name="postlog_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_details_postlog_files">
+          <End Role="postlog_files" Type="Self.postlog_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postlog_file_details" Type="Self.postlog_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_details">
+              <PropertyRef Name="postlog_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_problems_postlog_files">
+          <End Role="postlog_files" Type="Self.postlog_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postlog_file_problems" Type="Self.postlog_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_problems">
+              <PropertyRef Name="postlog_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2318,6 +2464,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_station_inventory_manifest_genres_genres">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="station_inventory_manifest_genres" Type="Self.station_inventory_manifest_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_genres">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_genres_station_inventory_manifest">
+          <End Role="station_inventory_manifest" Type="Self.station_inventory_manifest" Multiplicity="1" />
+          <End Role="station_inventory_manifest_genres" Type="Self.station_inventory_manifest_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_genres">
+              <PropertyRef Name="station_inventory_manifest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_station_inventory_manifest_inventory_files">
           <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="0..1" />
           <End Role="station_inventory_manifest" Type="Self.station_inventory_manifest" Multiplicity="*" />
@@ -2535,6 +2705,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_details" EntityType="Self.post_file_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_files" EntityType="Self.post_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postlog_file_detail_demographics" EntityType="Self.postlog_file_detail_demographics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postlog_file_detail_problems" EntityType="Self.postlog_file_detail_problems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postlog_file_details" EntityType="Self.postlog_file_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postlog_file_problems" EntityType="Self.postlog_file_problems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postlog_files" EntityType="Self.postlog_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="postlog_outbound_file_problems" EntityType="Self.postlog_outbound_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="postlog_outbound_files" EntityType="Self.postlog_outbound_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_names" EntityType="Self.program_names" Schema="dbo" store:Type="Tables" />
@@ -2578,6 +2753,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="station_inventory_manifest_audiences" EntityType="Self.station_inventory_manifest_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_dayparts" EntityType="Self.station_inventory_manifest_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_generation" EntityType="Self.station_inventory_manifest_generation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="station_inventory_manifest_genres" EntityType="Self.station_inventory_manifest_genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_rates" EntityType="Self.station_inventory_manifest_rates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spot_audiences" EntityType="Self.station_inventory_spot_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spot_genres" EntityType="Self.station_inventory_spot_genres" Schema="dbo" store:Type="Tables" />
@@ -2723,6 +2899,26 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_post_files_media_months" Association="Self.FK_post_files_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="post_files" EntitySet="post_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_detail_demographics_audiences" Association="Self.FK_postlog_file_detail_demographics_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="postlog_file_detail_demographics" EntitySet="postlog_file_detail_demographics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_detail_demographics_postlog_file_details" Association="Self.FK_postlog_file_detail_demographics_postlog_file_details">
+            <End Role="postlog_file_details" EntitySet="postlog_file_details" />
+            <End Role="postlog_file_detail_demographics" EntitySet="postlog_file_detail_demographics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_detail_problems_postlog_file_details" Association="Self.FK_postlog_file_detail_problems_postlog_file_details">
+            <End Role="postlog_file_details" EntitySet="postlog_file_details" />
+            <End Role="postlog_file_detail_problems" EntitySet="postlog_file_detail_problems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_details_postlog_files" Association="Self.FK_postlog_file_details_postlog_files">
+            <End Role="postlog_files" EntitySet="postlog_files" />
+            <End Role="postlog_file_details" EntitySet="postlog_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_problems_postlog_files" Association="Self.FK_postlog_file_problems_postlog_files">
+            <End Role="postlog_files" EntitySet="postlog_files" />
+            <End Role="postlog_file_problems" EntitySet="postlog_file_problems" />
           </AssociationSet>
           <AssociationSet Name="FK_postlog_outbound_file_problems_postlog_outbound_files" Association="Self.FK_postlog_outbound_file_problems_postlog_outbound_files">
             <End Role="postlog_outbound_files" EntitySet="postlog_outbound_files" />
@@ -2987,6 +3183,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_station_inventory_manifest_generation_station_inventory_manifest" Association="Self.FK_station_inventory_manifest_generation_station_inventory_manifest">
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
             <End Role="station_inventory_manifest_generation" EntitySet="station_inventory_manifest_generation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_genres_genres" Association="Self.FK_station_inventory_manifest_genres_genres">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="station_inventory_manifest_genres" EntitySet="station_inventory_manifest_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_genres_station_inventory_manifest" Association="Self.FK_station_inventory_manifest_genres_station_inventory_manifest">
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="station_inventory_manifest_genres" EntitySet="station_inventory_manifest_genres" />
           </AssociationSet>
           <AssociationSet Name="FK_station_inventory_manifest_inventory_files" Association="Self.FK_station_inventory_manifest_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -3501,22 +3705,21 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="proposal_version_detail_proprietary_pricing" EntitySet="proposal_version_detail_proprietary_pricing" />
           </AssociationSet>
-          <EntitySet Name="station_inventory_spot_genres" EntityType="BroadcastModel.station_inventory_spot_genres" />
-          <AssociationSet Name="FK_station_inventory_spot_genres_genres" Association="BroadcastModel.FK_station_inventory_spot_genres_genres">
-            <End Role="genre" EntitySet="genres" />
-            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
+          <EntitySet Name="spot_tracker_file_details" EntityType="BroadcastModel.spot_tracker_file_details" />
+          <EntitySet Name="spot_tracker_files" EntityType="BroadcastModel.spot_tracker_files" />
+          <AssociationSet Name="FK_spot_tracker_file_details_spot_lengths" Association="BroadcastModel.FK_spot_tracker_file_details_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="spot_tracker_file_details" EntitySet="spot_tracker_file_details" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_inventory_spot_genres_station_inventory_spots" Association="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots">
-            <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
-            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
+          <AssociationSet Name="FK_spot_tracker_file_spot_tracker_file_details" Association="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details">
+            <End Role="spot_tracker_files" EntitySet="spot_tracker_files" />
+            <End Role="spot_tracker_file_details" EntitySet="spot_tracker_file_details" />
           </AssociationSet>
-          <EntitySet Name="market_coverages" EntityType="BroadcastModel.market_coverages" />
           <EntitySet Name="proposal_buy_file_detail_audiences" EntityType="BroadcastModel.proposal_buy_file_detail_audiences" />
           <EntitySet Name="proposal_buy_file_detail_weeks" EntityType="BroadcastModel.proposal_buy_file_detail_weeks" />
           <EntitySet Name="proposal_buy_file_details" EntityType="BroadcastModel.proposal_buy_file_details" />
           <EntitySet Name="proposal_buy_files" EntityType="BroadcastModel.proposal_buy_files" />
-          <EntitySet Name="spot_tracker_file_details" EntityType="BroadcastModel.spot_tracker_file_details" />
-          <EntitySet Name="spot_tracker_files" EntityType="BroadcastModel.spot_tracker_files" />
+          <EntitySet Name="station_inventory_spot_genres" EntityType="BroadcastModel.station_inventory_spot_genres" />
           <AssociationSet Name="FK_proposal_buy_file_detail_audiences_audiences" Association="BroadcastModel.FK_proposal_buy_file_detail_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
             <End Role="proposal_buy_file_detail_audiences" EntitySet="proposal_buy_file_detail_audiences" />
@@ -3525,9 +3728,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="daypart" EntitySet="dayparts" />
             <End Role="proposal_buy_file_details" EntitySet="proposal_buy_file_details" />
           </AssociationSet>
-          <AssociationSet Name="FK_market_coverages_markets" Association="BroadcastModel.FK_market_coverages_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="market_coverages" EntitySet="market_coverages" />
+          <AssociationSet Name="FK_station_inventory_spot_genres_genres" Association="BroadcastModel.FK_station_inventory_spot_genres_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
           </AssociationSet>
           <AssociationSet Name="FK_proposal_buy_file_detail_weeks_media_weeks" Association="BroadcastModel.FK_proposal_buy_file_detail_weeks_media_weeks">
             <End Role="media_weeks" EntitySet="media_weeks" />
@@ -3557,13 +3760,48 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="proposal_buy_files" EntitySet="proposal_buy_files" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_tracker_file_details_spot_lengths" Association="BroadcastModel.FK_spot_tracker_file_details_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="spot_tracker_file_details" EntitySet="spot_tracker_file_details" />
+          <AssociationSet Name="FK_station_inventory_spot_genres_station_inventory_spots" Association="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots">
+            <End Role="station_inventory_spots" EntitySet="station_inventory_spots" />
+            <End Role="station_inventory_spot_genres" EntitySet="station_inventory_spot_genres" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_tracker_file_spot_tracker_file_details" Association="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details">
-            <End Role="spot_tracker_files" EntitySet="spot_tracker_files" />
-            <End Role="spot_tracker_file_details" EntitySet="spot_tracker_file_details" />
+          <EntitySet Name="market_coverages" EntityType="BroadcastModel.market_coverages" />
+          <AssociationSet Name="FK_market_coverages_markets" Association="BroadcastModel.FK_market_coverages_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="market_coverages" EntitySet="market_coverages" />
+          </AssociationSet>
+          <EntitySet Name="postlog_file_detail_demographics" EntityType="BroadcastModel.postlog_file_detail_demographics" />
+          <EntitySet Name="postlog_file_detail_problems" EntityType="BroadcastModel.postlog_file_detail_problems" />
+          <EntitySet Name="postlog_file_details" EntityType="BroadcastModel.postlog_file_details" />
+          <EntitySet Name="postlog_file_problems" EntityType="BroadcastModel.postlog_file_problems" />
+          <EntitySet Name="postlog_files" EntityType="BroadcastModel.postlog_files" />
+          <AssociationSet Name="FK_postlog_file_detail_demographics_audiences" Association="BroadcastModel.FK_postlog_file_detail_demographics_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="postlog_file_detail_demographics" EntitySet="postlog_file_detail_demographics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_detail_demographics_postlog_file_details" Association="BroadcastModel.FK_postlog_file_detail_demographics_postlog_file_details">
+            <End Role="postlog_file_details" EntitySet="postlog_file_details" />
+            <End Role="postlog_file_detail_demographics" EntitySet="postlog_file_detail_demographics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_detail_problems_postlog_file_details" Association="BroadcastModel.FK_postlog_file_detail_problems_postlog_file_details">
+            <End Role="postlog_file_details" EntitySet="postlog_file_details" />
+            <End Role="postlog_file_detail_problems" EntitySet="postlog_file_detail_problems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_details_postlog_files" Association="BroadcastModel.FK_postlog_file_details_postlog_files">
+            <End Role="postlog_files" EntitySet="postlog_files" />
+            <End Role="postlog_file_details" EntitySet="postlog_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postlog_file_problems_postlog_files" Association="BroadcastModel.FK_postlog_file_problems_postlog_files">
+            <End Role="postlog_files" EntitySet="postlog_files" />
+            <End Role="postlog_file_problems" EntitySet="postlog_file_problems" />
+          </AssociationSet>
+          <EntitySet Name="station_inventory_manifest_genres" EntityType="BroadcastModel.station_inventory_manifest_genres" />
+          <AssociationSet Name="FK_station_inventory_manifest_genres_genres" Association="BroadcastModel.FK_station_inventory_manifest_genres_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="station_inventory_manifest_genres" EntitySet="station_inventory_manifest_genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_genres_station_inventory_manifest" Association="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest">
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="station_inventory_manifest_genres" EntitySet="station_inventory_manifest_genres" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -3601,6 +3839,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="affidavit_client_scrub_audiences" Relationship="BroadcastModel.FK_affidavit_client_scrub_audiences_audiences" FromRole="audience" ToRole="affidavit_client_scrub_audiences" />
           <NavigationProperty Name="affidavit_file_detail_demographics" Relationship="BroadcastModel.FK_affidavit_file_detail_demographics_audiences" FromRole="audience" ToRole="affidavit_file_detail_demographics" />
           <NavigationProperty Name="proposal_buy_file_detail_audiences" Relationship="BroadcastModel.FK_proposal_buy_file_detail_audiences_audiences" FromRole="audience" ToRole="proposal_buy_file_detail_audiences" />
+          <NavigationProperty Name="postlog_file_detail_demographics" Relationship="BroadcastModel.FK_postlog_file_detail_demographics_audiences" FromRole="audience" ToRole="postlog_file_detail_demographics" />
         </EntityType>
         <EntityType Name="bvs_file_details">
           <Key>
@@ -4507,6 +4746,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_genres" FromRole="genre" ToRole="proposal_version_detail_criteria_genres" />
           <NavigationProperty Name="station_inventory_spot_genres" Relationship="BroadcastModel.FK_station_inventory_spot_genres_genres" FromRole="genre" ToRole="station_inventory_spot_genres" />
+          <NavigationProperty Name="station_inventory_manifest_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_genres" FromRole="genre" ToRole="station_inventory_manifest_genres" />
         </EntityType>
         <EntityType Name="proposal_version_detail_criteria_cpm">
           <Key>
@@ -4772,8 +5012,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
-          <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_buy_file_details" />
           <NavigationProperty Name="spot_tracker_file_details" Relationship="BroadcastModel.FK_spot_tracker_file_details_spot_lengths" FromRole="spot_lengths" ToRole="spot_tracker_file_details" />
+          <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_buy_file_details" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -4920,6 +5160,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
           <NavigationProperty Name="station_inventory_spots" Relationship="BroadcastModel.FK_station_inventory_spots_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_spots" />
+          <NavigationProperty Name="station_inventory_manifest_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_genres" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_inventory_files">
           <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="0..1" />
@@ -5912,53 +6153,81 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="station_inventory_spot_genres">
+        <EntityType Name="spot_tracker_file_details">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="station_inventory_spot_id" Type="Int32" Nullable="false" />
-          <Property Name="genre_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_station_inventory_spot_genres_genres" FromRole="station_inventory_spot_genres" ToRole="genre" />
-          <NavigationProperty Name="station_inventory_spots" Relationship="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots" FromRole="station_inventory_spot_genres" ToRole="station_inventory_spots" />
+          <Property Name="spot_tracker_file_id" Type="Int32" Nullable="false" />
+          <Property Name="client" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="client_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="advertiser" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="release_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="spot_length_id" Type="Int32" />
+          <Property Name="spot_length" Type="Int32" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="rank" Type="Int32" />
+          <Property Name="market" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int32" />
+          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="station_name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="affiliate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="date_aired" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="day_of_week" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="daypart" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="time_aired" Type="Int32" Nullable="false" />
+          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="encode_date" Type="DateTime" Precision="0" />
+          <Property Name="encode_time" Type="Int32" />
+          <Property Name="rel_type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="identifier_2" Type="Int32" />
+          <Property Name="identifier_3" Type="Int32" />
+          <Property Name="sid" Type="Int32" />
+          <Property Name="discid" Type="Int32" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_tracker_file_details_spot_lengths" FromRole="spot_tracker_file_details" ToRole="spot_lengths" />
+          <NavigationProperty Name="spot_tracker_files" Relationship="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details" FromRole="spot_tracker_file_details" ToRole="spot_tracker_files" />
         </EntityType>
-        <Association Name="FK_station_inventory_spot_genres_genres">
-          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
-          <End Type="BroadcastModel.station_inventory_spot_genres" Role="station_inventory_spot_genres" Multiplicity="*" />
+        <EntityType Name="spot_tracker_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="spot_tracker_file_details" Relationship="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details" FromRole="spot_tracker_files" ToRole="spot_tracker_file_details" />
+        </EntityType>
+        <Association Name="FK_spot_tracker_file_details_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_tracker_file_details" Role="spot_tracker_file_details" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="genre">
+            <Principal Role="spot_lengths">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="station_inventory_spot_genres">
-              <PropertyRef Name="genre_id" />
+            <Dependent Role="spot_tracker_file_details">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_station_inventory_spot_genres_station_inventory_spots">
-          <End Type="BroadcastModel.station_inventory_spots" Role="station_inventory_spots" Multiplicity="1">
+        <Association Name="FK_spot_tracker_file_spot_tracker_file_details">
+          <End Type="BroadcastModel.spot_tracker_files" Role="spot_tracker_files" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="BroadcastModel.station_inventory_spot_genres" Role="station_inventory_spot_genres" Multiplicity="*" />
+          <End Type="BroadcastModel.spot_tracker_file_details" Role="spot_tracker_file_details" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="station_inventory_spots">
+            <Principal Role="spot_tracker_files">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="station_inventory_spot_genres">
-              <PropertyRef Name="station_inventory_spot_id" />
+            <Dependent Role="spot_tracker_file_details">
+              <PropertyRef Name="spot_tracker_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="market_coverages">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="rank" Type="Int32" Nullable="false" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="tv_homes" Type="Int32" Nullable="false" />
-          <Property Name="percentage_of_us" Type="Double" Nullable="false" />
-          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_market_coverages_markets" FromRole="market_coverages" ToRole="market" />
-        </EntityType>
         <EntityType Name="proposal_buy_file_detail_audiences">
           <Key>
             <PropertyRef Name="id" />
@@ -6018,54 +6287,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_proposal_buy_files" FromRole="proposal_buy_files" ToRole="proposal_buy_file_details" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_buy_files_proposal_version_details" FromRole="proposal_buy_files" ToRole="proposal_version_details" />
         </EntityType>
-        <EntityType Name="spot_tracker_file_details">
+        <EntityType Name="station_inventory_spot_genres">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_tracker_file_id" Type="Int32" Nullable="false" />
-          <Property Name="client" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="client_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="advertiser" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="release_name" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="isci" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="spot_length_id" Type="Int32" />
-          <Property Name="spot_length" Type="Int32" Nullable="false" />
-          <Property Name="country" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="rank" Type="Int32" />
-          <Property Name="market" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int32" />
-          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="station_name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="affiliate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="date_aired" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="day_of_week" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="daypart" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="time_aired" Type="Int32" Nullable="false" />
-          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="encode_date" Type="DateTime" Precision="0" />
-          <Property Name="encode_time" Type="Int32" />
-          <Property Name="rel_type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="identifier_2" Type="Int32" />
-          <Property Name="identifier_3" Type="Int32" />
-          <Property Name="sid" Type="Int32" />
-          <Property Name="discid" Type="Int32" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_tracker_file_details_spot_lengths" FromRole="spot_tracker_file_details" ToRole="spot_lengths" />
-          <NavigationProperty Name="spot_tracker_files" Relationship="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details" FromRole="spot_tracker_file_details" ToRole="spot_tracker_files" />
-        </EntityType>
-        <EntityType Name="spot_tracker_files">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="file_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="spot_tracker_file_details" Relationship="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details" FromRole="spot_tracker_files" ToRole="spot_tracker_file_details" />
+          <Property Name="station_inventory_spot_id" Type="Int32" Nullable="false" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_station_inventory_spot_genres_genres" FromRole="station_inventory_spot_genres" ToRole="genre" />
+          <NavigationProperty Name="station_inventory_spots" Relationship="BroadcastModel.FK_station_inventory_spot_genres_station_inventory_spots" FromRole="station_inventory_spot_genres" ToRole="station_inventory_spots" />
         </EntityType>
         <Association Name="FK_proposal_buy_file_detail_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -6091,15 +6321,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_market_coverages_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
-          <End Type="BroadcastModel.market_coverages" Role="market_coverages" Multiplicity="*" />
+        <Association Name="FK_station_inventory_spot_genres_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_spot_genres" Role="station_inventory_spot_genres" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="market">
-              <PropertyRef Name="market_code" />
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="market_coverages">
-              <PropertyRef Name="market_code" />
+            <Dependent Role="station_inventory_spot_genres">
+              <PropertyRef Name="genre_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6193,29 +6423,221 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_spot_tracker_file_details_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_tracker_file_details" Role="spot_tracker_file_details" Multiplicity="*" />
+        <Association Name="FK_station_inventory_spot_genres_station_inventory_spots">
+          <End Type="BroadcastModel.station_inventory_spots" Role="station_inventory_spots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.station_inventory_spot_genres" Role="station_inventory_spot_genres" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="spot_lengths">
+            <Principal Role="station_inventory_spots">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="spot_tracker_file_details">
-              <PropertyRef Name="spot_length_id" />
+            <Dependent Role="station_inventory_spot_genres">
+              <PropertyRef Name="station_inventory_spot_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_spot_tracker_file_spot_tracker_file_details">
-          <End Type="BroadcastModel.spot_tracker_files" Role="spot_tracker_files" Multiplicity="1">
+        <EntityType Name="market_coverages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="tv_homes" Type="Int32" Nullable="false" />
+          <Property Name="percentage_of_us" Type="Double" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_market_coverages_markets" FromRole="market_coverages" ToRole="market" />
+        </EntityType>
+        <Association Name="FK_market_coverages_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
+          <End Type="BroadcastModel.market_coverages" Role="market_coverages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="market_coverages">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="postlog_file_detail_demographics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="audience_id" Type="Int32" />
+          <Property Name="postlog_file_detail_id" Type="Int64" />
+          <Property Name="overnight_rating" Type="Double" />
+          <Property Name="overnight_impressions" Type="Double" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_postlog_file_detail_demographics_audiences" FromRole="postlog_file_detail_demographics" ToRole="audience" />
+          <NavigationProperty Name="postlog_file_details" Relationship="BroadcastModel.FK_postlog_file_detail_demographics_postlog_file_details" FromRole="postlog_file_detail_demographics" ToRole="postlog_file_details" />
+        </EntityType>
+        <EntityType Name="postlog_file_detail_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postlog_file_detail_id" Type="Int64" Nullable="false" />
+          <Property Name="problem_type" Type="Int32" Nullable="false" />
+          <Property Name="problem_description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="postlog_file_details" Relationship="BroadcastModel.FK_postlog_file_detail_problems_postlog_file_details" FromRole="postlog_file_detail_problems" ToRole="postlog_file_details" />
+        </EntityType>
+        <EntityType Name="postlog_file_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postlog_file_id" Type="Int32" Nullable="false" />
+          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="original_air_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="adjusted_air_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="air_time" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="genre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadin_genre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadin_program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadout_genre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadout_program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="market" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="estimate_id" Type="Int32" />
+          <Property Name="inventory_source" Type="Int32" />
+          <Property Name="spot_cost" Type="Double" />
+          <Property Name="affiliate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="leadin_end_time" Type="Int32" />
+          <Property Name="leadout_start_time" Type="Int32" />
+          <Property Name="program_show_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadin_show_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="leadout_show_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="archived" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="postlog_file_detail_demographics" Relationship="BroadcastModel.FK_postlog_file_detail_demographics_postlog_file_details" FromRole="postlog_file_details" ToRole="postlog_file_detail_demographics" />
+          <NavigationProperty Name="postlog_file_detail_problems" Relationship="BroadcastModel.FK_postlog_file_detail_problems_postlog_file_details" FromRole="postlog_file_details" ToRole="postlog_file_detail_problems" />
+          <NavigationProperty Name="postlog_files" Relationship="BroadcastModel.FK_postlog_file_details_postlog_files" FromRole="postlog_file_details" ToRole="postlog_files" />
+        </EntityType>
+        <EntityType Name="postlog_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postlog_file_id" Type="Int32" Nullable="false" />
+          <Property Name="problem_description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="postlog_files" Relationship="BroadcastModel.FK_postlog_file_problems_postlog_files" FromRole="postlog_file_problems" ToRole="postlog_files" />
+        </EntityType>
+        <EntityType Name="postlog_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="source_id" Type="Int32" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="postlog_file_details" Relationship="BroadcastModel.FK_postlog_file_details_postlog_files" FromRole="postlog_files" ToRole="postlog_file_details" />
+          <NavigationProperty Name="postlog_file_problems" Relationship="BroadcastModel.FK_postlog_file_problems_postlog_files" FromRole="postlog_files" ToRole="postlog_file_problems" />
+        </EntityType>
+        <Association Name="FK_postlog_file_detail_demographics_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="BroadcastModel.spot_tracker_file_details" Role="spot_tracker_file_details" Multiplicity="*" />
+          <End Type="BroadcastModel.postlog_file_detail_demographics" Role="postlog_file_detail_demographics" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="spot_tracker_files">
+            <Principal Role="audience">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="spot_tracker_file_details">
-              <PropertyRef Name="spot_tracker_file_id" />
+            <Dependent Role="postlog_file_detail_demographics">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_detail_demographics_postlog_file_details">
+          <End Type="BroadcastModel.postlog_file_details" Role="postlog_file_details" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.postlog_file_detail_demographics" Role="postlog_file_detail_demographics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_file_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_detail_demographics">
+              <PropertyRef Name="postlog_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_detail_problems_postlog_file_details">
+          <End Type="BroadcastModel.postlog_file_details" Role="postlog_file_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.postlog_file_detail_problems" Role="postlog_file_detail_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_file_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_detail_problems">
+              <PropertyRef Name="postlog_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_details_postlog_files">
+          <End Type="BroadcastModel.postlog_files" Role="postlog_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.postlog_file_details" Role="postlog_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_details">
+              <PropertyRef Name="postlog_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postlog_file_problems_postlog_files">
+          <End Type="BroadcastModel.postlog_files" Role="postlog_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.postlog_file_problems" Role="postlog_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postlog_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlog_file_problems">
+              <PropertyRef Name="postlog_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="station_inventory_manifest_genres">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_genres" FromRole="station_inventory_manifest_genres" ToRole="genre" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest" FromRole="station_inventory_manifest_genres" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <Association Name="FK_station_inventory_manifest_genres_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_genres" Role="station_inventory_manifest_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_genres">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_genres_station_inventory_manifest">
+          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_genres" Role="station_inventory_manifest_genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_genres">
+              <PropertyRef Name="station_inventory_manifest_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7235,22 +7657,50 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="station_inventory_spot_genres">
-            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_spot_genres">
-              <MappingFragment StoreEntitySet="station_inventory_spot_genres">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="station_inventory_spot_id" ColumnName="station_inventory_spot_id" />
+          <EntitySetMapping Name="spot_tracker_file_details">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_tracker_file_details">
+              <MappingFragment StoreEntitySet="spot_tracker_file_details">
+                <ScalarProperty Name="discid" ColumnName="discid" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="identifier_3" ColumnName="identifier_3" />
+                <ScalarProperty Name="identifier_2" ColumnName="identifier_2" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="rel_type" ColumnName="rel_type" />
+                <ScalarProperty Name="encode_time" ColumnName="encode_time" />
+                <ScalarProperty Name="encode_date" ColumnName="encode_date" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="time_aired" ColumnName="time_aired" />
+                <ScalarProperty Name="daypart" ColumnName="daypart" />
+                <ScalarProperty Name="day_of_week" ColumnName="day_of_week" />
+                <ScalarProperty Name="date_aired" ColumnName="date_aired" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="station_name" ColumnName="station_name" />
+                <ScalarProperty Name="station" ColumnName="station" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="market" ColumnName="market" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="spot_length" ColumnName="spot_length" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="release_name" ColumnName="release_name" />
+                <ScalarProperty Name="advertiser" ColumnName="advertiser" />
+                <ScalarProperty Name="client_name" ColumnName="client_name" />
+                <ScalarProperty Name="client" ColumnName="client" />
+                <ScalarProperty Name="spot_tracker_file_id" ColumnName="spot_tracker_file_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="market_coverages">
-            <EntityTypeMapping TypeName="BroadcastModel.market_coverages">
-              <MappingFragment StoreEntitySet="market_coverages">
-                <ScalarProperty Name="percentage_of_us" ColumnName="percentage_of_us" />
-                <ScalarProperty Name="tv_homes" ColumnName="tv_homes" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
+          <EntitySetMapping Name="spot_tracker_files">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_tracker_files">
+              <MappingFragment StoreEntitySet="spot_tracker_files">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="file_hash" ColumnName="file_hash" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7306,50 +7756,104 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_tracker_file_details">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_tracker_file_details">
-              <MappingFragment StoreEntitySet="spot_tracker_file_details">
-                <ScalarProperty Name="discid" ColumnName="discid" />
-                <ScalarProperty Name="sid" ColumnName="sid" />
-                <ScalarProperty Name="identifier_3" ColumnName="identifier_3" />
-                <ScalarProperty Name="identifier_2" ColumnName="identifier_2" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="rel_type" ColumnName="rel_type" />
-                <ScalarProperty Name="encode_time" ColumnName="encode_time" />
-                <ScalarProperty Name="encode_date" ColumnName="encode_date" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="time_aired" ColumnName="time_aired" />
-                <ScalarProperty Name="daypart" ColumnName="daypart" />
-                <ScalarProperty Name="day_of_week" ColumnName="day_of_week" />
-                <ScalarProperty Name="date_aired" ColumnName="date_aired" />
-                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
-                <ScalarProperty Name="station_name" ColumnName="station_name" />
-                <ScalarProperty Name="station" ColumnName="station" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="market" ColumnName="market" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
-                <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="spot_length" ColumnName="spot_length" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="isci" ColumnName="isci" />
-                <ScalarProperty Name="release_name" ColumnName="release_name" />
-                <ScalarProperty Name="advertiser" ColumnName="advertiser" />
-                <ScalarProperty Name="client_name" ColumnName="client_name" />
-                <ScalarProperty Name="client" ColumnName="client" />
-                <ScalarProperty Name="spot_tracker_file_id" ColumnName="spot_tracker_file_id" />
+          <EntitySetMapping Name="station_inventory_spot_genres">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_spot_genres">
+              <MappingFragment StoreEntitySet="station_inventory_spot_genres">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="station_inventory_spot_id" ColumnName="station_inventory_spot_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_tracker_files">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_tracker_files">
-              <MappingFragment StoreEntitySet="spot_tracker_files">
+          <EntitySetMapping Name="market_coverages">
+            <EntityTypeMapping TypeName="BroadcastModel.market_coverages">
+              <MappingFragment StoreEntitySet="market_coverages">
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="percentage_of_us" ColumnName="percentage_of_us" />
+                <ScalarProperty Name="tv_homes" ColumnName="tv_homes" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postlog_file_detail_demographics">
+            <EntityTypeMapping TypeName="BroadcastModel.postlog_file_detail_demographics">
+              <MappingFragment StoreEntitySet="postlog_file_detail_demographics">
+                <ScalarProperty Name="overnight_impressions" ColumnName="overnight_impressions" />
+                <ScalarProperty Name="overnight_rating" ColumnName="overnight_rating" />
+                <ScalarProperty Name="postlog_file_detail_id" ColumnName="postlog_file_detail_id" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postlog_file_detail_problems">
+            <EntityTypeMapping TypeName="BroadcastModel.postlog_file_detail_problems">
+              <MappingFragment StoreEntitySet="postlog_file_detail_problems">
+                <ScalarProperty Name="problem_description" ColumnName="problem_description" />
+                <ScalarProperty Name="problem_type" ColumnName="problem_type" />
+                <ScalarProperty Name="postlog_file_detail_id" ColumnName="postlog_file_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postlog_file_details">
+            <EntityTypeMapping TypeName="BroadcastModel.postlog_file_details">
+              <MappingFragment StoreEntitySet="postlog_file_details">
+                <ScalarProperty Name="archived" ColumnName="archived" />
+                <ScalarProperty Name="leadout_show_type" ColumnName="leadout_show_type" />
+                <ScalarProperty Name="leadin_show_type" ColumnName="leadin_show_type" />
+                <ScalarProperty Name="program_show_type" ColumnName="program_show_type" />
+                <ScalarProperty Name="leadout_start_time" ColumnName="leadout_start_time" />
+                <ScalarProperty Name="leadin_end_time" ColumnName="leadin_end_time" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="spot_cost" ColumnName="spot_cost" />
+                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="market" ColumnName="market" />
+                <ScalarProperty Name="leadout_program_name" ColumnName="leadout_program_name" />
+                <ScalarProperty Name="leadout_genre" ColumnName="leadout_genre" />
+                <ScalarProperty Name="leadin_program_name" ColumnName="leadin_program_name" />
+                <ScalarProperty Name="leadin_genre" ColumnName="leadin_genre" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="air_time" ColumnName="air_time" />
+                <ScalarProperty Name="adjusted_air_date" ColumnName="adjusted_air_date" />
+                <ScalarProperty Name="original_air_date" ColumnName="original_air_date" />
+                <ScalarProperty Name="station" ColumnName="station" />
+                <ScalarProperty Name="postlog_file_id" ColumnName="postlog_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postlog_file_problems">
+            <EntityTypeMapping TypeName="BroadcastModel.postlog_file_problems">
+              <MappingFragment StoreEntitySet="postlog_file_problems">
+                <ScalarProperty Name="problem_description" ColumnName="problem_description" />
+                <ScalarProperty Name="postlog_file_id" ColumnName="postlog_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postlog_files">
+            <EntityTypeMapping TypeName="BroadcastModel.postlog_files">
+              <MappingFragment StoreEntitySet="postlog_files">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="source_id" ColumnName="source_id" />
                 <ScalarProperty Name="file_hash" ColumnName="file_hash" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_inventory_manifest_genres">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_genres">
+              <MappingFragment StoreEntitySet="station_inventory_manifest_genres">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

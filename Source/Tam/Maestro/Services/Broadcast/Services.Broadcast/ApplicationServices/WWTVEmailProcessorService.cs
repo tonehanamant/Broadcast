@@ -6,9 +6,9 @@ using System.Text;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common;
@@ -16,13 +16,13 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface IAffidavitEmailProcessorService : IApplicationService
+    public interface IWWTVEmailProcessorService : IApplicationService
     {
-        int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors, string fileContents);
+        int ProcessAndSendValidationErrors(string filePath, List<WWTVInboundFileValidationResult> validationErrors, string fileContents);
         int ProcessAndSendTechError(string filePath, string errorMessage, string fileContents);
         void ProcessAndSendFailedFiles(List<string> filesFailedDownload, string ftpLocation);
-        void ProcessAndSendInvalidDataFiles(List<OutboundAffidavitFileValidationResultDto> validationList);
-        string CreateValidationErrorEmailBody(List<AffidavitValidationResult> validationErrors, string fileName);
+        void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> validationList);
+        string CreateValidationErrorEmailBody(List<WWTVInboundFileValidationResult> validationErrors, string fileName);
         string CreateTechErrorEmailBody(string errorMessage, string filePath);
         string CreateFailedFTPFileEmailBody(List<string> filesFailedDownload, string ftpLocation);
 
@@ -34,7 +34,7 @@ namespace Services.Broadcast.BusinessEngines
 
     }
 
-    public class AffidavitEmailProcessorService : IAffidavitEmailProcessorService
+    public class WWTVEmailProcessorService : IWWTVEmailProcessorService
     {
         private const string _EmailValidationSubject = "WWTV File Failed Validation";
         private readonly IAffidavitRepository _AffidavitRepository;
@@ -42,7 +42,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IFileService _FileService;
 
-        public AffidavitEmailProcessorService(IEmailerService emailerService,
+        public WWTVEmailProcessorService(IEmailerService emailerService,
                                                 IDataRepositoryFactory broadcastDataRepositoryFactory,
                                                 IFileTransferEmailHelper emailHelper,
                                                 IFileService fileService)
@@ -58,7 +58,7 @@ namespace Services.Broadcast.BusinessEngines
             var fullPath = WWTVSharedNetworkHelper.BuildLocalErrorPath(fileName);
             File.WriteAllText(fullPath, fileContents);
         }
-        public int ProcessAndSendValidationErrors(string filePath, List<AffidavitValidationResult> validationErrors, string fileContents)
+        public int ProcessAndSendValidationErrors(string filePath, List<WWTVInboundFileValidationResult> validationErrors, string fileContents)
         {
             _SaveFileContentsToErrorFolder(Path.GetFileName(filePath), fileContents);
             if (validationErrors == null || !validationErrors.Any())
@@ -94,9 +94,9 @@ namespace Services.Broadcast.BusinessEngines
         /// Move invalid files to invalid files folder. Notify users about failed files
         /// </summary>
         /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the files to process</param>
-        public void ProcessAndSendInvalidDataFiles(List<OutboundAffidavitFileValidationResultDto> validationList)
+        public void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> validationList)
         {
-            var invalidFiles = validationList.Where(v => v.Status == AffidaviteFileProcessingStatus.Invalid);
+            var invalidFiles = validationList.Where(v => v.Status == FileProcessingStatusEnum.Invalid);
 
             foreach (var invalidFile in invalidFiles)
             {
@@ -119,9 +119,9 @@ namespace Services.Broadcast.BusinessEngines
             return emailBody;
         }
 
-        public string CreateValidationErrorEmailBody(List<AffidavitValidationResult> validationErrors, string fileName)
+        public string CreateValidationErrorEmailBody(List<WWTVInboundFileValidationResult> validationErrors, string fileName)
         {
-            var errorMessage = AffidavitValidationResult.FormatValidationMessage(validationErrors);
+            var errorMessage = WWTVInboundFileValidationResult.FormatValidationMessage(validationErrors);
 
             var emailBody = new StringBuilder();
 
@@ -154,13 +154,13 @@ namespace Services.Broadcast.BusinessEngines
             var affidavitFile = new AffidavitFile
             {
                 FileName = Path.GetFileName(filePath),
-                Status = AffidaviteFileProcessingStatus.Invalid,
+                Status = FileProcessingStatusEnum.Invalid,
                 FileHash = HashGenerator.ComputeHash(filePath.ToByteArray()), // just so there is something
                 CreatedDate = DateTime.Now,
-                SourceId = (int)AffidaviteFileSourceEnum.Strata
+                SourceId = (int)AffidavitFileSourceEnum.Strata
             };
 
-            affidavitFile.AffidavitFileProblems.Add(new AffidavitFileProblem
+            affidavitFile.AffidavitFileProblems.Add(new WWTVFileProblem
             {
                 ProblemDescription = errorMessage
             });

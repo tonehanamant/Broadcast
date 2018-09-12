@@ -52,7 +52,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFile.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 VerifyAffidavit(response.Id.Value);
             }
@@ -67,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_SpotCost.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -81,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_AffidavitValidFileContent_NullDemo.txt";
                 var fileContents = File.ReadAllText(filePath);
                 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -95,10 +95,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_bad_file_Times.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+                jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -119,10 +119,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Basic_Required_Validation.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+                jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -150,13 +150,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Basic_Required_Validation.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 
                 VerifyAffidavit(response.Id.Value);
             }
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void AffPP_Escaped_DoubleQuotes()
@@ -166,7 +165,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Escaped_DoubleQuotes.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -180,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var filePath = @".\Files\WWTV_Affidavit_Decimal_Overnight_Impressions.txt";
                 var fileContents = File.ReadAllText(filePath);
 
-                AffidavitSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 VerifyAffidavit(response.Id.Value);
             }
         }
@@ -190,10 +189,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var response = _AffidavitRepository.GetAffidavit(affidavitId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileProblem), "AffidavitFileId");
+            jsonResolver.Ignore(typeof(WWTVFileProblem), "Id");
+            jsonResolver.Ignore(typeof(WWTVFileProblem), "FileId");
             jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
+            jsonResolver.Ignore(typeof(AffidavitFileDetail), "FileId");
             jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
             jsonResolver.Ignore(typeof(AffidavitFile), "Id");
 
@@ -363,7 +362,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsEmpty(response.ValidationErrors);
                 Assert.IsTrue(response.FilesFoundToProcess.Count() == 1,"Expecting only one file found for processing");
 
-                VerifyAffidavit(response.AffidavitSaveResults.First().Id.Value);
+                VerifyAffidavit(response.SaveResults.First().Id.Value);
             }
         }
 
@@ -385,7 +384,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+                jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -412,7 +411,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var response = srv.DownloadAndProcessWWTVFiles("WWTV Service");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(AffidavitSaveResult), "Id");
+                jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

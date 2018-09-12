@@ -178,6 +178,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "MediaMonthCruchCacheSlidingExpirationSeconds":
                     result = "24";
                     break;
+                case "WWTV_KeepingTracFtpInboundFolder":
+                    result = @"D:\temp\wwtv\WWTV_KeepingTracFtpInboundFolder";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
