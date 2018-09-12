@@ -192,7 +192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(WWTVFileProblem), "Id");
             jsonResolver.Ignore(typeof(WWTVFileProblem), "FileId");
             jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileDetail), "FileId");
+            jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
             jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
             jsonResolver.Ignore(typeof(AffidavitFile), "Id");
 
