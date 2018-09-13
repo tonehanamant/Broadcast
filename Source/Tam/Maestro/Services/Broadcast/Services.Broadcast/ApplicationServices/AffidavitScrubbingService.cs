@@ -141,17 +141,20 @@ namespace Services.Broadcast.ApplicationServices
             double deliveredImpressions = 0;
             foreach (var impressionData in impressionsDataGuaranteed)
             {
-                double impressions = (type == SchedulePostType.NTI)
-                    ? _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor)
-                    : impressionData.Impressions;
+                double impressions = impressionData.Impressions;
                 if (equivalized)
                 {
                     impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, true, spotLengthsMap.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                }
+                if (type == SchedulePostType.NTI)
+                {
+                    impressions = _CalculateNtiImpressions(impressionData.Impressions, impressionData.NtiConversionFactor);
                 }
                 deliveredImpressions += impressions;
             }
             return deliveredImpressions;
         }
+
 
         private void _SetPostAdvertiser(PostedContracts post)
         {
