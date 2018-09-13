@@ -182,6 +182,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var affidavitFileDetailsToBeLinked = _MapToAffidavitFileDetails(saveRequest.Details);
+            var affidavitDetailsToNotLink = new List<AffidavitFileDetail>();
+
             foreach (var detail in affidavitFileDetailsToBeLinked)
             {
                 if (_PostRepository.IsIsciBlacklisted(new List<string> { detail.Isci }))
@@ -193,9 +195,11 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     detail.Archived = true;
                     affidavitFile.AffidavitFileDetails.Add(detail);
-                    affidavitFileDetailsToBeLinked.Remove(detail);
+                    affidavitDetailsToNotLink.Add(detail);
                 }
             }
+
+            affidavitFileDetailsToBeLinked.RemoveAll(d => affidavitDetailsToNotLink.Contains(d) );
 
             _LoadIsciMappings(affidavitFileDetailsToBeLinked);
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitFileDetailsToBeLinked);
