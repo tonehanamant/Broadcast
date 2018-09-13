@@ -497,6 +497,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "WWTV_KeepingTracErrorFolder"; }
         }
 	 
+		public static string WWTV_KeepingTracFtpInboundFolder  
+		{
+            get { return "WWTV_KeepingTracFtpInboundFolder"; }
+        }
+	 
 		public static string WWTV_KeepingTracFtpOutboundFolder  
 		{
             get { return "WWTV_KeepingTracFtpOutboundFolder"; }

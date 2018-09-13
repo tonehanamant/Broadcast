@@ -158,6 +158,13 @@ export class DataGridContainer extends Component {
         width: '10%',
       },
       {
+        name: 'Contract Id',
+        dataIndex: 'searchContractId',
+        hidden: true,
+        hideable: false,
+        width: '5%',
+      },
+      {
         name: 'Advertiser',
         dataIndex: 'Advertiser',
         width: '15%',
@@ -177,9 +184,23 @@ export class DataGridContainer extends Component {
         width: '15%',
       },
       {
+        name: 'Spots in Spec',
+        dataIndex: 'searchSpotsInSpec',
+        hidden: true,
+        hideable: false,
+        width: '5%',
+      },
+      {
         name: 'Spots Out of Spec',
         dataIndex: 'SpotsOutOfSpec',
         width: '15%',
+      },
+      {
+        name: 'Spots Out of Spec',
+        dataIndex: 'searchSpotsOutOfSpec',
+        hidden: true,
+        hideable: false,
+        width: '5%',
       },
       {
         name: 'Primary Demo Booked',

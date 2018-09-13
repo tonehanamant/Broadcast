@@ -18,7 +18,6 @@ namespace WWTVData.Service
             get { return "WWTV Download from WWTV";  }
         }
 
-        private bool _RunWhenChecked = false;
         private DateTime? _RunWhen = null;
         /// <summary>
         /// Use when you want day/time of week to run.
@@ -49,8 +48,8 @@ namespace WWTVData.Service
 
             try
             {
-                var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
-                service.DownloadAndProcessWWTVFiles("WWTV Service");
+                ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>().DownloadAndProcessWWTVFiles("WWTV Service");
+                ApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>().DownloadAndProcessWWTVFiles("WWTV Service");
                 _LastRun = DateTime.Now;
             }
             catch (Exception e)

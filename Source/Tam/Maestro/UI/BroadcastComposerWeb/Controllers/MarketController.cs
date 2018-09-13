@@ -42,7 +42,7 @@ namespace BroadcastComposerWeb.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, "Market Coverages were loaded successfully");
         }
     }
 }

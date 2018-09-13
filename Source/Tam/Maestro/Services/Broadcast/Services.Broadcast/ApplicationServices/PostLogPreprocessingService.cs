@@ -61,15 +61,15 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var dropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_PostLogDropFolder);
                 var validationResults = ValidateFiles(dropFilePathList, username, FileSourceEnum.Sigma);
-                _SaveAndUploadToWWTV(validationResults);
+                _SaveAndUploadToWWTV(validationResults, FileSourceEnum.Sigma);
 
                 var ktDropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_KeepingTracDropFolder);
                 var ktValidationResults = ValidateFiles(ktDropFilePathList, username, FileSourceEnum.KeepingTrac);
-                _SaveAndUploadToWWTV(ktValidationResults);
+                _SaveAndUploadToWWTV(ktValidationResults, FileSourceEnum.KeepingTrac);
             });
         }
 
-        private void _SaveAndUploadToWWTV(List<FileValidationResult> validationResults)
+        private void _SaveAndUploadToWWTV(List<FileValidationResult> validationResults, FileSourceEnum source)
         {
             _PostLogRepository.SavePreprocessingValidationResults(validationResults);
             var validFileList = validationResults.Where(v => v.Status == ProcessingStatusEnum.Valid)
@@ -83,7 +83,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
             if (invalidFileList.Any())
             {
-                _MoveToErrorFolderAndSendNotification(invalidFileList);
+                _MoveToErrorFolderAndSendNotification(invalidFileList, source);
             }
 
             _FileService.Delete(validFileList.Select(x => x.FilePath).ToArray());
@@ -130,11 +130,12 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
-        private void _MoveToErrorFolderAndSendNotification(List<FileValidationResult> invalidFileList)
+        private void _MoveToErrorFolderAndSendNotification(List<FileValidationResult> invalidFileList, FileSourceEnum source)
         {
             foreach (var invalidFile in invalidFileList)
             {
-                var invalidFilePath = _FileService.Move(invalidFile.FilePath, BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
+                var invalidFilePath = _FileService.Move(invalidFile.FilePath, 
+                    source.Equals(FileSourceEnum.KeepingTrac) ? BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder : BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
 
                 var emailBody = _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
 
@@ -144,14 +145,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CreateAndUploadZipArchiveToWWTV(List<string> filePaths)
         {
-            string zipFileName = BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder;
+            string zipFileName = BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder;
             if (!zipFileName.EndsWith("\\"))
                 zipFileName += "\\";
             zipFileName += "PostLog_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
             _FileService.CreateZipArchive(filePaths, zipFileName);
             if (_FileService.Exists(zipFileName))
             {
-                _WWTVFtpHelper.UploadFile(zipFileName, $"{_WWTVFtpHelper.GetOutboundPath()}/{Path.GetFileName(zipFileName)}", File.Delete);
+                _WWTVFtpHelper.UploadFile(zipFileName, $"{_WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpOutboundFolder)}/{Path.GetFileName(zipFileName)}", File.Delete);
                 _FileService.Delete(zipFileName);
             }
         }

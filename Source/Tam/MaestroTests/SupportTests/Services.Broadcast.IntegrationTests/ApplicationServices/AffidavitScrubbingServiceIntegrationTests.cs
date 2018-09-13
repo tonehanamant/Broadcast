@@ -305,14 +305,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                AffidavitSaveRequest affidavitSaveRequest = new AffidavitSaveRequest
+                InboundFileSaveRequest affidavitSaveRequest = new InboundFileSaveRequest
                 {
                     FileHash = "abc123",
-                    Source = (int)AffidaviteFileSourceEnum.Strata,
+                    Source = (int)AffidavitFileSourceEnum.Strata,
                     FileName = "test.file",
-                    Details = new List<AffidavitSaveRequestDetail>()
+                    Details = new List<InboundFileSaveRequestDetail>()
                     {
-                        new AffidavitSaveRequestDetail
+                        new InboundFileSaveRequestDetail
                         {
                             AirTime = DateTime.Parse("06/29/2017 8:00AM"),
                             Isci = "FFFFFF",
@@ -328,7 +328,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             LeadInGenre = "LeadInGenre",
                             LeadOutProgramName = "LeadOutProgramName",
                             LeadInProgramName = "LeadInProgramName",
-                            InventorySource = AffidaviteFileSourceEnum.Strata,
+                            InventorySource = AffidavitFileSourceEnum.Strata,
                             LeadOutGenre = "LeadOutGenre",
                             Affiliate = "Affiate",
                             Market = "market"

@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities
         public AffidavitFileDetail AffidavitDetail { get; set; }
         public bool Archived { get; set; }
         public List<AffidavitMatchingProposalWeek> ProposalDetailWeeks { get; set; } = new List<AffidavitMatchingProposalWeek>();
-        public List<AffidavitFileDetailProblem> AffidavitDetailProblems { get; set; } = new List<AffidavitFileDetailProblem>();
+        public List<FileDetailProblem> AffidavitDetailProblems { get; set; } = new List<FileDetailProblem>();
         public string EffectiveIsci { get; set; }
     }
 }

@@ -24,9 +24,9 @@ namespace Services.Broadcast.Entities
         public int InventorySource { get; set; }
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
-        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
+        public List<WWTVDemographics> Demographics { get; set; } = new List<WWTVDemographics>();
         public List<AffidavitClientScrub> AffidavitClientScrubs { get; set; } = new List<AffidavitClientScrub>();
-        public List<AffidavitFileDetailProblem> AffidavitFileDetailProblems { get; set; } = new List<AffidavitFileDetailProblem>();
+        public List<FileDetailProblem> AffidavitFileDetailProblems { get; set; } = new List<FileDetailProblem>();
         public string ShowType { get; set; }
         public string LeadInShowType { get; set; }
         public string LeadOutShowType { get; set; }

@@ -9,7 +9,7 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IAffidavitValidationEngine : IApplicationService
     {
-        List<AffidavitValidationResult> ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail);
+        List<WWTVInboundFileValidationResult> ValidateAffidavitRecord(InboundFileSaveRequestDetail affidavitDetail);
     }
 
     public class AffidavitValidationEngine : IAffidavitValidationEngine
@@ -21,15 +21,15 @@ namespace Services.Broadcast.BusinessEngines
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
         }
 
-        public List<AffidavitValidationResult> ValidateAffidavitRecord(AffidavitSaveRequestDetail affidavitDetail)
+        public List<WWTVInboundFileValidationResult> ValidateAffidavitRecord(InboundFileSaveRequestDetail affidavitDetail)
         {
             Dictionary<int, int> spotLengthDict = null;
 
-            var validationResults = new List<AffidavitValidationResult>();
+            var validationResults = new List<WWTVInboundFileValidationResult>();
             
             if (affidavitDetail.AirTime == DateTime.MinValue)
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "AirTime",
                     ErrorMessage = "must be a valid date",
@@ -38,7 +38,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (affidavitDetail.InventorySource == (int) (InventorySourceEnum.Blank))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "InventorySource",
                     ErrorMessage = "must be valid",
@@ -47,7 +47,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Station))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "Station",
                     ErrorMessage = "is required",
@@ -56,7 +56,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (!_IsSpotLengthValid(affidavitDetail.SpotLength, ref spotLengthDict))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "SpotLength",
                     ErrorMessage = "must be valid broadcast spot length: 15,30,60,120,180,300",
@@ -65,7 +65,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Isci))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "Isci",
                     ErrorMessage = "is required",
@@ -74,7 +74,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.Affiliate))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "Affiliate",
                     ErrorMessage = "is required",
@@ -83,7 +83,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.ShowType))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "ShowType",
                     ErrorMessage = "is required",
@@ -92,7 +92,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.LeadInShowType))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "LeadInShowType",
                     ErrorMessage = "is required",
@@ -101,7 +101,7 @@ namespace Services.Broadcast.BusinessEngines
 
             if (string.IsNullOrWhiteSpace(affidavitDetail.LeadOutShowType))
             {
-                validationResults.Add(new AffidavitValidationResult()
+                validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "LeadOutShowType",
                     ErrorMessage = "is required",

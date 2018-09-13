@@ -33,7 +33,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("SaveAffidavit")]
-        public BaseResponse<AffidavitSaveResult> SaveAffidavit(AffidavitSaveRequest saveRequest)
+        public BaseResponse<WWTVSaveResult> SaveAffidavit(InboundFileSaveRequest saveRequest)
         {
             return
                 _ConvertToBaseResponse(() =>

@@ -551,6 +551,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_KeepingTracErrorFolder); }
         }
 	 
+		public static string WWTV_KeepingTracFtpInboundFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.WWTV_KeepingTracFtpInboundFolder); }
+        }
+	 
 		public static string WWTV_KeepingTracFtpOutboundFolder  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>

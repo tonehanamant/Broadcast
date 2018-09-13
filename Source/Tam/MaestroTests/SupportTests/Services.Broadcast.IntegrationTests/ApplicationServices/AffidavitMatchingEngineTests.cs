@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+            jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -78,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+            jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -119,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+            jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
