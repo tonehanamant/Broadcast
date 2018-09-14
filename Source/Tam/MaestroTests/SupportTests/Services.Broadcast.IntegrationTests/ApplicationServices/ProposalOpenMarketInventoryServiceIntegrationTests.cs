@@ -1477,12 +1477,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposal = new ProposalDto();
-                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
-                    ProposalId = proposal.Id.Value,
-                    ProposalDetailId = proposalDetailId
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978
                 };
 
                 var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);

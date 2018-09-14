@@ -72,7 +72,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                     (from m in context.market_coverages
-                     where marketIds.Contains(m.id)
+                     where marketIds.Contains(m.market_code)
                      select m).ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us));
         }
     }    
