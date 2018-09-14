@@ -8,9 +8,9 @@ using Common.Services.Extensions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
-using Services.Broadcast.ApplicationServices;
 using System;
 using Tam.Maestro.Common;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -30,7 +30,7 @@ namespace Services.Broadcast.Repositories
         /// Persists a List of OutboundAffidavitFileValidationResultDto objects
         /// </summary>
         /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
-        void SaveValidationObject(List<OutboundAffidavitFileValidationResultDto> model);
+        void SaveValidationObject(List<WWTVOutboundFileValidationResult> model);
         List<MyEventsReportData> GetMyEventsReportData(int proposalId);
         void OverrideScrubStatus(List<int> ClientScrubIds, ScrubbingStatus overrideToStatus);
         List<AffidavitFileDetail> GetAffidavitDetails(int proposalDetailId);
@@ -93,7 +93,7 @@ namespace Services.Broadcast.Repositories
                 affidavit_file_problems = affidavitFile.AffidavitFileProblems.Select(p => new affidavit_file_problems()
                 {
                     id = p.Id,
-                    affidavit_file_id = p.AffidavitFileId,
+                    affidavit_file_id = p.FileId,
                     problem_description = p.ProblemDescription
                 }).ToList(),
                 affidavit_file_details = affidavitFile.AffidavitFileDetails.Select(d => new affidavit_file_details
@@ -136,7 +136,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        private ICollection<affidavit_file_detail_problems> _MapFromAffidavitFileDetailProblems(List<AffidavitFileDetailProblem> affidavitFileDetailProblems)
+        private ICollection<affidavit_file_detail_problems> _MapFromAffidavitFileDetailProblems(List<FileDetailProblem> affidavitFileDetailProblems)
         {
             var result = affidavitFileDetailProblems.Select(p =>
                         new affidavit_file_detail_problems
@@ -229,12 +229,12 @@ namespace Services.Broadcast.Repositories
                 FileName = affidavitFile.file_name,
                 FileHash = affidavitFile.file_hash,
                 SourceId = affidavitFile.source_id,
-                Status = (AffidaviteFileProcessingStatus)affidavitFile.status,
+                Status = (FileProcessingStatusEnum)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
-                AffidavitFileProblems = affidavitFile.affidavit_file_problems.Select(p => new AffidavitFileProblem()
+                AffidavitFileProblems = affidavitFile.affidavit_file_problems.Select(p => new WWTVFileProblem()
                 {
                     Id = p.id,
-                    AffidavitFileId = p.affidavit_file_id,
+                    FileId = p.affidavit_file_id,
                     ProblemDescription = p.problem_description
                 }).ToList(),
                 AffidavitFileDetails = affidavitFile.affidavit_file_details.Select(d => new AffidavitFileDetail
@@ -263,7 +263,7 @@ namespace Services.Broadcast.Repositories
                     EstimateId = d.estimate_id,
                     InventorySource = d.inventory_source.Value,
                     SpotCost = d.spot_cost,
-                    Demographics = d.affidavit_file_detail_demographics.Select(a => new AffidavitDemographics()
+                    Demographics = d.affidavit_file_detail_demographics.Select(a => new WWTVDemographics()
                     {
                         AudienceId = a.audience_id.Value,
                         OvernightImpressions = a.overnight_impressions.Value,
@@ -442,7 +442,7 @@ namespace Services.Broadcast.Repositories
         /// Persists a List of OutboundAffidavitFileValidationResultDto objects
         /// </summary>
         /// <param name="model">List of OutboundAffidavitFileValidationResultDto objects to be saved</param>
-        public void SaveValidationObject(List<OutboundAffidavitFileValidationResultDto> model)
+        public void SaveValidationObject(List<WWTVOutboundFileValidationResult> model)
         {
             _InReadUncommitedTransaction(context =>
             {

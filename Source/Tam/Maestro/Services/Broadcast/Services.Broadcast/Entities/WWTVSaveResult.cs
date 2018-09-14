@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Services.Broadcast.Entities
 {
-    public class AffidavitSaveResult
+    public class WWTVSaveResult
     {
         public int? Id { get; set; }
-        public List<AffidavitValidationResult> ValidationResults { get; set; }
+        public List<WWTVInboundFileValidationResult> ValidationResults { get; set; }
 
        
         public override string ToString()

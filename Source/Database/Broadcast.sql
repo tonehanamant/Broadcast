@@ -362,6 +362,135 @@ GO
 
 /*************************************** END BCOP-3476 *****************************************************/
 
+/*************************************** BEGIN BCOP-3469 *****************************************************/
+IF OBJECT_ID('[postlog_files]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_files](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[file_name] [varchar](255) NOT NULL,
+	[file_hash] [varchar](255) NOT NULL,
+	[source_id] [int] NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[status] [int] NOT NULL,
+	 CONSTRAINT [PK_postlog_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+
+IF OBJECT_ID('[postlog_file_problems]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_problems](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[postlog_file_id] [int] NOT NULL,
+	[problem_description] [nvarchar](max) NOT NULL,
+	 CONSTRAINT [PK_postlog_file_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[postlog_file_problems]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_problems_postlog_files] FOREIGN KEY([postlog_file_id])
+	REFERENCES [dbo].[postlog_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_problems] CHECK CONSTRAINT [FK_postlog_file_problems_postlog_files]
+	CREATE INDEX IX_postlog_file_problems_postlog_files ON [postlog_file_problems] ([postlog_file_id])
+END
+GO
+
+IF OBJECT_ID('[postlog_file_details]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_details](
+		[id] [bigint] IDENTITY(1,1) NOT NULL,
+		[postlog_file_id] [int] NOT NULL,
+		[station] [varchar](15) NOT NULL,
+		[original_air_date] [date] NOT NULL,
+		[adjusted_air_date] [date] NOT NULL,
+		[air_time] [int] NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[isci] [varchar](63) NOT NULL,
+		[program_name] [varchar](255) NULL,
+		[genre] [varchar](255) NULL,
+		[leadin_genre] [varchar](255) NULL,
+		[leadin_program_name] [varchar](255) NULL,
+		[leadout_genre] [varchar](255) NULL,
+		[leadout_program_name] [varchar](255) NULL,
+		[market] [varchar](63) NULL,
+		[estimate_id] [int] NULL,
+		[inventory_source] [int] NULL,
+		[spot_cost] [float] NULL,
+		[affiliate] [varchar](15) NULL,
+		[leadin_end_time] [int] NULL,
+		[leadout_start_time] [int] NULL,
+		[program_show_type] [varchar](255) NULL,
+		[leadin_show_type] [varchar](255) NULL,
+		[leadout_show_type] [varchar](255) NULL,
+		[archived] [bit] NOT NULL,
+	 CONSTRAINT [PK_postlog_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_file_details]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_details_postlog_files] FOREIGN KEY([postlog_file_id])
+	REFERENCES [dbo].[postlog_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_details] CHECK CONSTRAINT [FK_postlog_file_details_postlog_files]
+	CREATE INDEX IX_postlog_file_details_postlog_files ON [postlog_file_details] ([postlog_file_id])
+END
+GO
+
+IF OBJECT_ID('[postlog_file_detail_problems]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_detail_problems](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[postlog_file_detail_id] [bigint] NOT NULL,
+		[problem_type] [int] NOT NULL,
+		[problem_description] [varchar](255) NULL,
+	 CONSTRAINT [PK_postlog_file_detail_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_file_detail_problems]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_detail_problems_postlog_file_details] FOREIGN KEY([postlog_file_detail_id])
+	REFERENCES [dbo].[postlog_file_details] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_detail_problems] CHECK CONSTRAINT [FK_postlog_file_detail_problems_postlog_file_details]
+	CREATE INDEX IX_postlog_file_detail_problems_postlog_file_details ON [postlog_file_detail_problems] ([postlog_file_detail_id])
+END
+GO
+
+IF OBJECT_ID('[postlog_file_detail_demographics]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_detail_demographics](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[audience_id] [int] NULL,
+		[postlog_file_detail_id] [bigint] NULL,
+		[overnight_rating] [float] NULL,
+		[overnight_impressions] [float] NULL,
+	 CONSTRAINT [PK_postlog_file_detail_demographics] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_file_detail_demographics]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_detail_demographics_postlog_file_details] FOREIGN KEY([postlog_file_detail_id])
+	REFERENCES [dbo].[postlog_file_details] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_detail_demographics] CHECK CONSTRAINT [FK_postlog_file_detail_demographics_postlog_file_details]
+	CREATE INDEX IX_postlog_file_detail_demographics_postlog_file_details ON [postlog_file_detail_demographics] ([postlog_file_detail_id])
+
+	ALTER TABLE [dbo].[postlog_file_detail_demographics]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_detail_demographics_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_detail_demographics] CHECK CONSTRAINT [FK_postlog_file_detail_demographics_audiences]
+	CREATE INDEX IX_postlog_file_detail_demographics_audiences ON [postlog_file_detail_demographics] ([audience_id])
+END
+GO
+/*************************************** END BCOP-3469 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

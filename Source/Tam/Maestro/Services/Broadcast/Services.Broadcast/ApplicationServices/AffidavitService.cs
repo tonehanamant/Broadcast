@@ -4,28 +4,22 @@ using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public enum AffidaviteFileProcessingStatus
-    {
-        Valid = 1,
-        Invalid = 2
-    };
-
     public interface IAffidavitService : IApplicationService
     {
-        AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime);
+        WWTVSaveResult SaveAffidavit(InboundFileSaveRequest saveRequest, string username, DateTime currentDateTime);
 
-        AffidavitSaveResult SaveAffidavitValidationErrors(AffidavitSaveRequest saveRequest, string userName, List<AffidavitValidationResult> affidavitValidationResults);
+        WWTVSaveResult SaveAffidavitValidationErrors(InboundFileSaveRequest saveRequest, string userName, List<WWTVInboundFileValidationResult> affidavitValidationResults);
 
         /// <summary>
         /// Scrubs an affidavit detail by an isci
@@ -39,7 +33,7 @@ namespace Services.Broadcast.ApplicationServices
         bool RescrubProposalDetail(RescrubProposalDetailRequest request, string userName, DateTime changeDate);
         bool CanRescrubProposalDetail(ProposalDto proposal, ProposalDetailDto proposalDetail);
 
-        string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request);
+        string JSONifyFile(Stream rawStream, string fileName, out InboundFileSaveRequest request);
 
         /// <summary>
         /// Swaps one or more client scrubs to another proposal detail
@@ -109,17 +103,17 @@ namespace Services.Broadcast.ApplicationServices
             _StationProcessingEngine = stationProcessingEngine;
         }
 
-        public AffidavitSaveResult SaveAffidavitValidationErrors(AffidavitSaveRequest saveRequest, string userName, List<AffidavitValidationResult> affidavitValidationResults)
+        public WWTVSaveResult SaveAffidavitValidationErrors(InboundFileSaveRequest saveRequest, string userName, List<WWTVInboundFileValidationResult> affidavitValidationResults)
         {
             var affidavitFile = _EnsureAffidavitFile(saveRequest, DateTime.Now);
 
             var problems = _MapValidationErrorToAffidavitFileProblem((affidavitValidationResults));
             affidavitFile.AffidavitFileProblems.AddRange(problems);
-            var result = new AffidavitSaveResult
+            var result = new WWTVSaveResult
             {
                 ValidationResults = affidavitValidationResults
             };
-            affidavitFile.Status = affidavitValidationResults.Any() ? AffidaviteFileProcessingStatus.Invalid : AffidaviteFileProcessingStatus.Valid;
+            affidavitFile.Status = affidavitValidationResults.Any() ? FileProcessingStatusEnum.Invalid : FileProcessingStatusEnum.Valid;
 
             if (affidavitValidationResults.Any())
             {   // save and get out
@@ -128,7 +122,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private static AffidavitFile _EnsureAffidavitFile(AffidavitSaveRequest saveRequest, DateTime currentDateTime)
+        private static AffidavitFile _EnsureAffidavitFile(InboundFileSaveRequest saveRequest, DateTime currentDateTime)
         {
             if (saveRequest == null)
             {
@@ -145,7 +139,7 @@ namespace Services.Broadcast.ApplicationServices
             return affidavitFile;
         }
 
-        public AffidavitSaveResult SaveAffidavit(AffidavitSaveRequest saveRequest, string username, DateTime currentDateTime)
+        public WWTVSaveResult SaveAffidavit(InboundFileSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
             var affidavitFile = _EnsureAffidavitFile(saveRequest, currentDateTime);
             var result = _AffidavitSaveResult(saveRequest, username, currentDateTime, affidavitFile);
@@ -154,13 +148,13 @@ namespace Services.Broadcast.ApplicationServices
         }
 
 
-        private AffidavitSaveResult _AffidavitSaveResult(AffidavitSaveRequest saveRequest, string username,
+        private WWTVSaveResult _AffidavitSaveResult(InboundFileSaveRequest saveRequest, string username,
             DateTime currentDateTime, AffidavitFile affidavitFile)
         {
             var postingBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(currentDateTime);
 
-            var result = new AffidavitSaveResult();
-            var affidavitValidationResults = new List<AffidavitValidationResult>();
+            var result = new WWTVSaveResult();
+            var affidavitValidationResults = new List<WWTVInboundFileValidationResult>();
 
             var lineNumber = 0;
             foreach (var saveRequestDetail in saveRequest.Details)
@@ -179,7 +173,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             result.ValidationResults = affidavitValidationResults;
-            affidavitFile.Status = affidavitValidationResults.Any() ? AffidaviteFileProcessingStatus.Invalid : AffidaviteFileProcessingStatus.Valid;
+            affidavitFile.Status = affidavitValidationResults.Any() ? FileProcessingStatusEnum.Invalid : FileProcessingStatusEnum.Valid;
 
             if (affidavitValidationResults.Any())
             {   // save and get out
@@ -188,20 +182,24 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var affidavitFileDetailsToBeLinked = _MapToAffidavitFileDetails(saveRequest.Details);
+            var affidavitDetailsToNotLink = new List<AffidavitFileDetail>();
+
             foreach (var detail in affidavitFileDetailsToBeLinked)
             {
                 if (_PostRepository.IsIsciBlacklisted(new List<string> { detail.Isci }))
                 {
-                    detail.AffidavitFileDetailProblems.Add(new AffidavitFileDetailProblem
+                    detail.AffidavitFileDetailProblems.Add(new FileDetailProblem
                     {
                         Description = ARCHIVED_ISCI,
-                        Type = AffidavitFileDetailProblemTypeEnum.ArchivedIsci
+                        Type = FileDetailProblemTypeEnum.ArchivedIsci
                     });
                     detail.Archived = true;
                     affidavitFile.AffidavitFileDetails.Add(detail);
-                    affidavitFileDetailsToBeLinked.Remove(detail);
+                    affidavitDetailsToNotLink.Add(detail);
                 }
             }
+
+            affidavitFileDetailsToBeLinked.RemoveAll(d => affidavitDetailsToNotLink.Contains(d) );
 
             _LoadIsciMappings(affidavitFileDetailsToBeLinked);
             var matchedAffidavitDetails = _LinkAndValidateContractIscis(affidavitFileDetailsToBeLinked);
@@ -240,7 +238,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<AffidavitFileDetail> _MapToAffidavitFileDetails(List<AffidavitSaveRequestDetail> details)
+        private List<AffidavitFileDetail> _MapToAffidavitFileDetails(List<InboundFileSaveRequestDetail> details)
         {
             var result = details.Select(d => new AffidavitFileDetail()
             {
@@ -527,13 +525,13 @@ namespace Services.Broadcast.ApplicationServices
             return null;
         }
 
-        public List<AffidavitFileProblem> _MapValidationErrorToAffidavitFileProblem(List<AffidavitValidationResult> affidavitValidationResults)
+        public List<WWTVFileProblem> _MapValidationErrorToAffidavitFileProblem(List<WWTVInboundFileValidationResult> affidavitValidationResults)
         {
-            List<AffidavitFileProblem> problems = new List<AffidavitFileProblem>();
+            List<WWTVFileProblem> problems = new List<WWTVFileProblem>();
 
             affidavitValidationResults.ForEach(v =>
             {
-                AffidavitFileProblem problem = new AffidavitFileProblem();
+                WWTVFileProblem problem = new WWTVFileProblem();
                 var description = v.ErrorMessage;
                 if (!string.IsNullOrEmpty(v.InvalidField))
                 {
@@ -642,7 +640,7 @@ namespace Services.Broadcast.ApplicationServices
             ,"LeadOutShowType"
         };
 
-        public string JSONifyFile(Stream rawStream, string fileName, out AffidavitSaveRequest request)
+        public string JSONifyFile(Stream rawStream, string fileName, out InboundFileSaveRequest request)
         {
             TextFileLineReader reader;
             if (fileName.EndsWith("csv"))
@@ -654,10 +652,10 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Unknown file");
             }
 
-            request = new AffidavitSaveRequest();
+            request = new InboundFileSaveRequest();
             request.FileName = fileName;
             request.FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream));
-            request.Source = (int)AffidaviteFileSourceEnum.Strata;
+            request.Source = (int)AffidavitFileSourceEnum.Strata;
 
             using (reader.Initialize(rawStream))
             {
@@ -668,7 +666,7 @@ namespace Services.Broadcast.ApplicationServices
                     if (reader.IsEmptyRow())
                         break;
 
-                    var detail = new AffidavitSaveRequestDetail();
+                    var detail = new InboundFileSaveRequestDetail();
 
                     detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
                     detail.Genre = reader.GetCellValue("Genre");
@@ -680,7 +678,7 @@ namespace Services.Broadcast.ApplicationServices
                     detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
                     detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
                     detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
-                    detail.InventorySource = (AffidaviteFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source"));
+                    detail.InventorySource = (AffidavitFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source"));
                     detail.Affiliate = reader.GetCellValue("Affiliate");
                     detail.ShowType = reader.GetCellValue("ShowType");
                     detail.LeadInShowType = reader.GetCellValue("LeadInShowType");

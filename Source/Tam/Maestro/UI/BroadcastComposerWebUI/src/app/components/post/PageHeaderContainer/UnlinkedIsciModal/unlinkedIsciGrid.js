@@ -50,6 +50,7 @@ export class UnlinkedIsciGrid extends Component {
         name: 'Count',
         dataIndex: 'Count',
         width: '25%',
+        // renderer: ({ row }) => (<span>{Number(row.Count) || '-'}</span>),
       },
       {
         name: 'Spot Length',

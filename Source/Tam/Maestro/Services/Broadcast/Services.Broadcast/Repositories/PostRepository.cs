@@ -2,6 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,7 +101,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="fileDetailIds">List of affidavit file detail ids</param>
         /// <returns>List of AffidavitFileDetailProblem objects</returns>
-        List<AffidavitFileDetailProblem> GetIsciProblems(List<long> fileDetailIds);
+        List<FileDetailProblem> GetIsciProblems(List<long> fileDetailIds);
 
         /// <summary>
         /// Removes iscis from blacklist table
@@ -230,7 +231,7 @@ namespace Services.Broadcast.Repositories
                         ISCI = x.isci,
                         SpotLengthId = x.spot_length_id,
                         Count = x.count,
-                        ProblemType = (AffidavitFileDetailProblemTypeEnum)x.problem_type
+                        ProblemType = (FileDetailProblemTypeEnum)x.problem_type
                     }).OrderByDescending(x => x.Count).ToList();
                 });
         }
@@ -240,17 +241,17 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="fileDetailIds">List of affidavit file detail ids</param>
         /// <returns>List of AffidavitFileDetailProblem objects</returns>
-        public List<AffidavitFileDetailProblem> GetIsciProblems(List<long> fileDetailIds)
+        public List<FileDetailProblem> GetIsciProblems(List<long> fileDetailIds)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
                     return context.affidavit_file_detail_problems
-                    .Where(x => fileDetailIds.Contains(x.affidavit_file_detail_id) && x.problem_type != (int)AffidavitFileDetailProblemTypeEnum.ArchivedIsci)
+                    .Where(x => fileDetailIds.Contains(x.affidavit_file_detail_id) && x.problem_type != (int)FileDetailProblemTypeEnum.ArchivedIsci)
                     .ToList()
-                    .Select(x => new AffidavitFileDetailProblem()
+                    .Select(x => new FileDetailProblem()
                     {
-                        Type = (AffidavitFileDetailProblemTypeEnum)x.problem_type,
+                        Type = (FileDetailProblemTypeEnum)x.problem_type,
                         Description = x.problem_description,
                         DetailId = x.affidavit_file_detail_id
                     }).ToList();
@@ -334,7 +335,7 @@ namespace Services.Broadcast.Repositories
                    {
                        affidavit_file_detail_id = x,
                        problem_description = "Not a Cadent ISCI",
-                       problem_type = (int)AffidavitFileDetailProblemTypeEnum.ArchivedIsci
+                       problem_type = (int)FileDetailProblemTypeEnum.ArchivedIsci
                    }).ToList());
                    context.SaveChanges();
                });
@@ -351,7 +352,7 @@ namespace Services.Broadcast.Repositories
                {
                    context.affidavit_file_detail_problems.RemoveRange(
                        context.affidavit_file_detail_problems
-                        .Where(x => fileDetailIds.Contains(x.affidavit_file_detail_id) && x.problem_type == (int)AffidavitFileDetailProblemTypeEnum.ArchivedIsci)
+                        .Where(x => fileDetailIds.Contains(x.affidavit_file_detail_id) && x.problem_type == (int)FileDetailProblemTypeEnum.ArchivedIsci)
                         .ToList());
                    context.SaveChanges();
                });

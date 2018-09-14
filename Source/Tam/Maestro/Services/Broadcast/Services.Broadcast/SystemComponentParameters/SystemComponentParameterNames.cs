@@ -447,6 +447,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ProgramSearchApiUrl"; }
         }
 	 
+		public static string RelativePathToMarketCoveragesFile  
+		{
+            get { return "RelativePathToMarketCoveragesFile"; }
+        }
+	 
 		public static string UseMaestroDaypartRepo  
 		{
             get { return "UseMaestroDaypartRepo"; }
@@ -495,6 +500,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string WWTV_KeepingTracErrorFolder  
 		{
             get { return "WWTV_KeepingTracErrorFolder"; }
+        }
+	 
+		public static string WWTV_KeepingTracFtpInboundFolder  
+		{
+            get { return "WWTV_KeepingTracFtpInboundFolder"; }
         }
 	 
 		public static string WWTV_KeepingTracFtpOutboundFolder  

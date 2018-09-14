@@ -45,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -68,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -113,7 +113,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -135,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -157,7 +157,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -179,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -206,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(OutboundAffidavitFileValidationResultDto), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

@@ -2,9 +2,9 @@
 
 namespace Services.Broadcast.Entities
 {
-    public class AffidavitValidationResult
+    public class WWTVInboundFileValidationResult
     {
-        public AffidavitValidationResult()
+        public WWTVInboundFileValidationResult()
         {
             InvalidLine = -1;
         }
@@ -32,10 +32,8 @@ namespace Services.Broadcast.Entities
             str += this.GetType().FullName;
             return str;
         }
-
-
-
-        public static string FormatValidationMessage(List<AffidavitValidationResult> validationErrors)
+        
+        public static string FormatValidationMessage(List<WWTVInboundFileValidationResult> validationErrors)
         {
             string message = "";
 

@@ -8,6 +8,8 @@ using Tam.Maestro.Common.DataLayer;
 using ApprovalTests;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
+using Services.Broadcast.Converters;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -94,6 +96,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Approvals.Verify(IntegrationTestHelper.ConvertToJson(messages));
                 }
             }
-        }        
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "File 'ExtendedSigmaImport_ValidFile.csv' failed validation for Sigma import", MatchType = MessageMatch.Contains)]
+        public void SaveSigmaExtendedFile_BCOP3634()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileSaveRequest = new FileSaveRequest()
+                {
+                    Files = new List<FileRequest>() {
+                        new FileRequest()
+                        {
+                            FileName = "ExtendedSigmaImport_ValidFile.csv",
+                            StreamData = new FileStream(@".\Files\ExtendedSigmaImport_ValidFile.csv", FileMode.Open, FileAccess.Read)
+                        }
+                    }
+                };
+                var userName = "Test_ExtendedSigmaFile";
+
+                _ISpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
+                _ISpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
+            }
+        }
     }
 }

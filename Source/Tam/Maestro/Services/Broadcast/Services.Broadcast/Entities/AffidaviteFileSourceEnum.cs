@@ -1,6 +1,6 @@
 ﻿namespace Services.Broadcast.Entities
 {
-    public enum AffidaviteFileSourceEnum
+    public enum AffidavitFileSourceEnum
     {
         Strata = 1,
         KeepingTrac = 2

@@ -31,7 +31,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IRatingAdjustmentsRepository _RatingAdjustmentsRepository;
         private readonly IBvsRepository _BvsRepository;
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
-
         public TrackerServiceIntegrationTests()
         {
             _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();

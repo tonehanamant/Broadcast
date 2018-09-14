@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines
@@ -15,17 +14,17 @@ namespace Services.Broadcast.BusinessEngines
         List<AffidavitMatchingProposalWeek> Match(
             AffidavitFileDetail affidavitFileDetail,
             List<AffidavitMatchingProposalWeek> proposalWeeks);
-        List<AffidavitFileDetailProblem> MatchingProblems();
+        List<FileDetailProblem> MatchingProblems();
     }
 
     public class AffidavitMatchingEngine : IAffidavitMatchingEngine
     {
         public List<AffidavitMatchingProposalWeek> _MatchingProposalWeeks;
-        public List<AffidavitFileDetailProblem> _MatchingProblems;
+        public List<FileDetailProblem> _MatchingProblems;
         private readonly int _BroadcastMatchingBuffer;
         private readonly IDaypartCache _DaypartCache;
 
-        public List<AffidavitFileDetailProblem> MatchingProblems()
+        public List<FileDetailProblem> MatchingProblems()
         {
             return _MatchingProblems;
         }
@@ -41,13 +40,13 @@ namespace Services.Broadcast.BusinessEngines
             List<AffidavitMatchingProposalWeek> proposalWeeks)
         {
             _MatchingProposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            _MatchingProblems = new List<AffidavitFileDetailProblem>();
+            _MatchingProblems = new List<FileDetailProblem>();
 
             if (proposalWeeks == null || proposalWeeks.Count == 0)
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                _MatchingProblems.Add(new FileDetailProblem()
                 {
-                    Type = AffidavitFileDetailProblemTypeEnum.UnlinkedIsci,
+                    Type = FileDetailProblemTypeEnum.UnlinkedIsci,
                     Description = $"Isci not found: {affidavitFileDetail.Isci}"
                 });
 
@@ -57,9 +56,9 @@ namespace Services.Broadcast.BusinessEngines
             var unmarriedProposalIscisByProposal = proposalWeeks.Where(i => !i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId);
             if (unmarriedProposalIscisByProposal.Count() > 1)
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                _MatchingProblems.Add(new FileDetailProblem()
                 {
-                    Type = AffidavitFileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
+                    Type = FileDetailProblemTypeEnum.UnmarriedOnMultipleContracts,
                     Description = $"Unmarried Isci {affidavitFileDetail.Isci} exists on multiple proposals"
                 });
                 return _MatchingProposalWeeks;
@@ -68,9 +67,9 @@ namespace Services.Broadcast.BusinessEngines
             var marriedProposalIscisByProposal = proposalWeeks.Where(i => i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId);
             if (unmarriedProposalIscisByProposal.Any() && marriedProposalIscisByProposal.Any())
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                _MatchingProblems.Add(new FileDetailProblem()
                 {
-                    Type = AffidavitFileDetailProblemTypeEnum.MarriedAndUnmarried,
+                    Type = FileDetailProblemTypeEnum.MarriedAndUnmarried,
                     Description = $"Isci {affidavitFileDetail.Isci} exists as married and unmarried"
                 });
                 return _MatchingProposalWeeks;
@@ -79,9 +78,9 @@ namespace Services.Broadcast.BusinessEngines
             proposalWeeks = proposalWeeks.Where(x => x.SpotLengthId == affidavitFileDetail.SpotLengthId).ToList();
             if (!proposalWeeks.Any())
             {
-                _MatchingProblems.Add(new AffidavitFileDetailProblem()
+                _MatchingProblems.Add(new FileDetailProblem()
                 {
-                    Type = AffidavitFileDetailProblemTypeEnum.UnmatchedSpotLength,
+                    Type = FileDetailProblemTypeEnum.UnmatchedSpotLength,
                     Description = $"Unmatched Spot length for isci {affidavitFileDetail.Isci}"
                 });
                 return _MatchingProposalWeeks;
