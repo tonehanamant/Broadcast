@@ -3,8 +3,8 @@ using Services.Broadcast.ApplicationServices;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Web.Configuration;
 using System.Web.Http;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -28,11 +28,9 @@ namespace BroadcastComposerWeb.Controllers
         [Route("LoadCoverages")]
         public HttpResponseMessage LoadCoverages()
         {
-            var relativePathToCoveragesFile = WebConfigurationManager.AppSettings["relativePathToMarketCoveragesFile"];
-
             try
             {
-                var serverPathToCoveragesFile = System.Web.Hosting.HostingEnvironment.MapPath(relativePathToCoveragesFile);
+                var serverPathToCoveragesFile = System.Web.Hosting.HostingEnvironment.MapPath(BroadcastServiceSystemParameter.RelativePathToMarketCoveragesFile);
                 var marketService = _ApplicationServiceFactory.GetApplicationService<IMarketService>();
                 marketService.LoadCoverages(serverPathToCoveragesFile);
             }

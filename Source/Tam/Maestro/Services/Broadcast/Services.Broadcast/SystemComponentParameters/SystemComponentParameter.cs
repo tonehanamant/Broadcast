@@ -491,6 +491,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramSearchApiUrl); }
         }
 	 
+		public static string RelativePathToMarketCoveragesFile  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.RelativePathToMarketCoveragesFile); }
+        }
+	 
 		public static bool UseMaestroDaypartRepo  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
