@@ -9,9 +9,7 @@ const initialState = {
   alert: null,
   loading: {},
   file: {
-    raw: {
-      name: 'No File',
-    },
+    name: 'No File',
     base64: '',
   },
   disabledDropzones: false,
@@ -98,7 +96,7 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         file: {
           ...state.file,
-          raw: file,
+          ...file,
         },
       });
 
@@ -113,10 +111,8 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.CLEAR_FILE:
       return Object.assign({}, state, {
         file: {
-          raw: {
-            name: 'No File',
-            base64: '',
-          },
+          name: 'No File',
+          base64: '',
         },
       });
 

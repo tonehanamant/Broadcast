@@ -66,7 +66,7 @@ export class PostPrePostingFileUploadModal extends Component {
     if (this.checkValid()) {
       const postFile = {
         UserName: this.props.employee.Username,
-        FileName: this.props.file.raw.name,
+        FileName: this.props.file.name,
         RawData: this.props.file.base64,
         BvsStream: null,
       };
@@ -149,7 +149,7 @@ export class PostPrePostingFileUploadModal extends Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <p>{this.props.file.raw.name}</p>
+          <p>{this.props.file.name}</p>
           <form>
             <FormGroup controlId="equivalized">
               <Checkbox
@@ -240,9 +240,7 @@ PostPrePostingFileUploadModal.defaultProps = {
     Demos: null,
   },
   file: {
-    raw: {
-      name: 'No File',
-    },
+    name: 'No File',
   },
 };
 
