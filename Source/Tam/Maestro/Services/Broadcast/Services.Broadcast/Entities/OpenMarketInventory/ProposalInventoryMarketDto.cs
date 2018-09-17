@@ -40,6 +40,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public int Spots { get; set; }
             public List<ProposalProgramFlightWeek> FlightWeeks { get; set; } = new List<ProposalProgramFlightWeek>();
             public short StationCode { get; set; }
+            public double? ProvidedUnitImpressions { get; set; }
         }
     }
 }

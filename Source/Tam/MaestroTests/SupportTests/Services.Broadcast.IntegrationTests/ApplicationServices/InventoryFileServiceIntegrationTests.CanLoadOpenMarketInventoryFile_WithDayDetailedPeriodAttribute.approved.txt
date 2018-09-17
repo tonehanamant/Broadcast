@@ -82,6 +82,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 7000.0,
     "ProgramNames": [
       "NBC EARLY TODAY"
@@ -177,6 +178,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 19900.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 EARLY TODAY-5A"
@@ -272,6 +274,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 30300.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 EARLY TODAY-530A"
@@ -367,6 +370,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 44400.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 EARLY TODAY-6A"
@@ -462,6 +466,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 36400.0,
     "ProgramNames": [
       "TODAY SHOW"
@@ -557,6 +562,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 7000.0,
     "ProgramNames": [
       "ON THE MONEY"
@@ -652,6 +658,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 4700.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 TODAY"
@@ -747,6 +754,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 18100.0,
     "ProgramNames": [
       "SAT TODAY SHOW - HR 1"
@@ -842,6 +850,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 22500.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 TODAY"
@@ -937,6 +946,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 18200.0,
     "ProgramNames": [
       "SAT TODAY SHOW - HR 2"
@@ -1032,6 +1042,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 2200.0,
     "ProgramNames": [
       "FORUM 13"
@@ -1127,6 +1138,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 19100.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 TODAY SUN-7A"
@@ -1222,6 +1234,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 25200.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 TODAY SUN-8A"
@@ -1317,6 +1330,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 30400.0,
     "ProgramNames": [
       "SUNDAY TODAY"
@@ -1412,6 +1426,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 28500.0,
     "ProgramNames": [
       "MEET THE PRESS"
@@ -1507,6 +1522,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 24800.0,
     "ProgramNames": [
       "NEWSCHANNEL 13 LIVE AT NOON"

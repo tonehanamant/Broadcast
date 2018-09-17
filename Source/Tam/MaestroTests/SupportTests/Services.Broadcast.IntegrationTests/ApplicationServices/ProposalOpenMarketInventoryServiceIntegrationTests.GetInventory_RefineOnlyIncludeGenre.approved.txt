@@ -105,7 +105,8 @@
                   "IsHiatus": false,
                   "MediaWeekId": 649,
                   "Rate": 0.0,
-                  "StartDate": "2016-05-30T00:00:00"
+                  "StartDate": "2016-05-30T00:00:00",
+                  "TotalProvidedImpressions": null
                 },
                 {
                   "Allocations": [
@@ -118,17 +119,19 @@
                   "IsHiatus": false,
                   "MediaWeekId": 650,
                   "Rate": 0.0,
-                  "StartDate": "2016-06-06T00:00:00"
+                  "StartDate": "2016-06-06T00:00:00",
+                  "TotalProvidedImpressions": null
                 }
               ],
               "Genres": [
                 {
-                  "Display": null
+                  "Display": "Entertainment"
                 }
               ],
               "ProgramNames": [
                 "New Program Name"
               ],
+              "ProvidedUnitImpressions": null,
               "Spots": 0,
               "StationCode": 5013,
               "TargetCpm": 0.0,
@@ -218,6 +221,7 @@
                   "Cost": 0.0,
                   "EFF": 0.0,
                   "ProgramId": 162232,
+                  "ProvidedUnitImpressions": null,
                   "Spots": 1,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,

@@ -20,7 +20,7 @@ namespace Services.Broadcast.Entities
         public List<StationInventoryManifestAudience> ManifestAudiencesReferences { get; set; }
 
         public List<StationInventoryManifestRate> ManifestRates { get; set; }
-
+        
         public StationInventoryManifest()
         {
             ManifestDayparts = new List<StationInventoryManifestDaypart>();

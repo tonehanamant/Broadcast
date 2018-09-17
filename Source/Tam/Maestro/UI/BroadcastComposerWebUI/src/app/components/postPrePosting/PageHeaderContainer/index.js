@@ -7,7 +7,8 @@ import { Row, Col } from 'react-bootstrap';
 import SearchInputButton from 'Components/shared/SearchInputButton';
 import UploadButton from 'Components/shared/UploadButton';
 
-import { createAlert } from 'Ducks/app';
+import { toggleModal, storeFile } from 'Ducks/app';
+
 import { getPostPrePostingFiltered } from 'Ducks/postPrePosting';
 
 const mapStateToProps = ({ routing }) => ({
@@ -15,16 +16,30 @@ const mapStateToProps = ({ routing }) => ({
 });
 
 const mapDispatchToProps = dispatch => (
-  bindActionCreators({ createAlert, getPostPrePostingFiltered }, dispatch)
+  bindActionCreators({
+     getPostPrePostingFiltered,
+     toggleModal,
+     storeFile,
+    }, dispatch)
 );
 
-/* eslint-disable react/prefer-stateless-function */
 export class PageHeaderContainer extends Component {
   constructor(props) {
 		super(props);
 		this.SearchInputAction = this.SearchInputAction.bind(this);
     this.SearchSubmitAction = this.SearchSubmitAction.bind(this);
-	}
+    this.processFiles = this.processFiles.bind(this);
+  }
+
+  processFiles(file) {
+    const { storeFile, toggleModal } = this.props;
+    storeFile(file);
+    toggleModal({
+      modal: 'postFileUploadModal',
+      active: true,
+      properties: {},
+    });
+  }
 
 	SearchInputAction() {
 		this.props.getPostPrePostingFiltered();
@@ -42,15 +57,8 @@ export class PageHeaderContainer extends Component {
             text="Upload"
             bsStyle="success"
             bsSize="small"
-            acceptedMimeTypes="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            fileType="Excel"
             fileTypeExtension=".xlsx"
-            postProcessFiles={{
-              toggleModal: {
-                modal: 'postFileUploadModal',
-                active: true,
-              },
-            }}
+            processFiles={this.processFiles}
           />
 				</Col>
         <Col xs={6}>
@@ -67,6 +75,8 @@ export class PageHeaderContainer extends Component {
 
 PageHeaderContainer.propTypes = {
   getPostPrePostingFiltered: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  storeFile: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHeaderContainer);

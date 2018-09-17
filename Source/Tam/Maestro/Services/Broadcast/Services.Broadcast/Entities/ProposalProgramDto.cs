@@ -8,7 +8,7 @@ namespace Services.Broadcast.Entities
     public class ProposalProgramDto
     {
         public int ManifestId { get; set; }
-        public List<ManifestDaypartDto> ManifestDayparts { get; set; } 
+        public List<ManifestDaypartDto> ManifestDayparts { get; set; }
         public List<ManifestAudienceDto> ManifestAudiences { get; set; }
         public List<LookupDto> DayParts { get; set; }
         public int ManifestDaypartId { get; set; }
@@ -38,6 +38,7 @@ namespace Services.Broadcast.Entities
         public bool IsOverlapping { get; set; }
         public double UnitImpressions { get; set; }
         public List<StationInventorySpots> Allocations { get; set; }
+        public double? ProvidedUnitImpressions { get; set; }
         public double TotalImpressions { get; set; }
 
         public ProposalProgramDto()

@@ -87,6 +87,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 86000.0,
     "ProgramNames": [
       "GENERAL HOSPITAL"
@@ -187,6 +188,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 103000.0,
     "ProgramNames": [
       "LIVE WITH KELLY"
@@ -287,6 +289,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 91000.0,
     "ProgramNames": [
       "THE CHEW"
@@ -387,6 +390,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 103000.0,
     "ProgramNames": [
       "THE VIEW"
@@ -487,6 +491,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 60000.0,
     "ProgramNames": [
       "WINDY CITY LIVE"
@@ -587,6 +592,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 114000.0,
     "ProgramNames": [
       "INSIDE EDITION"
@@ -687,6 +693,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 169000.0,
     "ProgramNames": [
       "JEOPARDY"
@@ -737,6 +744,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 43000.0,
     "ProgramNames": [
       "ABC7 LATE NEWS (R)"
@@ -837,6 +845,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 48000.0,
     "ProgramNames": [
       "ABC7 LATE NEWS (R)"
@@ -922,6 +931,7 @@
         "StartDate": "2016-11-28T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 73000.0,
     "ProgramNames": [
       "CASTLE"
@@ -1007,6 +1017,7 @@
         "StartDate": "2016-11-28T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 50000.0,
     "ProgramNames": [
       "CASTLE"
@@ -1057,6 +1068,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 107000.0,
     "ProgramNames": [
       "CASTLE"
@@ -1107,6 +1119,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 59000.0,
     "ProgramNames": [
       "CASTLE"
@@ -1207,6 +1220,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 94000.0,
     "ProgramNames": [
       "INSIDE EDITION W"
@@ -1307,6 +1321,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 123000.0,
     "ProgramNames": [
       "JIMMY KIMMEL"
@@ -1407,6 +1422,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 82000.0,
     "ProgramNames": [
       "NIGHTLINE"
@@ -1507,6 +1523,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 44000.0,
     "ProgramNames": [
       "SCANDAL"
@@ -1607,6 +1624,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 30000.0,
     "ProgramNames": [
       "SCANDAL"
@@ -1707,6 +1725,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 53000.0,
     "ProgramNames": [
       "WINDY CITY LIVE B"
@@ -1807,6 +1826,7 @@
         "StartDate": "2016-12-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 66000.0,
     "ProgramNames": [
       "WINDY CITY WKND"

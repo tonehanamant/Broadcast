@@ -601,10 +601,10 @@
     <Compile Include="station_inventory_manifest_dayparts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="station_inventory_manifest_generation.cs">
+    <Compile Include="station_inventory_manifest_daypart_genres.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="station_inventory_manifest_genres.cs">
+    <Compile Include="station_inventory_manifest_generation.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_rates.cs">
@@ -614,9 +614,6 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_spot_audiences.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="station_inventory_spot_genres.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="system_component_parameters.cs">

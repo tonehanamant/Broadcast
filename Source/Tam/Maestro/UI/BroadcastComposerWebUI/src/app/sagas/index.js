@@ -71,5 +71,6 @@ export default function* rootSaga() {
     // planningSaga.watchUploadSCXFileSuccess(),
 
     trackerSaga.watchUploadTrackerFile(),
+    trackerSaga.watchUploadTrackerFileSuccess(),
   ];
 }

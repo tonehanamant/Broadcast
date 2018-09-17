@@ -3642,5 +3642,84 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(hasSpotAllocated);
             }
         }
+
+        [Test]
+        public void InventoryService_SavesNewProgram_WithGenres()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int stationCode = 5276;
+                const int genreId = 1;
+                const string genreName = "Action";
+
+                var program = new StationProgram
+                {
+                    FlightWeeks = new List<FlightWeekDto>
+                    {
+                        new FlightWeekDto
+                        {
+                            StartDate = new DateTime(2017, 12, 01),
+                            EndDate = new DateTime(2018, 01, 01)
+                        }
+                    },
+                    HouseHoldImpressions = 1000,
+                    Rate15 = 15,
+                    Rating = 50,
+                    ProgramNames = new List<string>() { "Testing Program" },
+                    StationCode = stationCode,
+                    RateSource = "OpenMarket",
+                    Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) },
+                    Genres = new List<LookupDto> { new LookupDto { Id = genreId, Display = genreName } }
+                };
+
+                _InventoryFileService.SaveProgram(program, "TestUser");
+
+                var stationDetail = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCode);
+                var stationDetailContainsProgramWithExpectedGenre = stationDetail.Programs.Any(x => x.Genres.Any(g => g.Id == genreId));
+
+                Assert.True(stationDetailContainsProgramWithExpectedGenre);
+            }
+        }
+
+        [Test]
+        public void InventoryService_SavesExistingProgram_WithGenres()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                const int stationCode = 7353;
+                const int genreId = 1;
+                const string genreName = "Action";
+
+                var program = new StationProgram
+                {
+                    Id = 24538,
+                    EffectiveDate = new DateTime(2017, 12, 01),
+                    EndDate = new DateTime(2018, 01, 01),
+                    FlightWeeks = new List<FlightWeekDto>
+                    {
+                        new FlightWeekDto
+                        {
+                            StartDate = new DateTime(2017, 12, 01),
+                            EndDate = new DateTime(2018, 01, 01)
+                        }
+                    },
+                    HouseHoldImpressions = 1000,
+                    Rate30 = 20,
+                    Rating = 50,
+                    ProgramNames = new List<string>() { "Edited Program Name 54" },
+                    StationCode = stationCode,
+                    RateSource = "OpenMarket",
+                    Airtimes = new List<DaypartDto>() { DaypartDto.ConvertDisplayDaypart(DaypartCache.Instance.GetDisplayDaypart(1)) },
+                    Genres = new List<LookupDto> { new LookupDto { Id = genreId, Display = genreName } }
+                };
+
+                _InventoryFileService.SaveProgram(program, "TestUser");
+
+                var stationDetail = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCode);
+                var stationDetailContainsProgramWithExpectedGenre = stationDetail.Programs.Any(x => x.Genres.Any(g => g.Id == genreId));
+
+                Assert.True(stationDetailContainsProgramWithExpectedGenre);
+            }
+        }
     }
 }

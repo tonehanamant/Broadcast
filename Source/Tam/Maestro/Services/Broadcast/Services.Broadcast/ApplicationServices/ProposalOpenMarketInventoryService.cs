@@ -560,6 +560,8 @@ namespace Services.Broadcast.ApplicationServices
                                 weekStation.Programs.Add(null);
                                 continue;
                             }
+                            
+                            var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
                             var weekProgram = new ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram();
                             var numberOfSpotsAllocated =
                                 existingAllocations.Count(
@@ -567,9 +569,10 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.ProgramId = program.ProgramId;
                             weekProgram.Spots = numberOfSpotsAllocated;
                             weekProgram.UnitImpression = program.UnitImpressions;
+                            weekProgram.ProvidedUnitImpressions = program.ProvidedUnitImpressions;
                             weekProgram.UnitCost = programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
-                            weekProgram.TotalImpressions = weekProgram.Spots > 0 ? program.UnitImpressions * weekProgram.Spots : program.UnitImpressions;
+                            weekProgram.TotalImpressions = weekProgram.Spots > 0 ? unitImpressions * weekProgram.Spots : unitImpressions;
                             weekProgram.Cost = weekProgram.Spots > 0 ? weekProgram.Spots * weekProgram.UnitCost : weekProgram.UnitCost;
 
                             weekStation.Programs.Add(weekProgram);
@@ -655,17 +658,22 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var program in programs)
             {
                 var manifestAudienceForProposal = program.ManifestAudiences.SingleOrDefault(x => x.AudienceId == proposalDetail.GuaranteedAudience);
-
-                // if station impressions are provided we use them
+                
                 if (manifestAudienceForProposal != null && manifestAudienceForProposal.Impressions.HasValue)
                 {
-                    program.UnitImpressions = manifestAudienceForProposal.Impressions.Value;
+                    program.ProvidedUnitImpressions = manifestAudienceForProposal.Impressions.Value;
+
+                    foreach (var week in program.FlightWeeks)
+                    {
+                        var allocatedSpots = week.Allocations.First().Spots;
+                        week.TotalProvidedImpressions = allocatedSpots * program.ProvidedUnitImpressions;
+                    }
                 }
                 else
                 {
                     var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
                     var programDaypartImpressions =
-                        manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
+                                            manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
                     var daypartCount = programManifestDaypartIds.Count;
                     if (daypartCount > 0)
                     {
@@ -736,6 +744,7 @@ namespace Services.Broadcast.ApplicationServices
                             ProgramNames = p.ManifestDayparts.Select(md => md.ProgramName).ToList(),
                             TargetCpm = p.TargetCpm,
                             UnitImpressions = p.UnitImpressions,
+                            ProvidedUnitImpressions = p.ProvidedUnitImpressions,
                             TargetImpressions = p.TargetImpressions,
                             Dayparts = p.DayParts,
                             Spots = p.TotalSpots,
