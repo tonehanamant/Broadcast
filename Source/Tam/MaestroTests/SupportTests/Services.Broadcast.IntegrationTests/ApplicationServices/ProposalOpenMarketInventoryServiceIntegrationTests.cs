@@ -1472,39 +1472,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_CalculatesTotalProvidedImpressions_ForInventoryMarkets()
-        {
-            var proposalDetailId = 10799;
-            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-
-            var dto = _ProposalRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
-            var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => (short)m.Id).ToList();
-            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(
-                dto.DetailFlightStartDate,
-                dto.DetailFlightEndDate,
-                dto.DetailSpotLengthId,
-                BroadcastConstants.OpenMarketSourceId,
-                proposalMarketIds,
-                dto.DetailId);
-
-            var programWithStationImpressionsExcpected = programs.First(x => x.ManifestAudiences.Any(ma => ma.Impressions != null));
-            var manifestAudiencesExpected = programWithStationImpressionsExcpected.ManifestAudiences.First(ma => ma.Impressions != null);
-            var providedUnitImpressionsExpected = manifestAudiencesExpected.Impressions;
-
-            var allProgramsResult = inventory.Markets
-                .SelectMany(x => x.Stations)
-                .SelectMany(x => x.Programs);
-            var programWithProvidedUnitImpressions = allProgramsResult.First(x =>
-                x.ProgramId == programWithStationImpressionsExcpected.ManifestId &&
-                x.ProvidedUnitImpressions == providedUnitImpressionsExpected);
-            var weekWithNotZeroAllocatedSpots = programWithProvidedUnitImpressions.FlightWeeks.First(x => x.Allocations.Any(a => a.Spots > 0));
-            var spotsAllocated = weekWithNotZeroAllocatedSpots.Allocations.First().Spots;
-            var totalProvidedImpressionsExpected = spotsAllocated * providedUnitImpressionsExpected;
-
-            Assert.AreEqual(totalProvidedImpressionsExpected, weekWithNotZeroAllocatedSpots.TotalProvidedImpressions);
-        }
-
-        [Test]
         public void ProposalOpenMarketService_CalculatesTotalImpressions_ForInventoryWeeks()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
@@ -1516,7 +1483,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var totalImpressionsExpected = programWithProvidedUnitImpressions.Spots * programWithProvidedUnitImpressions.ProvidedUnitImpressions.Value;
 
-            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalImpressions);
+            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalProvidedImpressions);
         }
 
         [Test]

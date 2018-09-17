@@ -561,7 +561,7 @@ namespace Services.Broadcast.ApplicationServices
                                 continue;
                             }
                             
-                            var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
+                            var unitImpressions = program.UnitImpressions;
                             var weekProgram = new ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram();
                             var numberOfSpotsAllocated =
                                 existingAllocations.Count(
@@ -573,6 +573,13 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.UnitCost = programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
                             weekProgram.TotalImpressions = weekProgram.Spots > 0 ? unitImpressions * weekProgram.Spots : unitImpressions;
+
+                            if (program.ProvidedUnitImpressions.HasValue)
+                            {
+                                var providedUnitImpressions = program.ProvidedUnitImpressions.Value;
+                                weekProgram.TotalProvidedImpressions = weekProgram.Spots > 0 ? providedUnitImpressions * weekProgram.Spots : providedUnitImpressions;
+                            }
+
                             weekProgram.Cost = weekProgram.Spots > 0 ? weekProgram.Spots * weekProgram.UnitCost : weekProgram.UnitCost;
 
                             weekStation.Programs.Add(weekProgram);
@@ -662,12 +669,6 @@ namespace Services.Broadcast.ApplicationServices
                 if (hasManifestAudiences)
                 {
                     program.ProvidedUnitImpressions = manifestAudienceForProposal.Impressions.Value;
-
-                    foreach (var week in program.FlightWeeks)
-                    {
-                        var allocatedSpots = week.Allocations.First().Spots;
-                        week.TotalProvidedImpressions = allocatedSpots * program.ProvidedUnitImpressions;
-                    }
                 }
 
                 if (!hasManifestAudiences || addProgramImpressions)

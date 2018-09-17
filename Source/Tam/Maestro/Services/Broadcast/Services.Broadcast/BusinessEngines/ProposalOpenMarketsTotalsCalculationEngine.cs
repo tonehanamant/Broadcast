@@ -99,6 +99,12 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in weekPrograms)
             {
                 program.TotalImpressions = program.Spots == 0 ? program.UnitImpression : program.Spots * program.UnitImpression;
+
+                if (program.ProvidedUnitImpressions.HasValue)
+                {
+                    program.TotalProvidedImpressions = program.Spots == 0 ? program.ProvidedUnitImpressions : program.Spots * program.ProvidedUnitImpressions;
+                }
+
                 program.Cost = program.Spots == 0 ? program.UnitCost : program.Spots * program.UnitCost;
             }
         }
@@ -136,7 +142,10 @@ namespace Services.Broadcast.BusinessEngines
                         market.Stations.Select(a => a.Programs.Where(p => p != null && p.Spots > 0).Sum(b => b.Cost)).Sum();
                     market.Spots = market.Stations.Select(a => a.Programs.Where(p => p != null).Sum(b => b.Spots)).Sum();
                     market.Impressions =
-                        market.Stations.Select(a => a.Programs.Where(p => p != null && p.Spots > 0).Sum(p => p.TotalImpressions))
+                        market.Stations
+                            .Select(a => a.Programs
+                                            .Where(p => p != null && p.Spots > 0)
+                                            .Sum(p => p.TotalProvidedImpressions ?? p.TotalImpressions))
                             .Sum();
                 }
             }
