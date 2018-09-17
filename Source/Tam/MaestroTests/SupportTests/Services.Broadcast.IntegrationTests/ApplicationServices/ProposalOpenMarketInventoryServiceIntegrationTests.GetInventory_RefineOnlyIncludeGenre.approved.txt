@@ -77,6 +77,7 @@
   "Margin": 20.0,
   "Markets": [
     {
+      "MarketCoverage": 0.0,
       "MarketId": 101,
       "MarketName": "New York",
       "MarketRank": 1,
@@ -193,7 +194,8 @@
   "ProposalVersionId": 41,
   "RefineFilterPrograms": [
     "New Program Name",
-    "Test Program"
+    "Test Program",
+    "Test Program On Separate Daypart"
   ],
   "ShareProjectionBookId": 413,
   "SingleProjectionBookId": null,

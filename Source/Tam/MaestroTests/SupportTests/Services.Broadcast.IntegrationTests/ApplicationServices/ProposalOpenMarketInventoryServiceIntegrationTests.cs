@@ -279,7 +279,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
 
                 Assert.IsTrue(1 == filteredProgram.Count());
-                Assert.IsTrue(filteredProgram.First().ProgramNames.Count() == 1);
             }
         }
 
@@ -1435,6 +1434,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ProposalOpenMarketService_CanGetInventory()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);

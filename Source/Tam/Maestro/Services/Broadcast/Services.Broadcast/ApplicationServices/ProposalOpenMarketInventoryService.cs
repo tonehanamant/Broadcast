@@ -626,7 +626,6 @@ namespace Services.Broadcast.ApplicationServices
             {
                 foreach (var manifestDaypart in program.ManifestDayparts)
                 {
-
                     var manifestDp = Common.Services.DaypartCache.Instance.GetDisplayDaypart(manifestDaypart.DaypartId);
 
                     var stationDaypart = new ManifestDetailDaypart
@@ -658,8 +657,9 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var program in programs)
             {
                 var manifestAudienceForProposal = program.ManifestAudiences.SingleOrDefault(x => x.AudienceId == proposalDetail.GuaranteedAudience);
-                
-                if (manifestAudienceForProposal != null && manifestAudienceForProposal.Impressions.HasValue)
+                var hasManifestAudiences = manifestAudienceForProposal != null && manifestAudienceForProposal.Impressions.HasValue;
+
+                if (hasManifestAudiences)
                 {
                     program.ProvidedUnitImpressions = manifestAudienceForProposal.Impressions.Value;
 
@@ -670,7 +670,7 @@ namespace Services.Broadcast.ApplicationServices
                     }
                 }
 
-                if (!manifestAudienceForProposal.Impressions.HasValue || addProgramImpressions)
+                if (!hasManifestAudiences || addProgramImpressions)
                 {
                     var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
                     var programDaypartImpressions =
