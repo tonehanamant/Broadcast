@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities
 {
@@ -8,6 +9,7 @@ namespace Services.Broadcast.Entities
         public StationProgram()
         {
             FlightWeeks = new List<FlightWeekDto>();
+            Genres = new List<LookupDto>();
         }
 
         public int Id { get; set; }
@@ -26,6 +28,7 @@ namespace Services.Broadcast.Entities
         public double? Rating { get; set; }
         public List<FlightWeekDto> FlightWeeks { get; set; }
         public List<StationProgramConflictChangeDto> Conflicts { get; set; }
+        public List<LookupDto> Genres { get; set; }
 
         public class StationProgramConflictChangeDto
         {

@@ -99,6 +99,7 @@
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
+                "Genres": [],
                 "ProgramName": null
               }
             ],
@@ -205,6 +206,7 @@
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
+                "Genres": [],
                 "ProgramName": null
               },
               {
@@ -225,6 +227,7 @@
                   "_Tuesday": false,
                   "_Wednesday": false
                 },
+                "Genres": [],
                 "ProgramName": null
               }
             ],
@@ -331,6 +334,7 @@
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
+                "Genres": [],
                 "ProgramName": null
               },
               {
@@ -351,6 +355,7 @@
                   "_Tuesday": false,
                   "_Wednesday": false
                 },
+                "Genres": [],
                 "ProgramName": null
               }
             ],
@@ -457,6 +462,7 @@
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
+                "Genres": [],
                 "ProgramName": null
               },
               {
@@ -477,6 +483,7 @@
                   "_Tuesday": false,
                   "_Wednesday": false
                 },
+                "Genres": [],
                 "ProgramName": null
               },
               {
@@ -497,6 +504,7 @@
                   "_Tuesday": false,
                   "_Wednesday": false
                 },
+                "Genres": [],
                 "ProgramName": null
               }
             ],

@@ -8,11 +8,11 @@ using System.Linq;
 using Common.Services;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Repositories
 {
@@ -444,13 +444,14 @@ namespace Services.Broadcast.Repositories
                     var manifests = (from sp in
                         context.station_inventory_manifest
                             .Include(m => m.station_inventory_manifest_dayparts)
+                            .Include(m => m.station_inventory_manifest_dayparts.Select(d => d.station_inventory_manifest_daypart_genres))
                             .Include(m => m.station)
                             .Include(m => m.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_generation)
                             .Include(m => m.station_inventory_group)
                             .Include(m => m.inventory_sources)
                             .Include(m => m.station_inventory_manifest_rates)
-                        where sp.station_code == (short) stationCode
+                                     where sp.station_code == (short) stationCode
                               && sp.inventory_sources.name.ToLower().Equals(rateSource.Name.ToLower())
                                      select new StationInventoryManifest()
                                      {
@@ -474,7 +475,12 @@ namespace Services.Broadcast.Repositories
                                              {
                                                  Id = d.id,
                                                  Daypart = new DisplayDaypart { Id = d.daypart_id },
-                                                 ProgramName = d.program_name
+                                                 ProgramName = d.program_name,
+                                                 Genres = d.station_inventory_manifest_daypart_genres.Select(g => new LookupDto
+                                                 {
+                                                     Id = g.genre_id,
+                                                     Display = g.genre.name
+                                                 }).ToList(),
                                              }).ToList(),
                                          InventorySourceId = sp.inventory_source_id,
                                          EffectiveDate = sp.effective_date,
@@ -789,11 +795,21 @@ namespace Services.Broadcast.Repositories
 
                 foreach (var manifestDaypart in stationInventoryManifest.ManifestDayparts)
                 {
-                    manifest.station_inventory_manifest_dayparts.Add(new station_inventory_manifest_dayparts
+                    var newManifestDaypart = new station_inventory_manifest_dayparts
                     {
                         daypart_id = manifestDaypart.Daypart.Id,
                         program_name = manifestDaypart.ProgramName
-                    });
+                    };
+
+                    foreach (var genre in manifestDaypart.Genres)
+                    {
+                        newManifestDaypart.station_inventory_manifest_daypart_genres.Add(new station_inventory_manifest_daypart_genres
+                        {
+                            genre_id = genre.Id
+                        });
+                    }
+
+                    manifest.station_inventory_manifest_dayparts.Add(newManifestDaypart);
                 }
 
                 foreach (var manifestRates in stationInventoryManifest.ManifestRates)
@@ -848,11 +864,21 @@ namespace Services.Broadcast.Repositories
 
                 foreach (var manifestDaypart in stationInventoryManifest.ManifestDayparts)
                 {
-                    manifest.station_inventory_manifest_dayparts.Add(new station_inventory_manifest_dayparts
+                    var newManifestDaypart = new station_inventory_manifest_dayparts
                     {
                         daypart_id = manifestDaypart.Daypart.Id,
                         program_name = manifestDaypart.ProgramName
-                    });
+                    };
+
+                    foreach (var genre in manifestDaypart.Genres)
+                    {
+                        newManifestDaypart.station_inventory_manifest_daypart_genres.Add(new station_inventory_manifest_daypart_genres
+                        {
+                            genre_id = genre.Id
+                        });
+                    }
+
+                    manifest.station_inventory_manifest_dayparts.Add(newManifestDaypart);
                 }
 
                 context.station_inventory_manifest_audiences.RemoveRange(manifest.station_inventory_manifest_audiences);

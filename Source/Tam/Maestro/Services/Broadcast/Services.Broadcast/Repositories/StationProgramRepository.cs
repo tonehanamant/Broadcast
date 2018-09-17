@@ -1,19 +1,13 @@
-﻿using System.Data.Common;
-using System.Data.Entity;
-using System.IO.Compression;
-using System.Management.Automation;
+﻿using System.Data.Entity;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -43,6 +37,7 @@ namespace Services.Broadcast.Repositories
                     {
                         var manifests = context.station_inventory_manifest
                             .Include(a => a.station_inventory_manifest_dayparts)
+                            .Include(a => a.station_inventory_manifest_dayparts.Select(d => d.station_inventory_manifest_daypart_genres))
                             .Include(b => b.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_rates)
                             .Include(m => m.station_inventory_spots)
@@ -94,7 +89,10 @@ namespace Services.Broadcast.Repositories
                                     ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
                                     MediaWeekId = r.media_week_id
                                 }).ToList(),
-                                Genres = m.station_inventory_spots.SelectMany(x => x.station_inventory_spot_genres.Select(genre => new LookupDto() { Id = genre.genre_id })).Distinct().ToList()
+                                Genres = m.station_inventory_manifest_dayparts
+                                .SelectMany(x => x.station_inventory_manifest_daypart_genres
+                                    .Select(genre => new LookupDto() { Id = genre.genre_id, Display = genre.genre.name }))
+                                .Distinct().ToList()
                             }).ToList());
 
                         /*

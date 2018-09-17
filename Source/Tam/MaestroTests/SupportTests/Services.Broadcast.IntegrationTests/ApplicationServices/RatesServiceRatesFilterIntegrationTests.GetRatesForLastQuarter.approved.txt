@@ -100,6 +100,7 @@
         "StartDate": "2016-06-20T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": 20500.0,
     "ProgramNames": [
       "Q2 CADENT NEWS AT 11:30AM"

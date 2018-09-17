@@ -48,6 +48,7 @@
           "StartDate": "2016-10-03T00:00:00"
         }
       ],
+      "Genres": [],
       "HouseHoldImpressions": 26100.0,
       "ProgramNames": [
         "CADENT NEWS AT 11:30AM"

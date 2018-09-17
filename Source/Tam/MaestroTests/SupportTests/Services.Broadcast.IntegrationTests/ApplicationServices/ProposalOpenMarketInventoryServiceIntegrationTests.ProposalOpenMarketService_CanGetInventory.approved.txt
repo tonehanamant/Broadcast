@@ -104,7 +104,7 @@
               ],
               "Genres": [
                 {
-                  "Display": null,
+                  "Display": "Entertainment",
                   "Id": 15
                 }
               ],
@@ -162,12 +162,8 @@
               ],
               "Genres": [
                 {
-                  "Display": null,
+                  "Display": "Comedy",
                   "Id": 9
-                },
-                {
-                  "Display": null,
-                  "Id": 11
                 }
               ],
               "ProgramId": 46003,

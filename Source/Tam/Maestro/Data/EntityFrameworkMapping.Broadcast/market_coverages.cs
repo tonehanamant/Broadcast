@@ -16,9 +16,9 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public int rank { get; set; }
+        public short market_code { get; set; }
         public int tv_homes { get; set; }
         public double percentage_of_us { get; set; }
-        public short market_code { get; set; }
     
         public virtual market market { get; set; }
     }
