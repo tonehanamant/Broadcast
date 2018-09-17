@@ -282,7 +282,8 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
                 var totalCost = activeWeeks.Sum(w => w.Rate);
-                var totalImpressions = program.UnitImpressions * activeWeeks.Count;
+                var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
+                var totalImpressions = unitImpressions * activeWeeks.Count;
 
                 program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
             }
