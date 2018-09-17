@@ -84,7 +84,8 @@
                   "IsHiatus": false,
                   "MediaWeekId": 649,
                   "Rate": 0.0,
-                  "StartDate": "2016-05-30T00:00:00"
+                  "StartDate": "2016-05-30T00:00:00",
+                  "TotalProvidedImpressions": null
                 },
                 {
                   "Allocations": [
@@ -97,7 +98,8 @@
                   "IsHiatus": false,
                   "MediaWeekId": 650,
                   "Rate": 0.0,
-                  "StartDate": "2016-06-06T00:00:00"
+                  "StartDate": "2016-06-06T00:00:00",
+                  "TotalProvidedImpressions": null
                 }
               ],
               "Genres": [
@@ -110,6 +112,7 @@
               "ProgramNames": [
                 "New Program Name"
               ],
+              "ProvidedUnitImpressions": null,
               "Spots": 0,
               "StationCode": 5013,
               "TargetCpm": 0.0,
@@ -139,7 +142,8 @@
                   "IsHiatus": false,
                   "MediaWeekId": 649,
                   "Rate": 10.0000,
-                  "StartDate": "2016-05-30T00:00:00"
+                  "StartDate": "2016-05-30T00:00:00",
+                  "TotalProvidedImpressions": 2714.0
                 },
                 {
                   "Allocations": [
@@ -152,7 +156,8 @@
                   "IsHiatus": false,
                   "MediaWeekId": 650,
                   "Rate": 10.0000,
-                  "StartDate": "2016-06-06T00:00:00"
+                  "StartDate": "2016-06-06T00:00:00",
+                  "TotalProvidedImpressions": 0.0
                 }
               ],
               "Genres": [
@@ -170,11 +175,12 @@
                 "Test Program",
                 "Test Program On Separate Daypart"
               ],
+              "ProvidedUnitImpressions": 1357.0,
               "Spots": 0,
               "StationCode": 5013,
               "TargetCpm": 7.37,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 1357.0
+              "UnitImpressions": 0.0
             }
           ],
           "StationCode": 5013

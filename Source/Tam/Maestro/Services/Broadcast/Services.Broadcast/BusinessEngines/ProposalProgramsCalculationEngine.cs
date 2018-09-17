@@ -257,11 +257,13 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-/*                var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
-                var totalCost = activeWeeks.Sum(w => w.Rate);
-                var totalImpressions = program.UnitImpressions * activeWeeks.Count;*/
+                /*                var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
+                                var totalCost = activeWeeks.Sum(w => w.Rate);
+                                var totalImpressions = program.UnitImpressions * activeWeeks.Count;*/
 
-                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, program.UnitImpressions); ;
+                var impressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
+
+                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, impressions);
             }
         }
     }

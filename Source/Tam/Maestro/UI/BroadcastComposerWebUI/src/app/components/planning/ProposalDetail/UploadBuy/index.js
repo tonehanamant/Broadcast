@@ -5,7 +5,7 @@ import { Modal, Button, Form, FormGroup, FormControl, ControlLabel, Col } from '
 import { bindActionCreators } from 'redux';
 import UploadButton from 'Components/shared/UploadButton';
 
-import { toggleModal, clearFile, storeFile, deployError, readFileB64 } from 'Ducks/app';
+import { toggleModal, clearFile, storeFile } from 'Ducks/app';
 import { uploadSCXFile } from 'Ducks/planning';
 
 const mapStateToProps = ({ app: { modals: { uploadBuy: modal }, file } }) => ({
@@ -16,8 +16,6 @@ const mapStateToProps = ({ app: { modals: { uploadBuy: modal }, file } }) => ({
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
       toggleModal,
-      readFileB64,
-      deployError,
       clearFile,
       storeFile,
       uploadSCXFile,
@@ -47,9 +45,9 @@ class UploadBuy extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.state.activeFile) return;
     if (nextProps.file && nextProps.file.base64 && nextProps.file.base64.length) {
-      // console.log('recieve file', this, nextProps.file);
+      console.log('recieve file', this, nextProps.file);
       this.setState({
-        fileName: nextProps.file.raw.name,
+        fileName: nextProps.file.name,
         activeFile: true,
       });
     }
@@ -69,7 +67,6 @@ class UploadBuy extends Component {
   }
 
   onSave() {
-   // this.props.uploadBuyFile(this.state.FileRequest);
     const ret = {
       EstimateId: parseInt(this.state.estimateId, 10),
       ProposalVersionDetailId: this.props.modal.properties.detailId, // just get from modal props
@@ -77,16 +74,12 @@ class UploadBuy extends Component {
       RawData: this.props.file.base64,
       UserName: 'user',
     };
-    console.log('onSave file', ret);
-   // should not cancel until success - do in duck
-    // this.onCancel();
     this.props.uploadSCXFile(ret);
   }
 
   onChangeEstimateId(event) {
     const estimateId = event.target.value;
     if (estimateId.length && estimateId !== '0') {
-      // console.log(event.target.value);
       this.setState({ estimateId });
     } else {
       this.setState({ estimateId: '' });
@@ -101,19 +94,9 @@ class UploadBuy extends Component {
     });
   }
 
-  processFile(acceptedFiles, rejectedFiles) {
+  processFile(file) {
     this.setState({ activeFile: false });
-    // console.log(this, acceptedFiles, rejectedFiles);
-    if (rejectedFiles.length > 0) {
-      this.props.deployError({ message: 'Invalid file format. Please provide a SCX file.' });
-    } else if (acceptedFiles.length > 0) {
-      if (acceptedFiles[0].name.indexOf('.scx') === -1) {
-        this.props.deployError({ message: 'Invalid file format. Please provide a SCX file.' });
-      } else {
-        this.props.readFileB64(acceptedFiles[0]);
-        this.props.storeFile(acceptedFiles[0]);
-      }
-    }
+    this.props.storeFile(file);
   }
 
   render() {
@@ -145,10 +128,8 @@ class UploadBuy extends Component {
                     text="Upload"
                     bsStyle="success"
                     bsSize="small"
-                    acceptedMimeTypes=""
-                    fileType="SCX"
                     fileTypeExtension=".scx"
-                    onFilesSelected={this.processFile}
+                    processFiles={this.processFile}
                   />
                 </Col>
                 <Col sm={7} style={{ paddingTop: '5px' }}>
@@ -194,8 +175,6 @@ UploadBuy.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   clearFile: PropTypes.func.isRequired,
   storeFile: PropTypes.func.isRequired,
-  readFileB64: PropTypes.func.isRequired,
-  deployError: PropTypes.func.isRequired,
   file: PropTypes.object.isRequired,
   uploadSCXFile: PropTypes.func.isRequired,
 };
@@ -206,9 +185,7 @@ UploadBuy.defaultProps = {
     properties: {},
   },
   file: {
-    raw: {
-      name: 'No File',
-    },
+    name: 'No File',
   },
 };
 

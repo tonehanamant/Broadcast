@@ -20,11 +20,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class AffidavitServiceTests
     {
+        private const string ISCI1 = "DDDDDDDD";
+        private const string ISCI2 = "FFFFFF";
+
         private readonly IProposalService _ProposalService;
 
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService =
             IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
 
+        private readonly IPostRepository _PostRepository;
         private readonly IAffidavitService _Sut;
         private readonly IAffidavitRepository _AffidavitRepository;
 
@@ -39,6 +43,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                 .GetDataRepository<IAffidavitRepository>();
 
+            _PostRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                .GetDataRepository<IPostRepository>();
             _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
         }
 
@@ -249,7 +255,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var detail = new InboundFileSaveRequestDetail
             {
                 AirTime = DateTime.Parse("06/08/2017 8:04AM"),
-                Isci = "FFFFFF",
+                Isci = ISCI2,
                 ProgramName = ProgramName1,
                 SpotLength = 30,
                 Genre = Genre1.Display,
@@ -272,6 +278,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
+        private void _AddBlackListedIscis(string IsciToBlacklist)
+        {
+            _PostRepository.ArchiveIsci(new List<string>() { IsciToBlacklist },"Test User");
+        }
+
         private InboundFileSaveRequest _SetupAffidavit()
         {
             InboundFileSaveRequest request = new InboundFileSaveRequest
@@ -284,7 +295,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new InboundFileSaveRequestDetail
                     {
                         AirTime = DateTime.Parse("06/29/2017 8:04AM"),
-                        Isci = "DDDDDDDD",
+                        Isci = ISCI1,
                         ProgramName = ProgramName1,
                         SpotLength = 30,
                         Genre = Genre1.Display,
@@ -319,7 +330,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new InboundFileSaveRequestDetail
                     {
                         AirTime = DateTime.Parse("06/29/2017 8:04AM"),
-                        Isci = "DDDDDDDD",
+                        Isci = ISCI1,
                         ProgramName = ProgramName1,
                         SpotLength = 30,
                         Genre = Genre1.Display,
@@ -411,7 +422,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new InboundFileSaveRequestDetail
                     {
                         AirTime = DateTime.Parse("05/30/2016 8:00AM"),
-                        Isci = "DDDDDDDD",
+                        Isci = ISCI1,
                         ProgramName = ProgramName1,
                         SpotLength = 30,
                         Genre = Genre1.Display,
@@ -436,9 +447,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 "AAAAAAAA",
                 "BBBBBBBBB",
                 "CCCCCCCCCC",
-                "DDDDDDDD",
+                ISCI1,
                 "EEEEEEEEEEE",
-                "FFFFFF"
+                ISCI2
             };
             int maxTimeAdd = 60 * 59;
             // first 3 stations of the top 16 markets
@@ -700,7 +711,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.Details.Add(new InboundFileSaveRequestDetail
                 {
                     AirTime = DateTime.Parse("06/29/2017 8:04AM"),
-                    Isci = "DDDDDDDD",
+                    Isci = ISCI1,
                     ProgramName = ProgramName1,
                     SpotLength = 30,
                     Genre = Genre1.Display,
@@ -1202,7 +1213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var request = _SetupAffidavit_TwoDetails();
                 var postingDate = new DateTime(2016, 4, 20);
 
-                _Sut.MapIsci(new MapIsciDto() {EffectiveIsci = "fff", OriginalIsci = "DDDDDDDD"}
+                _Sut.MapIsci(new MapIsciDto() {EffectiveIsci = "fff", OriginalIsci = ISCI1}
                     , postingDate
                     , "Mapped Thing");
 
@@ -1438,5 +1449,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyAffidavit(saveResult);
             }
         }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidavit_With_BlackListedIscis_BCOP3658()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _AddBlackListedIscis(ISCI1);
+                var request = _SetupAffidavit();
+
+                var postingDate = new DateTime(2016, 4, 20);
+                var result = _Sut.SaveAffidavit(request, "test user", postingDate);
+
+                // no scrubs?  Good!
+                VerifyAffidavit(result);
+            }
+        }
+
     }
 }

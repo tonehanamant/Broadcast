@@ -117,7 +117,7 @@ namespace Services.Broadcast.Entities.DTO
                         .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.AudienceImpressions
                             .Where(i => audienceMappings.Where(m => m.Key == proposalAudience.Id).SelectMany(m => m.Value).Contains(i.Key))
                             .Select(i => i.Value).Sum());
-
+                        
                         _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
                         _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key, ref audienceImpressions);
 

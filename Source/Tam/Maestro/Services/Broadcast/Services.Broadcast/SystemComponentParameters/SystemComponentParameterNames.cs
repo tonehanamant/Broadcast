@@ -447,6 +447,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ProgramSearchApiUrl"; }
         }
 	 
+		public static string RelativePathToMarketCoveragesFile  
+		{
+            get { return "RelativePathToMarketCoveragesFile"; }
+        }
+	 
 		public static string UseMaestroDaypartRepo  
 		{
             get { return "UseMaestroDaypartRepo"; }
