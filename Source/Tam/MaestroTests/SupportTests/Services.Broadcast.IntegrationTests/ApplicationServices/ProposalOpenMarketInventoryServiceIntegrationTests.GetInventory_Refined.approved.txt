@@ -136,8 +136,7 @@
                   "IsHiatus": false,
                   "MediaWeekId": 649,
                   "Rate": 0.0,
-                  "StartDate": "2016-05-30T00:00:00",
-                  "TotalProvidedImpressions": null
+                  "StartDate": "2016-05-30T00:00:00"
                 },
                 {
                   "Allocations": [
@@ -150,8 +149,7 @@
                   "IsHiatus": false,
                   "MediaWeekId": 650,
                   "Rate": 0.0,
-                  "StartDate": "2016-06-06T00:00:00",
-                  "TotalProvidedImpressions": null
+                  "StartDate": "2016-06-06T00:00:00"
                 }
               ],
               "Genres": [
@@ -258,6 +256,7 @@
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
                   "TotalImpressions": 0.0,
+                  "TotalProvidedImpressions": null,
                   "UnitCost": 0.0,
                   "UnitImpression": 0.0
                 }
