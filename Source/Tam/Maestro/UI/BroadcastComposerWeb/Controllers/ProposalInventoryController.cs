@@ -102,5 +102,14 @@ namespace BroadcastComposerWeb.Controllers
                 _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>()
                     .GetProposalDetailPricingGuideGridDto(request));
         }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/Grid/ApplyFilter")]
+        public BaseResponse<ProposalDetailPricingGuideGridDto> ApplyFilterOnOpenMarketPricingGuideGrid(ProposalDetailPricingGuideGridDto dto)
+        {
+            return _ConvertToBaseResponse(() => 
+                _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>()
+                    .ApplyFilterOnOpenMarketPricingGuideGrid(dto));
+        }
     }
 }

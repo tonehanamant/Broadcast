@@ -235,6 +235,7 @@
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ProposalProprietaryInventoryServiceTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
