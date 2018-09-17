@@ -398,7 +398,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _ApplyDaypartNames(programs);
-            _ApplyProgramImpressions(programs, dto);
+            _ApplyProgramImpressions(programs, dto, false);
             _ProposalProgramsCalculationEngine.CalculateCpmForPrograms(programs, dto.DetailSpotLength);
 
             filteredProgramsWithAllocations.Clear();
@@ -616,7 +616,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private void _ApplyProgramImpressions(IEnumerable<ProposalProgramDto> programs,
-            ProposalDetailInventoryBase proposalDetail)
+            ProposalDetailInventoryBase proposalDetail, bool addProgramImpressions)
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
             var stationDetailImpressions = new Dictionary<int, ProposalProgramDto>();
@@ -669,7 +669,8 @@ namespace Services.Broadcast.ApplicationServices
                         week.TotalProvidedImpressions = allocatedSpots * program.ProvidedUnitImpressions;
                     }
                 }
-                else
+
+                if (!manifestAudienceForProposal.Impressions.HasValue || addProgramImpressions)
                 {
                     var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
                     var programDaypartImpressions =
@@ -1091,6 +1092,7 @@ namespace Services.Broadcast.ApplicationServices
                             ProgramName = p.ManifestDayparts.Single().ProgramName,
                             BlendedCpm = p.TargetCpm,
                             ImpressionsPerSpot = p.UnitImpressions,
+                            StationImpressions = p.ProvidedUnitImpressions ?? 0,
                             Daypart = p.DayParts.Single(),
                             CostPerSpot = p.SpotCost,
                             Cost = p.TotalCost,
@@ -1171,7 +1173,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _ApplyDaypartNames(programs);
-            _ApplyProgramImpressions(programs, pricingGuideOpenMarketInventory);
+            _ApplyProgramImpressions(programs, pricingGuideOpenMarketInventory, true);
             _CalculateProgramCosts(programs, pricingGuideOpenMarketInventory);
 
             var inventoryMarkets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
