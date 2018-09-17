@@ -398,7 +398,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _ApplyDaypartNames(programs);
-            _ApplyProgramImpressions(programs, dto, false);
+            _ApplyProjectedImpressions(programs, dto);
+            _ApplyStationImpressions(programs, dto);
             _ProposalProgramsCalculationEngine.CalculateCpmForPrograms(programs, dto.DetailSpotLength);
 
             filteredProgramsWithAllocations.Clear();
@@ -433,6 +434,20 @@ namespace Services.Broadcast.ApplicationServices
             dto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
 
             _ApplyDefaultSorting(dto);
+        }
+
+        private void _ApplyStationImpressions(List<ProposalProgramDto> programs, ProposalDetailInventoryBase proposalDetail)
+        {
+            foreach (var program in programs)
+            {
+                var manifestAudienceForProposal = program.ManifestAudiences.SingleOrDefault(x => x.AudienceId == proposalDetail.GuaranteedAudience);
+                var hasManifestAudiences = manifestAudienceForProposal != null && manifestAudienceForProposal.Impressions.HasValue;
+
+                if (hasManifestAudiences)
+                {
+                    program.ProvidedUnitImpressions = manifestAudienceForProposal.Impressions.Value;
+                }
+            }            
         }
 
         private void _SetFlightWeeks(IEnumerable<ProposalProgramDto> programs)
@@ -622,8 +637,8 @@ namespace Services.Broadcast.ApplicationServices
             proposalInventory.Markets = sortedMarkets.ToList();
         }
 
-        private void _ApplyProgramImpressions(IEnumerable<ProposalProgramDto> programs,
-            ProposalDetailInventoryBase proposalDetail, bool addProgramImpressions)
+        private void _ApplyProjectedImpressions(IEnumerable<ProposalProgramDto> programs,
+            ProposalDetailInventoryBase proposalDetail)
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
             var stationDetailImpressions = new Dictionary<int, ProposalProgramDto>();
@@ -645,6 +660,7 @@ namespace Services.Broadcast.ApplicationServices
                     manifestDaypartImpressions.Add(manifestDaypart.Id, 0); //initialize with zero
 
                 }
+
                 stationDetailImpressions[program.ManifestId] = program;
             }
 
@@ -656,6 +672,7 @@ namespace Services.Broadcast.ApplicationServices
                     }).Select(r => r.rating_audience_id).Distinct().ToList();
 
             var programImpressions = GetImpressions(proposalDetail, ratingAudiences, impressionRequests);
+
             foreach (var imp in programImpressions)
             {
                 manifestDaypartImpressions[imp.id] += imp.impressions;
@@ -663,24 +680,13 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var program in programs)
             {
-                var manifestAudienceForProposal = program.ManifestAudiences.SingleOrDefault(x => x.AudienceId == proposalDetail.GuaranteedAudience);
-                var hasManifestAudiences = manifestAudienceForProposal != null && manifestAudienceForProposal.Impressions.HasValue;
-
-                if (hasManifestAudiences)
+                var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
+                var programDaypartImpressions =
+                                        manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
+                var daypartCount = programManifestDaypartIds.Count;
+                if (daypartCount > 0)
                 {
-                    program.ProvidedUnitImpressions = manifestAudienceForProposal.Impressions.Value;
-                }
-
-                if (!hasManifestAudiences || addProgramImpressions)
-                {
-                    var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
-                    var programDaypartImpressions =
-                                            manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
-                    var daypartCount = programManifestDaypartIds.Count;
-                    if (daypartCount > 0)
-                    {
-                        program.UnitImpressions = programDaypartImpressions.Sum(i => i.Value) / daypartCount;
-                    }
+                    program.UnitImpressions = programDaypartImpressions.Sum(i => i.Value) / daypartCount;
                 }
             }
         }
@@ -1174,7 +1180,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _ApplyDaypartNames(programs);
-            _ApplyProgramImpressions(programs, pricingGuideOpenMarketInventory, true);
+            _ApplyProjectedImpressions(programs, pricingGuideOpenMarketInventory);
+            _ApplyStationImpressions(programs, pricingGuideOpenMarketInventory);
             _CalculateProgramCosts(programs, pricingGuideOpenMarketInventory);
 
             var inventoryMarkets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
