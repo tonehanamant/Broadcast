@@ -44,5 +44,41 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(resultHasProgramsOnlyWithExpectedNames);
         }
+
+        [Test]
+        public void ProposalProprietaryInventoryService_AppliesMarketsFilter()
+        {
+            var dto = _ProposalProprietaryInventoryService.GetProposalDetailPricingGuideGridDto(_Request);
+            var expectedMarketIds = dto.DisplayFilter.Markets
+                                            .Where((x, index) => index == 0)
+                                            .Select(m => m.Id)
+                                            .ToList();
+            dto.Filter.Markets = expectedMarketIds;
+
+            var result = _ProposalProprietaryInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasMarketsOnlyWithExpectedIds = result.OpenMarkets.All(m => expectedMarketIds.Contains(m.MarketId));
+
+            Assert.IsTrue(resultHasMarketsOnlyWithExpectedIds);
+        }
+
+        [Test]
+        public void ProposalProprietaryInventoryService_AppliesAffiliationsFilter()
+        {
+            var dto = _ProposalProprietaryInventoryService.GetProposalDetailPricingGuideGridDto(_Request);
+            var expectedAffiliations = dto.DisplayFilter.Affiliations
+                                            .Where((x, index) => index == 0 || index == 1)
+                                            .Select(a => a)
+                                            .ToList();
+            dto.Filter.Affiliations = expectedAffiliations;
+
+            var result = _ProposalProprietaryInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasStationsOnlyWithExpectedAffiliations = result.OpenMarkets
+                                                            .SelectMany(m => m.Stations)
+                                                            .All(s => expectedAffiliations.Contains(s.Affiliation));
+
+            Assert.IsTrue(resultHasStationsOnlyWithExpectedAffiliations);
+        }
     }
 }

@@ -305,6 +305,7 @@ namespace Services.Broadcast.ApplicationServices
                                 CallLetters = "WNBC-TV",
                                 LegacyCallLetters = "WNBC",
                                 StationCode = 123,
+                                Affiliation = "NBC4",
                                 Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
                                 {
                                     new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
@@ -345,6 +346,7 @@ namespace Services.Broadcast.ApplicationServices
                                 CallLetters = "WKEW",
                                 LegacyCallLetters = "WKEW-TV",
                                 StationCode = 123,
+                                Affiliation = "NBC3",
                                 Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
                                 {
                                     new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
@@ -379,6 +381,7 @@ namespace Services.Broadcast.ApplicationServices
                                 CallLetters = "KTLA-TV",
                                 LegacyCallLetters = "KTLA",
                                 StationCode = 136,
+                                Affiliation = "NBC2",
                                 Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
                                 {
                                     new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
@@ -419,6 +422,7 @@ namespace Services.Broadcast.ApplicationServices
                                 CallLetters = "KABC-TV",
                                 LegacyCallLetters = "KABC",
                                 StationCode = 123,
+                                Affiliation = "NBC1",
                                 Programs = new List<ProposalDetailPricingGuideGridDto.OpenMarketProgram>()
                                 {
                                     new ProposalDetailPricingGuideGridDto.OpenMarketProgram()
@@ -485,6 +489,18 @@ namespace Services.Broadcast.ApplicationServices
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(name => name)
                 .ToList();
+
+            dto.DisplayFilter.Markets = dto.OpenMarkets
+                .Select(a => new { a.MarketId, a.MarketName })
+                .Distinct()
+                .Select(y => new LookupDto { Id = y.MarketId, Display = y.MarketName })
+                .OrderBy(n => n.Display)
+                .ToList();
+
+            dto.DisplayFilter.Affiliations = stations.Select(s => s.Affiliation)
+                .Distinct()
+                .OrderBy(a => a)
+                .ToList();
         }
 
         private static void _ApplyFilterForProposalOpenMarketPricingGuideGrid(ProposalDetailPricingGuideGridDto dto)
@@ -496,8 +512,12 @@ namespace Services.Broadcast.ApplicationServices
 
             var filter = dto.Filter;
 
+            _ApplyMarketsFilter(dto, filter);
+
             foreach (var market in dto.OpenMarkets)
             {
+                _ApplyAffiliationsFilter(market, filter);
+
                 foreach (var station in market.Stations)
                 {
                     _ApplyProgramNamesFilter(station, filter);
@@ -508,10 +528,26 @@ namespace Services.Broadcast.ApplicationServices
         private static void _ApplyProgramNamesFilter(ProposalDetailPricingGuideGridDto.OpenMarketStation station, OpenMarketPricingGuideGridFilterDto filter)
         {
             var programNames = filter.ProgramNames;
-
+            
             if (programNames != null && programNames.Any())
             {
                 station.Programs = station.Programs.Where(p => programNames.Contains(p.ProgramName)).ToList();
+            }
+        }
+
+        private static void _ApplyMarketsFilter(ProposalDetailPricingGuideGridDto dto, OpenMarketPricingGuideGridFilterDto filter)
+        {
+            if (filter.Markets != null && filter.Markets.Any())
+            {
+                dto.OpenMarkets = dto.OpenMarkets.Where(m => filter.Markets.Contains(m.MarketId)).ToList();
+            }
+        }
+
+        private static void _ApplyAffiliationsFilter(ProposalDetailPricingGuideGridDto.OpenMarket market, OpenMarketPricingGuideGridFilterDto filter)
+        {
+            if (filter.Affiliations != null && filter.Affiliations.Any())
+            {
+                market.Stations = market.Stations.Where(s => filter.Affiliations.Contains(s.Affiliation)).ToList();
             }
         }
     }

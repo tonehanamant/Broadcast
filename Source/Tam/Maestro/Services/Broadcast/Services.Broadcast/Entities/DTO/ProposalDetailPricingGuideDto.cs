@@ -50,6 +50,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public int StationCode { get; set; }
             public string CallLetters { get; set; }
             public string LegacyCallLetters { get; set; }
+            public string Affiliation { get; set; }
 
             public List<OpenMarketProgram> Programs { get; set; }
         }

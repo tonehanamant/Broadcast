@@ -1,6 +1,22 @@
 ﻿{
   "Cost": 130.76,
   "DisplayFilter": {
+    "Affiliations": [
+      "NBC1",
+      "NBC2",
+      "NBC3",
+      "NBC4"
+    ],
+    "Markets": [
+      {
+        "Display": "Los Angelas",
+        "Id": 124
+      },
+      {
+        "Display": "New York (Big Apple)",
+        "Id": 123
+      }
+    ],
     "ProgramNames": [
       "After conana",
       "Conan",
@@ -10,6 +26,8 @@
     ]
   },
   "Filter": {
+    "Affiliations": [],
+    "Markets": [],
     "ProgramNames": []
   },
   "Impressions": 6173998.0,
@@ -25,6 +43,7 @@
       "StationImpressions": 0.0,
       "Stations": [
         {
+          "Affiliation": "NBC4",
           "CallLetters": "WNBC-TV",
           "LegacyCallLetters": "WNBC",
           "Programs": [
@@ -60,6 +79,7 @@
           "StationCode": 123
         },
         {
+          "Affiliation": "NBC3",
           "CallLetters": "WKEW",
           "LegacyCallLetters": "WKEW-TV",
           "Programs": [
@@ -93,6 +113,7 @@
       "StationImpressions": 0.0,
       "Stations": [
         {
+          "Affiliation": "NBC2",
           "CallLetters": "KTLA-TV",
           "LegacyCallLetters": "KTLA",
           "Programs": [
@@ -128,6 +149,7 @@
           "StationCode": 136
         },
         {
+          "Affiliation": "NBC1",
           "CallLetters": "KABC-TV",
           "LegacyCallLetters": "KABC",
           "Programs": [
