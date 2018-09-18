@@ -1,0 +1,84 @@
+import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { toggleModal } from 'Ducks/app';
+// import { getPlanningGuideFiltered } from 'Ducks/planning';
+import { Row, Col, Button, Glyphicon, Form, FormGroup, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import Select from 'react-select';
+
+const spotFilterOptions = [
+  { Display: 'All Programs', Id: 1 },
+  { Display: 'Programs with Spots', Id: 2 },
+  { Display: 'Programs without Spots', Id: 3 },
+];
+
+// import FilterModal from './FilterModal';
+
+/* const mapDispatchToProps = dispatch => (
+  bindActionCreators({ getPlanningGuideFiltered, toggleModal }, dispatch)
+); */
+
+export default class PricingGuideGridHeader extends Component {
+  constructor(props) {
+    super(props);
+      this.onOpenFilterModal = this.onOpenFilterModal.bind(this);
+  }
+
+  onOpenFilterModal() {
+    console.log('Open Ivan Filter Modal', this);
+  }
+
+  render() {
+    // const { unlinkedIscisLength } = this.props;
+    return (
+      <div>
+        <Row style={{ marginTop: '10px' }}>
+          <Col xs={5}>
+          <Form inline>
+            <span>
+              <Glyphicon glyph="filter" style={{ fontSize: '18px', top: '6px' }} />
+            </span>
+            <FormGroup controlId="pricingFilters" style={{ margin: '0 30px 0 10px' }}>
+              <InputGroup>
+                <InputGroup.Button>
+                  <Button bsStyle="primary"onClick={this.onOpenFilterModal}><Glyphicon glyph="search" /></Button>
+                </InputGroup.Button>
+                <Select
+                  name="spotFilters"
+                  style={{ width: '220px' }}
+                  // wrapperStyle={{ height: '18px' }}
+                  value={1}
+                  // placeholder=""
+                  options={spotFilterOptions}
+                  labelKey="Display"
+                  valueKey="Id"
+                  // onChange={this.onFilterSpots}
+                  clearable={false}
+                />
+              </InputGroup>
+            </FormGroup>
+            <DropdownButton bsStyle="default" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret id="pricing_sort">
+            <MenuItem eventKey="sortMarketName">Sort By Market Name</MenuItem>
+            <MenuItem eventKey="sortMarketRank">Sort By Market Rank</MenuItem>
+            </DropdownButton>
+          </Form>
+          </Col>
+          <Col xs={7}>
+            <h4>Distribution Results</h4>
+          </Col>
+        </Row>
+      {/* <IvanFilterModal
+        toggleModal={this.props.toggleModal}
+      /> */}
+    </div>
+    );
+    }
+}
+
+PricingGuideGridHeader.propTypes = {
+  // openMarketsData: PropTypes.object.isRequired,
+  // toggleModal: PropTypes.func,
+};
+
+// export default connect(mapStateToProps, mapDispatchToProps)(PricingGuideGridHeader);
