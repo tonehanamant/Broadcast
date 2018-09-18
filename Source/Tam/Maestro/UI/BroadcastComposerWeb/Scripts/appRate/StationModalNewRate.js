@@ -130,8 +130,8 @@ var StationModalNewRate = function (view) {
                 // me.newProgram.ProgramName = $('#new_program_name_input').val();
                 me.newProgram.ProgramNames = [$('#new_program_name_input').val()];
                 me.newProgram.Airtimes = [me.newProgram.Airtime]; //adjust here for BE return
-                //not currenlty processsing Genres
-                //me.newProgram.Genres = me.processGenres();
+
+                me.newProgram.Genres = me.processGenres();
                 me.newProgram.Rate15 = $('#new_program_spot15_input').val() ? parseFloat($('#new_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
                 me.newProgram.Rate30 = $('#new_program_spot30_input').val() ? parseFloat($('#new_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
 

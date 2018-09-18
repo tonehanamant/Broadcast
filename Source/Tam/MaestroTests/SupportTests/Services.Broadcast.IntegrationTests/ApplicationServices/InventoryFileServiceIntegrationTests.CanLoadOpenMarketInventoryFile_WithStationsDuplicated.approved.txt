@@ -82,6 +82,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "Good Morning Cincinnati at 7a"
@@ -177,6 +178,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "Good Morning Cincinnati at 8a"

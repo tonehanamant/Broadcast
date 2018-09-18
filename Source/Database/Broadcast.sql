@@ -492,6 +492,40 @@ END
 GO
 /*************************************** END BCOP-3469 *****************************************************/
 
+/*************************************** START BCOP-3625 *****************************************************/
+IF OBJECT_ID('[station_inventory_manifest_daypart_genres]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest_daypart_genres]
+	(  
+		[id] int IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_daypart_id] int NOT NULL,
+		[genre_id] int NOT NULL,
+		CONSTRAINT [PK_station_inventory_manifest_daypart_genres] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts] 
+	FOREIGN KEY([station_inventory_manifest_daypart_id]) REFERENCES [dbo].[station_inventory_manifest_dayparts] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres] CHECK CONSTRAINT [FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts]
+	
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_daypart_genres_genres] 
+	FOREIGN KEY([genre_id]) REFERENCES [genres] ([id])	
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres] CHECK CONSTRAINT [FK_station_inventory_manifest_daypart_genres_genres]
+	
+	CREATE INDEX IX_station_inventory_manifest_daypart_genres_station_inventory_manifest_daypart_id ON [station_inventory_manifest_daypart_genres] ([station_inventory_manifest_daypart_id]);
+	CREATE INDEX IX_station_inventory_manifest_daypart_genres_genre_id ON [station_inventory_manifest_daypart_genres] ([genre_id]);
+END
+GO
+
+IF OBJECT_ID('[station_inventory_spot_genres]', 'U') IS NOT NULL
+BEGIN
+	DROP TABLE [station_inventory_spot_genres]
+END
+/*************************************** END BCOP-3625 *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

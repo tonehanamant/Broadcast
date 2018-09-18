@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class station_inventory_manifest_dayparts
     {
+        public station_inventory_manifest_dayparts()
+        {
+            this.station_inventory_manifest_daypart_genres = new HashSet<station_inventory_manifest_daypart_genres>();
+        }
+    
         public int daypart_id { get; set; }
         public int station_inventory_manifest_id { get; set; }
         public int id { get; set; }
@@ -21,5 +26,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
+        public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
     }
 }
