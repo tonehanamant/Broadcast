@@ -75,7 +75,7 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
 
-        PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId);
+        PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1096,7 +1096,7 @@ namespace Services.Broadcast.Repositories
                     Margin = pv.proposal_versions.margin,
                     GuaranteedAudience = pv.proposal_versions.guaranteed_audience_id
                 };
-                _SetBaseFields(pv, dto);
+                _PopoulateProposalDetailInventoryBase(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
@@ -1492,7 +1492,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new ProposalDetailProprietaryInventoryDto();
 
-                _SetBaseFields(pv, dto);
+                _PopoulateProposalDetailInventoryBase(pv, dto);
 
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
@@ -1511,7 +1511,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static void _SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
+        private static void _PopoulateProposalDetailInventoryBase(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
@@ -1689,7 +1689,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PricingGuideOpenMarketInventory GetPricingGuideOpenMarketInventory(int proposalDetailId)
+        public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1709,7 +1709,7 @@ namespace Services.Broadcast.Repositories
                     MarketCoverage = pv.proposal_versions.market_coverage
                 };
 
-                _SetBaseFields(pv, dto);
+                _PopoulateProposalDetailInventoryBase(pv, dto);
 
                 dto.Criteria = new OpenMarketCriterion
                 {
