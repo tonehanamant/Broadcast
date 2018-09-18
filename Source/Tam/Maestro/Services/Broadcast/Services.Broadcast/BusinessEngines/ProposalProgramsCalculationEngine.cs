@@ -32,12 +32,25 @@ namespace Services.Broadcast.BusinessEngines
             int? targetUnit);
 
         /// <summary>
+        /// Calculates CPM for a list of programs
+        /// </summary>
+        /// <param name="programs"></param>
+        /// <param name="spotLength"></param>
+        /// <returns></returns>
+        void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
+
+        /// <summary>
         /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week.
         /// </summary>
         /// <param name="programs"></param>
         /// <param name="spotLength"></param>
         /// <returns></returns>
-        void ApplyBlendedCpmForEachProgram(List<ProposalProgramDto> programs, int spotLength);
+        void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
+
+        void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
+
+        void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
+        void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
     }
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
@@ -253,17 +266,62 @@ namespace Services.Broadcast.BusinessEngines
             return total;
         }
 
-        public void ApplyBlendedCpmForEachProgram(List<ProposalProgramDto> programs, int spotLength)
+        public void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength)
         {
             foreach (var program in programs)
             {
-                /*                var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
-                                var totalCost = activeWeeks.Sum(w => w.Rate);
-                                var totalImpressions = program.UnitImpressions * activeWeeks.Count;*/
-
                 var impressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
 
                 program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, impressions);
+            }
+        }
+
+        public void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+                var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
+                var totalImpressions = unitImpressions * activeWeeks.Count;
+
+                program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
+            }
+        }
+
+        public void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+
+                if (activeWeeks.Count == 0)
+                    program.SpotCost = 0;
+                else
+                    program.SpotCost = totalCost / activeWeeks.Count;
+            }
+        }
+
+        public void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                if (program.TotalSpots == 0)
+                    program.TotalCost = program.SpotCost;
+                else
+                    program.TotalCost = program.SpotCost * program.TotalSpots;
+            }
+        }
+
+        public void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                if (program.TotalSpots == 0)
+                    program.TotalImpressions = program.UnitImpressions;
+                else
+                    program.TotalImpressions = program.UnitImpressions * program.TotalSpots;
             }
         }
     }

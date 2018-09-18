@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace Services.Broadcast.Repositories
         List<market> GetMarketsByMarketCodes(List<int> marketCodes);
         List<LookupDto> GetMarketDtos();
 
+        Dictionary<int, double> GetMarketCoverages(IEnumerable<int> marketIds);
+
         /// <summary>
         /// Returns a list of markets which are filtered by their geography names
         /// </summary>
@@ -25,7 +28,6 @@ namespace Services.Broadcast.Repositories
 
     public class MarketRepository: BroadcastRepositoryBase, IMarketRepository
     {
-
         public MarketRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
@@ -45,7 +47,7 @@ namespace Services.Broadcast.Repositories
                 context => (
                     from m in context.markets
                     select new LookupDto(){Display = m.geography_name, Id = m.market_code}).ToList());
-        } 
+        }
 
         public List<market> GetMarketsByMarketCodes(List<int> marketCodes)
         {
@@ -63,6 +65,15 @@ namespace Services.Broadcast.Repositories
                     (from m in context.markets
                      where geographyNames.Contains(m.geography_name)
                      select m).ToList());
+        }
+
+        public Dictionary<int, double> GetMarketCoverages(IEnumerable<int> marketIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                    (from m in context.market_coverages
+                     where marketIds.Contains(m.market_code)
+                     select m).ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us));
         }
     }    
 }

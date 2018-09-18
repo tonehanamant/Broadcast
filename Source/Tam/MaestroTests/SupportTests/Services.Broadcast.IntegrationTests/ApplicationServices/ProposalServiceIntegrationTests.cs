@@ -2284,7 +2284,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var proposal = _ProposalService.GetProposalById(248);
             var proposalDetail = proposal.Details.First();
 
-            var ratingBook = PropoeralsServiceHelper.GetBookId(proposalDetail);
+            var ratingBook = ProposalServiceHelper.GetBookId(proposalDetail);
 
             Assert.AreEqual(413, ratingBook);
         }
@@ -2295,7 +2295,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var proposal = _ProposalService.GetProposalById(253);
             var proposalDetail = proposal.Details.First();
 
-            var ratingBook = PropoeralsServiceHelper.GetBookId(proposalDetail);
+            var ratingBook = ProposalServiceHelper.GetBookId(proposalDetail);
 
             Assert.AreEqual(410, ratingBook);
         }

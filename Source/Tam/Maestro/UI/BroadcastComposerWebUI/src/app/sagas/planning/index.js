@@ -1389,9 +1389,19 @@ export function* rerunPostScrubing({ propId, propdetailid }) {
   }
 }
 
-export function* loadOpenMarketData({ propId, propdetailid }) {
+/* export function* loadOpenMarketData({ propId, propdetailid }) {
   const { loadOpenMarketData } = api.planning;
   return yield loadOpenMarketData(propId, propdetailid);
+} */
+
+export function* loadOpenMarketData(params) {
+  const { loadOpenMarketData } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: 'openMarketPricing', loading: true }));
+    return yield loadOpenMarketData(params);
+  } finally {
+    yield put(setOverlayLoading({ id: 'openMarketPricing', loading: false }));
+  }
 }
 
 /* export function* uploadSCXFile(params) {
