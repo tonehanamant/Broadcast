@@ -894,6 +894,7 @@ namespace Services.Broadcast.Repositories
                     AdjustmentInflation = version.adjustment_inflation,
                     AdjustmentMargin = version.adjustment_margin,
                     AdjustmentRate = version.adjustment_rate,
+                    EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
                     OpenMarketPricing = new OpenMarketPricing
                     {
                         CpmMin = version.open_market_cpm_min,
@@ -907,7 +908,8 @@ namespace Services.Broadcast.Repositories
                         Contain = (ContainTypeEnum)c.contain_type,
                         Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
                     }).ToList(),
-                    ShowTypeCriteria = version.proposal_version_detail_criteria_show_types.Select(st => new ShowTypeCriteria {
+                    ShowTypeCriteria = version.proposal_version_detail_criteria_show_types.Select(st => new ShowTypeCriteria
+                    {
                         Id = st.id,
                         Contain = (ContainTypeEnum)st.contain_type,
                         ShowType = new LookupDto { Id = st.show_types.id, Display = st.show_types.name }
@@ -922,7 +924,7 @@ namespace Services.Broadcast.Repositories
                             Display = p.program_name
                         }
                     }).ToList(),
-                    ProprietaryPricing =  version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                    ProprietaryPricing = version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
                     {
                         InventorySource = (InventorySourceEnum)p.inventory_source,
                         ImpressionsBalance = p.impressions_balance,
@@ -964,9 +966,9 @@ namespace Services.Broadcast.Repositories
                                 Sunday = isci.sunday == null ? false : isci.sunday.Value
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
-                        }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
-                        }).OrderBy(d => d.Sequence).ToList()
-                };
+                    }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
+                }).OrderBy(d => d.Sequence).ToList()
+            };
 
             return proposalDto;
         }
