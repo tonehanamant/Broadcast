@@ -1503,5 +1503,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
             }
         }
+        
+        [Test]
+        [Ignore]
+        public void ReturnsProposalDetailPricingGuideGridDto()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 1,
+                ProposalDetailId = 1
+            };
+            var result = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [Ignore]
+        public void ProposalProprietaryInventoryService_AppliesProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 1,
+                ProposalDetailId = 1
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedProgramNames = dto.DisplayFilter.ProgramNames
+                                            .Where((name, index) => index == 2 || index == 3)
+                                            .ToList();
+            dto.Filter.ProgramNames = expectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWithExpectedNames = result.Markets
+                                                               .SelectMany(m => m.Stations)
+                                                               .SelectMany(s => s.Programs)
+                                                               .Select(p => p.ProgramName)
+                                                               .All(p => expectedProgramNames.Contains(p));
+
+            Assert.IsTrue(resultHasProgramsOnlyWithExpectedNames);
+        }
     }
 }

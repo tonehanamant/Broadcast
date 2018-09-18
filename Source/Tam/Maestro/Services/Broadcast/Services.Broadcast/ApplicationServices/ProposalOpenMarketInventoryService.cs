@@ -25,6 +25,7 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
         PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request);
+        PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -1020,7 +1021,11 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideOpenMarketInventory, pricingGuideOpenMarketInventory.Criteria);
 
-            return ConvertPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
+            var dto = ConvertPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
+            
+            _SetProposalOpenMarketPricingGuideGridDisplayFilters(dto);
+
+            return dto;
         }
 
         private PricingGuideOpenMarketInventoryDto ConvertPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
@@ -1081,6 +1086,61 @@ namespace Services.Broadcast.ApplicationServices
             _SetFlightWeeks(programs);
 
             return programs;
+        }
+
+        public PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        {
+            _SetProposalOpenMarketPricingGuideGridDisplayFilters(dto);
+            _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
+
+            return dto;
+        }
+
+        private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideOpenMarketInventoryDto dto)
+        {
+            dto.DisplayFilter = new OpenMarketPricingGuideGridDisplayFilterDto();
+
+            var stations = dto.Markets
+                    .Where(m => m.Stations != null)
+                    .SelectMany(s => s.Stations)
+                    .ToList();
+
+            dto.DisplayFilter.ProgramNames = stations
+                .Where(p => p.Programs.Any())
+                .SelectMany(s => s.Programs.Where(p => p != null).Select(p => p.ProgramName))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(name => name)
+                .ToList();
+        }
+
+        private static void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        {
+            if (dto.Filter == null)
+            {
+                return;
+            }
+
+            var filter = dto.Filter;
+
+            foreach (var market in dto.Markets)
+            {
+                foreach (var station in market.Stations)
+                {
+                    _ApplyProgramNamesFilter(station, filter);
+                }
+            }
+        }
+
+        private static void _ApplyProgramNamesFilter(
+            PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation station,
+            OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var programNames = filter.ProgramNames;
+
+            if (programNames != null && programNames.Any())
+            {
+                station.Programs = station.Programs.Where(p => programNames.Contains(p.ProgramName)).ToList();
+            }
         }
     }
 }

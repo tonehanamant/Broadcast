@@ -9,13 +9,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
         public ProposalDetailPricingGuideGridDto()
         {
             OpenMarkets = new List<OpenMarket>();
-            DisplayFilter = new OpenMarketPricingGuideGridDisplayFilterDto();
-            Filter = new OpenMarketPricingGuideGridFilterDto();
         }
-
-        public OpenMarketPricingGuideGridDisplayFilterDto DisplayFilter { get; set; }
-
-        public OpenMarketPricingGuideGridFilterDto Filter { get; set; }
 
         public int ProposalDetailId { get; set; }
         public int ProposalId { get; set; }
