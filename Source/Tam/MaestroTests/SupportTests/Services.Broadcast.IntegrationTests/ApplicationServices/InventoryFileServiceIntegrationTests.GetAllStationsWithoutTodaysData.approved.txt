@@ -6236,7 +6236,7 @@
     "CallLetters": "WUNC-TV 4.1",
     "Code": 5316,
     "LegacyCallLetters": "WUNC",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2017-02-28T00:00:00",
     "OriginMarket": "Raleigh-Durham (Fayetvlle)"
   },
   {

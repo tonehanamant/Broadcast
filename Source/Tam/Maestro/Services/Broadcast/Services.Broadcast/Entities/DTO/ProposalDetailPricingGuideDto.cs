@@ -36,7 +36,6 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public string MarketName { get; set; }
             public int MarketRank { get; set; }
             public int MarketId { get; set; }
-
             public List<OpenMarketStation> Stations { get; set; }
             public int Spots { get; set; }
             public decimal Cost { get; set; }
@@ -50,7 +49,6 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public int StationCode { get; set; }
             public string CallLetters { get; set; }
             public string LegacyCallLetters { get; set; }
-
             public List<OpenMarketProgram> Programs { get; set; }
         }
 

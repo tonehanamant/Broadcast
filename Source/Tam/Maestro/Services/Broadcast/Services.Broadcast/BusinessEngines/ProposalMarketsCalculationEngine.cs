@@ -41,13 +41,12 @@ namespace Services.Broadcast.BusinessEngines
 
         public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail)
         {
-            var postingBookId = PropoeralsServiceHelper.GetBookId(proposalDetail);
+            var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
             return GetProposalMarketsList(proposal, postingBookId);
         }
 
         public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId)
         {
-
             var marketRankings =
                 _DataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
                 .GetMarketRankingsByMediaMonth(postingBookId);

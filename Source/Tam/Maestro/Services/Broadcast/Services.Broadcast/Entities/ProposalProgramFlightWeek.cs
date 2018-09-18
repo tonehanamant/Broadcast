@@ -11,6 +11,5 @@ namespace Services.Broadcast.Entities
         public int MediaWeekId { get; set; }
         public decimal Rate { get; set; }
         public List<OpenMarketAllocationDto> Allocations { get; set; }
-        public double? TotalProvidedImpressions { get; set; }
     }
 }

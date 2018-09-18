@@ -245,7 +245,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         var colGroups = [{ span: 2, caption: '<div id="openmarket_programs_column_inner" style="height: 12px; padding-right: 5px; text-align: right;">' + this.weeksLength + ' WEEKS:</div>' }];
         //var colGroups = [{ span: 1, caption: 'Airing Time', master:true }, { span: 1, caption: 'Program', master:true }, { span: 1, caption: 'CPM', master:true }]; //this does not work
         $.each(weekGroups, function (idx, group) {
-            colGroups.push({ caption: group, span: 3 })
+            colGroups.push({ caption: group, span: 4 })
         });
 
         this.openMarketsGrid.columnGroups = colGroups;
