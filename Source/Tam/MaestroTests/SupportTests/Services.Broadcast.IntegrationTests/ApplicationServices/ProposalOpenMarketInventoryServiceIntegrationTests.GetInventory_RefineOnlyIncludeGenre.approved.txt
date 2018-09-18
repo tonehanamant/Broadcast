@@ -77,6 +77,7 @@
   "Margin": 20.0,
   "Markets": [
     {
+      "MarketCoverage": 0.0,
       "MarketId": 101,
       "MarketName": "New York",
       "MarketRank": 1,

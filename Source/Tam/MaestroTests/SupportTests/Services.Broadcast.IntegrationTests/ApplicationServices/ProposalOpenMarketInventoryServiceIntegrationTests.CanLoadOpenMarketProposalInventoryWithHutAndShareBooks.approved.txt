@@ -1,5 +1,6 @@
 ﻿[
   {
+    "MarketCoverage": 0.0,
     "MarketId": 101,
     "MarketName": "New York",
     "MarketRank": 1,

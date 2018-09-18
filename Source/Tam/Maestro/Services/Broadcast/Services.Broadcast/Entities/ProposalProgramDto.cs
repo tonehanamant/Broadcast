@@ -39,6 +39,7 @@ namespace Services.Broadcast.Entities
         public double UnitImpressions { get; set; }
         public List<StationInventorySpots> Allocations { get; set; }
         public double? ProvidedUnitImpressions { get; set; }
+        public double TotalImpressions { get; set; }
 
         public ProposalProgramDto()
         {

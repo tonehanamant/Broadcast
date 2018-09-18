@@ -4,12 +4,13 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Repositories
 {
@@ -49,7 +50,7 @@ namespace Services.Broadcast.Repositories
                                         || (a.effective_date < flightStart.Date && a.end_date > flightEnd.Date))
                             .ToList();
 
-                        if (proposalMarketIds != null & proposalMarketIds.Count > 0)
+                        if (proposalMarketIds != null && proposalMarketIds.Count > 0)
                             manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
 
                         return (manifests.Select(m =>
@@ -161,12 +162,5 @@ namespace Services.Broadcast.Repositories
                     });
             }
         }
-    }
-
-    public class StationInventorySpots
-    {
-        public int ManifestId { get; set; }
-        public int MediaWeekId { get; set; }
-        public int? ProposalVersionDetailQuarterWeekId { get; set; }
     }
 }

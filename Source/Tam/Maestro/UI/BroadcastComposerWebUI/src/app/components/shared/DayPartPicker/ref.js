@@ -1,3 +1,4 @@
+/* eslint-disable*/
 //Broadcast custom dropdown (currently for New Program airtime); this is a port from the grid inline version from IMS project - adjust accordingly
 //there will be versions with and without grid record context
 //handle date object - will have no initial values
