@@ -9,6 +9,7 @@ namespace Services.Broadcast.Entities.DTO
             ProgramNames = new List<string>();
             Affiliations = new List<string>();
             Markets = new List<int>();
+            Genres = new List<int>();
         }
 
         public List<string> ProgramNames { get; set; }
@@ -16,5 +17,7 @@ namespace Services.Broadcast.Entities.DTO
         public List<string> Affiliations { get; set; }
 
         public List<int> Markets { get; set; }
+
+        public List<int> Genres { get; set; }
     }
 }

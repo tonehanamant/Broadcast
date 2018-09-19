@@ -1635,5 +1635,52 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(resultDoesNotHaveStations);
         }
+
+        [Test]
+        public void MatchesProgramsUsingGenresFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedGenres = dto.DisplayFilter.Genres
+                                                  .Where((x, index) => index == 0)
+                                                  .Select(g => g.Id)
+                                                  .ToList();
+            dto.Filter.Genres = expectedGenres;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWhichContainOneOfExpectedGenres = result.Markets
+                                                                             .SelectMany(m => m.Stations)
+                                                                             .SelectMany(s => s.Programs)
+                                                                             .All(p => p.Genres.Any(g => expectedGenres.Contains(g.Id)));
+
+            Assert.IsTrue(resultHasProgramsOnlyWhichContainOneOfExpectedGenres);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingGenresFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedGenres = new List<int> { -1 };
+            dto.Filter.Genres = notExpectedGenres;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                   .SelectMany(m => m.Stations)
+                                                   .SelectMany(s => s.Programs)
+                                                   .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
+        }
     }
 }

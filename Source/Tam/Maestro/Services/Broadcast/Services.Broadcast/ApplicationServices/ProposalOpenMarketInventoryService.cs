@@ -927,7 +927,8 @@ namespace Services.Broadcast.ApplicationServices
                             CostPerSpot = p.SpotCost,
                             Cost = p.TotalCost,
                             Impressions = p.TotalImpressions,
-                            Spots = p.TotalSpots,                        
+                            Spots = p.TotalSpots,
+                            Genres = p.Genres
                         }).ToList()
                     }).ToList()
                 }).ToList();
@@ -1123,6 +1124,14 @@ namespace Services.Broadcast.ApplicationServices
                .Distinct()
                .OrderBy(a => a)
                .ToList();
+
+            dto.DisplayFilter.Genres = stations
+                .SelectMany(s => s.Programs.Where(p => p != null).SelectMany(p => p.Genres))
+                .Select(g => new { g.Id, g.Display })
+                .Distinct()
+                .Select(g => new LookupDto { Id = g.Id, Display = g.Display })
+                .OrderBy(g => g.Display)
+                .ToList();
         }
 
         private static void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
@@ -1143,6 +1152,7 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var station in market.Stations)
                 {
                     _ApplyProgramNamesFilter(station, filter);
+                    _ApplyGenresFilter(station, filter);
                 }
             }
         }
@@ -1159,18 +1169,36 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        private static void _ApplyGenresFilter(
+            PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation station,
+            OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var genres = filter.Genres;
+
+            if (genres != null && genres.Any())
+            {
+                station.Programs = station.Programs
+                                          .Where(p => p.Genres.Any(genre => genres.Contains(genre.Id)))
+                                          .ToList();
+            }
+        }
+
         private static void _ApplyMarketsFilter(PricingGuideOpenMarketInventoryDto dto, OpenMarketPricingGuideGridFilterDto filter)
         {
-            if (filter.Markets != null && filter.Markets.Any())
+            var markets = filter.Markets;
+
+            if (markets != null && markets.Any())
             {
-                dto.Markets = dto.Markets.Where(m => filter.Markets.Contains(m.MarketId)).ToList();
+                dto.Markets = dto.Markets.Where(m => markets.Contains(m.MarketId)).ToList();
             }
         }
         private static void _ApplyAffiliationsFilter(PricingGuideOpenMarketInventory.PricingGuideMarket market, OpenMarketPricingGuideGridFilterDto filter)
         {
-            if (filter.Affiliations != null && filter.Affiliations.Any())
+            var affiliations = filter.Affiliations;
+
+            if (affiliations != null && affiliations.Any())
             {
-                market.Stations = market.Stations.Where(s => filter.Affiliations.Contains(s.Affiliation)).ToList();
+                market.Stations = market.Stations.Where(s => affiliations.Contains(s.Affiliation)).ToList();
             }
         }
     }
