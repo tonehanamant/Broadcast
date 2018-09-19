@@ -1550,5 +1550,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(resultDoesNotHavePrograms);
         }
+
+        [Test]
+        public void TotalsAreUpdatedWhenApplyingFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var marketBeforeFiltering = dto.Markets.First();
+            var totalCostBeforeFiltering = marketBeforeFiltering.TotalCost;
+            var totalImpressionsBeforeFiltering = marketBeforeFiltering.TotalImpressions;
+
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var marketAfterFiltering = result.Markets.First();
+            var totalCostAfterFiltering = marketBeforeFiltering.TotalCost;
+            var totalImpressionsAfterFiltering = marketBeforeFiltering.TotalImpressions;
+
+            Assert.AreNotEqual(totalCostBeforeFiltering, totalCostAfterFiltering);
+            Assert.AreNotEqual(totalImpressionsBeforeFiltering, totalImpressionsAfterFiltering);
+        }
     }
 }

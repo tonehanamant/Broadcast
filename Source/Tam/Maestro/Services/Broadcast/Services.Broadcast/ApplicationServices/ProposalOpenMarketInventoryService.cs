@@ -1036,6 +1036,14 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
+        private PricingGuideOpenMarketInventory ConvertPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryDto pricingGuideOpenMarketInventory)
+        {
+            return new PricingGuideOpenMarketInventory()
+            {
+                Markets = pricingGuideOpenMarketInventory.Markets
+            };
+        }
+
         private void _CalculateProgramCosts(List<ProposalProgramDto> programs,
             PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
@@ -1092,6 +1100,12 @@ namespace Services.Broadcast.ApplicationServices
         {
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(dto);
             _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
+
+            var model = ConvertPricingGuideOpenMarketInventory(dto);
+
+            _SumTotalsForMarkets(model);
+
+            dto = ConvertPricingGuideOpenMarketInventoryDto(model);
 
             return dto;
         }
