@@ -143,8 +143,11 @@ const planning = {
   rerunPostScrubing: (propId, propdetailid) => (
     call(PUT, `${apiBase}Proposals/RerunScrubbing/${propId}/${propdetailid}`)
   ),
-  loadOpenMarketData: (propId, propdetailid) => (
+  /* loadOpenMarketData: (propId, propdetailid) => (
     call(GET, `${apiBase}Inventory/Detail/PricingGuide/Grid/${propId}/${propdetailid}`)
+  ), */
+  loadOpenMarketData: params => (
+    call(POST, `${apiBase}Inventory/Detail/PricingGuide/Grid`, params)
   ),
   uploadSCXFile: params => (
     call(POST, `${apiBase}Proposals/UploadProposalDetailBuy`, params)

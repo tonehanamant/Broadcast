@@ -544,7 +544,7 @@
                     caption: 'Spots',
                     sortable: false,
                     resizable: false,
-                    size: '200px',
+                    size: '140px',
                     render: function (record, index, column_index) {
                         if (record.isStation) return '';
                         var week = getWeekData(record);
@@ -578,7 +578,7 @@
                     caption: 'Imp (000)',
                     sortable: false,
                     resizable: false,
-                    size: '180px',
+                    size: '120px',
                     render: function (record, index, column_index) {
                        
                         //format of impressions and dash
@@ -596,14 +596,39 @@
                         }
 
                     }
-                },
+            },
+            {
+                field: 'week' + weekIdx,
+                caption: 'Station Impressions',
+                sortable: false,
+                resizable: false,
+                size: '140px',
+                render: function (record, index, column_index) {
+
+                    //format of impressions and dash
+                    if (record.isStation) return '';
+                    var week = getWeekData(record);
+                    if (record.isProgram) {//display val including 0 unless not active
+                        if (!week.active) return PlanningConfig.greyRenderer('-', true);
+                        
+                        var val = numeral(util.divideImpressions(week.TotalProvidedImpressions)).format('0,0.[000]');
+                        //return grey for 0 or hiatus
+                        var grey = week.Spots === 0 || week.isHiatus;
+                        return PlanningConfig.greyRenderer(val, grey);
+                    } else {//market display val or dash - NO CURRRENT market display - future will have
+                        //return week.Impressions ? numeral(util.divideImpressions(week.Impressions)).format('0,0.[000]') : '-';
+                        return '-';
+                    }
+
+                }
+            },
 
                 {
                     field: 'week' + weekIdx,
                     caption: 'Cost',
                     sortable: false,
                     resizable: false,
-                    size: '180px',
+                    size: '120px',
                     render: function (record, index, column_index) {
                         if (record.isStation) return '';
                         var week = getWeekData(record);

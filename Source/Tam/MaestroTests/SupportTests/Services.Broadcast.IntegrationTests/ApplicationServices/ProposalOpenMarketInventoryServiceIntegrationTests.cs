@@ -279,7 +279,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
 
                 Assert.IsTrue(1 == filteredProgram.Count());
-                Assert.IsTrue(filteredProgram.First().ProgramNames.Count() == 2);
             }
         }
 
@@ -1435,6 +1434,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ProposalOpenMarketService_CanGetInventory()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);
@@ -1472,39 +1472,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_CalculatesTotalProvidedImpressions_ForInventoryMarkets()
-        {
-            var proposalDetailId = 10799;
-            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-
-            var dto = _ProposalRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
-            var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => (short)m.Id).ToList();
-            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(
-                dto.DetailFlightStartDate,
-                dto.DetailFlightEndDate,
-                dto.DetailSpotLengthId,
-                BroadcastConstants.OpenMarketSourceId,
-                proposalMarketIds,
-                dto.DetailId);
-
-            var programWithStationImpressionsExcpected = programs.First(x => x.ManifestAudiences.Any(ma => ma.Impressions != null));
-            var manifestAudiencesExpected = programWithStationImpressionsExcpected.ManifestAudiences.First(ma => ma.Impressions != null);
-            var providedUnitImpressionsExpected = manifestAudiencesExpected.Impressions;
-
-            var allProgramsResult = inventory.Markets
-                .SelectMany(x => x.Stations)
-                .SelectMany(x => x.Programs);
-            var programWithProvidedUnitImpressions = allProgramsResult.First(x =>
-                x.ProgramId == programWithStationImpressionsExcpected.ManifestId &&
-                x.ProvidedUnitImpressions == providedUnitImpressionsExpected);
-            var weekWithNotZeroAllocatedSpots = programWithProvidedUnitImpressions.FlightWeeks.First(x => x.Allocations.Any(a => a.Spots > 0));
-            var spotsAllocated = weekWithNotZeroAllocatedSpots.Allocations.First().Spots;
-            var totalProvidedImpressionsExpected = spotsAllocated * providedUnitImpressionsExpected;
-
-            Assert.AreEqual(totalProvidedImpressionsExpected, weekWithNotZeroAllocatedSpots.TotalProvidedImpressions);
-        }
-
-        [Test]
         public void ProposalOpenMarketService_CalculatesTotalImpressions_ForInventoryWeeks()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
@@ -1516,7 +1483,72 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var totalImpressionsExpected = programWithProvidedUnitImpressions.Spots * programWithProvidedUnitImpressions.ProvidedUnitImpressions.Value;
 
-            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalImpressions);
+            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalProvidedImpressions);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuide()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
+        public void MatchesProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedProgramNames = dto.DisplayFilter.ProgramNames
+                                            .Where((name, index) => index == 0)
+                                            .ToList();
+            dto.Filter.ProgramNames = expectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWithExpectedNames = result.Markets
+                                                               .SelectMany(m => m.Stations)
+                                                               .SelectMany(s => s.Programs)
+                                                               .Select(p => p.ProgramName)
+                                                               .All(p => expectedProgramNames.Contains(p));
+
+            Assert.IsTrue(resultHasProgramsOnlyWithExpectedNames);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                  .SelectMany(m => m.Stations)
+                                                  .SelectMany(s => s.Programs)
+                                                  .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
         }
     }
 }

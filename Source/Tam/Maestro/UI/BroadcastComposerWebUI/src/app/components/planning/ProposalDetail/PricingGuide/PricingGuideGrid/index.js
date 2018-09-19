@@ -2,16 +2,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Table, { withGrid } from 'Lib/react-table';
+// import { Well } from 'react-bootstrap';
+import PricingGuideGridHeader from './PricingGuideGridHeader';
 import { generateData, rowColors, columns } from './util';
 
 
 class PricingGuideGrid extends Component {
   render() {
     const { openMarketData, openMarketLoading } = this.props;
-    const data = generateData(openMarketData.OpenMarkets);
+    const data = generateData(openMarketData.Markets);
     return (
+      // <Well bsSize="small">
+      <div>
+      <PricingGuideGridHeader
+        openMarketsData={openMarketData}
+      />
       <Table
         data={data}
+        style={{ marginTop: '6px' }}
         columns={columns}
         selection="none"
         sortable={false}
@@ -20,6 +28,8 @@ class PricingGuideGrid extends Component {
             style: { backgroundColor: rowColors[rowInfo.original.rowType] },
         })}
       />
+      </div>
+    // </Well>
     );
   }
 }

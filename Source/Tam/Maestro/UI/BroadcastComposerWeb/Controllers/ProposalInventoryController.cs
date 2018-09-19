@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
@@ -89,26 +90,22 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>().GetInventoryTotals(request));
         }
-        [HttpGet]
-        [Route("Detail/PricingGuide/Grid/{proposalId}/{detailId}")]
-        public BaseResponse<ProposalDetailPricingGuideGridDto> GetOpenMarketPricingGuideGrid(int proposalId,int detailId)
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/Grid/")]
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuide(PricingGuideOpenMarketInventoryRequestDto request)
         {
-            var request = new ProposalDetailPricingGuidGridRequestDto()
-            {
-                ProposalId = proposalId,
-                ProposalDetailId = detailId
-            };
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>()
-                    .GetProposalDetailPricingGuideGridDto(request));
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .GetPricingGuideOpenMarketInventory(request));
         }
 
         [HttpPost]
         [Route("Detail/PricingGuide/Grid/ApplyFilter")]
-        public BaseResponse<ProposalDetailPricingGuideGridDto> ApplyFilterOnOpenMarketPricingGuideGrid(ProposalDetailPricingGuideGridDto dto)
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
         {
             return _ConvertToBaseResponse(() => 
-                _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>()
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
                     .ApplyFilterOnOpenMarketPricingGuideGrid(dto));
         }
     }

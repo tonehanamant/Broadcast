@@ -9,13 +9,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
         public ProposalDetailPricingGuideGridDto()
         {
             OpenMarkets = new List<OpenMarket>();
-            DisplayFilter = new OpenMarketPricingGuideGridDisplayFilterDto();
-            Filter = new OpenMarketPricingGuideGridFilterDto();
         }
-
-        public OpenMarketPricingGuideGridDisplayFilterDto DisplayFilter { get; set; }
-
-        public OpenMarketPricingGuideGridFilterDto Filter { get; set; }
 
         public int ProposalDetailId { get; set; }
         public int ProposalId { get; set; }
@@ -36,7 +30,6 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public string MarketName { get; set; }
             public int MarketRank { get; set; }
             public int MarketId { get; set; }
-
             public List<OpenMarketStation> Stations { get; set; }
             public int Spots { get; set; }
             public decimal Cost { get; set; }
@@ -50,8 +43,6 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public int StationCode { get; set; }
             public string CallLetters { get; set; }
             public string LegacyCallLetters { get; set; }
-            public string Affiliation { get; set; }
-
             public List<OpenMarketProgram> Programs { get; set; }
         }
 
