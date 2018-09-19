@@ -311,10 +311,28 @@ class PricingGuide extends Component {
     });
   }
 
+  // run with params - temporary until get new open market BE object
   onRunDistribution() {
     const { detail, proposalEditForm } = this.props;
-    this.props.loadOpenMarketData(proposalEditForm.Id, detail.Id);
+    const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
+    const openData = {
+      CpmMax: openCpmMax,
+      CpmMin: openCpmMin,
+      OpenMarketCpmTarget: openCpmTarget,
+      UnitCapPerStation: openUnitCap,
+    };
+    const request = {
+      ProposalId: proposalEditForm.Id,
+      ProposalDetailId: detail.Id,
+      OpenMarketPricing: openData,
+    };
+    this.props.loadOpenMarketData(request);
   }
+
+  /* onRunDistribution() {
+    const { detail, proposalEditForm } = this.props;
+    this.props.loadOpenMarketData(proposalEditForm.Id, detail.Id);
+  } */
 
   onSave() {
     const { impression, budget, margin, rateInflation, impressionInflation } = this.state;

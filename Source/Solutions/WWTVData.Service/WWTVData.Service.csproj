@@ -165,9 +165,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WWTVDownloadFromWWTV.cs" />
-    <Compile Include="WWTVErrorFiles.cs" />
-    <Compile Include="WWTVDataFile.cs" />
+    <Compile Include="WWTVInboundService.cs" />
+    <Compile Include="WWTVInboundErrorService.cs" />
+    <Compile Include="WWTVOutboundService.cs" />
     <Compile Include="WWTVDataServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

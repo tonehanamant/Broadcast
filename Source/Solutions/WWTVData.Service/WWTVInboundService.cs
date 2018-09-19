@@ -6,13 +6,12 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 namespace WWTVData.Service
 {
 
-    public class WWTVDownloadFromWWTV :  ScheduledServiceMethod
+    public class WWTVInboundService :  ScheduledServiceMethod
     {
-        public WWTVDownloadFromWWTV () : base(null)
+        public WWTVInboundService () : base(null)
         {
         }
-
-
+        
         public override string ServiceName
         {
             get { return "WWTV Download from WWTV";  }
@@ -39,8 +38,7 @@ namespace WWTVData.Service
                 return  BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
             }
         }
-
-
+        
         public override bool RunService(DateTime timeSignaled)
         {
             _LastRun = DateTime.Now;

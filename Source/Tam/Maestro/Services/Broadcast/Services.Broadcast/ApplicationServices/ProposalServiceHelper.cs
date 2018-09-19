@@ -4,7 +4,7 @@ using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public static class PropoeralsServiceHelper
+    public static class ProposalServiceHelper
     {
         public static int GetBookId(IHaveSingleSharedPostingBooks proposalDetail)
         {

@@ -17,14 +17,13 @@ const ACTIONS = { ...appActions, ...postActions };
 /* Adjust POST Data return */
 /* ////////////////////////////////// */
 export function adjustPost(posts) {
-  console.log(posts);
   const adjustPost = posts.map((item) => {
-    // console.log(item);
     const post = item;
-    console.log(post);
     post.searchContractId = String(post.ContractId);
     post.searchSpotsInSpec = String(post.SpotsInSpec);
     post.searchSpotsOutOfSpec = String(post.SpotsOutOfSpec);
+    post.DisplayUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
+
     // post.displayId = String(post.Id);
     // post.displayAdvertiser = post.Advertiser.Display;
     // post.displayLastModified = moment(post.LastModified).format('MM/DD/YYYY');
@@ -34,7 +33,6 @@ export function adjustPost(posts) {
     // post.displayFlights = `${start} - ${end}`;
     return post;
   });
-  console.log(adjustPost);
   return adjustPost;
 }
 
@@ -83,12 +81,12 @@ export function* requestPost() {
       type: ACTIONS.RECEIVE_POST,
       data,
     });
-    yield put({
-      type: ACTIONS.REQUEST_ASSIGN_POST_DISPLAY,
-      payload: {
-        data: data.Data,
-      },
-    });
+    // yield put({
+    //   type: ACTIONS.REQUEST_ASSIGN_POST_DISPLAY,
+    //   payload: {
+    //     data: data.Data,
+    //   },
+    // });
   } catch (e) {
     if (e.response) {
       yield put({
@@ -119,6 +117,7 @@ export function* assignPostDisplay({ payload: request }) {
       const post = item;
 
       // UploadDate
+      // post.testDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
       post.DisplayUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
       return post;
     },

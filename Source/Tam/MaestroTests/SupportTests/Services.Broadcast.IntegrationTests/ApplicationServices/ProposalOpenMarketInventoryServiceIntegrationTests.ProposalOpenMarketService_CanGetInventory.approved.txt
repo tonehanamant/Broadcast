@@ -55,6 +55,7 @@
   "Margin": 20.0,
   "Markets": [
     {
+      "MarketCoverage": 0.0,
       "MarketId": 101,
       "MarketName": "New York",
       "MarketRank": 1,
@@ -84,8 +85,7 @@
                   "IsHiatus": false,
                   "MediaWeekId": 649,
                   "Rate": 0.0,
-                  "StartDate": "2016-05-30T00:00:00",
-                  "TotalProvidedImpressions": null
+                  "StartDate": "2016-05-30T00:00:00"
                 },
                 {
                   "Allocations": [
@@ -98,8 +98,7 @@
                   "IsHiatus": false,
                   "MediaWeekId": 650,
                   "Rate": 0.0,
-                  "StartDate": "2016-06-06T00:00:00",
-                  "TotalProvidedImpressions": null
+                  "StartDate": "2016-06-06T00:00:00"
                 }
               ],
               "Genres": [
@@ -142,8 +141,7 @@
                   "IsHiatus": false,
                   "MediaWeekId": 649,
                   "Rate": 10.0000,
-                  "StartDate": "2016-05-30T00:00:00",
-                  "TotalProvidedImpressions": 2714.0
+                  "StartDate": "2016-05-30T00:00:00"
                 },
                 {
                   "Allocations": [
@@ -156,8 +154,7 @@
                   "IsHiatus": false,
                   "MediaWeekId": 650,
                   "Rate": 10.0000,
-                  "StartDate": "2016-06-06T00:00:00",
-                  "TotalProvidedImpressions": 0.0
+                  "StartDate": "2016-06-06T00:00:00"
                 }
               ],
               "Genres": [

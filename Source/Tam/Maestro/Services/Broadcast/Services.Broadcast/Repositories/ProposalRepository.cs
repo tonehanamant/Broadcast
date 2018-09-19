@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -72,6 +74,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalDetailId">Proposal detail id to filter by</param>
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
+
+        PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -890,6 +894,7 @@ namespace Services.Broadcast.Repositories
                     AdjustmentInflation = version.adjustment_inflation,
                     AdjustmentMargin = version.adjustment_margin,
                     AdjustmentRate = version.adjustment_rate,
+                    EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
                     OpenMarketPricing = new OpenMarketPricing
                     {
                         CpmMin = version.open_market_cpm_min,
@@ -903,7 +908,8 @@ namespace Services.Broadcast.Repositories
                         Contain = (ContainTypeEnum)c.contain_type,
                         Genre = new LookupDto { Id = c.genre.id, Display = c.genre.name }
                     }).ToList(),
-                    ShowTypeCriteria = version.proposal_version_detail_criteria_show_types.Select(st => new ShowTypeCriteria {
+                    ShowTypeCriteria = version.proposal_version_detail_criteria_show_types.Select(st => new ShowTypeCriteria
+                    {
                         Id = st.id,
                         Contain = (ContainTypeEnum)st.contain_type,
                         ShowType = new LookupDto { Id = st.show_types.id, Display = st.show_types.name }
@@ -918,7 +924,7 @@ namespace Services.Broadcast.Repositories
                             Display = p.program_name
                         }
                     }).ToList(),
-                    ProprietaryPricing =  version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                    ProprietaryPricing = version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
                     {
                         InventorySource = (InventorySourceEnum)p.inventory_source,
                         ImpressionsBalance = p.impressions_balance,
@@ -960,9 +966,9 @@ namespace Services.Broadcast.Repositories
                                 Sunday = isci.sunday == null ? false : isci.sunday.Value
                             }).ToList()
                         }).OrderBy(w => w.StartDate).ToList()
-                        }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
-                        }).OrderBy(d => d.Sequence).ToList()
-                };
+                    }).OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList()
+                }).OrderBy(d => d.Sequence).ToList()
+            };
 
             return proposalDto;
         }
@@ -1092,7 +1098,7 @@ namespace Services.Broadcast.Repositories
                     Margin = pv.proposal_versions.margin,
                     GuaranteedAudience = pv.proposal_versions.guaranteed_audience_id
                 };
-                _SetBaseFields(pv, dto);
+                _PopoulateProposalDetailInventoryBase(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
@@ -1486,12 +1492,10 @@ namespace Services.Broadcast.Repositories
                         string.Format("The proposal detail information you have entered [{0}] does not exist.",
                             proposalDetailId));
 
-                var dto = new ProposalDetailProprietaryInventoryDto
-                {
-                    Margin = pv.proposal_versions.margin
-                };
+                var dto = new ProposalDetailProprietaryInventoryDto();
 
-                _SetBaseFields(pv, dto);
+                _PopoulateProposalDetailInventoryBase(pv, dto);
+
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
                              orderby week.start_date
@@ -1509,11 +1513,11 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static void _SetBaseFields(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
+        private static void _PopoulateProposalDetailInventoryBase(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
-            baseDto.DetailId = pvd.id;
+            baseDto.Margin = pv.margin;
             baseDto.PostType = (SchedulePostType?)pv.post_type;
             baseDto.GuaranteedAudience = pv.guaranteed_audience_id;
             baseDto.Equivalized = pv.equivalized;
@@ -1530,7 +1534,7 @@ namespace Services.Broadcast.Repositories
                     StartDate = f.start_date,
                     MediaWeekId = f.media_week_id
                 }).OrderBy(w => w.StartDate).ToList();
-
+            baseDto.DetailId = pvd.id;
             baseDto.DetailDaypartId = pvd.daypart_id;
             baseDto.DetailSpotLengthId = pvd.spot_length_id;
             baseDto.DetailTargetImpressions = pvd.impressions_total;
@@ -1684,6 +1688,57 @@ namespace Services.Broadcast.Repositories
                         c.SaveChanges();
                     }                    
                 }                
+            });
+        }
+
+        public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var pv = context.proposal_version_details
+                    .Include(pvd => pvd.proposal_versions.proposal)
+                    .Include(pvd =>
+                        pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
+                    .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_programs)
+                    .Single(d => d.id == proposalDetailId,
+                        $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
+
+                var dto = new PricingGuideOpenMarketInventory
+                {
+                    MarketCoverage = pv.proposal_versions.market_coverage
+                };
+
+                _PopoulateProposalDetailInventoryBase(pv, dto);
+
+                dto.Criteria = new OpenMarketCriterion
+                {
+                    CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
+                        new CpmCriteria { Id = c.id, MinMax = (MinMaxEnum)c.min_max, Value = c.value }).ToList(),
+                    GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
+                            new GenreCriteria()
+                            {
+                                Id = c.id,
+                                Contain = (ContainTypeEnum)c.contain_type,
+                                Genre = new LookupDto(c.genre_id, c.genre.name)
+                            })
+                        .ToList(),
+                    ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
+                        new ProgramCriteria
+                        {
+                            Id = c.id,
+                            Contain = (ContainTypeEnum)c.contain_type,
+                            Program = new LookupDto
+                            {
+                                Id = c.program_name_id,
+                                Display = c.program_name
+                            }
+                        }).ToList()
+                };
+
+                return dto;
             });
         }
     }

@@ -197,6 +197,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
             jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
@@ -420,6 +421,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
@@ -577,6 +579,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
@@ -646,6 +649,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalDto), "Markets");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
@@ -682,6 +686,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
             jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
             jsonResolver.Ignore(typeof(ProposalDto), "Markets");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
@@ -711,6 +716,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
             jsonResolver.Ignore(typeof(ProposalDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
@@ -822,6 +828,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
@@ -881,6 +888,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "VersionId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
@@ -1081,6 +1089,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "FlightWeeks");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
@@ -1180,6 +1189,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
@@ -1233,6 +1243,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
@@ -1288,6 +1299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
@@ -1334,6 +1346,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
@@ -2262,6 +2275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "PrimaryVersionId");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Daypart");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
@@ -2284,7 +2298,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var proposal = _ProposalService.GetProposalById(248);
             var proposalDetail = proposal.Details.First();
 
-            var ratingBook = PropoeralsServiceHelper.GetBookId(proposalDetail);
+            var ratingBook = ProposalServiceHelper.GetBookId(proposalDetail);
 
             Assert.AreEqual(413, ratingBook);
         }
@@ -2295,7 +2309,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var proposal = _ProposalService.GetProposalById(253);
             var proposalDetail = proposal.Details.First();
 
-            var ratingBook = PropoeralsServiceHelper.GetBookId(proposalDetail);
+            var ratingBook = ProposalServiceHelper.GetBookId(proposalDetail);
 
             Assert.AreEqual(410, ratingBook);
         }
@@ -2717,6 +2731,58 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _ProposalService.SaveProposalBuy(request);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
+        }
+
+        [Test]
+        public void ProposalService_GetsProposalById_WithDetail_WithoutEstimateId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = SetupProposalDto();
+                var proposalDetailDto = SetupProposalDetailDto();
+                proposalDto.Details.Add(proposalDetailDto);
+                var savedProposal = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+
+                var result = _ProposalService.GetProposalById(savedProposal.Id.Value);
+
+                var retrievedProposalHasDetailWithoutEstimateId = result.Details.Single().EstimateId == null;
+                Assert.True(retrievedProposalHasDetailWithoutEstimateId);
+            }
+        }
+
+        [Test]
+        public void ProposalService_GetsProposalById_WithDetail_WithEstimateId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var estimateId = 3909;
+                var proposalDto = SetupProposalDto();
+                var proposalDetailDto = SetupProposalDetailDto();
+                proposalDto.Details.Add(proposalDetailDto);
+                var savedProposal = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+                var detailId = savedProposal.Details.Single().Id.Value;
+                var proposalBuySaveRequest = _GetProposalBuySaveRequestDtoForSuccessfullResult(detailId, estimateId);
+                _ProposalService.SaveProposalBuy(proposalBuySaveRequest);
+
+                var result = _ProposalService.GetProposalById(savedProposal.Id.Value);
+
+                var retrievedProposalHasDetailWithEstimateId = result.Details.Single().EstimateId == estimateId;
+                Assert.True(retrievedProposalHasDetailWithEstimateId);
+            }
+        }
+
+        private ProposalBuySaveRequestDto _GetProposalBuySaveRequestDtoForSuccessfullResult(int detailId, int estimateId)
+        {
+            return new ProposalBuySaveRequestDto
+            {
+                EstimateId = estimateId,
+                FileName = "Checkers 2Q16 SYN - ProposalBuy.scx",
+                Username = "test-user",
+                ProposalVersionDetailId = detailId,
+                FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - ProposalBuy.scx",
+                        FileMode.Open,
+                        FileAccess.Read)
+            };
         }
     }
 }
