@@ -1106,7 +1106,6 @@ namespace Services.Broadcast.ApplicationServices
                     .ToList();
 
             dto.DisplayFilter.ProgramNames = stations
-                .Where(p => p.Programs.Any())
                 .SelectMany(s => s.Programs.Where(p => p != null).Select(p => p.ProgramName))
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(name => name)

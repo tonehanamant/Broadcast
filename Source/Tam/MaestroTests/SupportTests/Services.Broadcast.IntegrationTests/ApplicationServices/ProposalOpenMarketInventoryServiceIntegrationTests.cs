@@ -1503,33 +1503,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
             }
         }
-        
+
         [Test]
-        [Ignore]
-        public void ReturnsProposalDetailPricingGuideGridDto()
+        public void MatchesProgramsUsingProgramNameFilter()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                ProposalId = 1,
-                ProposalDetailId = 1
-            };
-            var result = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [Ignore]
-        public void ProposalProprietaryInventoryService_AppliesProgramNameFilter()
-        {
-            var request = new PricingGuideOpenMarketInventoryRequestDto
-            {
-                ProposalId = 1,
-                ProposalDetailId = 1
+                ProposalId = 26016,
+                ProposalDetailId = 9978
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             var expectedProgramNames = dto.DisplayFilter.ProgramNames
-                                            .Where((name, index) => index == 2 || index == 3)
+                                            .Where((name, index) => index == 0)
                                             .ToList();
             dto.Filter.ProgramNames = expectedProgramNames;
 
@@ -1542,6 +1527,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                                                .All(p => expectedProgramNames.Contains(p));
 
             Assert.IsTrue(resultHasProgramsOnlyWithExpectedNames);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                  .SelectMany(m => m.Stations)
+                                                  .SelectMany(s => s.Programs)
+                                                  .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
         }
     }
 }

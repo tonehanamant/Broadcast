@@ -1,4 +1,12 @@
 ﻿{
+  "DisplayFilter": {
+    "ProgramNames": [
+      "Friends"
+    ]
+  },
+  "Filter": {
+    "ProgramNames": []
+  },
   "Markets": [
     {
       "MarketCoverage": 1.01,
