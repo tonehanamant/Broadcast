@@ -279,7 +279,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
 
                 Assert.IsTrue(1 == filteredProgram.Count());
-                Assert.IsTrue(filteredProgram.First().ProgramNames.Count() == 2);
             }
         }
 
@@ -1435,6 +1434,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ProposalOpenMarketService_CanGetInventory()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);
@@ -1484,6 +1484,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var totalImpressionsExpected = programWithProvidedUnitImpressions.Spots * programWithProvidedUnitImpressions.ProvidedUnitImpressions.Value;
 
             Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalProvidedImpressions);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuide()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
         }
     }
 }

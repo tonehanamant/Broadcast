@@ -7770,16 +7770,6 @@
     "RateDataThrough": "-"
   },
   {
-    "Affiliation": "PBS",
-    "CallLetters": "WUNC-TV 4.1",
-    "Code": 5316,
-    "LegacyCallLetters": "WUNC",
-    "ManifestMaxEndDate": null,
-    "MarketCode": 160,
-    "OriginMarket": "Raleigh-Durham (Fayetvlle)",
-    "RateDataThrough": "-"
-  },
-  {
     "Affiliation": "FOX",
     "CallLetters": "KMSP-TV 9.9",
     "Code": 5317,

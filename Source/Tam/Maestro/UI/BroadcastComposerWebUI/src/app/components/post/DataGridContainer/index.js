@@ -171,7 +171,7 @@ export class DataGridContainer extends Component {
       },
       {
         name: 'Affidavit Upload Date',
-        dataIndex: 'UploadDate',
+        dataIndex: 'DisplayUploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
         renderer: ({ row }) => (
