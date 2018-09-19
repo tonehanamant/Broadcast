@@ -1110,6 +1110,19 @@ namespace Services.Broadcast.ApplicationServices
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(name => name)
                 .ToList();
+
+            dto.DisplayFilter.Markets = dto.Markets
+                .Select(a => new { a.MarketId, a.MarketName })
+                .Distinct()
+                .Select(y => new LookupDto { Id = y.MarketId, Display = y.MarketName })
+                .OrderBy(n => n.Display)
+                .ToList();
+
+            dto.DisplayFilter.Affiliations = stations
+               .Select(s => s.Affiliation)
+               .Distinct()
+               .OrderBy(a => a)
+               .ToList();
         }
 
         private static void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
@@ -1121,8 +1134,12 @@ namespace Services.Broadcast.ApplicationServices
 
             var filter = dto.Filter;
 
+            _ApplyMarketsFilter(dto, filter);
+
             foreach (var market in dto.Markets)
             {
+                _ApplyAffiliationsFilter(market, filter);
+
                 foreach (var station in market.Stations)
                 {
                     _ApplyProgramNamesFilter(station, filter);
@@ -1139,6 +1156,21 @@ namespace Services.Broadcast.ApplicationServices
             if (programNames != null && programNames.Any())
             {
                 station.Programs = station.Programs.Where(p => programNames.Contains(p.ProgramName)).ToList();
+            }
+        }
+
+        private static void _ApplyMarketsFilter(PricingGuideOpenMarketInventoryDto dto, OpenMarketPricingGuideGridFilterDto filter)
+        {
+            if (filter.Markets != null && filter.Markets.Any())
+            {
+                dto.Markets = dto.Markets.Where(m => filter.Markets.Contains(m.MarketId)).ToList();
+            }
+        }
+        private static void _ApplyAffiliationsFilter(PricingGuideOpenMarketInventory.PricingGuideMarket market, OpenMarketPricingGuideGridFilterDto filter)
+        {
+            if (filter.Affiliations != null && filter.Affiliations.Any())
+            {
+                market.Stations = market.Stations.Where(s => filter.Affiliations.Contains(s.Affiliation)).ToList();
             }
         }
     }

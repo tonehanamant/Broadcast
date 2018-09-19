@@ -1550,5 +1550,90 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(resultDoesNotHavePrograms);
         }
+
+        [Test]
+        public void MatchesMarketsUsingMarketsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedMarketIds = dto.DisplayFilter.Markets
+                                            .Where((x, index) => index == 0)
+                                            .Select(m => m.Id)
+                                            .ToList();
+            dto.Filter.Markets = expectedMarketIds;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasMarketsOnlyWithExpectedIds = result.Markets.All(m => expectedMarketIds.Contains(m.MarketId));
+
+            Assert.IsTrue(resultHasMarketsOnlyWithExpectedIds);
+        }
+
+        [Test]
+        public void DoesNotMatchMarketsUsingMarketsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedMarketIds = new List<int> { -1 };
+            dto.Filter.Markets = notExpectedMarketIds;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHaveMarkets = !result.Markets.Any();
+
+            Assert.IsTrue(resultDoesNotHaveMarkets);
+        }
+
+        [Test]
+        public void MatchesStationsUsingAffiliationsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedAffiliations = dto.DisplayFilter.Affiliations
+                                                        .Where((x, index) => index == 0)
+                                                        .ToList();
+            dto.Filter.Affiliations = expectedAffiliations;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasStationsOnlyWithExpectedAffiliations = result.Markets
+                                                                      .SelectMany(m => m.Stations)
+                                                                      .All(s => expectedAffiliations.Contains(s.Affiliation));
+
+            Assert.IsTrue(resultHasStationsOnlyWithExpectedAffiliations);
+        }
+
+        [Test]
+        public void DoesNotMatchStationsUsingAffiliationsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedAffiliations = new List<string> { "NotExpectedAffiliation" };
+            dto.Filter.Affiliations = notExpectedAffiliations;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHaveStations = !result.Markets
+                                                   .SelectMany(m => m.Stations)
+                                                   .Any();
+
+            Assert.IsTrue(resultDoesNotHaveStations);
+        }
     }
 }
