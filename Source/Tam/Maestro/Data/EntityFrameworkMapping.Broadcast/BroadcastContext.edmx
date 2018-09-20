@@ -369,6 +369,23 @@
           <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
         </EntityType>
+        <EntityType Name="open_market_pricing_guide">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="station_code" Type="smallint" Nullable="false" />
+          <Property Name="station_inventory_manifest_dayparts_id" Type="int" Nullable="false" />
+          <Property Name="blended_cpm" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions_per_spot" Type="float" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="station_impressions" Type="float" Nullable="false" />
+          <Property Name="cost_per_spot" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
             <PropertyRef Name="post_file_id" />
@@ -1447,6 +1464,62 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="nsi_component_audiences">
               <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_market_code">
+          <End Role="markets" Type="Self.markets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="open_market_pricing_guide" Type="Self.open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markets">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_proposal_version_detail_id">
+          <End Role="proposal_version_details" Type="Self.proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="open_market_pricing_guide" Type="Self.open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_station_code">
+          <End Role="stations" Type="Self.stations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="open_market_pricing_guide" Type="Self.open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="station_code" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="station_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id">
+          <End Role="station_inventory_manifest_dayparts" Type="Self.station_inventory_manifest_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="open_market_pricing_guide" Type="Self.open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="station_inventory_manifest_dayparts_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2669,6 +2742,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_weeks" EntityType="Self.media_weeks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nsi_component_audiences" EntityType="Self.nsi_component_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="open_market_pricing_guide" EntityType="Self.open_market_pricing_guide" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_details" EntityType="Self.post_file_details" Schema="dbo" store:Type="Tables" />
@@ -2842,6 +2916,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_nsi_component_audiences_audiences" Association="Self.FK_nsi_component_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="nsi_component_audiences" EntitySet="nsi_component_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_market_code" Association="Self.FK_open_market_pricing_guide_market_code">
+            <End Role="markets" EntitySet="markets" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_proposal_version_detail_id" Association="Self.FK_open_market_pricing_guide_proposal_version_detail_id">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_station_code" Association="Self.FK_open_market_pricing_guide_station_code">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" Association="Self.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id">
+            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
           </AssociationSet>
           <AssociationSet Name="FK_post_file_demos_post_files" Association="Self.FK_post_file_demos_post_files">
             <End Role="post_files" EntitySet="post_files" />
@@ -3550,7 +3640,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="affidavit_files" EntitySet="affidavit_files" />
             <End Role="affidavit_file_problems" EntitySet="affidavit_file_problems" />
           </AssociationSet>
-          <EntitySet Name="affidavit_blacklist" EntityType="BroadcastModel.affidavit_blacklist" />
           <EntitySet Name="affidavit_client_scrub_audiences" EntityType="BroadcastModel.affidavit_client_scrub_audiences" />
           <AssociationSet Name="FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" Association="BroadcastModel.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs">
             <End Role="affidavit_client_scrubs" EntitySet="affidavit_client_scrubs" />
@@ -3753,6 +3842,24 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
             <End Role="station_inventory_manifest_daypart_genres" EntitySet="station_inventory_manifest_daypart_genres" />
           </AssociationSet>
+          <EntitySet Name="open_market_pricing_guide" EntityType="BroadcastModel.open_market_pricing_guide" />
+          <AssociationSet Name="FK_open_market_pricing_guide_market_code" Association="BroadcastModel.FK_open_market_pricing_guide_market_code">
+            <End Role="market" EntitySet="markets" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_proposal_version_detail_id" Association="BroadcastModel.FK_open_market_pricing_guide_proposal_version_detail_id">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_station_code" Association="BroadcastModel.FK_open_market_pricing_guide_station_code">
+            <End Role="station" EntitySet="stations" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <AssociationSet Name="FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" Association="BroadcastModel.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id">
+            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
+            <End Role="open_market_pricing_guide" EntitySet="open_market_pricing_guide" />
+          </AssociationSet>
+          <EntitySet Name="affidavit_blacklist" EntityType="BroadcastModel.affidavit_blacklist" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -3910,6 +4017,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
           <NavigationProperty Name="market_coverages" Relationship="BroadcastModel.FK_market_coverages_markets" FromRole="market" ToRole="market_coverages" />
+          <NavigationProperty Name="open_market_pricing_guide" Relationship="BroadcastModel.FK_open_market_pricing_guide_market_code" FromRole="market" ToRole="open_market_pricing_guide" />
         </EntityType>
         <EntityType Name="media_months">
           <Key>
@@ -4210,6 +4318,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station" ToRole="station_contacts" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station" ToRole="station_inventory_manifest" />
           <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_stations" FromRole="station" ToRole="proposal_buy_file_details" />
+          <NavigationProperty Name="open_market_pricing_guide" Relationship="BroadcastModel.FK_open_market_pricing_guide_station_code" FromRole="station" ToRole="open_market_pricing_guide" />
         </EntityType>
         <EntityType Name="system_component_parameters">
           <Key>
@@ -4989,6 +5098,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="station_inventory_manifest_dayparts" ToRole="daypart" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest_dayparts" ToRole="station_inventory_manifest" />
           <NavigationProperty Name="station_inventory_manifest_daypart_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts" FromRole="station_inventory_manifest_dayparts" ToRole="station_inventory_manifest_daypart_genres" />
+          <NavigationProperty Name="open_market_pricing_guide" Relationship="BroadcastModel.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" FromRole="station_inventory_manifest_dayparts" ToRole="open_market_pricing_guide" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -5556,15 +5666,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="affidavit_blacklist">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ISCI" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="affidavit_client_scrub_audiences">
           <Key>
             <PropertyRef Name="affidavit_client_scrub_id" />
@@ -5768,6 +5869,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="open_market_cpm_max" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="open_market_unit_cap_per_station" Type="Int32" />
           <Property Name="open_market_cpm_target" Type="Byte" />
+          <NavigationProperty Name="open_market_pricing_guide" Relationship="BroadcastModel.FK_open_market_pricing_guide_proposal_version_detail_id" FromRole="proposal_version_details" ToRole="open_market_pricing_guide" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -6555,6 +6657,92 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="open_market_pricing_guide">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="station_code" Type="Int16" Nullable="false" />
+          <Property Name="station_inventory_manifest_dayparts_id" Type="Int32" Nullable="false" />
+          <Property Name="blended_cpm" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions_per_spot" Type="Double" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cost_per_spot" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_open_market_pricing_guide_market_code" FromRole="open_market_pricing_guide" ToRole="market" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_open_market_pricing_guide_proposal_version_detail_id" FromRole="open_market_pricing_guide" ToRole="proposal_version_details" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_open_market_pricing_guide_station_code" FromRole="open_market_pricing_guide" ToRole="station" />
+          <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" FromRole="open_market_pricing_guide" ToRole="station_inventory_manifest_dayparts" />
+          <Property Name="station_impressions" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_open_market_pricing_guide_market_code">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.open_market_pricing_guide" Role="open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_proposal_version_detail_id">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.open_market_pricing_guide" Role="open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="proposal_version_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_station_code">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.open_market_pricing_guide" Role="open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="station_code" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="station_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id">
+          <End Type="BroadcastModel.station_inventory_manifest_dayparts" Role="station_inventory_manifest_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.open_market_pricing_guide" Role="open_market_pricing_guide" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="open_market_pricing_guide">
+              <PropertyRef Name="station_inventory_manifest_dayparts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="affidavit_blacklist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ISCI" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7399,16 +7587,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="affidavit_blacklist">
-            <EntityTypeMapping TypeName="BroadcastModel.affidavit_blacklist">
-              <MappingFragment StoreEntitySet="affidavit_blacklist">
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="ISCI" ColumnName="ISCI" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="affidavit_client_scrub_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.affidavit_client_scrub_audiences">
               <MappingFragment StoreEntitySet="affidavit_client_scrub_audiences">
@@ -7759,6 +7937,34 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="station_inventory_manifest_daypart_genres">
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="station_inventory_manifest_daypart_id" ColumnName="station_inventory_manifest_daypart_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="open_market_pricing_guide">
+            <EntityTypeMapping TypeName="BroadcastModel.open_market_pricing_guide">
+              <MappingFragment StoreEntitySet="open_market_pricing_guide">
+                <ScalarProperty Name="station_impressions" ColumnName="station_impressions" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="cost_per_spot" ColumnName="cost_per_spot" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="impressions_per_spot" ColumnName="impressions_per_spot" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="blended_cpm" ColumnName="blended_cpm" />
+                <ScalarProperty Name="station_inventory_manifest_dayparts_id" ColumnName="station_inventory_manifest_dayparts_id" />
+                <ScalarProperty Name="station_code" ColumnName="station_code" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="affidavit_blacklist">
+            <EntityTypeMapping TypeName="BroadcastModel.affidavit_blacklist">
+              <MappingFragment StoreEntitySet="affidavit_blacklist">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="ISCI" ColumnName="ISCI" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -526,6 +526,116 @@ END
 /*************************************** END BCOP-3625 *****************************************************/
 
 
+
+
+
+
+/**************************************************** START BCOP3512=>BCOP3608 **************************************************************/
+
+IF OBJECT_ID('[open_market_pricing_guide]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[open_market_pricing_guide](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_version_detail_id] int not null,
+		[market_code] smallint not null,
+		[station_code] smallint not null,
+		[station_inventory_manifest_dayparts_id] int not null,
+		[blended_cpm] decimal not null ,
+		[spots] int not null,
+		[impressions_per_spot] float not null,
+		[impressions] float not null,
+		[station_impressions] float not null ,
+		[cost_per_spot] decimal not null,
+		[cost] decimal not null
+		CONSTRAINT [PK_open_market_pricing_guide] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+
+
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_proposal_version_detail_id')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_proposal_version_detail_id] 
+		FOREIGN KEY([proposal_version_detail_id])
+		REFERENCES [dbo].[proposal_version_details] ([id])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_proposal_version_detail_id ON [open_market_pricing_guide] ([proposal_version_detail_id])
+
+END
+
+GO
+
+
+
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_market_code')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_market_code] 
+		FOREIGN KEY([market_code])
+		REFERENCES [dbo].[markets] ([market_code])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_market_code ON [open_market_pricing_guide] ([market_code])
+
+END
+GO
+
+--FK_open_market_pricing_guide_station_code
+--IX_open_market_pricing_guide_station_code
+
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_station_code')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_station_code] 
+		FOREIGN KEY([station_code])
+		REFERENCES [dbo].[stations] ([station_code])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_station_code ON [open_market_pricing_guide] ([station_code])
+
+END
+GO
+
+
+--FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id
+--IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id] 
+		FOREIGN KEY([station_inventory_manifest_dayparts_id])
+		REFERENCES [dbo].[station_inventory_manifest_dayparts] ([id])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id ON [open_market_pricing_guide] ([station_inventory_manifest_dayparts_id])
+
+END
+GO
+
+/**************************************************** END BCOP3512=>BCOP3608 **************************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

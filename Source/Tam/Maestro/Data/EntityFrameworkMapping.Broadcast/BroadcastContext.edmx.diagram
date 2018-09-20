@@ -138,7 +138,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_problems" Width="1.5" PointX="22.75" PointY="16" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_blacklist" Width="1.5" PointX="8.375" PointY="12.75" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrub_audiences" Width="1.5" PointX="27.125" PointY="6.625" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_audiences" />
@@ -206,6 +205,12 @@
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_details_postlog_files" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_problems_postlog_files" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.open_market_pricing_guide" Width="1.5" PointX="31.25" PointY="9" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_market_code" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_proposal_version_detail_id" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_station_code" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_blacklist" Width="1.5" PointX="8.375" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
