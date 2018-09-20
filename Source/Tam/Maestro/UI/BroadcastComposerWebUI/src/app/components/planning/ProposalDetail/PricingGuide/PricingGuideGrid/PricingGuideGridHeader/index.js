@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-// import { toggleModal } from 'Ducks/app';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toggleModal } from 'Ducks/app';
 // import { getPlanningGuideFiltered } from 'Ducks/planning';
 import { Row, Col, Button, Glyphicon, Form, FormGroup, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import Select from 'react-select';
+import PricingGuideFilterModal from '../PricingGuideFilterModal';
 
 const spotFilterOptions = [
   { Display: 'All Programs', Id: 1 },
@@ -13,20 +14,22 @@ const spotFilterOptions = [
   { Display: 'Programs without Spots', Id: 3 },
 ];
 
-// import FilterModal from './FilterModal';
 
-/* const mapDispatchToProps = dispatch => (
-  bindActionCreators({ getPlanningGuideFiltered, toggleModal }, dispatch)
-); */
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({ toggleModal }, dispatch)
+);
 
-export default class PricingGuideGridHeader extends Component {
+class PricingGuideGridHeader extends Component {
   constructor(props) {
     super(props);
       this.onOpenFilterModal = this.onOpenFilterModal.bind(this);
   }
 
   onOpenFilterModal() {
-    console.log('Open Ivan Filter Modal', this);
+    this.props.toggleModal({
+      modal: 'pricingFilterModal',
+      active: true,
+    });
   }
 
   render() {
@@ -68,9 +71,9 @@ export default class PricingGuideGridHeader extends Component {
             <h4>Distribution Results</h4>
           </Col>
         </Row>
-      {/* <IvanFilterModal
-        toggleModal={this.props.toggleModal}
-      /> */}
+        <PricingGuideFilterModal
+          toggleModal={this.props.toggleModal}
+        />
     </div>
     );
     }
@@ -78,7 +81,7 @@ export default class PricingGuideGridHeader extends Component {
 
 PricingGuideGridHeader.propTypes = {
   // openMarketsData: PropTypes.object.isRequired,
-  // toggleModal: PropTypes.func,
+  toggleModal: PropTypes.func.isRequired,
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(PricingGuideGridHeader);
+export default connect(null, mapDispatchToProps)(PricingGuideGridHeader);
