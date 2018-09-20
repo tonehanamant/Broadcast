@@ -9,6 +9,7 @@ using System.Linq;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Common.Services;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -20,6 +21,11 @@ namespace Services.Broadcast.ApplicationServices
         DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName);
 
         WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
+
+        /// <summary>
+        /// Process error files created by WWTV based on files uploaded by us
+        /// </summary>
+        void ProcessErrorFiles();
     }
 
 
@@ -28,6 +34,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVEmailProcessorService _affidavitEmailProcessorService;
         private readonly IAffidavitService _AffidavidService;
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
+        private readonly IEmailerService _EmailerService;
+        private readonly IFileService _FileService;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -37,11 +46,17 @@ namespace Services.Broadcast.ApplicationServices
             , IAffidavitService affidavidService
             , IWWTVFtpHelper ftpHelper
             , IFileTransferEmailHelper emailHelper
-            , IBroadcastAudiencesCache audienceCache) : base(emailHelper, ftpHelper, audienceCache)
+            , IBroadcastAudiencesCache audienceCache
+            , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
+            , IEmailerService emailerService
+            , IFileService fileService) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService)
         {
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;
             _WWTVFtpHelper = ftpHelper;
+            _WWTVSharedNetworkHelper = wWTVSharedNetworkHelper;
+            _EmailerService = emailerService;
+            _FileService = fileService;
         }
         
         /// <summary>
@@ -124,6 +139,21 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Process error files created by WWTV based on files uploaded by us
+        /// </summary>
+        public void ProcessErrorFiles()
+        {
+            _WWTVSharedNetworkHelper.Impersonate(delegate
+            {
+                var files = _WWTVFtpHelper.GetFtpErrorFileList(BroadcastServiceSystemParameter.WWTV_FtpErrorFolder);
+                var remoteFTPPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_FtpErrorFolder);
+                
+                var localPaths = DownloadFTPFiles(files, remoteFTPPath);
+                EmailFTPErrorFiles(localPaths);
+            });
         }
     }
 }
