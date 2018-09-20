@@ -1148,7 +1148,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
-        private static void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        private void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
         {
             if (dto.Filter == null)
             {
@@ -1167,6 +1167,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     _ApplyProgramNamesFilter(station, filter);
                     _ApplyGenresFilter(station, filter);
+                    _ApplyAirtimesFilter(station, filter);
                 }
             }
         }
@@ -1213,6 +1214,20 @@ namespace Services.Broadcast.ApplicationServices
             if (affiliations != null && affiliations.Any())
             {
                 market.Stations = market.Stations.Where(s => affiliations.Contains(s.Affiliation)).ToList();
+            }
+        }
+        
+        private void _ApplyAirtimesFilter(
+            PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation station,
+            OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var airtimes = filter.DayParts;
+
+            if (airtimes != null && airtimes.Any())
+            {
+                station.Programs = station.Programs
+                                          .Where(p => airtimes.Any(a => DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(a), DaypartCache.GetDisplayDaypart(p.Daypart.Id))))
+                                          .ToList();
             }
         }
     }
