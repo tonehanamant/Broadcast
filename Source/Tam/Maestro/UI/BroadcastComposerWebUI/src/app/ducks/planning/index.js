@@ -486,6 +486,11 @@ export const getPrograms = params => ({
   payload: params,
 });
 
+export const getShowTypes = params => ({
+  type: ACTIONS.REQUEST_SHOWTYPES,
+  payload: params,
+});
+
 export const rerunPostScrubing = (propId, propdetailid) => ({
   type: ACTIONS.RERUN_POST_SCRUBING.request,
   payload: { propId, propdetailid },
