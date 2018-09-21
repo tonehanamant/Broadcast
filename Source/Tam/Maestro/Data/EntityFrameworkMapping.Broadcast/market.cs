@@ -20,6 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.stations = new HashSet<station>();
             this.schedules = new HashSet<schedule>();
             this.market_coverages = new HashSet<market_coverages>();
+            this.open_market_pricing_guide = new HashSet<open_market_pricing_guide>();
         }
     
         public short market_code { get; set; }
@@ -30,5 +31,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station> stations { get; set; }
         public virtual ICollection<schedule> schedules { get; set; }
         public virtual ICollection<market_coverages> market_coverages { get; set; }
+        public virtual ICollection<open_market_pricing_guide> open_market_pricing_guide { get; set; }
     }
 }
