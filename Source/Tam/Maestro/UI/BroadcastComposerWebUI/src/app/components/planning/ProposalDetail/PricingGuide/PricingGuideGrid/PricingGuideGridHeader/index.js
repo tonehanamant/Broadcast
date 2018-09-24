@@ -73,6 +73,7 @@ class PricingGuideGridHeader extends Component {
         </Row>
         <PricingGuideFilterModal
           toggleModal={this.props.toggleModal}
+          openMarketsData={this.props.openMarketsData}
         />
     </div>
     );
@@ -80,7 +81,7 @@ class PricingGuideGridHeader extends Component {
 }
 
 PricingGuideGridHeader.propTypes = {
-  // openMarketsData: PropTypes.object.isRequired,
+  openMarketsData: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 

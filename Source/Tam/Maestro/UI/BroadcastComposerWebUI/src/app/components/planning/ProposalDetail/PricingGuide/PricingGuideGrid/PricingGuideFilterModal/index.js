@@ -83,8 +83,9 @@ class PricingGuideFilterModal extends Component {
   }
 
   render() {
-    const { modal } = this.props;
+    const { modal, openMarketsData } = this.props;
     const { filtersOptions, filtersRender, filtersValues, data = {} } = this.state;
+    console.log('displayFilter and Filter', openMarketsData.DisplayFilter, openMarketsData.Filter);
 
     return (
       <Modal show={modal.active}>
@@ -149,6 +150,7 @@ class PricingGuideFilterModal extends Component {
 PricingGuideFilterModal.propTypes = {
   modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
+  openMarketsData: PropTypes.object.isRequired,
 };
 
 PricingGuideFilterModal.defaultProps = {
