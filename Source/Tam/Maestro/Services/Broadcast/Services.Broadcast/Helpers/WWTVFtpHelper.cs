@@ -143,18 +143,18 @@ namespace Services.Broadcast.ApplicationServices.Helpers
         /// <param name="success">True or false based on download success</param>
         /// <param name="errorMessage">Empty or not based on download success</param>
         /// <returns>File content as string</returns>
-        public string DownloadFTPFileContent(string fileName, out bool success, out string errorMessage)
+        public string DownloadFTPFileContent(string filePath, out bool success, out string errorMessage)
         {
             try
             {
                 success = true;
                 errorMessage = string.Empty;
 
-                var shareFolder = GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_FtpInboundFolder);
+                var fullPath = GetRemoteFullPath(filePath);
                 using (var ftpClient = new WebClient())
                 {
                     ftpClient.Credentials = GetClientCredentials();
-                    using (StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}")))
+                    using (StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, fullPath)))
                     {
                         return reader.ReadToEnd();
                     }

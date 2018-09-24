@@ -69,7 +69,11 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
         {
-            List<string> filesToProcess = DownloadFilesToBeProcessed(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder);
+            var inboundFile = BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
+            if (!inboundFile.EndsWith("/"))
+                inboundFile += "/";
+
+            List<string> filesToProcess = DownloadFilesToBeProcessed(inboundFile);
             var response = new DownloadAndProcessWWTVFilesResponse();
             if (!filesToProcess.Any())
             {
@@ -77,12 +81,13 @@ namespace Services.Broadcast.ApplicationServices
             }
             response.FilesFoundToProcess.AddRange(filesToProcess);
 
-            var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder);
+            var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(inboundFile);
 
             foreach (var filePath in filesToProcess)
             {
+                var fullFtpPath = inboundFile + filePath;
                 //download file content
-                string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(filePath, out bool success, out string errorMessage);
+                string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(fullFtpPath, out bool success, out string errorMessage);
                 if (!success)
                 {
                     response.FailedDownloads.Add(filePath + " Reason: " + errorMessage);
