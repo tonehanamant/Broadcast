@@ -6,7 +6,7 @@ namespace Services.Broadcast.Entities
     public class WWTVSaveResult
     {
         public int? Id { get; set; }
-        public List<WWTVInboundFileValidationResult> ValidationResults { get; set; }
+        public List<WWTVInboundFileValidationResult> ValidationResults { get; set; } = new List<WWTVInboundFileValidationResult>();
 
        
         public override string ToString()

@@ -43,5 +43,6 @@ namespace Services.Broadcast.Entities
         public decimal? GoalBudget { get; set; }
         public List<ProprietaryPricingDto> ProprietaryPricing { get; set; } = new List<ProprietaryPricingDto>();
         public OpenMarketPricing OpenMarketPricing { get; set; } = new OpenMarketPricing();
+        public int? EstimateId { get; set; }
     }
 }

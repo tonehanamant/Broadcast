@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities;
@@ -7,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.ApplicationServices
@@ -35,15 +38,22 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
         private readonly IFileTransferEmailHelper _EmailHelper;
+        private readonly IEmailerService _EmailerService;
+        private readonly IFileService _FileService;
+
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
         public BasePostProcessingService(IFileTransferEmailHelper emailHelper
             , IWWTVFtpHelper wwtvFTPHelper
-            , IBroadcastAudiencesCache audienceCache)
+            , IBroadcastAudiencesCache audienceCache
+            , IEmailerService emailerService
+            , IFileService fileService)
         {
             _EmailHelper = emailHelper;
             _WWTVFtpHelper = wwtvFTPHelper;
             _AudienceCache = audienceCache;
+            _EmailerService = emailerService;
+            _FileService = fileService;
         }
 
         /// <summary>
@@ -65,8 +75,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
         }
-
-
+        
         /// <summary>
         /// Process a WWTV post processing file
         /// </summary>
@@ -96,6 +105,42 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return saveRequest;
+        }
+
+        public void EmailFTPErrorFiles(List<string> filePaths)
+        {
+            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+                return;
+
+            filePaths.ForEach(filePath =>
+            {
+                var body = string.Format("{0}", Path.GetFileName(filePath));
+                var subject = "Error files from WWTV";
+                var from = BroadcastServiceSystemParameter.EmailUsername;
+                var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
+                _EmailerService.QuickSend(true, body, subject, MailPriority.Normal, from, Tos, new List<string>() { filePath });
+            });
+        }
+
+        public List<string> DownloadFTPFiles(List<string> files, string remoteFtpPath)
+        {
+            var localPaths = new List<string>();
+            using (var ftpClient = _WWTVFtpHelper.EnsureFtpClient())
+            {
+                var localFolder = WWTVSharedNetworkHelper.GetLocalErrorFolder();
+                files.ForEach(filePath =>
+                {
+                    var path = remoteFtpPath + "/" + filePath.Remove(0, filePath.IndexOf(@"/") + 1);
+                    var localPath = localFolder + @"\" + filePath.Replace(@"/", @"\");
+                    if (_FileService.Exists(localPath))
+                        _FileService.Delete(localPath);
+
+                    _WWTVFtpHelper.DownloadFileFromClient(ftpClient, path, localPath);
+                    localPaths.Add(localPath);
+                    _WWTVFtpHelper.DeleteFiles(path);
+                });
+            }
+            return localPaths;
         }
 
         /// <summary>
@@ -150,6 +195,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return parsedTime.TimeOfDay;
         }
+
         private InboundFileSaveRequest _MapWWTVFileToInboundFileSaveRequest(string fileContents, InboundFileSaveRequest saveRequest, List<WWTVInboundFileValidationResult> validationErrors)
         {
             saveRequest.Details = new List<InboundFileSaveRequestDetail>();

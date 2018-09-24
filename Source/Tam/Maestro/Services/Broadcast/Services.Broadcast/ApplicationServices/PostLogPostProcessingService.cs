@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
@@ -28,6 +29,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileContents">File content as string</param>
         /// <returns>WWTVSaveResult object</returns>
         WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents);
+
+        /// <summary>
+        /// Process error files created by WWTV based on files uploaded by us
+        /// </summary>
+        void ProcessErrorFiles();
     }
 
     public class PostLogPostProcessingService : BasePostProcessingService, IPostLogPostProcessingService
@@ -35,16 +41,25 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
         private readonly IWWTVEmailProcessorService _EmailProcessorService;
         private readonly IPostLogService _PostLogService;
+        private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
+        private readonly IEmailerService _EmailerService;
+        private readonly IFileService _FileService;
 
         public PostLogPostProcessingService(IWWTVFtpHelper wwtvFtpHelper
             , IWWTVEmailProcessorService emailService
             , IPostLogService postLogService
             , IFileTransferEmailHelper emailHelper
-            , IBroadcastAudiencesCache audienceCache) : base(emailHelper, wwtvFtpHelper, audienceCache)
+            , IBroadcastAudiencesCache audienceCache
+            , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
+            , IEmailerService emailerService
+            , IFileService fileService) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService)
         {
             _WWTVFtpHelper = wwtvFtpHelper;
             _EmailProcessorService = emailService;
             _PostLogService = postLogService;
+            _WWTVSharedNetworkHelper = wWTVSharedNetworkHelper;
+            _EmailerService = emailerService;
+            _FileService = fileService;
         }
 
         /// <summary>
@@ -54,7 +69,11 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
         {
-            List<string> filesToProcess = DownloadFilesToBeProcessed(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder);
+            var inboundFile = BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
+            if (!inboundFile.EndsWith("/"))
+                inboundFile += "/";
+
+            List<string> filesToProcess = DownloadFilesToBeProcessed(inboundFile);
             var response = new DownloadAndProcessWWTVFilesResponse();
             if (!filesToProcess.Any())
             {
@@ -62,12 +81,13 @@ namespace Services.Broadcast.ApplicationServices
             }
             response.FilesFoundToProcess.AddRange(filesToProcess);
 
-            var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder);
+            var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(inboundFile);
 
             foreach (var filePath in filesToProcess)
             {
+                var fullFtpPath = inboundFile + filePath;
                 //download file content
-                string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(filePath, out bool success, out string errorMessage);
+                string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(fullFtpPath, out bool success, out string errorMessage);
                 if (!success)
                 {
                     response.FailedDownloads.Add(filePath + " Reason: " + errorMessage);
@@ -75,7 +95,6 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 string fileName = Path.GetFileName(filePath);
-
 
                 var ftpFileToDelete = inboundFtpPath + "/" + fileName;
                 try
@@ -134,5 +153,20 @@ namespace Services.Broadcast.ApplicationServices
 
             return result;
         }
+
+        /// <summary>
+        /// Process error files created by WWTV based on files uploaded by us
+        /// </summary>
+        public void ProcessErrorFiles()
+        {
+            _WWTVSharedNetworkHelper.Impersonate(delegate
+            {
+                var files = _WWTVFtpHelper.GetFtpErrorFileList(BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFtpFolder);
+                var remoteFTPPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFtpFolder);
+
+                var localPaths = DownloadFTPFiles(files, remoteFTPPath);
+                EmailFTPErrorFiles(localPaths);
+            });
+        }        
     }
 }

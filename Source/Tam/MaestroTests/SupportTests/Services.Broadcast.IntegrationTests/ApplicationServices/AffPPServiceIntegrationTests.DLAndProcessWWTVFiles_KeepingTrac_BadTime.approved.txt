@@ -1,7 +1,7 @@
 ﻿{
   "FailedDownloads": [],
   "FilesFoundToProcess": [
-    ".\\Files\\KeepingTracTest.xlsx.BadTimes.txt"
+    "KeepingTracTest.xlsx.BadTimes.txt"
   ],
   "SaveResults": [
     {

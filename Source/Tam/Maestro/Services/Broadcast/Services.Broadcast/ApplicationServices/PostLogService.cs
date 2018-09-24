@@ -32,7 +32,7 @@ namespace Services.Broadcast.ApplicationServices
         public WWTVSaveResult SaveKeepingTrac(InboundFileSaveRequest saveRequest, string username, DateTime currentDateTime)
         {
             var postLogFile = _MapInboundFileSaveRequestToPostLogFile(saveRequest, currentDateTime);
-            var result = _PostLogtSaveResult(saveRequest, username, currentDateTime, postLogFile);
+            var result = _PostLogSaveResult(saveRequest, username, currentDateTime, postLogFile);
 
             return result;
         }
@@ -71,11 +71,10 @@ namespace Services.Broadcast.ApplicationServices
             return problems;
         }
 
-        private WWTVSaveResult _PostLogtSaveResult(InboundFileSaveRequest saveRequest, string username,
+        private WWTVSaveResult _PostLogSaveResult(InboundFileSaveRequest saveRequest, string username,
             DateTime currentDateTime, PostLogFile postLogFile)
         {
             var result = new WWTVSaveResult();
-            var validationResults = new List<WWTVInboundFileValidationResult>();
 
             var lineNumber = 0;
             foreach (var saveRequestDetail in saveRequest.Details)
@@ -89,14 +88,13 @@ namespace Services.Broadcast.ApplicationServices
                     var problems = _MapValidationErrorToWWTVFileProblem(validationErrors);
                     postLogFile.FileProblems.AddRange(problems);
 
-                    validationResults.AddRange(validationErrors);
+                    result.ValidationResults.AddRange(validationErrors);
                 }
             }
 
-            result.ValidationResults = validationResults;
-            postLogFile.Status = validationResults.Any() ? FileProcessingStatusEnum.Invalid : FileProcessingStatusEnum.Valid;
+            postLogFile.Status = result.ValidationResults.Any() ? FileProcessingStatusEnum.Invalid : FileProcessingStatusEnum.Valid;
 
-            if (validationResults.Any())
+            if (result.ValidationResults.Any())
             {   // save and get out
                 result.Id = _PostLogRepository.SavePostLogFile(postLogFile);
                 return result;

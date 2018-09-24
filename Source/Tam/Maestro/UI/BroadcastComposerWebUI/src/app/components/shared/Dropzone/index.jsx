@@ -150,7 +150,7 @@ Dropzone.defaultProps = {
   multiple: false,
   acceptedMimeTypes: '',
   isShowError: true,
-  isParseFile: false,
+  isParseFile: true,
 };
 
 Dropzone.propTypes = {
