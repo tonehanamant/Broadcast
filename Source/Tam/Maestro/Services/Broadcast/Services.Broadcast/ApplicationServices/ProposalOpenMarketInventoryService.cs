@@ -1036,14 +1036,6 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private PricingGuideOpenMarketInventory ConvertPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryDto pricingGuideOpenMarketInventory)
-        {
-            return new PricingGuideOpenMarketInventory()
-            {
-                Markets = pricingGuideOpenMarketInventory.Markets
-            };
-        }
-
         private void _CalculateProgramCosts(List<ProposalProgramDto> programs,
             PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
@@ -1055,6 +1047,14 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private void _SumTotalsForMarkets(PricingGuideOpenMarketInventory pricingGuideOpenMarket)
+        {
+            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
+            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
+            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
+            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalStationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
+        }
+
+        private void _SumTotalsForMarkets(PricingGuideOpenMarketInventoryDto pricingGuideOpenMarket)
         {
             pricingGuideOpenMarket.Markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
             pricingGuideOpenMarket.Markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
@@ -1098,14 +1098,8 @@ namespace Services.Broadcast.ApplicationServices
 
         public PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
         {
-            _SetProposalOpenMarketPricingGuideGridDisplayFilters(dto);
             _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
-
-            var model = ConvertPricingGuideOpenMarketInventory(dto);
-
-            _SumTotalsForMarkets(model);
-
-            dto = ConvertPricingGuideOpenMarketInventoryDto(model);
+            _SumTotalsForMarkets(dto);
 
             return dto;
         }
