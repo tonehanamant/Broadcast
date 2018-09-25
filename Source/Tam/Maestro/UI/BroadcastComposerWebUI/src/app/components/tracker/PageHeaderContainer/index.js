@@ -53,7 +53,7 @@ export class PageHeaderContainer extends Component {
       FileName: file.name,
       RawData: file.base64,
     }));
-    this.props.uploadTrackerFile({ file: filesArray });
+    this.props.uploadTrackerFile({ Files: filesArray });
   }
 
   render() {
