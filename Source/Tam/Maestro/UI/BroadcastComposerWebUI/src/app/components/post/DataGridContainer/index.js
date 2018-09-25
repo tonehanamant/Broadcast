@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 // import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import { Badge } from 'react-bootstrap';
 import { toggleModal, createAlert } from 'Ducks/app';
 import { getPost, getPostClientScrubbing } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
@@ -216,9 +218,11 @@ export class DataGridContainer extends Component {
         name: 'Primary Demo Delivered',
         dataIndex: 'PrimaryAudienceDeliveredImpressions',
         width: '15%',
-        renderer: ({ row }) => (
-          row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-'
-        ),
+        renderer: ({ row }) => {
+          // handle equivalized indicator as badge if true
+          const val = row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-';
+          return row.Equivalized ? <div>{val}<Badge style={{ fontSize: '9px', marginTop: '4px' }} pullRight>EQ</Badge></div> : val;
+        },
       },
       {
         name: 'Primary Demo % Delivery',
@@ -237,9 +241,11 @@ export class DataGridContainer extends Component {
         name: 'Household Delivered',
         dataIndex: 'HouseholdDeliveredImpressions',
         width: '15%',
-        renderer: ({ row }) => (
-          row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-'
-        ),
+        renderer: ({ row }) => {
+          // handle equivalized indicator as badge if true
+          const val = row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-';
+          return row.Equivalized ? <div>{val}<Badge style={{ fontSize: '9px', marginTop: '4px' }} pullRight>EQ</Badge></div> : val;
+        },
       },
     ];
 
