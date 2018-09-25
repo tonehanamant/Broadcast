@@ -69,7 +69,11 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName)
         {
-            List<string> filesToProcess = DownloadFilesToBeProcessed(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder);
+            var inboundFile = BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
+            if (!inboundFile.EndsWith("/"))
+                inboundFile += "/";
+
+            List<string> filesToProcess = DownloadFilesToBeProcessed(inboundFile);
             var response = new DownloadAndProcessWWTVFilesResponse();
             if (!filesToProcess.Any())
             {
@@ -77,29 +81,27 @@ namespace Services.Broadcast.ApplicationServices
             }
             response.FilesFoundToProcess.AddRange(filesToProcess);
 
-            var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder);
+            var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(inboundFile);
 
-            foreach (var filePath in filesToProcess)
+            foreach (var fileName in filesToProcess)
             {
+                var fullFtpPath = inboundFile + fileName;
                 //download file content
-                string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(filePath, out bool success, out string errorMessage);
+                string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(fullFtpPath, out bool success, out string errorMessage);
                 if (!success)
                 {
-                    response.FailedDownloads.Add(filePath + " Reason: " + errorMessage);
+                    response.FailedDownloads.Add(fileName + " Reason: " + errorMessage);
                     continue;
                 }
 
-                string fileName = Path.GetFileName(filePath);
-
-                var ftpFileToDelete = inboundFtpPath + "/" + fileName;
                 try
                 {
-                    _WWTVFtpHelper.DeleteFiles(ftpFileToDelete);
+                    _WWTVFtpHelper.DeleteFiles(fullFtpPath);
                 }
                 catch (Exception e)
                 {
-                    var errorDeletingFile = "Error deleting post log file from FTP site: " + ftpFileToDelete + "\r\n" + e;
-                    _EmailProcessorService.ProcessAndSendTechError(filePath, errorMessage, fileContents);
+                    var errorDeletingFile = "Error deleting post log file from FTP site: " + fullFtpPath + "\r\n" + e;
+                    _EmailProcessorService.ProcessAndSendTechError(fileName, errorMessage, fileContents);
                     continue;
                 }
 
