@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, createAlert } from 'Ducks/app';
@@ -171,11 +172,11 @@ export class DataGridContainer extends Component {
       },
       {
         name: 'Affidavit Upload Date',
-        dataIndex: 'DisplayUploadDate',
+        dataIndex: 'searchUploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
         renderer: ({ row }) => (
-          <span>{row.DisplayUploadDate}</span>
+          <span>{row.searchUploadDate}</span>
         ),
       },
       {
