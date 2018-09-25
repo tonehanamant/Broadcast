@@ -1,0 +1,18 @@
+﻿{
+  "FileDetails": [],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "FileProblems": [
+    {
+      "ProblemDescription": "Record: 1: Field: 'AirTime' is invalid\r\nmust be a valid date"
+    },
+    {
+      "ProblemDescription": "Record: 1: Field: 'InventorySource' is invalid\r\nmust be valid"
+    },
+    {
+      "ProblemDescription": "Record: 1: Field: 'Affiliate' is invalid\r\nis required"
+    }
+  ],
+  "SourceId": 2,
+  "Status": 2
+}

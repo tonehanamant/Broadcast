@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public genre()
         {
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
+            this.station_inventory_manifest_genres = new HashSet<station_inventory_manifest_genres>();
             this.station_inventory_manifest_daypart_genres = new HashSet<station_inventory_manifest_daypart_genres>();
         }
     
@@ -28,6 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime modified_date { get; set; }
     
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
+        public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
     }
 }

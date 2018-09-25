@@ -16,23 +16,6 @@ using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface IBasePostProcessingService : IApplicationService
-    {
-        /// <summary>
-        /// Downloads a file list that needs to be processed
-        /// </summary>
-        /// <param name="path">Path to FTP directory containing the files</param>
-        /// <returns>List of ftp file paths</returns>
-        List<string> DownloadFilesToBeProcessed(string path);
-
-        /// <summary>
-        /// Process a WWTV post processing file
-        /// </summary>
-        /// <param name="filePath">Path of the file to process</param>
-        /// <returns>InboundFileSaveRequest object </returns>
-        InboundFileSaveRequest ParseWWTVFile(string fileName, string fileContents, List<WWTVInboundFileValidationResult> validationErrors);
-    }
-
     public class BasePostProcessingService
     {
         private readonly IBroadcastAudiencesCache _AudienceCache;
@@ -281,7 +264,7 @@ namespace Services.Broadcast.ApplicationServices
                             return null;
                         var audienceId = _AudienceCache.GetDisplayAudienceByCode(xtransformedCode).Id;
 
-                        return new WWTVDemographics()
+                        return new ScrubbingDemographics()
                         {
                             AudienceId = audienceId,
                             OvernightImpressions = y.OvernightImpressions,
@@ -296,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices
             return saveRequest;
         }
 
-        private bool _ValidateDemography(List<WWTVInboundFileValidationResult> validationErrors, WWTVDemographics demo, int recordNumber
+        private bool _ValidateDemography(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
             , AffidavitFileSourceEnum inventorySource, out string xtransformedCode)
         {
             xtransformedCode = demo.Demographic;
