@@ -84,7 +84,7 @@ class PricingGuideFilterModal extends Component {
 
   render() {
     const { modal, openMarketsData } = this.props;
-    const { filtersOptions, filtersRender, filtersValues, data = {} } = this.state;
+    const { filtersOptions, filtersRender, filtersValues } = this.state;
     console.log('displayFilter and Filter', openMarketsData.DisplayFilter, openMarketsData.Filter);
 
     return (
@@ -114,7 +114,7 @@ class PricingGuideFilterModal extends Component {
                   {filterMap[it.Id].render(
                     filtersValues[it.Id],
                     (value) => { this.onChangeFilter(it, value); },
-                    filterMap[it.Id].getInitialData(data),
+                    filterMap[it.Id].getInitialData(openMarketsData.DisplayFilter),
                   )}
                 </Col>
                 <Col sm={2}>

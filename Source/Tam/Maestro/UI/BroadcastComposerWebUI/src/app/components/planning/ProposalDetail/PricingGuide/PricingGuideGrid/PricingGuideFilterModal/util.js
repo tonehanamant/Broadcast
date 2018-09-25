@@ -16,12 +16,12 @@ export const filterMap = {
         value={value}
         onChange={onFilterChange}
         options={options}
-        labelKey="Display"
-        valueKey="Id"
+        // labelKey="Display"
+        // valueKey="Id"
         clearable={false}
       />
     ),
-    getInitialData: () => (defaultFiltersOptions),
+    getInitialData: filterOptions => filterOptions.ProgramNames,
   },
   airingTime: {
     render: (value, onFilterChange, options) => (
