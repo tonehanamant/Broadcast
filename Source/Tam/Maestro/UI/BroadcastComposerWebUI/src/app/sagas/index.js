@@ -71,6 +71,21 @@ export default function* rootSaga() {
     // planningSaga.watchUploadSCXFileSuccess(),
 
     trackerSaga.watchUploadTrackerFile(),
-    trackerSaga.watchUploadTrackerFileSuccess(),
+    // trackerSaga.watchUploadTrackerFileSuccess(),
+
+    trackerSaga.watchRequestUniqueIscis(),
+    trackerSaga.watchRequestUniqueIscisSuccess(),
+    trackerSaga.watchArchiveUnlinkedIsci(),
+    trackerSaga.watchLoadArchivedIscis(),
+    trackerSaga.watchRescrubUnlinkedIsci(),
+    trackerSaga.watchRequestUnlinkedFiltered(),
+    trackerSaga.watchRequestArchivedFiltered(),
+    trackerSaga.watchRequestArchivedIscisSuccess(),
+    trackerSaga.watchLoadValidIscis(),
+    trackerSaga.watchMapUnlinkedIsci(),
+    trackerSaga.watchMapUnlinkedIsciSuccess(),
+    trackerSaga.watchUndoArchivedIscis(),
+    trackerSaga.watchCloseUnlinkedIsciModal(),
+
   ];
 }

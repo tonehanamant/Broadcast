@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Count": 1,
+    "ISCI": "AAAAAAAA",
+    "SpotLength": 30,
+    "UnlinkedReason": "Unmatched Spot length"
+  },
+  {
+    "Count": 1,
+    "ISCI": "SomeISCI",
+    "SpotLength": 30,
+    "UnlinkedReason": "Not in system"
+  },
+  {
+    "Count": 1,
+    "ISCI": "SomeISCI3",
+    "SpotLength": 30,
+    "UnlinkedReason": "Married and Unmarried"
+  }
+]

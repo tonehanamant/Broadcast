@@ -22,8 +22,4 @@ namespace Services.Broadcast.Entities
         Station = 1,
         Program = 2
     }
-
-    
-
-   
 }

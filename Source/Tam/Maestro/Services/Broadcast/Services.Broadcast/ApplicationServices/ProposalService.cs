@@ -77,7 +77,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
-        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
+        private readonly IImpressionsService _AffidavitImpressionsService;
         const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -92,7 +92,7 @@ namespace Services.Broadcast.ApplicationServices
             IRatingForecastService ratingForecastService,
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
             IProposalProprietaryInventoryService proposalProprietaryInventoryService,
-            IAffidavitImpressionsService affidavitImpressionsService,
+            IImpressionsService affidavitImpressionsService,
             IMyEventsReportNamingEngine myEventsReportNamingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -462,7 +462,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (detail.Id.HasValue && detail.HasPostingDataChanged)
                 {
-                    _AffidavitImpressionsService.RecalculateAffidavitImpressionsForProposalDetail(detail.Id.Value);
+                    _AffidavitImpressionsService.RecalculateImpressionsForProposalDetail(detail.Id.Value);
                 }
             }
         }

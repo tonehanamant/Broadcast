@@ -1,14 +1,14 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
-      "AffidavitFileDetailProblems": [],
       "Affiliate": "Affiliate",
       "AirTime": 20580,
       "Archived": false,
+      "ClientScrubs": [],
       "Demographics": [],
       "EstimateId": 3832,
+      "FileDetailProblems": [],
       "Genre": "News",
       "InventorySource": 1,
       "Isci": "32YO41TC18H",
@@ -30,9 +30,9 @@
       "Station": "WBTS-TV"
     }
   ],
-  "AffidavitFileProblems": [],
   "FileHash": "F2-26-9B-9F-27-C0-E2-22-D9-BF-81-6C-69-A6-C7-76-1E-0B-72-2D",
   "FileName": "Special_Ftp_Phantom_File.txt",
+  "FileProblems": [],
   "SourceId": 1,
   "Status": 1
 }

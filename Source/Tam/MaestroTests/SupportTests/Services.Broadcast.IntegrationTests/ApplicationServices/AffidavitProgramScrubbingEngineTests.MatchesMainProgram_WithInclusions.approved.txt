@@ -1,6 +1,5 @@
 ﻿{
-  "AffidavitClientScrubAudiences": [],
-  "AffidavitFileDetailId": 0,
+  "ClientScrubAudiences": [],
   "Comment": null,
   "EffectiveClientIsci": null,
   "EffectiveGenre": "Action",
@@ -24,5 +23,6 @@
   "PostingPlaybackType": null,
   "ProposalVersionDetailId": 0,
   "ProposalVersionDetailQuarterWeekId": 0,
+  "ScrubbingFileDetailId": 0,
   "Status": 0
 }

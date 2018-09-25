@@ -1,10 +1,13 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
               "AudienceId": 4,
               "Impressions": 210.0
@@ -114,12 +117,9 @@
           "Status": 1
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "NSI1",
@@ -142,9 +142,12 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
               "AudienceId": 4,
               "Impressions": 210.0
@@ -254,12 +257,9 @@
           "Status": 1
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "NSI2",
@@ -282,9 +282,12 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
               "AudienceId": 31,
               "Impressions": 666.0
@@ -314,7 +317,7 @@
           "Status": 2
         },
         {
-          "AffidavitClientScrubAudiences": [],
+          "ClientScrubAudiences": [],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
@@ -339,12 +342,9 @@
           "Status": 2
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "NSI3",
@@ -367,9 +367,12 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
               "AudienceId": 31,
               "Impressions": 777.0
@@ -399,12 +402,9 @@
           "Status": 2
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "NSI4",
@@ -426,9 +426,9 @@
       "Station": "WNBC"
     }
   ],
-  "AffidavitFileProblems": [],
   "FileHash": "abc123",
   "FileName": "test.file",
+  "FileProblems": [],
   "SourceId": 1,
   "Status": 1
 }
