@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.postlog_file_detail_demographics = new HashSet<postlog_file_detail_demographics>();
             this.postlog_file_detail_problems = new HashSet<postlog_file_detail_problems>();
+            this.postlog_client_scrubs = new HashSet<postlog_client_scrubs>();
         }
     
         public long id { get; set; }
@@ -49,5 +50,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<postlog_file_detail_demographics> postlog_file_detail_demographics { get; set; }
         public virtual ICollection<postlog_file_detail_problems> postlog_file_detail_problems { get; set; }
         public virtual postlog_files postlog_files { get; set; }
+        public virtual ICollection<postlog_client_scrubs> postlog_client_scrubs { get; set; }
     }
 }

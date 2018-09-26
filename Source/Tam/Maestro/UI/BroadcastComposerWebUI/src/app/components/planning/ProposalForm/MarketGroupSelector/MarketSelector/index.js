@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import { sortBy } from 'lodash';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { ListGroup, ListGroupItem, Button, Well } from 'react-bootstrap/lib';
 
@@ -46,9 +47,10 @@ class MarketSelector extends Component {
   }
 
   render() {
-    const { isReadOnly } = this.props;
+    const { isReadOnly, selectedMarkets } = this.props;
     let marketCount = 0;
-    const marketList = this.props.selectedMarkets.map((market) => {
+    const sortedList = sortBy(selectedMarkets, ['Display']);
+    const marketList = sortedList.map((market) => {
       if (market) {
         marketCount += market.Count ? market.Count : 1;
 

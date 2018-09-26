@@ -139,7 +139,7 @@ namespace Services.Broadcast.ApplicationServices
             WWTVSaveResult result;
             try
             {
-                result = _PostLogService.SaveKeepingTrac(saveRequest, userName, DateTime.Now);
+                result = _PostLogService.SaveKeepingTracFile(saveRequest, userName, DateTime.Now);
             }
             catch (Exception e)
             {

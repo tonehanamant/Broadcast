@@ -1,14 +1,14 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
-      "AffidavitFileDetailProblems": [],
       "Affiliate": "Hello Affiliate",
       "AirTime": 53160,
       "Archived": false,
+      "ClientScrubs": [],
       "Demographics": [],
       "EstimateId": 3926,
+      "FileDetailProblems": [],
       "Genre": "Reality",
       "InventorySource": 1,
       "Isci": "C\"ECT\"21LR02H",
@@ -30,9 +30,9 @@
       "Station": "WICZ-TV"
     }
   ],
-  "AffidavitFileProblems": [],
   "FileHash": "BC-B4-F9-54-40-14-DB-B4-AE-18-FE-3B-37-50-23-E2-6B-05-86-4E",
   "FileName": "WWTV_Escaped_DoubleQuotes.txt",
+  "FileProblems": [],
   "SourceId": 1,
   "Status": 1
 }

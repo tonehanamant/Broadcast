@@ -8,12 +8,7 @@ namespace Services.Broadcast.Entities
         public string FileName { get; set; }
         public string FileHash { get; set; }
         public int Source { get; set; }
-        public List<InboundFileSaveRequestDetail> Details { get; set; }
-
-        public InboundFileSaveRequest()
-        {
-            Details = new List<InboundFileSaveRequestDetail>();
-        }
+        public List<InboundFileSaveRequestDetail> Details { get; set; } = new List<InboundFileSaveRequestDetail>();
     }
 
     public class InboundFileSaveRequestDetail
@@ -33,7 +28,7 @@ namespace Services.Broadcast.Entities
         public AffidavitFileSourceEnum InventorySource { get; set; }
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
-        public List<WWTVDemographics> Demographics { get; set; } = new List<WWTVDemographics>();
+        public List<ScrubbingDemographics> Demographics { get; set; } = new List<ScrubbingDemographics>();
         public DateTime LeadInEndTime { get; set; }
         public DateTime LeadOutStartTime { get; set; }
         public string ShowType { get; set; }

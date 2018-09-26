@@ -151,7 +151,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public int LogAffidavitError(string filePath, string errorMessage)
         {
-            var affidavitFile = new AffidavitFile
+            var affidavitFile = new ScrubbingFile
             {
                 FileName = Path.GetFileName(filePath),
                 Status = FileProcessingStatusEnum.Invalid,
@@ -160,7 +160,7 @@ namespace Services.Broadcast.BusinessEngines
                 SourceId = (int)AffidavitFileSourceEnum.Strata
             };
 
-            affidavitFile.AffidavitFileProblems.Add(new WWTVFileProblem
+            affidavitFile.FileProblems.Add(new ScrubbingFileProblem
             {
                 ProblemDescription = errorMessage
             });

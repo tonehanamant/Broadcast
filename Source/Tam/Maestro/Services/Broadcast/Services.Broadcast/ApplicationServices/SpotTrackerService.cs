@@ -58,6 +58,11 @@ namespace Services.Broadcast.ApplicationServices
             StringBuilder errorMessages = new StringBuilder();
             var hasErrors = false;
 
+            if (fileSaveRequest.Files.Count < 1)
+            {
+                throw new ApplicationException("Empty Request. No files uploaded.");
+            }
+
             foreach (var requestFile in fileSaveRequest.Files)
             {
                 try

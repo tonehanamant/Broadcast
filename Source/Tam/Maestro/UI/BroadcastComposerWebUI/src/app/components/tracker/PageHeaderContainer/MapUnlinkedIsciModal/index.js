@@ -5,13 +5,13 @@ import { bindActionCreators } from 'redux';
 import { Button, Modal } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { head } from 'lodash';
-import { mapUnlinkedIscis, loadValidIscis, mapUnlinkedIsci } from 'Ducks/post';
+import { mapUnlinkedIscis, loadValidIscis, mapUnlinkedIsci } from 'Ducks/tracker';
 import { toggleModal } from 'Ducks/app';
 
 import './index.scss';
 
 
-const mapStateToProps = ({ app: { modals: { mapUnlinkedIsci: modal } }, post: { loadingValidIscis, typeaheadIscisList } }) => ({
+const mapStateToProps = ({ app: { modals: { mapUnlinkedIsci: modal } }, tracker: { loadingValidIscis, typeaheadIscisList } }) => ({
   modal,
   typeaheadIscisList,
   loadingValidIscis,

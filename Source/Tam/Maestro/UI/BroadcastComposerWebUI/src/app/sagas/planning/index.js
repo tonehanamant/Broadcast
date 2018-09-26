@@ -1431,17 +1431,19 @@ export function* uploadSCXFile({ payload: params }) {
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
         id: 'uploadSCX',
-        loading: true },
+        loading: true,
+      },
       });
     const response = yield uploadSCXFile(params);
     const { status, data } = response;
-    yield put({
+    // see below finally
+   /*  yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
         id: 'uploadSCX',
         loading: false,
       },
-    });
+    }); */
     if (status !== 200) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
@@ -1498,6 +1500,8 @@ export function* uploadSCXFile({ payload: params }) {
         },
       });
     }
+  } finally {
+    yield put(setOverlayLoading({ id: 'uploadSCX', loading: false }));
   }
 }
 
