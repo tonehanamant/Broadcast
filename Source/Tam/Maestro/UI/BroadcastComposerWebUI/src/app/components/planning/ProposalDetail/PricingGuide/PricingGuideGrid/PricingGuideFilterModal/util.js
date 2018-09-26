@@ -14,14 +14,22 @@ export const filterMap = {
     render: (value, onFilterChange, options) => (
       <Select
         value={value}
+        multi
         onChange={onFilterChange}
         options={options}
-        // labelKey="Display"
-        // valueKey="Id"
+        labelKey="Display"
+        valueKey="Id"
         clearable={false}
       />
     ),
-    getInitialData: filterOptions => filterOptions.ProgramNames,
+    getInitialData: (filterOptions) => {
+      const programs = [];
+      filterOptions.ProgramNames.forEach((item) => {
+        const ret = { Display: item, Id: item };
+        programs.push(ret);
+      });
+      return programs;
+    },
   },
   airingTime: {
     render: (value, onFilterChange, options) => (
