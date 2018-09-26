@@ -1,0 +1,15 @@
+﻿[
+  {
+    "blended_cpm": 0.0100,
+    "cost": 25.0000,
+    "cost_per_spot": 25.0000,
+    "impressions": 2125796.25,
+    "impressions_per_spot": 2125796.25,
+    "market_code": 160,
+    "proposal_version_detail_id": 9978,
+    "spots": 0,
+    "station_code": 5316,
+    "station_impressions": 0.0,
+    "station_inventory_manifest_dayparts_id": 213348
+  }
+]

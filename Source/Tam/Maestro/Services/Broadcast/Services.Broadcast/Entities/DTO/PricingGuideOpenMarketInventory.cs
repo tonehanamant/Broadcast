@@ -39,6 +39,8 @@ namespace Services.Broadcast.Entities.DTO
                 public class PricingGuideProgram
                 {
                     public int ProgramId { get; set; }
+                    public int ManifestDaypartId { get; set; }
+
                     public LookupDto Daypart { get; set; } = new LookupDto();
                     public string ProgramName { get; set; } 
                     public decimal BlendedCpm { get; set; }
