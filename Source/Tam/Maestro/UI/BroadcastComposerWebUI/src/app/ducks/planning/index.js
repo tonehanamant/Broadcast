@@ -10,6 +10,7 @@ const initialState = {
   planningProposals: [],
   activeOpenMarketData: undefined,
   openMarketData: undefined,
+  hasOpenMarketData: false,
   openMarketLoading: false,
   openMarketLoaded: false,
   filteredPlanningProposals: [],
@@ -345,6 +346,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && (data.Data.Markets.length > 0),
         activeOpenMarketData: data.Data,
         openMarketLoading: false,
         openMarketLoaded: true,
@@ -365,6 +367,7 @@ export default function reducer(state = initialState, action) {
         openMarketLoaded: false,
         openMarketData: undefined,
         activeOpenMarketData: undefined,
+        hasOpenMarketData: false,
       };
     }
 
