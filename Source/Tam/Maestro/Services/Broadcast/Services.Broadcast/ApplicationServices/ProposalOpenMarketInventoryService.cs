@@ -1129,7 +1129,7 @@ namespace Services.Broadcast.ApplicationServices
 
             dto.DisplayFilter.Affiliations = stations
                .Select(s => s.Affiliation)
-               .Distinct()
+               .Distinct(StringComparer.OrdinalIgnoreCase)
                .OrderBy(a => a)
                .ToList();
 
@@ -1207,7 +1207,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (affiliations != null && affiliations.Any())
             {
-                market.Stations = market.Stations.Where(s => affiliations.Contains(s.Affiliation)).ToList();
+                market.Stations = market.Stations.Where(s => affiliations.Contains(s.Affiliation, StringComparer.OrdinalIgnoreCase)).ToList();
             }
         }
         
