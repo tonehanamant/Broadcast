@@ -194,27 +194,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore]
         [UseReporter(typeof(DiffReporter))]
-        public void AffidavitPreprocessing_ValidFile()
+        public void AffidavitPreprocessing_ManualTestForZipArchives()
         {
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>()
                 {
-                    @".\Files\StrataSBMSInvoicePostExportValid.xlsx",
+                    @".\Files\KeepingTrac_Test_Clean.csv",
                     @".\Files\StrataSBMSInvoicePostExportValid.xlsx"
                 };
-                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+               // _AffidavitPreprocessingService.CreateAndUploadZipArchiveToWWTV(fileNames);                
             }
         }
     }
