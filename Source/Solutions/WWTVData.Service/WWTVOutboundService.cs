@@ -5,20 +5,17 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace WWTVData.Service
 {
-    public class WWTVDataFile : ScheduledServiceMethod
+    public class WWTVOutboundService : ScheduledServiceMethod
     {
-        public WWTVDataFile() : base(null)
+        public WWTVOutboundService() : base(null)
         {
         }
-
-
+        
         public override string ServiceName
         {
             get { return "WWTV File Retriever"; }
         }
-
-
-        private bool _RunWhenChecked = false;
+        
         private DateTime? _RunWhen = null;
 
         /// <summary>

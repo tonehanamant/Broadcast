@@ -1,7 +1,9 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -87,8 +89,16 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 };
 
                 var result = sut.MapToProposalDto(proposal, proposalVersion);
-  
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "EstimateId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
     }

@@ -30,6 +30,7 @@ class PricingGuideFilterModal extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.clearState = this.clearState.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.getFiltersForSave = this.getFiltersForSave.bind(this);
 
     this.state = initialState;
   }
@@ -64,6 +65,7 @@ class PricingGuideFilterModal extends Component {
     this.setState({
       filtersValues: Object.assign(filtersValues, { [filter.Id]: value }),
     });
+    // console.log('onChangeFilter', filtersValues);
   }
 
   closeModal() {
@@ -78,13 +80,32 @@ class PricingGuideFilterModal extends Component {
     this.setState(initialState);
   }
 
+  // get values for BE conversion; TBD
+  // todo get other values as needed
+  // object assign to existing filters?
+  getFiltersForSave() {
+    const values = this.state.filtersValues;
+    const ProgramNames = [];
+    if (values.programName && values.programName.length) {
+      values.programName.forEach((item) => {
+        ProgramNames.push(item.Id);
+      });
+    }
+    return { Filter: { ProgramNames } };
+  }
+
   handleSave() {
-    console.log(this.state);
+    // console.log(this.state);
+    const filters = this.getFiltersForSave();
+    // console.log('handleSave', filters);
+    this.props.applyFilters(filters);
+    this.closeModal(); // do here or after success?
   }
 
   render() {
-    const { modal } = this.props;
-    const { filtersOptions, filtersRender, filtersValues, data = {} } = this.state;
+    const { modal, activeOpenMarketData } = this.props;
+    const { filtersOptions, filtersRender, filtersValues } = this.state;
+    // console.log('displayFilter and Filter', activeOpenMarketData.DisplayFilter, activeOpenMarketData.Filter);
 
     return (
       <Modal show={modal.active}>
@@ -113,7 +134,7 @@ class PricingGuideFilterModal extends Component {
                   {filterMap[it.Id].render(
                     filtersValues[it.Id],
                     (value) => { this.onChangeFilter(it, value); },
-                    filterMap[it.Id].getInitialData(data),
+                    filterMap[it.Id].getInitialData(activeOpenMarketData.DisplayFilter),
                   )}
                 </Col>
                 <Col sm={2}>
@@ -149,6 +170,8 @@ class PricingGuideFilterModal extends Component {
 PricingGuideFilterModal.propTypes = {
   modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
+  activeOpenMarketData: PropTypes.object.isRequired,
+  applyFilters: PropTypes.func.isRequired,
 };
 
 PricingGuideFilterModal.defaultProps = {

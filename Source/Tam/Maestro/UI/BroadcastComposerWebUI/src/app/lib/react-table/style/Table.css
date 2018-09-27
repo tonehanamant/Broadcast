@@ -2,6 +2,11 @@
   min-height: 36px;
 }
 
+
+.rt-th {
+   text-align: left; 
+}
+
 .ReactTable {
   margin: 20px 0;
 }

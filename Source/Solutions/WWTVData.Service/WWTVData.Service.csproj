@@ -165,9 +165,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WWTVDownloadFromWWTV.cs" />
-    <Compile Include="WWTVErrorFiles.cs" />
-    <Compile Include="WWTVDataFile.cs" />
+    <Compile Include="WWTVInboundService.cs" />
+    <Compile Include="WWTVInboundErrorService.cs" />
+    <Compile Include="WWTVOutboundService.cs" />
     <Compile Include="WWTVDataServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -183,7 +183,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Copy /Y "$(ProjectDir)ServiceCommonAppSettings.config" "$(TargetDir)\ServiceCommonAppSettings.config"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

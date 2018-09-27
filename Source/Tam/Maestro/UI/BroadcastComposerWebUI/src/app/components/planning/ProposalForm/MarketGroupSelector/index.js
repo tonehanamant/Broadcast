@@ -6,6 +6,8 @@ import { Row, Col, Button, Modal } from 'react-bootstrap/lib';
 import MarketSelector from './MarketSelector';
 import styles from './index.scss';
 
+const isOpenning = (modal, nextModal) => (!(modal && modal.active) && (nextModal && nextModal.active));
+
 const mapStateToProps = ({ app: { modals: { marketSelectorModal: modal } } }) => ({
   modal,
 });
@@ -113,31 +115,18 @@ class MarketGroupSelector extends Component {
     });
   }
 
-  componentWillReceiveProps() {
-    const { proposalEditForm } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { proposalEditForm, modal } = this.props;
     const { MarketGroup, Markets, BlackoutMarketGroup } = proposalEditForm;
     const isCustom = ((Markets && Markets.length > 0) || (MarketGroup && BlackoutMarketGroup));
-    if (isCustom) {
-      const selectedMarkets = Markets.filter(market => !market.IsBlackout);
-
-      if (MarketGroup) {
-        selectedMarkets.unshift(MarketGroup);
-      }
-
-      this.setState({
-        selectedMarkets,
-        currentSelectedMarkets: selectedMarkets,
-      });
-
+    if (isCustom && isOpenning(modal, nextProps.modal)) {
       const blackoutMarkets = Markets.filter(market => market.IsBlackout);
-
-      if (BlackoutMarketGroup) {
-        blackoutMarkets.unshift(BlackoutMarketGroup);
-      }
-
+      const selectedMarkets = Markets.filter(market => !market.IsBlackout);
       this.setState({
-        blackoutMarkets,
+        blackoutMarkets: [].concat(blackoutMarkets || [], MarketGroup),
         currentBlackoutMarkets: blackoutMarkets,
+        selectedMarkets: [].concat(selectedMarkets || [], MarketGroup),
+        currentSelectedMarkets: selectedMarkets,
       });
     }
   }

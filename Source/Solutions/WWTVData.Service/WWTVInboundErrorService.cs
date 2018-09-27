@@ -6,20 +6,17 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 namespace WWTVData.Service
 {
 
-    public class WWTVErrorFiles :  ScheduledServiceMethod
+    public class WWTVInboundErrorService :  ScheduledServiceMethod
     {
-
-        public WWTVErrorFiles() : base(null)
+        public WWTVInboundErrorService() : base(null)
         {
         }
-
-
+        
         public override string ServiceName
         {
             get { return "WWTV Error File Retiever";  }
         }
 
-        private bool _RunWhenChecked = false;
         private DateTime? _RunWhen = null;
         /// <summary>
         /// Use when you want day/time of week to run.
@@ -40,8 +37,8 @@ namespace WWTVData.Service
             //BaseWindowsService.LogServiceEvent("Checking Error Files . . .");
             try
             {
-                var service = ApplicationServiceFactory.GetApplicationService<IAffidavitPreprocessingService>();
-                service.ProcessErrorFiles();
+                ApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>().ProcessErrorFiles();
+                ApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>().ProcessErrorFiles();
             }
             catch (Exception e)
             {

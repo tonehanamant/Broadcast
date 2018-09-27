@@ -8,6 +8,7 @@ import * as ACTIONS from './actionTypes.js';
 const initialState = {
   initialdata: {},
   planningProposals: [],
+  activeOpenMarketData: undefined,
   openMarketData: undefined,
   openMarketLoading: false,
   openMarketLoaded: false,
@@ -344,6 +345,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         openMarketData: data.Data,
+        activeOpenMarketData: data.Data,
         openMarketLoading: false,
         openMarketLoaded: true,
       };
@@ -362,6 +364,30 @@ export default function reducer(state = initialState, action) {
         openMarketLoading: false,
         openMarketLoaded: false,
         openMarketData: undefined,
+        activeOpenMarketData: undefined,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.request: {
+      return {
+        ...state,
+        openMarketLoading: true,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.success: {
+      return {
+        ...state,
+        activeOpenMarketData: data.Data,
+        openMarketLoading: false,
+        openMarketLoaded: true,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.failure: {
+      return {
+        ...state,
+        openMarketLoading: false,
       };
     }
 
@@ -486,6 +512,11 @@ export const getPrograms = params => ({
   payload: params,
 });
 
+export const getShowTypes = params => ({
+  type: ACTIONS.REQUEST_SHOWTYPES,
+  payload: params,
+});
+
 export const rerunPostScrubing = (propId, propdetailid) => ({
   type: ACTIONS.RERUN_POST_SCRUBING.request,
   payload: { propId, propdetailid },
@@ -507,6 +538,10 @@ export const clearOpenMarketData = () => ({
 
 export const uploadSCXFile = params => ({
   type: ACTIONS.SCX_FILE_UPLOAD.request,
+  payload: params,
+});
+export const filterOpenMarketData = params => ({
+  type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
   payload: params,
 });
 

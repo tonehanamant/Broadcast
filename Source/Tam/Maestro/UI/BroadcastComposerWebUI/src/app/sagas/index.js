@@ -69,6 +69,7 @@ export default function* rootSaga() {
     planningSaga.watchLoadOpenMarketData(),
     planningSaga.watchUploadSCXFile(),
     // planningSaga.watchUploadSCXFileSuccess(),
+    planningSaga.watchFilterOpenMarketData(),
 
     trackerSaga.watchUploadTrackerFile(),
     trackerSaga.watchUploadTrackerFileSuccess(),
