@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CSSModules from 'react-css-modules';
 import { Grid } from 'react-redux-grid';
-import { getScrubbingDataFiltered, clearScrubbingFiltersList } from 'Ducks/post';
+import { getScrubbingDataFiltered, clearScrubbingFiltersList } from 'Ducks/tracker';
 import styles from './index.scss';
 import FilterPopoverWrapper from './Filters/FilterPopoverWrapper';
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     }, dispatch)
 );
 
-export class PostScrubbingFilters extends Component {
+export class TrackerScrubbingFilters extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
@@ -55,7 +55,7 @@ export class PostScrubbingFilters extends Component {
   }
 
   render() {
-    const stateKey = 'PostScrubbingFiltersGrid';
+    const stateKey = 'TrackerScrubbingFiltersGrid';
     const inactiveFilterStyle = { backgroundColor: '#bfbfbf', minHeight: '20px', maxHeight: '20px', width: '100%', borderRadius: '2px' };
     const columns = [
       {
@@ -343,7 +343,7 @@ export class PostScrubbingFilters extends Component {
   }
 }
 
-PostScrubbingFilters.propTypes = {
+TrackerScrubbingFilters.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
   activeFilters: PropTypes.array.isRequired,
@@ -352,4 +352,4 @@ PostScrubbingFilters.propTypes = {
   clearScrubbingFiltersList: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(PostScrubbingFilters, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(TrackerScrubbingFilters, styles));

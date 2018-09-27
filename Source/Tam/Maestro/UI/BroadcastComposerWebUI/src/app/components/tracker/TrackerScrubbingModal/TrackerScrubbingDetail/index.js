@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Well, Row, Col, Nav, NavItem } from 'react-bootstrap';
-/* import { getDateInFormat } from '../../../../utils/dateFormatter'; */
 
-import PostScrubbingGrid from '../PostScrubbingGrid';
-import PostScrubbingFilters from '../PostScrubbingFilters';
+import TrackerScrubbingGrid from '../TrackerScrubbingGrid';
+import TrackerScrubbingFilters from '../TrackerScrubbingFilters';
 
 
-export class PostScrubbingDetail extends Component {
+export class TrackerScrubbingDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +16,6 @@ export class PostScrubbingDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('detail component receive props', this.state.activeTabKey, nextProps.activeScrubbingData.filterKey);
     // if change filterKey/data at the saga level (on refresh) - need match filterkey state to change active tab here
     if (nextProps.activeScrubbingData.filterKey && this.state.activeTabKey) {
       if (nextProps.activeScrubbingData.filterKey !== this.state.activeTabKey) {
@@ -32,7 +30,7 @@ export class PostScrubbingDetail extends Component {
     this.setState({ activeTabKey: eventKey });
     // console.log(`selected ${eventKey}`);
     const Id = this.props.activeScrubbingData.Id;
-    this.props.getPostClientScrubbing({ proposalId: Id, showModal: false, filterKey: eventKey });
+    this.props.getTrackerClientScrubbing({ proposalId: Id, showModal: false, filterKey: eventKey });
   }
 
   render() {
@@ -58,11 +56,11 @@ export class PostScrubbingDetail extends Component {
           <Row style={{ marginTop: 4 }}>
             <Col md={12}>
               { hasData &&
-              <PostScrubbingFilters
+              <TrackerScrubbingFilters
                 activeFilters={scrubbingFiltersList}
               />
               }
-              <PostScrubbingGrid
+              <TrackerScrubbingGrid
                   activeScrubbingData={activeScrubbingData}
                   grid={grid}
                   dataSource={dataSource}
@@ -81,12 +79,12 @@ export class PostScrubbingDetail extends Component {
   }
 }
 
-PostScrubbingDetail.defaultProps = {
+TrackerScrubbingDetail.defaultProps = {
     isReadOnly: true,
     hasActiveScrubbingFilters: false,
 };
 
-PostScrubbingDetail.propTypes = {
+TrackerScrubbingDetail.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
   activeScrubbingData: PropTypes.object.isRequired,
@@ -94,11 +92,11 @@ PostScrubbingDetail.propTypes = {
   hasActiveScrubbingFilters: PropTypes.bool.isRequired,
   details: PropTypes.array.isRequired,
   setOverlayLoading: PropTypes.func.isRequired,
-  getPostClientScrubbing: PropTypes.func.isRequired,
+  getTrackerClientScrubbing: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,
   deselectAll: PropTypes.func.isRequired,
   doLocalSort: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 
-export default PostScrubbingDetail;
+export default TrackerScrubbingDetail;
