@@ -1146,7 +1146,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (programNames != null && programNames.Any())
             {
-                station.Programs = station.Programs.Where(p => programNames.Contains(p.ProgramName)).ToList();
+                station.Programs = station.Programs.Where(p => programNames.Contains(p.ProgramName, StringComparer.OrdinalIgnoreCase)).ToList();
             }
         }
     }

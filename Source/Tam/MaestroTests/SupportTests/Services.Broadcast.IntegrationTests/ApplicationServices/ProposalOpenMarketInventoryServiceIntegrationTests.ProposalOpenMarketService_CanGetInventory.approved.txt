@@ -157,7 +157,12 @@
                   "StartDate": "2016-06-06T00:00:00"
                 }
               ],
-              "Genres": [],
+              "Genres": [
+                {
+                  "Display": "Comedy",
+                  "Id": 9
+                }
+              ],
               "ProgramId": 46003,
               "ProgramNames": [
                 "Test Program",
