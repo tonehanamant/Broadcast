@@ -391,6 +391,18 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case ACTIONS.SET_ESTIMATED_ID: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.detailId);
+      details[detailIndex].EstimateId = payload.estimatedId;
+      return Object.assign({}, state, {
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: details,
+        },
+      });
+    }
+
     default:
       return state;
   }
@@ -543,5 +555,13 @@ export const uploadSCXFile = params => ({
 export const filterOpenMarketData = params => ({
   type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
   payload: params,
+});
+
+export const setEstimatedId = (detailId, estimatedId) => ({
+  type: ACTIONS.SET_ESTIMATED_ID,
+  payload: {
+    detailId,
+    estimatedId,
+  },
 });
 

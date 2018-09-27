@@ -6,7 +6,7 @@ import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
 import { deployError, createAlert, toggleModal, setOverlayLoading } from 'Ducks/app/index';
-import { receiveFilteredPlanning } from 'Ducks/planning/index';
+import { receiveFilteredPlanning, setEstimatedId } from 'Ducks/planning/index';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
 
@@ -1480,6 +1480,7 @@ export function* uploadSCXFile({ payload: params }) {
         throw new Error();
       }
     }
+    yield put(setEstimatedId(params.ProposalVersionDetailId, params.EstimateId));
     yield call(uploadSCXFileSuccess);
   } catch (e) {
     if (e.response) {

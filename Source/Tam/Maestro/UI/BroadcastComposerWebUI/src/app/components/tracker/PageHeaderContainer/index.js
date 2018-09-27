@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, storeFile } from 'Ducks/app';
-import { getPostFiltered } from 'Ducks/post';
-import { getUnlinkedIscis, uploadTrackerFile } from 'Ducks/tracker';
+import { getUnlinkedIscis, uploadTrackerFile, getTrackerFiltered } from 'Ducks/tracker';
 import { Row, Col, Button } from 'react-bootstrap';
 import UploadButton from 'Components/shared/UploadButton';
 import SearchInputButton from 'Components/shared/SearchInputButton';
 import UnlinkedIsciModal from './UnlinkedIsciModal';
 
 
-const mapStateToProps = ({ app: { file }, post: { unlinkedIscisLength }, tracker: { unlinkedIscisData, archivedIscisData } }) => ({
+const mapStateToProps = ({ app: { file }, tracker: { unlinkedIscisLength, unlinkedIscisData, archivedIscisData } }) => ({
   file,
   unlinkedIscisData,
   archivedIscisData,
@@ -21,7 +20,7 @@ const mapStateToProps = ({ app: { file }, post: { unlinkedIscisLength }, tracker
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     storeFile,
-    getPostFiltered,
+    getTrackerFiltered,
     getUnlinkedIscis,
     toggleModal,
     uploadTrackerFile,
@@ -38,11 +37,11 @@ export class PageHeaderContainer extends Component {
 	}
 
 	SearchInputAction() {
-		this.props.getPostFiltered();
+		this.props.getTrackerFiltered();
 	}
 
 	SearchSubmitAction(value) {
-		this.props.getPostFiltered(value);
+		this.props.getTrackerFiltered(value);
   }
 
   openUnlinkedIscis() {
@@ -108,7 +107,7 @@ PageHeaderContainer.defaultProps = {
 };
 
 PageHeaderContainer.propTypes = {
-  getPostFiltered: PropTypes.func.isRequired,
+  getTrackerFiltered: PropTypes.func.isRequired,
   getUnlinkedIscis: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   unlinkedIscisData: PropTypes.array.isRequired,

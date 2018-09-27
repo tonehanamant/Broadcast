@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Grid, Actions } from 'react-redux-grid';
-import { overrideStatus, undoScrubStatus } from 'Ducks/post';
+import { overrideStatus, undoScrubStatus } from 'Ducks/tracker';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
 
 import SwapDetailModal from './SwapDetailModal';
@@ -15,7 +15,7 @@ import './index.scss';
 const { MenuActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 
-const stateKey = 'PostScrubbingGrid';
+const stateKey = 'TrackerScrubbingGrid';
 
 const mapStateToProps = ({ grid, selection, dataSource, menu }) => ({
   // Grid
@@ -34,7 +34,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
   }, dispatch)
 );
 
-export class PostScrubbingGrid extends Component {
+export class TrackerScrubbingGrid extends Component {
     constructor(props, context) {
       super(props, context);
       this.context = context;
@@ -48,7 +48,7 @@ export class PostScrubbingGrid extends Component {
     componentDidUpdate(prevProps) {
       if (prevProps.activeScrubbingData !== this.props.activeScrubbingData) {
         // Hide Context Menu (assumes visible)
-        this.props.hideMenu({ stateKey: 'PostScrubbingGrid' });
+        this.props.hideMenu({ stateKey: 'TrackerScrubbingGrid' });
       }
     }
 
@@ -102,7 +102,7 @@ export class PostScrubbingGrid extends Component {
 
     render() {
         const style = { color: '#FF0000' };
-        const stateKey = 'PostScrubbingGrid';
+        const stateKey = 'TrackerScrubbingGrid';
         const { activeScrubbingData, details } = this.props;
         const { ClientScrubs = [] } = activeScrubbingData;
 
@@ -375,7 +375,7 @@ export class PostScrubbingGrid extends Component {
     }
 }
 
-PostScrubbingGrid.propTypes = {
+TrackerScrubbingGrid.propTypes = {
     grid: PropTypes.object.isRequired,
     dataSource: PropTypes.object.isRequired,
     activeScrubbingData: PropTypes.object.isRequired,
@@ -391,4 +391,4 @@ PostScrubbingGrid.propTypes = {
     undoScrubStatus: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(TrackerScrubbingGrid);

@@ -95,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 try
                 {
-                    _WWTVFtpHelper.DeleteFiles(fullFtpPath);
+                    _WWTVFtpHelper.DeleteFiles(_WWTVFtpHelper.GetRemoteFullPath(fullFtpPath));
                 }
                 catch (Exception e)
                 {
