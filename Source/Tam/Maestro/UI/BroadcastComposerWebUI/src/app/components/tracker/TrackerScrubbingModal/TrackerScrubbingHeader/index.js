@@ -9,7 +9,7 @@ import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
 import styles from './index.scss';
 import { getDateInFormat } from '../../../../utils/dateFormatter';
 
-export class PostScrubbingHeader extends Component {
+export class TrackerScrubbingHeader extends Component {
   componentDidMount() {
     // const { date } = this.props;
     // const dateInProperFormat = getDateForDisplay(date);
@@ -21,6 +21,7 @@ export class PostScrubbingHeader extends Component {
     const isCustomMarket = this.props.marketId === 255;
     const secondaryDemoOptions = [];
     let marketLabel;
+    console.log(this.props);
     if (isCustomMarket) {
       marketLabel = 'Custom';
     } else {
@@ -34,7 +35,7 @@ export class PostScrubbingHeader extends Component {
       secondaryDemoOptions.push(option);
     });
 
-    const stateKey = 'PostScrubbingDetailsGrid';
+    const stateKey = 'TrackerScrubbingDetailsGrid';
 
     const columns = [
       {
@@ -205,12 +206,11 @@ export class PostScrubbingHeader extends Component {
   }
 }
 
-PostScrubbingHeader.defaultProps = {
+TrackerScrubbingHeader.defaultProps = {
   isReadOnly: true,
-  // getProposalDetail: () => { },
 };
 
-PostScrubbingHeader.propTypes = {
+TrackerScrubbingHeader.propTypes = {
   advertiser: PropTypes.string.isRequired,
   details: PropTypes.array.isRequired,
   guaranteedDemo: PropTypes.string.isRequired,
@@ -221,7 +221,6 @@ PostScrubbingHeader.propTypes = {
   name: PropTypes.string.isRequired,
   notes: PropTypes.string.isRequired,
   secondaryDemo: PropTypes.array.isRequired,
-  // getProposalDetail: PropTypes.func.isRequired,
 };
 
-export default CSSModules(PostScrubbingHeader, styles);
+export default CSSModules(TrackerScrubbingHeader, styles);
