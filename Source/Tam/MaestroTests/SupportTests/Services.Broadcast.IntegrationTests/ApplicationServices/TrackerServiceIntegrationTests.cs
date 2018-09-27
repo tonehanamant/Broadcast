@@ -2170,17 +2170,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void TrackerService_GeneratesSpotTrackerReport_WithoutErrors_WithValidData()
         {
-            var newProposalDto = ProposalServiceIntegrationTests.SetupProposalDto();
-            var newProposalDetailDto = ProposalServiceIntegrationTests.SetupProposalDetailDto();
-            newProposalDto.Details.Add(newProposalDetailDto);
-            var newProposal = _ProposalService.SaveProposal(newProposalDto, "IntegrationTestUser", _CurrentDateTime);
-            var newBuyRequest = _CreateSuccessfullProposalBuySaveRequestDto(newProposal.Details.First().Id.Value);
-            _ProposalService.SaveProposalBuy(newBuyRequest);
+            const int proposalId = 32474;
 
-            _TrackerService.GenerateSpotTrackerReport(newProposal.Id.Value);
+            _TrackerService.GenerateSpotTrackerReport(proposalId);
             
             var jsonSettings = _GetJsonSerializerSettingsForSpotTrackerReport();
-            var spotTrackerReportData = _TrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
+            var spotTrackerReportData = _TrackerService.GetSpotTrackerReportDataForProposal(proposalId);
             var spotTrackerReportDataJson = IntegrationTestHelper.ConvertToJson(spotTrackerReportData, jsonSettings);
             Approvals.Verify(spotTrackerReportDataJson);
         }
