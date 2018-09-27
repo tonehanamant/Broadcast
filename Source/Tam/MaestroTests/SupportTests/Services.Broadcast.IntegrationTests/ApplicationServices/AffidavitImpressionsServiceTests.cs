@@ -18,11 +18,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class AffidavitImpressionsServiceTests
     {
-        private readonly IAffidavitImpressionsService _AffidavitImpressionsService;
+        private readonly IImpressionsService _AffidavitImpressionsService;
 
         public AffidavitImpressionsServiceTests()
         {
-            _AffidavitImpressionsService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitImpressionsService>();
+            _AffidavitImpressionsService = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionsService>();
         }
 
         [Test]
@@ -38,11 +38,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                _AffidavitImpressionsService.RecalculateAffidavitImpressionsForProposalDetail(proposalDetailId.Value);
+                _AffidavitImpressionsService.RecalculateImpressionsForProposalDetail(proposalDetailId.Value);
 
                 var affidavitFile = affidavitRepository.GetAffidavit(167, true);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(affidavitFile));
+                VerifyAffidavit(affidavitFile);
             }
         }
 
@@ -54,9 +54,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 .GetDataRepository<IAffidavitRepository>();
             var affidavitFile = affidavitRepository.GetAffidavit(166, true);
 
-            _AffidavitImpressionsService.CalculateAffidavitImpressionsForAffidavitFileDetails(affidavitFile.AffidavitFileDetails);
+            _AffidavitImpressionsService.CalculateImpressionsForFileDetails(affidavitFile.FileDetails);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(affidavitFile));
+            VerifyAffidavit(affidavitFile);
+        }
+
+        private void VerifyAffidavit(ScrubbingFile affidavit)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
+            jsonResolver.Ignore(typeof(ClientScrub), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileAudiences), "ClientScrubId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ScrubbingFileDetailId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ModifiedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "MediaMonthId");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var json = IntegrationTestHelper.ConvertToJson(affidavit, jsonSettings);
+            Approvals.Verify(json);
         }
     }
 }

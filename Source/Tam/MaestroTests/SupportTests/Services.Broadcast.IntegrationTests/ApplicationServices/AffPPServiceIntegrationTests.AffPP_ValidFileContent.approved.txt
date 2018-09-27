@@ -1,12 +1,11 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
-      "AffidavitFileDetailProblems": [],
       "Affiliate": "CBS",
       "AirTime": 81300,
       "Archived": false,
+      "ClientScrubs": [],
       "Demographics": [
         {
           "AudienceId": 36,
@@ -16,6 +15,7 @@
         }
       ],
       "EstimateId": 123,
+      "FileDetailProblems": [],
       "Genre": "Comedy",
       "InventorySource": 1,
       "Isci": "ABC123",
@@ -38,11 +38,10 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [],
-      "AffidavitFileDetailProblems": [],
       "Affiliate": "CBS",
       "AirTime": 33720,
       "Archived": false,
+      "ClientScrubs": [],
       "Demographics": [
         {
           "AudienceId": 36,
@@ -52,6 +51,7 @@
         }
       ],
       "EstimateId": 456,
+      "FileDetailProblems": [],
       "Genre": "Talk",
       "InventorySource": 1,
       "Isci": "DEF456",
@@ -73,9 +73,9 @@
       "Station": "WKYW"
     }
   ],
-  "AffidavitFileProblems": [],
   "FileHash": "12-E4-DE-79-96-CD-D6-6E-B3-65-83-15-45-C3-4C-CB-8C-E0-F7-BB",
   "FileName": "WWTV_AffidavitValidFile.txt",
+  "FileProblems": [],
   "SourceId": 1,
   "Status": 1
 }

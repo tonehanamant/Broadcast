@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_generation = new HashSet<station_inventory_manifest_generation>();
             this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
             this.station_inventory_spots = new HashSet<station_inventory_spots>();
+            this.station_inventory_manifest_genres = new HashSet<station_inventory_manifest_genres>();
         }
     
         public int id { get; set; }
@@ -44,5 +45,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual station station { get; set; }
         public virtual ICollection<station_inventory_spots> station_inventory_spots { get; set; }
+        public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
     }
 }

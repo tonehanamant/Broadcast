@@ -92,6 +92,27 @@ const tracker = {
   uploadTracker: params => (
     call(POST, `${apiBase}SpotTracker/UploadExtendedSigmaFile`, params)
   ),
+  getValidIscis: query => (
+    call(GET, `${apiBase}PostLog/FindValidIscis/${query}`)
+  ),
+  mapUnlinkedIscis: ({ OriginalIsci, EffectiveIsci }) => (
+    call(POST, `${apiBase}PostLog/MapIsci`, { OriginalIsci, EffectiveIsci })
+  ),
+  getUnlinkedIscis: () => (
+    call(GET, `${apiBase}PostLog/UnlinkedIscis`, {})
+  ),
+  getArchivedIscis: () => (
+    call(GET, `${apiBase}PostLog/ArchivedIscis `, {})
+  ),
+  archiveUnlinkedIscis: isciIds => (
+    call(POST, `${apiBase}PostLog/ArchiveUnlinkedIsci`, isciIds)
+  ),
+  undoArchivedIscis: isciIds => (
+    call(POST, `${apiBase}PostLog/UndoArchiveIsci`, isciIds)
+  ),
+  rescrubUnlinkedIscis: isci => (
+    call(POST, `${apiBase}PostLog/ScrubUnlinkedIsci`, { Isci: isci })
+  ),
 };
 
 const planning = {

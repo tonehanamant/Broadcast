@@ -225,7 +225,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\BroadcastControllerBase\" />
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +239,7 @@
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\PostLogController.cs" />
     <Compile Include="Controllers\SpotTrackerController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />

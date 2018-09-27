@@ -2,12 +2,12 @@
 
 namespace Services.Broadcast.Entities
 {
-    public class AffidavitMatchingDetail
+    public class MatchingDetail
     {
-        public AffidavitFileDetail AffidavitDetail { get; set; }
+        public ScrubbingFileDetail FileDetail { get; set; }
         public bool Archived { get; set; }
-        public List<AffidavitMatchingProposalWeek> ProposalDetailWeeks { get; set; } = new List<AffidavitMatchingProposalWeek>();
-        public List<FileDetailProblem> AffidavitDetailProblems { get; set; } = new List<FileDetailProblem>();
+        public List<MatchingProposalWeek> ProposalDetailWeeks { get; set; } = new List<MatchingProposalWeek>();
+        public List<FileDetailProblem> FileDetailProblems { get; set; } = new List<FileDetailProblem>();
         public string EffectiveIsci { get; set; }
     }
 }

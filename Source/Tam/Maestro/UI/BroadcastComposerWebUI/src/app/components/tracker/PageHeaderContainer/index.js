@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleModal, storeFile } from 'Ducks/app';
-import { getPostFiltered, getUnlinkedIscis } from 'Ducks/post';
+import { getPostFiltered } from 'Ducks/post';
+import { getUnlinkedIscis, uploadTrackerFile } from 'Ducks/tracker';
 import { Row, Col, Button } from 'react-bootstrap';
-import { uploadTrackerFile } from 'Ducks/tracker';
 import UploadButton from 'Components/shared/UploadButton';
 import SearchInputButton from 'Components/shared/SearchInputButton';
 import UnlinkedIsciModal from './UnlinkedIsciModal';
 
 
-const mapStateToProps = ({ app: { file }, post: { unlinkedIscis, unlinkedIscisLength } }) => ({
+const mapStateToProps = ({ app: { file }, post: { unlinkedIscisLength }, tracker: { unlinkedIscisData, archivedIscisData } }) => ({
   file,
-  unlinkedIscis,
+  unlinkedIscisData,
+  archivedIscisData,
   unlinkedIscisLength,
 });
 
@@ -53,7 +54,7 @@ export class PageHeaderContainer extends Component {
       FileName: file.name,
       RawData: file.base64,
     }));
-    this.props.uploadTrackerFile({ file: filesArray });
+    this.props.uploadTrackerFile({ Files: filesArray });
   }
 
   render() {
@@ -65,7 +66,7 @@ export class PageHeaderContainer extends Component {
         {!!unlinkedIscisLength &&
           <Button
             bsStyle="success"
-            disabled
+            // disabled
             onClick={this.openUnlinkedIscis}
             bsSize="small"
           >
@@ -91,7 +92,8 @@ export class PageHeaderContainer extends Component {
 			</Row>
       <UnlinkedIsciModal
         toggleModal={this.props.toggleModal}
-        unlinkedIscis={this.props.unlinkedIscis}
+        unlinkedIscisData={this.props.unlinkedIscisData}
+        archivedIscisData={this.props.archivedIscisData}
       />
     </div>
     );
@@ -109,7 +111,8 @@ PageHeaderContainer.propTypes = {
   getPostFiltered: PropTypes.func.isRequired,
   getUnlinkedIscis: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
-	unlinkedIscis: PropTypes.array.isRequired,
+  unlinkedIscisData: PropTypes.array.isRequired,
+  archivedIscisData: PropTypes.array.isRequired,
   unlinkedIscisLength: PropTypes.number.isRequired,
   uploadTrackerFile: PropTypes.func.isRequired,
 };

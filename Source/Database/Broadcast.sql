@@ -525,6 +525,83 @@ BEGIN
 END
 /*************************************** END BCOP-3625 *****************************************************/
 
+/*************************************** BEGIN BCOP-3470 *****************************************************/
+IF OBJECT_ID('[postlog_client_scrubs]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_client_scrubs](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[postlog_file_detail_id] [bigint] NOT NULL,
+		[proposal_version_detail_quarter_week_id] [int] NOT NULL,
+		[lead_in] [bit] NOT NULL,
+		[effective_program_name] [varchar](255) NULL,
+		[effective_genre] [varchar](255) NULL,
+		[effective_show_type] [varchar](255) NULL,			
+		[effective_isci] [varchar](63) NULL,		
+		[effective_client_isci] [varchar](63) NULL,
+		[match_program] [bit] NOT NULL,
+		[match_genre] [bit] NOT NULL,
+		[match_market] [bit] NOT NULL,
+		[match_time] [bit] NOT NULL,
+		[match_station] [bit] NOT NULL,
+		[match_isci_days] [bit] NOT NULL,
+		[match_date] [bit] NULL,	
+		[match_show_type] [bit] NOT NULL,	
+		[match_isci] [bit] NOT NULL,
+		[comment] [varchar](1023) NULL,	
+		[modified_by] [varchar](255) NOT NULL,
+		[modified_date] [datetime] NULL,
+		[status] [int] NOT NULL,
+		[status_override] [bit] NOT NULL,
+	 CONSTRAINT [PK_postlog_client_scrubs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_client_scrubs]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_details_postlog_client_scrubs] FOREIGN KEY([postlog_file_detail_id])
+	REFERENCES [dbo].[postlog_file_details] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_client_scrubs] CHECK CONSTRAINT [FK_postlog_file_details_postlog_client_scrubs]
+	CREATE INDEX IX_postlog_client_scrubs_postlog_file_detail_id ON [postlog_client_scrubs] ([postlog_file_detail_id])
+
+	ALTER TABLE [dbo].[postlog_client_scrubs]  WITH CHECK ADD  CONSTRAINT [FK_proposal_version_detail_quarter_weeks_postlog_client_scrubs] FOREIGN KEY([proposal_version_detail_quarter_week_id])
+	REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_client_scrubs] CHECK CONSTRAINT [FK_proposal_version_detail_quarter_weeks_postlog_client_scrubs]
+	CREATE INDEX IX_postlog_client_scrubs_proposal_version_detail_quarter_week_id ON [postlog_client_scrubs] ([proposal_version_detail_quarter_week_id])
+END
+
+IF OBJECT_ID('[postlog_client_scrub_audiences]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_client_scrub_audiences](
+		[postlog_client_scrub_id] [int] NOT NULL,
+		[audience_id] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+	 CONSTRAINT [PK_postlog_client_scrub_audiences] PRIMARY KEY CLUSTERED 
+	(
+		[postlog_client_scrub_id] ASC,
+		[audience_id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences]  WITH CHECK ADD  CONSTRAINT [FK_postlog_client_scrub_audiences_postlog_client_scrubs] FOREIGN KEY([postlog_client_scrub_id])
+	REFERENCES [dbo].[postlog_client_scrubs] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences] CHECK CONSTRAINT [FK_postlog_client_scrub_audiences_postlog_client_scrubs]
+	CREATE INDEX IX_postlog_client_scrub_audiences_postlog_client_scrub_id ON [postlog_client_scrub_audiences] ([postlog_client_scrub_id])
+	
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences]  WITH CHECK ADD  CONSTRAINT [FK_postlog_client_scrub_audiences_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences] CHECK CONSTRAINT [FK_postlog_client_scrub_audiences_audiences]
+	CREATE INDEX IX_postlog_client_scrub_audiences_audience_id ON [postlog_client_scrub_audiences] ([audience_id])
+END
+
+IF OBJECT_ID('[affidavit_blacklist]', 'U') IS NOT NULL
+BEGIN
+	EXEC sp_rename 'dbo.affidavit_blacklist', 'isci_blacklist'
+END
+/*************************************** END BCOP-3470 *****************************************************/
+
 
 
 

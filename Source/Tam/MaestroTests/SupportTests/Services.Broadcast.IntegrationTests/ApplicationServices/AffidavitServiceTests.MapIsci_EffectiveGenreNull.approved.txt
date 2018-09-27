@@ -1,10 +1,13 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [],
+          "ClientScrubAudiences": [],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
@@ -29,12 +32,9 @@
           "Status": 2
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "AAAAAAAA1",
@@ -57,9 +57,12 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [],
+          "ClientScrubAudiences": [],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
@@ -84,12 +87,9 @@
           "Status": 2
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "BBBBBBBBB2",
@@ -112,9 +112,12 @@
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
               "AudienceId": 4,
               "Impressions": 0.0
@@ -224,12 +227,9 @@
           "Status": 1
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": null,
       "InventorySource": 1,
       "Isci": "SomeISCI3",
@@ -251,9 +251,9 @@
       "Station": "WNBC"
     }
   ],
-  "AffidavitFileProblems": [],
   "FileHash": "abc123",
   "FileName": "test.file",
+  "FileProblems": [],
   "SourceId": 1,
   "Status": 1
 }

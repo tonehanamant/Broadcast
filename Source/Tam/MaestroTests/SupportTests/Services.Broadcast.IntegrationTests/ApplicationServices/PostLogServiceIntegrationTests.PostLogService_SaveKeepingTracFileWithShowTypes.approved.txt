@@ -1,0 +1,38 @@
+﻿{
+  "FileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "Affiliate": "Affiate",
+      "AirTime": 29040,
+      "Archived": false,
+      "ClientScrubs": [],
+      "Demographics": [],
+      "EstimateId": null,
+      "FileDetailProblems": [],
+      "Genre": "Do It Yourself",
+      "InventorySource": 2,
+      "Isci": "DDDDDDDD",
+      "LeadInEndTime": 30660,
+      "LeadinGenre": "News",
+      "LeadinProgramName": "LeadInProgramName",
+      "LeadInShowType": "Drama2",
+      "LeadoutGenre": "LeadOutGenre",
+      "LeadoutProgramName": "LeadOutProgramName",
+      "LeadOutShowType": "Drama3",
+      "LeadOutStartTime": 28920,
+      "MappedIsci": null,
+      "Market": "Tampa-St. Pete (Sarasota)",
+      "OriginalAirDate": "2017-06-29T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ShowType": "Drama1",
+      "SpotCost": null,
+      "SpotLengthId": 1,
+      "Station": "WWSB"
+    }
+  ],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "FileProblems": [],
+  "SourceId": 2,
+  "Status": 1
+}

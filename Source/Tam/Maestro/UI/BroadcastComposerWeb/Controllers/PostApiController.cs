@@ -28,7 +28,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PostedContractedProposalsDto> GetPostList()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetPosts());
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().GetPosts());
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetClientScrubbingForProposal(proposalId, proposalScrubbingRequest));
+                    () => _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().GetClientScrubbingForProposal(proposalId, proposalScrubbingRequest));
         }
 
         [HttpGet]
@@ -96,7 +96,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<UnlinkedIscisDto>> GetUnlinkedIscis()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetUnlinkedIscis());
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().GetUnlinkedIscis());
         }
 
         [HttpPost]
@@ -113,7 +113,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<ArchivedIscisDto>> GetArchivedIscis()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().GetArchivedIscis());
+                _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().GetArchivedIscis());
         }
 
         [HttpPost]
@@ -121,7 +121,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<bool> ArchiveUnlinkedIsci(List<string> iscis)
         {
             return _ConvertToBaseResponse(() => 
-            _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().ArchiveUnlinkedIsci(iscis, Identity.Name));
+            _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().ArchiveUnlinkedIsci(iscis, Identity.Name));
         }
 
 
@@ -130,7 +130,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<bool> UndoArchiveUnlinkedIsci(List<long> FileDetailsIds)
         {
             return _ConvertToBaseResponse(() =>
-            _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().UndoArchiveUnlinkedIsci(FileDetailsIds, DateTime.Now, Identity.Name));
+            _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().UndoArchiveUnlinkedIsci(FileDetailsIds, DateTime.Now, Identity.Name));
         }
 
         [HttpGet]
@@ -138,7 +138,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<string>> FindValidIscis(string isci)
         { 
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().FindValidIscis(isci));
+                () => _ApplicationServiceFactory.GetApplicationService<IIsciService>().FindValidIscis(isci));
         }
 
         [HttpPost]
@@ -155,7 +155,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
             _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().OverrideScrubbingStatus(request));
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().OverrideScrubbingStatus(request));
         }
 
         [HttpPut]
@@ -164,7 +164,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
             _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitScrubbingService>().UndoOverrideScrubbingStatus(request));
+                () => _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().UndoOverrideScrubbingStatus(request));
         }
         
         [HttpPost]

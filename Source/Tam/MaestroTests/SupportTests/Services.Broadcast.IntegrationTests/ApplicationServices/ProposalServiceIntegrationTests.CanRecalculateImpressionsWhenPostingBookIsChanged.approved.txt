@@ -1,117 +1,120 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "CreatedDate": "2018-02-08T12:57:39.693",
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": null,
+      "AirTime": 32400,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 4,
+              "ClientScrubId": 1034,
               "Impressions": 0.0
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 5,
+              "ClientScrubId": 1034,
               "Impressions": 0.0
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 6,
+              "ClientScrubId": 1034,
               "Impressions": 0.0
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 7,
+              "ClientScrubId": 1034,
               "Impressions": 0.0
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 13,
+              "ClientScrubId": 1034,
               "Impressions": 215.05
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 14,
+              "ClientScrubId": 1034,
               "Impressions": 428.75
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 15,
+              "ClientScrubId": 1034,
               "Impressions": 1396.05
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 19,
+              "ClientScrubId": 1034,
               "Impressions": 0.0
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 20,
+              "ClientScrubId": 1034,
               "Impressions": 66.4
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 21,
+              "ClientScrubId": 1034,
               "Impressions": 35.0
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 22,
+              "ClientScrubId": 1034,
               "Impressions": 35.5
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 28,
+              "ClientScrubId": 1034,
               "Impressions": 93.1
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 29,
+              "ClientScrubId": 1034,
               "Impressions": 66.7
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 30,
+              "ClientScrubId": 1034,
               "Impressions": 314.15
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 31,
+              "ClientScrubId": 1034,
               "Impressions": 3910.45
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 46,
+              "ClientScrubId": 1034,
               "Impressions": 516.65
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 284,
+              "ClientScrubId": 1034,
               "Impressions": 106.2
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 290,
+              "ClientScrubId": 1034,
               "Impressions": 94.05
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 339,
+              "ClientScrubId": 1034,
               "Impressions": 102.3
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 347,
+              "ClientScrubId": 1034,
               "Impressions": 1015.15
             },
             {
-              "AffidavitClientScrubId": 1034,
               "AudienceId": 348,
+              "ClientScrubId": 1034,
               "Impressions": 169.1
             }
           ],
-          "AffidavitFileDetailId": 1034,
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
@@ -135,16 +138,13 @@
           "PostingPlaybackType": 4,
           "ProposalVersionDetailId": 9961,
           "ProposalVersionDetailQuarterWeekId": 39,
+          "ScrubbingFileDetailId": 1034,
           "Status": 2
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "AffidavitFileId": 167,
-      "Affiliate": null,
-      "AirTime": 32400,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "Id": 1034,
       "InventorySource": 1,
@@ -161,16 +161,16 @@
       "Market": "New York",
       "OriginalAirDate": "2016-06-03T00:00:00",
       "ProgramName": "Program Names R us",
+      "ScrubbingFileId": 167,
       "ShowType": "",
       "SpotCost": null,
       "SpotLengthId": 1,
       "Station": "KAPP"
     }
   ],
-  "AffidavitFileProblems": [],
-  "CreatedDate": "2018-02-08T12:57:39.693",
   "FileHash": "abc123",
   "FileName": "test.file",
+  "FileProblems": [],
   "Id": 167,
   "SourceId": 1,
   "Status": 1
