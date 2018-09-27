@@ -1130,7 +1130,10 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                pricingGuideOpenMarketInventory = _GetExistingPricingGuideOpenMarketInventory(existingPricingGuide);
+                var proposalDetail = _ProposalRepository.GetProposalDetail(request.ProposalDetailId);
+                var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
+
+                pricingGuideOpenMarketInventory = _GetExistingPricingGuideOpenMarketInventory(existingPricingGuide,postingBookId);
             }
 
             var pricingGuideDto = ConvertPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
@@ -1143,25 +1146,29 @@ namespace Services.Broadcast.ApplicationServices
             return pricingGuideDto;
         }
 
-        private PricingGuideOpenMarketInventory _GetExistingPricingGuideOpenMarketInventory(List<open_market_pricing_guide> existingPricingGuide)
+        private PricingGuideOpenMarketInventory _GetExistingPricingGuideOpenMarketInventory(List<open_market_pricing_guide> existingPricingGuide,int postingBookId)
         {
             var response = new PricingGuideOpenMarketInventory();
             response.Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>();
 
             var existingMarketPriceGuides = existingPricingGuide.GroupBy(pg => new {pg.market});
 
+            var marketRankings =
+                BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
+                    .GetMarketRankingsByMediaMonth(postingBookId);
+
             foreach (var marketPricingGuide in existingMarketPriceGuides)
             {
                 var market = marketPricingGuide.Key.market;
-                var marketCoverage = market.market_coverages.First();
                 var pricingGuideMarket = new PricingGuideOpenMarketInventory.PricingGuideMarket()
                 {
                     MarketId = market.market_code,
                     MarketCoverage = market.market_coverages.First().percentage_of_us,
-                    MarketRank = marketCoverage.rank,
+                    MarketRank = marketRankings[market.market_code],
                     MarketName = market.geography_name,
                     Stations = new List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation>()
                 };
+
                 var stationPriceGuide = marketPricingGuide.GroupBy(mpg => mpg.station);
 
                 foreach (var stationGuide in stationPriceGuide)
@@ -1187,7 +1194,7 @@ namespace Services.Broadcast.ApplicationServices
                             ManifestDaypartId = program.id,
                             Impressions = guide.impressions,
                             StationImpressions = guide.station_impressions,
-                            BlendedCpm = guide.blended_cpm,
+                            BlendedCpm = Math.Round(guide.blended_cpm,2),
                             Cost = guide.cost,
                             CostPerSpot = guide.cost_per_spot,
                             ImpressionsPerSpot = guide.impressions_per_spot,
@@ -1216,9 +1223,9 @@ namespace Services.Broadcast.ApplicationServices
             _CalculateProgramCosts(programs, pricingGuideOpenMarketInventory);
 
             var inventoryMarkets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
-            var postingBook = ProposalServiceHelper.GetBookId(pricingGuideOpenMarketInventory);
 
-            _ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
+            var postingBookId = ProposalServiceHelper.GetBookId(pricingGuideOpenMarketInventory);
+            _ApplyInventoryMarketRankings(postingBookId, inventoryMarkets);
             _ApplyInventoryMarketCoverages(inventoryMarkets);
 
             pricingGuideOpenMarketInventory.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());

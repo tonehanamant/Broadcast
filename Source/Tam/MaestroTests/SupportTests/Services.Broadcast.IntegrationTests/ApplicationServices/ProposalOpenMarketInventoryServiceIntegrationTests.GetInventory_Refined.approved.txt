@@ -223,8 +223,7 @@
   "ProposalVersionId": 41,
   "RefineFilterPrograms": [
     "New Program Name",
-    "Test Program",
-    "Test Program On Separate Daypart"
+    "Test Program"
   ],
   "ShareProjectionBookId": 413,
   "SingleProjectionBookId": null,

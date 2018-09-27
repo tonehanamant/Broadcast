@@ -12,7 +12,7 @@
           "LegacyCallLetters": "WUNC",
           "Programs": [
             {
-              "BlendedCpm": 0.0100,
+              "BlendedCpm": 0.01,
               "Cost": 575.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
+using ApprovalUtilities.Utilities;
 using Common.Services;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
@@ -1587,7 +1589,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanGetOpenMarketPricingGuide()
+        public void OpenMarketPricingGuide()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1601,7 +1603,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ManifestDaypartId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -1615,19 +1616,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanGetOpenMarketPricingGuide_Saved_Open_Market_Pricing_Guide()
+        public void OpenMarketPricingGuide_Saved_Open_Market_Pricing_Guide()
         {
             using (new TransactionScopeWrapper())
             {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
                 var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
-                    ProposalId = 26016,
-                    ProposalDetailId = 9978
+                    ProposalId = proposal.Id.Value,//26016,
+                    ProposalDetailId = proposalDetailId,//9978
                 };
 
+                // create pricing guide
                 var pricingGuideOpenMarketDto =
                     _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
+                // reload it from repo directly and verify
                 var openMarketInventoryRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                     .GetDataRepository<IProposalOpenMarketInventoryRepository>();
                 var price_guide = openMarketInventoryRepo.GetProposalDetailPricingGuide(request.ProposalDetailId);
@@ -1657,42 +1663,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void CanGetOpenMarketPricingGuide_Saved_And_Reload()
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide_Saved_And_Reload()
         {
             using (new TransactionScopeWrapper())
             {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
                 var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
-                    ProposalId = 26016,
-                    ProposalDetailId = 9978
+                    ProposalId = proposal.Id.Value,//26016,
+                    ProposalDetailId = proposalDetailId,//9978
                 };
                 // first time saves
-                var firstDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
-
-                // second time will load from db
-                var secondDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+                var pricingGuideDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+                // second time will get from db
+                pricingGuideDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
                 // verify second time didn't change anything.
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram),"ManifestDaypartId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                secondDto.Markets.First().Stations.First().Programs.First().BlendedCpm =
-                    Math.Round(secondDto.Markets.First().Stations.First().Programs.First().BlendedCpm, 2);
-                var first = IntegrationTestHelper.ConvertToJson(firstDto, jsonSettings);
-                var second = IntegrationTestHelper.ConvertToJson(secondDto, jsonSettings);
 
-                Assert.AreEqual(first, second, "The reloading of open market price guide did not work :(");
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideDto, jsonSettings));
             }
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanGetOpenMarketPricingGuide_Save_Spots()
+        public void OpenMarketPricingGuide_Save_Spots()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1732,7 +1736,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CanGetOpenMarketPricingGuide_Delete()
+        public void OpenMarketPricingGuide_Delete()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1748,7 +1752,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // delete the pricing guide
                 _ProposalOpenMarketInventoryService.DeleteExistingGeneratedPricingGuide(request.ProposalDetailId);
 
-                // now try to load the pricing guide directly.  should fail
+                // now try to load the pricing guide directly.  should return null
                 var openMarketInventoryRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
                 var priceGuide = openMarketInventoryRepo.GetProposalDetailPricingGuide(request.ProposalDetailId);
 
@@ -1759,9 +1763,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(priceGuide, jsonSettings));
             }
         }
-    }
+   }
 }
