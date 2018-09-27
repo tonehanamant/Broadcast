@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, Button, Form, FormGroup, Col, Glyphicon } from 'react-bootstrap';
 import Select from 'react-select';
+import { omit } from 'lodash';
 import { defaultFiltersOptions, filterMap } from './util';
 
 import './index.scss';
@@ -31,8 +32,33 @@ class PricingGuideFilterModal extends Component {
     this.clearState = this.clearState.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.getFiltersForSave = this.getFiltersForSave.bind(this);
+    this.generateFiltersState = this.generateFiltersState.bind(this);
 
     this.state = initialState;
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    const { modal } = this.props;
+    if (!modal.active && nextProps.modal.active) {
+      this.generateFiltersState();
+    }
+  }
+
+  generateFiltersState() {
+    const { activeOpenMarketData: { Filter } } = this.props;
+    const selectedFilters = Object.keys(Filter);
+
+    const filtersValues = {};
+    selectedFilters.forEach((filter) => {
+      filtersValues[filter] = Filter[filter].map(val => ({ Display: val, Id: val }));
+    });
+
+    this.setState({
+      filtersOptions: defaultFiltersOptions.filter(it => !selectedFilters.includes(it.Id)),
+      filtersRender: defaultFiltersOptions.filter(it => selectedFilters.includes(it.Id)),
+      filtersValues,
+    });
   }
 
   onAddFilter(filter) {
@@ -48,7 +74,7 @@ class PricingGuideFilterModal extends Component {
     this.setState({
       filtersRender: filtersRender.filter(({ Id }) => (Id !== filter.Id)),
       filtersOptions: filtersOptions.concat(filter),
-      filtersValues: Object.assign(filtersValues, { [filter.Id]: null }),
+      filtersValues: omit(filtersValues, filter.Id),
     });
   }
 
@@ -65,7 +91,6 @@ class PricingGuideFilterModal extends Component {
     this.setState({
       filtersValues: Object.assign(filtersValues, { [filter.Id]: value }),
     });
-    // console.log('onChangeFilter', filtersValues);
   }
 
   closeModal() {
@@ -80,32 +105,26 @@ class PricingGuideFilterModal extends Component {
     this.setState(initialState);
   }
 
-  // get values for BE conversion; TBD
-  // todo get other values as needed
-  // object assign to existing filters?
   getFiltersForSave() {
-    const values = this.state.filtersValues;
-    const ProgramNames = [];
-    if (values.programName && values.programName.length) {
-      values.programName.forEach((item) => {
-        ProgramNames.push(item.Id);
+    const { filtersValues } = this.state;
+    const parsedFilters = {};
+    Object.keys(filtersValues)
+      .filter(filter => !!filtersValues[filter].length)
+      .forEach((filter) => {
+        parsedFilters[filter] = filtersValues[filter].map(({ Display }) => (Display));
       });
-    }
-    return { Filter: { ProgramNames } };
+    return { Filter: parsedFilters };
   }
 
   handleSave() {
-    // console.log(this.state);
     const filters = this.getFiltersForSave();
-    // console.log('handleSave', filters);
     this.props.applyFilters(filters);
-    this.closeModal(); // do here or after success?
+    this.closeModal();
   }
 
   render() {
     const { modal, activeOpenMarketData } = this.props;
     const { filtersOptions, filtersRender, filtersValues } = this.state;
-    // console.log('displayFilter and Filter', activeOpenMarketData.DisplayFilter, activeOpenMarketData.Filter);
 
     return (
       <Modal show={modal.active}>
