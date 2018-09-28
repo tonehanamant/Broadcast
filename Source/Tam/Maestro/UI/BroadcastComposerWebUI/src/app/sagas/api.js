@@ -92,6 +92,46 @@ const tracker = {
   uploadTracker: params => (
     call(POST, `${apiBase}SpotTracker/UploadExtendedSigmaFile`, params)
   ),
+  // unlinked iscis
+  getValidIscis: query => (
+    call(GET, `${apiBase}PostLog/FindValidIscis/${query}`)
+  ),
+  mapUnlinkedIscis: ({ OriginalIsci, EffectiveIsci }) => (
+    call(POST, `${apiBase}PostLog/MapIsci`, { OriginalIsci, EffectiveIsci })
+  ),
+  getUnlinkedIscis: () => (
+    call(GET, `${apiBase}PostLog/UnlinkedIscis`, {})
+  ),
+  getArchivedIscis: () => (
+    call(GET, `${apiBase}PostLog/ArchivedIscis `, {})
+  ),
+  archiveUnlinkedIscis: isciIds => (
+    call(POST, `${apiBase}PostLog/ArchiveUnlinkedIsci`, isciIds)
+  ),
+  undoArchivedIscis: isciIds => (
+    call(POST, `${apiBase}PostLog/UndoArchiveIsci`, isciIds)
+  ),
+  rescrubUnlinkedIscis: isci => (
+    call(POST, `${apiBase}PostLog/ScrubUnlinkedIsci`, { Isci: isci })
+  ),
+  // BCOP-3471 tracker data and scrubbing
+  getTracker: () => (
+    call(GET, `${apiBase}PostLog`, {})
+  ),
+  getTrackerClientScrubbing: (params) => {
+    const sendStatus = params.filterKey.length && (params.filterKey !== 'All');
+    const statusParams = sendStatus ? { ScrubbingStatusFilter: params.filterKey } : {};
+    return call(POST, `${apiBase}/PostLog/ClientScrubbingProposal/${params.proposalId}`, statusParams);
+  },
+  overrideStatus: params => (
+    call(PUT, `${apiBase}PostLog/OverrideStatus`, params)
+  ),
+  undoScrubStatus: params => (
+    call(PUT, `${apiBase}PostLog/UndoOverrideStatus`, params)
+  ),
+  swapProposalDetail: params => (
+    call(POST, `${apiBase}PostLog/SwapProposalDetail`, params)
+  ),
 };
 
 const planning = {

@@ -1,0 +1,12 @@
+﻿{
+  "FileDetails": [],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "FileProblems": [
+    {
+      "ProblemDescription": "Record: 255: Field: 'ErrorField' is invalid\r\nGeneric error message"
+    }
+  ],
+  "SourceId": 2,
+  "Status": 2
+}

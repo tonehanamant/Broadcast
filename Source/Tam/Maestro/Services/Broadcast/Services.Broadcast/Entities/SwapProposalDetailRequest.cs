@@ -4,7 +4,7 @@ namespace Services.Broadcast.Entities
 {
     public class SwapProposalDetailRequest
     {
-        public List<int> AffidavitScrubbingIds { get; set; }
+        public List<int> ScrubbingIds { get; set; }
         public int ProposalDetailId { get; set; }
     }
 }

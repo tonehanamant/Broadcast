@@ -221,8 +221,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
-    <Compile Include="ApplicationServices\AffidavitImpressionsService.cs" />
+    <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />
+    <Compile Include="ApplicationServices\BaseScrubbingService.cs" />
+    <Compile Include="ApplicationServices\IsciService.cs" />
     <Compile Include="ApplicationServices\LogoService.cs" />
     <Compile Include="ApplicationServices\MarketService.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingService.cs" />
@@ -241,15 +243,14 @@
     <Compile Include="ApplicationServices\Inventory\StationInventoryManifestService.cs" />
     <Compile Include="ApplicationServices\NsiPostingBookService.cs" />
     <Compile Include="ApplicationServices\ProjectionBooksService.cs" />
-    <Compile Include="ApplicationServices\AffidavitScrubbingService.cs" />
     <Compile Include="ApplicationServices\ProposalOpenMarketInventoryService.cs" />
     <Compile Include="ApplicationServices\Inventory\StationInventoryGroupService.cs" />
     <Compile Include="ApplicationServices\ProposalServiceHelper.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvService.cs" />
     <Compile Include="ApplicationServices\WWTVEmailProcessorService.cs" />
     <Compile Include="Attributes\ExcelColumnAttribute.cs" />
-    <Compile Include="BusinessEngines\AffidavitMatchingEngine.cs" />
-    <Compile Include="BusinessEngines\AffidavitProgramScrubbingEngine.cs" />
+    <Compile Include="BusinessEngines\MatchingEngine.cs" />
+    <Compile Include="BusinessEngines\ProgramScrubbingEngine.cs" />
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
@@ -270,8 +271,6 @@
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketInventory\PricingGuideOpenMarketInventoryRequestDto.cs" />
     <Compile Include="Entities\OpenMarketPricing.cs" />
-    <Compile Include="Entities\PostLogFile.cs" />
-    <Compile Include="Entities\PostLogFileDetails.cs" />
     <Compile Include="Entities\SpotTrackerReport.cs" />
     <Compile Include="Entities\DTO\ProposalBuySaveRequestDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
@@ -288,6 +287,7 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExcelWorksheetExtensions.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
@@ -303,7 +303,7 @@
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
     <Compile Include="FtpService.cs" />
-    <Compile Include="Entities\AffidavitFileProblems.cs" />
+    <Compile Include="Entities\ScrubbingFileProblem.cs" />
     <Compile Include="Entities\InboundFileSaveRequest.cs" />
     <Compile Include="Entities\WWTVInboundFileValidationResult.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
@@ -325,7 +325,7 @@
     <Compile Include="Converters\TextFileLineReader.cs" />
     <Compile Include="DaypartCache.cs" />
     <Compile Include="EmailService.cs" />
-    <Compile Include="Entities\AffidavitClientScrub.cs" />
+    <Compile Include="Entities\ClientScrub.cs" />
     <Compile Include="Entities\ScrubIsciRequest.cs" />
     <Compile Include="Entities\ScrubStatusOverrideRequest.cs" />
     <Compile Include="Entities\MapIsciDto.cs" />
@@ -333,14 +333,14 @@
     <Compile Include="Entities\ProposalScrubbingRequest.cs" />
     <Compile Include="Entities\MyEventsReportData.cs" />
     <Compile Include="Entities\ScrubbingStatus.cs" />
-    <Compile Include="Entities\WWTVDemographics.cs" />
+    <Compile Include="Entities\ScrubbingDemographics.cs" />
     <Compile Include="Entities\FileDetailProblem.cs" />
     <Compile Include="Entities\AffidavitMatchingDetail.cs" />
-    <Compile Include="Entities\AffidavitFile.cs" />
-    <Compile Include="Entities\AffidavitFileDetail.cs" />
-    <Compile Include="Entities\AffidavitFileDetailAudience.cs" />
+    <Compile Include="Entities\ScrubbingFile.cs" />
+    <Compile Include="Entities\ScrubbingFileDetail.cs" />
+    <Compile Include="Entities\ScrubbingFileAudiences.cs" />
     <Compile Include="Entities\WWTVSaveResult.cs" />
-    <Compile Include="Entities\AffidavitMatchingProposalWeek.cs" />
+    <Compile Include="Entities\MatchingProposalWeek.cs" />
     <Compile Include="Entities\BroadcastAudience.cs" />
     <Compile Include="Entities\BvsTrackingAudience.cs" />
     <Compile Include="Entities\MyEventsReportDataLine.cs" />
@@ -554,6 +554,7 @@
     <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
+    <Compile Include="Repositories\IsciRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\BvsRepository.cs" />
     <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />

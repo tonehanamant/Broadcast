@@ -13,6 +13,14 @@ namespace Services.Broadcast.BusinessEngines
         double AdjustImpression(double impression, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
         double AdjustImpression(double impression, bool? isEquivilized, int spotLength, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
         double AdjustImpression(double impression, bool? isEquivalized, int spotLength);
+
+        /// <summary>
+        /// Adjust impression using the NTI Conversion factor
+        /// </summary>
+        /// <param name="impressions">Impressions</param>
+        /// <param name="ntiConversionFactor">NTI Conversion Factor</param>
+        /// <returns>Adjusted impressions</returns>
+        double AdjustImpression(double impressions, double ntiConversionFactor);
     }
 
     public class ImpressionAdjustmentEngine : IImpressionAdjustmentEngine
@@ -78,6 +86,17 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return impression;
+        }
+
+        /// <summary>
+        /// Adjust impression using the NTI Conversion factor
+        /// </summary>
+        /// <param name="impressions">Impressions</param>
+        /// <param name="ntiConversionFactor">NTI Conversion Factor</param>
+        /// <returns>Adjusted impressions</returns>
+        public double AdjustImpression(double impressions, double ntiConversionFactor)
+        {
+            return impressions * (1 - ntiConversionFactor);
         }
     }
 }

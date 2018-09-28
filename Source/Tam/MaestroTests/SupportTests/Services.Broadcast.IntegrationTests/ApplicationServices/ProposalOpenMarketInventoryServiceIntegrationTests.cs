@@ -1505,6 +1505,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithProgramsGroupedByDaypart()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26017,
+                    ProposalDetailId = 9979
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
         public void MatchesProgramsUsingProgramNameFilter()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto

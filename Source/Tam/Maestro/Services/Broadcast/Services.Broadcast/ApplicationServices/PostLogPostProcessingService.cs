@@ -83,28 +83,25 @@ namespace Services.Broadcast.ApplicationServices
 
             var inboundFtpPath = _WWTVFtpHelper.GetRemoteFullPath(inboundFile);
 
-            foreach (var filePath in filesToProcess)
+            foreach (var fileName in filesToProcess)
             {
-                var fullFtpPath = inboundFile + filePath;
+                var fullFtpPath = inboundFile + fileName;
                 //download file content
                 string fileContents = _WWTVFtpHelper.DownloadFTPFileContent(fullFtpPath, out bool success, out string errorMessage);
                 if (!success)
                 {
-                    response.FailedDownloads.Add(filePath + " Reason: " + errorMessage);
+                    response.FailedDownloads.Add(fileName + " Reason: " + errorMessage);
                     continue;
                 }
 
-                string fileName = Path.GetFileName(filePath);
-
-                var ftpFileToDelete = inboundFtpPath + "/" + fileName;
                 try
                 {
-                    _WWTVFtpHelper.DeleteFiles(ftpFileToDelete);
+                    _WWTVFtpHelper.DeleteFiles(_WWTVFtpHelper.GetRemoteFullPath(fullFtpPath));
                 }
                 catch (Exception e)
                 {
-                    var errorDeletingFile = "Error deleting post log file from FTP site: " + ftpFileToDelete + "\r\n" + e;
-                    _EmailProcessorService.ProcessAndSendTechError(filePath, errorMessage, fileContents);
+                    errorMessage = "Error deleting post log file from FTP site: " + fullFtpPath + "\r\n" + e;
+                    _EmailProcessorService.ProcessAndSendTechError(fileName, errorMessage, fileContents);
                     continue;
                 }
 
@@ -142,7 +139,7 @@ namespace Services.Broadcast.ApplicationServices
             WWTVSaveResult result;
             try
             {
-                result = _PostLogService.SaveKeepingTrac(saveRequest, userName, DateTime.Now);
+                result = _PostLogService.SaveKeepingTracFile(saveRequest, userName, DateTime.Now);
             }
             catch (Exception e)
             {

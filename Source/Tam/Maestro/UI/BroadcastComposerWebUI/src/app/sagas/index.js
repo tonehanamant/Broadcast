@@ -15,7 +15,7 @@ export default function* rootSaga() {
     postSaga.watchRequestPostFiltered(),
     postSaga.watchRequestUnlinkedFiltered(),
     postSaga.watchRequestArchivedFiltered(),
-    postSaga.watchRequestAssignPostDisplay(),
+    // postSaga.watchRequestAssignPostDisplay(),
     postSaga.watchRequestPostClientScrubbing(),
     postSaga.watchRequestUniqueIscis(),
     postSaga.watchRequestScrubbingDataFiltered(),
@@ -73,5 +73,29 @@ export default function* rootSaga() {
 
     trackerSaga.watchUploadTrackerFile(),
     trackerSaga.watchUploadTrackerFileSuccess(),
+
+    trackerSaga.watchRequestTracker(),
+    trackerSaga.watchRequestTrackerFiltered(),
+    trackerSaga.watchRequestUnlinkedFiltered(),
+    trackerSaga.watchRequestArchivedFiltered(),
+    trackerSaga.watchRequestTrackerClientScrubbing(),
+    trackerSaga.watchRequestUniqueIscis(),
+    trackerSaga.watchRequestScrubbingDataFiltered(),
+    trackerSaga.watchRequestClearScrubbingFiltersList(),
+    trackerSaga.watchRequestOverrideStatus(),
+    trackerSaga.watchSwapProposalDetail(),
+    trackerSaga.watchArchiveUnlinkedIsci(),
+    trackerSaga.watchRequestUniqueIscisSuccess(),
+    trackerSaga.watchRequestArchivedIscisSuccess(),
+    trackerSaga.watchLoadArchivedIscis(),
+    trackerSaga.watchLoadValidIscis(),
+    trackerSaga.watchMapUnlinkedIsci(),
+    trackerSaga.watchMapUnlinkedIsciSuccess(),
+    trackerSaga.watchRescrubUnlinkedIsci(),
+    trackerSaga.watchCloseUnlinkedIsciModal(),
+    trackerSaga.watchUndoArchivedIscis(),
+    trackerSaga.watchUndoScrubStatus(),
+    trackerSaga.watchUndoScrubStatusSuccess(),
+
   ];
 }

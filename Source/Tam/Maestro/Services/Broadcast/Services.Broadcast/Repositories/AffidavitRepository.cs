@@ -16,8 +16,8 @@ namespace Services.Broadcast.Repositories
 {
     public interface IAffidavitRepository : IDataRepository
     {
-        int SaveAffidavitFile(AffidavitFile affidavitFile);
-        AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
+        int SaveAffidavitFile(ScrubbingFile affidavitFile);
+        ScrubbingFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false);
         List<ProposalDetailPostScrubbing> GetProposalDetailPostScrubbing(int proposalId, ScrubbingStatus? status);
 
         /// <summary>
@@ -33,11 +33,11 @@ namespace Services.Broadcast.Repositories
         void SaveValidationObject(List<WWTVOutboundFileValidationResult> model);
         List<MyEventsReportData> GetMyEventsReportData(int proposalId);
         void OverrideScrubStatus(List<int> ClientScrubIds, ScrubbingStatus overrideToStatus);
-        List<AffidavitFileDetail> GetAffidavitDetails(int proposalDetailId);
-        void RemoveAffidavitAudiences(List<AffidavitFileDetail> affidavitFileDetails);
-        void SaveAffidavitAudiences(List<AffidavitFileDetail> affidavitFileDetails);
-        List<AffidavitFileDetail> GetUnlinkedAffidavitDetailsByIsci(string isci);
-        void SaveScrubbedFileDetails(List<AffidavitFileDetail> affidavitFileDetails);
+        List<ScrubbingFileDetail> GetAffidavitDetails(int proposalDetailId);
+        void RemoveAffidavitAudiences(List<ScrubbingFileDetail> affidavitFileDetails);
+        void SaveAffidavitAudiences(List<ScrubbingFileDetail> affidavitFileDetails);
+        List<ScrubbingFileDetail> GetUnlinkedAffidavitDetailsByIsci(string isci);
+        void SaveScrubbedFileDetails(List<ScrubbingFileDetail> affidavitFileDetails);
 
         /// <summary>
         /// Undo the override status
@@ -50,7 +50,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="affidavitScrubbingIds">Affidavit Client scrubs ids</param>
         /// <returns>List of AffidavitFileDetail objects</returns>
-        List<AffidavitFileDetail> GetAffidavitDetailsByClientScrubIds(List<int> affidavitScrubbingIds);
+        List<ScrubbingFileDetail> GetAffidavitDetailsByClientScrubIds(List<int> affidavitScrubbingIds);
 
         /// <summary>
         /// Gets all override affidavit client scrubs based on ids
@@ -69,7 +69,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public int SaveAffidavitFile(AffidavitFile affidavitFile)
+        public int SaveAffidavitFile(ScrubbingFile affidavitFile)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -81,7 +81,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private affidavit_files _MapFromAffidavitFile(AffidavitFile affidavitFile)
+        private affidavit_files _MapFromAffidavitFile(ScrubbingFile affidavitFile)
         {
             var result = new affidavit_files
             {
@@ -90,13 +90,13 @@ namespace Services.Broadcast.Repositories
                 file_name = affidavitFile.FileName,
                 source_id = affidavitFile.SourceId,
                 status = (int)affidavitFile.Status,
-                affidavit_file_problems = affidavitFile.AffidavitFileProblems.Select(p => new affidavit_file_problems()
+                affidavit_file_problems = affidavitFile.FileProblems.Select(p => new affidavit_file_problems()
                 {
                     id = p.Id,
                     affidavit_file_id = p.FileId,
                     problem_description = p.ProblemDescription
                 }).ToList(),
-                affidavit_file_details = affidavitFile.AffidavitFileDetails.Select(d => new affidavit_file_details
+                affidavit_file_details = affidavitFile.FileDetails.Select(d => new affidavit_file_details
                 {
                     air_time = d.AirTime,
                     original_air_date = d.OriginalAirDate,
@@ -114,15 +114,15 @@ namespace Services.Broadcast.Repositories
                     leadout_genre = d.LeadoutGenre,
                     leadin_program_name = d.LeadinProgramName,
                     leadout_program_name = d.LeadoutProgramName,
-                    leadin_end_time = d.LeadInEndTime,
-                    leadout_start_time = d.LeadOutStartTime,
+                    leadin_end_time = d.LeadInEndTime.Value,
+                    leadout_start_time = d.LeadOutStartTime.Value,
                     program_show_type = d.ShowType,
                     leadin_show_type = d.LeadInShowType,
                     leadout_show_type = d.LeadOutShowType,
                     adjusted_air_date = d.AdjustedAirDate,
                     archived = d.Archived,
-                    affidavit_client_scrubs = _MapFromAffidavitClientScrubs(d.AffidavitClientScrubs),
-                    affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(d.AffidavitFileDetailProblems),
+                    affidavit_client_scrubs = _MapFromAffidavitClientScrubs(d.ClientScrubs),
+                    affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(d.FileDetailProblems),
                     affidavit_file_detail_demographics = d.Demographics.Select(demo =>
                         new affidavit_file_detail_demographics
                         {
@@ -147,7 +147,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        private ICollection<affidavit_client_scrubs> _MapFromAffidavitClientScrubs(List<AffidavitClientScrub> affidavitClientScrubs)
+        private ICollection<affidavit_client_scrubs> _MapFromAffidavitClientScrubs(List<ClientScrub> affidavitClientScrubs)
         {
             var result = affidavitClientScrubs.Select(s => new affidavit_client_scrubs
             {
@@ -170,7 +170,7 @@ namespace Services.Broadcast.Repositories
                 status = (int)s.Status,
                 effective_isci = s.EffectiveIsci,
                 effective_client_isci = s.EffectiveClientIsci,
-                affidavit_client_scrub_audiences = s.AffidavitClientScrubAudiences.Select(a =>
+                affidavit_client_scrub_audiences = s.ClientScrubAudiences.Select(a =>
                     new affidavit_client_scrub_audiences
                     {
                         audience_id = a.AudienceId,
@@ -180,7 +180,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        public void SaveScrubbedFileDetails(List<AffidavitFileDetail> affidavitFileDetails)
+        public void SaveScrubbedFileDetails(List<ScrubbingFileDetail> affidavitFileDetails)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -190,14 +190,14 @@ namespace Services.Broadcast.Repositories
                         var detail = context.affidavit_file_details.Find(affidavitFileDetail.Id);
                         context.affidavit_file_detail_problems.RemoveRange(detail.affidavit_file_detail_problems);
                         context.affidavit_client_scrubs.RemoveRange(detail.affidavit_client_scrubs);
-                        detail.affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(affidavitFileDetail.AffidavitFileDetailProblems);
-                        detail.affidavit_client_scrubs = _MapFromAffidavitClientScrubs(affidavitFileDetail.AffidavitClientScrubs);
+                        detail.affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(affidavitFileDetail.FileDetailProblems);
+                        detail.affidavit_client_scrubs = _MapFromAffidavitClientScrubs(affidavitFileDetail.ClientScrubs);
                         context.SaveChanges();
                     }
                 });
         }
 
-        public AffidavitFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false)
+        public ScrubbingFile GetAffidavit(int affidavitId, bool includeScrubbingDetail = false)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -221,9 +221,9 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private AffidavitFile _MapToAffidavitFile(affidavit_files affidavitFile)
+        private ScrubbingFile _MapToAffidavitFile(affidavit_files affidavitFile)
         {
-            return new AffidavitFile
+            return new ScrubbingFile
             {
                 Id = affidavitFile.id,
                 FileName = affidavitFile.file_name,
@@ -231,16 +231,16 @@ namespace Services.Broadcast.Repositories
                 SourceId = affidavitFile.source_id,
                 Status = (FileProcessingStatusEnum)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
-                AffidavitFileProblems = affidavitFile.affidavit_file_problems.Select(p => new WWTVFileProblem()
+                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new ScrubbingFileProblem()
                 {
                     Id = p.id,
                     FileId = p.affidavit_file_id,
                     ProblemDescription = p.problem_description
                 }).ToList(),
-                AffidavitFileDetails = affidavitFile.affidavit_file_details.Select(d => new AffidavitFileDetail
+                FileDetails = affidavitFile.affidavit_file_details.Select(d => new ScrubbingFileDetail
                 {
                     Id = d.id,
-                    AffidavitFileId = d.affidavit_file_id,
+                    ScrubbingFileId = d.affidavit_file_id,
                     Station = d.station,
                     OriginalAirDate = d.original_air_date,
                     AdjustedAirDate = d.adjusted_air_date,
@@ -263,16 +263,16 @@ namespace Services.Broadcast.Repositories
                     EstimateId = d.estimate_id,
                     InventorySource = d.inventory_source.Value,
                     SpotCost = d.spot_cost,
-                    Demographics = d.affidavit_file_detail_demographics.Select(a => new WWTVDemographics()
+                    Demographics = d.affidavit_file_detail_demographics.Select(a => new ScrubbingDemographics()
                     {
                         AudienceId = a.audience_id.Value,
                         OvernightImpressions = a.overnight_impressions.Value,
                         OvernightRating = a.overnight_rating.Value
                     }).ToList(),
-                    AffidavitClientScrubs = d.affidavit_client_scrubs.Select(a => new AffidavitClientScrub
+                    ClientScrubs = d.affidavit_client_scrubs.Select(a => new ClientScrub
                     {
                         Id = a.id,
-                        AffidavitFileDetailId = a.affidavit_file_detail_id,
+                        ScrubbingFileDetailId = a.affidavit_file_detail_id,
                         ProposalVersionDetailQuarterWeekId = a.proposal_version_detail_quarter_week_id,
                         MatchProgram = a.match_program,
                         MatchGenre = a.match_genre,
@@ -299,10 +299,10 @@ namespace Services.Broadcast.Repositories
                         PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)a
                             .proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
                             .proposal_version_details.posting_playback_type,
-                        AffidavitClientScrubAudiences = a.affidavit_client_scrub_audiences.Select(sa =>
-                            new AffidavitClientScrubAudience
+                        ClientScrubAudiences = a.affidavit_client_scrub_audiences.Select(sa =>
+                            new ScrubbingFileAudiences
                             {
-                                AffidavitClientScrubId = sa.affidavit_client_scrub_id,
+                                ClientScrubId = sa.affidavit_client_scrub_id,
                                 AudienceId = sa.audience_id,
                                 Impressions = sa.impressions
                             }).ToList()
@@ -579,7 +579,7 @@ namespace Services.Broadcast.Repositories
             );
         }
 
-        public List<AffidavitFileDetail> GetAffidavitDetails(int proposalDetailId)
+        public List<ScrubbingFileDetail> GetAffidavitDetails(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -591,10 +591,10 @@ namespace Services.Broadcast.Repositories
                                             where proposalVersionDetail.id == proposalDetailId
                                             select affidavitFileScrub.affidavit_file_details);
 
-                    return affidavitDetails.Select(d => new AffidavitFileDetail
+                    return affidavitDetails.Select(d => new ScrubbingFileDetail
                     {
                         Id = d.id,
-                        AffidavitFileId = d.affidavit_file_id,
+                        ScrubbingFileId = d.affidavit_file_id,
                         Station = d.station,
                         OriginalAirDate = d.original_air_date,
                         AdjustedAirDate = d.adjusted_air_date,
@@ -617,10 +617,10 @@ namespace Services.Broadcast.Repositories
                         EstimateId = d.estimate_id,
                         InventorySource = d.inventory_source.Value,
                         SpotCost = d.spot_cost,
-                        AffidavitClientScrubs = d.affidavit_client_scrubs.Select(a => new AffidavitClientScrub
+                        ClientScrubs = d.affidavit_client_scrubs.Select(a => new ClientScrub
                         {
                             Id = a.id,
-                            AffidavitFileDetailId = a.affidavit_file_detail_id,
+                            ScrubbingFileDetailId = a.affidavit_file_detail_id,
                             ProposalVersionDetailQuarterWeekId = a.proposal_version_detail_quarter_week_id,
                             MatchProgram = a.match_program,
                             MatchGenre = a.match_genre,
@@ -653,14 +653,14 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void RemoveAffidavitAudiences(List<AffidavitFileDetail> affidavitFileDetails)
+        public void RemoveAffidavitAudiences(List<ScrubbingFileDetail> affidavitFileDetails)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
                     foreach (var affidavitFileDetail in affidavitFileDetails)
                     {
-                        foreach (var affidavitClientScrub in affidavitFileDetail.AffidavitClientScrubs)
+                        foreach (var affidavitClientScrub in affidavitFileDetail.ClientScrubs)
                         {
                             var audiences = context.affidavit_client_scrub_audiences.Where(x =>
                                 x.affidavit_client_scrub_id == affidavitClientScrub.Id);
@@ -673,17 +673,17 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void SaveAffidavitAudiences(List<AffidavitFileDetail> affidavitFileDetails)
+        public void SaveAffidavitAudiences(List<ScrubbingFileDetail> affidavitFileDetails)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
                     foreach (var affidavitFileDetail in affidavitFileDetails)
                     {
-                        foreach (var affidavitClientScrub in affidavitFileDetail.AffidavitClientScrubs)
+                        foreach (var affidavitClientScrub in affidavitFileDetail.ClientScrubs)
                         {
                             foreach (var affidavitClientScrubAudience in affidavitClientScrub
-                                .AffidavitClientScrubAudiences)
+                                .ClientScrubAudiences)
                             {
                                 context.affidavit_client_scrub_audiences.Add(new affidavit_client_scrub_audiences
                                 {
@@ -699,7 +699,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<AffidavitFileDetail> GetUnlinkedAffidavitDetailsByIsci(string isci)
+        public List<ScrubbingFileDetail> GetUnlinkedAffidavitDetailsByIsci(string isci)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -713,12 +713,12 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private List<AffidavitFileDetail> _MapToAffidavitDetail(List<affidavit_file_details> affidavitDetails)
+        private List<ScrubbingFileDetail> _MapToAffidavitDetail(List<affidavit_file_details> affidavitDetails)
         {
-            return affidavitDetails.Select(d => new AffidavitFileDetail
+            return affidavitDetails.Select(d => new ScrubbingFileDetail
             {
                 Id = d.id,
-                AffidavitFileId = d.affidavit_file_id,
+                ScrubbingFileId = d.affidavit_file_id,
                 Station = d.station,
                 OriginalAirDate = d.original_air_date,
                 AdjustedAirDate = d.adjusted_air_date,
@@ -749,7 +749,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="affidavitScrubbingIds">Affidavit Client scrubs ids</param>
         /// <returns>List of AffidavitFileDetail objects</returns>
-        public List<AffidavitFileDetail> GetAffidavitDetailsByClientScrubIds(List<int> affidavitScrubbingIds)
+        public List<ScrubbingFileDetail> GetAffidavitDetailsByClientScrubIds(List<int> affidavitScrubbingIds)
         {
             return _InReadUncommitedTransaction(
                context =>

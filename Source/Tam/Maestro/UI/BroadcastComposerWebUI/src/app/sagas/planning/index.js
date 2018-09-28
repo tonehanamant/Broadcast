@@ -6,7 +6,7 @@ import FuzzySearch from 'fuzzy-search';
 import moment from 'moment';
 import _ from 'lodash';
 import { deployError, createAlert, toggleModal, setOverlayLoading } from 'Ducks/app/index';
-import { receiveFilteredPlanning } from 'Ducks/planning/index';
+import { receiveFilteredPlanning, setEstimatedId } from 'Ducks/planning/index';
 import * as appActions from 'Ducks/app/actionTypes';
 import * as planningActions from 'Ducks/planning/actionTypes';
 
@@ -1431,17 +1431,19 @@ export function* uploadSCXFile({ payload: params }) {
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
         id: 'uploadSCX',
-        loading: true },
+        loading: true,
+      },
       });
     const response = yield uploadSCXFile(params);
     const { status, data } = response;
-    yield put({
+    // see below finally
+   /*  yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
         id: 'uploadSCX',
         loading: false,
       },
-    });
+    }); */
     if (status !== 200) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
@@ -1478,6 +1480,7 @@ export function* uploadSCXFile({ payload: params }) {
         throw new Error();
       }
     }
+    yield put(setEstimatedId(params.ProposalVersionDetailId, params.EstimateId));
     yield call(uploadSCXFileSuccess);
   } catch (e) {
     if (e.response) {
@@ -1498,6 +1501,8 @@ export function* uploadSCXFile({ payload: params }) {
         },
       });
     }
+  } finally {
+    yield put(setOverlayLoading({ id: 'uploadSCX', loading: false }));
   }
 }
 export function* filterOpenMarketData(filters) {
