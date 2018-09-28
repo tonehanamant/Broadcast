@@ -1,0 +1,12 @@
+.remove-button {
+  background-color: transparent !important;
+  border: transparent !important;
+  padding: 0 !important;
+  font-size: 24px !important;
+  background-image: none !important;
+  box-shadow: unset;
+
+  > span {
+    color: red
+  }
+}

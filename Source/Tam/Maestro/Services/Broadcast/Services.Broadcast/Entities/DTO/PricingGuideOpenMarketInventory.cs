@@ -1,5 +1,4 @@
 ﻿using Services.Broadcast.Entities.OpenMarketInventory;
-using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -7,6 +6,10 @@ namespace Services.Broadcast.Entities.DTO
 {
     public class PricingGuideOpenMarketInventoryDto 
     {
+        public OpenMarketPricingGuideGridDisplayFilterDto DisplayFilter { get; set; } = new OpenMarketPricingGuideGridDisplayFilterDto();
+
+        public OpenMarketPricingGuideGridFilterDto Filter { get; set; } = new OpenMarketPricingGuideGridFilterDto();
+
         public List<PricingGuideOpenMarketInventory.PricingGuideMarket> Markets { get; set; } = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>();
     }
 
@@ -39,6 +42,8 @@ namespace Services.Broadcast.Entities.DTO
                 public class PricingGuideProgram
                 {
                     public int ProgramId { get; set; }
+                    public int ManifestDaypartId { get; set; }
+
                     public LookupDto Daypart { get; set; } = new LookupDto();
                     public string ProgramName { get; set; } 
                     public decimal BlendedCpm { get; set; }

@@ -8,7 +8,9 @@ import * as ACTIONS from './actionTypes.js';
 const initialState = {
   initialdata: {},
   planningProposals: [],
+  activeOpenMarketData: undefined,
   openMarketData: undefined,
+  hasOpenMarketData: false,
   openMarketLoading: false,
   openMarketLoaded: false,
   filteredPlanningProposals: [],
@@ -344,6 +346,8 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && (data.Data.Markets.length > 0),
+        activeOpenMarketData: data.Data,
         openMarketLoading: false,
         openMarketLoaded: true,
       };
@@ -362,6 +366,31 @@ export default function reducer(state = initialState, action) {
         openMarketLoading: false,
         openMarketLoaded: false,
         openMarketData: undefined,
+        activeOpenMarketData: undefined,
+        hasOpenMarketData: false,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.request: {
+      return {
+        ...state,
+        openMarketLoading: true,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.success: {
+      return {
+        ...state,
+        activeOpenMarketData: data.Data,
+        openMarketLoading: false,
+        openMarketLoaded: true,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.failure: {
+      return {
+        ...state,
+        openMarketLoading: false,
       };
     }
 
@@ -524,6 +553,10 @@ export const clearOpenMarketData = () => ({
 
 export const uploadSCXFile = params => ({
   type: ACTIONS.SCX_FILE_UPLOAD.request,
+  payload: params,
+});
+export const filterOpenMarketData = params => ({
+  type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
   payload: params,
 });
 

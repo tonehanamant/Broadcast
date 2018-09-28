@@ -261,6 +261,8 @@
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
+    <Compile Include="Entities\DTO\OpenMarketPricingGuideGridDisplayFilterDto.cs" />
+    <Compile Include="Entities\DTO\OpenMarketPricingGuideGridFilterDto.cs" />
     <Compile Include="Entities\Enums\FileProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\FileDetailProblemTypeEnum.cs" />
     <Compile Include="Entities\MarketCoverage.cs" />
@@ -283,6 +285,7 @@
     <Compile Include="Entities\StationInventorySpots.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExcelWorksheetExtensions.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
