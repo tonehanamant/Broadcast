@@ -40,15 +40,13 @@
           "Contain": 1,
           "Genre": {
             "Display": "Entertainment"
-          },
-          "Id": 9896
+          }
         },
         {
           "Contain": 1,
           "Genre": {
             "Display": "Auction"
-          },
-          "Id": 9897
+          }
         }
       ],
       "GoalBudget": null,
