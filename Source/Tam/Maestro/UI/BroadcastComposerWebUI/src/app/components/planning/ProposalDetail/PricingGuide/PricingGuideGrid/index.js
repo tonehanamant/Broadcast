@@ -9,13 +9,14 @@ import { generateData, rowColors, columns } from './util';
 
 class PricingGuideGrid extends Component {
   render() {
-    const { activeOpenMarketData, openMarketLoading } = this.props;
+    const { activeOpenMarketData, openMarketLoading, hasOpenMarketData } = this.props;
     const data = generateData(activeOpenMarketData.Markets);
     return (
       // <Well bsSize="small">
       <div>
       <PricingGuideGridHeader
         activeOpenMarketData={activeOpenMarketData}
+        hasOpenMarketData={hasOpenMarketData}
       />
       <Table
         data={data}
@@ -36,6 +37,7 @@ class PricingGuideGrid extends Component {
 
 PricingGuideGrid.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
+  hasOpenMarketData: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
 };
 

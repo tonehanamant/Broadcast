@@ -35,14 +35,15 @@ class PricingGuideGridHeader extends Component {
   }
 
   applyFilters(filterObject) {
-    console.log('header apply filters', filterObject);
+    // console.log('header apply filters', filterObject);
     this.props.filterOpenMarketData(filterObject);
   }
 
   render() {
-    // const { unlinkedIscisLength } = this.props;
-    const hasData = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Markets.length;
-    // todo formalize so can check modal specific filters active
+    // const hasData = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Markets.length;
+    // change to determine by master data set - not active which could be empty by filter
+    const hasData = this.props.hasOpenMarketData;
+    // FOR INDICATOR - TODO formalize so can check modal specific filters active
     const hasActiveModalFilter = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Filter && this.props.activeOpenMarketData.Filter.ProgramNames.length;
     return (
       <div>
@@ -94,6 +95,7 @@ class PricingGuideGridHeader extends Component {
 
 PricingGuideGridHeader.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
+  hasOpenMarketData: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   filterOpenMarketData: PropTypes.func.isRequired,
 };

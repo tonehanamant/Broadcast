@@ -1511,7 +1511,6 @@ export function* filterOpenMarketData(filters) {
     yield put(setOverlayLoading({ id: 'openMarketFilter', loading: true }));
     const original = yield select(state => state.planning.openMarketData);
     const request = Object.assign({}, original, filters);
-    // console.log('filter request', request, original);
     return yield filterOpenMarketData(request);
   } finally {
       yield put(setOverlayLoading({ id: 'openMarketFilter', loading: false }));
