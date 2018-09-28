@@ -1,4 +1,10 @@
 ﻿{
+  "DisplayFilter": {
+    "ProgramNames": [
+      "Friends|Friends 2"
+    ]
+  },
+  "Filter": {},
   "Markets": [
     {
       "MarketCoverage": 1.01,
@@ -22,8 +28,9 @@
               "Genres": [],
               "Impressions": 2125796.25,
               "ImpressionsPerSpot": 2125796.25,
-              "ProgramId": 162233,
-              "ProgramName": "Friends",
+              "ManifestDaypartId": 213349,
+              "ProgramId": 162234,
+              "ProgramName": "Friends|Friends 2",
               "Spots": 0,
               "StationImpressions": 0.0
             }

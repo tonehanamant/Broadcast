@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Services.Broadcast.Repositories;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.OpenMarketInventory
@@ -10,6 +10,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
         {
             OpenMarkets = new List<OpenMarket>();
         }
+
         public int ProposalDetailId { get; set; }
         public int ProposalId { get; set; }
         public int Spots { get; set; }

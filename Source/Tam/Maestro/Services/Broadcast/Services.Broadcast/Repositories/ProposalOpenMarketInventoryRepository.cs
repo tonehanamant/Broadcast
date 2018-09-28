@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 
@@ -20,6 +22,10 @@ namespace Services.Broadcast.Repositories
         void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, int guaranteedAudienceId);
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
         Dictionary<int, List<station_inventory_manifest>> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds);
+        List<open_market_pricing_guide> GetProposalDetailPricingGuide(int proposalDetailId);
+        void SaveProposalDetailPricingGuide(int proposalDetailId,List<PricingGuideOpenMarketInventory.PricingGuideMarket> openMarketsPricingGuide);
+        void SaveProposalDetailPricingGuide(int proposalDetailId, List<open_market_pricing_guide> pricingGuides);
+        void DeleteProposalDetailPricingGuide(int proposalDetailId);
     }
 
     public class ProposalOpenMarketInventoryRepository : BroadcastRepositoryBase, IProposalOpenMarketInventoryRepository
@@ -38,13 +44,13 @@ namespace Services.Broadcast.Repositories
                         join q in context.proposal_version_detail_quarters on w.proposal_version_quarter_id equals q.id
                         where q.proposal_version_detail_id == proposalVersionDetailId
                         select new OpenMarketInventoryAllocation
-                            {
-                                Id = a.id,
-                                ProposalVersionDetailId = proposalVersionDetailId,
-                                ManifestId = a.station_inventory_manifest_id,
-                                MediaWeekId = a.media_week_id,
-                                ProposalVersionDetailQuarterWeekId = a.proposal_version_detail_quarter_week_id,
-                            }).ToList();
+                        {
+                            Id = a.id,
+                            ProposalVersionDetailId = proposalVersionDetailId,
+                            ManifestId = a.station_inventory_manifest_id,
+                            MediaWeekId = a.media_week_id,
+                            ProposalVersionDetailQuarterWeekId = a.proposal_version_detail_quarter_week_id,
+                        }).ToList();
             });
         }
 
@@ -97,7 +103,7 @@ namespace Services.Broadcast.Repositories
                             });
 
                             context.station_inventory_spots.Add(programAllocation);
-                        }                       
+                        }
                     }
                     context.SaveChanges();
                 });
@@ -117,7 +123,7 @@ namespace Services.Broadcast.Repositories
                 var matchingAllocations =
                     c.station_inventory_spots.Where(
                         spfp =>
-                            proposalVersionDetailQuarterWeekIds.Contains(spfp.proposal_version_detail_quarter_week_id ?? 0) && 
+                            proposalVersionDetailQuarterWeekIds.Contains(spfp.proposal_version_detail_quarter_week_id ?? 0) &&
                             programIds.Contains(spfp.station_inventory_manifest_id));
 
                 c.station_inventory_spots.RemoveRange(matchingAllocations);
@@ -138,6 +144,72 @@ namespace Services.Broadcast.Repositories
                 return list.GroupBy(sis => sis.proposal_version_detail_quarter_week_id.Value)
                             .ToDictionary(k => k.Key, v => v.Select(m => m.station_inventory_manifest).ToList());
             });
+        }
+
+        public List<open_market_pricing_guide> GetProposalDetailPricingGuide(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(c =>
+            {
+                var rawPricingGuide =
+                    c.open_market_pricing_guide
+                            .Include(pg => pg.market.market_coverages)
+                            .Include(pg => pg.station)
+                            .Include(pg => pg.station_inventory_manifest_dayparts.daypart)
+                        .Where(pg => pg.proposal_version_detail_id == proposalDetailId);
+                return rawPricingGuide.ToList();
+            });
+        }
+
+        public void SaveProposalDetailPricingGuide(int proposalDetailId, List<open_market_pricing_guide> pricingGuides)
+        {
+            _InReadUncommitedTransaction(c =>
+            {
+                var proposalDetailPricingGuides =
+                    c.open_market_pricing_guide.Where(g => g.proposal_version_detail_id == proposalDetailId);
+
+                c.open_market_pricing_guide.RemoveRange(proposalDetailPricingGuides);
+
+                c.open_market_pricing_guide.AddRange(pricingGuides);
+                c.SaveChanges();
+            });
+        }
+
+        public void DeleteProposalDetailPricingGuide(int proposalDetailId)
+        {
+            _InReadUncommitedTransaction(c =>
+            {
+                var proposalDetailPricingGuides =
+                    c.open_market_pricing_guide.Where(g => g.proposal_version_detail_id == proposalDetailId);
+                c.open_market_pricing_guide.RemoveRange(proposalDetailPricingGuides);
+                c.SaveChanges();
+            });
+
+        }
+
+        public void SaveProposalDetailPricingGuide(int proposalDetailId,
+            List<PricingGuideOpenMarketInventory.PricingGuideMarket> openMarketPricingGuides)
+        {
+            var pricingGuides = openMarketPricingGuides
+                .SelectMany(m => m.Stations
+                    .SelectMany(s => s.Programs
+                        .Select(p => new open_market_pricing_guide()
+                        {
+                            proposal_version_detail_id = proposalDetailId,
+                            market_code = (short) m.MarketId,
+                            station_code = (short) s.StationCode,
+                            station_inventory_manifest_dayparts_id = p.ManifestDaypartId,
+                            blended_cpm = p.BlendedCpm,
+                            spots = p.Spots,
+                            impressions_per_spot = p.ImpressionsPerSpot,
+                            impressions = p.Impressions,
+                            station_impressions = p.StationImpressions,
+                            cost_per_spot = p.CostPerSpot,
+                            cost = p.Cost
+                        })
+                    )
+                );
+
+            SaveProposalDetailPricingGuide(proposalDetailId, pricingGuides.ToList());
         }
     }
 }

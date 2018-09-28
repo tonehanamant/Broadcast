@@ -64,3 +64,4 @@ export const FILTERED_PLANNING_PROPOSALS = createAction('FILTERED_PLANNING_PROPO
 export const RERUN_POST_SCRUBING = createAction('RERUN_POST_SCRUBING');
 export const LOAD_OPEN_MARKET_DATA = createAction('LOAD_OPEN_MARKET_DATA');
 export const SCX_FILE_UPLOAD = createAction('SCX_FILE_UPLOAD');
+export const FILTER_OPEN_MARKET_DATA = createAction('FILTER_OPEN_MARKET_DATA');
