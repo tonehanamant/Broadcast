@@ -2,9 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -30,13 +28,6 @@ namespace Services.Broadcast.Repositories
         FileDetailFilterResult<BvsFileDetail> FilterOutExistingDetails(List<BvsFileDetail> newDetails);
         List<BvsFileSummary> GetBvsFileSummaries();
         void DeleteById(int bvsFileId);
-
-        /// <summary>
-        /// Returns a list of BvsFileDetails filtered by estimate ids
-        /// </summary>
-        /// <param name="estimateIds">List of estimate ids</param>
-        /// <returns>List of BvsFileDetails</returns>
-        List<BvsFileDetail> GetBvsFileDetailsByEstimateIds(IEnumerable<int> estimateIds);
     }
 
     public class BvsRepository : BroadcastRepositoryBase, IBvsRepository
@@ -541,19 +532,6 @@ namespace Services.Broadcast.Repositories
                     var bvsFile = context.bvs_files.Single(x => x.id == bvsFileId);
                     context.bvs_files.Remove(bvsFile);
                     context.SaveChanges();
-                });
-        }
-
-        public List<BvsFileDetail> GetBvsFileDetailsByEstimateIds(IEnumerable<int> estimateIds)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return context.bvs_file_details
-                        .Where(d => estimateIds.Contains(d.estimate_id))
-                        .ToList()
-                        .Select(_MapFromBvsFileDetail)
-                        .ToList();
                 });
         }
     }

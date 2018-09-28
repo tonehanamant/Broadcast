@@ -1,7 +1,6 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
@@ -27,6 +26,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="newDetails">Details to check</param>
         /// <returns>FileDetailFilterResult object</returns>
         FileDetailFilterResult<SpotTrackerFileDetail> FilterOutExistingDetails(List<SpotTrackerFileDetail> newDetails);
+
+        /// <summary>
+        /// Returns a list of SpotTrackerFileDetails filtered by estimate ids
+        /// </summary>
+        /// <param name="estimateIds">List of estimate ids</param>
+        /// <returns>List of SpotTrackerFileDetails</returns>
+        List<SpotTrackerFileDetail> GetSpotTrackerFileDetailsByEstimateIds(IEnumerable<int> estimateIds);
     }
 
     public class SpotTrackerRepository : BroadcastRepositoryBase, ISpotTrackerRepository
@@ -109,16 +115,16 @@ namespace Services.Broadcast.Repositories
                     {
                         if (existingDetail == null)
                         {
-                            result.New.Add(_MapFromBvsFileDetail(pair.newDetail));
+                            result.New.Add(_MapFromSpotTrackerFileDetail(pair.newDetail));
                         }
                         else if (existingDetail.program_name == pair.newDetail.program_name)
                         {
-                            result.Ignored.Add(_MapFromBvsFileDetail(pair.newDetail));
+                            result.Ignored.Add(_MapFromSpotTrackerFileDetail(pair.newDetail));
                         }
                         else if (existingDetail.program_name != pair.newDetail.program_name)
                         {
                             existingDetail.program_name = pair.newDetail.program_name;
-                            result.Updated.Add(_MapFromBvsFileDetail(pair.newDetail));
+                            result.Updated.Add(_MapFromSpotTrackerFileDetail(pair.newDetail));
                         }
                         context.SaveChanges();
                     }
@@ -180,7 +186,7 @@ namespace Services.Broadcast.Repositories
             }).ToList();
         }
 
-        private SpotTrackerFileDetail _MapFromBvsFileDetail(spot_tracker_file_details detail)
+        private SpotTrackerFileDetail _MapFromSpotTrackerFileDetail(spot_tracker_file_details detail)
         {
             return new SpotTrackerFileDetail
             {
@@ -213,6 +219,19 @@ namespace Services.Broadcast.Repositories
                 RelType = detail.rel_type,
                 Sid = detail.sid
             };
+        }
+
+        public List<SpotTrackerFileDetail> GetSpotTrackerFileDetailsByEstimateIds(IEnumerable<int> estimateIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.spot_tracker_file_details
+                        .Where(d => estimateIds.Contains(d.estimate_id))
+                        .ToList()
+                        .Select(_MapFromSpotTrackerFileDetail)
+                        .ToList();
+                });
         }
     }
 }

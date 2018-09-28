@@ -3,59 +3,20 @@
     {
       "Weeks": [
         {
-          "MediaWeekId": 640,
-          "StartDate": "2016-03-28T00:00:00",
+          "MediaWeekId": 767,
+          "StartDate": "2018-09-03T00:00:00",
           "StationSpotsValues": [
             {
               "Affiliate": "NBC",
-              "Market": "New York",
-              "SpotsDelivered": 0,
-              "SpotsOrdered": 75,
-              "Station": "WNBC"
-            }
-          ]
-        },
-        {
-          "MediaWeekId": 641,
-          "StartDate": "2016-04-04T00:00:00",
-          "StationSpotsValues": [
-            {
-              "Affiliate": "NBC",
-              "Market": "New York",
-              "SpotsDelivered": 0,
-              "SpotsOrdered": 71,
-              "Station": "WNBC"
-            }
-          ]
-        },
-        {
-          "MediaWeekId": 642,
-          "StartDate": "2016-04-11T00:00:00",
-          "StationSpotsValues": [
-            {
-              "Affiliate": "NBC",
-              "Market": "New York",
-              "SpotsDelivered": 2,
-              "SpotsOrdered": 67,
-              "Station": "WNBC"
-            }
-          ]
-        },
-        {
-          "MediaWeekId": 643,
-          "StartDate": "2016-04-18T00:00:00",
-          "StationSpotsValues": [
-            {
-              "Affiliate": "NBC",
-              "Market": "New York",
-              "SpotsDelivered": 0,
-              "SpotsOrdered": 42,
-              "Station": "WNBC"
+              "Market": "Atlanta",
+              "SpotsDelivered": 5,
+              "SpotsOrdered": 555,
+              "Station": "WXIA"
             }
           ]
         }
       ]
     }
   ],
-  "Name": "Proposal Test"
+  "Name": "BCOP-3367"
 }
