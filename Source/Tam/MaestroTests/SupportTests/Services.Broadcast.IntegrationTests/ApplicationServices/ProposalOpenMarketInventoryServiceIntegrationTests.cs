@@ -1784,5 +1784,78 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
             }
         }
-   }
+
+        [Test]
+        public void MatchesProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedProgramNames = dto.DisplayFilter.ProgramNames
+                                            .Where((name, index) => index == 0)
+                                            .ToList();
+            dto.Filter.ProgramNames = expectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWithExpectedNames = result.Markets
+                                                               .SelectMany(m => m.Stations)
+                                                               .SelectMany(s => s.Programs)
+                                                               .Select(p => p.ProgramName)
+                                                               .All(p => expectedProgramNames.Contains(p));
+
+            Assert.IsTrue(resultHasProgramsOnlyWithExpectedNames);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                  .SelectMany(m => m.Stations)
+                                                  .SelectMany(s => s.Programs)
+                                                  .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
+        }
+
+        [Test]
+        public void TotalsAreUpdatedWhenApplyingFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var marketBeforeFiltering = dto.Markets.First();
+            var totalCostBeforeFiltering = marketBeforeFiltering.TotalCost;
+            var totalImpressionsBeforeFiltering = marketBeforeFiltering.TotalImpressions;
+
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var marketAfterFiltering = result.Markets.First();
+            var totalCostAfterFiltering = marketBeforeFiltering.TotalCost;
+            var totalImpressionsAfterFiltering = marketBeforeFiltering.TotalImpressions;
+
+            Assert.AreNotEqual(totalCostBeforeFiltering, totalCostAfterFiltering);
+            Assert.AreNotEqual(totalImpressionsBeforeFiltering, totalImpressionsAfterFiltering);
+        }
+    }
 }
