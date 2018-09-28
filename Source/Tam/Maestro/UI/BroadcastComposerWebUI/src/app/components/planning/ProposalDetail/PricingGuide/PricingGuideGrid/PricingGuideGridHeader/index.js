@@ -43,8 +43,10 @@ class PricingGuideGridHeader extends Component {
     // const hasData = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Markets.length;
     // change to determine by master data set - not active which could be empty by filter
     const hasData = this.props.hasOpenMarketData;
+    const { activeOpenMarketData, toggleModal } = this.props;
     // FOR INDICATOR - TODO formalize so can check modal specific filters active
-    const hasActiveModalFilter = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Filter && this.props.activeOpenMarketData.Filter.ProgramNames.length;
+    const hasActiveModalFilter = activeOpenMarketData && activeOpenMarketData.Filter
+      && activeOpenMarketData.Filter.ProgramNames && activeOpenMarketData.Filter.ProgramNames.length;
     return (
       <div>
         <Row style={{ marginTop: '10px' }}>
@@ -84,8 +86,8 @@ class PricingGuideGridHeader extends Component {
           </Col>
         </Row>
         <PricingGuideFilterModal
-          toggleModal={this.props.toggleModal}
-          activeOpenMarketData={this.props.activeOpenMarketData}
+          toggleModal={toggleModal}
+          activeOpenMarketData={activeOpenMarketData}
           applyFilters={this.applyFilters}
         />
     </div>
