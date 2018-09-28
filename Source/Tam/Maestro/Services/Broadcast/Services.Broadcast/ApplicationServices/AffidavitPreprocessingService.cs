@@ -25,7 +25,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">User processing the files</param>
         /// <returns>List of OutboundAffidavitFileValidationResultDto objects</returns>
         List<WWTVOutboundFileValidationResult> ProcessFiles(string userName);
-        List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filepathList, string userName);        
+        List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filepathList, string userName);
     }
 
     public class AffidavitPreprocessingService : IAffidavitPreprocessingService
@@ -85,28 +85,33 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Creates and uploads a zip archive to WWTV FTP server
+        /// Creates and uploads zip archives to WWTV FTP server
         /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the valid files to be sent</param>
+        /// <param name="files">List of file paths objects representing the valid files to be sent</param>
         private void _CreateAndUploadZipArchiveToWWTV(List<string> filePaths)
         {
-            string zipFileName = WWTVSharedNetworkHelper.GetLocalErrorFolder();
-            if (!zipFileName.EndsWith("\\"))
-                zipFileName += "\\";
-            zipFileName += "Post_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
-            _FileService.CreateZipArchive(filePaths, zipFileName);
-            if (_FileService.Exists(zipFileName))
-            {
-                _UploadZipToWWTV(zipFileName);
-                _FileService.Delete(zipFileName);
-            }
+            string zipPath = WWTVSharedNetworkHelper.GetLocalErrorFolder();
+            if (!zipPath.EndsWith("\\"))
+                zipPath += "\\";
+            string zipKeepingTracFileName = zipPath + "Post_KeepingTrac_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+            string zipAffidavitFileName = zipPath + "Post_Affidavit_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+
+            _FileService.CreateZipArchive(filePaths.Where(x=>Path.GetExtension(x).Equals(".xlsx")).ToList(), zipKeepingTracFileName);
+            _FileService.CreateZipArchive(filePaths.Where(x => Path.GetExtension(x).Equals(".csv")).ToList(), zipAffidavitFileName);
+
+            _UploadZipToWWTV(zipKeepingTracFileName);
+            _UploadZipToWWTV(zipAffidavitFileName);
         }
 
         private void _UploadZipToWWTV(string zipFileName)
         {
-            var sharedFolder = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder);
-            var uploadUrl = $"{sharedFolder}/{Path.GetFileName(zipFileName)}";
-            _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl, File.Delete);
+            if (_FileService.Exists(zipFileName))
+            {
+                var sharedFolder = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder);
+                var uploadUrl = $"{sharedFolder}/{Path.GetFileName(zipFileName)}";
+                _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl, File.Delete);
+                _FileService.Delete(zipFileName);
+            }
         }
 
         public List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filepathList, string userName)

@@ -96,11 +96,11 @@ namespace Services.Broadcast.ApplicationServices
 
                 try
                 {
-                    _WWTVFtpHelper.DeleteFiles(fullFtpPath);
+                    _WWTVFtpHelper.DeleteFiles(_WWTVFtpHelper.GetRemoteFullPath(fullFtpPath));
                 }
                 catch (Exception e)
                 {
-                    var errorDeletingFile = "Error deleting post log file from FTP site: " + fullFtpPath + "\r\n" + e;
+                    errorMessage = "Error deleting post log file from FTP site: " + fullFtpPath + "\r\n" + e;
                     _EmailProcessorService.ProcessAndSendTechError(fileName, errorMessage, fileContents);
                     continue;
                 }
