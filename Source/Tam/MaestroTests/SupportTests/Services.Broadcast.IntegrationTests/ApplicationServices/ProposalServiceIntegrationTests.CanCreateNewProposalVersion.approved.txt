@@ -35,20 +35,7 @@
           "StartDate": "2016-05-30T00:00:00"
         }
       ],
-      "GenreCriteria": [
-        {
-          "Contain": 2,
-          "Genre": {
-            "Display": "Comedy"
-          }
-        },
-        {
-          "Contain": 2,
-          "Genre": {
-            "Display": "Crime"
-          }
-        }
-      ],
+      "GenreCriteria": [],
       "GoalBudget": null,
       "GoalImpression": null,
       "HasPostingDataChanged": false,
@@ -62,20 +49,7 @@
       },
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "ProgramCriteria": [
-        {
-          "Contain": 2,
-          "Program": {
-            "Display": "Open Market Program"
-          }
-        },
-        {
-          "Contain": 2,
-          "Program": {
-            "Display": "Test Program"
-          }
-        }
-      ],
+      "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "ProprietaryPricing": [],

@@ -37,32 +37,16 @@
       ],
       "GenreCriteria": [
         {
-          "Contain": 2,
+          "Contain": 1,
           "Genre": {
-            "Display": "Comedy"
-          },
-          "Id": 7115
-        },
-        {
-          "Contain": 2,
-          "Genre": {
-            "Display": "Crime"
-          },
-          "Id": 7116
+            "Display": "Entertainment"
+          }
         },
         {
           "Contain": 1,
           "Genre": {
-            "Display": "Entertainment"
-          },
-          "Id": 7117
-        },
-        {
-          "Contain": 1,
-          "Genre": {
-            "Display": "Entertainment"
-          },
-          "Id": 7118
+            "Display": "Auction"
+          }
         }
       ],
       "GoalBudget": null,
@@ -78,20 +62,7 @@
       },
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "ProgramCriteria": [
-        {
-          "Contain": 2,
-          "Program": {
-            "Display": "Open Market Program"
-          }
-        },
-        {
-          "Contain": 2,
-          "Program": {
-            "Display": "Test Program"
-          }
-        }
-      ],
+      "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
       "ProprietaryPricing": [],

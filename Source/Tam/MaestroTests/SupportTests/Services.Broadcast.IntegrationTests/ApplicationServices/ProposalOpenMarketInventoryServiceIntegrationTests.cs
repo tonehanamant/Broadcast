@@ -1857,5 +1857,51 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.AreNotEqual(totalCostBeforeFiltering, totalCostAfterFiltering);
             Assert.AreNotEqual(totalImpressionsBeforeFiltering, totalImpressionsAfterFiltering);
         }
+
+        [Test]
+        public void OpenMarketInventoryService_ReturnsPrograms_ThatHaveSpecifiedGenres_WhenRefiningPrograms()
+        {
+            const int entertainmentGenreId = 15;
+            const int auctionGenreId = 5;
+
+            var request = new OpenMarketRefineProgramsRequest
+            {
+                ProposalDetailId = 7,
+                IgnoreExistingAllocation = true,
+                Criteria = new OpenMarketCriterion
+                {
+                    GenreSearchCriteria = new List<GenreCriteria>
+                    {
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Include,
+                            Genre = new LookupDto
+                            {
+                                Id = entertainmentGenreId,
+                                Display = "Entertainment"
+                            }
+                        },
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Include,
+                            Genre = new LookupDto
+                            {
+                                Id = auctionGenreId,
+                                Display = "Auction"
+                            }
+                        }
+                    }
+                }
+            };
+
+            var result = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+            var eachProgramHasAtLeastOneOfTheSecifiedGenres = result.Markets
+                                                     .SelectMany(x => x.Stations)
+                                                     .SelectMany(x => x.Programs)
+                                                     .All(p => p.Genres.Any(g => g.Id == entertainmentGenreId || g.Id == auctionGenreId));
+
+            Assert.True(eachProgramHasAtLeastOneOfTheSecifiedGenres);
+        }
     }
 }
