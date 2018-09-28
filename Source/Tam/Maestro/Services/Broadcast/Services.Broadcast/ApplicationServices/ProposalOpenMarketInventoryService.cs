@@ -147,13 +147,11 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x => x.Genre.Id).ToList();
             dto.Markets.ForEach(market => market.Stations.ForEach(station => station.Programs.ForEach(program =>
             {
-                foreach (var id in genreIdsToInclude)
+                if (genreIdsToInclude.Any() && program.Genres.All(g => !genreIdsToInclude.Contains(g.Id)))
                 {
-                    if (program.Genres.All(x => x.Id != id))
-                    {
-                        programsToExclude.Add(program);
-                    }
+                    programsToExclude.Add(program);
                 }
+                
 
                 foreach (var id in genreIdsToExclude)
                 {
