@@ -4,9 +4,7 @@
       "Friends"
     ]
   },
-  "Filter": {
-    "ProgramNames": []
-  },
+  "Filter": {},
   "Markets": [
     {
       "MarketCoverage": 1.01,

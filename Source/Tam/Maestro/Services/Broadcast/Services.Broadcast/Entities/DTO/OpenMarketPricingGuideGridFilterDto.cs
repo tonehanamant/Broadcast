@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.DTO
 {
     public class OpenMarketPricingGuideGridFilterDto
     {
-        public OpenMarketPricingGuideGridFilterDto()
-        {
-            ProgramNames = new List<string>();
-        }
-
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<string> ProgramNames { get; set; }
     }
 }
