@@ -981,26 +981,39 @@ namespace Services.Broadcast.ApplicationServices
                             CallLetters = s.First().Station.CallLetters,
                             LegacyCallLetters = s.First().Station.LegacyCallLetters,
                             StationCode = s.First().Station.StationCode,
-                            Programs = s.Select(p =>
-                                new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.
-                                    PricingGuideProgram
-                                    {
-                                        ProgramId = p.ManifestId,
-                                        ManifestDaypartId = p.ManifestDayparts.Single().Id,
-                                        ProgramName = p.ManifestDayparts.Single().ProgramName,
-                                        BlendedCpm = p.TargetCpm,
-                                        ImpressionsPerSpot = p.UnitImpressions,
-                                        StationImpressions = p.ProvidedUnitImpressions ?? 0,
-                                        Daypart = p.DayParts.Single(),
-                                        CostPerSpot = p.SpotCost,
-                                        Cost = p.TotalCost,
-                                        Impressions = p.TotalImpressions,
-                                        Spots = p.TotalSpots,
-                                    }).ToList()
+                        Programs = _GroupProgramsByDaypart(s)
                         }).ToList()
                 }).ToList();
 
             return inventoryMarkets;
+        }
+
+        private List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> _GroupProgramsByDaypart(IGrouping<short, ProposalProgramDto> programs)
+        {
+            var programsGroupedByDaypart = programs.GroupBy(s => s.DayParts.Single().Id);
+
+            return programsGroupedByDaypart.Select(p => new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram
+            {
+                ProgramId = p.First().ManifestId,
+                ProgramName = _GetProgramName(p),
+                BlendedCpm = p.Average(x => x.TargetCpm),
+                ImpressionsPerSpot = p.Average(x => x.UnitImpressions),
+                StationImpressions = p.Average(x => x.ProvidedUnitImpressions ?? 0),
+                Daypart = p.First().DayParts.Single(),
+                CostPerSpot = p.Average(x => x.SpotCost),
+                Cost = p.Average(x => x.TotalCost),
+                Impressions = p.Average(x => x.TotalImpressions),
+                Spots = p.Sum(x => x.TotalSpots),
+                ManifestDaypartId = p.First().ManifestDayparts.Single().Id,
+                Genres = p.SelectMany(x => x.Genres).ToList()
+            }).ToList();
+        }
+
+        private string _GetProgramName(IGrouping<int, ProposalProgramDto> p)
+        {
+            var distinctProgramNames = p.Select(x => x.ManifestDayparts.First().ProgramName).Distinct();
+
+            return string.Join("|", distinctProgramNames);
         }
 
         private static void _ApplyDefaultSortingForPricingGuide(PricingGuideOpenMarketInventory proposalInventory)
