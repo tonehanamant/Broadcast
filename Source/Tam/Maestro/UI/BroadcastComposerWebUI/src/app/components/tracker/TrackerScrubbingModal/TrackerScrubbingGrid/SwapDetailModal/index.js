@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { FormGroup, ControlLabel, Button, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import { toggleModal } from 'Ducks/app';
-import { swapProposalDetail } from 'Ducks/post';
+import { swapProposalDetail } from 'Ducks/tracker';
 import { getDateInFormat } from '../../../../../utils/dateFormatter';
 // import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit } from 'Ducks/postPrePosting';
 
@@ -47,7 +47,7 @@ export class SwapDetailModal extends Component {
     this.props.modal.properties.selections.forEach((scrub) => {
       scrubbingIds.push(scrub.ScrubbingClientId);
     });
-    const params = { ProposalDetailId: this.state.selectedDetailOption.Id, AffidavitScrubbingIds: scrubbingIds };
+    const params = { ProposalDetailId: this.state.selectedDetailOption.Id, ScrubbingIds: scrubbingIds };
     // console.log('save swap detail', params);
     this.props.swapProposalDetail(params);
   }
