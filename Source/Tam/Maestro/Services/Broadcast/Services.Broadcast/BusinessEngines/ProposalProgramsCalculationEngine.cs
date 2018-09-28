@@ -51,6 +51,9 @@ namespace Services.Broadcast.BusinessEngines
 
         void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
         void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
+
+        decimal CalculateSpotCost(int spots, decimal spotCost);
+        double CalculateSpotImpressions(int spots, double unitImpressions);
     }
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
@@ -307,10 +310,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-                if (program.TotalSpots == 0)
-                    program.TotalCost = program.SpotCost;
-                else
-                    program.TotalCost = program.SpotCost * program.TotalSpots;
+                program.TotalCost = CalculateSpotCost(program.TotalSpots, program.SpotCost);
             }
         }
 
@@ -318,11 +318,30 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-                if (program.TotalSpots == 0)
-                    program.TotalImpressions = program.UnitImpressions;
-                else
-                    program.TotalImpressions = program.UnitImpressions * program.TotalSpots;
+                program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.UnitImpressions);
             }
+        }
+
+        public decimal CalculateSpotCost(int spots, decimal spotCost)
+        {
+            decimal totalSpotCost = 0;
+            if (spots == 0)
+                totalSpotCost = spotCost;
+            else
+                totalSpotCost = spotCost * spots;
+
+            return totalSpotCost;
+        }
+
+        public double  CalculateSpotImpressions(int spots,double unitImpressions)
+        {
+            double totalImpressions = 0;
+            if (spots == 0)
+                totalImpressions = unitImpressions;
+            else
+                totalImpressions = unitImpressions * spots;
+
+            return totalImpressions;
         }
     }
 }

@@ -28,6 +28,7 @@
               "Genres": [],
               "Impressions": 2125796.25,
               "ImpressionsPerSpot": 2125796.25,
+              "ManifestDaypartId": 213348,
               "ProgramId": 162233,
               "ProgramName": "Friends",
               "Spots": 0,

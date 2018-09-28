@@ -1,7 +1,7 @@
 ﻿{
   "DisplayFilter": {
     "ProgramNames": [
-      "Friends|Friends 2"
+      "Friends"
     ]
   },
   "Filter": {},
@@ -19,28 +19,28 @@
           "Programs": [
             {
               "BlendedCpm": 0.01,
-              "Cost": 25.0000,
+              "Cost": 575.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 6AM-6PM",
                 "Id": 12
               },
               "Genres": [],
-              "Impressions": 2125796.25,
+              "Impressions": 48893313.75,
               "ImpressionsPerSpot": 2125796.25,
-              "ManifestDaypartId": 213349,
-              "ProgramId": 162234,
-              "ProgramName": "Friends|Friends 2",
-              "Spots": 0,
+              "ManifestDaypartId": 213348,
+              "ProgramId": 162233,
+              "ProgramName": "Friends",
+              "Spots": 23,
               "StationImpressions": 0.0
             }
           ],
           "StationCode": 5316
         }
       ],
-      "TotalCost": 25.0000,
-      "TotalImpressions": 2125796.25,
-      "TotalSpots": 0,
+      "TotalCost": 575.0000,
+      "TotalImpressions": 48893313.75,
+      "TotalSpots": 23,
       "TotalStationImpressions": 0.0
     }
   ]
