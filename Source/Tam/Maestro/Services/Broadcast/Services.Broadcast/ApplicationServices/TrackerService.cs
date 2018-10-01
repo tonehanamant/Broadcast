@@ -85,7 +85,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IProposalRepository _ProposalRepository;
         private readonly IProposalBuyRepository _ProposalBuyRepository;
-        private readonly IBvsRepository _BvsRepository;
+        private readonly ISpotTrackerRepository _SpotTrackerRepository;
         private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
 
         private readonly string _CsvFileExtension = ".csv";
@@ -123,7 +123,7 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _ProposalBuyRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
-            _BvsRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>();
+            _SpotTrackerRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotTrackerRepository>();
             _MediaMonthAndWeekAggregateRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IMediaMonthAndWeekAggregateRepository>();
         }
 
@@ -906,18 +906,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             var proposalBuys = report.Details.Select(x => x.ProposalBuyFile);
             var estimateIds = proposalBuys.Select(x => x.EstimateId);
-            var bvsFileDetails = _BvsRepository.GetBvsFileDetailsByEstimateIds(estimateIds);
+            var spotTrackerFileDetails = _SpotTrackerRepository.GetSpotTrackerFileDetailsByEstimateIds(estimateIds);
 
             foreach (var reportDetail in report.Details)
             {
-                reportDetail.Weeks = _GetWeeklySpotsDataForReportDetail(reportDetail.ProposalBuyFile, bvsFileDetails);
+                reportDetail.Weeks = _GetWeeklySpotsDataForReportDetail(reportDetail.ProposalBuyFile, spotTrackerFileDetails);
             }
         }
 
-        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForReportDetail(ProposalBuyFile buy, IEnumerable<BvsFileDetail> bvsFileDetails)
+        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForReportDetail(ProposalBuyFile buy, IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
         {
-            var bvsFileDetailsByEstimateId = bvsFileDetails.Where(x => x.EstimateId == buy.EstimateId);
-            var deliveredSpotsData = _GetDeliveredSpotsData(bvsFileDetailsByEstimateId);
+            var spotTrackerFileDetailsByEstimateId = spotTrackerFileDetails.Where(x => x.EstimateId == buy.EstimateId);
+            var deliveredSpotsData = _GetDeliveredSpotsData(spotTrackerFileDetailsByEstimateId);
 
             return buy.Details
                 .SelectMany(x => x.Weeks, (detail, week) => new
@@ -959,15 +959,15 @@ namespace Services.Broadcast.ApplicationServices
                 ?.DeliveredSpotsValueForStations.SingleOrDefault(x => x.Station.Equals(station, StringComparison.InvariantCultureIgnoreCase))?.Spots ?? 0;
         }
 
-        private IEnumerable<DeliveredSpotsValueForStationsForWeek> _GetDeliveredSpotsData(IEnumerable<BvsFileDetail> bvsFileDetails)
+        private IEnumerable<DeliveredSpotsValueForStationsForWeek> _GetDeliveredSpotsData(IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
         {
             var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
-            var bvsFileDetailsGroupedByMediaWeek = bvsFileDetails.GroupBy(x => mediaMonthAggregate.GetMediaWeekContainingDate(x.DateAired).Id);
+            var spotTrackerFileDetailsGroupedByMediaWeek = spotTrackerFileDetails.GroupBy(x => mediaMonthAggregate.GetMediaWeekContainingDate(x.DateAired).Id);
 
-            return bvsFileDetailsGroupedByMediaWeek.Select(bvsFileDetailsForMediaWeek => new DeliveredSpotsValueForStationsForWeek
+            return spotTrackerFileDetailsGroupedByMediaWeek.Select(spotTrackerFileDetailsForMediaWeek => new DeliveredSpotsValueForStationsForWeek
             {
-                MediaWeekId = bvsFileDetailsForMediaWeek.Key,
-                DeliveredSpotsValueForStations = bvsFileDetailsForMediaWeek
+                MediaWeekId = spotTrackerFileDetailsForMediaWeek.Key,
+                DeliveredSpotsValueForStations = spotTrackerFileDetailsForMediaWeek
                         .GroupBy(x => x.Station, StringComparer.InvariantCultureIgnoreCase)
                         .Select(x => new DeliveredSpotsValueForStationsForWeek.DeliveredSpotsValueForStation
                         {

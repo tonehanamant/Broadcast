@@ -15,10 +15,11 @@ const isActiveDialog = (detail, modal) => (
   modal && detail && modal.properties.detailId === detail.Id && modal.active
 );
 
-const mapStateToProps = ({ app: { modals: { pricingGuide: modal } }, planning: { proposalEditForm, openMarketData, openMarketLoading, openMarketLoaded } }) => ({
+const mapStateToProps = ({ app: { modals: { pricingGuide: modal } }, planning: { proposalEditForm, activeOpenMarketData, hasOpenMarketData, openMarketLoading, openMarketLoaded } }) => ({
   modal,
   proposalEditForm,
-  openMarketData,
+  activeOpenMarketData,
+  hasOpenMarketData,
   openMarketLoading,
   openMarketLoaded,
 });
@@ -405,7 +406,7 @@ class PricingGuide extends Component {
   }
 
   render() {
-    const { modal, detail, isReadOnly, openMarketData, openMarketLoading, openMarketLoaded } = this.props;
+    const { modal, detail, isReadOnly, activeOpenMarketData, hasOpenMarketData, openMarketLoading, openMarketLoaded } = this.props;
     const show = isActiveDialog(detail, modal);
     // const labelStyle = { fontSize: '11px', fontWeight: 'normal', color: '#333' };
     const { isInventoryEditing, isProprietaryEditing, isOpenMarketEditing } = this.state;
@@ -893,10 +894,11 @@ class PricingGuide extends Component {
                   </div>
                   </Col>
                 </Row>
-                {openMarketLoaded && openMarketData &&
+                {openMarketLoaded && activeOpenMarketData &&
                   <PricingGuideGrid
-                    openMarketData={openMarketData}
+                    activeOpenMarketData={activeOpenMarketData}
                     openMarketLoading={openMarketLoading}
+                    hasOpenMarketData={hasOpenMarketData}
                   />}
               </Panel.Body>
             </Panel.Collapse>
@@ -928,7 +930,8 @@ PricingGuide.propTypes = {
   loadOpenMarketData: PropTypes.func.isRequired,
   detail: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
-  openMarketData: PropTypes.object,
+  activeOpenMarketData: PropTypes.object,
+  hasOpenMarketData: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
   openMarketLoaded: PropTypes.bool.isRequired,
 };
@@ -936,7 +939,7 @@ PricingGuide.propTypes = {
 PricingGuide.defaultProps = {
   modal: null,
   isReadOnly: false,
-  openMarketData: undefined,
+  activeOpenMarketData: undefined,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PricingGuide);

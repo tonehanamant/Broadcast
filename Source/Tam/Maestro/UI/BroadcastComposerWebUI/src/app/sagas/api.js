@@ -192,6 +192,9 @@ const planning = {
   uploadSCXFile: params => (
     call(POST, `${apiBase}Proposals/UploadProposalDetailBuy`, params)
   ),
+  filterOpenMarketData: params => (
+    call(POST, `${apiBase}Inventory/Detail/PricingGuide/Grid/ApplyFilter`, params)
+  ),
 };
 
 // Calls

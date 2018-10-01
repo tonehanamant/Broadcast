@@ -7,13 +7,12 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
 using System.Transactions;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities.OpenMarketInventory;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -158,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices
                                 var detail = new ManifestDetailDaypart
                                 {
                                     Id = component.Id,
-                                    LegacyCallLetters= "xyz",
+                                    LegacyCallLetters = "xyz",
                                     DisplayDaypart = DisplayDaypart.Intersect(displayDaypart, proposalDetailDaypart)
                                 };
 

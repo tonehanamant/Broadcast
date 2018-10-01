@@ -115,6 +115,7 @@ class Table extends Component {
               showPagination={showPagination}
               showPageSizeOptions={showPageSizeOptions}
               defaultPageSize={defaultPageSize || data.length}
+              pageSize={defaultPageSize || data.length}
             />
             {!!menuItems && <DynamicMenu
                menuItems={menuItems}

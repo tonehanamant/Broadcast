@@ -609,7 +609,14 @@ END
 
 /**************************************************** START BCOP3512=>BCOP3608 **************************************************************/
 
-IF OBJECT_ID('[open_market_pricing_guide]', 'U') IS NULL
+
+IF (SELECT data_type FROM Information_Schema.Columns WHERE Table_Name = 'open_market_pricing_guide'
+      AND Column_Name = 'blended_cpm' AND data_type = 'decimal') IS NOT NULL
+BEGIN
+	  drop table open_market_pricing_guide
+END
+
+IF OBJECT_ID('[open_market_pricing_guide]', 'U') IS NULL 
 BEGIN
 	CREATE TABLE [dbo].[open_market_pricing_guide](
 		[id] [int] IDENTITY(1,1) NOT NULL,
@@ -617,13 +624,13 @@ BEGIN
 		[market_code] smallint not null,
 		[station_code] smallint not null,
 		[station_inventory_manifest_dayparts_id] int not null,
-		[blended_cpm] decimal not null ,
+		[blended_cpm] money not null ,
 		[spots] int not null,
 		[impressions_per_spot] float not null,
 		[impressions] float not null,
 		[station_impressions] float not null ,
-		[cost_per_spot] decimal not null,
-		[cost] decimal not null
+		[cost_per_spot] money not null,
+		[cost] money not null
 		CONSTRAINT [PK_open_market_pricing_guide] PRIMARY KEY CLUSTERED
 		(
 			[id] ASC
