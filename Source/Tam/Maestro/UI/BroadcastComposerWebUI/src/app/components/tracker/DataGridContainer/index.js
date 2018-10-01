@@ -129,12 +129,9 @@ export class DataGridContainer extends Component {
       },
       {
         name: 'Post Log Upload Date',
-        dataIndex: 'UploadDate',
+        dataIndex: 'searchUploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
-        renderer: ({ row }) => (
-          <span>{row.searchUploadDate}</span>
-        ),
       },
       {
         name: 'Spots in Spec',
