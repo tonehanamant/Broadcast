@@ -1108,6 +1108,7 @@ namespace Services.Broadcast.ApplicationServices
                     p.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(p.Spots,p.ImpressionsPerSpot );
                 }));
             });
+
             repository.SaveProposalDetailPricingGuide(proposalDetailId, pricingGuide.Markets);
         }
 
@@ -1121,20 +1122,19 @@ namespace Services.Broadcast.ApplicationServices
         {
             PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory = null;
             List<ProposalProgramDto> programs = null;
-
-
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             List<open_market_pricing_guide> existingPricingGuide = _GetProposalDetailPricingGuide(request.ProposalId, request.ProposalDetailId);
-            
-            if (existingPricingGuide == null)
+            var generatePricingGuide = request.HasPricingGuideChanges ?? true;
+
+            if (existingPricingGuide == null ||
+                generatePricingGuide)
             {
                 pricingGuideOpenMarketInventory = proposalRepository.GetProposalDetailPricingGuideInventory(request.ProposalDetailId);
-
                 _SetProposalInventoryDetailSpotLength(pricingGuideOpenMarketInventory);
-
                 programs = _GetPrograms(pricingGuideOpenMarketInventory);
                 _FilterProgramsByDaypart(pricingGuideOpenMarketInventory, programs);
                 pricingGuideOpenMarketInventory = DefaultPricingGuideOpenMarketInventory(programs, pricingGuideOpenMarketInventory);
+
                 if (programs.IsEmpty())
                 {
                     return ConvertPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
@@ -1149,6 +1149,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var pricingGuideDto = ConvertPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
+            
             // since the pricing guide was never save, lets save it now
             if (existingPricingGuide == null)
             {
@@ -1237,7 +1238,6 @@ namespace Services.Broadcast.ApplicationServices
             _CalculateProgramCosts(programs, pricingGuideOpenMarketInventory);
 
             var inventoryMarkets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
-
             var postingBookId = ProposalServiceHelper.GetBookId(pricingGuideOpenMarketInventory);
             _ApplyInventoryMarketRankings(postingBookId, inventoryMarkets);
             _ApplyInventoryMarketCoverages(inventoryMarkets);
@@ -1248,9 +1248,25 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyDefaultSortingForPricingGuide(pricingGuideOpenMarketInventory);
 
-            _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideOpenMarketInventory,pricingGuideOpenMarketInventory.Criteria);
+            _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideOpenMarketInventory, pricingGuideOpenMarketInventory.Criteria);
+
+            _RemoveEmptyStationsAndMarkets(pricingGuideOpenMarketInventory);
 
             return pricingGuideOpenMarketInventory;
+        }
+
+        public void _RemoveEmptyStationsAndMarkets(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        {
+            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            {
+                var emptyStations = market.Stations.Where(y => !y.Programs.Any()).ToList();
+
+                market.Stations.RemoveAll(x => emptyStations.Contains(x));
+            }
+
+            var emptyMarkets = pricingGuideOpenMarketInventory.Markets.Where(x => !x.Stations.Any());
+
+            pricingGuideOpenMarketInventory.Markets.RemoveAll(x => emptyMarkets.Contains(x));
         }
 
         private PricingGuideOpenMarketInventoryDto ConvertPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
