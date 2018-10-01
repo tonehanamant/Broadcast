@@ -2,11 +2,12 @@ import React from 'react';
 import Select from 'react-select';
 
 
-export const defaultFiltersOptions = [
-  { Display: 'Program name', Id: 'ProgramNames' },
-  { Display: 'Airing Time', Id: 'AiringTime', disabled: true },
-  { Display: 'Affilation', Id: 'Affiliation', disabled: true },
-  { Display: 'Market', Id: 'Market', disabled: true },
+export const defaultFiltersItems = [
+  { Display: 'Program name', Id: 'ProgramNames', order: 1 },
+  { Display: 'Airing Time', Id: 'AiringTime', disabled: true, order: 2 },
+  { Display: 'Affilate', Id: 'Affiliations', order: 3 },
+  { Display: 'Market', Id: 'Markets', order: 4 },
+  { Display: 'Genre', Id: 'Genres', order: 5 },
 ];
 
 export const filterMap = {
@@ -22,12 +23,15 @@ export const filterMap = {
         clearable={false}
       />
     ),
-    getInitialData: filterOptions => filterOptions.ProgramNames.map(item => ({ Display: item, Id: item })),
+    getInitialData: filterOptions => filterOptions.map(item => ({ Display: item, Id: item })),
+    postTransformer: values => values.map(({ Display }) => Display),
+    preTransformer: values => values.map(item => ({ Display: item, Id: item })),
   },
-  AiringTime: {
+  Affiliations: {
     render: (value, onFilterChange, options) => (
       <Select
         value={value}
+        multi
         onChange={onFilterChange}
         options={options}
         labelKey="Display"
@@ -35,12 +39,41 @@ export const filterMap = {
         clearable={false}
       />
     ),
-    getInitialData: () => ([
-      { Display: 'asdasdasda name', Id: 'programName' },
-      { Display: 'asdasdasd Time', Id: 'airingTime' },
-      { Display: 'asdasdads', Id: 'affiliation' },
-      { Display: 'Marasdasdasdasdasdasdasdaket', Id: 'market' },
-    ]),
+    getInitialData: filterOptions => filterOptions.map(item => ({ Display: item, Id: item })),
+    postTransformer: values => values.map(({ Display }) => Display),
+    preTransformer: values => values.map(item => ({ Display: item, Id: item })),
+  },
+  Genres: {
+    render: (value, onFilterChange, options) => (
+      <Select
+        value={value}
+        multi
+        onChange={onFilterChange}
+        options={options}
+        labelKey="Display"
+        valueKey="Id"
+        clearable={false}
+      />
+    ),
+    getInitialData: filterOptions => filterOptions.map(item => ({ Display: item, Id: item })),
+    postTransformer: values => values.map(({ Id }) => Id),
+    preTransformer: (values, options) => options.filter(({ Id }) => values.includes(Id)),
+  },
+  Markets: {
+    render: (value, onFilterChange, options) => (
+      <Select
+        value={value}
+        multi
+        onChange={onFilterChange}
+        options={options}
+        labelKey="Display"
+        valueKey="Id"
+        clearable={false}
+      />
+    ),
+    getInitialData: filterOptions => filterOptions,
+    postTransformer: values => values.map(({ Id }) => Id),
+    preTransformer: (values, options) => options.filter(({ Id }) => values.includes(Id)),
   },
 };
 
