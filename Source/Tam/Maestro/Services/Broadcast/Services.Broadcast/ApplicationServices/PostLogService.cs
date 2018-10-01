@@ -927,19 +927,21 @@ namespace Services.Broadcast.ApplicationServices
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;
         }
-        
+
         private double _GetImpressionsForAudience(int contractId, SchedulePostType type, int audienceId, bool equivalized)
         {
             var impressionsDataGuaranteed = _GetPostLogImpressionsData(contractId, audienceId);
             double deliveredImpressions = 0;
             foreach (var impressionData in impressionsDataGuaranteed)
             {
-                double impressions = (type == SchedulePostType.NTI)
-                    ? _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, impressionData.NtiConversionFactor)
-                    : impressionData.Impressions;
+                double impressions = impressionData.Impressions;
                 if (equivalized)
                 {
                     impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, true, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                }
+                if (type == SchedulePostType.NTI)
+                {
+                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor);
                 }
                 deliveredImpressions += impressions;
             }

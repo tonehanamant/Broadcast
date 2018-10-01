@@ -711,7 +711,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 if (type == SchedulePostType.NTI)
                 {
-                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, impressionData.NtiConversionFactor);
+                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor);
                 }
                 deliveredImpressions += impressions;
             }
