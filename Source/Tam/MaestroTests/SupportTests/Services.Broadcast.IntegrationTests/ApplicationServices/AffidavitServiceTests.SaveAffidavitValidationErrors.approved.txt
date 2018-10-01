@@ -1,12 +1,12 @@
 ﻿{
-  "AffidavitFileDetails": [],
-  "AffidavitFileProblems": [
+  "FileDetails": [],
+  "FileHash": "abc123",
+  "FileName": "test.file",
+  "FileProblems": [
     {
       "ProblemDescription": "Record: 255: Field: 'ErrorField' is invalid\r\nGeneric error message"
     }
   ],
-  "FileHash": "abc123",
-  "FileName": "test.file",
   "SourceId": 1,
   "Status": 2
 }

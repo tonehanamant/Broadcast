@@ -3,14 +3,14 @@ import Select from 'react-select';
 
 
 export const defaultFiltersOptions = [
-  { Display: 'Program name', Id: 'programName' },
-  { Display: 'Airing Time', Id: 'airingTime', disable: true },
-  { Display: 'Affilation', Id: 'affiliation', disabled: true },
-  { Display: 'Market', Id: 'market', disabled: true },
+  { Display: 'Program name', Id: 'ProgramNames' },
+  { Display: 'Airing Time', Id: 'AiringTime', disabled: true },
+  { Display: 'Affilation', Id: 'Affiliation', disabled: true },
+  { Display: 'Market', Id: 'Market', disabled: true },
 ];
 
 export const filterMap = {
-  programName: {
+  ProgramNames: {
     render: (value, onFilterChange, options) => (
       <Select
         value={value}
@@ -22,16 +22,9 @@ export const filterMap = {
         clearable={false}
       />
     ),
-    getInitialData: (filterOptions) => {
-      const programs = [];
-      filterOptions.ProgramNames.forEach((item) => {
-        const ret = { Display: item, Id: item };
-        programs.push(ret);
-      });
-      return programs;
-    },
+    getInitialData: filterOptions => filterOptions.ProgramNames.map(item => ({ Display: item, Id: item })),
   },
-  airingTime: {
+  AiringTime: {
     render: (value, onFilterChange, options) => (
       <Select
         value={value}

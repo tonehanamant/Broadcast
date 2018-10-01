@@ -189,12 +189,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var response = _AffidavitRepository.GetAffidavit(affidavitId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(WWTVFileProblem), "Id");
-            jsonResolver.Ignore(typeof(WWTVFileProblem), "FileId");
-            jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
-            jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
-            jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {

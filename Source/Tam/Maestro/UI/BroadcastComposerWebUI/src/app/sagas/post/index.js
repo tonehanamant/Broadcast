@@ -22,7 +22,8 @@ export function adjustPost(posts) {
     post.searchContractId = String(post.ContractId);
     post.searchSpotsInSpec = String(post.SpotsInSpec);
     post.searchSpotsOutOfSpec = String(post.SpotsOutOfSpec);
-    post.DisplayUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
+    // post.searchUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
+    // post.searchUploadDate = String(post.UploadDate);
 
     // post.displayId = String(post.Id);
     // post.displayAdvertiser = post.Advertiser.Display;
@@ -157,7 +158,7 @@ export function* assignPostDisplay({ payload: request }) {
 export function* requestPostFiltered({ payload: query }) {
   const postListUnfiltered = yield select(state => state.post.postUnfilteredGridData);
 
-  const keys = ['searchContractId', 'ContractName', 'Advertiser', 'DisplayUploadDate', 'searchSpotsInSpec', 'searchSpotsOutOfSpec', 'UploadDate'];
+  const keys = ['searchContractId', 'ContractName', 'Advertiser', 'UploadDate', 'serchSpotsInSpec', 'searchSpotsOutOfSpec'];
   const searcher = new FuzzySearch(postListUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 

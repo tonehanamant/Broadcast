@@ -123,10 +123,6 @@
                 {
                   "Display": "M-F 9AM-10AM",
                   "Id": 6724
-                },
-                {
-                  "Display": "M-F 6AM-8AM",
-                  "Id": 9491
                 }
               ],
               "FlightWeeks": [
@@ -157,16 +153,10 @@
                   "StartDate": "2016-06-06T00:00:00"
                 }
               ],
-              "Genres": [
-                {
-                  "Display": "Comedy",
-                  "Id": 9
-                }
-              ],
+              "Genres": [],
               "ProgramId": 46003,
               "ProgramNames": [
-                "Test Program",
-                "Test Program On Separate Daypart"
+                "Test Program"
               ],
               "ProvidedUnitImpressions": 1357.0,
               "Spots": 0,
@@ -206,8 +196,7 @@
   "ProposalVersionId": 53,
   "RefineFilterPrograms": [
     "New Program Name",
-    "Test Program",
-    "Test Program On Separate Daypart"
+    "Test Program"
   ],
   "ShareProjectionBookId": null,
   "SingleProjectionBookId": 410,

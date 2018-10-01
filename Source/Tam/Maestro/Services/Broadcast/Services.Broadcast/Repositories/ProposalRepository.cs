@@ -64,7 +64,7 @@ namespace Services.Broadcast.Repositories
         void ResetAllTotals(int proposalId, int proposalVersion);
         void DeleteProposal(int proposalId);
         Dictionary<int, ProposalDto> GetProposalsByQuarterWeeks(List<int> quarterWeekIds);
-        List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci);
+        List<MatchingProposalWeek> GetMatchingProposalWeeksByHouseIsci(string isci);
         ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
         void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> list);
 
@@ -73,7 +73,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="proposalDetailId">Proposal detail id to filter by</param>
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
-        List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId);
+        List<MatchingProposalWeek> GetMatchingProposalWeeksByDetailId(int proposalDetailId);
 
         PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId);
     }
@@ -1590,7 +1590,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByHouseIsci(string isci)
+        public List<MatchingProposalWeek> GetMatchingProposalWeeksByHouseIsci(string isci)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -1602,7 +1602,7 @@ namespace Services.Broadcast.Repositories
                         .Include(i => i.proposal_version_detail_quarter_weeks
                                 .proposal_version_detail_quarters.proposal_version_details)
                         .Select(
-                            i => new AffidavitMatchingProposalWeek()
+                            i => new MatchingProposalWeek()
                             {
                                 ProposalVersionId = i.proposal_version_detail_quarter_weeks
                                                         .proposal_version_detail_quarters
@@ -1642,7 +1642,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="proposalDetailId">Proposal detail id to filter by</param>
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
-        public List<AffidavitMatchingProposalWeek> GetAffidavitMatchingProposalWeeksByDetailId(int proposalDetailId)
+        public List<MatchingProposalWeek> GetMatchingProposalWeeksByDetailId(int proposalDetailId)
         {
             return _InReadUncommitedTransaction(
                context =>
@@ -1654,7 +1654,7 @@ namespace Services.Broadcast.Repositories
                                where detail.id == proposalDetailId
                                select new { detail, quarter, week, isci }).ToList();
                    return weeks.Select(
-                           i => new AffidavitMatchingProposalWeek()
+                           i => new MatchingProposalWeek()
                            {
                                ProposalVersionId = i.detail.proposal_version_id,
                                ProposalVersionDetailId = i.detail.id,

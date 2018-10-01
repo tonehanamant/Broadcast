@@ -10,6 +10,7 @@ const initialState = {
   planningProposals: [],
   activeOpenMarketData: undefined,
   openMarketData: undefined,
+  hasOpenMarketData: false,
   openMarketLoading: false,
   openMarketLoaded: false,
   filteredPlanningProposals: [],
@@ -345,6 +346,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && (data.Data.Markets.length > 0),
         activeOpenMarketData: data.Data,
         openMarketLoading: false,
         openMarketLoaded: true,
@@ -365,6 +367,7 @@ export default function reducer(state = initialState, action) {
         openMarketLoaded: false,
         openMarketData: undefined,
         activeOpenMarketData: undefined,
+        hasOpenMarketData: false,
       };
     }
 
@@ -389,6 +392,18 @@ export default function reducer(state = initialState, action) {
         ...state,
         openMarketLoading: false,
       };
+    }
+
+    case ACTIONS.SET_ESTIMATED_ID: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.detailId);
+      details[detailIndex].EstimateId = payload.estimatedId;
+      return Object.assign({}, state, {
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: details,
+        },
+      });
     }
 
     default:
@@ -543,5 +558,13 @@ export const uploadSCXFile = params => ({
 export const filterOpenMarketData = params => ({
   type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
   payload: params,
+});
+
+export const setEstimatedId = (detailId, estimatedId) => ({
+  type: ACTIONS.SET_ESTIMATED_ID,
+  payload: {
+    detailId,
+    estimatedId,
+  },
 });
 

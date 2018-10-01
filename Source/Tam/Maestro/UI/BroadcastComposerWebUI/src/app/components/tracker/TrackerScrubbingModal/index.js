@@ -6,16 +6,16 @@ import { Actions } from 'react-redux-grid';
 
 import { Button, Modal } from 'react-bootstrap';
 import { toggleModal, setOverlayLoading } from 'Ducks/app';
-import { getPost, getPostClientScrubbing } from 'Ducks/post';
+import { getTracker, getTrackerClientScrubbing } from 'Ducks/tracker';
 
-import PostScrubbingHeader from './PostScrubbingHeader';
-import PostScrubbingDetail from './PostScrubbingDetail';
+import TrackerScrubbingHeader from './TrackerScrubbingHeader';
+import TrackerScrubbingDetail from './TrackerScrubbingDetail';
 
 const { SelectionActions, GridActions } = Actions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post: { proposalHeader = { }, scrubbingFiltersList = [], hasActiveScrubbingFilters }, grid, dataSource }) => ({
+const mapStateToProps = ({ app: { modals: { trackerScrubbingModal: modal } }, tracker: { proposalHeader = { }, scrubbingFiltersList = [], hasActiveScrubbingFilters }, grid, dataSource }) => ({
 	modal,
   proposalHeader,
   scrubbingFiltersList,
@@ -26,10 +26,8 @@ const mapStateToProps = ({ app: { modals: { postScrubbingModal: modal } }, post:
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
-		// clearPostScrubbingDetail,
-    // getPostScrubbingDetail,
-    getPostClientScrubbing,
-    getPost,
+    getTrackerClientScrubbing,
+    getTracker,
 		toggleModal,
 		selectRow,
 		deselectAll,
@@ -39,7 +37,7 @@ const mapDispatchToProps = dispatch => (
 );
 
 
-export class PostScrubbingModal extends Component {
+export class TrackerScrubbingModal extends Component {
 	constructor(props) {
 		super(props);
 		this.close = this.close.bind(this);
@@ -49,12 +47,10 @@ export class PostScrubbingModal extends Component {
 
 	close() {
 		this.props.toggleModal({
-		modal: 'postScrubbingModal',
+		modal: 'trackerScrubbingModal',
 		active: false,
 		properties: this.props.modal.properties,
 		});
-
-		// this.props.clearPostScrubbingDetail();  //??
 	}
 
 	dismiss() {
@@ -63,12 +59,11 @@ export class PostScrubbingModal extends Component {
   }
 
   refreshPost() {
-    this.props.getPost();
+    this.props.getTracker();
   }
 
 	render() {
-	// const { getPostScrubbingDetail } = this.props;
-		const { proposalHeader, scrubbingFiltersList, getPostClientScrubbing, hasActiveScrubbingFilters, toggleModal } = this.props;
+		const { proposalHeader, scrubbingFiltersList, getTrackerClientScrubbing, hasActiveScrubbingFilters, toggleModal } = this.props;
 		const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
 		const { Advertiser, Id, Name, Markets, GuaranteedDemo, SecondaryDemos, Notes, MarketGroupId, Details } = scrubbingData;
 		const { grid, dataSource } = this.props;
@@ -83,7 +78,7 @@ export class PostScrubbingModal extends Component {
 						</Button>
           </Modal.Header>
           <Modal.Body style={{ overflowX: 'auto', paddingBottom: 0 }}>
-						<PostScrubbingHeader
+						<TrackerScrubbingHeader
 							advertiser={Advertiser}
 							details={Details}
 							guaranteedDemo={GuaranteedDemo}
@@ -93,12 +88,11 @@ export class PostScrubbingModal extends Component {
 							name={Name}
 							notes={Notes}
 							secondaryDemo={SecondaryDemos}
-							// getPostScrubbingDetail={getPostScrubbingDetail}
 						/>
-						<PostScrubbingDetail
+						<TrackerScrubbingDetail
               activeScrubbingData={activeScrubbingData}
               scrubbingFiltersList={scrubbingFiltersList}
-              getPostClientScrubbing={getPostClientScrubbing}
+              getTrackerClientScrubbing={getTrackerClientScrubbing}
               hasActiveScrubbingFilters={hasActiveScrubbingFilters}
               details={Details}
 							grid={grid}
@@ -119,7 +113,7 @@ export class PostScrubbingModal extends Component {
 		}
 }
 
-PostScrubbingModal.defaultProps = {
+TrackerScrubbingModal.defaultProps = {
 	modal: {
 		active: false,
 		properties: {
@@ -134,11 +128,11 @@ PostScrubbingModal.defaultProps = {
 	},
 };
 
-PostScrubbingModal.propTypes = {
+TrackerScrubbingModal.propTypes = {
 	modal: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  getPostClientScrubbing: PropTypes.func.isRequired,
-  getPost: PropTypes.func.isRequired,
+  getTrackerClientScrubbing: PropTypes.func.isRequired,
+  getTracker: PropTypes.func.isRequired,
 	grid: PropTypes.object.isRequired,
 	dataSource: PropTypes.object.isRequired,
 	proposalHeader: PropTypes.object.isRequired,
@@ -150,4 +144,4 @@ PostScrubbingModal.propTypes = {
   doLocalSort: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostScrubbingModal);
+export default connect(mapStateToProps, mapDispatchToProps)(TrackerScrubbingModal);

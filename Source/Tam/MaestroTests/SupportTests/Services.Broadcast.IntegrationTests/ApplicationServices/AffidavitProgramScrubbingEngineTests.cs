@@ -18,15 +18,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     [TestFixture]
     public class AffidavitProgramScrubbingEngineTests
     {
-        private readonly IAffidavitProgramScrubbingEngine _ScrubbingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitProgramScrubbingEngine>();
+        private readonly IProgramScrubbingEngine _ScrubbingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramScrubbingEngine>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MatchesMainProgram_NoExclusions()
         {
             var proposalDetail = new ProposalDetailDto();
-            var affidavitDetail = new AffidavitFileDetail();
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitDetail = new ScrubbingFileDetail();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -66,11 +66,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      ShowType = new LookupDto{ Id = 1, Display = "Movie"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "West World";
             affidavitDetail.Genre = "Action";
             affidavitDetail.ShowType = "Movie";
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -110,11 +110,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      ShowType = new LookupDto{ Id = 1, Display = "Movie"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "East Works";
             affidavitDetail.Genre = "Nature";
             affidavitDetail.ShowType = "Documentary";
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -154,11 +154,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      ShowType = new LookupDto{ Id = 1, Display = "Movie"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "East Works";
             affidavitDetail.Genre = "Nature";
             affidavitDetail.ShowType = "Documentary";
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -198,14 +198,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      ShowType = new LookupDto{ Id = 1, Display = "Movie"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "West World";
             affidavitDetail.Genre = "Action";
             affidavitDetail.ShowType = "Movie";
             affidavitDetail.AirTime = 1800;
             affidavitDetail.LeadInEndTime = 0;
             affidavitDetail.LeadOutStartTime = 3600;
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -227,7 +227,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      Program = new LookupDto{ Id = 1, Display = "West World"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "NFL Tonight";
             affidavitDetail.Genre = "Sports";
             affidavitDetail.ShowType = "News";
@@ -236,7 +236,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadInShowType = "Movie";
             affidavitDetail.AirTime = 32400;
             affidavitDetail.LeadInEndTime = 32280;
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -258,7 +258,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      Program = new LookupDto{ Id = 1, Display = "West World"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "NFL Tonight";
             affidavitDetail.Genre = "Sports";
             affidavitDetail.ShowType = "News";
@@ -267,7 +267,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadInShowType = "Movie";
             affidavitDetail.AirTime = 60;
             affidavitDetail.LeadInEndTime = 86340;
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -289,7 +289,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      Program = new LookupDto{ Id = 1, Display = "West World"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "NFL Tonight";
             affidavitDetail.Genre = "Sports";
             affidavitDetail.ShowType = "News";
@@ -298,7 +298,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadOutShowType = "Movie";
             affidavitDetail.AirTime = 32280;
             affidavitDetail.LeadOutStartTime = 32400;
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -320,7 +320,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      Program = new LookupDto{ Id = 1, Display = "West World"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.ProgramName = "NFL Tonight";
             affidavitDetail.Genre = "Sports";
             affidavitDetail.ShowType = "News";
@@ -329,7 +329,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.LeadOutShowType = "Movie";
             affidavitDetail.AirTime = 86340;
             affidavitDetail.LeadOutStartTime = 60;
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 
@@ -351,7 +351,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                      Program = new LookupDto{ Id = 1, Display = "West World"}
                 }
             };
-            var affidavitDetail = new AffidavitFileDetail();
+            var affidavitDetail = new ScrubbingFileDetail();
             affidavitDetail.LeadinProgramName = "NFL Tonight";
             affidavitDetail.LeadinGenre = "Sports";
             affidavitDetail.LeadInShowType = "News";
@@ -360,7 +360,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             affidavitDetail.ShowType = "Movie";
             affidavitDetail.AirTime = 32280;
             affidavitDetail.LeadInEndTime = 32400;
-            var affidavitScrub = new AffidavitClientScrub();
+            var affidavitScrub = new ClientScrub();
 
             _ScrubbingEngine.Scrub(proposalDetail, affidavitDetail, affidavitScrub);
 

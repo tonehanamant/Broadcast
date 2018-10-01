@@ -3,18 +3,6 @@
     "CpmCriteria": [],
     "GenreSearchCriteria": [
       {
-        "Contain": 2,
-        "Genre": {
-          "Display": ""
-        }
-      },
-      {
-        "Contain": 2,
-        "Genre": {
-          "Display": ""
-        }
-      },
-      {
         "Contain": 1,
         "Genre": {
           "Display": ""
@@ -27,20 +15,7 @@
         }
       }
     ],
-    "ProgramNameSearchCriteria": [
-      {
-        "Contain": 2,
-        "Program": {
-          "Display": "Open Market Program"
-        }
-      },
-      {
-        "Contain": 2,
-        "Program": {
-          "Display": "Test Program"
-        }
-      }
-    ]
+    "ProgramNameSearchCriteria": []
   },
   "DetailBudgetMarginAchieved": true,
   "DetailBudgetPercent": 2400.0,
@@ -223,8 +198,7 @@
   "ProposalVersionId": 41,
   "RefineFilterPrograms": [
     "New Program Name",
-    "Test Program",
-    "Test Program On Separate Daypart"
+    "Test Program"
   ],
   "ShareProjectionBookId": 413,
   "SingleProjectionBookId": null,

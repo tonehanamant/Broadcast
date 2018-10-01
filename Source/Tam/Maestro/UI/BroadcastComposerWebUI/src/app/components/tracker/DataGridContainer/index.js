@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Badge } from 'react-bootstrap';
 import { toggleModal, createAlert } from 'Ducks/app';
-import { getPost, getPostClientScrubbing } from 'Ducks/post';
+import { getTracker, getTrackerClientScrubbing } from 'Ducks/tracker';
 import { Grid, Actions } from 'react-redux-grid';
 import CustomPager from 'Components/shared/CustomPager';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
@@ -15,10 +16,10 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-const stateKey = 'gridPostMain';
+const stateKey = 'gridTrackerMain';
 
-const mapStateToProps = ({ post: { postGridData }, grid, dataSource, menu }) => ({
-  postGridData,
+const mapStateToProps = ({ tracker: { trackerGridData }, grid, dataSource, menu }) => ({
+  trackerGridData,
   grid,
   dataSource,
   menu,
@@ -26,7 +27,7 @@ const mapStateToProps = ({ post: { postGridData }, grid, dataSource, menu }) => 
 
 const mapDispatchToProps = dispatch => (bindActionCreators(
   {
-    getPost,
+    getTracker,
     createAlert,
     toggleModal,
     showMenu,
@@ -34,7 +35,7 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
     selectRow,
     deselectAll,
     doLocalSort,
-    getPostClientScrubbing,
+    getTrackerClientScrubbing,
   }, dispatch)
 );
 
@@ -48,23 +49,23 @@ export class DataGridContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.getPost();
+    this.props.getTracker();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.postGridData !== this.props.postGridData) {
+    if (prevProps.trackerGridData !== this.props.trackerGridData) {
       // evaluate column sort direction
       setTimeout(() => {
-        const cols = this.props.grid.get('gridPostMain').get('columns');
+        const cols = this.props.grid.get('gridTrackerMain').get('columns');
         let sortCol = cols.find(x => x.sortDirection);
         if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
         if (sortCol) {
-          const datasource = this.props.dataSource.get('gridPostMain');
+           const datasource = this.props.dataSource.get('gridTrackerMain');
           const sorted = Sorter.sortBy(sortCol.dataIndex, sortCol.sortDirection || sortCol.defaultSortDirection, datasource);
 
           this.props.doLocalSort({
             data: sorted,
-            stateKey: 'gridPostMain',
+            stateKey: 'gridTrackerMain',
           });
         }
       }, 0);
@@ -89,7 +90,7 @@ export class DataGridContainer extends Component {
   }
   showscrubbingModal(Id) {
     // change to params
-    this.props.getPostClientScrubbing({ proposalId: Id, showModal: true, filterKey: 'All' });
+    this.props.getTrackerClientScrubbing({ proposalId: Id, showModal: true, filterKey: 'All' });
   }
   /* eslint-disable no-undef */
   render() {
@@ -98,53 +99,9 @@ export class DataGridContainer extends Component {
         text: 'Spot Tracker Report',
         key: 'menu-tracker-spot-tracker-report',
         EVENT_HANDLER: ({ metaData }) => {
-          // window.open(`${window.location.origin}/broadcast/api/Tracker/SpotTrackerReport/${metaData.rowData.ContractId}`, '_blank');
           window.open(`${__API__}Tracker/SpotTrackerReport/${metaData.rowData.ContractId}`, '_blank');
-          // const inSpec = metaData.rowData.SpotsInSpec !== 0;
-          /* if (inSpec) {
-            window.open(`${window.location.origin}/broadcast/api/proposals/SpotTrackerReport/${metaData.rowData.ContractId}`, '_blank');
-          } else {
-            this.props.createAlert({
-              type: 'warning',
-              headline: 'Spot Tracker Report Unavailable',
-              message: 'There are no in-spec spots for this proposal.',
-            });
-          } */
         },
       },
-      /* {
-        text: 'NSI Post Report with Overnights',
-        key: 'menu-post-nsi-report-overnight',
-        EVENT_HANDLER: ({ metaData }) => {
-          const inSpec = metaData.rowData.SpotsInSpec !== 0;
-          // console.log('nsi overnight menu', metaData, inSpec);
-          if (inSpec) {
-            window.open(`${window.location.origin}/broadcast/api/Post/DownloadNSIPostReportWithOvernight/${metaData.rowData.ContractId}`, '_blank');
-          } else {
-            this.props.createAlert({
-              type: 'warning',
-              headline: 'NSI Report with Overnights Unavailable',
-              message: 'There are no in-spec spots for this proposal.',
-            });
-          }
-        },
-      },
-      {
-        text: 'MYEvents Report',
-        key: 'menu-post-myevents-report',
-        EVENT_HANDLER: ({ metaData }) => {
-          const inSpec = metaData.rowData.SpotsInSpec !== 0;
-          if (inSpec) {
-            window.open(`${window.location.origin}/broadcast/api/Post/DownloadMyEventsReport/${metaData.rowData.ContractId}`, '_blank');
-          } else {
-            this.props.createAlert({
-              type: 'warning',
-              headline: 'MYEvents Report Unavailable',
-              message: 'There are no in-spec spots for this proposal.',
-            });
-          }
-        },
-      }, */
     ];
 
     const columns = [
@@ -171,12 +128,12 @@ export class DataGridContainer extends Component {
         width: '15%',
       },
       {
-        name: 'Affidavit Upload Date',
+        name: 'Post Log Upload Date',
         dataIndex: 'UploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
         renderer: ({ row }) => (
-          <span>{row.DisplayUploadDate}</span>
+          <span>{row.searchUploadDate}</span>
         ),
       },
       {
@@ -216,18 +173,16 @@ export class DataGridContainer extends Component {
         name: 'Primary Demo Delivered',
         dataIndex: 'PrimaryAudienceDeliveredImpressions',
         width: '15%',
-        renderer: ({ row }) => (
-          row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-'
-        ),
+        renderer: ({ row }) => {
+          // handle equivalized indicator as badge if true
+          const val = row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-';
+          return row.Equivalized ? <div>{val}<Badge style={{ fontSize: '9px', marginTop: '4px' }} pullRight>EQ</Badge></div> : val;
+        },
       },
       {
         name: 'Primary Demo % Delivery',
         dataIndex: 'PrimaryAudienceDelivery',
         width: '15%',
-        // renderer: ({ row }) => (
-        //   // row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0%') : '-'
-        //   row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]%') : '-'
-        // ),
         renderer: ({ row }) => {
           const val = row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]') : false;
           return val ? `${val}%` : '-';
@@ -237,9 +192,11 @@ export class DataGridContainer extends Component {
         name: 'Household Delivered',
         dataIndex: 'HouseholdDeliveredImpressions',
         width: '15%',
-        renderer: ({ row }) => (
-          row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-'
-        ),
+        renderer: ({ row }) => {
+          // handle equivalized indicator as badge if true
+          const val = row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-';
+          return row.Equivalized ? <div>{val}<Badge style={{ fontSize: '9px', marginTop: '4px' }} pullRight>EQ</Badge></div> : val;
+        },
       },
     ];
 
@@ -304,7 +261,7 @@ export class DataGridContainer extends Component {
       stateKey,
     };
     return (
-      <Grid {...grid} data={this.props.postGridData} store={this.context.store} />
+      <Grid {...grid} data={this.props.trackerGridData} store={this.context.store} />
     );
   }
 }
@@ -313,10 +270,10 @@ DataGridContainer.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
   menu: PropTypes.object.isRequired,
-  postGridData: PropTypes.array.isRequired,
+  trackerGridData: PropTypes.array.isRequired,
 
-  getPost: PropTypes.func.isRequired,
-  getPostClientScrubbing: PropTypes.func.isRequired,
+  getTracker: PropTypes.func.isRequired,
+  getTrackerClientScrubbing: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired,
 

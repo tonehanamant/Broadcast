@@ -342,9 +342,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="affidavit_blacklist.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="affidavit_client_scrubs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -425,6 +422,9 @@
     <Compile Include="inventory_sources.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="isci_blacklist.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="isci_mapping.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -446,7 +446,13 @@
     <Compile Include="nsi_component_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="postlog_client_scrubs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="open_market_pricing_guide.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="postlog_client_scrub_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="postlog_files.cs">
@@ -608,6 +614,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_generation.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_manifest_genres.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_rates.cs">
