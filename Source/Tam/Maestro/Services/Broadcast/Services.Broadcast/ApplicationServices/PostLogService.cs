@@ -637,9 +637,9 @@ namespace Services.Broadcast.ApplicationServices
                     });
                     detail.Archived = true;
                     postLogFile.FileDetails.Add(detail);
-                    ScrubbingFileDetailsToBeLinked.Remove(detail);
                 }
             }
+            ScrubbingFileDetailsToBeLinked.RemoveAll(d => postLogFile.FileDetails.Contains(d));
 
             _IsciService.LoadIsciMappings(ScrubbingFileDetailsToBeLinked);
             var matchedPostLogDetails = _LinkAndValidateContractIscis(ScrubbingFileDetailsToBeLinked);
