@@ -1929,10 +1929,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProposalDetailId = 9978
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
-            var expectedGenres = dto.DisplayFilter.Genres
-                                                  .Where((x, index) => index == 0)
-                                                  .Select(g => g.Id)
-                                                  .ToList();
+            var program = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs).First();
+            program.Genres.Add(new LookupDto { Id = 2 });
+            var expectedGenres = new List<int> { 1, 2, 3 };
             dto.Filter.Genres = expectedGenres;
 
             var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
