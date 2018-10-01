@@ -45,6 +45,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void PostLogPostProcessing_ValidFileContent_BCOP3666()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\BCOP3666.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                // technically nothing to verify, but the original error caused an exception and this is for a black listed isci anyway, so nothing to process
+                VerifyResults(response);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void PostLogPostProcessing_FileErrorDateTime()
         {
             using (new TransactionScopeWrapper())
