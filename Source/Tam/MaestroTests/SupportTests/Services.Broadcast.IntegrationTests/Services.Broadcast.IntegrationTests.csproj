@@ -702,6 +702,9 @@
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\BCOP3666.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

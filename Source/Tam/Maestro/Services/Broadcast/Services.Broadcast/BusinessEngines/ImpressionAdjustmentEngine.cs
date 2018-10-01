@@ -12,6 +12,14 @@ namespace Services.Broadcast.BusinessEngines
     {
         double AdjustImpression(double impression, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
         double AdjustImpression(double impression, bool? isEquivilized, int spotLength, SchedulePostType? postType, int schedulePostingBook, bool applyAnnualAdjustment = true);
+
+        /// <summary>
+        /// Adjust impressions by applying equivalization
+        /// </summary>
+        /// <param name="impression">Impressions to adjust</param>
+        /// <param name="isEquivalized">Equivalized or not</param>
+        /// <param name="spotLength">Spot length</param>
+        /// <returns>Equivalized impressions</returns>
         double AdjustImpression(double impression, bool? isEquivalized, int spotLength);
 
         /// <summary>
@@ -73,6 +81,13 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
+        /// <summary>
+        /// Adjust impressions by applying equivalization
+        /// </summary>
+        /// <param name="impression">Impressions to adjust</param>
+        /// <param name="isEquivalized">Equivalized or not</param>
+        /// <param name="spotLength">Spot length</param>
+        /// <returns>Equivalized impressions</returns>
         public double AdjustImpression(double impression, bool? isEquivalized, int spotLength)
         {
             if (isEquivalized == true)
