@@ -411,7 +411,7 @@ export class ProposalDetail extends Component {
           toggleModal={this.props.toggleModal}
           // updateProposalEditFormDetail={updateProposalEditFormDetail}
           // initialdata={initialdata}
-          // detail={detail}
+          detail={detail}
           // isReadOnly={isReadOnly}
         />
 

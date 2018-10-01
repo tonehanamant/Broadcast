@@ -5,7 +5,7 @@ import { Modal, Button, Form, FormGroup, FormControl, ControlLabel, Col } from '
 import { bindActionCreators } from 'redux';
 import UploadButton from 'Components/shared/UploadButton';
 
-import { toggleModal, clearFile, storeFile } from 'Ducks/app';
+import { clearFile, storeFile } from 'Ducks/app';
 import { uploadSCXFile } from 'Ducks/planning';
 
 const mapStateToProps = ({ app: { modals: { uploadBuy: modal }, file } }) => ({
@@ -15,7 +15,7 @@ const mapStateToProps = ({ app: { modals: { uploadBuy: modal }, file } }) => ({
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-      toggleModal,
+      // toggleModal,
       clearFile,
       storeFile,
       uploadSCXFile,
@@ -102,9 +102,11 @@ class UploadBuy extends Component {
   render() {
     const { activeFile, estimateId } = this.state;
     const valid = estimateId.length && activeFile;
+    const { modal, detail } = this.props;
+    const show = (detail && modal && modal.properties.detailId === detail.Id) ? modal.active : false;
     return (
       <div>
-        <Modal show={this.props.modal.active} onExit={this.onModalHide}>
+        <Modal show={show} onExit={this.onModalHide}>
           <Modal.Header>
             <Button
                 className="close"
@@ -177,16 +179,15 @@ UploadBuy.propTypes = {
   storeFile: PropTypes.func.isRequired,
   file: PropTypes.object.isRequired,
   uploadSCXFile: PropTypes.func.isRequired,
+  detail: PropTypes.object,
 };
 
 UploadBuy.defaultProps = {
-  modal: {
-    active: false, // modal closed by default
-    properties: {},
-  },
+  modal: null,
   file: {
     name: 'No File',
   },
+  detail: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadBuy);
