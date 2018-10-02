@@ -2167,7 +2167,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(spotTrackerReportDataJson);
         }
 
-        [Ignore]
         [Test]
         public void TrackerService_GeneratesSpotTrackerReport_WithoutErrors_WithValidData()
         {
