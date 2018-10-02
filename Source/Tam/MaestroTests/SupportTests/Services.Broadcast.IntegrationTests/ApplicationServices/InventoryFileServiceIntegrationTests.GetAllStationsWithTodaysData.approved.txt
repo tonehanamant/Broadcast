@@ -81,6 +81,15 @@
     "RateDataThrough": "9/24/2017"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WUNC-TV 4.1",
+    "Code": 5316,
+    "LegacyCallLetters": "WUNC",
+    "ManifestMaxEndDate": "2017-03-19T00:00:00",
+    "OriginMarket": "Raleigh-Durham (Fayetvlle)",
+    "RateDataThrough": "3/19/2017"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "KIII 3.1",
     "Code": 5319,

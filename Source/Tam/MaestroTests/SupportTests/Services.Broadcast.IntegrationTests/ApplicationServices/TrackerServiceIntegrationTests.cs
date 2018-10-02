@@ -2165,8 +2165,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var spotTrackerReportData = _TrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
             var spotTrackerReportDataJson = IntegrationTestHelper.ConvertToJson(spotTrackerReportData, jsonSettings);
             Approvals.Verify(spotTrackerReportDataJson);
-    }
+        }
 
+        [Ignore]
         [Test]
         public void TrackerService_GeneratesSpotTrackerReport_WithoutErrors_WithValidData()
         {

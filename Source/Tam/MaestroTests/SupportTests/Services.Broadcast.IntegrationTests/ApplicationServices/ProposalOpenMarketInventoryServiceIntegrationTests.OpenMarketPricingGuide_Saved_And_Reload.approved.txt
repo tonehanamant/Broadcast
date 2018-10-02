@@ -149,7 +149,7 @@
           "LegacyCallLetters": "WWSB",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 300.0000,
               "CostPerSpot": 300.0000,
               "Daypart": {
@@ -166,7 +166,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 275.0000,
               "CostPerSpot": 275.0000,
               "Daypart": {
@@ -325,7 +325,7 @@
           "LegacyCallLetters": "KCYU",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 20.0000,
               "CostPerSpot": 20.0000,
               "Daypart": {
@@ -342,7 +342,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
@@ -396,7 +396,7 @@
           "LegacyCallLetters": "KION",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 30.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
@@ -413,7 +413,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
@@ -430,7 +430,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 125.0000,
               "CostPerSpot": 125.0000,
               "Daypart": {
@@ -447,7 +447,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 150.0000,
               "CostPerSpot": 150.0000,
               "Daypart": {
@@ -523,7 +523,7 @@
           "LegacyCallLetters": "NION",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -716,7 +716,7 @@
           "LegacyCallLetters": "KCWQ",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -733,7 +733,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -750,7 +750,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -792,7 +792,7 @@
           "LegacyCallLetters": "KDFX",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -846,7 +846,7 @@
           "LegacyCallLetters": "KTBY",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 40.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {
@@ -871,7 +871,7 @@
           "LegacyCallLetters": "KYUR",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -888,7 +888,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 20.0000,
               "CostPerSpot": 20.0000,
               "Daypart": {
@@ -905,7 +905,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -959,7 +959,7 @@
           "LegacyCallLetters": "KIDK",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
@@ -976,7 +976,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 70.0000,
               "CostPerSpot": 70.0000,
               "Daypart": {
@@ -993,7 +993,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 30.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
@@ -1069,7 +1069,7 @@
           "LegacyCallLetters": "KXPI",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 8.0000,
               "CostPerSpot": 8.0000,
               "Daypart": {
@@ -1106,7 +1106,7 @@
           "LegacyCallLetters": "GGEM",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
@@ -1131,7 +1131,7 @@
           "LegacyCallLetters": "KHQA",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 45.0000,
               "CostPerSpot": 45.0000,
               "Daypart": {
@@ -1148,7 +1148,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 40.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {
@@ -1207,7 +1207,7 @@
           "LegacyCallLetters": "NHQA",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -1224,7 +1224,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -1241,7 +1241,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
@@ -1317,7 +1317,7 @@
           "LegacyCallLetters": "WGEM",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
@@ -1334,7 +1334,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
@@ -1456,7 +1456,7 @@
           "LegacyCallLetters": "KNBN",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 7.0000,
               "CostPerSpot": 7.0000,
               "Daypart": {
@@ -1473,7 +1473,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 7.0000,
               "CostPerSpot": 7.0000,
               "Daypart": {
@@ -1578,7 +1578,7 @@
           "LegacyCallLetters": "WNTZ",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 35.0000,
               "CostPerSpot": 35.0000,
               "Daypart": {
@@ -1615,7 +1615,7 @@
           "LegacyCallLetters": "KJNB",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
@@ -1640,7 +1640,7 @@
           "LegacyCallLetters": "NJNB",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -1657,7 +1657,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -1674,7 +1674,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
@@ -1691,7 +1691,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -1708,7 +1708,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -1918,7 +1918,7 @@
           "LegacyCallLetters": "KFNB",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 100.0000,
               "CostPerSpot": 100.0000,
               "Daypart": {
@@ -1977,7 +1977,7 @@
           "LegacyCallLetters": "KTWO",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -1994,7 +1994,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -2011,7 +2011,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -2082,7 +2082,7 @@
           "LegacyCallLetters": "KATN",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -2099,7 +2099,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -2116,7 +2116,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
@@ -2170,7 +2170,7 @@
           "LegacyCallLetters": "KJUD",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
@@ -2187,7 +2187,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
@@ -2204,7 +2204,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
@@ -2258,7 +2258,7 @@
           "LegacyCallLetters": "KXGN",
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 40.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {
@@ -2275,7 +2275,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 40.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {
@@ -2292,7 +2292,7 @@
               "StationImpressions": 0.0
             },
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0,
               "Cost": 40.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {

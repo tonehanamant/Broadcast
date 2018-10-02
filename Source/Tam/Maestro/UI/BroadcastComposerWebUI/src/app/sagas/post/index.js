@@ -22,7 +22,7 @@ export function adjustPost(posts) {
     post.searchContractId = String(post.ContractId);
     post.searchSpotsInSpec = String(post.SpotsInSpec);
     post.searchSpotsOutOfSpec = String(post.SpotsOutOfSpec);
-    // post.searchUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
+    post.searchUploadDate = post.UploadDate ? moment(post.UploadDate).format('MM/DD/YYYY') : '-';
     // post.searchUploadDate = String(post.UploadDate);
 
     // post.displayId = String(post.Id);

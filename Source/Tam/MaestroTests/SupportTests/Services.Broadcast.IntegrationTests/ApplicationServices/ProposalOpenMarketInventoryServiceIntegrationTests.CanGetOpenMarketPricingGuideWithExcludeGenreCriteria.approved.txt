@@ -1,17 +1,7 @@
 ﻿{
   "DisplayFilter": {
-    "Affiliations": [
-      "PBS"
-    ],
-    "Genres": [],
-    "Markets": [
-      {
-        "Display": "Raleigh-Durham (Fayetvlle)",
-        "Id": 160
-      }
-    ],
     "ProgramNames": [
-      "Friends"
+      "Adventure Time"
     ]
   },
   "Filter": {},
@@ -28,19 +18,24 @@
           "LegacyCallLetters": "WUNC",
           "Programs": [
             {
-              "BlendedCpm": 0.01,
+              "BlendedCpm": 0.00,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
-                "Display": "M-F 6AM-6PM",
-                "Id": 12
+                "Display": "M-SU 9AM-12AM",
+                "Id": 5
               },
-              "Genres": [],
-              "Impressions": 2125796.25,
-              "ImpressionsPerSpot": 2125796.25,
-              "ManifestDaypartId": 213348,
-              "ProgramId": 162233,
-              "ProgramName": "Friends",
+              "Genres": [
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                }
+              ],
+              "Impressions": 10392144.25,
+              "ImpressionsPerSpot": 10392144.25,
+              "ManifestDaypartId": 213351,
+              "ProgramId": 162236,
+              "ProgramName": "Adventure Time",
               "Spots": 0,
               "StationImpressions": 0.0
             }
@@ -48,8 +43,8 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 25.0000,
-      "TotalImpressions": 2125796.25,
+      "TotalCost": 50.0000,
+      "TotalImpressions": 12517940.5,
       "TotalSpots": 0,
       "TotalStationImpressions": 0.0
     }

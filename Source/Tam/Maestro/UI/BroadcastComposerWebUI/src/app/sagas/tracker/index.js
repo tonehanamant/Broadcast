@@ -39,7 +39,7 @@ export function adjustTracker(posts) {
     tracker.searchContractId = String(tracker.ContractId);
     tracker.searchSpotsInSpec = String(tracker.SpotsInSpec);
     tracker.searchSpotsOutOfSpec = String(tracker.SpotsOutOfSpec);
-    tracker.searchUploadDate = tracker.UploadDate !== null ? moment(tracker.UploadDate).format('M/D/YYYY') : '-';
+    tracker.searchUploadDate = tracker.UploadDate ? moment(tracker.UploadDate).format('MM/DD/YYYY') : '-';
     return tracker;
   });
   return adjustTracker;

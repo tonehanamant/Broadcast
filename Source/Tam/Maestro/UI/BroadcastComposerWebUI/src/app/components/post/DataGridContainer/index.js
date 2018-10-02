@@ -12,7 +12,7 @@ import CustomPager from 'Components/shared/CustomPager';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import Sorter from 'Utils/react-redux-grid-sorter';
 import numeral from 'numeral';
-import { getDateInFormat } from '../../../utils/dateFormatter';
+// import { getDateInFormat } from '../../../utils/dateFormatter';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -175,12 +175,13 @@ export class DataGridContainer extends Component {
       },
       {
         name: 'Affidavit Upload Date',
-        dataIndex: 'UploadDate',
+        dataIndex: 'searchUploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
-        renderer: ({ row }) => (
-          <span>{row.UploadDate !== null ? getDateInFormat(row.UploadDate) : '-'}</span>
-        ),
+        // renderer: ({ row }) => (
+        //   <span>{row.UploadDate !== null ? getDateInFormat(row.UploadDate) : '-'}</span>
+        // ),
+        // sortFn: (a, b) => a.value - b.value,
       },
       {
         name: 'Spots in Spec',
