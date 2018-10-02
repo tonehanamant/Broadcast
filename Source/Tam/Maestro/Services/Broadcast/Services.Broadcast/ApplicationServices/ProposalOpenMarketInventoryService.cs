@@ -1367,9 +1367,30 @@ namespace Services.Broadcast.ApplicationServices
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(name => name)
                 .ToList();
+
+            dto.DisplayFilter.Markets = dto.Markets
+                .Select(a => new { a.MarketId, a.MarketName })
+                .Distinct()
+                .Select(y => new LookupDto { Id = y.MarketId, Display = y.MarketName })
+                .OrderBy(n => n.Display)
+                .ToList();
+
+            dto.DisplayFilter.Affiliations = stations
+               .Select(s => s.Affiliation)
+               .Distinct(StringComparer.OrdinalIgnoreCase)
+               .OrderBy(a => a)
+               .ToList();
+
+            dto.DisplayFilter.Genres = stations
+                .SelectMany(s => s.Programs.Where(p => p != null).SelectMany(p => p.Genres))
+                .Select(g => new { g.Id, g.Display })
+                .Distinct()
+                .Select(g => new LookupDto { Id = g.Id, Display = g.Display })
+                .OrderBy(g => g.Display)
+                .ToList();
         }
 
-        private static void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        private void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
         {
             if (dto.Filter == null)
             {
@@ -1378,11 +1399,17 @@ namespace Services.Broadcast.ApplicationServices
 
             var filter = dto.Filter;
 
+            _ApplyMarketsFilter(dto, filter);
+
             foreach (var market in dto.Markets)
             {
+                _ApplyAffiliationsFilter(market, filter);
+
                 foreach (var station in market.Stations)
                 {
                     _ApplyProgramNamesFilter(station, filter);
+                    _ApplyGenresFilter(station, filter);
+                    _ApplyAirtimesFilter(station, filter);
                 }
             }
         }
@@ -1396,6 +1423,53 @@ namespace Services.Broadcast.ApplicationServices
             if (programNames != null && programNames.Any())
             {
                 station.Programs = station.Programs.Where(p => programNames.Contains(p.ProgramName, StringComparer.OrdinalIgnoreCase)).ToList();
+            }
+        }
+
+        private static void _ApplyGenresFilter(
+            PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation station,
+            OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var genres = filter.Genres;
+
+            if (genres != null && genres.Any())
+            {
+                station.Programs = station.Programs
+                                          .Where(p => p.Genres.Any(genre => genres.Contains(genre.Id)))
+                                          .ToList();
+            }
+        }
+
+        private static void _ApplyMarketsFilter(PricingGuideOpenMarketInventoryDto dto, OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var markets = filter.Markets;
+
+            if (markets != null && markets.Any())
+            {
+                dto.Markets = dto.Markets.Where(m => markets.Contains(m.MarketId)).ToList();
+            }
+        }
+        private static void _ApplyAffiliationsFilter(PricingGuideOpenMarketInventory.PricingGuideMarket market, OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var affiliations = filter.Affiliations;
+
+            if (affiliations != null && affiliations.Any())
+            {
+                market.Stations = market.Stations.Where(s => affiliations.Contains(s.Affiliation, StringComparer.OrdinalIgnoreCase)).ToList();
+            }
+        }
+        
+        private void _ApplyAirtimesFilter(
+            PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation station,
+            OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var airtimes = filter.DayParts;
+
+            if (airtimes != null && airtimes.Any())
+            {
+                station.Programs = station.Programs
+                                          .Where(p => airtimes.Any(a => DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(a), DaypartCache.GetDisplayDaypart(p.Daypart.Id))))
+                                          .ToList();
             }
         }
     }

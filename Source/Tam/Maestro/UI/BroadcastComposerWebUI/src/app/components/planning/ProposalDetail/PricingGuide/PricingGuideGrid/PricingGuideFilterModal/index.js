@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, Button, Form, FormGroup, Col, Glyphicon } from 'react-bootstrap';
 import Select from 'react-select';
-import { omit } from 'lodash';
-import { defaultFiltersOptions, filterMap } from './util';
+import { pipe, sortBy, concat, keys, pickBy, mapValues, omit } from 'lodash/fp';
+import { defaultFiltersItems, filterMap } from './util';
 
 import './index.scss';
+
+const mapValuesWithKey = mapValues.convert({ cap: false });
 
 
 const mapStateToProps = ({ app: { modals: { pricingFilterModal: modal } } }) => ({
@@ -14,7 +16,7 @@ const mapStateToProps = ({ app: { modals: { pricingFilterModal: modal } } }) => 
 });
 
 const initialState = {
-  filtersOptions: defaultFiltersOptions,
+  filtersItems: defaultFiltersItems,
   filtersRender: [],
   filtersValues: {},
 };
@@ -46,35 +48,40 @@ class PricingGuideFilterModal extends Component {
   }
 
   generateFiltersState() {
-    const { activeOpenMarketData: { Filter } } = this.props;
-    const selectedFilters = Object.keys(Filter);
-
-    const filtersValues = {};
-    selectedFilters.forEach((filter) => {
-      filtersValues[filter] = Filter[filter].map(val => ({ Display: val, Id: val }));
-    });
+    const { activeOpenMarketData: { Filter, DisplayFilter } } = this.props;
+    const selectedFilters = keys(Filter);
+    const filtersOptions = mapValuesWithKey((value, key) => {
+      console.log();
+      return filterMap[key].getInitialData(value);
+    })(DisplayFilter);
 
     this.setState({
-      filtersOptions: defaultFiltersOptions.filter(it => !selectedFilters.includes(it.Id)),
-      filtersRender: defaultFiltersOptions.filter(it => selectedFilters.includes(it.Id)),
-      filtersValues,
+      filtersItems: defaultFiltersItems.filter(it => !selectedFilters.includes(it.Id)),
+      filtersRender: defaultFiltersItems.filter(it => selectedFilters.includes(it.Id)),
+      filtersValues: mapValuesWithKey((value, key) => filterMap[key].preTransformer(Filter[key], filtersOptions[key]))(Filter),
+      filtersOptions,
     });
   }
 
   onAddFilter(filter) {
-    const { filtersRender, filtersOptions } = this.state;
+    const { filtersRender, filtersItems } = this.state;
     this.setState({
       filtersRender: filtersRender.concat(filter),
-      filtersOptions: filtersOptions.filter(({ Id }) => (Id !== filter.Id)),
+      filtersItems: filtersItems.filter(({ Id }) => (Id !== filter.Id)),
     });
   }
 
   onDeleteFilter(filter) {
-    const { filtersRender, filtersOptions, filtersValues } = this.state;
+    const { filtersRender, filtersItems, filtersValues } = this.state;
+    const newFilterOptions = pipe(
+      concat(filter),
+      sortBy('order'),
+    )(filtersItems);
+
     this.setState({
       filtersRender: filtersRender.filter(({ Id }) => (Id !== filter.Id)),
-      filtersOptions: filtersOptions.concat(filter),
-      filtersValues: omit(filtersValues, filter.Id),
+      filtersItems: newFilterOptions,
+      filtersValues: omit(filter.Id, filtersValues),
     });
   }
 
@@ -106,13 +113,11 @@ class PricingGuideFilterModal extends Component {
   }
 
   getFiltersForSave() {
-    const { filtersValues } = this.state;
-    const parsedFilters = {};
-    Object.keys(filtersValues)
-      .filter(filter => !!filtersValues[filter].length)
-      .forEach((filter) => {
-        parsedFilters[filter] = filtersValues[filter].map(({ Display }) => (Display));
-      });
+    const { filtersValues, filtersOptions } = this.state;
+    const parsedFilters = pipe(
+      pickBy(filter => !!filter.length),
+      mapValuesWithKey((value, key) => (filterMap[key].postTransformer ? filterMap[key].postTransformer(value, filtersOptions[key]) : value)),
+    )(filtersValues);
     return { Filter: parsedFilters };
   }
 
@@ -123,8 +128,8 @@ class PricingGuideFilterModal extends Component {
   }
 
   render() {
-    const { modal, activeOpenMarketData } = this.props;
-    const { filtersOptions, filtersRender, filtersValues } = this.state;
+    const { modal } = this.props;
+    const { filtersItems, filtersRender, filtersValues, filtersOptions } = this.state;
 
     return (
       <Modal show={modal.active}>
@@ -143,7 +148,7 @@ class PricingGuideFilterModal extends Component {
                   <Select
                     value={it}
                     onChange={(filter) => { this.onEditFilter(filter, it, idx); }}
-                    options={filtersOptions}
+                    options={filtersItems}
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
@@ -153,7 +158,7 @@ class PricingGuideFilterModal extends Component {
                   {filterMap[it.Id].render(
                     filtersValues[it.Id],
                     (value) => { this.onChangeFilter(it, value); },
-                    filterMap[it.Id].getInitialData(activeOpenMarketData.DisplayFilter),
+                    filtersOptions[it.Id],
                   )}
                 </Col>
                 <Col sm={2}>
@@ -167,7 +172,7 @@ class PricingGuideFilterModal extends Component {
               <Col sm={4}>
                 <Select
                   onChange={this.onAddFilter}
-                  options={filtersOptions}
+                  options={filtersItems}
                   labelKey="Display"
                   valueKey="Id"
                   clearable={false}

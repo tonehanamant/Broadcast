@@ -1,5 +1,15 @@
 ﻿{
   "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
     "ProgramNames": [
       "Friends|Friends 2"
     ]

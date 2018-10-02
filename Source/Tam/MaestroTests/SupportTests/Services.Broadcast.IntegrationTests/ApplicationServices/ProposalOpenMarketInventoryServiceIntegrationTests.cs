@@ -12,6 +12,7 @@ using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
@@ -41,6 +42,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine =
             IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMarketsCalculationEngine>();
+
+        private readonly IDaypartCache _DaypartCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartCache>();
 
         [TestCase(MinMaxEnum.Min)]
         [TestCase(MinMaxEnum.Max)]
@@ -1870,6 +1873,137 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void MatchesMarketsUsingMarketsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedMarketIds = dto.DisplayFilter.Markets
+                                            .Where((x, index) => index == 0)
+                                            .Select(m => m.Id)
+                                            .ToList();
+            dto.Filter.Markets = expectedMarketIds;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasMarketsOnlyWithExpectedIds = result.Markets.All(m => expectedMarketIds.Contains(m.MarketId));
+
+            Assert.IsTrue(resultHasMarketsOnlyWithExpectedIds);
+        }
+
+        [Test]
+        public void DoesNotMatchMarketsUsingMarketsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedMarketIds = new List<int> { -1 };
+            dto.Filter.Markets = notExpectedMarketIds;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHaveMarkets = !result.Markets.Any();
+
+            Assert.IsTrue(resultDoesNotHaveMarkets);
+        }
+
+        [Test]
+        public void MatchesStationsUsingAffiliationsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedAffiliations = dto.DisplayFilter.Affiliations
+                                                        .Where((x, index) => index == 0)
+                                                        .ToList();
+            dto.Filter.Affiliations = expectedAffiliations;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasStationsOnlyWithExpectedAffiliations = result.Markets
+                                                                      .SelectMany(m => m.Stations)
+                                                                      .All(s => expectedAffiliations.Contains(s.Affiliation));
+
+            Assert.IsTrue(resultHasStationsOnlyWithExpectedAffiliations);
+        }
+
+        [Test]
+        public void DoesNotMatchStationsUsingAffiliationsFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedAffiliations = new List<string> { "NotExpectedAffiliation" };
+            dto.Filter.Affiliations = notExpectedAffiliations;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHaveStations = !result.Markets
+                                                   .SelectMany(m => m.Stations)
+                                                   .Any();
+
+            Assert.IsTrue(resultDoesNotHaveStations);
+        }
+
+        [Test]
+        public void MatchesProgramsUsingGenresFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var program = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs).First();
+            program.Genres.Add(new LookupDto { Id = 2 });
+            var expectedGenres = new List<int> { 1, 2, 3 };
+            dto.Filter.Genres = expectedGenres;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWhichContainOneOfExpectedGenres = result.Markets
+                                                                             .SelectMany(m => m.Stations)
+                                                                             .SelectMany(s => s.Programs)
+                                                                             .All(p => p.Genres.Any(g => expectedGenres.Contains(g.Id)));
+
+            Assert.IsTrue(resultHasProgramsOnlyWhichContainOneOfExpectedGenres);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingGenresFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedGenres = new List<int> { -1 };
+            dto.Filter.Genres = notExpectedGenres;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                   .SelectMany(m => m.Stations)
+                                                   .SelectMany(s => s.Programs)
+                                                   .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
+        }
+
+        [Test]
         public void TotalsAreUpdatedWhenApplyingFilter()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
@@ -1893,6 +2027,75 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.AreNotEqual(totalCostBeforeFiltering, totalCostAfterFiltering);
             Assert.AreNotEqual(totalImpressionsBeforeFiltering, totalImpressionsAfterFiltering);
+        }
+
+        [Test]
+        public void MatchesProgramsUsingAirtimesFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+
+            var d = _DaypartCache.GetDisplayDaypart(12);
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedAirtimes = new List<DaypartDto>
+            {
+                new DaypartDto
+                {
+                    tue = true,
+                    wed = true,
+                    startTime = 30000,
+                    endTime = 60000
+                }
+            };
+            dto.Filter.DayParts = expectedAirtimes;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWhichHasAirtimeThatIntersectsWithOneOfExpectedOnes = result.Markets
+                                                                             .SelectMany(m => m.Stations)
+                                                                             .SelectMany(s => s.Programs)
+                                                                             .All(p => expectedAirtimes.Any(a => 
+                                                                                    DisplayDaypart.Intersects(
+                                                                                        DaypartDto.ConvertDaypartDto(a),
+                                                                                        _DaypartCache.GetDisplayDaypart(p.Daypart.Id))));
+
+            Assert.IsTrue(resultHasProgramsOnlyWhichHasAirtimeThatIntersectsWithOneOfExpectedOnes);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingAirtimesFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+
+            var d = _DaypartCache.GetDisplayDaypart(12);
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedAirtimes = new List<DaypartDto>
+            {
+                new DaypartDto
+                {
+                    sun = true,
+                    sat = true,
+                    startTime = 30000,
+                    endTime = 60000
+                }
+            };
+            dto.Filter.DayParts = notExpectedAirtimes;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                   .SelectMany(m => m.Stations)
+                                                   .SelectMany(s => s.Programs)
+                                                   .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
         }
 
         [Test]

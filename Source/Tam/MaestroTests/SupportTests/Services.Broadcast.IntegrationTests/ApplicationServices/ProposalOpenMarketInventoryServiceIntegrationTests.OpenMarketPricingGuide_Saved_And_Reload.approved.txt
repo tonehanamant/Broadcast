@@ -1,5 +1,83 @@
 ﻿{
   "DisplayFilter": {
+    "Affiliations": [
+      "ABC",
+      "CBS",
+      "CW",
+      "FOX",
+      "NBC"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "Alexandria, LA",
+        "Id": 244
+      },
+      {
+        "Display": "Anchorage",
+        "Id": 343
+      },
+      {
+        "Display": "Casper-Riverton",
+        "Id": 367
+      },
+      {
+        "Display": "Corpus Christi",
+        "Id": 200
+      },
+      {
+        "Display": "Fairbanks",
+        "Id": 345
+      },
+      {
+        "Display": "Glendive",
+        "Id": 398
+      },
+      {
+        "Display": "Idaho Fals-Pocatllo(Jcksn)",
+        "Id": 358
+      },
+      {
+        "Display": "Jackson, MS",
+        "Id": 318
+      },
+      {
+        "Display": "Jonesboro",
+        "Id": 334
+      },
+      {
+        "Display": "Juneau",
+        "Id": 347
+      },
+      {
+        "Display": "Monterey-Salinas",
+        "Id": 428
+      },
+      {
+        "Display": "Palm Springs",
+        "Id": 404
+      },
+      {
+        "Display": "Quincy-Hannibal-Keokuk",
+        "Id": 317
+      },
+      {
+        "Display": "Rapid City",
+        "Id": 364
+      },
+      {
+        "Display": "Tampa-St. Pete (Sarasota)",
+        "Id": 139
+      },
+      {
+        "Display": "Twin Falls",
+        "Id": 360
+      },
+      {
+        "Display": "Yakima-Pasco-Rchlnd-Knnwck",
+        "Id": 410
+      }
+    ],
     "ProgramNames": [
       "3 News First Edition",
       "AgDay",
