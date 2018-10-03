@@ -720,6 +720,9 @@
     <Content Include="Files\ImportingRateData\1Q18 ENT-SYN Rates\Buffalo WBBZ SYN.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\Keeping Trac BCOP-3771.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\KeepingTracTest.xlsx.BadTimes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

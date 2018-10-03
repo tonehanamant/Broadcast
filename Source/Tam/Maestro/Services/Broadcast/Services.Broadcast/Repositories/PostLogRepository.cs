@@ -906,6 +906,7 @@ namespace Services.Broadcast.Repositories
                     leadout_show_type = d.LeadOutShowType,
                     adjusted_air_date = d.AdjustedAirDate,
                     archived = d.Archived,
+                    postlog_client_scrubs = _MapFromPostLogClientScrubs(d.ClientScrubs),
                     postlog_file_detail_problems = _MapFromFileDetailProblems(d.FileDetailProblems),
                     postlog_file_detail_demographics = d.Demographics.Select(demo =>
                         new postlog_file_detail_demographics
