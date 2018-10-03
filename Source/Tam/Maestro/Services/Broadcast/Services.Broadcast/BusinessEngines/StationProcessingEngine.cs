@@ -17,10 +17,18 @@ namespace Services.Broadcast.BusinessEngines
 
         public string StripStationSuffix(string stationLetters)
         {
+            const string plusS2Extension = "+s2";
+
             if (stationLetters.Contains("-"))
             {
-                return stationLetters.Substring(0, stationLetters.Length - stationLetters.LastIndexOf("-") + 1).Trim();
+                stationLetters = stationLetters.Substring(0, stationLetters.Length - stationLetters.LastIndexOf("-") + 1).Trim();
             }
+
+            if (stationLetters.EndsWith(plusS2Extension, StringComparison.InvariantCultureIgnoreCase))
+            {
+                stationLetters = stationLetters.Substring(0, stationLetters.Length - plusS2Extension.Length).Trim();
+            }
+
             return stationLetters;
         }
 
