@@ -2772,6 +2772,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        public void ProposalService_UploadsProposalBuyScx_WithStationsWithPlusS2Extensions()
+        {
+            var request = new ProposalBuySaveRequestDto
+            {
+                EstimateId = 3909,
+                FileName = "WithPlusS2Extensions.scx",
+                Username = "test-user",
+                ProposalVersionDetailId = 10,
+                FileStream = new FileStream(@".\Files\WithPlusS2Extensions.scx", FileMode.Open, FileAccess.Read)
+            };
+
+            var errors = _ProposalService.SaveProposalBuy(request);
+
+            Assert.AreEqual(0, errors.Count);
+        }
+
         private ProposalBuySaveRequestDto _GetProposalBuySaveRequestDtoForSuccessfullResult(int detailId, int estimateId)
         {
             return new ProposalBuySaveRequestDto
