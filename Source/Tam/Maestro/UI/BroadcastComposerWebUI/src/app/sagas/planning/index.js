@@ -1418,8 +1418,8 @@ export function* loadOpenMarketData(params) {
 /* UPLOAD SCX - bypass wrapper to handle custom error */
 /* ////////////////////////////////// */
 
-export function* uploadSCXFileSuccess() {
-  yield put(toggleModal({ modal: 'uploadBuy', active: false }));
+export function* uploadSCXFileSuccess(detailId) {
+  yield put(toggleModal({ modal: 'uploadBuy', active: false, properties: { detailId } }));
   yield put(createAlert({ type: 'success', headline: 'SCX File Uploaded' }));
 }
 
@@ -1481,7 +1481,7 @@ export function* uploadSCXFile({ payload: params }) {
       }
     }
     yield put(setEstimatedId(params.ProposalVersionDetailId, params.EstimateId));
-    yield call(uploadSCXFileSuccess);
+    yield call(uploadSCXFileSuccess, [params.ProposalVersionDetailId]);
   } catch (e) {
     if (e.response) {
       yield put({
