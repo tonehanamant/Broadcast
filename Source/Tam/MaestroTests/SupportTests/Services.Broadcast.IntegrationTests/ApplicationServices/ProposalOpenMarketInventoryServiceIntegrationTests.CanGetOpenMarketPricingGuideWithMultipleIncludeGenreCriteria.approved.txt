@@ -27,10 +27,13 @@
   "Filter": {},
   "Markets": [
     {
+      "AvgCpm": 0.01,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
+      "MaxCpm": 0.01,
+      "MinCpm": 0.01,
       "Stations": [
         {
           "Affiliation": "PBS",

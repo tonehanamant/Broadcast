@@ -45,7 +45,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="programs"></param>
         /// <param name="spotLength"></param>
         /// <returns></returns>
-        void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
+        void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs);
 
         void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
 
@@ -279,7 +279,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs, int spotLength)
+        public void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs)
         {
             foreach (var program in programs)
             {

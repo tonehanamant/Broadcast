@@ -248,6 +248,7 @@
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
+    <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\KeepingTracConverter.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\AffidaviteFileSourceEnum.cs" />

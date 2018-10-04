@@ -138,10 +138,13 @@
   "Filter": {},
   "Markets": [
     {
+      "AvgCpm": 4.548,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
+      "MaxCpm": 8.56,
+      "MinCpm": 0.66,
       "Stations": [
         {
           "Affiliation": "ABC",
@@ -277,10 +280,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 1.16,
       "MarketCoverage": 0.273,
       "MarketId": 318,
       "MarketName": "Jackson, MS",
       "MarketRank": 95,
+      "MaxCpm": 1.16,
+      "MinCpm": 1.16,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -314,10 +320,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 42.33,
       "MarketCoverage": 0.214,
       "MarketId": 410,
       "MarketName": "Yakima-Pasco-Rchlnd-Knnwck",
       "MarketRank": 123,
+      "MaxCpm": 42.33,
+      "MinCpm": 42.33,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -385,10 +394,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.0433333333333333333333333333,
       "MarketCoverage": 0.194,
       "MarketId": 428,
       "MarketName": "Monterey-Salinas",
       "MarketRank": 125,
+      "MaxCpm": 4.93,
+      "MinCpm": 0.66,
       "Stations": [
         {
           "Affiliation": "CBS",
@@ -549,10 +561,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 10.10875,
       "MarketCoverage": 0.177,
       "MarketId": 200,
       "MarketName": "Corpus Christi",
       "MarketRank": 129,
+      "MaxCpm": 25.00,
+      "MinCpm": 4.89,
       "Stations": [
         {
           "Affiliation": "ABC",
@@ -705,10 +720,13 @@
       "TotalStationImpressions": 66150.0
     },
     {
+      "AvgCpm": 21.85,
       "MarketCoverage": 0.136,
       "MarketId": 404,
       "MarketName": "Palm Springs",
       "MarketRank": 146,
+      "MaxCpm": 41.22,
+      "MinCpm": 2.48,
       "Stations": [
         {
           "Affiliation": "CW",
@@ -835,10 +853,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.81,
       "MarketCoverage": 0.133,
       "MarketId": 343,
       "MarketName": "Anchorage",
       "MarketRank": 148,
+      "MaxCpm": 3.81,
+      "MinCpm": 3.81,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -948,10 +969,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 5.0133333333333333333333333333,
       "MarketCoverage": 0.107,
       "MarketId": 358,
       "MarketName": "Idaho Fals-Pocatllo(Jcksn)",
       "MarketRank": 163,
+      "MaxCpm": 12.07,
+      "MinCpm": 0.53,
       "Stations": [
         {
           "Affiliation": "CBS",
@@ -1095,10 +1119,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 4.769,
       "MarketCoverage": 0.084,
       "MarketId": 317,
       "MarketName": "Quincy-Hannibal-Keokuk",
       "MarketRank": 170,
+      "MaxCpm": 16.41,
+      "MinCpm": 0.51,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -1445,10 +1472,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.8925,
       "MarketCoverage": 0.085,
       "MarketId": 364,
       "MarketName": "Rapid City",
       "MarketRank": 171,
+      "MaxCpm": 10.91,
+      "MinCpm": 0.49,
       "Stations": [
         {
           "Affiliation": "NBC",
@@ -1567,10 +1597,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 0.0,
       "MarketCoverage": 0.073,
       "MarketId": 244,
       "MarketName": "Alexandria, LA",
       "MarketRank": 179,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -1604,10 +1637,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 0.0,
       "MarketCoverage": 0.069,
       "MarketId": 334,
       "MarketName": "Jonesboro",
       "MarketRank": 181,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -1734,10 +1770,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 34.911111111111111111111111111,
       "MarketCoverage": 0.056,
       "MarketId": 360,
       "MarketName": "Twin Falls",
       "MarketRank": 193,
+      "MaxCpm": 125.00,
+      "MinCpm": 6.52,
       "Stations": [
         {
           "Affiliation": "NBC",
@@ -1907,10 +1946,13 @@
       "TotalStationImpressions": 11300.0
     },
     {
+      "AvgCpm": 20.02,
       "MarketCoverage": 0.047,
       "MarketId": 367,
       "MarketName": "Casper-Riverton",
       "MarketRank": 196,
+      "MaxCpm": 47.12,
+      "MinCpm": 1.97,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -2071,10 +2113,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.73,
       "MarketCoverage": 0.031,
       "MarketId": 345,
       "MarketName": "Fairbanks",
       "MarketRank": 202,
+      "MaxCpm": 3.73,
+      "MinCpm": 3.73,
       "Stations": [
         {
           "Affiliation": "ABC",
@@ -2159,10 +2204,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.72,
       "MarketCoverage": 0.022,
       "MarketId": 347,
       "MarketName": "Juneau",
       "MarketRank": 207,
+      "MaxCpm": 3.72,
+      "MinCpm": 3.72,
       "Stations": [
         {
           "Affiliation": "ABC",
@@ -2247,10 +2295,13 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 1290.66,
       "MarketCoverage": 0.004,
       "MarketId": 398,
       "MarketName": "Glendive",
       "MarketRank": 210,
+      "MaxCpm": 1290.66,
+      "MinCpm": 1290.66,
       "Stations": [
         {
           "Affiliation": "CBS",

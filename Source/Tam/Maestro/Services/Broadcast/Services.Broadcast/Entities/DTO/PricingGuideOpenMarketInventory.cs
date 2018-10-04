@@ -29,6 +29,9 @@ namespace Services.Broadcast.Entities.DTO
             public double TotalImpressions { get; set; }
             public double TotalStationImpressions { get; set; }
             public decimal TotalCost { get; set; }
+            public decimal MinCpm { get; set; }
+            public decimal AvgCpm { get; set; }
+            public decimal MaxCpm { get; set; }
             public List<PricingGuideStation> Stations { get; set; } = new List<PricingGuideStation>();
 
             public class PricingGuideStation

@@ -2657,7 +2657,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalDetailDto.OpenMarketPricing.CpmMin = 9.99m;
                 proposalDetailDto.OpenMarketPricing.CpmMax = 55.99m;
                 proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 100;
-                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Max;
+                proposalDetailDto.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Max;
 
                 proposalDto.Details.Add(proposalDetailDto);
 
@@ -2682,7 +2682,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalDetailDto.OpenMarketPricing.CpmMin = 123.99m;
                 proposalDetailDto.OpenMarketPricing.CpmMax = 200m;
                 proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 10;
-                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Avg;
+                proposalDetailDto.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Avg;
 
                 var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
 

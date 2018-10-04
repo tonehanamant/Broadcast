@@ -228,7 +228,8 @@
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
+    <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
+	<Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />

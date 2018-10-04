@@ -110,7 +110,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
             unityContainer.RegisterType<IPostLogEngine, PostLogEngine>();
-
+            unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
 
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
