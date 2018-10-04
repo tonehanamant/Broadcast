@@ -1826,6 +1826,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithMultipleIncludeGenreCriteria()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26020,
+                    ProposalDetailId = 9982
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
         public void MatchesProgramsUsingProgramNameFilter()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
