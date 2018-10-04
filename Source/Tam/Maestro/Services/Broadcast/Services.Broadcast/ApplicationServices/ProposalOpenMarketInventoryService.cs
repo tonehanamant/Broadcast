@@ -1047,13 +1047,19 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x => x.Genre.Id).ToList();
             dto.Markets.ForEach(market => market.Stations.ForEach(station => station.Programs.ForEach(program =>
             {
-                foreach (var id in genreIdsToInclude)
+                var hasIncludedGenre = false || genreIdsToInclude.IsEmpty();
+
+                foreach(var genre in program.Genres)
                 {
-                    if (program.Genres.All(x => x.Id != id))
+                    if (genreIdsToInclude.Contains(genre.Id))
                     {
-                        programsToExclude.Add(program);
+                        hasIncludedGenre = true;
+                        break;
                     }
                 }
+
+                if (!hasIncludedGenre)
+                    programsToExclude.Add(program);
 
                 foreach (var id in genreIdsToExclude)
                 {
