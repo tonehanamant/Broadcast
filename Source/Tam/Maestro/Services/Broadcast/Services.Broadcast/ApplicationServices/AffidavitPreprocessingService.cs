@@ -93,14 +93,22 @@ namespace Services.Broadcast.ApplicationServices
             string zipPath = WWTVSharedNetworkHelper.GetLocalErrorFolder();
             if (!zipPath.EndsWith("\\"))
                 zipPath += "\\";
-            string zipKeepingTracFileName = zipPath + "Post_KeepingTrac_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
-            string zipAffidavitFileName = zipPath + "Post_Affidavit_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
 
-            _FileService.CreateZipArchive(filePaths.Where(x=>Path.GetExtension(x).Equals(".xlsx")).ToList(), zipKeepingTracFileName);
-            _FileService.CreateZipArchive(filePaths.Where(x => Path.GetExtension(x).Equals(".csv")).ToList(), zipAffidavitFileName);
+            var strataFiles = filePaths.Where(x => Path.GetExtension(x).Equals(".xlsx")).ToList();
+            if (strataFiles.Any())
+            {
+                string strataZipFile = zipPath + "Post_Affidavit_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+                _FileService.CreateZipArchive(strataFiles, strataZipFile);
+                _UploadZipToWWTV(strataZipFile);
+            }
 
-            _UploadZipToWWTV(zipKeepingTracFileName);
-            _UploadZipToWWTV(zipAffidavitFileName);
+            var keepingTracFiles = filePaths.Where(x => Path.GetExtension(x).Equals(".csv")).ToList();
+            if (keepingTracFiles.Any())
+            {
+                string keepingTracZipFile = zipPath + "Post_KeepingTrac_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+                _FileService.CreateZipArchive(keepingTracFiles, keepingTracZipFile);
+                _UploadZipToWWTV(keepingTracZipFile);
+            }
         }
 
         private void _UploadZipToWWTV(string zipFileName)
