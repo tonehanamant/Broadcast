@@ -7,6 +7,7 @@ import { filterOpenMarketData } from 'Ducks/planning';
 // import { getPlanningGuideFiltered } from 'Ducks/planning';
 import { Row, Col, Button, Glyphicon, Form, FormGroup, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import Select from 'react-select';
+import { merge } from 'lodash';
 import PricingGuideFilterModal from '../PricingGuideFilterModal';
 
 const spotFilterOptions = [
@@ -25,6 +26,7 @@ class PricingGuideGridHeader extends Component {
     super(props);
       this.onOpenFilterModal = this.onOpenFilterModal.bind(this);
       this.applyFilters = this.applyFilters.bind(this);
+      this.onFilterSpots = this.onFilterSpots.bind(this);
   }
 
   onOpenFilterModal() {
@@ -34,9 +36,21 @@ class PricingGuideGridHeader extends Component {
     });
   }
 
-  applyFilters(filterObject) {
-    // console.log('header apply filters', filterObject);
-    this.props.filterOpenMarketData(filterObject);
+  applyFilters(filterObject, isModal) {
+    // adjust if call is from modal where SpotFilter omitted: TODO change and split in reducer?
+    let filters = filterObject;
+    if (isModal && this.props.activeOpenMarketData.Filter.SpotFilter) {
+      filters = merge(filterObject, { Filter: { SpotFilter: this.props.activeOpenMarketData.Filter.SpotFilter } });
+    }
+    // console.log('header apply filters', filterObject, filters);
+    this.props.filterOpenMarketData(filters);
+  }
+
+  onFilterSpots(value) {
+    const filterObject = this.props.activeOpenMarketData.Filter || {};
+    const filters = Object.assign({}, filterObject, { SpotFilter: value.Id });
+    // console.log('onFilterSpots', filters, filterObject);
+    this.applyFilters({ Filter: filters });
   }
 
   render() {
@@ -47,6 +61,7 @@ class PricingGuideGridHeader extends Component {
     // FOR INDICATOR - check modal specific filters active (not spot)
     const hasActiveModalFilter = activeOpenMarketData && activeOpenMarketData.Filter ?
       (activeOpenMarketData.Filter.ProgramNames || activeOpenMarketData.Filter.Affiliations || activeOpenMarketData.Filter.Markets || activeOpenMarketData.Filter.Genres || activeOpenMarketData.Filter.DayParts) : false;
+      const spotFilterValue = activeOpenMarketData && activeOpenMarketData.Filter && activeOpenMarketData.Filter.SpotFilter ? activeOpenMarketData.Filter.SpotFilter : 1;
     return (
       <div>
         <Row style={{ marginTop: '10px' }}>
@@ -64,13 +79,13 @@ class PricingGuideGridHeader extends Component {
                   name="spotFilters"
                   style={{ width: '220px' }}
                   // wrapperStyle={{ height: '18px' }}
-                  value={1}
+                  value={spotFilterValue}
                   // placeholder=""
                   disabled={!hasData}
                   options={spotFilterOptions}
                   labelKey="Display"
                   valueKey="Id"
-                  // onChange={this.onFilterSpots}
+                  onChange={this.onFilterSpots}
                   clearable={false}
                 />
               </InputGroup>

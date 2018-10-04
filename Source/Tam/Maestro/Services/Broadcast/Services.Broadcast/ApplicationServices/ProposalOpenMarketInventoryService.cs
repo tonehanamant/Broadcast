@@ -1410,6 +1410,7 @@ namespace Services.Broadcast.ApplicationServices
                     _ApplyProgramNamesFilter(station, filter);
                     _ApplyGenresFilter(station, filter);
                     _ApplyAirtimesFilter(station, filter);
+                    _ApplySpotFilter(station, filter);
                 }
             }
         }
@@ -1470,6 +1471,20 @@ namespace Services.Broadcast.ApplicationServices
                 station.Programs = station.Programs
                                           .Where(p => airtimes.Any(a => DisplayDaypart.Intersects(DaypartDto.ConvertDaypartDto(a), DaypartCache.GetDisplayDaypart(p.Daypart.Id))))
                                           .ToList();
+            }
+        }
+
+        private static void _ApplySpotFilter(
+            PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation station,
+            OpenMarketPricingGuideGridFilterDto filter)
+        {
+            var spotFilter = filter.SpotFilter;
+
+            if (spotFilter.HasValue && spotFilter.Value != OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.AllPrograms)
+            {
+                station.Programs = (spotFilter.Value == OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.ProgramWithSpots 
+                    ? station.Programs.Where(p => p.Spots > 0)
+                    : station.Programs.Where(p => p.Spots == 0)).ToList();
             }
         }
     }

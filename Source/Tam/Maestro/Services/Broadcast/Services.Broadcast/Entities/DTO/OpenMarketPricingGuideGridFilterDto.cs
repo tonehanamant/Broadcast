@@ -5,6 +5,13 @@ namespace Services.Broadcast.Entities.DTO
 {
     public class OpenMarketPricingGuideGridFilterDto
     {
+        public enum OpenMarketSpotFilter
+        {
+            AllPrograms = 1,
+            ProgramWithSpots = 2,
+            ProgramWithoutSpots = 3
+        }
+
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<string> ProgramNames { get; set; }
 
@@ -19,5 +26,8 @@ namespace Services.Broadcast.Entities.DTO
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<DaypartDto> DayParts { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public OpenMarketSpotFilter? SpotFilter { get; set; }
     }
 }

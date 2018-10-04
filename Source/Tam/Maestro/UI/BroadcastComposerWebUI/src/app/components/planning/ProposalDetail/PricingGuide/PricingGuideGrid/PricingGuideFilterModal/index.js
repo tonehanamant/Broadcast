@@ -49,7 +49,9 @@ class PricingGuideFilterModal extends Component {
 
   generateFiltersState() {
     const { activeOpenMarketData: { Filter, DisplayFilter } } = this.props;
-    const selectedFilters = keys(Filter);
+    // omit SpotFilter from modal version Filter: todo seprate in Reducer?
+    const AdjustFilter = Filter.SpotFilter ? omit(['SpotFilter'], Filter) : Filter;
+    const selectedFilters = keys(AdjustFilter);
     const filtersOptions = mapValuesWithKey((value, key) => {
       console.log();
       return filterMap[key].getInitialData(value);
@@ -58,7 +60,7 @@ class PricingGuideFilterModal extends Component {
     this.setState({
       filtersItems: defaultFiltersItems.filter(it => !selectedFilters.includes(it.Id)),
       filtersRender: defaultFiltersItems.filter(it => selectedFilters.includes(it.Id)),
-      filtersValues: mapValuesWithKey((value, key) => filterMap[key].preTransformer(Filter[key], filtersOptions[key]))(Filter),
+      filtersValues: mapValuesWithKey((value, key) => filterMap[key].preTransformer(AdjustFilter[key], filtersOptions[key]))(AdjustFilter),
       filtersOptions,
     });
   }
@@ -123,7 +125,7 @@ class PricingGuideFilterModal extends Component {
 
   handleSave() {
     const filters = this.getFiltersForSave();
-    this.props.applyFilters(filters);
+    this.props.applyFilters(filters, true);
     this.closeModal();
   }
 
