@@ -1,5 +1,24 @@
 ﻿{
   "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure",
+        "Id": 3
+      },
+      {
+        "Display": "Comedy",
+        "Id": 9
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
     "ProgramNames": [
       "Adventure Time",
       "Friends"
