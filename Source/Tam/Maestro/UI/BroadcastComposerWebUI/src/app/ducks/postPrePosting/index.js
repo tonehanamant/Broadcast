@@ -15,27 +15,27 @@ import {
   FILE_UPLOAD_FORM_UPDATE_POSTING_BOOK,
   FILE_UPLOAD_FORM_UPDATE_PLAYBACK_TYPE,
   FILE_UPLOAD_FORM_UPDATE_DEMOS,
-  CLEAR_FILE_UPLOAD_FORM,
-} from './actionTypes.js';
+  CLEAR_FILE_UPLOAD_FORM
+} from "./actionTypes.js";
 
 const initialState = {
   initialdata: {},
   post: [],
   fileEditForm: {
     Id: null,
-    FileName: 'File',
+    FileName: "File",
     Equivalized: true,
     PostingBookId: null,
     PlaybackType: null,
-    Demos: null,
+    Demos: null
   },
   fileUploadForm: {
-    FileName: 'File',
+    FileName: "File",
     Equivalized: true,
     PostingBookId: null,
     PlaybackType: null,
-    Demos: null,
-  },
+    Demos: null
+  }
 };
 
 // Reducer
@@ -46,20 +46,20 @@ export default function reducer(state = initialState, action) {
     case POST_PRE_POSTING_INITIALDATA.success:
       return {
         ...state,
-        initialdata: data.Data,
+        initialdata: data.Data
       };
 
     case POST_PRE_POSTING.success:
       return {
         ...state,
         post: data.Data,
-        postUnfiltered: data.Data, // store copy to be used by filter
+        postUnfiltered: data.Data // store copy to be used by filter
       };
 
     case FILTERED_POST_PRE_POSTING.success:
       return {
         ...state,
-        post: data,
+        post: data
       };
 
     case FILE_EDIT_FORM_UPDATE_EQUIVALIZED:
@@ -67,8 +67,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileEditForm: {
           ...state.fileEditForm,
-          Equivalized: payload.value,
-        },
+          Equivalized: payload.value
+        }
       };
 
     case FILE_EDIT_FORM_UPDATE_POSTING_BOOK:
@@ -76,8 +76,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileEditForm: {
           ...state.fileEditForm,
-          PostingBookId: payload.value,
-        },
+          PostingBookId: payload.value
+        }
       };
 
     case FILE_EDIT_FORM_UPDATE_PLAYBACK_TYPE:
@@ -85,8 +85,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileEditForm: {
           ...state.fileEditForm,
-          PlaybackType: payload.value,
-        },
+          PlaybackType: payload.value
+        }
       };
 
     case FILE_EDIT_FORM_UPDATE_DEMOS:
@@ -94,8 +94,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileEditForm: {
           ...state.fileEditForm,
-          Demos: payload.value,
-        },
+          Demos: payload.value
+        }
       };
 
     case FILE_UPLOAD_FORM_UPDATE_EQUIVALIZED:
@@ -103,8 +103,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileUploadForm: {
           ...state.fileUploadForm,
-          Equivalized: payload.value,
-        },
+          Equivalized: payload.value
+        }
       };
 
     case FILE_UPLOAD_FORM_UPDATE_POSTING_BOOK:
@@ -112,8 +112,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileUploadForm: {
           ...state.fileUploadForm,
-          PostingBookId: payload.value,
-        },
+          PostingBookId: payload.value
+        }
       };
 
     case FILE_UPLOAD_FORM_UPDATE_PLAYBACK_TYPE:
@@ -121,8 +121,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileUploadForm: {
           ...state.fileUploadForm,
-          PlaybackType: payload.value,
-        },
+          PlaybackType: payload.value
+        }
       };
 
     case FILE_UPLOAD_FORM_UPDATE_DEMOS:
@@ -130,20 +130,20 @@ export default function reducer(state = initialState, action) {
         ...state,
         fileUploadForm: {
           ...state.fileUploadForm,
-          Demos: payload.value,
-        },
+          Demos: payload.value
+        }
       };
 
     case CLEAR_FILE_UPLOAD_FORM:
       return {
         ...state,
         fileUploadForm: {
-          FileName: 'File',
+          FileName: "File",
           Equivalized: true,
           PostingBookId: null,
           PlaybackType: null,
-          Demos: null,
-        },
+          Demos: null
+        }
       };
 
     case POST_PRE_POSTING_FILE_EDIT.success:
@@ -155,8 +155,8 @@ export default function reducer(state = initialState, action) {
           Equivalized: data.Data.Equivalized,
           PostingBookId: data.Data.PostingBookId,
           PlaybackType: data.Data.PlaybackType,
-          Demos: data.Data.Demos,
-        },
+          Demos: data.Data.Demos
+        }
       };
 
     default:
@@ -167,120 +167,120 @@ export default function reducer(state = initialState, action) {
 // Action Creators
 export const receivePostPrePostingInitialData = data => ({
   type: POST_PRE_POSTING_INITIALDATA.success,
-  data,
+  data
 });
 
 export const receivePostPrePostingFileEdit = data => ({
   type: POST_PRE_POSTING_FILE_EDIT.success,
-  data,
+  data
 });
 
 export const receivePostPrePostingFileEditSave = data => ({
   type: POST_PRE_POSTING_FILE_SAVE.success,
-  data,
+  data
 });
 
 export const receiveFilteredPostPrePosting = data => ({
   type: FILTERED_POST_PRE_POSTING.success,
-  data,
+  data
 });
 
 export const receivePostPrePosting = data => ({
   type: POST_PRE_POSTING.success,
-  data,
+  data
 });
 
 export const getPostPrePostingInitialData = () => ({
   type: POST_PRE_POSTING_INITIALDATA.request,
-  payload: {},
+  payload: {}
 });
 
 export const getPostPrePosting = () => ({
   type: POST_PRE_POSTING.request,
-  payload: {},
+  payload: {}
 });
 
 export const getPostPrePostingFiltered = query => ({
   type: FILTERED_POST_PRE_POSTING.request,
-  payload: query,
+  payload: query
 });
 
 export const updateEquivalized = value => ({
   type: FILE_EDIT_FORM_UPDATE_EQUIVALIZED,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updatePostingBook = value => ({
   type: FILE_EDIT_FORM_UPDATE_POSTING_BOOK,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updatePlaybackType = value => ({
   type: FILE_EDIT_FORM_UPDATE_PLAYBACK_TYPE,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updateDemos = value => ({
   type: FILE_EDIT_FORM_UPDATE_DEMOS,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updateUploadEquivalized = value => ({
   type: FILE_UPLOAD_FORM_UPDATE_EQUIVALIZED,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updateUploadPostingBook = value => ({
   type: FILE_UPLOAD_FORM_UPDATE_POSTING_BOOK,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updateUploadPlaybackType = value => ({
   type: FILE_UPLOAD_FORM_UPDATE_PLAYBACK_TYPE,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const updateUploadDemos = value => ({
   type: FILE_UPLOAD_FORM_UPDATE_DEMOS,
   payload: {
-    value,
-  },
+    value
+  }
 });
 
 export const clearFileUploadForm = () => ({
-  type: CLEAR_FILE_UPLOAD_FORM,
+  type: CLEAR_FILE_UPLOAD_FORM
 });
 
 export const deletePostPrePosting = id => ({
   type: DELETE_POST_PRE_POSTING.request,
-  payload: id,
+  payload: id
 });
 
 export const getPostPrePostingFileEdit = id => ({
   type: POST_PRE_POSTING_FILE_EDIT.request,
-  payload: id,
+  payload: id
 });
 
 export const savePostPrePostingFileEdit = params => ({
   type: POST_PRE_POSTING_FILE_SAVE.request,
-  payload: params,
+  payload: params
 });
 
 export const uploadPostPrePostingFile = params => ({
   type: POST_PRE_POSTING_FILE_UPLOAD.request,
-  payload: params,
+  payload: params
 });

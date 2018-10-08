@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 
 /* eslint-disable react/prefer-stateless-function */
 export default class DateMDYYYY extends Component {
@@ -9,15 +9,10 @@ export default class DateMDYYYY extends Component {
   // }
 
   render() {
-    return (
-			<span>{ moment(this.props.date).format('M/D/YYYY') }</span>
-    );
-	}
+    return <span>{moment(this.props.date).format("M/D/YYYY")}</span>;
+  }
 }
 
 DateMDYYYY.propTypes = {
-  date: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };

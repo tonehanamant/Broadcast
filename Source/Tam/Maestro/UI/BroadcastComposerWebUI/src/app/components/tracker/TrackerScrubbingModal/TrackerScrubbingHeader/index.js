@@ -1,13 +1,31 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Row, Col, ControlLabel, FormGroup, FormControl, Badge, Button, Glyphicon, Panel, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { Grid } from 'react-redux-grid';
-import CSSModules from 'react-css-modules';
-import Select from 'react-select';
-import DateMDYYYY from 'Components/shared/TextFormatters/DateMDYYYY';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import {
+  Row,
+  Col,
+  ControlLabel,
+  FormGroup,
+  FormControl,
+  Button,
+  Glyphicon,
+  Panel,
+  Tooltip,
+  OverlayTrigger
+} from "react-bootstrap";
+import { Grid } from "react-redux-grid";
+import CSSModules from "react-css-modules";
+import Select from "react-select";
+import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
 
-import styles from './index.scss';
-import { getDateInFormat } from '../../../../utils/dateFormatter';
+import styles from "./index.scss";
+import { getDateInFormat } from "../../../../utils/dateFormatter";
+
+const generateMarketLabael = (marketGroupId, markets) => {
+  if (marketGroupId === 1) {
+    return "All";
+  }
+  return markets.length ? "Custom" : "None";
+};
 
 export class TrackerScrubbingHeader extends Component {
   componentDidMount() {
@@ -17,52 +35,58 @@ export class TrackerScrubbingHeader extends Component {
     // this.setState({ dates: dateInProperFormat });
   }
   render() {
-    const { advertiser, guaranteedDemo, Id, marketId, name, notes, secondaryDemo } = this.props;
-    const isCustomMarket = this.props.marketId === 255;
+    const {
+      advertiser,
+      guaranteedDemo,
+      Id,
+      marketGroupId,
+      name,
+      notes,
+      secondaryDemo,
+      market
+    } = this.props;
     const secondaryDemoOptions = [];
-    let marketLabel;
-    console.log(this.props);
-    if (isCustomMarket) {
-      marketLabel = 'Custom';
-    } else {
-      marketLabel = marketId === 0 ? 'All' : `Top ${marketId}`;
-    }
+    const marketLabel = generateMarketLabael(marketGroupId, market);
 
-    secondaryDemo.forEach((item) => {
+    secondaryDemo.forEach(item => {
       const option = {};
       option.Display = item;
       option.Id = item;
       secondaryDemoOptions.push(option);
     });
 
-    const stateKey = 'TrackerScrubbingDetailsGrid';
+    const stateKey = "TrackerScrubbingDetailsGrid";
 
     const columns = [
       {
-        name: 'ID',
-        dataIndex: 'Sequence',
-        width: '10%',
+        name: "ID",
+        dataIndex: "Sequence",
+        width: "10%"
       },
       {
-        name: 'Flight',
-        dataIndex: 'FlightStartDate',
-        width: '40%',
+        name: "Flight",
+        dataIndex: "FlightStartDate",
+        width: "40%",
         renderer: ({ row }) => {
           let hasTip = false;
-          const checkFlightWeeksTip = (flightWeeks) => {
-            if (flightWeeks.length < 1) return '';
+          const checkFlightWeeksTip = flightWeeks => {
+            if (flightWeeks.length < 1) return "";
             const tip = [<div key="flight">Hiatus Weeks</div>];
             flightWeeks.forEach((flight, idx) => {
               if (flight.IsHiatus) {
                 hasTip = true;
                 const key = `flight_ + ${idx}`;
-                tip.push(<div key={key}><DateMDYYYY date={flight.StartDate} /><span> - </span><DateMDYYYY date={flight.EndDate} /></div>);
+                tip.push(
+                  <div key={key}>
+                    <DateMDYYYY date={flight.StartDate} />
+                    <span> - </span>
+                    <DateMDYYYY date={flight.EndDate} />
+                  </div>
+                );
               }
             });
             const display = tip;
-            return (
-              <Tooltip id="flightstooltip">{display}</Tooltip>
-            );
+            return <Tooltip id="flightstooltip">{display}</Tooltip>;
           };
           const tooltip = checkFlightWeeksTip(row.FlightWeeks);
           const start = getDateInFormat(row.FlightStartDate);
@@ -71,79 +95,82 @@ export class TrackerScrubbingHeader extends Component {
           return (
             <div>
               <span>{display}</span>
-              { hasTip &&
-              <OverlayTrigger placement="top" overlay={tooltip}>
-              <Button bsStyle="link"><Glyphicon style={{ color: 'black' }} glyph="info-sign" /></Button>
-              </OverlayTrigger>
-              }
+              {hasTip && (
+                <OverlayTrigger placement="top" overlay={tooltip}>
+                  <Button bsStyle="link">
+                    <Glyphicon style={{ color: "black" }} glyph="info-sign" />
+                  </Button>
+                </OverlayTrigger>
+              )}
             </div>
           );
-        },
+        }
       },
       {
-        name: 'Daypart',
-        dataIndex: 'DayPart',
-        width: '30%',
+        name: "Daypart",
+        dataIndex: "DayPart",
+        width: "30%"
       },
       {
-        name: 'Spot Length',
-        dataIndex: 'SpotLength',
-        width: '20%',
-      },
-  ];
+        name: "Spot Length",
+        dataIndex: "SpotLength",
+        width: "20%"
+      }
+    ];
 
-  const plugins = {
-    COLUMN_MANAGER: {
-      resizable: false,
-      moveable: false,
-      sortable: {
+    const plugins = {
+      COLUMN_MANAGER: {
+        resizable: false,
+        moveable: false,
+        sortable: {
           enabled: false,
-          method: 'local',
-      },
-    },
-  };
+          method: "local"
+        }
+      }
+    };
 
-  const grid = {
-    columns,
-    plugins,
-    stateKey,
-  };
+    const grid = {
+      columns,
+      plugins,
+      stateKey
+    };
 
     return (
       <div>
         <Row>
-          <Col md={12}><ControlLabel><strong>Proposal ID : {Id}</strong></ControlLabel></Col>
+          <Col md={12}>
+            <ControlLabel>
+              <strong>Proposal ID : {Id}</strong>
+            </ControlLabel>
+          </Col>
         </Row>
         <Row>
           <Col md={6}>
             <Row>
               <Col md={4}>
                 <FormGroup controlId="proposalName">
-                  <ControlLabel><strong>Proposal Name</strong></ControlLabel>
+                  <ControlLabel>
+                    <strong>Proposal Name</strong>
+                  </ControlLabel>
                   <FormControl.Static>{name}</FormControl.Static>
                 </FormGroup>
               </Col>
               <Col md={4}>
                 <FormGroup controlId="advertiser">
-                  <ControlLabel><strong>Advertiser</strong></ControlLabel>
+                  <ControlLabel>
+                    <strong>Advertiser</strong>
+                  </ControlLabel>
                   <FormControl.Static>{advertiser}</FormControl.Static>
                 </FormGroup>
               </Col>
               <Col md={3}>
                 <FormGroup controlId="proposalMarket">
-                  <ControlLabel><strong>Market</strong></ControlLabel>
-                  <div style={{ overflow: 'hidden' }} href="">
-                    <span className="pull-left "style={{ width: '100%' }} >
+                  <ControlLabel>
+                    <strong>Market</strong>
+                  </ControlLabel>
+                  <div style={{ overflow: "hidden" }} href="">
+                    <span className="pull-left " style={{ width: "100%" }}>
                       <FormControl.Static>{marketLabel}</FormControl.Static>
-                      <Badge style={{
-                        display: isCustomMarket ? 'block' : 'none',
-                        position: 'absolute',
-                        left: '50%',
-                        top: '45%',
-                        }}
-                      >
-                      i
-                      </Badge>
                     </span>
                   </div>
                 </FormGroup>
@@ -152,18 +179,23 @@ export class TrackerScrubbingHeader extends Component {
             <Row>
               <Col md={12}>
                 <Panel defaultExpanded>
-                  <Panel.Heading style={{ padding: '0' }}>
+                  <Panel.Heading style={{ padding: "0" }}>
                     <Panel.Title>
-                    <Panel.Toggle>
-                      <Button bsStyle="link" bsSize="xsmall">
-                        <Glyphicon glyph="triangle-bottom" /> Proposal Detail
-                      </Button>
-                    </Panel.Toggle>
+                      <Panel.Toggle>
+                        <Button bsStyle="link" bsSize="xsmall">
+                          <Glyphicon glyph="triangle-bottom" /> Proposal Detail
+                        </Button>
+                      </Panel.Toggle>
                     </Panel.Title>
                   </Panel.Heading>
                   <Panel.Collapse>
-                    <Panel.Body style={{ padding: '10px' }}>
-                      <Grid {...grid} data={this.props.details} store={this.context.store} height={false} />
+                    <Panel.Body style={{ padding: "10px" }}>
+                      <Grid
+                        {...grid}
+                        data={this.props.details}
+                        store={this.context.store}
+                        height={false}
+                      />
                     </Panel.Body>
                   </Panel.Collapse>
                 </Panel>
@@ -174,13 +206,20 @@ export class TrackerScrubbingHeader extends Component {
             <Row>
               <Col md={4}>
                 <FormGroup controlId="guaranteedDemo">
-                  <ControlLabel><strong>Guaranteed Demo</strong></ControlLabel>
+                  <ControlLabel>
+                    <strong>Guaranteed Demo</strong>
+                  </ControlLabel>
                   <FormControl.Static>{guaranteedDemo}</FormControl.Static>
                 </FormGroup>
               </Col>
               <Col md={4}>
-                <FormGroup id="proposal_secondary_demo" controlId="proposalSecondaryDemo">
-                  <ControlLabel><strong>Secondary Demo</strong></ControlLabel>
+                <FormGroup
+                  id="proposal_secondary_demo"
+                  controlId="proposalSecondaryDemo"
+                >
+                  <ControlLabel>
+                    <strong>Secondary Demo</strong>
+                  </ControlLabel>
                   <Select
                     placeholder="--"
                     name="proposalSecondaryDemo"
@@ -195,7 +234,7 @@ export class TrackerScrubbingHeader extends Component {
               <Col md={4}>
                 <FormGroup controlId="proposalNotes">
                   <ControlLabel>Notes</ControlLabel>
-                  <FormControl.Static>{notes || '--'}</FormControl.Static>
+                  <FormControl.Static>{notes || "--"}</FormControl.Static>
                 </FormGroup>
               </Col>
             </Row>
@@ -208,19 +247,28 @@ export class TrackerScrubbingHeader extends Component {
 
 TrackerScrubbingHeader.defaultProps = {
   isReadOnly: true,
+  notes: undefined,
+  secondaryDemo: [],
+  name: "",
+  marketGroupId: null,
+  market: null,
+  Id: undefined,
+  guaranteedDemo: undefined,
+  advertiser: undefined,
+  details: []
 };
 
 TrackerScrubbingHeader.propTypes = {
-  advertiser: PropTypes.string.isRequired,
-  details: PropTypes.array.isRequired,
-  guaranteedDemo: PropTypes.string.isRequired,
-  Id: PropTypes.number.isRequired,
+  advertiser: PropTypes.string,
+  details: PropTypes.array,
+  guaranteedDemo: PropTypes.string,
+  Id: PropTypes.number,
   isReadOnly: PropTypes.bool,
-  market: PropTypes.array.isRequired,
-  marketId: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  notes: PropTypes.string.isRequired,
-  secondaryDemo: PropTypes.array.isRequired,
+  market: PropTypes.array,
+  marketGroupId: PropTypes.number,
+  name: PropTypes.string,
+  notes: PropTypes.string,
+  secondaryDemo: PropTypes.array
 };
 
 export default CSSModules(TrackerScrubbingHeader, styles);

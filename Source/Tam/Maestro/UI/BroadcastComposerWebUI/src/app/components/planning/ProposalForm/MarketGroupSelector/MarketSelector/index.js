@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import { sortBy } from 'lodash';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import { ListGroup, ListGroupItem, Button, Well } from 'react-bootstrap/lib';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import CSSModules from "react-css-modules";
+import { sortBy } from "lodash";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { ListGroup, ListGroupItem, Button, Well } from "react-bootstrap/lib";
 
-import styles from './index.scss';
+import styles from "./index.scss";
 
 class MarketSelector extends Component {
   constructor(props) {
@@ -26,19 +26,23 @@ class MarketSelector extends Component {
 
       const { selectedMarkets, onMarketsSelectionChange } = this.props;
       if (newMarket.Count) {
-        const marketListWithGroup = selectedMarkets.filter(market => market && market.Count === undefined);
+        const marketListWithGroup = selectedMarkets.filter(
+          market => market && market.Count === undefined
+        );
         marketListWithGroup.unshift(newMarket);
         onMarketsSelectionChange(marketListWithGroup, this.props.name);
       } else if (!selectedMarkets.some(market => market.Id === newMarket.Id)) {
-          const marketListWithSingle = [...selectedMarkets, newMarket];
-          onMarketsSelectionChange(marketListWithSingle, this.props.name);
+        const marketListWithSingle = [...selectedMarkets, newMarket];
+        onMarketsSelectionChange(marketListWithSingle, this.props.name);
       }
     }
   }
 
   onMarketExcluded(marketId) {
     const { selectedMarkets, onMarketsSelectionChange } = this.props;
-    const filteredSelectedMarkets = selectedMarkets.filter(market => market && market.Id !== marketId);
+    const filteredSelectedMarkets = selectedMarkets.filter(
+      market => market && market.Id !== marketId
+    );
     onMarketsSelectionChange(filteredSelectedMarkets, this.props.name);
   }
 
@@ -49,8 +53,8 @@ class MarketSelector extends Component {
   render() {
     const { isReadOnly, selectedMarkets } = this.props;
     let marketCount = 0;
-    const sortedList = sortBy(selectedMarkets, ['Display']);
-    const marketList = sortedList.map((market) => {
+    const sortedList = sortBy(selectedMarkets, ["Display"]);
+    const marketList = sortedList.map(market => {
       if (market) {
         marketCount += market.Count ? market.Count : 1;
 
@@ -58,7 +62,7 @@ class MarketSelector extends Component {
           <ListGroupItem key={market.Id}>
             <Button
               className="close pull-left"
-              style={{ marginRight: '5px' }}
+              style={{ marginRight: "5px" }}
               disabled={isReadOnly}
               onClick={() => this.onMarketExcluded(market.Id)}
             >
@@ -83,12 +87,16 @@ class MarketSelector extends Component {
           <span className="glyphicon glyphicon-trash pull-right" />
         </Button>
 
-        <span style={{ fontSize: '18px' }}>{this.props.name} ({marketCount})</span>
+        <span style={{ fontSize: "18px" }}>
+          {this.props.name} ({marketCount})
+        </span>
 
         <Well>
           <Typeahead
             multiple
-            ref={(ref) => { this.typeahead = ref; }}
+            ref={ref => {
+              this.typeahead = ref;
+            }}
             placeholder="Type to add..."
             options={this.typeaheadOptions}
             disabled={isReadOnly}
@@ -98,9 +106,7 @@ class MarketSelector extends Component {
 
           <br />
 
-          <ListGroup>
-            {marketList}
-          </ListGroup>
+          <ListGroup>{marketList}</ListGroup>
         </Well>
       </div>
     );
@@ -110,25 +116,29 @@ class MarketSelector extends Component {
 MarketSelector.propTypes = {
   name: PropTypes.string.isRequired,
 
-  markets: PropTypes.arrayOf(PropTypes.shape({
-    Id: PropTypes.number,
-    Display: PropTypes.string,
-  })),
+  markets: PropTypes.arrayOf(
+    PropTypes.shape({
+      Id: PropTypes.number,
+      Display: PropTypes.string
+    })
+  ),
 
-  selectedMarkets: PropTypes.arrayOf(PropTypes.shape({
-    Id: PropTypes.number,
-    Display: PropTypes.string,
-  })),
+  selectedMarkets: PropTypes.arrayOf(
+    PropTypes.shape({
+      Id: PropTypes.number,
+      Display: PropTypes.string
+    })
+  ),
 
   onMarketsSelectionChange: PropTypes.func,
-  isReadOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };
 
 MarketSelector.defaultProps = {
   markets: [],
   selectedMarkets: [],
   onMarketsSelectionChange: null,
-  isReadOnly: false,
+  isReadOnly: false
 };
 
 export default CSSModules(MarketSelector, styles);

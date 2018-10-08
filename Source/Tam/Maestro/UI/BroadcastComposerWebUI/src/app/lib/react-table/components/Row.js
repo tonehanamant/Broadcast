@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { ContextMenuRow } from './ConextMenu/index';
-import { RowChildrenProps } from '../propTypes/propTypes';
+import React from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import { ContextMenuRow } from "./ConextMenu/index";
+import { RowChildrenProps } from "../propTypes/propTypes";
 
-function Row({
-  children, className, isRender, rowInfo, ...rest
-}) {
+function Row({ children, className, isRender, rowInfo, ...rest }) {
   return (
-    <ContextMenuRow
-      isRender={isRender}
-      row={rowInfo}
-    >
-      <div className={classnames('rt-tr-group', className)} role="rowgroup" {...rest}>
+    <ContextMenuRow isRender={isRender} row={rowInfo}>
+      <div
+        className={classnames("rt-tr-group", className)}
+        role="rowgroup"
+        {...rest}
+      >
         {children}
       </div>
     </ContextMenuRow>
@@ -22,14 +21,14 @@ function Row({
 Row.defaultProps = {
   isRender: false,
   rowInfo: null,
-  className: '',
+  className: ""
 };
 
 Row.propTypes = {
   children: RowChildrenProps.isRequired,
   className: PropTypes.string,
   rowInfo: PropTypes.objectOf(PropTypes.shape),
-  isRender: PropTypes.bool,
+  isRender: PropTypes.bool
 };
 
 export default Row;

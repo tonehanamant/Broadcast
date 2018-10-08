@@ -1,9 +1,16 @@
-/* eslint-disable no-undef */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { Row, Col, Form, FormGroup, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
-import Select from 'react-select';
+import {
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  ControlLabel,
+  DropdownButton,
+  MenuItem
+} from "react-bootstrap";
+import Select from "react-select";
 
 export default class ProposalHeaderActions extends Component {
   constructor(props) {
@@ -18,7 +25,10 @@ export default class ProposalHeaderActions extends Component {
   }
 
   onChangeStatus(value) {
-    this.props.updateProposalEditForm({ key: 'Status', value: value ? value.Id : null });
+    this.props.updateProposalEditForm({
+      key: "Status",
+      value: value ? value.Id : null
+    });
   }
 
   onSaveVersion() {
@@ -31,62 +41,66 @@ export default class ProposalHeaderActions extends Component {
 
   onDeleteProposal() {
     this.props.toggleModal({
-      modal: 'confirmModal',
+      modal: "confirmModal",
       active: true,
       properties: {
-        titleText: 'Delete Proposal',
-        bodyText: 'Are you sure you want to delete this proposal? Any reserved inventory will be lost.',
-        closeButtonText: 'Cancel',
-        actionButtonText: 'Continue',
-        actionButtonBsStyle: 'danger',
+        titleText: "Delete Proposal",
+        bodyText:
+          "Are you sure you want to delete this proposal? Any reserved inventory will be lost.",
+        closeButtonText: "Cancel",
+        actionButtonText: "Continue",
+        actionButtonBsStyle: "danger",
         action: () => this.props.deleteProposal(this.props.proposalEditForm.Id),
-        dismiss: () => {},
-      },
+        dismiss: () => {}
+      }
     });
   }
 
   onUnorder() {
     this.props.toggleModal({
-      modal: 'confirmModal',
+      modal: "confirmModal",
       active: true,
       properties: {
-        titleText: 'Unorder Proposal',
-        bodyText: 'Operation will Archive contracted version of the proposal and create new version for editing. Select Continue to complete. Select Cancel to cancel.',
-        closeButtonText: 'Cancel',
-        actionButtonText: 'Continue',
-        actionButtonBsStyle: 'warning',
-        action: () => this.props.unorderProposal(this.props.proposalEditForm.Id),
-        dismiss: () => {},
-      },
+        titleText: "Unorder Proposal",
+        bodyText:
+          "Operation will Archive contracted version of the proposal and create new version for editing. Select Continue to complete. Select Cancel to cancel.",
+        closeButtonText: "Cancel",
+        actionButtonText: "Continue",
+        actionButtonBsStyle: "warning",
+        action: () =>
+          this.props.unorderProposal(this.props.proposalEditForm.Id),
+        dismiss: () => {}
+      }
     });
   }
 
   onGenerateSCX() {
     const { proposal, toggleModal } = this.props;
     toggleModal({
-      modal: 'confirmModal',
+      modal: "confirmModal",
       active: true,
       properties: {
-        titleText: 'Generate SCX file',
-        bodyText: 'Operation will produce SCX files for all Open Market Inventory in each Proposal Detail.',
-        bodyList: [
-          'Select Continue to proceed',
-          'Select Cancel to cancel',
-        ],
-        closeButtonText: 'Cancel',
-        actionButtonText: 'Continue',
-        actionButtonBsStyle: 'success',
+        titleText: "Generate SCX file",
+        bodyText:
+          "Operation will produce SCX files for all Open Market Inventory in each Proposal Detail.",
+        bodyList: ["Select Continue to proceed", "Select Cancel to cancel"],
+        closeButtonText: "Cancel",
+        actionButtonText: "Continue",
+        actionButtonBsStyle: "success",
         href: `${__API__}Proposals/generate_scx_archive/${proposal.Id}`,
         action: () => {},
-        dismiss: () => {},
-      },
+        dismiss: () => {}
+      }
     });
   }
 
   render() {
     const { initialdata, proposalEditForm, isReadOnly } = this.props;
     const copyStatuses = [...initialdata.Statuses];
-    const statusOptions = (proposalEditForm.Status !== 4) ? copyStatuses.filter(item => item.Id !== 4) : copyStatuses;
+    const statusOptions =
+      proposalEditForm.Status !== 4
+        ? copyStatuses.filter(item => item.Id !== 4)
+        : copyStatuses;
 
     return (
       <Row>
@@ -112,22 +126,55 @@ export default class ProposalHeaderActions extends Component {
           </Form>
         </Col>
         <Col md={2}>
-          <div style={{ float: 'right' }}>
-            { !isReadOnly &&
-              <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
-                  <MenuItem eventKey="1" onClick={this.onSaveVersion}>Save As Version</MenuItem>
-                  <MenuItem eventKey="2" onClick={this.onSwitchVersions}>Switch Version</MenuItem>
-                  <MenuItem eventKey="3" onClick={this.onDeleteProposal}>Delete Proposal</MenuItem>
-
+          <div style={{ float: "right" }}>
+            {!isReadOnly && (
+              <DropdownButton
+                bsStyle="success"
+                title={
+                  <span
+                    className="glyphicon glyphicon-option-horizontal"
+                    aria-hidden="true"
+                  />
+                }
+                noCaret
+                pullRight
+                id="header_actions"
+              >
+                <MenuItem eventKey="1" onClick={this.onSaveVersion}>
+                  Save As Version
+                </MenuItem>
+                <MenuItem eventKey="2" onClick={this.onSwitchVersions}>
+                  Switch Version
+                </MenuItem>
+                <MenuItem eventKey="3" onClick={this.onDeleteProposal}>
+                  Delete Proposal
+                </MenuItem>
               </DropdownButton>
-            }
-            { isReadOnly &&
-              <DropdownButton bsStyle="success" title={<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />} noCaret pullRight id="header_actions">
-                  <MenuItem eventKey="1" onClick={this.onSwitchVersions}>Switch Version</MenuItem>
-                  <MenuItem eventKey="2" onClick={this.onUnorder}>Unorder</MenuItem>
-                  <MenuItem eventKey="3" onClick={this.onGenerateSCX}>Generate SCX</MenuItem>
+            )}
+            {isReadOnly && (
+              <DropdownButton
+                bsStyle="success"
+                title={
+                  <span
+                    className="glyphicon glyphicon-option-horizontal"
+                    aria-hidden="true"
+                  />
+                }
+                noCaret
+                pullRight
+                id="header_actions"
+              >
+                <MenuItem eventKey="1" onClick={this.onSwitchVersions}>
+                  Switch Version
+                </MenuItem>
+                <MenuItem eventKey="2" onClick={this.onUnorder}>
+                  Unorder
+                </MenuItem>
+                <MenuItem eventKey="3" onClick={this.onGenerateSCX}>
+                  Generate SCX
+                </MenuItem>
               </DropdownButton>
-            }
+            )}
           </div>
         </Col>
       </Row>
@@ -149,5 +196,5 @@ ProposalHeaderActions.propTypes = {
   saveProposalAsVersion: PropTypes.func.isRequired,
   unorderProposal: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired
 };

@@ -1,9 +1,8 @@
-import moment from 'moment';
-import update from 'immutability-helper';
+import moment from "moment";
+import update from "immutability-helper";
 
 // Actions
-import * as ACTIONS from './actionTypes.js';
-
+import * as ACTIONS from "./actionTypes.js";
 
 const initialState = {
   initialdata: {},
@@ -57,14 +56,14 @@ const initialState = {
     TotalImpressionsPercent: 0,
     ValidationWarning: null,
     Version: null,
-    VersionId: 0,
+    VersionId: 0
   },
   proposalEditForm: {},
   versions: [],
   proposalValidationStates: {
     FormInvalid: false,
     DetailInvalid: false,
-    DetailGridsInvalid: false,
+    DetailGridsInvalid: false
   },
   genres: [],
   isGenresLoading: false,
@@ -73,7 +72,7 @@ const initialState = {
   showTypes: [],
   isShowTypesLoading: false,
   isISCIEdited: false,
-  isGridCellEdited: false,
+  isGridCellEdited: false
 };
 
 initialState.proposalEditForm = { ...initialState.proposal };
@@ -83,62 +82,62 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
-     // PLANNING PROPOSALS  DATA
-     case ACTIONS.RECEIVE_PROPOSALS:
-     return {
-       ...state,
-       planningProposals: data.Data,
-       filteredPlanningProposals: data.Data,
-     };
+    // PLANNING PROPOSALS  DATA
+    case ACTIONS.RECEIVE_PROPOSALS:
+      return {
+        ...state,
+        planningProposals: data.Data,
+        filteredPlanningProposals: data.Data
+      };
 
-     case ACTIONS.FILTERED_PLANNING_PROPOSALS.success:
-     return {
-       ...state,
-       planningProposals: data,
-     };
+    case ACTIONS.FILTERED_PLANNING_PROPOSALS.success:
+      return {
+        ...state,
+        planningProposals: data
+      };
 
     // PROPOSAL INITIAL DATA
     case ACTIONS.RECEIVE_PROPOSAL_INITIALDATA:
       return {
         ...state,
-        initialdata: data.Data,
+        initialdata: data.Data
       };
 
     // PROPOSAL LOCK UNLOCK
     case ACTIONS.RECEIVE_PROPOSAL_LOCK:
-    return {
-      ...state,
-      proposalLock: data.Data,
-    };
+      return {
+        ...state,
+        proposalLock: data.Data
+      };
 
     // PROPOSAL
     case ACTIONS.RECEIVE_PROPOSAL:
       return {
         ...state,
         proposal: data.Data,
-        proposalEditForm: data.Data,
+        proposalEditForm: data.Data
       };
 
     // PROPOSAL VERSIONS
     case ACTIONS.RECEIVE_PROPOSAL_VERSIONS:
       return {
         ...state,
-        versions: data.Data,
+        versions: data.Data
       };
 
     case ACTIONS.RECEIVE_PROPOSAL_VERSION:
       return {
         ...state,
         proposal: data.Data,
-        proposalEditForm: data.Data,
+        proposalEditForm: data.Data
       };
 
     case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM:
       return Object.assign({}, state, {
         proposalEditForm: {
           ...state.proposalEditForm,
-          [payload.key]: payload.value,
-        },
+          [payload.key]: payload.value
+        }
       });
 
     case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL: {
@@ -155,12 +154,12 @@ export default function reducer(state = initialState, action) {
             // },
             ...state.proposalEditForm.Details.slice(0, detailIndex),
             {
-                ...state.proposalEditForm.Details[detailIndex],
-                [payload.key]: payload.value,
+              ...state.proposalEditForm.Details[detailIndex],
+              [payload.key]: payload.value
             },
-            ...state.proposalEditForm.Details.slice(detailIndex + 1),
-          ],
-        },
+            ...state.proposalEditForm.Details.slice(detailIndex + 1)
+          ]
+        }
       });
     }
 
@@ -169,8 +168,10 @@ export default function reducer(state = initialState, action) {
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
       const quarterIndex = payload.quarterIndex;
       const weekIndex = payload.weekIndex;
-      let rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(row => row._key === payload.row);
-      if (rowIndex === -1) rowIndex = payload.row.replace(/row-/, '');
+      let rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(
+        row => row._key === payload.row
+      );
+      if (rowIndex === -1) rowIndex = payload.row.replace(/row-/, "");
 
       let newState = { ...state };
 
@@ -182,17 +183,21 @@ export default function reducer(state = initialState, action) {
                 Quarters: {
                   [quarterIndex]: {
                     [payload.key]: { $set: payload.value },
-                    DistributeGoals: { $set: (payload.key === 'ImpressionGoal' || payload.key === 'Impressions') },
-                  },
+                    DistributeGoals: {
+                      $set:
+                        payload.key === "ImpressionGoal" ||
+                        payload.key === "Impressions"
+                    }
+                  }
                 },
                 GridQuarterWeeks: {
                   [rowIndex]: {
-                    [payload.key]: { $set: payload.value },
-                  },
-                },
-              },
-            },
-          },
+                    [payload.key]: { $set: payload.value }
+                  }
+                }
+              }
+            }
+          }
         });
       } else if (quarterIndex !== null && weekIndex !== null) {
         newState = update(state, {
@@ -204,19 +209,19 @@ export default function reducer(state = initialState, action) {
                     DistributeGoals: { $set: false },
                     Weeks: {
                       [weekIndex]: {
-                        [payload.key]: { $set: payload.value },
-                      },
-                    },
-                  },
+                        [payload.key]: { $set: payload.value }
+                      }
+                    }
+                  }
                 },
                 GridQuarterWeeks: {
                   [rowIndex]: {
-                    [payload.key]: { $set: payload.value },
-                  },
-                },
-              },
-            },
-          },
+                    [payload.key]: { $set: payload.value }
+                  }
+                }
+              }
+            }
+          }
         });
       }
 
@@ -228,11 +233,8 @@ export default function reducer(state = initialState, action) {
         ...state,
         proposalEditForm: {
           ...state.proposalEditForm,
-          Details: [
-            ...state.proposalEditForm.Details,
-            payload,
-          ],
-        },
+          Details: [...state.proposalEditForm.Details, payload]
+        }
       };
     }
 
@@ -243,9 +245,11 @@ export default function reducer(state = initialState, action) {
         proposalEditForm: {
           ...state.proposalEditForm,
           Details: [
-            ...state.proposalEditForm.Details.filter((item, index) => index !== detailIndex),
-          ],
-        },
+            ...state.proposalEditForm.Details.filter(
+              (item, index) => index !== detailIndex
+            )
+          ]
+        }
       });
     }
 
@@ -268,77 +272,78 @@ export default function reducer(state = initialState, action) {
           TotalImpressions: data.Data.TotalImpressions,
           TargetImpressions: data.Data.TargetImpressions,
           TotalImpressionsPercent: data.Data.TotalImpressionsPercent,
-          TotalImpressionsMarginAchieved: data.Data.TotalImpressionsMarginAchieved,
+          TotalImpressionsMarginAchieved:
+            data.Data.TotalImpressionsMarginAchieved,
           TargetUnits: data.Data.TargetUnits,
           SpotLengths: data.Data.SpotLengths,
           FlightStartDate: data.Data.FlightStartDate,
           FlightEndDate: data.Data.FlightEndDate,
           FlightWeeks: data.Data.FlightWeeks,
-          Details: data.Data.Details,
-        },
+          Details: data.Data.Details
+        }
       };
 
     case ACTIONS.SET_PROPOSAL_VALIDATION_STATE:
       return Object.assign({}, state, {
         proposalValidationStates: {
           ...state.proposalValidationStates,
-          [payload.type]: payload.state,
-        },
+          [payload.type]: payload.state
+        }
       });
 
     case ACTIONS.RESTORE_PLANNING_PROPOSAL: {
       return {
         ...state,
-        planning: payload,
+        planning: payload
       };
     }
 
     case ACTIONS.TOGGLE_GENRE_LOADING: {
       return {
         ...state,
-        isGenresLoading: !state.isGenresLoading,
+        isGenresLoading: !state.isGenresLoading
       };
     }
 
     case ACTIONS.RECEIVE_GENRES: {
       return {
         ...state,
-        genres: payload,
+        genres: payload
       };
     }
 
     case ACTIONS.TOGGLE_PROGRAM_LOADING: {
       return {
         ...state,
-        isProgramsLoading: !state.isProgramsLoading,
+        isProgramsLoading: !state.isProgramsLoading
       };
     }
 
     case ACTIONS.RECEIVE_PROGRAMS: {
       return {
         ...state,
-        programs: payload,
+        programs: payload
       };
     }
 
     case ACTIONS.TOGGLE_SHOWTYPES_LOADING: {
       return {
         ...state,
-        isShowTypesLoading: !state.isShowTypesLoading,
+        isShowTypesLoading: !state.isShowTypesLoading
       };
     }
 
     case ACTIONS.RECEIVE_SHOWTYPES: {
       return {
         ...state,
-        showTypes: payload,
+        showTypes: payload
       };
     }
 
     case ACTIONS.LOAD_OPEN_MARKET_DATA.request: {
       return {
         ...state,
-        openMarketLoading: true,
+        openMarketLoading: true
       };
     }
 
@@ -346,17 +351,17 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         openMarketData: data.Data,
-        hasOpenMarketData: data.Data.Markets && (data.Data.Markets.length > 0),
+        hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         activeOpenMarketData: data.Data,
         openMarketLoading: false,
-        openMarketLoaded: true,
+        openMarketLoaded: true
       };
     }
 
     case ACTIONS.LOAD_OPEN_MARKET_DATA.failure: {
       return {
         ...state,
-        openMarketLoading: false,
+        openMarketLoading: false
       };
     }
 
@@ -367,14 +372,14 @@ export default function reducer(state = initialState, action) {
         openMarketLoaded: false,
         openMarketData: undefined,
         activeOpenMarketData: undefined,
-        hasOpenMarketData: false,
+        hasOpenMarketData: false
       };
     }
 
     case ACTIONS.FILTER_OPEN_MARKET_DATA.request: {
       return {
         ...state,
-        openMarketLoading: true,
+        openMarketLoading: true
       };
     }
 
@@ -383,26 +388,28 @@ export default function reducer(state = initialState, action) {
         ...state,
         activeOpenMarketData: data.Data,
         openMarketLoading: false,
-        openMarketLoaded: true,
+        openMarketLoaded: true
       };
     }
 
     case ACTIONS.FILTER_OPEN_MARKET_DATA.failure: {
       return {
         ...state,
-        openMarketLoading: false,
+        openMarketLoading: false
       };
     }
 
     case ACTIONS.SET_ESTIMATED_ID: {
       const details = [...state.proposalEditForm.Details];
-      const detailIndex = details.findIndex(detail => detail.Id === payload.detailId);
+      const detailIndex = details.findIndex(
+        detail => detail.Id === payload.detailId
+      );
       details[detailIndex].EstimateId = payload.estimatedId;
       return Object.assign({}, state, {
         proposalEditForm: {
           ...state.proposalEditForm,
-          Details: details,
-        },
+          Details: details
+        }
       });
     }
 
@@ -414,127 +421,127 @@ export default function reducer(state = initialState, action) {
 // Action Creators
 export const getPlanningFiltered = query => ({
   type: ACTIONS.FILTERED_PLANNING_PROPOSALS.request,
-  payload: query,
+  payload: query
 });
 
 export const receiveFilteredPlanning = data => ({
   type: ACTIONS.FILTERED_PLANNING_PROPOSALS.success,
-  data,
+  data
 });
 
 export const getProposalInitialData = () => ({
   type: ACTIONS.REQUEST_PROPOSAL_INITIALDATA,
-  payload: {},
+  payload: {}
 });
 
 export const getProposals = () => ({
   type: ACTIONS.REQUEST_PROPOSALS,
-  payload: {},
+  payload: {}
 });
 
 export const getProposalLock = id => ({
   type: ACTIONS.REQUEST_PROPOSAL_LOCK,
-  payload: id,
+  payload: id
 });
 
 export const getProposalUnlock = id => ({
   type: ACTIONS.REQUEST_PROPOSAL_UNLOCK,
-  payload: id,
+  payload: id
 });
 
 export const getProposal = id => ({
   type: ACTIONS.REQUEST_PROPOSAL,
-  payload: id,
+  payload: id
 });
 
 export const getProposalVersions = id => ({
   type: ACTIONS.REQUEST_PROPOSAL_VERSIONS,
-  payload: id,
+  payload: id
 });
 
 export const getProposalVersion = (id, version) => ({
   type: ACTIONS.REQUEST_PROPOSAL_VERSION,
-  payload: { id, version },
+  payload: { id, version }
 });
 
 export const saveProposal = params => ({
   type: ACTIONS.SAVE_PROPOSAL,
-  payload: params,
+  payload: params
 });
 
 export const saveProposalAsVersion = params => ({
   type: ACTIONS.SAVE_PROPOSAL_AS_VERSION,
-  payload: params,
+  payload: params
 });
 
 export const deleteProposal = id => ({
   type: ACTIONS.DELETE_PROPOSAL,
-  payload: id,
+  payload: id
 });
 
 export const updateProposal = params => ({
   type: ACTIONS.UPDATE_PROPOSAL,
-  payload: params,
+  payload: params
 });
 
 export const updateProposalEditForm = keyValue => ({
   type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM,
-  payload: keyValue,
+  payload: keyValue
 });
 
 export const updateProposalEditFormDetail = idKeyValue => ({
   type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL,
-  payload: idKeyValue,
+  payload: idKeyValue
 });
 
 export const updateProposalEditFormDetailGrid = idKeyValue => ({
   type: ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL_GRID,
-  payload: idKeyValue,
+  payload: idKeyValue
 });
 
 export const deleteProposalDetail = params => ({
   type: ACTIONS.DELETE_PROPOSAL_DETAIL,
-  payload: params,
+  payload: params
 });
 
 export const modelNewProposalDetail = flight => ({
   type: ACTIONS.MODEL_NEW_PROPOSAL_DETAIL,
-  payload: flight,
+  payload: flight
 });
 
 export const unorderProposal = id => ({
   type: ACTIONS.UNORDER_PROPOSAL,
-  payload: id,
+  payload: id
 });
 
 export const setProposalValidationState = typeState => ({
   type: ACTIONS.SET_PROPOSAL_VALIDATION_STATE,
-  payload: typeState,
+  payload: typeState
 });
 
 export const restorePlanningProposal = planningState => ({
   type: ACTIONS.RESTORE_PLANNING_PROPOSAL,
-  payload: planningState,
+  payload: planningState
 });
 
 export const getGenres = query => ({
   type: ACTIONS.REQUEST_GENRES,
-  payload: query,
+  payload: query
 });
 
 export const getPrograms = params => ({
   type: ACTIONS.REQUEST_PROGRAMS,
-  payload: params,
+  payload: params
 });
 
 export const getShowTypes = params => ({
   type: ACTIONS.REQUEST_SHOWTYPES,
-  payload: params,
+  payload: params
 });
 
 export const rerunPostScrubing = (propId, propdetailid) => ({
   type: ACTIONS.RERUN_POST_SCRUBING.request,
-  payload: { propId, propdetailid },
+  payload: { propId, propdetailid }
 });
 
 /* export const loadOpenMarketData = (propId, propdetailid) => ({
@@ -544,27 +551,26 @@ export const rerunPostScrubing = (propId, propdetailid) => ({
 
 export const loadOpenMarketData = params => ({
   type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
-  payload: params,
+  payload: params
 });
 
 export const clearOpenMarketData = () => ({
-  type: ACTIONS.CLEAR_OPEN_MARKET_DATA,
+  type: ACTIONS.CLEAR_OPEN_MARKET_DATA
 });
 
 export const uploadSCXFile = params => ({
   type: ACTIONS.SCX_FILE_UPLOAD.request,
-  payload: params,
+  payload: params
 });
 export const filterOpenMarketData = params => ({
   type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
-  payload: params,
+  payload: params
 });
 
 export const setEstimatedId = (detailId, estimatedId) => ({
   type: ACTIONS.SET_ESTIMATED_ID,
   payload: {
     detailId,
-    estimatedId,
-  },
+    estimatedId
+  }
 });
-

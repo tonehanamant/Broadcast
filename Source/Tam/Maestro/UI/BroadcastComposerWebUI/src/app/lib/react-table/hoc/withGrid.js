@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { isEqual } from 'lodash';
-import reducer, { initialState } from '../actions/reducer';
+import React, { Component } from "react";
+import { isEqual } from "lodash";
+import reducer, { initialState } from "../actions/reducer";
 
 export const GridContext = React.createContext();
 
@@ -33,11 +33,16 @@ function withGrid(WrappedComponent) {
       }
     }
 
-
     render() {
       return (
-        <GridContext.Provider value={{ dispatch: this.dispatch, hocState: this.state }}>
-            <WrappedComponent {...this.props} {...this.state} dispatch={this.dispatch} />
+        <GridContext.Provider
+          value={{ dispatch: this.dispatch, hocState: this.state }}
+        >
+          <WrappedComponent
+            {...this.props}
+            {...this.state}
+            dispatch={this.dispatch}
+          />
         </GridContext.Provider>
       );
     }

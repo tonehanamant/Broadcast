@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { toggleModal, createAlert, setOverlayLoading } from 'Ducks/app';
-import { getPostPrePostingInitialData, getPostPrePosting, getPostPrePostingFiltered, deletePostPrePosting, getPostPrePostingFileEdit } from 'Ducks/postPrePosting';
-import { Grid, Actions } from 'react-redux-grid';
-import CustomPager from 'Components/shared/CustomPager';
-import ContextMenuRow from 'Components/shared/ContextMenuRow';
-import Sorter from 'Utils/react-redux-grid-sorter';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { toggleModal, createAlert, setOverlayLoading } from "Ducks/app";
+import {
+  getPostPrePostingInitialData,
+  getPostPrePosting,
+  getPostPrePostingFiltered,
+  deletePostPrePosting,
+  getPostPrePostingFileEdit
+} from "Ducks/postPrePosting";
+import { Grid, Actions } from "react-redux-grid";
+import CustomPager from "Components/shared/CustomPager";
+import ContextMenuRow from "Components/shared/ContextMenuRow";
+import Sorter from "Utils/react-redux-grid-sorter";
 
 /* ////////////////////////////////// */
 /* // REACT-REDUX-GRID ACTIONS
@@ -17,40 +23,48 @@ const { showMenu, hideMenu } = MenuActions;
 const { selectRow, deselectAll } = SelectionActions;
 const { doLocalSort } = GridActions;
 
-const stateKey = 'gridPostPrePostingMain';
+const stateKey = "gridPostPrePostingMain";
 
 /* ////////////////////////////////// */
 /* // MAPPING STATE AND DISPATCH
 /* ////////////////////////////////// */
-const mapStateToProps = ({ postPrePosting: { initialdata }, postPrePosting: { post }, grid, dataSource, menu }) => ({
+const mapStateToProps = ({
+  postPrePosting: { initialdata },
+  postPrePosting: { post },
+  grid,
+  dataSource,
+  menu
+}) => ({
   // App
   initialdata,
   post,
   // React-Redux-Grid
   grid,
   dataSource,
-  menu,
+  menu
 });
 
-const mapDispatchToProps = dispatch => (bindActionCreators(
-  {
-    // App
-    getPostPrePostingInitialData,
-    getPostPrePosting,
-    getPostPrePostingFiltered,
-    createAlert,
-    toggleModal,
-    deletePostPrePosting,
-    getPostPrePostingFileEdit,
-    setOverlayLoading,
-    // React-Redux-Grid
-    showMenu,
-    hideMenu,
-    selectRow,
-    deselectAll,
-    doLocalSort,
-  }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      // App
+      getPostPrePostingInitialData,
+      getPostPrePosting,
+      getPostPrePostingFiltered,
+      createAlert,
+      toggleModal,
+      deletePostPrePosting,
+      getPostPrePostingFileEdit,
+      setOverlayLoading,
+      // React-Redux-Grid
+      showMenu,
+      hideMenu,
+      selectRow,
+      deselectAll,
+      doLocalSort
+    },
+    dispatch
+  );
 
 /* ////////////////////////////////// */
 /* // DATAGRIDCONTAINER COMPONENT
@@ -58,10 +72,12 @@ const mapDispatchToProps = dispatch => (bindActionCreators(
 
 export class DataGridContainer extends Component {
   constructor(props, context) {
-		super(props, context);
+    super(props, context);
     this.context = context;
     this.contextMenuDeleteAction = this.contextMenuDeleteAction.bind(this);
-    this.contextMenuFileSettingsAction = this.contextMenuFileSettingsAction.bind(this);
+    this.contextMenuFileSettingsAction = this.contextMenuFileSettingsAction.bind(
+      this
+    );
     this.deselectAll = this.deselectAll.bind(this);
     this.selectRow = this.selectRow.bind(this);
   }
@@ -73,31 +89,39 @@ export class DataGridContainer extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.post !== this.props.post) {
       this.props.setOverlayLoading({
-        id: 'gridPostPrePostingMain',
-        loading: true,
+        id: "gridPostPrePostingMain",
+        loading: true
       });
       // Evaluate if sort directions is set on column or default
       // Sort dataSource using Sorter
       setTimeout(() => {
-        const cols = this.props.grid.get('gridPostPrePostingMain').get('columns');
+        const cols = this.props.grid
+          .get("gridPostPrePostingMain")
+          .get("columns");
         let sortCol = cols.find(x => x.sortDirection);
         if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
         if (sortCol) {
-          const datasource = this.props.dataSource.get('gridPostPrePostingMain');
-          const sorted = Sorter.sortBy(sortCol.dataIndex, sortCol.sortDirection || sortCol.defaultSortDirection, datasource);
+          const datasource = this.props.dataSource.get(
+            "gridPostPrePostingMain"
+          );
+          const sorted = Sorter.sortBy(
+            sortCol.dataIndex,
+            sortCol.sortDirection || sortCol.defaultSortDirection,
+            datasource
+          );
           this.props.doLocalSort({
             data: sorted,
-            stateKey: 'gridPostPrePostingMain',
+            stateKey: "gridPostPrePostingMain"
           });
         }
         this.props.setOverlayLoading({
-          id: 'gridPostPrePostingMain',
-          loading: false,
+          id: "gridPostPrePostingMain",
+          loading: false
         });
       }, 0); // SET_DATA is completed, for dataSource
 
       // Hide Context Menu (assumes visible)
-      this.props.hideMenu({ stateKey: 'gridPostPrePostingMain' });
+      this.props.hideMenu({ stateKey: "gridPostPrePostingMain" });
     }
   }
 
@@ -106,17 +130,17 @@ export class DataGridContainer extends Component {
   /* ////////////////////////////////// */
   contextMenuDeleteAction(rowData) {
     this.props.toggleModal({
-      modal: 'confirmModal',
+      modal: "confirmModal",
       active: true,
       properties: {
-        titleText: 'Delete Post File',
+        titleText: "Delete Post File",
         bodyText: `Are you sure you want to delete ${rowData.FileName}?`,
-        closeButtonText: 'Cancel',
-        actionButtonText: 'Continue',
-        actionButtonBsStyle: 'danger',
+        closeButtonText: "Cancel",
+        actionButtonText: "Continue",
+        actionButtonBsStyle: "danger",
         action: () => this.props.deletePostPrePosting(rowData.Id),
-        dismiss: () => {},
-      },
+        dismiss: () => {}
+      }
     });
   }
 
@@ -163,56 +187,56 @@ export class DataGridContainer extends Component {
     /* GRID COLUMNS */
     const columns = [
       {
-          name: 'File Name',
-          dataIndex: 'FileName',
-          width: '20%',
+        name: "File Name",
+        dataIndex: "FileName",
+        width: "20%"
       },
       {
-          name: 'Demos',
-          dataIndex: 'DisplayDemos',
-          width: '40%',
+        name: "Demos",
+        dataIndex: "DisplayDemos",
+        width: "40%"
       },
       {
-          name: 'Upload Date',
-          dataIndex: 'UploadDate',
-          defaultSortDirection: 'ASC',
-          width: '20%',
-          renderer: ({ row }) => (
-            <span>{row.DisplayUploadDate}</span>
-          ),
+        name: "Upload Date",
+        dataIndex: "UploadDate",
+        defaultSortDirection: "ASC",
+        width: "20%",
+        renderer: ({ row }) => <span>{row.DisplayUploadDate}</span>
       },
       {
-          name: 'Last Modified',
-          dataIndex: 'ModifiedDate',
-          width: '20%',
-          renderer: ({ row }) => (
-            <span>{row.DisplayModifiedDate}</span>
-          ),
-      },
+        name: "Last Modified",
+        dataIndex: "ModifiedDate",
+        width: "20%",
+        renderer: ({ row }) => <span>{row.DisplayModifiedDate}</span>
+      }
     ];
 
     const menuItems = [
       {
-        text: 'File Settings',
-        key: 'menu-file-settings',
+        text: "File Settings",
+        key: "menu-file-settings",
         EVENT_HANDLER: ({ metaData }) => {
           this.contextMenuFileSettingsAction(metaData.rowData.Id);
-        },
+        }
       },
       {
-        text: 'Post Report',
-        key: 'menu-post-report',
-        EVENT_HANDLER: ({ metaData }) => {
-          window.open(`${window.location.origin}/broadcast/api/PostPrePosting/Report/${metaData.rowData.Id}`, '_blank');
-        },
+        text: "Post Report",
+        key: "menu-post-report",
+        EVENT_HANDLER: ({
+          metaData: {
+            rowData: { Id }
+          }
+        }) => {
+          window.open(`${__API__}PostPrePosting/Report/${Id}`, "_blank");
+        }
       },
       {
-        text: 'Delete',
-        key: 'menu-delete',
+        text: "Delete",
+        key: "menu-delete",
         EVENT_HANDLER: ({ metaData }) => {
           this.contextMenuDeleteAction(metaData.rowData);
-        },
-      },
+        }
+      }
     ];
 
     /* GRID PLGUINS */
@@ -221,62 +245,58 @@ export class DataGridContainer extends Component {
         resizable: true,
         moveable: false,
         sortable: {
-            enabled: true,
-            method: 'local',
-        },
+          enabled: true,
+          method: "local"
+        }
       },
       EDITOR: {
-        type: 'inline',
-        enabled: false,
+        type: "inline",
+        enabled: false
       },
       PAGER: {
         enabled: false,
-        pagingType: 'local',
-        pagerComponent: (
-            <CustomPager stateKey={stateKey} idProperty="Id" />
-        ),
+        pagingType: "local",
+        pagerComponent: <CustomPager stateKey={stateKey} idProperty="Id" />
       },
       LOADER: {
-        enabled: false,
+        enabled: false
       },
       SELECTION_MODEL: {
-        mode: 'single',
+        mode: "single",
         enabled: true,
         allowDeselect: true,
-        activeCls: 'active',
-        selectionEvent: 'singleclick',
+        activeCls: "active",
+        selectionEvent: "singleclick"
       },
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => (
-            <ContextMenuRow
-              {...rowData}
-              menuItems={menuItems}
-              stateKey={stateKey}
-              beforeOpenMenu={this.selectRow}
-            >
-              {cells}
-            </ContextMenuRow>
-          ),
-      },
+          <ContextMenuRow
+            {...rowData}
+            menuItems={menuItems}
+            stateKey={stateKey}
+            beforeOpenMenu={this.selectRow}
+          >
+            {cells}
+          </ContextMenuRow>
+        )
+      }
     };
 
     /* GRID EVENT HANDLERS */
     const events = {
       HANDLE_BEFORE_SORT: () => {
         this.deselectAll();
-      },
+      }
     };
 
     const grid = {
       columns,
       plugins,
       events,
-      stateKey,
+      stateKey
     };
-    return (
-      <Grid {...grid} data={this.props.post} store={this.context.store} />
-    );
+    return <Grid {...grid} data={this.props.post} store={this.context.store} />;
   }
 }
 
@@ -302,7 +322,10 @@ DataGridContainer.propTypes = {
   hideMenu: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,
   deselectAll: PropTypes.func.isRequired,
-  doLocalSort: PropTypes.func.isRequired,
+  doLocalSort: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataGridContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DataGridContainer);
