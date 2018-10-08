@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var fileNames = new List<string>() { @".\Files\StrataSBMSInvoicePostExportInvalidData.xlsx" };
+                var fileNames = new List<string>() { @".\Files\BCOP3666.txt" };
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Unknown);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -167,9 +167,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PostLogPreprocessingService.ValidateFiles(
                     new List<string>
                     {
-                        @".\Files\KeepingTrac-BCOP3553.csv",
-                        @".\Files\KeepingTrac-BCOP3553_RequiredColumnMissing.csv",
-                        @".\Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv"
+                        @".\Files\KeepingTrac_ValidFile.xlsx",
+                        @".\Files\KeepingTrac_MissingData.xlsx",
+                        @".\Files\KeepingTrac_MissingHeaders.xlsx"
                     },
                     userName, FileSourceEnum.KeepingTrac);
                 var jsonResolver = new IgnorableSerializerContractResolver();

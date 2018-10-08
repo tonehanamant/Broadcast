@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Helpers
 {
@@ -25,9 +23,9 @@ namespace Services.Broadcast.Helpers
         /// </summary>
         /// <param name="fileInfo">FileInfo object</param>
         /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>/// <param name="fileValidationResult"></param>
-        /// <param name="tabName">Worksheet name</param>
+        /// <param name="tabName">Optional Worksheet name</param>
         /// <returns>ExcelWorksheet object</returns>
-        ExcelWorksheet GetWorksheetToProcess(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult, string tabName);
+        ExcelWorksheet GetWorksheetToProcess(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult, string tabName = null);
 
         /// <summary>
         /// Checks if all the required columns are present in the worksheet 
@@ -71,22 +69,19 @@ namespace Services.Broadcast.Helpers
         /// </summary>
         /// <param name="fileInfo">FileInfo object</param>
         /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>/// <param name="fileValidationResult"></param>
-        /// <param name="tabName">Worksheet name</param>
-        /// <returns>ExcelWorksheet object</returns>
-        public ExcelWorksheet GetWorksheetToProcess(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult, string tabName)
+        /// <param name="tabName">Optional Worksheet name</param>
+        /// <returns>ExcelWorksheet based on name (if provided) or first sheet in the file</returns>
+        public ExcelWorksheet GetWorksheetToProcess(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult, string tabName = null)
         {
-            ExcelWorksheet result = null;
             var package = new ExcelPackage(fileInfo, true);
-            foreach (var worksheet in package.Workbook.Worksheets)
+            if (string.IsNullOrWhiteSpace(tabName))
             {
-                if (worksheet.Name.Equals(tabName))
-                {                    
-                    result = worksheet;
-                    break;
-                }
+                return package.Workbook.Worksheets.First();
             }
-
-            return result;
+            else
+            {
+                return package.Workbook.Worksheets.FirstOrDefault(x => x.Name.Equals(tabName));
+            }
         }
 
         /// <summary>

@@ -163,7 +163,14 @@ namespace Services.Broadcast.ApplicationServices
                     worksheet = _ExcelHelper.GetWorksheetToProcess(fileInfo, currentFile, _ValidKeepingTracTabName);
                     currentFile.Source = FileSourceEnum.KeepingTrac;
                 }
-
+                if(worksheet == null)
+                {
+                    currentFile.Source = FileSourceEnum.Unknown;
+                    currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidStrataTabName, currentFile.FilePath));
+                    currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidKeepingTracTabName, currentFile.FilePath));
+                    continue;
+                }
+                
                 if (worksheet == null)
                 {
                     currentFile.Source = FileSourceEnum.Unknown;
