@@ -471,14 +471,14 @@
     <None Include="Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_MissingData.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_MissingData.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_Clean.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_MissingHeaders.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_MissingHeaders.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_ValidFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

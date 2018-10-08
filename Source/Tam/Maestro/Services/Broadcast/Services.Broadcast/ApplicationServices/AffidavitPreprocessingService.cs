@@ -13,6 +13,8 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities.Enums;
+using OfficeOpenXml;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -35,16 +37,20 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVEmailProcessorService _affidavitEmailProcessorService;
         private readonly IEmailerService _EmailerService;
         private readonly IFileService _FileService;
-
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
         private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
+        private readonly IExcelHelper _ExcelHelper;
 
-        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-                                                IWWTVEmailProcessorService affidavitEmailProcessorService,
-                                                IWWTVFtpHelper WWTVFtpHelper,
-                                                IWWTVSharedNetworkHelper WWTVSharedNetworkHelper,
-                                                IEmailerService emailerService,
-                                                IFileService fileService)
+        private const string _ValidStrataTabName = "PostAnalRep_ExportDetail";
+        private const string _ValidKeepingTracTabName = "KeepingTrac.csv";
+
+        public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory
+                                                , IWWTVEmailProcessorService affidavitEmailProcessorService
+                                                , IWWTVFtpHelper WWTVFtpHelper
+                                                , IWWTVSharedNetworkHelper WWTVSharedNetworkHelper
+                                                , IEmailerService emailerService
+                                                , IFileService fileService
+                                                , IExcelHelper excelHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -53,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _WWTVSharedNetworkHelper = WWTVSharedNetworkHelper;
             _FileService = fileService;
+            _ExcelHelper = excelHelper;
         }
 
         /// <summary>
@@ -124,6 +131,9 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filepathList, string userName)
         {
+            List<string> RequiredStrataColumns = new List<string>() { "ESTIMATE_ID", "STATION_NAME", "DATE_RANGE", "SPOT_TIME", "SPOT_DESCRIPTOR", "COST" };
+            List<string> RequiredKeepingTracColumns = new List<string>() { "Estimate", "Station", "Air Date", "Air Time", "Air ISCI", "Demographic", "Act Ratings", "Act Impression" };
+
             List<WWTVOutboundFileValidationResult> result = new List<WWTVOutboundFileValidationResult>();
 
             foreach (var filepath in filepathList)
@@ -132,7 +142,6 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     FilePath = filepath,
                     FileName = Path.GetFileName(filepath),
-                    SourceId = (int)AffidavitFileSourceEnum.Strata,
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
                     FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filepath)),
@@ -140,37 +149,48 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 result.Add(currentFile);
 
-                var fileInfo = new FileInfo(filepath);
+                FileInfo fileInfo = new FileInfo(filepath);
 
-                using (var affidavitPickupValidationService =
-                    AffidavitPickupFileValidation.GetAffidavitValidationService(fileInfo, currentFile))
+                _ExcelHelper.CheckForExcelFileType(fileInfo, currentFile);
+                if (currentFile.ErrorMessages.Any()) continue;
+                                
+                //get the tab that needs processing
+                var worksheet = _ExcelHelper.GetWorksheetToProcess(fileInfo, currentFile, _ValidStrataTabName);
+                currentFile.Source = FileSourceEnum.Strata;
+
+                if (worksheet == null)
                 {
-                    if (currentFile.ErrorMessages.Any())
-                        continue;
+                    worksheet = _ExcelHelper.GetWorksheetToProcess(fileInfo, currentFile, _ValidKeepingTracTabName);
+                    currentFile.Source = FileSourceEnum.KeepingTrac;
+                }
 
-                    //check if tab exists
-                    affidavitPickupValidationService.ValidateFileStruct();
-                    if (currentFile.ErrorMessages.Any())
-                        continue;
+                if (worksheet == null)
+                {
+                    currentFile.Source = FileSourceEnum.Unknown;
+                    currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidStrataTabName, currentFile.FilePath));
+                    currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidKeepingTracTabName, currentFile.FilePath));
+                    continue;
+                }
 
-                    //check column headers
-                    affidavitPickupValidationService.ValidateHeaders();
-                    if (currentFile.ErrorMessages.Any())
-                        continue;
+                List<string> requiredColumns = currentFile.Source == FileSourceEnum.Strata ? RequiredStrataColumns : RequiredKeepingTracColumns;
+                
+                //check column headers
+                var fileColumns = _ExcelHelper.ValidateHeaders(requiredColumns, worksheet, currentFile);
+                if (currentFile.ErrorMessages.Any())
+                    continue;
 
-                    //check required data fields
-                    affidavitPickupValidationService.HasMissingData();
-                    if (currentFile.ErrorMessages.Any())
-                        continue;
+                //check required data fields
+                _ExcelHelper.CheckMissingDataOnRequiredColumns(requiredColumns, fileColumns, worksheet, currentFile);
+                if (currentFile.ErrorMessages.Any())
+                    continue;
 
-                    if (!currentFile.ErrorMessages.Any())
-                    {
-                        currentFile.Status = FileProcessingStatusEnum.Valid;
-                    }
+                if (!currentFile.ErrorMessages.Any())
+                {
+                    currentFile.Status = FileProcessingStatusEnum.Valid;
                 }
             }
 
             return result;
-        }
+        }        
     }
 }

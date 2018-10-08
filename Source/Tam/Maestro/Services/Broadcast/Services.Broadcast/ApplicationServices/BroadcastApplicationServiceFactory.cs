@@ -144,6 +144,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
             unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
+            unityContainer.RegisterType<IExcelHelper, ExcelHelper>();
 
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
 

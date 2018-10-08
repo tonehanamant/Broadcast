@@ -79,7 +79,6 @@ namespace Services.Broadcast.Converters
         private List<string> _GetColumnValidationResults(List<string> fileColumns)
         {
             var validationErrors = new List<string>();
-            Dictionary<string, int> headerDict = new Dictionary<string, int>();
 
             var missingColumns = _RequiredKeepingTrac.Where(f => !fileColumns.Contains(f)).ToList();
 

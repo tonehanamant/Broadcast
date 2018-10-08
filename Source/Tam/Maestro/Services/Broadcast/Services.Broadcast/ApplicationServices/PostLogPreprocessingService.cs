@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -18,7 +19,7 @@ namespace Services.Broadcast.ApplicationServices
     public interface IPostLogPreprocessingService : IApplicationService
     {
         void ProcessFiles(string username);
-        List<FileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource);        
+        List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource);        
     }
 
     class PostLogPreprocessingService : IPostLogPreprocessingService
@@ -69,17 +70,17 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
 
-        private void _SaveAndUploadToWWTV(List<FileValidationResult> validationResults, FileSourceEnum source)
+        private void _SaveAndUploadToWWTV(List<WWTVOutboundFileValidationResult> validationResults, FileSourceEnum source)
         {
             _PostLogRepository.SavePreprocessingValidationResults(validationResults);
-            var validFileList = validationResults.Where(v => v.Status == ProcessingStatusEnum.Valid)
+            var validFileList = validationResults.Where(v => v.Status == FileProcessingStatusEnum.Valid)
                 .ToList();
             if (validFileList.Any())
             {
                 _CreateAndUploadZipArchiveToWWTV(validFileList.Select(x => x.FilePath).ToList());
             }
 
-            var invalidFileList = validationResults.Where(v => v.Status == ProcessingStatusEnum.Invalid)
+            var invalidFileList = validationResults.Where(v => v.Status == FileProcessingStatusEnum.Invalid)
                 .ToList();
             if (invalidFileList.Any())
             {
@@ -89,13 +90,13 @@ namespace Services.Broadcast.ApplicationServices
             _FileService.Delete(validFileList.Select(x => x.FilePath).ToArray());
         }
 
-        public List<FileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource)
+        public List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource)
         {
-            var results = new List<FileValidationResult>();
+            var results = new List<WWTVOutboundFileValidationResult>();
 
             foreach (var filePath in filePathList)
             {
-                FileValidationResult currentFileResult = new FileValidationResult()
+                WWTVOutboundFileValidationResult currentFileResult = new WWTVOutboundFileValidationResult()
                 {
                     FilePath = filePath,
                     FileName = Path.GetFileName(filePath),
@@ -103,7 +104,7 @@ namespace Services.Broadcast.ApplicationServices
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
                     FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filePath)),
-                    Status = ProcessingStatusEnum.Valid
+                    Status = FileProcessingStatusEnum.Valid
                 };
                 results.Add(currentFileResult);
 
@@ -123,14 +124,14 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 if (currentFileResult.ErrorMessages.Any())
-                    currentFileResult.Status = ProcessingStatusEnum.Invalid;
+                    currentFileResult.Status = FileProcessingStatusEnum.Invalid;
             }
 
             return results;
 
         }
 
-        private void _MoveToErrorFolderAndSendNotification(List<FileValidationResult> invalidFileList, FileSourceEnum source)
+        private void _MoveToErrorFolderAndSendNotification(List<WWTVOutboundFileValidationResult> invalidFileList, FileSourceEnum source)
         {
             foreach (var invalidFile in invalidFileList)
             {

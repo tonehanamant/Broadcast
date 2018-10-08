@@ -216,13 +216,11 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />
-    <Compile Include="ApplicationServices\BaseScrubbingService.cs" />
     <Compile Include="ApplicationServices\IsciService.cs" />
     <Compile Include="ApplicationServices\LogoService.cs" />
     <Compile Include="ApplicationServices\MarketService.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingService.cs" />
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
-    <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostLogService.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
@@ -283,6 +281,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExcelWorksheetExtensions.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
@@ -291,9 +290,7 @@
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\TrackerFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
-    <Compile Include="Entities\FileValidationResult.cs" />
     <Compile Include="Entities\FileSourceEnum.cs" />
-    <Compile Include="Entities\ProcessingStatusEnum.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />

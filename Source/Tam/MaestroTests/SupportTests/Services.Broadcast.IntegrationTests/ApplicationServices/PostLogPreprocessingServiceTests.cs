@@ -45,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -67,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -112,7 +112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Unknown);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -173,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     },
                     userName, FileSourceEnum.KeepingTrac);
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
