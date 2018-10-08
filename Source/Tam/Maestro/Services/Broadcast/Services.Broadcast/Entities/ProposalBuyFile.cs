@@ -48,6 +48,12 @@ namespace Services.Broadcast.Entities
             DaypartCache = daypartCache;
             SpotLengths = spotLengthsDict;
             FileAudiences = new Dictionary<int, DisplayAudience>();
+
+            if(StartDate > EndDate)
+            {
+                throw new ApplicationException($"Invalid campaign date range: {StartDate.ToShortDateString()} to {EndDate.ToShortDateString()}");
+            }
+
             foreach(var scxFileAudience in scxFile.Audiences)
             {
                 var broadcastAudience = AudienceCache.FindByAgeRangeAndSubcategory(scxFileAudience.AgeFrom, scxFileAudience.AgeTo, scxFileAudience.Group).SingleOrDefault();

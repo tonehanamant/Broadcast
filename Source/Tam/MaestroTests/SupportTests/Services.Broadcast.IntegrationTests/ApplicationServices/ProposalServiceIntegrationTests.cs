@@ -2735,6 +2735,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [ExpectedException(typeof(ApplicationException), ExpectedMessage = "Invalid campaign date range", MatchType = MessageMatch.Contains)]
+        public void UploadProposalBuyScxWithInvalidDateRange()
+        {
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var request = new ProposalBuySaveRequestDto
+                {
+                    EstimateId = 3909,
+                    FileName = "Checkers 2Q16 SYN - ProposalBuyWithInvalidDateRange.scx",
+                    Username = "test-user",
+                    ProposalVersionDetailId = 10,
+                    FileStream = new FileStream(@".\Files\Checkers 2Q16 SYN - ProposalBuyWithInvalidDateRange.scx",
+                        FileMode.Open,
+                        FileAccess.Read)
+                };
+
+                var result = _ProposalService.SaveProposalBuy(request);
+            }
+        }
+
+        [Test]
         public void ProposalService_GetsProposalById_WithDetail_WithoutEstimateId()
         {
             using (new TransactionScopeWrapper())
