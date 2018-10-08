@@ -10,12 +10,17 @@ import {
   Glyphicon
 } from "react-bootstrap";
 import Select from "react-select";
-import { pipe, sortBy, concat, keys, pickBy, mapValues, omit } from "lodash/fp";
-import { defaultFiltersItems, filterMap } from "./util";
+import { omit } from "lodash";
+import {
+  defaultFiltersItems,
+  filterMap,
+  generateFilter,
+  getFilterValuesToRequest,
+  getFilterValuesFromResponse,
+  addFilterToItems
+} from "./util";
 
 import "./index.scss";
-
-const mapValuesWithKey = mapValues.convert({ cap: false });
 
 const mapStateToProps = ({
   app: {
@@ -59,57 +64,39 @@ class PricingGuideFilterModal extends Component {
     const {
       activeOpenMarketData: { Filter, DisplayFilter }
     } = this.props;
-    // omit SpotFilter from modal version Filter: todo seprate in Reducer?
-    const AdjustFilter = Filter.SpotFilter
-      ? omit(["SpotFilter"], Filter)
-      : Filter;
-    const selectedFilters = keys(AdjustFilter);
-    const filtersOptions = mapValuesWithKey((value, key) => {
-      console.log();
-      return filterMap[key].getInitialData(value);
-    })(DisplayFilter);
 
-    this.setState({
-      filtersItems: defaultFiltersItems.filter(
-        it => !selectedFilters.includes(it.Id)
-      ),
-      filtersRender: defaultFiltersItems.filter(it =>
-        selectedFilters.includes(it.Id)
-      ),
-      filtersValues: mapValuesWithKey((value, key) =>
-        filterMap[key].preTransformer(AdjustFilter[key], filtersOptions[key])
-      )(AdjustFilter),
-      filtersOptions
-    });
+    const nextState = getFilterValuesFromResponse(Filter, DisplayFilter);
+    this.setState(nextState);
   }
 
   onAddFilter(filter) {
     const { filtersRender, filtersItems } = this.state;
     this.setState({
-      filtersRender: filtersRender.concat(filter),
-      filtersItems: filtersItems.filter(({ Id }) => Id !== filter.Id)
+      filtersRender: filtersRender.concat(generateFilter(filter)),
+      filtersItems: filterMap[filter.Id].isMultiple
+        ? filtersItems
+        : filtersItems.filter(({ Id }) => Id !== filter.Id)
     });
   }
 
   onDeleteFilter(filter) {
     const { filtersRender, filtersItems, filtersValues } = this.state;
-    const newFilterOptions = pipe(
-      concat(filter),
-      sortBy("order")
-    )(filtersItems);
+    const newFilterOptions = filterMap[filter.Id].isMultiple
+      ? filtersItems
+      : addFilterToItems(filter, filtersItems);
 
     this.setState({
-      filtersRender: filtersRender.filter(({ Id }) => Id !== filter.Id),
+      filtersRender: filtersRender.filter(({ name }) => name !== filter.name),
       filtersItems: newFilterOptions,
-      filtersValues: omit(filter.Id, filtersValues)
+      filtersValues: omit(filtersValues, filter.name)
     });
   }
 
-  onEditFilter(newFilter) {
+  onEditFilter(newFilter, oldFilter) {
     const { filtersRender, filtersValues } = this.state;
     this.setState({
       filtersRender: filtersRender.map(
-        it => (it.Id === newFilter.Id ? newFilter : it)
+        it => (it.name === oldFilter.name ? generateFilter(newFilter) : it)
       ),
       filtersValues: Object.assign(filtersValues, { [newFilter.Id]: null })
     });
@@ -118,7 +105,7 @@ class PricingGuideFilterModal extends Component {
   onChangeFilter(filter, value) {
     const { filtersValues } = this.state;
     this.setState({
-      filtersValues: Object.assign(filtersValues, { [filter.Id]: value })
+      filtersValues: Object.assign(filtersValues, { [filter.name]: value })
     });
   }
 
@@ -135,16 +122,12 @@ class PricingGuideFilterModal extends Component {
   }
 
   getFiltersForSave() {
-    const { filtersValues, filtersOptions } = this.state;
-    const parsedFilters = pipe(
-      pickBy(filter => !!filter.length),
-      mapValuesWithKey(
-        (value, key) =>
-          filterMap[key].postTransformer
-            ? filterMap[key].postTransformer(value, filtersOptions[key])
-            : value
-      )
-    )(filtersValues);
+    const { filtersValues, filtersOptions, filtersRender } = this.state;
+    const parsedFilters = getFilterValuesToRequest(
+      filtersValues,
+      filtersOptions,
+      filtersRender
+    );
     return { Filter: parsedFilters };
   }
 
@@ -179,16 +162,16 @@ class PricingGuideFilterModal extends Component {
 
         <Modal.Body>
           <Form horizontal>
-            {filtersRender.map((it, idx) => (
+            {filtersRender.map((filter, idx) => (
               <FormGroup
-                key={`pricing-filter-${it.Id}`}
-                controlId={`filter-${it.Id}-${it.idx}`}
+                key={`pricing-filter-${filter.name}`}
+                controlId={`filter-${filter.name}`}
               >
                 <Col sm={4}>
                   <Select
-                    value={it}
-                    onChange={filter => {
-                      this.onEditFilter(filter, it, idx);
+                    value={filter}
+                    onChange={newFilter => {
+                      this.onEditFilter(newFilter, filter, idx);
                     }}
                     options={filtersItems}
                     labelKey="Display"
@@ -197,19 +180,19 @@ class PricingGuideFilterModal extends Component {
                   />
                 </Col>
                 <Col sm={6}>
-                  {filterMap[it.Id].render(
-                    filtersValues[it.Id],
+                  {filterMap[filter.Id].render(
+                    filtersValues[filter.name],
                     value => {
-                      this.onChangeFilter(it, value);
+                      this.onChangeFilter(filter, value);
                     },
-                    filtersOptions[it.Id]
+                    filtersOptions[filter.Id]
                   )}
                 </Col>
                 <Col sm={2}>
                   <Button
                     className="remove-button"
                     onClick={() => {
-                      this.onDeleteFilter(it);
+                      this.onDeleteFilter(filter);
                     }}
                   >
                     <Glyphicon glyph="remove" />

@@ -403,14 +403,25 @@ export class ProposalDetail extends Component {
                 </FormGroup>
               )}
               {detail && (
-                <div className="proposal-detail-form-daypart">
+                <FormGroup
+                  controlId="proposalDetailDaypart"
+                  validationState={this.state.validationStates.Daypart}
+                  className="proposal-detail-form-item"
+                >
+                  <div className="proposal-form-label">
+                    <ControlLabel>Daypart</ControlLabel>
+                    {this.state.validationStates.Daypart && (
+                      <HelpBlock>
+                        <span className="text-danger">Required.</span>
+                      </HelpBlock>
+                    )}
+                  </div>
                   <DayPartPicker
                     dayPart={detail.Daypart || undefined}
                     onApply={daypart => this.onDayPartPickerApply(daypart)}
-                    isReadOnly={isReadOnly}
-                    validationState={this.state.validationStates.Daypart}
+                    disabled={isReadOnly}
                   />
-                </div>
+                </FormGroup>
               )}
               {detail && (
                 <FormGroup

@@ -29,9 +29,7 @@ module.exports = {
       options: {}
     }),
     new webpack.DefinePlugin({
-      __API_HOSTNAME__: '""',
-      __API_NAME_AND_VERSION__: '"broadcast/api/"'
-      // __API_NAME_AND_VERSION__: '"broadcast/api/v1/"'
+      __API__: '"broadcast/api/"'
     }),
     new MiniCSSExtractPlugin("qa-style.css"),
     new HtmlWebpackPlugin({
