@@ -11,9 +11,9 @@ module.exports = {
   target: "web",
   entry: resolve(__dirname, "../src/index.jsx"),
   output: {
-    filename: "qa-bundle.js",
-    path: resolve(__dirname, "../dist"),
-    publicPath: "/broadcastreact/"
+    path: resolve(__dirname, '../dist'),
+    filename: '[name]-bundle-[hash].js',
+    publicPath: '/broadcastreact/',
   },
   resolve: {
     alias: HELPERS.alias,
