@@ -245,18 +245,23 @@ namespace BroadcastComposerWeb.Controllers
         [Route("UploadProposalDetailBuy")]
         public BaseResponse<List<string>> UploadProposalDetailBuy(HttpRequestMessage proposalBuy)
         {
-            if (proposalBuy == null)
+            var response = _ConvertToBaseResponse(() =>
             {
-                throw new Exception("No proposal buy file data received.");
+                if (proposalBuy == null)
+                {
+                    throw new Exception("No proposal buy file data received.");
+                }
+                ProposalBuySaveRequestDto proposalBuyRequest = JsonConvert.DeserializeObject<ProposalBuySaveRequestDto>(proposalBuy.Content.ReadAsStringAsync().Result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy" });
+                proposalBuyRequest.Username = Identity.Name;
+                var errors = _ApplicationServiceFactory.GetApplicationService<IProposalService>().SaveProposalBuy(proposalBuyRequest);
+                return errors;
+            });
+
+            if (response.Data != null && response.Data.Any()) //check if any errors returned
+            {
+                response.Success = false;
             }
-            ProposalBuySaveRequestDto proposalBuyRequest = JsonConvert.DeserializeObject<ProposalBuySaveRequestDto>(proposalBuy.Content.ReadAsStringAsync().Result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy" });
-            proposalBuyRequest.Username = Identity.Name;
-            var result = _ApplicationServiceFactory.GetApplicationService<IProposalService>().SaveProposalBuy(proposalBuyRequest);
-            var response = new BaseResponse<List<string>>
-            {
-                Data = result,
-                Success = !result.Any()
-            };
+
             return response;
         }
     }
