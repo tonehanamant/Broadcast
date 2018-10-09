@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
-import CSSModules from 'react-css-modules';
-import PropTypes from 'prop-types';
-import { v4 } from 'uuid';
-import { Checkbox, ButtonToolbar, Button, FormGroup, FormControl } from 'react-bootstrap/lib/';
-import styles from './index.scss';
+import React, { Component } from "react";
+import CSSModules from "react-css-modules";
+import PropTypes from "prop-types";
+import { v4 } from "uuid";
+import {
+  Checkbox,
+  ButtonToolbar,
+  Button,
+  FormGroup,
+  FormControl
+} from "react-bootstrap/lib/";
+import styles from "./index.scss";
 
 class FilterInput extends Component {
   constructor(props) {
@@ -18,38 +24,47 @@ class FilterInput extends Component {
     this.handleMatchSpeckCheck = this.handleMatchSpeckCheck.bind(this);
     this.state = {
       selectAll: true,
-      filterText: '',
+      filterText: "",
       filterOptions: [],
       matchOptions: {},
-      isValidSelection: true,
+      isValidSelection: true
     };
   }
 
   // populates the filterOptions state with filter options prop
   componentWillMount() {
-    this.setState({ filterOptions: this.props.filterOptions, matchOptions: this.props.matchOptions }, () => {
-      this.checkSelectAll();
-    });
+    this.setState(
+      {
+        filterOptions: this.props.filterOptions,
+        matchOptions: this.props.matchOptions
+      },
+      () => {
+        this.checkSelectAll();
+      }
+    );
   }
 
   // match check handler
   handleMatchSpeckCheck(name, checked) {
     // const change = this.state.matchOptions[name];
-    this.setState(prevState => ({
-      ...prevState,
-      matchOptions: {
-        ...prevState.matchOptions,
-        [name]: checked,
-      },
-    }), () => {
-      this.setValidSelections();
-    });
+    this.setState(
+      prevState => ({
+        ...prevState,
+        matchOptions: {
+          ...prevState.matchOptions,
+          [name]: checked
+        }
+      }),
+      () => {
+        this.setValidSelections();
+      }
+    );
   }
 
   // applies the 'selectAll' parameter as the selected property of each filter option
   applyCheckToAll(selectAll) {
     /* eslint-disable no-param-reassign */
-    const filterOptions = this.state.filterOptions.map((option) => {
+    const filterOptions = this.state.filterOptions.map(option => {
       option.Selected = selectAll;
       return option;
     });
@@ -57,7 +72,7 @@ class FilterInput extends Component {
 
     this.setState({
       selectAll,
-      filterOptions,
+      filterOptions
     });
     // this.setValidSelections(selectAll);
     this.setValidSelections();
@@ -65,14 +80,16 @@ class FilterInput extends Component {
 
   // check select all to handle select all state
   checkSelectAll() {
-    const allChecked = this.state.filterOptions.find(item => item.Selected === false) === undefined;
+    const allChecked =
+      this.state.filterOptions.find(item => item.Selected === false) ===
+      undefined;
     // console.log('check select all', allChecked);
     this.setState({ selectAll: allChecked });
   }
 
   // filterOption checked handler
   handleOptionChecked(changedOption) {
-    const filterOptions = this.state.filterOptions.map((option) => {
+    const filterOptions = this.state.filterOptions.map(option => {
       if (option.Value === changedOption.Value) {
         return { ...option, Selected: !option.Selected };
       }
@@ -89,42 +106,66 @@ class FilterInput extends Component {
     // needed ?
     this.applyCheckToAll(true);
     // change the matchOptions to true or revise to send simplified props?
-    this.setState(prevState => ({
-      ...prevState,
-      matchOptions: {
-        ...prevState.matchOptions,
-        inSpec: true,
-        outOfSpec: true,
-      },
-    }), () => {
-      this.props.applySelection({ filterKey: this.props.filterKey, exclusions: [], filterOptions: this.state.filterOptions, activeMatch: false, matchOptions: this.state.matchOptions });
-    });
+    this.setState(
+      prevState => ({
+        ...prevState,
+        matchOptions: {
+          ...prevState.matchOptions,
+          inSpec: true,
+          outOfSpec: true
+        }
+      }),
+      () => {
+        this.props.applySelection({
+          filterKey: this.props.filterKey,
+          exclusions: [],
+          filterOptions: this.state.filterOptions,
+          activeMatch: false,
+          matchOptions: this.state.matchOptions
+        });
+      }
+    );
   }
   // apply filters - filterOptions and matchOptions if applicable
   // change to send unselected as flat array of values - exclusions; send all options
   apply() {
-    const unselectedValues = this.state.filterOptions.reduce((result, option) => {
-      if (!option.Selected) {
-        result.push(option.Value);
-      }
+    const unselectedValues = this.state.filterOptions.reduce(
+      (result, option) => {
+        if (!option.Selected) {
+          result.push(option.Value);
+        }
 
-      return result;
-    }, []);
+        return result;
+      },
+      []
+    );
     // determine if needs matching spec
     let activeMatch = false;
     if (this.props.hasMatchSpec) {
-      activeMatch = (this.state.matchOptions.inSpec === false) || (this.state.matchOptions.outOfSpec === false);
+      activeMatch =
+        this.state.matchOptions.inSpec === false ||
+        this.state.matchOptions.outOfSpec === false;
     }
-    const filter = { filterKey: this.props.filterKey, exclusions: unselectedValues, filterOptions: this.state.filterOptions, activeMatch, matchOptions: this.state.matchOptions };
-     // console.log('apply', filter);
+    const filter = {
+      filterKey: this.props.filterKey,
+      exclusions: unselectedValues,
+      filterOptions: this.state.filterOptions,
+      activeMatch,
+      matchOptions: this.state.matchOptions
+    };
+    // console.log('apply', filter);
     this.props.applySelection(filter);
   }
 
   // check valid both filterOptions and matchOptions
   setValidSelections() {
-    let isValid = this.state.filterOptions.find(item => item.Selected === true) !== undefined;
+    let isValid =
+      this.state.filterOptions.find(item => item.Selected === true) !==
+      undefined;
     if (this.props.hasMatchSpec && isValid) {
-      isValid = (this.state.matchOptions.inSpec === true) || (this.state.matchOptions.outOfSpec === true);
+      isValid =
+        this.state.matchOptions.inSpec === true ||
+        this.state.matchOptions.outOfSpec === true;
     }
     this.setState({ isValidSelection: isValid });
   }
@@ -141,7 +182,10 @@ class FilterInput extends Component {
     // create the checkbox array considering the current text filter
     const checkboxes = filterOptions.reduce((result, option) => {
       // use startsWith or includes? included for contains
-      if (!filterText || option.Display.toLowerCase().includes(filterText.toLowerCase())) {
+      if (
+        !filterText ||
+        option.Display.toLowerCase().includes(filterText.toLowerCase())
+      ) {
         result.push(
           <Checkbox
             key={v4()}
@@ -149,40 +193,59 @@ class FilterInput extends Component {
             onChange={() => this.handleOptionChecked(option)}
           >
             {option.Display}
-          </Checkbox>);
+          </Checkbox>
+        );
       }
       return result;
     }, []);
 
     return (
       <div>
-        { hasMatchSpec &&
-        <FormGroup>
-          <Checkbox
-            inline
-            key={v4()}
-            disabled={!canFilter}
-            defaultChecked={this.state.matchOptions.inSpec}
-            onClick={() => this.handleMatchSpeckCheck('inSpec', !this.state.matchOptions.inSpec)}
-          >
-          In Spec
-          </Checkbox>
-          <Checkbox
-            inline
-            key={v4()}
-            disabled={!canFilter}
-            defaultChecked={this.state.matchOptions.outOfSpec}
-            onClick={() => this.handleMatchSpeckCheck('outOfSpec', !this.state.matchOptions.outOfSpec)}
-          >
-          Out Spec
-          </Checkbox>
-        </FormGroup>
-        }
+        {hasMatchSpec && (
+          <FormGroup>
+            <Checkbox
+              inline
+              key={v4()}
+              disabled={!canFilter}
+              defaultChecked={this.state.matchOptions.inSpec}
+              onClick={() =>
+                this.handleMatchSpeckCheck(
+                  "inSpec",
+                  !this.state.matchOptions.inSpec
+                )
+              }
+            >
+              In Spec
+            </Checkbox>
+            <Checkbox
+              inline
+              key={v4()}
+              disabled={!canFilter}
+              defaultChecked={this.state.matchOptions.outOfSpec}
+              onClick={() =>
+                this.handleMatchSpeckCheck(
+                  "outOfSpec",
+                  !this.state.matchOptions.outOfSpec
+                )
+              }
+            >
+              Out Spec
+            </Checkbox>
+          </FormGroup>
+        )}
         <FormGroup controlId="filterSearch">
           <FormControl
             type="text"
             placeholder="Search..."
-            style={!this.props.hasTextSearch ? { visibility: 'hidden', position: 'relative', marginBottom: '-35px' } : {}}
+            style={
+              !this.props.hasTextSearch
+                ? {
+                    visibility: "hidden",
+                    position: "relative",
+                    marginBottom: "-35px"
+                  }
+                : {}
+            }
             onChange={e => this.setState({ filterText: e.target.value })}
             value={this.state.filterText}
           />
@@ -198,7 +261,7 @@ class FilterInput extends Component {
           </Checkbox>
           {checkboxes}
         </div>
-        <ButtonToolbar className="pull-right" style={{ margin: '0 0 8px 0' }}>
+        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button
             bsStyle="success"
             bsSize="xsmall"
@@ -213,7 +276,7 @@ class FilterInput extends Component {
             bsStyle="success"
             bsSize="xsmall"
             disabled={!canFilter || !this.state.isValidSelection}
-            style={{ marginLeft: '10px' }}
+            style={{ marginLeft: "10px" }}
             onClick={this.apply}
           >
             Apply
@@ -227,7 +290,7 @@ class FilterInput extends Component {
 FilterInput.defaultProps = {
   hasTextSearch: true,
   hasMatchSpec: false,
-  applySelection: () => {},
+  applySelection: () => {}
 };
 
 FilterInput.propTypes = {
@@ -236,7 +299,7 @@ FilterInput.propTypes = {
   applySelection: PropTypes.func,
   matchOptions: PropTypes.object.isRequired,
   filterOptions: PropTypes.array.isRequired,
-  filterKey: PropTypes.string.isRequired,
+  filterKey: PropTypes.string.isRequired
 };
 
 export default CSSModules(FilterInput, styles);

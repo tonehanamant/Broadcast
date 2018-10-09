@@ -1,10 +1,15 @@
-import { isArray } from 'lodash';
+import { isArray } from "lodash";
 
 const createReader = (resolve, reject, isAddFileInfo, { name, size, type }) => {
   const reader = new FileReader();
-  reader.onload = (parsedFile) => {
+  reader.onload = parsedFile => {
     if (isAddFileInfo) {
-      resolve({ name, size, type, base64: parsedFile.currentTarget.result.split('base64,')[1] });
+      resolve({
+        name,
+        size,
+        type,
+        base64: parsedFile.currentTarget.result.split("base64,")[1]
+      });
     } else {
       resolve(parsedFile);
     }
@@ -14,13 +19,11 @@ const createReader = (resolve, reject, isAddFileInfo, { name, size, type }) => {
   return reader;
 };
 
-
-const parseFile = (file, isAddFileInfo) => (
+const parseFile = (file, isAddFileInfo) =>
   new Promise((resolve, reject) => {
     const reader = createReader(resolve, reject, isAddFileInfo, file);
     reader.readAsDataURL(file);
-  })
-);
+  });
 
 const parseFiles = (files, isAddFileInfo) => {
   const parseFunctions = files.map(file => parseFile(file, isAddFileInfo));
@@ -33,4 +36,3 @@ export const parseFileToBase64 = (files, isAddFileInfo) => {
   }
   return parseFile(files, isAddFileInfo);
 };
-

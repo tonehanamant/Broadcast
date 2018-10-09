@@ -1,41 +1,51 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Button, Modal } from 'react-bootstrap';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
-import { head } from 'lodash';
-import { mapUnlinkedIscis, loadValidIscis, mapUnlinkedIsci } from 'Ducks/tracker';
-import { toggleModal } from 'Ducks/app';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Button, Modal } from "react-bootstrap";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import { head } from "lodash";
+import {
+  mapUnlinkedIscis,
+  loadValidIscis,
+  mapUnlinkedIsci
+} from "Ducks/tracker";
+import { toggleModal } from "Ducks/app";
 
-import './index.scss';
+import "./index.scss";
 
-
-const mapStateToProps = ({ app: { modals: { mapUnlinkedIsci: modal } }, tracker: { loadingValidIscis, typeaheadIscisList } }) => ({
+const mapStateToProps = ({
+  app: {
+    modals: { mapUnlinkedIsci: modal }
+  },
+  tracker: { loadingValidIscis, typeaheadIscisList }
+}) => ({
   modal,
   typeaheadIscisList,
-  loadingValidIscis,
+  loadingValidIscis
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    mapIscis: mapUnlinkedIscis,
-    toggleModal,
-    loadValidIscis,
-    mapUnlinkedIsci,
-  }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      mapIscis: mapUnlinkedIscis,
+      toggleModal,
+      loadValidIscis,
+      mapUnlinkedIsci
+    },
+    dispatch
+  );
 
 export class MapUnlinkedIsciModal extends Component {
   constructor(props, context) {
-		super(props, context);
-		this.context = context;
+    super(props, context);
+    this.context = context;
     this.onCancel = this.onCancel.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onClearState = this.onClearState.bind(this);
     this.state = {
-      selectedIsci: null,
+      selectedIsci: null
     };
   }
 
@@ -49,15 +59,15 @@ export class MapUnlinkedIsciModal extends Component {
 
   onClearState() {
     this.setState({
-      selectedIsci: null,
+      selectedIsci: null
     });
   }
 
   onCancel() {
     this.props.toggleModal({
-      modal: 'mapUnlinkedIsci',
+      modal: "mapUnlinkedIsci",
       active: false,
-      properties: {},
+      properties: {}
     });
   }
 
@@ -72,13 +82,18 @@ export class MapUnlinkedIsciModal extends Component {
     const rowData = modal.properties.rowData || {};
     this.props.mapUnlinkedIsci({
       OriginalIsci: rowData.ISCI,
-      EffectiveIsci: selectedIsci,
+      EffectiveIsci: selectedIsci
     });
   }
 
   render() {
     const { selectedIsci } = this.state;
-    const { modal, loadValidIscis, typeaheadIscisList, loadingValidIscis } = this.props;
+    const {
+      modal,
+      loadValidIscis,
+      typeaheadIscisList,
+      loadingValidIscis
+    } = this.props;
 
     if (!(modal.properties && modal.properties.rowData)) {
       return null;
@@ -93,16 +108,14 @@ export class MapUnlinkedIsciModal extends Component {
         dialogClassName="large-40-modal"
       >
         <Modal.Header>
-          <Modal.Title
-            style={{ display: 'inline-block' }}
-          >
-          Map ISCIs
+          <Modal.Title style={{ display: "inline-block" }}>
+            Map ISCIs
           </Modal.Title>
           <Button
             className="close"
             bsStyle="link"
             onClick={this.close}
-            style={{ display: 'inline-block', float: 'right' }}
+            style={{ display: "inline-block", float: "right" }}
           >
             <span>&times;</span>
           </Button>
@@ -115,20 +128,22 @@ export class MapUnlinkedIsciModal extends Component {
             <div className="typeahead-wrapper">
               <span>To:</span>
               <AsyncTypeahead
-                  options={typeaheadIscisList}
-                  isLoading={loadingValidIscis}
-                  allowNew={false}
-                  minLength={2}
-                  onSearch={loadValidIscis}
-                  onChange={this.onChange}
-                  placeholder="Search valid ISCI..."
-                  className="typeahead-element"
+                options={typeaheadIscisList}
+                isLoading={loadingValidIscis}
+                allowNew={false}
+                minLength={2}
+                onSearch={loadValidIscis}
+                onChange={this.onChange}
+                placeholder="Search valid ISCI..."
+                className="typeahead-element"
               />
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-					<Button bsStyle="danger" onClick={this.onCancel}>Cancel</Button>
+          <Button bsStyle="danger" onClick={this.onCancel}>
+            Cancel
+          </Button>
           <Button
             bsStyle="success"
             onClick={this.onSubmit}
@@ -144,16 +159,19 @@ export class MapUnlinkedIsciModal extends Component {
 
 MapUnlinkedIsciModal.defaultProps = {
   modal: {},
-  typeaheadIscisList: [],
+  typeaheadIscisList: []
 };
 
 MapUnlinkedIsciModal.propTypes = {
-	modal: PropTypes.object,
-	toggleModal: PropTypes.func.isRequired,
-	loadValidIscis: PropTypes.func.isRequired,
-	mapUnlinkedIsci: PropTypes.func.isRequired,
-	typeaheadIscisList: PropTypes.arrayOf(PropTypes.string),
-	loadingValidIscis: PropTypes.bool.isRequired,
+  modal: PropTypes.object,
+  toggleModal: PropTypes.func.isRequired,
+  loadValidIscis: PropTypes.func.isRequired,
+  mapUnlinkedIsci: PropTypes.func.isRequired,
+  typeaheadIscisList: PropTypes.arrayOf(PropTypes.string),
+  loadingValidIscis: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapUnlinkedIsciModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MapUnlinkedIsciModal);

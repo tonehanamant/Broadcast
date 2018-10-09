@@ -1,13 +1,15 @@
 module.exports = {
   test: /\.(js|jsx)$/,
-  exclude: /node_modules/,
+  exclude: function(modulePath) {
+    return /node_modules/.test(modulePath) && /node_modules(\/|\\)(?!react-table|react-dropzone)/.test(modulePath);
+  },
   use: [
     {
-      loader: 'babel-loader',
+      loader: "babel-loader",
       options: {
-        presets: ['env', 'react']
+        presets: ["env", "react"]
       }
     },
-    'eslint-loader',
+    "eslint-loader"
   ]
 };

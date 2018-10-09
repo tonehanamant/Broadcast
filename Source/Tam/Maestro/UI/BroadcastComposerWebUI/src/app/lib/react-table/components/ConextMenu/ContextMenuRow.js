@@ -1,11 +1,10 @@
-import React from 'react';
-import { ContextMenuTrigger } from 'react-contextmenu';
-import PropTypes from 'prop-types';
-import { RowChildrenProps } from '../../propTypes/propTypes';
-import { contextMenuId } from './util';
+import React from "react";
+import { ContextMenuTrigger } from "react-contextmenu";
+import PropTypes from "prop-types";
+import { RowChildrenProps } from "../../propTypes/propTypes";
+import { contextMenuId } from "./util";
 
-import '../../style/ContextMenuRow.css';
-
+import "../../style/ContextMenuRow.css";
 
 function ContextMenuRow({ isRender, row, children }) {
   if (!(isRender && row)) {
@@ -13,25 +12,21 @@ function ContextMenuRow({ isRender, row, children }) {
   }
 
   return (
-      <ContextMenuTrigger
-        id={contextMenuId}
-        collect={() => row}
-      >
-        {children}
-      </ContextMenuTrigger>
+    <ContextMenuTrigger id={contextMenuId} collect={() => row}>
+      {children}
+    </ContextMenuTrigger>
   );
 }
 
 ContextMenuRow.defaultProps = {
   isRender: true,
-  row: null,
+  row: null
 };
 
 ContextMenuRow.propTypes = {
   children: RowChildrenProps.isRequired,
   row: PropTypes.any,
-  isRender: PropTypes.bool,
+  isRender: PropTypes.bool
 };
-
 
 export default ContextMenuRow;
