@@ -21,18 +21,27 @@ import {
   daysSelectionsRender,
   transformDaysByWeekends,
   quickOptionsRender,
-  dateToString
+  dateToString,
+  nullDayPart,
+  initialDayPart,
+  validator
 } from "./util";
 import "./index.scss";
 
-const transformDayPart = ({ Text: text, startTime, endTime, ...days }) => {
+const transformTimeFromSeconds = time =>
+  moment()
+    .startOf("day")
+    .add(time, "seconds");
+
+const transformDayPart = ({
+  Text: text,
+  startTime,
+  endTime,
+  ...days
+} = initialDayPart) => {
   const dayPartValue = {
-    startTime: moment()
-      .startOf("day")
-      .add(startTime, "seconds"),
-    endTime: moment()
-      .startOf("day")
-      .add(endTime, "seconds"),
+    startTime: transformTimeFromSeconds(startTime),
+    endTime: transformTimeFromSeconds(endTime),
     days
   };
   return {
@@ -41,8 +50,15 @@ const transformDayPart = ({ Text: text, startTime, endTime, ...days }) => {
   };
 };
 
-const generateInitialState = dayPart => {
-  const newDayPart = transformDayPart(dayPart);
+const generateDayPart = (dayPart, allowEmpty) => {
+  if (allowEmpty) {
+    return dayPart ? transformDayPart(dayPart) : nullDayPart;
+  }
+  return transformDayPart(dayPart);
+};
+
+const generateInitialState = (dayPart, allowEmpty) => {
+  const newDayPart = generateDayPart(dayPart, allowEmpty);
   return {
     ...newDayPart,
     show: false
@@ -53,7 +69,7 @@ export default class DayPartPicker extends Component {
   constructor(props) {
     super(props);
 
-    this.state = generateInitialState(props.dayPart);
+    this.state = generateInitialState(props.dayPart, props.allowEmpty);
 
     this.onDayChange = this.onDayChange.bind(this);
     this.onRangeChange = this.onRangeChange.bind(this);
@@ -62,6 +78,13 @@ export default class DayPartPicker extends Component {
     this.onHide = this.onHide.bind(this);
     this.onApply = this.onApply.bind(this);
     this.editDayPart = this.editDayPart.bind(this);
+  }
+
+  componentDidMount() {
+    const { applyOnMount, dayPart } = this.props;
+    if (applyOnMount) {
+      this.onApply(dayPart || transformDayPart(initialDayPart));
+    }
   }
 
   editDayPart(nextDayPart) {
@@ -94,12 +117,13 @@ export default class DayPartPicker extends Component {
   }
 
   onShow() {
-    this.setState({ show: true });
+    const { disabled } = this.props;
+    this.setState({ show: !disabled });
   }
 
   onHide() {
-    const { dayPart } = this.props;
-    this.setState(generateInitialState(dayPart));
+    const { dayPart, allowEmpty } = this.props;
+    this.setState(generateInitialState(dayPart, allowEmpty));
   }
 
   onApply() {
@@ -115,10 +139,11 @@ export default class DayPartPicker extends Component {
 
   render() {
     const { days, show, startTime, endTime, text } = this.state;
-    const { disabled } = this.props;
+    const { disabled, allowEmpty } = this.props;
 
     const weekends = transformDaysByWeekends(days, true);
     const weekdays = transformDaysByWeekends(days, false);
+    const isValid = validator(days, startTime, endTime);
 
     return (
       <div className="daypart-picker">
@@ -166,7 +191,7 @@ export default class DayPartPicker extends Component {
                   }}
                   use12Hours
                   format={"h:mm a"}
-                  allowEmpty={false}
+                  allowEmpty={allowEmpty}
                   getPopupContainer={() =>
                     document.getElementById("startTimePicker")
                   }
@@ -182,7 +207,7 @@ export default class DayPartPicker extends Component {
                   }}
                   use12Hours
                   format={"h:mm a"}
-                  allowEmpty={false}
+                  allowEmpty={allowEmpty}
                   getPopupContainer={() =>
                     document.getElementById("endTimePicker")
                   }
@@ -196,7 +221,12 @@ export default class DayPartPicker extends Component {
                 <Button bsStyle="default" bsSize="small" onClick={this.onHide}>
                   Cancel
                 </Button>
-                <Button bsStyle="success" bsSize="small" onClick={this.onApply}>
+                <Button
+                  bsStyle="success"
+                  bsSize="small"
+                  onClick={this.onApply}
+                  disabled={!isValid}
+                >
                   Apply
                 </Button>
               </ButtonToolbar>
@@ -209,23 +239,16 @@ export default class DayPartPicker extends Component {
 }
 
 DayPartPicker.defaultProps = {
-  dayPart: {
-    Text: "",
-    endTime: 0,
-    startTime: 0,
-    mon: true,
-    tue: true,
-    wed: true,
-    thu: true,
-    fri: true,
-    sat: true,
-    sun: true
-  },
-  disabled: false
+  dayPart: undefined,
+  disabled: false,
+  applyOnMount: false,
+  allowEmpty: false
 };
 
 DayPartPicker.propTypes = {
   dayPart: PropTypes.object,
   onApply: PropTypes.func.isRequired,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  applyOnMount: PropTypes.bool,
+  allowEmpty: PropTypes.bool
 };

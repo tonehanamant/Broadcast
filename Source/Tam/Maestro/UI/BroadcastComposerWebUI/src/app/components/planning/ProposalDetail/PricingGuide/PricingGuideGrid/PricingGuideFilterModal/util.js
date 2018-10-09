@@ -110,8 +110,8 @@ export const filterMap = {
       options.filter(({ Id }) => values.includes(Id))
   },
   DayParts: {
-    render: (value, onFilterChange, options) => (
-      <DayPartPicker dayPart={options} onApply={onFilterChange} />
+    render: (value, onFilterChange) => (
+      <DayPartPicker applyOnMount dayPart={value} onApply={onFilterChange} />
     ),
     getInitialData: filterOptions => filterOptions,
     postTransformer: values => values,

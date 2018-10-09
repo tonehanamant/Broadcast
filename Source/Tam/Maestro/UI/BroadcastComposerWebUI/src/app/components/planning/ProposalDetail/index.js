@@ -63,6 +63,7 @@ export class ProposalDetail extends Component {
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
     this.rerunPostScrubing = this.rerunPostScrubing.bind(this);
+    this.onDayPartPickerApply = this.onDayPartPickerApply.bind(this);
 
     this.state = {
       validationStates: {
@@ -417,8 +418,9 @@ export class ProposalDetail extends Component {
                     )}
                   </div>
                   <DayPartPicker
+                    allowEmpty
                     dayPart={detail.Daypart || undefined}
-                    onApply={daypart => this.onDayPartPickerApply(daypart)}
+                    onApply={this.onDayPartPickerApply}
                     disabled={isReadOnly}
                   />
                 </FormGroup>

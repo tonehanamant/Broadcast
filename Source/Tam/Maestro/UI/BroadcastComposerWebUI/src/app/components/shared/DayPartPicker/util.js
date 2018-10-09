@@ -7,10 +7,39 @@ import {
   sortBy,
   split,
   filter,
+  every as everyFp,
   map
 } from "lodash/fp";
 import { every, forEach, head, last } from "lodash";
 import { Checkbox, Radio } from "react-bootstrap";
+
+export const nullDayPart = {
+  days: {
+    sun: false,
+    mon: false,
+    tue: false,
+    wed: false,
+    thu: false,
+    fri: false,
+    sat: false
+  },
+  text: "",
+  endTime: null,
+  startTime: null
+};
+
+export const initialDayPart = {
+  Text: "",
+  endTime: 0,
+  startTime: 0,
+  mon: true,
+  tue: true,
+  wed: true,
+  thu: true,
+  fri: true,
+  sat: true,
+  sun: true
+};
 
 const daysMap = {
   mon: {
@@ -104,7 +133,7 @@ export const transformDaysByWeekends = (days, isWeekends) => {
         });
       }
     })
-  )(days);
+  )(daysMap);
   return daysArray;
 };
 
@@ -167,7 +196,20 @@ const timeToString = timeValue => timeValue.format("h:mmA").replace(":00", "");
 
 export const dateToString = ({ days, startTime, endTime }) => {
   const daysText = dayToString(days);
-  const startTimeText = timeToString(startTime);
-  const endTimeText = timeToString(endTime);
-  return `${daysText} ${startTimeText}-${endTimeText}`;
+  const startTimeText = startTime ? timeToString(startTime) : "";
+  const endTimeText = endTime ? timeToString(endTime) : "";
+  const timeText =
+    startTimeText && endTimeText
+      ? `${startTimeText}-${endTimeText}`
+      : startTimeText || endTimeText;
+  return `${daysText} ${timeText}`;
+};
+
+export const validator = (days, startTime, endTime) => {
+  const isDayNotSelected = pipe(
+    keys,
+    everyFp(name => !days[name])
+  )(days);
+
+  return !isDayNotSelected && startTime && endTime;
 };
