@@ -43,8 +43,8 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 50.0000,
-      "TotalImpressions": 12517940.5,
+      "TotalCost": 25.0000,
+      "TotalImpressions": 2125796.25,
       "TotalSpots": 0,
       "TotalStationImpressions": 0.0
     }

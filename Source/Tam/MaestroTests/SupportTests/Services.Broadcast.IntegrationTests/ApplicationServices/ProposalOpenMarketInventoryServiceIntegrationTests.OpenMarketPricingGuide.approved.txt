@@ -25,7 +25,28 @@
                 "Display": "M-F 6AM-6PM",
                 "Id": 12
               },
-              "Genres": [],
+              "Genres": [
+                {
+                  "Display": "Action",
+                  "Id": 1
+                },
+                {
+                  "Display": "Adult",
+                  "Id": 2
+                },
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                },
+                {
+                  "Display": "Anthology",
+                  "Id": 4
+                },
+                {
+                  "Display": "Auction",
+                  "Id": 5
+                }
+              ],
               "Impressions": 2125796.25,
               "ImpressionsPerSpot": 2125796.25,
               "ManifestDaypartId": 213348,

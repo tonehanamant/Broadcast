@@ -1163,14 +1163,14 @@ namespace Services.Broadcast.ApplicationServices
             }
             
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
-            
+            _SumTotalsForMarkets(pricingGuideDto.Markets);
+
             return pricingGuideDto;
         }
 
         private PricingGuideOpenMarketInventory _GetExistingPricingGuideOpenMarketInventory(List<open_market_pricing_guide> existingPricingGuide,int postingBookId)
         {
             var response = new PricingGuideOpenMarketInventory();
-            response.Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>();
 
             var existingMarketPriceGuides = existingPricingGuide.GroupBy(pg => new {pg.market});
 
@@ -1228,8 +1228,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 response.Markets.Add(pricingGuideMarket);
             }
-
-            _SumTotalsForMarkets(response);
+            
             _ApplyDefaultSortingForPricingGuide(response);
 
             return response;
@@ -1250,7 +1249,7 @@ namespace Services.Broadcast.ApplicationServices
 
             pricingGuideOpenMarketInventory.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
 
-            _SumTotalsForMarkets(pricingGuideOpenMarketInventory);
+            _SumTotalsForMarkets(pricingGuideOpenMarketInventory.Markets);
 
             _ApplyDefaultSortingForPricingGuide(pricingGuideOpenMarketInventory);
 
@@ -1292,25 +1291,17 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
         }
 
-        private void _SumTotalsForMarkets(PricingGuideOpenMarketInventory pricingGuideOpenMarket)
+        private void _SumTotalsForMarkets(List<PricingGuideOpenMarketInventory.PricingGuideMarket> markets)
         {
-            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
-            pricingGuideOpenMarket.Markets.ForEach(
+            markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
+            markets.ForEach(
                 m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
-            pricingGuideOpenMarket.Markets.ForEach(m =>
+            markets.ForEach(m =>
                 m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            pricingGuideOpenMarket.Markets.ForEach(m =>
+            markets.ForEach(m =>
                 m.TotalStationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
         }
-
-        private void _SumTotalsForMarkets(PricingGuideOpenMarketInventoryDto pricingGuideOpenMarket)
-        {
-            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
-            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
-            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            pricingGuideOpenMarket.Markets.ForEach(m => m.TotalStationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
-        }
-
+        
         private void _FilterProgramsByDaypart(ProposalDetailInventoryBase pricingGuideOpenMarketDto, List<ProposalProgramDto> programs)
         {
             if (pricingGuideOpenMarketDto.DetailDaypartId == null)
@@ -1354,7 +1345,7 @@ namespace Services.Broadcast.ApplicationServices
         public PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
         {
             _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
-            _SumTotalsForMarkets(dto);
+            _SumTotalsForMarkets(dto.Markets);
 
             return dto;
         }
