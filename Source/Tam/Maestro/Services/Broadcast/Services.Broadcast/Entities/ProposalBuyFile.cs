@@ -69,7 +69,15 @@ namespace Services.Broadcast.Entities
             {
                 try
                 {
-                    Details.Add(new ProposalBuyFileDetail(scxDetail, this));
+                    var buyDetail = new ProposalBuyFileDetail(scxDetail, this);
+                    if (buyDetail.Errors.Any())
+                    {
+                        Errors.AddRange(buyDetail.Errors);
+                    }
+                    else
+                    {
+                        Details.Add(buyDetail);
+                    }
                 }catch(ApplicationException e)
                 {
                     Errors.Add(e.Message);
@@ -97,41 +105,60 @@ namespace Services.Broadcast.Entities
             public DisplayDaypart Daypart { get; set; }
             public List<ProposalBuyFileDetailWeek> Weeks { get; set; }
             public List<ProposalBuyFileDetailAudience> Audiences { get; set; }
+            public List<string> Errors { get; set; }
 
             public ProposalBuyFileDetail() { }
 
             public ProposalBuyFileDetail(ScxFile.ScxFileDetail detail, ProposalBuyFile proposalBuyFile)
             {
+                Errors = new List<string>();
+
                 Station = proposalBuyFile.StationEngine.FindStation(detail.Network);
                 if(Station == null)
                 {
-                    throw new ApplicationException($"Unable to find station {detail.Network}");
+                    Errors.Add($"Unable to find station {detail.Network}");
                 }
+
                 SpotCost = detail.SpotCost;
-                TotalSpots = detail.TotalSpots;
-                TotalCost = detail.TotalCost;
-                int spotLengthId;
-                if(!proposalBuyFile.SpotLengths.TryGetValue(detail.SpotLength, out spotLengthId))
+                if(SpotCost <= 0)
                 {
-                    throw new ApplicationException($"Unable to find spot length {detail.SpotLength}");
+                    Errors.Add($"Unable to find valid spot cost: {SpotCost}");
                 }
-                SpotLengthId = spotLengthId;
-                var detailDaypart = new DisplayDaypart
+
+                TotalSpots = detail.TotalSpots;
+                if(TotalSpots <= 0)
                 {
-                    Monday = detail.Monday,
-                    Tuesday = detail.Tuesday,
-                    Wednesday = detail.Wednesday,
-                    Thursday = detail.Thursday,
-                    Friday = detail.Friday,
-                    Saturday = detail.Saturday,
-                    Sunday = detail.Sunday,
-                    StartTime = detail.StartTime,
-                    EndTime = detail.EndTime
-                };
-                detailDaypart.Id = proposalBuyFile.DaypartCache.GetIdByDaypart(detailDaypart);
-                Daypart = detailDaypart;
-                Weeks = detail.Weeks.Select(w => new ProposalBuyFileDetailWeek(w, proposalBuyFile)).ToList();
-                Audiences = detail.Audiences.Select(a => new ProposalBuyFileDetailAudience(a, proposalBuyFile)).ToList();
+                    Errors.Add($"Unable to find valid number of spots: {TotalSpots}");
+                }
+
+                TotalCost = detail.TotalCost;
+
+                if (!proposalBuyFile.SpotLengths.TryGetValue(detail.SpotLength, out int spotLengthId))
+                {
+                    Errors.Add($"Unable to find spot length {detail.SpotLength}");
+                }
+
+                if (!Errors.Any())
+                {
+
+                    SpotLengthId = spotLengthId;
+                    var detailDaypart = new DisplayDaypart
+                    {
+                        Monday = detail.Monday,
+                        Tuesday = detail.Tuesday,
+                        Wednesday = detail.Wednesday,
+                        Thursday = detail.Thursday,
+                        Friday = detail.Friday,
+                        Saturday = detail.Saturday,
+                        Sunday = detail.Sunday,
+                        StartTime = detail.StartTime,
+                        EndTime = detail.EndTime
+                    };
+                    detailDaypart.Id = proposalBuyFile.DaypartCache.GetIdByDaypart(detailDaypart);
+                    Daypart = detailDaypart;
+                    Weeks = detail.Weeks.Select(w => new ProposalBuyFileDetailWeek(w, proposalBuyFile)).ToList();
+                    Audiences = detail.Audiences.Select(a => new ProposalBuyFileDetailAudience(a, proposalBuyFile)).ToList();
+                }
             }
 
         }

@@ -185,7 +185,7 @@
 							<code codeOwner="Strata" codeDescription="End Date">2016-06-26</code>
 						</ID>
 					</network>
-					<spotCost currency="USD">1625.00</spotCost>
+					<spotCost currency="USD">0</spotCost>
 					<demoValue demoRank="1">
 						<value type="Ratings">0.6</value>
 						<value type="Impressions">47178</value>
