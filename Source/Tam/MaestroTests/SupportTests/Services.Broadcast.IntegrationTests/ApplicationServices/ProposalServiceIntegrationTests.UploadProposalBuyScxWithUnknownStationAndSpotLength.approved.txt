@@ -1,4 +1,6 @@
 ﻿[
+  "Unable to find valid spot cost: 0 (1)",
+  "Unable to find valid number of spots: 0 (4)",
   "Unable to find spot length 16 (1)",
   "Unable to find station 1NBC-TV (1)"
 ]

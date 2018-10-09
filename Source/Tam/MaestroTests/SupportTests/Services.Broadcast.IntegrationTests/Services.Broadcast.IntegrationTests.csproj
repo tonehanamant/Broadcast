@@ -318,6 +318,9 @@
     <None Include="Files\Checkers 2Q16 SYN - ProposalBuy.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Checkers 2Q16 SYN - ProposalBuyWithInvalidDateRange.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Checkers 2Q16 SYN - ProposalBuyWithErrors.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
