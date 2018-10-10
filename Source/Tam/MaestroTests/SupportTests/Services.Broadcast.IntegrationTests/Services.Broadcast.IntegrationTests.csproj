@@ -228,7 +228,8 @@
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
+    <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
+	<Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
@@ -315,6 +316,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Checkers 2Q16 SYN - ProposalBuy.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Checkers 2Q16 SYN - ProposalBuyWithInvalidDateRange.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Checkers 2Q16 SYN - ProposalBuyWithErrors.scx">
@@ -461,23 +465,23 @@
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac-BCOP3553.csv">
+    <None Include="Files\KeepingTrac_MissingData.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac-BCOP3553_RequiredColumnMissing.csv">
+    <None Include="Files\KeepingTrac_MissingHeaders.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv">
+    <None Include="Files\KeepingTrac_ValidFile.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_MissingData.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_MissingData.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_Clean.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_MissingHeaders.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_MissingHeaders.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_ValidFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -714,6 +718,9 @@
     </Content>
     <Content Include="Files\ImportingRateData\1Q18 ENT-SYN Rates\Buffalo WBBZ SYN.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Keeping Trac BCOP-3771.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\KeepingTracTest.xlsx.BadTimes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

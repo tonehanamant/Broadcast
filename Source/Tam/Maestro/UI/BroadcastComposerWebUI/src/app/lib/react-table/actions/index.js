@@ -1,3 +1,3 @@
-import * as ACTIONS from './actions';
+import * as ACTIONS from "./actions";
 
 export default ACTIONS;

@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import ProposalDetail from 'Components/planning/ProposalDetail';
+import ProposalDetail from "Components/planning/ProposalDetail";
 
 export default class ProposalDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.onUpdateProposal = this.onUpdateProposal.bind(this);
-	}
+  }
 
   onUpdateProposal() {
     const { updateProposal } = this.props;
@@ -16,14 +16,26 @@ export default class ProposalDetails extends Component {
   }
 
   render() {
-    const { proposalEditForm, initialdata, updateProposalEditFormDetail, deleteProposalDetail, toggleModal, createAlert, modelNewProposalDetail, updateProposalEditFormDetailGrid, proposalValidationStates } = this.props;
+    const {
+      proposalEditForm,
+      initialdata,
+      updateProposalEditFormDetail,
+      deleteProposalDetail,
+      toggleModal,
+      createAlert,
+      modelNewProposalDetail,
+      updateProposalEditFormDetailGrid,
+      proposalValidationStates
+    } = this.props;
     return (
       <div id="proposal-details">
-				<h5 style={{ textAlign: 'center', color: '#1e5fa8' }}><strong>Proposal Details</strong></h5>
+        <h5 style={{ textAlign: "center", color: "#1e5fa8" }}>
+          <strong>Proposal Details</strong>
+        </h5>
         {proposalEditForm.Details.map(detail => (
-					<ProposalDetail
+          <ProposalDetail
             key={detail.Id}
-						proposalEditForm={proposalEditForm}
+            proposalEditForm={proposalEditForm}
             detail={detail}
             initialdata={initialdata}
             updateProposalEditFormDetail={updateProposalEditFormDetail}
@@ -35,7 +47,7 @@ export default class ProposalDetails extends Component {
             isDirty={this.props.isDirty}
             proposalValidationStates={proposalValidationStates}
             createAlert={createAlert}
-					/>
+          />
         ))}
         <ProposalDetail
           initialdata={initialdata}
@@ -43,13 +55,12 @@ export default class ProposalDetails extends Component {
           isReadOnly={this.props.isReadOnly}
           isDirty={this.props.isDirty}
         />
-			</div>
+      </div>
     );
   }
 }
 
-ProposalDetails.defaultProps = {
-};
+ProposalDetails.defaultProps = {};
 
 ProposalDetails.propTypes = {
   proposalEditForm: PropTypes.object.isRequired,
@@ -64,5 +75,5 @@ ProposalDetails.propTypes = {
   isDirty: PropTypes.func.isRequired,
 
   createAlert: PropTypes.func.isRequired,
-  proposalValidationStates: PropTypes.object.isRequired,
+  proposalValidationStates: PropTypes.object.isRequired
 };

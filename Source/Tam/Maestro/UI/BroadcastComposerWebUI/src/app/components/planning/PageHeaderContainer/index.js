@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getPlanningFiltered } from 'Ducks/planning';
-import { Row, Col, Glyphicon, Button } from 'react-bootstrap';
-import { Actions } from 'react-redux-grid';
-import SearchInputButton from 'Components/shared/SearchInputButton';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getPlanningFiltered } from "Ducks/planning";
+import { Row, Col, Glyphicon, Button } from "react-bootstrap";
+import { Actions } from "react-redux-grid";
+import SearchInputButton from "Components/shared/SearchInputButton";
 
 const { MenuActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
 
-const mapStateToProps = ({ routing }) => ({
-  routing,
-});
-
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { getPlanningFiltered,
+    {
+      getPlanningFiltered,
       showMenu,
-      hideMenu,
-     }, dispatch)
-);
+      hideMenu
+    },
+    dispatch
+  );
 
 /* eslint-disable react/prefer-stateless-function */
 export class PageHeaderContainer extends Component {
@@ -28,7 +26,7 @@ export class PageHeaderContainer extends Component {
     super(props);
     console.log(this.props);
     this.openCreateProposalDetail = this.openCreateProposalDetail.bind(this);
-		this.SearchInputAction = this.SearchInputAction.bind(this);
+    this.SearchInputAction = this.SearchInputAction.bind(this);
     this.SearchSubmitAction = this.SearchSubmitAction.bind(this);
     this.showHeaderMenu = this.showHeaderMenu.bind(this);
     this.onHideHeaderMenu = this.onHideHeaderMenu.bind(this);
@@ -38,16 +36,20 @@ export class PageHeaderContainer extends Component {
 
   componentDidMount() {
     // document.body.addEventListener('click', this.hideHeaderMenu);
-    document.getElementById('planning-section').addEventListener('click', this.onHideHeaderMenu);
+    document
+      .getElementById("planning-section")
+      .addEventListener("click", this.onHideHeaderMenu);
   }
 
   componentWillUnmount() {
     // document.body.removeEventListener('click', this.hideHeaderMenu);
-    document.getElementById('planning-section').removeEventListener('click', this.onHideHeaderMenu);
+    document
+      .getElementById("planning-section")
+      .removeEventListener("click", this.onHideHeaderMenu);
   }
 
   showHeaderMenu() {
-    this.props.showMenu({ id: 'header-row', stateKey: 'gridPlanningHome' });
+    this.props.showMenu({ id: "header-row", stateKey: "gridPlanningHome" });
   }
 
   onHideHeaderMenu(e) {
@@ -55,62 +57,70 @@ export class PageHeaderContainer extends Component {
     // click outside of menu - close
     const targ = e.target.className;
     const parent = e.target.parentNode.className;
-    if (targ === 'react-grid-action-menu-item' || parent === 'react-grid-action-menu-item') {
+    if (
+      targ === "react-grid-action-menu-item" ||
+      parent === "react-grid-action-menu-item"
+    ) {
       // this.props.hideMenu({ id: 'header-row', stateKey: 'gridPlanningHome' });
     } else {
-      this.props.hideMenu({ id: 'header-row', stateKey: 'gridPlanningHome' });
+      this.props.hideMenu({ id: "header-row", stateKey: "gridPlanningHome" });
     }
   }
 
-	SearchInputAction() {
-		this.props.getPlanningFiltered();
-	}
+  SearchInputAction() {
+    this.props.getPlanningFiltered();
+  }
 
-	SearchSubmitAction(value) {
-		this.props.getPlanningFiltered(value);
+  SearchSubmitAction(value) {
+    this.props.getPlanningFiltered(value);
   }
 
   /* eslint-disable class-methods-use-this */
   openCreateProposalDetail() {
-		const url = 'planning/proposal/create';
+    const url = "/broadcastreact/planning/proposal/create";
     window.location.assign(url);
-	}
+  }
 
   render() {
     return (
-			<Row>
-				<Col xs={6}>
+      <Row>
+        <Col xs={6}>
           <Button
             bsStyle="success"
             bsSize="small"
             onClick={this.openCreateProposalDetail}
-          >Create New Proposal
+          >
+            Create New Proposal
           </Button>
-				</Col>
+        </Col>
         <Col xs={6}>
           <Button
             // bsStyle="success"
-            style={{ marginLeft: '6px' }}
+            style={{ marginLeft: "6px" }}
             bsSize="small"
             className="pull-right"
             onClick={this.showHeaderMenu}
-          ><Glyphicon glyph="menu-hamburger" />
+          >
+            <Glyphicon glyph="menu-hamburger" />
           </Button>
-					<SearchInputButton
+          <SearchInputButton
             inputAction={this.SearchInputAction}
             submitAction={this.SearchSubmitAction}
             fieldPlaceHolder="Filter..."
-					/>
-				</Col>
-			</Row>
+          />
+        </Col>
+      </Row>
     );
-	}
+  }
 }
 
 PageHeaderContainer.propTypes = {
   getPlanningFiltered: PropTypes.func.isRequired,
   showMenu: PropTypes.func.isRequired,
-  hideMenu: PropTypes.func.isRequired,
+  hideMenu: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageHeaderContainer);
+export default connect(
+  null,
+  mapDispatchToProps
+)(PageHeaderContainer);

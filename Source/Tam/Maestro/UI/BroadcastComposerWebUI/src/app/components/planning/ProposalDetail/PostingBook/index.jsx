@@ -1,30 +1,43 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Modal, Button, Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { bindActionCreators } from 'redux';
-import Select from 'react-select';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  Modal,
+  Button,
+  Form,
+  FormGroup,
+  ControlLabel,
+  Col
+} from "react-bootstrap";
+import { bindActionCreators } from "redux";
+import Select from "react-select";
 
-import { toggleModal } from 'Ducks/app';
-import { updateProposalEditFormDetail } from 'Ducks/planning';
+import { toggleModal } from "Ducks/app";
+import { updateProposalEditFormDetail } from "Ducks/planning";
 
-const findValue = (options, id) => (options.find(option => option.Id === id));
+const findValue = (options, id) => options.find(option => option.Id === id);
 
-const isActiveDialog = (detail, modal) => (
-  modal && detail && modal.properties.detailId === detail.Id && modal.active
-);
+const isActiveDialog = (detail, modal) =>
+  modal && detail && modal.properties.detailId === detail.Id && modal.active;
 
-const mapStateToProps = ({ app: { modals: { postingBook: modal } }, planning: { initialdata, proposalEditForm } }) => ({
+const mapStateToProps = ({
+  app: {
+    modals: { postingBook: modal }
+  },
+  planning: { initialdata, proposalEditForm }
+}) => ({
   modal,
   initialdata,
-  proposalEditForm,
+  proposalEditForm
 });
 
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
       toggleModal,
-      updateDetail: updateProposalEditFormDetail,
-    }, dispatch)
+      updateDetail: updateProposalEditFormDetail
+    },
+    dispatch
   );
 
 class PostingBook extends Component {
@@ -41,7 +54,7 @@ class PostingBook extends Component {
     this.state = {
       postingBook: null,
       playbackType: null,
-      showConfirmation: false,
+      showConfirmation: false
     };
   }
 
@@ -59,7 +72,7 @@ class PostingBook extends Component {
     this.setState({
       postingBook: null,
       playbackType: null,
-      showConfirmation: false,
+      showConfirmation: false
     });
   }
 
@@ -75,10 +88,20 @@ class PostingBook extends Component {
     const { postingBook, playbackType } = this.state;
     const { updateDetail, detail, initialdata } = this.props;
     const { CrunchedMonths, PlaybackTypes } = initialdata.ForecastDefaults;
-    const selectedPlayback = playbackType || findValue(PlaybackTypes, detail.PostingPlaybackType);
-    const selectedPostingBook = postingBook || findValue(CrunchedMonths, detail.PostingBookId);
-    updateDetail({ id: detail.Id, key: 'PostingBookId', value: selectedPostingBook.Id });
-    updateDetail({ id: detail.Id, key: 'PostingPlaybackType', value: selectedPlayback.Id });
+    const selectedPlayback =
+      playbackType || findValue(PlaybackTypes, detail.PostingPlaybackType);
+    const selectedPostingBook =
+      postingBook || findValue(CrunchedMonths, detail.PostingBookId);
+    updateDetail({
+      id: detail.Id,
+      key: "PostingBookId",
+      value: selectedPostingBook.Id
+    });
+    updateDetail({
+      id: detail.Id,
+      key: "PostingPlaybackType",
+      value: selectedPlayback.Id
+    });
     this.onCancel();
   }
 
@@ -88,9 +111,9 @@ class PostingBook extends Component {
 
   onCancel() {
     this.props.toggleModal({
-      modal: 'postingBook',
+      modal: "postingBook",
       active: false,
-      properties: { detailId: this.props.detail.Id },
+      properties: { detailId: this.props.detail.Id }
     });
   }
 
@@ -99,7 +122,10 @@ class PostingBook extends Component {
     const { postingBook, playbackType, showConfirmation } = this.state;
     const show = isActiveDialog(detail, modal);
     const { CrunchedMonths, PlaybackTypes } = initialdata.ForecastDefaults;
-    const originalPlayback = findValue(PlaybackTypes, detail.PostingPlaybackType);
+    const originalPlayback = findValue(
+      PlaybackTypes,
+      detail.PostingPlaybackType
+    );
     const originalPostingBook = findValue(CrunchedMonths, detail.PostingBookId);
     const selectedPlayback = playbackType || originalPlayback;
     const selectedPostingBook = postingBook || originalPostingBook;
@@ -110,12 +136,12 @@ class PostingBook extends Component {
         <Modal show={show}>
           <Modal.Header>
             <Button
-                className="close"
-                bsStyle="link"
-                onClick={this.onCancel}
-                style={{ display: 'inline-block', float: 'right' }}
+              className="close"
+              bsStyle="link"
+              onClick={this.onCancel}
+              style={{ display: "inline-block", float: "right" }}
             >
-                <span>&times;</span>
+              <span>&times;</span>
             </Button>
             <Modal.Title>Proposal Details Posting Book</Modal.Title>
           </Modal.Header>
@@ -129,7 +155,9 @@ class PostingBook extends Component {
                 <Col sm={9}>
                   <Select
                     value={selectedPostingBook}
-                    onChange={(value) => { this.onChange('postingBook', value); }}
+                    onChange={value => {
+                      this.onChange("postingBook", value);
+                    }}
                     placeholder="Select..."
                     options={CrunchedMonths}
                     labelKey="Display"
@@ -147,7 +175,9 @@ class PostingBook extends Component {
                 <Col sm={9}>
                   <Select
                     value={selectedPlayback}
-                    onChange={(value) => { this.onChange('playbackType', value); }}
+                    onChange={value => {
+                      this.onChange("playbackType", value);
+                    }}
                     options={PlaybackTypes}
                     labelKey="Display"
                     valueKey="Id"
@@ -160,14 +190,16 @@ class PostingBook extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
-              <Button
-                disabled={isDisableForm}
-                onClick={this.showConfirmation}
-                bsStyle="success"
-              >
+            <Button onClick={this.onCancel} bsStyle="default">
+              Cancel
+            </Button>
+            <Button
+              disabled={isDisableForm}
+              onClick={this.showConfirmation}
+              bsStyle="success"
+            >
               Save
-              </Button>
+            </Button>
           </Modal.Footer>
         </Modal>
 
@@ -177,7 +209,7 @@ class PostingBook extends Component {
               className="close"
               bsStyle="link"
               onClick={this.hideConfirmation}
-              style={{ display: 'inline-block', float: 'right' }}
+              style={{ display: "inline-block", float: "right" }}
             >
               <span>&times;</span>
             </Button>
@@ -189,8 +221,12 @@ class PostingBook extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.hideConfirmation} bsStyle="default">Cancel</Button>
-            <Button onClick={this.onSave} bsStyle="success">Save</Button>
+            <Button onClick={this.hideConfirmation} bsStyle="default">
+              Cancel
+            </Button>
+            <Button onClick={this.onSave} bsStyle="success">
+              Save
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -203,12 +239,15 @@ PostingBook.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   updateDetail: PropTypes.func.isRequired,
   initialdata: PropTypes.object.isRequired,
-  detail: PropTypes.object.isRequired,
+  detail: PropTypes.object.isRequired
 };
 
 PostingBook.defaultProps = {
   modal: null,
-  isReadOnly: false,
+  isReadOnly: false
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostingBook);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostingBook);

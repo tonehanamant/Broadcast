@@ -51,17 +51,6 @@
         margin-right: 6px;
       }
     }
-    .proposal-detail-form-daypart {
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-
-        > label {
-          margin: 0 !important;
-        }
-      }
-    }
   }
 
   @media (min-width: 1501px) {

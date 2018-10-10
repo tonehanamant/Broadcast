@@ -1,22 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
-import CSSModules from 'react-css-modules';
+import React from "react";
+import PropTypes from "prop-types";
+import { Switch, Route } from "react-router-dom";
+import CSSModules from "react-css-modules";
 
-import AppHeader from 'Components/header/AppHeader';
-import AppFooter from 'Components/footer/AppFooter';
+import AppHeader from "Components/header/AppHeader";
+import AppFooter from "Components/footer/AppFooter";
 // import SectionHome from 'Containers/SectionHome';
-import SectionPostPrePosting from 'Containers/SectionPostPrePosting';
-import SectionPost from 'Containers/SectionPost';
-import SectionPlanning from 'Containers/SectionPlanning';
-import SectionTracker from 'Containers/SectionTracker';
+import SectionPostPrePosting from "Containers/SectionPostPrePosting";
+import SectionPost from "Containers/SectionPost";
+import SectionPlanning from "Containers/SectionPlanning";
+import SectionTracker from "Containers/SectionTracker";
 // import SectionRates from 'Containers/SectionRates';
-import Toast from 'Components/shared/Toast';
-import ErrorModal from 'Components/shared/ErrorModal';
-import ConfirmModal from 'Components/shared/ConfirmModal';
-import Overlay from 'Components/shared/Overlay';
+import Toast from "Components/shared/Toast";
+import ErrorModal from "Components/shared/ErrorModal";
+import ConfirmModal from "Components/shared/ConfirmModal";
+import Overlay from "Components/shared/Overlay";
+import "font-awesome/css/font-awesome.min.css";
 
-import styles from './index.style.scss';
+import styles from "./index.style.scss";
 
 /* eslint-disable no-unused-vars */
 export const AppMain = ({ match: { path } }) => (
@@ -30,7 +31,10 @@ export const AppMain = ({ match: { path } }) => (
     <Switch>
       <Route exact path={path} component={SectionPostPrePosting} />
       <Route path={`${path}/post`} component={SectionPost} />
-      <Route path={`${path}/post-pre-posting`} component={SectionPostPrePosting} />
+      <Route
+        path={`${path}/post-pre-posting`}
+        component={SectionPostPrePosting}
+      />
       <Route path={`${path}/planning`} component={SectionPlanning} />
       <Route path={`${path}/tracker`} component={SectionTracker} />
     </Switch>
@@ -39,7 +43,7 @@ export const AppMain = ({ match: { path } }) => (
 );
 
 AppMain.propTypes = {
-  match: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 
 export default CSSModules(AppMain, styles);

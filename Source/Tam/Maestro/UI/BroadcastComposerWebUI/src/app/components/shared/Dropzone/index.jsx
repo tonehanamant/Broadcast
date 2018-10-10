@@ -1,27 +1,30 @@
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { head, pick } from 'lodash';
-import CSSModules from 'react-css-modules';
-import ReactDropzone from 'react-dropzone';
-import { getDataTransferItems, validateFilesByExtension } from 'Utils/file-upload';
-import { parseFileToBase64 } from 'Utils/file-parser';
+import React, { PureComponent, Fragment } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { head, pick } from "lodash";
+import CSSModules from "react-css-modules";
+import ReactDropzone from "react-dropzone";
+import {
+  getDataTransferItems,
+  validateFilesByExtension
+} from "Utils/file-upload";
+import { parseFileToBase64 } from "Utils/file-parser";
 
-import { deployError } from 'Ducks/app';
+import { deployError } from "Ducks/app";
 
-import styles from './index.scss';
+import styles from "./index.scss";
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    deployError,
-  }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      deployError
+    },
+    dispatch
+  );
 
-
-const mapStateToProps = ({ routing, app }) => ({
-  routing,
-  disabledDropzones: app.disabledDropzones,
+const mapStateToProps = ({ app }) => ({
+  disabledDropzones: app.disabledDropzones
 });
 
 export class Dropzone extends PureComponent {
@@ -35,14 +38,13 @@ export class Dropzone extends PureComponent {
     this.processMultipleFiles = this.processMultipleFiles.bind(this);
 
     this.state = {
-      disabled: true,
+      disabled: true
     };
   }
 
-
   onDragEnter({ dataTransfer: { types } }) {
     const { disabled } = this.state;
-    const nextValue = !types.includes('Files');
+    const nextValue = !types.includes("Files");
     if (disabled !== nextValue) {
       this.setState({ disabled: nextValue });
     }
@@ -55,17 +57,24 @@ export class Dropzone extends PureComponent {
 
   processSingleFile(acceptedFiles, rejectedFiles) {
     const { processFiles, fileTypeExtension } = this.props;
-    const { file, isAccepted } = acceptedFiles.length ?
-    { file: head(acceptedFiles), isAccepted: true } : { file: head(rejectedFiles), isAccepted: false };
+    const { file, isAccepted } = acceptedFiles.length
+      ? { file: head(acceptedFiles), isAccepted: true }
+      : { file: head(rejectedFiles), isAccepted: false };
     processFiles(file, isAccepted, fileTypeExtension);
   }
 
   validateFiles(acceptedFiles, rejectedFiles) {
     const { fileTypeExtension, deployError, isShowError } = this.props;
     if (!acceptedFiles.length && !rejectedFiles.length) return false;
-    const validated = validateFilesByExtension(acceptedFiles, rejectedFiles, fileTypeExtension);
+    const validated = validateFilesByExtension(
+      acceptedFiles,
+      rejectedFiles,
+      fileTypeExtension
+    );
     if (isShowError && rejectedFiles.length > 0) {
-      deployError({ message: `Invalid file format. Please provide a ${fileTypeExtension} file.` });
+      deployError({
+        message: `Invalid file format. Please provide a ${fileTypeExtension} file.`
+      });
       return false;
     }
     return validated;
@@ -76,9 +85,11 @@ export class Dropzone extends PureComponent {
     const validated = this.validateFiles(acceptedFiles, rejectedFiles);
     // if files are not valid do not process them
     if (!validated) return false;
-    const processFile = multiple ? this.processMultipleFiles : this.processSingleFile;
+    const processFile = multiple
+      ? this.processMultipleFiles
+      : this.processSingleFile;
     if (isParseFile) {
-      parseFileToBase64(acceptedFiles, true).then((values) => {
+      parseFileToBase64(acceptedFiles, true).then(values => {
         processFile(values, validated.rejectedFiles);
       });
     } else {
@@ -88,9 +99,19 @@ export class Dropzone extends PureComponent {
   }
 
   render() {
-    const { children, onDrop, disabledDropzones, fileType, fileTypeExtension, acceptedMimeTypes } = this.props;
+    const {
+      children,
+      onDrop,
+      disabledDropzones,
+      fileType,
+      fileTypeExtension,
+      acceptedMimeTypes
+    } = this.props;
     const { disabled } = this.state;
-    const dropZoneProps = pick(this.props, Object.keys(ReactDropzone.propTypes));
+    const dropZoneProps = pick(
+      this.props,
+      Object.keys(ReactDropzone.propTypes)
+    );
     if (!children) {
       return (
         <ReactDropzone
@@ -127,14 +148,23 @@ export class Dropzone extends PureComponent {
         disabled={disabledDropzones}
       >
         <Fragment>
-          {!disabled && <div className="drop-overlay">
-            <div className="drop-dialog">
-              <h1><i className="fa fa-cloud-upload upload-cloud" /></h1>
-              <h2>Drop a {fileType} file here to upload</h2>
-              <p className="reject-prompt">Invalid file format. Please provide an {fileTypeExtension} file.</p>
-              <p className="accept-prompt">Valid {fileTypeExtension} file format.</p>
+          {!disabled && (
+            <div className="drop-overlay">
+              <div className="drop-dialog">
+                <h1>
+                  <i className="fa fa-cloud-upload upload-cloud" />
+                </h1>
+                <h2>Drop a {fileType} file here to upload</h2>
+                <p className="reject-prompt">
+                  Invalid file format. Please provide an {fileTypeExtension}{" "}
+                  file.
+                </p>
+                <p className="accept-prompt">
+                  Valid {fileTypeExtension} file format.
+                </p>
+              </div>
             </div>
-          </div>}
+          )}
           {children}
         </Fragment>
       </ReactDropzone>
@@ -144,19 +174,19 @@ export class Dropzone extends PureComponent {
 
 Dropzone.defaultProps = {
   children: null,
-  fileType: 'Excel',
-  fileTypeExtension: '.xlsx',
+  fileType: "Excel",
+  fileTypeExtension: ".xlsx",
   onDrop: null,
   multiple: false,
-  acceptedMimeTypes: '',
+  acceptedMimeTypes: "",
   isShowError: true,
-  isParseFile: true,
+  isParseFile: true
 };
 
 Dropzone.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
+    PropTypes.node
   ]),
   fileType: PropTypes.string,
   fileTypeExtension: PropTypes.string,
@@ -167,7 +197,10 @@ Dropzone.propTypes = {
   disabledDropzones: PropTypes.bool.isRequired,
   isShowError: PropTypes.bool,
   isParseFile: PropTypes.bool,
-  deployError: PropTypes.func.isRequired,
+  deployError: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dropzone, styles));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CSSModules(Dropzone, styles));

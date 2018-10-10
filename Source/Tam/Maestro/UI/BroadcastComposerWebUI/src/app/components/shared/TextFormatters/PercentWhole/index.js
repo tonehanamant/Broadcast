@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import numeral from 'numeral';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import numeral from "numeral";
 
 /* eslint-disable react/prefer-stateless-function */
 export default class PercentWhole extends Component {
@@ -9,15 +9,10 @@ export default class PercentWhole extends Component {
   // }
 
   render() {
-    return (
-			<span>{ numeral(this.props.percent / 100).format('0%') }</span>
-    );
-	}
+    return <span>{numeral(this.props.percent / 100).format("0%")}</span>;
+  }
 }
 
 PercentWhole.propTypes = {
-  percent: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  percent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };

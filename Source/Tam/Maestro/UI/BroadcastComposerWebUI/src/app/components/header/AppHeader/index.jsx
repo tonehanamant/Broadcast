@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-import { getEnvironment, getEmployee } from 'Ducks/app';
+import { getEnvironment, getEmployee } from "Ducks/app";
 
-import NavigationBar from 'Components/header/NavigationBar';
+import NavigationBar from "Components/header/NavigationBar";
 
-const mapStateToProps = ({ routing, app: { environment }, app: { employee } }) => ({
-  routing,
+const mapStateToProps = ({ app: { environment }, app: { employee } }) => ({
   environment,
-  employee,
+  employee
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ getEnvironment, getEmployee }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getEnvironment, getEmployee }, dispatch);
 
 export class AppHeader extends Component {
   // constructor(props) {
   //   super(props);
   // }
-
 
   componentWillMount() {
     this.props.getEnvironment();
@@ -29,20 +27,39 @@ export class AppHeader extends Component {
   }
 
   render() {
+    const routing = {
+      location: this.props.location,
+      history: this.props.history,
+      match: this.props.match
+    };
+    const { environment, employee } = this.props;
     return (
       <div id="app-header">
-        <NavigationBar routing={this.props.routing} environment={this.props.environment} employee={this.props.employee} />
+        <NavigationBar
+          routing={routing}
+          environment={environment}
+          employee={employee}
+        />
       </div>
     );
   }
 }
 
 AppHeader.propTypes = {
-  routing: PropTypes.object.isRequired,
+  // redux props:
   environment: PropTypes.string.isRequired,
   employee: PropTypes.object.isRequired,
   getEnvironment: PropTypes.func.isRequired,
   getEmployee: PropTypes.func.isRequired,
+  // withRouter props:
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);
+const AppHeaderRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppHeader);
+
+export default withRouter(AppHeaderRedux);

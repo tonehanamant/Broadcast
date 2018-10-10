@@ -1,24 +1,29 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { head } from 'lodash';
-import { Button } from 'react-bootstrap/lib/';
-import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import ReactDropzone from 'react-dropzone';
-import { getDataTransferItems, validateFilesByExtension } from 'Utils/file-upload';
-import { parseFileToBase64 } from 'Utils/file-parser';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { head } from "lodash";
+import { Button } from "react-bootstrap/lib/";
+import PropTypes from "prop-types";
+import CSSModules from "react-css-modules";
+import ReactDropzone from "react-dropzone";
+import {
+  getDataTransferItems,
+  validateFilesByExtension
+} from "Utils/file-upload";
+import { parseFileToBase64 } from "Utils/file-parser";
 
-import { toggleDisabledDropzones, deployError } from 'Ducks/app';
+import { toggleDisabledDropzones, deployError } from "Ducks/app";
 
-import styles from './index.scss';
+import styles from "./index.scss";
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    toggleDisabledDropzones,
-    deployError,
-  }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      toggleDisabledDropzones,
+      deployError
+    },
+    dispatch
+  );
 
 export class UploadButton extends Component {
   constructor(props) {
@@ -48,17 +53,24 @@ export class UploadButton extends Component {
 
   processSingleFile(acceptedFiles, rejectedFiles) {
     const { processFiles, fileTypeExtension } = this.props;
-    const { file, isAccepted } = acceptedFiles.length ?
-    { file: head(acceptedFiles), isAccepted: true } : { file: head(rejectedFiles), isAccepted: false };
+    const { file, isAccepted } = acceptedFiles.length
+      ? { file: head(acceptedFiles), isAccepted: true }
+      : { file: head(rejectedFiles), isAccepted: false };
     processFiles(file, isAccepted, fileTypeExtension);
   }
 
   validateFiles(acceptedFiles, rejectedFiles) {
     const { fileTypeExtension, deployError, isShowError } = this.props;
     if (!acceptedFiles.length && !rejectedFiles.length) return false;
-    const validated = validateFilesByExtension(acceptedFiles, rejectedFiles, fileTypeExtension);
+    const validated = validateFilesByExtension(
+      acceptedFiles,
+      rejectedFiles,
+      fileTypeExtension
+    );
     if (isShowError && rejectedFiles.length > 0) {
-      deployError({ message: `Invalid file format. Please provide a ${fileTypeExtension} file.` });
+      deployError({
+        message: `Invalid file format. Please provide a ${fileTypeExtension} file.`
+      });
       return false;
     }
     return validated;
@@ -69,9 +81,11 @@ export class UploadButton extends Component {
     const validated = this.validateFiles(acceptedFiles, rejectedFiles);
     // if files are not valid do not process them
     if (!validated) return false;
-    const processFile = multiple ? this.processMultipleFiles : this.processSingleFile;
+    const processFile = multiple
+      ? this.processMultipleFiles
+      : this.processSingleFile;
     if (isParseFile) {
-      parseFileToBase64(acceptedFiles, true).then((values) => {
+      parseFileToBase64(acceptedFiles, true).then(values => {
         processFile(values, validated.rejectedFiles);
       });
     } else {
@@ -81,7 +95,14 @@ export class UploadButton extends Component {
   }
 
   render() {
-    const { text, bsStyle, style, bsSize, acceptedMimeTypes, multiple } = this.props;
+    const {
+      text,
+      bsStyle,
+      style,
+      bsSize,
+      acceptedMimeTypes,
+      multiple
+    } = this.props;
 
     return (
       <Fragment>
@@ -108,15 +129,15 @@ export class UploadButton extends Component {
 }
 
 UploadButton.defaultProps = {
-  text: 'Upload',
-  bsStyle: 'default',
-  bsSize: 'small',
+  text: "Upload",
+  bsStyle: "default",
+  bsSize: "small",
   style: {},
-  fileTypeExtension: '.xlsx',
+  fileTypeExtension: ".xlsx",
   multiple: false,
   isShowError: true,
   isParseFile: true,
-  acceptedMimeTypes: '',
+  acceptedMimeTypes: ""
 };
 
 UploadButton.propTypes = {
@@ -131,7 +152,10 @@ UploadButton.propTypes = {
   isShowError: PropTypes.bool,
   isParseFile: PropTypes.bool,
   toggleDisabledDropzones: PropTypes.func.isRequired,
-  deployError: PropTypes.func.isRequired,
+  deployError: PropTypes.func.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(CSSModules(UploadButton, styles));
+export default connect(
+  null,
+  mapDispatchToProps
+)(CSSModules(UploadButton, styles));

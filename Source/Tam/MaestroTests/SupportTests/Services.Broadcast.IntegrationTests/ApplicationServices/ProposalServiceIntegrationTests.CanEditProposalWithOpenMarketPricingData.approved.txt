@@ -56,7 +56,7 @@
       "OpenMarketPricing": {
         "CpmMax": 200.0000,
         "CpmMin": 123.9900,
-        "CpmTarget": 2,
+        "OpenMarketCpmTarget": 2,
         "UnitCapPerStation": 10
       },
       "PostingBookId": null,

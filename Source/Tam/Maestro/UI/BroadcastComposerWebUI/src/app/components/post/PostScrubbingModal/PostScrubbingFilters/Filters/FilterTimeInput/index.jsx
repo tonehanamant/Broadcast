@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Col, Form, ButtonToolbar, Button, FormGroup } from 'react-bootstrap/lib/';
-import { TimePicker } from 'antd';
-import moment from 'moment';
-import './index.css';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import {
+  Col,
+  Form,
+  ButtonToolbar,
+  Button,
+  FormGroup
+} from "react-bootstrap/lib/";
+import { TimePicker } from "antd";
+import moment from "moment";
+import "./index.css";
 
 class FilterTimeInput extends Component {
   constructor(props) {
@@ -13,7 +19,7 @@ class FilterTimeInput extends Component {
       endTime: null,
       originalStartTime: this.props.filterOptions.originalTimeAiredStart,
       originalEndTime: this.props.filterOptions.originalTimeAiredEnd,
-      filterOptions: {},
+      filterOptions: {}
     };
     this.handleStartChange = this.handleStartChange.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
@@ -22,29 +28,45 @@ class FilterTimeInput extends Component {
   }
 
   componentWillMount() {
-    console.log('Time Input Mount >>>>', this.props);
-      // console.log(moment(moment().startOf('day').seconds(this.props.filterOptions.TimeAiredStart).format('H:mm:ss')));
-      // startTime: moment(this.props.filterOptions.TimeAiredStart),
-      // endTime: moment(this.props.filterOptions.TimeAiredEnd),
+    console.log("Time Input Mount >>>>", this.props);
+    // console.log(moment(moment().startOf('day').seconds(this.props.filterOptions.TimeAiredStart).format('H:mm:ss')));
+    // startTime: moment(this.props.filterOptions.TimeAiredStart),
+    // endTime: moment(this.props.filterOptions.TimeAiredEnd),
     this.setState({
-      originalStartTime: moment(moment().startOf('day').seconds(this.props.filterOptions.originalTimeAiredStart)),
-      originalEndTime: moment(moment().startOf('day').seconds(this.props.filterOptions.originalTimeAiredEnd)),
+      originalStartTime: moment(
+        moment()
+          .startOf("day")
+          .seconds(this.props.filterOptions.originalTimeAiredStart)
+      ),
+      originalEndTime: moment(
+        moment()
+          .startOf("day")
+          .seconds(this.props.filterOptions.originalTimeAiredEnd)
+      ),
       // startTime: moment(),
-      startTime: moment(moment().startOf('day').seconds(this.props.filterOptions.TimeAiredStart)),
-      endTime: moment(moment().startOf('day').seconds(this.props.filterOptions.TimeAiredEnd)),
+      startTime: moment(
+        moment()
+          .startOf("day")
+          .seconds(this.props.filterOptions.TimeAiredStart)
+      ),
+      endTime: moment(
+        moment()
+          .startOf("day")
+          .seconds(this.props.filterOptions.TimeAiredEnd)
+      )
     });
   }
 
   handleStartChange(time) {
     console.log(time);
     this.setState({
-      startTime: time,
+      startTime: time
     });
   }
 
   handleEndChange(time) {
     this.setState({
-      endTime: time,
+      endTime: time
     });
   }
 
@@ -53,35 +75,44 @@ class FilterTimeInput extends Component {
     // REVIEW may be problematic as filterOptions may be changed - need originals? yes
     const options = {
       TimeAiredStart: this.props.filterOptions.originalTimeAiredStart,
-      TimeAiredEnd: this.props.filterOptions.originalTimeAiredEnd,
+      TimeAiredEnd: this.props.filterOptions.originalTimeAiredEnd
     };
     // using exclusions in this context to denote not active;
     this.props.applySelection({
       filterKey: this.props.filterKey,
       exclusions: false,
-      filterOptions: options,
+      filterOptions: options
     });
   }
   // apply filters - filterOptions and matchOptions if applicable
   // change to send unselected as flat array of values - exclusions; send all options
   apply() {
     // const startTime = moment(this.state.startTime).format('hh:mm:ss');
-    const startTime = moment(this.state.startTime, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
-    const endTime = moment(this.state.endTime, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
+    const startTime = moment(this.state.startTime, "HH:mm:ss: A").diff(
+      moment().startOf("day"),
+      "seconds"
+    );
+    const endTime = moment(this.state.endTime, "HH:mm:ss: A").diff(
+      moment().startOf("day"),
+      "seconds"
+    );
     let exclusions = true;
     // if startTime and endTime are the same as originalStartTime and originalEndDate
     // then set exclusions to false, otherwise set to true
-    if (startTime === this.props.filterOptions.originalTimeAiredStart && endTime === this.props.filterOptions.originalTimeAiredEnd) {
+    if (
+      startTime === this.props.filterOptions.originalTimeAiredStart &&
+      endTime === this.props.filterOptions.originalTimeAiredEnd
+    ) {
       exclusions = false;
     }
     const options = {
       TimeAiredStart: startTime,
-      TimeAiredEnd: endTime,
+      TimeAiredEnd: endTime
     };
     this.props.applySelection({
       filterKey: this.props.filterKey,
       exclusions,
-      filterOptions: options,
+      filterOptions: options
     });
   }
 
@@ -90,7 +121,9 @@ class FilterTimeInput extends Component {
       <div>
         <Form horizontal>
           <FormGroup>
-            <Col style={{ textAlign: 'left' }} className="control-label" sm={4}>Start time</Col>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+              Start time
+            </Col>
             <Col sm={8}>
               <TimePicker
                 use12Hours
@@ -104,7 +137,9 @@ class FilterTimeInput extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col style={{ textAlign: 'left' }} className="control-label" sm={4}>End time</Col>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+              End time
+            </Col>
             <Col sm={8}>
               <TimePicker
                 use12Hours
@@ -118,21 +153,24 @@ class FilterTimeInput extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar className="pull-right" style={{ margin: '0 0 8px 0' }}>
+        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button
             bsStyle="success"
             bsSize="xsmall"
             onClick={this.clear}
             // disabled={!canFilter}
-          >Clear
+          >
+            Clear
           </Button>
           <Button
             bsStyle="success"
             bsSize="xsmall"
             // disabled={!canFilter || !this.state.isValidSelection}
-            style={{ marginLeft: '10px' }}
+            style={{ marginLeft: "10px" }}
             onClick={this.apply}
-          > Apply
+          >
+            {" "}
+            Apply
           </Button>
         </ButtonToolbar>
       </div>
@@ -141,13 +179,13 @@ class FilterTimeInput extends Component {
 }
 
 FilterTimeInput.defaultProps = {
-  applySelection: () => {},
+  applySelection: () => {}
 };
 
 FilterTimeInput.propTypes = {
   applySelection: PropTypes.func,
   filterOptions: PropTypes.object.isRequired,
-  filterKey: PropTypes.string.isRequired,
+  filterKey: PropTypes.string.isRequired
 };
 
 export default FilterTimeInput;

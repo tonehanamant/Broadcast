@@ -10,6 +10,9 @@ using Common.Services;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
+using System;
+using Services.Broadcast.Entities.DTO;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -17,6 +20,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class PostLogPostProcessingServiceIntegrationTests
     {
         private readonly IPostLogPostProcessingService _PostLogPostProcessingService;
+        private readonly IPostLogService _PostLogService;
         private const string _UserName = "PostLog Post Processing Test User";
         
         public PostLogPostProcessingServiceIntegrationTests()
@@ -26,9 +30,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
 
             _PostLogPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
+            _PostLogService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogService>();
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void PostLogPostProcessing_ValidFileContent()
@@ -40,6 +44,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
                 VerifyResults(response);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PostLogPostProcessing_BCOP3771()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\Keeping Trac BCOP-3771.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                var result = _PostLogService.GetClientScrubbingForProposal(33029, new ProposalScrubbingRequest());
+                VerifyClientPostScrubbingObject(result);
             }
         }
 
@@ -124,6 +143,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
             Approvals.Verify(json);
+        }
+
+        private void VerifyClientPostScrubbingObject(ClientPostScrubbingProposalDto result)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
     }
 }

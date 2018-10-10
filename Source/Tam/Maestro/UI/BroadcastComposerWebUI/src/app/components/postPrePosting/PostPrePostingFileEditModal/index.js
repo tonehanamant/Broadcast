@@ -1,23 +1,50 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { FormGroup, ControlLabel, Checkbox, Button, Modal, HelpBlock } from 'react-bootstrap';
-import Select from 'react-select';
+import {
+  FormGroup,
+  ControlLabel,
+  Checkbox,
+  Button,
+  Modal,
+  HelpBlock
+} from "react-bootstrap";
+import Select from "react-select";
 
-import { toggleModal } from 'Ducks/app';
-import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit } from 'Ducks/postPrePosting';
+import { toggleModal } from "Ducks/app";
+import {
+  updateEquivalized,
+  updatePostingBook,
+  updatePlaybackType,
+  updateDemos,
+  savePostPrePostingFileEdit
+} from "Ducks/postPrePosting";
 
-const mapStateToProps = ({ app: { modals: { postFileEditModal: modal } }, postPrePosting: { initialdata: formOptions, fileEditForm: fileEditFormValues } }) => ({
+const mapStateToProps = ({
+  app: {
+    modals: { postFileEditModal: modal }
+  },
+  postPrePosting: { initialdata: formOptions, fileEditForm: fileEditFormValues }
+}) => ({
   modal,
   formOptions,
-  fileEditFormValues,
+  fileEditFormValues
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      toggleModal,
+      updateEquivalized,
+      updatePostingBook,
+      updatePlaybackType,
+      updateDemos,
+      savePostPrePostingFileEdit
+    },
+    dispatch
+  );
 
 export class PostPrePostingFileEditModal extends Component {
   constructor(props) {
@@ -34,28 +61,34 @@ export class PostPrePostingFileEditModal extends Component {
     this.state = {
       postingBookInvalid: null,
       playbackTypeInvalid: null,
-      demosInvalid: null,
+      demosInvalid: null
     };
   }
 
   close() {
     this.clearValidationStates();
     this.props.toggleModal({
-      modal: 'postFileEditModal',
+      modal: "postFileEditModal",
       active: false,
-      properties: this.props.modal.properties,
+      properties: this.props.modal.properties
     });
   }
 
   save() {
     if (this.checkValid()) {
-      const { Id, Equivalized, PostingBookId, PlaybackType, Demos } = this.props.fileEditFormValues;
+      const {
+        Id,
+        Equivalized,
+        PostingBookId,
+        PlaybackType,
+        Demos
+      } = this.props.fileEditFormValues;
       const ret = {
         FileId: Id,
         Audiences: Demos,
         Equivalized,
         PostingBookId,
-        PlaybackType,
+        PlaybackType
       };
       this.props.savePostPrePostingFileEdit(ret);
     }
@@ -70,32 +103,34 @@ export class PostPrePostingFileEditModal extends Component {
     // can be empty value
     const val = value ? value.Id : null;
     this.props.updatePostingBook(val); // actioncreator
-    this.setValidationState('postingBookInvalid', val ? null : 'error');
+    this.setValidationState("postingBookInvalid", val ? null : "error");
   }
 
   onChangePlaybackType(value) {
     const val = value ? value.Id : null;
     this.props.updatePlaybackType(val); // actioncreator
-    this.setValidationState('playbackTypeInvalid', val ? null : 'error');
+    this.setValidationState("playbackTypeInvalid", val ? null : "error");
   }
 
   onChangeDemos(value) {
     const convert = value.map(item => item.Id);
     this.props.updateDemos(convert); // actioncreator
-    this.setValidationState('demosInvalid', value.length ? null : 'error');
+    this.setValidationState("demosInvalid", value.length ? null : "error");
   }
 
   checkValid() {
     const pbookValid = this.props.fileEditFormValues.PostingBookId != null;
     const ptypeValid = this.props.fileEditFormValues.PlaybackType != null;
-    const pdemoValid = this.props.fileEditFormValues.Demos && this.props.fileEditFormValues.Demos.length > 0;
+    const pdemoValid =
+      this.props.fileEditFormValues.Demos &&
+      this.props.fileEditFormValues.Demos.length > 0;
     if (pbookValid && ptypeValid && pdemoValid) {
       this.clearValidationStates();
       return true;
     }
-    this.setValidationState('postingBookInvalid', pbookValid ? null : 'error');
-    this.setValidationState('playbackTypeInvalid', ptypeValid ? null : 'error');
-    this.setValidationState('demosInvalid', pdemoValid ? null : 'error');
+    this.setValidationState("postingBookInvalid", pbookValid ? null : "error");
+    this.setValidationState("playbackTypeInvalid", ptypeValid ? null : "error");
+    this.setValidationState("demosInvalid", pdemoValid ? null : "error");
     return false;
   }
 
@@ -107,25 +142,36 @@ export class PostPrePostingFileEditModal extends Component {
     this.setState({
       postingBookInvalid: null,
       playbackTypeInvalid: null,
-      demosInvalid: null,
+      demosInvalid: null
     });
   }
 
   render() {
-    const { postingBookInvalid, playbackTypeInvalid, demosInvalid } = this.state;
+    const {
+      postingBookInvalid,
+      playbackTypeInvalid,
+      demosInvalid
+    } = this.state;
     const { fileEditFormValues, modal, formOptions } = this.props;
-    const { FileName, Equivalized, PostingBookId, PlaybackType } = fileEditFormValues;
+    const {
+      FileName,
+      Equivalized,
+      PostingBookId,
+      PlaybackType
+    } = fileEditFormValues;
     const { PostingBooks, PlaybackTypes } = formOptions;
 
     return (
       <Modal show={modal.active} onHide={this.close}>
         <Modal.Header>
-          <Modal.Title style={{ display: 'inline-block' }}>Post File Edit</Modal.Title>
+          <Modal.Title style={{ display: "inline-block" }}>
+            Post File Edit
+          </Modal.Title>
           <Button
             className="close"
             bsStyle="link"
             onClick={this.close}
-            style={{ display: 'inline-block', float: 'right' }}
+            style={{ display: "inline-block", float: "right" }}
           >
             <span>&times;</span>
           </Button>
@@ -138,11 +184,16 @@ export class PostPrePostingFileEditModal extends Component {
                 checked={Equivalized}
                 onChange={this.onChangeEquivalized}
               >
-              <strong>Equivalized</strong>
+                <strong>Equivalized</strong>
               </Checkbox>
             </FormGroup>
-            <FormGroup controlId="postingBook" validationState={postingBookInvalid} >
-              <ControlLabel><strong>Posting Book</strong></ControlLabel>
+            <FormGroup
+              controlId="postingBook"
+              validationState={postingBookInvalid}
+            >
+              <ControlLabel>
+                <strong>Posting Book</strong>
+              </ControlLabel>
               <Select
                 name="postingBook"
                 value={PostingBookId}
@@ -152,14 +203,19 @@ export class PostPrePostingFileEditModal extends Component {
                 valueKey="Id"
                 onChange={this.onChangePostingBook}
               />
-              {postingBookInvalid != null &&
-              <HelpBlock>
-                <p className="text-danger">Required</p>
-              </HelpBlock>
-              }
+              {postingBookInvalid != null && (
+                <HelpBlock>
+                  <p className="text-danger">Required</p>
+                </HelpBlock>
+              )}
             </FormGroup>
-            <FormGroup controlId="playbackType" validationState={playbackTypeInvalid}>
-              <ControlLabel><strong>Playback Type</strong></ControlLabel>
+            <FormGroup
+              controlId="playbackType"
+              validationState={playbackTypeInvalid}
+            >
+              <ControlLabel>
+                <strong>Playback Type</strong>
+              </ControlLabel>
               <Select
                 name="playbackType"
                 value={PlaybackType}
@@ -169,14 +225,16 @@ export class PostPrePostingFileEditModal extends Component {
                 valueKey="Id"
                 onChange={this.onChangePlaybackType}
               />
-              {this.state.playbackTypeInvalid != null &&
-              <HelpBlock>
-                <p className="text-danger">Required</p>
-              </HelpBlock>
-              }
+              {this.state.playbackTypeInvalid != null && (
+                <HelpBlock>
+                  <p className="text-danger">Required</p>
+                </HelpBlock>
+              )}
             </FormGroup>
             <FormGroup controlId="demos" validationState={demosInvalid}>
-              <ControlLabel><strong>Demos</strong></ControlLabel>
+              <ControlLabel>
+                <strong>Demos</strong>
+              </ControlLabel>
               <Select
                 name="demos"
                 value={fileEditFormValues.Demos}
@@ -189,17 +247,18 @@ export class PostPrePostingFileEditModal extends Component {
                 // simpleValue
                 onChange={this.onChangeDemos}
               />
-              {demosInvalid != null &&
-              <HelpBlock>
-                <p className="text-danger">Required</p>
-              </HelpBlock>
-              }
+              {demosInvalid != null && (
+                <HelpBlock>
+                  <p className="text-danger">Required</p>
+                </HelpBlock>
+              )}
             </FormGroup>
-
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.save} bsStyle="success">Save</Button>
+          <Button onClick={this.save} bsStyle="success">
+            Save
+          </Button>
           <Button onClick={this.close}>Cancel</Button>
         </Modal.Footer>
       </Modal>
@@ -210,16 +269,16 @@ export class PostPrePostingFileEditModal extends Component {
 PostPrePostingFileEditModal.defaultProps = {
   modal: {
     active: false, // modal closed by default
-    properties: {},
+    properties: {}
   },
   fileEditFormValues: {
     Id: null,
-    FileName: 'File',
+    FileName: "File",
     Equivalized: true,
     PostingBookId: null,
     PlaybackType: null,
-    Demos: null,
-  },
+    Demos: null
+  }
 };
 
 PostPrePostingFileEditModal.propTypes = {
@@ -231,7 +290,10 @@ PostPrePostingFileEditModal.propTypes = {
   updateEquivalized: PropTypes.func.isRequired,
   updatePostingBook: PropTypes.func.isRequired,
   updatePlaybackType: PropTypes.func.isRequired,
-  updateDemos: PropTypes.func.isRequired,
+  updateDemos: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostPrePostingFileEditModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostPrePostingFileEditModal);

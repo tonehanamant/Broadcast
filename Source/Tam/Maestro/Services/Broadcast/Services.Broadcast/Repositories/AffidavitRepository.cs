@@ -452,7 +452,7 @@ namespace Services.Broadcast.Repositories
                         created_date = item.CreatedDate,
                         file_hash = item.FileHash,
                         file_name = item.FileName,
-                        source_id = item.SourceId,
+                        source_id = (int)item.Source,
                         status = (int)item.Status,
                         created_by = item.CreatedBy,
                         affidavit_outbound_file_problems = item.ErrorMessages.Select(y =>

@@ -1,51 +1,54 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-import { createLogger } from 'redux-logger';
-import createmiddlewareSaga from 'redux-saga';
-import createHistory from 'history/createBrowserHistory';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createLogger } from "redux-logger";
+import createMiddlewareSaga from "redux-saga";
+import { Reducers as gridReducers } from "react-redux-grid";
 
-import { Reducers as gridReducers } from 'react-redux-grid';
+// Reducers
+// import * as reducers from "./index.ducks.js";
+// import sagas from "./index.sagas.js";
+import * as reducers from "./app/ducks/index.js";
+import sagas from "./app/sagas/index.js";
 
-import * as reducers from './app/ducks';
-import sagas from './app/sagas';
+// broadcast specific:
+import { saveLocalStorageState } from "./index.store.localstorage.js";
 
-// import { loadLocalStorageState, saveLocalStorageState } from './index.store.localstorage.js';
-import { saveLocalStorageState } from './index.store.localstorage.js';
-
-export const history = createHistory();
-const mwSaga = createmiddlewareSaga();
+const mwSaga =
+  typeof createMiddlewareSaga === "function"
+    ? createMiddlewareSaga()
+    : createMiddlewareSaga.default();
 const mwLogger = createLogger();
-const mwHistory = routerMiddleware(history);
-const createStoreWithMiddleware = applyMiddleware(mwSaga, mwLogger, mwHistory);
-
+const createStoreWithMiddleware =
+  process.env.NODE_ENV === "production"
+    ? applyMiddleware(mwSaga)
+    : applyMiddleware(mwSaga, mwLogger);
 const rootReducer = combineReducers({
   ...gridReducers,
-  ...reducers,
-  routing: routerReducer,
+  ...reducers
 });
 
 export default function configureStore(initialState) {
   const configuredStore = createStore(
     rootReducer,
-    // loadLocalStorageState() || initialState,
     initialState,
-    createStoreWithMiddleware,
+    createStoreWithMiddleware
   );
 
   mwSaga.run(sagas);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./app/ducks/index.js', () => {
+    // module.hot.accept("./index.ducks.js", () => {
+    module.hot.accept("./app/ducks/index.js", () => {
       const nextReducer = rootReducer;
       configuredStore.replaceReducer(nextReducer);
     });
   }
 
+  // broadcast specific:
   configuredStore.subscribe(() => {
     saveLocalStorageState({
       app: configuredStore.getState().app,
-      planning: configuredStore.getState().planning,
+      planning: configuredStore.getState().planning
     });
   });
 

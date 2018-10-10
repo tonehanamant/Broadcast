@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import numeral from 'numeral';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import numeral from "numeral";
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NumberCommaWhole extends Component {
@@ -13,23 +13,18 @@ export default class NumberCommaWhole extends Component {
 
     // 0, null or undefined
     if (dash && !number) {
-      return '-';
+      return "-";
     }
 
-    return (
-			<span>{ numeral(number).format('0,0') }</span>
-    );
-	}
+    return <span>{numeral(number).format("0,0")}</span>;
+  }
 }
 
 NumberCommaWhole.propTypes = {
-  number: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  dash: PropTypes.bool,
+  number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  dash: PropTypes.bool
 };
 
 NumberCommaWhole.defaultProps = {
-  dash: false,
+  dash: false
 };

@@ -353,7 +353,7 @@ namespace Services.Broadcast.Repositories
                     open_market_cpm_min =  proposalDetail.OpenMarketPricing.CpmMin,
                     open_market_cpm_max = proposalDetail.OpenMarketPricing.CpmMax,
                     open_market_unit_cap_per_station = proposalDetail.OpenMarketPricing.UnitCapPerStation,
-                    open_market_cpm_target = (byte?)proposalDetail.OpenMarketPricing.CpmTarget,
+                    open_market_cpm_target = (byte?)proposalDetail.OpenMarketPricing.OpenMarketCpmTarget,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -480,7 +480,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.open_market_cpm_min = detail.OpenMarketPricing.CpmMin;
                     updatedDetail.open_market_cpm_max = detail.OpenMarketPricing.CpmMax;
                     updatedDetail.open_market_unit_cap_per_station = detail.OpenMarketPricing.UnitCapPerStation;
-                    updatedDetail.open_market_cpm_target = (byte?)detail.OpenMarketPricing.CpmTarget;
+                    updatedDetail.open_market_cpm_target = (byte?)detail.OpenMarketPricing.OpenMarketCpmTarget;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -900,7 +900,7 @@ namespace Services.Broadcast.Repositories
                         CpmMin = version.open_market_cpm_min,
                         CpmMax = version.open_market_cpm_max,
                         UnitCapPerStation = version.open_market_unit_cap_per_station,
-                        CpmTarget = (OpenMarketCpmTarget?)version.open_market_cpm_target,
+                        OpenMarketCpmTarget = (OpenMarketCpmTarget?)version.open_market_cpm_target,
                     },
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {

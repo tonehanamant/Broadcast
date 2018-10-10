@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getProposals } from 'Ducks/planning';
-import PageTitle from 'Components/shared/PageTitle';
-import PageHeaderContainer from 'Components/planning/PageHeaderContainer';
-import PlanningGrid from 'Components/planning/PlanningGrid';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getProposals } from "Ducks/planning";
+import PageTitle from "Components/shared/PageTitle";
+import PageHeaderContainer from "Components/planning/PageHeaderContainer";
+import PlanningGrid from "Components/planning/PlanningGrid";
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ getProposals }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getProposals }, dispatch);
 
 export class SectionPlanningHome extends Component {
   constructor(props) {
@@ -29,13 +28,16 @@ export class SectionPlanningHome extends Component {
         <PageTitle title="Planning" />
         <PageHeaderContainer />
         <PlanningGrid />
-    </div>
+      </div>
     );
   }
 }
 
 SectionPlanningHome.propTypes = {
-  getProposals: PropTypes.func.isRequired,
+  getProposals: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionPlanningHome);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SectionPlanningHome);

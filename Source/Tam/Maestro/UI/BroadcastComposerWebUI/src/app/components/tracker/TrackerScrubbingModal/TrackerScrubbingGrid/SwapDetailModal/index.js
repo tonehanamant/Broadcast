@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { FormGroup, ControlLabel, Button, Modal } from 'react-bootstrap';
-import Select from 'react-select';
-import { toggleModal } from 'Ducks/app';
-import { swapProposalDetail } from 'Ducks/tracker';
-import { getDateInFormat } from '../../../../../utils/dateFormatter';
+import { FormGroup, ControlLabel, Button, Modal } from "react-bootstrap";
+import Select from "react-select";
+import { toggleModal } from "Ducks/app";
+import { swapProposalDetail } from "Ducks/tracker";
+import { getDateInFormat } from "../../../../../utils/dateFormatter";
 // import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit } from 'Ducks/postPrePosting';
 
-const mapStateToProps = ({ app: { modals: { swapDetailModal: modal } } }) => ({
-  modal,
+const mapStateToProps = ({
+  app: {
+    modals: { swapDetailModal: modal }
+  }
+}) => ({
+  modal
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({ toggleModal, swapProposalDetail }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ toggleModal, swapProposalDetail }, dispatch);
 
 export class SwapDetailModal extends Component {
   constructor(props) {
@@ -27,16 +30,16 @@ export class SwapDetailModal extends Component {
     this.selectDetailRender = this.selectDetailRender.bind(this);
     this.onModalExit = this.onModalExit.bind(this);
     this.state = {
-      selectedDetailOption: null,
+      selectedDetailOption: null
     };
   }
 
   // close the modal
   close() {
     this.props.toggleModal({
-      modal: 'swapDetailModal',
+      modal: "swapDetailModal",
       active: false,
-      properties: this.props.modal.properties,
+      properties: this.props.modal.properties
     });
   }
 
@@ -44,10 +47,13 @@ export class SwapDetailModal extends Component {
   // TODO call api
   save() {
     const scrubbingIds = [];
-    this.props.modal.properties.selections.forEach((scrub) => {
+    this.props.modal.properties.selections.forEach(scrub => {
       scrubbingIds.push(scrub.ScrubbingClientId);
     });
-    const params = { ProposalDetailId: this.state.selectedDetailOption.Id, ScrubbingIds: scrubbingIds };
+    const params = {
+      ProposalDetailId: this.state.selectedDetailOption.Id,
+      ScrubbingIds: scrubbingIds
+    };
     // console.log('save swap detail', params);
     this.props.swapProposalDetail(params);
   }
@@ -77,26 +83,38 @@ export class SwapDetailModal extends Component {
   render() {
     const { details, modal } = this.props;
     // console.log('modal', modal);
-    const detailCnt = modal.properties.selections ? modal.properties.selections.length : 0;
+    const detailCnt = modal.properties.selections
+      ? modal.properties.selections.length
+      : 0;
     return (
-      <Modal show={modal.active} onHide={this.close} onExited={this.onModalExit}>
+      <Modal
+        show={modal.active}
+        onHide={this.close}
+        onExited={this.onModalExit}
+      >
         <Modal.Header>
-          <Modal.Title style={{ display: 'inline-block' }}>Swap Proposal Detail</Modal.Title>
+          <Modal.Title style={{ display: "inline-block" }}>
+            Swap Proposal Detail
+          </Modal.Title>
           <Button
             className="close"
             bsStyle="link"
             onClick={this.close}
-            style={{ display: 'inline-block', float: 'right' }}
+            style={{ display: "inline-block", float: "right" }}
           >
             <span>&times;</span>
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <p>`You have selected <strong>{detailCnt}</strong> records to be updated. Any manual overrides will be lost.`</p>
+          <p>
+            `You have selected <strong>{detailCnt}</strong> records to be
+            updated. Any manual overrides will be lost.`
+          </p>
           <form>
-
-            <FormGroup controlId="swapDetail" >
-              <ControlLabel><strong>Select Detail</strong></ControlLabel>
+            <FormGroup controlId="swapDetail">
+              <ControlLabel>
+                <strong>Select Detail</strong>
+              </ControlLabel>
               <Select
                 name="swapDetail"
                 // value={PostingBookId}
@@ -113,7 +131,13 @@ export class SwapDetailModal extends Component {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.save} disabled={this.state.selectedDetailOption == null} bsStyle="success">OK</Button>
+          <Button
+            onClick={this.save}
+            disabled={this.state.selectedDetailOption == null}
+            bsStyle="success"
+          >
+            OK
+          </Button>
           <Button onClick={this.close}>Cancel</Button>
         </Modal.Footer>
       </Modal>
@@ -124,16 +148,19 @@ export class SwapDetailModal extends Component {
 SwapDetailModal.defaultProps = {
   modal: {
     active: false, // modal closed by default
-    properties: {},
+    properties: {}
   },
-  details: [],
+  details: []
 };
 
 SwapDetailModal.propTypes = {
   modal: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
   details: PropTypes.array.isRequired,
-  swapProposalDetail: PropTypes.func.isRequired,
+  swapProposalDetail: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwapDetailModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SwapDetailModal);
