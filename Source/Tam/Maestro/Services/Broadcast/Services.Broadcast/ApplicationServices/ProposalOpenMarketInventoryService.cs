@@ -1493,7 +1493,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CalculateProgramsCostsAndTotals(List<ProposalProgramDto> programs)
         {
-            _ProposalProgramsCalculationEngine.CalculateBlendedCpmForProgramsRaw(programs,pricingGuideOpenMarketInventory.DetailSpotLengthId);
+            _ProposalProgramsCalculationEngine.CalculateBlendedCpmForProgramsRaw(programs);
             _ProposalProgramsCalculationEngine.CalculateAvgCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
