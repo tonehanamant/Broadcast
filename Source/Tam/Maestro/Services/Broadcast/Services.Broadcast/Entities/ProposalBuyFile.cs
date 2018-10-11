@@ -120,17 +120,7 @@ namespace Services.Broadcast.Entities
                 }
 
                 SpotCost = detail.SpotCost;
-                if(SpotCost <= 0)
-                {
-                    Errors.Add($"Unable to find valid spot cost: {SpotCost}");
-                }
-
                 TotalSpots = detail.TotalSpots;
-                if(TotalSpots <= 0)
-                {
-                    Errors.Add($"Unable to find valid number of spots: {TotalSpots}");
-                }
-
                 TotalCost = detail.TotalCost;
 
                 if (!proposalBuyFile.SpotLengths.TryGetValue(detail.SpotLength, out int spotLengthId))
