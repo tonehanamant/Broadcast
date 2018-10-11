@@ -11,7 +11,8 @@ class PricingGuideGrid extends Component {
     const {
       activeOpenMarketData,
       openMarketLoading,
-      hasOpenMarketData
+      hasOpenMarketData,
+      isOpenMarketDataSortName
     } = this.props;
     const data = generateData(activeOpenMarketData.Markets);
     return (
@@ -20,6 +21,7 @@ class PricingGuideGrid extends Component {
         <PricingGuideGridHeader
           activeOpenMarketData={activeOpenMarketData}
           hasOpenMarketData={hasOpenMarketData}
+          isOpenMarketDataSortName={isOpenMarketDataSortName}
         />
         <Table
           data={data}
@@ -41,6 +43,7 @@ class PricingGuideGrid extends Component {
 PricingGuideGrid.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
   hasOpenMarketData: PropTypes.bool.isRequired,
+  isOpenMarketDataSortName: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired
 };
 

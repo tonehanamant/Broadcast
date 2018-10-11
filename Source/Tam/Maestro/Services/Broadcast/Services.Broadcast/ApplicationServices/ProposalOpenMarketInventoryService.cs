@@ -15,6 +15,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Extensions;
 using Tam.Maestro.Common;
+using static Services.Broadcast.Entities.DTO.PricingGuideOpenMarketInventory;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -1018,21 +1019,24 @@ namespace Services.Broadcast.ApplicationServices
             return string.Join("|", distinctProgramNames);
         }
 
-        private static void _ApplyDefaultSortingForPricingGuide(PricingGuideOpenMarketInventory proposalInventory)
+        private static List<PricingGuideMarket> _ApplyDefaultSortingForPricingGuideMarkets(List<PricingGuideMarket> markets)
         {
-            var sortedMarkets = proposalInventory.Markets.OrderBy(m => m.MarketRank).ToList();
+            var sortedMarkets = markets.OrderBy(m => m.MarketRank).ToList();
 
             foreach (var market in sortedMarkets)
             {
-                market.Stations = market.Stations.OrderBy(s => s.Programs.Min(p => p.BlendedCpm))
-                    .ThenBy(s => s.LegacyCallLetters).ToList();
+                market.Stations = market.Stations
+                    .OrderBy(s => s.MinProgramsBlendedCpm)
+                    .ThenBy(s => s.LegacyCallLetters)
+                    .ToList();
+
                 foreach (var station in market.Stations)
                 {
                     station.Programs = station.Programs.OrderBy(p => p.BlendedCpm).ToList();
                 }
             }
 
-            proposalInventory.Markets = sortedMarkets;
+            return sortedMarkets;
         }
 
         private void _ApplyProgramAndGenreFilterForPricingGuide(PricingGuideOpenMarketInventory dto,
@@ -1162,7 +1166,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 SavePricingGuideOpenMarketInventory(request.ProposalDetailId, pricingGuideDto);
             }
-            
+
+            pricingGuideDto.Markets = _ApplyDefaultSortingForPricingGuideMarkets(pricingGuideDto.Markets);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
             _SumTotalsForMarkets(pricingGuideDto.Markets);
 
@@ -1229,8 +1234,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 response.Markets.Add(pricingGuideMarket);
             }
-            
-            _ApplyDefaultSortingForPricingGuide(response);
+
+            response.Markets = _ApplyDefaultSortingForPricingGuideMarkets(response.Markets);
 
             return response;
         }
@@ -1254,7 +1259,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _CalculateCpmForMarkets(pricingGuideOpenMarketInventory);
 
-            _ApplyDefaultSortingForPricingGuide(pricingGuideOpenMarketInventory);
+            pricingGuideOpenMarketInventory.Markets = _ApplyDefaultSortingForPricingGuideMarkets(pricingGuideOpenMarketInventory.Markets);
 
             _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideOpenMarketInventory, pricingGuideOpenMarketInventory.Criteria);
 
@@ -1484,6 +1489,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
             _SumTotalsForMarkets(dto.Markets);
+            dto.Markets = _ApplyDefaultSortingForPricingGuideMarkets(dto.Markets);
 
             return dto;
         }

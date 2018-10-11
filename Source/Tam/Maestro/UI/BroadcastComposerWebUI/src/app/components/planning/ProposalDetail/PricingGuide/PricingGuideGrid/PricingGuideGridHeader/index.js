@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { toggleModal } from "Ducks/app";
-import { filterOpenMarketData } from "Ducks/planning";
+import { filterOpenMarketData, sortOpenMarketData } from "Ducks/planning";
 // import { getPlanningGuideFiltered } from 'Ducks/planning';
 import {
   Row,
@@ -27,7 +27,10 @@ const spotFilterOptions = [
 ];
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModal, filterOpenMarketData }, dispatch);
+  bindActionCreators(
+    { toggleModal, filterOpenMarketData, sortOpenMarketData },
+    dispatch
+  );
 
 class PricingGuideGridHeader extends Component {
   constructor(props) {
@@ -35,6 +38,7 @@ class PricingGuideGridHeader extends Component {
     this.onOpenFilterModal = this.onOpenFilterModal.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
     this.onFilterSpots = this.onFilterSpots.bind(this);
+    this.sortMarket = this.sortMarket.bind(this);
   }
 
   onOpenFilterModal() {
@@ -65,11 +69,21 @@ class PricingGuideGridHeader extends Component {
     this.applyFilters({ Filter: filters });
   }
 
+  sortMarket(sortKey) {
+    const sortByName = sortKey === "sortMarketName";
+    this.props.sortOpenMarketData(sortByName);
+    // console.log("sortMarket", sortByName, sortKey, this);
+  }
+
   render() {
     // const hasData = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Markets.length;
     // change to determine by master data set - not active which could be empty by filter
     const hasData = this.props.hasOpenMarketData;
-    const { activeOpenMarketData, toggleModal } = this.props;
+    const {
+      activeOpenMarketData,
+      toggleModal,
+      isOpenMarketDataSortName
+    } = this.props;
     // FOR INDICATOR - check modal specific filters active (not spot)
     const hasActiveModalFilter =
       activeOpenMarketData && activeOpenMarketData.Filter
@@ -141,10 +155,20 @@ class PricingGuideGridHeader extends Component {
                 noCaret
                 id="pricing_sort"
               >
-                <MenuItem eventKey="sortMarketName">
+                <MenuItem eventKey="sortMarketName" onSelect={this.sortMarket}>
+                  {isOpenMarketDataSortName ? (
+                    <Glyphicon style={{ color: "green" }} glyph="ok" />
+                  ) : (
+                    ""
+                  )}{" "}
                   Sort By Market Name
                 </MenuItem>
-                <MenuItem eventKey="sortMarketRank">
+                <MenuItem eventKey="sortMarketRank" onSelect={this.sortMarket}>
+                  {!isOpenMarketDataSortName ? (
+                    <Glyphicon style={{ color: "green" }} glyph="ok" />
+                  ) : (
+                    ""
+                  )}{" "}
                   Sort By Market Rank
                 </MenuItem>
               </DropdownButton>
@@ -167,8 +191,10 @@ class PricingGuideGridHeader extends Component {
 PricingGuideGridHeader.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
   hasOpenMarketData: PropTypes.bool.isRequired,
+  isOpenMarketDataSortName: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  filterOpenMarketData: PropTypes.func.isRequired
+  filterOpenMarketData: PropTypes.func.isRequired,
+  sortOpenMarketData: PropTypes.func.isRequired
 };
 
 export default connect(

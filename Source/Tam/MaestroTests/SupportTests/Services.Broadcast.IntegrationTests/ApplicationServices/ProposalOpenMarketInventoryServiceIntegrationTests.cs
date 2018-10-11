@@ -2235,5 +2235,78 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(resultHasProgramsOnlyWithoutSpots);
         }
+
+        [Test]
+        public void ProposalOpenMarketInventoryService_SortsMarketsByRankAsc_WhenGettingPricingGuideOpenMarketInventory()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            var marketsSortedByRankAsc = true;
+            var previousMarketRank = -1;
+
+            foreach(var market in dto.Markets)
+            {
+                if (previousMarketRank > market.MarketRank)
+                {
+                    marketsSortedByRankAsc = false;
+                    break;
+                }
+
+                previousMarketRank = market.MarketRank;
+            }
+
+            Assert.IsTrue(marketsSortedByRankAsc);
+        }
+
+        [Test]
+        public void ProposalOpenMarketInventoryService_SortsMarketsByRankAsc_WhenApplyingPricingGuideOpenMarketInventory()
+        {
+            var random = new Random();
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            _ShuffleList(dto.Markets, random);
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var marketsSortedByRankAsc = true;
+            var previousMarketRank = -1;
+
+            foreach (var market in result.Markets)
+            {
+                if (previousMarketRank > market.MarketRank)
+                {
+                    marketsSortedByRankAsc = false;
+                    break;
+                }
+
+                previousMarketRank = market.MarketRank;
+            }
+
+            Assert.IsTrue(marketsSortedByRankAsc);
+        }
+
+        private void _ShuffleList<T>(IList<T> list, Random random)
+        {
+            int n = list.Count;
+
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
     }
 }

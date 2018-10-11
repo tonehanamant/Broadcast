@@ -40,6 +40,7 @@ const mapStateToProps = ({
     proposalEditForm,
     activeOpenMarketData,
     hasOpenMarketData,
+    isOpenMarketDataSortName,
     openMarketLoading,
     openMarketLoaded
   }
@@ -48,6 +49,7 @@ const mapStateToProps = ({
   proposalEditForm,
   activeOpenMarketData,
   hasOpenMarketData,
+  isOpenMarketDataSortName,
   openMarketLoading,
   openMarketLoaded
 });
@@ -468,6 +470,7 @@ class PricingGuide extends Component {
       isReadOnly,
       activeOpenMarketData,
       hasOpenMarketData,
+      isOpenMarketDataSortName,
       openMarketLoading,
       openMarketLoaded
     } = this.props;
@@ -1340,6 +1343,7 @@ class PricingGuide extends Component {
                         activeOpenMarketData={activeOpenMarketData}
                         openMarketLoading={openMarketLoading}
                         hasOpenMarketData={hasOpenMarketData}
+                        isOpenMarketDataSortName={isOpenMarketDataSortName}
                       />
                     )}
                 </Panel.Body>
@@ -1375,6 +1379,7 @@ PricingGuide.propTypes = {
   proposalEditForm: PropTypes.object.isRequired,
   activeOpenMarketData: PropTypes.object,
   hasOpenMarketData: PropTypes.bool.isRequired,
+  isOpenMarketDataSortName: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
   openMarketLoaded: PropTypes.bool.isRequired
 };

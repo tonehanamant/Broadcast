@@ -29,6 +29,7 @@
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.01,
           "Programs": [
             {
               "BlendedCpm": 0.01,

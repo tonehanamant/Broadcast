@@ -1,5 +1,6 @@
 import moment from "moment";
 import update from "immutability-helper";
+import { sortBy } from "lodash";
 
 // Actions
 import * as ACTIONS from "./actionTypes.js";
@@ -10,6 +11,7 @@ const initialState = {
   activeOpenMarketData: undefined,
   openMarketData: undefined,
   hasOpenMarketData: false,
+  isOpenMarketDataSortName: false,
   openMarketLoading: false,
   openMarketLoaded: false,
   filteredPlanningProposals: [],
@@ -76,6 +78,12 @@ const initialState = {
 };
 
 initialState.proposalEditForm = { ...initialState.proposal };
+
+const sortMarketsData = (markets, isSortByName) => {
+  const sortByType = isSortByName ? "MarketName" : "MarketRank";
+  const sortedMarkets = sortBy(markets, sortByType);
+  return sortedMarkets;
+};
 
 // Reducer
 export default function reducer(state = initialState, action) {
@@ -353,6 +361,7 @@ export default function reducer(state = initialState, action) {
         openMarketData: data.Data,
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         activeOpenMarketData: data.Data,
+        isOpenMarketDataSortName: false,
         openMarketLoading: false,
         openMarketLoaded: true
       };
@@ -372,7 +381,8 @@ export default function reducer(state = initialState, action) {
         openMarketLoaded: false,
         openMarketData: undefined,
         activeOpenMarketData: undefined,
-        hasOpenMarketData: false
+        hasOpenMarketData: false,
+        isOpenMarketDataSortName: false
       };
     }
 
@@ -384,6 +394,8 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.FILTER_OPEN_MARKET_DATA.success: {
+      const isName = state.isOpenMarketDataSortName;
+      if (isName) data.Data.Markets = sortMarketsData(data.Data.Markets, true);
       return {
         ...state,
         activeOpenMarketData: data.Data,
@@ -397,6 +409,19 @@ export default function reducer(state = initialState, action) {
         ...state,
         openMarketLoading: false
       };
+    }
+
+    case ACTIONS.SORT_OPEN_MARKET_DATA: {
+      const activeData = { ...state.activeOpenMarketData };
+      const sortedData = sortMarketsData(activeData.Markets, payload);
+      // console.log("SORT_OPEN_MARKET_DATA", payload, sortedData);
+      return Object.assign({}, state, {
+        activeOpenMarketData: {
+          ...state.activeOpenMarketData,
+          Markets: sortedData
+        },
+        isOpenMarketDataSortName: payload
+      });
     }
 
     case ACTIONS.SET_ESTIMATED_ID: {
@@ -566,7 +591,10 @@ export const filterOpenMarketData = params => ({
   type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
   payload: params
 });
-
+export const sortOpenMarketData = sortByName => ({
+  type: ACTIONS.SORT_OPEN_MARKET_DATA,
+  payload: sortByName
+});
 export const setEstimatedId = (detailId, estimatedId) => ({
   type: ACTIONS.SET_ESTIMATED_ID,
   payload: {

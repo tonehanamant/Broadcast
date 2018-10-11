@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.DTO
@@ -41,6 +42,8 @@ namespace Services.Broadcast.Entities.DTO
                 public string LegacyCallLetters { get; set; }
                 public string Affiliation { get; set; }
                 public List<PricingGuideProgram> Programs { get; set; } = new List<PricingGuideProgram>();
+
+                public decimal MinProgramsBlendedCpm => Programs.Any() ? Programs.Min(p => p.BlendedCpm) : 0;
 
                 public class PricingGuideProgram
                 {

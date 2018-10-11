@@ -150,6 +150,7 @@
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
           "LegacyCallLetters": "WWSB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -292,6 +293,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
           "LegacyCallLetters": "WDBD",
+          "MinProgramsBlendedCpm": 1.16,
           "Programs": [
             {
               "BlendedCpm": 1.16,
@@ -332,6 +334,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KCYU-LD 41.1",
           "LegacyCallLetters": "KCYU",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -406,6 +409,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KION-TV 46.1",
           "LegacyCallLetters": "KION",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -533,6 +537,7 @@
           "Affiliation": "CW",
           "CallLetters": "KION-TV 46.2",
           "LegacyCallLetters": "NION",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -573,6 +578,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KIII 3.1",
           "LegacyCallLetters": "KIII",
+          "MinProgramsBlendedCpm": 4.89,
           "Programs": [
             {
               "BlendedCpm": 4.89,
@@ -732,6 +738,7 @@
           "Affiliation": "CW",
           "CallLetters": "KCWQ",
           "LegacyCallLetters": "KCWQ",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -808,6 +815,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KDFX-CD 39.1",
           "LegacyCallLetters": "KDFX",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -865,6 +873,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KTBY 4.1",
           "LegacyCallLetters": "KTBY",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -890,6 +899,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KYUR 13.1",
           "LegacyCallLetters": "KYUR",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -981,6 +991,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KIDK 3.1",
           "LegacyCallLetters": "KIDK",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1091,6 +1102,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KXPI-LD 34.2",
           "LegacyCallLetters": "KXPI",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1131,6 +1143,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WGEM-TV 10.3",
           "LegacyCallLetters": "GGEM",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1156,6 +1169,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KHQA-TV 7.1",
           "LegacyCallLetters": "KHQA",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1232,6 +1246,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KHQA-TV 7.2",
           "LegacyCallLetters": "NHQA",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1342,6 +1357,7 @@
           "Affiliation": "NBC",
           "CallLetters": "WGEM-TV 10.1",
           "LegacyCallLetters": "WGEM",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1484,6 +1500,7 @@
           "Affiliation": "NBC",
           "CallLetters": "KNBN-DT 21.1",
           "LegacyCallLetters": "KNBN",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1609,6 +1626,7 @@
           "Affiliation": "FOX",
           "CallLetters": "WNTZ-TV 48.1",
           "LegacyCallLetters": "WNTZ",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1649,6 +1667,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KJNB-LD 39.1",
           "LegacyCallLetters": "KJNB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1674,6 +1693,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KJNB-LD 39.2",
           "LegacyCallLetters": "NJNB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1782,6 +1802,7 @@
           "Affiliation": "NBC",
           "CallLetters": "KTFT-LD 7.1",
           "LegacyCallLetters": "KTFT",
+          "MinProgramsBlendedCpm": 6.52,
           "Programs": [
             {
               "BlendedCpm": 6.52,
@@ -1958,6 +1979,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KFNB 20.1",
           "LegacyCallLetters": "KFNB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -2017,6 +2039,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KTWO-TV 2.1",
           "LegacyCallLetters": "KTWO",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -2125,6 +2148,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KATN 2.1",
           "LegacyCallLetters": "KATN",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -2216,6 +2240,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KJUD 8.1",
           "LegacyCallLetters": "KJUD",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -2307,6 +2332,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KXGN-TV 5.1",
           "LegacyCallLetters": "KXGN",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
