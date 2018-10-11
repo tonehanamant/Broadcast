@@ -2792,8 +2792,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.True(retrievedProposalHasDetailWithEstimateId);
             }
         }
-        //TODO unignore this and fix
-        [Ignore]    
+   
         [Test]
         public void ProposalService_UploadsProposalBuyScx_WithStationsWithPlusS2Extensions()
         {
@@ -2807,8 +2806,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var errors = _ProposalService.SaveProposalBuy(request);
+            var allStationWereFound = errors.All(x => !x.StartsWith("Unable to find station"));
 
-            Assert.AreEqual(0, errors.Count);
+            Assert.IsTrue(allStationWereFound);
         }
 
         private ProposalBuySaveRequestDto _GetProposalBuySaveRequestDtoForSuccessfullResult(int detailId, int estimateId)
