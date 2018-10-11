@@ -997,7 +997,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 ProgramId = p.First().ManifestId,
                 ProgramName = _GetProgramName(p),
-                BlendedCpm = p.Average(x => x.TargetCpm),
+                BlendedCpm = Math.Round(p.Average(x => x.TargetCpm),2),
                 ImpressionsPerSpot = p.Average(x => x.UnitImpressions),
                 StationImpressions = p.Average(x => x.ProvidedUnitImpressions ?? 0),
                 Daypart = p.First().DayParts.Single(),
@@ -1164,7 +1164,6 @@ namespace Services.Broadcast.ApplicationServices
             
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
             _SumTotalsForMarkets(pricingGuideDto.Markets);
-
             return pricingGuideDto;
         }
 
@@ -1276,16 +1275,17 @@ namespace Services.Broadcast.ApplicationServices
 
         private PricingGuideOpenMarketInventoryDto ConvertPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
-            return new PricingGuideOpenMarketInventoryDto()
+            var response = new PricingGuideOpenMarketInventoryDto()
             {
                 Markets = pricingGuideOpenMarketInventory.Markets
             };
+
+            return response;
         }
 
         private void _CalculateProgramCosts(List<ProposalProgramDto> programs,PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
-            _ProposalProgramsCalculationEngine.CalculateBlendedCpmForPrograms(programs,
-                pricingGuideOpenMarketInventory.DetailSpotLengthId);
+            _ProposalProgramsCalculationEngine.CalculateBlendedCpmForProgramsRaw(programs,pricingGuideOpenMarketInventory.DetailSpotLengthId);
             _ProposalProgramsCalculationEngine.CalculateAvgCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
@@ -1294,12 +1294,9 @@ namespace Services.Broadcast.ApplicationServices
         private void _SumTotalsForMarkets(List<PricingGuideOpenMarketInventory.PricingGuideMarket> markets)
         {
             markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
-            markets.ForEach(
-                m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
-            markets.ForEach(m =>
-                m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            markets.ForEach(m =>
-                m.TotalStationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
+            markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
+            markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
+            markets.ForEach(m =>m.TotalStationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
         }
         
         private void _FilterProgramsByDaypart(ProposalDetailInventoryBase pricingGuideOpenMarketDto, List<ProposalProgramDto> programs)
