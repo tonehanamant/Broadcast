@@ -140,6 +140,7 @@ export function* requestTrackerFiltered({ payload: query }) {
 
 export function* requestUnlinkedFiltered({ payload: query }) {
   const unlinkedListUnfiltered = yield select(state => state.tracker.unlinkedFilteredIscis);
+  // const unlinkedListUnfiltered = yield select(state => state.tracker.archivedFilteredIscis);
 
   // for each post, convert all properties to string to enable use on FuzzySearch object
   unlinkedListUnfiltered.map(post => (
@@ -152,8 +153,9 @@ export function* requestUnlinkedFiltered({ payload: query }) {
 
   try {
     const filtered = yield unlinkedFiltered();
+    console.log(filtered);
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_UNLINKED,
+      type: ACTIONS.TRACKER_RECEIVE_FILTERED_UNLINKED,
       data: { query, filteredData: filtered },
     });
   } catch (e) {
@@ -176,24 +178,26 @@ export function* requestArchivedFiltered({ payload: query }) {
     Object.keys(post).map(key => post[key])
   ));
 
-  const keys = ['ISCI'];
-  const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
-  const archivedFiltered = () => searcher.search(query);
+  if (archivedListUnfiltered.length > 0) {
+    const keys = ['ISCI'];
+    const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
+    const archivedFiltered = () => searcher.search(query);
 
-  try {
-    const filtered = yield archivedFiltered();
-    yield put({
-      type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
-      data: { query, filteredData: filtered },
-    });
-  } catch (e) {
-    if (e.message) {
+    try {
+      const filtered = yield archivedFiltered();
       yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
+        type: ACTIONS.TRACKER_RECEIVE_FILTERED_ARCHIVED,
+        data: { query, filteredData: filtered },
       });
+    } catch (e) {
+      if (e.message) {
+        yield put({
+          type: ACTIONS.DEPLOY_ERROR,
+          error: {
+            message: e.message,
+          },
+        });
+      }
     }
   }
 }
@@ -204,7 +208,7 @@ export function* requestArchivedFiltered({ payload: query }) {
 export function* requestClearScrubbingDataFiltersList() {
   try {
     yield put({
-      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
+      type: ACTIONS.TRACKER_RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
       data: [],
     });
   } catch (e) {
@@ -421,7 +425,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     }
 
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA,
+      type: ACTIONS.TRACKER_RECEIVE_FILTERED_SCRUBBING_DATA,
       data: filtered,
     });
   } catch (e) {
@@ -453,7 +457,7 @@ export function* requestUnlinkedIscis() {
 
 export function* unlinkedIscisSuccess() {
   const activeQuery = yield select(state => state.tracker.activeIsciFilterQuery);
-  // console.log('unlinked isci active query success>>>>>>>', activeQuery);
+  console.log('unlinked isci active query success>>>>>>>', activeQuery);
   const modal = select(selectModal, 'trackerUnlinkedIsciModal');
   if (modal && !modal.active) {
     yield put(toggleModal({
@@ -472,7 +476,7 @@ export function* unlinkedIscisSuccess() {
 
 export function* archivedIscisSuccess() {
   const activeQuery = yield select(state => state.tracker.activeIsciFilterQuery);
-  // console.log('archived isci active query success>>>>>>>', activeQuery);
+  console.log('archived isci active query success>>>>>>>', activeQuery);
   if (activeQuery.length) {
     yield call(requestArchivedFiltered, { payload: activeQuery });
   }
@@ -787,7 +791,7 @@ export function* mapUnlinkedIsciSuccess() {
 
 export function* closeUnlinkedIsciModal({ modalPrams }) {
   yield put({
-    type: ACTIONS.RECEIVE_CLEAR_ISCI_FILTER,
+    type: ACTIONS.TRACKER_RECEIVE_CLEAR_ISCI_FILTER,
   });
   yield put(toggleModal({
     modal: 'trackerUnlinkedIsciModal',
@@ -849,11 +853,11 @@ export function* watchRequestTrackerFiltered() {
 }
 
 export function* watchRequestUnlinkedFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
+  yield takeEvery(ACTIONS.TRACKER_REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
 }
 
 export function* watchRequestArchivedFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
+  yield takeEvery(ACTIONS.TRACKER_REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
 }
 
 export function* watchRequestTrackerClientScrubbing() {
@@ -861,34 +865,34 @@ export function* watchRequestTrackerClientScrubbing() {
 }
 
 export function* watchRequestScrubbingDataFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA, requestScrubbingDataFiltered);
+  yield takeEvery(ACTIONS.TRACKER_REQUEST_FILTERED_SCRUBBING_DATA, requestScrubbingDataFiltered);
 }
 
 export function* watchRequestClearScrubbingFiltersList() {
-  yield takeEvery(ACTIONS.REQUEST_CLEAR_SCRUBBING_FILTERS_LIST, requestClearScrubbingDataFiltersList);
+  yield takeEvery(ACTIONS.TRACKER_REQUEST_CLEAR_SCRUBBING_FILTERS_LIST, requestClearScrubbingDataFiltersList);
 }
 
 export function* watchRequestUniqueIscis() {
   yield takeEvery([
-    ACTIONS.UNLINKED_ISCIS_DATA.request,
-    ACTIONS.ARCHIVE_UNLIKED_ISCI.success,
-    ACTIONS.RESCRUB_UNLIKED_ISCI.success,
-    ACTIONS.MAP_UNLINKED_ISCI.success,
+    ACTIONS.TRACKER_UNLINKED_ISCIS_DATA.request,
+    ACTIONS.TRACKER_ARCHIVE_UNLIKED_ISCI.success,
+    ACTIONS.TRACKER_RESCRUB_UNLIKED_ISCI.success,
+    ACTIONS.TRACKER_MAP_UNLINKED_ISCI.success,
   ],
-    sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA),
+    sagaWrapper(requestUnlinkedIscis, ACTIONS.TRACKER_UNLINKED_ISCIS_DATA),
   );
 }
 
 export function* watchRequestUniqueIscisSuccess() {
-  yield takeEvery(ACTIONS.UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
+  yield takeEvery(ACTIONS.TRACKER_UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
 }
 
 export function* watchRequestArchivedIscisSuccess() {
-  yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.success, archivedIscisSuccess);
+  yield takeEvery(ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI.success, archivedIscisSuccess);
 }
 
 export function* watchArchiveUnlinkedIsci() {
-  yield takeEvery(ACTIONS.ARCHIVE_UNLIKED_ISCI.request, sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI));
+  yield takeEvery(ACTIONS.TRACKER_ARCHIVE_UNLIKED_ISCI.request, sagaWrapper(archiveUnlinkedIsci, ACTIONS.TRACKER_ARCHIVE_UNLIKED_ISCI));
 }
 
 export function* watchRequestOverrideStatus() {
@@ -896,48 +900,48 @@ export function* watchRequestOverrideStatus() {
 }
 
 export function* watchSwapProposalDetail() {
-  yield takeEvery(ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL, swapProposalDetail);
+  yield takeEvery(ACTIONS.TRACKER_REQUEST_SWAP_PROPOSAL_DETAIL, swapProposalDetail);
 }
 
 export function* watchLoadArchivedIscis() {
   yield takeEvery([
-    ACTIONS.LOAD_ARCHIVED_ISCI.request,
-    ACTIONS.UNDO_ARCHIVED_ISCI.success,
+    ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI.request,
+    ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI.success,
   ],
-    sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI),
+    sagaWrapper(loadArchivedIsci, ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI),
   );
 }
 
 export function* watchLoadValidIscis() {
-  yield takeEvery(ACTIONS.LOAD_VALID_ISCI.request, sagaWrapper(loadValidIscis, ACTIONS.LOAD_VALID_ISCI));
+  yield takeEvery(ACTIONS.TRACKER_LOAD_VALID_ISCI.request, sagaWrapper(loadValidIscis, ACTIONS.TRACKER_LOAD_VALID_ISCI));
 }
 
 export function* watchRescrubUnlinkedIsci() {
-  yield takeEvery(ACTIONS.RESCRUB_UNLIKED_ISCI.request, sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI));
+  yield takeEvery(ACTIONS.TRACKER_RESCRUB_UNLIKED_ISCI.request, sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRTRACKER_RESCRUB_UNLIKED_ISCIUB_UNLIKED_ISCI));
 }
 
 export function* watchMapUnlinkedIsci() {
-  yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.request, sagaWrapper(mapUnlinkedIsci, ACTIONS.MAP_UNLINKED_ISCI));
+  yield takeEvery(ACTIONS.TRACKER_MAP_UNLINKED_ISCI.request, sagaWrapper(mapUnlinkedIsci, ACTIONS.TRACKER_MAP_UNLINKED_ISCI));
 }
 
 export function* watchCloseUnlinkedIsciModal() {
-  yield takeEvery(ACTIONS.CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
+  yield takeEvery(ACTIONS.TRACKER_CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
 }
 
 export function* watchMapUnlinkedIsciSuccess() {
-  yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
+  yield takeEvery(ACTIONS.TRACKER_MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
 }
 
 export function* watchUndoArchivedIscis() {
-  yield takeEvery(ACTIONS.UNDO_ARCHIVED_ISCI.request, sagaWrapper(undoArchivedIscis, ACTIONS.UNDO_ARCHIVED_ISCI));
+  yield takeEvery(ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI.request, sagaWrapper(undoArchivedIscis, ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI));
 }
 
 export function* watchUndoScrubStatus() {
-  yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.request, sagaWrapper(undoScrubStatus, ACTIONS.UNDO_SCRUB_STATUS));
+  yield takeEvery(ACTIONS.TRACKER_UNDO_SCRUB_STATUS.request, sagaWrapper(undoScrubStatus, ACTIONS.TRACKER_UNDO_SCRUB_STATUS));
 }
 
 export function* watchUndoScrubStatusSuccess() {
-  yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
+  yield takeEvery(ACTIONS.TRACKER_UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
 }
 
 export function* watchUploadTrackerFile() {

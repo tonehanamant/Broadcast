@@ -164,7 +164,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 foreach (var name in programNamesToExclude)
                 {
-                    if (program.ProgramNames.Any(x => name.Equals(x)))
+                    if (program.ProgramNames.Any(x => name.Equals(x, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         programsToExclude.Add(program);
                     }
@@ -991,7 +991,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> _GroupProgramsByDaypart(IGrouping<short, ProposalProgramDto> programs)
         {
-            var programsGroupedByDaypart = programs.GroupBy(s => s.DayParts.Single().Id);
+            var programsWithDayParts = programs.Where(x => x.DayParts.Any());
+            var programsGroupedByDaypart = programsWithDayParts.GroupBy(s => s.DayParts.Single().Id);
 
             return programsGroupedByDaypart.Select(p => new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram
             {
@@ -1023,7 +1024,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var market in sortedMarkets)
             {
-                market.Stations = market.Stations.OrderBy(s => s.Programs.Min(p => p.BlendedCpm))
+                market.Stations = market.Stations.OrderBy(s => s.Programs.Any() ? s.Programs.Min(p => p.BlendedCpm) : 0)
                     .ThenBy(s => s.LegacyCallLetters).ToList();
                 foreach (var station in market.Stations)
                 {
@@ -1034,17 +1035,18 @@ namespace Services.Broadcast.ApplicationServices
             proposalInventory.Markets = sortedMarkets;
         }
 
-        private void _ApplyProgramAndGenreFilterForPricingGuide(PricingGuideOpenMarketInventory dto,
-            OpenMarketCriterion criterion)
+        private void _ApplyGenreFilterForPricingGuide(PricingGuideOpenMarketInventory dto, OpenMarketCriterion criterion)
         {
-            var programsToExclude =
-                new List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram>();
-            var programNamesToExclude = criterion.ProgramNameSearchCriteria
-                .Where(x => x.Contain == ContainTypeEnum.Exclude).Select(x => x.Program.Display).ToList();
-            var genreIdsToInclude = criterion.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Include)
-                .Select(x => x.Genre.Id).ToList();
-            var genreIdsToExclude = criterion.GenreSearchCriteria.Where(x => x.Contain == ContainTypeEnum.Exclude)
-                .Select(x => x.Genre.Id).ToList();
+            var programsToExclude = new List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram>();
+            var genreIdsToInclude = criterion.GenreSearchCriteria
+                .Where(x => x.Contain == ContainTypeEnum.Include)
+                .Select(x => x.Genre.Id)
+                .ToList();
+            var genreIdsToExclude = criterion.GenreSearchCriteria
+                .Where(x => x.Contain == ContainTypeEnum.Exclude)
+                .Select(x => x.Genre.Id)
+                .ToList();
+
             dto.Markets.ForEach(market => market.Stations.ForEach(station => station.Programs.ForEach(program =>
             {
                 var hasIncludedGenre = false || genreIdsToInclude.IsEmpty();
@@ -1068,17 +1070,25 @@ namespace Services.Broadcast.ApplicationServices
                         programsToExclude.Add(program);
                     }
                 }
-
-                foreach (var name in programNamesToExclude)
-                {
-                    if (program.ProgramName.Equals(name))
-                    {
-                        programsToExclude.Add(program);
-                    }
-                }
             })));
 
             dto.Markets.ForEach(x => x.Stations.ForEach(y => y.Programs.RemoveAll(z => programsToExclude.Contains(z))));
+        }
+
+        private void _ApplyProgramFilterForPricingGuide(IEnumerable<ProposalProgramDto> programs, OpenMarketCriterion criterion)
+        {
+            var programsToExclude = new List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram>();
+            var programNamesToExclude = criterion.ProgramNameSearchCriteria
+                .Where(x => x.Contain == ContainTypeEnum.Exclude)
+                .Select(x => x.Program.Display)
+                .ToList();
+
+            foreach(var program in programs)
+            {
+                program.ManifestDayparts = program.ManifestDayparts
+                    .Where(x => !programNamesToExclude.Contains(x.ProgramName, StringComparer.InvariantCultureIgnoreCase))
+                    .ToList();
+            }
         }
 
         public static PricingGuideOpenMarketInventory MapToPricingGuideOpenMarketInventory(open_market_pricing_guide pricingGuide)
@@ -1235,6 +1245,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private PricingGuideOpenMarketInventory DefaultPricingGuideOpenMarketInventory(List<ProposalProgramDto> programs, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
+            _ApplyProgramFilterForPricingGuide(programs, pricingGuideOpenMarketInventory.Criteria);
             _ApplyDaypartNames(programs);
 
             _ApplyProjectedImpressions(programs, pricingGuideOpenMarketInventory);
@@ -1252,7 +1263,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyDefaultSortingForPricingGuide(pricingGuideOpenMarketInventory);
 
-            _ApplyProgramAndGenreFilterForPricingGuide(pricingGuideOpenMarketInventory, pricingGuideOpenMarketInventory.Criteria);
+            _ApplyGenreFilterForPricingGuide(pricingGuideOpenMarketInventory, pricingGuideOpenMarketInventory.Criteria);
 
             _RemoveEmptyStationsAndMarkets(pricingGuideOpenMarketInventory);
 
