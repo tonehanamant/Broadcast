@@ -256,21 +256,21 @@ export default function reducer(state = initialState, action) {
         trackerGridData: data
       };
 
-    case ACTIONS.RECEIVE_FILTERED_UNLINKED:
+    case ACTIONS.TRACKER_RECEIVE_FILTERED_UNLINKED:
       return {
         ...state,
         unlinkedIscisData: data.filteredData,
         activeIsciFilterQuery: data.query
       };
 
-    case ACTIONS.RECEIVE_FILTERED_ARCHIVED:
+    case ACTIONS.TRACKER_RECEIVE_FILTERED_ARCHIVED:
       return {
         ...state,
         archivedIscisData: data.filteredData,
         activeIsciFilterQuery: data.query
       };
 
-    case ACTIONS.RECEIVE_CLEAR_ISCI_FILTER:
+      case ACTIONS.TRACKER_RECEIVE_CLEAR_ISCI_FILTER:
       return {
         ...state,
         activeIsciFilterQuery: ""
@@ -385,7 +385,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA:
+    case ACTIONS.TRACKER_RECEIVE_FILTERED_SCRUBBING_DATA:
       // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data, state);
       return {
         ...state,
@@ -416,45 +416,45 @@ export default function reducer(state = initialState, action) {
         scrubbingFiltersList: [data.activeFilters]
       };
 
-    case ACTIONS.LOAD_ARCHIVED_ISCI.success:
+    case ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI.success:
       return {
         ...state,
         archivedIscisData: data.Data,
         unlinkedFilteredIscis: data.Data
       };
-    case ACTIONS.UNLINKED_ISCIS_DATA.success:
+    case ACTIONS.TRACKER_UNLINKED_ISCIS_DATA.success:
       return {
         ...state,
         unlinkedIscisData: data.Data,
         unlinkedFilteredIscis: data.Data
       };
 
-    case ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST:
+    case ACTIONS.TRACKER_RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST:
       return {
         ...state,
         scrubbingFiltersList: []
       };
 
-    case ACTIONS.LOAD_VALID_ISCI.request:
+    case ACTIONS.TRACKER_LOAD_VALID_ISCI.request:
       return {
         ...state,
         loadingValidIscis: true
       };
 
-    case ACTIONS.LOAD_VALID_ISCI.success:
+    case ACTIONS.TRACKER_LOAD_VALID_ISCI.success:
       return {
         ...state,
         typeaheadIscisList: data.Data,
         loadingValidIscis: false
       };
 
-    case ACTIONS.LOAD_VALID_ISCI.failure:
+    case ACTIONS.TRACKER_LOAD_VALID_ISCI.failure:
       return {
         ...state,
         loadingValidIscis: false
       };
 
-    case ACTIONS.SAVE_NEW_CLIENT_SCRUBS:
+    case ACTIONS.TRACKER_SAVE_NEW_CLIENT_SCRUBS:
       return {
         ...state,
         proposalHeader: {
@@ -481,12 +481,12 @@ export const getTrackerFiltered = query => ({
 });
 
 export const getUnlinkedFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_UNLINKED,
+  type: ACTIONS.TRACKER_REQUEST_FILTERED_UNLINKED,
   payload: query
 });
 
 export const getArchivedFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_ARCHIVED,
+  type: ACTIONS.TRACKER_REQUEST_FILTERED_ARCHIVED,
   payload: query
 });
 
@@ -496,17 +496,17 @@ export const getTrackerClientScrubbing = params => ({
 });
 
 export const getScrubbingDataFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA,
+  type: ACTIONS.TRACKER_REQUEST_FILTERED_SCRUBBING_DATA,
   payload: query
 });
 
 export const clearScrubbingFiltersList = () => ({
-  type: ACTIONS.REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
+  type: ACTIONS.TRACKER_REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
   payload: {}
 });
 
 export const getUnlinkedIscis = () => ({
-  type: ACTIONS.UNLINKED_ISCIS_DATA.request,
+  type: ACTIONS.TRACKER_UNLINKED_ISCIS_DATA.request,
   payload: {}
 });
 
@@ -516,32 +516,32 @@ export const overrideStatus = params => ({
 });
 
 export const swapProposalDetail = params => ({
-  type: ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL,
+  type: ACTIONS.TRACKER_REQUEST_SWAP_PROPOSAL_DETAIL,
   payload: params
 });
 
 export const archiveUnlinkedIscis = ids => ({
-  type: ACTIONS.ARCHIVE_UNLIKED_ISCI.request,
+  type: ACTIONS.TRACKER_ARCHIVE_UNLIKED_ISCI.request,
   payload: { ids }
 });
 
 export const loadArchivedIscis = () => ({
-  type: ACTIONS.LOAD_ARCHIVED_ISCI.request,
+  type: ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI.request,
   payload: {}
 });
 
 export const loadValidIscis = query => ({
-  type: ACTIONS.LOAD_VALID_ISCI.request,
+  type: ACTIONS.TRACKER_LOAD_VALID_ISCI.request,
   payload: { query }
 });
 
 export const mapUnlinkedIsci = payload => ({
-  type: ACTIONS.MAP_UNLINKED_ISCI.request,
+  type: ACTIONS.TRACKER_MAP_UNLINKED_ISCI.request,
   payload
 });
 
 export const undoArchivedIscis = ids => ({
-  type: ACTIONS.UNDO_ARCHIVED_ISCI.request,
+  type: ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI.request,
   payload: { ids }
 });
 
@@ -563,17 +563,17 @@ export const toggleUnlinkedTab = tab => {
 };
 
 export const rescrubUnlinkedIscis = isci => ({
-  type: ACTIONS.RESCRUB_UNLIKED_ISCI.request,
+  type: ACTIONS.TRACKER_RESCRUB_UNLIKED_ISCI.request,
   payload: { isci }
 });
 
 export const closeUnlinkedIsciModal = modalPrams => ({
-  type: ACTIONS.CLOSE_UNLINKED_ISCI_MODAL,
+  type: ACTIONS.TRACKER_CLOSE_UNLINKED_ISCI_MODAL,
   payload: { modalPrams }
 });
 
 export const undoScrubStatus = (proposalId, scrubIds) => ({
-  type: ACTIONS.UNDO_SCRUB_STATUS.request,
+  type: ACTIONS.TRACKER_UNDO_SCRUB_STATUS.request,
   payload: {
     ProposalId: proposalId,
     ScrubIds: scrubIds
@@ -581,7 +581,7 @@ export const undoScrubStatus = (proposalId, scrubIds) => ({
 });
 
 export const saveActiveScrubData = (newData, fullList) => ({
-  type: ACTIONS.SAVE_NEW_CLIENT_SCRUBS,
+  type: ACTIONS.TRACKER_SAVE_NEW_CLIENT_SCRUBS,
   payload: { Data: newData, FullData: fullList }
 });
 

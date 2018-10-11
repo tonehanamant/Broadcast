@@ -229,26 +229,27 @@ export function* requestArchivedFiltered({ payload: query }) {
   // for each post, convert all properties to string to enable use on FuzzySearch object
   archivedListUnfiltered.map(post => Object.keys(post).map(key => post[key]));
 
-  const keys = ["ISCI"];
-  const searcher = new FuzzySearch(archivedListUnfiltered, keys, {
-    caseSensitive: false
+  if (archivedListUnfiltered.length > 0) {
+    const keys = ['ISCI'];
+    const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
   });
-  const archivedFiltered = () => searcher.search(query);
+    const archivedFiltered = () => searcher.search(query);
 
-  try {
-    const filtered = yield archivedFiltered();
-    yield put({
-      type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
-      data: { query, filteredData: filtered }
-    });
-  } catch (e) {
-    if (e.message) {
+    try {
+      const filtered = yield archivedFiltered();
       yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
+        type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
+        data: { query, filteredData: filtered },
       });
+    } catch (e) {
+      if (e.message) {
+        yield put({
+          type: ACTIONS.DEPLOY_ERROR,
+          error: {
+            message: e.message,
+          },
+        });
+      }
     }
   }
 }

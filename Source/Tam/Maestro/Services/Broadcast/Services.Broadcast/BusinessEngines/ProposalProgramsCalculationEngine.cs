@@ -40,12 +40,10 @@ namespace Services.Broadcast.BusinessEngines
         void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
 
         /// <summary>
-        /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week.
+        /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week (raw = no rounding).
         /// </summary>
-        /// <param name="programs"></param>
-        /// <param name="spotLength"></param>
         /// <returns></returns>
-        void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs);
+        void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength);
 
         void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
 
@@ -279,7 +277,10 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public void CalculateBlendedCpmForPrograms(List<ProposalProgramDto> programs)
+        /// <summary>
+        /// Raw == no rounding
+        /// </summary>
+        public void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength)
         {
             foreach (var program in programs)
             {
@@ -288,7 +289,7 @@ namespace Services.Broadcast.BusinessEngines
                 var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
                 var totalImpressions = unitImpressions * activeWeeks.Count;
 
-                program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
+                program.TargetCpm = ProposalMath.CalculateCpmRaw(totalCost, totalImpressions);
             }
         }
 
