@@ -1134,7 +1134,7 @@ namespace Services.Broadcast.ApplicationServices
             PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory = null;
             List<ProposalProgramDto> programs = null;
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-            List<open_market_pricing_guide> existingPricingGuide = _GetProposalDetailPricingGuide(request.ProposalId, request.ProposalDetailId);
+            var existingPricingGuide = _GetProposalDetailPricingGuide(request.ProposalId, request.ProposalDetailId);
             var generatePricingGuide = request.HasPricingGuideChanges ?? true;
 
             if (existingPricingGuide == null ||
@@ -1320,12 +1320,65 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _AllocateSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
+            if (request.BudgetGoal == null && request.ImpressionsGoal == null)
+            {
+                AllocateSpotsWithoutGoals(pricingGuideOpenMarketInventory, request);
+            }
+            else
+            {
+                _AllocateSpotsWithGoals(pricingGuideOpenMarketInventory, request);
+            }
+        }
+
+        private void AllocateSpotsWithoutGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
+        {
             if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
                 _AllocateMaxSpots(pricingGuideOpenMarketInventory);
             else if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Min)
                 _AllocateMinSpots(pricingGuideOpenMarketInventory);
             else if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Avg)
                 _AllocateAvgSpots(pricingGuideOpenMarketInventory);
+        }
+
+        private void _AllocateSpotsWithGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
+        {
+            var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 1;
+            var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
+            var impressionsGoal = request.ImpressionsGoal ?? Double.MaxValue;
+
+            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            {
+                foreach (var station in market.Stations)
+                {
+                    var minProgram = station.Programs.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+
+                    if (minProgram != null && budgetGoal > 0 && impressionsGoal > 0)
+                    {
+                        minProgram.Spots = unitCapPerStation;
+                        minProgram.Impressions = minProgram.Spots * minProgram.ImpressionsPerSpot;
+                        minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
+                        impressionsGoal -= minProgram.Impressions;
+                        budgetGoal -= minProgram.Cost;
+                    }
+                }
+            }
+
+            var allCheapestPrograms = pricingGuideOpenMarketInventory.Markets.SelectMany(
+                m => m.Stations.SelectMany(
+                    s => s.Programs.Where(
+                        x => x.BlendedCpm != 0 && x.Spots == 0).OrderBy(x => x.BlendedCpm))).ToList();
+            var programCount = 0;
+
+            while (budgetGoal > 0 && impressionsGoal > 0 && 
+                   programCount < allCheapestPrograms.Count())
+            {
+                var program = allCheapestPrograms[programCount];
+                program.Spots = unitCapPerStation;
+                program.Impressions = program.Spots * program.ImpressionsPerSpot;
+                program.Cost = program.Spots * program.CostPerSpot;
+                impressionsGoal -= program.Impressions;
+                budgetGoal -= program.Cost;
+            }
         }
 
         private void _AllocateMinSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)

@@ -1844,6 +1844,52 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithAllocationGoals()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26020,
+                    ProposalDetailId = 9982,
+                    BudgetGoal = 10000,
+                    OpenMarketPricing = new OpenMarketPricing
+                    {
+                        UnitCapPerStation = 100
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithAllocationGoalsMultiplePrograms()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26021,
+                    ProposalDetailId = 9983,
+                    BudgetGoal = 10000,
+                    OpenMarketPricing = new OpenMarketPricing
+                    {
+                        UnitCapPerStation = 10
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
         public void MatchesProgramsUsingProgramNameFilter()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto

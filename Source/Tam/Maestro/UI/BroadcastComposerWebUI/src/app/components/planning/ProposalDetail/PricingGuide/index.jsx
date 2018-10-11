@@ -73,6 +73,7 @@ class PricingGuide extends Component {
     this.onCancel = this.onCancel.bind(this);
     this.clearState = this.clearState.bind(this);
 
+    this.setInventory = this.setInventory.bind(this);
     this.toggleInventoryEditing = this.toggleInventoryEditing.bind(this);
     this.saveInventory = this.saveInventory.bind(this);
     this.cancelInventory = this.cancelInventory.bind(this);
@@ -147,8 +148,10 @@ class PricingGuide extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  // this is unreliable - updates constantly and clears set states
+  /* componentWillReceiveProps(nextProps) {
     if (nextProps.detail) {
+      console.log("component receive props detail", nextProps.detail);
       this.setState({
         impression: nextProps.detail.GoalImpression,
         budget: nextProps.detail.GoalBudget,
@@ -162,16 +165,36 @@ class PricingGuide extends Component {
         editingImpressionInflation: nextProps.detail.AdjustmentInflation
       });
     }
-  }
+  } */
 
   onModalShow() {
     // console.log('MODAL SHOW>>>>>>>>>', this.props.detail);
-    // process proprietary pricing/ open market just once on open
+    // process inventory/proprietary pricing/ open market just once on open
+    this.setInventory(this.props.detail);
     this.setProprietaryPricing(this.props.detail);
     this.setOpenMarketPricing(this.props.detail);
   }
 
   // INVENTORY Goals and Adjustments
+
+  setInventory(detail) {
+    if (detail) {
+      this.setState({
+        impression: detail.GoalImpression,
+        budget: detail.GoalBudget,
+        margin: detail.AdjustmentMargin,
+        rateInflation: detail.AdjustmentRate,
+        impressionInflation: detail.AdjustmentInflation
+      });
+      this.setState({
+        editingImpression: detail.GoalImpression,
+        editingBudget: detail.GoalBudget,
+        editingMargin: detail.AdjustmentMargin,
+        editingRateInflation: detail.AdjustmentRate,
+        editingImpressionInflation: detail.AdjustmentInflation
+      });
+    }
+  }
 
   toggleInventoryEditing() {
     this.setState({ isInventoryEditing: !this.state.isInventoryEditing });
@@ -350,7 +373,14 @@ class PricingGuide extends Component {
   // run with params - temporary until get new open market BE object
   onRunDistribution() {
     const { detail, proposalEditForm } = this.props;
-    const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
+    const {
+      openCpmMax,
+      openCpmMin,
+      openCpmTarget,
+      openUnitCap,
+      budget,
+      impression
+    } = this.state;
     const openData = {
       CpmMax: openCpmMax,
       CpmMin: openCpmMin,
@@ -360,6 +390,8 @@ class PricingGuide extends Component {
     const request = {
       ProposalId: proposalEditForm.Id,
       ProposalDetailId: detail.Id,
+      BudgetGoal: budget,
+      ImpressionGoal: impression,
       OpenMarketPricing: openData
     };
     this.props.loadOpenMarketData(request);
@@ -1387,7 +1419,8 @@ PricingGuide.propTypes = {
 PricingGuide.defaultProps = {
   modal: null,
   isReadOnly: false,
-  activeOpenMarketData: undefined
+  activeOpenMarketData: undefined,
+  detail: undefined
 };
 
 export default connect(
