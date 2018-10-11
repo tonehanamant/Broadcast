@@ -164,7 +164,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 foreach (var name in programNamesToExclude)
                 {
-                    if (program.ProgramNames.Any(x => name.Equals(x)))
+                    if (program.ProgramNames.Any(x => name.Equals(x, StringComparison.InvariantCultureIgnoreCase)))
                     {
                         programsToExclude.Add(program);
                     }

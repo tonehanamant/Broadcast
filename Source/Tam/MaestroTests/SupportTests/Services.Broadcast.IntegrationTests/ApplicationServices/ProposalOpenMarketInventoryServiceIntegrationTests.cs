@@ -2038,5 +2038,51 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             detail.ProgramCriteria = new List<ProgramCriteria>();
             _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
         }
+
+        [Test]
+        public void ProposalOpenMarketInventoryService_ReturnsOpenMarketInventory_WithProgramsFilteredByName_CaseInsensitive()
+        {
+            const int proposalId = 26017;
+            const int proposalDetailId = 9979;
+
+            // Setting program criteria empty
+            var proposal = _ProposalService.GetProposalById(proposalId);
+            var detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>();
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+            var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsTrue(programs.Any(x => x.ProgramNames.Contains("Friends")));
+
+
+            // Setting program criteria for excluding 'FRIENDS' program
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>
+            {
+                new ProgramCriteria
+                {
+                    Contain = ContainTypeEnum.Exclude,
+                    Program = new LookupDto
+                    {
+                        Id = 102,
+                        Display = "FRIENDS"
+                    }
+                }
+            };
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+            programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsFalse(programs.Any(x => x.ProgramNames.Contains("Friends")));
+
+
+            // Setting program criteria empty as it was initially
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>();
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+        }
     }
 }
