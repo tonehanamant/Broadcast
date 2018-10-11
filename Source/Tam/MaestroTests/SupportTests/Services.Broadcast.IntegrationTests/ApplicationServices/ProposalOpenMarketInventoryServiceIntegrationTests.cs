@@ -1843,6 +1843,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketPricingGuideWithAllocationGoals()
@@ -1865,7 +1866,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
             }
         }
-
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketPricingGuideWithAllocationGoalsMultiplePrograms()
