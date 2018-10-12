@@ -1,0 +1,15 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "AdvertiserId": 37444,
+  "ContractName": "NTI Adjustment Post Test",
+  "Equivalized": true,
+  "GuaranteedAudienceId": 34,
+  "HouseholdDeliveredImpressions": 650.0,
+  "PostType": 2,
+  "PrimaryAudienceBookedImpressions": 200000.0,
+  "PrimaryAudienceDeliveredImpressions": 705.0,
+  "PrimaryAudienceDelivery": 0.3525,
+  "SpotsInSpec": 2,
+  "SpotsOutOfSpec": 0,
+  "UploadDate": "2018-02-08T12:57:39.693"
+}

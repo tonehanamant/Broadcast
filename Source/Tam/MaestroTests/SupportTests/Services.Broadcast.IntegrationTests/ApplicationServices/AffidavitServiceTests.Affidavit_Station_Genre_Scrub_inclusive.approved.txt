@@ -1,10 +1,13 @@
 ﻿{
-  "AffidavitFileDetails": [
+  "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "AffidavitClientScrubs": [
+      "Affiliate": "Affiate",
+      "AirTime": 29040,
+      "Archived": false,
+      "ClientScrubs": [
         {
-          "AffidavitClientScrubAudiences": [
+          "ClientScrubAudiences": [
             {
               "AudienceId": 4,
               "Impressions": 0.0
@@ -114,12 +117,9 @@
           "Status": 1
         }
       ],
-      "AffidavitFileDetailProblems": [],
-      "Affiliate": "Affiate",
-      "AirTime": 29040,
-      "Archived": false,
       "Demographics": [],
       "EstimateId": null,
+      "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 1,
       "Isci": "WAWA",
@@ -141,9 +141,9 @@
       "Station": "WWSB"
     }
   ],
-  "AffidavitFileProblems": [],
   "FileHash": "abc123",
   "FileName": "test.file",
+  "FileProblems": [],
   "SourceId": 1,
   "Status": 1
 }

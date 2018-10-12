@@ -12,6 +12,7 @@
       "AdjustmentMargin": 3.0,
       "AdjustmentRate": 1.0,
       "Adu": false,
+      "CpmCriteria": [],
       "Daypart": {
         "endTime": 86400,
         "fri": false,
@@ -56,6 +57,12 @@
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
+      "OpenMarketPricing": {
+        "CpmMax": null,
+        "CpmMin": null,
+        "CpmTarget": null,
+        "UnitCapPerStation": null
+      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "ProgramCriteria": [
@@ -74,6 +81,7 @@
       ],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
+      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 21.1300,

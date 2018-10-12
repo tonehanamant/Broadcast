@@ -9,41 +9,39 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface IPostLogPreprocessingService: IApplicationService
+    public interface IPostLogPreprocessingService : IApplicationService
     {
         void ProcessFiles(string username);
-        List<OutboundPostLogFileValidationResult> ValidateFiles(List<string> filePathList, string userName);
+        List<FileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource);        
     }
 
-    public interface IPostLogPreprocessingValidator
-    {
-        List<string> GetValidationResults(string filePath);
-    }
-    class PostLogPreprocessingService: IPostLogPreprocessingService
+    class PostLogPreprocessingService : IPostLogPreprocessingService
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
+        private readonly IPostLogRepository _PostLogRepository;
         private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
+        private readonly ISigmaConverter _SigmaConverter;
+        private readonly IKeepingTracConverter _KeepingTracConverter;
+
         private readonly IFileTransferEmailHelper _EmailHelper;
-        private readonly string _SigmaFileExtension = ".csv";
+        private readonly string _CsvFileExtension = ".csv";
 
         public PostLogPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                            IWWTVSharedNetworkHelper WWTVSharedNetworkHelper,
                                            IEmailerService emailerService,
                                            IFileService fileService,
                                            IWWTVFtpHelper ftpHelper,
+                                           ISigmaConverter sigmaConverter,
+                                           IKeepingTracConverter keepingTracConverter,
                                            IFileTransferEmailHelper emailHelper)
         {
             _DataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -51,138 +49,112 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _FileService = fileService;
             _WWTVFtpHelper = ftpHelper;
+            _SigmaConverter = sigmaConverter;
+            _KeepingTracConverter = keepingTracConverter;
             _EmailHelper = emailHelper;
+            _PostLogRepository = _DataRepositoryFactory.GetDataRepository<IPostLogRepository>();
         }
+
         public void ProcessFiles(string username)
         {
             _WWTVSharedNetworkHelper.Impersonate(delegate
             {
-                var dropFilePathList = _GetDropFolderFileList();
-                var validationResults = ValidateFiles(dropFilePathList, username);
-                _DataRepositoryFactory.GetDataRepository<IPostLogRepository>().SavePreprocessingValidationResults(validationResults);
-                var validFileList = validationResults.Where(v => v.Status == PostLogProcessingStatusEnum.Valid)
-                    .ToList();
-                if (validFileList.Any())
-                {
-                    _CreateAndUploadZipArchiveToWWTV(validFileList);
-                }
+                var dropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_PostLogDropFolder);
+                var validationResults = ValidateFiles(dropFilePathList, username, FileSourceEnum.Sigma);
+                _SaveAndUploadToWWTV(validationResults, FileSourceEnum.Sigma);
 
-                var invalidFileList = validationResults.Where(v => v.Status == PostLogProcessingStatusEnum.Invalid)
-                    .ToList();
-                if (invalidFileList.Any())
-                {
-                    _MoveToErrorFolderAndSendNotification(invalidFileList);
-                }
-
-                _FileService.Delete(validFileList.Select(x=>x.FilePath).ToArray());
+                var ktDropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_KeepingTracDropFolder);
+                var ktValidationResults = ValidateFiles(ktDropFilePathList, username, FileSourceEnum.KeepingTrac);
+                _SaveAndUploadToWWTV(ktValidationResults, FileSourceEnum.KeepingTrac);
             });
         }
 
-        private void _MoveToErrorFolderAndSendNotification(List<OutboundPostLogFileValidationResult> invalidFileList)
+        private void _SaveAndUploadToWWTV(List<FileValidationResult> validationResults, FileSourceEnum source)
         {
-            foreach (var invalidFile in invalidFileList)
+            _PostLogRepository.SavePreprocessingValidationResults(validationResults);
+            var validFileList = validationResults.Where(v => v.Status == ProcessingStatusEnum.Valid)
+                .ToList();
+            if (validFileList.Any())
             {
-                var invalidFilePath = _FileService.Move(invalidFile.FilePath, BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
-
-                var emailBody =  _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
-
-                _EmailHelper.SendEmail(emailBody, "Error Preprocessing");
+                _CreateAndUploadZipArchiveToWWTV(validFileList.Select(x => x.FilePath).ToList());
             }
-        }
-        
-        private void _CreateAndUploadZipArchiveToWWTV(List<OutboundPostLogFileValidationResult> files)
-        {
-            string zipFileName = BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder;
-            if (!zipFileName.EndsWith("\\"))
-                zipFileName += "\\";
-            zipFileName += "PostLog_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
-            _CreateZipArchive(files, zipFileName);
-            if (File.Exists(zipFileName))
+
+            var invalidFileList = validationResults.Where(v => v.Status == ProcessingStatusEnum.Invalid)
+                .ToList();
+            if (invalidFileList.Any())
             {
-                _UploadZipToWWTV(zipFileName);
-                File.Delete(zipFileName);
+                _MoveToErrorFolderAndSendNotification(invalidFileList, source);
             }
+
+            _FileService.Delete(validFileList.Select(x => x.FilePath).ToArray());
         }
 
-        private static void _CreateZipArchive(List<OutboundPostLogFileValidationResult> files, string zipFileName)
+        public List<FileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource)
         {
-            using (ZipArchive zip = ZipFile.Open(zipFileName, ZipArchiveMode.Create))
-            {
-                foreach (var file in files)
-                {
-                    // Add the entry for each file
-                    zip.CreateEntryFromFile(file.FilePath, Path.GetFileName(file.FilePath), System.IO.Compression.CompressionLevel.Fastest);
-                }
-            }
-        }
-
-        private void _UploadZipToWWTV(string zipFileName)
-        {
-            var sharedFolder = BroadcastServiceSystemParameter.WWTV_PostLogFtpOutboundFolder;
-            var ftpHost = BroadcastServiceSystemParameter.WWTV_FtpHost;
-            var uploadUrl = $"ftp://{ftpHost}/{sharedFolder}/{Path.GetFileName(zipFileName)}";
-            _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl, File.Delete);
-        }
-
-        public List<OutboundPostLogFileValidationResult> ValidateFiles(List<string> filePathList, string userName)
-        {
-            var results = new List<OutboundPostLogFileValidationResult>();
+            var results = new List<FileValidationResult>();
 
             foreach (var filePath in filePathList)
             {
-                IPostLogPreprocessingValidator postLogValidator = null;
-                OutboundPostLogFileValidationResult currentFileResult = new OutboundPostLogFileValidationResult()
+                FileValidationResult currentFileResult = new FileValidationResult()
                 {
                     FilePath = filePath,
                     FileName = Path.GetFileName(filePath),
-                    Source = PostLogFileSourceEnum.Unknown,
+                    Source = FileSourceEnum.Unknown,
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
                     FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filePath)),
-                    Status = PostLogProcessingStatusEnum.Valid
+                    Status = ProcessingStatusEnum.Valid
                 };
                 results.Add(currentFileResult);
 
                 var fileInfo = new FileInfo(filePath);
 
-                if (fileInfo.Extension.Equals(_SigmaFileExtension, StringComparison.InvariantCultureIgnoreCase))
+                if (fileInfo.Extension.Equals(_CsvFileExtension, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    currentFileResult.Source = PostLogFileSourceEnum.Sigma;
-                    postLogValidator = new SigmaConverter();
-                }
-
-                if(postLogValidator == null)
-                {
-                    currentFileResult.ErrorMessages.Add($"Unknown PostLog file type for file: {filePath}");
+                    currentFileResult.Source = fileSource;
+                    currentFileResult.ErrorMessages.AddRange(
+                        fileSource == FileSourceEnum.Sigma 
+                        ? _SigmaConverter.GetValidationResults(filePath) 
+                        : _KeepingTracConverter.GetValidationResults(filePath));
                 }
                 else
                 {
-                    currentFileResult.ErrorMessages.AddRange(postLogValidator.GetValidationResults(filePath));
+                    currentFileResult.ErrorMessages.Add($"Unknown PostLog file type for file: {filePath}");
                 }
 
                 if (currentFileResult.ErrorMessages.Any())
-                    currentFileResult.Status = PostLogProcessingStatusEnum.Invalid;
+                    currentFileResult.Status = ProcessingStatusEnum.Invalid;
             }
 
             return results;
 
         }
 
-        private List<string> _GetDropFolderFileList()
+        private void _MoveToErrorFolderAndSendNotification(List<FileValidationResult> invalidFileList, FileSourceEnum source)
         {
-            var dropFolder = string.Empty;
-            List<string> filepathList;
-            try
+            foreach (var invalidFile in invalidFileList)
             {
-                dropFolder = BroadcastServiceSystemParameter.WWTV_PostLogDropFolder;
-                filepathList = _FileService.GetFiles(dropFolder).ToList();
-            }
-            catch (Exception e)
-            {
-                throw new InvalidOperationException($"Unable to read from WWTV_PostLogDropFolder folder {dropFolder}.", e);
-            }
+                var invalidFilePath = _FileService.Move(invalidFile.FilePath, 
+                    source.Equals(FileSourceEnum.KeepingTrac) ? BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder : BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
 
-            return filepathList;
+                var emailBody = _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
+
+                _EmailHelper.SendEmail(emailBody, "Error Preprocessing");
+            }
+        }
+
+        private void _CreateAndUploadZipArchiveToWWTV(List<string> filePaths)
+        {
+            string zipFileName = BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder;
+            if (!zipFileName.EndsWith("\\"))
+                zipFileName += "\\";
+            zipFileName += "PostLog_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+            _FileService.CreateZipArchive(filePaths, zipFileName);
+            if (_FileService.Exists(zipFileName))
+            {
+                _WWTVFtpHelper.UploadFile(zipFileName, $"{_WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpOutboundFolder)}/{Path.GetFileName(zipFileName)}", File.Delete);
+                _FileService.Delete(zipFileName);
+            }
         }
     }
 }

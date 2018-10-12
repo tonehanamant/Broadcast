@@ -1,81 +1,108 @@
-
-import React, { Component } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { head, pick } from 'lodash';
 import CSSModules from 'react-css-modules';
 import ReactDropzone from 'react-dropzone';
+import { getDataTransferItems, validateFilesByExtension } from 'Utils/file-upload';
+import { parseFileToBase64 } from 'Utils/file-parser';
 
-import { toggleModal, deployError, storeFile, readFileB64 } from 'Ducks/app';
+import { deployError } from 'Ducks/app';
 
 import styles from './index.scss';
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    deployError,
+  }, dispatch)
+);
+
 
 const mapStateToProps = ({ routing, app }) => ({
   routing,
   disabledDropzones: app.disabledDropzones,
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    toggleModal,
-    deployError,
-    storeFile,
-    readFileB64,
-  }, dispatch)
-);
-
-export class Dropzone extends Component {
+export class Dropzone extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.processFiles = this.processFiles.bind(this);
     this.onDragEnter = this.onDragEnter.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.validateFiles = this.validateFiles.bind(this);
+    this.processSingleFile = this.processSingleFile.bind(this);
+    this.processMultipleFiles = this.processMultipleFiles.bind(this);
 
     this.state = {
       disabled: true,
     };
   }
 
-  onDragEnter(event) {
-    this.setState({ disabled: false });
-    const dt = event.dataTransfer;
 
-    if (dt.types.indexOf('Files') === -1) {
-      this.setState({ disabled: true });
+  onDragEnter({ dataTransfer: { types } }) {
+    const { disabled } = this.state;
+    const nextValue = !types.includes('Files');
+    if (disabled !== nextValue) {
+      this.setState({ disabled: nextValue });
     }
   }
 
-  processFiles(acceptedFiles, rejectedFiles) {
-    if (rejectedFiles.length > 0) {
-      this.props.deployError({ message: `Invalid file format. Please provide a ${this.props.fileTypeExtension} file.` });
-    } else if (acceptedFiles.length > 0) {
-      this.props.storeFile(acceptedFiles[0]);
-      this.props.readFileB64(acceptedFiles[0]);
+  processMultipleFiles(acceptedFiles, rejectedFiles) {
+    const { processFiles, fileTypeExtension } = this.props;
+    processFiles(acceptedFiles, rejectedFiles, fileTypeExtension);
+  }
 
-      if (this.props.postProcessFiles.toggleModal) {
-        const toggleModalObj = {
-          ...this.props.postProcessFiles.toggleModal,
-          properties: {},
-        };
+  processSingleFile(acceptedFiles, rejectedFiles) {
+    const { processFiles, fileTypeExtension } = this.props;
+    const { file, isAccepted } = acceptedFiles.length ?
+    { file: head(acceptedFiles), isAccepted: true } : { file: head(rejectedFiles), isAccepted: false };
+    processFiles(file, isAccepted, fileTypeExtension);
+  }
 
-        this.props.toggleModal(toggleModalObj);
-      }
+  validateFiles(acceptedFiles, rejectedFiles) {
+    const { fileTypeExtension, deployError, isShowError } = this.props;
+    if (!acceptedFiles.length && !rejectedFiles.length) return false;
+    const validated = validateFilesByExtension(acceptedFiles, rejectedFiles, fileTypeExtension);
+    if (isShowError && rejectedFiles.length > 0) {
+      deployError({ message: `Invalid file format. Please provide a ${fileTypeExtension} file.` });
+      return false;
     }
+    return validated;
+  }
 
-    this.setState({ disabled: true });
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { multiple, isParseFile } = this.props;
+    const validated = this.validateFiles(acceptedFiles, rejectedFiles);
+    // if files are not valid do not process them
+    if (!validated) return false;
+    const processFile = multiple ? this.processMultipleFiles : this.processSingleFile;
+    if (isParseFile) {
+      parseFileToBase64(acceptedFiles, true).then((values) => {
+        processFile(values, validated.rejectedFiles);
+      });
+    } else {
+      processFile(validated.acceptedFiles, validated.rejectedFiles);
+    }
+    return true;
   }
 
   render() {
-    if (!this.props.children) {
+    const { children, onDrop, disabledDropzones, fileType, fileTypeExtension, acceptedMimeTypes } = this.props;
+    const { disabled } = this.state;
+    const dropZoneProps = pick(this.props, Object.keys(ReactDropzone.propTypes));
+    if (!children) {
       return (
         <ReactDropzone
-          onDrop={this.props.onDrop}
-          accept={this.props.acceptedMimeTypes}
+          {...dropZoneProps}
+          onDrop={onDrop}
           className={styles.dropzone}
           activeClassName={styles.active}
           acceptClassName={styles.accept}
           rejectClassName={styles.reject}
-          disabled={this.props.disabledDropzones}
+          disabled={disabledDropzones}
+          accept={acceptedMimeTypes}
+          getDataTransferItems={getDataTransferItems}
         >
           <div className="drop-overlay">
             <h4>Drop your files here or click to select</h4>
@@ -84,45 +111,32 @@ export class Dropzone extends Component {
       );
     }
 
-    if (this.state.disabled) {
-      return (
-        <ReactDropzone
-          onDragEnter={this.onDragEnter}
-          accept={this.props.acceptedMimeTypes}
-          className={styles.dropzoneAsWrapper}
-          disableClick
-          disablePreview
-          disabled={this.props.disabledDropzones}
-        >
-          {this.props.children}
-        </ReactDropzone>
-      );
-    }
-
     return (
       <ReactDropzone
-        onDrop={this.props.onDrop || this.processFiles}
+        {...dropZoneProps}
+        onDrop={this.onDrop}
         onDragEnter={this.onDragEnter}
         onDragOver={this.onDragOver}
-        accept={this.props.acceptedMimeTypes}
         className={styles.dropzoneAsWrapper}
         activeClassName={styles.active}
         acceptClassName={styles.accept}
         rejectClassName={styles.reject}
+        getDataTransferItems={getDataTransferItems}
+        accept={acceptedMimeTypes}
         disableClick
-        disabled={this.props.disabledDropzones}
+        disabled={disabledDropzones}
       >
-        <div>
-          <div className="drop-overlay">
+        <Fragment>
+          {!disabled && <div className="drop-overlay">
             <div className="drop-dialog">
               <h1><i className="fa fa-cloud-upload upload-cloud" /></h1>
-              <h2>Drop a {this.props.fileType} file here to upload</h2>
-              <p className="reject-prompt">Invalid file format. Please provide an {this.props.fileTypeExtension} file.</p>
-              <p className="accept-prompt">Valid {this.props.fileTypeExtension} file format.</p>
+              <h2>Drop a {fileType} file here to upload</h2>
+              <p className="reject-prompt">Invalid file format. Please provide an {fileTypeExtension} file.</p>
+              <p className="accept-prompt">Valid {fileTypeExtension} file format.</p>
             </div>
-          </div>
-          {this.props.children}
-        </div>
+          </div>}
+          {children}
+        </Fragment>
       </ReactDropzone>
     );
   }
@@ -130,15 +144,13 @@ export class Dropzone extends Component {
 
 Dropzone.defaultProps = {
   children: null,
-  acceptedMimeTypes: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   fileType: 'Excel',
   fileTypeExtension: '.xlsx',
   onDrop: null,
-  postProcessFiles: {
-    toggleModal: null,
-    deployError: null,
-    createAlert: null,
-  },
+  multiple: false,
+  acceptedMimeTypes: '',
+  isShowError: true,
+  isParseFile: true,
 };
 
 Dropzone.propTypes = {
@@ -146,16 +158,16 @@ Dropzone.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  acceptedMimeTypes: PropTypes.string,
   fileType: PropTypes.string,
   fileTypeExtension: PropTypes.string,
   onDrop: PropTypes.func,
-  postProcessFiles: PropTypes.object,
-  toggleModal: PropTypes.func.isRequired,
-  deployError: PropTypes.func.isRequired,
-  storeFile: PropTypes.func.isRequired,
-  readFileB64: PropTypes.func.isRequired,
+  multiple: PropTypes.bool,
+  acceptedMimeTypes: PropTypes.string,
+  processFiles: PropTypes.func.isRequired,
   disabledDropzones: PropTypes.bool.isRequired,
+  isShowError: PropTypes.bool,
+  isParseFile: PropTypes.bool,
+  deployError: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dropzone, styles));

@@ -1,0 +1,105 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "ClientScrubs": [
+    {
+      "Affiliate": "CBS",
+      "ClientISCI": "Clinet_BCOP3471STORY",
+      "Comments": null,
+      "DateAired": "2018-10-02T00:00:00",
+      "DayOfWeek": 2,
+      "GenreName": "Talk Show",
+      "ISCI": "BCOP3471STORY",
+      "Market": "Albany-Schenectady-Troy",
+      "MatchDate": true,
+      "MatchGenre": true,
+      "MatchIsci": false,
+      "MatchIsciDays": true,
+      "MatchMarket": true,
+      "MatchProgram": true,
+      "MatchShowType": true,
+      "MatchStation": true,
+      "MatchTime": false,
+      "ProgramName": "Bill Cunningham",
+      "ProposalDetailId": 14751,
+      "Sequence": null,
+      "ShowTypeName": "Series",
+      "SpotLength": 15,
+      "Station": "WRGB",
+      "Status": 1,
+      "StatusOverride": false,
+      "TimeAired": 77280,
+      "WeekStart": "2018-10-02T00:00:00"
+    }
+  ],
+  "Details": [
+    {
+      "DayPart": "M-F 9AM-10AM",
+      "FlightEndDate": "2018-10-20T00:00:00",
+      "FlightStartDate": "2018-10-02T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2018-10-09T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2018-10-02T00:00:00"
+        }
+      ],
+      "Genres": [],
+      "Id": 14751,
+      "Programs": [],
+      "Sequence": null,
+      "SpotLength": "15"
+    }
+  ],
+  "Filters": {
+    "DateAiredEnd": "2018-10-02T00:00:00",
+    "DateAiredStart": "2018-10-02T00:00:00",
+    "DistinctAffiliates": [
+      "CBS"
+    ],
+    "DistinctClientIscis": [
+      "Clinet_BCOP3471STORY"
+    ],
+    "DistinctDayOfWeek": [
+      2
+    ],
+    "DistinctGenres": [
+      "Talk Show"
+    ],
+    "DistinctHouseIscis": [
+      "BCOP3471STORY"
+    ],
+    "DistinctMarkets": [
+      "Albany-Schenectady-Troy"
+    ],
+    "DistinctPrograms": [
+      "Bill Cunningham"
+    ],
+    "DistinctSequences": [],
+    "DistinctShowTypes": [
+      "Series"
+    ],
+    "DistinctSpotLengths": [
+      15
+    ],
+    "DistinctStations": [
+      "WRGB"
+    ],
+    "DistinctWeekStarts": [
+      "2018-10-02T00:00:00"
+    ],
+    "TimeAiredEnd": 77280,
+    "TimeAiredStart": 77280,
+    "WeekEnd": "2018-10-09T00:00:00",
+    "WeekStart": "2018-10-02T00:00:00"
+  },
+  "GuaranteedDemo": "House Holds",
+  "Id": 33029,
+  "MarketGroupId": 1,
+  "Markets": [],
+  "Name": "Proposal BCOP-3771",
+  "Notes": "",
+  "SecondaryDemos": []
+}

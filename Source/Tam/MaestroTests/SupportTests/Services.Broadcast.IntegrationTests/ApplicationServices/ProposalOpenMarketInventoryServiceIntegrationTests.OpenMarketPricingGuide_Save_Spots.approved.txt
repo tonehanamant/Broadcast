@@ -1,0 +1,47 @@
+﻿{
+  "DisplayFilter": {
+    "ProgramNames": [
+      "Friends"
+    ]
+  },
+  "Filter": {},
+  "Markets": [
+    {
+      "MarketCoverage": 1.01,
+      "MarketId": 160,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "Programs": [
+            {
+              "BlendedCpm": 0.01,
+              "Cost": 25.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-6PM",
+                "Id": 12
+              },
+              "Genres": [],
+              "Impressions": 2125796.25,
+              "ImpressionsPerSpot": 2125796.25,
+              "ManifestDaypartId": 213348,
+              "ProgramId": 162233,
+              "ProgramName": "Friends",
+              "Spots": 0,
+              "StationImpressions": 0.0
+            }
+          ],
+          "StationCode": 5316
+        }
+      ],
+      "TotalCost": 25.0000,
+      "TotalImpressions": 2125796.25,
+      "TotalSpots": 0,
+      "TotalStationImpressions": 0.0
+    }
+  ]
+}

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFrameworkMapping.Broadcast;
+﻿using System.Collections.Generic;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities
@@ -13,14 +9,20 @@ namespace Services.Broadcast.Entities
         public int? Id { get; set; }
         public DisplayDaypart Daypart { get; set; }
         public string ProgramName { get; set; }
+        
+        public List<LookupDto> Genres { get; set; }
 
-        public StationInventoryManifestDaypart() { }
+        public StationInventoryManifestDaypart()
+        {
+            Genres = new List<LookupDto>();
+        }
 
         public StationInventoryManifestDaypart(int id,DisplayDaypart daypart, string programName)
         {
-            this.Id = id;
-            this.Daypart = daypart;
-            this.ProgramName = programName;
+            Id = id;
+            Daypart = daypart;
+            ProgramName = programName;
+            Genres = new List<LookupDto>();
         }
     }
 }

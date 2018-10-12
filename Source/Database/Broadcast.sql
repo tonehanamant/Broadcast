@@ -52,10 +52,673 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** BEGIN BCOP-3510 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('spot_tracker_files'))
+BEGIN
+	CREATE TABLE [spot_tracker_files](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [varchar](127) NOT NULL,
+		[start_date] [date] NOT NULL,
+		[end_date] [date] NOT NULL,
+		[file_hash] [varchar](63) NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+	 CONSTRAINT [PK_spot_tracker_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables where object_id = OBJECT_ID('spot_tracker_file_details'))
+BEGIN
+	CREATE TABLE [dbo].[spot_tracker_file_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[spot_tracker_file_id] [int] NOT NULL,
+		[client] [varchar](15) NULL,
+		[client_name] [varchar](63) NULL,
+		[advertiser] [varchar](63) NULL,
+		[release_name] [varchar](63),
+		[isci] [varchar](63) NOT NULL,
+		[spot_length_id] [int] NULL,
+		[spot_length] [int] NOT NULL,
+		[country] [varchar](63) NULL,
+		[rank] [int] NULL,
+		[market] [varchar](63),
+		[market_code] [int] NULL,
+		[station] [varchar](15) NOT NULL,
+		[station_name] [varchar](64) NULL,
+		[affiliate] [varchar](15) NULL,
+		[date_aired] [date] NOT NULL,
+		[day_of_week] [varchar](2),
+		[daypart] [varchar](10),
+		[time_aired] [int] NOT NULL,
+		[program_name] [varchar](255),
+		[encode_date] [date] NULL,
+		[encode_time] [int] NULL,
+		[rel_type] [varchar](15),
+		[estimate_id] [int] NOT NULL,
+		[identifier_2] [int] NULL,
+		[identifier_3] [int] NULL,
+		[sid] [int] NULL,
+		[discid] [int] NULL	
+	 CONSTRAINT [PK_spot_tracker_file_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[spot_tracker_file_details]  WITH CHECK ADD  CONSTRAINT [FK_spot_tracker_file_spot_tracker_file_details] FOREIGN KEY([spot_tracker_file_id])
+	REFERENCES [dbo].[spot_tracker_files] ([id])
+	ON DELETE CASCADE
+	
+	ALTER TABLE [dbo].[spot_tracker_file_details] CHECK CONSTRAINT [FK_spot_tracker_file_spot_tracker_file_details]
+
+	ALTER TABLE [dbo].[spot_tracker_file_details]  WITH CHECK ADD  CONSTRAINT [FK_spot_tracker_file_details_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[spot_tracker_file_details] CHECK CONSTRAINT [FK_spot_tracker_file_details_spot_lengths]
+END
+/*************************************** END BCOP-3510 *****************************************************/
+
+
+/*************************************** BCOP-3515 *****************************************************/
+
+IF OBJECT_ID('proposal_version_detail_proprietary_pricing', 'U') IS NULL
+BEGIN
+	CREATE TABLE proposal_version_detail_proprietary_pricing
+	(
+		proposal_version_detail_id INT NOT NULL,
+		inventory_source TINYINT NOT NULL,
+		impressions_balance FLOAT NOT NULL,
+		cpm MONEY NOT NULL,
+		CONSTRAINT [PK_proposal_version_detail_proprietary_pricing] PRIMARY KEY CLUSTERED
+		(
+			proposal_version_detail_id, inventory_source ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]		
+	)
+
+	ALTER TABLE [dbo].[proposal_version_detail_proprietary_pricing]
+	WITH CHECK ADD CONSTRAINT [FK_proposal_version_detail_proprietary_pricing_proposal_version_details] 
+	FOREIGN KEY(proposal_version_detail_id)
+	REFERENCES [dbo].[proposal_version_details] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_version_detail_proprietary_pricing] CHECK CONSTRAINT [FK_proposal_version_detail_proprietary_pricing_proposal_version_details]
+END
+
+/*************************************** BCOP-3515 - END *****************************************************/
+
+/*************************************** START BCOP-3517 *****************************************************/
+IF OBJECT_ID('station_inventory_spot_genres', 'U') IS NULL
+BEGIN
+	CREATE TABLE [station_inventory_spot_genres](
+		id INT IDENTITY(1,1) NOT NULL,
+		station_inventory_spot_id INT NOT NULL,
+		genre_id INT NOT NULL
+		CONSTRAINT [PK_station_inventory_spot_genres] PRIMARY KEY CLUSTERED
+		(
+			id ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+
+	ALTER TABLE [dbo].[station_inventory_spot_genres]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_spot_genres_station_inventory_spots] FOREIGN KEY([station_inventory_spot_id])
+	REFERENCES [dbo].[station_inventory_spots] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[station_inventory_spot_genres] CHECK CONSTRAINT [FK_station_inventory_spot_genres_station_inventory_spots]
+
+	ALTER TABLE [dbo].[station_inventory_spot_genres]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_spot_genres_genres] FOREIGN KEY([genre_id])
+	REFERENCES [dbo].[genres] ([id])
+	ALTER TABLE [dbo].[station_inventory_spot_genres] CHECK CONSTRAINT [FK_station_inventory_spot_genres_genres]
+
+	CREATE INDEX IX_station_inventory_spot_genres_genre_id ON [station_inventory_spot_genres] ([genre_id]);
+	CREATE INDEX IX_station_inventory_spot_genres_station_inventory_spot_id ON [station_inventory_spot_genres] ([station_inventory_spot_id]);
+END
+GO
+
+/*************************************** END BCOP-3517 *****************************************************/
+
+/*************************************** BCOP-3516 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_cpm_min' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_cpm_min MONEY NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_cpm_max' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_cpm_max MONEY NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_unit_cap_per_station' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_unit_cap_per_station INT NULL
+END
+
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+              WHERE name = 'open_market_cpm_target' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [proposal_version_details] 
+	ADD open_market_cpm_target TINYINT NULL
+END
+
+/*************************************** BCOP-3516 - END *****************************************************/
+
+/*************************************** BCOP-3561 *****************************************************/
+
+IF OBJECT_ID('market_coverages', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[market_coverages]
+	(  
+		[id] int IDENTITY(1,1) NOT NULL,
+		[rank] int NOT NULL,
+		[market_code] smallint NOT NULL,
+		[tv_homes] int NOT NULL,
+		[percentage_of_us] float NOT NULL
+		CONSTRAINT [PK_market_coverages] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+	ALTER TABLE [dbo].[market_coverages]  WITH CHECK ADD  CONSTRAINT [FK_market_coverages_markets] 
+	FOREIGN KEY([market_code]) REFERENCES [dbo].[markets] ([market_code])
+
+	ALTER TABLE [dbo].[market_coverages] CHECK CONSTRAINT [FK_market_coverages_markets]
+
+	CREATE INDEX IX_market_coverages_market_code ON [market_coverages] ([market_code])
+END
+
+/*************************************** BCOP-3561 - END *****************************************************/
 -- BEGIN BCOP-3509
 ALTER TABLE [dbo].[station_inventory_manifest_dayparts]
 ALTER COLUMN [program_name] varchar(255) NULL
 -- END BCOP-3509
+/*************************************** START BCOP-3476 *****************************************************/
+
+IF OBJECT_ID('proposal_buy_files', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_files](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [varchar](255) NOT NULL,
+		[file_hash] [varchar](63) NOT NULL,
+		[estimate_id] [int] NULL,
+		[proposal_version_detail_id] [int] NOT NULL,
+		[start_date] [date] NOT NULL,
+		[end_date] [date] NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		CONSTRAINT [PK_proposal_buy_files] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+	ALTER TABLE [dbo].[proposal_buy_files]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_files_proposal_version_details] 
+	FOREIGN KEY([proposal_version_detail_id]) REFERENCES [dbo].[proposal_version_details] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_files] CHECK CONSTRAINT [FK_proposal_buy_files_proposal_version_details]
+END
+GO
+
+
+IF OBJECT_ID('proposal_buy_file_details', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_file_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_buy_file_id] [int] NOT NULL,
+		[station_code] [smallint] NOT NULL,
+		[total_spots] [int] NOT NULL,
+		[spot_cost] [decimal](10, 2) NOT NULL,
+		[total_cost] [decimal](10, 2) NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[daypart_id] [int] NOT NULL,
+		 CONSTRAINT [PK_proposal_buy_file_details] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_proposal_buy_files]
+	FOREIGN KEY([proposal_buy_file_id]) REFERENCES [dbo].[proposal_buy_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_buy_file_details] CHECK CONSTRAINT [FK_proposal_buy_file_details_proposal_buy_files]
+
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_stations]
+	FOREIGN KEY([station_code]) REFERENCES [dbo].[stations] ([station_code])
+
+	ALTER TABLE [dbo].[proposal_buy_file_details] CHECK CONSTRAINT [FK_proposal_buy_file_details_stations]
+
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_spot_lengths]
+	FOREIGN KEY([spot_length_id]) REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_file_details] CHECK CONSTRAINT [FK_proposal_buy_file_details_spot_lengths]
+
+	ALTER TABLE [dbo].[proposal_buy_file_details]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_details_dayparts]
+	FOREIGN KEY([daypart_id]) REFERENCES [dbo].[dayparts] ([id])
+
+END
+GO
+
+IF OBJECT_ID('proposal_buy_file_detail_weeks', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_file_detail_weeks](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_buy_file_detail_id] [int] NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[spots] [int] NOT NULL,
+		 CONSTRAINT [PK_proposal_buy_file_detail_weeks] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_weeks_proposal_buy_file_details]
+	FOREIGN KEY([proposal_buy_file_detail_id]) REFERENCES [dbo].[proposal_buy_file_details] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks] CHECK CONSTRAINT [FK_proposal_buy_file_detail_weeks_proposal_buy_file_details]
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_weeks_media_weeks]
+	FOREIGN KEY([media_week_id]) REFERENCES [dbo].[media_weeks] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_weeks] CHECK CONSTRAINT [FK_proposal_buy_file_detail_weeks_media_weeks]
+END
+GO
+
+IF OBJECT_ID('proposal_buy_file_detail_audiences', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[proposal_buy_file_detail_audiences](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_buy_file_detail_id] [int] NOT NULL,
+		[audience_id] [int] NOT NULL,
+		[audience_rank] [int] NOT NULL,
+		[audience_population] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		 CONSTRAINT [PK_proposal_buy_file_detail_audiences] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_audiences_proposal_buy_file_details]
+	FOREIGN KEY([proposal_buy_file_detail_id]) REFERENCES [dbo].[proposal_buy_file_details] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences] CHECK CONSTRAINT [FK_proposal_buy_file_detail_audiences_proposal_buy_file_details]
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences]  WITH CHECK ADD  CONSTRAINT [FK_proposal_buy_file_detail_audiences_audiences]
+	FOREIGN KEY([audience_id]) REFERENCES [dbo].[audiences] ([id])
+
+	ALTER TABLE [dbo].[proposal_buy_file_detail_audiences] CHECK CONSTRAINT [FK_proposal_buy_file_detail_audiences_audiences]
+END
+GO
+
+/*************************************** END BCOP-3476 *****************************************************/
+
+/*************************************** BEGIN BCOP-3469 *****************************************************/
+IF OBJECT_ID('[postlog_files]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_files](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[file_name] [varchar](255) NOT NULL,
+	[file_hash] [varchar](255) NOT NULL,
+	[source_id] [int] NOT NULL,
+	[created_date] [datetime] NOT NULL,
+	[status] [int] NOT NULL,
+	 CONSTRAINT [PK_postlog_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+
+IF OBJECT_ID('[postlog_file_problems]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_problems](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[postlog_file_id] [int] NOT NULL,
+	[problem_description] [nvarchar](max) NOT NULL,
+	 CONSTRAINT [PK_postlog_file_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[postlog_file_problems]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_problems_postlog_files] FOREIGN KEY([postlog_file_id])
+	REFERENCES [dbo].[postlog_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_problems] CHECK CONSTRAINT [FK_postlog_file_problems_postlog_files]
+	CREATE INDEX IX_postlog_file_problems_postlog_files ON [postlog_file_problems] ([postlog_file_id])
+END
+GO
+
+IF OBJECT_ID('[postlog_file_details]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_details](
+		[id] [bigint] IDENTITY(1,1) NOT NULL,
+		[postlog_file_id] [int] NOT NULL,
+		[station] [varchar](15) NOT NULL,
+		[original_air_date] [date] NOT NULL,
+		[adjusted_air_date] [date] NOT NULL,
+		[air_time] [int] NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[isci] [varchar](63) NOT NULL,
+		[program_name] [varchar](255) NULL,
+		[genre] [varchar](255) NULL,
+		[leadin_genre] [varchar](255) NULL,
+		[leadin_program_name] [varchar](255) NULL,
+		[leadout_genre] [varchar](255) NULL,
+		[leadout_program_name] [varchar](255) NULL,
+		[market] [varchar](63) NULL,
+		[estimate_id] [int] NULL,
+		[inventory_source] [int] NULL,
+		[spot_cost] [float] NULL,
+		[affiliate] [varchar](15) NULL,
+		[leadin_end_time] [int] NULL,
+		[leadout_start_time] [int] NULL,
+		[program_show_type] [varchar](255) NULL,
+		[leadin_show_type] [varchar](255) NULL,
+		[leadout_show_type] [varchar](255) NULL,
+		[archived] [bit] NOT NULL,
+	 CONSTRAINT [PK_postlog_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_file_details]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_details_postlog_files] FOREIGN KEY([postlog_file_id])
+	REFERENCES [dbo].[postlog_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_details] CHECK CONSTRAINT [FK_postlog_file_details_postlog_files]
+	CREATE INDEX IX_postlog_file_details_postlog_files ON [postlog_file_details] ([postlog_file_id])
+END
+GO
+
+IF OBJECT_ID('[postlog_file_detail_problems]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_detail_problems](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[postlog_file_detail_id] [bigint] NOT NULL,
+		[problem_type] [int] NOT NULL,
+		[problem_description] [varchar](255) NULL,
+	 CONSTRAINT [PK_postlog_file_detail_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_file_detail_problems]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_detail_problems_postlog_file_details] FOREIGN KEY([postlog_file_detail_id])
+	REFERENCES [dbo].[postlog_file_details] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_detail_problems] CHECK CONSTRAINT [FK_postlog_file_detail_problems_postlog_file_details]
+	CREATE INDEX IX_postlog_file_detail_problems_postlog_file_details ON [postlog_file_detail_problems] ([postlog_file_detail_id])
+END
+GO
+
+IF OBJECT_ID('[postlog_file_detail_demographics]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_file_detail_demographics](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[audience_id] [int] NULL,
+		[postlog_file_detail_id] [bigint] NULL,
+		[overnight_rating] [float] NULL,
+		[overnight_impressions] [float] NULL,
+	 CONSTRAINT [PK_postlog_file_detail_demographics] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_file_detail_demographics]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_detail_demographics_postlog_file_details] FOREIGN KEY([postlog_file_detail_id])
+	REFERENCES [dbo].[postlog_file_details] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_detail_demographics] CHECK CONSTRAINT [FK_postlog_file_detail_demographics_postlog_file_details]
+	CREATE INDEX IX_postlog_file_detail_demographics_postlog_file_details ON [postlog_file_detail_demographics] ([postlog_file_detail_id])
+
+	ALTER TABLE [dbo].[postlog_file_detail_demographics]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_detail_demographics_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_file_detail_demographics] CHECK CONSTRAINT [FK_postlog_file_detail_demographics_audiences]
+	CREATE INDEX IX_postlog_file_detail_demographics_audiences ON [postlog_file_detail_demographics] ([audience_id])
+END
+GO
+/*************************************** END BCOP-3469 *****************************************************/
+
+/*************************************** START BCOP-3625 *****************************************************/
+IF OBJECT_ID('[station_inventory_manifest_daypart_genres]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest_daypart_genres]
+	(  
+		[id] int IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_daypart_id] int NOT NULL,
+		[genre_id] int NOT NULL,
+		CONSTRAINT [PK_station_inventory_manifest_daypart_genres] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	)
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts] 
+	FOREIGN KEY([station_inventory_manifest_daypart_id]) REFERENCES [dbo].[station_inventory_manifest_dayparts] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres] CHECK CONSTRAINT [FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts]
+	
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres]  WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_daypart_genres_genres] 
+	FOREIGN KEY([genre_id]) REFERENCES [genres] ([id])	
+	ALTER TABLE [dbo].[station_inventory_manifest_daypart_genres] CHECK CONSTRAINT [FK_station_inventory_manifest_daypart_genres_genres]
+	
+	CREATE INDEX IX_station_inventory_manifest_daypart_genres_station_inventory_manifest_daypart_id ON [station_inventory_manifest_daypart_genres] ([station_inventory_manifest_daypart_id]);
+	CREATE INDEX IX_station_inventory_manifest_daypart_genres_genre_id ON [station_inventory_manifest_daypart_genres] ([genre_id]);
+END
+GO
+
+IF OBJECT_ID('[station_inventory_spot_genres]', 'U') IS NOT NULL
+BEGIN
+	DROP TABLE [station_inventory_spot_genres]
+END
+/*************************************** END BCOP-3625 *****************************************************/
+
+/*************************************** BEGIN BCOP-3470 *****************************************************/
+IF OBJECT_ID('[postlog_client_scrubs]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_client_scrubs](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[postlog_file_detail_id] [bigint] NOT NULL,
+		[proposal_version_detail_quarter_week_id] [int] NOT NULL,
+		[lead_in] [bit] NOT NULL,
+		[effective_program_name] [varchar](255) NULL,
+		[effective_genre] [varchar](255) NULL,
+		[effective_show_type] [varchar](255) NULL,			
+		[effective_isci] [varchar](63) NULL,		
+		[effective_client_isci] [varchar](63) NULL,
+		[match_program] [bit] NOT NULL,
+		[match_genre] [bit] NOT NULL,
+		[match_market] [bit] NOT NULL,
+		[match_time] [bit] NOT NULL,
+		[match_station] [bit] NOT NULL,
+		[match_isci_days] [bit] NOT NULL,
+		[match_date] [bit] NULL,	
+		[match_show_type] [bit] NOT NULL,	
+		[match_isci] [bit] NOT NULL,
+		[comment] [varchar](1023) NULL,	
+		[modified_by] [varchar](255) NOT NULL,
+		[modified_date] [datetime] NULL,
+		[status] [int] NOT NULL,
+		[status_override] [bit] NOT NULL,
+	 CONSTRAINT [PK_postlog_client_scrubs] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_client_scrubs]  WITH CHECK ADD  CONSTRAINT [FK_postlog_file_details_postlog_client_scrubs] FOREIGN KEY([postlog_file_detail_id])
+	REFERENCES [dbo].[postlog_file_details] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_client_scrubs] CHECK CONSTRAINT [FK_postlog_file_details_postlog_client_scrubs]
+	CREATE INDEX IX_postlog_client_scrubs_postlog_file_detail_id ON [postlog_client_scrubs] ([postlog_file_detail_id])
+
+	ALTER TABLE [dbo].[postlog_client_scrubs]  WITH CHECK ADD  CONSTRAINT [FK_proposal_version_detail_quarter_weeks_postlog_client_scrubs] FOREIGN KEY([proposal_version_detail_quarter_week_id])
+	REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_client_scrubs] CHECK CONSTRAINT [FK_proposal_version_detail_quarter_weeks_postlog_client_scrubs]
+	CREATE INDEX IX_postlog_client_scrubs_proposal_version_detail_quarter_week_id ON [postlog_client_scrubs] ([proposal_version_detail_quarter_week_id])
+END
+
+IF OBJECT_ID('[postlog_client_scrub_audiences]', 'U') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[postlog_client_scrub_audiences](
+		[postlog_client_scrub_id] [int] NOT NULL,
+		[audience_id] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+	 CONSTRAINT [PK_postlog_client_scrub_audiences] PRIMARY KEY CLUSTERED 
+	(
+		[postlog_client_scrub_id] ASC,
+		[audience_id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences]  WITH CHECK ADD  CONSTRAINT [FK_postlog_client_scrub_audiences_postlog_client_scrubs] FOREIGN KEY([postlog_client_scrub_id])
+	REFERENCES [dbo].[postlog_client_scrubs] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences] CHECK CONSTRAINT [FK_postlog_client_scrub_audiences_postlog_client_scrubs]
+	CREATE INDEX IX_postlog_client_scrub_audiences_postlog_client_scrub_id ON [postlog_client_scrub_audiences] ([postlog_client_scrub_id])
+	
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences]  WITH CHECK ADD  CONSTRAINT [FK_postlog_client_scrub_audiences_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[postlog_client_scrub_audiences] CHECK CONSTRAINT [FK_postlog_client_scrub_audiences_audiences]
+	CREATE INDEX IX_postlog_client_scrub_audiences_audience_id ON [postlog_client_scrub_audiences] ([audience_id])
+END
+
+IF OBJECT_ID('[affidavit_blacklist]', 'U') IS NOT NULL
+BEGIN
+	EXEC sp_rename 'dbo.affidavit_blacklist', 'isci_blacklist'
+END
+/*************************************** END BCOP-3470 *****************************************************/
+
+
+
+
+
+
+/**************************************************** START BCOP3512=>BCOP3608 **************************************************************/
+
+
+IF (SELECT data_type FROM Information_Schema.Columns WHERE Table_Name = 'open_market_pricing_guide'
+      AND Column_Name = 'blended_cpm' AND data_type = 'decimal') IS NOT NULL
+BEGIN
+	  drop table open_market_pricing_guide
+END
+
+IF OBJECT_ID('[open_market_pricing_guide]', 'U') IS NULL 
+BEGIN
+	CREATE TABLE [dbo].[open_market_pricing_guide](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[proposal_version_detail_id] int not null,
+		[market_code] smallint not null,
+		[station_code] smallint not null,
+		[station_inventory_manifest_dayparts_id] int not null,
+		[blended_cpm] money not null ,
+		[spots] int not null,
+		[impressions_per_spot] float not null,
+		[impressions] float not null,
+		[station_impressions] float not null ,
+		[cost_per_spot] money not null,
+		[cost] money not null
+		CONSTRAINT [PK_open_market_pricing_guide] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+
+
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_proposal_version_detail_id')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_proposal_version_detail_id] 
+		FOREIGN KEY([proposal_version_detail_id])
+		REFERENCES [dbo].[proposal_version_details] ([id])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_proposal_version_detail_id ON [open_market_pricing_guide] ([proposal_version_detail_id])
+
+END
+
+GO
+
+
+
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_market_code')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_market_code] 
+		FOREIGN KEY([market_code])
+		REFERENCES [dbo].[markets] ([market_code])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_market_code ON [open_market_pricing_guide] ([market_code])
+
+END
+GO
+
+--FK_open_market_pricing_guide_station_code
+--IX_open_market_pricing_guide_station_code
+
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_station_code')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_station_code] 
+		FOREIGN KEY([station_code])
+		REFERENCES [dbo].[stations] ([station_code])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_station_code ON [open_market_pricing_guide] ([station_code])
+
+END
+GO
+
+
+--FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id
+--IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id
+IF NOT EXISTS (SELECT * 
+  FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'dbo.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id')
+   AND parent_object_id = OBJECT_ID(N'dbo.open_market_pricing_guide'))
+BEGIN
+
+	ALTER TABLE [dbo].[open_market_pricing_guide]  
+	ADD  CONSTRAINT [FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id] 
+		FOREIGN KEY([station_inventory_manifest_dayparts_id])
+		REFERENCES [dbo].[station_inventory_manifest_dayparts] ([id])
+		ON DELETE CASCADE
+	
+	CREATE INDEX IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id ON [open_market_pricing_guide] ([station_inventory_manifest_dayparts_id])
+
+END
+GO
+
+/**************************************************** END BCOP3512=>BCOP3608 **************************************************************/
+
 
 /* START: Creation of MEDIA MONTHS and MEDIA WEEKS from 0121 to 0149 */
 IF (SELECT COUNT(1) FROM dbo.media_months mm WHERE mm.media_month='0121') = 0
@@ -1939,7 +2602,7 @@ GO
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.09.1' -- Current release version
+SET parameter_value = '18.10.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -1950,8 +2613,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.08.1' -- Previous release version
-		OR [version] = '18.09.1') -- Current release version
+		WHERE [version] = '18.09.1' -- Previous release version
+		OR [version] = '18.10.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

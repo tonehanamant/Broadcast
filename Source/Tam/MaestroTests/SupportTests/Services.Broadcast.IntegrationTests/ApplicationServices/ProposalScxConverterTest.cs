@@ -6,7 +6,13 @@ using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using ApprovalTests;
+using ApprovalTests.Reporters;
+using IntegrationTests.Common;
+using Newtonsoft.Json;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -49,14 +55,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const int proposalId = 270;
 
-            var result = _ProposalService.GenerateScxFileArchive(proposalId);
+            var proposal = ProposalTestHelper.CreateProposal();
+            var result = _ProposalService.GenerateScxFileArchive(proposal.Id.Value);
 
-            using (var fileStream = new FileStream(string.Format("..\\File.zip"), FileMode.OpenOrCreate))
+            using (var fileStream = new FileStream(string.Format("c:\\scxFile.zip"), FileMode.OpenOrCreate))
             {
                 result.Item2.CopyTo(fileStream);
                 fileStream.Close();
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Test_Proposal_Scx_Converter()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                const int proposalId = 270;
+                var proposal = ProposalTestHelper.CreateProposal();
+                var result = _ProposalScxConverter.BuildFromProposalDetail(proposal,proposal.Details.First());
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                // remove start/end times because they are current date dependant
+                jsonResolver.Ignore(typeof(detailLine), "startTime");
+                jsonResolver.Ignore(typeof(detailLine), "endTime");
+                jsonResolver.Ignore(typeof(document), "date");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
 }

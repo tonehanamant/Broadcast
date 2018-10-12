@@ -4,27 +4,27 @@
   "PrimaryVersionId": null,
   "ProposalName": "Integrated Test Blooper",
   "AdvertiserId": 37674,
-  "FlightStartDate": "2016-09-26 00:00:00.000",
-  "FlightEndDate": "2016-10-16 00:00:00.000",
+  "FlightStartDate": "2017-06-26 00:00:00.000",
+  "FlightEndDate": "2017-07-16 00:00:00.000",
   "FlightWeeks": [
     {
-      "StartDate": "2016-09-26 00:00:00.000",
-      "EndDate": "2016-10-02 00:00:00.000",
+      "StartDate": "2017-06-26 00:00:00.000",
+      "EndDate": "2017-07-02 00:00:00.000",
       "IsHiatus": false,
-      "MediaWeekId": 666
+      "MediaWeekId": 705
 
     },
     {
-      "StartDate": "2016-10-03 00:00:00.000",
-      "EndDate": "2016-10-09 00:00:00.000",
+      "StartDate": "2017-07-03 00:00:00.000",
+      "EndDate": "2017-07-09 00:00:00.000",
       "IsHiatus": false,
-      "MediaWeekId": 667
+      "MediaWeekId": 706
     },
     {
-      "StartDate": "2016-10-10 00:00:00.000",
-      "EndDate": "2016-10-16 00:00:00.000",
+      "StartDate": "2017-07-10 00:00:00.000",
+      "EndDate": "2017-07-16 00:00:00.000",
       "IsHiatus": false,
-      "MediaWeekId": 668
+      "MediaWeekId": 707
     }
   ],
   "SpotLengths": [
@@ -37,7 +37,7 @@
   "Notes": null,
   "PostType": 1,
   "SecondaryDemos": [
-    
+
   ],
   "Equivalized": true,
   "TargetImpressions": 50,
@@ -46,32 +46,38 @@
   "TargetUnits": 3,
   "Status": 2,
   "ForceSave": false,
-  "Markets": [{ "Id": "439","Display": "Las Vegas","IsBlackout": false}],
-  "MarketGroupId": 0,
+  "Markets": [
+    {
+      "Id": "439",
+      "Display": "Las Vegas",
+      "IsBlackout": false
+    }
+  ],
+  "MarketGroupId": 1,
   "BlackoutMarketGroupId": null,
   "Details": [
     {
       "Id": null,
-      "FlightStartDate": "2016-09-26 00:00:00.000",
-      "FlightEndDate": "2016-10-02 00:00:00.000",
+      "FlightStartDate": "2017-06-26 00:00:00.000",
+      "FlightEndDate": "2017-07-16 00:00:00.000",
       "FlightWeeks": [
         {
-          "StartDate": "2016-09-26 00:00:00.000",
-          "EndDate": "2016-10-02 00:00:00.000",
+          "StartDate": "2017-06-26 00:00:00.000",
+          "EndDate": "2017-07-02 00:00:00.000",
           "IsHiatus": false,
-          "MediaWeekId": 666
+          "MediaWeekId": 705
         },
         {
-          "StartDate": "2016-10-03 00:00:00.000",
-          "EndDate": "2016-10-09 00:00:00.000",
+          "StartDate": "2017-07-03 00:00:00.000",
+          "EndDate": "2017-07-09 00:00:00.000",
           "IsHiatus": false,
-          "MediaWeekId": 667
+          "MediaWeekId": 706
         },
         {
-          "StartDate": "2016-10-10 00:00:00.000",
-          "EndDate": "2016-10-16 00:00:00.000",
+          "StartDate": "2017-07-10 00:00:00.000",
+          "EndDate": "2017-07-16 00:00:00.000",
           "IsHiatus": false,
-          "MediaWeekId": 668
+          "MediaWeekId": 707
         }
       ],
       "SpotLengthId": 3,
@@ -83,7 +89,7 @@
         "fri": true,
         "sat": true,
         "sun": true,
-        "startTime": 28800,
+        "startTime": 0,
         "endTime": 82800,
         "Text": "M-SU 8AM-11PM"
       },
@@ -104,14 +110,14 @@
           "Weeks": [
             {
               "Id": null,
-              "MediaWeekId": 666,
-              "Week": "9/26/2016",
+              "MediaWeekId": 705,
+              "Week": "2017-06-26",
               "IsHiatus": false,
               "Units": 1,
               "Impressions": 16.666,
               "Cost": 16666,
-              "EndDate": "2016-10-02 00:00:00.000",
-              "StartDate": "2016-09-26 00:00:00.000",
+              "EndDate": "2017-07-02 00:00:00.000",
+              "StartDate": "2017-06-26 00:00:00.000",
               "recid": "d12a06c5-ca99-43f3-8161-8694a9a18279",
               "quarterId": null,
               "quarterIdx": 0,
@@ -119,14 +125,14 @@
             },
             {
               "Id": null,
-              "MediaWeekId": 667,
-              "Week": "10/3/2016",
+              "MediaWeekId": 706,
+              "Week": "2017-07-03",
               "IsHiatus": false,
               "Units": 1,
               "Impressions": 16.666,
               "Cost": 16666,
-              "EndDate": "2016-10-09 00:00:00.000",
-              "StartDate": "2016-10-03 00:00:00.000",
+              "EndDate": "2017-07-09 00:00:00.000",
+              "StartDate": "2017-07-03 00:00:00.000",
               "recid": "456484d1-01ba-4132-bf34-0d88b79f95bf",
               "quarterId": null,
               "quarterIdx": 0,
@@ -134,14 +140,14 @@
             },
             {
               "Id": null,
-              "MediaWeekId": 668,
-              "Week": "10/10/2016",
+              "MediaWeekId": 707,
+              "Week": "2017-07-10",
               "IsHiatus": false,
               "Units": 1,
               "Impressions": 16.668,
               "Cost": 16668,
-              "EndDate": "2016-10-16 00:00:00.000",
-              "StartDate": "2016-10-10 00:00:00.000",
+              "EndDate": "2017-07-16 00:00:00.000",
+              "StartDate": "2017-07-10 00:00:00.000",
               "recid": "f0cfe1f0-c1d6-4644-bc0a-5a0660f737d0",
               "quarterId": null,
               "quarterIdx": 0,

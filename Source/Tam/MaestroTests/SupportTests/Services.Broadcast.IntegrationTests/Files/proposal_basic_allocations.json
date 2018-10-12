@@ -2,27 +2,27 @@
   "ProposalVersionDetailId": 4014,
   "Weeks": [
     {
-      "MediaWeekId": 666,
+      "MediaWeekId": 705,
       "Programs": [
         {
-          "ProgramId": 519159,
+          "ProgramId": 26621,
           "Spots": 2,
-          "Impressions": 588.633918786507
+          "TotalImpressions": 588.633918786507
         },
         {
-          "ProgramId": 519165,
+          "ProgramId": 26624,
           "Spots": 3,
-          "Impressions": 289.4691537242589
+          "TotalImpressions": 289.4691537242589
         }
       ]
     },
     {
-      "MediaWeekId": 668,
+      "MediaWeekId": 706,
       "Programs": [
         {
-          "ProgramId": 520050,
+          "ProgramId": 26615,
           "Spots": 2,
-          "Impressions": 588.633918786507
+          "TotalImpressions": 588.633918786507
         }
       ]
     }

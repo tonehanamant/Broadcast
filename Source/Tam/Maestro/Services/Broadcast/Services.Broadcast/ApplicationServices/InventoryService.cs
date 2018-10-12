@@ -262,7 +262,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var startTime = DateTime.Now;
 
-                fileImporter.ExtractFileData(request.RatesStream, inventoryFile, request.EffectiveDate);
+                fileImporter.ExtractFileData(request.StreamData, inventoryFile, request.EffectiveDate);
 
                 var endTime = DateTime.Now;
 
@@ -534,6 +534,7 @@ namespace Services.Broadcast.ApplicationServices
             var previousManifest = _inventoryRepository.GetStationManifest(stationProgram.Id);
 
             _SetManifestValuesFromPreviousManifest(manifest, previousManifest);
+            _SetManifestDaypartGenres(manifest, stationProgram);
 
             if (manifest.EffectiveDate > previousManifest.EffectiveDate)
             {
@@ -566,6 +567,17 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Code = previousManifest.Station.Code
             };
+        }
+
+        private void _SetManifestDaypartGenres(StationInventoryManifest manifest, StationProgram stationProgram)
+        {
+            if (manifest.ManifestDayparts != null)
+            {
+                foreach (var daypart in manifest.ManifestDayparts)
+                {
+                    daypart.Genres = stationProgram.Genres;
+                }
+            }
         }
 
         private void _AddNewProgram(StationProgram stationProgram, StationInventoryManifest manifest, string userName)
@@ -614,6 +626,7 @@ namespace Services.Broadcast.ApplicationServices
                     new StationInventoryManifestDaypart
                     {
                         Daypart = md,
+                        Genres = stationProgram.Genres,
                         ProgramName = stationProgram.ProgramNames.FirstOrDefault() //TODO: This needs to be updated once UI can handle multipe program names
                     }
                 ).ToList(),
@@ -810,7 +823,8 @@ namespace Services.Broadcast.ApplicationServices
                         Rate30 = _GetSpotRateFromManifestRates(30, manifest.ManifestRates),
                         HouseHoldImpressions = _GetHouseHoldImpressionFromManifestAudiences(manifest.ManifestAudiencesReferences),
                         Rating = _GetHouseHoldRatingFromManifestAudiences(manifest.ManifestAudiencesReferences),
-                        FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate)
+                        FlightWeeks = _GetFlightWeeks(manifest.EffectiveDate, manifest.EndDate),
+                        Genres = manifest.ManifestDayparts.SelectMany(d => d.Genres).Distinct().ToList()
                     }).ToList();
         }
 

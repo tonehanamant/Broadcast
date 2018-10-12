@@ -6232,14 +6232,6 @@
     "OriginMarket": "West Palm Beach-Ft. Pierce"
   },
   {
-    "Affiliation": "PBS",
-    "CallLetters": "WUNC-TV 4.1",
-    "Code": 5316,
-    "LegacyCallLetters": "WUNC",
-    "ManifestMaxEndDate": null,
-    "OriginMarket": "Raleigh-Durham (Fayetvlle)"
-  },
-  {
     "Affiliation": "FOX",
     "CallLetters": "KMSP-TV 9.9",
     "Code": 5317,

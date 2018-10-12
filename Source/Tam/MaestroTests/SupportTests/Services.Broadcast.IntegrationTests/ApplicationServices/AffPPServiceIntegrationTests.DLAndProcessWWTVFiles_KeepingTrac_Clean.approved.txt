@@ -1,12 +1,12 @@
 ﻿{
-  "AffidavitSaveResults": [
+  "FailedDownloads": [],
+  "FilesFoundToProcess": [
+    "KeepingTracTest.xlsx.txt"
+  ],
+  "SaveResults": [
     {
       "ValidationResults": []
     }
-  ],
-  "FailedDownloads": [],
-  "FilesFoundToProcess": [
-    ".\\Files\\KeepingTracTest.xlsx.txt"
   ],
   "ValidationErrors": {}
 }

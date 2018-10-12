@@ -32,12 +32,26 @@ namespace Services.Broadcast.BusinessEngines
             int? targetUnit);
 
         /// <summary>
-        /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week.
+        /// Calculates CPM for a list of programs
         /// </summary>
         /// <param name="programs"></param>
         /// <param name="spotLength"></param>
         /// <returns></returns>
-        void ApplyBlendedCpmForEachProgram(List<ProposalProgramDto> programs, int spotLength);
+        void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength);
+
+        /// <summary>
+        /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week (raw = no rounding).
+        /// </summary>
+        /// <returns></returns>
+        void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength);
+
+        void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
+
+        void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
+        void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
+
+        decimal CalculateSpotCost(int spots, decimal spotCost);
+        double CalculateSpotImpressions(int spots, double unitImpressions);
     }
 
     public class ProposalProgramsCalculationEngine : IProposalProgramsCalculationEngine
@@ -253,16 +267,82 @@ namespace Services.Broadcast.BusinessEngines
             return total;
         }
 
-        public void ApplyBlendedCpmForEachProgram(List<ProposalProgramDto> programs, int spotLength)
+        public void CalculateCpmForPrograms(List<ProposalProgramDto> programs, int spotLength)
         {
             foreach (var program in programs)
             {
-/*                var activeWeeks = program.FlightWeeks.Where(w => w.IsHiatus == false).ToList();
-                var totalCost = activeWeeks.Sum(w => w.Rate);
-                var totalImpressions = program.UnitImpressions * activeWeeks.Count;*/
+                var impressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
 
-                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, program.UnitImpressions); ;
+                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, impressions);
             }
+        }
+
+        /// <summary>
+        /// Raw == no rounding
+        /// </summary>
+        public void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+                var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
+                var totalImpressions = unitImpressions * activeWeeks.Count;
+
+                program.TargetCpm = ProposalMath.CalculateCpmRaw(totalCost, totalImpressions);
+            }
+        }
+
+        public void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
+                var totalCost = activeWeeks.Sum(w => w.Rate);
+
+                if (activeWeeks.Count == 0)
+                    program.SpotCost = 0;
+                else
+                    program.SpotCost = totalCost / activeWeeks.Count;
+            }
+        }
+
+        public void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.TotalCost = CalculateSpotCost(program.TotalSpots, program.SpotCost);
+            }
+        }
+
+        public void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.UnitImpressions);
+            }
+        }
+
+        public decimal CalculateSpotCost(int spots, decimal spotCost)
+        {
+            decimal totalSpotCost = 0;
+            if (spots == 0)
+                totalSpotCost = spotCost;
+            else
+                totalSpotCost = spotCost * spots;
+
+            return totalSpotCost;
+        }
+
+        public double  CalculateSpotImpressions(int spots,double unitImpressions)
+        {
+            double totalImpressions = 0;
+            if (spots == 0)
+                totalImpressions = unitImpressions;
+            else
+                totalImpressions = unitImpressions * spots;
+
+            return totalImpressions;
         }
     }
 }

@@ -8,6 +8,11 @@ import * as ACTIONS from './actionTypes.js';
 const initialState = {
   initialdata: {},
   planningProposals: [],
+  activeOpenMarketData: undefined,
+  openMarketData: undefined,
+  hasOpenMarketData: false,
+  openMarketLoading: false,
+  openMarketLoaded: false,
   filteredPlanningProposals: [],
   proposalLock: {},
   proposal: {
@@ -330,19 +335,76 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-   /*  case ACTIONS.TOGGLE_EDIT_ISCI_CLASS: {
+    case ACTIONS.LOAD_OPEN_MARKET_DATA.request: {
       return {
         ...state,
-        isISCIEdited: data,
+        openMarketLoading: true,
       };
     }
 
-    case ACTIONS.TOGGLE_EDIT_GRID_CELL_CLASS: {
+    case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
       return {
         ...state,
-        isGridCellEdited: data,
+        openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && (data.Data.Markets.length > 0),
+        activeOpenMarketData: data.Data,
+        openMarketLoading: false,
+        openMarketLoaded: true,
       };
-    } */
+    }
+
+    case ACTIONS.LOAD_OPEN_MARKET_DATA.failure: {
+      return {
+        ...state,
+        openMarketLoading: false,
+      };
+    }
+
+    case ACTIONS.CLEAR_OPEN_MARKET_DATA: {
+      return {
+        ...state,
+        openMarketLoading: false,
+        openMarketLoaded: false,
+        openMarketData: undefined,
+        activeOpenMarketData: undefined,
+        hasOpenMarketData: false,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.request: {
+      return {
+        ...state,
+        openMarketLoading: true,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.success: {
+      return {
+        ...state,
+        activeOpenMarketData: data.Data,
+        openMarketLoading: false,
+        openMarketLoaded: true,
+      };
+    }
+
+    case ACTIONS.FILTER_OPEN_MARKET_DATA.failure: {
+      return {
+        ...state,
+        openMarketLoading: false,
+      };
+    }
+
+    case ACTIONS.SET_ESTIMATED_ID: {
+      const details = [...state.proposalEditForm.Details];
+      const detailIndex = details.findIndex(detail => detail.Id === payload.detailId);
+      details[detailIndex].EstimateId = payload.estimatedId;
+      return Object.assign({}, state, {
+        proposalEditForm: {
+          ...state.proposalEditForm,
+          Details: details,
+        },
+      });
+    }
 
     default:
       return state;
@@ -465,8 +527,44 @@ export const getPrograms = params => ({
   payload: params,
 });
 
+export const getShowTypes = params => ({
+  type: ACTIONS.REQUEST_SHOWTYPES,
+  payload: params,
+});
+
 export const rerunPostScrubing = (propId, propdetailid) => ({
   type: ACTIONS.RERUN_POST_SCRUBING.request,
   payload: { propId, propdetailid },
+});
+
+/* export const loadOpenMarketData = (propId, propdetailid) => ({
+  type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
+  payload: { propId, propdetailid },
+}); */
+
+export const loadOpenMarketData = params => ({
+  type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
+  payload: params,
+});
+
+export const clearOpenMarketData = () => ({
+  type: ACTIONS.CLEAR_OPEN_MARKET_DATA,
+});
+
+export const uploadSCXFile = params => ({
+  type: ACTIONS.SCX_FILE_UPLOAD.request,
+  payload: params,
+});
+export const filterOpenMarketData = params => ({
+  type: ACTIONS.FILTER_OPEN_MARKET_DATA.request,
+  payload: params,
+});
+
+export const setEstimatedId = (detailId, estimatedId) => ({
+  type: ACTIONS.SET_ESTIMATED_ID,
+  payload: {
+    detailId,
+    estimatedId,
+  },
 });
 

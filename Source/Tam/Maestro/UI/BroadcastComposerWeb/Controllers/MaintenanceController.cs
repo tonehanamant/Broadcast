@@ -61,7 +61,7 @@ namespace BroadcastComposerWeb.Controllers
                 else
                 {
                     var service = _ApplicationServiceFactory.GetApplicationService<IAffidavitService>();
-                    AffidavitSaveRequest request = new AffidavitSaveRequest();
+                    InboundFileSaveRequest request = new InboundFileSaveRequest();
                     var json = service.JSONifyFile(file.InputStream, fileName,out request);
 
                     ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
@@ -103,8 +103,8 @@ namespace BroadcastComposerWeb.Controllers
             NetworkCredential creds = helper.GetClientCredentials();
             var site = "ftp://" + helper.Host;
             var list = srv.GetFileList(creds, site);
+        
             ViewBag.Message = "Get file worked w/o error!\r\n";
-            list.ForEach(f => ViewBag.Message += f + "\r\n");
             return View("Index");
  }
 

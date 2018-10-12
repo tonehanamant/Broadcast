@@ -3,32 +3,27 @@ using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Services.Cable.Entities;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class AffidavitEmailProcessorTests
     {
-        private readonly IAffidavitEmailProcessorService _AffidavitEmailProcessorService;
+        private readonly IWWTVEmailProcessorService _AffidavitEmailProcessorService;
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IAffidavitRepository _AffidavitRepository;
         private const string _UserName = "Test User";
         
         public AffidavitEmailProcessorTests()
         {
-            _AffidavitEmailProcessorService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitEmailProcessorService>();
+            _AffidavitEmailProcessorService = IntegrationTestApplicationServiceFactory.GetApplicationService<IWWTVEmailProcessorService>();
             _EmailHelper = IntegrationTestApplicationServiceFactory.GetApplicationService<IFileTransferEmailHelper>();
             _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
@@ -37,12 +32,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var response = _AffidavitRepository.GetAffidavit(affidavitId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileProblem), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileProblem), "AffidavitFileId");
-            jsonResolver.Ignore(typeof(AffidavitFileDetail), "Id");
-            jsonResolver.Ignore(typeof(AffidavitFileDetail), "AffidavitFileId");
-            jsonResolver.Ignore(typeof(AffidavitFile), "CreatedDate");
-            jsonResolver.Ignore(typeof(AffidavitFile), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "AffidavitFileId");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -75,10 +70,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitEmailService_CreateValidationErrorEmailBody()
         {
-            List<AffidavitValidationResult> validationErrors = new List<AffidavitValidationResult>()
+            List<WWTVInboundFileValidationResult> validationErrors = new List<WWTVInboundFileValidationResult>()
             {
-                new AffidavitValidationResult() { ErrorMessage = "is required",InvalidField = "FieldName", InvalidLine =  123 },
-                new AffidavitValidationResult() { ErrorMessage = "is also required",InvalidField = "SecondField" },
+                new WWTVInboundFileValidationResult() { ErrorMessage = "is required",InvalidField = "FieldName", InvalidLine =  123 },
+                new WWTVInboundFileValidationResult() { ErrorMessage = "is also required",InvalidField = "SecondField" },
             };
             string fileName = "FileNameCausingError";
 
@@ -118,9 +113,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         // use for manual testing and not automated running 
         public void AffidavitEmailService_CreateInvalidDataFileEmailBody() //Validation errors for files going to WWTV
         {
-            var validationError = new OutboundAffidavitFileValidationResultDto()
+            var validationError = new WWTVOutboundFileValidationResult()
             {
-                Status = AffidaviteFileProcessingStatus.Invalid,
+                Status = FileProcessingStatusEnum.Invalid,
                 FilePath = @"E:\Users\broadcast-ftp\eula.1028.txt",
                 FileName = "eula.1028.txt",
                 ErrorMessages = new List<string>() {

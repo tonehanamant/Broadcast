@@ -1,6 +1,8 @@
 ﻿{
-  "AffidavitFileDetails": [],
-  "AffidavitFileProblems": [
+  "FileDetails": [],
+  "FileHash": "22-0B-A7-F6-57-18-42-8B-CE-37-33-9A-C3-B6-46-5D-24-E6-49-23",
+  "FileName": "WWTV_Basic_Required_Validation.txt",
+  "FileProblems": [
     {
       "ProblemDescription": "Record: 1: Field: 'Station' is invalid\r\nis required"
     },
@@ -20,8 +22,6 @@
       "ProblemDescription": "Record: 3: Field: 'LeadInShowType' is invalid\r\nis required"
     }
   ],
-  "FileHash": "22-0B-A7-F6-57-18-42-8B-CE-37-33-9A-C3-B6-46-5D-24-E6-49-23",
-  "FileName": "WWTV_Basic_Required_Validation.txt",
   "SourceId": 1,
   "Status": 2
 }

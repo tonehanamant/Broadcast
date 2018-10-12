@@ -169,11 +169,17 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_PostLogErrorFolder":
                     result = @"E:\temp\wwtv\WWTVErrors\PostLogPreprocessing";
                     break;
+                case "WWTV_SpotTrackerDropFolder":
+                    result = @"D:\temp\wwtv\SpotTrackerDropFolder";
+                    break;
                 case "WWTV_PostLogFtpOutboundFolder":
                     result = "InPrePost";
                     break;
                 case "MediaMonthCruchCacheSlidingExpirationSeconds":
                     result = "24";
+                    break;
+                case "WWTV_KeepingTracFtpInboundFolder":
+                    result = @"D:\temp\wwtv\WWTV_KeepingTracFtpInboundFolder";
                     break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);

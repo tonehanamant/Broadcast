@@ -90,7 +90,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<show_types> show_types { get; set; }
         public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_file_problems> affidavit_file_problems { get; set; }
-        public virtual DbSet<affidavit_blacklist> affidavit_blacklist { get; set; }
         public virtual DbSet<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
@@ -99,5 +98,24 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<postlog_outbound_file_problems> postlog_outbound_file_problems { get; set; }
         public virtual DbSet<postlog_outbound_files> postlog_outbound_files { get; set; }
         public virtual DbSet<proposal_versions> proposal_versions { get; set; }
+        public virtual DbSet<proposal_version_detail_proprietary_pricing> proposal_version_detail_proprietary_pricing { get; set; }
+        public virtual DbSet<spot_tracker_file_details> spot_tracker_file_details { get; set; }
+        public virtual DbSet<spot_tracker_files> spot_tracker_files { get; set; }
+        public virtual DbSet<proposal_buy_file_detail_audiences> proposal_buy_file_detail_audiences { get; set; }
+        public virtual DbSet<proposal_buy_file_detail_weeks> proposal_buy_file_detail_weeks { get; set; }
+        public virtual DbSet<proposal_buy_file_details> proposal_buy_file_details { get; set; }
+        public virtual DbSet<proposal_buy_files> proposal_buy_files { get; set; }
+        public virtual DbSet<market_coverages> market_coverages { get; set; }
+        public virtual DbSet<postlog_file_detail_demographics> postlog_file_detail_demographics { get; set; }
+        public virtual DbSet<postlog_file_detail_problems> postlog_file_detail_problems { get; set; }
+        public virtual DbSet<postlog_file_details> postlog_file_details { get; set; }
+        public virtual DbSet<postlog_file_problems> postlog_file_problems { get; set; }
+        public virtual DbSet<postlog_files> postlog_files { get; set; }
+        public virtual DbSet<isci_blacklist> isci_blacklist { get; set; }
+        public virtual DbSet<postlog_client_scrub_audiences> postlog_client_scrub_audiences { get; set; }
+        public virtual DbSet<postlog_client_scrubs> postlog_client_scrubs { get; set; }
+        public virtual DbSet<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
+        public virtual DbSet<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
+        public virtual DbSet<open_market_pricing_guide> open_market_pricing_guide { get; set; }
     }
 }

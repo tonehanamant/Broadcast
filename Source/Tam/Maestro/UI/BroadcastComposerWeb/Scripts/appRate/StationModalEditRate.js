@@ -86,14 +86,12 @@ var StationModalEditRate = function (view) {
                     tags: true,
                     data: genres
                 });
-                //not processing per current
-                /*
+
                 var selected = me.activeRecord.Genres.map(function (selectedGenre) {
                     return selectedGenre.Id;
                 });
 
                 $('#update_program_genre_input').val(selected).trigger('change');
-                */
             });
         },
 
@@ -102,6 +100,7 @@ var StationModalEditRate = function (view) {
                 var programName = $('#update_program_name_input').val();
 
                 // unmasking form values
+                var genres = this.processGenres();
                 var rate15 = $('#update_program_spot15_input').val() ? parseFloat($('#update_program_spot15_input').val().replace(/[$,]+/g, "")) : null;
                 var rate30 = $('#update_program_spot30_input').val() ? parseFloat($('#update_program_spot30_input').val().replace(/[$,]+/g, "")) : null;
 
@@ -111,7 +110,7 @@ var StationModalEditRate = function (view) {
                 var rating = parseFloat($('#update_program_hhrating_input').val().replace(/,/g, ''));
                 var getEffectiveDate = $('#update_program_effective_date_input').val();
                 var effectiveDate = moment(new Date(getEffectiveDate)).isValid() ? moment(new Date(getEffectiveDate)).format('YYYY-MM-DD' + 'T00:00:00') : null;
-                
+                    
                 var updatedProgram = {
                     Id: this.activeRecord.Id,
                     ProgramName: programName,
@@ -122,7 +121,8 @@ var StationModalEditRate = function (view) {
                     Rating: rating,
                     EffectiveDate: effectiveDate,
                     Airtime: this.activeRecord.Airtime,
-                    EndDate: this.activeRecord.EndDate
+                    EndDate: this.activeRecord.EndDate,
+                    Genres: genres
                 };
 
                 _view.controller.apiUpdateRatesProgram(updatedProgram);

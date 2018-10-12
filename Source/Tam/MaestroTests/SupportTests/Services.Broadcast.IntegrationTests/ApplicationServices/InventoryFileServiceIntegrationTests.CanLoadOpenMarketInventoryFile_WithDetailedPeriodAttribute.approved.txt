@@ -82,6 +82,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "America This Morning"
@@ -177,6 +178,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 at 4:30am"
@@ -272,6 +274,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 in the Morning"
@@ -367,6 +370,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 in the Morning"
@@ -462,6 +466,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 in the Morning"
@@ -557,6 +562,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "Good Morning America"
@@ -652,6 +658,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ 6am"
@@ -747,6 +754,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ 7am"
@@ -842,6 +850,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "Good Morning America Saturday"
@@ -937,6 +946,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ 9am"
@@ -1032,6 +1042,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ 6am"
@@ -1127,6 +1138,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ 7am"
@@ -1222,6 +1234,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "Good Morning America Sunday"
@@ -1317,6 +1330,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ 9am"
@@ -1412,6 +1426,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "This Week"
@@ -1507,6 +1522,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "Capital Political Program"
@@ -1602,6 +1618,7 @@
         "StartDate": "2018-03-19T00:00:00"
       }
     ],
+    "Genres": [],
     "HouseHoldImpressions": null,
     "ProgramNames": [
       "News 10 @ Noon"

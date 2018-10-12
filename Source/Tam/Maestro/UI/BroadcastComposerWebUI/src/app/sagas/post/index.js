@@ -13,6 +13,30 @@ import sagaWrapper from '../wrapper';
 
 const ACTIONS = { ...appActions, ...postActions };
 
+/* ////////////////////////////////// */
+/* Adjust POST Data return */
+/* ////////////////////////////////// */
+export function adjustPost(posts) {
+  const adjustPost = posts.map((item) => {
+    const post = item;
+    post.searchContractId = String(post.ContractId);
+    post.searchSpotsInSpec = String(post.SpotsInSpec);
+    post.searchSpotsOutOfSpec = String(post.SpotsOutOfSpec);
+    post.searchUploadDate = post.UploadDate ? moment(post.UploadDate).format('MM/DD/YYYY') : '-';
+    // post.searchUploadDate = String(post.UploadDate);
+
+    // post.displayId = String(post.Id);
+    // post.displayAdvertiser = post.Advertiser.Display;
+    // post.displayLastModified = moment(post.LastModified).format('MM/DD/YYYY');
+    // // handle empty dates
+    // const start = post.FlightStartDate ? moment(post.FlightStartDate).format('MM/DD/YYYY') : '';
+    // const end = post.FlightEndDate ? moment(post.FlightEndDate).format('MM/DD/YYYY') : '';
+    // post.displayFlights = `${start} - ${end}`;
+    return post;
+  });
+  return adjustPost;
+}
+
 export function* requestPost() {
   const { getPosts } = api.post;
 
@@ -52,16 +76,18 @@ export function* requestPost() {
       });
       throw new Error();
     }
+    // adjust the data for grid handling
+    data.Data.Posts = yield adjustPost(data.Data.Posts);
     yield put({
       type: ACTIONS.RECEIVE_POST,
       data,
     });
-    yield put({
-      type: ACTIONS.REQUEST_ASSIGN_POST_DISPLAY,
-      payload: {
-        data: data.Data,
-      },
-    });
+    // yield put({
+    //   type: ACTIONS.REQUEST_ASSIGN_POST_DISPLAY,
+    //   payload: {
+    //     data: data.Data,
+    //   },
+    // });
   } catch (e) {
     if (e.response) {
       yield put({
@@ -92,6 +118,7 @@ export function* assignPostDisplay({ payload: request }) {
       const post = item;
 
       // UploadDate
+      // post.testDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
       post.DisplayUploadDate = post.UploadDate !== null ? moment(post.UploadDate).format('M/D/YYYY') : '-';
       return post;
     },
@@ -131,17 +158,7 @@ export function* assignPostDisplay({ payload: request }) {
 export function* requestPostFiltered({ payload: query }) {
   const postListUnfiltered = yield select(state => state.post.postUnfilteredGridData);
 
-  // for each post, convert all properties to string to enable use on FuzzySearch object
-  postListUnfiltered.map(post => (
-    Object.keys(post).map((key) => {
-      if (post[key] !== null && post[key] !== undefined) {
-        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
-      }
-      return post[key];
-    })
-  ));
-
-  const keys = ['ContractId', 'ContractName', 'DisplayUploadDate', 'PrimaryAudienceImpressions', 'SpotsInSpec', 'SpotsOutOfSpec', 'UploadDate'];
+  const keys = ['searchContractId', 'ContractName', 'Advertiser', 'UploadDate', 'serchSpotsInSpec', 'searchSpotsOutOfSpec'];
   const searcher = new FuzzySearch(postListUnfiltered, keys, { caseSensitive: false });
   const postFiltered = () => searcher.search(query);
 
@@ -168,12 +185,7 @@ export function* requestUnlinkedFiltered({ payload: query }) {
 
   // for each post, convert all properties to string to enable use on FuzzySearch object
   unlinkedListUnfiltered.map(post => (
-    Object.keys(post).map((key) => {
-      if (post[key] !== null && post[key] !== undefined) {
-        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
-      }
-      return post[key];
-    })
+    Object.keys(post).map(key => post[key])
   ));
 
   const keys = ['ISCI'];
@@ -203,32 +215,29 @@ export function* requestArchivedFiltered({ payload: query }) {
 
   // for each post, convert all properties to string to enable use on FuzzySearch object
   archivedListUnfiltered.map(post => (
-    Object.keys(post).map((key) => {
-      if (post[key] !== null && post[key] !== undefined) {
-        post[key] = post[key].toString(); // eslint-disable-line no-param-reassign
-      }
-      return post[key];
-    })
+    Object.keys(post).map(key => post[key])
   ));
 
-  const keys = ['ISCI'];
-  const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
-  const archivedFiltered = () => searcher.search(query);
+  if (archivedListUnfiltered.length > 0) {
+    const keys = ['ISCI'];
+    const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
+    const archivedFiltered = () => searcher.search(query);
 
-  try {
-    const filtered = yield archivedFiltered();
-    yield put({
-      type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
-      data: { query, filteredData: filtered },
-    });
-  } catch (e) {
-    if (e.message) {
+    try {
+      const filtered = yield archivedFiltered();
       yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message,
-        },
+        type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
+        data: { query, filteredData: filtered },
       });
+    } catch (e) {
+      if (e.message) {
+        yield put({
+          type: ACTIONS.DEPLOY_ERROR,
+          error: {
+            message: e.message,
+          },
+        });
+      }
     }
   }
 }

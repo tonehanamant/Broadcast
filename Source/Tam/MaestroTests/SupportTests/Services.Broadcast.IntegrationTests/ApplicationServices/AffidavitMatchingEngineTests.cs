@@ -20,24 +20,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class AffidavitMatchingEngineTests
     {
 
-        private IAffidavitMatchingEngine _AffidavitMatchingEngine =
-            IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitMatchingEngine>();
+        private IMatchingEngine _AffidavitMatchingEngine =
+            IntegrationTestApplicationServiceFactory.GetApplicationService<IMatchingEngine>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UnmatchedIsci()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123"
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
+            var proposalWeeks = new List<MatchingProposalWeek>();
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+            jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -45,20 +45,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver,
             };
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems(), jsonSettings));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.GetMatchingProblems(), jsonSettings));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MultipleUnmarriedIscisOnSeparateProposals()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123"
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<MatchingProposalWeek>();
+            proposalWeeks.Add(new MatchingProposalWeek()
             {
                 ProposalVersionId = 1,
                 ProposalVersionDetailId = 1,
@@ -66,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 HouseIsci = "ABC123",
                 MarriedHouseIsci = false
             });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            proposalWeeks.Add(new MatchingProposalWeek()
             {
                 ProposalVersionId = 2,
                 ProposalVersionDetailId = 2,
@@ -78,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+            jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -86,20 +86,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver,
             };
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems(), jsonSettings));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.GetMatchingProblems(), jsonSettings));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MarriedAndUnmarriedIscisOnSeparateProposals()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123"
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<MatchingProposalWeek>();
+            proposalWeeks.Add(new MatchingProposalWeek()
             {
                 ProposalVersionId = 1,
                 ProposalVersionDetailId = 1,
@@ -107,7 +107,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 HouseIsci = "ABC123",
                 MarriedHouseIsci = true
             });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            proposalWeeks.Add(new MatchingProposalWeek()
             {
                 ProposalVersionId = 2,
                 ProposalVersionDetailId = 2,
@@ -119,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(AffidavitFileDetailProblem), "DetailId");
+            jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -127,20 +127,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver,
             };
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems(), jsonSettings));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.GetMatchingProblems(), jsonSettings));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MultipleUnmarriedIscisOnSameProposal()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123"
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>();
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            var proposalWeeks = new List<MatchingProposalWeek>();
+            proposalWeeks.Add(new MatchingProposalWeek()
             {
                 ProposalVersionId = 1,
                 ProposalVersionDetailId = 5,
@@ -149,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 HouseIsci = "ABC123",
                 MarriedHouseIsci = false
             });
-            proposalWeeks.Add(new AffidavitMatchingProposalWeek()
+            proposalWeeks.Add(new MatchingProposalWeek()
             {
                 ProposalVersionId = 1,
                 ProposalVersionDetailId = 4,
@@ -161,14 +161,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.MatchingProblems()));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.GetMatchingProblems()));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksAirtimeMatch()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T07:00:00"),
@@ -176,9 +176,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,
@@ -191,7 +191,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Spots = 1,
                     SpotLengthId = 1
                 },
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 4,
@@ -215,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailMatchDateOnly()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T01:00:00"),
@@ -223,9 +223,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,
@@ -238,7 +238,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Spots = 1,
                     SpotLengthId = 1
                 },
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 4,
@@ -262,7 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailMatchTimeOnly()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-08T09:00:00"),
@@ -270,9 +270,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,
@@ -285,7 +285,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Spots = 1,
                     SpotLengthId = 1
                 },
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 4,
@@ -309,7 +309,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksAirtimeMatchWithLeadIn()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T08:58:00"),
@@ -317,9 +317,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,
@@ -332,7 +332,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Spots = 1,
                     SpotLengthId = 1
                 },
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 4,
@@ -356,7 +356,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksFirstIfBothMatchAirtime()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-05T07:00:00"),
@@ -364,9 +364,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,
@@ -379,7 +379,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Spots = 1,
                     SpotLengthId = 1
                 },
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 4,
@@ -403,7 +403,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void IsciOnMultipleProposalDetailPicksFirstIfNoneMatchAirtime()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-08T05:00:00"),
@@ -411,9 +411,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,
@@ -426,7 +426,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Spots = 1,
                     SpotLengthId = 1
                 },
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 4,
@@ -450,7 +450,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitMatchingEngine_IncludeDatepartEndtime()
         {
-            var affidavitDetail = new AffidavitFileDetail
+            var affidavitDetail = new ScrubbingFileDetail
             {
                 Isci = "ABC123",
                 OriginalAirDate = DateTime.Parse("2018-01-07T09:00:00"),
@@ -458,9 +458,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 SpotLengthId = 1
             };
 
-            var proposalWeeks = new List<AffidavitMatchingProposalWeek>
+            var proposalWeeks = new List<MatchingProposalWeek>
             {
-                new AffidavitMatchingProposalWeek()
+                new MatchingProposalWeek()
                 {
                     ProposalVersionId = 1,
                     ProposalVersionDetailId = 5,

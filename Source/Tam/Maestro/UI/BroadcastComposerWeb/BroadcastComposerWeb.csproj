@@ -225,18 +225,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\BroadcastControllerBase\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Attributes\CacheWebApiAttribute.cs" />
     <Compile Include="Controllers\AffidavitUploadApiController.cs" />
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\EnvironmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageApiController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
+    <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
+    <Compile Include="Controllers\PostLogController.cs" />
+    <Compile Include="Controllers\SpotTrackerController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />
     <Compile Include="Controllers\PostPrePostingController.cs" />
@@ -357,6 +361,9 @@
     <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
     <Content Include="Styles\fonts\FontAwesome.otf" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="App_Data\Market coverages.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\QA %28OnDeck%29.pubxml" />
     <None Include="Properties\PublishProfiles\QA.pubxml" />
     <Content Include="Scripts\library\bootstrap-tagsinput\bootstrap-tagsinput.css" />
@@ -622,7 +629,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61777/</IISUrl>
+          <IISUrl>http://localhost:61727/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

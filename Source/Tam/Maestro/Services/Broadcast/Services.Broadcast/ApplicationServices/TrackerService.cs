@@ -1,9 +1,12 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,7 +26,7 @@ namespace Services.Broadcast.ApplicationServices
         LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate);
         BvsLoadDto GetBvsLoadData(DateTime currentDateTime);
         int SaveSchedule(ScheduleSaveRequest request);
-        Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request, string username, bool isSigmaUpload = false);
+        Tuple<List<int>, string> SaveBvsFiles(FileSaveRequest request, string username, bool isSigmaUpload = false);
         string SaveBvsViaFtp(string userName);
         bool ScheduleExists(int estimateIds);
         BvsScrubbingDto GetBvsScrubbingData(int estimateId);
@@ -42,6 +45,22 @@ namespace Services.Broadcast.ApplicationServices
         List<BvsFileSummary> GetBvsFileSummaries();
         bool TrackSchedule(int scheduleId);
         bool DeleteBvsFile(int bvsFileId);
+        List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate);
+        List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);
+
+        /// <summary>
+        /// Generates spot tracker report for requested proposal 
+        /// </summary>
+        /// <param name="proposalId">Proposal Identifier</param>
+        /// <returns>ReportOutput contains spot tracker report file name and the report which is represented as a stream of zip archive</returns>
+        ReportOutput GenerateSpotTrackerReport(int proposalId);
+
+        /// <summary>
+        /// Returns spot tracker report data for requested proposal 
+        /// </summary>
+        /// <param name="proposalId">Proposal Identifier</param>
+        /// <returns>Spot tracker report data model</returns>
+        SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId);
     }
 
     public class TrackerService : ITrackerService
@@ -51,8 +70,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IBvsPostingEngine _BvsPostingEngine;
         private readonly ITrackingEngine _TrackingEngine;
-        private readonly IScxConverter _ScxConverter;
+        private readonly IScxScheduleConverter _ScxConverter;
         private readonly IBvsConverter _BvsConverter;
+        private readonly ISigmaConverter _SigmaConverter;
         private readonly IAssemblyScheduleConverter _AssemblyFileConverter;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
@@ -62,20 +82,35 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly INsiPostingBookService _NsiPostingBookService;
+        private readonly IFileService _FileService;
+        private readonly IProposalRepository _ProposalRepository;
+        private readonly IProposalBuyRepository _ProposalBuyRepository;
+        private readonly ISpotTrackerRepository _SpotTrackerRepository;
+        private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
 
-        public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory, IBvsPostingEngine bvsPostingEngine,
-            ITrackingEngine trackingEngine, IScxConverter scxConverter, IBvsConverter bvsConverter,
-            IAssemblyScheduleConverter assemblyFileConverter,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IBroadcastAudiencesCache audiencesCache,
-            IDefaultScheduleConverter defaultScheduleConverter, IDaypartCache dayPartCache,
-            IQuarterCalculationEngine quarterCalculationEngine, ISMSClient smsClient,
-            IImpressionAdjustmentEngine impressionAdjustmentEngine, INsiPostingBookService nsiPostingBookService)
+        private readonly string _CsvFileExtension = ".csv";
+
+        public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory
+            , IBvsPostingEngine bvsPostingEngine
+            , ITrackingEngine trackingEngine
+            , IScxScheduleConverter scxConverter
+            , IBvsConverter bvsConverter
+            , ISigmaConverter sigmaConverter
+            , IAssemblyScheduleConverter assemblyFileConverter
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IBroadcastAudiencesCache audiencesCache, IDefaultScheduleConverter defaultScheduleConverter
+            , IDaypartCache dayPartCache, IQuarterCalculationEngine quarterCalculationEngine
+            , ISMSClient smsClient
+            , IImpressionAdjustmentEngine impressionAdjustmentEngine
+            , INsiPostingBookService nsiPostingBookService
+            , IFileService fileService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BvsPostingEngine = bvsPostingEngine;
             _TrackingEngine = trackingEngine;
             _ScxConverter = scxConverter;
             _BvsConverter = bvsConverter;
+            _SigmaConverter = sigmaConverter;
             _AssemblyFileConverter = assemblyFileConverter;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _AudiencesCache = audiencesCache;
@@ -85,6 +120,11 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _NsiPostingBookService = nsiPostingBookService;
+            _FileService = fileService;
+            _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            _ProposalBuyRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
+            _SpotTrackerRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotTrackerRepository>();
+            _MediaMonthAndWeekAggregateRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IMediaMonthAndWeekAggregateRepository>();
         }
 
         public LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate)
@@ -111,7 +151,7 @@ namespace Services.Broadcast.ApplicationServices
             return ret;
         }
 
-        internal List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
+        public List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate)
         {
             var displaySchedules = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().GetDisplaySchedules(startDate, endDate);
 
@@ -357,7 +397,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Returns bvsID.
         /// </summary>
-        public Tuple<List<int>, string> SaveBvsFiles(BvsSaveRequest request, string username, bool isSigmaUpload = false)
+        public Tuple<List<int>, string> SaveBvsFiles(FileSaveRequest request, string username, bool isSigmaUpload = false)
         {
             var duplicateMessage = string.Empty;
 
@@ -366,14 +406,14 @@ namespace Services.Broadcast.ApplicationServices
             var errorMessage = string.Empty;
             var hasErrors = false;
 
-            foreach (var requestBvsFile in request.BvsFiles)
+            foreach (var requestBvsFile in request.Files)
             {
                 try
                 {
-                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestBvsFile.BvsFileName);
+                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestBvsFile.FileName);
 
                     //compute file hash to check against duplicate files being loaded
-                    var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestBvsFile.BvsStream));
+                    var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestBvsFile.StreamData));
 
                     //check if file has already been loaded
                     if (bvsRepo.GetBvsFileIdByHash(hash) > 0)
@@ -383,16 +423,16 @@ namespace Services.Broadcast.ApplicationServices
 
                     //we made it this far, it must be a new file - persist the file
                     string message = string.Empty;
-                    BvsFile bvsFile = new BvsFile();
-                    Dictionary<BvsFileDetailKey, int> lineInfo = new Dictionary<BvsFileDetailKey, int>();
+                    TrackerFile<BvsFileDetail> bvsFile = new TrackerFile<BvsFileDetail>();
+                    Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
 
                     if (isSigmaUpload)
                     {
-                        bvsFile = _BvsConverter.ExtractSigmaData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out lineInfo);
+                        bvsFile = _SigmaConverter.ExtractSigmaData(requestBvsFile.StreamData, hash, username, requestBvsFile.FileName, out lineInfo);
                     }
                     else
                     {
-                        bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.BvsStream, hash, username, requestBvsFile.BvsFileName, out message, out lineInfo);
+                        bvsFile = _BvsConverter.ExtractBvsData(requestBvsFile.StreamData, hash, username, requestBvsFile.FileName, out message, out lineInfo);
                     }
 
                     if (!string.IsNullOrEmpty(message))
@@ -401,8 +441,8 @@ namespace Services.Broadcast.ApplicationServices
                         hasErrors = true;
                     }
 
-                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.BvsFileDetails.ToList());
-                    bvsFile.BvsFileDetails = filterResult.New;
+                    var filterResult = bvsRepo.FilterOutExistingDetails(bvsFile.FileDetails.ToList());
+                    bvsFile.FileDetails = filterResult.New;
 
                     if (filterResult.Ignored.Any())
                     {
@@ -410,7 +450,7 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Ignored)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}</li>",
-                                lineInfo[new BvsFileDetailKey(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
+                                lineInfo[new TrackerFileDetailKey<BvsFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
                         }
 
                         duplicateMessage += "</ul>";
@@ -422,19 +462,19 @@ namespace Services.Broadcast.ApplicationServices
                         foreach (var file in filterResult.Updated)
                         {
                             duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}, Program Name {8}</li>",
-                                lineInfo[new BvsFileDetailKey(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
+                                lineInfo[new TrackerFileDetailKey<BvsFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
                         }
 
                         duplicateMessage += "</ul>";
                     }
 
                     bvsIds.Add(bvsRepo.SaveBvsFile(bvsFile));
-                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestBvsFile.BvsFileName);
+                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestBvsFile.FileName);
                 }
                 catch (Exception e)
                 {
                     hasErrors = true;
-                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestBvsFile.BvsFileName, e.Message);
+                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestBvsFile.FileName, e.Message);
                 }
             }
 
@@ -514,8 +554,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         try
                         {
-                            var request = new BvsSaveRequest();
-                            request.BvsFiles.Add(new BvsFileRequest { BvsFileName = fileName, BvsStream = stream });
+                            var request = new FileSaveRequest();
+                            request.Files.Add(new FileRequest { FileName = fileName, StreamData = stream });
 
                             //Requirements are to ignore this for FTP for now
                             SaveBvsFiles(request, userName);
@@ -659,7 +699,7 @@ namespace Services.Broadcast.ApplicationServices
             return scrubbingDto;
         }
 
-        internal List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
+        public List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule)
         {
             var details = _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().GetBvsTrackingDetailsByEstimateId(estimateId);
 
@@ -819,6 +859,150 @@ namespace Services.Broadcast.ApplicationServices
             _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().DeleteById(bvsFileId);
             return true;
         }
+
+        public ReportOutput GenerateSpotTrackerReport(int proposalId)
+        {
+            var spotTrackerReportData = GetSpotTrackerReportDataForProposal(proposalId);
+            var reportGenerator = new SpotTrackerReportGenerator();
+            return reportGenerator.Generate(spotTrackerReportData);
     }
+
+        public SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId)
+        {
+            var proposal = _ProposalRepository.GetProposalById(proposalId);
+
+            var report = new SpotTrackerReport
+            {
+                Id = proposal.Id ?? default(int),
+                Name = proposal.ProposalName,
+                Details = proposal.Details.Select(d => new SpotTrackerReport.Detail
+                {
+                    Id = d.Id ?? default(int)
+                }).ToList()
+            };
+
+            _SetReportDetailBuys(report);
+
+            // We generate a report file only for details with proposal buys
+            report.Details = report.Details.Where(x => x.ProposalBuyFile != null).ToList();
+
+            _SetSpotsData(report);
+
+            return report;
 }
 
+        private void _SetReportDetailBuys(SpotTrackerReport report)
+        {
+            var detailIds = report.Details.Select(x => x.Id);
+            var proposalBuys = _ProposalBuyRepository.GetProposalBuyFilesForProposalDetails(detailIds);
+
+            foreach (var reportDetail in report.Details)
+            {
+                reportDetail.ProposalBuyFile = proposalBuys.SingleOrDefault(x => x.ProposalVersionDetailId == reportDetail.Id);
+            }
+        }
+
+        private void _SetSpotsData(SpotTrackerReport report)
+        {
+            var proposalBuys = report.Details.Select(x => x.ProposalBuyFile);
+            var estimateIds = proposalBuys.Select(x => x.EstimateId);
+            var spotTrackerFileDetails = _SpotTrackerRepository.GetSpotTrackerFileDetailsByEstimateIds(estimateIds);
+
+            foreach (var reportDetail in report.Details)
+            {
+                reportDetail.Weeks = _GetWeeklySpotsDataForReportDetail(reportDetail.ProposalBuyFile, spotTrackerFileDetails);
+            }
+        }
+
+        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForReportDetail(ProposalBuyFile buy, IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
+        {
+            var spotTrackerFileDetailsByEstimateId = spotTrackerFileDetails.Where(x => x.EstimateId == buy.EstimateId);
+            var deliveredSpotsData = _GetDeliveredSpotsData(spotTrackerFileDetailsByEstimateId);
+
+            return buy.Details
+                .SelectMany(x => x.Weeks, (detail, week) => new
+                {
+                    detail.Station,
+                    week.MediaWeek,
+                    week.Spots
+                })
+                .GroupBy(x => new { x.MediaWeek.Id, x.MediaWeek.WeekStartDate })
+                .Select(groupingByWeek => new SpotTrackerReport.Detail.Week
+                {
+                    MediaWeekId = groupingByWeek.Key.Id,
+                    StartDate = groupingByWeek.Key.WeekStartDate,
+                    StationSpotsValues = groupingByWeek
+                        .GroupBy(x => new StationGrouping
+                        {
+                            OriginMarket = x.Station.OriginMarket,
+                            Affiliation = x.Station.Affiliation,
+                            LegacyCallLetters = x.Station.LegacyCallLetters
+                        })
+                        .Select(groupingByStation => new SpotTrackerReport.Detail.Week.StationSpotsValue
+                        {
+                            Market = groupingByStation.Key.OriginMarket,
+                            Affiliate = groupingByStation.Key.Affiliation,
+                            Station = groupingByStation.Key.LegacyCallLetters,
+                            SpotsOrdered = groupingByStation.Sum(spots => spots.Spots),
+                            SpotsDelivered = _GetDeliveredSpotsForWeekAndStation(deliveredSpotsData, groupingByWeek.Key.Id, groupingByStation.Key.LegacyCallLetters)
+                        })
+                });
+        }
+
+        private int _GetDeliveredSpotsForWeekAndStation(
+            IEnumerable<DeliveredSpotsValueForStationsForWeek> deliveredSpotsData,
+            int mediaWeekId,
+            string station)
+        {
+            return deliveredSpotsData
+                .SingleOrDefault(x => x.MediaWeekId == mediaWeekId)
+                ?.DeliveredSpotsValueForStations.SingleOrDefault(x => x.Station.Equals(station, StringComparison.InvariantCultureIgnoreCase))?.Spots ?? 0;
+        }
+
+        private IEnumerable<DeliveredSpotsValueForStationsForWeek> _GetDeliveredSpotsData(IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
+        {
+            var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
+            var spotTrackerFileDetailsGroupedByMediaWeek = spotTrackerFileDetails.GroupBy(x => mediaMonthAggregate.GetMediaWeekContainingDate(x.DateAired).Id);
+
+            return spotTrackerFileDetailsGroupedByMediaWeek.Select(spotTrackerFileDetailsForMediaWeek => new DeliveredSpotsValueForStationsForWeek
+            {
+                MediaWeekId = spotTrackerFileDetailsForMediaWeek.Key,
+                DeliveredSpotsValueForStations = spotTrackerFileDetailsForMediaWeek
+                        .GroupBy(x => x.Station, StringComparer.InvariantCultureIgnoreCase)
+                        .Select(x => new DeliveredSpotsValueForStationsForWeek.DeliveredSpotsValueForStation
+                        {
+                            Station = x.Key,
+                            Spots = x.Count()
+                        })
+            });
+        }
+
+        // Only for case-insensitive comparison
+        private class StationGrouping
+        {
+            public string OriginMarket { get; set; }
+
+            public string Affiliation { get; set; }
+
+            public string LegacyCallLetters { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                var stationGrouping = obj as StationGrouping;
+
+                return OriginMarket.Equals(stationGrouping.OriginMarket, StringComparison.InvariantCultureIgnoreCase) &&
+                    Affiliation.Equals(stationGrouping.Affiliation, StringComparison.InvariantCultureIgnoreCase) &&
+                    LegacyCallLetters.Equals(stationGrouping.LegacyCallLetters, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            public override int GetHashCode()
+            {
+                var hashCode = 1677836291;
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(OriginMarket);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Affiliation);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LegacyCallLetters);
+                return hashCode;
+            }
+        }
+    }
+}

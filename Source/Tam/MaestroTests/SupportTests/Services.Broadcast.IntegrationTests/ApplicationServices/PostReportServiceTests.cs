@@ -159,13 +159,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GenerateMyEventsReportTest()
         {
             var expectedFileName = "Test Adve NAV 30 05-30-16.txt";
             var expectedFilePath = @".\Files\" + expectedFileName;
             var myEventsReport = _PostReportService.GenerateMyEventsReport(25999);
+            
             var tempPath = Path.GetTempFileName();
-
+            
             File.WriteAllBytes(tempPath, myEventsReport.Stream.ToArray());
 
             using (var zip = new ZipArchive(myEventsReport.Stream, ZipArchiveMode.Read))
@@ -183,6 +185,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GenerateMultipleMyEventsReportsTest()
         {
             const int expectedNumberOfEntries = 2;

@@ -161,7 +161,7 @@ namespace Services.Broadcast.IntegrationTests
 
     public class FtpServiceStubb_KeepingTrac : FtpServiceStubb_SingleFile
     {
-        public string KeepingTracFile = ".\\Files\\KeepingTracTest.xlsx.txt";
+        public string KeepingTracFile = "KeepingTracTest.xlsx.txt";
         public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)
         {
             return new List<string>()
@@ -171,14 +171,14 @@ namespace Services.Broadcast.IntegrationTests
         }
         protected override string GetFileContents()
         {
-            return File.ReadAllText(KeepingTracFile);
+            return File.ReadAllText(".\\Files\\" + KeepingTracFile);
         }
 
     }
 
     public class FtpServiceStubb_KeepingTrac_BadTime : FtpServiceStubb_SingleFile
     {
-        public string KeepingTracFile = ".\\Files\\KeepingTracTest.xlsx.BadTimes.txt";
+        public string KeepingTracFile = "KeepingTracTest.xlsx.BadTimes.txt";
         public override List<string> GetFileList(NetworkCredential credentials, string remoteFTPPath)
         {
             return new List<string>()
@@ -188,7 +188,7 @@ namespace Services.Broadcast.IntegrationTests
         }
         protected override string GetFileContents()
         {
-            return File.ReadAllText(KeepingTracFile);
+            return File.ReadAllText(".\\Files\\" + KeepingTracFile);
         }
 
     }

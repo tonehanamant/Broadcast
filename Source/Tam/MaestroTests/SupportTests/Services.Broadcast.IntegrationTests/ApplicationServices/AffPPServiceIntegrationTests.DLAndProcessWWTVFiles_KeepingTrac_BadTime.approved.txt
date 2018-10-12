@@ -1,5 +1,9 @@
 ﻿{
-  "AffidavitSaveResults": [
+  "FailedDownloads": [],
+  "FilesFoundToProcess": [
+    "KeepingTracTest.xlsx.BadTimes.txt"
+  ],
+  "SaveResults": [
     {
       "ValidationResults": [
         {
@@ -9,10 +13,6 @@
         }
       ]
     }
-  ],
-  "FailedDownloads": [],
-  "FilesFoundToProcess": [
-    ".\\Files\\KeepingTracTest.xlsx.BadTimes.txt"
   ],
   "ValidationErrors": {
     "KeepingTracTest.xlsx.BadTimes.txt": [

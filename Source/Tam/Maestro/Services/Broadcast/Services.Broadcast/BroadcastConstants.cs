@@ -11,5 +11,7 @@
         public static readonly int OpenMarketSourceId = 1;
 
         public static string EMAIL_PROFILE_SEED = "34oqdfn201@#4-u34nssk10Q@94ihaefje34092";
+
+        public const int LogoCachingDurationInMinutes = 60;
     }
 }

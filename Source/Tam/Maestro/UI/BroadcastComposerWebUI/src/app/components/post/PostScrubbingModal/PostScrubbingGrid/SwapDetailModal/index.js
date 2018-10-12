@@ -47,7 +47,7 @@ export class SwapDetailModal extends Component {
     this.props.modal.properties.selections.forEach((scrub) => {
       scrubbingIds.push(scrub.ScrubbingClientId);
     });
-    const params = { ProposalDetailId: this.state.selectedDetailOption.Id, AffidavitScrubbingIds: scrubbingIds };
+    const params = { ProposalDetailId: this.state.selectedDetailOption.Id, ScrubbingIds: scrubbingIds };
     // console.log('save swap detail', params);
     this.props.swapProposalDetail(params);
   }

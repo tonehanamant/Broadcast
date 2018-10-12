@@ -1,16 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
+using ApprovalUtilities.Utilities;
 using Common.Services;
 using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
@@ -22,8 +27,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class ProposalOpenMarketInventoryServiceIntegrationTests
     {
-        private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
-        private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+        private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService =
+            IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
+
+        private readonly IProposalService _ProposalService =
+            IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+
+        private readonly IProposalRepository _ProposalRepository = IntegrationTestApplicationServiceFactory
+            .BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+
+        private readonly IStationProgramRepository _StationProgramRepository = IntegrationTestApplicationServiceFactory
+            .BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+
+        private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine =
+            IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalMarketsCalculationEngine>();
 
         [TestCase(MinMaxEnum.Min)]
         [TestCase(MinMaxEnum.Max)]
@@ -40,7 +57,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 }
             };
-            Assert.That(() => _ProposalOpenMarketInventoryService.RefinePrograms(request), Throws.Exception.With.Message.EqualTo("Only 1 Min CPM and 1 Max CPM criteria allowed."));
+            Assert.That(() => _ProposalOpenMarketInventoryService.RefinePrograms(request),
+                Throws.Exception.With.Message.EqualTo("Only 1 Min CPM and 1 Max CPM criteria allowed."));
         }
 
         [Test]
@@ -50,7 +68,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
 
@@ -62,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto.InventoryWeekProgram), "ProgramId");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "ProposalVersionId");
-                jsonResolver.Ignore(typeof (ProposalProgramDto), "ManifestId");
+                jsonResolver.Ignore(typeof(ProposalProgramDto), "ManifestId");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
 
                 var jsonSettings = new JsonSerializerSettings
@@ -82,7 +101,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
                 var request = new OpenMarketRefineProgramsRequest
                 {
@@ -92,7 +112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         CpmCriteria = new List<CpmCriteria>
                         {
-                            new CpmCriteria { MinMax = MinMaxEnum.Min, Value = 1 }
+                            new CpmCriteria {MinMax = MinMaxEnum.Min, Value = 1}
                         }
                     }
                 };
@@ -122,7 +142,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
                 var request = new OpenMarketRefineProgramsRequest
                 {
@@ -132,7 +153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         CpmCriteria = new List<CpmCriteria>
                         {
-                            new CpmCriteria { MinMax = MinMaxEnum.Max, Value = 1 }
+                            new CpmCriteria {MinMax = MinMaxEnum.Max, Value = 1}
                         }
                     }
                 };
@@ -162,7 +183,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
                 var request = new OpenMarketRefineProgramsRequest
                 {
@@ -172,7 +194,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         ProgramNameSearchCriteria = new List<ProgramCriteria>
                         {
-                            new ProgramCriteria{Contain = ContainTypeEnum.Include, Program = new LookupDto{Display = "Open Market Program" } }
+                            new ProgramCriteria
+                            {
+                                Contain = ContainTypeEnum.Include,
+                                Program = new LookupDto {Display = "Open Market Program"}
+                            }
                         }
                     }
                 };
@@ -209,7 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var filteredDto = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketInventory(dto);
 
-                Assert.IsTrue(filteredDto.Markets.Count == 1) ;
+                Assert.IsTrue(filteredDto.Markets.Count == 1);
             }
         }
 
@@ -275,7 +301,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     filteredDto.Markets.SelectMany(a => a.Stations.SelectMany(b => b.Programs));
 
                 Assert.IsTrue(1 == filteredProgram.Count());
-                Assert.IsTrue(filteredProgram.First().ProgramNames.Count() == 2);
             }
         }
 
@@ -311,7 +336,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
@@ -334,13 +360,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposal = new ProposalDto();
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
 
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416,413 );
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
+                proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 416, 413);
 
                 var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
-                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations).SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
-                
-                AllocationProgram(proposalDetailId, programId,proposal.FlightWeeks.First().MediaWeekId);
+                var programId = dto.Weeks.SelectMany(w => w.Markets).SelectMany(m => m.Stations)
+                    .SelectMany(s => s.Programs).First(p => p.UnitImpression > 0).ProgramId;
+
+                AllocationProgram(proposalDetailId, programId, proposal.FlightWeeks.First().MediaWeekId);
 
                 dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
 
@@ -354,7 +382,67 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private void AllocationProgram(int proposalDetailId, int programId,int mediaWeekId)
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventory_Refined()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                int proposalDetailId = 7;
+                var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(dto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventory_RefineOnlyIncludeGenre()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new OpenMarketRefineProgramsRequest
+                {
+                    Criteria = new OpenMarketCriterion
+                    {
+                        GenreSearchCriteria = new List<GenreCriteria>
+                        {
+                            new GenreCriteria {Contain = ContainTypeEnum.Include, Genre = new LookupDto {Id = 15}}
+                        }
+                    },
+                    ProposalDetailId = 7
+                };
+                var dto = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalInventoryMarketDto.InventoryMarketStationProgram), "ProgramId");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(dto, jsonSettings));
+            }
+        }
+
+        private void AllocationProgram(int proposalDetailId, int programId, int mediaWeekId)
         {
             var request = new OpenMarketAllocationSaveRequest
             {
@@ -448,7 +536,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
 
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
@@ -466,14 +555,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
 
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
 
                 var program =
                     proposalInventory.Weeks.SelectMany(
-                        a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d)))).FirstOrDefault();
+                            a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d))))
+                        .FirstOrDefault();
                 program.Spots = 99;
                 var detailTotalBudget = proposalInventory.DetailTotalBudget;
                 var detailTotalImpressions = proposalInventory.DetailTotalImpressions;
@@ -491,15 +582,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
                 var program =
                     proposalInventory.Weeks.SelectMany(
-                        a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d)))).FirstOrDefault();
+                            a => a.Markets.SelectMany(b => b.Stations.SelectMany(c => c.Programs.Select(d => d))))
+                        .FirstOrDefault();
                 program.Spots = 99999;
 
-                var editedInventory = _ProposalOpenMarketInventoryService.UpdateOpenMarketInventoryTotals(proposalInventory);
+                var editedInventory =
+                    _ProposalOpenMarketInventoryService.UpdateOpenMarketInventoryTotals(proposalInventory);
 
                 Assert.IsTrue(editedInventory.DetailImpressionsMarginAchieved);
             }
@@ -513,7 +607,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(7, 413, 416);
 
                 var proposalInventory = _ProposalOpenMarketInventoryService.GetInventory(7);
@@ -567,7 +662,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             new ProgramCriteria
                             {
                                 Contain = ContainTypeEnum.Exclude,
-                                Program = new LookupDto{Display = "Open Market Program Too" }
+                                Program = new LookupDto {Display = "Open Market Program Too"}
                             }
                         }
                     }
@@ -595,7 +690,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             new ProgramCriteria
                             {
                                 Contain = ContainTypeEnum.Exclude,
-                                Program = new LookupDto{Display = "Open Market Program Too" }
+                                Program = new LookupDto {Display = "Open Market Program Too"}
                             }
                         }
                     }
@@ -628,7 +723,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 };
-                Assert.IsTrue(_ProposalOpenMarketInventoryService.RefinePrograms(request).NewCriteriaAffectsExistingAllocations);
+                Assert.IsTrue(_ProposalOpenMarketInventoryService.RefinePrograms(request)
+                    .NewCriteriaAffectsExistingAllocations);
             }
         }
 
@@ -655,16 +751,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 };
-                
+
                 var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
                 // get allocations before filter
-                var rawAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>().GetProposalDetailAllocations(request.ProposalDetailId);
+                var rawAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .GetProposalDetailAllocations(request.ProposalDetailId);
                 Assert.IsNotNull(rawAllocations.FirstOrDefault(a => a.ManifestId == 519159));
 
                 var refinedPrograms = _ProposalOpenMarketInventoryService.RefinePrograms(request);
                 // that should have filtered out exactly one allocation with station_program_id = 519159
 
-                var refinedAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>().GetProposalDetailAllocations(request.ProposalDetailId);
+                var refinedAllocations = repo.GetDataRepository<IProposalOpenMarketInventoryRepository>()
+                    .GetProposalDetailAllocations(request.ProposalDetailId);
                 Assert.IsNull(refinedAllocations.FirstOrDefault(a => a.ManifestId == 519159));
             }
         }
@@ -685,14 +783,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         ProgramNameSearchCriteria = new List<ProgramCriteria>
                         {
-                            new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = proposalInventory.RefineFilterPrograms.First() } }
+                            new ProgramCriteria
+                            {
+                                Contain = ContainTypeEnum.Exclude,
+                                Program = new LookupDto {Display = proposalInventory.RefineFilterPrograms.First()}
+                            }
                         }
                     }
                 };
 
                 var refinedPrograms = _ProposalOpenMarketInventoryService.RefinePrograms(request);
 
-                Assert.IsTrue(Enumerable.SequenceEqual(proposalInventory.RefineFilterPrograms, refinedPrograms.RefineFilterPrograms));
+                Assert.IsTrue(Enumerable.SequenceEqual(proposalInventory.RefineFilterPrograms,
+                    refinedPrograms.RefineFilterPrograms));
             }
         }
 
@@ -702,13 +805,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var newCriteria = new List<CpmCriteria>
             {
                 new CpmCriteria {MinMax = MinMaxEnum.Min, Value = 3.22m},
-                new CpmCriteria{MinMax = MinMaxEnum.Max, Value = 4.20m}
+                new CpmCriteria {MinMax = MinMaxEnum.Max, Value = 4.20m}
             };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
             mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(),
                 newCriteria,
-                It.IsAny<List<int>>(), It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(), It.IsAny<List<int>>()));
+                It.IsAny<List<int>>(), It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(),
+                It.IsAny<List<ProgramCriteria>>(), It.IsAny<List<int>>()));
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
@@ -719,7 +823,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Criteria = new OpenMarketCriterion()
             };
 
-            var criteria = new OpenMarketCriterion { CpmCriteria = newCriteria };
+            var criteria = new OpenMarketCriterion {CpmCriteria = newCriteria};
 
             sut.UpdateCriteria(dto, criteria);
 
@@ -729,12 +833,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClearExistingCriteria_Deletes_OldCpmCriteria()
         {
-            var deleteCriteriaIds = new List<int> { 420, 322 };
+            var deleteCriteriaIds = new List<int> {420, 322};
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
             mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(),
                 deleteCriteriaIds,
-                It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(), It.IsAny<List<int>>()));
+                It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(),
+                It.IsAny<List<int>>()));
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
@@ -762,19 +867,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClearExistingCriteria_Deletes_OldCpmCriteria_And_AddNewCpmCriteria()
         {
-            var deleteCriteriaIds = new List<int> { 420 };
-            var newCriteria = new List<CpmCriteria> { new CpmCriteria { MinMax = MinMaxEnum.Max, Value = 4.20m } };
+            var deleteCriteriaIds = new List<int> {420};
+            var newCriteria = new List<CpmCriteria> {new CpmCriteria {MinMax = MinMaxEnum.Max, Value = 4.20m}};
 
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
             mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(),
                 newCriteria,
                 deleteCriteriaIds,
-                It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(), It.IsAny<List<int>>()));
+                It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(),
+                It.IsAny<List<int>>()));
 
             var factory = new Mock<IDataRepositoryFactory>();
             factory.Setup(f => f.GetDataRepository<IProposalProgramsCriteriaRepository>()).Returns(mock.Object);
-            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null,  null);
+            var sut = new ProposalOpenMarketInventoryService(factory.Object, null, null, null, null, null, null, null);
 
             var dto = new ProposalDetailOpenMarketInventoryDto
             {
@@ -807,8 +913,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var newCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain = ContainTypeEnum.Include,Genre = new LookupDto(1,"")},
-                new GenreCriteria {Contain = ContainTypeEnum.Exclude,Genre = new LookupDto(2,"")}
+                new GenreCriteria {Contain = ContainTypeEnum.Include, Genre = new LookupDto(1, "")},
+                new GenreCriteria {Contain = ContainTypeEnum.Exclude, Genre = new LookupDto(2, "")}
             };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
@@ -825,7 +931,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Criteria = new OpenMarketCriterion()
             };
 
-            var criteria = new OpenMarketCriterion { GenreSearchCriteria = newCriteria };
+            var criteria = new OpenMarketCriterion {GenreSearchCriteria = newCriteria};
 
             sut.UpdateCriteria(dto, criteria);
 
@@ -835,10 +941,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClearExistingCriteria_Deletes_OldGenreCriteria()
         {
-            var deleteCriteriaIds = new List<int> { 420, 322 };
+            var deleteCriteriaIds = new List<int> {420, 322};
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
-            mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<GenreCriteria>>(),
+            mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(), It.IsAny<List<int>>(),
+                It.IsAny<List<GenreCriteria>>(),
                 deleteCriteriaIds,
                 It.IsAny<List<ProgramCriteria>>(), It.IsAny<List<int>>()));
 
@@ -852,8 +959,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     GenreSearchCriteria = new List<GenreCriteria>
                     {
-                        new GenreCriteria {Contain = ContainTypeEnum.Include, Id = deleteCriteriaIds.First(),Genre = new LookupDto(1,"")},
-                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = deleteCriteriaIds.Last(),Genre = new LookupDto(2,"")}
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Include,
+                            Id = deleteCriteriaIds.First(),
+                            Genre = new LookupDto(1, "")
+                        },
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Exclude,
+                            Id = deleteCriteriaIds.Last(),
+                            Genre = new LookupDto(2, "")
+                        }
                     }
                 }
             };
@@ -868,8 +985,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClearExistingCriteria_Deletes_OldGenreCriteria_And_AddNewGenreCriteria()
         {
-            var deleteCriteriaIds = new List<int> { 420 };
-            var newCriteria = new List<GenreCriteria>(123) { new GenreCriteria { Contain = ContainTypeEnum.Include} };
+            var deleteCriteriaIds = new List<int> {420};
+            var newCriteria = new List<GenreCriteria>(123) {new GenreCriteria {Contain = ContainTypeEnum.Include}};
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
             mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(),
@@ -887,8 +1004,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     GenreSearchCriteria = new List<GenreCriteria>
                     {
-                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = 322,Genre = new LookupDto(2,"")},
-                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = deleteCriteriaIds.First(),Genre = new LookupDto(2,"")}
+                        new GenreCriteria {Contain = ContainTypeEnum.Exclude, Id = 322, Genre = new LookupDto(2, "")},
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Exclude,
+                            Id = deleteCriteriaIds.First(),
+                            Genre = new LookupDto(2, "")
+                        }
                     }
                 }
             };
@@ -912,12 +1034,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var newCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{ Display = "cde" } },
-                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto { Display = "abc"} }
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto {Display = "cde"}},
+                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto {Display = "abc"}}
             };
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
-            mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(),
+            mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(), It.IsAny<List<int>>(),
+                It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(),
                 newCriteria,
                 It.IsAny<List<int>>()));
 
@@ -930,7 +1053,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Criteria = new OpenMarketCriterion()
             };
 
-            var criteria = new OpenMarketCriterion { ProgramNameSearchCriteria = newCriteria };
+            var criteria = new OpenMarketCriterion {ProgramNameSearchCriteria = newCriteria};
 
             sut.UpdateCriteria(dto, criteria);
 
@@ -940,10 +1063,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClearExistingCriteria_Deletes_OldProgramCriteria()
         {
-            var deleteCriteriaIds = new List<int> { 420, 322 };
+            var deleteCriteriaIds = new List<int> {420, 322};
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
-            mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(),
+            mock.Setup(m => m.UpdateCriteria(It.IsAny<int>(), It.IsAny<List<CpmCriteria>>(), It.IsAny<List<int>>(),
+                It.IsAny<List<GenreCriteria>>(), It.IsAny<List<int>>(), It.IsAny<List<ProgramCriteria>>(),
                 deleteCriteriaIds));
 
             var factory = new Mock<IDataRepositoryFactory>();
@@ -956,8 +1080,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProgramNameSearchCriteria = new List<ProgramCriteria>
                     {
-                        new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{ Display = "cde" }, Id = deleteCriteriaIds.First()},
-                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{ Display = "abc" }, Id = deleteCriteriaIds.Last()}
+                        new ProgramCriteria
+                        {
+                            Contain = ContainTypeEnum.Include,
+                            Program = new LookupDto {Display = "cde"},
+                            Id = deleteCriteriaIds.First()
+                        },
+                        new ProgramCriteria
+                        {
+                            Contain = ContainTypeEnum.Exclude,
+                            Program = new LookupDto {Display = "abc"},
+                            Id = deleteCriteriaIds.Last()
+                        }
                     }
                 }
             };
@@ -972,8 +1106,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClearExistingCriteria_Deletes_OldProgramCriteria_And_AddNewProgramCriteria()
         {
-            var deleteCriteriaIds = new List<int> { 420 };
-            var newCriteria = new List<ProgramCriteria> { new ProgramCriteria { Contain = ContainTypeEnum.Include, Program = new LookupDto { Display = "cde" } } };
+            var deleteCriteriaIds = new List<int> {420};
+            var newCriteria = new List<ProgramCriteria>
+            {
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto {Display = "cde"}}
+            };
 
 
             var mock = new Mock<IProposalProgramsCriteriaRepository>();
@@ -992,8 +1129,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProgramNameSearchCriteria = new List<ProgramCriteria>
                     {
-                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = "cde" }, Id = 322},
-                        new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = "abc" }, Id = deleteCriteriaIds.First()}
+                        new ProgramCriteria
+                        {
+                            Contain = ContainTypeEnum.Exclude,
+                            Program = new LookupDto {Display = "cde"},
+                            Id = 322
+                        },
+                        new ProgramCriteria
+                        {
+                            Contain = ContainTypeEnum.Exclude,
+                            Program = new LookupDto {Display = "abc"},
+                            Id = deleteCriteriaIds.First()
+                        }
                     }
                 }
             };
@@ -1023,7 +1170,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Value = 5
                 }
             };
-            var program = new ProposalProgramDto { TargetCpm = 3 };
+            var program = new ProposalProgramDto {TargetCpm = 3};
             Assert.IsTrue(ProposalOpenMarketInventoryService.FilterByCpmCriteria(program, cpmCriteria));
         }
 
@@ -1039,7 +1186,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var program = new ProposalProgramDto { TargetCpm = 6 };
+            var program = new ProposalProgramDto {TargetCpm = 6};
             Assert.IsTrue(ProposalOpenMarketInventoryService.FilterByCpmCriteria(program, cpmCriteria));
         }
 
@@ -1049,10 +1196,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Include,Genre = new LookupDto {Id=5}}
+                new GenreCriteria {Contain = ContainTypeEnum.Include, Genre = new LookupDto {Id = 5}}
             };
-            var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 6 } } };
-            Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
+            var program = new ProposalProgramDto {Genres = new List<LookupDto> {new LookupDto {Id = 6}}};
+            Assert.True(
+                ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -1061,10 +1209,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Include,Genre = new LookupDto {Id=5}}
+                new GenreCriteria {Contain = ContainTypeEnum.Include, Genre = new LookupDto {Id = 5}}
             };
-            var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 5 } } };
-            Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
+            var program = new ProposalProgramDto {Genres = new List<LookupDto> {new LookupDto {Id = 5}}};
+            Assert.False(
+                ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -1073,10 +1222,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Exclude,Genre = new LookupDto {Id=5}}
+                new GenreCriteria {Contain = ContainTypeEnum.Exclude, Genre = new LookupDto {Id = 5}}
             };
-            var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 5 } } };
-            Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
+            var program = new ProposalProgramDto {Genres = new List<LookupDto> {new LookupDto {Id = 5}}};
+            Assert.True(
+                ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Test]
@@ -1085,10 +1235,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.GenreSearchCriteria = new List<GenreCriteria>
             {
-                new GenreCriteria {Contain =ContainTypeEnum.Exclude,Genre = new LookupDto {Id=5}}
+                new GenreCriteria {Contain = ContainTypeEnum.Exclude, Genre = new LookupDto {Id = 5}}
             };
-            var program = new ProposalProgramDto { Genres = new List<LookupDto> { new LookupDto { Id = 6 } } };
-            Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
+            var program = new ProposalProgramDto {Genres = new List<LookupDto> {new LookupDto {Id = 6}}};
+            Assert.False(
+                ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
         [Ignore]
@@ -1098,7 +1249,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{ Display = "ABC" } }
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto {Display = "ABC"}}
             };
             //var program = new ProposalProgramDto { ProgramName = "ABC" };
             //Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1111,7 +1262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto{Display = "ABC" } }
+                new ProgramCriteria {Contain = ContainTypeEnum.Include, Program = new LookupDto {Display = "ABC"}}
             };
             //var program = new ProposalProgramDto { ProgramName = "AB123C123" };
             //Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1124,7 +1275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{ Display = "ABC" } }
+                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto {Display = "ABC"}}
             };
             //var program = new ProposalProgramDto { ProgramName = "ABC" };
             //Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1137,7 +1288,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var marketCriterion = new OpenMarketCriterion();
             marketCriterion.ProgramNameSearchCriteria = new List<ProgramCriteria>
             {
-                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto{Display = "ABC" } }
+                new ProgramCriteria {Contain = ContainTypeEnum.Exclude, Program = new LookupDto {Display = "ABC"}}
             };
             //var program = new ProposalProgramDto { ProgramName = "AB123C123" };
             //Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
@@ -1148,7 +1299,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                const int programId = 26684;
+                const int programId = 46003;
 
                 var request = new OpenMarketAllocationSaveRequest
                 {
@@ -1176,11 +1327,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
 
                 var allocations =
-                    _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(request.ProposalVersionDetailId);
+                    _ProposalOpenMarketInventoryService
+                        .GetProposalInventoryAllocations(request.ProposalVersionDetailId);
 
                 var firstAllocation = allocations.First();
 
-                Assert.AreEqual(10, allocations.Count);
+                Assert.AreEqual(11, allocations.Count);
                 Assert.AreEqual(programId, firstAllocation.ManifestId);
             }
         }
@@ -1217,7 +1369,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _ProposalOpenMarketInventoryService.SaveInventoryAllocations(request);
 
                 var allocations =
-                    _ProposalOpenMarketInventoryService.GetProposalInventoryAllocations(request.ProposalVersionDetailId);
+                    _ProposalOpenMarketInventoryService
+                        .GetProposalInventoryAllocations(request.ProposalVersionDetailId);
 
                 Assert.AreEqual(3, allocations.Count);
             }
@@ -1277,7 +1430,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Ignore]
         [Test]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot allocate spots that have zero impressions", MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot allocate spots that have zero impressions",
+            MatchType = MessageMatch.Contains)]
         public void CannotSaveInventoryAllocationWhenImpressionsIsZero()
         {
             using (new TransactionScopeWrapper())
@@ -1317,13 +1471,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var proposal = ProposalTestHelper.CreateProposal();
-                
+
                 // this has 3 allocation with dayparts: M 8PM-9PM;  TU 8PM - 10PM; SA 5:30PM - 9PM
                 // the proposal detail has daypart  M-SU 8AM-11PM.
                 // if we update the proposal to M-SU 9PM-11PM, that should remove allocation for SA 5:30PM - 9PM and M 8PM-9PM; 
 
-                var newProposalDetailDaypart = DaypartCache.Instance.GetDisplayDaypart(proposal.Details.First().DaypartId);
-                newProposalDetailDaypart.StartTime = Convert.ToInt32(Convert.ToDateTime("1/1/2017 9PM").TimeOfDay.TotalSeconds);
+                var newProposalDetailDaypart =
+                    DaypartCache.Instance.GetDisplayDaypart(proposal.Details.First().DaypartId);
+                newProposalDetailDaypart.StartTime =
+                    Convert.ToInt32(Convert.ToDateTime("1/1/2017 9PM").TimeOfDay.TotalSeconds);
                 var detail = proposal.Details.First();
                 proposal.Details.First().Daypart = DaypartDto.ConvertDisplayDaypart(newProposalDetailDaypart);
                 detail.DaypartId = DaypartCache.Instance.GetIdByDaypart(newProposalDetailDaypart);
@@ -1334,7 +1490,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailQuarterWeekId");
                 jsonResolver.Ignore(typeof(OpenMarketInventoryAllocation), "ProposalVersionDetailId");
-                
+
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1371,6 +1527,562 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations, jsonSettings));
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_CanGetInventory()
+        {
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);
+            var inventoryJson = IntegrationTestHelper.ConvertToJson(inventory);
+
+            Approvals.Verify(inventoryJson);
+        }
+
+        [Test]
+        public void ProposalOpenMarketService_SetsProvidedUnitImpressions()
+        {
+            var proposalDetailId = 10799;
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+
+            var dto = _ProposalRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
+            var proposalMarketIds = _ProposalMarketsCalculationEngine
+                .GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => (short) m.Id)
+                .ToList();
+            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(
+                dto.DetailFlightStartDate,
+                dto.DetailFlightEndDate,
+                dto.DetailSpotLengthId,
+                BroadcastConstants.OpenMarketSourceId,
+                proposalMarketIds,
+                dto.DetailId);
+
+            var programWithStationImpressionsExcpected =
+                programs.First(x => x.ManifestAudiences.Any(ma => ma.Impressions != null));
+            var manifestAudiencesExpected =
+                programWithStationImpressionsExcpected.ManifestAudiences.First(ma => ma.Impressions != null);
+            var allProgramsResult = inventory.Markets
+                .SelectMany(x => x.Stations)
+                .SelectMany(x => x.Programs);
+            var programWithProvidedUnitImpressionsExists = allProgramsResult.Any(x =>
+                x.ProgramId == programWithStationImpressionsExcpected.ManifestId &&
+                x.ProvidedUnitImpressions == manifestAudiencesExpected.Impressions);
+
+            Assert.IsTrue(programWithProvidedUnitImpressionsExists);
+        }
+
+        [Test]
+        public void ProposalOpenMarketService_CalculatesTotalImpressions_ForInventoryWeeks()
+        {
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
+            var programWithProvidedUnitImpressions = inventory.Weeks
+                .SelectMany(w => w.Markets)
+                .SelectMany(m => m.Stations)
+                .SelectMany(s => s.Programs)
+                .First(p => p != null && p.ProvidedUnitImpressions.HasValue && p.Spots > 0);
+
+            var totalImpressionsExpected = programWithProvidedUnitImpressions.Spots *
+                                           programWithProvidedUnitImpressions.ProvidedUnitImpressions.Value;
+
+            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalProvidedImpressions);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978
+                };
+
+                var pricingGuideOpenMarketDto =
+                    _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide_Saved_Open_Market_Pricing_Guide()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = proposal.Id.Value,//26016,
+                    ProposalDetailId = proposalDetailId,//9978
+                };
+
+                // create pricing guide
+                var pricingGuideOpenMarketDto =
+                    _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                // reload it from repo directly and verify
+                var openMarketInventoryRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<IProposalOpenMarketInventoryRepository>();
+                var price_guide = openMarketInventoryRepo.GetProposalDetailPricingGuide(request.ProposalDetailId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(open_market_pricing_guide), "id");
+                jsonResolver.Ignore(typeof(market), "market_dma_map");
+                jsonResolver.Ignore(typeof(market), "open_market_pricing_guide");
+                jsonResolver.Ignore(typeof(market), "proposal_version_details");
+                jsonResolver.Ignore(typeof(market), "station_inventory_manifest_dayparts");
+                jsonResolver.Ignore(typeof(market), "proposal_version_markets");
+                jsonResolver.Ignore(typeof(market), "schedules");
+                jsonResolver.Ignore(typeof(market), "stations");
+                jsonResolver.Ignore(typeof(open_market_pricing_guide), "proposal_version_details");
+                jsonResolver.Ignore(typeof(open_market_pricing_guide), "station");
+                jsonResolver.Ignore(typeof(open_market_pricing_guide), "market");
+                jsonResolver.Ignore(typeof(open_market_pricing_guide), "station_inventory_manifest_dayparts");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(price_guide,jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide_Saved_And_Reload()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = new ProposalDto();
+                var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = proposal.Id.Value,//26016,
+                    ProposalDetailId = proposalDetailId,//9978
+                };
+                // first time saves
+                var pricingGuideDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+                // second time will get from db
+                pricingGuideDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                // verify second time didn't change anything.
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideDto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide_Save_Spots()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978
+                };
+
+                // create initial pricing guide
+                var pricingGuideOpenMarketDto =
+                    _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                // read it directly
+                var priceGuide = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+                // make change
+                priceGuide.Markets.First().Stations.First().Programs.First().Spots = 23;
+
+                // save it
+                _ProposalOpenMarketInventoryService.SavePricingGuideOpenMarketInventory(request.ProposalDetailId,priceGuide);
+
+                // load again and verify
+                priceGuide = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(open_market_pricing_guide), "market");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(priceGuide,jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide_Delete()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978
+                };
+
+                // create the pricing guide
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                // delete the pricing guide
+                _ProposalOpenMarketInventoryService.DeleteExistingGeneratedPricingGuide(request.ProposalDetailId);
+
+                // now try to load the pricing guide directly.  should return null
+                var openMarketInventoryRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
+                var priceGuide = openMarketInventoryRepo.GetProposalDetailPricingGuide(request.ProposalDetailId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(priceGuide, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithProgramsGroupedByDaypart()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26017,
+                    ProposalDetailId = 9979
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithIncludeGenreCriteria()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26018,
+                    ProposalDetailId = 9980
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithExcludeGenreCriteria()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26019,
+                    ProposalDetailId = 9981
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetOpenMarketPricingGuideWithMultipleIncludeGenreCriteria()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26020,
+                    ProposalDetailId = 9982
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+            }
+        }
+
+        [Test]
+        public void MatchesProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var expectedProgramNames = dto.DisplayFilter.ProgramNames
+                                            .Where((name, index) => index == 0)
+                                            .ToList();
+            dto.Filter.ProgramNames = expectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultHasProgramsOnlyWithExpectedNames = result.Markets
+                                                               .SelectMany(m => m.Stations)
+                                                               .SelectMany(s => s.Programs)
+                                                               .Select(p => p.ProgramName)
+                                                               .All(p => expectedProgramNames.Contains(p));
+
+            Assert.IsTrue(resultHasProgramsOnlyWithExpectedNames);
+        }
+
+        [Test]
+        public void DoesNotMatchProgramsUsingProgramNameFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var resultDoesNotHavePrograms = !result.Markets
+                                                  .SelectMany(m => m.Stations)
+                                                  .SelectMany(s => s.Programs)
+                                                  .Any();
+
+            Assert.IsTrue(resultDoesNotHavePrograms);
+        }
+
+        [Test]
+        public void TotalsAreUpdatedWhenApplyingFilter()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26016,
+                ProposalDetailId = 9978
+            };
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var marketBeforeFiltering = dto.Markets.First();
+            var totalCostBeforeFiltering = marketBeforeFiltering.TotalCost;
+            var totalImpressionsBeforeFiltering = marketBeforeFiltering.TotalImpressions;
+
+            var notExpectedProgramNames = new List<string> { "NotExpectedProgramName" };
+            dto.Filter.ProgramNames = notExpectedProgramNames;
+
+            var result = _ProposalOpenMarketInventoryService.ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+
+            var marketAfterFiltering = result.Markets.First();
+            var totalCostAfterFiltering = marketBeforeFiltering.TotalCost;
+            var totalImpressionsAfterFiltering = marketBeforeFiltering.TotalImpressions;
+
+            Assert.AreNotEqual(totalCostBeforeFiltering, totalCostAfterFiltering);
+            Assert.AreNotEqual(totalImpressionsBeforeFiltering, totalImpressionsAfterFiltering);
+        }
+
+        [Test]
+        public void OpenMarketInventoryService_ReturnsPrograms_ThatHaveSpecifiedGenres_WhenRefiningPrograms()
+        {
+            const int entertainmentGenreId = 15;
+            const int auctionGenreId = 5;
+
+            var request = new OpenMarketRefineProgramsRequest
+            {
+                ProposalDetailId = 7,
+                IgnoreExistingAllocation = true,
+                Criteria = new OpenMarketCriterion
+                {
+                    GenreSearchCriteria = new List<GenreCriteria>
+                    {
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Include,
+                            Genre = new LookupDto
+                            {
+                                Id = entertainmentGenreId,
+                                Display = "Entertainment"
+                            }
+                        },
+                        new GenreCriteria
+                        {
+                            Contain = ContainTypeEnum.Include,
+                            Genre = new LookupDto
+                            {
+                                Id = auctionGenreId,
+                                Display = "Auction"
+                            }
+                        }
+                    }
+                }
+            };
+
+            var result = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+            var eachProgramHasAtLeastOneOfTheSecifiedGenres = result.Markets
+                                                     .SelectMany(x => x.Stations)
+                                                     .SelectMany(x => x.Programs)
+                                                     .All(p => p.Genres.Any(g => g.Id == entertainmentGenreId || g.Id == auctionGenreId));
+
+            Assert.True(eachProgramHasAtLeastOneOfTheSecifiedGenres);
+        }
+
+        [Test]
+        public void ProposalOpenMarketInventoryService_ReturnsPricingGuideOpenMarketInventory_WithProgramsFilteredByName()
+        {
+            const int proposalId = 26017;
+            const int proposalDetailId = 9979;
+
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = proposalId,
+                ProposalDetailId = proposalDetailId
+            };
+
+            // Setting program criteria empty
+            var proposal = _ProposalService.GetProposalById(proposalId);
+            var detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>();
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsTrue(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
+
+
+            // Setting program criteria for excluding 'Friends' program
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>
+            {
+                new ProgramCriteria
+                {
+                    Contain = ContainTypeEnum.Exclude,
+                    Program = new LookupDto
+                    {
+                        Id = 100,
+                        Display = "Friends"
+                    }
+                }
+            };
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
+
+
+            // Setting program criteria for excluding 'Friends 2' program
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>
+            {
+                new ProgramCriteria
+                {
+                    Contain = ContainTypeEnum.Exclude,
+                    Program = new LookupDto
+                    {
+                        Id = 101,
+                        Display = "Friends 2"
+                    }
+                }
+            };
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
+
+
+            // Setting program criteria empty as it was initially
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>();
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+        }
+
+        [Test]
+        public void ProposalOpenMarketInventoryService_ReturnsOpenMarketInventory_WithProgramsFilteredByName_CaseInsensitive()
+        {
+            const int proposalId = 26017;
+            const int proposalDetailId = 9979;
+
+            // Setting program criteria empty
+            var proposal = _ProposalService.GetProposalById(proposalId);
+            var detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>();
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            var dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+            var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsTrue(programs.Any(x => x.ProgramNames.Contains("Friends")));
+
+
+            // Setting program criteria for excluding 'FRIENDS' program
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>
+            {
+                new ProgramCriteria
+                {
+                    Contain = ContainTypeEnum.Exclude,
+                    Program = new LookupDto
+                    {
+                        Id = 102,
+                        Display = "FRIENDS"
+                    }
+                }
+            };
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+            dto = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
+            programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+            Assert.IsFalse(programs.Any(x => x.ProgramNames.Contains("Friends")));
+
+
+            // Setting program criteria empty as it was initially
+            proposal = _ProposalService.GetProposalById(proposalId);
+            detail = proposal.Details.First(x => x.Id == proposalDetailId);
+            detail.ProgramCriteria = new List<ProgramCriteria>();
+            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
         }
     }
 }

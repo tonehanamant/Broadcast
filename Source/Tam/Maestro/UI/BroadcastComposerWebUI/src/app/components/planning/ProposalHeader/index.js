@@ -42,6 +42,7 @@ export default class ProposalHeader extends Component {
                 unorderProposal={unorderProposal}
                 toggleModal={toggleModal}
                 isReadOnly={this.props.isReadOnly}
+                proposal={proposal}
               />
             </Col>
           </Row>

@@ -1,0 +1,204 @@
+﻿{
+  "Criteria": {
+    "CpmCriteria": [],
+    "GenreSearchCriteria": [],
+    "ProgramNameSearchCriteria": []
+  },
+  "DetailBudgetMarginAchieved": false,
+  "DetailBudgetPercent": 0.0,
+  "DetailCpm": 0.06,
+  "DetailCpmMarginAchieved": false,
+  "DetailCpmPercent": 0.0,
+  "DetailDaypart": {
+    "endTime": 36000,
+    "fri": true,
+    "mon": true,
+    "sat": false,
+    "startTime": 32400,
+    "sun": false,
+    "Text": "M-F 9AM-10AM",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DetailDaypartId": 6724,
+  "DetailFlightEndDate": "2016-06-06T00:00:00",
+  "DetailFlightStartDate": "2016-05-30T00:00:00",
+  "DetailFlightWeeks": [],
+  "DetailId": 10799,
+  "DetailImpressionsMarginAchieved": false,
+  "DetailImpressionsPercent": 0.0,
+  "DetailSpotLength": 30,
+  "DetailSpotLengthId": 1,
+  "DetailTargetBudget": 60.0000,
+  "DetailTargetImpressions": 1000000.0,
+  "DetailTotalBudget": 0.00,
+  "DetailTotalCpm": 0.0,
+  "DetailTotalImpressions": 0.0,
+  "DisplayFilter": {
+    "Affiliations": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": []
+  },
+  "Equivalized": true,
+  "Filter": {
+    "Affiliations": [],
+    "DayParts": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": [],
+    "SpotFilter": 1
+  },
+  "GuaranteedAudience": 31,
+  "HutProjectionBookId": null,
+  "Margin": 20.0,
+  "Markets": [
+    {
+      "MarketCoverage": 0.0,
+      "MarketId": 101,
+      "MarketName": "New York",
+      "MarketRank": 1,
+      "MarketSubscribers": 0.0,
+      "Stations": [
+        {
+          "Affiliation": "NBC",
+          "CallLetters": "WNBC 4.1",
+          "LegacyCallLetters": "WNBC",
+          "Programs": [
+            {
+              "Dayparts": [
+                {
+                  "Display": "M-SU 6AM-12AM",
+                  "Id": 1
+                }
+              ],
+              "FlightWeeks": [
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 649,
+                      "Spots": 1
+                    }
+                  ],
+                  "EndDate": "2016-06-05T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 0.0,
+                  "StartDate": "2016-05-30T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 650,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2016-06-12T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 650,
+                  "Rate": 0.0,
+                  "StartDate": "2016-06-06T00:00:00"
+                }
+              ],
+              "Genres": [
+                {
+                  "Display": "Entertainment",
+                  "Id": 15
+                }
+              ],
+              "ProgramId": 162232,
+              "ProgramNames": [
+                "New Program Name"
+              ],
+              "ProvidedUnitImpressions": null,
+              "Spots": 0,
+              "StationCode": 5013,
+              "TargetCpm": 0.0,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 0.0
+            },
+            {
+              "Dayparts": [
+                {
+                  "Display": "M-F 9AM-10AM",
+                  "Id": 6724
+                }
+              ],
+              "FlightWeeks": [
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 649,
+                      "Spots": 2
+                    }
+                  ],
+                  "EndDate": "2016-06-05T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 649,
+                  "Rate": 10.0000,
+                  "StartDate": "2016-05-30T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 650,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2016-06-12T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 650,
+                  "Rate": 10.0000,
+                  "StartDate": "2016-06-06T00:00:00"
+                }
+              ],
+              "Genres": [],
+              "ProgramId": 46003,
+              "ProgramNames": [
+                "Test Program"
+              ],
+              "ProvidedUnitImpressions": 1357.0,
+              "Spots": 0,
+              "StationCode": 5013,
+              "TargetCpm": 7.37,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 0.0
+            }
+          ],
+          "StationCode": 5013
+        }
+      ]
+    }
+  ],
+  "NewCriteriaAffectsExistingAllocations": false,
+  "PlaybackType": 4,
+  "PostType": 1,
+  "ProposalFlightEndDate": "2016-06-06T00:00:00",
+  "ProposalFlightStartDate": "2016-05-30T00:00:00",
+  "ProposalFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    },
+    {
+      "EndDate": "2016-06-14T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 650,
+      "StartDate": "2016-06-07T00:00:00"
+    }
+  ],
+  "ProposalId": 253,
+  "ProposalName": "Proposal Test",
+  "ProposalVersion": 1,
+  "ProposalVersionId": 53,
+  "RefineFilterPrograms": [
+    "New Program Name",
+    "Test Program"
+  ],
+  "ShareProjectionBookId": null,
+  "SingleProjectionBookId": 410,
+  "Weeks": []
+}

@@ -26,6 +26,9 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_audiences = new HashSet<station_inventory_spot_audiences>();
             this.affidavit_client_scrub_audiences = new HashSet<affidavit_client_scrub_audiences>();
             this.affidavit_file_detail_demographics = new HashSet<affidavit_file_detail_demographics>();
+            this.proposal_buy_file_detail_audiences = new HashSet<proposal_buy_file_detail_audiences>();
+            this.postlog_file_detail_demographics = new HashSet<postlog_file_detail_demographics>();
+            this.postlog_client_scrub_audiences = new HashSet<postlog_client_scrub_audiences>();
         }
     
         public int id { get; set; }
@@ -48,5 +51,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual nsi_component_audiences nsi_component_audiences { get; set; }
         public virtual ICollection<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
         public virtual ICollection<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
+        public virtual ICollection<proposal_buy_file_detail_audiences> proposal_buy_file_detail_audiences { get; set; }
+        public virtual ICollection<postlog_file_detail_demographics> postlog_file_detail_demographics { get; set; }
+        public virtual ICollection<postlog_client_scrub_audiences> postlog_client_scrub_audiences { get; set; }
     }
 }

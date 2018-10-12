@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.bvs_file_details" Width="1.5" PointX="15" PointY="35" />
@@ -32,7 +32,7 @@
         <EntityTypeShape EntityType="BroadcastModel.schedule_iscis" Width="1.5" PointX="10.5" PointY="34" />
         <EntityTypeShape EntityType="BroadcastModel.schedule_restriction_dayparts" Width="1.5" PointX="8.375" PointY="44.625" />
         <EntityTypeShape EntityType="BroadcastModel.schedule" Width="1.5" PointX="8.25" PointY="38.75" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_length_cost_multipliers" Width="1.5" PointX="0.75" PointY="21.25" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_length_cost_multipliers" Width="1.5" PointX="0.75" PointY="20.125" />
         <EntityTypeShape EntityType="BroadcastModel.station_contacts" Width="1.5" PointX="10.5" PointY="7.25" />
         <EntityTypeShape EntityType="BroadcastModel.station" Width="1.5" PointX="8.25" PointY="7.75" />
         <EntityTypeShape EntityType="BroadcastModel.system_component_parameters" Width="1.5" PointX="20.75" PointY="2.25" />
@@ -138,7 +138,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_problems" Width="1.5" PointX="22.75" PointY="16" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_problems_affidiavit_file_id_affidavit_id" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_blacklist" Width="1.5" PointX="8.375" PointY="12.75" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrub_audiences" Width="1.5" PointX="27.125" PointY="6.625" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_audiences" />
@@ -172,6 +171,55 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_versions_proposals" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_proprietary_pricing" Width="1.5" PointX="31.75" PointY="14" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_tracker_file_details" Width="1.5" PointX="5" PointY="22" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_tracker_files" Width="1.5" PointX="2.75" PointY="30.25" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_tracker_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_tracker_file_spot_tracker_file_details" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_buy_file_detail_audiences" Width="1.5" PointX="36.75" PointY="7.125" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_buy_file_detail_weeks" Width="1.5" PointX="36.75" PointY="15.375" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_buy_file_details" Width="1.5" PointX="34.5" PointY="12.625" />
+        <EntityTypeShape EntityType="BroadcastModel.proposal_buy_files" Width="1.5" PointX="31.25" PointY="17.5" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_detail_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_detail_weeks_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_detail_audiences_proposal_buy_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_detail_weeks_proposal_buy_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_proposal_buy_files" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_files_proposal_version_details" />
+        <EntityTypeShape EntityType="BroadcastModel.market_coverages" Width="1.5" PointX="5.375" PointY="18.75" />
+        <AssociationConnector Association="BroadcastModel.FK_market_coverages_markets" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_file_detail_demographics" Width="1.5" PointX="30.875" PointY="22.125" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_file_detail_problems" Width="1.5" PointX="30.875" PointY="39.125" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_file_details" Width="1.5" PointX="28.625" PointY="33.75" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_file_problems" Width="1.5" PointX="28.625" PointY="31.25" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_files" Width="1.5" PointX="26.375" PointY="34.5" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_file_detail_demographics_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_file_detail_demographics_postlog_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_file_detail_problems_postlog_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_file_details_postlog_files" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_file_problems_postlog_files" />
+        <EntityTypeShape EntityType="BroadcastModel.isci_blacklist" Width="1.5" PointX="8.625" PointY="13.125" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_client_scrub_audiences" Width="1.5" PointX="34.125" PointY="17.625" />
+        <EntityTypeShape EntityType="BroadcastModel.postlog_client_scrubs" Width="1.5" PointX="30.875" PointY="30.75" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_genres" Width="1.5" PointX="15.75" PointY="31.625" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_client_scrub_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_genres_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_client_scrub_audiences_postlog_client_scrubs" />
+        <AssociationConnector Association="BroadcastModel.FK_postlog_file_details_postlog_client_scrubs" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_postlog_client_scrubs" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_daypart_genres" Width="1.5" PointX="21.5" PointY="30" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_genres_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.open_market_pricing_guide" Width="1.5" PointX="31.25" PointY="9" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_market_code" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_proposal_version_detail_id" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_station_code" />
+        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

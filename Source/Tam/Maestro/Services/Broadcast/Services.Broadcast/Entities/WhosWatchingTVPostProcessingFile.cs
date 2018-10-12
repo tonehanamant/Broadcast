@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Services.Broadcast.Entities
 {
@@ -27,7 +26,7 @@ namespace Services.Broadcast.Entities
         public string LeadInGenre { get; set; }
         public string LeadOutProgram { get; set; }
         public string LeadOutGenre { get; set; }
-        public List<AffidavitDemographics> Demographics { get; set; } = new List<AffidavitDemographics>();
+        public List<ScrubbingDemographics> Demographics { get; set; } = new List<ScrubbingDemographics>();
         public string LeadInEndTime { get; set; }
         public string LeadOutStartTime { get; set; }
         public string ShowType { get; set; }

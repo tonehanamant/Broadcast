@@ -12,7 +12,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
-using System.Collections.Generic;
 using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -52,12 +51,18 @@ namespace Services.Broadcast.ApplicationServices
 
         public static void RegisterApplicationServices(UnityContainer unityContainer)
         {
+            unityContainer.RegisterType<IMarketService, MarketService>();
+            unityContainer.RegisterType<ILogoService, LogoService>();
             unityContainer.RegisterType<ITransactionHelper, TransactionHelper>();
             unityContainer.RegisterType<ITrackerService, TrackerService>();
             unityContainer.RegisterType<IBvsPostingEngine, BvsBvsPostingEngine>();
+            unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
-            unityContainer.RegisterType<IScxConverter, ScxConverter>();
+            unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
+            unityContainer.RegisterType<IPostLogBaseFileConverter, PostLogBaseFileConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
+            unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
+            unityContainer.RegisterType<IKeepingTracConverter, KeepingTracConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
@@ -104,24 +109,29 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
+            unityContainer.RegisterType<IPostLogEngine, PostLogEngine>();
+
 
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
 
+            unityContainer.RegisterType<IPostLogService, PostLogService>();
             unityContainer.RegisterType<IAffidavitService, AffidavitService>();
             unityContainer.RegisterType<IAffidavitPreprocessingService, AffidavitPreprocessingService>();
             unityContainer.RegisterType<IAffidavitPostProcessingService, AffidavitPostProcessingService>();
-            unityContainer.RegisterType<IAffidavitMatchingEngine, AffidavitMatchingEngine>();
-            unityContainer.RegisterType<IAffidavitProgramScrubbingEngine, AffidavitProgramScrubbingEngine>();
+            unityContainer.RegisterType<IMatchingEngine, MatchingEngine>();
+            unityContainer.RegisterType<IProgramScrubbingEngine, ProgramScrubbingEngine>();
             unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
-            unityContainer.RegisterType<IAffidavitScrubbingService, AffidavitScrubbingService>();
-            unityContainer.RegisterType<IAffidavitEmailProcessorService, AffidavitEmailProcessorService>();
+            unityContainer.RegisterType<IWWTVEmailProcessorService, WWTVEmailProcessorService>();
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
             unityContainer.RegisterType<IPostReportService, PostReportService>();
-            unityContainer.RegisterType<IAffidavitImpressionsService, AffidavitImpressionsService>();
+            unityContainer.RegisterType<IImpressionsService, ImpressionsService>();
+            unityContainer.RegisterType<ISpotTrackerService, SpotTrackerService>();
+            unityContainer.RegisterType<IIsciService, IsciService>();
 
             unityContainer.RegisterType<IPostLogPreprocessingService, PostLogPreprocessingService>();
+            unityContainer.RegisterType<IPostLogPostProcessingService, PostLogPostProcessingService>();
 
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class BvsFileDetailFilterResult
+    public class FileDetailFilterResult<T> where T : class
     {
-        public List<BvsFileDetail> Ignored = new List<BvsFileDetail>();
-        public List<BvsFileDetail> Updated = new List<BvsFileDetail>();
-        public List<BvsFileDetail> New = new List<BvsFileDetail>();
+        public List<T> Ignored = new List<T>();
+        public List<T> Updated = new List<T>();
+        public List<T> New = new List<T>();
     }
 }

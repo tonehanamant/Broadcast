@@ -12,10 +12,19 @@ namespace Services.Broadcast.ApplicationServices.Helpers
     public interface IWWTVFtpHelper
     {
         string Host { get; }
+
+        /// <summary>
+        /// Gets the newtwork credentials for WWTV FTP
+        /// </summary>
+        /// <returns>NetworkCredential object</returns>
         NetworkCredential GetClientCredentials();
-        string GetOutboundPath();
-        string GetErrorPath();
-        string GetInboundPath();
+
+        /// <summary>
+        /// Builds the complete path with scheme, host and a specified path
+        /// </summary>
+        /// <param name="path">Specific path inside FTP directory structure</param>
+        /// <returns>Full path</returns>
+        string GetRemoteFullPath(string path);
 
         #region Client Operations (WebClient style ftp)
 
@@ -29,12 +38,30 @@ namespace Services.Broadcast.ApplicationServices.Helpers
 
         void UploadFile(string sourceFilePath, string destPath, Action<string> OnSuccessfulUpload);
 
-        string DownloadFileFtpToString(string fileName);
+        /// <summary>
+        /// Downloads a ftp file
+        /// </summary>
+        /// <param name="fileName">File name to download</param>
+        /// <param name="success">True or false based on download success</param>
+        /// <param name="errorMessage">Empty or not based on download success</param>
+        /// <returns>File content as string</returns>
+        string DownloadFTPFileContent(string fileName, out bool success, out string errorMessage);
 
-        List<string> GetFtpErrorFileList(Func<string, bool> isValidFile = null);
-        List<string> GetInboundFileList(Func<string, bool> isValidFile = null);
-        void DeleteFiles(List<string> fileNames);
-        void DeleteFile(string remoteFfpPath);
+        List<string> GetFtpErrorFileList(string path, Func<string, bool> isValidFile = null);
+
+        /// <summary>
+        /// Get a list of files from the remote path.
+        /// </summary>
+        /// <param name="path">Remote path</param>
+        /// <param name="isValidFile">Function that will filter the remote files</param>
+        /// <returns>List of remote file paths</returns>
+        List<string> GetInboundFileList(string path, Func<string, bool> isValidFile = null);
+
+        /// <summary>
+        /// Delete files from the ftp path
+        /// </summary>
+        /// <param name="filePaths">List of filepaths to delete</param>
+        void DeleteFiles(params string[] fileNames);
     }
 
     public class WWTVFtpHelper : IWWTVFtpHelper
@@ -56,6 +83,11 @@ namespace Services.Broadcast.ApplicationServices.Helpers
         {
             _FtpService = ftpService;
         }
+
+        /// <summary>
+        /// Gets the newtwork credentials for WWTV FTP
+        /// </summary>
+        /// <returns>NetworkCredential object</returns>
         public NetworkCredential GetClientCredentials()
         {
             return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
@@ -63,28 +95,17 @@ namespace Services.Broadcast.ApplicationServices.Helpers
         }
 
         
-        #region Remote path getters 
+        #region Remote path getter
 
-        public string GetOutboundPath()
+        /// <summary>
+        /// Builds the complete path with scheme, host and a specified path
+        /// </summary>
+        /// <param name="path">Specific path inside FTP directory structure</param>
+        /// <returns>Full path</returns>
+        public string GetRemoteFullPath(string path)
         {
-            var path = BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder;
-
             return $"{FTP_SCHEME}{Host}/{path}";
-        }
-        
-        public string GetErrorPath()
-        {
-            var path = BroadcastServiceSystemParameter.WWTV_FtpErrorFolder;
-
-            return $"{FTP_SCHEME}{Host}/{path}";
-        }
-
-        public string GetInboundPath()
-        {
-            var path = BroadcastServiceSystemParameter.WWTV_FtpInboundFolder;
-
-            return $"{FTP_SCHEME}{Host}/{path}";
-        }
+        }       
 
         #endregion
 
@@ -115,64 +136,84 @@ namespace Services.Broadcast.ApplicationServices.Helpers
             OnSuccessfulUpload?.Invoke(sourceFilePath);
         }
 
-        public string DownloadFileFtpToString(string fileName)
+        /// <summary>
+        /// Downloads a ftp file
+        /// </summary>
+        /// <param name="fileName">File name to download</param>
+        /// <param name="success">True or false based on download success</param>
+        /// <param name="errorMessage">Empty or not based on download success</param>
+        /// <returns>File content as string</returns>
+        public string DownloadFTPFileContent(string filePath, out bool success, out string errorMessage)
         {
-            var shareFolder = GetInboundPath();
-            using (var ftpClient = new WebClient())
+            try
             {
-                ftpClient.Credentials = GetClientCredentials();
-                using (StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, $"{shareFolder}/{fileName}")))
+                success = true;
+                errorMessage = string.Empty;
+
+                var fullPath = GetRemoteFullPath(filePath);
+                using (var ftpClient = new WebClient())
                 {
-                    return reader.ReadToEnd();
+                    ftpClient.Credentials = GetClientCredentials();
+                    using (StreamReader reader = new StreamReader(_FtpService.DownloadFileToStream(ftpClient, fullPath)))
+                    {
+                        return reader.ReadToEnd();
+                    }
                 }
             }
-
-        }
-
-
-
-        public List<string> GetFtpErrorFileList(Func<string, bool> isValidFile = null)
-        {
-            var remoteFTPPath = GetErrorPath();
-
-            var credentials = GetClientCredentials();
-            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
-
-            var validList = list;
-            if (isValidFile != null)
-                validList = list.Where(f => isValidFile(f)).ToList();
-
-            return validList;
-        }
-
-        public List<string> GetInboundFileList(Func<string, bool> isValidFile = null)
-        {
-            string remoteFTPPath = GetInboundPath();
-
-            var credentials = GetClientCredentials();
-            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
-
-            var validList = list;
-            if (isValidFile != null)
-                validList = list.Where(f => isValidFile(f)).ToList();
-
-            return validList;
-        }
-
-
-        public void DeleteFiles(List<string> fileNames)
-        {
-            foreach (var fileName in fileNames)
+            catch(Exception ex)
             {
-                DeleteFile(fileName);
+                success = false;
+                errorMessage = ex.ToString();
+                return string.Empty;
             }
         }
 
-        public void DeleteFile(string remoteFtpPath)
+        public List<string> GetFtpErrorFileList(string path, Func<string, bool> isValidFile = null)
         {
-            _FtpService.DeleteFile(GetClientCredentials(), remoteFtpPath);
+            var remoteFTPPath = GetRemoteFullPath(path);
+
+            var credentials = GetClientCredentials();
+            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
+
+            var validList = list;
+            if (isValidFile != null)
+                validList = list.Where(f => isValidFile(f)).ToList();
+
+            return validList;
         }
 
+        /// <summary>
+        /// Get a list of files from the remote path.
+        /// </summary>
+        /// <param name="path">Remote path</param>
+        /// <param name="isValidFile">Function that will filter the remote files</param>
+        /// <returns>List of remote file paths</returns>
+        public List<string> GetInboundFileList(string path, Func<string, bool> isValidFile = null)
+        {
+            string remoteFTPPath = GetRemoteFullPath(path);
+
+            var credentials = GetClientCredentials();
+            var list = _FtpService.GetFileList(credentials, remoteFTPPath);
+
+            var validList = list;
+            if (isValidFile != null)
+                validList = list.Where(f => isValidFile(f)).ToList();
+
+            return validList;
+        }
+
+        /// <summary>
+        /// Delete files from the ftp path
+        /// </summary>
+        /// <param name="filePaths">List of filepaths to delete</param>
+        public void DeleteFiles(params string[] filePaths)
+        {
+            foreach (var fileName in filePaths)
+            {
+                _FtpService.DeleteFile(GetClientCredentials(), fileName);
+            }
+        }
+        
         #endregion
     }
 }

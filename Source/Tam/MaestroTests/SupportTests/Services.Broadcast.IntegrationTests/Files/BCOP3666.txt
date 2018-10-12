@@ -1,0 +1,27 @@
+[ {
+    "EstimateId": "3333",
+    "Market": "Raleigh-Durham (Fayetvlle)",
+    "Date": "08/10/2017",
+    "InventorySource": "Strata",
+    "Station": "WUNC",
+    "SpotLength": "15",
+    "Time": "0925P",
+    "SpotCost": 0.00,
+    "ISCI": "ToBeArchivedIsci",
+    "Affiliate": "PBS",
+    "Program": "Bill Cunningham",
+    "ShowType": "Series",
+    "Genre": "Talk Show",
+	"ProgramShowType": "Series",
+    "LeadInProgram": "Voice, The",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Series",
+    "LeadInEndTime": "08/10/2017 08:25PM",
+    "LeadOutProgram": "10 News Nightbeat",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "08/10/2017 08:25PM",
+    "Demographics": [ { "Demographic": "HH", "OvernightImpressions":"555","OvernightRating":"1.0"  } ]
+	}
+	
+]

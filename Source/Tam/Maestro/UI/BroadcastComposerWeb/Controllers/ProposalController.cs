@@ -1,9 +1,14 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.WebComponents;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -87,6 +92,7 @@ namespace BroadcastComposerWeb.Controllers
                         _ApplicationServiceFactory.GetApplicationService<IProposalService>()
                             .UnorderProposal(proposalId, Identity.Name));
         }
+
         [HttpGet]
         [Route("generate_scx_archive/{proposalId}")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
@@ -233,6 +239,30 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindProgramsExternalApi(request));
+        }
+
+        [HttpPost]
+        [Route("UploadProposalDetailBuy")]
+        public BaseResponse<List<string>> UploadProposalDetailBuy(HttpRequestMessage proposalBuy)
+        {
+            var response = _ConvertToBaseResponse(() =>
+            {
+                if (proposalBuy == null)
+                {
+                    throw new Exception("No proposal buy file data received.");
+                }
+                ProposalBuySaveRequestDto proposalBuyRequest = JsonConvert.DeserializeObject<ProposalBuySaveRequestDto>(proposalBuy.Content.ReadAsStringAsync().Result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy" });
+                proposalBuyRequest.Username = Identity.Name;
+                var errors = _ApplicationServiceFactory.GetApplicationService<IProposalService>().SaveProposalBuy(proposalBuyRequest);
+                return errors;
+            });
+
+            if (response.Data != null && response.Data.Any()) //check if any errors returned
+            {
+                response.Success = false;
+            }
+
+            return response;
         }
     }
 }

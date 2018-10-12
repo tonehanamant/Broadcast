@@ -2,7 +2,6 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
@@ -14,7 +13,7 @@ namespace Services.Broadcast.Repositories
     public interface IBvsRepository : IDataRepository
     {
         int GetBvsFileIdByHash(string hash);
-        int SaveBvsFile(BvsFile file);
+        int SaveBvsFile(TrackerFile<BvsFileDetail> file);
         List<BvsPostDetail> GetBvsPostDetailsByEstimateId(int estimateId);
         List<BvsPostDetailAudience> GetBvsPostDetailAudienceByEstimateId(int estimateId);
         List<BvsTrackingDetail> GetBvsTrackingDetailsByEstimateId(int estimateId);
@@ -26,7 +25,7 @@ namespace Services.Broadcast.Repositories
         List<int> GetEstimateIdsWithSchedulesByFileIds(List<int> fileIds);
 
         List<int> GetEstimateIdsByIscis(List<string> iscis);
-        BvsFileDetailFilterResult FilterOutExistingDetails(List<BvsFileDetail> newDetails);
+        FileDetailFilterResult<BvsFileDetail> FilterOutExistingDetails(List<BvsFileDetail> newDetails);
         List<BvsFileSummary> GetBvsFileSummaries();
         void DeleteById(int bvsFileId);
     }
@@ -49,7 +48,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public int SaveBvsFile(BvsFile file)
+        public int SaveBvsFile(TrackerFile<BvsFileDetail> file)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -60,11 +59,11 @@ namespace Services.Broadcast.Repositories
             return file.Id;
         }
 
-        private bvs_files _MapToBvsFile(BvsFile file)
+        private bvs_files _MapToBvsFile(TrackerFile<BvsFileDetail> file)
         {
             return new bvs_files
             {
-                bvs_file_details = _MapToBvsFileDetail(file.BvsFileDetails),
+                bvs_file_details = _MapToBvsFileDetail(file.FileDetails),
                 created_by = file.CreatedBy,
                 created_date = file.CreatedDate,
                 end_date = file.EndDate,
@@ -377,7 +376,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public BvsFileDetailFilterResult FilterOutExistingDetails(List<BvsFileDetail> newDetails)
+        public FileDetailFilterResult<BvsFileDetail> FilterOutExistingDetails(List<BvsFileDetail> newDetails)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -410,7 +409,7 @@ namespace Services.Broadcast.Repositories
                                     existingDetail = gb
                                 };
 
-                var result = new BvsFileDetailFilterResult();
+                var result = new FileDetailFilterResult<BvsFileDetail>();
                 foreach (var pair in groupJoin)
                 {
                     foreach (var existingDetail in pair.existingDetail.DefaultIfEmpty())

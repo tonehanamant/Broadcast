@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import { Badge } from 'react-bootstrap';
 import { toggleModal, createAlert } from 'Ducks/app';
 import { getPost, getPostClientScrubbing } from 'Ducks/post';
 import { Grid, Actions } from 'react-redux-grid';
@@ -9,6 +12,7 @@ import CustomPager from 'Components/shared/CustomPager';
 import ContextMenuRow from 'Components/shared/ContextMenuRow';
 import Sorter from 'Utils/react-redux-grid-sorter';
 import numeral from 'numeral';
+// import { getDateInFormat } from '../../../utils/dateFormatter';
 
 const { MenuActions, SelectionActions, GridActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -158,18 +162,26 @@ export class DataGridContainer extends Component {
         width: '10%',
       },
       {
+        name: 'Contract Id',
+        dataIndex: 'searchContractId',
+        hidden: true,
+        hideable: false,
+        width: '5%',
+      },
+      {
         name: 'Advertiser',
         dataIndex: 'Advertiser',
         width: '15%',
       },
       {
         name: 'Affidavit Upload Date',
-        dataIndex: 'UploadDate',
+        dataIndex: 'searchUploadDate',
         defaultSortDirection: 'ASC',
         width: '15%',
-        renderer: ({ row }) => (
-          <span>{row.DisplayUploadDate}</span>
-        ),
+        // renderer: ({ row }) => (
+        //   <span>{row.UploadDate !== null ? getDateInFormat(row.UploadDate) : '-'}</span>
+        // ),
+        // sortFn: (a, b) => a.value - b.value,
       },
       {
         name: 'Spots in Spec',
@@ -177,9 +189,23 @@ export class DataGridContainer extends Component {
         width: '15%',
       },
       {
+        name: 'Spots in Spec',
+        dataIndex: 'searchSpotsInSpec',
+        hidden: true,
+        hideable: false,
+        width: '5%',
+      },
+      {
         name: 'Spots Out of Spec',
         dataIndex: 'SpotsOutOfSpec',
         width: '15%',
+      },
+      {
+        name: 'Spots Out of Spec',
+        dataIndex: 'searchSpotsOutOfSpec',
+        hidden: true,
+        hideable: false,
+        width: '5%',
       },
       {
         name: 'Primary Demo Booked',
@@ -194,9 +220,11 @@ export class DataGridContainer extends Component {
         name: 'Primary Demo Delivered',
         dataIndex: 'PrimaryAudienceDeliveredImpressions',
         width: '15%',
-        renderer: ({ row }) => (
-          row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-'
-        ),
+        renderer: ({ row }) => {
+          // handle equivalized indicator as badge if true
+          const val = row.PrimaryAudienceDeliveredImpressions ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format('0,0.[000]') : '-';
+          return row.Equivalized ? <div>{val}<Badge style={{ fontSize: '9px', marginTop: '4px' }} pullRight>EQ</Badge></div> : val;
+        },
       },
       {
         name: 'Primary Demo % Delivery',
@@ -215,9 +243,11 @@ export class DataGridContainer extends Component {
         name: 'Household Delivered',
         dataIndex: 'HouseholdDeliveredImpressions',
         width: '15%',
-        renderer: ({ row }) => (
-          row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-'
-        ),
+        renderer: ({ row }) => {
+          // handle equivalized indicator as badge if true
+          const val = row.HouseholdDeliveredImpressions ? numeral(row.HouseholdDeliveredImpressions / 1000).format('0,0.[000]') : '-';
+          return row.Equivalized ? <div>{val}<Badge style={{ fontSize: '9px', marginTop: '4px' }} pullRight>EQ</Badge></div> : val;
+        },
       },
     ];
 

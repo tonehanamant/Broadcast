@@ -1,21 +1,16 @@
-﻿using System.Data.Common;
-using System.Data.Entity;
-using System.IO.Compression;
-using System.Management.Automation;
+﻿using System.Data.Entity;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -28,7 +23,7 @@ namespace Services.Broadcast.Repositories
 
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
     {
-        public StationProgramRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
+        public StationProgramRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
         }
@@ -43,8 +38,10 @@ namespace Services.Broadcast.Repositories
                     {
                         var manifests = context.station_inventory_manifest
                             .Include(a => a.station_inventory_manifest_dayparts)
+                            .Include(a => a.station_inventory_manifest_dayparts.Select(d => d.station_inventory_manifest_daypart_genres))
                             .Include(b => b.station_inventory_manifest_audiences)
                             .Include(m => m.station_inventory_manifest_rates)
+                            .Include(m => m.station_inventory_spots)
                             .Include(s => s.station)
                             .Include(i => i.inventory_sources)
                             .Where(p => p.inventory_source_id == rateSource)
@@ -53,7 +50,7 @@ namespace Services.Broadcast.Repositories
                                         || (a.effective_date < flightStart.Date && a.end_date > flightEnd.Date))
                             .ToList();
 
-                        if (proposalMarketIds != null & proposalMarketIds.Count > 0)
+                        if (proposalMarketIds != null && proposalMarketIds.Count > 0)
                             manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
 
                         return (manifests.Select(m =>
@@ -65,6 +62,11 @@ namespace Services.Broadcast.Repositories
                                     Id = md.id,
                                     DaypartId = md.daypart_id,
                                     ProgramName = md.program_name
+                                }).ToList(),
+                                ManifestAudiences = m.station_inventory_manifest_audiences.Select(ma => new ProposalProgramDto.ManifestAudienceDto
+                                {
+                                    AudienceId = ma.audience_id,
+                                    Impressions = ma.impressions
                                 }).ToList(),
                                 StartDate = m.effective_date,
                                 EndDate = m.end_date,
@@ -87,9 +89,11 @@ namespace Services.Broadcast.Repositories
                                     ManifestId = r.station_inventory_manifest_id,
                                     ProposalVersionDetailQuarterWeekId = r.proposal_version_detail_quarter_week_id,
                                     MediaWeekId = r.media_week_id
-                                }).ToList()
-                                // todo : still undefined
-                                //Genres = 
+                                }).ToList(),
+                                Genres = m.station_inventory_manifest_dayparts
+                                .SelectMany(x => x.station_inventory_manifest_daypart_genres
+                                    .Select(genre => new LookupDto() { Id = genre.genre_id, Display = genre.genre.name }))
+                                .Distinct().ToList()
                             }).ToList());
 
                         /*
@@ -158,14 +162,5 @@ namespace Services.Broadcast.Repositories
                     });
             }
         }
-
-        
-    }
-
-    public class StationInventorySpots
-    {
-        public int ManifestId { get; set; }
-        public int MediaWeekId { get; set; }
-        public int? ProposalVersionDetailQuarterWeekId { get; set; }
     }
 }

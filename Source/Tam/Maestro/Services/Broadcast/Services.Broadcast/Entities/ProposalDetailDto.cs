@@ -11,7 +11,7 @@ namespace Services.Broadcast.Entities
         public List<GenreCriteria> GenreCriteria { get; set; } = new List<GenreCriteria>();
         public List<ProgramCriteria> ProgramCriteria { get; set; } = new List<ProgramCriteria>();
         public List<ShowTypeCriteria> ShowTypeCriteria { get; set; } = new List<ShowTypeCriteria>();
-
+        public List<CpmCriteria> CpmCriteria { get; set; } = new List<CpmCriteria>();
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
         public List<ProposalFlightWeek> FlightWeeks { get; set; } = new List<ProposalFlightWeek>();
@@ -41,7 +41,8 @@ namespace Services.Broadcast.Entities
         public double? AdjustmentMargin { get; set; }
         public double? GoalImpression { get; set; }
         public decimal? GoalBudget { get; set; }
-
-
+        public List<ProprietaryPricingDto> ProprietaryPricing { get; set; } = new List<ProprietaryPricingDto>();
+        public OpenMarketPricing OpenMarketPricing { get; set; } = new OpenMarketPricing();
+        public int? EstimateId { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
@@ -88,6 +89,24 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<ProposalInventoryTotalsDto> CalculateProposalDetailInventoryTotals(ProposalInventoryTotalsRequestDto request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>().GetInventoryTotals(request));
+        }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/Grid/")]
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuide(PricingGuideOpenMarketInventoryRequestDto request)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .GetPricingGuideOpenMarketInventory(request));
+        }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/Grid/ApplyFilter")]
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        {
+            return _ConvertToBaseResponse(() => 
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .ApplyFilterOnOpenMarketPricingGuideGrid(dto));
         }
     }
 }
