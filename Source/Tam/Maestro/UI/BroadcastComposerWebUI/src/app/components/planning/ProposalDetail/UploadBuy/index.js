@@ -44,6 +44,7 @@ class UploadBuy extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.clearState();
     if (this.state.activeFile) return;
     if (nextProps.file && nextProps.file.base64 && nextProps.file.base64.length) {
       console.log('recieve file', this, nextProps.file);
@@ -102,6 +103,7 @@ class UploadBuy extends Component {
       active: false,
       properties: this.props.modal.properties,
     });
+    this.clearState();
   }
 
   processFile(file) {
