@@ -179,7 +179,7 @@ export function* requestUnlinkedFiltered({ payload: query }) {
   try {
     const filtered = yield unlinkedFiltered();
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_UNLINKED,
+      type: ACTIONS.TRACKER_RECEIVE_FILTERED_UNLINKED,
       data: { query, filteredData: filtered }
     });
   } catch (e) {
@@ -211,7 +211,7 @@ export function* requestArchivedFiltered({ payload: query }) {
   try {
     const filtered = yield archivedFiltered();
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
+      type: ACTIONS.TRACKER_RECEIVE_FILTERED_ARCHIVED,
       data: { query, filteredData: filtered }
     });
   } catch (e) {
@@ -1023,7 +1023,7 @@ export function* watchRequestUniqueIscis() {
       ACTIONS.TRACKER_RESCRUB_UNLIKED_ISCI.success,
       ACTIONS.TRACKER_MAP_UNLINKED_ISCI.success
     ],
-    sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA)
+    sagaWrapper(requestUnlinkedIscis, ACTIONS.TRACKER_UNLINKED_ISCIS_DATA)
   );
 }
 
@@ -1044,7 +1044,7 @@ export function* watchRequestArchivedIscisSuccess() {
 export function* watchArchiveUnlinkedIsci() {
   yield takeEvery(
     ACTIONS.TRACKER_ARCHIVE_UNLIKED_ISCI.request,
-    sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI)
+    sagaWrapper(archiveUnlinkedIsci, ACTIONS.TRACKER_ARCHIVE_UNLIKED_ISCI)
   );
 }
 
@@ -1068,28 +1068,28 @@ export function* watchLoadArchivedIscis() {
       ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI.request,
       ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI.success
     ],
-    sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI)
+    sagaWrapper(loadArchivedIsci, ACTIONS.TRACKER_LOAD_ARCHIVED_ISCI)
   );
 }
 
 export function* watchLoadValidIscis() {
   yield takeEvery(
     ACTIONS.TRACKER_LOAD_VALID_ISCI.request,
-    sagaWrapper(loadValidIscis, ACTIONS.LOAD_VALID_ISCI)
+    sagaWrapper(loadValidIscis, ACTIONS.TRACKER_LOAD_VALID_ISCI)
   );
 }
 
 export function* watchRescrubUnlinkedIsci() {
   yield takeEvery(
     ACTIONS.TRACKER_RESCRUB_UNLIKED_ISCI.request,
-    sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI)
+    sagaWrapper(rescrubUnlinkedIsci, ACTIONS.TRACKER_RESCRUB_UNLIKED_ISCI)
   );
 }
 
 export function* watchMapUnlinkedIsci() {
   yield takeEvery(
     ACTIONS.TRACKER_MAP_UNLINKED_ISCI.request,
-    sagaWrapper(mapUnlinkedIsci, ACTIONS.MAP_UNLINKED_ISCI)
+    sagaWrapper(mapUnlinkedIsci, ACTIONS.TRACKER_MAP_UNLINKED_ISCI)
   );
 }
 
@@ -1110,14 +1110,14 @@ export function* watchMapUnlinkedIsciSuccess() {
 export function* watchUndoArchivedIscis() {
   yield takeEvery(
     ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI.request,
-    sagaWrapper(undoArchivedIscis, ACTIONS.UNDO_ARCHIVED_ISCI)
+    sagaWrapper(undoArchivedIscis, ACTIONS.TRACKER_UNDO_ARCHIVED_ISCI)
   );
 }
 
 export function* watchUndoScrubStatus() {
   yield takeEvery(
     ACTIONS.TRACKER_UNDO_SCRUB_STATUS.request,
-    sagaWrapper(undoScrubStatus, ACTIONS.UNDO_SCRUB_STATUS)
+    sagaWrapper(undoScrubStatus, ACTIONS.TRACKER_UNDO_SCRUB_STATUS)
   );
 }
 
