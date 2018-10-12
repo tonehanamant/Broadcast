@@ -2402,7 +2402,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
             Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
             Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
-            Assert.IsTrue(programs.Any(x => x.ProgramName == "Friends 2"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
 
 
             // Setting program criteria for excluding 'Friends 2' program
@@ -2425,7 +2425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
             Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
-            Assert.IsTrue(programs.Any(x => x.ProgramName == "Friends"));
+            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
             Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
 
 
