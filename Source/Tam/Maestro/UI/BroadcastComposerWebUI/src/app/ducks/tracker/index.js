@@ -270,7 +270,7 @@ export default function reducer(state = initialState, action) {
         activeIsciFilterQuery: data.query
       };
 
-      case ACTIONS.TRACKER_RECEIVE_CLEAR_ISCI_FILTER:
+    case ACTIONS.TRACKER_RECEIVE_CLEAR_ISCI_FILTER:
       return {
         ...state,
         activeIsciFilterQuery: ""

@@ -230,24 +230,25 @@ export function* requestArchivedFiltered({ payload: query }) {
   archivedListUnfiltered.map(post => Object.keys(post).map(key => post[key]));
 
   if (archivedListUnfiltered.length > 0) {
-    const keys = ['ISCI'];
-    const searcher = new FuzzySearch(archivedListUnfiltered, keys, { caseSensitive: false });
-  });
+    const keys = ["ISCI"];
+    const searcher = new FuzzySearch(archivedListUnfiltered, keys, {
+      caseSensitive: false
+    });
     const archivedFiltered = () => searcher.search(query);
 
     try {
       const filtered = yield archivedFiltered();
       yield put({
         type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
-        data: { query, filteredData: filtered },
+        data: { query, filteredData: filtered }
       });
     } catch (e) {
       if (e.message) {
         yield put({
           type: ACTIONS.DEPLOY_ERROR,
           error: {
-            message: e.message,
-          },
+            message: e.message
+          }
         });
       }
     }
