@@ -8,7 +8,6 @@ using Tam.Maestro.Common.DataLayer;
 using ApprovalTests;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
-using Services.Broadcast.Converters;
 using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -16,12 +15,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class SpotTrackerServiceIntegrationTests
     {
-
-        private readonly ISpotTrackerService _ISpotTrackerService;
+        private readonly ISpotTrackerService _SpotTrackerService;
+        private readonly IProposalService _ProposalService;
 
         public SpotTrackerServiceIntegrationTests()
         {
-            _ISpotTrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISpotTrackerService>();
+            _SpotTrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISpotTrackerService>();
+            _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var userName = "Test_ExtendedSigmaFile";
 
-                var messages = _ISpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
+                var messages = _SpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
                 if (messages.Count == 0)
                 {
                     Approvals.Verify(IntegrationTestHelper.ConvertToJson("File imported with no messages"));
@@ -84,9 +84,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var userName = "Test_ExtendedSigmaFile";
 
-                _ISpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
+                _SpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
 
-                var messages = _ISpotTrackerService.SaveSigmaFile(fileSaveRequestDuplicate, userName);
+                var messages = _SpotTrackerService.SaveSigmaFile(fileSaveRequestDuplicate, userName);
                 if (messages.Count == 0)
                 {
                     Approvals.Verify(IntegrationTestHelper.ConvertToJson("File imported with no messages"));
@@ -117,9 +117,48 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 var userName = "Test_ExtendedSigmaFile";
 
-                _ISpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
-                _ISpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
+                _SpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
+                _SpotTrackerService.SaveSigmaFile(fileSaveRequest, userName);
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SpotTracker_GenerateEmptyReport_WithoutBuys()
+        {
+            var newProposalDto = ProposalServiceIntegrationTests.SetupProposalDto();
+            var newProposalDetailDto = ProposalServiceIntegrationTests.SetupProposalDetailDto();
+            newProposalDto.Details.Add(newProposalDetailDto);
+            var newProposal = _ProposalService.SaveProposal(newProposalDto, "IntegrationTestUser", DateTime.Now);
+
+            var spotTrackerReportData = _SpotTrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
+            ApproveResults(spotTrackerReportData);
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SpotTracker_GenerateReport_WithoutErrors_WithValidData()
+        {
+            const int proposalId = 32474;
+            
+            var spotTrackerReportData = _SpotTrackerService.GetSpotTrackerReportDataForProposal(proposalId);
+            ApproveResults(spotTrackerReportData);
+        }
+
+        private void ApproveResults(SpotTrackerReport spotTrackerReportData)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(SpotTrackerReport), "Id");
+            jsonResolver.Ignore(typeof(SpotTrackerReport.Detail), "Id");
+            jsonResolver.Ignore(typeof(SpotTrackerReport.Detail), "ProposalBuyFile");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var spotTrackerReportDataJson = IntegrationTestHelper.ConvertToJson(spotTrackerReportData, jsonSettings);
+            Approvals.Verify(spotTrackerReportDataJson);
         }
     }
 }

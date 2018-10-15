@@ -1,6 +1,7 @@
 ﻿{
   "Details": [
     {
+      "FileName": "Test Advertiser 9 4214 Spot Traker Report.xlsx",
       "Weeks": [
         {
           "MediaWeekId": 767,
@@ -18,5 +19,5 @@
       ]
     }
   ],
-  "Name": "BCOP-3367"
+  "ZipFileName": "BCOP-3367 Spot Traker Report.zip"
 }

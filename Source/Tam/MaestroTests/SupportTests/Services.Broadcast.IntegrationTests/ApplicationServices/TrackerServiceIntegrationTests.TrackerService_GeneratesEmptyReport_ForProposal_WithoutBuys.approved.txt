@@ -1,4 +1,0 @@
-﻿{
-  "Details": [],
-  "Name": "Proposal Test"
-}
