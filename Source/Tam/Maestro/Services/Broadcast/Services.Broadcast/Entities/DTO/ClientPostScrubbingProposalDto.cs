@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 

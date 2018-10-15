@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -7,7 +8,7 @@ namespace Services.Broadcast.Entities
         public readonly short HutMediaMonthId;
         public readonly short ShareMediaMonthId;
         public readonly int MaestroAudienceId;
-        public readonly PlaybackType PlaybackType;
+        public readonly PlaybackTypeEnum PlaybackType;
         public readonly List<ProgramRating> ProgramRatings;
 
         public RatingForecastResponse(RatingForecastRequest forecastRequest, List<ProgramRating> programRatings)

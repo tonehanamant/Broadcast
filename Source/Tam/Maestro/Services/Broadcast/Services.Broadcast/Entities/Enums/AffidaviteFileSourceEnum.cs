@@ -1,4 +1,4 @@
-﻿namespace Services.Broadcast.Entities
+﻿namespace Services.Broadcast.Entities.Enums
 {
     public enum AffidavitFileSourceEnum
     {

@@ -1,40 +1,41 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Converters
 {
     public class PlaybackTypeConverter
     {
-        public static PlaybackType ProposalPlaybackTypeToForecastPlaybackType(ProposalEnums.ProposalPlaybackType? proposalPlaybackType)
+        public static PlaybackTypeEnum ProposalPlaybackTypeToForecastPlaybackType(ProposalEnums.ProposalPlaybackType? proposalPlaybackType)
         {
             switch (proposalPlaybackType)
             {
                 case ProposalEnums.ProposalPlaybackType.Live:
-                    return PlaybackType.O;
+                    return PlaybackTypeEnum.O;
                 case ProposalEnums.ProposalPlaybackType.LiveSameDay:
-                    return PlaybackType.S;
+                    return PlaybackTypeEnum.S;
                 case ProposalEnums.ProposalPlaybackType.LivePlus1:
-                    return PlaybackType.One;
+                    return PlaybackTypeEnum.One;
                 case ProposalEnums.ProposalPlaybackType.LivePlus3:
-                    return PlaybackType.Three;
+                    return PlaybackTypeEnum.Three;
                 case ProposalEnums.ProposalPlaybackType.LivePlus7:
-                    return PlaybackType.Seven;
+                    return PlaybackTypeEnum.Seven;
                 default:
-                    return PlaybackType.Three;
+                    return PlaybackTypeEnum.Three;
             }
         }
-        public static ProposalEnums.ProposalPlaybackType ForecastPlaybackTypeToProposalPlaybackType(PlaybackType playbackType)
+        public static ProposalEnums.ProposalPlaybackType ForecastPlaybackTypeToProposalPlaybackType(PlaybackTypeEnum playbackType)
         {
             switch (playbackType)
             {
-                case PlaybackType.O:
+                case PlaybackTypeEnum.O:
                     return ProposalEnums.ProposalPlaybackType.Live;
-                case PlaybackType.S:
+                case PlaybackTypeEnum.S:
                     return ProposalEnums.ProposalPlaybackType.LiveSameDay;
-                case PlaybackType.One:
+                case PlaybackTypeEnum.One:
                     return ProposalEnums.ProposalPlaybackType.LivePlus1 ;
-                case PlaybackType.Three:
+                case PlaybackTypeEnum.Three:
                     return ProposalEnums.ProposalPlaybackType.LivePlus3;
-                case PlaybackType.Seven:
+                case PlaybackTypeEnum.Seven:
                     return ProposalEnums.ProposalPlaybackType.LivePlus7;
                 default:
                     return ProposalEnums.ProposalPlaybackType.LivePlus3;

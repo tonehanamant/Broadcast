@@ -6,6 +6,12 @@
     "3Q'17: 4 weeks - 7/10, 7/17, 7/24, 7/31"
   ],
   "GuaranteedDemo": "House Holds",
+  "PlaybackTypes": [
+    "Live+3"
+  ],
+  "PostingBooks": [
+    "July 2017"
+  ],
   "ProposalAudiences": [
     {
       "Display": "HH",

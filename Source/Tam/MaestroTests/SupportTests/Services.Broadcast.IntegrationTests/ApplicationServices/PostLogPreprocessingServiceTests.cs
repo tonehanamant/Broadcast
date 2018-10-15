@@ -12,6 +12,7 @@ using Common.Services;
 using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Common.DataLayer;
 using Services.Broadcast.ApplicationServices.Helpers;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

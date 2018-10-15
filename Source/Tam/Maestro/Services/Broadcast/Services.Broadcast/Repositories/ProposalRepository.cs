@@ -18,6 +18,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using proposal = EntityFrameworkMapping.Broadcast.proposal;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {

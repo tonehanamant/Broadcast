@@ -1,4 +1,6 @@
 ﻿using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace Services.Broadcast.Entities.DTO
         public string SpotLengthsDisplay { get; set; }
         public string ReportName { get; set; }
         public string Advertiser { get; set; }
+        public List<string> PostingBooks { get; set; }
+        public List<string> PlaybackTypes { get; set; }
 
         private const string SUMMARY_TABLE_NAME_FORMAT = "{0}Q'{1}";
         private const string SPOT_DETAIL_TAB_NAME_FORMAT = "Spot Detail {0}Q{1}";
@@ -93,7 +97,9 @@ namespace Services.Broadcast.Entities.DTO
                             string guaranteedDemo, int guaranteedDemoId,
                             List<Tuple<DateTime, DateTime>> flights,
                             bool withOvernightImpressions, bool equivalized, string proposalName,
-                            IImpressionAdjustmentEngine impressionAdjustmentEngine)
+                            IImpressionAdjustmentEngine impressionAdjustmentEngine,
+                            List<MediaMonth> mediaMonths,
+                            List<ProposalEnums.ProposalPlaybackType> playbackTypes)
         {
             ProposalId = proposalId;
             WithOvernightImpressions = withOvernightImpressions;
@@ -102,6 +108,8 @@ namespace Services.Broadcast.Entities.DTO
             ProposalAudiences = proposalAudiences;
             ReportName = _GenerateReportName(proposalName, inSpecAffidavitFileDetails, advertiser, withOvernightImpressions);
             Advertiser = advertiser;
+            PostingBooks = mediaMonths.Select(x => x.LongMonthNameAndYear).ToList();
+            PlaybackTypes = playbackTypes.Select(x=>EnumHelper.GetDescriptionAttribute(x)).ToList();
 
             //map the data
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);

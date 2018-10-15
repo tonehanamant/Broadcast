@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.BusinessEngines
 {

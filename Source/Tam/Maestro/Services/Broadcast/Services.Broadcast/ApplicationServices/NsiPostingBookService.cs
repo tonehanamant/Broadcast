@@ -37,8 +37,7 @@ namespace Services.Broadcast.ApplicationServices
             return (from x in mediaMonths
                     select new LookupDto
                     {
-                        Id = x.Id
-                    ,
+                        Id = x.Id,
                         Display = x.MediaMonthX
                     }).ToList();
         }

@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Linq;
 

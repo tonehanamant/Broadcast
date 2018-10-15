@@ -8,6 +8,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Repositories;

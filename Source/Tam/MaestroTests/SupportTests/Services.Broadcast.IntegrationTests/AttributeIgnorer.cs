@@ -1,5 +1,6 @@
 ﻿using IntegrationTests.Common;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.IntegrationTests
 {

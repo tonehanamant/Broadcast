@@ -1,6 +1,7 @@
 ﻿using Common.Services.WebComponents;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

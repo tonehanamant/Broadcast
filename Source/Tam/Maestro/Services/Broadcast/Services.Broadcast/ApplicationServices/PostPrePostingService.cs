@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;

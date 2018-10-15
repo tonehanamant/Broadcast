@@ -25,6 +25,7 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System.Diagnostics;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {

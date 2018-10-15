@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;

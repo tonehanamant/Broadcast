@@ -165,7 +165,7 @@ namespace Services.Broadcast.ReportGenerators
                 foreach (var demo in reportData.ProposalAudiences.Select(a => a.Id).ToList())
                 {
                     var value = row.AudienceImpressions.ContainsKey(demo) ? row.AudienceImpressions[demo] : 0;
-                    ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = "#,#";
+                    ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = IMPRESSIONS_FORMAT;
                     ws.Cells[rowOffset, columnOffset].Value = value;
                     columnOffset++;
                 }
@@ -317,10 +317,15 @@ namespace Services.Broadcast.ReportGenerators
             {
                 wsSummary.Cells[$"C{rowOffset++}"].Value = item;
             }
+
+            wsSummary.Cells[$"B{rowOffset}"].Value = "Posting Book:";
+            wsSummary.Cells[$"C{rowOffset++}"].Value = string.Join(", ", reportData.PostingBooks);
+            wsSummary.Cells[$"B{rowOffset}"].Value = "Playback Type:";
+            wsSummary.Cells[$"C{rowOffset++}"].Value = string.Join(", ", reportData.PlaybackTypes);
             
-            wsSummary.Cells["B9:B17"].Style.Font.Bold = true;
-            wsSummary.Cells["B9:B17"].Style.Font.Size = 10;
-            wsSummary.Cells["B9:B17"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            wsSummary.Cells[$"B9:B{rowOffset}"].Style.Font.Bold = true;
+            wsSummary.Cells[$"B9:B{rowOffset}"].Style.Font.Size = 10;
+            wsSummary.Cells[$"B9:B{rowOffset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
             wsSummary.Cells["I9:I13"].Style.Font.Bold = true;
             wsSummary.Cells["I9:I13"].Style.Font.Size = 10;
@@ -341,7 +346,7 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var audience in reportData.ProposalAudiences)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = audience.Display;
+                ws.Cells[rowOffset, columnOffset++].Value = $"{audience.Display} (000)";
             }
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Font.Bold = true;
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);

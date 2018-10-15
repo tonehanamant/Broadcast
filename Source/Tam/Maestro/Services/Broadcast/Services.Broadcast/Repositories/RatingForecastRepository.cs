@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,7 +21,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IRatingForecastRepository : IDataRepository
     {
-        List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackType playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions);
+        List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions);
         void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate);
         List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions);
@@ -34,7 +35,7 @@ namespace Services.Broadcast.Repositories
     {
         public RatingForecastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
 
-        public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackType playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions)
+        public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
