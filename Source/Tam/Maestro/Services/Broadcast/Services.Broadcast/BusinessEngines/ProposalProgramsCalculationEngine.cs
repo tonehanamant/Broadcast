@@ -43,7 +43,7 @@ namespace Services.Broadcast.BusinessEngines
         /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week (raw = no rounding).
         /// </summary>
         /// <returns></returns>
-        void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength);
+        void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs);
 
         void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
 
@@ -280,7 +280,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Raw == no rounding
         /// </summary>
-        public void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength)
+        public void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs)
         {
             foreach (var program in programs)
             {

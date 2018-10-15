@@ -1,18 +1,18 @@
 // Actions
-import * as ACTIONS from './actionTypes.js';
+import * as ACTIONS from "./actionTypes.js";
 
 const initialState = {
-  environment: '',
+  environment: "",
   employee: {},
   modals: {},
   errors: [],
   alert: null,
   loading: {},
   file: {
-    name: 'No File',
-    base64: '',
+    name: "No File",
+    base64: ""
   },
-  disabledDropzones: false,
+  disabledDropzones: false
 };
 
 // Reducer
@@ -23,26 +23,26 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.RECEIVE_ENVIRONMENT:
       return {
         ...state,
-        environment: data.Data,
+        environment: data.Data
       };
 
     case ACTIONS.RECEIVE_EMPLOYEE:
       return {
         ...state,
-        employee: data.Data,
+        employee: data.Data
       };
 
     case ACTIONS.CREATE_ALERT: {
-        return {
-          ...state,
-          alert: {
-            display: true,
-            type: alert.type,
-            headline: alert.headline,
-            message: alert.message,
-          },
-        };
-      }
+      return {
+        ...state,
+        alert: {
+          display: true,
+          type: alert.type,
+          headline: alert.headline,
+          message: alert.message
+        }
+      };
+    }
 
     case ACTIONS.TOGGLE_MODAL:
       return Object.assign({}, state, {
@@ -51,9 +51,9 @@ export default function reducer(state = initialState, action) {
           [modal.modal]: {
             ...state[modal.modal],
             active: modal.active,
-            properties: modal.properties,
-          },
-        },
+            properties: modal.properties
+          }
+        }
       });
 
     case ACTIONS.DEPLOY_ERROR:
@@ -62,58 +62,55 @@ export default function reducer(state = initialState, action) {
           ...state.modals,
           errorModal: {
             ...state.active,
-            active: true,
-          },
+            active: true
+          }
         },
-        errors: [
-          ...state.errors,
-          error,
-        ],
+        errors: [...state.errors, error]
       });
 
     case ACTIONS.CLEAR_ERRORS:
       return Object.assign({}, state, {
-        errors: [],
+        errors: []
       });
 
     case ACTIONS.SET_OVERLAY_LOADING:
       return Object.assign({}, state, {
         loading: {
           ...state.loading,
-          [overlay.id]: overlay.loading,
-        },
+          [overlay.id]: overlay.loading
+        }
       });
 
     case ACTIONS.SET_OVERLAY_PROCESSING:
       return Object.assign({}, state, {
         processing: {
           ...state.processing,
-          [overlay.id]: overlay.processing,
-        },
+          [overlay.id]: overlay.processing
+        }
       });
 
     case ACTIONS.STORE_FILE:
       return Object.assign({}, state, {
         file: {
           ...state.file,
-          ...file,
-        },
+          ...file
+        }
       });
 
     case ACTIONS.STORE_FILE_B64:
       return Object.assign({}, state, {
         file: {
           ...state.file,
-          base64: data,
-        },
+          base64: data
+        }
       });
 
     case ACTIONS.CLEAR_FILE:
       return Object.assign({}, state, {
         file: {
-          name: 'No File',
-          base64: '',
-        },
+          name: "No File",
+          base64: ""
+        }
       });
 
     case ACTIONS.TOGGLE_DISABLED_DROPZONES:
@@ -127,57 +124,57 @@ export default function reducer(state = initialState, action) {
 // Action Creators
 export const getEnvironment = () => ({
   type: ACTIONS.REQUEST_ENVIRONMENT,
-  payload: {},
+  payload: {}
 });
 
 export const getEmployee = () => ({
   type: ACTIONS.REQUEST_EMPLOYEE,
-  payload: {},
+  payload: {}
 });
 
 export const toggleModal = modal => ({
   type: ACTIONS.TOGGLE_MODAL,
-  modal,
+  modal
 });
 
 export const createAlert = alert => ({
   type: ACTIONS.CREATE_ALERT,
-  alert,
+  alert
 });
 
 export const deployError = error => ({
   type: ACTIONS.DEPLOY_ERROR,
-  error,
+  error
 });
 
 export const clearErrors = () => ({
-  type: ACTIONS.CLEAR_ERRORS,
+  type: ACTIONS.CLEAR_ERRORS
 });
 
 export const setOverlayProcessing = overlay => ({
   type: ACTIONS.SET_OVERLAY_PROCESSING,
-  overlay,
+  overlay
 });
 
 export const setOverlayLoading = overlay => ({
   type: ACTIONS.SET_OVERLAY_LOADING,
-  overlay,
+  overlay
 });
 
 export const storeFile = file => ({
   type: ACTIONS.STORE_FILE,
-  file,
+  file
 });
 
 export const readFileB64 = file => ({
   type: ACTIONS.READ_FILE_B64,
-  payload: file,
+  payload: file
 });
 
 export const clearFile = () => ({
-  type: ACTIONS.CLEAR_FILE,
+  type: ACTIONS.CLEAR_FILE
 });
 
 export const toggleDisabledDropzones = () => ({
-  type: ACTIONS.TOGGLE_DISABLED_DROPZONES,
+  type: ACTIONS.TOGGLE_DISABLED_DROPZONES
 });

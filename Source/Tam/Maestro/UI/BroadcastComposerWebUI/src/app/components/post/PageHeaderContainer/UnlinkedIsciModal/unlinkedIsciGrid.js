@@ -1,94 +1,98 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ContextMenuRow from 'Components/shared/ContextMenuRow';
-import CustomPager from 'Components/shared/CustomPager';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Grid, Actions } from 'react-redux-grid';
-import { archiveUnlinkedIscis, rescrubUnlinkedIscis } from 'Ducks/post';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ContextMenuRow from "Components/shared/ContextMenuRow";
+import CustomPager from "Components/shared/CustomPager";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Grid, Actions } from "react-redux-grid";
+import { archiveUnlinkedIscis, rescrubUnlinkedIscis } from "Ducks/post";
 
-const { SelectionActions: { deselectAll, selectRow } } = Actions;
+const {
+  SelectionActions: { deselectAll, selectRow }
+} = Actions;
 
 const mapStateToProps = ({ grid, selection, dataSource }) => ({
   selection,
   dataSource,
-  grid,
+  grid
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    rescrubIscis: rescrubUnlinkedIscis,
-    archiveIscis: archiveUnlinkedIscis,
-    deselectAll,
-    selectRow,
-  }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      rescrubIscis: rescrubUnlinkedIscis,
+      archiveIscis: archiveUnlinkedIscis,
+      deselectAll,
+      selectRow
+    },
+    dispatch
+  );
 
 export class UnlinkedIsciGrid extends Component {
   constructor(props, context) {
-		super(props, context);
-		this.context = context;
+    super(props, context);
+    this.context = context;
   }
 
   render() {
     const { unlinkedIscisData } = this.props;
-    const stateKey = 'unlinked_grid';
+    const stateKey = "unlinked_grid";
 
     const columns = [
-			{
-				name: 'ISCI',
-				dataIndex: 'ISCI',
-				width: '25%',
+      {
+        name: "ISCI",
+        dataIndex: "ISCI",
+        width: "25%"
       },
       {
-        name: 'Unlinked Reason',
-        dataIndex: 'UnlinkedReason',
-        width: '25%',
-        renderer: ({ row }) => (<span>{row.UnlinkedReason || '-'}</span>),
+        name: "Unlinked Reason",
+        dataIndex: "UnlinkedReason",
+        width: "25%",
+        renderer: ({ row }) => <span>{row.UnlinkedReason || "-"}</span>
       },
       {
-        name: 'Count',
-        dataIndex: 'Count',
-        width: '25%',
+        name: "Count",
+        dataIndex: "Count",
+        width: "25%"
         // renderer: ({ row }) => (<span>{Number(row.Count) || '-'}</span>),
       },
       {
-        name: 'Spot Length',
-        dataIndex: 'SpotLength',
-        width: '25%',
-        renderer: ({ row }) => (<span>{row.SpotLength || '-'}</span>),
-      },
+        name: "Spot Length",
+        dataIndex: "SpotLength",
+        width: "25%",
+        renderer: ({ row }) => <span>{row.SpotLength || "-"}</span>
+      }
     ];
 
     const menuItems = [
       {
-        text: 'Not a Cadent ISCI',
-        key: 'menu-archive-isci',
+        text: "Not a Cadent ISCI",
+        key: "menu-archive-isci",
         EVENT_HANDLER: ({ metaData }) => {
           this.props.archiveIscis([metaData.rowData.ISCI]);
-        },
+        }
       },
       {
-        text: 'Rescrub this ISCI',
-        key: 'menu-rescrub-isci',
+        text: "Rescrub this ISCI",
+        key: "menu-rescrub-isci",
         EVENT_HANDLER: ({ metaData }) => {
           this.props.rescrubIscis(metaData.rowData.ISCI);
-        },
+        }
       },
       {
-        text: 'Map ISCI',
-        key: 'menu-map-isci',
+        text: "Map ISCI",
+        key: "menu-map-isci",
         EVENT_HANDLER: ({ metaData }) => {
           this.props.toggleModal({
-            modal: 'mapUnlinkedIsci',
+            modal: "mapUnlinkedIsci",
             active: true,
-            properties: { rowData: metaData.rowData },
+            properties: { rowData: metaData.rowData }
           });
-        },
-      },
+        }
+      }
     ];
 
-    const beforeOpenMenu = (rowId) => {
+    const beforeOpenMenu = rowId => {
       deselectAll({ stateKey });
       selectRow({ rowId, stateKey });
     };
@@ -98,30 +102,25 @@ export class UnlinkedIsciGrid extends Component {
         resizable: true,
         moveable: false,
         sortable: {
-            enabled: true,
-            method: 'local',
-        },
+          enabled: true,
+          method: "local"
+        }
       },
       EDITOR: {
-        type: 'inline',
-        enabled: false,
+        type: "inline",
+        enabled: false
       },
       PAGER: {
         enabled: false,
-        pagingType: 'local',
-        pagerComponent: (
-            <CustomPager
-            stateKey={stateKey}
-            idProperty="ISCI"
-            />
-        ),
+        pagingType: "local",
+        pagerComponent: <CustomPager stateKey={stateKey} idProperty="ISCI" />
       },
       SELECTION_MODEL: {
-        mode: 'single',
+        mode: "single",
         enabled: true,
         allowDeselect: true,
-        activeCls: 'active',
-        selectionEvent: 'singleclick',
+        activeCls: "active",
+        selectionEvent: "singleclick"
       },
       ROW: {
         enabled: true,
@@ -133,14 +132,15 @@ export class UnlinkedIsciGrid extends Component {
             beforeOpenMenu={beforeOpenMenu}
           >
             {cells}
-          </ContextMenuRow>),
-      },
+          </ContextMenuRow>
+        )
+      }
     };
 
     const grid = {
       columns,
       plugins,
-      stateKey,
+      stateKey
     };
 
     return (
@@ -154,15 +154,17 @@ export class UnlinkedIsciGrid extends Component {
   }
 }
 
-
 UnlinkedIsciGrid.propTypes = {
   toggleModal: PropTypes.func.isRequired,
-	rescrubIscis: PropTypes.func.isRequired,
+  rescrubIscis: PropTypes.func.isRequired,
   unlinkedIscisData: PropTypes.array.isRequired,
   archiveIscis: PropTypes.func.isRequired,
   dataSource: PropTypes.object.isRequired,
   selection: PropTypes.object.isRequired,
-  grid: PropTypes.object.isRequired,
+  grid: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnlinkedIsciGrid);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UnlinkedIsciGrid);

@@ -2,32 +2,44 @@
   {
     "CreatedBy": "Test_ProcessKeepingTracFiles",
     "ErrorMessages": [],
-    "FileHash": "02-F4-27-84-CB-C4-B2-6C-C3-46-CA-E3-0A-83-82-90-44-B9-8B-50",
-    "FileName": "KeepingTrac-BCOP3553.csv",
-    "FilePath": ".\\Files\\KeepingTrac-BCOP3553.csv",
+    "FileHash": "9D-60-BB-5D-37-13-0E-BA-0E-95-29-17-73-EF-13-55-CA-49-76-6D",
+    "FileName": "KeepingTrac_ValidFile.xlsx",
+    "FilePath": ".\\Files\\KeepingTrac_ValidFile.xlsx",
     "Source": 2,
     "Status": 1
   },
   {
     "CreatedBy": "Test_ProcessKeepingTracFiles",
     "ErrorMessages": [
-      "Could not find required column Station."
+      "Missing 'Estimate' on row 2",
+      "Missing 'Demographic' on row 2",
+      "Missing 'Station' on row 3",
+      "Missing 'Act Ratings' on row 3",
+      "Missing 'Air Date' on row 4",
+      "Missing 'Air Time' on row 4",
+      "Missing 'Act Impression' on row 4",
+      "Missing 'Air ISCI' on row 5"
     ],
-    "FileHash": "13-BB-39-CD-86-D3-5A-E1-C4-D1-81-A5-17-86-B9-8C-46-11-A4-F1",
-    "FileName": "KeepingTrac-BCOP3553_RequiredColumnMissing.csv",
-    "FilePath": ".\\Files\\KeepingTrac-BCOP3553_RequiredColumnMissing.csv",
+    "FileHash": "5A-80-26-D4-80-5E-82-AB-32-50-B0-D9-BD-47-5A-06-36-35-11-36",
+    "FileName": "KeepingTrac_MissingData.xlsx",
+    "FilePath": ".\\Files\\KeepingTrac_MissingData.xlsx",
     "Source": 2,
     "Status": 2
   },
   {
     "CreatedBy": "Test_ProcessKeepingTracFiles",
     "ErrorMessages": [
-      "Required field Station is null or empty in row 1",
-      "Required field Station is null or empty in row 2"
+      "Could not find header for column Estimate in file .\\Files\\KeepingTrac_MissingHeaders.xlsx",
+      "Could not find header for column Station in file .\\Files\\KeepingTrac_MissingHeaders.xlsx",
+      "Could not find header for column Air Date in file .\\Files\\KeepingTrac_MissingHeaders.xlsx",
+      "Could not find header for column Air Time in file .\\Files\\KeepingTrac_MissingHeaders.xlsx",
+      "Could not find header for column Air ISCI in file .\\Files\\KeepingTrac_MissingHeaders.xlsx",
+      "Could not find header for column Demographic in file .\\Files\\KeepingTrac_MissingHeaders.xlsx",
+      "Could not find header for column Act Impression in file .\\Files\\KeepingTrac_MissingHeaders.xlsx"
     ],
-    "FileHash": "2F-99-FC-A2-E1-19-F9-6C-2A-81-CD-85-7D-BA-D8-2E-0C-6C-6C-A1",
-    "FileName": "KeepingTrac-BCOP3553_RequiredDataMissing.csv",
-    "FilePath": ".\\Files\\KeepingTrac-BCOP3553_RequiredDataMissing.csv",
+    "FileHash": "D7-B1-DE-6E-D9-A7-81-12-8F-30-A1-95-F6-97-F2-1A-58-A7-02-C4",
+    "FileName": "KeepingTrac_MissingHeaders.xlsx",
+    "FilePath": ".\\Files\\KeepingTrac_MissingHeaders.xlsx",
     "Source": 2,
     "Status": 2
   }

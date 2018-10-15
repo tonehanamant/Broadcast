@@ -1,0 +1,97 @@
+﻿{
+  "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure",
+        "Id": 3
+      },
+      {
+        "Display": "Comedy",
+        "Id": 9
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
+    "ProgramNames": [
+      "Adventure Time",
+      "Friends"
+    ]
+  },
+  "Filter": {},
+  "Markets": [
+    {
+      "AvgCpm": 0.01,
+      "MarketCoverage": 1.01,
+      "MarketId": 160,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 0.01,
+      "MinCpm": 0.01,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "Programs": [
+            {
+              "BlendedCpm": 0.00,
+              "Cost": 25.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM",
+                "Id": 5
+              },
+              "Genres": [
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                }
+              ],
+              "Impressions": 10392144.25,
+              "ImpressionsPerSpot": 10392144.25,
+              "ManifestDaypartId": 213351,
+              "ProgramId": 162236,
+              "ProgramName": "Adventure Time",
+              "Spots": 0,
+              "StationImpressions": 0.0
+            },
+            {
+              "BlendedCpm": 0.01,
+              "Cost": 2500.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-6PM",
+                "Id": 12
+              },
+              "Genres": [
+                {
+                  "Display": "Comedy",
+                  "Id": 9
+                }
+              ],
+              "Impressions": 212579625.0,
+              "ImpressionsPerSpot": 2125796.25,
+              "ManifestDaypartId": 213352,
+              "ProgramId": 162237,
+              "ProgramName": "Friends",
+              "Spots": 100,
+              "StationImpressions": 0.0
+            }
+          ],
+          "StationCode": 5316
+        }
+      ],
+      "TotalCost": 50.0000,
+      "TotalImpressions": 12517940.5,
+      "TotalSpots": 0,
+      "TotalStationImpressions": 0.0
+    }
+  ]
+}

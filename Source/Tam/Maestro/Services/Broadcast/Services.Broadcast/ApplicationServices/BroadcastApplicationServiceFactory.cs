@@ -62,7 +62,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostLogBaseFileConverter, PostLogBaseFileConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
-            unityContainer.RegisterType<IKeepingTracConverter, KeepingTracConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
@@ -110,7 +109,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
             unityContainer.RegisterType<IPostLogEngine, PostLogEngine>();
-
+            unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
 
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
@@ -144,6 +143,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
             unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
+            unityContainer.RegisterType<IExcelHelper, ExcelHelper>();
 
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
 

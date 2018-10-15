@@ -44,7 +44,7 @@
       "OpenMarketPricing": {
         "CpmMax": null,
         "CpmMin": null,
-        "CpmTarget": null,
+        "OpenMarketCpmTarget": null,
         "UnitCapPerStation": null
       },
       "PostingBookId": 416,
@@ -218,7 +218,7 @@
       "OpenMarketPricing": {
         "CpmMax": null,
         "CpmMin": null,
-        "CpmTarget": null,
+        "OpenMarketCpmTarget": null,
         "UnitCapPerStation": null
       },
       "PostingBookId": 416,
@@ -357,7 +357,7 @@
       "OpenMarketPricing": {
         "CpmMax": null,
         "CpmMin": null,
-        "CpmTarget": null,
+        "OpenMarketCpmTarget": null,
         "UnitCapPerStation": null
       },
       "PostingBookId": 416,

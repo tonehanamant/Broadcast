@@ -1,0 +1,11 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [],
+    "FileHash": "9D-60-BB-5D-37-13-0E-BA-0E-95-29-17-73-EF-13-55-CA-49-76-6D",
+    "FileName": "KeepingTrac_ValidFile.xlsx",
+    "FilePath": ".\\Files\\KeepingTrac_ValidFile.xlsx",
+    "Source": 2,
+    "Status": 1
+  }
+]

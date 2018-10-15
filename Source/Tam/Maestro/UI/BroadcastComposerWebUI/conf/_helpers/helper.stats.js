@@ -4,5 +4,5 @@ module.exports = {
   hash: false,
   children: false,
   version: false,
-  modules: false,
-}
+  modules: false
+};

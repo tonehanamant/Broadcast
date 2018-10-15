@@ -154,15 +154,15 @@ namespace Services.Broadcast.ApplicationServices
                                 if (!DisplayDaypart.IsContained(displayDaypart, proposalDetailDaypart))
                                     slotDto.HasWastage = true;
                                 throw new Exception("Should not have gotten this far");
-                                var detail = new ManifestDetailDaypart
-                                {
-                                    Id = component.Id,
-                                    LegacyCallLetters = "xyz",
-                                    DisplayDaypart = DisplayDaypart.Intersect(displayDaypart, proposalDetailDaypart)
-                                };
+                                //var detail = new ManifestDetailDaypart
+                                //{
+                                //    Id = component.Id,
+                                //    LegacyCallLetters = "xyz",
+                                //    DisplayDaypart = DisplayDaypart.Intersect(displayDaypart, proposalDetailDaypart)
+                                //};
 
-                                impressionRequests.Add(detail);
-                                stationDetailImpressions[detail.Id] = slotDto;
+                                //impressionRequests.Add(detail);
+                                //stationDetailImpressions[detail.Id] = slotDto;
                             }
 
                             daypartGroupDto.DaypartSlots.Add(slotDto);

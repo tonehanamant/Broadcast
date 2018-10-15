@@ -2657,7 +2657,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalDetailDto.OpenMarketPricing.CpmMin = 9.99m;
                 proposalDetailDto.OpenMarketPricing.CpmMax = 55.99m;
                 proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 100;
-                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Max;
+                proposalDetailDto.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Max;
 
                 proposalDto.Details.Add(proposalDetailDto);
 
@@ -2682,7 +2682,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 proposalDetailDto.OpenMarketPricing.CpmMin = 123.99m;
                 proposalDetailDto.OpenMarketPricing.CpmMax = 200m;
                 proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 10;
-                proposalDetailDto.OpenMarketPricing.CpmTarget = OpenMarketCpmTarget.Avg;
+                proposalDetailDto.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Avg;
 
                 var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
 
@@ -2791,6 +2791,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var retrievedProposalHasDetailWithEstimateId = result.Details.Single().EstimateId == estimateId;
                 Assert.True(retrievedProposalHasDetailWithEstimateId);
             }
+        }
+   
+        [Test]
+        public void ProposalService_UploadsProposalBuyScx_WithStationsWithPlusS2Extensions()
+        {
+            var request = new ProposalBuySaveRequestDto
+            {
+                EstimateId = 3909,
+                FileName = "WithPlusS2Extensions.scx",
+                Username = "test-user",
+                ProposalVersionDetailId = 10,
+                FileStream = new FileStream(@".\Files\WithPlusS2Extensions.scx", FileMode.Open, FileAccess.Read)
+            };
+
+            var errors = _ProposalService.SaveProposalBuy(request);
+            var allStationWereFound = errors.All(x => !x.StartsWith("Unable to find station"));
+
+            Assert.IsTrue(allStationWereFound);
         }
 
         private ProposalBuySaveRequestDto _GetProposalBuySaveRequestDtoForSuccessfullResult(int detailId, int estimateId)

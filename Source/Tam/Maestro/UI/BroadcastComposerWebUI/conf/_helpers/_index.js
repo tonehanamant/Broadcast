@@ -1,6 +1,7 @@
+const alias = require("./helper.alias.js");
+const stats = require("./helper.stats.js");
+
 module.exports = {
-  api: require('./helper.api.js'),
-  stats: require('./helper.stats.js'),
-  exclude: require('./helper.exclude.js'),
-  alias: require('./helper.alias.js'),
+  alias,
+  stats
 };

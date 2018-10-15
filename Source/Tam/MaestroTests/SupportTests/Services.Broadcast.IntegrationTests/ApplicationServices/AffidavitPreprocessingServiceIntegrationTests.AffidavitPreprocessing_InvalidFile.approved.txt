@@ -1,0 +1,13 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [
+      "Unknown extension type for file .\\Files\\Checkers BVS Report.DAT"
+    ],
+    "FileHash": "5F-E2-53-FB-9F-17-D5-24-F3-DD-F5-45-A0-C9-85-03-ED-B7-CE-5B",
+    "FileName": "Checkers BVS Report.DAT",
+    "FilePath": ".\\Files\\Checkers BVS Report.DAT",
+    "Source": 0,
+    "Status": 2
+  }
+]

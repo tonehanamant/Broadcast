@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { v4 } from 'uuid';
-import { connect } from 'react-redux';
-import { AlertList } from 'react-bs-notifier';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { v4 } from "uuid";
+import { connect } from "react-redux";
+import { AlertList } from "react-bs-notifier";
 
 class Toast extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Toast extends Component {
 
     this.state = {
       alerts: [],
-      timeout: 3000,
+      timeout: 3000
     };
   }
 
@@ -22,7 +22,7 @@ class Toast extends Component {
     if (alert) {
       alert.id = v4();
       this.setState({
-        alerts: [...this.state.alerts, alert],
+        alerts: [...this.state.alerts, alert]
       });
     }
   }
@@ -33,7 +33,7 @@ class Toast extends Component {
 
     if (idx >= 0) {
       this.setState({
-        alerts: [...alerts.slice(0, idx), ...alerts.slice(idx + 1)],
+        alerts: [...alerts.slice(0, idx), ...alerts.slice(idx + 1)]
       });
     }
   }
@@ -45,14 +45,16 @@ class Toast extends Component {
         alerts={this.state.alerts}
         timeout={this.state.timeout}
         dismissTitle="Dismiss"
-        onDismiss={(alert) => { this.closeAlert(alert); }}
+        onDismiss={alert => {
+          this.closeAlert(alert);
+        }}
       />
     );
   }
 }
 
 Toast.defaultProps = {
-  alert: null,
+  alert: null
 };
 
 Toast.propTypes = {
@@ -60,15 +62,14 @@ Toast.propTypes = {
     display: PropTypes.bool,
     type: PropTypes.string,
     headline: PropTypes.string,
-    message: PropTypes.string,
-  }),
+    message: PropTypes.string
+  })
 };
 
 function mapStateToProps(state) {
   return {
-    alert: state.app.alert,
+    alert: state.app.alert
   };
 }
 
 export default connect(mapStateToProps)(Toast);
-

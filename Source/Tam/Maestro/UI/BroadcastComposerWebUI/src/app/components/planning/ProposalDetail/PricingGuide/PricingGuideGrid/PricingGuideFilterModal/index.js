@@ -1,24 +1,40 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Modal, Button, Form, FormGroup, Col, Glyphicon } from 'react-bootstrap';
-import Select from 'react-select';
-import { omit } from 'lodash';
-import { defaultFiltersOptions, filterMap } from './util';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  Modal,
+  Button,
+  Form,
+  FormGroup,
+  Col,
+  Glyphicon
+} from "react-bootstrap";
+import Select from "react-select";
+import { omit } from "lodash";
+import {
+  defaultFiltersItems,
+  filterMap,
+  generateFilter,
+  getFilterValuesToRequest,
+  getFilterValuesFromResponse,
+  addFilterToItems
+} from "./util";
 
-import './index.scss';
+import "./index.scss";
 
-
-const mapStateToProps = ({ app: { modals: { pricingFilterModal: modal } } }) => ({
-  modal,
+const mapStateToProps = ({
+  app: {
+    modals: { pricingFilterModal: modal }
+  }
+}) => ({
+  modal
 });
 
 const initialState = {
-  filtersOptions: defaultFiltersOptions,
+  filtersItems: defaultFiltersItems,
   filtersRender: [],
-  filtersValues: {},
+  filtersValues: {}
 };
-
 
 class PricingGuideFilterModal extends Component {
   constructor(props) {
@@ -37,7 +53,6 @@ class PricingGuideFilterModal extends Component {
     this.state = initialState;
   }
 
-
   componentWillReceiveProps(nextProps) {
     const { modal } = this.props;
     if (!modal.active && nextProps.modal.active) {
@@ -46,57 +61,58 @@ class PricingGuideFilterModal extends Component {
   }
 
   generateFiltersState() {
-    const { activeOpenMarketData: { Filter } } = this.props;
-    const selectedFilters = Object.keys(Filter);
+    const {
+      activeOpenMarketData: { Filter, DisplayFilter }
+    } = this.props;
 
-    const filtersValues = {};
-    selectedFilters.forEach((filter) => {
-      filtersValues[filter] = Filter[filter].map(val => ({ Display: val, Id: val }));
-    });
-
-    this.setState({
-      filtersOptions: defaultFiltersOptions.filter(it => !selectedFilters.includes(it.Id)),
-      filtersRender: defaultFiltersOptions.filter(it => selectedFilters.includes(it.Id)),
-      filtersValues,
-    });
+    const nextState = getFilterValuesFromResponse(Filter, DisplayFilter);
+    this.setState(nextState);
   }
 
   onAddFilter(filter) {
-    const { filtersRender, filtersOptions } = this.state;
+    const { filtersRender, filtersItems } = this.state;
     this.setState({
-      filtersRender: filtersRender.concat(filter),
-      filtersOptions: filtersOptions.filter(({ Id }) => (Id !== filter.Id)),
+      filtersRender: filtersRender.concat(generateFilter(filter)),
+      filtersItems: filterMap[filter.Id].isMultiple
+        ? filtersItems
+        : filtersItems.filter(({ Id }) => Id !== filter.Id)
     });
   }
 
   onDeleteFilter(filter) {
-    const { filtersRender, filtersOptions, filtersValues } = this.state;
+    const { filtersRender, filtersItems, filtersValues } = this.state;
+    const newFilterOptions = filterMap[filter.Id].isMultiple
+      ? filtersItems
+      : addFilterToItems(filter, filtersItems);
+
     this.setState({
-      filtersRender: filtersRender.filter(({ Id }) => (Id !== filter.Id)),
-      filtersOptions: filtersOptions.concat(filter),
-      filtersValues: omit(filtersValues, filter.Id),
+      filtersRender: filtersRender.filter(({ name }) => name !== filter.name),
+      filtersItems: newFilterOptions,
+      filtersValues: omit(filtersValues, filter.name)
     });
   }
 
-  onEditFilter(newFilter) {
+  onEditFilter(newFilter, oldFilter) {
     const { filtersRender, filtersValues } = this.state;
     this.setState({
-      filtersRender: filtersRender.map(it => ((it.Id === newFilter.Id) ? newFilter : it)),
-      filtersValues: Object.assign(filtersValues, { [newFilter.Id]: null }),
+      filtersRender: filtersRender.map(
+        it => (it.name === oldFilter.name ? generateFilter(newFilter) : it)
+      ),
+      filtersValues: Object.assign(filtersValues, { [newFilter.Id]: null })
     });
   }
 
   onChangeFilter(filter, value) {
     const { filtersValues } = this.state;
     this.setState({
-      filtersValues: Object.assign(filtersValues, { [filter.Id]: value }),
+      filtersValues: Object.assign(filtersValues, { [filter.name]: value })
     });
   }
 
   closeModal() {
     this.props.toggleModal({
-      modal: 'pricingFilterModal',
-      active: false,
+      modal: "pricingFilterModal",
+      active: false
     });
     this.clearState();
   }
@@ -106,58 +122,79 @@ class PricingGuideFilterModal extends Component {
   }
 
   getFiltersForSave() {
-    const { filtersValues } = this.state;
-    const parsedFilters = {};
-    Object.keys(filtersValues)
-      .filter(filter => !!filtersValues[filter].length)
-      .forEach((filter) => {
-        parsedFilters[filter] = filtersValues[filter].map(({ Display }) => (Display));
-      });
+    const { filtersValues, filtersOptions, filtersRender } = this.state;
+    const parsedFilters = getFilterValuesToRequest(
+      filtersValues,
+      filtersOptions,
+      filtersRender
+    );
     return { Filter: parsedFilters };
   }
 
   handleSave() {
     const filters = this.getFiltersForSave();
-    this.props.applyFilters(filters);
+    this.props.applyFilters(filters, true);
     this.closeModal();
   }
 
   render() {
-    const { modal, activeOpenMarketData } = this.props;
-    const { filtersOptions, filtersRender, filtersValues } = this.state;
+    const { modal } = this.props;
+    const {
+      filtersItems,
+      filtersRender,
+      filtersValues,
+      filtersOptions
+    } = this.state;
 
     return (
       <Modal show={modal.active}>
         <Modal.Header>
-          <Button className="close" bsStyle="link" onClick={this.closeModal} style={{ display: 'inline-block', float: 'right' }}>
-          <span>&times;</span>
-        </Button>
-        <Modal.Title>Filter Programs</Modal.Title>
+          <Button
+            className="close"
+            bsStyle="link"
+            onClick={this.closeModal}
+            style={{ display: "inline-block", float: "right" }}
+          >
+            <span>&times;</span>
+          </Button>
+          <Modal.Title>Filter Programs</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <Form horizontal>
-            {filtersRender.map((it, idx) => (
-              <FormGroup key={`pricing-filter-${it.Id}`} controlId={`filter-${it.Id}-${it.idx}`}>
+            {filtersRender.map((filter, idx) => (
+              <FormGroup
+                key={`pricing-filter-${filter.name}`}
+                controlId={`filter-${filter.name}`}
+              >
                 <Col sm={4}>
                   <Select
-                    value={it}
-                    onChange={(filter) => { this.onEditFilter(filter, it, idx); }}
-                    options={filtersOptions}
+                    value={filter}
+                    onChange={newFilter => {
+                      this.onEditFilter(newFilter, filter, idx);
+                    }}
+                    options={filtersItems}
                     labelKey="Display"
                     valueKey="Id"
                     clearable={false}
                   />
                 </Col>
                 <Col sm={6}>
-                  {filterMap[it.Id].render(
-                    filtersValues[it.Id],
-                    (value) => { this.onChangeFilter(it, value); },
-                    filterMap[it.Id].getInitialData(activeOpenMarketData.DisplayFilter),
+                  {filterMap[filter.Id].render(
+                    filtersValues[filter.name],
+                    value => {
+                      this.onChangeFilter(filter, value);
+                    },
+                    filtersOptions[filter.Id]
                   )}
                 </Col>
                 <Col sm={2}>
-                  <Button className="remove-button" onClick={() => { this.onDeleteFilter(it); }}>
+                  <Button
+                    className="remove-button"
+                    onClick={() => {
+                      this.onDeleteFilter(filter);
+                    }}
+                  >
                     <Glyphicon glyph="remove" />
                   </Button>
                 </Col>
@@ -167,7 +204,7 @@ class PricingGuideFilterModal extends Component {
               <Col sm={4}>
                 <Select
                   onChange={this.onAddFilter}
-                  options={filtersOptions}
+                  options={filtersItems}
                   labelKey="Display"
                   valueKey="Id"
                   clearable={false}
@@ -178,8 +215,12 @@ class PricingGuideFilterModal extends Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={this.closeModal} bsStyle="danger">Cancel</Button>
-            <Button onClick={this.handleSave} bsStyle="success">Apply</Button>
+          <Button onClick={this.closeModal} bsStyle="danger">
+            Cancel
+          </Button>
+          <Button onClick={this.handleSave} bsStyle="success">
+            Apply
+          </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -190,13 +231,13 @@ PricingGuideFilterModal.propTypes = {
   modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   activeOpenMarketData: PropTypes.object.isRequired,
-  applyFilters: PropTypes.func.isRequired,
+  applyFilters: PropTypes.func.isRequired
 };
 
 PricingGuideFilterModal.defaultProps = {
   modal: {
-    active: false,
-  },
+    active: false
+  }
 };
 
 export default connect(mapStateToProps)(PricingGuideFilterModal);

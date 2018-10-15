@@ -1,5 +1,83 @@
 ﻿{
   "DisplayFilter": {
+    "Affiliations": [
+      "ABC",
+      "CBS",
+      "CW",
+      "FOX",
+      "NBC"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "Alexandria, LA",
+        "Id": 244
+      },
+      {
+        "Display": "Anchorage",
+        "Id": 343
+      },
+      {
+        "Display": "Casper-Riverton",
+        "Id": 367
+      },
+      {
+        "Display": "Corpus Christi",
+        "Id": 200
+      },
+      {
+        "Display": "Fairbanks",
+        "Id": 345
+      },
+      {
+        "Display": "Glendive",
+        "Id": 398
+      },
+      {
+        "Display": "Idaho Fals-Pocatllo(Jcksn)",
+        "Id": 358
+      },
+      {
+        "Display": "Jackson, MS",
+        "Id": 318
+      },
+      {
+        "Display": "Jonesboro",
+        "Id": 334
+      },
+      {
+        "Display": "Juneau",
+        "Id": 347
+      },
+      {
+        "Display": "Monterey-Salinas",
+        "Id": 428
+      },
+      {
+        "Display": "Palm Springs",
+        "Id": 404
+      },
+      {
+        "Display": "Quincy-Hannibal-Keokuk",
+        "Id": 317
+      },
+      {
+        "Display": "Rapid City",
+        "Id": 364
+      },
+      {
+        "Display": "Tampa-St. Pete (Sarasota)",
+        "Id": 139
+      },
+      {
+        "Display": "Twin Falls",
+        "Id": 360
+      },
+      {
+        "Display": "Yakima-Pasco-Rchlnd-Knnwck",
+        "Id": 410
+      }
+    ],
     "ProgramNames": [
       "3 News First Edition",
       "AgDay",
@@ -60,15 +138,19 @@
   "Filter": {},
   "Markets": [
     {
+      "AvgCpm": 4.548,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
+      "MaxCpm": 8.56,
+      "MinCpm": 0.66,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
           "LegacyCallLetters": "WWSB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -199,15 +281,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 1.16,
       "MarketCoverage": 0.273,
       "MarketId": 318,
       "MarketName": "Jackson, MS",
       "MarketRank": 95,
+      "MaxCpm": 1.16,
+      "MinCpm": 1.16,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
           "LegacyCallLetters": "WDBD",
+          "MinProgramsBlendedCpm": 1.16,
           "Programs": [
             {
               "BlendedCpm": 1.16,
@@ -236,15 +322,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 42.33,
       "MarketCoverage": 0.214,
       "MarketId": 410,
       "MarketName": "Yakima-Pasco-Rchlnd-Knnwck",
       "MarketRank": 123,
+      "MaxCpm": 42.33,
+      "MinCpm": 42.33,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "KCYU-LD 41.1",
           "LegacyCallLetters": "KCYU",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -307,15 +397,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.0433333333333333333333333333,
       "MarketCoverage": 0.194,
       "MarketId": 428,
       "MarketName": "Monterey-Salinas",
       "MarketRank": 125,
+      "MaxCpm": 4.93,
+      "MinCpm": 0.66,
       "Stations": [
         {
           "Affiliation": "CBS",
           "CallLetters": "KION-TV 46.1",
           "LegacyCallLetters": "KION",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -443,6 +537,7 @@
           "Affiliation": "CW",
           "CallLetters": "KION-TV 46.2",
           "LegacyCallLetters": "NION",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -471,15 +566,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 10.10875,
       "MarketCoverage": 0.177,
       "MarketId": 200,
       "MarketName": "Corpus Christi",
       "MarketRank": 129,
+      "MaxCpm": 25.00,
+      "MinCpm": 4.89,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "KIII 3.1",
           "LegacyCallLetters": "KIII",
+          "MinProgramsBlendedCpm": 4.89,
           "Programs": [
             {
               "BlendedCpm": 4.89,
@@ -627,15 +726,19 @@
       "TotalStationImpressions": 66150.0
     },
     {
+      "AvgCpm": 21.85,
       "MarketCoverage": 0.136,
       "MarketId": 404,
       "MarketName": "Palm Springs",
       "MarketRank": 146,
+      "MaxCpm": 41.22,
+      "MinCpm": 2.48,
       "Stations": [
         {
           "Affiliation": "CW",
           "CallLetters": "KCWQ",
           "LegacyCallLetters": "KCWQ",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -712,6 +815,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KDFX-CD 39.1",
           "LegacyCallLetters": "KDFX",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -757,15 +861,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.81,
       "MarketCoverage": 0.133,
       "MarketId": 343,
       "MarketName": "Anchorage",
       "MarketRank": 148,
+      "MaxCpm": 3.81,
+      "MinCpm": 3.81,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "KTBY 4.1",
           "LegacyCallLetters": "KTBY",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -791,6 +899,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KYUR 13.1",
           "LegacyCallLetters": "KYUR",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -870,15 +979,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 5.0133333333333333333333333333,
       "MarketCoverage": 0.107,
       "MarketId": 358,
       "MarketName": "Idaho Fals-Pocatllo(Jcksn)",
       "MarketRank": 163,
+      "MaxCpm": 12.07,
+      "MinCpm": 0.53,
       "Stations": [
         {
           "Affiliation": "CBS",
           "CallLetters": "KIDK 3.1",
           "LegacyCallLetters": "KIDK",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -989,6 +1102,7 @@
           "Affiliation": "FOX",
           "CallLetters": "KXPI-LD 34.2",
           "LegacyCallLetters": "KXPI",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1017,15 +1131,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 4.769,
       "MarketCoverage": 0.084,
       "MarketId": 317,
       "MarketName": "Quincy-Hannibal-Keokuk",
       "MarketRank": 170,
+      "MaxCpm": 16.41,
+      "MinCpm": 0.51,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "WGEM-TV 10.3",
           "LegacyCallLetters": "GGEM",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1051,6 +1169,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KHQA-TV 7.1",
           "LegacyCallLetters": "KHQA",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1127,6 +1246,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KHQA-TV 7.2",
           "LegacyCallLetters": "NHQA",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1237,6 +1357,7 @@
           "Affiliation": "NBC",
           "CallLetters": "WGEM-TV 10.1",
           "LegacyCallLetters": "WGEM",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1367,15 +1488,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.8925,
       "MarketCoverage": 0.085,
       "MarketId": 364,
       "MarketName": "Rapid City",
       "MarketRank": 171,
+      "MaxCpm": 10.91,
+      "MinCpm": 0.49,
       "Stations": [
         {
           "Affiliation": "NBC",
           "CallLetters": "KNBN-DT 21.1",
           "LegacyCallLetters": "KNBN",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1489,15 +1614,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 0.0,
       "MarketCoverage": 0.073,
       "MarketId": 244,
       "MarketName": "Alexandria, LA",
       "MarketRank": 179,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "WNTZ-TV 48.1",
           "LegacyCallLetters": "WNTZ",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1526,15 +1655,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 0.0,
       "MarketCoverage": 0.069,
       "MarketId": 334,
       "MarketName": "Jonesboro",
       "MarketRank": 181,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "KJNB-LD 39.1",
           "LegacyCallLetters": "KJNB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1560,6 +1693,7 @@
           "Affiliation": "CBS",
           "CallLetters": "KJNB-LD 39.2",
           "LegacyCallLetters": "NJNB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1656,15 +1790,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 34.911111111111111111111111111,
       "MarketCoverage": 0.056,
       "MarketId": 360,
       "MarketName": "Twin Falls",
       "MarketRank": 193,
+      "MaxCpm": 125.00,
+      "MinCpm": 6.52,
       "Stations": [
         {
           "Affiliation": "NBC",
           "CallLetters": "KTFT-LD 7.1",
           "LegacyCallLetters": "KTFT",
+          "MinProgramsBlendedCpm": 6.52,
           "Programs": [
             {
               "BlendedCpm": 6.52,
@@ -1829,15 +1967,19 @@
       "TotalStationImpressions": 11300.0
     },
     {
+      "AvgCpm": 20.02,
       "MarketCoverage": 0.047,
       "MarketId": 367,
       "MarketName": "Casper-Riverton",
       "MarketRank": 196,
+      "MaxCpm": 47.12,
+      "MinCpm": 1.97,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "KFNB 20.1",
           "LegacyCallLetters": "KFNB",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1897,6 +2039,7 @@
           "Affiliation": "ABC",
           "CallLetters": "KTWO-TV 2.1",
           "LegacyCallLetters": "KTWO",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -1993,15 +2136,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.73,
       "MarketCoverage": 0.031,
       "MarketId": 345,
       "MarketName": "Fairbanks",
       "MarketRank": 202,
+      "MaxCpm": 3.73,
+      "MinCpm": 3.73,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "KATN 2.1",
           "LegacyCallLetters": "KATN",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -2081,15 +2228,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 3.72,
       "MarketCoverage": 0.022,
       "MarketId": 347,
       "MarketName": "Juneau",
       "MarketRank": 207,
+      "MaxCpm": 3.72,
+      "MinCpm": 3.72,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "KJUD 8.1",
           "LegacyCallLetters": "KJUD",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,
@@ -2169,15 +2320,19 @@
       "TotalStationImpressions": 0.0
     },
     {
+      "AvgCpm": 1290.66,
       "MarketCoverage": 0.004,
       "MarketId": 398,
       "MarketName": "Glendive",
       "MarketRank": 210,
+      "MaxCpm": 1290.66,
+      "MinCpm": 1290.66,
       "Stations": [
         {
           "Affiliation": "CBS",
           "CallLetters": "KXGN-TV 5.1",
           "LegacyCallLetters": "KXGN",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
               "BlendedCpm": 0.0,

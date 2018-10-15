@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import CSSModules from 'react-css-modules';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 // import { v4 } from 'uuid';
-import { Col, Form, ButtonToolbar, Button, FormGroup } from 'react-bootstrap/lib/';
-import moment from 'moment';
+import {
+  Col,
+  Form,
+  ButtonToolbar,
+  Button,
+  FormGroup
+} from "react-bootstrap/lib/";
+import moment from "moment";
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
-import { DatePicker } from 'antd';
-import './index.css';
+import { DatePicker } from "antd";
+import "./index.css";
 
-const dateFormat = 'MM/DD/YYYY';
+const dateFormat = "MM/DD/YYYY";
 
 class FilterDateInput extends Component {
   constructor(props) {
@@ -17,12 +23,18 @@ class FilterDateInput extends Component {
     this.state = {
       startDate: moment(),
       endDate: moment(),
-      originalStartDate: moment(this.props.filterOptions.originalDateAiredStart, 'YYYY-MM-DD').toDate(),
-      originalEndDate: moment(this.props.filterOptions.originalDateAiredEnd, 'YYYY-MM-DD').toDate(),
+      originalStartDate: moment(
+        this.props.filterOptions.originalDateAiredStart,
+        "YYYY-MM-DD"
+      ).toDate(),
+      originalEndDate: moment(
+        this.props.filterOptions.originalDateAiredEnd,
+        "YYYY-MM-DD"
+      ).toDate(),
       filterOptions: {},
       startValid: true,
       endValid: true,
-      isValidSelection: true,
+      isValidSelection: true
     };
     this.disabledStartDate = this.disabledStartDate.bind(this);
     this.disabledEndDate = this.disabledEndDate.bind(this);
@@ -35,8 +47,8 @@ class FilterDateInput extends Component {
 
   componentWillMount() {
     this.setState({
-      startDate: moment(this.props.filterOptions.DateAiredStart, 'YYYY-MM-DD'),
-      endDate: moment(this.props.filterOptions.DateAiredEnd, 'YYYY-MM-DD'),
+      startDate: moment(this.props.filterOptions.DateAiredStart, "YYYY-MM-DD"),
+      endDate: moment(this.props.filterOptions.DateAiredEnd, "YYYY-MM-DD")
     });
   }
 
@@ -52,34 +64,40 @@ class FilterDateInput extends Component {
 
   handleStartChange(date) {
     if (date && moment(date).isValid()) {
-      this.setState({
-        startDate: date,
-        startValid: true,
-      }, () => {
-        this.setValidSelections();
-      });
+      this.setState(
+        {
+          startDate: date,
+          startValid: true
+        },
+        () => {
+          this.setValidSelections();
+        }
+      );
     }
   }
 
   handleEndChange(date) {
     if (date && moment(date).isValid()) {
-      this.setState({
-        endDate: date,
-        endValid: true,
-      }, () => {
-        this.setValidSelections();
-      });
+      this.setState(
+        {
+          endDate: date,
+          endValid: true
+        },
+        () => {
+          this.setValidSelections();
+        }
+      );
     }
   }
 
   setValidSelections() {
     if (this.state.startValid && this.state.endValid) {
       this.setState({
-        isValidSelection: true,
+        isValidSelection: true
       });
     } else {
       this.setState({
-        isValidSelection: false,
+        isValidSelection: false
       });
     }
   }
@@ -87,9 +105,16 @@ class FilterDateInput extends Component {
   clear() {
     // update states as needed then apply
     // REVIEW may be problematic as filterOptions may be changed - need originals? yes
-    const options = { DateAiredStart: this.props.filterOptions.originalDateAiredStart, DateAiredEnd: this.props.filterOptions.originalDateAiredEnd };
+    const options = {
+      DateAiredStart: this.props.filterOptions.originalDateAiredStart,
+      DateAiredEnd: this.props.filterOptions.originalDateAiredEnd
+    };
     // using exclusions in this context to denote not active;
-    this.props.applySelection({ filterKey: this.props.filterKey, exclusions: false, filterOptions: options });
+    this.props.applySelection({
+      filterKey: this.props.filterKey,
+      exclusions: false,
+      filterOptions: options
+    });
   }
   // apply filters - filterOptions and matchOptions if applicable
   // change to send unselected as flat array of values - exclusions; send all options
@@ -100,14 +125,19 @@ class FilterDateInput extends Component {
     let exclusions = true;
     // if startDate and endDate are the same as originalStartDate and originalEndDate
     // then set exclusions to false, otherwise set to true
-    if (startDate === moment(this.props.filterOptions.originalDateAiredStart).toISOString() && endDate === moment(this.props.filterOptions.originalDateAiredEnd).toISOString()) {
+    if (
+      startDate ===
+        moment(this.props.filterOptions.originalDateAiredStart).toISOString() &&
+      endDate ===
+        moment(this.props.filterOptions.originalDateAiredEnd).toISOString()
+    ) {
       exclusions = false;
     }
     const options = { DateAiredStart: startDate, DateAiredEnd: endDate };
     this.props.applySelection({
       filterKey: this.props.filterKey,
       exclusions,
-      filterOptions: options,
+      filterOptions: options
     });
   }
 
@@ -116,7 +146,9 @@ class FilterDateInput extends Component {
       <div>
         <Form horizontal>
           <FormGroup>
-            <Col style={{ textAlign: 'left' }} className="control-label" sm={4}>Start date</Col>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+              Start date
+            </Col>
             <Col sm={8}>
               <DatePicker
                 disabledDate={this.disabledStartDate}
@@ -130,7 +162,9 @@ class FilterDateInput extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col style={{ textAlign: 'left' }} className="control-label" sm={4}>End date</Col>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+              End date
+            </Col>
             <Col sm={8}>
               <DatePicker
                 disabledDate={this.disabledEndDate}
@@ -144,20 +178,19 @@ class FilterDateInput extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar className="pull-right" style={{ margin: '0 0 8px 0' }}>
-          <Button
-            bsStyle="success"
-            bsSize="xsmall"
-            onClick={this.clear}
-          >Clear
+        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
+          <Button bsStyle="success" bsSize="xsmall" onClick={this.clear}>
+            Clear
           </Button>
           <Button
             bsStyle="success"
             bsSize="xsmall"
             disabled={!this.state.isValidSelection}
-            style={{ marginLeft: '10px' }}
+            style={{ marginLeft: "10px" }}
             onClick={this.apply}
-          > Apply
+          >
+            {" "}
+            Apply
           </Button>
         </ButtonToolbar>
       </div>
@@ -166,13 +199,13 @@ class FilterDateInput extends Component {
 }
 
 FilterDateInput.defaultProps = {
-  applySelection: () => {},
+  applySelection: () => {}
 };
 
 FilterDateInput.propTypes = {
   applySelection: PropTypes.func,
   filterOptions: PropTypes.object.isRequired,
-  filterKey: PropTypes.string.isRequired,
+  filterKey: PropTypes.string.isRequired
 };
 
 export default FilterDateInput;

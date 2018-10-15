@@ -1,4 +1,4 @@
-var { resolve } = require('path');
+const { resolve } = require("path");
 
 module.exports = {
   SRCRoot: resolve(__dirname, '../../src'),

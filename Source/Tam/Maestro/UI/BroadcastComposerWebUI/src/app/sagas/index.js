@@ -1,12 +1,11 @@
-import * as appSaga from './app';
-import * as postSaga from './post';
-import * as postPrePostingSaga from './postPrePosting';
-import * as planningSaga from './planning';
-import * as trackerSaga from './tracker';
+import * as appSaga from "./app";
+import * as postSaga from "./post";
+import * as postPrePostingSaga from "./postPrePosting";
+import * as planningSaga from "./planning";
+import * as trackerSaga from "./tracker";
 
 export default function* rootSaga() {
   yield [
-
     appSaga.watchRequestEnvironment(),
     appSaga.watchRequestEmployee(),
     appSaga.watchReadFileB64(),
@@ -95,7 +94,6 @@ export default function* rootSaga() {
     trackerSaga.watchCloseUnlinkedIsciModal(),
     trackerSaga.watchUndoArchivedIscis(),
     trackerSaga.watchUndoScrubStatus(),
-    trackerSaga.watchUndoScrubStatusSuccess(),
-
+    trackerSaga.watchUndoScrubStatusSuccess()
   ];
 }
