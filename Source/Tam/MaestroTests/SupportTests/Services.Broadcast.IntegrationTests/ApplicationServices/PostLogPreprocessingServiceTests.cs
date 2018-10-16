@@ -170,7 +170,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         @".\Files\KeepingTrac_ValidFile.xlsx",
                         @".\Files\KeepingTrac_MissingData.xlsx",
-                        @".\Files\KeepingTrac_MissingHeaders.xlsx"
+                        @".\Files\KeepingTrac_MissingHeaders.xlsx",
+                        @".\Files\C786.Sigma.MissingColumns.csv"
                     },
                     userName, FileSourceEnum.KeepingTrac);
                 var jsonResolver = new IgnorableSerializerContractResolver();

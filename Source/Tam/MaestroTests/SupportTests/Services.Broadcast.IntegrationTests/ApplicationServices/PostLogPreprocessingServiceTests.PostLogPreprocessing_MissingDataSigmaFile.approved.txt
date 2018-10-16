@@ -11,7 +11,7 @@
     "FileHash": "19-BA-76-D5-98-ED-62-BF-23-0A-01-CC-A1-C6-D4-9F-32-17-A6-84",
     "FileName": "C786.Sigma.MissingData.csv",
     "FilePath": ".\\Files\\C786.Sigma.MissingData.csv",
-    "Source": 1,
+    "Source": 0,
     "Status": 2
   }
 ]
