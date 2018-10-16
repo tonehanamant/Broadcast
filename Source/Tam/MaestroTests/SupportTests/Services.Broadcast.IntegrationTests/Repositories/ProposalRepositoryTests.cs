@@ -4,6 +4,7 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;

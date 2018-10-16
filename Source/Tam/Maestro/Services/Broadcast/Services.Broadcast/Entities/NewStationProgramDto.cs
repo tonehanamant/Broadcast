@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;

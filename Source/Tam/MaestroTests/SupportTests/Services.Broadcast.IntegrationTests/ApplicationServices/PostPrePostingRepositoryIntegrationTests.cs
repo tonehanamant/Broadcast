@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkMapping.Broadcast;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;

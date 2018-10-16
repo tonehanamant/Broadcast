@@ -22,6 +22,7 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

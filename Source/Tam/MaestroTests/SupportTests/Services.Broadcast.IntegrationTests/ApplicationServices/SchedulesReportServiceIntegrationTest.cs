@@ -11,6 +11,7 @@ using Moq;
 using Services.Broadcast.Aggregates;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

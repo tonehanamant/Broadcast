@@ -1,4 +1,6 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Services.Broadcast.Helpers
 {
@@ -19,6 +21,17 @@ namespace Services.Broadcast.Helpers
                 default:
                     return null;
             }
+        }
+
+        public static string GetDescriptionAttribute<T>(this T source)
+        {
+            FieldInfo fi = source.GetType().GetField(source.ToString());
+
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
+                typeof(DescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0) return attributes[0].Description;
+            else return source.ToString();
         }
 
     }

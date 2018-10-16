@@ -12,6 +12,7 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
 using Image = System.Drawing.Image;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {

@@ -3,6 +3,7 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 

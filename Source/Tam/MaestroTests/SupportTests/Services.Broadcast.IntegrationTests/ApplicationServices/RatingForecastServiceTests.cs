@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly List<int> _StartTimes = new List<int>();
         private readonly List<short> _MediaMonthIds = new List<short> { 401, 404, 406, 413, 416};
         private readonly List<bool> _Bools = new List<bool> { true, false };
-        private readonly List<PlaybackType> _PlaybackTypes = new List<PlaybackType> { PlaybackType.O, PlaybackType.S, PlaybackType.One, PlaybackType.Three, PlaybackType.Seven };
+        private readonly List<PlaybackTypeEnum> _PlaybackTypes = new List<PlaybackTypeEnum> { PlaybackTypeEnum.O, PlaybackTypeEnum.S, PlaybackTypeEnum.One, PlaybackTypeEnum.Three, PlaybackTypeEnum.Seven };
         private readonly List<DisplayDaypart> _Dayparts = new List<DisplayDaypart>();
         private readonly List<short> _Programs = new List<short>();
 
@@ -161,7 +162,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetRatings_Fails_WhenContainingDuplicatePrograms()
         {
-            var request = new RatingForecastRequest(0, 1, 0, PlaybackType.O);
+            var request = new RatingForecastRequest(0, 1, 0, PlaybackTypeEnum.O);
             var daypart1 = _Dayparts.Random();
             request.Programs.Add(new Program(10776, daypart1));
             request.Programs.Add(new Program(10776, daypart1));
@@ -177,7 +178,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetRatings_Fails_WhenContainingNoPrograms()
         {
-            var request = new RatingForecastRequest(0, 1, 0, PlaybackType.O);
+            var request = new RatingForecastRequest(0, 1, 0, PlaybackTypeEnum.O);
 
             Assert.Throws<NoProgramsException>(() => _Sut.ForecastRatings(request));
         }
@@ -185,7 +186,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetRatings_Fails_WhenHutMediaMonthGreaterThanShareMediaMonth()
         {
-            var request = new RatingForecastRequest(1, 0, 0, PlaybackType.O);
+            var request = new RatingForecastRequest(1, 0, 0, PlaybackTypeEnum.O);
 
             Assert.Throws<HutGreaterThanShareException>(() => _Sut.ForecastRatings(request), string.Format(RatingForecastService.HutMediaMonthMustBeEarlierLessThanThanShareMediaMonth, request.HutMediaMonthId, request.ShareMediaMonthId));
         }
@@ -193,7 +194,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetRatings_Fails_WhenSameHutAndShareMediaMonth()
         {
-            var request = new RatingForecastRequest(0, 0, 0, PlaybackType.O);
+            var request = new RatingForecastRequest(0, 0, 0, PlaybackTypeEnum.O);
             request.Programs.Add(new Program(10776, _Dayparts.Random()));
             Assert.Throws<IdenticalHutAndShareException>(() => _Sut.ForecastRatings(request), string.Format(RatingForecastService.IdenticalHutAndShareMessage, request.HutMediaMonthId));
         }
@@ -201,7 +202,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetRatings_Fails_WhenDaypartHasNoSelectedDays()
         {
-            var request = new RatingForecastRequest(0, 1, 0, PlaybackType.O);
+            var request = new RatingForecastRequest(0, 1, 0, PlaybackTypeEnum.O);
             var displayDaypart = new DisplayDaypart(0, 0, 10000, false, false, false, false, false, false, false);
             request.Programs.Add(new Program(10776, displayDaypart));
 

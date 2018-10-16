@@ -17,6 +17,7 @@ using Tam.Maestro.Services.Cable.Entities;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
 using System.Net.Mail;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

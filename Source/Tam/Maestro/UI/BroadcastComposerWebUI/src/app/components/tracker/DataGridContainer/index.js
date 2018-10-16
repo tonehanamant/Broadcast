@@ -114,7 +114,7 @@ export class DataGridContainer extends Component {
         key: "menu-tracker-spot-tracker-report",
         EVENT_HANDLER: ({ metaData }) => {
           window.open(
-            `${__API__}Tracker/SpotTrackerReport/${
+            `${__API__}SpotTracker/SpotTrackerReport/${
               metaData.rowData.ContractId
             }`,
             "_blank"

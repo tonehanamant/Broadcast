@@ -1,6 +1,8 @@
 ﻿using Common.Services;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;

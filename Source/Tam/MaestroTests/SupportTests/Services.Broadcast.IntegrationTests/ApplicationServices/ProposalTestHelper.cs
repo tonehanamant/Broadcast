@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.OpenMarketInventory;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices

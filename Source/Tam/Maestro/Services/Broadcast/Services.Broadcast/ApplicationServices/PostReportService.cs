@@ -113,7 +113,7 @@ namespace Services.Broadcast.ApplicationServices
         public NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
-
+            
             var flights = _GetFlightsRange(proposal.Details);
             var inspecSpots = _AffidavitRepository.GetInSpecSpotsForProposal(proposalId);
 
@@ -137,10 +137,13 @@ namespace Services.Broadcast.ApplicationServices
                 .ToDictionary(k => k.LegacyCallLetters, v => v);
             var nsiMarketRankings = _GetMarketRankingsByPostingBook(inspecSpots);
             var guaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString;
+            var postingBooks = _MediaMonthAndWeekCache.GetMediaMonthsByIds(inspecSpots.Select(x => x.ProposalDetailPostingBookId.Value).Distinct().ToList());
+            var playbackTypes = inspecSpots.Select(x => x.ProposalDetailPlaybackType.Value).Distinct().ToList();
 
             return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName, _ImpressionAdjustmentEngine);
+                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName, _ImpressionAdjustmentEngine,
+                                                postingBooks, playbackTypes);
         }
         /// <summary>
         /// 

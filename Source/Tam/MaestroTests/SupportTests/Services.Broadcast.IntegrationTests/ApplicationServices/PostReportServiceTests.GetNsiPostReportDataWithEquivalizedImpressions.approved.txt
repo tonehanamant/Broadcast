@@ -6,6 +6,12 @@
     "2Q'16: 1 week - 5/23"
   ],
   "GuaranteedDemo": "House Holds",
+  "PlaybackTypes": [
+    "Live+3"
+  ],
+  "PostingBooks": [
+    "November 2017"
+  ],
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -47,7 +53,7 @@
           },
           "DateAired": "2016-05-29T00:00:00",
           "DaypartName": "ADU",
-          "Isci": "NSIIMP1",
+          "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "ProgramName": "Program Names R us",

@@ -12,6 +12,7 @@ using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {

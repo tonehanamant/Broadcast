@@ -9,19 +9,17 @@ namespace Services.Broadcast.ReportGenerators
     {
         public ReportOutput Generate(SpotTrackerReport spotTrackerReport)
         {
-            var proposalName = spotTrackerReport.Name.PrepareForUsingInFileName();
-            var fileName = $"{proposalName} Spot Traker Report.zip";
-            var result = new ReportOutput(fileName)
+            var result = new ReportOutput(spotTrackerReport.ZipFileName)
             {
                 Stream = new MemoryStream()
             };
-            
+
             using (var archiveFile = new ZipArchive(result.Stream, ZipArchiveMode.Create, true))
             {
                 foreach (var proposalDetail in spotTrackerReport.Details)
                 {
                     var reportFile = _SaveProposalDetailToSpotTrackerReportFile(proposalDetail);
-                    _SaveSpotTrackerReportFileToArchive(proposalDetail, proposalName, archiveFile, reportFile);
+                    _SaveSpotTrackerReportFileToArchive(proposalDetail, archiveFile, reportFile);
                 }
             }
 
@@ -41,7 +39,7 @@ namespace Services.Broadcast.ReportGenerators
 
             return reportFile;
         }
-        
+
         private void _AddWeekTabToSpotTrackerReportFile(SpotTrackerReport.Detail.Week week, OfficeOpenXml.ExcelPackage reportFile)
         {
             const string dateFormat = @"MM-dd-yy";
@@ -82,15 +80,13 @@ namespace Services.Broadcast.ReportGenerators
 
             excelWorksheet.Cells.AutoFitColumns();
         }
-        
+
         private void _SaveSpotTrackerReportFileToArchive(
             SpotTrackerReport.Detail proposalDetail,
-            string proposalName,
             ZipArchive archiveFile,
             OfficeOpenXml.ExcelPackage reportFile)
         {
-            var reportFileName = $"{proposalName} Spot Traker Report (DetailId {proposalDetail.Id}).xlsx";
-            var archiveEntry = archiveFile.CreateEntry(reportFileName, CompressionLevel.Fastest);
+            var archiveEntry = archiveFile.CreateEntry(proposalDetail.FileName, CompressionLevel.Fastest);
 
             using (var zippedStreamEntry = archiveEntry.Open())
             {

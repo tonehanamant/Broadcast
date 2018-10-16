@@ -7,6 +7,7 @@ using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Entities.spotcableXML;
 

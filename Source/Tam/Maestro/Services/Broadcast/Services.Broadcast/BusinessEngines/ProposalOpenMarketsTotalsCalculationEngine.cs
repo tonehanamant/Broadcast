@@ -4,6 +4,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Linq;
 using System;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.BusinessEngines
 {

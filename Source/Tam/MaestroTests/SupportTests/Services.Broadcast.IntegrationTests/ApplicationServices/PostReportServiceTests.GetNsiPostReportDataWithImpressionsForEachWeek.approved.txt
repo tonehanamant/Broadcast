@@ -8,6 +8,12 @@
     "2Q'16: 2 weeks - 5/30, 6/6"
   ],
   "GuaranteedDemo": "House Holds",
+  "PlaybackTypes": [
+    "Live+3"
+  ],
+  "PostingBooks": [
+    "May 2016"
+  ],
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -98,7 +104,7 @@
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV1",
-          "Isci": "NSI1",
+          "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
@@ -124,7 +130,7 @@
           },
           "DateAired": "2016-06-08T00:00:00",
           "DaypartName": "NAV1",
-          "Isci": "NSI2",
+          "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
@@ -156,7 +162,7 @@
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV1",
-          "Isci": "NSI3",
+          "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
@@ -182,7 +188,7 @@
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV1",
-          "Isci": "NSI3",
+          "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",
@@ -208,7 +214,7 @@
           },
           "DateAired": "2016-06-08T00:00:00",
           "DaypartName": "NAV1",
-          "Isci": "NSI4",
+          "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
           "ProgramName": "Program Names R us",

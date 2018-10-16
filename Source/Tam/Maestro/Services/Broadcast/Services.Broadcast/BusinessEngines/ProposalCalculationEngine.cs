@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using System;
 using System.Linq;
 

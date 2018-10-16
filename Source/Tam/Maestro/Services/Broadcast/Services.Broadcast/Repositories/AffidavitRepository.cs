@@ -391,8 +391,6 @@ namespace Services.Broadcast.Repositories
                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                          from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                         let AffidavitClientScrubAudiences =
-                                             affidavitClientScrub.affidavit_client_scrub_audiences.DefaultIfEmpty()
                                          let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
                                          where proposal.id == proposalId &&
                                                affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
@@ -404,24 +402,22 @@ namespace Services.Broadcast.Repositories
                                              proposalVersion,
                                              proposal,
                                              proposalVersionWeeks,
-                                             affidavitClientScrub,
-                                             AffidavitClientScrubAudiences
-                                         })
-                        .ToList();
+                                             affidavitClientScrub
+                                         }).ToList();
 
-                    var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
+                    var inSpecAffidavitFileDetails = inSpecDetails.Select(x =>  new InSpecAffidavitFileDetail()
                     {
                         Station = x.affidavitFileDetails.station,
-                        Isci = x.affidavitFileDetails.isci,
+                        Isci = x.affidavitClientScrub.effective_client_isci,
                         ProgramName = x.affidavitClientScrub.effective_program_name,
                         SpotLengthId = x.affidavitFileDetails.spot_length_id,
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,
                         DaypartName = x.proposalVersionDetail.daypart_code,
                         AudienceImpressions = x.affidavitClientScrub.affidavit_client_scrub_audiences
-                            .ToDictionary(i => i.audience_id, j => j.impressions),
+                             .ToDictionary(i => i.audience_id, j => j.impressions),
                         OvernightImpressions = x.affidavitFileDetails.affidavit_file_detail_demographics
-                            .ToDictionary(i => i.audience_id.Value, j => (double)j.overnight_impressions.Value),
+                             .ToDictionary(i => i.audience_id.Value, j => j.overnight_impressions.Value),
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
                         AdvertiserId = x.proposal.advertiser_id,
@@ -430,9 +426,10 @@ namespace Services.Broadcast.Repositories
                         Units = x.proposalVersionWeeks.units,
                         ProposalWeekId = x.proposalVersionWeeks.id,
                         ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id,
+                        ProposalDetailPlaybackType = (ProposalEnums.ProposalPlaybackType?)x.proposalVersionDetail.posting_playback_type,
                         ProposalDetailSpotLengthId = x.proposalVersionDetail.spot_length_id,
                         Adu = x.proposalVersionDetail.adu
-                    }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ToList();
+                    }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ThenBy(x=>x.Isci).ToList();
 
                     return inSpecAffidavitFileDetails;
                 });

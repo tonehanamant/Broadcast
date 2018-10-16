@@ -1,7 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using Services.Broadcast.Converters;
-using Tam.Maestro.Data.Entities;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities
 {
@@ -16,8 +15,8 @@ namespace Services.Broadcast.Entities
             set
             {
                 _available_playback_type = value;
-                PlaybackType playback;
-                if (Entities.PlaybackType.TryParse(_available_playback_type, true, out playback))
+                PlaybackTypeEnum playback;
+                if (Enum.TryParse(_available_playback_type, true, out playback))
                 {
                     ForecastPlaybackType = playback;
                     PlaybackType = PlaybackTypeConverter.ForecastPlaybackTypeToProposalPlaybackType(ForecastPlaybackType);
@@ -28,7 +27,7 @@ namespace Services.Broadcast.Entities
                 }
             }
         }
-        public PlaybackType ForecastPlaybackType { get; set; }
+        public PlaybackTypeEnum ForecastPlaybackType { get; set; }
 
         public int MarketId { get { return market_code;} }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; private set; }

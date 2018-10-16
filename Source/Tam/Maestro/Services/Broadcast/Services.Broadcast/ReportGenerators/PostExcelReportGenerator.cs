@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ReportGenerators
 {
