@@ -84,7 +84,7 @@ export class PageHeaderContainer extends Component {
           <Col xs={4}>
             <UploadButton
               multiple
-              text="Upload Spot Tracker Data"
+              text="Upload spot detections"
               bsStyle="success"
               style={{ float: "left" }}
               bsSize="small"

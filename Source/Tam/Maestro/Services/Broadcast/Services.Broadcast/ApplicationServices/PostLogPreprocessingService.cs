@@ -81,7 +81,6 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     FilePath = filePath,
                     FileName = Path.GetFileName(filePath),
-                    Source = FileSourceEnum.Unknown,
                     CreatedBy = userName,
                     CreatedDate = DateTime.Now,
                     FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(filePath)),
@@ -91,24 +90,26 @@ namespace Services.Broadcast.ApplicationServices
 
                 var fileInfo = new FileInfo(filePath);
 
-                if (fileInfo.Extension.Equals(_CsvFileExtension, StringComparison.InvariantCultureIgnoreCase))
+                if (fileSource.Equals(FileSourceEnum.Sigma) && fileInfo.Extension.Equals(_CsvFileExtension, StringComparison.InvariantCultureIgnoreCase))
                 {
                     currentFile.Source = FileSourceEnum.Sigma;
                     currentFile.ErrorMessages.AddRange(_SigmaConverter.GetValidationResults(filePath));
                 }
-                else if (fileInfo.Extension.Equals(_ExcelFileExtension, StringComparison.InvariantCultureIgnoreCase))
+                else if (fileSource.Equals(FileSourceEnum.KeepingTrac) && fileInfo.Extension.Equals(_ExcelFileExtension, StringComparison.InvariantCultureIgnoreCase))
                 {
                     currentFile.Source = FileSourceEnum.KeepingTrac;
                     _LoadKeepingTracValidationResults(filePath, currentFile);
                 }
                 else
-                {
-                    currentFile.Source = FileSourceEnum.Unknown;
+                {                    
                     currentFile.ErrorMessages.Add($"Unknown PostLog file type for file: {filePath}");
                 }
 
                 if (currentFile.ErrorMessages.Any())
+                {
+                    currentFile.Source = FileSourceEnum.Unknown;
                     currentFile.Status = FileProcessingStatusEnum.Invalid;
+                }                    
             }
 
             return results;
