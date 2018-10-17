@@ -58,7 +58,9 @@ class UploadBuy extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.clearState();
+    if (nextProps.file.name === "No File") {
+      this.clearState();
+    }
     if (this.state.activeFile) return;
     if (
       nextProps.file &&
@@ -138,6 +140,9 @@ class UploadBuy extends Component {
       estimateId &&
       estimateId > 0 &&
       String(estimateId).match(reg);
+    // console.log(activeFile, estimateId, estimateId > 0);
+    // console.log(String(estimateId).match(reg));
+    // console.log(valid);
     const { modal, detail } = this.props;
     const show =
       detail && modal && modal.properties.detailId === detail.Id
