@@ -26,6 +26,7 @@ namespace Services.Broadcast.Repositories
     {
         List<DisplayProposal> GetAllProposals();
         ProposalDto GetProposalById(int proposalId);
+        ProposalDto GetProposalByDetailId(int proposalDetailId);
         int GetPrimaryProposalVersionNumber(int proposalId);
         short GetLatestProposalVersion(int proposalId);
         List<FlightWeekDto> GetProposalVersionFlightWeeks(int proposalVersionId);
@@ -793,8 +794,27 @@ namespace Services.Broadcast.Repositories
                         .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
                         .OrderBy(p => p.Id)
                         .Single(string.Format(
-                            "The Proposal information you have entered [{0}] does not exist. Please try again.",
+                            "The Proposal information you have entered [{0}] does not exist",
                             proposalId));
+                });
+        }
+
+        public ProposalDto GetProposalByDetailId(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from p in context.proposals
+                            join v in context.proposal_versions on p.id equals v.proposal_id
+                            join d in context.proposal_version_details on v.id equals d.proposal_version_id
+                            where p.primary_version_id == v.id
+                                  && d.id == proposalDetailId
+                            select new { p, v })
+                        .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
+                        .OrderBy(p => p.Id)
+                        .Single(string.Format(
+                            "The Proposal information you have entered [ProposalDetailId={0}] does not exist.",
+                            proposalDetailId));
                 });
         }
 
@@ -1563,7 +1583,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var proposal = context.proposals.Single(a => a.id == proposalId,
-                    string.Format("The Proposal information you have entered [{0}] does not exist. Please try again.",
+                    string.Format("The Proposal information you have entered [{0}] does not exist.",
                         proposalId));
 
                 context.proposals.Remove(proposal);

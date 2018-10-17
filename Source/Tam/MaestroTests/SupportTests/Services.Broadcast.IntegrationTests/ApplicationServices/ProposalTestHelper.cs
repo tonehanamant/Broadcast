@@ -32,7 +32,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var service = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
             proposal = service.SaveProposal(proposal, "Integration user", DateTime.Now);
 
-            //            json = @"{""ProposalVersionDetailId"":394,""Weeks"":[{""MediaWeekId"":713,""Programs"":[{""ProgramId"":79,""Spots"":3,""Impressions"":184.63887499999996},{""ProgramId"":218,""Spots"":4,""Impressions"":0}]},{""MediaWeekId"":714,""Programs"":[{""ProgramId"":80,""Spots"":3,""Impressions"":48.3829375}]}],""Filter"":{""ProgramNames"":[],""Genres"":[],""DayParts"":[],""Affiliations"":[],""Markets"":[],""SpotFilter"":1}}";
             OpenMarketAllocationSaveRequest allocationSaveRequest;
 
             using (var fileStream = new FileStream(string.Format(".\\Files\\proposal_basic_allocations.json"), FileMode.Open))

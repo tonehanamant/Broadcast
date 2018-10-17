@@ -76,6 +76,7 @@ export default class ProposalHeaderActions extends Component {
 
   onGenerateSCX() {
     const { proposal, toggleModal } = this.props;
+    const modalUrl = `${__API__}Proposals/GenerateScxArchive/${proposal.Id}`;
     toggleModal({
       modal: "confirmModal",
       active: true,
@@ -87,8 +88,10 @@ export default class ProposalHeaderActions extends Component {
         closeButtonText: "Cancel",
         actionButtonText: "Continue",
         actionButtonBsStyle: "success",
-        href: `${__API__}Proposals/generate_scx_archive/${proposal.Id}`,
-        action: () => {},
+        // href: `${__API__}Proposals/GenerateScxArchive/${proposal.Id}`,
+        action: () => {
+          window.open(modalUrl, "_blank");
+        },
         dismiss: () => {}
       }
     });

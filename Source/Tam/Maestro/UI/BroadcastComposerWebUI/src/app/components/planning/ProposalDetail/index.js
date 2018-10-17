@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
@@ -63,6 +64,7 @@ export class ProposalDetail extends Component {
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
     this.rerunPostScrubing = this.rerunPostScrubing.bind(this);
+    this.generateSCX = this.generateSCX.bind(this);
     this.onDayPartPickerApply = this.onDayPartPickerApply.bind(this);
 
     this.state = {
@@ -328,6 +330,29 @@ export class ProposalDetail extends Component {
       return;
     }
     window.location = modalUrl;
+  }
+
+  generateSCX() {
+    const { detail, toggleModal } = this.props;
+    const modalUrl = `${__API__}Proposals/GenerateScxDetail/${detail.Id}`;
+    toggleModal({
+      modal: "confirmModal",
+      active: true,
+      properties: {
+        titleText: "Generate SCX file",
+        bodyText:
+          "Operation will produce a single SCX file for this Proposal Detail.",
+        bodyList: ["Select Continue to proceed", "Select Cancel to cancel"],
+        closeButtonText: "Cancel",
+        actionButtonText: "Continue",
+        actionButtonBsStyle: "success",
+        // href: `${__API__}Proposals/GenerateScxDetail/${detail.Id}`,
+        action: () => {
+          window.open(modalUrl, "_blank");
+        },
+        dismiss: () => {}
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -602,6 +627,14 @@ export class ProposalDetail extends Component {
                           Upload SCX File
                         </MenuItem>
                       )}
+                      {isReadOnly && (
+                        <MenuItem
+                          eventKey="generateSCX"
+                          onClick={() => this.generateSCX()}
+                        >
+                          Generate SCX File
+                        </MenuItem>
+                      )}
                     </DropdownButton>
                   </div>
                 )}
@@ -690,6 +723,7 @@ ProposalDetail.defaultProps = {
 };
 
 ProposalDetail.propTypes = {
+  // proposal: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   detail: PropTypes.object,
   proposalEditForm: PropTypes.object,
