@@ -54,6 +54,7 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> FindShowType(string showTypeSearchString);
 
         List<string> SaveProposalBuy(ProposalBuySaveRequestDto proposalBuyRequest);
+        Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId);
     }
 
     public class ProposalService : IProposalService
@@ -1492,5 +1493,28 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySources;
         }
 
+        public Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId)
+        {
+            string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
+            string detailInfoTemplate = "Flt {2:00} From {0} to {1}";
+
+            var proposal = _ProposalRepository.GetProposalByDetailId(proposalDetailId);
+            var proposalDetail = proposal.Details.Single(d => d.Id == proposalDetailId);
+            ProposalScxFile scxFile = null;
+            _ProposalScxConverter.ConvertProposalDetail(proposal,proposalDetail,ref scxFile);
+            if (scxFile == null)
+                throw new InvalidOperationException("Could not generate SCX file.");
+
+            string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
+
+            var detailName = string.Format(detailInfoTemplate,
+                _FileDateFormat(scxFile.ProposalDetailDto.FlightStartDate),
+                _FileDateFormat(scxFile.ProposalDetailDto.FlightEndDate),
+                1);
+
+            var detailFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
+
+            return new Tuple<string, Stream>(detailFileName, scxFile.ScxStream);
+        }
     }
 }

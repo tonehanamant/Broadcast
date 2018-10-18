@@ -90,5 +90,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Test_Proposal_Scx_Converter_ProposalDetail()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = ProposalTestHelper.CreateProposal();
+                var output = _ProposalService.GenerateScxFileDetail(proposal.Details.First().Id.Value);
+
+                var result = new StreamReader(output.Item2 as MemoryStream).ReadToEnd();
+                result = result.Replace(string.Format("<date>{0}</date>",DateTime.Today.ToString("yyyy-mm-dd")), "");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
 }
