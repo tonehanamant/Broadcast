@@ -137,7 +137,7 @@ const columns = [
     Cell: NumberCell
   },
   {
-    Header: "Impressions(OOO)",
+    Header: "Impressions(000)",
     accessor: "Impressions",
     Cell: ImpressionCell
   },
