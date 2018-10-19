@@ -21350,12 +21350,12 @@
 					<program>LIVE W KELLY &amp; MICHAEL</program>
 					<comment>DAYTIME</comment>
 					<network>
-						<name>KPNX+S2</name>
+						<name>KPNX++S2</name>
 						<ID>
-							<code codeOwner="Spotcable" codeDescription="147">KPNX+S2</code>
+							<code codeOwner="Spotcable" codeDescription="147">KPNX++S2</code>
 						</ID>
 						<ID>
-							<code codeOwner="Strata" codeDescription="Station">KPNX+S2</code>
+							<code codeOwner="Strata" codeDescription="Station">KPNX++S2</code>
 						</ID>
 						<ID>
 							<code codeOwner="Strata" codeDescription="Band"/>
@@ -21415,12 +21415,12 @@
 					<program>CARSON DALY</program>
 					<comment></comment>
 					<network>
-						<name>KPNX+S2</name>
+						<name>KPNX+++S2</name>
 						<ID>
-							<code codeOwner="Spotcable" codeDescription="147">KPNX+S2</code>
+							<code codeOwner="Spotcable" codeDescription="147">KPNX+++S2</code>
 						</ID>
 						<ID>
-							<code codeOwner="Strata" codeDescription="Station">KPNX+S2</code>
+							<code codeOwner="Strata" codeDescription="Station">KPNX+++S2</code>
 						</ID>
 						<ID>
 							<code codeOwner="Strata" codeDescription="Band"/>
@@ -21480,12 +21480,12 @@
 					<program>TODAY SHOW 3</program>
 					<comment></comment>
 					<network>
-						<name>KPNX+S2</name>
+						<name>KPNX-S2</name>
 						<ID>
-							<code codeOwner="Spotcable" codeDescription="147">KPNX+S2</code>
+							<code codeOwner="Spotcable" codeDescription="147">KPNX-S2</code>
 						</ID>
 						<ID>
-							<code codeOwner="Strata" codeDescription="Station">KPNX+S2</code>
+							<code codeOwner="Strata" codeDescription="Station">KPNX-S2</code>
 						</ID>
 						<ID>
 							<code codeOwner="Strata" codeDescription="Band"/>
@@ -21545,12 +21545,12 @@
 					<program>EXTRA</program>
 					<comment></comment>
 					<network>
-						<name>KPNX+S2</name>
+						<name>KPNX--S2</name>
 						<ID>
-							<code codeOwner="Spotcable" codeDescription="147">KPNX+S2</code>
+							<code codeOwner="Spotcable" codeDescription="147">KPNX--S2</code>
 						</ID>
 						<ID>
-							<code codeOwner="Strata" codeDescription="Station">KPNX+S2</code>
+							<code codeOwner="Strata" codeDescription="Station">KPNX--S2</code>
 						</ID>
 						<ID>
 							<code codeOwner="Strata" codeDescription="Band"/>
