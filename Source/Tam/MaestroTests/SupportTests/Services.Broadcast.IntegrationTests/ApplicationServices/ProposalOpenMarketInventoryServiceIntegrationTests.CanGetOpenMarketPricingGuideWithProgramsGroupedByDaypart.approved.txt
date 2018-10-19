@@ -18,6 +18,8 @@
   "Markets": [
     {
       "AvgCpm": 0.01,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
@@ -39,23 +41,25 @@
                 "Display": "M-F 6AM-6PM",
                 "Id": 12
               },
+              "DisplayImpressions": 2125796.25,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 2125796.25,
               "Genres": [],
-              "Impressions": 2125796.25,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 2125796.25,
               "ManifestDaypartId": 213349,
               "ProgramId": 162234,
               "ProgramName": "Friends|Friends 2",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5316
         }
       ],
       "TotalCost": 25.0000,
-      "TotalImpressions": 2125796.25,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     }
   ]
 }

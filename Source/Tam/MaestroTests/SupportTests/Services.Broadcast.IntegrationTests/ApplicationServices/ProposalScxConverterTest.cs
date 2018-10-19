@@ -100,17 +100,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var output = _ProposalService.GenerateScxFileDetail(proposal.Details.First().Id.Value);
 
                 var result = new StreamReader(output.Item2 as MemoryStream).ReadToEnd();
-                result = result.Replace(string.Format("<date>{0}</date>",DateTime.Today.ToString("yyyy-mm-dd")), "");
+                result = result.Replace(string.Format("<date>{0}</date>",DateTime.Today.ToString("yyyy-MM-dd")), "");
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Approvals.Verify(result);
             }
         }
     }

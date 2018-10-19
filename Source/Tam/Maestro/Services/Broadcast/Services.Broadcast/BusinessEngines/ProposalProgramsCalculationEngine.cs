@@ -287,8 +287,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
                 var totalCost = activeWeeks.Sum(w => w.Rate);
-                var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
-                var totalImpressions = unitImpressions * activeWeeks.Count;
+                var totalImpressions = program.EffectiveImpressionsPerSpot * activeWeeks.Count;
 
                 program.TargetCpm = ProposalMath.CalculateCpmRaw(totalCost, totalImpressions);
             }
@@ -320,7 +319,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-                program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.UnitImpressions);
+                program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.EffectiveImpressionsPerSpot);
             }
         }
 
@@ -339,7 +338,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             double totalImpressions = 0;
             if (spots == 0)
-                totalImpressions = unitImpressions;
+                totalImpressions = 0;
             else
                 totalImpressions = unitImpressions * spots;
 

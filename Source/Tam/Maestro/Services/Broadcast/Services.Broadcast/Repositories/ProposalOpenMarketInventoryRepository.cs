@@ -202,7 +202,7 @@ namespace Services.Broadcast.Repositories
                             spots = p.Spots,
                             impressions_per_spot = p.ImpressionsPerSpot,
                             impressions = p.Impressions,
-                            station_impressions = p.StationImpressions,
+                            station_impressions = p.StationImpressionsPerSpot,
                             cost_per_spot = p.CostPerSpot,
                             cost = p.Cost
                         })

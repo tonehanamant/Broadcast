@@ -26,12 +26,12 @@ const generateData = markets => {
       rowType: rowTypes.TITLE,
       AiringTime: `${market.MarketRank}. ${market.MarketName}`,
       Spots: market.TotalSpots,
-      Impressions: market.TotalImpressions
-        ? market.TotalImpressions / 1000
-        : market.TotalImpressions,
-      StationImpressions: market.TotalStationImpressions
-        ? market.TotalStationImpressions / 1000
-        : market.TotalStationImpressions,
+      Impressions: market.DisplayImpressions
+        ? market.DisplayImpressions / 1000
+        : market.DisplayImpressions,
+      StationImpressions: market.DisplayStationImpressions
+        ? market.DisplayStationImpressions / 1000
+        : market.DisplayStationImpressions,
       // OvernightImpressions: market.TotalOvernightImpressions,
       Cost: market.TotalCost,
       isMarket: true // need for future use
@@ -51,12 +51,12 @@ const generateData = markets => {
           Program: program.ProgramName,
           CPM: program.BlendedCpm,
           Spots: program.Spots,
-          Impressions: program.Impressions
-            ? program.Impressions / 1000
-            : program.Impressions,
-          StationImpressions: program.StationImpressions
-            ? program.StationImpressions / 1000
-            : program.StationImpressions,
+          Impressions: program.DisplayImpressions
+            ? program.DisplayImpressions / 1000
+            : program.DisplayImpressions,
+          StationImpressions: program.DisplayStationImpressions
+            ? program.DisplayStationImpressions / 1000
+            : program.DisplayStationImpressions,
           // OvernightImpressions: program.OvernightImpressions,
           Cost: program.Cost,
           isProgram: true // need for future use
@@ -137,7 +137,7 @@ const columns = [
     Cell: NumberCell
   },
   {
-    Header: "Impressions(OOO)",
+    Header: "Impressions(000)",
     accessor: "Impressions",
     Cell: ImpressionCell
   },

@@ -139,6 +139,8 @@
   "Markets": [
     {
       "AvgCpm": 4.548,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
@@ -160,6 +162,9 @@
                 "Display": "SA 8AM-9AM",
                 "Id": 31239
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -167,7 +172,7 @@
               "ProgramId": 26640,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -177,6 +182,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -184,7 +192,7 @@
               "ProgramId": 26641,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.66,
@@ -194,14 +202,17 @@
                 "Display": "M-F 12PM-1PM",
                 "Id": 1617
               },
+              "DisplayImpressions": 91348.27550893,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 91348.27550893,
               "Genres": [],
-              "Impressions": 91348.27550893,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 91348.27550893,
               "ManifestDaypartId": 55369,
               "ProgramId": 26630,
               "ProgramName": "America next morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.85,
@@ -211,14 +222,17 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 87623.17943776,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 87623.17943776,
               "Genres": [],
-              "Impressions": 87623.17943776,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 87623.17943776,
               "ManifestDaypartId": 41606,
               "ProgramId": 26636,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.51,
@@ -228,14 +242,17 @@
                 "Display": "M-F 5AM-5:30AM",
                 "Id": 32756
               },
+              "DisplayImpressions": 28506.10132628,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 28506.10132628,
               "Genres": [],
-              "Impressions": 28506.10132628,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 28506.10132628,
               "ManifestDaypartId": 41602,
               "ProgramId": 26632,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 7.16,
@@ -245,14 +262,17 @@
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayImpressions": 20956.66047932,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 20956.66047932,
               "Genres": [],
-              "Impressions": 20956.66047932,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 20956.66047932,
               "ManifestDaypartId": 41604,
               "ProgramId": 26634,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 8.56,
@@ -262,26 +282,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 37968.69484494,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 37968.69484494,
               "Genres": [],
-              "Impressions": 37968.69484494,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 37968.69484494,
               "ManifestDaypartId": 41608,
               "ProgramId": 26638,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5942
         }
       ],
       "TotalCost": 1460.0000,
-      "TotalImpressions": 266402.91159723,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 1.16,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
       "MarketId": 318,
       "MarketName": "Jackson, MS",
@@ -303,26 +327,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 21473.91954406,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 21473.91954406,
               "Genres": [],
-              "Impressions": 21473.91954406,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 21473.91954406,
               "ManifestDaypartId": 41556,
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6173
         }
       ],
       "TotalCost": 25.0000,
-      "TotalImpressions": 21473.91954406,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 42.33,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.214,
       "MarketId": 410,
       "MarketName": "Yakima-Pasco-Rchlnd-Knnwck",
@@ -344,6 +372,9 @@
                 "Display": "SA 7AM-9AM",
                 "Id": 29598
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -351,7 +382,7 @@
               "ProgramId": 26650,
               "ProgramName": "KCYU Marketplace",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -361,6 +392,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -368,7 +402,7 @@
               "ProgramId": 26651,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 42.33,
@@ -378,26 +412,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 590.57222459,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 590.57222459,
               "Genres": [],
-              "Impressions": 590.57222459,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 590.57222459,
               "ManifestDaypartId": 41620,
               "ProgramId": 26649,
               "ProgramName": "Good Day Morning News",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 1045
         }
       ],
       "TotalCost": 105.0000,
-      "TotalImpressions": 590.57222459,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 3.0433333333333333333333333333,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.194,
       "MarketId": 428,
       "MarketName": "Monterey-Salinas",
@@ -419,6 +457,9 @@
                 "Display": "SA 5AM-7AM",
                 "Id": 36477
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -426,7 +467,7 @@
               "ProgramId": 26610,
               "ProgramName": "CBS Saturday Morning News",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -436,6 +477,9 @@
                 "Display": "SU 5AM-6AM",
                 "Id": 1593
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -443,7 +487,7 @@
               "ProgramId": 26612,
               "ProgramName": "This Week In Agribusiness",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -453,6 +497,9 @@
                 "Display": "SU 7AM-8:30AM",
                 "Id": 33555
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -460,7 +507,7 @@
               "ProgramId": 26613,
               "ProgramName": "CBS Sunday Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -470,6 +517,9 @@
                 "Display": "SU 8:30AM-9AM",
                 "Id": 33161
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -477,7 +527,7 @@
               "ProgramId": 26614,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.66,
@@ -487,14 +537,17 @@
                 "Display": "M-F 5AM-6AM",
                 "Id": 29862
               },
+              "DisplayImpressions": 22790.40650181,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 22790.40650181,
               "Genres": [],
-              "Impressions": 22790.40650181,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 22790.40650181,
               "ManifestDaypartId": 41579,
               "ProgramId": 26602,
               "ProgramName": "Wake Up Central Coast",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.54,
@@ -504,14 +557,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 21209.1256847,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 21209.1256847,
               "Genres": [],
-              "Impressions": 21209.1256847,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 21209.1256847,
               "ManifestDaypartId": 41581,
               "ProgramId": 26607,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 4.93,
@@ -521,14 +577,17 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 7101.0017007,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 7101.0017007,
               "Genres": [],
-              "Impressions": 7101.0017007,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 7101.0017007,
               "ManifestDaypartId": 41577,
               "ProgramId": 26597,
               "ProgramName": "Wake Up Central Coast",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5927
@@ -547,6 +606,9 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -554,19 +616,20 @@
               "ProgramId": 26590,
               "ProgramName": "Are We There Yet?",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 2784
         }
       ],
       "TotalCost": 455.0000,
-      "TotalImpressions": 51100.53388722,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 10.10875,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.177,
       "MarketId": 200,
       "MarketName": "Corpus Christi",
@@ -588,14 +651,17 @@
                 "Display": "M-F 5AM-5:58AM",
                 "Id": 62772
               },
+              "DisplayImpressions": 149503.72321279,
+              "DisplayStationImpressions": 6140.0,
+              "EffectiveImpressionsPerSpot": 6140.0,
               "Genres": [],
-              "Impressions": 149503.72321279,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 149503.72321279,
               "ManifestDaypartId": 41653,
               "ProgramId": 26682,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "StationImpressions": 6140.0
+              "StationImpressionsPerSpot": 6140.0
             },
             {
               "BlendedCpm": 4.94,
@@ -605,6 +671,9 @@
                 "Display": "SA 5:58AM-7AM",
                 "Id": 62775
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 8090.0,
+              "EffectiveImpressionsPerSpot": 8090.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -612,7 +681,7 @@
               "ProgramId": 26686,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "StationImpressions": 8090.0
+              "StationImpressionsPerSpot": 8090.0
             },
             {
               "BlendedCpm": 6.50,
@@ -622,6 +691,9 @@
                 "Display": "SA 7AM-8AM",
                 "Id": 35762
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 9230.0,
+              "EffectiveImpressionsPerSpot": 9230.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -629,7 +701,7 @@
               "ProgramId": 26687,
               "ProgramName": "Good Morning America-Sat",
               "Spots": 0,
-              "StationImpressions": 9230.0
+              "StationImpressionsPerSpot": 9230.0
             },
             {
               "BlendedCpm": 6.68,
@@ -639,6 +711,9 @@
                 "Display": "SU 5:58AM-7AM",
                 "Id": 62776
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 4490.0,
+              "EffectiveImpressionsPerSpot": 4490.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -646,7 +721,7 @@
               "ProgramId": 26688,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "StationImpressions": 4490.0
+              "StationImpressionsPerSpot": 4490.0
             },
             {
               "BlendedCpm": 7.13,
@@ -656,6 +731,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 8410.0,
+              "EffectiveImpressionsPerSpot": 8410.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -663,7 +741,7 @@
               "ProgramId": 26689,
               "ProgramName": "Good Morning America-Sun",
               "Spots": 0,
-              "StationImpressions": 8410.0
+              "StationImpressionsPerSpot": 8410.0
             },
             {
               "BlendedCpm": 10.98,
@@ -673,14 +751,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 85113.07194443,
+              "DisplayStationImpressions": 16390.0,
+              "EffectiveImpressionsPerSpot": 16390.0,
               "Genres": [],
-              "Impressions": 85113.07194443,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 85113.07194443,
               "ManifestDaypartId": 41655,
               "ProgramId": 26684,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 16390.0
+              "StationImpressionsPerSpot": 16390.0
             },
             {
               "BlendedCpm": 14.75,
@@ -690,14 +771,17 @@
                 "Display": "M-F 5:58AM-7AM",
                 "Id": 62773
               },
+              "DisplayImpressions": 163840.78050019,
+              "DisplayStationImpressions": 12200.0,
+              "EffectiveImpressionsPerSpot": 12200.0,
               "Genres": [],
-              "Impressions": 163840.78050019,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 163840.78050019,
               "ManifestDaypartId": 41654,
               "ProgramId": 26683,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "StationImpressions": 12200.0
+              "StationImpressionsPerSpot": 12200.0
             },
             {
               "BlendedCpm": 25.00,
@@ -707,6 +791,9 @@
                 "Display": "SA 5AM-5:58AM",
                 "Id": 62774
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 1200.0,
+              "EffectiveImpressionsPerSpot": 1200.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -714,19 +801,20 @@
               "ProgramId": 26685,
               "ProgramName": "This Week In Agri-Business",
               "Spots": 0,
-              "StationImpressions": 1200.0
+              "StationImpressionsPerSpot": 1200.0
             }
           ],
           "StationCode": 5319
         }
       ],
       "TotalCost": 610.0000,
-      "TotalImpressions": 398457.57565741,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 66150.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 21.85,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.136,
       "MarketId": 404,
       "MarketName": "Palm Springs",
@@ -748,6 +836,9 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -755,7 +846,7 @@
               "ProgramId": 26621,
               "ProgramName": "King Of The Hill",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -765,6 +856,9 @@
                 "Display": "M-F 7AM-7:30AM",
                 "Id": 32868
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -772,7 +866,7 @@
               "ProgramId": 26622,
               "ProgramName": "Cheaters",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -782,6 +876,9 @@
                 "Display": "M-F 7:30AM-8AM",
                 "Id": 33490
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -789,7 +886,7 @@
               "ProgramId": 26623,
               "ProgramName": "Cops Reloaded",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 41.22,
@@ -799,14 +896,17 @@
                 "Display": "M-F 8AM-9AM",
                 "Id": 7059
               },
+              "DisplayImpressions": 242.61831679,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 242.61831679,
               "Genres": [],
-              "Impressions": 242.61831679,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 242.61831679,
               "ManifestDaypartId": 41595,
               "ProgramId": 26624,
               "ProgramName": "Steve Wilkos Show",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 2772
@@ -825,6 +925,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -832,7 +935,7 @@
               "ProgramId": 26626,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.48,
@@ -842,26 +945,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 6060.34335516,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 6060.34335516,
               "Genres": [],
-              "Impressions": 6060.34335516,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 6060.34335516,
               "ManifestDaypartId": 41596,
               "ProgramId": 26625,
               "ProgramName": "News Channel 3 on FOX 11",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 7011
         }
       ],
       "TotalCost": 80.0000,
-      "TotalImpressions": 6302.96167195,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 3.81,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.133,
       "MarketId": 343,
       "MarketName": "Anchorage",
@@ -883,6 +990,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -890,7 +1000,7 @@
               "ProgramId": 26654,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6682
@@ -909,6 +1019,9 @@
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -916,7 +1029,7 @@
               "ProgramId": 26666,
               "ProgramName": "Good Morning America Saturday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -926,6 +1039,9 @@
                 "Display": "SU 6AM-7AM",
                 "Id": 30352
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -933,7 +1049,7 @@
               "ProgramId": 26668,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -943,6 +1059,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -950,7 +1069,7 @@
               "ProgramId": 26669,
               "ProgramName": "This Week",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.81,
@@ -960,26 +1079,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 5248.34554568,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 5248.34554568,
               "Genres": [],
-              "Impressions": 5248.34554568,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 5248.34554568,
               "ManifestDaypartId": 41628,
               "ProgramId": 26664,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6072
         }
       ],
       "TotalCost": 115.0000,
-      "TotalImpressions": 5248.34554568,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 5.0133333333333333333333333333,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.107,
       "MarketId": 358,
       "MarketName": "Idaho Fals-Pocatllo(Jcksn)",
@@ -1001,6 +1124,9 @@
                 "Display": "SA 5AM-7AM",
                 "Id": 36477
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1008,7 +1134,7 @@
               "ProgramId": 26604,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1018,6 +1144,9 @@
                 "Display": "SU 8AM-9:30AM",
                 "Id": 33181
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1025,7 +1154,7 @@
               "ProgramId": 26606,
               "ProgramName": "CBS Sunday Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1035,6 +1164,9 @@
                 "Display": "SU 9:30AM-10:30AM",
                 "Id": 36410
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1042,7 +1174,7 @@
               "ProgramId": 26609,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.53,
@@ -1052,14 +1184,17 @@
                 "Display": "M-F 5AM-6AM",
                 "Id": 29862
               },
+              "DisplayImpressions": 9364.61857939,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 9364.61857939,
               "Genres": [],
-              "Impressions": 9364.61857939,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 9364.61857939,
               "ManifestDaypartId": 41568,
               "ProgramId": 26588,
               "ProgramName": "Business First with Angela Miles",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.44,
@@ -1069,14 +1204,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 10233.95545822,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 10233.95545822,
               "Genres": [],
-              "Impressions": 10233.95545822,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 10233.95545822,
               "ManifestDaypartId": 41572,
               "ProgramId": 26599,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 12.07,
@@ -1086,14 +1224,17 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 2071.44997677,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 2071.44997677,
               "Genres": [],
-              "Impressions": 2071.44997677,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 2071.44997677,
               "ManifestDaypartId": 41570,
               "ProgramId": 26594,
               "ProgramName": "CBS Morning News",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5225
@@ -1112,6 +1253,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1119,19 +1263,20 @@
               "ProgramId": 26611,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6444
         }
       ],
       "TotalCost": 178.0000,
-      "TotalImpressions": 21670.02401438,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 4.769,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.084,
       "MarketId": 317,
       "MarketName": "Quincy-Hannibal-Keokuk",
@@ -1153,6 +1298,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1160,7 +1308,7 @@
               "ProgramId": 26627,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 7634
@@ -1179,6 +1327,9 @@
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1186,7 +1337,7 @@
               "ProgramId": 26655,
               "ProgramName": "CBS THIS MORNING SAT",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1196,6 +1347,9 @@
                 "Display": "SU 8AM-9:30AM",
                 "Id": 33181
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1203,7 +1357,7 @@
               "ProgramId": 26656,
               "ProgramName": "CBS SUNDAY NEWS",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.14,
@@ -1213,14 +1367,17 @@
                 "Display": "M-F 5AM-7AM",
                 "Id": 36471
               },
+              "DisplayImpressions": 14040.66713056,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 14040.66713056,
               "Genres": [],
-              "Impressions": 14040.66713056,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 14040.66713056,
               "ManifestDaypartId": 41623,
               "ProgramId": 26652,
               "ProgramName": "KHQA THIS MORNING",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.91,
@@ -1230,14 +1387,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 5116.90138469,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 5116.90138469,
               "Genres": [],
-              "Impressions": 5116.90138469,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 5116.90138469,
               "ManifestDaypartId": 41625,
               "ProgramId": 26653,
               "ProgramName": "CBS THIS MORNING",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5192
@@ -1256,6 +1416,9 @@
                 "Display": "SA 7AM-8AM",
                 "Id": 35762
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1263,7 +1426,7 @@
               "ProgramId": 26618,
               "ProgramName": "GOOD MORNING AMERICA",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1273,6 +1436,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1280,7 +1446,7 @@
               "ProgramId": 26619,
               "ProgramName": "GOOD MORNING AMERICA",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1290,6 +1456,9 @@
                 "Display": "SU 9AM-9:30AM",
                 "Id": 31278
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1297,7 +1466,7 @@
               "ProgramId": 26620,
               "ProgramName": "FULL MEASURE W SHARYLATTKISSON",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.35,
@@ -1307,14 +1476,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 6381.9695587,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 6381.9695587,
               "Genres": [],
-              "Impressions": 6381.9695587,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 6381.9695587,
               "ManifestDaypartId": 41588,
               "ProgramId": 26617,
               "ProgramName": "GOOD MORNING AMERICA",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 12.84,
@@ -1324,14 +1496,17 @@
                 "Display": "M-F 5AM-6:30AM",
                 "Id": 34550
               },
+              "DisplayImpressions": 778.97292725,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 778.97292725,
               "Genres": [],
-              "Impressions": 778.97292725,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 778.97292725,
               "ManifestDaypartId": 41586,
               "ProgramId": 26615,
               "ProgramName": "KHQA THIS MORNING",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 16.41,
@@ -1341,14 +1516,17 @@
                 "Display": "M-F 6:30AM-7AM",
                 "Id": 34270
               },
+              "DisplayImpressions": 913.97916796,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 913.97916796,
               "Genres": [],
-              "Impressions": 913.97916796,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 913.97916796,
               "ManifestDaypartId": 41587,
               "ProgramId": 26616,
               "ProgramName": "KHQA THIS MORNING",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 2279
@@ -1367,6 +1545,9 @@
                 "Display": "SA 7AM-9AM",
                 "Id": 29598
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1374,7 +1555,7 @@
               "ProgramId": 26637,
               "ProgramName": "Saturday Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1384,6 +1565,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1391,7 +1575,7 @@
               "ProgramId": 26639,
               "ProgramName": "Sunday Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.51,
@@ -1401,14 +1585,17 @@
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayImpressions": 145973.99841742,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 145973.99841742,
               "Genres": [],
-              "Impressions": 145973.99841742,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 145973.99841742,
               "ManifestDaypartId": 41601,
               "ProgramId": 26629,
               "ProgramName": "Wgem News Early Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 1.01,
@@ -1418,14 +1605,17 @@
                 "Display": "M-F 9AM-11AM",
                 "Id": 6533
               },
+              "DisplayImpressions": 24776.33399837,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 24776.33399837,
               "Genres": [],
-              "Impressions": 24776.33399837,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 24776.33399837,
               "ManifestDaypartId": 41607,
               "ProgramId": 26635,
               "ProgramName": "Today Show 2",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 1.41,
@@ -1435,14 +1625,17 @@
                 "Display": "M-F 5AM-5:30AM",
                 "Id": 32756
               },
+              "DisplayImpressions": 17711.35386071,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 17711.35386071,
               "Genres": [],
-              "Impressions": 17711.35386071,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 17711.35386071,
               "ManifestDaypartId": 41600,
               "ProgramId": 26628,
               "ProgramName": "Early Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.21,
@@ -1452,14 +1645,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 52905.79977459,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 52905.79977459,
               "Genres": [],
-              "Impressions": 52905.79977459,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 52905.79977459,
               "ManifestDaypartId": 41605,
               "ProgramId": 26633,
               "ProgramName": "Today Show",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.90,
@@ -1469,26 +1665,30 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 44920.75082183,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 44920.75082183,
               "Genres": [],
-              "Impressions": 44920.75082183,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 44920.75082183,
               "ManifestDaypartId": 41603,
               "ProgramId": 26631,
               "ProgramName": "Wgem Early News",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5198
         }
       ],
       "TotalCost": 815.0000,
-      "TotalImpressions": 313520.72704207,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 3.8925,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.085,
       "MarketId": 364,
       "MarketName": "Rapid City",
@@ -1510,6 +1710,9 @@
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1517,7 +1720,7 @@
               "ProgramId": 26646,
               "ProgramName": "Saturday Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1527,6 +1730,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1534,7 +1740,7 @@
               "ProgramId": 26647,
               "ProgramName": "Sunday Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.49,
@@ -1544,14 +1750,17 @@
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayImpressions": 20518.1602912,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 20518.1602912,
               "Genres": [],
-              "Impressions": 20518.1602912,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 20518.1602912,
               "ManifestDaypartId": 41614,
               "ProgramId": 26643,
               "ProgramName": "Early Today 2",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.06,
@@ -1561,14 +1770,17 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 12156.81393922,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 12156.81393922,
               "Genres": [],
-              "Impressions": 12156.81393922,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 12156.81393922,
               "ManifestDaypartId": 41615,
               "ProgramId": 26644,
               "ProgramName": "NewsCenter 1 Today",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 2.11,
@@ -1578,14 +1790,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 11844.35745675,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 11844.35745675,
               "Genres": [],
-              "Impressions": 11844.35745675,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 11844.35745675,
               "ManifestDaypartId": 41616,
               "ProgramId": 26645,
               "ProgramName": "Today Show",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 10.91,
@@ -1595,26 +1810,30 @@
                 "Display": "M-F 5AM-5:30AM",
                 "Id": 32756
               },
+              "DisplayImpressions": 916.97408764,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 916.97408764,
               "Genres": [],
-              "Impressions": 916.97408764,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 916.97408764,
               "ManifestDaypartId": 41613,
               "ProgramId": 26642,
               "ProgramName": "Early Today 1",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 3503
         }
       ],
       "TotalCost": 84.0000,
-      "TotalImpressions": 45436.30577482,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 0.0,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,
       "MarketId": 244,
       "MarketName": "Alexandria, LA",
@@ -1636,6 +1855,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1643,7 +1865,7 @@
               "ProgramId": 26648,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6433
@@ -1651,11 +1873,12 @@
       ],
       "TotalCost": 35.0000,
       "TotalImpressions": 0.0,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 0.0,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.069,
       "MarketId": 334,
       "MarketName": "Jonesboro",
@@ -1677,6 +1900,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1684,7 +1910,7 @@
               "ProgramId": 26608,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 10686
@@ -1703,6 +1929,9 @@
                 "Display": "M-F 6:30AM-7AM",
                 "Id": 34270
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1710,7 +1939,7 @@
               "ProgramId": 26589,
               "ProgramName": "CBS Morning News",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1720,6 +1949,9 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1727,7 +1959,7 @@
               "ProgramId": 26591,
               "ProgramName": "The Early Show",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1737,6 +1969,9 @@
                 "Display": "SA 7AM-9AM",
                 "Id": 29598
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1744,7 +1979,7 @@
               "ProgramId": 26596,
               "ProgramName": "The Saturday Early Show",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1754,6 +1989,9 @@
                 "Display": "SU 8AM-9:30AM",
                 "Id": 33181
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1761,7 +1999,7 @@
               "ProgramId": 26601,
               "ProgramName": "CBS News Sunday Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -1771,6 +2009,9 @@
                 "Display": "SU 9:30AM-10:30AM",
                 "Id": 36410
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1778,7 +2019,7 @@
               "ProgramId": 26605,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 10736
@@ -1786,11 +2027,12 @@
       ],
       "TotalCost": 50.0000,
       "TotalImpressions": 0.0,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 34.911111111111111111111111111,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.056,
       "MarketId": 360,
       "MarketName": "Twin Falls",
@@ -1812,6 +2054,9 @@
                 "Display": "SA 8AM-10AM",
                 "Id": 6305
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 2300.0,
+              "EffectiveImpressionsPerSpot": 2300.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1819,7 +2064,7 @@
               "ProgramId": 26662,
               "ProgramName": "SATURDAY MORNING NEWS",
               "Spots": 0,
-              "StationImpressions": 2300.0
+              "StationImpressionsPerSpot": 2300.0
             },
             {
               "BlendedCpm": 10.00,
@@ -1829,14 +2074,17 @@
                 "Display": "M-F 12PM-1PM",
                 "Id": 1617
               },
+              "DisplayImpressions": 12272.16697896,
+              "DisplayStationImpressions": 1500.0,
+              "EffectiveImpressionsPerSpot": 1500.0,
               "Genres": [],
-              "Impressions": 12272.16697896,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 12272.16697896,
               "ManifestDaypartId": 41640,
               "ProgramId": 26667,
               "ProgramName": "NEWSCENTER 7 MIDDAY",
               "Spots": 0,
-              "StationImpressions": 1500.0
+              "StationImpressionsPerSpot": 1500.0
             },
             {
               "BlendedCpm": 14.29,
@@ -1846,6 +2094,9 @@
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 1400.0,
+              "EffectiveImpressionsPerSpot": 1400.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1853,7 +2104,7 @@
               "ProgramId": 26661,
               "ProgramName": "SATURDAY TODAY",
               "Spots": 0,
-              "StationImpressions": 1400.0
+              "StationImpressionsPerSpot": 1400.0
             },
             {
               "BlendedCpm": 20.00,
@@ -1863,14 +2114,17 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 11734.23300659,
+              "DisplayStationImpressions": 2500.0,
+              "EffectiveImpressionsPerSpot": 2500.0,
               "Genres": [],
-              "Impressions": 11734.23300659,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 11734.23300659,
               "ManifestDaypartId": 41635,
               "ProgramId": 26660,
               "ProgramName": "TODAY SHOW",
               "Spots": 0,
-              "StationImpressions": 2500.0
+              "StationImpressionsPerSpot": 2500.0
             },
             {
               "BlendedCpm": 23.81,
@@ -1880,6 +2134,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 2100.0,
+              "EffectiveImpressionsPerSpot": 2100.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1887,7 +2144,7 @@
               "ProgramId": 26665,
               "ProgramName": "MEET THE PRESS",
               "Spots": 0,
-              "StationImpressions": 2100.0
+              "StationImpressionsPerSpot": 2100.0
             },
             {
               "BlendedCpm": 31.25,
@@ -1897,14 +2154,17 @@
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayImpressions": 11744.47441559,
+              "DisplayStationImpressions": 800.0,
+              "EffectiveImpressionsPerSpot": 800.0,
               "Genres": [],
-              "Impressions": 11744.47441559,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 11744.47441559,
               "ManifestDaypartId": 41633,
               "ProgramId": 26659,
               "ProgramName": "IDAHO AT SUNRISE",
               "Spots": 0,
-              "StationImpressions": 800.0
+              "StationImpressionsPerSpot": 800.0
             },
             {
               "BlendedCpm": 33.33,
@@ -1914,14 +2174,17 @@
                 "Display": "M-F 5AM-6AM",
                 "Id": 29862
               },
+              "DisplayImpressions": 13966.05166186,
+              "DisplayStationImpressions": 300.0,
+              "EffectiveImpressionsPerSpot": 300.0,
               "Genres": [],
-              "Impressions": 13966.05166186,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 13966.05166186,
               "ManifestDaypartId": 41632,
               "ProgramId": 26658,
               "ProgramName": "MORNING NEWS",
               "Spots": 0,
-              "StationImpressions": 300.0
+              "StationImpressionsPerSpot": 300.0
             },
             {
               "BlendedCpm": 50.00,
@@ -1931,14 +2194,17 @@
                 "Display": "M-F 4:30AM-5AM",
                 "Id": 33758
               },
+              "DisplayImpressions": 1185.21323001,
+              "DisplayStationImpressions": 200.0,
+              "EffectiveImpressionsPerSpot": 200.0,
               "Genres": [],
-              "Impressions": 1185.21323001,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 1185.21323001,
               "ManifestDaypartId": 41630,
               "ProgramId": 26657,
               "ProgramName": "MORNING NEWS",
               "Spots": 0,
-              "StationImpressions": 200.0
+              "StationImpressionsPerSpot": 200.0
             },
             {
               "BlendedCpm": 125.00,
@@ -1948,6 +2214,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 200.0,
+              "EffectiveImpressionsPerSpot": 200.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1955,19 +2224,20 @@
               "ProgramId": 26663,
               "ProgramName": "SUNDAY TODAY",
               "Spots": 0,
-              "StationImpressions": 200.0
+              "StationImpressionsPerSpot": 200.0
             }
           ],
           "StationCode": 6269
         }
       ],
       "TotalCost": 220.0000,
-      "TotalImpressions": 50902.13929303,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 11300.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 20.02,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.047,
       "MarketId": 367,
       "MarketName": "Casper-Riverton",
@@ -1989,6 +2259,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -1996,7 +2269,7 @@
               "ProgramId": 26672,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 26.12,
@@ -2006,14 +2279,17 @@
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayImpressions": 1148.4933525,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 1148.4933525,
               "Genres": [],
-              "Impressions": 1148.4933525,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 1148.4933525,
               "ManifestDaypartId": 41641,
               "ProgramId": 26670,
               "ProgramName": "AgDay",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 47.12,
@@ -2023,14 +2299,17 @@
                 "Display": "M-F 7AM-8AM",
                 "Id": 35772
               },
+              "DisplayImpressions": 636.61881453,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 636.61881453,
               "Genres": [],
-              "Impressions": 636.61881453,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 636.61881453,
               "ManifestDaypartId": 41642,
               "ProgramId": 26671,
               "ProgramName": "Good Morning Wyoming",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 1160
@@ -2049,6 +2328,9 @@
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2056,7 +2338,7 @@
               "ProgramId": 26675,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2066,6 +2348,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2073,7 +2358,7 @@
               "ProgramId": 26676,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2083,6 +2368,9 @@
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2090,7 +2378,7 @@
               "ProgramId": 26677,
               "ProgramName": "This Week",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 1.97,
@@ -2100,14 +2388,17 @@
                 "Display": "M-F 5:30AM-7AM",
                 "Id": 37403
               },
+              "DisplayImpressions": 15255.23058707,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 15255.23058707,
               "Genres": [],
-              "Impressions": 15255.23058707,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 15255.23058707,
               "ManifestDaypartId": 41644,
               "ProgramId": 26673,
               "ProgramName": "Good Morning Wyoming",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 4.87,
@@ -2117,26 +2408,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 6160.2107669,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 6160.2107669,
               "Genres": [],
-              "Impressions": 6160.2107669,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 6160.2107669,
               "ManifestDaypartId": 41645,
               "ProgramId": 26674,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5408
         }
       ],
       "TotalCost": 295.0000,
-      "TotalImpressions": 23200.553521,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 3.73,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.031,
       "MarketId": 345,
       "MarketName": "Fairbanks",
@@ -2158,6 +2453,9 @@
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2165,7 +2463,7 @@
               "ProgramId": 26679,
               "ProgramName": "Good Morning America Saturday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2175,6 +2473,9 @@
                 "Display": "SU 6AM-7AM",
                 "Id": 30352
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2182,7 +2483,7 @@
               "ProgramId": 26680,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2192,6 +2493,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2199,7 +2503,7 @@
               "ProgramId": 26681,
               "ProgramName": "This Week",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.73,
@@ -2209,26 +2513,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 2683.88418029,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 2683.88418029,
               "Genres": [],
-              "Impressions": 2683.88418029,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 2683.88418029,
               "ManifestDaypartId": 41649,
               "ProgramId": 26678,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6069
         }
       ],
       "TotalCost": 40.0000,
-      "TotalImpressions": 2683.88418029,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 3.72,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.022,
       "MarketId": 347,
       "MarketName": "Juneau",
@@ -2250,6 +2558,9 @@
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2257,7 +2568,7 @@
               "ProgramId": 26593,
               "ProgramName": "Good Morning America Saturday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2267,6 +2578,9 @@
                 "Display": "SU 6AM-7AM",
                 "Id": 30352
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2274,7 +2588,7 @@
               "ProgramId": 26598,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2284,6 +2598,9 @@
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2291,7 +2608,7 @@
               "ProgramId": 26603,
               "ProgramName": "This Week",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 3.72,
@@ -2301,26 +2618,30 @@
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayImpressions": 1344.91242972,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 1344.91242972,
               "Genres": [],
-              "Impressions": 1344.91242972,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 1344.91242972,
               "ManifestDaypartId": 41558,
               "ProgramId": 26586,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6684
         }
       ],
       "TotalCost": 20.0000,
-      "TotalImpressions": 1344.91242972,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     },
     {
       "AvgCpm": 1290.66,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.004,
       "MarketId": 398,
       "MarketName": "Glendive",
@@ -2342,6 +2663,9 @@
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2349,7 +2673,7 @@
               "ProgramId": 26592,
               "ProgramName": "CBS This Morning Saturday",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2359,6 +2683,9 @@
                 "Display": "SU 7AM-8:30AM",
                 "Id": 33555
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2366,7 +2693,7 @@
               "ProgramId": 26595,
               "ProgramName": "CBS Sunday Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 0.0,
@@ -2376,6 +2703,9 @@
                 "Display": "SU 8:30AM-9:30AM",
                 "Id": 34783
               },
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
               "Genres": [],
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
@@ -2383,7 +2713,7 @@
               "ProgramId": 26600,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             },
             {
               "BlendedCpm": 1290.66,
@@ -2393,23 +2723,25 @@
                 "Display": "M-F 6AM-8AM",
                 "Id": 9491
               },
+              "DisplayImpressions": 30.99196858,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 30.99196858,
               "Genres": [],
-              "Impressions": 30.99196858,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 30.99196858,
               "ManifestDaypartId": 41557,
               "ProgramId": 26587,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5465
         }
       ],
       "TotalCost": 160.0000,
-      "TotalImpressions": 30.99196858,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     }
   ]
 }

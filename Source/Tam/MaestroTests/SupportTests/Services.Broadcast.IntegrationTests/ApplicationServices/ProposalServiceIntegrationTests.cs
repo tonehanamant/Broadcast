@@ -2795,6 +2795,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
    
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ProposalService_UploadsProposalBuyScx_WithStationsWithPlusS2Extensions()
         {
             var request = new ProposalBuySaveRequestDto
@@ -2807,9 +2808,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var errors = _ProposalService.SaveProposalBuy(request);
-            var allStationWereFound = errors.All(x => !x.StartsWith("Unable to find station"));
 
-            Assert.IsTrue(allStationWereFound);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(errors));
         }
 
         private ProposalBuySaveRequestDto _GetProposalBuySaveRequestDtoForSuccessfullResult(int detailId, int estimateId)

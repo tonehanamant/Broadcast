@@ -37,7 +37,6 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public decimal UnitCost { get; set; }
             public double UnitImpression { get; set; }
             public double? ProvidedUnitImpressions { get; set; }
-            public double? TotalProvidedImpressions { get; set; }
             public decimal Cost { get; set; }
             public double TargetImpressions { get; set; }
             public double TotalImpressions { get; set; }
