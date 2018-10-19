@@ -632,6 +632,9 @@ namespace Services.Broadcast.ApplicationServices
                                 weekProgram.TotalImpressions = weekProgram.Spots == 0 ? weekProgram.UnitImpression : weekProgram.Spots * weekProgram.UnitImpression;
                             }
 
+                            weekProgram.HasImpressions = weekProgram.UnitImpression > 0 || 
+                                (weekProgram.ProvidedUnitImpressions.HasValue && weekProgram.ProvidedUnitImpressions.Value > 0);
+
                             weekProgram.Cost = weekProgram.Spots > 0
                                 ? weekProgram.Spots * weekProgram.UnitCost
                                 : weekProgram.UnitCost;

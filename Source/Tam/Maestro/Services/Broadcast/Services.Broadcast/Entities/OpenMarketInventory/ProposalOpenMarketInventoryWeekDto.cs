@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.OpenMarketInventory
 {
@@ -43,6 +42,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public double EFF { get; set; }
             public int Spots { get; set; }
             public decimal TargetCpm { get; set; }
+            public bool HasImpressions { get; set; }
         }
     }
 }
