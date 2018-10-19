@@ -28,12 +28,26 @@ namespace Services.Broadcast.Entities.DTO
             public int MarketRank { get; set; }
             public int TotalSpots { get; set; }
             public double TotalImpressions { get; set; }
-            public double TotalStationImpressions { get; set; }
             public decimal TotalCost { get; set; }
             public decimal MinCpm { get; set; }
             public decimal AvgCpm { get; set; }
             public decimal MaxCpm { get; set; }
             public List<PricingGuideStation> Stations { get; set; } = new List<PricingGuideStation>();
+            public double DisplayImpressions
+            {
+                get
+                {
+                    return Stations.SelectMany(s => s.Programs).Sum(p => p.Spots * p.ImpressionsPerSpot);
+                }
+            }
+
+            public double DisplayStationImpressions
+            {
+                get
+                {
+                    return Stations.SelectMany(s => s.Programs).Sum(p => p.Spots * p.StationImpressionsPerSpot);
+                }
+            }
 
             public class PricingGuideStation
             {
@@ -56,10 +70,54 @@ namespace Services.Broadcast.Entities.DTO
                     public int Spots { get; set; }
                     public double ImpressionsPerSpot { get; set; }
                     public double Impressions { get; set; }
-                    public double StationImpressions { get; set; }
+                    public double StationImpressionsPerSpot { get; set; }
                     public decimal CostPerSpot { get; set; }
                     public decimal Cost { get; set; }
                     public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
+                    public double EffectiveImpressionsPerSpot
+                    {
+                        get
+                        {
+                            if (StationImpressionsPerSpot != 0)
+                            {
+                                return StationImpressionsPerSpot;
+                            }
+                            else
+                            {
+                                return ImpressionsPerSpot;
+                            }
+                        }
+                    }
+
+                    public double DisplayImpressions
+                    {
+                        get
+                        {
+                            if(Spots == 0)
+                            {
+                                return ImpressionsPerSpot;
+                            }
+                            else
+                            {
+                                return ImpressionsPerSpot * Spots;
+                            }
+                        }
+                    }
+
+                    public double DisplayStationImpressions
+                    {
+                        get
+                        {
+                            if (Spots == 0)
+                            {
+                                return StationImpressionsPerSpot;
+                            }
+                            else
+                            {
+                                return StationImpressionsPerSpot * Spots;
+                            }
+                        }
+                    }
                 }
             }
         }

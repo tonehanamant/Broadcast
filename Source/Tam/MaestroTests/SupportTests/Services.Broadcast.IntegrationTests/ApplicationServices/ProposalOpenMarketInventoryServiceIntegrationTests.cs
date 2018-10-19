@@ -1588,7 +1588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var totalImpressionsExpected = programWithProvidedUnitImpressions.Spots *
                                            programWithProvidedUnitImpressions.ProvidedUnitImpressions.Value;
 
-            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalProvidedImpressions);
+            Assert.AreEqual(totalImpressionsExpected, programWithProvidedUnitImpressions.TotalImpressions);
         }
 
         [Test]
@@ -1631,6 +1631,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = proposal.Id.Value,//26016,
                     ProposalDetailId = proposalDetailId,//9978
+                     OpenMarketPricing =
+                    {
+                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
                 };
 
                 // create pricing guide
@@ -1844,7 +1848,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketPricingGuideWithAllocationGoals()
@@ -1867,8 +1870,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
             }
         }
-        [Ignore]
+
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketPricingGuideWithAllocationGoalsMultiplePrograms()
         {
@@ -2075,7 +2079,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalId = 26016,
-                ProposalDetailId = 9978
+                ProposalDetailId = 9978,
+                OpenMarketPricing =
+                {
+                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+                
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             var marketBeforeFiltering = dto.Markets.First();

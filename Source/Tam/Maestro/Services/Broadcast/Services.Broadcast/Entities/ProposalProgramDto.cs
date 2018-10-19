@@ -40,6 +40,20 @@ namespace Services.Broadcast.Entities
         public List<StationInventorySpots> Allocations { get; set; }
         public double? ProvidedUnitImpressions { get; set; }
         public double TotalImpressions { get; set; }
+        public double EffectiveImpressionsPerSpot
+        {
+            get
+            {
+                if(ProvidedUnitImpressions.HasValue && ProvidedUnitImpressions.Value != 0)
+                {
+                    return ProvidedUnitImpressions.Value;
+                }
+                else
+                {
+                    return UnitImpressions;
+                }
+            }
+        }
 
         public ProposalProgramDto()
         {

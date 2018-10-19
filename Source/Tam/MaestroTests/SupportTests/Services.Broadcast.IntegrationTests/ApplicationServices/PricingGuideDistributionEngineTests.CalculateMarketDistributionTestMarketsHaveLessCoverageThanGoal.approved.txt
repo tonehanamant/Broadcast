@@ -1,6 +1,8 @@
 ﻿[
   {
     "AvgCpm": 0.0,
+    "DisplayImpressions": 0.0,
+    "DisplayStationImpressions": 0.0,
     "MarketCoverage": 0.1,
     "MarketId": 0,
     "MarketName": null,
@@ -10,11 +12,12 @@
     "Stations": [],
     "TotalCost": 0.0,
     "TotalImpressions": 0.0,
-    "TotalSpots": 0,
-    "TotalStationImpressions": 0.0
+    "TotalSpots": 0
   },
   {
     "AvgCpm": 0.0,
+    "DisplayImpressions": 0.0,
+    "DisplayStationImpressions": 0.0,
     "MarketCoverage": 0.2,
     "MarketId": 0,
     "MarketName": null,
@@ -24,11 +27,12 @@
     "Stations": [],
     "TotalCost": 0.0,
     "TotalImpressions": 0.0,
-    "TotalSpots": 0,
-    "TotalStationImpressions": 0.0
+    "TotalSpots": 0
   },
   {
     "AvgCpm": 0.0,
+    "DisplayImpressions": 0.0,
+    "DisplayStationImpressions": 0.0,
     "MarketCoverage": 0.2,
     "MarketId": 0,
     "MarketName": null,
@@ -38,7 +42,6 @@
     "Stations": [],
     "TotalCost": 0.0,
     "TotalImpressions": 0.0,
-    "TotalSpots": 0,
-    "TotalStationImpressions": 0.0
+    "TotalSpots": 0
   }
 ]

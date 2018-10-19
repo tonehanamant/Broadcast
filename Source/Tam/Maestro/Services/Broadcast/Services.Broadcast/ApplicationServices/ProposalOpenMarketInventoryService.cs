@@ -623,16 +623,13 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.ProvidedUnitImpressions = program.ProvidedUnitImpressions;
                             weekProgram.UnitCost = programFlightweek.Rate;
                             weekProgram.TargetImpressions = program.TargetImpressions;
-                            weekProgram.TotalImpressions = weekProgram.Spots > 0
-                                ? unitImpressions * weekProgram.Spots
-                                : unitImpressions;
-
-                            if (program.ProvidedUnitImpressions.HasValue)
+                            if (weekProgram.ProvidedUnitImpressions.HasValue)
                             {
-                                var providedUnitImpressions = program.ProvidedUnitImpressions.Value;
-                                weekProgram.TotalProvidedImpressions = weekProgram.Spots > 0
-                                    ? providedUnitImpressions * weekProgram.Spots
-                                    : providedUnitImpressions;
+                                weekProgram.TotalImpressions = weekProgram.Spots == 0 ? weekProgram.ProvidedUnitImpressions.Value : weekProgram.Spots * weekProgram.ProvidedUnitImpressions.Value;
+                            }
+                            else
+                            {
+                                weekProgram.TotalImpressions = weekProgram.Spots == 0 ? weekProgram.UnitImpression : weekProgram.Spots * weekProgram.UnitImpression;
                             }
 
                             weekProgram.Cost = weekProgram.Spots > 0
@@ -1002,7 +999,7 @@ namespace Services.Broadcast.ApplicationServices
                 ProgramName = _GetProgramName(p),
                 BlendedCpm = Math.Round(p.Average(x => x.TargetCpm),2),
                 ImpressionsPerSpot = p.Average(x => x.UnitImpressions),
-                StationImpressions = p.Average(x => x.ProvidedUnitImpressions ?? 0),
+                StationImpressionsPerSpot = p.Average(x => x.ProvidedUnitImpressions ?? 0),
                 Daypart = p.First().DayParts.Single(),
                 CostPerSpot = p.Average(x => x.SpotCost),
                 Cost = p.Average(x => x.TotalCost),
@@ -1051,7 +1048,8 @@ namespace Services.Broadcast.ApplicationServices
                 .Where(x => x.Contain == ContainTypeEnum.Exclude)
                 .Select(x => x.Genre.Id)
                 .ToList();
-            var programNamesToExclude = criterion.ProgramNameSearchCriteria                .Where(x => x.Contain == ContainTypeEnum.Exclude)
+            var programNamesToExclude = criterion.ProgramNameSearchCriteria
+                .Where(x => x.Contain == ContainTypeEnum.Exclude)
                 .Select(x => x.Program.Display)
                 .ToList();
 
@@ -1123,7 +1121,7 @@ namespace Services.Broadcast.ApplicationServices
                 m.Stations.ForEach(s => s.Programs.ForEach(p =>
                 {
                     p.Cost = _ProposalProgramsCalculationEngine.CalculateSpotCost(p.Spots, p.CostPerSpot);
-                    p.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(p.Spots,p.ImpressionsPerSpot );
+                    p.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(p.Spots, p.EffectiveImpressionsPerSpot);
                 }));
             });
 
@@ -1226,7 +1224,7 @@ namespace Services.Broadcast.ApplicationServices
                             ProgramName = program.program_name,
                             ManifestDaypartId = program.id,
                             Impressions = guide.impressions,
-                            StationImpressions = guide.station_impressions,
+                            StationImpressionsPerSpot = guide.station_impressions,
                             BlendedCpm = Math.Round(guide.blended_cpm,2),
                             Cost = guide.cost,
                             CostPerSpot = guide.cost_per_spot,
@@ -1354,54 +1352,57 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
-                foreach (var station in market.Stations)
-                {
-                    var minProgram = station.Programs.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+                
+                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
+                var minProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
 
-                    if (minProgram != null && budgetGoal > 0 && impressionsGoal > 0)
-                    {
-                        minProgram.Spots = unitCapPerStation;
-                        minProgram.Impressions = minProgram.Spots * minProgram.ImpressionsPerSpot;
-                        minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
-                        impressionsGoal -= minProgram.Impressions;
-                        budgetGoal -= minProgram.Cost;
-                    }
+                while (minProgram != null && budgetGoal > 0 && impressionsGoal > 0)
+                {
+                    minProgram.Spots = minProgram.Spots + 1;
+                    minProgram.Impressions = minProgram.Spots * minProgram.EffectiveImpressionsPerSpot;
+                    minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
+                    impressionsGoal -= minProgram.EffectiveImpressionsPerSpot;
+                    budgetGoal -= minProgram.CostPerSpot;
                 }
             }
 
-            var allCheapestPrograms = pricingGuideOpenMarketInventory.Markets.SelectMany(
-                m => m.Stations.SelectMany(
-                    s => s.Programs.Where(
-                        x => x.BlendedCpm != 0 && x.Spots == 0).OrderBy(x => x.BlendedCpm))).ToList();
-            var programCount = 0;
-
-            while (budgetGoal > 0 && impressionsGoal > 0 && 
-                   programCount < allCheapestPrograms.Count())
+            var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation);
+            while (budgetGoal > 0 && impressionsGoal > 0 && allocatableProgram != null)
             {
-                var program = allCheapestPrograms[programCount];
-                program.Spots = unitCapPerStation;
-                program.Impressions = program.Spots * program.ImpressionsPerSpot;
-                program.Cost = program.Spots * program.CostPerSpot;
-                impressionsGoal -= program.Impressions;
-                budgetGoal -= program.Cost;
+                allocatableProgram.Spots = allocatableProgram.Spots + 1;
+                allocatableProgram.Impressions = allocatableProgram.Spots * allocatableProgram.EffectiveImpressionsPerSpot;
+                allocatableProgram.Cost = allocatableProgram.Spots * allocatableProgram.CostPerSpot;
+                impressionsGoal -= allocatableProgram.EffectiveImpressionsPerSpot;
+                budgetGoal -= allocatableProgram.CostPerSpot;
+                allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation);
             }
+        }
+
+        private static PricingGuideMarket.PricingGuideStation.PricingGuideProgram
+            _GetNextGoalAllocatableProgram(List<PricingGuideMarket> markets, int stationCap)
+        {
+            var allocatableStations = markets.SelectMany(m => m.Stations).Where(
+                s => s.Programs.Sum(p => p.Spots) < stationCap);
+            var program = allocatableStations.SelectMany(
+                s => s.Programs.Where(
+                    p => p.BlendedCpm != 0)).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+            return program;
         }
 
         private void _AllocateMinSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
-                foreach (var station in market.Stations)
-                {
-                    var minProgram = station.Programs.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
+                var minProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
 
-                    if (minProgram != null)
-                    {
-                        minProgram.Spots = 1;
-                        minProgram.Impressions = minProgram.Spots * minProgram.ImpressionsPerSpot;
-                        minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
-                    }
+                if (minProgram != null)
+                {
+                    minProgram.Spots = 1;
+                    minProgram.Impressions = minProgram.Spots * minProgram.EffectiveImpressionsPerSpot;
+                    minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
                 }
+
             }
         }
 
@@ -1409,32 +1410,30 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
-                foreach (var station in market.Stations)
+                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
+                var avgPrograms = marketPrograms.Where(x => x.BlendedCpm != 0);
+                var count = avgPrograms.Count();
+
+                if (count == 0)
+                    continue;
+
+                var totalCpm = avgPrograms.Sum(x => x.BlendedCpm);
+                var averageCpm = totalCpm / count;
+                var programClosestToAvg = avgPrograms.First();
+                var distanceToAverage = Math.Abs(programClosestToAvg.BlendedCpm - averageCpm);
+
+                foreach(var program in avgPrograms)
                 {
-                    var avgPrograms = station.Programs.Where(x => x.BlendedCpm != 0);
-                    var count = avgPrograms.Count();
-
-                    if (count == 0)
-                        continue;
-
-                    var totalCpm = avgPrograms.Sum(x => x.BlendedCpm);
-                    var averageCpm = totalCpm / count;
-                    var programClosestToAvg = avgPrograms.First();
-                    var distanceToAverage = Math.Abs(programClosestToAvg.BlendedCpm - averageCpm);
-
-                    foreach(var program in avgPrograms)
+                    if (Math.Abs(program.BlendedCpm - averageCpm) < distanceToAverage)
                     {
-                        if (Math.Abs(program.BlendedCpm - averageCpm) < distanceToAverage)
-                        {
-                            programClosestToAvg = program;
-                            distanceToAverage = Math.Abs(program.BlendedCpm - averageCpm);
-                        }
+                        programClosestToAvg = program;
+                        distanceToAverage = Math.Abs(program.BlendedCpm - averageCpm);
                     }
-
-                    programClosestToAvg.Spots = 1;
-                    programClosestToAvg.Impressions = programClosestToAvg.Spots * programClosestToAvg.ImpressionsPerSpot;
-                    programClosestToAvg.Cost = programClosestToAvg.Spots * programClosestToAvg.CostPerSpot;
                 }
+
+                programClosestToAvg.Spots = 1;
+                programClosestToAvg.Impressions = programClosestToAvg.Spots * programClosestToAvg.EffectiveImpressionsPerSpot;
+                programClosestToAvg.Cost = programClosestToAvg.Spots * programClosestToAvg.CostPerSpot;
             }
         }
 
@@ -1442,16 +1441,14 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
-                foreach (var station in market.Stations)
-                {
-                    var maxProgram = station.Programs.Where(x => x.BlendedCpm != 0).OrderByDescending(x => x.BlendedCpm).FirstOrDefault();
+                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
+                var maxProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderByDescending(x => x.BlendedCpm).FirstOrDefault();
 
-                    if (maxProgram != null)
-                    {
-                        maxProgram.Spots = 1;
-                        maxProgram.Impressions = maxProgram.Spots * maxProgram.ImpressionsPerSpot;
-                        maxProgram.Cost = maxProgram.Spots * maxProgram.CostPerSpot;
-                    }
+                if (maxProgram != null)
+                {
+                    maxProgram.Spots = 1;
+                    maxProgram.Impressions = maxProgram.Spots * maxProgram.EffectiveImpressionsPerSpot;
+                    maxProgram.Cost = maxProgram.Spots * maxProgram.CostPerSpot;
                 }
             }
         }
@@ -1500,7 +1497,6 @@ namespace Services.Broadcast.ApplicationServices
             markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
             markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
             markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            markets.ForEach(m =>m.TotalStationImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.StationImpressions)));
         }
         
         private void _FilterProgramsByDaypart(ProposalDetailInventoryBase pricingGuideOpenMarketDto, List<ProposalProgramDto> programs)
