@@ -7,7 +7,92 @@
       "Archived": false,
       "ClientScrubs": [
         {
-          "ClientScrubAudiences": [],
+          "ClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 1189.25
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 3080.8
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 1151.35
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 616.2
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 23513.15
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 46558.15
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 55361.3
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 1225.05
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 2811.3
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 2543.75
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 8885.45
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 16341.55
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 12689.15
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 213532.95
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 9777.15
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 5413.95
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 13419.1
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 1305.7
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 47357.6
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 4696.1
+            }
+          ],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
@@ -19,10 +104,10 @@
           "MatchGenre": true,
           "MatchIsci": true,
           "MatchIsciDays": false,
-          "MatchMarket": false,
+          "MatchMarket": true,
           "MatchProgram": true,
           "MatchShowType": false,
-          "MatchStation": false,
+          "MatchStation": true,
           "MatchTime": false,
           "ModifiedBy": "test user",
           "PostingBookId": 416,
@@ -47,7 +132,7 @@
       "LeadOutShowType": "Documentary",
       "LeadOutStartTime": 28920,
       "MappedIsci": null,
-      "Market": "market",
+      "Market": "New York",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
       "ShowType": "News",
