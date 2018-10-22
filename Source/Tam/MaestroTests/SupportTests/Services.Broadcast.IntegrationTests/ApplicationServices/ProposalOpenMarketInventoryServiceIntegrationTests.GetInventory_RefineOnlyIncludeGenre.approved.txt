@@ -219,6 +219,7 @@
                 {
                   "Cost": 0.0,
                   "EFF": 0.0,
+                  "HasImpressions": false,
                   "ProgramId": 162232,
                   "ProvidedUnitImpressions": null,
                   "Spots": 1,

@@ -2491,5 +2491,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             detail.ProgramCriteria = new List<ProgramCriteria>();
             _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
         }
+
+        [Test]
+        public void ProposalOpenMarketService_SetsCanEditSpotsPropertyTrue_ForProgramsThatHaveImpressions()
+        {
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
+            var programs = inventory.Weeks
+                .SelectMany(w => w.Markets)
+                .SelectMany(m => m.Stations)
+                .SelectMany(s => s.Programs);
+            var programsWithImpressions = programs.Where(x => x.UnitImpression > 0 ||
+                                                             (x.ProvidedUnitImpressions.HasValue && x.ProvidedUnitImpressions.Value > 0));
+            var programsWithImpressionsHavePropertySetTrue = programsWithImpressions.All(x => x.HasImpressions);
+
+            Assert.True(programsWithImpressionsHavePropertySetTrue);
+        }
+
+        [Test]
+        public void ProposalOpenMarketService_SetsCanEditSpotsPropertyFalse_ForProgramsThatDoNotHaveImpressions()
+        {
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
+            var programs = inventory.Weeks
+                .SelectMany(w => w.Markets)
+                .SelectMany(m => m.Stations)
+                .SelectMany(s => s.Programs);
+            var programsWithoutImpressions = programs.Where(x => x.UnitImpression <= 0 && 
+                                                               (!x.ProvidedUnitImpressions.HasValue || x.ProvidedUnitImpressions.Value <= 0));
+            var programsWithoutImpressionsHavePropertySetFalse = programsWithoutImpressions.All(x => !x.HasImpressions);
+            
+            Assert.True(programsWithoutImpressionsHavePropertySetFalse);
+        }
     }
 }
