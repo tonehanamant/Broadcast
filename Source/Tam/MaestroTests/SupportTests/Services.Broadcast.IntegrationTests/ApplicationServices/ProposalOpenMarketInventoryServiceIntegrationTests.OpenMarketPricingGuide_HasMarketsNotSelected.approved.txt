@@ -341,12 +341,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -361,12 +362,13 @@
             },
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -381,12 +383,13 @@
             },
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SU 6AM-7AM",
                 "Id": 30352
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -401,12 +404,13 @@
             },
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -423,7 +427,7 @@
           "StationCode": 6069
         }
       ],
-      "TotalCost": 26.0000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -446,12 +450,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.14,
-              "Cost": 39.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
                 "Display": "M-F 12PM-1PM",
                 "Id": 1617
               },
+              "DisplayCost": 39.0000,
               "DisplayImpressions": 273696.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 273696.0,
@@ -466,12 +471,13 @@
             },
             {
               "BlendedCpm": 0.93,
-              "Cost": 211.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 211.2500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 211.2500,
               "DisplayImpressions": 226126.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 226126.5,
@@ -486,12 +492,13 @@
             },
             {
               "BlendedCpm": 2.13,
-              "Cost": 162.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 162.5000,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 162.5000,
               "DisplayImpressions": 76456.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 76456.5,
@@ -506,12 +513,13 @@
             },
             {
               "BlendedCpm": 4.57,
-              "Cost": 65.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 65.0000,
               "Daypart": {
                 "Display": "M-F 5AM-5:30AM",
                 "Id": 32756
               },
+              "DisplayCost": 65.0000,
               "DisplayImpressions": 14216.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 14216.5,
@@ -526,12 +534,13 @@
             },
             {
               "BlendedCpm": 5.76,
-              "Cost": 97.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 97.5000,
               "Daypart": {
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayCost": 97.5000,
               "DisplayImpressions": 16939.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 16939.75,
@@ -546,12 +555,13 @@
             },
             {
               "BlendedCpm": 6.76,
-              "Cost": 178.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 178.7500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 178.7500,
               "DisplayImpressions": 26457.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 26457.0,
@@ -566,12 +576,13 @@
             },
             {
               "BlendedCpm": 7.37,
-              "Cost": 195.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 195.0000,
               "Daypart": {
                 "Display": "SA 8AM-9AM",
                 "Id": 31239
               },
+              "DisplayCost": 195.0000,
               "DisplayImpressions": 26457.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 26457.0,
@@ -588,7 +599,7 @@
           "StationCode": 5942
         }
       ],
-      "TotalCost": 949.0000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -611,12 +622,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.07,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 221183.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 221183.25,
@@ -633,7 +645,7 @@
           "StationCode": 6173
         }
       ],
-      "TotalCost": 16.2500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -656,12 +668,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.43,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 37541.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 37541.0,
@@ -676,12 +689,13 @@
             },
             {
               "BlendedCpm": 2.70,
-              "Cost": 13.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
                 "Display": "SA 7AM-9AM",
                 "Id": 29598
               },
+              "DisplayCost": 13.0000,
               "DisplayImpressions": 4809.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 4809.25,
@@ -696,12 +710,13 @@
             },
             {
               "BlendedCpm": 13.29,
-              "Cost": 39.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 39.0000,
               "DisplayImpressions": 2934.625,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 2934.625,
@@ -718,7 +733,7 @@
           "StationCode": 1045
         }
       ],
-      "TotalCost": 68.2500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -741,12 +756,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "SU 5AM-6AM",
                 "Id": 1593
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -761,12 +777,13 @@
             },
             {
               "BlendedCpm": 0.32,
-              "Cost": 48.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 48.7500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 48.7500,
               "DisplayImpressions": 152405.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 152405.5,
@@ -781,12 +798,13 @@
             },
             {
               "BlendedCpm": 0.66,
-              "Cost": 22.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 22.7500,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 22.7500,
               "DisplayImpressions": 34418.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 34418.75,
@@ -801,12 +819,13 @@
             },
             {
               "BlendedCpm": 0.67,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "M-F 5AM-6AM",
                 "Id": 29862
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 14518.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 14518.0,
@@ -821,12 +840,13 @@
             },
             {
               "BlendedCpm": 3.11,
-              "Cost": 81.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 81.2500,
               "Daypart": {
                 "Display": "SU 7AM-8:30AM",
                 "Id": 33555
               },
+              "DisplayCost": 81.2500,
               "DisplayImpressions": 26158.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 26158.25,
@@ -841,12 +861,13 @@
             },
             {
               "BlendedCpm": 11.52,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "SA 5AM-7AM",
                 "Id": 36477
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 1692.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1692.25,
@@ -861,12 +882,13 @@
             },
             {
               "BlendedCpm": 16.13,
-              "Cost": 97.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 97.5000,
               "Daypart": {
                 "Display": "SU 8:30AM-9AM",
                 "Id": 33161
               },
+              "DisplayCost": 97.5000,
               "DisplayImpressions": 6044.875,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 6044.875,
@@ -890,12 +912,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -912,7 +935,7 @@
           "StationCode": 2784
         }
       ],
-      "TotalCost": 295.7500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -935,12 +958,13 @@
           "Programs": [
             {
               "BlendedCpm": 3.18,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "M-F 5AM-5:58AM",
                 "Id": 62772
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 119944.75,
               "DisplayStationImpressions": 6140.0,
               "EffectiveImpressionsPerSpot": 6140.0,
@@ -955,12 +979,13 @@
             },
             {
               "BlendedCpm": 3.21,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "SA 5:58AM-7AM",
                 "Id": 62775
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 30877.5,
               "DisplayStationImpressions": 8090.0,
               "EffectiveImpressionsPerSpot": 8090.0,
@@ -975,12 +1000,13 @@
             },
             {
               "BlendedCpm": 4.23,
-              "Cost": 39.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
                 "Display": "SA 7AM-8AM",
                 "Id": 35762
               },
+              "DisplayCost": 39.0000,
               "DisplayImpressions": 35596.125,
               "DisplayStationImpressions": 9230.0,
               "EffectiveImpressionsPerSpot": 9230.0,
@@ -995,12 +1021,13 @@
             },
             {
               "BlendedCpm": 4.34,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "SU 5:58AM-7AM",
                 "Id": 62776
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 30877.5,
               "DisplayStationImpressions": 4490.0,
               "EffectiveImpressionsPerSpot": 4490.0,
@@ -1015,12 +1042,13 @@
             },
             {
               "BlendedCpm": 4.64,
-              "Cost": 39.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 39.0000,
               "DisplayImpressions": 35596.125,
               "DisplayStationImpressions": 8410.0,
               "EffectiveImpressionsPerSpot": 8410.0,
@@ -1035,12 +1063,13 @@
             },
             {
               "BlendedCpm": 7.14,
-              "Cost": 117.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 117.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 117.0000,
               "DisplayImpressions": 711865.25,
               "DisplayStationImpressions": 16390.0,
               "EffectiveImpressionsPerSpot": 16390.0,
@@ -1055,12 +1084,13 @@
             },
             {
               "BlendedCpm": 9.59,
-              "Cost": 117.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 117.0000,
               "Daypart": {
                 "Display": "M-F 5:58AM-7AM",
                 "Id": 62773
               },
+              "DisplayCost": 117.0000,
               "DisplayImpressions": 307129.0,
               "DisplayStationImpressions": 12200.0,
               "EffectiveImpressionsPerSpot": 12200.0,
@@ -1075,12 +1105,13 @@
             },
             {
               "BlendedCpm": 16.25,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "SA 5AM-5:58AM",
                 "Id": 62774
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 6985.0,
               "DisplayStationImpressions": 1200.0,
               "EffectiveImpressionsPerSpot": 1200.0,
@@ -1097,7 +1128,7 @@
           "StationCode": 5319
         }
       ],
-      "TotalCost": 396.5000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -1120,12 +1151,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.36,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 26723.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 26723.25,
@@ -1140,12 +1172,13 @@
             },
             {
               "BlendedCpm": 10.30,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 1577.375,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1577.375,
@@ -1169,12 +1202,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.41,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 8AM-9AM",
                 "Id": 7059
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 15692.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 15692.0,
@@ -1189,12 +1223,13 @@
             },
             {
               "BlendedCpm": 0.87,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 7:30AM-8AM",
                 "Id": 33490
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 7476.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 7476.5,
@@ -1209,12 +1244,13 @@
             },
             {
               "BlendedCpm": 1.34,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 7AM-7:30AM",
                 "Id": 32868
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 4851.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 4851.75,
@@ -1229,12 +1265,13 @@
             },
             {
               "BlendedCpm": 12.64,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 514.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 514.25,
@@ -1251,7 +1288,7 @@
           "StationCode": 2772
         }
       ],
-      "TotalCost": 52.0000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -1274,12 +1311,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -1294,12 +1332,13 @@
             },
             {
               "BlendedCpm": 0.0,
-              "Cost": 13.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
                 "Display": "SU 6AM-7AM",
                 "Id": 30352
               },
+              "DisplayCost": 13.0000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -1314,12 +1353,13 @@
             },
             {
               "BlendedCpm": 0.33,
-              "Cost": 13.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 13.0000,
               "DisplayImpressions": 39854.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 39854.0,
@@ -1334,12 +1374,13 @@
             },
             {
               "BlendedCpm": 41.75,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 389.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 389.25,
@@ -1363,12 +1404,13 @@
           "Programs": [
             {
               "BlendedCpm": 24.71,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 1052.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1052.25,
@@ -1385,7 +1427,7 @@
           "StationCode": 6682
         }
       ],
-      "TotalCost": 74.7500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -1408,12 +1450,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.22,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 74168.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 74168.5,
@@ -1428,12 +1471,13 @@
             },
             {
               "BlendedCpm": 0.92,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 17597.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 17597.25,
@@ -1448,12 +1492,13 @@
             },
             {
               "BlendedCpm": 3.37,
-              "Cost": 3.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 3.2500,
               "Daypart": {
                 "Display": "M-F 5AM-6AM",
                 "Id": 29862
               },
+              "DisplayCost": 3.2500,
               "DisplayImpressions": 965.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 965.25,
@@ -1468,12 +1513,13 @@
             },
             {
               "BlendedCpm": 4.59,
-              "Cost": 45.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 45.5000,
               "Daypart": {
                 "Display": "SU 8AM-9:30AM",
                 "Id": 33181
               },
+              "DisplayCost": 45.5000,
               "DisplayImpressions": 9918.625,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 9918.625,
@@ -1488,12 +1534,13 @@
             },
             {
               "BlendedCpm": 5.56,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "SU 9:30AM-10:30AM",
                 "Id": 36410
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 3505.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 3505.5,
@@ -1508,12 +1555,13 @@
             },
             {
               "BlendedCpm": 11.40,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "SA 5AM-7AM",
                 "Id": 36477
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 855.375,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 855.375,
@@ -1537,12 +1585,13 @@
           "Programs": [
             {
               "BlendedCpm": 4.46,
-              "Cost": 5.2000,
+              "Cost": 0.0000,
               "CostPerSpot": 5.2000,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 5.2000,
               "DisplayImpressions": 1166.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1166.5,
@@ -1559,7 +1608,7 @@
           "StationCode": 6444
         }
       ],
-      "TotalCost": 115.7000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -1582,12 +1631,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.11,
-              "Cost": 13.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 13.0000,
               "DisplayImpressions": 114463.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 114463.5,
@@ -1602,12 +1652,13 @@
             },
             {
               "BlendedCpm": 0.16,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "M-F 5AM-7AM",
                 "Id": 36471
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 123917.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 123917.5,
@@ -1622,12 +1673,13 @@
             },
             {
               "BlendedCpm": 1.91,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "SU 8AM-9:30AM",
                 "Id": 33181
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 13618.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 13618.25,
@@ -1642,12 +1694,13 @@
             },
             {
               "BlendedCpm": 3.89,
-              "Cost": 29.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 29.2500,
               "Daypart": {
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayCost": 29.2500,
               "DisplayImpressions": 7520.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 7520.75,
@@ -1671,12 +1724,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.13,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 9AM-11AM",
                 "Id": 6533
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 124757.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 124757.75,
@@ -1691,12 +1745,13 @@
             },
             {
               "BlendedCpm": 0.38,
-              "Cost": 110.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 110.5000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 110.5000,
               "DisplayImpressions": 293058.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 293058.75,
@@ -1711,12 +1766,13 @@
             },
             {
               "BlendedCpm": 0.98,
-              "Cost": 113.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 113.7500,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 113.7500,
               "DisplayImpressions": 116016.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 116016.75,
@@ -1731,12 +1787,13 @@
             },
             {
               "BlendedCpm": 1.46,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 5AM-5:30AM",
                 "Id": 32756
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 11159.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 11159.0,
@@ -1751,12 +1808,13 @@
             },
             {
               "BlendedCpm": 1.81,
-              "Cost": 39.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
                 "Display": "SA 7AM-9AM",
                 "Id": 29598
               },
+              "DisplayCost": 39.0000,
               "DisplayImpressions": 21550.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 21550.5,
@@ -1771,12 +1829,13 @@
             },
             {
               "BlendedCpm": 2.51,
-              "Cost": 48.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 48.7500,
               "Daypart": {
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayCost": 48.7500,
               "DisplayImpressions": 19389.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 19389.5,
@@ -1791,12 +1850,13 @@
             },
             {
               "BlendedCpm": 3.21,
-              "Cost": 39.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 39.0000,
               "DisplayImpressions": 12142.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 12142.5,
@@ -1820,12 +1880,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.18,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 55656.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 55656.25,
@@ -1840,12 +1901,13 @@
             },
             {
               "BlendedCpm": 0.35,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 5AM-6:30AM",
                 "Id": 34550
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 18766.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 18766.0,
@@ -1860,12 +1922,13 @@
             },
             {
               "BlendedCpm": 0.86,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "M-F 6:30AM-7AM",
                 "Id": 34270
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 11385.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 11385.0,
@@ -1880,12 +1943,13 @@
             },
             {
               "BlendedCpm": 1.13,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SA 7AM-8AM",
                 "Id": 35762
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 5775.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 5775.0,
@@ -1900,12 +1964,13 @@
             },
             {
               "BlendedCpm": 1.13,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 5775.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 5775.0,
@@ -1920,12 +1985,13 @@
             },
             {
               "BlendedCpm": 32.79,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "SU 9AM-9:30AM",
                 "Id": 31278
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 297.375,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 297.375,
@@ -1949,12 +2015,13 @@
           "Programs": [
             {
               "BlendedCpm": 16.97,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 574.625,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 574.625,
@@ -1971,7 +2038,7 @@
           "StationCode": 7634
         }
       ],
-      "TotalCost": 529.7500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -1994,12 +2061,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.14,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 118501.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 118501.25,
@@ -2014,12 +2082,13 @@
             },
             {
               "BlendedCpm": 0.24,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 67205.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 67205.25,
@@ -2034,12 +2103,13 @@
             },
             {
               "BlendedCpm": 1.06,
-              "Cost": 4.5500,
+              "Cost": 0.0000,
               "CostPerSpot": 4.5500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 4.5500,
               "DisplayImpressions": 4299.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 4299.25,
@@ -2054,12 +2124,13 @@
             },
             {
               "BlendedCpm": 1.25,
-              "Cost": 4.5500,
+              "Cost": 0.0000,
               "CostPerSpot": 4.5500,
               "Daypart": {
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayCost": 4.5500,
               "DisplayImpressions": 3652.875,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 3652.875,
@@ -2074,12 +2145,13 @@
             },
             {
               "BlendedCpm": 1.66,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 3925.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 3925.5,
@@ -2094,12 +2166,13 @@
             },
             {
               "BlendedCpm": 4.09,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 5AM-5:30AM",
                 "Id": 32756
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 1590.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1590.0,
@@ -2116,7 +2189,7 @@
           "StationCode": 3503
         }
       ],
-      "TotalCost": 54.6000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -2139,12 +2212,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 22.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 22.7500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 22.7500,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -2161,7 +2235,7 @@
           "StationCode": 6433
         }
       ],
-      "TotalCost": 22.7500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -2184,12 +2258,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 3.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 3.2500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 3.2500,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -2213,12 +2288,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 6:30AM-7AM",
                 "Id": 34270
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -2233,12 +2309,13 @@
             },
             {
               "BlendedCpm": 0.78,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 8325.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 8325.0,
@@ -2253,12 +2330,13 @@
             },
             {
               "BlendedCpm": 0.98,
-              "Cost": 3.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 3.2500,
               "Daypart": {
                 "Display": "SA 7AM-9AM",
                 "Id": 29598
               },
+              "DisplayCost": 3.2500,
               "DisplayImpressions": 3320.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 3320.5,
@@ -2273,12 +2351,13 @@
             },
             {
               "BlendedCpm": 1.81,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SU 8AM-9:30AM",
                 "Id": 33181
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 3601.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 3601.0,
@@ -2293,12 +2372,13 @@
             },
             {
               "BlendedCpm": 2.73,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "SU 9:30AM-10:30AM",
                 "Id": 36410
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 2379.375,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 2379.375,
@@ -2315,7 +2395,7 @@
           "StationCode": 10736
         }
       ],
-      "TotalCost": 32.5000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -2338,12 +2418,13 @@
           "Programs": [
             {
               "BlendedCpm": 4.24,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "SA 8AM-10AM",
                 "Id": 6305
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 7877.25,
               "DisplayStationImpressions": 2300.0,
               "EffectiveImpressionsPerSpot": 2300.0,
@@ -2358,12 +2439,13 @@
             },
             {
               "BlendedCpm": 6.50,
-              "Cost": 9.7500,
+              "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
                 "Display": "M-F 12PM-1PM",
                 "Id": 1617
               },
+              "DisplayCost": 9.7500,
               "DisplayImpressions": 31642.0,
               "DisplayStationImpressions": 1500.0,
               "EffectiveImpressionsPerSpot": 1500.0,
@@ -2378,12 +2460,13 @@
             },
             {
               "BlendedCpm": 9.29,
-              "Cost": 13.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayCost": 13.0000,
               "DisplayImpressions": 3682.625,
               "DisplayStationImpressions": 1400.0,
               "EffectiveImpressionsPerSpot": 1400.0,
@@ -2398,12 +2481,13 @@
             },
             {
               "BlendedCpm": 13.00,
-              "Cost": 32.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 32.5000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 32.5000,
               "DisplayImpressions": 69662.0,
               "DisplayStationImpressions": 2500.0,
               "EffectiveImpressionsPerSpot": 2500.0,
@@ -2418,12 +2502,13 @@
             },
             {
               "BlendedCpm": 15.48,
-              "Cost": 32.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 32.5000,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 32.5000,
               "DisplayImpressions": 4554.375,
               "DisplayStationImpressions": 2100.0,
               "EffectiveImpressionsPerSpot": 2100.0,
@@ -2438,12 +2523,13 @@
             },
             {
               "BlendedCpm": 20.31,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "M-F 6AM-7AM",
                 "Id": 6447
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 19220.5,
               "DisplayStationImpressions": 800.0,
               "EffectiveImpressionsPerSpot": 800.0,
@@ -2458,12 +2544,13 @@
             },
             {
               "BlendedCpm": 21.67,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 5AM-6AM",
                 "Id": 29862
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 5847.5,
               "DisplayStationImpressions": 300.0,
               "EffectiveImpressionsPerSpot": 300.0,
@@ -2478,12 +2565,13 @@
             },
             {
               "BlendedCpm": 32.50,
-              "Cost": 6.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
                 "Display": "M-F 4:30AM-5AM",
                 "Id": 33758
               },
+              "DisplayCost": 6.5000,
               "DisplayImpressions": 357.5,
               "DisplayStationImpressions": 200.0,
               "EffectiveImpressionsPerSpot": 200.0,
@@ -2498,12 +2586,13 @@
             },
             {
               "BlendedCpm": 81.25,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 1954.25,
               "DisplayStationImpressions": 200.0,
               "EffectiveImpressionsPerSpot": 200.0,
@@ -2520,7 +2609,7 @@
           "StationCode": 6269
         }
       ],
-      "TotalCost": 143.0000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -2543,12 +2632,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.0,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "M-F 5:30AM-6AM",
                 "Id": 29947
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -2563,12 +2653,13 @@
             },
             {
               "BlendedCpm": 0.0,
-              "Cost": 65.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 65.0000,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 65.0000,
               "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 0.0,
@@ -2583,12 +2674,13 @@
             },
             {
               "BlendedCpm": 3.18,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "M-F 7AM-8AM",
                 "Id": 35772
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 6137.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 6137.0,
@@ -2612,12 +2704,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.36,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 54093.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 54093.25,
@@ -2632,12 +2725,13 @@
             },
             {
               "BlendedCpm": 0.49,
-              "Cost": 19.5000,
+              "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
                 "Display": "M-F 5:30AM-7AM",
                 "Id": 37403
               },
+              "DisplayCost": 19.5000,
               "DisplayImpressions": 40198.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 40198.5,
@@ -2652,12 +2746,13 @@
             },
             {
               "BlendedCpm": 9.99,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "SU 8AM-9AM",
                 "Id": 31233
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 1627.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1627.0,
@@ -2672,12 +2767,13 @@
             },
             {
               "BlendedCpm": 10.18,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "SA 6AM-7AM",
                 "Id": 6407
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 1597.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1597.0,
@@ -2692,12 +2788,13 @@
             },
             {
               "BlendedCpm": 16.09,
-              "Cost": 16.2500,
+              "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
                 "Display": "SU 7AM-8AM",
                 "Id": 35768
               },
+              "DisplayCost": 16.2500,
               "DisplayImpressions": 1010.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 1010.0,
@@ -2714,7 +2811,7 @@
           "StationCode": 5408
         }
       ],
-      "TotalCost": 191.7500,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     },
@@ -2737,12 +2834,13 @@
           "Programs": [
             {
               "BlendedCpm": 56.34,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "M-F 6AM-8AM",
                 "Id": 9491
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 461.5,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 461.5,
@@ -2757,12 +2855,13 @@
             },
             {
               "BlendedCpm": 108.45,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "SA 6AM-8AM",
                 "Id": 29813
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 239.75,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 239.75,
@@ -2777,12 +2876,13 @@
             },
             {
               "BlendedCpm": 128.71,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "SU 7AM-8:30AM",
                 "Id": 33555
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 202.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 202.0,
@@ -2797,12 +2897,13 @@
             },
             {
               "BlendedCpm": 242.99,
-              "Cost": 26.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
                 "Display": "SU 8:30AM-9:30AM",
                 "Id": 34783
               },
+              "DisplayCost": 26.0000,
               "DisplayImpressions": 107.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 107.0,
@@ -2819,7 +2920,7 @@
           "StationCode": 5465
         }
       ],
-      "TotalCost": 104.0000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     }
