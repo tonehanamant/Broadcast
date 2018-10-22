@@ -8,6 +8,10 @@
         background-color: transparent !important;
         background-image:  none !important;
     }
+    .panel-footer {
+        background-color: transparent !important;
+        background-image:  none !important;
+    }
     .panel-title {
         font-weight: bold;
     }
@@ -56,6 +60,10 @@
 .summary-bar {
     display: flex;
     justify-content: flex-end;
+}
+.summary-bar-left {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .summary-item {

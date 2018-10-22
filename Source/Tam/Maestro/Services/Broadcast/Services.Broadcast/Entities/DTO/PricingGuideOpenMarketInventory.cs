@@ -12,14 +12,17 @@ namespace Services.Broadcast.Entities.DTO
         public OpenMarketPricingGuideGridFilterDto Filter { get; set; } = new OpenMarketPricingGuideGridFilterDto();
 
         public List<PricingGuideOpenMarketInventory.PricingGuideMarket> Markets { get; set; } = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>();
+
+        public List<PricingGuideMarketTotalsDto> AllMarkets { get; set; } = new List<PricingGuideMarketTotalsDto>();
     }
 
     public class PricingGuideOpenMarketInventory : ProposalDetailInventoryBase
     {
         public OpenMarketCriterion Criteria { get; set; }
         public List<PricingGuideMarket> Markets { get; set; } = new List<PricingGuideMarket>();
+        public List<PricingGuideMarketTotalsDto> AllMarkets { get; set; } = new List<PricingGuideMarketTotalsDto>();
         public double? MarketCoverage { get; set; }
-
+        
         public class PricingGuideMarket : IInventoryMarket
         {
             public string MarketName { get; set; }

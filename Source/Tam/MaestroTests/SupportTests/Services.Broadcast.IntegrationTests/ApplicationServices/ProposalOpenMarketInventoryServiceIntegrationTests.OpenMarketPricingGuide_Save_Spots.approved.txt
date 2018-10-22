@@ -1,4 +1,17 @@
 ﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.0,
+      "Id": 160,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
   "DisplayFilter": {
     "Affiliations": [
       "PBS"

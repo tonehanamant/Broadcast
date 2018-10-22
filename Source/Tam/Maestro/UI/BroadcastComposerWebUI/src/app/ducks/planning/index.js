@@ -12,6 +12,8 @@ const initialState = {
   openMarketData: undefined,
   hasOpenMarketData: false,
   isOpenMarketDataSortName: false,
+  activeEditMarkets: [],
+  isEditMarketsActive: false,
   openMarketLoading: false,
   openMarketLoaded: false,
   filteredPlanningProposals: [],
@@ -363,7 +365,9 @@ export default function reducer(state = initialState, action) {
         activeOpenMarketData: data.Data,
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
-        openMarketLoaded: true
+        openMarketLoaded: true,
+        activeEditMarkets: data.Data.AllMarkets,
+        isEditMarketsActive: false
       };
     }
 
@@ -422,6 +426,13 @@ export default function reducer(state = initialState, action) {
         },
         isOpenMarketDataSortName: payload
       });
+    }
+
+    case ACTIONS.SHOW_EDIT_MARKETS: {
+      return {
+        ...state,
+        isEditMarketsActive: payload
+      };
     }
 
     case ACTIONS.SET_ESTIMATED_ID: {
@@ -594,6 +605,10 @@ export const filterOpenMarketData = params => ({
 export const sortOpenMarketData = sortByName => ({
   type: ACTIONS.SORT_OPEN_MARKET_DATA,
   payload: sortByName
+});
+export const showEditMarkets = show => ({
+  type: ACTIONS.SHOW_EDIT_MARKETS,
+  payload: show
 });
 export const setEstimatedId = (detailId, estimatedId) => ({
   type: ACTIONS.SET_ESTIMATED_ID,

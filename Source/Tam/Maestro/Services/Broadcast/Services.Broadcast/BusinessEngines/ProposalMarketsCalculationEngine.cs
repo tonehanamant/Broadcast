@@ -15,7 +15,6 @@ namespace Services.Broadcast.BusinessEngines
     public interface IProposalMarketsCalculationEngine : IApplicationService
     {
         List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto);
-        List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail);
         List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId);
     }
 
@@ -28,30 +27,19 @@ namespace Services.Broadcast.BusinessEngines
             _DataRepositoryFactory = dataRepositoryFactory;
         }
 
-        public List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto)
+        public List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailId)
         {
-            var proposalDetail =
-                _DataRepositoryFactory.GetDataRepository<IProposalRepository>()
-                    .GetProposalDetail(proposalDetailDto);
+            var proposalDetail =_DataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalDetail(proposalDetailId);
 
-            var proposal =
-                _DataRepositoryFactory.GetDataRepository<IProposalRepository>()
-                    .GetProposalByIdAndVersion(proposalId, versionNumber);
+            var proposal = _DataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalByIdAndVersion(proposalId, versionNumber);
 
-            return GetProposalMarketsList(proposal,proposalDetail);
-        }
-
-        public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, ProposalDetailDto proposalDetail)
-        {
             var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
             return GetProposalMarketsList(proposal, postingBookId);
         }
 
         public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId)
         {
-            var marketRankings =
-                _DataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
-                .GetMarketRankingsByMediaMonth(postingBookId);
+            var marketRankings =_DataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonth(postingBookId);
 
             var allMarkets = _DataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos();
 

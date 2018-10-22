@@ -1551,7 +1551,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var dto = _ProposalRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
             var proposalMarketIds = _ProposalMarketsCalculationEngine
-                .GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => (short) m.Id)
+                .GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => m.Id)
                 .ToList();
             var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(
                 dto.DetailFlightStartDate,
@@ -1603,8 +1603,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalDetailId = 9978
                 };
 
-                var pricingGuideOpenMarketDto =
-                    _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
 
@@ -1697,6 +1696,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideDto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OpenMarketPricingGuide_HasMarketsNotSelected()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 3134,
+                    ProposalDetailId = 3253
+                };
+                var pricingGuideDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+                
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = new IgnorableSerializerContractResolver()
+            };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideDto, jsonSettings));
             }

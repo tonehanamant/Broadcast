@@ -27,6 +27,7 @@ import {
   clearOpenMarketData
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
+import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
 import "./index.scss";
 
 const isActiveDialog = (detail, modal) =>
@@ -42,7 +43,9 @@ const mapStateToProps = ({
     hasOpenMarketData,
     isOpenMarketDataSortName,
     openMarketLoading,
-    openMarketLoaded
+    openMarketLoaded,
+    activeEditMarkets,
+    isEditMarketsActive
   }
 }) => ({
   modal,
@@ -51,7 +54,9 @@ const mapStateToProps = ({
   hasOpenMarketData,
   isOpenMarketDataSortName,
   openMarketLoading,
-  openMarketLoaded
+  openMarketLoaded,
+  activeEditMarkets,
+  isEditMarketsActive
 });
 
 const mapDispatchToProps = dispatch =>
@@ -504,7 +509,10 @@ class PricingGuide extends Component {
       hasOpenMarketData,
       isOpenMarketDataSortName,
       openMarketLoading,
-      openMarketLoaded
+      openMarketLoaded,
+      activeEditMarkets,
+      isEditMarketsActive,
+      proposalEditForm
     } = this.props;
     const show = isActiveDialog(detail, modal);
     // const labelStyle = { fontSize: '11px', fontWeight: 'normal', color: '#333' };
@@ -569,6 +577,10 @@ class PricingGuide extends Component {
       openCpmTarget === 2 ? "tag-label active" : "tag-label inactive";
     const TargetMaxActive =
       openCpmTarget === 3 ? "tag-label active" : "tag-label inactive";
+    const coverage =
+      proposalEditForm && proposalEditForm.MarketCoverage
+        ? proposalEditForm.MarketCoverage
+        : 0;
     return (
       <div>
         <Modal
@@ -1363,6 +1375,7 @@ class PricingGuide extends Component {
                         <Button
                           bsStyle="primary"
                           onClick={this.onRunDistribution}
+                          disabled={isEditMarketsActive}
                         >
                           Run Distribution
                         </Button>
@@ -1370,12 +1383,21 @@ class PricingGuide extends Component {
                     </Col>
                   </Row>
                   {openMarketLoaded &&
-                    activeOpenMarketData && (
+                    activeOpenMarketData &&
+                    !isEditMarketsActive && (
                       <PricingGuideGrid
                         activeOpenMarketData={activeOpenMarketData}
                         openMarketLoading={openMarketLoading}
                         hasOpenMarketData={hasOpenMarketData}
                         isOpenMarketDataSortName={isOpenMarketDataSortName}
+                      />
+                    )}
+                  {openMarketLoaded &&
+                    activeOpenMarketData &&
+                    isEditMarketsActive && (
+                      <PricingGuideEditMarkets
+                        activeEditMarkets={activeEditMarkets}
+                        marketCoverageGoal={coverage}
                       />
                     )}
                 </Panel.Body>
@@ -1413,7 +1435,9 @@ PricingGuide.propTypes = {
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
-  openMarketLoaded: PropTypes.bool.isRequired
+  openMarketLoaded: PropTypes.bool.isRequired,
+  activeEditMarkets: PropTypes.array.isRequired,
+  isEditMarketsActive: PropTypes.bool.isRequired
 };
 
 PricingGuide.defaultProps = {

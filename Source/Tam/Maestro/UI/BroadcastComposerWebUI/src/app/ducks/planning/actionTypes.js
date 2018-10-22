@@ -78,3 +78,4 @@ export const FILTER_OPEN_MARKET_DATA = createAction(
   "planning/FILTER_OPEN_MARKET_DATA"
 );
 export const SORT_OPEN_MARKET_DATA = "planning/SORT_OPEN_MARKET_DATA";
+export const SHOW_EDIT_MARKETS = "planning/SHOW_EDIT_MARKETS";
