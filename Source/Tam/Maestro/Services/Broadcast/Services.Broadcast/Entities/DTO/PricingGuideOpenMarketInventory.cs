@@ -121,6 +121,22 @@ namespace Services.Broadcast.Entities.DTO
                             }
                         }
                     }
+
+                    public decimal DisplayCost
+                    {
+                        get
+                        {
+                            if (Spots == 0)
+                            {
+                                return CostPerSpot;
+                            }
+                            else
+                            {
+                                return Cost;
+                            }
+                           
+                        }
+                    }
                 }
             }
         }
