@@ -1,7 +1,7 @@
 ﻿[
   {
     "blended_cpm": 0.0000,
-    "cost": 300.0000,
+    "cost": 0.0000,
     "cost_per_spot": 300.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -14,7 +14,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 275.0000,
+    "cost": 0.0000,
     "cost_per_spot": 275.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -40,7 +40,7 @@
   },
   {
     "blended_cpm": 2.8500,
-    "cost": 250.0000,
+    "cost": 0.0000,
     "cost_per_spot": 250.0000,
     "impressions": 0.0,
     "impressions_per_spot": 87623.17943776,
@@ -53,7 +53,7 @@
   },
   {
     "blended_cpm": 3.5100,
-    "cost": 100.0000,
+    "cost": 0.0000,
     "cost_per_spot": 100.0000,
     "impressions": 0.0,
     "impressions_per_spot": 28506.10132628,
@@ -66,7 +66,7 @@
   },
   {
     "blended_cpm": 7.1600,
-    "cost": 150.0000,
+    "cost": 0.0000,
     "cost_per_spot": 150.0000,
     "impressions": 0.0,
     "impressions_per_spot": 20956.66047932,
@@ -79,7 +79,7 @@
   },
   {
     "blended_cpm": 8.5600,
-    "cost": 325.0000,
+    "cost": 0.0000,
     "cost_per_spot": 325.0000,
     "impressions": 0.0,
     "impressions_per_spot": 37968.69484494,
@@ -105,7 +105,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 20.0000,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -118,7 +118,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -144,7 +144,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -157,7 +157,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -170,7 +170,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 125.0000,
+    "cost": 0.0000,
     "cost_per_spot": 125.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -183,7 +183,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 150.0000,
+    "cost": 0.0000,
     "cost_per_spot": 150.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -209,7 +209,7 @@
   },
   {
     "blended_cpm": 3.5400,
-    "cost": 75.0000,
+    "cost": 0.0000,
     "cost_per_spot": 75.0000,
     "impressions": 0.0,
     "impressions_per_spot": 21209.1256847,
@@ -222,7 +222,7 @@
   },
   {
     "blended_cpm": 4.9300,
-    "cost": 35.0000,
+    "cost": 0.0000,
     "cost_per_spot": 35.0000,
     "impressions": 0.0,
     "impressions_per_spot": 7101.0017007,
@@ -235,7 +235,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -261,7 +261,7 @@
   },
   {
     "blended_cpm": 4.9400,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -274,7 +274,7 @@
   },
   {
     "blended_cpm": 6.5000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -287,7 +287,7 @@
   },
   {
     "blended_cpm": 6.6800,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -300,7 +300,7 @@
   },
   {
     "blended_cpm": 7.1300,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -313,7 +313,7 @@
   },
   {
     "blended_cpm": 10.9800,
-    "cost": 180.0000,
+    "cost": 0.0000,
     "cost_per_spot": 180.0000,
     "impressions": 0.0,
     "impressions_per_spot": 85113.07194443,
@@ -326,7 +326,7 @@
   },
   {
     "blended_cpm": 14.7500,
-    "cost": 180.0000,
+    "cost": 0.0000,
     "cost_per_spot": 180.0000,
     "impressions": 0.0,
     "impressions_per_spot": 163840.78050019,
@@ -339,7 +339,7 @@
   },
   {
     "blended_cpm": 25.0000,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -352,7 +352,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -365,7 +365,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -378,7 +378,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -391,7 +391,7 @@
   },
   {
     "blended_cpm": 41.2200,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 242.61831679,
@@ -404,7 +404,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -430,7 +430,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -443,7 +443,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -456,7 +456,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 20.0000,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -469,7 +469,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -495,7 +495,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -508,7 +508,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 70.0000,
+    "cost": 0.0000,
     "cost_per_spot": 70.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -521,7 +521,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -547,7 +547,7 @@
   },
   {
     "blended_cpm": 2.4400,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 10233.95545822,
@@ -560,7 +560,7 @@
   },
   {
     "blended_cpm": 12.0700,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 2071.44997677,
@@ -573,7 +573,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 8.0000,
+    "cost": 0.0000,
     "cost_per_spot": 8.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -586,7 +586,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -599,7 +599,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 45.0000,
+    "cost": 0.0000,
     "cost_per_spot": 45.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -612,7 +612,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -625,7 +625,7 @@
   },
   {
     "blended_cpm": 2.1400,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 14040.66713056,
@@ -638,7 +638,7 @@
   },
   {
     "blended_cpm": 3.9100,
-    "cost": 20.0000,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 5116.90138469,
@@ -651,7 +651,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -664,7 +664,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -677,7 +677,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -690,7 +690,7 @@
   },
   {
     "blended_cpm": 2.3500,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 6381.9695587,
@@ -703,7 +703,7 @@
   },
   {
     "blended_cpm": 12.8400,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 778.97292725,
@@ -716,7 +716,7 @@
   },
   {
     "blended_cpm": 16.4100,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 913.97916796,
@@ -729,7 +729,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -742,7 +742,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -768,7 +768,7 @@
   },
   {
     "blended_cpm": 1.0100,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 24776.33399837,
@@ -781,7 +781,7 @@
   },
   {
     "blended_cpm": 1.4100,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 17711.35386071,
@@ -794,7 +794,7 @@
   },
   {
     "blended_cpm": 3.2100,
-    "cost": 170.0000,
+    "cost": 0.0000,
     "cost_per_spot": 170.0000,
     "impressions": 0.0,
     "impressions_per_spot": 52905.79977459,
@@ -807,7 +807,7 @@
   },
   {
     "blended_cpm": 3.9000,
-    "cost": 175.0000,
+    "cost": 0.0000,
     "cost_per_spot": 175.0000,
     "impressions": 0.0,
     "impressions_per_spot": 44920.75082183,
@@ -820,7 +820,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 7.0000,
+    "cost": 0.0000,
     "cost_per_spot": 7.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -833,7 +833,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 7.0000,
+    "cost": 0.0000,
     "cost_per_spot": 7.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -859,7 +859,7 @@
   },
   {
     "blended_cpm": 2.0600,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 12156.81393922,
@@ -872,7 +872,7 @@
   },
   {
     "blended_cpm": 2.1100,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 11844.35745675,
@@ -885,7 +885,7 @@
   },
   {
     "blended_cpm": 10.9100,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 916.97408764,
@@ -898,7 +898,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 35.0000,
+    "cost": 0.0000,
     "cost_per_spot": 35.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -911,7 +911,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -924,7 +924,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -937,7 +937,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -950,7 +950,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -963,7 +963,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -976,7 +976,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1002,7 +1002,7 @@
   },
   {
     "blended_cpm": 10.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 12272.16697896,
@@ -1015,7 +1015,7 @@
   },
   {
     "blended_cpm": 14.2900,
-    "cost": 20.0000,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1028,7 +1028,7 @@
   },
   {
     "blended_cpm": 20.0000,
-    "cost": 50.0000,
+    "cost": 0.0000,
     "cost_per_spot": 50.0000,
     "impressions": 0.0,
     "impressions_per_spot": 11734.23300659,
@@ -1041,7 +1041,7 @@
   },
   {
     "blended_cpm": 23.8100,
-    "cost": 50.0000,
+    "cost": 0.0000,
     "cost_per_spot": 50.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1054,7 +1054,7 @@
   },
   {
     "blended_cpm": 31.2500,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 11744.47441559,
@@ -1067,7 +1067,7 @@
   },
   {
     "blended_cpm": 33.3300,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 13966.05166186,
@@ -1080,7 +1080,7 @@
   },
   {
     "blended_cpm": 50.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 1185.21323001,
@@ -1093,7 +1093,7 @@
   },
   {
     "blended_cpm": 125.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1106,7 +1106,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 100.0000,
+    "cost": 0.0000,
     "cost_per_spot": 100.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1119,7 +1119,7 @@
   },
   {
     "blended_cpm": 26.1200,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 1148.4933525,
@@ -1132,7 +1132,7 @@
   },
   {
     "blended_cpm": 47.1200,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 636.61881453,
@@ -1145,7 +1145,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1158,7 +1158,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1171,7 +1171,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1197,7 +1197,7 @@
   },
   {
     "blended_cpm": 4.8700,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 6160.2107669,
@@ -1210,7 +1210,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1223,7 +1223,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1236,7 +1236,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1262,7 +1262,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1275,7 +1275,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1288,7 +1288,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1314,7 +1314,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1327,7 +1327,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1340,7 +1340,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,

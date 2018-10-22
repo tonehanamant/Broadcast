@@ -45,12 +45,13 @@
           "Programs": [
             {
               "BlendedCpm": 0.00,
-              "Cost": 25.0000,
+              "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-SU 9AM-12AM",
                 "Id": 5
               },
+              "DisplayCost": 25.0000,
               "DisplayImpressions": 10392144.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 10392144.25,
@@ -76,6 +77,7 @@
                 "Display": "M-F 6AM-6PM",
                 "Id": 12
               },
+              "DisplayCost": 10000.0000,
               "DisplayImpressions": 850318500.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 2125796.25,
@@ -97,7 +99,7 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 10025.0000,
+      "TotalCost": 10000.0000,
       "TotalImpressions": 850318500.0,
       "TotalSpots": 400
     }
