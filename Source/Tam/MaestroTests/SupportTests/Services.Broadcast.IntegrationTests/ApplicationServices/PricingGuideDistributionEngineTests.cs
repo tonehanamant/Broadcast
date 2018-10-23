@@ -26,20 +26,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 1,
                         MarketCoverage = 0.6d,
                         MinCpm = 6m
                     },
                      new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                         MarketId = 2,
                         MarketCoverage = 0.2d,
                         MinCpm = 2m
                     },
                       new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                          MarketId = 3,
                         MarketCoverage = 0.2d,
                         MinCpm = 3m
                     }
-                }
+                },
+                AllMarkets = _LoadAllMarketsObject()
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -78,7 +82,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         MarketCoverage = 0.2d,
                         MinCpm = 3m
                     }
-                }
+                },
+                AllMarkets = _LoadAllMarketsObject()
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -122,7 +127,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         MarketCoverage = 0.1d,
                         MinCpm = 1m
                     }
-                }
+                },
+                AllMarkets = _LoadAllMarketsObject()
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -149,25 +155,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 1,
                         MarketCoverage = 5d,
                         MinCpm = 6m
                     },
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 2,
                         MarketCoverage = 5d,
                         MinCpm = 10m
                     },
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 3,
                         MarketCoverage = 1d,
                         MinCpm = 3m
                     },
                      new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                         MarketId = 4,
                         MarketCoverage = 1d,
                         MinCpm = 1m
                     }
-                }
+                },
+                AllMarkets = _LoadAllMarketsObject()
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -181,7 +192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuide.Markets));
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CalculateMarketDistributionTestSelectMarketsAvgCpm()
@@ -193,25 +204,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 1,
                         MarketCoverage = 5d,
                         MinCpm = 6m
                     },
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 2,
                         MarketCoverage = 5d,
                         MinCpm = 10m
                     },
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                        MarketId = 3,
                         MarketCoverage = 1d,
                         MinCpm = 3m
                     },
                      new PricingGuideOpenMarketInventory.PricingGuideMarket
                     {
+                         MarketId = 4,
                         MarketCoverage = 1d,
                         MinCpm = 1m
                     }
-                }
+                },
+                AllMarkets = _LoadAllMarketsObject()
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -224,6 +240,72 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             pricingGuideDistributionEngine.CalculateMarketDistribution(pricingGuide, request);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuide.Markets));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateMarketDistributionTest_WithNotSelectedMarkets()
+        {
+            var pricingGuide = new PricingGuideOpenMarketInventory
+            {
+                MarketCoverage = 0.00008d,
+                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                {
+                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    {
+                        MarketId = 1,
+                        MarketCoverage = 0.0001d,
+                        MinCpm = 6m
+                    },
+                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    {
+                         MarketId = 2,
+                        MarketCoverage = 0.00002d,
+                        MinCpm = 2m
+                    },
+                      new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    {
+                          MarketId = 3,
+                        MarketCoverage = 0.00002d,
+                        MinCpm = 3m
+                    }
+                },
+                AllMarkets = _LoadAllMarketsObject()
+            };
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                OpenMarketPricing = new OpenMarketPricing
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            pricingGuideDistributionEngine.CalculateMarketDistribution(pricingGuide, request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuide.Markets));
+        }
+
+        private static List<PricingGuideMarketTotalsDto> _LoadAllMarketsObject()
+        {
+            return new List<PricingGuideMarketTotalsDto>
+                {
+                    new PricingGuideMarketTotalsDto
+                    {
+                        Id = 1
+                    },
+                    new PricingGuideMarketTotalsDto
+                    {
+                        Id = 2
+                    },
+                    new PricingGuideMarketTotalsDto
+                    {
+                        Id = 3
+                    },
+                    new PricingGuideMarketTotalsDto
+                    {
+                        Id = 4
+                    }
+                };
         }
     }
 }

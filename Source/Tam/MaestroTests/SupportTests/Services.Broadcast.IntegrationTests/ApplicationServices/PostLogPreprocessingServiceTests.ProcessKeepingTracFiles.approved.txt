@@ -46,7 +46,7 @@
   {
     "CreatedBy": "Test_ProcessKeepingTracFiles",
     "ErrorMessages": [
-      "Unknown PostLog file type for file: .\\Files\\C786.Sigma.MissingColumns.csv"
+      "Unknown extension type for file: .\\Files\\C786.Sigma.MissingColumns.csv"
     ],
     "FileHash": "64-D0-EE-4E-4B-CD-92-75-F3-07-3D-EC-C2-B5-AB-52-DF-22-19-6E",
     "FileName": "C786.Sigma.MissingColumns.csv",

@@ -1,4 +1,17 @@
 ﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.0,
+      "Id": 160,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
   "DisplayFilter": {
     "Affiliations": [
       "PBS"
@@ -38,30 +51,31 @@
   "Filter": {},
   "Markets": [
     {
-      "AvgCpm": 0.01,
+      "AvgCpm": 0.0117602992290535840393922983,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.01,
-      "MinCpm": 0.01,
+      "MaxCpm": 0.0117602992290535840393922983,
+      "MinCpm": 0.0117602992290535840393922983,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.01,
+          "MinProgramsBlendedCpm": 0.0117602992290535840393922983,
           "Programs": [
             {
-              "BlendedCpm": 0.01,
-              "Cost": 25.0000,
+              "BlendedCpm": 0.0117602992290535840393922983,
+              "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 6AM-6PM",
                 "Id": 12
               },
+              "DisplayCost": 25.0000,
               "DisplayImpressions": 2125796.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 2125796.25,
@@ -99,7 +113,7 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 25.0000,
+      "TotalCost": 0.0000,
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     }

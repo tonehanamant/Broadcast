@@ -102,7 +102,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {                    
-                    currentFile.ErrorMessages.Add($"Unknown PostLog file type for file: {filePath}");
+                    currentFile.ErrorMessages.Add($"Unknown extension type for file: {filePath}");
                 }
 
                 if (currentFile.ErrorMessages.Any())

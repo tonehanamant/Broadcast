@@ -2,7 +2,7 @@
   {
     "CreatedBy": "PostLogPreprocessing_User",
     "ErrorMessages": [
-      "Unknown PostLog file type for file: .\\Files\\BCOP3666.txt"
+      "Unknown extension type for file: .\\Files\\BCOP3666.txt"
     ],
     "FileHash": "82-90-4D-5E-67-B6-5D-E1-F2-99-45-A3-DB-91-5E-7A-3E-D2-BC-97",
     "FileName": "BCOP3666.txt",

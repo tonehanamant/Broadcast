@@ -35,7 +35,7 @@ namespace Services.Broadcast.BusinessEngines
             if (totalMarketCoverage < pricingGuideOpenMarketInventory.MarketCoverage)
                 return;
 
-            var distributionMarkets = _GetDistributionMarkets(pricingGuideOpenMarketInventory.Markets);
+            var distributionMarkets = _MapToDistributionMarkets(pricingGuideOpenMarketInventory.Markets);
 
             // We convert the coverage to int. That's necessary for the Knapsack algorithm.
             var marketCoverage = (int)(pricingGuideOpenMarketInventory.MarketCoverage * 100000);
@@ -70,7 +70,7 @@ namespace Services.Broadcast.BusinessEngines
             return _FindCheapestMarketsKnapsack(coverage, markets);
         }
 
-        private List<DistributionMarket> _GetDistributionMarkets(List<PricingGuideMarket> markets)
+        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarket> markets)
         {
             return markets.Select(x => new DistributionMarket
             {
@@ -160,7 +160,6 @@ namespace Services.Broadcast.BusinessEngines
 
         public void _SetPricingGuideMarkets(bool[,] itemsToSelect, int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
-            var selectedMarkets = new List<PricingGuideMarket>();
             var itemIndex = markets.Count;
             var remainingCoverage = coverage;
             var coverageCount = remainingCoverage;
@@ -170,8 +169,7 @@ namespace Services.Broadcast.BusinessEngines
                 while (coverageCount > 0)
                 {
                     if (itemsToSelect[itemIndex, coverageCount])
-                    {
-                        selectedMarkets.Add(pricingGuideOpenMarketInventory.Markets[itemIndex - 1]);
+                    {                        
                         remainingCoverage = remainingCoverage - markets[itemIndex - 1].MarketCoverage;
                         coverageCount = remainingCoverage;
                         break;
@@ -183,8 +181,6 @@ namespace Services.Broadcast.BusinessEngines
                 coverageCount = remainingCoverage;
                 itemIndex--;
             }
-
-            pricingGuideOpenMarketInventory.Markets = selectedMarkets;
         }
     }
 }
