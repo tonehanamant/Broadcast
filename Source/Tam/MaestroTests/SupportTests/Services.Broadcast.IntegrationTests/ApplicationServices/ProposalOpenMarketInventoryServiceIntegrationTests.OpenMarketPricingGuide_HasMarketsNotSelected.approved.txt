@@ -432,24 +432,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 3.9514285714285714285714285714,
+      "AvgCpm": 3.9509483175825524140147462299,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
-      "MaxCpm": 7.37,
-      "MinCpm": 0.14,
+      "MaxCpm": 7.3704501644177344370109989795,
+      "MinCpm": 0.1424938618028761837951595931,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
           "LegacyCallLetters": "WWSB",
-          "MinProgramsBlendedCpm": 0.14,
+          "MinProgramsBlendedCpm": 0.1424938618028761837951595931,
           "Programs": [
             {
-              "BlendedCpm": 0.14,
+              "BlendedCpm": 0.1424938618028761837951595931,
               "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
@@ -470,7 +470,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.93,
+              "BlendedCpm": 0.9342116027975491594306726545,
               "Cost": 0.0000,
               "CostPerSpot": 211.2500,
               "Daypart": {
@@ -491,7 +491,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 2.13,
+              "BlendedCpm": 2.1253915625224801030651416165,
               "Cost": 0.0000,
               "CostPerSpot": 162.5000,
               "Daypart": {
@@ -512,7 +512,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 4.57,
+              "BlendedCpm": 4.5721520768121548904442021595,
               "Cost": 0.0000,
               "CostPerSpot": 65.0000,
               "Daypart": {
@@ -533,7 +533,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 5.76,
+              "BlendedCpm": 5.7556929706754822237636328753,
               "Cost": 0.0000,
               "CostPerSpot": 97.5000,
               "Daypart": {
@@ -554,7 +554,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 6.76,
+              "BlendedCpm": 6.7562459840495899005934157312,
               "Cost": 0.0000,
               "CostPerSpot": 178.7500,
               "Daypart": {
@@ -575,7 +575,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 7.37,
+              "BlendedCpm": 7.3704501644177344370109989795,
               "Cost": 0.0000,
               "CostPerSpot": 195.0000,
               "Daypart": {
@@ -604,24 +604,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 0.07,
+      "AvgCpm": 0.0734684927543111876690481761,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
       "MarketId": 318,
       "MarketName": "Jackson, MS",
       "MarketRank": 95,
-      "MaxCpm": 0.07,
-      "MinCpm": 0.07,
+      "MaxCpm": 0.0734684927543111876690481761,
+      "MinCpm": 0.0734684927543111876690481761,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
           "LegacyCallLetters": "WDBD",
-          "MinProgramsBlendedCpm": 0.07,
+          "MinProgramsBlendedCpm": 0.0734684927543111876690481761,
           "Programs": [
             {
-              "BlendedCpm": 0.07,
+              "BlendedCpm": 0.0734684927543111876690481761,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -650,24 +650,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 5.4733333333333333333333333333,
+      "AvgCpm": 5.4751956168395807423440144653,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.214,
       "MarketId": 410,
       "MarketName": "Yakima-Pasco-Rchlnd-Knnwck",
       "MarketRank": 122,
-      "MaxCpm": 13.29,
-      "MinCpm": 0.43,
+      "MaxCpm": 13.289602589768709801081909954,
+      "MinCpm": 0.4328600729868676913241522602,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "KCYU-LD 41.1",
           "LegacyCallLetters": "KCYU",
-          "MinProgramsBlendedCpm": 0.43,
+          "MinProgramsBlendedCpm": 0.4328600729868676913241522602,
           "Programs": [
             {
-              "BlendedCpm": 0.43,
+              "BlendedCpm": 0.4328600729868676913241522602,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -688,7 +688,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 2.70,
+              "BlendedCpm": 2.7031241877631647346259811821,
               "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
@@ -709,7 +709,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 13.29,
+              "BlendedCpm": 13.289602589768709801081909954,
               "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
@@ -738,15 +738,15 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 5.4016666666666666666666666667,
+      "AvgCpm": 5.4018346531250042743025459673,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.194,
       "MarketId": 428,
       "MarketName": "Monterey-Salinas",
       "MarketRank": 125,
-      "MaxCpm": 16.13,
-      "MinCpm": 0.32,
+      "MaxCpm": 16.129365785065861576955685601,
+      "MinCpm": 0.3198703458864673519000298546,
       "Stations": [
         {
           "Affiliation": "CBS",
@@ -776,7 +776,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.32,
+              "BlendedCpm": 0.3198703458864673519000298546,
               "Cost": 0.0000,
               "CostPerSpot": 48.7500,
               "Daypart": {
@@ -797,7 +797,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.66,
+              "BlendedCpm": 0.6609769384419829308153259488,
               "Cost": 0.0000,
               "CostPerSpot": 22.7500,
               "Daypart": {
@@ -818,7 +818,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.67,
+              "BlendedCpm": 0.6715801074528171924507507921,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -839,7 +839,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 3.11,
+              "BlendedCpm": 3.1060946355356340733802911127,
               "Cost": 0.0000,
               "CostPerSpot": 81.2500,
               "Daypart": {
@@ -860,7 +860,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 11.52,
+              "BlendedCpm": 11.523120106367262520313192495,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -881,7 +881,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 16.13,
+              "BlendedCpm": 16.129365785065861576955685601,
               "Cost": 0.0000,
               "CostPerSpot": 97.5000,
               "Daypart": {
@@ -940,24 +940,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 6.5725,
+      "AvgCpm": 6.5717595079383549254191209364,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.177,
       "MarketId": 200,
       "MarketName": "Corpus Christi",
       "MarketRank": 128,
-      "MaxCpm": 16.25,
-      "MinCpm": 3.18,
+      "MaxCpm": 16.250,
+      "MinCpm": 3.1758957654723127035830618893,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "KIII 3.1",
           "LegacyCallLetters": "KIII",
-          "MinProgramsBlendedCpm": 3.18,
+          "MinProgramsBlendedCpm": 3.1758957654723127035830618893,
           "Programs": [
             {
-              "BlendedCpm": 3.18,
+              "BlendedCpm": 3.1758957654723127035830618893,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -978,7 +978,7 @@
               "StationImpressionsPerSpot": 6140.0
             },
             {
-              "BlendedCpm": 3.21,
+              "BlendedCpm": 3.2138442521631644004944375773,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
@@ -999,7 +999,7 @@
               "StationImpressionsPerSpot": 8090.0
             },
             {
-              "BlendedCpm": 4.23,
+              "BlendedCpm": 4.2253521126760563380281690141,
               "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
@@ -1020,7 +1020,7 @@
               "StationImpressionsPerSpot": 9230.0
             },
             {
-              "BlendedCpm": 4.34,
+              "BlendedCpm": 4.34298440979955456570155902,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -1041,7 +1041,7 @@
               "StationImpressionsPerSpot": 4490.0
             },
             {
-              "BlendedCpm": 4.64,
+              "BlendedCpm": 4.6373365041617122473246135553,
               "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
@@ -1062,7 +1062,7 @@
               "StationImpressionsPerSpot": 8410.0
             },
             {
-              "BlendedCpm": 7.14,
+              "BlendedCpm": 7.1384990848078096400244051251,
               "Cost": 0.0000,
               "CostPerSpot": 117.0000,
               "Daypart": {
@@ -1083,7 +1083,7 @@
               "StationImpressionsPerSpot": 16390.0
             },
             {
-              "BlendedCpm": 9.59,
+              "BlendedCpm": 9.590163934426229508196721311,
               "Cost": 0.0000,
               "CostPerSpot": 117.0000,
               "Daypart": {
@@ -1104,7 +1104,7 @@
               "StationImpressionsPerSpot": 12200.0
             },
             {
-              "BlendedCpm": 16.25,
+              "BlendedCpm": 16.250,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -1133,24 +1133,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 4.32,
+      "AvgCpm": 4.3216467494506526592555049465,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.136,
       "MarketId": 404,
       "MarketName": "Palm Springs",
       "MarketRank": 146,
-      "MaxCpm": 12.64,
-      "MinCpm": 0.36,
+      "MaxCpm": 12.639766650461837627613028683,
+      "MinCpm": 0.3648508321405517667199910191,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "KDFX-CD 39.1",
           "LegacyCallLetters": "KDFX",
-          "MinProgramsBlendedCpm": 0.36,
+          "MinProgramsBlendedCpm": 0.3648508321405517667199910191,
           "Programs": [
             {
-              "BlendedCpm": 0.36,
+              "BlendedCpm": 0.3648508321405517667199910191,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -1171,7 +1171,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 10.30,
+              "BlendedCpm": 10.301925667644028845391869403,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -1198,10 +1198,10 @@
           "Affiliation": "CW",
           "CallLetters": "KCWQ",
           "LegacyCallLetters": "KCWQ",
-          "MinProgramsBlendedCpm": 0.41,
+          "MinProgramsBlendedCpm": 0.4142238083099668620953352027,
           "Programs": [
             {
-              "BlendedCpm": 0.41,
+              "BlendedCpm": 0.4142238083099668620953352027,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1222,7 +1222,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.87,
+              "BlendedCpm": 0.8693907577074834481374974921,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1243,7 +1243,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.34,
+              "BlendedCpm": 1.3397227804400474055753078786,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1264,7 +1264,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 12.64,
+              "BlendedCpm": 12.639766650461837627613028683,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1293,15 +1293,15 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 22.263333333333333333333333333,
+      "AvgCpm": 22.260698951328573232403987409,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.133,
       "MarketId": 343,
       "MarketName": "Anchorage",
       "MarketRank": 147,
-      "MaxCpm": 41.75,
-      "MinCpm": 0.33,
+      "MaxCpm": 41.746949261400128452151573539,
+      "MinCpm": 0.326190595674210869674311236,
       "Stations": [
         {
           "Affiliation": "ABC",
@@ -1352,7 +1352,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.33,
+              "BlendedCpm": 0.326190595674210869674311236,
               "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
@@ -1373,7 +1373,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 41.75,
+              "BlendedCpm": 41.746949261400128452151573539,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -1400,10 +1400,10 @@
           "Affiliation": "FOX",
           "CallLetters": "KTBY 4.1",
           "LegacyCallLetters": "KTBY",
-          "MinProgramsBlendedCpm": 24.71,
+          "MinProgramsBlendedCpm": 24.708956996911380375386077453,
           "Programs": [
             {
-              "BlendedCpm": 24.71,
+              "BlendedCpm": 24.708956996911380375386077453,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
@@ -1432,24 +1432,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 4.36,
+      "AvgCpm": 4.3594063605731160108394054939,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.107,
       "MarketId": 358,
       "MarketName": "Idaho Fals-Pocatllo(Jcksn)",
       "MarketRank": 163,
-      "MaxCpm": 11.40,
-      "MinCpm": 0.22,
+      "MaxCpm": 11.398509425690486628671635248,
+      "MinCpm": 0.2190957077465500852787908613,
       "Stations": [
         {
           "Affiliation": "CBS",
           "CallLetters": "KIDK 3.1",
           "LegacyCallLetters": "KIDK",
-          "MinProgramsBlendedCpm": 0.22,
+          "MinProgramsBlendedCpm": 0.2190957077465500852787908613,
           "Programs": [
             {
-              "BlendedCpm": 0.22,
+              "BlendedCpm": 0.2190957077465500852787908613,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -1470,7 +1470,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.92,
+              "BlendedCpm": 0.9234397420051428490247055648,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -1491,7 +1491,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 3.37,
+              "BlendedCpm": 3.367003367003367003367003367,
               "Cost": 0.0000,
               "CostPerSpot": 3.2500,
               "Daypart": {
@@ -1512,7 +1512,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 4.59,
+              "BlendedCpm": 4.5873293929350086327489949464,
               "Cost": 0.0000,
               "CostPerSpot": 45.5000,
               "Daypart": {
@@ -1533,7 +1533,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 5.56,
+              "BlendedCpm": 5.5626872058194266153187847668,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -1554,7 +1554,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 11.40,
+              "BlendedCpm": 11.398509425690486628671635248,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -1581,10 +1581,10 @@
           "Affiliation": "FOX",
           "CallLetters": "KXPI-LD 34.2",
           "LegacyCallLetters": "KXPI",
-          "MinProgramsBlendedCpm": 4.46,
+          "MinProgramsBlendedCpm": 4.4577796828118302614659237034,
           "Programs": [
             {
-              "BlendedCpm": 4.46,
+              "BlendedCpm": 4.4577796828118302614659237034,
               "Cost": 0.0000,
               "CostPerSpot": 5.2000,
               "Daypart": {
@@ -1613,24 +1613,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 3.8866666666666666666666666667,
+      "AvgCpm": 3.8851490023546872902573429136,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.084,
       "MarketId": 317,
       "MarketName": "Quincy-Hannibal-Keokuk",
       "MarketRank": 170,
-      "MaxCpm": 32.79,
-      "MinCpm": 0.11,
+      "MaxCpm": 32.786885245901639344262295082,
+      "MinCpm": 0.1135733225001856487002406881,
       "Stations": [
         {
           "Affiliation": "CBS",
           "CallLetters": "KHQA-TV 7.1",
           "LegacyCallLetters": "KHQA",
-          "MinProgramsBlendedCpm": 0.11,
+          "MinProgramsBlendedCpm": 0.1135733225001856487002406881,
           "Programs": [
             {
-              "BlendedCpm": 0.11,
+              "BlendedCpm": 0.1135733225001856487002406881,
               "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
@@ -1651,7 +1651,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.16,
+              "BlendedCpm": 0.1573627615147174531442290233,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -1672,7 +1672,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.91,
+              "BlendedCpm": 1.9092027242854258072806711582,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
@@ -1693,7 +1693,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 3.89,
+              "BlendedCpm": 3.8892397699697503573446797194,
               "Cost": 0.0000,
               "CostPerSpot": 29.2500,
               "Daypart": {
@@ -1720,10 +1720,10 @@
           "Affiliation": "NBC",
           "CallLetters": "WGEM-TV 10.1",
           "LegacyCallLetters": "WGEM",
-          "MinProgramsBlendedCpm": 0.13,
+          "MinProgramsBlendedCpm": 0.1302524292078047255581316592,
           "Programs": [
             {
-              "BlendedCpm": 0.13,
+              "BlendedCpm": 0.1302524292078047255581316592,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -1744,7 +1744,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.38,
+              "BlendedCpm": 0.3770575012689435138858675948,
               "Cost": 0.0000,
               "CostPerSpot": 110.5000,
               "Daypart": {
@@ -1765,7 +1765,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.98,
+              "BlendedCpm": 0.9804618729623093217143214234,
               "Cost": 0.0000,
               "CostPerSpot": 113.7500,
               "Daypart": {
@@ -1786,7 +1786,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.46,
+              "BlendedCpm": 1.4562236759566269378976610807,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -1807,7 +1807,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.81,
+              "BlendedCpm": 1.8097027911185355328182640774,
               "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
@@ -1828,7 +1828,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 2.51,
+              "BlendedCpm": 2.5142474019443513241702983574,
               "Cost": 0.0000,
               "CostPerSpot": 48.7500,
               "Daypart": {
@@ -1849,7 +1849,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 3.21,
+              "BlendedCpm": 3.2118591723285978999382334775,
               "Cost": 0.0000,
               "CostPerSpot": 39.0000,
               "Daypart": {
@@ -1876,10 +1876,10 @@
           "Affiliation": "ABC",
           "CallLetters": "KHQA-TV 7.2",
           "LegacyCallLetters": "NHQA",
-          "MinProgramsBlendedCpm": 0.18,
+          "MinProgramsBlendedCpm": 0.1751824817518248175182481752,
           "Programs": [
             {
-              "BlendedCpm": 0.18,
+              "BlendedCpm": 0.1751824817518248175182481752,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -1900,7 +1900,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.35,
+              "BlendedCpm": 0.3463710966641798998188212725,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1921,7 +1921,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.86,
+              "BlendedCpm": 0.856389986824769433465085639,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -1942,7 +1942,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.13,
+              "BlendedCpm": 1.1255411255411255411255411255,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1963,7 +1963,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.13,
+              "BlendedCpm": 1.1255411255411255411255411255,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -1984,7 +1984,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 32.79,
+              "BlendedCpm": 32.786885245901639344262295082,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -2011,10 +2011,10 @@
           "Affiliation": "FOX",
           "CallLetters": "WGEM-TV 10.3",
           "LegacyCallLetters": "GGEM",
-          "MinProgramsBlendedCpm": 16.97,
+          "MinProgramsBlendedCpm": 16.967587557102458124864041766,
           "Programs": [
             {
-              "BlendedCpm": 16.97,
+              "BlendedCpm": 16.967587557102458124864041766,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -2043,24 +2043,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 1.4066666666666666666666666667,
+      "AvgCpm": 1.404455770980291541836484330,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.085,
       "MarketId": 364,
       "MarketName": "Rapid City",
       "MarketRank": 172,
-      "MaxCpm": 4.09,
-      "MinCpm": 0.14,
+      "MaxCpm": 4.0880503144654088050314465409,
+      "MinCpm": 0.1371293551755783166844231601,
       "Stations": [
         {
           "Affiliation": "NBC",
           "CallLetters": "KNBN-DT 21.1",
           "LegacyCallLetters": "KNBN",
-          "MinProgramsBlendedCpm": 0.14,
+          "MinProgramsBlendedCpm": 0.1371293551755783166844231601,
           "Programs": [
             {
-              "BlendedCpm": 0.14,
+              "BlendedCpm": 0.1371293551755783166844231601,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2081,7 +2081,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.24,
+              "BlendedCpm": 0.2417965858322080492223449805,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2102,7 +2102,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.06,
+              "BlendedCpm": 1.0583241263010990289003896028,
               "Cost": 0.0000,
               "CostPerSpot": 4.5500,
               "Daypart": {
@@ -2123,7 +2123,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.25,
+              "BlendedCpm": 1.2455942237278855695856003833,
               "Cost": 0.0000,
               "CostPerSpot": 4.5500,
               "Daypart": {
@@ -2144,7 +2144,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.66,
+              "BlendedCpm": 1.6558400203795694815947013119,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2165,7 +2165,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 4.09,
+              "BlendedCpm": 4.0880503144654088050314465409,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2240,15 +2240,15 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 1.575,
+      "AvgCpm": 1.5741032535515590538200302592,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.069,
       "MarketId": 334,
       "MarketName": "Jonesboro",
       "MarketRank": 182,
-      "MaxCpm": 2.73,
-      "MinCpm": 0.78,
+      "MaxCpm": 2.7318098240084055686892566325,
+      "MinCpm": 0.7807807807807807807807807808,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -2308,7 +2308,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.78,
+              "BlendedCpm": 0.7807807807807807807807807808,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2329,7 +2329,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.98,
+              "BlendedCpm": 0.9787682577925011293479897606,
               "Cost": 0.0000,
               "CostPerSpot": 3.2500,
               "Daypart": {
@@ -2350,7 +2350,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 1.81,
+              "BlendedCpm": 1.8050541516245487364620938628,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2371,7 +2371,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 2.73,
+              "BlendedCpm": 2.7318098240084055686892566325,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2400,24 +2400,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 22.693333333333333333333333333,
+      "AvgCpm": 22.692244651483781918564527261,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.056,
       "MarketId": 360,
       "MarketName": "Twin Falls",
       "MarketRank": 191,
-      "MaxCpm": 81.25,
-      "MinCpm": 4.24,
+      "MaxCpm": 81.250,
+      "MinCpm": 4.239130434782608695652173913,
       "Stations": [
         {
           "Affiliation": "NBC",
           "CallLetters": "KTFT-LD 7.1",
           "LegacyCallLetters": "KTFT",
-          "MinProgramsBlendedCpm": 4.24,
+          "MinProgramsBlendedCpm": 4.239130434782608695652173913,
           "Programs": [
             {
-              "BlendedCpm": 4.24,
+              "BlendedCpm": 4.239130434782608695652173913,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -2438,7 +2438,7 @@
               "StationImpressionsPerSpot": 2300.0
             },
             {
-              "BlendedCpm": 6.50,
+              "BlendedCpm": 6.500,
               "Cost": 0.0000,
               "CostPerSpot": 9.7500,
               "Daypart": {
@@ -2459,7 +2459,7 @@
               "StationImpressionsPerSpot": 1500.0
             },
             {
-              "BlendedCpm": 9.29,
+              "BlendedCpm": 9.285714285714285714285714286,
               "Cost": 0.0000,
               "CostPerSpot": 13.0000,
               "Daypart": {
@@ -2480,7 +2480,7 @@
               "StationImpressionsPerSpot": 1400.0
             },
             {
-              "BlendedCpm": 13.00,
+              "BlendedCpm": 13.000,
               "Cost": 0.0000,
               "CostPerSpot": 32.5000,
               "Daypart": {
@@ -2501,7 +2501,7 @@
               "StationImpressionsPerSpot": 2500.0
             },
             {
-              "BlendedCpm": 15.48,
+              "BlendedCpm": 15.476190476190476190476190476,
               "Cost": 0.0000,
               "CostPerSpot": 32.5000,
               "Daypart": {
@@ -2522,7 +2522,7 @@
               "StationImpressionsPerSpot": 2100.0
             },
             {
-              "BlendedCpm": 20.31,
+              "BlendedCpm": 20.3125,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2543,7 +2543,7 @@
               "StationImpressionsPerSpot": 800.0
             },
             {
-              "BlendedCpm": 21.67,
+              "BlendedCpm": 21.666666666666666666666666667,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2564,7 +2564,7 @@
               "StationImpressionsPerSpot": 300.0
             },
             {
-              "BlendedCpm": 32.50,
+              "BlendedCpm": 32.500,
               "Cost": 0.0000,
               "CostPerSpot": 6.5000,
               "Daypart": {
@@ -2585,7 +2585,7 @@
               "StationImpressionsPerSpot": 200.0
             },
             {
-              "BlendedCpm": 81.25,
+              "BlendedCpm": 81.250,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2614,15 +2614,15 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 6.715,
+      "AvgCpm": 6.7125291136583678088052290767,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.047,
       "MarketId": 367,
       "MarketName": "Casper-Riverton",
       "MarketRank": 197,
-      "MaxCpm": 16.09,
-      "MinCpm": 0.36,
+      "MaxCpm": 16.089108910891089108910891089,
+      "MinCpm": 0.3604886007034149362443558115,
       "Stations": [
         {
           "Affiliation": "FOX",
@@ -2673,7 +2673,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 3.18,
+              "BlendedCpm": 3.1774482646244093205149095649,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -2700,10 +2700,10 @@
           "Affiliation": "ABC",
           "CallLetters": "KTWO-TV 2.1",
           "LegacyCallLetters": "KTWO",
-          "MinProgramsBlendedCpm": 0.36,
+          "MinProgramsBlendedCpm": 0.3604886007034149362443558115,
           "Programs": [
             {
-              "BlendedCpm": 0.36,
+              "BlendedCpm": 0.3604886007034149362443558115,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -2724,7 +2724,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.49,
+              "BlendedCpm": 0.4850927273405724094182618754,
               "Cost": 0.0000,
               "CostPerSpot": 19.5000,
               "Daypart": {
@@ -2745,7 +2745,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 9.99,
+              "BlendedCpm": 9.987707437000614628149969269,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2766,7 +2766,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 10.18,
+              "BlendedCpm": 10.17532874139010644959298685,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2787,7 +2787,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 16.09,
+              "BlendedCpm": 16.089108910891089108910891089,
               "Cost": 0.0000,
               "CostPerSpot": 16.2500,
               "Daypart": {
@@ -2816,24 +2816,24 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 134.1225,
+      "AvgCpm": 134.12196297226759978604687734,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.004,
       "MarketId": 398,
       "MarketName": "Glendive",
       "MarketRank": 210,
-      "MaxCpm": 242.99,
-      "MinCpm": 56.34,
+      "MaxCpm": 242.99065420560747663551401869,
+      "MinCpm": 56.338028169014084507042253521,
       "Stations": [
         {
           "Affiliation": "CBS",
           "CallLetters": "KXGN-TV 5.1",
           "LegacyCallLetters": "KXGN",
-          "MinProgramsBlendedCpm": 56.34,
+          "MinProgramsBlendedCpm": 56.338028169014084507042253521,
           "Programs": [
             {
-              "BlendedCpm": 56.34,
+              "BlendedCpm": 56.338028169014084507042253521,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
@@ -2854,7 +2854,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 108.45,
+              "BlendedCpm": 108.44629822732012513034410845,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
@@ -2875,7 +2875,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 128.71,
+              "BlendedCpm": 128.71287128712871287128712871,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
@@ -2896,7 +2896,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 242.99,
+              "BlendedCpm": 242.99065420560747663551401869,
               "Cost": 0.0000,
               "CostPerSpot": 26.0000,
               "Daypart": {
