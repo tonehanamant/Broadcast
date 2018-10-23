@@ -64,8 +64,6 @@
           "OpenMarketCpmTarget": 3,
           "UnitCapPerStation": 100
         },
-        "ProposalDetailId": 0,
-        "ProposalId": 0,
         "ProprietaryPricing": []
       },
       "ProgramCriteria": [

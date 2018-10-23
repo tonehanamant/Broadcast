@@ -274,7 +274,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricing
+                OpenMarketPricingGuide = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }

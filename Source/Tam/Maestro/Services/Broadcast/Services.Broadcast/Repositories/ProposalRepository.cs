@@ -912,6 +912,8 @@ namespace Services.Broadcast.Repositories
                     NtiConversionFactor = version.nti_conversion_factor,
                     PricingGuide = new ProposalDetailPricingGuideDto()
                     {
+                        ProposalId = proposalVersion.proposal_id,
+                        ProposalDetailId = version.id,
                         GoalBudget = version.goal_budget,
                         GoalImpression = version.goal_impression,
                         AdjustmentMargin = version.adjustment_margin,

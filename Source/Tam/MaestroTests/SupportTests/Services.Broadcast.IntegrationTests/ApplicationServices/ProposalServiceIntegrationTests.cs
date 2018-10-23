@@ -208,6 +208,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
             jsonResolver.Ignore(typeof(GenreCriteria), "Id");
             jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -432,6 +434,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -510,6 +514,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -587,6 +593,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -661,6 +669,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
             jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
             jsonResolver.Ignore(typeof(LookupDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -699,6 +709,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
             jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
             jsonResolver.Ignore(typeof(LookupDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -728,6 +740,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
             jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
             jsonResolver.Ignore(typeof(LookupDto), "Id");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -839,6 +853,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -899,6 +915,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -953,6 +971,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1007,6 +1027,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1064,6 +1086,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1099,6 +1123,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 jsonResolver.Ignore(typeof(ProgramCriteria), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1200,6 +1226,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1254,6 +1282,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
                 jsonResolver.Ignore(typeof(ShowTypeCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -1311,6 +1341,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -1357,6 +1389,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1490,6 +1524,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1694,6 +1730,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1774,6 +1812,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalImpressions");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "BudgetTotal");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "ImpressionsTotal");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -1815,6 +1855,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalImpressions");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "BudgetTotal");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "ImpressionsTotal");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
 
 
@@ -1858,6 +1900,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDetailInventoryBase), "DetailTotalImpressions");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "BudgetTotal");
                 jsonResolver.Ignore(typeof(BaseProposalInventoryWeekDto), "ImpressionsTotal");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
 
                 var jsonSettings = new JsonSerializerSettings()
@@ -2286,6 +2330,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalDto), "ForceSave");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDto), "Markets");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

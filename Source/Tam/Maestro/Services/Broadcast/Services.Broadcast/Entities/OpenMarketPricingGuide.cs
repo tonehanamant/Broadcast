@@ -9,6 +9,6 @@ namespace Services.Broadcast.Entities
         public int? UnitCapPerStation { get; set; }
         public OpenMarketCpmTarget? OpenMarketCpmTarget { get; set; }
 
-        public PricingGuideOpenMarketDistributionReport DistributionReport { get; set; }
+        public PricingGuideOpenMarketDistributionDto DistributionReport { get; set; }
     }
 }

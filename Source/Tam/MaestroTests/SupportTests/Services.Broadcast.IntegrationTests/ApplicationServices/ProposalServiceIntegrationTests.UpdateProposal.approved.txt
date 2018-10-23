@@ -82,8 +82,6 @@
           "OpenMarketCpmTarget": null,
           "UnitCapPerStation": null
         },
-        "ProposalDetailId": 0,
-        "ProposalId": 0,
         "ProprietaryPricing": []
       },
       "ProgramCriteria": [
@@ -249,8 +247,6 @@
           "OpenMarketCpmTarget": null,
           "UnitCapPerStation": null
         },
-        "ProposalDetailId": 0,
-        "ProposalId": 0,
         "ProprietaryPricing": []
       },
       "ProgramCriteria": [],
