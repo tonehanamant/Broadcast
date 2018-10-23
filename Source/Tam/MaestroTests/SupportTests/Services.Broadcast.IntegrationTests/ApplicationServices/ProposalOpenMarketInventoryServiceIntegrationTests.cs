@@ -1631,7 +1631,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = proposal.Id.Value,//26016,
                     ProposalDetailId = proposalDetailId,//9978
-                     OpenMarketPricing =
+                    OpenMarketPricingGuide =
                     {
                          OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
@@ -1859,7 +1859,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26020,
                     ProposalDetailId = 9982,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricing
+                    OpenMarketPricingGuide = new OpenMarketPricingGuide
                     {
                         UnitCapPerStation = 100
                     }
@@ -1883,7 +1883,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26021,
                     ProposalDetailId = 9983,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricing
+                    OpenMarketPricingGuide = new OpenMarketPricingGuide
                     {
                         UnitCapPerStation = 10
                     }
@@ -2080,7 +2080,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 ProposalId = 26016,
                 ProposalDetailId = 9978,
-                OpenMarketPricing =
+                OpenMarketPricingGuide =
                 {
                      OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }

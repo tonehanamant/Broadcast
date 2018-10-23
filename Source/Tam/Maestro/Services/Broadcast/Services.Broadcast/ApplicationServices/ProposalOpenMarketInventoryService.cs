@@ -27,10 +27,10 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailOpenMarketInventoryDto UpdateOpenMarketInventoryTotals(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
-        PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request);
-        void SavePricingGuideOpenMarketInventory(int proposalDetailId, PricingGuideOpenMarketInventoryDto pricingGuide);
+        PricingGuideOpenMarketDistributionReport GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request);
+        void SavePricingGuideOpenMarketInventory(int proposalDetailId, PricingGuideOpenMarketDistributionReport pricingGuide);
         void DeleteExistingGeneratedPricingGuide(int proposalDetailId);
-        PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto);
+        PricingGuideOpenMarketDistributionReport ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketDistributionReport dto);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -1114,7 +1114,7 @@ namespace Services.Broadcast.ApplicationServices
             return guide?.Count() == 0 ? null : guide;
         }
 
-        public void SavePricingGuideOpenMarketInventory(int proposalDetailId,PricingGuideOpenMarketInventoryDto pricingGuide)
+        public void SavePricingGuideOpenMarketInventory(int proposalDetailId,PricingGuideOpenMarketDistributionReport pricingGuide)
         {
             var repository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
 
@@ -1137,7 +1137,7 @@ namespace Services.Broadcast.ApplicationServices
             repository.DeleteProposalDetailPricingGuide(proposalDetailId);    
         }
 
-        public PricingGuideOpenMarketInventoryDto GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request)
+        public PricingGuideOpenMarketDistributionReport GetPricingGuideOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request)
         {
             PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory = null;
             List<ProposalProgramDto> programs = null;
@@ -1297,11 +1297,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _FilterByCpm(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (request.OpenMarketPricing == null)
+            if (request.OpenMarketPricingGuide == null)
                 return;
 
-            if (!request.OpenMarketPricing.CpmMax.HasValue &&
-                !request.OpenMarketPricing.CpmMin.HasValue)
+            if (!request.OpenMarketPricingGuide.CpmMax.HasValue &&
+                !request.OpenMarketPricingGuide.CpmMin.HasValue)
                 return;
 
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
@@ -1310,14 +1310,14 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var programs = station.Programs;
 
-                    if (request.OpenMarketPricing.CpmMax.HasValue)
+                    if (request.OpenMarketPricingGuide.CpmMax.HasValue)
                     {
-                        programs = programs.Where(x => x.BlendedCpm < request.OpenMarketPricing.CpmMax.Value).ToList();
+                        programs = programs.Where(x => x.BlendedCpm < request.OpenMarketPricingGuide.CpmMax.Value).ToList();
                     }
 
-                    if (request.OpenMarketPricing.CpmMin.HasValue)
+                    if (request.OpenMarketPricingGuide.CpmMin.HasValue)
                     {
-                        programs = programs.Where(x => x.BlendedCpm > request.OpenMarketPricing.CpmMin.Value).ToList();
+                        programs = programs.Where(x => x.BlendedCpm > request.OpenMarketPricingGuide.CpmMin.Value).ToList();
                     }
 
                     station.Programs = programs;
@@ -1339,17 +1339,17 @@ namespace Services.Broadcast.ApplicationServices
 
         private void AllocateSpotsWithoutGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
+            if (request.OpenMarketPricingGuide.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
                 _AllocateMaxSpots(pricingGuideOpenMarketInventory);
-            else if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Min)
+            else if (request.OpenMarketPricingGuide.OpenMarketCpmTarget == OpenMarketCpmTarget.Min)
                 _AllocateMinSpots(pricingGuideOpenMarketInventory);
-            else if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Avg)
+            else if (request.OpenMarketPricingGuide.OpenMarketCpmTarget == OpenMarketCpmTarget.Avg)
                 _AllocateAvgSpots(pricingGuideOpenMarketInventory);
         }
 
         private void _AllocateSpotsWithGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 1;
+            var unitCapPerStation = request.OpenMarketPricingGuide.UnitCapPerStation ?? 1;
             var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
             var impressionsGoal = request.ImpressionsGoal ?? Double.MaxValue;
 
@@ -1477,9 +1477,9 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private PricingGuideOpenMarketInventoryDto ConvertPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        private PricingGuideOpenMarketDistributionReport ConvertPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
-            var response = new PricingGuideOpenMarketInventoryDto()
+            var response = new PricingGuideOpenMarketDistributionReport()
             {
                 Markets = pricingGuideOpenMarketInventory.Markets
             };
@@ -1542,7 +1542,7 @@ namespace Services.Broadcast.ApplicationServices
             return null;
         }
 
-        public PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        public PricingGuideOpenMarketDistributionReport ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketDistributionReport dto)
         {
             _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
             _SumTotalsForMarkets(dto.Markets);
@@ -1551,7 +1551,7 @@ namespace Services.Broadcast.ApplicationServices
             return dto;
         }
 
-        private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideOpenMarketInventoryDto dto)
+        private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideOpenMarketDistributionReport dto)
         {
             dto.DisplayFilter = new OpenMarketPricingGuideGridDisplayFilterDto();
 
@@ -1588,7 +1588,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
-        private void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        private void _ApplyFilterForProposalOpenMarketPricingGuideGrid(PricingGuideOpenMarketDistributionReport dto)
         {
             if (dto.Filter == null)
             {
@@ -1639,7 +1639,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private static void _ApplyMarketsFilter(PricingGuideOpenMarketInventoryDto dto, OpenMarketPricingGuideGridFilterDto filter)
+        private static void _ApplyMarketsFilter(PricingGuideOpenMarketDistributionReport dto, OpenMarketPricingGuideGridFilterDto filter)
         {
             var markets = filter.Markets;
 

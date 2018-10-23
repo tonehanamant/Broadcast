@@ -348,14 +348,14 @@ namespace Services.Broadcast.Repositories
                     posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
                     nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
                     adjustment_inflation = proposalDetail.AdjustmentInflation,
-                    adjustment_margin = proposalDetail.AdjustmentMargin,
-                    adjustment_rate = proposalDetail.AdjustmentRate,
-                    goal_budget = proposalDetail.GoalBudget,
-                    goal_impression = proposalDetail.GoalImpression,
-                    open_market_cpm_min =  proposalDetail.OpenMarketPricing.CpmMin,
-                    open_market_cpm_max = proposalDetail.OpenMarketPricing.CpmMax,
-                    open_market_unit_cap_per_station = proposalDetail.OpenMarketPricing.UnitCapPerStation,
-                    open_market_cpm_target = (byte?)proposalDetail.OpenMarketPricing.OpenMarketCpmTarget,
+                    adjustment_margin = proposalDetail.PricingGuide.AdjustmentMargin,
+                    adjustment_rate = proposalDetail.PricingGuide.AdjustmentRate,
+                    goal_budget = proposalDetail.PricingGuide.GoalBudget,
+                    goal_impression = proposalDetail.PricingGuide.GoalImpression,
+                    open_market_cpm_min =  proposalDetail.PricingGuide.OpenMarketPricing.CpmMin,
+                    open_market_cpm_max = proposalDetail.PricingGuide.OpenMarketPricing.CpmMax,
+                    open_market_unit_cap_per_station = proposalDetail.PricingGuide.OpenMarketPricing.UnitCapPerStation,
+                    open_market_cpm_target = (byte?)proposalDetail.PricingGuide.OpenMarketPricing.OpenMarketCpmTarget,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
@@ -371,7 +371,7 @@ namespace Services.Broadcast.Repositories
                         program_name_id = p.Program.Id,
                         contain_type = (byte)p.Contain
                     }).ToList(),
-                    proposal_version_detail_proprietary_pricing = proposalDetail.ProprietaryPricing.Select(g => new proposal_version_detail_proprietary_pricing()
+                    proposal_version_detail_proprietary_pricing = proposalDetail.PricingGuide.ProprietaryPricing.Select(g => new proposal_version_detail_proprietary_pricing()
                     {
                         inventory_source = (byte)g.InventorySource,
                         impressions_balance = g.ImpressionsBalance,
@@ -475,14 +475,14 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.sequence = detail.Sequence;
                     updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
                     updatedDetail.adjustment_inflation = detail.AdjustmentInflation;
-                    updatedDetail.adjustment_margin = detail.AdjustmentMargin;
-                    updatedDetail.adjustment_rate = detail.AdjustmentRate;
-                    updatedDetail.goal_budget = detail.GoalBudget;
-                    updatedDetail.goal_impression = detail.GoalImpression;
-                    updatedDetail.open_market_cpm_min = detail.OpenMarketPricing.CpmMin;
-                    updatedDetail.open_market_cpm_max = detail.OpenMarketPricing.CpmMax;
-                    updatedDetail.open_market_unit_cap_per_station = detail.OpenMarketPricing.UnitCapPerStation;
-                    updatedDetail.open_market_cpm_target = (byte?)detail.OpenMarketPricing.OpenMarketCpmTarget;
+                    updatedDetail.adjustment_margin = detail.PricingGuide.AdjustmentMargin;
+                    updatedDetail.adjustment_rate = detail.PricingGuide.AdjustmentRate;
+                    updatedDetail.goal_budget = detail.PricingGuide.GoalBudget;
+                    updatedDetail.goal_impression = detail.PricingGuide.GoalImpression;
+                    updatedDetail.open_market_cpm_min = detail.PricingGuide.OpenMarketPricing.CpmMin;
+                    updatedDetail.open_market_cpm_max = detail.PricingGuide.OpenMarketPricing.CpmMax;
+                    updatedDetail.open_market_unit_cap_per_station = detail.PricingGuide.OpenMarketPricing.UnitCapPerStation;
+                    updatedDetail.open_market_cpm_target = (byte?)detail.PricingGuide.OpenMarketPricing.OpenMarketCpmTarget;
 
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
@@ -527,9 +527,9 @@ namespace Services.Broadcast.Repositories
                     //update proposal detail proprietary pricing
                     context.proposal_version_detail_proprietary_pricing.RemoveRange(
                         context.proposal_version_detail_proprietary_pricing.Where(g => g.proposal_version_detail_id == detail.Id));
-                    if (detail.ProprietaryPricing != null && detail.ProprietaryPricing.Any())
+                    if (detail.PricingGuide.ProprietaryPricing != null && detail.PricingGuide.ProprietaryPricing.Any())
                         context.proposal_version_detail_proprietary_pricing.AddRange(
-                            detail.ProprietaryPricing.Select(
+                            detail.PricingGuide.ProprietaryPricing.Select(
                                 p => new proposal_version_detail_proprietary_pricing()
                                 {
                                     proposal_version_detail_id = detail.Id.Value,
@@ -910,19 +910,28 @@ namespace Services.Broadcast.Repositories
                     PostingBookId = version.posting_book_id,
                     PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
                     NtiConversionFactor = version.nti_conversion_factor,
-                    GoalBudget = version.goal_budget,
-                    GoalImpression = version.goal_impression,
-                    AdjustmentInflation = version.adjustment_inflation,
-                    AdjustmentMargin = version.adjustment_margin,
-                    AdjustmentRate = version.adjustment_rate,
-                    EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
-                    OpenMarketPricing = new OpenMarketPricing
+                    PricingGuide = new ProposalDetailPricingGuideDto()
                     {
-                        CpmMin = version.open_market_cpm_min,
-                        CpmMax = version.open_market_cpm_max,
-                        UnitCapPerStation = version.open_market_unit_cap_per_station,
-                        OpenMarketCpmTarget = (OpenMarketCpmTarget?)version.open_market_cpm_target,
+                        GoalBudget = version.goal_budget,
+                        GoalImpression = version.goal_impression,
+                        AdjustmentMargin = version.adjustment_margin,
+                        AdjustmentRate = version.adjustment_rate,
+                        OpenMarketPricing = new OpenMarketPricingGuide
+                        {
+                            CpmMin = version.open_market_cpm_min,
+                            CpmMax = version.open_market_cpm_max,
+                            UnitCapPerStation = version.open_market_unit_cap_per_station,
+                            OpenMarketCpmTarget = (OpenMarketCpmTarget?)version.open_market_cpm_target,
+                        },
+                        ProprietaryPricing = version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                        {
+                            InventorySource = (InventorySourceEnum)p.inventory_source,
+                            ImpressionsBalance = p.impressions_balance,
+                            Cpm = p.cpm
+                        }).ToList(),
                     },
+                    EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
+                    AdjustmentInflation = version.adjustment_inflation,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -944,12 +953,6 @@ namespace Services.Broadcast.Repositories
                             Id = p.program_name_id,
                             Display = p.program_name
                         }
-                    }).ToList(),
-                    ProprietaryPricing = version.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
-                    {
-                        InventorySource = (InventorySourceEnum)p.inventory_source,
-                        ImpressionsBalance = p.impressions_balance,
-                        Cpm = p.cpm
                     }).ToList(),
                     Quarters = version.proposal_version_detail_quarters.Select(quarter => new ProposalQuarterDto
                     {
@@ -1191,11 +1194,14 @@ namespace Services.Broadcast.Repositories
                     ShareProjectionBookId = proposalDetail.share_projection_book_id,
                     HutProjectionBookId = proposalDetail.hut_projection_book_id,
                     ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.projection_playback_type,
-                    GoalImpression = proposalDetail.goal_impression,
-                    GoalBudget = proposalDetail.goal_budget,
                     AdjustmentInflation = proposalDetail.adjustment_inflation,
-                    AdjustmentMargin =  proposalDetail.adjustment_margin,
-                    AdjustmentRate = proposalDetail.adjustment_rate,
+                    PricingGuide = new ProposalDetailPricingGuideDto()
+                    {
+                        GoalImpression = proposalDetail.goal_impression,
+                        GoalBudget = proposalDetail.goal_budget,
+                        AdjustmentMargin = proposalDetail.adjustment_margin,
+                        AdjustmentRate = proposalDetail.adjustment_rate
+                    },
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,

@@ -56,13 +56,13 @@ namespace Services.Broadcast.BusinessEngines
 
         private bool[,] _FindMarkets(int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (request.OpenMarketPricing == null)
+            if (request.OpenMarketPricingGuide == null)
                 throw new Exception("No Open Market Pricing parameters available");
 
-            if (!request.OpenMarketPricing.OpenMarketCpmTarget.HasValue)
+            if (!request.OpenMarketPricingGuide.OpenMarketCpmTarget.HasValue)
                 throw new Exception("No Open Market Pricing CPM target available");
 
-            var cpmTarget = request.OpenMarketPricing.OpenMarketCpmTarget.Value;
+            var cpmTarget = request.OpenMarketPricingGuide.OpenMarketCpmTarget.Value;
 
             if (cpmTarget == OpenMarketCpmTarget.Max)
                 return _FindExpensiveMarketsKnapsack(coverage, markets);

@@ -6,8 +6,6 @@
   "Details": [
     {
       "AdjustmentInflation": 2.0,
-      "AdjustmentMargin": 3.0,
-      "AdjustmentRate": 1.0,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -49,19 +47,48 @@
           }
         }
       ],
-      "GoalBudget": 100.0000,
-      "GoalImpression": 10000.0,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "OpenMarketCpmTarget": null,
-        "UnitCapPerStation": null
-      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
+      "PricingGuide": {
+        "AdjustmentMargin": 3.0,
+        "AdjustmentRate": 1.0,
+        "GoalBudget": 100.0000,
+        "GoalImpression": 10000.0,
+        "OpenMarketPricing": {
+          "CpmMax": null,
+          "CpmMin": null,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": null,
+          "UnitCapPerStation": null
+        },
+        "ProposalDetailId": 0,
+        "ProposalId": 0,
+        "ProprietaryPricing": [
+          {
+            "Cpm": 45.0000,
+            "ImpressionsBalance": 0.25,
+            "InventorySource": 3
+          },
+          {
+            "Cpm": 12.4200,
+            "ImpressionsBalance": 0.25,
+            "InventorySource": 4
+          },
+          {
+            "Cpm": 99.9900,
+            "ImpressionsBalance": 0.3,
+            "InventorySource": 5
+          },
+          {
+            "Cpm": 2000.0000,
+            "ImpressionsBalance": 0.2,
+            "InventorySource": 6
+          }
+        ]
+      },
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -78,28 +105,6 @@
       ],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [
-        {
-          "Cpm": 45.0000,
-          "ImpressionsBalance": 0.25,
-          "InventorySource": 3
-        },
-        {
-          "Cpm": 12.4200,
-          "ImpressionsBalance": 0.25,
-          "InventorySource": 4
-        },
-        {
-          "Cpm": 99.9900,
-          "ImpressionsBalance": 0.3,
-          "InventorySource": 5
-        },
-        {
-          "Cpm": 2000.0000,
-          "ImpressionsBalance": 0.2,
-          "InventorySource": 6
-        }
-      ],
       "Quarters": [
         {
           "Cpm": 21.1300,

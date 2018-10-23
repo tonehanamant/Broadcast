@@ -6,8 +6,6 @@
   "Details": [
     {
       "AdjustmentInflation": null,
-      "AdjustmentMargin": null,
-      "AdjustmentRate": null,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -36,23 +34,30 @@
         }
       ],
       "GenreCriteria": [],
-      "GoalBudget": null,
-      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "OpenMarketCpmTarget": null,
-        "UnitCapPerStation": null
-      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
+      "PricingGuide": {
+        "AdjustmentMargin": null,
+        "AdjustmentRate": null,
+        "GoalBudget": null,
+        "GoalImpression": null,
+        "OpenMarketPricing": {
+          "CpmMax": null,
+          "CpmMin": null,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": null,
+          "UnitCapPerStation": null
+        },
+        "ProposalDetailId": 0,
+        "ProposalId": 0,
+        "ProprietaryPricing": []
+      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -88,8 +93,6 @@
     },
     {
       "AdjustmentInflation": null,
-      "AdjustmentMargin": null,
-      "AdjustmentRate": null,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -118,23 +121,30 @@
         }
       ],
       "GenreCriteria": [],
-      "GoalBudget": null,
-      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "OpenMarketCpmTarget": null,
-        "UnitCapPerStation": null
-      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
+      "PricingGuide": {
+        "AdjustmentMargin": null,
+        "AdjustmentRate": null,
+        "GoalBudget": null,
+        "GoalImpression": null,
+        "OpenMarketPricing": {
+          "CpmMax": null,
+          "CpmMin": null,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": null,
+          "UnitCapPerStation": null
+        },
+        "ProposalDetailId": 0,
+        "ProposalId": 0,
+        "ProprietaryPricing": []
+      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,

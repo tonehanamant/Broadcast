@@ -905,7 +905,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var proprietaryInventorySources = _GetProprietaryInventorySources();
 
-            foreach (var proprietaryPricingDto in detail.ProprietaryPricing)
+            foreach (var proprietaryPricingDto in detail.PricingGuide.ProprietaryPricing)
             {
                 if (!proprietaryInventorySources.Contains(proprietaryPricingDto.InventorySource))
                     throw new Exception($"Cannot save proposal detail that contains invalid inventory source for proprietary pricing: {proprietaryPricingDto.InventorySource}");
@@ -913,7 +913,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var proprietaryPricingInventorySource in proprietaryInventorySources)
             {
-                if (detail.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
+                if (detail.PricingGuide.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
                     throw new Exception("Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data");
             }
         }

@@ -38,12 +38,7 @@ namespace Services.Broadcast.Entities.DTO
         public bool HasPostingDataChanged { get; set; }
         public double? NtiConversionFactor { get; set; }
         public double? AdjustmentInflation { get; set; }
-        public double? AdjustmentRate { get; set; }
-        public double? AdjustmentMargin { get; set; }
-        public double? GoalImpression { get; set; }
-        public decimal? GoalBudget { get; set; }
-        public List<ProprietaryPricingDto> ProprietaryPricing { get; set; } = new List<ProprietaryPricingDto>();
-        public OpenMarketPricing OpenMarketPricing { get; set; } = new OpenMarketPricing();
+        public ProposalDetailPricingGuideDto PricingGuide { get; set; } = new ProposalDetailPricingGuideDto();
         public int? EstimateId { get; set; }
     }
 }

@@ -67,11 +67,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareProjectionBookId = 413,
                 HutProjectionBookId = 410,
                 ProjectionPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
-                AdjustmentRate = 1,
-                AdjustmentMargin = 3,
                 AdjustmentInflation = 2,
-                GoalImpression = 10000,
-                GoalBudget = 100,
+                PricingGuide = new ProposalDetailPricingGuideDto()
+                {
+                    AdjustmentRate = 1,
+                    AdjustmentMargin = 3,
+                    GoalImpression = 10000,
+                    GoalBudget = 100
+                },
                 GenreCriteria = new List<GenreCriteria>()
                 {
                     new GenreCriteria
@@ -2487,28 +2490,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var proposalDetailDto = SetupProposalDetailDto();
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.CNN,
                     ImpressionsBalance = 0.3,
                     Cpm = 99.99m
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.TTNW,
                     ImpressionsBalance = 0.25,
                     Cpm = 12.42m
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.TVB,
                     ImpressionsBalance = 0.25,
                     Cpm = 45
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.Sinclair,
                     ImpressionsBalance = 0.2,
@@ -2535,28 +2538,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var proposalDetailDto = SetupProposalDetailDto();
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.CNN,
                     ImpressionsBalance = 0.33,
                     Cpm = 99.99m
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.TTNW,
                     ImpressionsBalance = 0.33,
                     Cpm = 12.42m
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.TVB,
                     ImpressionsBalance = 0.33,
                     Cpm = 45
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.Sinclair,
                     ImpressionsBalance = 0.33,
@@ -2588,7 +2591,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var proposalDetailDto = SetupProposalDetailDto();
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.OpenMarket,
                     ImpressionsBalance = 1,
@@ -2618,14 +2621,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var proposalDetailDto = SetupProposalDetailDto();
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.CNN,
                     ImpressionsBalance = 1,
                     Cpm = 99.99m
                 });
 
-                proposalDetailDto.ProprietaryPricing.Add(new ProprietaryPricingDto()
+                proposalDetailDto.PricingGuide.ProprietaryPricing.Add(new ProprietaryPricingDto()
                 {
                     InventorySource = InventorySourceEnum.CNN,
                     ImpressionsBalance = 1,
@@ -2655,10 +2658,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var proposalDetailDto = SetupProposalDetailDto();
 
-                proposalDetailDto.OpenMarketPricing.CpmMin = 9.99m;
-                proposalDetailDto.OpenMarketPricing.CpmMax = 55.99m;
-                proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 100;
-                proposalDetailDto.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Max;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.CpmMin = 9.99m;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.CpmMax = 55.99m;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.UnitCapPerStation = 100;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Max;
 
                 proposalDto.Details.Add(proposalDetailDto);
 
@@ -2680,10 +2683,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var proposalDetailDto = proposalDto.Details.First();
 
-                proposalDetailDto.OpenMarketPricing.CpmMin = 123.99m;
-                proposalDetailDto.OpenMarketPricing.CpmMax = 200m;
-                proposalDetailDto.OpenMarketPricing.UnitCapPerStation = 10;
-                proposalDetailDto.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Avg;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.CpmMin = 123.99m;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.CpmMax = 200m;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.UnitCapPerStation = 10;
+                proposalDetailDto.PricingGuide.OpenMarketPricing.OpenMarketCpmTarget = OpenMarketCpmTarget.Avg;
 
                 var result = _ProposalService.SaveProposal(proposalDto, "Integration User", _CurrentDateTime);
 

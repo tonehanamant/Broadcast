@@ -5,7 +5,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.DTO
 {
-    public class PricingGuideOpenMarketInventoryDto 
+    public class PricingGuideOpenMarketDistributionReport 
     {
         public OpenMarketPricingGuideGridDisplayFilterDto DisplayFilter { get; set; } = new OpenMarketPricingGuideGridDisplayFilterDto();
 
