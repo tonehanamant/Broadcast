@@ -249,6 +249,7 @@
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuideMarketTotalsDto.cs" />
     <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />

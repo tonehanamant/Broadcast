@@ -58,7 +58,7 @@ const generateData = markets => {
             ? program.DisplayStationImpressions / 1000
             : program.DisplayStationImpressions,
           // OvernightImpressions: program.OvernightImpressions,
-          Cost: program.Cost,
+          Cost: program.DisplayCost,
           isProgram: true // need for future use
         });
       });

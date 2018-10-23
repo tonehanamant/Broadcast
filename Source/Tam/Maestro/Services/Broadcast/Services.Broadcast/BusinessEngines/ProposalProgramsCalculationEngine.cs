@@ -325,22 +325,15 @@ namespace Services.Broadcast.BusinessEngines
 
         public decimal CalculateSpotCost(int spots, decimal spotCost)
         {
-            decimal totalSpotCost = 0;
-            if (spots == 0)
-                totalSpotCost = spotCost;
-            else
-                totalSpotCost = spotCost * spots;
+            decimal totalSpotCost = spotCost * spots;
 
             return totalSpotCost;
         }
 
         public double  CalculateSpotImpressions(int spots,double unitImpressions)
         {
-            double totalImpressions = 0;
-            if (spots == 0)
-                totalImpressions = 0;
-            else
-                totalImpressions = unitImpressions * spots;
+
+            double totalImpressions = unitImpressions * spots;
 
             return totalImpressions;
         }

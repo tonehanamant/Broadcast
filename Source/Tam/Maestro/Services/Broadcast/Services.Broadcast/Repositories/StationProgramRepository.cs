@@ -18,7 +18,7 @@ namespace Services.Broadcast.Repositories
     public interface IStationProgramRepository : IDataRepository
     {
         List<ProposalProgramDto> GetStationProgramsForProposalDetail(DateTime flightStart, DateTime flightEnd,
-            int spotLength, int rateSource, List<short> proposalMarketIds, int proposalDetailId);
+            int spotLength, int rateSource, List<int> proposalMarketIds, int proposalDetailId);
     }
 
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
@@ -29,7 +29,7 @@ namespace Services.Broadcast.Repositories
         }
 
         public List<ProposalProgramDto> GetStationProgramsForProposalDetail(DateTime flightStart, DateTime flightEnd,
-            int spotLengthId, int rateSource, List<short> proposalMarketIds, int proposalDetailId)
+            int spotLengthId, int rateSource, List<int> proposalMarketIds, int proposalDetailId)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {

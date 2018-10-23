@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { toggleModal } from "Ducks/app";
-import { filterOpenMarketData, sortOpenMarketData } from "Ducks/planning";
+import {
+  filterOpenMarketData,
+  sortOpenMarketData,
+  showEditMarkets
+} from "Ducks/planning";
 // import { getPlanningGuideFiltered } from 'Ducks/planning';
 import {
   Row,
@@ -28,7 +32,7 @@ const spotFilterOptions = [
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { toggleModal, filterOpenMarketData, sortOpenMarketData },
+    { toggleModal, filterOpenMarketData, sortOpenMarketData, showEditMarkets },
     dispatch
   );
 
@@ -39,6 +43,7 @@ class PricingGuideGridHeader extends Component {
     this.applyFilters = this.applyFilters.bind(this);
     this.onFilterSpots = this.onFilterSpots.bind(this);
     this.sortMarket = this.sortMarket.bind(this);
+    this.onOpenEditMarkets = this.onOpenEditMarkets.bind(this);
   }
 
   onOpenFilterModal() {
@@ -73,6 +78,10 @@ class PricingGuideGridHeader extends Component {
     const sortByName = sortKey === "sortMarketName";
     this.props.sortOpenMarketData(sortByName);
     // console.log("sortMarket", sortByName, sortKey, this);
+  }
+
+  onOpenEditMarkets() {
+    this.props.showEditMarkets(true);
   }
 
   render() {
@@ -174,8 +183,19 @@ class PricingGuideGridHeader extends Component {
               </DropdownButton>
             </Form>
           </Col>
-          <Col xs={7}>
-            <h4>Distribution Results</h4>
+          <Col xs={3}>
+            <h4 style={{ marginTop: "10px" }}>Distribution Results</h4>
+          </Col>
+          <Col xs={4}>
+            <div style={{ textAlign: "right" }}>
+              <Button
+                bsStyle="success"
+                onClick={this.onOpenEditMarkets}
+                // disabled={!hasData}
+              >
+                Edit Markets
+              </Button>
+            </div>
           </Col>
         </Row>
         <PricingGuideFilterModal
@@ -194,7 +214,8 @@ PricingGuideGridHeader.propTypes = {
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   filterOpenMarketData: PropTypes.func.isRequired,
-  sortOpenMarketData: PropTypes.func.isRequired
+  sortOpenMarketData: PropTypes.func.isRequired,
+  showEditMarkets: PropTypes.func.isRequired
 };
 
 export default connect(
