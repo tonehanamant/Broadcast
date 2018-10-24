@@ -1167,14 +1167,15 @@ namespace Services.Broadcast.ApplicationServices
 
         private OpenMarketTotals _SumTotalsForOpenMarketSection(List<PricingGuideMarket> markets)
         {
-            List<PricingGuideMarket> marketsWithSpots = new List<PricingGuideMarket>();
-            markets.ForEach(x => x.Stations.ForEach(y =>
+            List<PricingGuideMarket> marketsWithSpots = new List<PricingGuideMarket>();           
+            markets.ForEach(x =>
             {
-                if (y.Programs.Where(z => z.Spots != 0).Any())
+                if( x.Stations.Any(y => y.Programs.Where(z => z.Spots != 0).Any()))
                 {
                     marketsWithSpots.Add(x);
                 }
-            }));
+            });
+
             var result = new OpenMarketTotals
             {
                 Cost = markets.Sum(x => x.TotalCost),
