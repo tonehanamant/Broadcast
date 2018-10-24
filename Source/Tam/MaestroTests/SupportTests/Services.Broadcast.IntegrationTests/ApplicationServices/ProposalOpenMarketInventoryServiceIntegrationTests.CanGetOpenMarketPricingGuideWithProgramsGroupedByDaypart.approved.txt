@@ -27,6 +27,19 @@
       "Friends|Friends 2"
     ]
   },
+  "DistributionRequest": {
+    "BudgetGoal": null,
+    "HasPricingGuideChanges": null,
+    "ImpressionsGoal": null,
+    "OpenMarketPricing": {
+      "CpmMax": null,
+      "CpmMin": null,
+      "OpenMarketCpmTarget": null,
+      "UnitCapPerStation": null
+    },
+    "ProposalDetailId": 9979,
+    "ProposalId": 26017
+  },
   "Filter": {},
   "Markets": [
     {

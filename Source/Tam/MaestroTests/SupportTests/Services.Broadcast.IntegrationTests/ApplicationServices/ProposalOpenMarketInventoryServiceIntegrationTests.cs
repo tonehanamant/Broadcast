@@ -2543,5 +2543,54 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             
             Assert.True(programsWithoutImpressionsHavePropertySetFalse);
         }
+
+        [Test]
+        public void ProposalOpenMarketService_UpdatesOpenMarketPricingGuide_OnlyWithSelectedMarkets()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            pricingGuideOpenMarketDto.AllMarkets.ForEach(x => x.Selected = false);
+            var firstMarket = pricingGuideOpenMarketDto.AllMarkets.First();
+            var lastMarket = pricingGuideOpenMarketDto.AllMarkets.Last();
+            firstMarket.Selected = true;
+            lastMarket.Selected = true;
+
+            var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
+
+            var firstMarketIsInResultList = result.Markets.Any(x => x.MarketId == firstMarket.Id);
+            var lastMarketIsInResultList = result.Markets.Any(x => x.MarketId == lastMarket.Id);
+            
+            Assert.AreEqual(2, result.Markets.Count);
+            Assert.IsTrue(firstMarketIsInResultList);
+            Assert.IsTrue(lastMarketIsInResultList);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_UpdatesOpenMarketPricingGuideMarkets()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            pricingGuideOpenMarketDto.AllMarkets.ForEach(x => x.Selected = false);
+            pricingGuideOpenMarketDto.AllMarkets.First().Selected = true;
+            pricingGuideOpenMarketDto.AllMarkets.Last().Selected = true;
+
+            var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
     }
 }

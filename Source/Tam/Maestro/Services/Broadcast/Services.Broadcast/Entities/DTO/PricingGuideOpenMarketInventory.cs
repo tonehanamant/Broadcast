@@ -7,6 +7,8 @@ namespace Services.Broadcast.Entities.DTO
 {
     public class PricingGuideOpenMarketInventoryDto 
     {
+        public PricingGuideOpenMarketInventoryRequestDto DistributionRequest { get; set; }
+
         public OpenMarketPricingGuideGridDisplayFilterDto DisplayFilter { get; set; } = new OpenMarketPricingGuideGridDisplayFilterDto();
 
         public OpenMarketPricingGuideGridFilterDto Filter { get; set; } = new OpenMarketPricingGuideGridFilterDto();

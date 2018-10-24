@@ -32,6 +32,19 @@
       "Adventure Time"
     ]
   },
+  "DistributionRequest": {
+    "BudgetGoal": null,
+    "HasPricingGuideChanges": null,
+    "ImpressionsGoal": null,
+    "OpenMarketPricing": {
+      "CpmMax": null,
+      "CpmMin": null,
+      "OpenMarketCpmTarget": null,
+      "UnitCapPerStation": null
+    },
+    "ProposalDetailId": 9981,
+    "ProposalId": 26019
+  },
   "Filter": {},
   "Markets": [
     {

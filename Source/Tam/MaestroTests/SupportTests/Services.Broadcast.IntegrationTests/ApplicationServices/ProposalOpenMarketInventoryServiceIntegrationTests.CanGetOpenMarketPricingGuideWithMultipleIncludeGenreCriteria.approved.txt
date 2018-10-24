@@ -37,6 +37,19 @@
       "Friends"
     ]
   },
+  "DistributionRequest": {
+    "BudgetGoal": null,
+    "HasPricingGuideChanges": null,
+    "ImpressionsGoal": null,
+    "OpenMarketPricing": {
+      "CpmMax": null,
+      "CpmMin": null,
+      "OpenMarketCpmTarget": null,
+      "UnitCapPerStation": null
+    },
+    "ProposalDetailId": 9982,
+    "ProposalId": 26020
+  },
   "Filter": {},
   "Markets": [
     {

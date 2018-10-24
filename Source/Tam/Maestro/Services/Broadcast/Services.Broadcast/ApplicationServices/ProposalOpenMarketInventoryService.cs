@@ -31,6 +31,7 @@ namespace Services.Broadcast.ApplicationServices
         void SavePricingGuideOpenMarketInventory(int proposalDetailId, PricingGuideOpenMarketInventoryDto pricingGuide);
         void DeleteExistingGeneratedPricingGuide(int proposalDetailId);
         PricingGuideOpenMarketInventoryDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto);
+        PricingGuideOpenMarketInventoryDto UpdateOpenMarketPricingGuideMarkets(PricingGuideOpenMarketInventoryDto dto);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -1131,7 +1132,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 pricingGuideOpenMarketInventory = proposalRepository.GetProposalDetailPricingGuideInventory(request.ProposalDetailId);
                 _SetProposalInventoryDetailSpotLength(pricingGuideOpenMarketInventory);
-                List<ProposalProgramDto>  programs = _GetPrograms(pricingGuideOpenMarketInventory);
+                List<ProposalProgramDto> programs = _GetPrograms(pricingGuideOpenMarketInventory);
                 List<ProposalProgramDto> allPrograms = _GetPrograms(pricingGuideOpenMarketInventory, true);
 
                 _FilterProgramsByDaypart(pricingGuideOpenMarketInventory, programs);
@@ -1139,7 +1140,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (programs.IsEmpty())
                 {
-                    return _MapToPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
+                    return _MapToPricingGuideOpenMarketInventoryDto(request, pricingGuideOpenMarketInventory);
                 }
             }
             else
@@ -1150,7 +1151,7 @@ namespace Services.Broadcast.ApplicationServices
                 pricingGuideOpenMarketInventory = _GetExistingPricingGuideOpenMarketInventory(existingPricingGuide,postingBookId);
             }
 
-            var pricingGuideDto = _MapToPricingGuideOpenMarketInventoryDto(pricingGuideOpenMarketInventory);
+            var pricingGuideDto = _MapToPricingGuideOpenMarketInventoryDto(request, pricingGuideOpenMarketInventory);
             
             // since the pricing guide was never save, lets save it now
             if (existingPricingGuide == null)
@@ -1490,10 +1491,11 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private PricingGuideOpenMarketInventoryDto _MapToPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        private PricingGuideOpenMarketInventoryDto _MapToPricingGuideOpenMarketInventoryDto(PricingGuideOpenMarketInventoryRequestDto request, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
             var response = new PricingGuideOpenMarketInventoryDto()
             {
+                DistributionRequest = request,
                 Markets = pricingGuideOpenMarketInventory.Markets,
                 AllMarkets = pricingGuideOpenMarketInventory.AllMarkets
             };
@@ -1533,13 +1535,19 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<ProposalProgramDto> _GetPrograms(ProposalDetailInventoryBase inventory, bool includeAllPrograms = false)
         {
-            var stationProgramRepository = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             var proposalMarketIds = includeAllPrograms 
                             ? null 
                             : ProposalMarketsCalculationEngine.GetProposalMarketsList(inventory.ProposalId, inventory.ProposalVersion, inventory.DetailId).Select(m => m.Id).ToList();
-            var programs = stationProgramRepository.GetStationProgramsForProposalDetail(inventory.DetailFlightStartDate, 
-                                                                                        inventory.DetailFlightEndDate, 
-                                                                                        inventory.DetailSpotLengthId, 
+            
+            return _GetPrograms(inventory, proposalMarketIds);
+        }
+
+        private List<ProposalProgramDto> _GetPrograms(ProposalDetailInventoryBase inventory, List<int> proposalMarketIds)
+        {
+            var stationProgramRepository = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+            var programs = stationProgramRepository.GetStationProgramsForProposalDetail(inventory.DetailFlightStartDate,
+                                                                                        inventory.DetailFlightEndDate,
+                                                                                        inventory.DetailSpotLengthId,
                                                                                         BroadcastConstants.OpenMarketSourceId,
                                                                                         proposalMarketIds,
                                                                                         inventory.DetailId);
@@ -1697,6 +1705,25 @@ namespace Services.Broadcast.ApplicationServices
                     ? station.Programs.Where(p => p.Spots > 0)
                     : station.Programs.Where(p => p.Spots == 0)).ToList();
             }
+        }
+
+        public PricingGuideOpenMarketInventoryDto UpdateOpenMarketPricingGuideMarkets(PricingGuideOpenMarketInventoryDto dto)
+        {
+            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            var pricingGuideOpenMarketInventory = proposalRepository.GetProposalDetailPricingGuideInventory(dto.DistributionRequest.ProposalDetailId);
+            _SetProposalInventoryDetailSpotLength(pricingGuideOpenMarketInventory);
+            var marketIds = dto.AllMarkets.Where(x => x.Selected).Select(x => x.Id).ToList();
+            var programs = _GetPrograms(pricingGuideOpenMarketInventory, marketIds);
+            var allPrograms = _GetPrograms(pricingGuideOpenMarketInventory, true);
+
+            _FilterProgramsByDaypart(pricingGuideOpenMarketInventory, programs);
+            pricingGuideOpenMarketInventory = DefaultPricingGuideOpenMarketInventory(programs, allPrograms, pricingGuideOpenMarketInventory, dto.DistributionRequest);
+
+            var pricingGuideDto = _MapToPricingGuideOpenMarketInventoryDto(dto.DistributionRequest, pricingGuideOpenMarketInventory);
+            pricingGuideDto.Markets = _ApplyDefaultSortingForPricingGuideMarkets(pricingGuideDto.Markets);
+            _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
+            _SumTotalsForMarkets(pricingGuideDto.Markets);
+            return pricingGuideDto;
         }
     }
 }
