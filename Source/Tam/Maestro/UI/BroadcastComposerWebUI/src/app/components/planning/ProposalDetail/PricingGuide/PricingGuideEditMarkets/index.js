@@ -3,14 +3,21 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 // import { toggleModal } from "Ducks/app";
-import { showEditMarkets } from "Ducks/planning";
+import {
+  showEditMarkets,
+  changeEditMarkets,
+  discardEditMarkets
+} from "Ducks/planning";
 import { Row, Col, Panel, Button, ButtonToolbar } from "react-bootstrap";
 import numeral from "numeral";
 import { partition, sumBy } from "lodash";
 import EditMarketsGrid from "./EditMarketsGrid";
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ showEditMarkets }, dispatch);
+  bindActionCreators(
+    { showEditMarkets, changeEditMarkets, discardEditMarkets },
+    dispatch
+  );
 
 class PricingGuideEditMarkets extends Component {
   constructor(props) {
@@ -22,20 +29,24 @@ class PricingGuideEditMarkets extends Component {
   }
 
   onDismissEditMarkets() {
+    this.props.discardEditMarkets();
     this.props.showEditMarkets(false);
   }
-  // todo persist changes
+  // todo persist changes - do not discard
   onUpdateEditMarkets() {
+    this.props.discardEditMarkets();
     this.props.showEditMarkets(false);
   }
 
   // handle update via action todo
   removeUsedMarket(rec) {
-    console.log("removeUsedMarket", rec, this);
+    // console.log("removeUsedMarket", rec, this);
+    this.props.changeEditMarkets(rec.Id, false);
   }
 
   addAvailableMarket(rec) {
-    console.log("addAvailableMarket", rec, this);
+    // console.log("addAvailableMarket", rec, this);
+    this.props.changeEditMarkets(rec.Id, true);
   }
 
   render() {
@@ -133,6 +144,8 @@ class PricingGuideEditMarkets extends Component {
 PricingGuideEditMarkets.propTypes = {
   activeEditMarkets: PropTypes.array.isRequired,
   showEditMarkets: PropTypes.func.isRequired,
+  changeEditMarkets: PropTypes.func.isRequired,
+  discardEditMarkets: PropTypes.func.isRequired,
   marketCoverageGoal: PropTypes.number.isRequired
   // hasOpenMarketData: PropTypes.bool.isRequired,
 };
