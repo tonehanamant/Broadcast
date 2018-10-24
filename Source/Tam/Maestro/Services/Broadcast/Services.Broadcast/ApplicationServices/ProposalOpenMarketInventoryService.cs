@@ -990,7 +990,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     ProgramId = p.First().ManifestId,
                     ProgramName = string.Join("|", p.Select(x => x.ManifestDayparts.First().ProgramName).Distinct()),
-                    BlendedCpm = Math.Round(p.Average(x => x.TargetCpm), 2),
+                BlendedCpm = p.Average(x => x.TargetCpm),
                     ImpressionsPerSpot = p.Average(x => x.UnitImpressions),
                     StationImpressionsPerSpot = p.Average(x => x.ProvidedUnitImpressions ?? 0),
                     Daypart = p.First().DayParts.Single(),
@@ -1234,7 +1234,7 @@ namespace Services.Broadcast.ApplicationServices
                             ManifestDaypartId = program.id,
                             Impressions = guide.impressions,
                             StationImpressionsPerSpot = guide.station_impressions,
-                            BlendedCpm = Math.Round(guide.blended_cpm, 2),
+                            BlendedCpm = guide.blended_cpm,
                             Cost = guide.cost,
                             CostPerSpot = guide.cost_per_spot,
                             ImpressionsPerSpot = guide.impressions_per_spot,

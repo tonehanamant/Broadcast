@@ -35,24 +35,24 @@
   "Filter": {},
   "Markets": [
     {
-      "AvgCpm": 0.01,
+      "AvgCpm": 0.0070829812630578446944124378,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.01,
-      "MinCpm": 0.01,
+      "MaxCpm": 0.0117602992290535840393922983,
+      "MinCpm": 0.0024056632970621053494325774,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.00,
+          "MinProgramsBlendedCpm": 0.0024056632970621053494325774,
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.0024056632970621053494325774,
               "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
