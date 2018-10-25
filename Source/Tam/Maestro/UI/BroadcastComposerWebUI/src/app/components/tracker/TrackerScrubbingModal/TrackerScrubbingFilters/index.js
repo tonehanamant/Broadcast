@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Button } from "react-bootstrap";
 import CSSModules from "react-css-modules";
 import { Grid } from "react-redux-grid";
 import {
   getScrubbingDataFiltered,
-  clearScrubbingFiltersList
+  clearScrubbingFiltersList,
+  clearFilteredScrubbingData,
+  getClearScrubbingDataFiltered
 } from "Ducks/tracker";
 import styles from "./index.scss";
 import FilterPopoverWrapper from "./Filters/FilterPopoverWrapper";
@@ -20,7 +23,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getScrubbingDataFiltered,
-      clearScrubbingFiltersList
+      clearScrubbingFiltersList,
+      clearFilteredScrubbingData,
+      getClearScrubbingDataFiltered
     },
     dispatch
   );
@@ -31,6 +36,7 @@ export class TrackerScrubbingFilters extends Component {
     this.context = context;
 
     this.applyFilter = this.applyFilter.bind(this);
+    this.onClear = this.onClear.bind(this);
   }
 
   applyFilter(filter) {
@@ -43,6 +49,10 @@ export class TrackerScrubbingFilters extends Component {
     }, 50); */
     // Change: use call in saga to block
     this.props.getScrubbingDataFiltered(filter);
+  }
+
+  onClear() {
+    this.props.getClearScrubbingDataFiltered();
   }
 
   render() {
@@ -59,7 +69,12 @@ export class TrackerScrubbingFilters extends Component {
         name: "Status",
         dataIndex: "Status",
         width: 59,
-        renderer: () => <div style={inactiveFilterStyle} />
+        // renderer: () => <div style={inactiveFilterStyle} />
+        renderer: () => (
+          <Button bsSize="xsmall" onClick={this.onClear}>
+            Clear
+          </Button>
+        )
       },
       {
         name: "Sequence",
@@ -348,7 +363,9 @@ TrackerScrubbingFilters.propTypes = {
   activeFilters: PropTypes.array.isRequired,
   // doLocalSort: PropTypes.func.isRequired,
   getScrubbingDataFiltered: PropTypes.func.isRequired,
-  clearScrubbingFiltersList: PropTypes.func.isRequired
+  clearScrubbingFiltersList: PropTypes.func.isRequired,
+  clearFilteredScrubbingData: PropTypes.func.isRequired,
+  getClearScrubbingDataFiltered: PropTypes.func.isRequired
 };
 
 export default connect(

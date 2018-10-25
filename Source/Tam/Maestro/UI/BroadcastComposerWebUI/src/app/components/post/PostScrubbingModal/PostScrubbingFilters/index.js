@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Button } from "react-bootstrap";
 import CSSModules from "react-css-modules";
 import { Grid } from "react-redux-grid";
 import {
   getScrubbingDataFiltered,
-  clearScrubbingFiltersList
+  clearScrubbingFiltersList,
+  clearFilteredScrubbingData,
+  getClearScrubbingDataFiltered
 } from "Ducks/post";
 import styles from "./index.scss";
 import FilterPopoverWrapper from "./Filters/FilterPopoverWrapper";
@@ -20,7 +23,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getScrubbingDataFiltered,
-      clearScrubbingFiltersList
+      clearScrubbingFiltersList,
+      clearFilteredScrubbingData,
+      getClearScrubbingDataFiltered
     },
     dispatch
   );
@@ -31,20 +36,12 @@ export class PostScrubbingFilters extends Component {
     this.context = context;
 
     this.applyFilter = this.applyFilter.bind(this);
+    this.onClear = this.onClear.bind(this);
     // remove as should not be needed - use saga/props
     /* this.state = {
       filterOptions: {},
     }; */
   }
-
-  /* componentWillReceiveProps(nextProps) {
-    console.log('filtergrid receive props', nextProps, this);
-  } */
-
-  /* shouldComponentUpdate(nextProps, nextState) {
-    console.log('filtergrid should component update', nextProps, nextState);
-    return true;
-  } */
 
   applyFilter(filter) {
     // ISSUE: Data changes but Object so does not update
@@ -56,6 +53,10 @@ export class PostScrubbingFilters extends Component {
     }, 50); */
     // Change: use call in saga to block
     this.props.getScrubbingDataFiltered(filter);
+  }
+
+  onClear() {
+    this.props.getClearScrubbingDataFiltered();
   }
 
   render() {
@@ -74,7 +75,12 @@ export class PostScrubbingFilters extends Component {
         // width: '3%',
         // test specific width
         width: 59,
-        renderer: () => <div style={inactiveFilterStyle} />
+        // renderer: () => <div style={inactiveFilterStyle} />
+        renderer: () => (
+          <Button bsSize="xsmall" onClick={this.onClear}>
+            Clear
+          </Button>
+        )
       },
       {
         name: "Sequence",
@@ -363,7 +369,9 @@ PostScrubbingFilters.propTypes = {
   activeFilters: PropTypes.array.isRequired,
   // doLocalSort: PropTypes.func.isRequired,
   getScrubbingDataFiltered: PropTypes.func.isRequired,
-  clearScrubbingFiltersList: PropTypes.func.isRequired
+  clearScrubbingFiltersList: PropTypes.func.isRequired,
+  clearFilteredScrubbingData: PropTypes.func.isRequired,
+  getClearScrubbingDataFiltered: PropTypes.func.isRequired
 };
 
 export default connect(

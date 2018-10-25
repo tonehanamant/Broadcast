@@ -276,6 +276,22 @@ export default function reducer(state = initialState, action) {
         activeIsciFilterQuery: ""
       };
 
+    case ACTIONS.RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA: {
+      return {
+        ...state,
+        proposalHeader: {
+          ...state.proposalHeader,
+          activeScrubbingData: {
+            ...state.proposalHeader.activeScrubbingData,
+            ClientScrubs: data.originalScrubs
+          }
+        },
+        hasActiveScrubbingFilters: false,
+        activeScrubbingFilters: data.activeFilters,
+        scrubbingFiltersList: [data.activeFilters]
+      };
+    }
+
     case ACTIONS.RECEIVE_TRACKER_CLIENT_SCRUBBING: {
       const filtersData = data.Data.Filters;
       const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
@@ -588,4 +604,14 @@ export const saveActiveScrubData = (newData, fullList) => ({
 export const uploadTrackerFile = params => ({
   type: ACTIONS.TRACKER_FILE_UPLOAD.request,
   payload: params
+});
+
+// clears scrubbing filters
+export const clearFilteredScrubbingData = () => ({
+  type: ACTIONS.CLEAR_FILTERED_SCRUBBING_DATA,
+  payload: {}
+});
+
+export const getClearScrubbingDataFiltered = () => ({
+  type: ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA
 });
