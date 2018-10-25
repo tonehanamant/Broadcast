@@ -1550,16 +1550,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
 
             var dto = _ProposalRepository.GetOpenMarketProposalDetailInventory(proposalDetailId);
-            var proposalMarketIds = _ProposalMarketsCalculationEngine
-                .GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion, dto.DetailId).Select(m => m.Id)
-                .ToList();
-            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(
-                dto.DetailFlightStartDate,
-                dto.DetailFlightEndDate,
-                dto.DetailSpotLengthId,
-                BroadcastConstants.OpenMarketSourceId,
-                proposalMarketIds,
-                dto.DetailId);
+            var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(dto.ProposalId, dto.ProposalVersion).Select(m => m.Id).ToList();
+            var programs = _StationProgramRepository.GetStationProgramsForProposalDetail(dto.DetailFlightStartDate, dto.DetailFlightEndDate, 
+                dto.DetailSpotLengthId, BroadcastConstants.OpenMarketSourceId, proposalMarketIds);
 
             var programWithStationImpressionsExcpected =
                 programs.First(x => x.ManifestAudiences.Any(ma => ma.Impressions != null));
@@ -1723,7 +1716,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideDto, jsonSettings));
             }
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void OpenMarketPricingGuide_Save_Spots()

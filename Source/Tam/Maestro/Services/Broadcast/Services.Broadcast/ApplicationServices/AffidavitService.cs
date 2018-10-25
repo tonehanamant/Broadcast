@@ -547,7 +547,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (affidavitStation != null)
                     {
-                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, scrub.PostingBookId.Value);
+                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal);
 
                         var marketGeoName = affidavitStation.OriginMarket;
                         if (markets.Any(m => m.Display == marketGeoName))

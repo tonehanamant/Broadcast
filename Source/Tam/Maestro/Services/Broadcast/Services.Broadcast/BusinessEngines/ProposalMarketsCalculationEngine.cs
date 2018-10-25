@@ -1,7 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
@@ -14,8 +12,8 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IProposalMarketsCalculationEngine : IApplicationService
     {
-        List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailDto);
-        List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId);
+        List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber);
+        List<LookupDto> GetProposalMarketsList(ProposalDto proposal);
     }
 
     public class ProposalMarketsCalculationEngine : IProposalMarketsCalculationEngine
@@ -27,27 +25,20 @@ namespace Services.Broadcast.BusinessEngines
             _DataRepositoryFactory = dataRepositoryFactory;
         }
 
-        public List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber, int proposalDetailId)
+        public List<LookupDto> GetProposalMarketsList(int proposalId, int versionNumber)
         {
-            var proposalDetail =_DataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalDetail(proposalDetailId);
-
             var proposal = _DataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalByIdAndVersion(proposalId, versionNumber);
 
-            var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
-            return GetProposalMarketsList(proposal, postingBookId);
+            return GetProposalMarketsList(proposal);
         }
 
-        public List<LookupDto> GetProposalMarketsList(ProposalDto proposal, int postingBookId)
+        public List<LookupDto> GetProposalMarketsList(ProposalDto proposal)
         {
-            var marketRankings =_DataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonth(postingBookId);
-
             var allMarkets = _DataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos();
 
-            var finalProposalMarkets = new List<LookupDto>();
+            var finalProposalMarkets = allMarkets;
 
-            _AddMarketsFromGroup(proposal, finalProposalMarkets, allMarkets, marketRankings);
-            _AddCustomMarkets(proposal, finalProposalMarkets);
-            _ExcludeStandardMarketGroupFromMarkets(proposal, allMarkets, marketRankings, finalProposalMarkets);
+            _ExcludeStandardMarketGroupFromMarkets(proposal, allMarkets, finalProposalMarkets);
             _ExcludeCustomMarkets(proposal, finalProposalMarkets);
 
             return finalProposalMarkets.DistinctBy(m => m.Id).ToList();
@@ -68,42 +59,11 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _ExcludeStandardMarketGroupFromMarkets(
-            ProposalDto proposal,
-            List<LookupDto> allMarkets,
-            Dictionary<int, int> marketRankings,
-            List<LookupDto> finalProposalMarkets)
+        private void _ExcludeStandardMarketGroupFromMarkets(ProposalDto proposal, List<LookupDto> allMarkets, List<LookupDto> finalProposalMarkets)
         {
             if (proposal.BlackoutMarketGroupId == ProposalEnums.ProposalMarketGroups.All)
             {
                 finalProposalMarkets.RemoveAll(m => allMarkets.Select(e => e.Id).ToList().Contains(m.Id));
-            }
-        }
-
-        private static void _AddCustomMarkets(ProposalDto proposal, List<LookupDto> finalProposalMarkets)
-        {
-            if (proposal.Markets != null)
-            {
-                var customNonBlackoutMarkets =
-                    proposal.Markets.Where(m => m.IsBlackout == false).Select(
-                        m => new LookupDto()
-                        {
-                            Display = m.Display,
-                            Id = m.Id
-                        }).ToList();
-                finalProposalMarkets.AddRange(customNonBlackoutMarkets);
-            }
-        }
-
-        private void _AddMarketsFromGroup(
-            ProposalDto proposal,
-            List<LookupDto> finalProposalMarkets,
-            List<LookupDto> allMarkets,
-            Dictionary<int, int> marketRankings)
-        {
-            if (proposal.MarketGroupId == ProposalEnums.ProposalMarketGroups.All)
-            {
-                finalProposalMarkets.AddRange(allMarkets);
             }
         }
     }

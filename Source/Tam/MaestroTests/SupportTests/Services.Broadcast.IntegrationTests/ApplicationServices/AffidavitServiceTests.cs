@@ -1288,8 +1288,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var postingDate = new DateTime(2016, 4, 20);
 
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
-                    .GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 413, 416);
 
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
