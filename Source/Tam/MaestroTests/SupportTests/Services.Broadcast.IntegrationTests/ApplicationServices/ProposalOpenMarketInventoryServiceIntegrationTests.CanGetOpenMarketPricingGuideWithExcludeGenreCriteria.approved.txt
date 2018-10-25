@@ -98,5 +98,11 @@
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     }
-  ]
+  ],
+  "OpenMarketTotals": {
+    "Cost": 0.0000,
+    "Coverage": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
 }
