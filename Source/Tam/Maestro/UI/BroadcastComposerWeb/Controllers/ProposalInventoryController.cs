@@ -108,5 +108,14 @@ namespace BroadcastComposerWeb.Controllers
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
                     .ApplyFilterOnOpenMarketPricingGuideGrid(dto));
         }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/AllocateSpots")]
+        public BaseResponse<PricingGuideOpenMarketInventoryDto> SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .SavePricingGuideAllocations(request));
+        }
     }
 }

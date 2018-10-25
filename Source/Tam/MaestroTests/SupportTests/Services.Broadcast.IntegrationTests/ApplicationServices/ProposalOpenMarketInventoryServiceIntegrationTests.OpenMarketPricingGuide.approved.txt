@@ -101,6 +101,7 @@
                   "Id": 5
                 }
               ],
+              "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 2125796.25,
               "ManifestDaypartId": 213348,

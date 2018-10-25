@@ -74,6 +74,7 @@ export const LOAD_OPEN_MARKET_DATA = createAction(
   "planning/LOAD_OPEN_MARKET_DATA"
 );
 export const SCX_FILE_UPLOAD = createAction("planning/SCX_FILE_UPLOAD");
+export const ALLOCATE_SPOTS = createAction("planning/ALLOCATE_SPOTS");
 export const FILTER_OPEN_MARKET_DATA = createAction(
   "planning/FILTER_OPEN_MARKET_DATA"
 );

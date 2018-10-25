@@ -137,6 +137,8 @@ const planning = {
     call(POST, `${apiBase}Inventory/Detail/PricingGuide/Grid`, params),
   uploadSCXFile: params =>
     call(POST, `${apiBase}Proposals/UploadProposalDetailBuy`, params),
+  allocateSpots: data =>
+    call(POST, `${apiBase}Inventory/Detail/PricingGuide/AllocateSpots`, data),
   filterOpenMarketData: params =>
     call(
       POST,
