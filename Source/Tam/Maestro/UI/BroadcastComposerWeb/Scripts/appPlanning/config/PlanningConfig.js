@@ -588,12 +588,12 @@
                         if (record.isProgram) {//display val including 0 unless not active
                             if (!week.active) return PlanningConfig.greyRenderer('-', true);
                             //TODO hiatus needs set here
-                            var val = numeral(util.divideImpressions(week.TotalImpressions)).format('0,0.[000]');
+                            var val = numeral(util.divideImpressions(week.DisplayImpressions)).format('0,0.[000]');
                             //return grey for 0 or hiatus
                             var grey = week.Spots === 0 || week.isHiatus;
                             return PlanningConfig.greyRenderer(val, grey);
                         } else {//market display val or dash
-                            return week.Impressions ? numeral(util.divideImpressions(week.Impressions)).format('0,0.[000]') : '-';
+                            return week.DisplayImpressions ? numeral(util.divideImpressions(week.DisplayImpressions)).format('0,0.[000]') : '-';
                         }
 
                     }
@@ -612,13 +612,12 @@
                     if (record.isProgram) {//display val including 0 unless not active
                         if (!week.active) return PlanningConfig.greyRenderer('-', true);
                         
-                        var val = numeral(util.divideImpressions(week.TotalProvidedImpressions)).format('0,0.[000]');
+                        var val = numeral(util.divideImpressions(week.DisplayStationImpressions)).format('0,0.[000]');
                         //return grey for 0 or hiatus
                         var grey = week.Spots === 0 || week.isHiatus;
                         return PlanningConfig.greyRenderer(val, grey);
-                    } else {//market display val or dash - NO CURRRENT market display - future will have
-                        //return week.Impressions ? numeral(util.divideImpressions(week.Impressions)).format('0,0.[000]') : '-';
-                        return '-';
+                    } else {
+                        return week.DisplayStationImpressions ? numeral(util.divideImpressions(week.DisplayStationImpressions)).format('0,0.[000]') : '-';
                     }
 
                 }
