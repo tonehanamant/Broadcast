@@ -347,7 +347,7 @@ namespace Services.Broadcast.Repositories
                     posting_book_id = proposalDetail.PostingBookId,
                     posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
                     nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
-                    adjustment_inflation = proposalDetail.AdjustmentInflation,
+                    adjustment_inflation = proposalDetail.PricingGuide.AdjustmentInflation,
                     adjustment_margin = proposalDetail.PricingGuide.AdjustmentMargin,
                     adjustment_rate = proposalDetail.PricingGuide.AdjustmentRate,
                     goal_budget = proposalDetail.PricingGuide.GoalBudget,
@@ -474,7 +474,7 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
                     updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
-                    updatedDetail.adjustment_inflation = detail.AdjustmentInflation;
+                    updatedDetail.adjustment_inflation = detail.PricingGuide.AdjustmentInflation;
                     updatedDetail.adjustment_margin = detail.PricingGuide.AdjustmentMargin;
                     updatedDetail.adjustment_rate = detail.PricingGuide.AdjustmentRate;
                     updatedDetail.goal_budget = detail.PricingGuide.GoalBudget;
@@ -918,6 +918,7 @@ namespace Services.Broadcast.Repositories
                         GoalImpression = version.goal_impression,
                         AdjustmentMargin = version.adjustment_margin,
                         AdjustmentRate = version.adjustment_rate,
+                        AdjustmentInflation = version.adjustment_inflation,
                         OpenMarketPricing = new OpenMarketPricingGuide
                         {
                             CpmMin = version.open_market_cpm_min,
@@ -933,7 +934,6 @@ namespace Services.Broadcast.Repositories
                         }).ToList(),
                     },
                     EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
-                    AdjustmentInflation = version.adjustment_inflation,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1196,10 +1196,10 @@ namespace Services.Broadcast.Repositories
                     ShareProjectionBookId = proposalDetail.share_projection_book_id,
                     HutProjectionBookId = proposalDetail.hut_projection_book_id,
                     ProjectionPlaybackType = (ProposalEnums.ProposalPlaybackType)proposalDetail.projection_playback_type,
-                    AdjustmentInflation = proposalDetail.adjustment_inflation,
                     PricingGuide = new ProposalDetailPricingGuideDto()
                     {
                         GoalImpression = proposalDetail.goal_impression,
+                        AdjustmentInflation = proposalDetail.adjustment_inflation,
                         GoalBudget = proposalDetail.goal_budget,
                         AdjustmentMargin = proposalDetail.adjustment_margin,
                         AdjustmentRate = proposalDetail.adjustment_rate
