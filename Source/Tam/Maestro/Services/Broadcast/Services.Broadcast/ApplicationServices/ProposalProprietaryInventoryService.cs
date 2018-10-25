@@ -68,7 +68,7 @@ namespace Services.Broadcast.ApplicationServices
             var relevantMediaWeeks = proposalDetailInventory.Weeks.Select(w => w.MediaWeekId).ToList();
             var spotLengthRepository = BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             var spotLengthMappings = spotLengthRepository.GetSpotLengths();
-            var proposalMarketIds = ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDetailInventory.ProposalId, proposalDetailInventory.ProposalVersion, detailId).Select(m => m.Id).ToList();
+            var proposalMarketIds = ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDetailInventory.ProposalId, proposalDetailInventory.ProposalVersion).Select(m => m.Id).ToList();
             var spotLengths = spotLengthMappings.Where(m => int.Parse(m.Display) >= proposalDetailInventory.DetailSpotLength && int.Parse(m.Display) <= 30).Select(m => m.Id);
             var sortedFilteredInventoryDetails = BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>().GetSortedFilteredInventoryDetails(relevantMediaWeeks, proposalMarketIds, spotLengths);
 

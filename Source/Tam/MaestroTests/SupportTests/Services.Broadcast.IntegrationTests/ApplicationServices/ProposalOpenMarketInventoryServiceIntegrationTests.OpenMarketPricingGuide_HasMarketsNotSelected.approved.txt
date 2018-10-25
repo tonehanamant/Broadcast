@@ -14,17 +14,6 @@
     {
       "AvgCpm": 0.0,
       "Coverage": 0.0,
-      "Id": 347,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Juneau",
-      "Programs": 4,
-      "Selected": false,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.0,
       "Id": 398,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,

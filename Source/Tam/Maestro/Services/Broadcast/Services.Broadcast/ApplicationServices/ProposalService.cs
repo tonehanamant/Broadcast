@@ -676,7 +676,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (!proposalDetailDto.Id.HasValue)
                     continue;
 
-                var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDto.Id.Value, proposalDto.Version.Value, proposalDetailDto.Id.Value);
+                var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDto.Id.Value, proposalDto.Version.Value);
                 var marketIds = markets.Select(m => m.Id).ToList();
                 var proposalDetailWeeks = proposalDetailDto.Quarters.SelectMany(x => x.Weeks).Select(x => x.Id.HasValue ? x.Id.Value : -1).ToList();
                 var proposalInventorySlots = _ProposalInventoryRepository.GetProposalInventorySlotsByQuarterWeekIds(proposalDetailWeeks);

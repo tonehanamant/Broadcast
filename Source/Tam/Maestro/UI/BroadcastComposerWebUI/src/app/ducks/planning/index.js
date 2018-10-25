@@ -1,6 +1,6 @@
 import moment from "moment";
 import update from "immutability-helper";
-import { sortBy } from "lodash";
+import { sortBy, find, cloneDeep } from "lodash";
 
 // Actions
 import * as ACTIONS from "./actionTypes.js";
@@ -366,7 +366,7 @@ export default function reducer(state = initialState, action) {
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
         openMarketLoaded: true,
-        activeEditMarkets: data.Data.AllMarkets,
+        activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };
     }
@@ -432,6 +432,25 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         isEditMarketsActive: payload
+      };
+    }
+
+    case ACTIONS.CHANGE_EDIT_MARKETS_DATA: {
+      const editMarkets = [...state.activeEditMarkets];
+      const market = find(editMarkets, { Id: payload.id });
+      if (market) market.Selected = payload.isAdd;
+      // console.log("Change Edit Markets", market, payload, editMarkets);
+      return {
+        ...state,
+        activeEditMarkets: editMarkets
+      };
+    }
+
+    case ACTIONS.DISCARD_EDIT_MARKETS_DATA: {
+      const openMarketsData = { ...state.openMarketData };
+      return {
+        ...state,
+        activeEditMarkets: cloneDeep(openMarketsData.AllMarkets)
       };
     }
 
@@ -609,6 +628,13 @@ export const sortOpenMarketData = sortByName => ({
 export const showEditMarkets = show => ({
   type: ACTIONS.SHOW_EDIT_MARKETS,
   payload: show
+});
+export const changeEditMarkets = (id, isAdd) => ({
+  type: ACTIONS.CHANGE_EDIT_MARKETS_DATA,
+  payload: { id, isAdd }
+});
+export const discardEditMarkets = () => ({
+  type: ACTIONS.DISCARD_EDIT_MARKETS_DATA
 });
 export const setEstimatedId = (detailId, estimatedId) => ({
   type: ACTIONS.SET_ESTIMATED_ID,
