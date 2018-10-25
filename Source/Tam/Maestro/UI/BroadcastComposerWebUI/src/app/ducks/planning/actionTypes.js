@@ -79,3 +79,5 @@ export const FILTER_OPEN_MARKET_DATA = createAction(
 );
 export const SORT_OPEN_MARKET_DATA = "planning/SORT_OPEN_MARKET_DATA";
 export const SHOW_EDIT_MARKETS = "planning/SHOW_EDIT_MARKETS";
+export const DISCARD_EDIT_MARKETS_DATA = "planning/DISCARD_EDIT_MARKETS_DATA";
+export const CHANGE_EDIT_MARKETS_DATA = "planning/CHANGE_EDIT_MARKETS_DATA";
