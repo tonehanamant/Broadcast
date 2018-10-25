@@ -17,6 +17,11 @@ namespace Services.Broadcast.Repositories
         List<market> GetMarketsByMarketCodes(List<int> marketCodes);
         List<LookupDto> GetMarketDtos();
 
+        /// <summary>
+        /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
+        /// </summary>
+        /// <param name="marketIds">Market id list.</param>
+        /// <returns>Dictionary of market code and percentage coverage</returns>
         Dictionary<int, double> GetMarketCoverages(IEnumerable<int> marketIds);
 
         /// <summary>
@@ -67,6 +72,11 @@ namespace Services.Broadcast.Repositories
                      select m).ToList());
         }
 
+        /// <summary>
+        /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
+        /// </summary>
+        /// <param name="marketIds">Market id list.</param>
+        /// <returns>Dictionary of market code and percentage coverage</returns>
         public Dictionary<int, double> GetMarketCoverages(IEnumerable<int> marketIds)
         {
             return _InReadUncommitedTransaction(
