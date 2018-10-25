@@ -67,6 +67,7 @@ export default function* rootSaga() {
     planningSaga.watchRerunPostScrubing(),
     planningSaga.watchLoadOpenMarketData(),
     planningSaga.watchUploadSCXFile(),
+    planningSaga.watchAllocateSpots(),
     // planningSaga.watchUploadSCXFileSuccess(),
     planningSaga.watchFilterOpenMarketData(),
 

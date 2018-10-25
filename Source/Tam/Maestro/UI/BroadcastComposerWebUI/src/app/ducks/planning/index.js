@@ -357,6 +357,18 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case ACTIONS.ALLOCATE_SPOTS.success: {
+      const isName = state.isOpenMarketDataSortName;
+      if (isName) data.Data.Markets = sortMarketsData(data.Data.Markets, true);
+      return {
+        ...state,
+        openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
+        activeOpenMarketData: data.Data,
+        openMarketLoading: false,
+        openMarketLoaded: true
+      };
+    }
     case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
       return {
         ...state,
@@ -642,4 +654,9 @@ export const setEstimatedId = (detailId, estimatedId) => ({
     detailId,
     estimatedId
   }
+});
+
+export const allocateSpots = newData => ({
+  type: ACTIONS.ALLOCATE_SPOTS.request,
+  payload: newData
 });

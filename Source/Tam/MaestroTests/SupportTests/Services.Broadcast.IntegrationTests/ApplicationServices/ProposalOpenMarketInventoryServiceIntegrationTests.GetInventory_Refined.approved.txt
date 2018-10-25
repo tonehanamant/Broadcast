@@ -216,6 +216,8 @@
       "Markets": [
         {
           "Cost": 0.0,
+          "DisplayImpressions": 0.0,
+          "DisplayStationImpressions": 0.0,
           "Impressions": 0.0,
           "MarketId": 101,
           "Spots": 1,
@@ -224,6 +226,8 @@
               "Programs": [
                 {
                   "Cost": 0.0,
+                  "DisplayImpressions": 0.0,
+                  "DisplayStationImpressions": 0.0,
                   "EFF": 0.0,
                   "HasImpressions": false,
                   "ProgramId": 162232,

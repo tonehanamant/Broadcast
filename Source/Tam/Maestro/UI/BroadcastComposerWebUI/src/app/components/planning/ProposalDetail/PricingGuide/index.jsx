@@ -24,6 +24,7 @@ import { toggleModal } from "Ducks/app";
 import {
   updateProposalEditFormDetail,
   loadOpenMarketData,
+  allocateSpots,
   clearOpenMarketData
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
@@ -65,6 +66,7 @@ const mapDispatchToProps = dispatch =>
       toggleModal,
       loadOpenMarketData,
       clearOpenMarketData,
+      allocateSpots,
       updateDetail: updateProposalEditFormDetail
     },
     dispatch
@@ -509,6 +511,7 @@ class PricingGuide extends Component {
       hasOpenMarketData,
       isOpenMarketDataSortName,
       openMarketLoading,
+      allocateSpots,
       openMarketLoaded,
       activeEditMarkets,
       isEditMarketsActive,
@@ -519,16 +522,12 @@ class PricingGuide extends Component {
     const {
       isInventoryEditing,
       isProprietaryEditing,
-      isOpenMarketEditing
-    } = this.state;
-    const {
+      isOpenMarketEditing,
       impression,
       budget,
       margin,
       rateInflation,
-      impressionInflation
-    } = this.state;
-    const {
+      impressionInflation,
       editingImpression,
       editingBudget,
       editingMargin,
@@ -540,9 +539,7 @@ class PricingGuide extends Component {
       propImpressionsCNN,
       propImpressionsSinclair,
       propImpressionsTTNW,
-      propImpressionsTVB
-    } = this.state;
-    const {
+      propImpressionsTVB,
       editingPropImpressionsCNN,
       editingPropImpressionsSinclair,
       editingPropImpressionsTTNW,
@@ -1390,6 +1387,7 @@ class PricingGuide extends Component {
                         openMarketLoading={openMarketLoading}
                         hasOpenMarketData={hasOpenMarketData}
                         isOpenMarketDataSortName={isOpenMarketDataSortName}
+                        allocateSpots={allocateSpots}
                       />
                     )}
                   {openMarketLoaded &&
@@ -1435,6 +1433,7 @@ PricingGuide.propTypes = {
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
+  allocateSpots: PropTypes.func.isRequired,
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
   isEditMarketsActive: PropTypes.bool.isRequired

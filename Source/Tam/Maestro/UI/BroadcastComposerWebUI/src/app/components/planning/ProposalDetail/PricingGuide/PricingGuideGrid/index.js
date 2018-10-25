@@ -1,12 +1,22 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Table, { withGrid } from "Lib/react-table";
-// import { Well } from 'react-bootstrap';
 import PricingGuideGridHeader from "./PricingGuideGridHeader";
-import { generateData, rowColors, columns } from "./util";
+import { generateData, rowColors, generateColumns, updateItem } from "./util";
 
 class PricingGuideGrid extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onCellChange = this.onCellChange.bind(this);
+  }
+
+  onCellChange(...args) {
+    const { activeOpenMarketData, allocateSpots } = this.props;
+    const updatedMarkets = updateItem(activeOpenMarketData.Markets, ...args);
+    allocateSpots({ ...activeOpenMarketData, Markets: updatedMarkets });
+  }
+
   render() {
     const {
       activeOpenMarketData,
@@ -15,8 +25,9 @@ class PricingGuideGrid extends Component {
       isOpenMarketDataSortName
     } = this.props;
     const data = generateData(activeOpenMarketData.Markets);
+    const columns = generateColumns(this.onCellChange);
+
     return (
-      // <Well bsSize="small">
       <div>
         <PricingGuideGridHeader
           activeOpenMarketData={activeOpenMarketData}
@@ -35,7 +46,6 @@ class PricingGuideGrid extends Component {
           })}
         />
       </div>
-      // </Well>
     );
   }
 }
@@ -44,7 +54,8 @@ PricingGuideGrid.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
-  openMarketLoading: PropTypes.bool.isRequired
+  openMarketLoading: PropTypes.bool.isRequired,
+  allocateSpots: PropTypes.func.isRequired
 };
 
 PricingGuideGrid.defaultProps = {};

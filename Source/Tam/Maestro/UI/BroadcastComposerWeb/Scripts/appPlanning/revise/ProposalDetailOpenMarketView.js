@@ -294,6 +294,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             Spots: market.Spots,
             //EFF: market.EFF,
             Impressions: market.Impressions,
+            DisplayImpressions: market.DisplayImpressions,
+            DisplayStationImpressions: market.DisplayStationImpressions,
             isHiatus: isHiatus
         };
         return ret;
@@ -577,12 +579,21 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
         //update market row
         var marketChanges = {};
-        marketChanges['week' + week.weekIdx] = { Spots: marketDataItem.Spots, Cost: marketDataItem.Cost, Impressions: marketDataItem.Impressions };
+        marketChanges['week' + week.weekIdx] = {
+            Spots: marketDataItem.Spots,
+            Cost: marketDataItem.Cost,
+            DisplayImpressions: marketDataItem.DisplayImpressions,
+            DisplayStationImpressions: marketDataItem.DisplayStationImpressions
+        };
         this.openMarketsGrid.set('market_' + rec.MarketId, marketChanges);
 
         //update program row (spots already set)
         var weekProgramChanges = {};
-        weekProgramChanges['week' + week.weekIdx] = { Cost: programDataItem.Cost, TotalImpressions: programDataItem.TotalImpressions };
+        weekProgramChanges['week' + week.weekIdx] = {
+            Cost: programDataItem.Cost,
+            DisplayImpressions: programDataItem.DisplayImpressions,
+            DisplayStationImpressions: programDataItem.DisplayStationImpressions
+        };
         this.openMarketsGrid.set(rec.recid, weekProgramChanges);
 
         //reset with new data
