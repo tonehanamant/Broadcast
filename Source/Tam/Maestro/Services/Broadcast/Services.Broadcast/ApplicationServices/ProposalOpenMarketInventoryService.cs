@@ -1308,11 +1308,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _FilterByCpm(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (request.OpenMarketPricingGuide == null)
+            if (request.OpenMarketPricing == null)
                 return;
 
-            if (!request.OpenMarketPricingGuide.CpmMax.HasValue &&
-                !request.OpenMarketPricingGuide.CpmMin.HasValue)
+            if (!request.OpenMarketPricing.CpmMax.HasValue &&
+                !request.OpenMarketPricing.CpmMin.HasValue)
                 return;
 
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
@@ -1321,14 +1321,14 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var programs = station.Programs;
 
-                    if (request.OpenMarketPricingGuide.CpmMax.HasValue)
+                    if (request.OpenMarketPricing.CpmMax.HasValue)
                     {
-                        programs = programs.Where(x => x.BlendedCpm < request.OpenMarketPricingGuide.CpmMax.Value).ToList();
+                        programs = programs.Where(x => x.BlendedCpm < request.OpenMarketPricing.CpmMax.Value).ToList();
                     }
 
-                    if (request.OpenMarketPricingGuide.CpmMin.HasValue)
+                    if (request.OpenMarketPricing.CpmMin.HasValue)
                     {
-                        programs = programs.Where(x => x.BlendedCpm > request.OpenMarketPricingGuide.CpmMin.Value).ToList();
+                        programs = programs.Where(x => x.BlendedCpm > request.OpenMarketPricing.CpmMin.Value).ToList();
                     }
 
                     station.Programs = programs;
@@ -1350,17 +1350,17 @@ namespace Services.Broadcast.ApplicationServices
 
         private void AllocateSpotsWithoutGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (request.OpenMarketPricingGuide.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
+            if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
                 _AllocateMaxSpots(pricingGuideOpenMarketInventory);
-            else if (request.OpenMarketPricingGuide.OpenMarketCpmTarget == OpenMarketCpmTarget.Min)
+            else if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Min)
                 _AllocateMinSpots(pricingGuideOpenMarketInventory);
-            else if (request.OpenMarketPricingGuide.OpenMarketCpmTarget == OpenMarketCpmTarget.Avg)
+            else if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Avg)
                 _AllocateAvgSpots(pricingGuideOpenMarketInventory);
         }
 
         private void _AllocateSpotsWithGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            var unitCapPerStation = request.OpenMarketPricingGuide.UnitCapPerStation ?? 1;
+            var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 1;
             var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
             var impressionsGoal = request.ImpressionsGoal ?? Double.MaxValue;
 

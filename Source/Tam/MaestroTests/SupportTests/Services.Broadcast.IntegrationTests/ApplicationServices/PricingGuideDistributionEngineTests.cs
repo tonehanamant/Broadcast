@@ -47,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricingGuide = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -87,7 +87,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricingGuide = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -132,7 +132,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricingGuide = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -182,7 +182,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricingGuide = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Max
                 }
@@ -231,7 +231,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricingGuide = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Avg
                 }
@@ -274,7 +274,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricingGuide = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
