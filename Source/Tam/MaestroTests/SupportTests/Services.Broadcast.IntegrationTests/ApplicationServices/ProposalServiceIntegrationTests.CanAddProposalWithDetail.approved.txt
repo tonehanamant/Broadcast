@@ -8,7 +8,6 @@
   "CanDelete": true,
   "Details": [
     {
-      "AdjustmentInflation": 2.0,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -56,6 +55,7 @@
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "PricingGuide": {
+        "AdjustmentInflation": 2.0,
         "AdjustmentMargin": 3.0,
         "AdjustmentRate": 1.0,
         "GoalBudget": 100.0000,

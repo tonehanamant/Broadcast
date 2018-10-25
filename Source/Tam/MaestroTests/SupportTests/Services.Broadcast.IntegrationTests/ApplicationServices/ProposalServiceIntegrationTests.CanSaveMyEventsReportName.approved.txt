@@ -5,7 +5,6 @@
   "CanDelete": true,
   "Details": [
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -52,6 +51,7 @@
       "PostingBookId": null,
       "PostingPlaybackType": null,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,

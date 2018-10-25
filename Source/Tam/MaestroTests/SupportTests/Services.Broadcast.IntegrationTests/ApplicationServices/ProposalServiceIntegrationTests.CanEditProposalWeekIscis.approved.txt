@@ -5,7 +5,6 @@
   "CanDelete": false,
   "Details": [
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "DaypartCode": "NAV",
@@ -28,6 +27,7 @@
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,
@@ -170,7 +170,6 @@
       "TotalUnits": 10
     },
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "DaypartCode": "NAV",
@@ -205,6 +204,7 @@
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,
@@ -331,7 +331,6 @@
       "TotalUnits": 30
     },
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "DaypartCode": "NAV",
@@ -347,6 +346,7 @@
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,

@@ -1,5 +1,4 @@
 ﻿{
-  "AdjustmentInflation": null,
   "Adu": false,
   "CpmCriteria": [],
   "Daypart": null,
@@ -28,6 +27,7 @@
   "PostingBookId": null,
   "PostingPlaybackType": null,
   "PricingGuide": {
+    "AdjustmentInflation": null,
     "AdjustmentMargin": null,
     "AdjustmentRate": null,
     "GoalBudget": null,

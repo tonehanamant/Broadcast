@@ -67,12 +67,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ShareProjectionBookId = 413,
                 HutProjectionBookId = 410,
                 ProjectionPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
-                AdjustmentInflation = 2,
+                
                 PricingGuide = new ProposalDetailPricingGuideDto()
                 {
                     AdjustmentRate = 1,
                     AdjustmentMargin = 3,
                     GoalImpression = 10000,
+                    AdjustmentInflation = 2,
                     GoalBudget = 100
                 },
                 GenreCriteria = new List<GenreCriteria>()

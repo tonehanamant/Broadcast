@@ -5,7 +5,6 @@
   "CanDelete": false,
   "Details": [
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -40,6 +39,7 @@
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,
@@ -169,7 +169,6 @@
       "TotalUnits": 200
     },
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -216,6 +215,7 @@
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,
@@ -343,7 +343,6 @@
       "TotalUnits": 200
     },
     {
-      "AdjustmentInflation": null,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -371,6 +370,7 @@
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "PricingGuide": {
+        "AdjustmentInflation": null,
         "AdjustmentMargin": null,
         "AdjustmentRate": null,
         "GoalBudget": null,
