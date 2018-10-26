@@ -52,6 +52,42 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-3883 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'supplied_program' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+	ALTER TABLE [affidavit_file_details] ADD [supplied_program] VARCHAR(255) NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'program_show_type' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+	ALTER TABLE [affidavit_file_details] ALTER COLUMN [program_show_type] VARCHAR(255) NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'leadin_show_type' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+	ALTER TABLE [affidavit_file_details] ALTER COLUMN [leadin_show_type] VARCHAR(255) NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'leadout_show_type' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+	ALTER TABLE [affidavit_file_details] ALTER COLUMN [leadout_show_type] VARCHAR(255) NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'leadin_end_time' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+	ALTER TABLE [affidavit_file_details] ALTER COLUMN [leadin_end_time] INT NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'leadout_start_time' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
+BEGIN
+	ALTER TABLE [affidavit_file_details] ALTER COLUMN [leadout_start_time] INT NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_program_name' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_client_scrubs]'))
+BEGIN
+	ALTER TABLE [affidavit_client_scrubs] ALTER COLUMN [effective_program_name] VARCHAR(255) NULL
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'effective_show_type' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_client_scrubs]'))
+BEGIN
+	ALTER TABLE [affidavit_client_scrubs] ALTER COLUMN [effective_show_type] VARCHAR(255) NULL
+END
+/*************************************** END BCOP-3883 *****************************************************/
+
+
 /* START: Creation of MEDIA MONTHS and MEDIA WEEKS from 0121 to 0149 */
 IF (SELECT COUNT(1) FROM dbo.media_months mm WHERE mm.media_month='0121') = 0
 BEGIN
