@@ -277,6 +277,66 @@ export function* requestClearScrubbingDataFiltersList() {
 }
 
 /* ////////////////////////////////// */
+/* CLEAR FILTERED SCRUBBING DATA - resets filters */
+/* ////////////////////////////////// */
+export function* clearFilteredScrubbingData() {
+  yield call(requestClearScrubbingDataFiltersList);
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+  yield delay(500);
+  const originalFilters = yield select(
+    state => state.post.activeScrubbingFilters
+  );
+  const originalScrubs = yield select(
+    state => state.post.proposalHeader.scrubbingData.ClientScrubs
+  );
+  const activeFilters = _.forEach(originalFilters, filter => {
+    if (filter.active) {
+      const isList = filter.type === "filterList";
+      filter.active = false;
+      if (isList) {
+        filter.exclusions = [];
+        if (filter.hasMatchSpec) {
+          filter.activeMatch = false;
+          filter.matchOptions.outOfSpec = true;
+          filter.matchOptions.inSpec = true;
+        }
+        filter.filterOptions.forEach(option => {
+          option.Selected = true;
+        });
+      } else {
+        filter.exclusions = false;
+        if (filter.type === "timeInput") {
+          filter.filterOptions.TimeAiredStart =
+            filter.filterOptions.originalTimeAiredStart;
+          filter.filterOptions.TimeAiredEnd =
+            filter.filterOptions.originalTimeAiredEnd;
+        }
+        if (filter.type === "dateInput") {
+          filter.filterOptions.DateAiredStart =
+            filter.filterOptions.originalDateAiredStart;
+          filter.filterOptions.DateAiredEnd =
+            filter.filterOptions.originalDateAiredEnd;
+        }
+      }
+    }
+  });
+  // console.log("clear filters", activeFilters, originalFilters);
+  const ret = {
+    activeFilters,
+    originalScrubs
+  };
+  try {
+    yield put(setOverlayLoading({ id: "PostScrubbingFilter", loading: true }));
+    yield put({
+      type: ACTIONS.RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
+      data: ret
+    });
+  } finally {
+    yield put(setOverlayLoading({ id: "PostScrubbingFilter", loading: false }));
+  }
+}
+
+/* ////////////////////////////////// */
 /* REQUEST POST CLIENT SCRUBBING */
 /* ////////////////////////////////// */
 // allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
@@ -1132,4 +1192,11 @@ export function* watchUndoScrubStatus() {
 
 export function* watchUndoScrubStatusSuccess() {
   yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
+}
+
+export function* watchRequestClearFilteredScrubbingData() {
+  yield takeEvery(
+    ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
+    clearFilteredScrubbingData
+  );
 }

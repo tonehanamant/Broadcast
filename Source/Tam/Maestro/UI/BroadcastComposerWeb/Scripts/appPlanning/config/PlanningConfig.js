@@ -514,7 +514,7 @@
                     render: function (record, index, column_index) {
                         if (record) {
 
-                            var val = record.TargetCpm ? numeral(record.TargetCpm).format('$0,0[.]00') : '-';
+                            var val = (record.TargetCpm || record.TargetCpm === 0) ? numeral(record.TargetCpm).format('$0,0[.]00') : '-';
                             if (record.isProgram) {
                                 return PlanningConfig.greyRenderer(val, record.TotalSpots === 0);
                             } else {

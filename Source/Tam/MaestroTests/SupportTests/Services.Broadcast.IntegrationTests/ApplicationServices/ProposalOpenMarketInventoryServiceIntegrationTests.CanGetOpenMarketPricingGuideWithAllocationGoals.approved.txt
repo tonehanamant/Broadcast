@@ -118,5 +118,11 @@
       "TotalImpressions": 4156857700.0,
       "TotalSpots": 400
     }
-  ]
+  ],
+  "OpenMarketTotals": {
+    "Cost": 10000.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.0024056632970621053494326000,
+    "Impressions": 4156857700.0
+  }
 }

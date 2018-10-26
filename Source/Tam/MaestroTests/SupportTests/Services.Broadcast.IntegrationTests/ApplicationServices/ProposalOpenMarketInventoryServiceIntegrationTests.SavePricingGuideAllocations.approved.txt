@@ -50,5 +50,6 @@
       "TotalImpressions": 10628981.25,
       "TotalSpots": 5
     }
-  ]
+  ],
+  "OpenMarketTotals": null
 }
