@@ -19,11 +19,13 @@ import {
 import { bindActionCreators } from "redux";
 import { InputNumber } from "antd";
 import numeral from "numeral";
+import { get } from "lodash";
 
 import { toggleModal } from "Ducks/app";
 import {
   updateProposalEditFormDetail,
   loadOpenMarketData,
+  allocateSpots,
   clearOpenMarketData
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
@@ -32,6 +34,12 @@ import "./index.scss";
 
 const isActiveDialog = (detail, modal) =>
   modal && detail && modal.properties.detailId === detail.Id && modal.active;
+
+const numberRender = (data, path, format, divideBy) => {
+  let number = get(data, path);
+  if (number && divideBy) number /= divideBy;
+  return number ? numeral(number).format(format) : "--";
+};
 
 const mapStateToProps = ({
   app: {
@@ -65,6 +73,7 @@ const mapDispatchToProps = dispatch =>
       toggleModal,
       loadOpenMarketData,
       clearOpenMarketData,
+      allocateSpots,
       updateDetail: updateProposalEditFormDetail
     },
     dispatch
@@ -509,6 +518,7 @@ class PricingGuide extends Component {
       hasOpenMarketData,
       isOpenMarketDataSortName,
       openMarketLoading,
+      allocateSpots,
       openMarketLoaded,
       activeEditMarkets,
       isEditMarketsActive,
@@ -519,16 +529,12 @@ class PricingGuide extends Component {
     const {
       isInventoryEditing,
       isProprietaryEditing,
-      isOpenMarketEditing
-    } = this.state;
-    const {
+      isOpenMarketEditing,
       impression,
       budget,
       margin,
       rateInflation,
-      impressionInflation
-    } = this.state;
-    const {
+      impressionInflation,
       editingImpression,
       editingBudget,
       editingMargin,
@@ -540,9 +546,7 @@ class PricingGuide extends Component {
       propImpressionsCNN,
       propImpressionsSinclair,
       propImpressionsTTNW,
-      propImpressionsTVB
-    } = this.state;
-    const {
+      propImpressionsTVB,
       editingPropImpressionsCNN,
       editingPropImpressionsSinclair,
       editingPropImpressionsTTNW,
@@ -616,7 +620,7 @@ class PricingGuide extends Component {
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
                     <div className="summary-display">--</div>
-                    <div className="summary-label">IMPRESSIONS</div>
+                    <div className="summary-label">IMPRESSIONS (000)</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
@@ -883,7 +887,9 @@ class PricingGuide extends Component {
                 <Row>
                   <Col sm={1}>
                     <div className="summary-item single">
-                      <div className="summary-display">--%</div>
+                      <div className="summary-display">
+                        {numeral(balanceSum * 100).format("0,0.[00]")}%
+                      </div>
                     </div>
                   </Col>
                   <Col sm={5}>
@@ -902,7 +908,7 @@ class PricingGuide extends Component {
                       </div>
                       <div className="summary-item">
                         <div className="summary-display">--</div>
-                        <div className="summary-label">IMPRESSIONS</div>
+                        <div className="summary-label">IMPRESSIONS (000)</div>
                       </div>
                       <div className="summary-item">
                         <div className="summary-display">$--</div>
@@ -1183,25 +1189,52 @@ class PricingGuide extends Component {
                 <Row>
                   <Col sm={6}>
                     <div className="summary-item single">
-                      <div className="summary-display">--%</div>
+                      <div className="summary-display">
+                        {numeral((1 - balanceSum) * 100).format("0,0.[00]")}%
+                      </div>
                     </div>
                   </Col>
                   <Col sm={6}>
                     <div className="summary-bar">
                       <div className="summary-item">
-                        <div className="summary-display">--%</div>
+                        <div className="summary-display">
+                          {numberRender(
+                            activeOpenMarketData,
+                            "OpenMarketTotals.Coverage",
+                            "0.000"
+                          )}%
+                        </div>
                         <div className="summary-label">MARKET COVERAGE</div>
                       </div>
                       <div className="summary-item">
-                        <div className="summary-display">$--</div>
+                        <div className="summary-display">
+                          ${numberRender(
+                            activeOpenMarketData,
+                            "OpenMarketTotals.Cpm",
+                            "0,0.00"
+                          )}
+                        </div>
                         <div className="summary-label">CPM</div>
                       </div>
                       <div className="summary-item">
-                        <div className="summary-display">--</div>
-                        <div className="summary-label">IMPRESSIONS</div>
+                        <div className="summary-display">
+                          {numberRender(
+                            activeOpenMarketData,
+                            "OpenMarketTotals.Impressions",
+                            "0,0",
+                            1000
+                          )}
+                        </div>
+                        <div className="summary-label">IMPRESSIONS (000)</div>
                       </div>
                       <div className="summary-item">
-                        <div className="summary-display">$--</div>
+                        <div className="summary-display">
+                          ${numberRender(
+                            activeOpenMarketData,
+                            "OpenMarketTotals.Cost",
+                            "0,0"
+                          )}
+                        </div>
                         <div className="summary-label">TOTAL COST</div>
                       </div>
                     </div>
@@ -1390,6 +1423,7 @@ class PricingGuide extends Component {
                         openMarketLoading={openMarketLoading}
                         hasOpenMarketData={hasOpenMarketData}
                         isOpenMarketDataSortName={isOpenMarketDataSortName}
+                        allocateSpots={allocateSpots}
                       />
                     )}
                   {openMarketLoaded &&
@@ -1435,6 +1469,7 @@ PricingGuide.propTypes = {
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
+  allocateSpots: PropTypes.func.isRequired,
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
   isEditMarketsActive: PropTypes.bool.isRequired

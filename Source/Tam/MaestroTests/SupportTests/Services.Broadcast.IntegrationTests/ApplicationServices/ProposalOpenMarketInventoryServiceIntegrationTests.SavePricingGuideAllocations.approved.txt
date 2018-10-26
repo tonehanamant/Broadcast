@@ -1,0 +1,56 @@
+﻿{
+  "AllMarkets": [],
+  "DisplayFilter": {
+    "Affiliations": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": []
+  },
+  "DistributionRequest": null,
+  "Filter": {},
+  "Markets": [
+    {
+      "AvgCpm": 0.0117602992290535840393922983,
+      "DisplayImpressions": 10628981.25,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 1.01,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 0.0117602992290535840393922983,
+      "MinCpm": 0.0117602992290535840393922983,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.0117602992290535840393922983,
+          "Programs": [
+            {
+              "BlendedCpm": 0.0117602992290535840393922983,
+              "Cost": 125.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-6PM",
+                "Id": 12
+              },
+              "DisplayCost": 125.0000,
+              "DisplayImpressions": 10628981.25,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 2125796.25,
+              "HasImpressions": true,
+              "Impressions": 10628981.25,
+              "ImpressionsPerSpot": 2125796.25,
+              "ProgramName": "Friends",
+              "Spots": 5,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ]
+        }
+      ],
+      "TotalCost": 125.0000,
+      "TotalImpressions": 10628981.25,
+      "TotalSpots": 5
+    }
+  ],
+  "OpenMarketTotals": null
+}

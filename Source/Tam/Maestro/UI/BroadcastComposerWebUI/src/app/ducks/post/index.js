@@ -1,4 +1,5 @@
 // Actions
+// import _ from "lodash";
 import * as ACTIONS from "./actionTypes.js";
 import { getDay, getDateInFormat } from "../../utils/dateFormatter";
 
@@ -63,7 +64,7 @@ const initialState = {
           outOfSpec: true,
         }, */
       exclusions: false,
-      filterOptions: []
+      filterOptions: {}
     },
     DayOfWeek: {
       filterDisplay: "Days",
@@ -215,7 +216,7 @@ const initialState = {
       type: "timeInput",
       active: false,
       exclusions: false,
-      filterOptions: []
+      filterOptions: {}
     },
     WeekStart: {
       filterDisplay: "Week Starts",
@@ -275,6 +276,22 @@ export default function reducer(state = initialState, action) {
         ...state,
         activeIsciFilterQuery: ""
       };
+
+    case ACTIONS.RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA: {
+      return {
+        ...state,
+        proposalHeader: {
+          ...state.proposalHeader,
+          activeScrubbingData: {
+            ...state.proposalHeader.activeScrubbingData,
+            ClientScrubs: data.originalScrubs
+          }
+        },
+        hasActiveScrubbingFilters: false,
+        activeScrubbingFilters: data.activeFilters,
+        scrubbingFiltersList: [data.activeFilters]
+      };
+    }
 
     case ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING: {
       const filtersData = data.Data.Filters;
@@ -604,4 +621,14 @@ export const undoScrubStatus = (proposalId, scrubIds) => ({
 export const saveActiveScrubData = (newData, fullList) => ({
   type: ACTIONS.SAVE_NEW_CLIENT_SCRUBS,
   payload: { Data: newData, FullData: fullList }
+});
+
+// clears scrubbing filters
+export const clearFilteredScrubbingData = () => ({
+  type: ACTIONS.CLEAR_FILTERED_SCRUBBING_DATA,
+  payload: {}
+});
+
+export const getClearScrubbingDataFiltered = () => ({
+  type: ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA
 });

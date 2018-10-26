@@ -72,6 +72,7 @@
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 2125796.25,
               "Genres": [],
+              "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 2125796.25,
               "ManifestDaypartId": 213349,

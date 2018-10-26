@@ -50,6 +50,8 @@ namespace Services.Broadcast.BusinessEngines
 
         void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
         void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
+        void CalculateTotalCostForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs);
+        void CalculateTotalImpressionsForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs);
 
         decimal CalculateSpotCost(int spots, decimal spotCost);
         double CalculateSpotImpressions(int spots, double unitImpressions);
@@ -320,6 +322,22 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.EffectiveImpressionsPerSpot);
+            }
+        }
+        
+        public void CalculateTotalCostForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.Cost = CalculateSpotCost(program.Spots, program.CostPerSpot);
+            }
+        }
+
+        public void CalculateTotalImpressionsForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.Impressions = CalculateSpotImpressions(program.Spots, program.EffectiveImpressionsPerSpot);
             }
         }
 

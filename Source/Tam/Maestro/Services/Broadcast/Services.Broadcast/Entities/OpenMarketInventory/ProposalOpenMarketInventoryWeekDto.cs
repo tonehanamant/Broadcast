@@ -18,6 +18,9 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public double Impressions { get; set; }
             public decimal Cost { get; set; }
             public List<InventoryWeekStation> Stations { get; set; }
+            public double DisplayImpressions { get; set; }
+            public double DisplayStationImpressions { get; set; }
+
         }
 
         public class InventoryWeekStation
@@ -43,6 +46,40 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
             public int Spots { get; set; }
             public decimal TargetCpm { get; set; }
             public bool HasImpressions { get; set; }
+            public double DisplayStationImpressions
+            {
+                get
+                {
+                    if (!ProvidedUnitImpressions.HasValue)
+                    {
+                        return 0;
+                    }
+
+                    if(Spots == 0)
+                    {
+                        return ProvidedUnitImpressions.Value;
+                    }
+                    else
+                    {
+                        return ProvidedUnitImpressions.Value * Spots;
+                    }
+                }
+            }
+
+            public double DisplayImpressions
+            {
+                get
+                {
+                    if (Spots == 0)
+                    {
+                        return UnitImpression;
+                    }
+                    else
+                    {
+                        return UnitImpression * Spots;
+                    }
+                }
+            }
         }
     }
 }

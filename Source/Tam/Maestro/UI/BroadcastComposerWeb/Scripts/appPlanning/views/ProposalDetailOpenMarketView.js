@@ -284,6 +284,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             Spots: market.Spots,
             //EFF: market.EFF,
             Impressions: market.Impressions,
+            DisplayImpressions: market.DisplayImpressions,
+            DisplayStationImpressions: market.DisplayStationImpressions,
             isHiatus: isHiatus
         };
         return ret;

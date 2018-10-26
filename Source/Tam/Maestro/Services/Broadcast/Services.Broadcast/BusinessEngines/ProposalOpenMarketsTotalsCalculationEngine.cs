@@ -151,6 +151,16 @@ namespace Services.Broadcast.BusinessEngines
                                             .Where(p => p != null && p.Spots > 0)
                                             .Sum(p => p.TotalImpressions))
                             .Sum();
+                    market.DisplayImpressions = market.Stations
+                            .Select(a => a.Programs
+                                            .Where(p => p != null && p.Spots > 0)
+                                            .Sum(p => p.UnitImpression * p.Spots))
+                            .Sum();
+                    market.DisplayStationImpressions = market.Stations
+                            .Select(a => a.Programs
+                                            .Where(p => p != null && p.Spots > 0 && p.ProvidedUnitImpressions.HasValue)
+                                            .Sum(p => p.ProvidedUnitImpressions.Value * p.Spots))
+                            .Sum();
                 }
             }
         }
