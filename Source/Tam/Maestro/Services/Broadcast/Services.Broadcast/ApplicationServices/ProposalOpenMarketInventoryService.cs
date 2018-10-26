@@ -1745,8 +1745,10 @@ namespace Services.Broadcast.ApplicationServices
 
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
+            ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+            dto.OpenMarketTotals = _SumTotalsForOpenMarketSection(dto.Markets);
 
-            return ApplyFilterOnOpenMarketPricingGuideGrid(dto);
+            return dto;
         }
 
         private void _ValidateAllocations(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
