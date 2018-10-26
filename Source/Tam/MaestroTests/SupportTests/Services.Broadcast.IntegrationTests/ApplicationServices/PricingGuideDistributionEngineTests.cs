@@ -248,7 +248,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
-                MarketCoverage = 0.00008d,
+                MarketCoverage = 0.8d,
                 Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
                 {
                     new PricingGuideOpenMarketInventory.PricingGuideMarket
