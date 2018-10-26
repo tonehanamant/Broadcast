@@ -1335,8 +1335,11 @@ namespace Services.Broadcast.ApplicationServices
             if (request.OpenMarketPricing == null)
                 return;
 
-            if (!request.OpenMarketPricing.CpmMax.HasValue &&
-                !request.OpenMarketPricing.CpmMin.HasValue)
+            var cpmMaxHasValue = request.OpenMarketPricing.CpmMax.HasValue && request.OpenMarketPricing.CpmMax != 0;
+            var cpmMinHasValue = request.OpenMarketPricing.CpmMin.HasValue && request.OpenMarketPricing.CpmMin != 0;
+
+            if (!cpmMaxHasValue &&
+                !cpmMinHasValue)
                 return;
 
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
@@ -1345,12 +1348,12 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var programs = station.Programs;
 
-                    if (request.OpenMarketPricing.CpmMax.HasValue)
+                    if (cpmMaxHasValue)
                     {
                         programs = programs.Where(x => x.BlendedCpm < request.OpenMarketPricing.CpmMax.Value).ToList();
                     }
 
-                    if (request.OpenMarketPricing.CpmMin.HasValue)
+                    if (cpmMinHasValue)
                     {
                         programs = programs.Where(x => x.BlendedCpm > request.OpenMarketPricing.CpmMin.Value).ToList();
                     }
