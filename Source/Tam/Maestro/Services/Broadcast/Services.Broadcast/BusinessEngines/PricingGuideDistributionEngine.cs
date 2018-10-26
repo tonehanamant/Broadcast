@@ -28,7 +28,7 @@ namespace Services.Broadcast.BusinessEngines
             if (!pricingGuideOpenMarketInventory.MarketCoverage.HasValue)
                 return;
 
-            var totalMarketCoverage = pricingGuideOpenMarketInventory.Markets.Sum(x => x.MarketCoverage);
+            var totalMarketCoverage = pricingGuideOpenMarketInventory.Markets.Sum(x => x.MarketCoverage) / 100;
 
             // The sum of the coverage of the available markets is less than the desired market coverage.
             // Therefore, all available markets will be selected.
@@ -160,6 +160,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public void _SetPricingGuideMarkets(bool[,] itemsToSelect, int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
+            var selectedMarkets = new List<PricingGuideMarket>();
             var itemIndex = markets.Count;
             var remainingCoverage = coverage;
             var coverageCount = remainingCoverage;
@@ -169,7 +170,8 @@ namespace Services.Broadcast.BusinessEngines
                 while (coverageCount > 0)
                 {
                     if (itemsToSelect[itemIndex, coverageCount])
-                    {                        
+                    {
+                        selectedMarkets.Add(pricingGuideOpenMarketInventory.Markets[itemIndex - 1]);
                         remainingCoverage = remainingCoverage - markets[itemIndex - 1].MarketCoverage;
                         coverageCount = remainingCoverage;
                         break;
@@ -181,6 +183,8 @@ namespace Services.Broadcast.BusinessEngines
                 coverageCount = remainingCoverage;
                 itemIndex--;
             }
+
+            pricingGuideOpenMarketInventory.Markets = selectedMarkets;
         }
     }
 }
