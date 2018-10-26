@@ -74,6 +74,7 @@
                   "Id": 3
                 }
               ],
+              "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 10392144.25,
               "ManifestDaypartId": 213351,
@@ -100,6 +101,7 @@
                   "Id": 9
                 }
               ],
+              "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 2125796.25,
               "ManifestDaypartId": 213352,
@@ -116,5 +118,11 @@
       "TotalImpressions": 0.0,
       "TotalSpots": 0
     }
-  ]
+  ],
+  "OpenMarketTotals": {
+    "Cost": 0.0000,
+    "Coverage": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
 }

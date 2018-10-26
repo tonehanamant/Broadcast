@@ -1633,6 +1633,7 @@ export function* uploadSCXFile({ payload: params }) {
     yield put(setOverlayLoading({ id: "uploadSCX", loading: false }));
   }
 }
+
 export function* filterOpenMarketData(filters) {
   const { filterOpenMarketData } = api.planning;
   try {
@@ -1640,6 +1641,16 @@ export function* filterOpenMarketData(filters) {
     const original = yield select(state => state.planning.openMarketData);
     const request = Object.assign({}, original, filters);
     return yield filterOpenMarketData(request);
+  } finally {
+    yield put(setOverlayLoading({ id: "openMarketFilter", loading: false }));
+  }
+}
+
+export function* allocateSpots(payload) {
+  const { allocateSpots } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: "openMarketFilter", loading: true }));
+    return yield allocateSpots(payload);
   } finally {
     yield put(setOverlayLoading({ id: "openMarketFilter", loading: false }));
   }
@@ -1749,6 +1760,13 @@ export function* watchFilterOpenMarketData() {
   yield takeEvery(
     ACTIONS.FILTER_OPEN_MARKET_DATA.request,
     sagaWrapper(filterOpenMarketData, ACTIONS.FILTER_OPEN_MARKET_DATA)
+  );
+}
+
+export function* watchAllocateSpots() {
+  yield takeEvery(
+    ACTIONS.ALLOCATE_SPOTS.request,
+    sagaWrapper(allocateSpots, ACTIONS.ALLOCATE_SPOTS)
   );
 }
 

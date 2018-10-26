@@ -1,7 +1,35 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import PropTypes from "prop-types";
 import numeral from "numeral";
-import { isNil } from "lodash";
+import { isNil, update, findIndex, get } from "lodash";
+import { EditableCell } from "Lib/react-table";
+
+const findFieldIdx = (data, fieldName, rowData) =>
+  findIndex(data, it => it[fieldName] === rowData[fieldName]);
+
+const buildFieldPath = (data, rowData, fieldName) => {
+  const marketIndex = findFieldIdx(data, "MarketId", rowData);
+  let fieldPath = `[${marketIndex}]`;
+  if (!rowData.isMarket) {
+    fieldPath = `${fieldPath}.Stations`;
+    const station = get(data, fieldPath);
+    const stationIndex = findFieldIdx(station, "StationCode", rowData);
+    fieldPath = `${fieldPath}[${stationIndex}]`;
+    if (!rowData.isStation) {
+      fieldPath = `${fieldPath}.Programs`;
+      const program = get(data, fieldPath);
+      const programIndex = findFieldIdx(program, "ProgramId", rowData);
+      fieldPath = `${fieldPath}[${programIndex}]`;
+    }
+  }
+  return `${fieldPath}.${fieldName}`;
+};
+
+export const updateItem = (data, fieldName, value, rowData) => {
+  const fieldPath = buildFieldPath(data, rowData, fieldName);
+  return update(data, fieldPath, () => value);
+};
 
 const rowTypes = {
   TITLE: "TITLE",
@@ -34,6 +62,7 @@ const generateData = markets => {
         : market.DisplayStationImpressions,
       // OvernightImpressions: market.TotalOvernightImpressions,
       Cost: market.TotalCost,
+      MarketId: market.MarketId,
       isMarket: true // need for future use
     });
     market.Stations.forEach(station => {
@@ -41,7 +70,9 @@ const generateData = markets => {
       data.push({
         rowType: rowTypes.SUB_TITLE,
         AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
-        isStation: true
+        isStation: true,
+        MarketId: market.MarketId,
+        StationCode: station.StationCode
       });
 
       station.Programs.forEach(program => {
@@ -57,7 +88,10 @@ const generateData = markets => {
           StationImpressions: program.DisplayStationImpressions
             ? program.DisplayStationImpressions / 1000
             : program.DisplayStationImpressions,
-          // OvernightImpressions: program.OvernightImpressions,
+          HasImpressions: program.HasImpressions,
+          MarketId: market.MarketId,
+          StationCode: station.StationCode,
+          ProgramId: program.ProgramId,
           Cost: program.DisplayCost,
           isProgram: true // need for future use
         });
@@ -76,7 +110,6 @@ const GreyDisplay = (value, isGrey) => {
 };
 
 const NumberCell = ({ value, original }) => {
-  // console.log('number row', original);
   if (isNil(value)) return "";
   const retVal = value !== 0 ? numeral(value).format("0,0") : "-";
   const inactive = original.isProgram
@@ -86,7 +119,6 @@ const NumberCell = ({ value, original }) => {
 };
 
 const ImpressionCell = ({ value, original }) => {
-  // console.log('impression row', original);
   if (isNil(value)) return "";
   const inactive = original.isProgram
     ? original.Spots === 0 || original.Impressions > 0
@@ -114,7 +146,21 @@ GroupingCell.propTypes = {
   value: PropTypes.string.isRequired
 };
 
-const columns = [
+const SpotCell = onChange => ({ value, original }) =>
+  original.HasImpressions ? (
+    <EditableCell
+      mask="integer"
+      value={value}
+      onChange={(...arg) => {
+        onChange(...arg, original);
+      }}
+      id="Spots"
+    />
+  ) : (
+    NumberCell({ value, original })
+  );
+
+const generateColumns = onChange => [
   {
     Header: "Airing Time",
     accessor: "AiringTime",
@@ -134,7 +180,7 @@ const columns = [
   {
     Header: "Spots",
     accessor: "Spots",
-    Cell: NumberCell
+    Cell: SpotCell(onChange)
   },
   {
     Header: "Impressions(000)",
@@ -153,4 +199,4 @@ const columns = [
   }
 ];
 
-export { columns, generateData, rowColors, rowTypes };
+export { generateColumns, generateData, rowColors, rowTypes };

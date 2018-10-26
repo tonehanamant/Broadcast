@@ -14,6 +14,8 @@ namespace Services.Broadcast.Entities.DTO
         public List<PricingGuideOpenMarketInventory.PricingGuideMarket> Markets { get; set; } = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>();
 
         public List<PricingGuideMarketTotalsDto> AllMarkets { get; set; } = new List<PricingGuideMarketTotalsDto>();
+
+        public PricingGuideOpenMarketInventory.OpenMarketTotals OpenMarketTotals { get; set; }
     }
 
     public class PricingGuideOpenMarketInventory : ProposalDetailInventoryBase
@@ -76,6 +78,7 @@ namespace Services.Broadcast.Entities.DTO
                     public double StationImpressionsPerSpot { get; set; }
                     public decimal CostPerSpot { get; set; }
                     public decimal Cost { get; set; }
+                    public bool HasImpressions { get; set; }
                     public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
                     public double EffectiveImpressionsPerSpot
                     {
@@ -139,6 +142,14 @@ namespace Services.Broadcast.Entities.DTO
                     }
                 }
             }
+        }
+
+        public class OpenMarketTotals
+        {
+            public decimal Cpm { get; set; }
+            public decimal Cost { get; set; }
+            public double Impressions { get; set; }
+            public double Coverage { get; set; }
         }
     }
 }

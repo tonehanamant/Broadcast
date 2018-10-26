@@ -12,7 +12,4 @@ export const rowSelection = {
   [SELECTION.MULTI]: multiSelectRow
 };
 
-export const isNumeric = val => {
-  const parsedValue = parseFloat(val);
-  return !isNaN(parsedValue);
-};
+export const isNumeric = val => !isNaN(val);

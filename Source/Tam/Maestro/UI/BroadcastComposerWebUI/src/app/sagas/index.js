@@ -33,6 +33,7 @@ export default function* rootSaga() {
     postSaga.watchUndoArchivedIscis(),
     postSaga.watchUndoScrubStatus(),
     postSaga.watchUndoScrubStatusSuccess(),
+    postSaga.watchRequestClearFilteredScrubbingData(),
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),
@@ -67,12 +68,12 @@ export default function* rootSaga() {
     planningSaga.watchRerunPostScrubing(),
     planningSaga.watchLoadOpenMarketData(),
     planningSaga.watchUploadSCXFile(),
+    planningSaga.watchAllocateSpots(),
     // planningSaga.watchUploadSCXFileSuccess(),
     planningSaga.watchFilterOpenMarketData(),
 
     trackerSaga.watchUploadTrackerFile(),
     trackerSaga.watchUploadTrackerFileSuccess(),
-
     trackerSaga.watchRequestTracker(),
     trackerSaga.watchRequestTrackerFiltered(),
     trackerSaga.watchRequestUnlinkedFiltered(),
@@ -94,6 +95,7 @@ export default function* rootSaga() {
     trackerSaga.watchCloseUnlinkedIsciModal(),
     trackerSaga.watchUndoArchivedIscis(),
     trackerSaga.watchUndoScrubStatus(),
-    trackerSaga.watchUndoScrubStatusSuccess()
+    trackerSaga.watchUndoScrubStatusSuccess(),
+    trackerSaga.watchRequestClearFilteredScrubbingData()
   ];
 }
