@@ -26,7 +26,8 @@ import {
   updateProposalEditFormDetail,
   loadOpenMarketData,
   allocateSpots,
-  clearOpenMarketData
+  clearOpenMarketData,
+  showEditMarkets
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
 import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
@@ -73,6 +74,7 @@ const mapDispatchToProps = dispatch =>
       toggleModal,
       loadOpenMarketData,
       clearOpenMarketData,
+      showEditMarkets,
       allocateSpots,
       updateDetail: updateProposalEditFormDetail
     },
@@ -184,6 +186,7 @@ class PricingGuide extends Component {
   onModalShow() {
     // console.log('MODAL SHOW>>>>>>>>>', this.props.detail);
     // process inventory/proprietary pricing/ open market just once on open
+    this.props.showEditMarkets(false);
     this.setInventory(this.props.detail.PricingGuide);
     this.setProprietaryPricing(this.props.detail.PricingGuide);
     this.setOpenMarketPricing(this.props.detail.PricingGuide);
@@ -1490,7 +1493,8 @@ PricingGuide.propTypes = {
   allocateSpots: PropTypes.func.isRequired,
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
-  isEditMarketsActive: PropTypes.bool.isRequired
+  isEditMarketsActive: PropTypes.bool.isRequired,
+  showEditMarkets: PropTypes.func.isRequired
 };
 
 PricingGuide.defaultProps = {
