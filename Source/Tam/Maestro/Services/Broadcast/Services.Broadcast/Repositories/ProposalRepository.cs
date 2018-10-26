@@ -1223,6 +1223,12 @@ namespace Services.Broadcast.Repositories
                         Id = x.id,
                         MinMax = (MinMaxEnum)x.min_max,
                         Value = x.value
+                    }).ToList(),
+                    ProprietaryPricing = proposalDetail.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                    {
+                        InventorySource = (InventorySourceEnum)p.inventory_source,
+                        ImpressionsBalance = p.impressions_balance,
+                        Cpm = p.cpm
                     }).ToList()
                 };
 

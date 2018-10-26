@@ -1125,6 +1125,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             var existingPricingGuide = _GetProposalDetailPricingGuide(request.ProposalId, request.ProposalDetailId);
             var generatePricingGuide = request.HasPricingGuideChanges ?? true;
+            var detail = _ProposalRepository.GetProposalDetail(request.ProposalDetailId);
 
             if (existingPricingGuide == null || generatePricingGuide)
             {
@@ -1160,9 +1161,35 @@ namespace Services.Broadcast.ApplicationServices
 
             _SetCanEditSpotsForPrograms(pricingGuideDto);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
+            _SumTotalsForPricingGuide(pricingGuideDto, detail.ProprietaryPricing);
+
+            return pricingGuideDto;
+        }
+
+        private void _SumTotalsForPricingGuide(PricingGuideOpenMarketInventoryDto pricingGuideDto, List<ProprietaryPricingDto> proprietaryPricingValues)
+        {
             _SumTotalsForMarkets(pricingGuideDto.Markets);
             pricingGuideDto.OpenMarketTotals = _SumTotalsForOpenMarketSection(pricingGuideDto.Markets);
-            return pricingGuideDto;
+            pricingGuideDto.ProprietaryTotals = _SumTotalsForProprietarySection(pricingGuideDto.OpenMarketTotals.Impressions, proprietaryPricingValues);
+        }
+
+        private ProprietaryTotals _SumTotalsForProprietarySection(double openMarketImpressions, List<ProprietaryPricingDto> proprietaryPricingValues)
+        {
+            var proprietaryBalance = proprietaryPricingValues.Sum(x => x.ImpressionsBalance) * 100;
+            var result = new ProprietaryTotals();
+
+            if (openMarketImpressions == 0 || proprietaryBalance == 0)
+            {
+                return result;
+            }
+            
+            var openMarketBalance = 100 - proprietaryBalance;
+            var impressionsPerOnePercentage = openMarketImpressions / openMarketBalance;
+            result.Impressions = proprietaryBalance * impressionsPerOnePercentage;
+            result.Cpm = (decimal)(proprietaryPricingValues.Sum(x => (x.ImpressionsBalance * 100) * (double)x.Cpm) / proprietaryBalance);
+            result.Cost = (decimal)(result.Impressions / 1000) * result.Cpm;
+
+            return result;
         }
 
         private OpenMarketTotals _SumTotalsForOpenMarketSection(List<PricingGuideMarket> markets)

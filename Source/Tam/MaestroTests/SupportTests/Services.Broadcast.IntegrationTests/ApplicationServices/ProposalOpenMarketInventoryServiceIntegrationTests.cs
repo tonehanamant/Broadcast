@@ -2595,20 +2595,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
-
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket), "MarketId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation), "StationCode");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ProgramId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ManifestDaypartId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "Genres");
-
-            var jsonSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-            var resultJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result, _GetPricingGuideJsonSerializerSettings());
 
             Approvals.Verify(resultJson);
         }
@@ -2639,6 +2626,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
 
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_SetsProprietaryTotals()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26020,
+                ProposalDetailId = 9982,
+                BudgetGoal = 10000,
+                OpenMarketPricing = new OpenMarketPricing
+                {
+                    UnitCapPerStation = 100
+                }
+            };
+
+            var result = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result, _GetPricingGuideJsonSerializerSettings());
+
+            Approvals.Verify(resultJson);
+        }
+
+        private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket), "MarketId");
+            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation), "StationCode");
+            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ProgramId");
+            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ManifestDaypartId");
+            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "Genres");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
         }
     }
 }
