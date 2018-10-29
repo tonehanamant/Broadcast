@@ -3156,7 +3156,6 @@
     "Impressions": 0.0
   },
   "ProprietaryTotals": {
-    "Balance": 0.0,
     "Cost": 0.0,
     "Cpm": 0.0,
     "Impressions": 0.0

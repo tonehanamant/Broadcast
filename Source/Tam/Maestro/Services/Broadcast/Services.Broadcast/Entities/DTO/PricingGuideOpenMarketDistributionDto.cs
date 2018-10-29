@@ -161,7 +161,6 @@ namespace Services.Broadcast.Entities.DTO
             public decimal Cpm { get; set; }
             public decimal Cost { get; set; }
             public double Impressions { get; set; }
-            public double Balance { get; set; }
         }
 
         public class PricingTotals

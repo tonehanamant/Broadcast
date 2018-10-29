@@ -1176,16 +1176,19 @@ namespace Services.Broadcast.ApplicationServices
 
         private PricingTotals _SumPricingTotals(OpenMarketTotals openMarketTotals, ProprietaryTotals proprietaryTotals)
         {
-            var proprietaryBalance = proprietaryTotals.Balance / 100;
-            var openMarketBalance = 1 - proprietaryBalance;
-
-            return new PricingTotals
+            var result = new PricingTotals
             {
                 Impressions = openMarketTotals.Impressions + proprietaryTotals.Impressions,
                 Cost = openMarketTotals.Cost + proprietaryTotals.Cost,
-                Coverage = openMarketTotals.Coverage,
-                Cpm = ((decimal)openMarketBalance * openMarketTotals.Cpm) + ((decimal)proprietaryBalance * proprietaryTotals.Cpm)
+                Coverage = openMarketTotals.Coverage
             };
+
+            if (result.Impressions > 0)
+            {
+                result.Cpm = result.Cost / (decimal)result.Impressions * 1000;
+            }
+
+            return result;
         }
 
         private ProprietaryTotals _SumTotalsForProprietarySection(double openMarketImpressions, List<ProprietaryPricingDto> proprietaryPricingValues)
@@ -1200,7 +1203,6 @@ namespace Services.Broadcast.ApplicationServices
 
             var openMarketBalance = 100 - proprietaryBalance;
             var impressionsPerOnePercentage = openMarketImpressions / openMarketBalance;
-            result.Balance = proprietaryBalance;
             result.Impressions = proprietaryBalance * impressionsPerOnePercentage;
             result.Cpm = (decimal)(proprietaryPricingValues.Sum(x => (x.ImpressionsBalance * 100) * (double)x.Cpm) / proprietaryBalance);
             result.Cost = (decimal)(result.Impressions / 1000) * result.Cpm;
