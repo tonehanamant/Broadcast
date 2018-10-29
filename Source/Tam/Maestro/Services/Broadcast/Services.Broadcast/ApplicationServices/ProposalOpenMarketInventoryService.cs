@@ -1257,8 +1257,7 @@ namespace Services.Broadcast.ApplicationServices
             PricingGuideOpenMarketInventory inventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
             _ApplyDaypartNames(programs);
-            inventory.AllMarkets = _MapAllMarketsObject(_GroupProgramsByMarketAndStationForPricingGuide(programs));
-
+            
             _ApplyProjectedImpressions(programs, inventory);
             _ApplyStationImpressions(programs, inventory);
             _CalculateProgramsCostsAndTotals(programs);
@@ -1269,6 +1268,7 @@ namespace Services.Broadcast.ApplicationServices
             _ApplyInventoryMarketRankings(postingBookId, inventoryMarkets);
             _ApplyInventoryMarketCoverages(inventoryMarkets);
 
+            inventory.AllMarkets = _MapAllMarketsObject(inventoryMarkets);
             inventory.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
 
             _SumTotalsForMarkets(inventory.Markets);

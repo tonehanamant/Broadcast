@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Table, { withGrid } from "Lib/react-table";
 import { Button, Glyphicon } from "react-bootstrap";
 import numeral from "numeral";
+// import { rowTypes } from "../../PricingGuideGrid/util";
 // import { generateData, rowColors, columns } from "./util";
 
 class EditMarketsGrid extends Component {
@@ -37,7 +38,7 @@ class EditMarketsGrid extends Component {
       {
         Header: "Coverage",
         accessor: "Coverage",
-        Cell: value => numeral(value).format("0,0.[000]")
+        Cell: row => numeral(row.value).format("0,0.[000]")
         // minWidth: 50
       },
       {
