@@ -1365,7 +1365,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _AllocateSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (request.BudgetGoal == null && request.ImpressionsGoal == null)
+            if (request.BudgetGoal == null && request.ImpressionGoal == null)
             {
                 AllocateSpotsWithoutGoals(pricingGuideOpenMarketInventory, request);
             }
@@ -1389,7 +1389,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 1;
             var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
-            var impressionsGoal = request.ImpressionsGoal ?? Double.MaxValue;
+            var impressionsGoal = request.ImpressionGoal ?? Double.MaxValue;
 
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
@@ -1397,9 +1397,9 @@ namespace Services.Broadcast.ApplicationServices
                 var marketPrograms = market.Stations.SelectMany(s => s.Programs);
                 var minProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
 
-                while (minProgram != null && budgetGoal > 0 && impressionsGoal > 0)
+                if (minProgram != null)
                 {
-                    minProgram.Spots = minProgram.Spots + 1;
+                    minProgram.Spots = 1;
                     minProgram.Impressions = minProgram.Spots * minProgram.EffectiveImpressionsPerSpot;
                     minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
                     impressionsGoal -= minProgram.EffectiveImpressionsPerSpot;
