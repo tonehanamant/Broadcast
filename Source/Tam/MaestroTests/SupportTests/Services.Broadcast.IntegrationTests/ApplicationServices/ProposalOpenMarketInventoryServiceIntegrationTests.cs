@@ -2577,10 +2577,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavePricingGuideAllocations()
         {
+            const int proposalDetailId = 9978;
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalId = 26016,
-                ProposalDetailId = 9978
+                ProposalDetailId = proposalDetailId
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             var market = dto.Markets.First(m => m.Stations.Any(s => s.Programs.Any()));
@@ -2590,6 +2591,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             program.Spots = program.Spots + 5;
             var allocationRequest = new PricingGuideAllocationSaveRequestDto
             {
+                ProposalDetailId = proposalDetailId,
                 Markets = dto.Markets,
                 Filter = dto.Filter,
             };
@@ -2605,6 +2607,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             MatchType = MessageMatch.Contains)]
         public void SavePricingGuideAllocations_WithoutImpressions()
         {
+            const int proposalDetailId = 9978;
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalId = 26016,
@@ -2620,12 +2623,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             program.StationImpressionsPerSpot = 0;
             var allocationRequest = new PricingGuideAllocationSaveRequestDto
             {
+                ProposalDetailId = proposalDetailId,
                 Markets = dto.Markets,
                 Filter = dto.Filter,
             };
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
-
         }
 
         [Test]
@@ -2637,7 +2640,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProposalId = 26020,
                 ProposalDetailId = 9982,
                 BudgetGoal = 10000,
-                OpenMarketPricing = new OpenMarketPricing
+                OpenMarketPricing = new OpenMarketPricingGuide
                 {
                     UnitCapPerStation = 100
                 }

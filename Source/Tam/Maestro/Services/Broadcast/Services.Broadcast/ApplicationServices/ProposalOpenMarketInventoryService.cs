@@ -1161,14 +1161,14 @@ namespace Services.Broadcast.ApplicationServices
 
             _SetCanEditSpotsForPrograms(pricingGuideDto);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
-            _SumTotalsForPricingGuide(pricingGuideDto, detail.ProprietaryPricing);
+            _SumTotalsForMarkets(pricingGuideDto.Markets);
+            _SumTotalsForPricingGuide(pricingGuideDto, detail.PricingGuide.ProprietaryPricing);
 
             return pricingGuideDto;
         }
 
-        private void _SumTotalsForPricingGuide(PricingGuideOpenMarketInventoryDto pricingGuideDto, List<ProprietaryPricingDto> proprietaryPricingValues)
+        private void _SumTotalsForPricingGuide(PricingGuideOpenMarketDistributionDto pricingGuideDto, List<ProprietaryPricingDto> proprietaryPricingValues)
         {
-            _SumTotalsForMarkets(pricingGuideDto.Markets);
             pricingGuideDto.OpenMarketTotals = _SumTotalsForOpenMarketSection(pricingGuideDto.Markets);
             pricingGuideDto.ProprietaryTotals = _SumTotalsForProprietarySection(pricingGuideDto.OpenMarketTotals.Impressions, proprietaryPricingValues);
         }
@@ -1776,7 +1776,9 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
             ApplyFilterOnOpenMarketPricingGuideGrid(dto);
-            dto.OpenMarketTotals = _SumTotalsForOpenMarketSection(dto.Markets);
+
+            var detail = _ProposalRepository.GetProposalDetail(request.ProposalDetailId);
+            _SumTotalsForPricingGuide(dto, detail.PricingGuide.ProprietaryPricing);
 
             return dto;
         }

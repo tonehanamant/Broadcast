@@ -57,5 +57,9 @@
     "Cpm": 0.0117602992290535840393923000,
     "Impressions": 10628981.25
   },
-  "ProprietaryTotals": null
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
 }
