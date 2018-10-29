@@ -317,7 +317,7 @@ namespace Services.Broadcast.ApplicationServices
                 LeadInShowType = d.LeadInShowType,
                 LeadOutShowType = d.LeadOutShowType,
                 Demographics = d.Demographics,
-                SuppliedProgramName = d.SuppliedProgram
+                SuppliedProgramName = d.SuppliedProgramName
             }).ToList();
             return result;
         }

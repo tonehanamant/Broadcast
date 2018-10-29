@@ -10,95 +10,95 @@
           "ClientScrubAudiences": [
             {
               "AudienceId": 4,
-              "Impressions": 1802.1
+              "Impressions": 2414.1
             },
             {
               "AudienceId": 5,
-              "Impressions": 2186.1
+              "Impressions": 1099.7
             },
             {
               "AudienceId": 6,
-              "Impressions": 323.15
+              "Impressions": 198.65
             },
             {
               "AudienceId": 7,
-              "Impressions": 2889.2
+              "Impressions": 2433.85
             },
             {
               "AudienceId": 13,
-              "Impressions": 24581.37894737
+              "Impressions": 34867.45
             },
             {
               "AudienceId": 14,
-              "Impressions": 80846.73684211
+              "Impressions": 56733.05
             },
             {
               "AudienceId": 15,
-              "Impressions": 141885.13947368
+              "Impressions": 119525.8
             },
             {
               "AudienceId": 19,
-              "Impressions": 1740.19210526
+              "Impressions": 2041.95
             },
             {
               "AudienceId": 20,
-              "Impressions": 1188.84210526
+              "Impressions": 2808.95
             },
             {
               "AudienceId": 21,
-              "Impressions": 2035.75
+              "Impressions": 3224.7
             },
             {
               "AudienceId": 22,
-              "Impressions": 5129.55
+              "Impressions": 3690.3
             },
             {
               "AudienceId": 28,
-              "Impressions": 25782.15
+              "Impressions": 17984.65
             },
             {
               "AudienceId": 29,
-              "Impressions": 56149.55263158
+              "Impressions": 44661.1
             },
             {
               "AudienceId": 30,
-              "Impressions": 103226.77894737
+              "Impressions": 64062.8
             },
             {
               "AudienceId": 31,
-              "Impressions": 413371.57631579
+              "Impressions": 362701.1
             },
             {
               "AudienceId": 46,
-              "Impressions": 4902.85
+              "Impressions": 4187.65
             },
             {
               "AudienceId": 284,
-              "Impressions": 12605.1
+              "Impressions": 9788.6
             },
             {
               "AudienceId": 290,
-              "Impressions": 35021.98157895
+              "Impressions": 35697.7
             },
             {
               "AudienceId": 339,
-              "Impressions": 3199.45
+              "Impressions": 3114.95
             },
             {
               "AudienceId": 347,
-              "Impressions": 26770.74210526
+              "Impressions": 43823.8
             },
             {
               "AudienceId": 348,
-              "Impressions": 11351.75
+              "Impressions": 10295.5
             }
           ],
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": null,
-          "EffectiveIsci": "AAAAAAAA1",
+          "EffectiveIsci": "AAAAAAAA",
           "EffectiveProgramName": null,
-          "EffectiveShowType": null,
+          "EffectiveShowType": "Comedy",
           "LeadIn": false,
           "MatchDate": false,
           "MatchGenre": true,
@@ -106,14 +106,14 @@
           "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
-          "MatchShowType": true,
+          "MatchShowType": false,
           "MatchStation": true,
           "MatchTime": false,
-          "ModifiedBy": "Test User",
-          "PostingBookId": 434,
+          "ModifiedBy": "PostLog Post Processing Test User",
+          "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 9951,
-          "ProposalVersionDetailQuarterWeekId": 9951,
+          "ProposalVersionDetailId": 14,
+          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -129,28 +129,28 @@
       "FileDetailProblems": [],
       "Genre": null,
       "InventorySource": 1,
-      "Isci": "AAAAAAAA1",
+      "Isci": "AAAAAAAA",
       "LeadInEndTime": null,
       "LeadinGenre": null,
       "LeadinProgramName": null,
-      "LeadInShowType": null,
+      "LeadInShowType": "News",
       "LeadoutGenre": null,
       "LeadoutProgramName": null,
-      "LeadOutShowType": null,
+      "LeadOutShowType": "Documentary",
       "LeadOutStartTime": null,
       "MappedIsci": null,
       "Market": "New York",
       "OriginalAirDate": "2017-12-26T00:00:00",
       "ProgramName": null,
-      "ShowType": null,
+      "ShowType": "Comedy",
       "SpotCost": 315.25,
       "SpotLengthId": 1,
       "Station": "WCBS",
       "SuppliedProgramName": "Everybody Loves Raymond"
     }
   ],
-  "FileHash": "E8-89-98-47-71-12-1B-47-B3-60-8A-31-2A-C5-35-CD-23-39-4A-30",
-  "FileName": "WWTV_AffidavitValidFile_NullValues.txt",
+  "FileHash": "46-C9-BD-9C-39-FF-C5-F7-93-E2-0B-EE-B5-01-1B-D9-86-D1-25-EB",
+  "FileName": "WWTV_KeepingTracValidFile_WithNullValues.txt",
   "FileProblems": [],
   "SourceId": 1,
   "Status": 1

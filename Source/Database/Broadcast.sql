@@ -87,6 +87,12 @@ BEGIN
 END
 /*************************************** END BCOP-3883 *****************************************************/
 
+/*************************************** START BCOP-3884 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'supplied_program_name' AND OBJECT_ID = OBJECT_ID('[dbo].[postlog_file_details]'))
+BEGIN
+	ALTER TABLE [postlog_file_details] ADD [supplied_program_name] VARCHAR(255) NULL
+END
+/*************************************** END BCOP-3884 *****************************************************/
 
 /* START: Creation of MEDIA MONTHS and MEDIA WEEKS from 0121 to 0149 */
 IF (SELECT COUNT(1) FROM dbo.media_months mm WHERE mm.media_month='0121') = 0

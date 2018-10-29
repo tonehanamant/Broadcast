@@ -35,6 +35,6 @@ namespace Services.Broadcast.Entities
         public string ShowType { get; set; }
         public string LeadInShowType { get; set; }
         public string LeadOutShowType { get; set; }
-        public string SuppliedProgram { get; set; }
+        public string SuppliedProgramName { get; set; }
     }
 }

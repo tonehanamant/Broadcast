@@ -596,8 +596,7 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private WWTVSaveResult _PostLogSaveResult(InboundFileSaveRequest saveRequest, string username,
-            DateTime currentDateTime, ScrubbingFile postLogFile)
+        private WWTVSaveResult _PostLogSaveResult(InboundFileSaveRequest saveRequest, string username, DateTime currentDateTime, ScrubbingFile postLogFile)
         {
             var result = new WWTVSaveResult();
 
@@ -887,12 +886,13 @@ namespace Services.Broadcast.ApplicationServices
                 LeadoutGenre = d.LeadOutGenre,
                 LeadinProgramName = d.LeadInProgramName,
                 LeadoutProgramName = d.LeadOutProgramName,
-                LeadInEndTime = Convert.ToInt32(d.LeadInEndTime?.TimeOfDay.TotalSeconds),
-                LeadOutStartTime = Convert.ToInt32(d.LeadOutStartTime?.TimeOfDay.TotalSeconds),
+                LeadInEndTime = d.LeadInEndTime == null ? (int?)null : Convert.ToInt32(d.LeadInEndTime.Value.TimeOfDay.TotalSeconds),
+                LeadOutStartTime = d.LeadOutStartTime == null ? (int?)null : Convert.ToInt32(d.LeadOutStartTime.Value.TimeOfDay.TotalSeconds),
                 ShowType = d.ShowType,
                 LeadInShowType = d.LeadInShowType,
                 LeadOutShowType = d.LeadOutShowType,
-                Demographics = d.Demographics
+                Demographics = d.Demographics,
+                SuppliedProgramName = d.SuppliedProgramName
             }).ToList();
             return result;
         }

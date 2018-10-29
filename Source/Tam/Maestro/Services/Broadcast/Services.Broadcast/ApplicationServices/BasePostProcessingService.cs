@@ -258,7 +258,8 @@ namespace Services.Broadcast.ApplicationServices
                     LeadOutStartTime = leadOutStartTime,
                     ShowType = jsonDetail.ShowType,
                     LeadInShowType = jsonDetail.LeadInShowType,
-                    LeadOutShowType = jsonDetail.LeadOutShowType
+                    LeadOutShowType = jsonDetail.LeadOutShowType,
+                    SuppliedProgramName = jsonDetail.SuppliedProgram
                 };
 
                 if (jsonDetail.Demographics != null)
