@@ -230,8 +230,12 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     airTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
                 }
-                var leadInEndTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, validationErrors, "LeadInEndTime", recordNumber));
-                var leadOutStartTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, validationErrors, "LeadOutStartTime", recordNumber));
+                var leadInEndTime = string.IsNullOrWhiteSpace(jsonDetail.LeadInEndTime) 
+                    ? (DateTime?)null
+                    :jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadInEndTime, validationErrors, "LeadInEndTime", recordNumber));
+                var leadOutStartTime = string.IsNullOrWhiteSpace(jsonDetail.LeadOutStartTime)
+                    ? (DateTime?)null
+                    : jsonDetail.Date.Add(ExtractDateTime(jsonDetail.LeadOutStartTime, validationErrors, "LeadOutStartTime", recordNumber));
 
                 var saveRequestDetail = new InboundFileSaveRequestDetail()
                 {

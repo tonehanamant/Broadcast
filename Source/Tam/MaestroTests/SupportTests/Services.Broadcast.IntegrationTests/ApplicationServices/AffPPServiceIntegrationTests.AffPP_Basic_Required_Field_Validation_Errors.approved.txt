@@ -19,16 +19,6 @@
       "ErrorMessage": "is required",
       "InvalidField": "Isci",
       "InvalidLine": 2
-    },
-    {
-      "ErrorMessage": "is required",
-      "InvalidField": "ShowType",
-      "InvalidLine": 3
-    },
-    {
-      "ErrorMessage": "is required",
-      "InvalidField": "LeadInShowType",
-      "InvalidLine": 3
     }
   ]
 }

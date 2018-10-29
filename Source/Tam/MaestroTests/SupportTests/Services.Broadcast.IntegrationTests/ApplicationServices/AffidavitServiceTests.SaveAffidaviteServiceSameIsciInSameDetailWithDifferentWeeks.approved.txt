@@ -138,7 +138,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 3,
-      "Station": "WWSB"
+      "Station": "WWSB",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -278,7 +279,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 3,
-      "Station": "WWSB"
+      "Station": "WWSB",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "abc123",

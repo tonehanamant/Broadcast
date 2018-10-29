@@ -30,10 +30,11 @@ namespace Services.Broadcast.Entities
         public double? SpotCost { get; set; }
         public string Affiliate { get; set; }
         public List<ScrubbingDemographics> Demographics { get; set; } = new List<ScrubbingDemographics>();
-        public DateTime LeadInEndTime { get; set; }
-        public DateTime LeadOutStartTime { get; set; }
+        public DateTime? LeadInEndTime { get; set; }
+        public DateTime? LeadOutStartTime { get; set; }
         public string ShowType { get; set; }
         public string LeadInShowType { get; set; }
         public string LeadOutShowType { get; set; }
+        public string SuppliedProgram { get; set; }
     }
 }

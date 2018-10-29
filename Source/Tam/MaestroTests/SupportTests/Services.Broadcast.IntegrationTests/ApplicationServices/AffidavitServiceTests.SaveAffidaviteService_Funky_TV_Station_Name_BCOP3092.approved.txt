@@ -53,7 +53,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WBTS-TV"
+      "Station": "WBTS-TV",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "abc123",

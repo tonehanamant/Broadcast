@@ -5,15 +5,11 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Http.Validation;
 using Common.Services;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Services.Cable.Entities;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
 using System.Net.Mail;
@@ -52,6 +48,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var filePath = @".\Files\WWTV_AffidavitValidFile.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+
+                VerifyAffidavit(response.Id.Value);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffPP_ValidFileContent_WithNullColumns()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_AffidavitValidFile_NullValues.txt";
                 var fileContents = File.ReadAllText(filePath);
 
                 WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
@@ -194,7 +205,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ModifiedDate");
+            jsonResolver.Ignore(typeof(ClientScrub), "Id");
+            jsonResolver.Ignore(typeof(ClientScrub), "ScrubbingFileDetailId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ModifiedDate");
             jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFileAudiences), "ClientScrubId");
             jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
 
             var jsonSettings = new JsonSerializerSettings()

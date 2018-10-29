@@ -2,103 +2,103 @@
   "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "Affiliate": "Affiate",
-      "AirTime": 29040,
+      "Affiliate": "CBS",
+      "AirTime": 81300,
       "Archived": false,
       "ClientScrubs": [
         {
           "ClientScrubAudiences": [
             {
               "AudienceId": 4,
-              "Impressions": 0.0
+              "Impressions": 1802.1
             },
             {
               "AudienceId": 5,
-              "Impressions": 0.0
+              "Impressions": 2186.1
             },
             {
               "AudienceId": 6,
-              "Impressions": 0.0
+              "Impressions": 323.15
             },
             {
               "AudienceId": 7,
-              "Impressions": 0.0
+              "Impressions": 2889.2
             },
             {
               "AudienceId": 13,
-              "Impressions": 2826.05
+              "Impressions": 24581.37894737
             },
             {
               "AudienceId": 14,
-              "Impressions": 2803.75
+              "Impressions": 80846.73684211
             },
             {
               "AudienceId": 15,
-              "Impressions": 2151.45
+              "Impressions": 141885.13947368
             },
             {
               "AudienceId": 19,
-              "Impressions": 0.0
+              "Impressions": 1740.19210526
             },
             {
               "AudienceId": 20,
-              "Impressions": 0.0
+              "Impressions": 1188.84210526
             },
             {
               "AudienceId": 21,
-              "Impressions": 0.0
+              "Impressions": 2035.75
             },
             {
               "AudienceId": 22,
-              "Impressions": 189.65
+              "Impressions": 5129.55
             },
             {
               "AudienceId": 28,
-              "Impressions": 0.0
+              "Impressions": 25782.15
             },
             {
               "AudienceId": 29,
-              "Impressions": 703.25
+              "Impressions": 56149.55263158
             },
             {
               "AudienceId": 30,
-              "Impressions": 0.0
+              "Impressions": 103226.77894737
             },
             {
               "AudienceId": 31,
-              "Impressions": 9141.6
+              "Impressions": 413371.57631579
             },
             {
               "AudienceId": 46,
-              "Impressions": 233.95
+              "Impressions": 4902.85
             },
             {
               "AudienceId": 284,
-              "Impressions": 0.0
+              "Impressions": 12605.1
             },
             {
               "AudienceId": 290,
-              "Impressions": 128.75
+              "Impressions": 35021.98157895
             },
             {
               "AudienceId": 339,
-              "Impressions": 446.4
+              "Impressions": 3199.45
             },
             {
               "AudienceId": 347,
-              "Impressions": 343.6
+              "Impressions": 26770.74210526
             },
             {
               "AudienceId": 348,
-              "Impressions": 0.0
+              "Impressions": 11351.75
             }
           ],
           "Comment": null,
           "EffectiveClientIsci": null,
-          "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": "DDDDDDDD",
-          "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "News",
+          "EffectiveGenre": null,
+          "EffectiveIsci": "AAAAAAAA1",
+          "EffectiveProgramName": null,
+          "EffectiveShowType": null,
           "LeadIn": false,
           "MatchDate": false,
           "MatchGenre": true,
@@ -106,44 +106,51 @@
           "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
-          "MatchShowType": false,
+          "MatchShowType": true,
           "MatchStation": true,
           "MatchTime": false,
-          "ModifiedBy": "test user",
-          "PostingBookId": 416,
+          "ModifiedBy": "Test User",
+          "PostingBookId": 434,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
+          "ProposalVersionDetailId": 9951,
+          "ProposalVersionDetailQuarterWeekId": 9951,
           "Status": 1
         }
       ],
-      "Demographics": [],
-      "EstimateId": null,
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 1928.0,
+          "OvernightRating": 2.3
+        }
+      ],
+      "EstimateId": 123,
       "FileDetailProblems": [],
-      "Genre": "Do It Yourself",
+      "Genre": null,
       "InventorySource": 1,
-      "Isci": "DDDDDDDD",
-      "LeadInEndTime": 36000,
-      "LeadinGenre": "News",
-      "LeadinProgramName": "LeadInProgramName",
-      "LeadInShowType": "Comedy",
-      "LeadoutGenre": "LeadOutGenre",
-      "LeadoutProgramName": "LeadOutProgramName",
-      "LeadOutShowType": "Documentary",
-      "LeadOutStartTime": 28920,
+      "Isci": "AAAAAAAA1",
+      "LeadInEndTime": null,
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadInShowType": null,
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
+      "LeadOutShowType": null,
+      "LeadOutStartTime": null,
       "MappedIsci": null,
-      "Market": "Tampa-St. Pete (Sarasota)",
-      "OriginalAirDate": "2017-06-29T00:00:00",
-      "ProgramName": "Program Names R us",
-      "ShowType": "News",
-      "SpotCost": null,
+      "Market": "New York",
+      "OriginalAirDate": "2017-12-26T00:00:00",
+      "ProgramName": null,
+      "ShowType": null,
+      "SpotCost": 315.25,
       "SpotLengthId": 1,
-      "Station": "WWSB",
+      "Station": "WCBS",
       "SuppliedProgramName": null
     }
   ],
-  "FileHash": "abc123",
-  "FileName": "test.file",
+  "FileHash": "E8-89-98-47-71-12-1B-47-B3-60-8A-31-2A-C5-35-CD-23-39-4A-30",
+  "FileName": "WWTV_AffidavitValidFile_NullValues.txt",
   "FileProblems": [],
   "SourceId": 1,
   "Status": 1

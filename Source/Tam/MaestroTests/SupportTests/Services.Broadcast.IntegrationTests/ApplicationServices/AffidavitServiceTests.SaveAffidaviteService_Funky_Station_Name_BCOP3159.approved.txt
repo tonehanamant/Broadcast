@@ -138,7 +138,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WNBC-SR"
+      "Station": "WNBC-SR",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "abc123",
