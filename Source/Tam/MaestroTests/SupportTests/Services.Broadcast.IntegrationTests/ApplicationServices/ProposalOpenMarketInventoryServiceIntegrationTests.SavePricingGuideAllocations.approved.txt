@@ -51,6 +51,11 @@
       "TotalSpots": 5
     }
   ],
-  "OpenMarketTotals": null,
+  "OpenMarketTotals": {
+    "Cost": 125.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.0117602992290535840393923000,
+    "Impressions": 10628981.25
+  },
   "ProprietaryTotals": null
 }

@@ -248,6 +248,8 @@
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
+    <Compile Include="Entities\DTO\PricingGuideOpenMarketDistributionDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\DTO\PricingGuideMarketTotalsDto.cs" />
     <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
@@ -259,11 +261,9 @@
     <Compile Include="Entities\Enums\FileProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\FileDetailProblemTypeEnum.cs" />
     <Compile Include="Entities\MarketCoverage.cs" />
-    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventory.cs" />
-    <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketInventory\PricingGuideOpenMarketInventoryRequestDto.cs" />
-    <Compile Include="Entities\OpenMarketPricing.cs" />
+    <Compile Include="Entities\OpenMarketPricingGuide.cs" />
     <Compile Include="Entities\SpotTrackerReport.cs" />
     <Compile Include="Entities\DTO\ProposalBuySaveRequestDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />

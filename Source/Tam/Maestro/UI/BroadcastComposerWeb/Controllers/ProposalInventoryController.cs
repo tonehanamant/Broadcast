@@ -93,7 +93,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Detail/PricingGuide/Grid/")]
-        public BaseResponse<PricingGuideOpenMarketInventoryDto> GetOpenMarketPricingGuide(PricingGuideOpenMarketInventoryRequestDto request)
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> GetOpenMarketPricingGuide(PricingGuideOpenMarketInventoryRequestDto request)
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
@@ -102,7 +102,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Detail/PricingGuide/Grid/ApplyFilter")]
-        public BaseResponse<PricingGuideOpenMarketInventoryDto> ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketInventoryDto dto)
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketDistributionDto dto)
         {
             return _ConvertToBaseResponse(() => 
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
@@ -111,7 +111,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Detail/PricingGuide/AllocateSpots")]
-        public BaseResponse<PricingGuideOpenMarketInventoryDto> SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request)
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request)
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
