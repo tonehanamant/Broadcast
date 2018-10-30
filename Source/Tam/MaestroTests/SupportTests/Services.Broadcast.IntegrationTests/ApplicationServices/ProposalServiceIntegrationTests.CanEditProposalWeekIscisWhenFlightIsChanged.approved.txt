@@ -5,9 +5,6 @@
   "CanDelete": false,
   "Details": [
     {
-      "AdjustmentInflation": null,
-      "AdjustmentMargin": null,
-      "AdjustmentRate": null,
       "Adu": false,
       "CpmCriteria": [],
       "DaypartCode": "NAV",
@@ -36,23 +33,29 @@
         }
       ],
       "GenreCriteria": [],
-      "GoalBudget": null,
-      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "OpenMarketCpmTarget": null,
-        "UnitCapPerStation": null
-      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
+      "PricingGuide": {
+        "AdjustmentInflation": null,
+        "AdjustmentMargin": null,
+        "AdjustmentRate": null,
+        "GoalBudget": null,
+        "GoalImpression": null,
+        "OpenMarketPricing": {
+          "CpmMax": null,
+          "CpmMin": null,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": null,
+          "UnitCapPerStation": null
+        },
+        "ProprietaryPricing": []
+      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -179,9 +182,6 @@
       "TotalUnits": 10
     },
     {
-      "AdjustmentInflation": null,
-      "AdjustmentMargin": null,
-      "AdjustmentRate": null,
       "Adu": false,
       "CpmCriteria": [],
       "DaypartCode": "NAV",
@@ -210,23 +210,29 @@
         }
       ],
       "GenreCriteria": [],
-      "GoalBudget": null,
-      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "OpenMarketCpmTarget": null,
-        "UnitCapPerStation": null
-      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
+      "PricingGuide": {
+        "AdjustmentInflation": null,
+        "AdjustmentMargin": null,
+        "AdjustmentRate": null,
+        "GoalBudget": null,
+        "GoalImpression": null,
+        "OpenMarketPricing": {
+          "CpmMax": null,
+          "CpmMin": null,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": null,
+          "UnitCapPerStation": null
+        },
+        "ProprietaryPricing": []
+      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,
@@ -337,9 +343,6 @@
       "TotalUnits": 30
     },
     {
-      "AdjustmentInflation": null,
-      "AdjustmentMargin": null,
-      "AdjustmentRate": null,
       "Adu": false,
       "CpmCriteria": [],
       "DaypartCode": "NAV",
@@ -349,23 +352,29 @@
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [],
       "GenreCriteria": [],
-      "GoalBudget": null,
-      "GoalImpression": null,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": null,
-        "CpmMin": null,
-        "OpenMarketCpmTarget": null,
-        "UnitCapPerStation": null
-      },
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
+      "PricingGuide": {
+        "AdjustmentInflation": null,
+        "AdjustmentMargin": null,
+        "AdjustmentRate": null,
+        "GoalBudget": null,
+        "GoalImpression": null,
+        "OpenMarketPricing": {
+          "CpmMax": null,
+          "CpmMin": null,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": null,
+          "UnitCapPerStation": null
+        },
+        "ProprietaryPricing": []
+      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 20.0000,

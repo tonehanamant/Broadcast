@@ -204,7 +204,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var postlog_file = _MapFromPostLogFile(postLogFile);
+                    var postlog_file = _MapFromScrubbingFile(postLogFile);
                     context.postlog_files.Add(postlog_file);
                     context.SaveChanges();
                     return postlog_file.id;
@@ -342,7 +342,7 @@ namespace Services.Broadcast.Repositories
                         context.postlog_file_detail_problems.RemoveRange(detail.postlog_file_detail_problems);
                         context.postlog_client_scrubs.RemoveRange(detail.postlog_client_scrubs);
 
-                        detail.postlog_file_detail_problems = _MapFromPostLogFileDetailProblems(fileDetail.FileDetailProblems);
+                        detail.postlog_file_detail_problems = _MapFromFileDetailProblems(fileDetail.FileDetailProblems);
                         detail.postlog_client_scrubs = _MapFromPostLogClientScrubs(fileDetail.ClientScrubs);
                         context.SaveChanges();
                     }
@@ -446,7 +446,7 @@ namespace Services.Broadcast.Repositories
                                             && !fileDetail.postlog_client_scrubs.Any()
                                             select fileDetail).ToList();
 
-                    return _MapToPostLogDetail(details);
+                    return _MapToScrubbingFileDetail(details);
                 });
         }
 
@@ -532,7 +532,7 @@ namespace Services.Broadcast.Repositories
 
                     var postlogFile = query.Single(a => a.id == postLogFileId, "Post Log not found in database");
 
-                    return _MapToPostLogFile(postlogFile);
+                    return _MapToScrubbingFile(postlogFile);
                 });
         }
 
@@ -687,11 +687,86 @@ namespace Services.Broadcast.Repositories
                                            where scrubbingIds.Contains(clientScrubs.id)
                                            select fileDetails).ToList();
 
-                   return _MapToPostLogDetail(details);
+                   return _MapToScrubbingFileDetail(details);
                });
         }
 
-        private ScrubbingFile _MapToPostLogFile(postlog_files postlogFile)
+        private ICollection<postlog_client_scrubs> _MapFromPostLogClientScrubs(List<ClientScrub> clientScrubs)
+        {
+            var result = clientScrubs.Select(s => new postlog_client_scrubs
+            {
+                proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,
+                match_program = s.MatchProgram,
+                match_genre = s.MatchGenre,
+                match_show_type = s.MatchShowType,
+                match_market = s.MatchMarket,
+                match_station = s.MatchStation,
+                match_time = s.MatchTime,
+                match_date = s.MatchDate,
+                modified_by = s.ModifiedBy,
+                modified_date = s.ModifiedDate,
+                match_isci_days = s.MatchIsciDays,
+                match_isci = s.MatchIsci,
+                effective_program_name = s.EffectiveProgramName,
+                effective_genre = s.EffectiveGenre,
+                effective_show_type = s.EffectiveShowType,
+                lead_in = s.LeadIn,
+                status = (int)s.Status,
+                effective_isci = s.EffectiveIsci,
+                effective_client_isci = s.EffectiveClientIsci,
+                postlog_client_scrub_audiences = s.ClientScrubAudiences.Select(a =>
+                    new postlog_client_scrub_audiences
+                    {
+                        audience_id = a.AudienceId,
+                        impressions = a.Impressions
+                    }).ToList()
+            }).ToList();
+            return result;
+        }
+
+        private List<ScrubbingFileDetail> _MapToScrubbingFileDetail(List<postlog_file_details> details)
+        {
+            return details.Select(d => new ScrubbingFileDetail
+            {
+                Id = d.id,
+                ScrubbingFileId = d.postlog_file_id,
+                Station = d.station,
+                OriginalAirDate = d.original_air_date,
+                AdjustedAirDate = d.adjusted_air_date,
+                AirTime = d.air_time,
+                SpotLengthId = d.spot_length_id,
+                Isci = d.isci,
+                ProgramName = d.program_name,
+                Genre = d.genre,
+                LeadinGenre = d.leadin_genre,
+                LeadinProgramName = d.leadin_program_name,
+                LeadoutGenre = d.leadout_genre,
+                LeadoutProgramName = d.leadout_program_name,
+                ShowType = d.program_show_type,
+                LeadInShowType = d.leadin_show_type,
+                LeadOutShowType = d.leadout_show_type,
+                LeadOutStartTime = d.leadout_start_time,
+                LeadInEndTime = d.leadin_end_time,
+                Market = d.market,
+                Affiliate = d.affiliate,
+                EstimateId = d.estimate_id,
+                InventorySource = d.inventory_source.Value,
+                SpotCost = d.spot_cost,
+                SuppliedProgramName = d.supplied_program_name
+            }).ToList();
+        }
+
+        private IQueryable<postlog_file_details> _GetUnlinkedIscisQuery(QueryHintBroadcastContext context)
+        {
+            return from fileDetails in context.postlog_file_details
+                   join clientScrubs in context.postlog_client_scrubs on fileDetails.id equals clientScrubs.postlog_file_detail_id
+                   into dataGroupped
+                   from x in dataGroupped.DefaultIfEmpty()
+                   where x == null && fileDetails.archived == false
+                   select fileDetails;
+        }
+
+        private ScrubbingFile _MapToScrubbingFile(postlog_files postlogFile)
         {
             return new ScrubbingFile
             {
@@ -733,6 +808,7 @@ namespace Services.Broadcast.Repositories
                     EstimateId = d.estimate_id,
                     InventorySource = d.inventory_source.Value,
                     SpotCost = d.spot_cost,
+                    SuppliedProgramName = d.supplied_program_name,
                     Demographics = d.postlog_file_detail_demographics.Select(a => new ScrubbingDemographics()
                     {
                         AudienceId = a.audience_id.Value,
@@ -781,92 +857,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private ICollection<postlog_file_detail_problems> _MapFromPostLogFileDetailProblems(List<FileDetailProblem> fileDetailProblems)
-        {
-            var result = fileDetailProblems.Select(p =>
-                        new postlog_file_detail_problems
-                        {
-                            problem_description = p.Description,
-                            problem_type = (int)p.Type
-                        }).ToList();
-            return result;
-        }
-
-        private ICollection<postlog_client_scrubs> _MapFromPostLogClientScrubs(List<ClientScrub> clientScrubs)
-        {
-            var result = clientScrubs.Select(s => new postlog_client_scrubs
-            {
-                proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,
-                match_program = s.MatchProgram,
-                match_genre = s.MatchGenre,
-                match_show_type = s.MatchShowType,
-                match_market = s.MatchMarket,
-                match_station = s.MatchStation,
-                match_time = s.MatchTime,
-                match_date = s.MatchDate,
-                modified_by = s.ModifiedBy,
-                modified_date = s.ModifiedDate,
-                match_isci_days = s.MatchIsciDays,
-                match_isci = s.MatchIsci,
-                effective_program_name = s.EffectiveProgramName,
-                effective_genre = s.EffectiveGenre,
-                effective_show_type = s.EffectiveShowType,
-                lead_in = s.LeadIn,
-                status = (int)s.Status,
-                effective_isci = s.EffectiveIsci,
-                effective_client_isci = s.EffectiveClientIsci,
-                postlog_client_scrub_audiences = s.ClientScrubAudiences.Select(a =>
-                    new postlog_client_scrub_audiences
-                    {
-                        audience_id = a.AudienceId,
-                        impressions = a.Impressions
-                    }).ToList()
-            }).ToList();
-            return result;
-        }
-
-        private List<ScrubbingFileDetail> _MapToPostLogDetail(List<postlog_file_details> details)
-        {
-            return details.Select(d => new ScrubbingFileDetail
-            {
-                Id = d.id,
-                ScrubbingFileId = d.postlog_file_id,
-                Station = d.station,
-                OriginalAirDate = d.original_air_date,
-                AdjustedAirDate = d.adjusted_air_date,
-                AirTime = d.air_time,
-                SpotLengthId = d.spot_length_id,
-                Isci = d.isci,
-                ProgramName = d.program_name,
-                Genre = d.genre,
-                LeadinGenre = d.leadin_genre,
-                LeadinProgramName = d.leadin_program_name,
-                LeadoutGenre = d.leadout_genre,
-                LeadoutProgramName = d.leadout_program_name,
-                ShowType = d.program_show_type,
-                LeadInShowType = d.leadin_show_type,
-                LeadOutShowType = d.leadout_show_type,
-                LeadOutStartTime = d.leadout_start_time,
-                LeadInEndTime = d.leadin_end_time,
-                Market = d.market,
-                Affiliate = d.affiliate,
-                EstimateId = d.estimate_id,
-                InventorySource = d.inventory_source.Value,
-                SpotCost = d.spot_cost,
-            }).ToList();
-        }
-
-        private IQueryable<postlog_file_details> _GetUnlinkedIscisQuery(QueryHintBroadcastContext context)
-        {
-            return from fileDetails in context.postlog_file_details
-                   join clientScrubs in context.postlog_client_scrubs on fileDetails.id equals clientScrubs.postlog_file_detail_id
-                   into dataGroupped
-                   from x in dataGroupped.DefaultIfEmpty()
-                   where x == null && fileDetails.archived == false
-                   select fileDetails;
-        }
-
-        private postlog_files _MapFromPostLogFile(ScrubbingFile postlogFile)
+        private postlog_files _MapFromScrubbingFile(ScrubbingFile postlogFile)
         {
             var result = new postlog_files
             {
@@ -899,13 +890,14 @@ namespace Services.Broadcast.Repositories
                     leadout_genre = d.LeadoutGenre,
                     leadin_program_name = d.LeadinProgramName,
                     leadout_program_name = d.LeadoutProgramName,
-                    leadin_end_time = d.LeadInEndTime,
-                    leadout_start_time = d.LeadOutStartTime,
+                    leadin_end_time = d.LeadInEndTime == null ? (int?)null : d.LeadInEndTime.Value,
+                    leadout_start_time = d.LeadOutStartTime == null ? (int?)null : d.LeadOutStartTime.Value,
                     program_show_type = d.ShowType,
                     leadin_show_type = d.LeadInShowType,
                     leadout_show_type = d.LeadOutShowType,
                     adjusted_air_date = d.AdjustedAirDate,
                     archived = d.Archived,
+                    supplied_program_name = d.SuppliedProgramName,
                     postlog_client_scrubs = _MapFromPostLogClientScrubs(d.ClientScrubs),
                     postlog_file_detail_problems = _MapFromFileDetailProblems(d.FileDetailProblems),
                     postlog_file_detail_demographics = d.Demographics.Select(demo =>
@@ -920,7 +912,7 @@ namespace Services.Broadcast.Repositories
 
             return result;
         }
-
+        
         private ICollection<postlog_file_detail_problems> _MapFromFileDetailProblems(List<FileDetailProblem> fileDetailProblems)
         {
             var result = fileDetailProblems.Select(p =>

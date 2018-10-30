@@ -2,7 +2,7 @@
   "AllMarkets": [
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.0,
+      "Coverage": 1.01,
       "Id": 160,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,

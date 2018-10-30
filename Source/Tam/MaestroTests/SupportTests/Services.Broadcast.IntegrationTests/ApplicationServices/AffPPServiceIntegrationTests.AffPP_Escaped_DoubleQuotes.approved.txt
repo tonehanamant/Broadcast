@@ -27,7 +27,8 @@
       "ShowType": "Series",
       "SpotCost": 0.0,
       "SpotLengthId": 1,
-      "Station": "WICZ-TV"
+      "Station": "WICZ-TV",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "BC-B4-F9-54-40-14-DB-B4-AE-18-FE-3B-37-50-23-E2-6B-05-86-4E",

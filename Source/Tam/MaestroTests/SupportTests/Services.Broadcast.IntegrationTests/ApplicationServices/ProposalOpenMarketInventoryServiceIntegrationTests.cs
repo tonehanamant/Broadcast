@@ -1623,7 +1623,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = proposal.Id.Value,//26016,
                     ProposalDetailId = proposalDetailId,//9978
-                     OpenMarketPricing =
+                    OpenMarketPricing =
                     {
                          OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
@@ -1874,7 +1874,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26020,
                     ProposalDetailId = 9982,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricing
+                    OpenMarketPricing = new OpenMarketPricingGuide
                     {
                         UnitCapPerStation = 100
                     }
@@ -1887,7 +1887,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketPricingGuideWithAllocationGoalsMultiplePrograms()
         {
@@ -1898,7 +1897,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26021,
                     ProposalDetailId = 9983,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricing
+                    OpenMarketPricing = new OpenMarketPricingGuide
                     {
                         UnitCapPerStation = 10
                     }

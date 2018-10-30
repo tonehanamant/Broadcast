@@ -2,103 +2,103 @@
   "FileDetails": [
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
-      "Affiliate": "Affiate",
-      "AirTime": 29040,
+      "Affiliate": "CBS",
+      "AirTime": 81300,
       "Archived": false,
       "ClientScrubs": [
         {
           "ClientScrubAudiences": [
             {
               "AudienceId": 4,
-              "Impressions": 0.0
+              "Impressions": 2414.1
             },
             {
               "AudienceId": 5,
-              "Impressions": 0.0
+              "Impressions": 1099.7
             },
             {
               "AudienceId": 6,
-              "Impressions": 0.0
+              "Impressions": 198.65
             },
             {
               "AudienceId": 7,
-              "Impressions": 0.0
+              "Impressions": 2433.85
             },
             {
               "AudienceId": 13,
-              "Impressions": 2826.05
+              "Impressions": 34867.45
             },
             {
               "AudienceId": 14,
-              "Impressions": 2803.75
+              "Impressions": 56733.05
             },
             {
               "AudienceId": 15,
-              "Impressions": 2151.45
+              "Impressions": 119525.8
             },
             {
               "AudienceId": 19,
-              "Impressions": 0.0
+              "Impressions": 2041.95
             },
             {
               "AudienceId": 20,
-              "Impressions": 0.0
+              "Impressions": 2808.95
             },
             {
               "AudienceId": 21,
-              "Impressions": 0.0
+              "Impressions": 3224.7
             },
             {
               "AudienceId": 22,
-              "Impressions": 189.65
+              "Impressions": 3690.3
             },
             {
               "AudienceId": 28,
-              "Impressions": 0.0
+              "Impressions": 17984.65
             },
             {
               "AudienceId": 29,
-              "Impressions": 703.25
+              "Impressions": 44661.1
             },
             {
               "AudienceId": 30,
-              "Impressions": 0.0
+              "Impressions": 64062.8
             },
             {
               "AudienceId": 31,
-              "Impressions": 9141.6
+              "Impressions": 362701.1
             },
             {
               "AudienceId": 46,
-              "Impressions": 233.95
+              "Impressions": 4187.65
             },
             {
               "AudienceId": 284,
-              "Impressions": 0.0
+              "Impressions": 9788.6
             },
             {
               "AudienceId": 290,
-              "Impressions": 128.75
+              "Impressions": 35697.7
             },
             {
               "AudienceId": 339,
-              "Impressions": 446.4
+              "Impressions": 3114.95
             },
             {
               "AudienceId": 347,
-              "Impressions": 343.6
+              "Impressions": 43823.8
             },
             {
               "AudienceId": 348,
-              "Impressions": 0.0
+              "Impressions": 10295.5
             }
           ],
           "Comment": null,
           "EffectiveClientIsci": null,
-          "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": "DDDDDDDD",
-          "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "News",
+          "EffectiveGenre": null,
+          "EffectiveIsci": "AAAAAAAA",
+          "EffectiveProgramName": null,
+          "EffectiveShowType": "Comedy",
           "LeadIn": false,
           "MatchDate": false,
           "MatchGenre": true,
@@ -109,7 +109,7 @@
           "MatchShowType": false,
           "MatchStation": true,
           "MatchTime": false,
-          "ModifiedBy": "test user",
+          "ModifiedBy": "PostLog Post Processing Test User",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
           "ProposalVersionDetailId": 14,
@@ -117,34 +117,41 @@
           "Status": 1
         }
       ],
-      "Demographics": [],
-      "EstimateId": null,
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 1928.0,
+          "OvernightRating": 2.3
+        }
+      ],
+      "EstimateId": 123,
       "FileDetailProblems": [],
-      "Genre": "Do It Yourself",
-      "InventorySource": 2,
-      "Isci": "DDDDDDDD",
-      "LeadInEndTime": 30660,
-      "LeadinGenre": "News",
-      "LeadinProgramName": "LeadInProgramName",
-      "LeadInShowType": "Comedy",
-      "LeadoutGenre": "LeadOutGenre",
-      "LeadoutProgramName": "LeadOutProgramName",
+      "Genre": null,
+      "InventorySource": 1,
+      "Isci": "AAAAAAAA",
+      "LeadInEndTime": null,
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadInShowType": "News",
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
       "LeadOutShowType": "Documentary",
-      "LeadOutStartTime": 720,
+      "LeadOutStartTime": null,
       "MappedIsci": null,
-      "Market": "Tampa-St. Pete (Sarasota)",
-      "OriginalAirDate": "2017-06-29T00:00:00",
-      "ProgramName": "Program Names R us",
-      "ShowType": "News",
-      "SpotCost": null,
+      "Market": "New York",
+      "OriginalAirDate": "2017-12-26T00:00:00",
+      "ProgramName": null,
+      "ShowType": "Comedy",
+      "SpotCost": 315.25,
       "SpotLengthId": 1,
-      "Station": "WWSB",
-      "SuppliedProgramName": null
+      "Station": "WCBS",
+      "SuppliedProgramName": "Everybody Loves Raymond"
     }
   ],
-  "FileHash": "abc123",
-  "FileName": "test.file",
+  "FileHash": "46-C9-BD-9C-39-FF-C5-F7-93-E2-0B-EE-B5-01-1B-D9-86-D1-25-EB",
+  "FileName": "WWTV_KeepingTracValidFile_WithNullValues.txt",
   "FileProblems": [],
-  "SourceId": 2,
+  "SourceId": 1,
   "Status": 1
 }

@@ -26,7 +26,8 @@ import {
   updateProposalEditFormDetail,
   loadOpenMarketData,
   allocateSpots,
-  clearOpenMarketData
+  clearOpenMarketData,
+  showEditMarkets
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
 import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
@@ -73,6 +74,7 @@ const mapDispatchToProps = dispatch =>
       toggleModal,
       loadOpenMarketData,
       clearOpenMarketData,
+      showEditMarkets,
       allocateSpots,
       updateDetail: updateProposalEditFormDetail
     },
@@ -184,28 +186,29 @@ class PricingGuide extends Component {
   onModalShow() {
     // console.log('MODAL SHOW>>>>>>>>>', this.props.detail);
     // process inventory/proprietary pricing/ open market just once on open
-    this.setInventory(this.props.detail);
-    this.setProprietaryPricing(this.props.detail);
-    this.setOpenMarketPricing(this.props.detail);
+    this.props.showEditMarkets(false);
+    this.setInventory(this.props.detail.PricingGuide);
+    this.setProprietaryPricing(this.props.detail.PricingGuide);
+    this.setOpenMarketPricing(this.props.detail.PricingGuide);
   }
 
   // INVENTORY Goals and Adjustments
 
-  setInventory(detail) {
-    if (detail) {
+  setInventory(guide) {
+    if (guide) {
       this.setState({
-        impression: detail.GoalImpression,
-        budget: detail.GoalBudget,
-        margin: detail.AdjustmentMargin,
-        rateInflation: detail.AdjustmentRate,
-        impressionInflation: detail.AdjustmentInflation
+        impression: guide.GoalImpression,
+        budget: guide.GoalBudget,
+        margin: guide.AdjustmentMargin,
+        rateInflation: guide.AdjustmentRate,
+        impressionInflation: guide.AdjustmentInflation
       });
       this.setState({
-        editingImpression: detail.GoalImpression,
-        editingBudget: detail.GoalBudget,
-        editingMargin: detail.AdjustmentMargin,
-        editingRateInflation: detail.AdjustmentRate,
-        editingImpressionInflation: detail.AdjustmentInflation
+        editingImpression: guide.GoalImpression,
+        editingBudget: guide.GoalBudget,
+        editingMargin: guide.AdjustmentMargin,
+        editingRateInflation: guide.AdjustmentRate,
+        editingImpressionInflation: guide.AdjustmentInflation
       });
     }
   }
@@ -241,11 +244,11 @@ class PricingGuide extends Component {
   // set states from detail ProprietaryPricing array - NOT using CPM from BE as hard coded
   // todo - possible compare with initial data id/objects?
   // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
-  setProprietaryPricing(detail) {
+  setProprietaryPricing(guide) {
     // console.log('set pricing', detail.ProprietaryPricing, this);
-    if (detail.ProprietaryPricing && detail.ProprietaryPricing.length) {
+    if (guide.ProprietaryPricing && guide.ProprietaryPricing.length) {
       const toUpdate = {};
-      detail.ProprietaryPricing.forEach(item => {
+      guide.ProprietaryPricing.forEach(item => {
         const bal = item.ImpressionsBalance;
         if (bal) {
           const src = item.InventorySource;
@@ -302,10 +305,10 @@ class PricingGuide extends Component {
     this.setState({ isOpenMarketEditing: !this.state.isOpenMarketEditing });
   }
 
-  setOpenMarketPricing(detail) {
-    if (detail.OpenMarketPricing) {
-      const openData = detail.OpenMarketPricing;
-      const target = openData.CpmTarget || 1;
+  setOpenMarketPricing(guide) {
+    if (guide.OpenMarketPricing) {
+      const openData = guide.OpenMarketPricing;
+      const target = openData.OpenMarketCpmTarget || 1;
       this.setState({
         openCpmMax: openData.CpmMax,
         openCpmMin: openData.CpmMin,
@@ -416,6 +419,7 @@ class PricingGuide extends Component {
     this.props.loadOpenMarketData(proposalEditForm.Id, detail.Id);
   } */
 
+  // change to inner object PricingGuide - need to combine call to updateDetail else each overrides other
   onSave() {
     const {
       impression,
@@ -425,9 +429,20 @@ class PricingGuide extends Component {
       impressionInflation
     } = this.state;
     const { updateDetail, detail } = this.props;
-    this.saveProprietaryPricingDetail();
-    this.saveOpenMarketPricingDetail();
-    updateDetail({ id: detail.Id, key: "GoalImpression", value: impression });
+    const proprietaryData = this.saveProprietaryPricingDetail();
+    const openData = this.saveOpenMarketPricingDetail();
+    // change to update inner object
+    const guideUpdates = {
+      GoalImpression: impression,
+      GoalBudget: budget,
+      AdjustmentMargin: margin,
+      AdjustmentRate: rateInflation,
+      AdjustmentInflation: impressionInflation,
+      OpenMarketPricing: openData,
+      ProprietaryPricing: proprietaryData
+    };
+    updateDetail({ id: detail.Id, key: "PricingGuide", value: guideUpdates });
+    /* updateDetail({ id: detail.Id, key: "GoalImpression", value: impression });
     updateDetail({ id: detail.Id, key: "GoalBudget", value: budget });
     updateDetail({ id: detail.Id, key: "AdjustmentMargin", value: margin });
     updateDetail({
@@ -439,14 +454,15 @@ class PricingGuide extends Component {
       id: detail.Id,
       key: "AdjustmentInflation",
       value: impressionInflation
-    });
+    }); */
     this.onCancel();
   }
 
   // update detail - with proprietary pricing states (CPM set for future but is harcoded)
   // // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
   saveProprietaryPricingDetail() {
-    const { updateDetail, detail } = this.props;
+    // change inner object PricingGuide
+    // const { updateDetail, detail } = this.props;
     const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
     const {
       propImpressionsCNN,
@@ -476,23 +492,28 @@ class PricingGuide extends Component {
         Cpm: propCpmSinclair
       }
     ];
-    updateDetail({
+    /*  updateDetail({
       id: detail.Id,
       key: "ProprietaryPricing",
       value: proprietaryPricing
-    });
+    }); */
+    return proprietaryPricing;
   }
 
   saveOpenMarketPricingDetail() {
     const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
-    const { updateDetail, detail } = this.props;
+    // const { updateDetail, detail } = this.props;
+    // change inner object PricingGuide
     const openData = {
       CpmMax: openCpmMax,
       CpmMin: openCpmMin,
-      CpmTarget: openCpmTarget,
+      OpenMarketCpmTarget: openCpmTarget,
       UnitCapPerStation: openUnitCap
     };
-    updateDetail({ id: detail.Id, key: "OpenMarketPricing", value: openData });
+    // const guideData = { OpenMarketPricing: openData };
+    // updateDetail({ id: detail.Id, key: "OpenMarketPricing", value: openData });
+    // updateDetail({ id: detail.Id, key: "PricingGuide", value: guideData });
+    return openData;
   }
 
   handleChange(fieldName, value) {
@@ -1472,7 +1493,8 @@ PricingGuide.propTypes = {
   allocateSpots: PropTypes.func.isRequired,
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
-  isEditMarketsActive: PropTypes.bool.isRequired
+  isEditMarketsActive: PropTypes.bool.isRequired,
+  showEditMarkets: PropTypes.func.isRequired
 };
 
 PricingGuide.defaultProps = {

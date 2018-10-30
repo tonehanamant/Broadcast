@@ -138,7 +138,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WNBC"
+      "Station": "WNBC",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -278,7 +279,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WFUT"
+      "Station": "WFUT",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -418,7 +420,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HPIX"
+      "Station": "HPIX",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -558,7 +561,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WNJN"
+      "Station": "WNJN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -698,7 +702,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "OTLA"
+      "Station": "OTLA",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -753,7 +758,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -808,7 +814,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -948,7 +955,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "ESNS"
+      "Station": "ESNS",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1088,7 +1096,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WESV"
+      "Station": "WESV",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1228,7 +1237,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GGN"
+      "Station": "GGN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1368,7 +1378,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WNJS"
+      "Station": "WNJS",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1423,7 +1434,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "RDZN"
+      "Station": "RDZN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1563,7 +1575,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GPHL"
+      "Station": "GPHL",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1618,7 +1631,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "QUBO"
+      "Station": "QUBO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1673,7 +1687,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1728,7 +1743,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1783,7 +1799,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "RLZC"
+      "Station": "RLZC",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1838,7 +1855,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -1893,7 +1911,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2033,7 +2052,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WPXW"
+      "Station": "WPXW",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2088,7 +2108,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2143,7 +2164,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GDCW"
+      "Station": "GDCW",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2198,7 +2220,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2253,7 +2276,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GENH"
+      "Station": "GENH",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2393,7 +2417,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WBPX"
+      "Station": "WBPX",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2448,7 +2473,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2503,7 +2529,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2558,7 +2585,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2698,7 +2726,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NTMD"
+      "Station": "NTMD",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2838,7 +2867,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KUVM"
+      "Station": "KUVM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2893,7 +2923,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "QUBO"
+      "Station": "QUBO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -2948,7 +2979,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3003,7 +3035,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3143,7 +3176,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GMOR"
+      "Station": "GMOR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3283,7 +3317,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KTVW"
+      "Station": "KTVW",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3423,7 +3458,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KFPH"
+      "Station": "KFPH",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3563,7 +3599,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KPNX"
+      "Station": "KPNX",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3618,7 +3655,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3673,7 +3711,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "QUBO"
+      "Station": "QUBO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3728,7 +3767,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3783,7 +3823,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3923,7 +3964,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KBTC"
+      "Station": "KBTC",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -3978,7 +4020,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4118,7 +4161,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KSTP"
+      "Station": "KSTP",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4173,7 +4217,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KAWE"
+      "Station": "KAWE",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4313,7 +4358,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WCCO"
+      "Station": "WCCO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4368,7 +4414,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4423,7 +4470,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HSTE"
+      "Station": "HSTE",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4478,7 +4526,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4618,7 +4667,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KDVR"
+      "Station": "KDVR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4673,7 +4723,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4813,7 +4864,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WFUT"
+      "Station": "WFUT",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -4953,7 +5005,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HPIX"
+      "Station": "HPIX",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5093,7 +5146,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WNJN"
+      "Station": "WNJN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5233,7 +5287,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "OTLA"
+      "Station": "OTLA",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5288,7 +5343,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5343,7 +5399,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5483,7 +5540,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "ESNS"
+      "Station": "ESNS",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5623,7 +5681,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WESV"
+      "Station": "WESV",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5763,7 +5822,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GGN"
+      "Station": "GGN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5903,7 +5963,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WNJS"
+      "Station": "WNJS",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -5958,7 +6019,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "RDZN"
+      "Station": "RDZN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6098,7 +6160,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GPHL"
+      "Station": "GPHL",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6153,7 +6216,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "QUBO"
+      "Station": "QUBO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6208,7 +6272,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6263,7 +6328,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6318,7 +6384,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "RLZC"
+      "Station": "RLZC",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6373,7 +6440,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6428,7 +6496,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6568,7 +6637,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WPXW"
+      "Station": "WPXW",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6623,7 +6693,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6678,7 +6749,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GDCW"
+      "Station": "GDCW",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6733,7 +6805,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6788,7 +6861,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GENH"
+      "Station": "GENH",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6928,7 +7002,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WBPX"
+      "Station": "WBPX",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -6983,7 +7058,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7038,7 +7114,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7093,7 +7170,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7233,7 +7311,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NTMD"
+      "Station": "NTMD",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7373,7 +7452,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KUVM"
+      "Station": "KUVM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7428,7 +7508,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "QUBO"
+      "Station": "QUBO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7483,7 +7564,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7538,7 +7620,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7678,7 +7761,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "GMOR"
+      "Station": "GMOR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7818,7 +7902,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KTVW"
+      "Station": "KTVW",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -7958,7 +8043,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KFPH"
+      "Station": "KFPH",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8098,7 +8184,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KPNX"
+      "Station": "KPNX",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8153,7 +8240,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8208,7 +8296,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "QUBO"
+      "Station": "QUBO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8263,7 +8352,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8318,7 +8408,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8458,7 +8549,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KBTC"
+      "Station": "KBTC",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8513,7 +8605,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "FBN"
+      "Station": "FBN",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8653,7 +8746,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KSTP"
+      "Station": "KSTP",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8708,7 +8802,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KAWE"
+      "Station": "KAWE",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8848,7 +8943,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WCCO"
+      "Station": "WCCO",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8903,7 +8999,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HMM"
+      "Station": "HMM",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -8958,7 +9055,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HSTE"
+      "Station": "HSTE",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -9013,7 +9111,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -9153,7 +9252,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KDVR"
+      "Station": "KDVR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -9208,7 +9308,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "NKJR"
+      "Station": "NKJR",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -9348,7 +9449,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WFUT"
+      "Station": "WFUT",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -9488,7 +9590,8 @@
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "HPIX"
+      "Station": "HPIX",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "abc123",
