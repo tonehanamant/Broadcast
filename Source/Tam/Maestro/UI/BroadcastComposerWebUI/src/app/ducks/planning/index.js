@@ -467,7 +467,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.UPDATE_EDIT_MARKETS_DATA.success: {
-      console.log("UPDATE_EDIT_MARKETS_DATA success", data.Data);
+      // console.log("UPDATE_EDIT_MARKETS_DATA success", data.Data);
       return {
         ...state,
         openMarketData: data.Data,

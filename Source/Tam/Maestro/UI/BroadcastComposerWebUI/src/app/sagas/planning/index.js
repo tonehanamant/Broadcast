@@ -1542,6 +1542,17 @@ export function* updateEditMarketsData(distributionRequest) {
   }
 }
 
+export function* updateEditMarketsDataSuccess() {
+  yield put({
+    type: ACTIONS.CREATE_ALERT,
+    alert: {
+      type: "success",
+      headline: "Edit Markets Updated",
+      message: ""
+    }
+  });
+}
+
 /* export function* uploadSCXFile(params) {
   const { uploadSCXFile } = api.planning;
   try {
@@ -1773,6 +1784,13 @@ export function* watchUpdateEditMarketsData() {
   yield takeEvery(
     ACTIONS.UPDATE_EDIT_MARKETS_DATA.request,
     sagaWrapper(updateEditMarketsData, ACTIONS.UPDATE_EDIT_MARKETS_DATA)
+  );
+}
+
+export function* watchUpdateEditMarketsDataSuccess() {
+  yield takeEvery(
+    ACTIONS.UPDATE_EDIT_MARKETS_DATA.success,
+    updateEditMarketsDataSuccess
   );
 }
 

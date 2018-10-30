@@ -67,9 +67,38 @@ class PricingGuideEditMarkets extends Component {
       <div>
         <Panel>
           <Panel.Heading>
-            <Panel.Title componentClass="h3" style={{ textAlign: "center" }}>
-              Edit Markets
-            </Panel.Title>
+            <Row>
+              <Col xs={4} />
+              <Col xs={4}>
+                <Panel.Title
+                  componentClass="h3"
+                  style={{ textAlign: "center" }}
+                >
+                  Edit Markets
+                </Panel.Title>
+              </Col>
+              <Col xs={4} style={{ textAlign: "right" }}>
+                <ButtonToolbar>
+                  <Button
+                    bsStyle="default"
+                    bsSize="small"
+                    style={{ float: "unset" }}
+                    onClick={this.onDismissEditMarkets}
+                  >
+                    Discard
+                  </Button>
+                  <Button
+                    bsStyle="primary"
+                    bsSize="small"
+                    // disabled={!this.state.isValidSelection}
+                    style={{ float: "unset", marginLeft: "10px" }}
+                    onClick={this.onUpdateEditMarkets}
+                  >
+                    Update Markets
+                  </Button>
+                </ButtonToolbar>
+              </Col>
+            </Row>
           </Panel.Heading>
           <Panel.Body>
             <Row style={{ marginTop: "10px" }}>
@@ -119,7 +148,7 @@ class PricingGuideEditMarkets extends Component {
               </Col>
             </Row>
           </Panel.Body>
-          <Panel.Footer style={{ textAlign: "right" }}>
+          {/* <Panel.Footer style={{ textAlign: "right" }}>
             <ButtonToolbar>
               <Button
                 bsStyle="default"
@@ -139,7 +168,7 @@ class PricingGuideEditMarkets extends Component {
                 Update Markets
               </Button>
             </ButtonToolbar>
-          </Panel.Footer>
+          </Panel.Footer> */}
         </Panel>
       </div>
     );
