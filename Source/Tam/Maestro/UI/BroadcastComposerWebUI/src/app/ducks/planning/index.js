@@ -663,8 +663,9 @@ export const changeEditMarkets = (id, isAdd) => ({
 export const discardEditMarkets = () => ({
   type: ACTIONS.DISCARD_EDIT_MARKETS_DATA
 });
-export const updateEditMarkets = () => ({
-  type: ACTIONS.UPDATE_EDIT_MARKETS_DATA.request
+export const updateEditMarkets = params => ({
+  type: ACTIONS.UPDATE_EDIT_MARKETS_DATA.request,
+  payload: params
 });
 export const setEstimatedId = (detailId, estimatedId) => ({
   type: ACTIONS.SET_ESTIMATED_ID,

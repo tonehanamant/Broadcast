@@ -1525,13 +1525,14 @@ export function* loadOpenMarketData(params) {
   }
 }
 
-export function* updateEditMarketsData() {
+export function* updateEditMarketsData(distributionRequest) {
   const { updateOpenEditMarketsData } = api.planning;
   const openMarketData = yield select(state => state.planning.openMarketData);
   const activeMarkets = yield select(state => state.planning.activeEditMarkets);
   const params = Object.assign({}, openMarketData, {
     Filter: {},
-    AllMarkets: activeMarkets
+    AllMarkets: activeMarkets,
+    DistributionRequest: distributionRequest
   });
   try {
     yield put(setOverlayLoading({ id: "editMarketsUpdate", loading: true }));

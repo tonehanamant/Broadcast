@@ -27,7 +27,8 @@ import {
   loadOpenMarketData,
   allocateSpots,
   clearOpenMarketData,
-  showEditMarkets
+  showEditMarkets,
+  updateEditMarkets
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
 import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
@@ -76,6 +77,7 @@ const mapDispatchToProps = dispatch =>
       clearOpenMarketData,
       showEditMarkets,
       allocateSpots,
+      updateEditMarkets,
       updateDetail: updateProposalEditFormDetail
     },
     dispatch
@@ -94,6 +96,8 @@ class PricingGuide extends Component {
     this.saveInventory = this.saveInventory.bind(this);
     this.cancelInventory = this.cancelInventory.bind(this);
     this.onRunDistribution = this.onRunDistribution.bind(this);
+    this.getDistributionRequest = this.getDistributionRequest.bind(this);
+    this.onUpdateEditMarkets = this.onUpdateEditMarkets.bind(this);
 
     this.saveProprietaryPricingDetail = this.saveProprietaryPricingDetail.bind(
       this
@@ -387,8 +391,7 @@ class PricingGuide extends Component {
     });
   }
 
-  // run with params - temporary until get new open market BE object
-  onRunDistribution() {
+  getDistributionRequest() {
     const { detail, proposalEditForm } = this.props;
     const {
       openCpmMax,
@@ -411,13 +414,19 @@ class PricingGuide extends Component {
       ImpressionGoal: impression,
       OpenMarketPricing: openData
     };
-    this.props.loadOpenMarketData(request);
+    return request;
   }
 
-  /* onRunDistribution() {
-    const { detail, proposalEditForm } = this.props;
-    this.props.loadOpenMarketData(proposalEditForm.Id, detail.Id);
-  } */
+  // run with params - temporary until get new open market BE object
+  onRunDistribution() {
+    const request = this.getDistributionRequest();
+    this.props.loadOpenMarketData(request);
+  }
+  // call from edit markets to get params needed here
+  onUpdateEditMarkets() {
+    const request = this.getDistributionRequest();
+    this.props.updateEditMarkets(request);
+  }
 
   // change to inner object PricingGuide - need to combine call to updateDetail else each overrides other
   onSave() {
@@ -1453,6 +1462,7 @@ class PricingGuide extends Component {
                       <PricingGuideEditMarkets
                         activeEditMarkets={activeEditMarkets}
                         marketCoverageGoal={coverage}
+                        onUpdateEditMarkets={this.onUpdateEditMarkets}
                       />
                     )}
                 </Panel.Body>
@@ -1494,7 +1504,8 @@ PricingGuide.propTypes = {
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
   isEditMarketsActive: PropTypes.bool.isRequired,
-  showEditMarkets: PropTypes.func.isRequired
+  showEditMarkets: PropTypes.func.isRequired,
+  updateEditMarkets: PropTypes.func.isRequired
 };
 
 PricingGuide.defaultProps = {

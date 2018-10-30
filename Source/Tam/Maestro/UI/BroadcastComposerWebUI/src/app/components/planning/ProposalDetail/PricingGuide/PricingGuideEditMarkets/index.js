@@ -6,8 +6,7 @@ import { bindActionCreators } from "redux";
 import {
   showEditMarkets,
   changeEditMarkets,
-  discardEditMarkets,
-  updateEditMarkets
+  discardEditMarkets
 } from "Ducks/planning";
 import { Row, Col, Panel, Button, ButtonToolbar } from "react-bootstrap";
 import numeral from "numeral";
@@ -19,8 +18,7 @@ const mapDispatchToProps = dispatch =>
     {
       showEditMarkets,
       changeEditMarkets,
-      discardEditMarkets,
-      updateEditMarkets
+      discardEditMarkets
     },
     dispatch
   );
@@ -38,11 +36,11 @@ class PricingGuideEditMarkets extends Component {
     this.props.discardEditMarkets();
     this.props.showEditMarkets(false);
   }
-  // todo persist changes - do not discard
+  // call parent as needs params
   onUpdateEditMarkets() {
     // this.props.discardEditMarkets();
     // this.props.showEditMarkets(false);
-    this.props.updateEditMarkets();
+    this.props.onUpdateEditMarkets();
   }
 
   // handle update via action todo
@@ -153,7 +151,7 @@ PricingGuideEditMarkets.propTypes = {
   showEditMarkets: PropTypes.func.isRequired,
   changeEditMarkets: PropTypes.func.isRequired,
   discardEditMarkets: PropTypes.func.isRequired,
-  updateEditMarkets: PropTypes.func.isRequired,
+  onUpdateEditMarkets: PropTypes.func.isRequired,
   marketCoverageGoal: PropTypes.number.isRequired
   // hasOpenMarketData: PropTypes.bool.isRequired,
 };
