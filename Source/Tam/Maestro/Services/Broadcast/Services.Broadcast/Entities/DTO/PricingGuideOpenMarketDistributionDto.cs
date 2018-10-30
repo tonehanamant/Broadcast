@@ -18,6 +18,10 @@ namespace Services.Broadcast.Entities.DTO
         public List<PricingGuideMarketTotalsDto> AllMarkets { get; set; } = new List<PricingGuideMarketTotalsDto>();
 
         public PricingGuideOpenMarketInventory.OpenMarketTotals OpenMarketTotals { get; set; }
+
+        public PricingGuideOpenMarketInventory.ProprietaryTotals ProprietaryTotals { get; set; }
+
+        public PricingGuideOpenMarketInventory.PricingTotals PricingTotals { get; set; }
     }
 
     public class PricingGuideOpenMarketInventory : ProposalDetailInventoryBase
@@ -147,6 +151,21 @@ namespace Services.Broadcast.Entities.DTO
         }
 
         public class OpenMarketTotals
+        {
+            public decimal Cpm { get; set; }
+            public decimal Cost { get; set; }
+            public double Impressions { get; set; }
+            public double Coverage { get; set; }
+        }
+
+        public class ProprietaryTotals
+        {
+            public decimal Cpm { get; set; }
+            public decimal Cost { get; set; }
+            public double Impressions { get; set; }
+        }
+
+        public class PricingTotals
         {
             public decimal Cpm { get; set; }
             public decimal Cost { get; set; }
