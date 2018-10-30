@@ -466,6 +466,21 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    case ACTIONS.UPDATE_EDIT_MARKETS_DATA.success: {
+      console.log("UPDATE_EDIT_MARKETS_DATA success", data.Data);
+      return {
+        ...state,
+        openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
+        activeOpenMarketData: data.Data,
+        isOpenMarketDataSortName: false,
+        // openMarketLoading: false,
+        // openMarketLoaded: true,
+        activeEditMarkets: cloneDeep(data.Data.AllMarkets),
+        isEditMarketsActive: false
+      };
+    }
+
     case ACTIONS.SET_ESTIMATED_ID: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(
@@ -647,6 +662,9 @@ export const changeEditMarkets = (id, isAdd) => ({
 });
 export const discardEditMarkets = () => ({
   type: ACTIONS.DISCARD_EDIT_MARKETS_DATA
+});
+export const updateEditMarkets = () => ({
+  type: ACTIONS.UPDATE_EDIT_MARKETS_DATA.request
 });
 export const setEstimatedId = (detailId, estimatedId) => ({
   type: ACTIONS.SET_ESTIMATED_ID,
