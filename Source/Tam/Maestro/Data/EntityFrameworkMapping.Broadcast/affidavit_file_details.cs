@@ -46,7 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string leadin_show_type { get; set; }
         public string leadout_show_type { get; set; }
         public bool archived { get; set; }
-        public string supplied_program { get; set; }
         public string supplied_program_name { get; set; }
     
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }

@@ -114,8 +114,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<open_market_pricing_guide> open_market_pricing_guide { get; set; }
         public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
-        public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<postlog_client_scrubs> postlog_client_scrubs { get; set; }
         public virtual DbSet<postlog_file_details> postlog_file_details { get; set; }
+        public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
     }
 }
