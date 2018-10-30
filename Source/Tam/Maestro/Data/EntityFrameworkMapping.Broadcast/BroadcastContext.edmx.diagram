@@ -205,21 +205,21 @@
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="25.875" PointY="12.875" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrub_audiences" Width="1.5" PointX="28.125" PointY="5.75" />
-        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_details" Width="1.5" PointX="22.625" PointY="7.625" />
         <EntityTypeShape EntityType="BroadcastModel.postlog_client_scrubs" Width="1.5" PointX="30.875" PointY="30.125" />
         <EntityTypeShape EntityType="BroadcastModel.postlog_file_details" Width="1.5" PointX="28.625" PointY="34.375" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_affidavit_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_client_scrub_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
-        <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_client_scrub_audiences_postlog_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_details_postlog_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_postlog_client_scrubs" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_detail_demographics_postlog_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_detail_problems_postlog_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_details_postlog_files" />
+        <EntityTypeShape EntityType="BroadcastModel.affidavit_file_details" Width="1.5" PointX="22.625" PointY="7.75" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_details_affidavit_client_scrubs" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
+        <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
