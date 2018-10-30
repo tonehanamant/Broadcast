@@ -2711,7 +2711,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             pricingGuideOpenMarketDto.AllMarkets.Last().Selected = true;
 
             var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result);
 
             Approvals.Verify(resultJson);
         }

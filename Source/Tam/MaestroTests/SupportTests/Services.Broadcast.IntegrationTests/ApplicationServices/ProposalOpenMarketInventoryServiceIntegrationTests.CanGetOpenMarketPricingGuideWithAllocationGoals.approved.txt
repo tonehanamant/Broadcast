@@ -40,10 +40,11 @@
   "DistributionRequest": {
     "BudgetGoal": 10000.0,
     "HasPricingGuideChanges": null,
-    "ImpressionsGoal": null,
+    "ImpressionGoal": null,
     "OpenMarketPricing": {
       "CpmMax": null,
       "CpmMin": null,
+      "DistributionReport": null,
       "OpenMarketCpmTarget": null,
       "UnitCapPerStation": 100
     },

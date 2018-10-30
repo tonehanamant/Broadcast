@@ -2,7 +2,7 @@
   "AllMarkets": [
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.0,
+      "Coverage": 1.01,
       "Id": 160,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
@@ -36,6 +36,20 @@
       "Adventure Time",
       "Friends"
     ]
+  },
+  "DistributionRequest": {
+    "BudgetGoal": 10000.0,
+    "HasPricingGuideChanges": null,
+    "ImpressionGoal": null,
+    "OpenMarketPricing": {
+      "CpmMax": null,
+      "CpmMin": null,
+      "DistributionReport": null,
+      "OpenMarketCpmTarget": null,
+      "UnitCapPerStation": 100
+    },
+    "ProposalDetailId": 9982,
+    "ProposalId": 26020
   },
   "Filter": {},
   "Markets": [
