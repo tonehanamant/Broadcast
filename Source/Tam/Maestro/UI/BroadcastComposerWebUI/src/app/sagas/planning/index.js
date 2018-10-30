@@ -1525,6 +1525,22 @@ export function* loadOpenMarketData(params) {
   }
 }
 
+export function* updateEditMarketsData() {
+  const { updateOpenEditMarketsData } = api.planning;
+  const openMarketData = yield select(state => state.planning.openMarketData);
+  const activeMarkets = yield select(state => state.planning.activeEditMarkets);
+  const params = Object.assign({}, openMarketData, {
+    Filter: {},
+    AllMarkets: activeMarkets
+  });
+  try {
+    yield put(setOverlayLoading({ id: "editMarketsUpdate", loading: true }));
+    return yield updateOpenEditMarketsData(params);
+  } finally {
+    yield put(setOverlayLoading({ id: "editMarketsUpdate", loading: false }));
+  }
+}
+
 /* export function* uploadSCXFile(params) {
   const { uploadSCXFile } = api.planning;
   try {
@@ -1749,6 +1765,13 @@ export function* watchLoadOpenMarketData() {
   yield takeEvery(
     ACTIONS.LOAD_OPEN_MARKET_DATA.request,
     sagaWrapper(loadOpenMarketData, ACTIONS.LOAD_OPEN_MARKET_DATA)
+  );
+}
+
+export function* watchUpdateEditMarketsData() {
+  yield takeEvery(
+    ACTIONS.UPDATE_EDIT_MARKETS_DATA.request,
+    sagaWrapper(updateEditMarketsData, ACTIONS.UPDATE_EDIT_MARKETS_DATA)
   );
 }
 
