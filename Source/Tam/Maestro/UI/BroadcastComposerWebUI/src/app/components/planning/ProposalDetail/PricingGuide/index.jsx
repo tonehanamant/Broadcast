@@ -630,22 +630,47 @@ class PricingGuide extends Component {
                 <div className="summary-bar" style={{ marginRight: "32px" }}>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">--%</div>
+                    <div className="summary-display">
+                      {numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Coverage",
+                        "0.000"
+                      )}%
+                    </div>
                     <div className="summary-label">MARKET COVERAGE</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">$--</div>
+                    <div className="summary-display">
+                      ${numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Cpm",
+                        "0,0.00"
+                      )}
+                    </div>
                     <div className="summary-label">CPM</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">--</div>
+                    <div className="summary-display">
+                      {numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Impressions",
+                        "0,0",
+                        1000
+                      )}
+                    </div>
                     <div className="summary-label">IMPRESSIONS (000)</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">$--</div>
+                    <div className="summary-display">
+                      ${numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Cost",
+                        "0,0"
+                      )}
+                    </div>
                     <div className="summary-label">TOTAL COST</div>
                   </div>
                 </div>
