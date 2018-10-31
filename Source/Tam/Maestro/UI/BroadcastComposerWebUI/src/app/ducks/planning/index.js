@@ -675,7 +675,7 @@ export const setEstimatedId = (detailId, estimatedId) => ({
   }
 });
 
-export const allocateSpots = newData => ({
+export const allocateSpots = (data, detailId) => ({
   type: ACTIONS.ALLOCATE_SPOTS.request,
-  payload: newData
+  payload: { data, detailId }
 });

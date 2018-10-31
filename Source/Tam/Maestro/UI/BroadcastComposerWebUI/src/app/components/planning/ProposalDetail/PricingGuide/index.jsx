@@ -19,7 +19,7 @@ import {
 import { bindActionCreators } from "redux";
 import { InputNumber } from "antd";
 import numeral from "numeral";
-import { get } from "lodash";
+import { get, isNumber } from "lodash";
 
 import { toggleModal } from "Ducks/app";
 import {
@@ -40,7 +40,7 @@ const isActiveDialog = (detail, modal) =>
 const numberRender = (data, path, format, divideBy) => {
   let number = get(data, path);
   if (number && divideBy) number /= divideBy;
-  return number ? numeral(number).format(format) : "--";
+  return isNumber(number) ? numeral(number).format(format) : "--";
 };
 
 const mapStateToProps = ({
@@ -639,22 +639,47 @@ class PricingGuide extends Component {
                 <div className="summary-bar" style={{ marginRight: "32px" }}>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">--%</div>
+                    <div className="summary-display">
+                      {numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Coverage",
+                        "0.000"
+                      )}%
+                    </div>
                     <div className="summary-label">MARKET COVERAGE</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">$--</div>
+                    <div className="summary-display">
+                      ${numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Cpm",
+                        "0,0.00"
+                      )}
+                    </div>
                     <div className="summary-label">CPM</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">--</div>
+                    <div className="summary-display">
+                      {numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Impressions",
+                        "0,0",
+                        1000
+                      )}
+                    </div>
                     <div className="summary-label">IMPRESSIONS (000)</div>
                   </div>
                   <div className="summary-item">
                     <div className="summary-tag">--%</div>
-                    <div className="summary-display">$--</div>
+                    <div className="summary-display">
+                      ${numberRender(
+                        activeOpenMarketData,
+                        "PricingTotals.Cost",
+                        "0,0"
+                      )}
+                    </div>
                     <div className="summary-label">TOTAL COST</div>
                   </div>
                 </div>
@@ -933,15 +958,34 @@ class PricingGuide extends Component {
                   <Col sm={6}>
                     <div className="summary-bar">
                       <div className="summary-item">
-                        <div className="summary-display">$--</div>
+                        <div className="summary-display">
+                          ${numberRender(
+                            activeOpenMarketData,
+                            "ProprietaryTotals.Cpm",
+                            "0,0.00"
+                          )}
+                        </div>
                         <div className="summary-label">CPM</div>
                       </div>
                       <div className="summary-item">
-                        <div className="summary-display">--</div>
+                        <div className="summary-display">
+                          {numberRender(
+                            activeOpenMarketData,
+                            "ProprietaryTotals.Impressions",
+                            "0,0",
+                            1000
+                          )}
+                        </div>
                         <div className="summary-label">IMPRESSIONS (000)</div>
                       </div>
                       <div className="summary-item">
-                        <div className="summary-display">$--</div>
+                        <div className="summary-display">
+                          ${numberRender(
+                            activeOpenMarketData,
+                            "ProprietaryTotals.Cost",
+                            "0,0"
+                          )}
+                        </div>
                         <div className="summary-label">TOTAL COST</div>
                       </div>
                     </div>
@@ -1454,6 +1498,7 @@ class PricingGuide extends Component {
                         hasOpenMarketData={hasOpenMarketData}
                         isOpenMarketDataSortName={isOpenMarketDataSortName}
                         allocateSpots={allocateSpots}
+                        detailId={detail && detail.Id}
                       />
                     )}
                   {openMarketLoaded &&

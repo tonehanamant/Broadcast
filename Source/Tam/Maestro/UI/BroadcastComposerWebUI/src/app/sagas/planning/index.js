@@ -1674,11 +1674,11 @@ export function* filterOpenMarketData(filters) {
   }
 }
 
-export function* allocateSpots(payload) {
+export function* allocateSpots({ data, detailId }) {
   const { allocateSpots } = api.planning;
   try {
     yield put(setOverlayLoading({ id: "openMarketFilter", loading: true }));
-    return yield allocateSpots(payload);
+    return yield allocateSpots({ ...data, ProposalDetailId: detailId });
   } finally {
     yield put(setOverlayLoading({ id: "openMarketFilter", loading: false }));
   }
