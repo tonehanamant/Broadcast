@@ -1732,12 +1732,18 @@ namespace Services.Broadcast.Repositories
                     .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
                     .Include(pvd => pvd.proposal_version_detail_criteria_genres)
                     .Include(pvd => pvd.proposal_version_detail_criteria_programs)
+                    .Include(pvd => pvd.proposal_versions.proposal_version_markets)
                     .Single(d => d.id == proposalDetailId,
                         $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
 
                 var dto = new PricingGuideOpenMarketInventory
                 {
-                    MarketCoverage = pv.proposal_versions.market_coverage
+                    MarketCoverage = pv.proposal_versions.market_coverage,
+                    ProposalMarkets = pv.proposal_versions.proposal_version_markets.Select(x => new ProposalMarketDto
+                    {
+                        Id = x.market_code,
+                        IsBlackout = x.is_blackout
+                    }).ToList()
                 };
 
                 _PopoulateProposalDetailInventoryBase(pv, dto);

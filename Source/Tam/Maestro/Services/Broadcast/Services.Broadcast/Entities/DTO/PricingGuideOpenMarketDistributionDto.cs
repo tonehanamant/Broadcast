@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.OpenMarketInventory;
+﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -24,7 +25,10 @@ namespace Services.Broadcast.Entities.DTO
         public List<PricingGuideMarket> Markets { get; set; } = new List<PricingGuideMarket>();
         public List<PricingGuideMarketTotalsDto> AllMarkets { get; set; } = new List<PricingGuideMarketTotalsDto>();
         public double? MarketCoverage { get; set; }
-        
+        public List<ProposalMarketDto> ProposalMarkets { get; set; }
+        public ProposalEnums.ProposalMarketGroups? MarketGroupId { get; set; }
+        public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
+
         public class PricingGuideMarket : IInventoryMarket
         {
             public string MarketName { get; set; }
