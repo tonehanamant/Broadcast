@@ -1847,6 +1847,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var pricingGuideDto = _MapToPricingGuideOpenMarketInventoryDto(dto.DistributionRequest, inventory);
             pricingGuideDto.Markets = _ApplyDefaultSortingForPricingGuideMarkets(pricingGuideDto.Markets);
+            _SetCanEditSpotsForPrograms(pricingGuideDto);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
             _SumTotalsForMarkets(pricingGuideDto.Markets);
             _SumTotalsForPricingGuide(pricingGuideDto, detail.PricingGuide.ProprietaryPricing);
