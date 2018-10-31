@@ -5,6 +5,7 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -41,7 +42,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="ratingsAudiences">list of rating audiences</param>
         /// <returns></returns>
         List<PostImpressionsData> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
-        
+
         /// <summary>
         /// Adds a 'Not a Cadent Isci' problem
         /// </summary>
@@ -102,42 +103,51 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
+                    context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
                     var proposalVersions = context.proposal_versions
+                        .Include(v => v.proposal)
+                        .Include(v => v.proposal_version_details.Select(d => d.proposal_version_detail_quarters.Select(q => q.proposal_version_detail_quarter_weeks.Select(w => w.affidavit_client_scrubs.Select(s => s.affidavit_file_details.affidavit_files)))))
                         .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted)
                         .ToList();
+
                     var posts = new List<PostedContracts>();
 
                     foreach (var proposalVersion in proposalVersions)
                     {
-                        var spots = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                     from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                     from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                     from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                     let affidavitFileDetail = affidavitFileScrub.affidavit_file_details
-                                     select affidavitFileScrub).ToList();
+                        var quarters = proposalVersion.proposal_version_details
+                            .SelectMany(d => d.proposal_version_detail_quarters).ToList();
+                        var primaryAudienceImpressions = quarters.Sum(q => q.impressions_goal);
+
+                        var scrubs = quarters.SelectMany(q => q.proposal_version_detail_quarter_weeks).SelectMany(w => w.affidavit_client_scrubs);
+
+                        int inSpecCount = 0;
+                        int outOfSpecCount = 0;
+                        DateTime? uploadDate = null;
+
+                        if (scrubs.Any())
+                        {
+                            inSpecCount = scrubs.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.InSpec);
+                            outOfSpecCount = scrubs.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec);
+
+                            uploadDate = scrubs.Select(s => s.affidavit_file_details.affidavit_files)
+                                                .Max(af => af.created_date);
+                        }
 
                         posts.Add(new PostedContracts
                         {
                             ContractId = proposalVersion.proposal_id,
                             Equivalized = proposalVersion.equivalized,
                             ContractName = proposalVersion.proposal.name,
-                            UploadDate = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                          from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                          orderby affidavitFileScrub.affidavit_file_details.affidavit_files.created_date descending
-                                          select (DateTime?)affidavitFileScrub.affidavit_file_details.affidavit_files.created_date).FirstOrDefault(),
-                            SpotsInSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.InSpec),
-                            SpotsOutOfSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec),
+                            UploadDate = uploadDate,
+                            SpotsInSpec = inSpecCount,
+                            SpotsOutOfSpec = outOfSpecCount,
                             AdvertiserId = proposalVersion.proposal.advertiser_id,
                             GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
                             PostType = (SchedulePostType)proposalVersion.post_type,
-                            PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                                                from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                                                select proposalVersionQuarters.impressions_goal).Sum(),
+                            PrimaryAudienceBookedImpressions = primaryAudienceImpressions,
                         });
                     }
-
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
                 });
         }
@@ -189,9 +199,9 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var iscis = from detail in _GetUnlinkedIscisQuery(context)
-                             from problem in detail.affidavit_file_detail_problems
-                             group detail by new { detail.isci, detail.spot_length_id, problem.problem_type } into g
-                             select new { g.Key.spot_length_id, g.Key.problem_type, g.Key.isci, count = g.Count() };
+                                from problem in detail.affidavit_file_detail_problems
+                                group detail by new { detail.isci, detail.spot_length_id, problem.problem_type } into g
+                                select new { g.Key.spot_length_id, g.Key.problem_type, g.Key.isci, count = g.Count() };
 
                     return iscis.ToList().Select(x => new UnlinkedIscis
                     {
@@ -254,7 +264,7 @@ namespace Services.Broadcast.Repositories
                     }).OrderBy(x => x.ISCI).ToList();
                 });
         }
-        
+
         /// <summary>
         /// Adds a 'Not a Cadent Isci' problem
         /// </summary>
