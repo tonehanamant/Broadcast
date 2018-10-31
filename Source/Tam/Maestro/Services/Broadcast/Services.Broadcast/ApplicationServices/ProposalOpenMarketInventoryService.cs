@@ -1818,19 +1818,22 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach(var program in programs)
             {
-
                 var hasPositiveImpressions = program.EffectiveImpressionsPerSpot > 0;
 
                 if (!hasPositiveImpressions && program.Spots > 0)
                 {
                     throw new Exception("Cannot allocate spots that have zero impressions");
                 }
-
             }
         }
 
         public PricingGuideOpenMarketDistributionDto UpdateOpenMarketPricingGuideMarkets(PricingGuideOpenMarketDistributionDto dto)
         {
+            var programSpots = dto.Markets
+                .SelectMany(x => x.Stations)
+                .SelectMany(x => x.Programs)
+                .Select(x => new KeyValuePair<int, int>(x.ProgramId, x.Spots))
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             var selectedMarketIds = dto.AllMarkets.Where(x => x.Selected).Select(x => x.Id).ToList();
             var detail = _ProposalRepository.GetProposalDetail(dto.DistributionRequest.ProposalDetailId);
             var inventory = _ProposalRepository.GetProposalDetailPricingGuideInventory(dto.DistributionRequest.ProposalDetailId);
@@ -1844,6 +1847,7 @@ namespace Services.Broadcast.ApplicationServices
             ApplyMarketsForPricingGuideOpenMarketInventory(inventoryMarkets, inventory, selectedMarketIds);
 
             ApplyPricingGuideOpenMarketInventory(inventory, dto.DistributionRequest);
+            _SetAllocatedSpots(inventory.Markets, programSpots);
 
             var pricingGuideDto = _MapToPricingGuideOpenMarketInventoryDto(dto.DistributionRequest, inventory);
             pricingGuideDto.Markets = _ApplyDefaultSortingForPricingGuideMarkets(pricingGuideDto.Markets);
@@ -1853,6 +1857,24 @@ namespace Services.Broadcast.ApplicationServices
             _SumTotalsForPricingGuide(pricingGuideDto, detail.PricingGuide.ProprietaryPricing);
 
             return pricingGuideDto;
+        }
+
+        private void _SetAllocatedSpots(List<PricingGuideMarket> markets, Dictionary<int, int> programSpots)
+        {
+            var programs = markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs).ToList();
+            _ValidateAllocations(programs);
+
+            foreach (var program in programs)
+            {
+                if (programSpots.ContainsKey(program.ProgramId))
+                {
+                    program.Spots = programSpots[program.ProgramId];
+                }
+            }
+
+            _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
+            _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
+            _SumTotalsForMarkets(markets);
         }
     }
 }

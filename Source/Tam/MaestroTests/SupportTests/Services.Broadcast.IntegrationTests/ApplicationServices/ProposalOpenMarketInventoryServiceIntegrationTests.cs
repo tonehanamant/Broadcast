@@ -2715,5 +2715,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(resultJson);
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_SavesAllocatedSpots_ForPricingMarkets()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            pricingGuideOpenMarketDto.AllMarkets.ForEach(x => x.Selected = false);
+            var firstMarket = pricingGuideOpenMarketDto.AllMarkets.First();
+            firstMarket.Selected = true;
+            var firstMarketProgram = pricingGuideOpenMarketDto.Markets
+                .Where(x => x.MarketId == firstMarket.Id)
+                .SelectMany(x => x.Stations)
+                .SelectMany(x => x.Programs)
+                .First();
+            firstMarketProgram.Spots = firstMarketProgram.Spots + 5;
+
+            var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result);
+
+            Approvals.Verify(resultJson);
+        }
     }
 }
