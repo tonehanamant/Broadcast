@@ -1464,6 +1464,7 @@ class PricingGuide extends Component {
                         hasOpenMarketData={hasOpenMarketData}
                         isOpenMarketDataSortName={isOpenMarketDataSortName}
                         allocateSpots={allocateSpots}
+                        detailId={detail && detail.Id}
                       />
                     )}
                   {openMarketLoaded &&
