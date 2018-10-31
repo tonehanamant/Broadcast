@@ -1876,7 +1876,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     BudgetGoal = 10000,
                     OpenMarketPricing = new OpenMarketPricingGuide
                     {
-                        UnitCapPerStation = 100
+                        UnitCapPerStation = 2
                     }
                 };
 
@@ -2637,7 +2637,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
-
         }
     }
 }

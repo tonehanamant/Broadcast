@@ -1390,24 +1390,8 @@ namespace Services.Broadcast.ApplicationServices
             var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 1;
             var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
             var impressionsGoal = request.ImpressionGoal ?? Double.MaxValue;
-
-            foreach (var market in pricingGuideOpenMarketInventory.Markets)
-            {
-
-                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
-                var minProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
-
-                if (minProgram != null)
-                {
-                    minProgram.Spots = 1;
-                    minProgram.Impressions = minProgram.Spots * minProgram.EffectiveImpressionsPerSpot;
-                    minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
-                    impressionsGoal -= minProgram.EffectiveImpressionsPerSpot;
-                    budgetGoal -= minProgram.CostPerSpot;
-                }
-            }
-
             var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation);
+
             while (budgetGoal > 0 && impressionsGoal > 0 && allocatableProgram != null)
             {
                 allocatableProgram.Spots = allocatableProgram.Spots + 1;
