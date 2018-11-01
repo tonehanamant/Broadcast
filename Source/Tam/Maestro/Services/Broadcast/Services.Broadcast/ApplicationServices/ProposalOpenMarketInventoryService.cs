@@ -41,6 +41,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IProposalRepository _ProposalRepository;
         private readonly IPricingGuideDistributionEngine _PricingGuideDistributionEngine;
+        private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
 
         private const string HOUSEHOLD_AUDIENCE_CODE = "HH";
 
@@ -60,6 +61,7 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _ProposalRepository = broadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _PricingGuideDistributionEngine = pricingGuideDistributionEngine;
+            _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
         }
 
         public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId,
@@ -1279,7 +1281,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyProgramAndGenreFilterForPricingGuide(inventory, inventory.Criteria);
 
-            _PricingGuideDistributionEngine.CalculateMarketDistribution(inventory, request);
+            _SetPricingGuideMarkets(inventory, request);
 
             _FilterByCpm(inventory, request);
 
@@ -1290,6 +1292,37 @@ namespace Services.Broadcast.ApplicationServices
             _SetSelectedMarketsInAllMarketsObject(inventory);
 
             return inventory;
+        }
+        
+        private void _SetPricingGuideMarkets(PricingGuideOpenMarketInventory inventory, PricingGuideOpenMarketInventoryRequestDto request)
+        {
+            // Markets that need to be included.
+            var includedMarketCodes = inventory.ProposalMarkets.Where(x => !x.IsBlackout).Select(x => (int)x.Id).ToList();
+            // Only markets in the list are allowed.
+            var allowedMarkets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(inventory.ProposalId, inventory.ProposalVersion);
+            var allowedMarketsIds = allowedMarkets.Select(x => x.Id);
+            // Remove all markets that might have been blacklisted.
+            includedMarketCodes.RemoveAll(x => !allowedMarketsIds.Contains(x));
+
+            var includedMarkets = inventory.Markets.Where(x => includedMarketCodes.Contains(x.MarketId)).ToList();
+            var includedMarketsCoverage = includedMarkets.Sum(x => x.MarketCoverage);
+
+            inventory.Markets.RemoveAll(x => !allowedMarketsIds.Contains(x.MarketId));
+
+            if (includedMarketsCoverage >= (inventory.MarketCoverage * 100))
+            {
+                inventory.Markets.Clear();
+                inventory.Markets.AddRange(includedMarkets);
+                return;
+            }
+           
+            inventory.Markets.RemoveAll(x => includedMarketCodes.Contains(x.MarketId));
+
+            var desiredCoverage = inventory.MarketCoverage - (includedMarketsCoverage / 100);
+
+            _PricingGuideDistributionEngine.CalculateMarketDistribution(inventory, request, desiredCoverage);
+
+            inventory.Markets.AddRange(includedMarkets);
         }
 
         private void _SetSelectedMarketsInAllMarketsObject(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)

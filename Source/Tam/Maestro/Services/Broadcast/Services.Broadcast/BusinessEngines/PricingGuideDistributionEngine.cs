@@ -11,6 +11,8 @@ namespace Services.Broadcast.BusinessEngines
     public interface IPricingGuideDistributionEngine : IApplicationService
     {
         void CalculateMarketDistribution(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventor, PricingGuideOpenMarketInventoryRequestDto request);
+
+        void CalculateMarketDistribution(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventor, PricingGuideOpenMarketInventoryRequestDto request, double? desiredCoverage);
     }
 
     public class DistributionMarket
@@ -23,22 +25,27 @@ namespace Services.Broadcast.BusinessEngines
     {
         private const double MaxMarketCoverage = 100d;
 
-        public void CalculateMarketDistribution(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
+        public void CalculateMarketDistribution(PricingGuideOpenMarketInventory inventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            if (!pricingGuideOpenMarketInventory.MarketCoverage.HasValue)
+            CalculateMarketDistribution(inventory, request, inventory.MarketCoverage);
+        }
+
+        public void CalculateMarketDistribution(PricingGuideOpenMarketInventory inventory, PricingGuideOpenMarketInventoryRequestDto request, double? desiredCoverage)
+        {
+            if (!inventory.MarketCoverage.HasValue)
                 return;
 
-            var totalMarketCoverage = pricingGuideOpenMarketInventory.Markets.Sum(x => x.MarketCoverage) / 100;
+            var totalMarketCoverage = inventory.Markets.Sum(x => x.MarketCoverage) / 100;
 
             // The sum of the coverage of the available markets is less than the desired market coverage.
             // Therefore, all available markets will be selected.
-            if (totalMarketCoverage < pricingGuideOpenMarketInventory.MarketCoverage)
+            if (totalMarketCoverage < inventory.MarketCoverage)
                 return;
 
-            var distributionMarkets = _MapToDistributionMarkets(pricingGuideOpenMarketInventory.Markets);
+            var distributionMarkets = _MapToDistributionMarkets(inventory.Markets);
 
             // We convert the coverage to int. That's necessary for the Knapsack algorithm.
-            var marketCoverage = (int)(pricingGuideOpenMarketInventory.MarketCoverage * 100000);
+            var marketCoverage = (int)(desiredCoverage * 100000);
 
             // The itemsToKeep is a matrix. The number of lines is the number of markets + 1.
             // The columns is the desired market coverage + 1.
@@ -51,7 +58,7 @@ namespace Services.Broadcast.BusinessEngines
             // Each selected market will reduced the remaining available coverage.
             // The matrix contains the solution for every possible combination, so it's a matter of iterating over it and
             // finding the best markets.
-            _SetPricingGuideMarkets(itemsToKeep, marketCoverage, distributionMarkets, pricingGuideOpenMarketInventory);
+            _SetPricingGuideMarkets(itemsToKeep, marketCoverage, distributionMarkets, inventory);
         }
 
         private bool[,] _FindMarkets(int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventoryRequestDto request)
