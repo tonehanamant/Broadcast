@@ -1202,7 +1202,13 @@ namespace Services.Broadcast.Repositories
                         AdjustmentInflation = proposalDetail.adjustment_inflation,
                         GoalBudget = proposalDetail.goal_budget,
                         AdjustmentMargin = proposalDetail.adjustment_margin,
-                        AdjustmentRate = proposalDetail.adjustment_rate
+                        AdjustmentRate = proposalDetail.adjustment_rate,
+                        ProprietaryPricing = proposalDetail.proposal_version_detail_proprietary_pricing.Select(p => new ProprietaryPricingDto
+                        {
+                            InventorySource = (InventorySourceEnum)p.inventory_source,
+                            ImpressionsBalance = p.impressions_balance,
+                            Cpm = p.cpm
+                        }).ToList()
                     },
                     GenreCriteria = proposalDetail.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {

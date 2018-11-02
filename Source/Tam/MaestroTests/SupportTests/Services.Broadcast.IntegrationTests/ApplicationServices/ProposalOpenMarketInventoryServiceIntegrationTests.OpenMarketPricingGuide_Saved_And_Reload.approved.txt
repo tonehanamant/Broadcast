@@ -3148,5 +3148,10 @@
     "Coverage": 0.0,
     "Cpm": 0.0,
     "Impressions": 0.0
+  },
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   }
 }

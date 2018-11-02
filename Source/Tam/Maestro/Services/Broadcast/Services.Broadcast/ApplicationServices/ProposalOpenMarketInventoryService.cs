@@ -1127,6 +1127,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             var existingPricingGuide = _GetProposalDetailPricingGuide(request.ProposalId, request.ProposalDetailId);
             var generatePricingGuide = request.HasPricingGuideChanges ?? true;
+            var detail = _ProposalRepository.GetProposalDetail(request.ProposalDetailId);
 
             if (existingPricingGuide == null || generatePricingGuide)
             {
@@ -1163,8 +1164,34 @@ namespace Services.Broadcast.ApplicationServices
             _SetCanEditSpotsForPrograms(pricingGuideDto);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
             _SumTotalsForMarkets(pricingGuideDto.Markets);
-            pricingGuideDto.OpenMarketTotals = _SumTotalsForOpenMarketSection(pricingGuideDto.Markets);
+            _SumTotalsForPricingGuide(pricingGuideDto, detail.PricingGuide.ProprietaryPricing);
+
             return pricingGuideDto;
+        }
+
+        private void _SumTotalsForPricingGuide(PricingGuideOpenMarketDistributionDto pricingGuideDto, List<ProprietaryPricingDto> proprietaryPricingValues)
+        {
+            pricingGuideDto.OpenMarketTotals = _SumTotalsForOpenMarketSection(pricingGuideDto.Markets);
+            pricingGuideDto.ProprietaryTotals = _SumTotalsForProprietarySection(pricingGuideDto.OpenMarketTotals.Impressions, proprietaryPricingValues);
+        }
+
+        private ProprietaryTotals _SumTotalsForProprietarySection(double openMarketImpressions, List<ProprietaryPricingDto> proprietaryPricingValues)
+        {
+            var proprietaryImpressionsPercent = proprietaryPricingValues.Sum(x => x.ImpressionsBalance);
+            var result = new ProprietaryTotals();
+
+            if (openMarketImpressions == 0 || proprietaryImpressionsPercent == 0)
+            {
+                return result;
+            }
+            
+            var openMarketImpressionsPercent = 1 - proprietaryImpressionsPercent;
+            var impressionsPerOnePercentage = openMarketImpressions / openMarketImpressionsPercent;
+            result.Impressions = proprietaryImpressionsPercent * impressionsPerOnePercentage;
+            result.Cpm = (decimal)(proprietaryPricingValues.Sum(x => x.ImpressionsBalance * (double)x.Cpm) / proprietaryImpressionsPercent);
+            result.Cost = result.Cpm * (decimal)result.Impressions / 1000;
+            
+            return result;
         }
 
         private OpenMarketTotals _SumTotalsForOpenMarketSection(List<PricingGuideMarket> markets)
@@ -1766,7 +1793,9 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
             ApplyFilterOnOpenMarketPricingGuideGrid(dto);
-            dto.OpenMarketTotals = _SumTotalsForOpenMarketSection(dto.Markets);
+
+            var detail = _ProposalRepository.GetProposalDetail(request.ProposalDetailId);
+            _SumTotalsForPricingGuide(dto, detail.PricingGuide.ProprietaryPricing);
 
             return dto;
         }

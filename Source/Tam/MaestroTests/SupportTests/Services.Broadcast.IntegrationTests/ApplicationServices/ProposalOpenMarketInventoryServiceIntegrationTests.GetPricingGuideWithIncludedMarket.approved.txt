@@ -2262,5 +2262,10 @@
     "Coverage": 0.984,
     "Cpm": 0.2988176017359004063919384000,
     "Impressions": 870096.0
+  },
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   }
 }
