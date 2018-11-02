@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -105,49 +106,10 @@ namespace Services.Broadcast.Repositories
                 {
                     context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
 
-                    var proposalVersions = context.proposal_versions
-                        .Include(v => v.proposal)
-                        .Include(v => v.proposal_version_details.Select(d => d.proposal_version_detail_quarters.Select(q => q.proposal_version_detail_quarter_weeks.Select(w => w.affidavit_client_scrubs.Select(s => s.affidavit_file_details.affidavit_files)))))
-                        .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted)
-                        .ToList();
+                    var posts = context.Database.SqlQuery<PostedContracts>("usp_GetPostedProposals");
 
-                    var posts = new List<PostedContracts>();
 
-                    foreach (var proposalVersion in proposalVersions)
-                    {
-                        var quarters = proposalVersion.proposal_version_details
-                            .SelectMany(d => d.proposal_version_detail_quarters).ToList();
-                        var primaryAudienceImpressions = quarters.Sum(q => q.impressions_goal);
 
-                        var scrubs = quarters.SelectMany(q => q.proposal_version_detail_quarter_weeks).SelectMany(w => w.affidavit_client_scrubs);
-
-                        int inSpecCount = 0;
-                        int outOfSpecCount = 0;
-                        DateTime? uploadDate = null;
-
-                        if (scrubs.Any())
-                        {
-                            inSpecCount = scrubs.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.InSpec);
-                            outOfSpecCount = scrubs.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec);
-
-                            uploadDate = scrubs.Select(s => s.affidavit_file_details.affidavit_files)
-                                                .Max(af => af.created_date);
-                        }
-
-                        posts.Add(new PostedContracts
-                        {
-                            ContractId = proposalVersion.proposal_id,
-                            Equivalized = proposalVersion.equivalized,
-                            ContractName = proposalVersion.proposal.name,
-                            UploadDate = uploadDate,
-                            SpotsInSpec = inSpecCount,
-                            SpotsOutOfSpec = outOfSpecCount,
-                            AdvertiserId = proposalVersion.proposal.advertiser_id,
-                            GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
-                            PostType = (SchedulePostType)proposalVersion.post_type,
-                            PrimaryAudienceBookedImpressions = primaryAudienceImpressions,
-                        });
-                    }
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
                 });
         }
