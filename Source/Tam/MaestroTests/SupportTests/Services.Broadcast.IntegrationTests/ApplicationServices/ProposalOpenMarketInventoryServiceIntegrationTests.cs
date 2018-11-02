@@ -2793,7 +2793,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var result = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
-            var resultJson = IntegrationTestHelper.ConvertToJson(result, _GetPricingGuideJsonSerializerSettings());
+            var resultJson = IntegrationTestHelper.ConvertToJsonMoreRounding(result, _GetPricingGuideJsonSerializerSettings());
 
             Approvals.Verify(resultJson);
         }
@@ -2806,7 +2806,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ProgramId");
             jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ManifestDaypartId");
             jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "Genres");
-
+            
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
