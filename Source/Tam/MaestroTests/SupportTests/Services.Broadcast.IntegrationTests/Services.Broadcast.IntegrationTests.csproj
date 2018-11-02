@@ -264,7 +264,7 @@
     <Compile Include="Stubbs\EmailerServicedStubb.cs" />
     <Compile Include="Stubbs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
-    <Compile Include="ApplicationServices\AffidavitProgramScrubbingEngineTests.cs" />
+    <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="UnitTests\FtpServiceTester.cs" />
     <Compile Include="UnitTests\InventoryFileImporterBaseTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
