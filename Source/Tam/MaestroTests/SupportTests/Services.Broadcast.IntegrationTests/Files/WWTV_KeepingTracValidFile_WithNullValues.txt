@@ -11,9 +11,6 @@
 	"ISCI": "AAAAAAAA",
 	"Affiliate": "CBS",
 	"SuppliedProgram": "Everybody Loves Raymond",
-	"ShowType": "Comedy",
-	"LeadInShowType": "News",
-	"LeadOutShowType": "Documentary",
 	"Demographics": [{
 			"Demographic": "A25-49",
 			"OvernightRating": 2.3,
