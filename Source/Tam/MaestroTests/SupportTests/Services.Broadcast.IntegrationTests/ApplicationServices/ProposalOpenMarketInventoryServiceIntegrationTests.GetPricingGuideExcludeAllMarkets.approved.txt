@@ -202,6 +202,12 @@
     "Cpm": 0.0,
     "Impressions": 0.0
   },
+  "PricingTotals": {
+    "Cost": 0.0,
+    "Coverage": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  },
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

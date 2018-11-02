@@ -1173,6 +1173,24 @@ namespace Services.Broadcast.ApplicationServices
         {
             pricingGuideDto.OpenMarketTotals = _SumTotalsForOpenMarketSection(pricingGuideDto.Markets);
             pricingGuideDto.ProprietaryTotals = _SumTotalsForProprietarySection(pricingGuideDto.OpenMarketTotals.Impressions, proprietaryPricingValues);
+            pricingGuideDto.PricingTotals = _SumPricingTotals(pricingGuideDto.OpenMarketTotals, pricingGuideDto.ProprietaryTotals);
+        }
+
+        private PricingTotals _SumPricingTotals(OpenMarketTotals openMarketTotals, ProprietaryTotals proprietaryTotals)
+        {
+            var result = new PricingTotals
+            {
+                Impressions = openMarketTotals.Impressions + proprietaryTotals.Impressions,
+                Cost = openMarketTotals.Cost + proprietaryTotals.Cost,
+                Coverage = openMarketTotals.Coverage
+            };
+
+            if (result.Impressions > 0)
+            {
+                result.Cpm = result.Cost / (decimal)result.Impressions * 1000;
+            }
+
+            return result;
         }
 
         private ProprietaryTotals _SumTotalsForProprietarySection(double openMarketImpressions, List<ProprietaryPricingDto> proprietaryPricingValues)

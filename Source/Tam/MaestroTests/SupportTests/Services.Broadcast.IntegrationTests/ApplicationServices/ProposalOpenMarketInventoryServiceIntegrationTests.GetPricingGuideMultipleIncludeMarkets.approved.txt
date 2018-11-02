@@ -2392,6 +2392,12 @@
     "Cpm": 0.2322576316345216847624513000,
     "Impressions": 1743753.25
   },
+  "PricingTotals": {
+    "Cost": 405.0000,
+    "Coverage": 0.917,
+    "Cpm": 0.2322576316345216847624513000,
+    "Impressions": 1743753.25
+  },
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

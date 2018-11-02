@@ -2779,7 +2779,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProposalOpenMarketService_SetsProprietaryTotals()
+        public void ProposalOpenMarketService_SetsTotalsForPricingGrid()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
