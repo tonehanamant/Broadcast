@@ -39,7 +39,7 @@ namespace Services.Broadcast.BusinessEngines
 
             // The sum of the coverage of the available markets is less than the desired market coverage.
             // Therefore, all available markets will be selected.
-            if (totalMarketCoverage < inventory.MarketCoverage)
+            if (totalMarketCoverage < desiredCoverage)
                 return;
 
             var distributionMarkets = _MapToDistributionMarkets(inventory.Markets);
