@@ -2813,5 +2813,56 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver
             };
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideMultipleIncludeMarketsNoRemaningCoverage()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26023);
+
+                proposal.Markets = new List<ProposalMarketDto>
+                {
+                    new ProposalMarketDto()
+                    {
+                        Id = 200
+                    },
+                    new ProposalMarketDto()
+                    {
+                        Id = 343
+                    },
+                    new ProposalMarketDto()
+                    {
+                        Id = 358,
+                        IsBlackout = true
+                    }
+                };
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", new DateTime(2018, 10, 31));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26023,
+                    ProposalDetailId = 9985,
+                    OpenMarketPricing = new OpenMarketPricingGuide
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
     }
 }
