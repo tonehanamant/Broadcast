@@ -1873,11 +1873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26020,
                     ProposalDetailId = 9982,
-                    BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricingGuide
-                    {
-                        UnitCapPerStation = 2
-                    }
+                    BudgetGoal = 10000
                 };
 
                 var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
