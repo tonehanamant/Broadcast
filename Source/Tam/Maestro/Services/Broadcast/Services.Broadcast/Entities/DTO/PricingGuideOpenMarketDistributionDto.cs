@@ -24,7 +24,7 @@ namespace Services.Broadcast.Entities.DTO
         public OpenMarketCriterion Criteria { get; set; }
         public List<PricingGuideMarket> Markets { get; set; } = new List<PricingGuideMarket>();
         public List<PricingGuideMarketTotalsDto> AllMarkets { get; set; } = new List<PricingGuideMarketTotalsDto>();
-        public double? MarketCoverage { get; set; }
+        public double MarketCoverage { get; set; }
         public List<ProposalMarketDto> ProposalMarkets { get; set; }
         public ProposalEnums.ProposalMarketGroups? MarketGroupId { get; set; }
         public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
