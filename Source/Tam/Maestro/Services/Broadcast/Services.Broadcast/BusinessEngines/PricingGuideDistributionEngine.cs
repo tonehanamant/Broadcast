@@ -12,7 +12,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         void CalculateMarketDistribution(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventor, PricingGuideOpenMarketInventoryRequestDto request);
 
-        void CalculateMarketDistribution(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventor, PricingGuideOpenMarketInventoryRequestDto request, double? desiredCoverage);
+        void CalculateMarketDistribution(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventor, PricingGuideOpenMarketInventoryRequestDto request, double desiredCoverage);
     }
 
     public class DistributionMarket
@@ -30,11 +30,8 @@ namespace Services.Broadcast.BusinessEngines
             CalculateMarketDistribution(inventory, request, inventory.MarketCoverage);
         }
 
-        public void CalculateMarketDistribution(PricingGuideOpenMarketInventory inventory, PricingGuideOpenMarketInventoryRequestDto request, double? desiredCoverage)
+        public void CalculateMarketDistribution(PricingGuideOpenMarketInventory inventory, PricingGuideOpenMarketInventoryRequestDto request, double desiredCoverage)
         {
-            if (!inventory.MarketCoverage.HasValue)
-                return;
-
             var totalMarketCoverage = inventory.Markets.Sum(x => x.MarketCoverage) / 100;
 
             // The sum of the coverage of the available markets is less than the desired market coverage.
@@ -42,10 +39,10 @@ namespace Services.Broadcast.BusinessEngines
             if (totalMarketCoverage < desiredCoverage)
                 return;
 
-            var distributionMarkets = _MapToDistributionMarkets(inventory.Markets);
+            var distributionMarkets = _MapToDistributionMarkets(inventory.Markets, request.OpenMarketPricing.OpenMarketCpmTarget.Value);
 
             // We convert the coverage to int. That's necessary for the Knapsack algorithm.
-            var marketCoverage = (int)(desiredCoverage * 100000);
+            var marketCoverage = (int)((totalMarketCoverage - desiredCoverage) * 100000);
 
             // The itemsToKeep is a matrix. The number of lines is the number of markets + 1.
             // The columns is the desired market coverage + 1.
@@ -58,7 +55,7 @@ namespace Services.Broadcast.BusinessEngines
             // Each selected market will reduced the remaining available coverage.
             // The matrix contains the solution for every possible combination, so it's a matter of iterating over it and
             // finding the best markets.
-            _SetPricingGuideMarkets(itemsToKeep, marketCoverage, distributionMarkets, inventory);
+            _SetPricingGuideMarkets(itemsToKeep, marketCoverage, distributionMarkets, inventory, request);
         }
 
         private bool[,] _FindMarkets(int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventoryRequestDto request)
@@ -69,16 +66,35 @@ namespace Services.Broadcast.BusinessEngines
             if (!request.OpenMarketPricing.OpenMarketCpmTarget.HasValue)
                 throw new Exception("No Open Market Pricing CPM target available");
 
-            var cpmTarget = request.OpenMarketPricing.OpenMarketCpmTarget.Value;
+            // The logic here is reversed because the knapsack is the actual remainder between the total avaiable coverage and the desired coverage.
+            // The actual selected markets are the markets that were not selected.
+            // This ensures some left over coverage.
+            if (request.OpenMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
+                return _FindCheapestMarketsKnapsack(coverage, markets);
 
-            if (cpmTarget == OpenMarketCpmTarget.Max)
-                return _FindExpensiveMarketsKnapsack(coverage, markets);
-
-            return _FindCheapestMarketsKnapsack(coverage, markets);
+            return _FindExpensiveMarketsKnapsack(coverage, markets);
         }
 
-        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarket> markets)
+        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarket> markets, OpenMarketCpmTarget target)
         {
+            if(target == OpenMarketCpmTarget.Max)
+            {
+                return markets.Select(x => new DistributionMarket
+                {
+                    Cpm = x.MaxCpm,
+                    MarketCoverage = (int)Math.Truncate(x.MarketCoverage * 1000)
+                }).ToList();
+            }
+
+            if(target == OpenMarketCpmTarget.Avg)
+            {
+                return markets.Select(x => new DistributionMarket
+                {
+                    Cpm = x.AvgCpm,
+                    MarketCoverage = (int)Math.Truncate(x.MarketCoverage * 1000)
+                }).ToList();
+            }
+            
             return markets.Select(x => new DistributionMarket
             {
                 Cpm = x.MinCpm,
@@ -89,41 +105,41 @@ namespace Services.Broadcast.BusinessEngines
         public static bool[,] _FindCheapestMarketsKnapsack(int coverage, List<DistributionMarket> markets)
         {
             var price = new decimal[markets.Count + 1, coverage + 1];
-            var itemsToKeep = new bool[markets.Count + 1, coverage + 1];
+            var marketsToKeep = new bool[markets.Count + 1, coverage + 1];
 
             for (var j = 1; j < coverage + 1; j++)
                 price[0, j] = 99999;
 
-            for (int priceItemIndex = 1; priceItemIndex <= markets.Count; priceItemIndex++)
+            for (int priceMarketIndex = 1; priceMarketIndex <= markets.Count; priceMarketIndex++)
             {
-                var itemIndex = priceItemIndex - 1;
-                var currentMarket = markets[itemIndex];
+                var marketIndex = priceMarketIndex - 1;
+                var currentMarket = markets[marketIndex];
 
                 for (int coverageIndex = 1; coverageIndex <= coverage; coverageIndex++)
                 {
                     if (currentMarket.MarketCoverage <= coverageIndex)
                     {
-                        var currentValuePlusValueForRemainingWeight = currentMarket.Cpm + price[itemIndex, coverageIndex - currentMarket.MarketCoverage];
+                        var currentValuePlusValueForRemainingWeight = currentMarket.Cpm + price[marketIndex, coverageIndex - currentMarket.MarketCoverage];
 
-                        if (currentValuePlusValueForRemainingWeight < price[itemIndex, coverageIndex])
+                        if (currentValuePlusValueForRemainingWeight < price[marketIndex, coverageIndex])
                         {
-                            price[priceItemIndex, coverageIndex] = currentValuePlusValueForRemainingWeight;
+                            price[priceMarketIndex, coverageIndex] = currentValuePlusValueForRemainingWeight;
 
-                            itemsToKeep[priceItemIndex, coverageIndex] = true;
+                            marketsToKeep[priceMarketIndex, coverageIndex] = true;
                         }
                         else
                         {
-                            price[priceItemIndex, coverageIndex] = price[itemIndex, coverageIndex];
+                            price[priceMarketIndex, coverageIndex] = price[marketIndex, coverageIndex];
                         }
                     }
                     else
                     {
-                        price[priceItemIndex, coverageIndex] = price[itemIndex, coverageIndex];
+                        price[priceMarketIndex, coverageIndex] = price[marketIndex, coverageIndex];
                     }
                 }
             }
 
-            return itemsToKeep;
+            return marketsToKeep;
         }
 
         public static bool[,] _FindExpensiveMarketsKnapsack(int coverage, List<DistributionMarket> markets)
@@ -165,33 +181,27 @@ namespace Services.Broadcast.BusinessEngines
             return itemsToKeep;
         }
 
-        public void _SetPricingGuideMarkets(bool[,] itemsToSelect, int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        public void _SetPricingGuideMarkets(bool[,] itemsToSelect, int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
             var selectedMarkets = new List<PricingGuideMarket>();
             var itemIndex = markets.Count;
             var remainingCoverage = coverage;
             var coverageCount = remainingCoverage;
-
+            
             while (itemIndex > 0)
             {
-                while (coverageCount > 0)
-                {
-                    if (itemsToSelect[itemIndex, coverageCount])
-                    {
-                        selectedMarkets.Add(pricingGuideOpenMarketInventory.Markets[itemIndex - 1]);
-                        remainingCoverage = remainingCoverage - markets[itemIndex - 1].MarketCoverage;
-                        coverageCount = remainingCoverage;
-                        break;
-                    }
 
-                    coverageCount--;
+                if (itemsToSelect[itemIndex, coverageCount])
+                {
+                    selectedMarkets.Add(pricingGuideOpenMarketInventory.Markets[itemIndex - 1]);
+                    remainingCoverage = remainingCoverage - markets[itemIndex - 1].MarketCoverage;
+                    coverageCount = remainingCoverage;
                 }
 
-                coverageCount = remainingCoverage;
-                itemIndex--;
+                itemIndex--; 
             }
 
-            pricingGuideOpenMarketInventory.Markets = selectedMarkets;
+            pricingGuideOpenMarketInventory.Markets = pricingGuideOpenMarketInventory.Markets.Where(m => !selectedMarkets.Select(sm => sm.MarketId).Contains(m.MarketId)).ToList();                     
         }
     }
 }

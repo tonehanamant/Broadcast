@@ -1465,7 +1465,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _AllocateSpotsWithGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 1;
+            var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 0;
             var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
             var impressionsGoal = request.ImpressionGoal ?? Double.MaxValue;
             var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation);
@@ -1484,8 +1484,16 @@ namespace Services.Broadcast.ApplicationServices
         private static PricingGuideMarket.PricingGuideStation.PricingGuideProgram
             _GetNextGoalAllocatableProgram(List<PricingGuideMarket> markets, int stationCap)
         {
-            var allocatableStations = markets.SelectMany(m => m.Stations).Where(
+            IEnumerable<PricingGuideMarket.PricingGuideStation> allocatableStations;
+            if(stationCap > 0)
+            {
+                allocatableStations = markets.SelectMany(m => m.Stations).Where(
                 s => s.Programs.Sum(p => p.Spots) < stationCap);
+            }
+            else
+            {
+                allocatableStations = markets.SelectMany(m => m.Stations);
+            }
             var program = allocatableStations.SelectMany(
                 s => s.Programs.Where(
                     p => p.BlendedCpm != 0)).OrderBy(x => x.BlendedCpm).FirstOrDefault();

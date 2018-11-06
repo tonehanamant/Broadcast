@@ -41,7 +41,7 @@
   "Markets": [
     {
       "AvgCpm": 0.0070829812630578446944124378,
-      "DisplayImpressions": 20784288.5,
+      "DisplayImpressions": 4156857700.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
@@ -58,14 +58,14 @@
           "Programs": [
             {
               "BlendedCpm": 0.0024056632970621053494325774,
-              "Cost": 50.0000,
+              "Cost": 10000.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-SU 9AM-12AM",
                 "Id": 5
               },
-              "DisplayCost": 50.0000,
-              "DisplayImpressions": 20784288.5,
+              "DisplayCost": 10000.0000,
+              "DisplayImpressions": 4156857700.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 10392144.25,
               "Genres": [
@@ -75,12 +75,12 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 20784288.5,
+              "Impressions": 4156857700.0,
               "ImpressionsPerSpot": 10392144.25,
               "ManifestDaypartId": 213351,
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
-              "Spots": 2,
+              "Spots": 400,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -114,13 +114,13 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 50.0000,
-      "TotalImpressions": 20784288.5,
-      "TotalSpots": 2
+      "TotalCost": 10000.0000,
+      "TotalImpressions": 4156857700.0,
+      "TotalSpots": 400
     }
   ],
   "OpenMarketTotals": {
-    "Cost": 50.0000,
+    "Cost": 10000.0000,
     "Coverage": 1.01,
     "Cpm": 0.0024056632970621053494326000,
     "Impressions": 20784288.5
