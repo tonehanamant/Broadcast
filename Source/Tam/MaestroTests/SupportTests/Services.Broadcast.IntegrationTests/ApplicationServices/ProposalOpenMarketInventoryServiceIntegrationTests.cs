@@ -7,16 +7,20 @@ using Common.Services;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -2628,8 +2632,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
         }
-
+        
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithIncludedMarket()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26022,
+                    ProposalDetailId = 9984,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
+
+    [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ProposalOpenMarketService_SetsTotalsForPricingGrid()
         {
@@ -2650,6 +2683,124 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(resultJson);
         }
 
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithExcludedMarkets()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26023,
+                    ProposalDetailId = 9985,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideExcludeAllMarkets()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26023);
+
+                proposal.BlackoutMarketGroupId = ProposalEnums.ProposalMarketGroups.All;
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", new DateTime(2018, 10, 31));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26023,
+                    ProposalDetailId = 9985,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideMultipleIncludeMarkets()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26023);
+
+                proposal.Markets = new List<ProposalMarketDto>
+                {
+                    new ProposalMarketDto()
+                    {
+                        Id = 200
+                    },
+                    new ProposalMarketDto()
+                    {
+                        Id = 343
+                    },
+                    new ProposalMarketDto()
+                    {
+                        Id = 358,
+                        IsBlackout = true
+                    }
+                };
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", new DateTime(2018, 10, 31));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26023,
+                    ProposalDetailId = 9985,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
+
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2658,12 +2809,63 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ProgramId");
             jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ManifestDaypartId");
             jsonResolver.Ignore(typeof(PricingGuideProgramDto), "Genres");
-
+            
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideMultipleIncludeMarketsNoRemaningCoverage()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26023);
+
+                proposal.Markets = new List<ProposalMarketDto>
+                {
+                    new ProposalMarketDto()
+                    {
+                        Id = 200
+                    },
+                    new ProposalMarketDto()
+                    {
+                        Id = 343
+                    },
+                    new ProposalMarketDto()
+                    {
+                        Id = 358,
+                        IsBlackout = true
+                    }
+                };
+
+                var result = _ProposalService.SaveProposal(proposal, "IntegrationTestUser", new DateTime(2018, 10, 31));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26023,
+                    ProposalDetailId = 9985,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
         }
 
         [Test]

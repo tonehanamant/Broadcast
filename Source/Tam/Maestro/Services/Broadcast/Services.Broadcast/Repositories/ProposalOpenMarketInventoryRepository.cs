@@ -226,7 +226,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PricingGuideOpenMarketInventory
                 {
-                    MarketCoverage = pv.proposal_versions.market_coverage
+                    MarketCoverage = pv.proposal_versions.market_coverage ?? default(double)
                 };
 
                 ProposalRepository.PopoulateProposalDetailInventoryBase(pv, dto);

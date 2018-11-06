@@ -97,7 +97,7 @@
           "EffectiveClientIsci": null,
           "EffectiveGenre": null,
           "EffectiveIsci": "AAAAAAAA1",
-          "EffectiveProgramName": null,
+          "EffectiveProgramName": "Everybody Loves Raymond",
           "EffectiveShowType": null,
           "LeadIn": false,
           "MatchDate": false,

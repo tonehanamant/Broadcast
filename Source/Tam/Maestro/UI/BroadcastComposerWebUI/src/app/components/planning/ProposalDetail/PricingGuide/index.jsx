@@ -402,16 +402,16 @@ class PricingGuide extends Component {
       impression
     } = this.state;
     const openData = {
-      CpmMax: openCpmMax,
-      CpmMin: openCpmMin,
+      CpmMax: openCpmMax || null,
+      CpmMin: openCpmMin || null,
       OpenMarketCpmTarget: openCpmTarget,
-      UnitCapPerStation: openUnitCap
+      UnitCapPerStation: openUnitCap || null
     };
     const request = {
       ProposalId: proposalEditForm.Id,
       ProposalDetailId: detail.Id,
-      BudgetGoal: budget,
-      ImpressionGoal: impression,
+      BudgetGoal: budget || null,
+      ImpressionGoal: impression || null,
       OpenMarketPricing: openData
     };
     return request;
@@ -442,11 +442,11 @@ class PricingGuide extends Component {
     const openData = this.saveOpenMarketPricingDetail();
     // change to update inner object
     const guideUpdates = {
-      GoalImpression: impression,
-      GoalBudget: budget,
-      AdjustmentMargin: margin,
-      AdjustmentRate: rateInflation,
-      AdjustmentInflation: impressionInflation,
+      GoalImpression: impression || null,
+      GoalBudget: budget || null,
+      AdjustmentMargin: margin || null,
+      AdjustmentRate: rateInflation || null,
+      AdjustmentInflation: impressionInflation || null,
       OpenMarketPricing: openData,
       ProprietaryPricing: proprietaryData
     };
@@ -514,10 +514,10 @@ class PricingGuide extends Component {
     // const { updateDetail, detail } = this.props;
     // change inner object PricingGuide
     const openData = {
-      CpmMax: openCpmMax,
-      CpmMin: openCpmMin,
+      CpmMax: openCpmMax || null,
+      CpmMin: openCpmMin || null,
       OpenMarketCpmTarget: openCpmTarget,
-      UnitCapPerStation: openUnitCap
+      UnitCapPerStation: openUnitCap || null
     };
     // const guideData = { OpenMarketPricing: openData };
     // updateDetail({ id: detail.Id, key: "OpenMarketPricing", value: openData });
@@ -638,7 +638,7 @@ class PricingGuide extends Component {
               <Col sm={6}>
                 <div className="summary-bar" style={{ marginRight: "32px" }}>
                   <div className="summary-item">
-                    <div className="summary-tag">--%</div>
+                    {/* <div className="summary-tag">--%</div> */}
                     <div className="summary-display">
                       {numberRender(
                         activeOpenMarketData,
@@ -649,7 +649,7 @@ class PricingGuide extends Component {
                     <div className="summary-label">MARKET COVERAGE</div>
                   </div>
                   <div className="summary-item">
-                    <div className="summary-tag">--%</div>
+                    {/* <div className="summary-tag">--%</div> */}
                     <div className="summary-display">
                       ${numberRender(
                         activeOpenMarketData,
@@ -660,7 +660,7 @@ class PricingGuide extends Component {
                     <div className="summary-label">CPM</div>
                   </div>
                   <div className="summary-item">
-                    <div className="summary-tag">--%</div>
+                    {/* <div className="summary-tag">--%</div> */}
                     <div className="summary-display">
                       {numberRender(
                         activeOpenMarketData,
@@ -672,7 +672,7 @@ class PricingGuide extends Component {
                     <div className="summary-label">IMPRESSIONS (000)</div>
                   </div>
                   <div className="summary-item">
-                    <div className="summary-tag">--%</div>
+                    {/* <div className="summary-tag">--%</div> */}
                     <div className="summary-display">
                       ${numberRender(
                         activeOpenMarketData,

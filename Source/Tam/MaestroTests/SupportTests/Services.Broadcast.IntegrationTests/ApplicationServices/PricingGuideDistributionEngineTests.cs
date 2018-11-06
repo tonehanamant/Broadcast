@@ -158,25 +158,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     {
                         MarketId = 1,
                         MarketCoverage = 5d,
-                        MinCpm = 6m
+                        MaxCpm = 6m
                     },
                     new PricingGuideMarketDto
                     {
                         MarketId = 2,
                         MarketCoverage = 5d,
-                        MinCpm = 10m
+                        MaxCpm = 10m
                     },
                     new PricingGuideMarketDto
                     {
                         MarketId = 3,
                         MarketCoverage = 1d,
-                        MinCpm = 3m
+                        MaxCpm = 3m
                     },
                      new PricingGuideMarketDto
                     {
                          MarketId = 4,
                         MarketCoverage = 1d,
-                        MinCpm = 1m
+                        MaxCpm = 1m
                     }
                 },
                 AllMarkets = _LoadAllMarketsObject()
@@ -200,32 +200,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
-                MarketCoverage = 10d,
+                MarketCoverage = 0.6d,
                 Markets = new List<PricingGuideMarketDto>
                 {
                     new PricingGuideMarketDto
                     {
                         MarketId = 1,
-                        MarketCoverage = 5d,
-                        MinCpm = 6m
+                        MarketCoverage = 50d,
+                        AvgCpm = 6m
                     },
                     new PricingGuideMarketDto
                     {
                         MarketId = 2,
-                        MarketCoverage = 5d,
-                        MinCpm = 10m
+                        MarketCoverage = 50d,
+                        AvgCpm = 10m
                     },
                     new PricingGuideMarketDto
                     {
                         MarketId = 3,
-                        MarketCoverage = 1d,
-                        MinCpm = 3m
+                        MarketCoverage = 10d,
+                        AvgCpm = 3m
                     },
                      new PricingGuideMarketDto
                     {
                          MarketId = 4,
-                        MarketCoverage = 1d,
-                        MinCpm = 1m
+                        MarketCoverage = 10d,
+                        AvgCpm = 1m
                     }
                 },
                 AllMarkets = _LoadAllMarketsObject()
@@ -286,6 +286,104 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuide.Markets));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateMarketDistributionTestLeftOvers()
+        {
+            var pricingGuide = new PricingGuideOpenMarketInventory
+            {
+                MarketCoverage = 0.7d,
+                Markets = new List<PricingGuideMarketDto>
+                {
+                    new PricingGuideMarketDto
+                    {
+                        MarketId = 1,
+                        MarketCoverage = 60,
+                        MinCpm = 6m
+                    },
+                     new PricingGuideMarketDto
+                    {
+                        MarketId = 2,
+                        MarketCoverage = 20,
+                        MinCpm = 2m
+                    },
+                      new PricingGuideMarketDto
+                    {
+                        MarketId = 3,
+                        MarketCoverage = 20,
+                        MinCpm = 3m
+                    }
+                },
+                AllMarkets = _LoadAllMarketsObject()
+            };
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            pricingGuideDistributionEngine.CalculateMarketDistribution(pricingGuide, request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuide.Markets));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateMarketDistributionTestCoverageGoalReach()
+        {
+            var pricingGuide = new PricingGuideOpenMarketInventory
+            {
+                MarketCoverage = 0.03d,
+                Markets = new List<PricingGuideMarketDto>
+                {
+                    new PricingGuideMarketDto
+                    {
+                        MarketId = 1,
+                        MarketCoverage = 2,
+                        MinCpm = 2m
+                    },
+                    new PricingGuideMarketDto
+                    {
+                        MarketId = 2,
+                        MarketCoverage = 1,
+                        MinCpm = 1m
+                    },
+                    new PricingGuideMarketDto
+                    {
+                        MarketId = 3,
+                        MarketCoverage = 0.5,
+                        MinCpm = 3m
+                    },
+                    new PricingGuideMarketDto
+                    {
+                        MarketId = 4,
+                        MarketCoverage = 0.5,
+                        MinCpm = 3m
+                    },
+                    new PricingGuideMarketDto
+                    {
+                        MarketId = 5,
+                        MarketCoverage = 0.1,
+                        MinCpm = 3m
+                    }
+                },
+                AllMarkets = _LoadAllMarketsObject()
+            };
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            pricingGuideDistributionEngine.CalculateMarketDistribution(pricingGuide, request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuide.Markets));
+        }
+
         private static List<PricingGuideMarketTotalsDto> _LoadAllMarketsObject()
         {
             return new List<PricingGuideMarketTotalsDto>
@@ -305,6 +403,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PricingGuideMarketTotalsDto
                     {
                         Id = 4
+                    },
+                    new PricingGuideMarketTotalsDto
+                    {
+                        Id = 5
                     }
                 };
         }

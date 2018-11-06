@@ -10,7 +10,6 @@ using Common.Services;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
-using System;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories;

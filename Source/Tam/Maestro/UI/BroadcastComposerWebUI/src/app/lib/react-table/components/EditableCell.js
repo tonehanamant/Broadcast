@@ -151,8 +151,9 @@ class EditableCell extends Component {
           value={value}
           mask={mask}
           placeholder={placeholder}
+          data-value={!!value}
         />
-        {!isFocused && <Glyphicon glyph="edit" />}
+        {!isFocused && <Glyphicon glyph="edit" data-value={!!value} />}
       </div>
     );
   }

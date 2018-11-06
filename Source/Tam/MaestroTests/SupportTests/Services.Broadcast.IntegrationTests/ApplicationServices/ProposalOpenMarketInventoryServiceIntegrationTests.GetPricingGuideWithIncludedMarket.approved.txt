@@ -1,0 +1,461 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.273,
+      "Id": 318,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Jackson, MS",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.022,
+      "Id": 347,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Juneau",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.004,
+      "Id": 398,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Glendive",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.107,
+      "Id": 358,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Idaho Fals-Pocatllo(Jcksn)",
+      "Programs": 7,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.069,
+      "Id": 334,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Jonesboro",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.194,
+      "Id": 428,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Monterey-Salinas",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.084,
+      "Id": 317,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Quincy-Hannibal-Keokuk",
+      "Programs": 18,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.136,
+      "Id": 404,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Palm Springs",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 1.676,
+      "Id": 139,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Tampa-St. Pete (Sarasota)",
+      "Programs": 7,
+      "Selected": true,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.085,
+      "Id": 364,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Rapid City",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.073,
+      "Id": 244,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Alexandria, LA",
+      "Programs": 1,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.214,
+      "Id": 410,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Yakima-Pasco-Rchlnd-Knnwck",
+      "Programs": 3,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.133,
+      "Id": 343,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Anchorage",
+      "Programs": 5,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.056,
+      "Id": 360,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Twin Falls",
+      "Programs": 9,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.047,
+      "Id": 367,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Casper-Riverton",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.031,
+      "Id": 345,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Fairbanks",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.177,
+      "Id": 200,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Corpus Christi",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 1
+    }
+  ],
+  "DisplayFilter": {
+    "Affiliations": [
+      "ABC",
+      "FOX"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "Jackson, MS",
+        "Id": 318
+      },
+      {
+        "Display": "Tampa-St. Pete (Sarasota)",
+        "Id": 139
+      }
+    ],
+    "ProgramNames": [
+      "America next morning",
+      "Fox40 Morning News",
+      "Good Morning America",
+      "Good Morning America Weekend",
+      "Good Morning Suncoast"
+    ]
+  },
+  "Filter": {},
+  "Markets": [
+    {
+      "AvgCpm": 7.8218154564892878861086530481,
+      "DisplayImpressions": 259990.0,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 1.676,
+      "MarketId": 139,
+      "MarketName": "Tampa-St. Pete (Sarasota)",
+      "MarketRank": 11,
+      "MaxCpm": 25.443674066535207683989568094,
+      "MinCpm": 0.2307781068502634716719873841,
+      "Stations": [
+        {
+          "Affiliation": "ABC",
+          "CallLetters": "WWSB 40.1",
+          "LegacyCallLetters": "WWSB",
+          "MinProgramsBlendedCpm": 0.2307781068502634716719873841,
+          "Programs": [
+            {
+              "BlendedCpm": 0.2307781068502634716719873841,
+              "Cost": 60.0000,
+              "CostPerSpot": 60.0000,
+              "Daypart": {
+                "Display": "M-F 12PM-1PM",
+                "Id": 1617
+              },
+              "DisplayCost": 60.0000,
+              "DisplayImpressions": 259990.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 259990.0,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 259990.0,
+              "ImpressionsPerSpot": 259990.0,
+              "ManifestDaypartId": 55369,
+              "ProgramId": 26630,
+              "ProgramName": "America next morning",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 0.6487887114756749149338185607,
+              "Cost": 0.0000,
+              "CostPerSpot": 325.0000,
+              "Daypart": {
+                "Display": "M-F 7AM-9AM",
+                "Id": 78
+              },
+              "DisplayCost": 325.0000,
+              "DisplayImpressions": 500933.5,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 500933.5,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 500933.5,
+              "ManifestDaypartId": 41608,
+              "ProgramId": 26638,
+              "ProgramName": "Good Morning America",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 1.1078540202914542356582757803,
+              "Cost": 0.0000,
+              "CostPerSpot": 250.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-7AM",
+                "Id": 6447
+              },
+              "DisplayCost": 250.0000,
+              "DisplayImpressions": 225661.5,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 225661.5,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 225661.5,
+              "ManifestDaypartId": 41606,
+              "ProgramId": 26636,
+              "ProgramName": "Good Morning Suncoast",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 1.6754909188392198914281884592,
+              "Cost": 0.0000,
+              "CostPerSpot": 100.0000,
+              "Daypart": {
+                "Display": "M-F 5AM-5:30AM",
+                "Id": 32756
+              },
+              "DisplayCost": 100.0000,
+              "DisplayImpressions": 59684.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 59684.0,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 59684.0,
+              "ManifestDaypartId": 41602,
+              "ProgramId": 26632,
+              "ProgramName": "Good Morning Suncoast",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 2.3227544771092546280882956402,
+              "Cost": 0.0000,
+              "CostPerSpot": 150.0000,
+              "Daypart": {
+                "Display": "M-F 5:30AM-6AM",
+                "Id": 29947
+              },
+              "DisplayCost": 150.0000,
+              "DisplayImpressions": 64578.5,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 64578.5,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 64578.5,
+              "ManifestDaypartId": 41604,
+              "ProgramId": 26634,
+              "ProgramName": "Good Morning Suncoast",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 23.323367894323940376990437419,
+              "Cost": 0.0000,
+              "CostPerSpot": 275.0000,
+              "Daypart": {
+                "Display": "SU 8AM-9AM",
+                "Id": 31233
+              },
+              "DisplayCost": 275.0000,
+              "DisplayImpressions": 11790.75,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 11790.75,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 11790.75,
+              "ManifestDaypartId": 41612,
+              "ProgramId": 26641,
+              "ProgramName": "Good Morning America Weekend",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 25.443674066535207683989568094,
+              "Cost": 0.0000,
+              "CostPerSpot": 300.0000,
+              "Daypart": {
+                "Display": "SA 8AM-9AM",
+                "Id": 31239
+              },
+              "DisplayCost": 300.0000,
+              "DisplayImpressions": 11790.75,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 11790.75,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 11790.75,
+              "ManifestDaypartId": 41610,
+              "ProgramId": 26640,
+              "ProgramName": "Good Morning America Weekend",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 5942
+        }
+      ],
+      "TotalCost": 60.0000,
+      "TotalImpressions": 259990.0,
+      "TotalSpots": 1
+    },
+    {
+      "AvgCpm": 0.133872392835149535462796862,
+      "DisplayImpressions": 186745.0,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.273,
+      "MarketId": 318,
+      "MarketName": "Jackson, MS",
+      "MarketRank": 95,
+      "MaxCpm": 0.133872392835149535462796862,
+      "MinCpm": 0.133872392835149535462796862,
+      "Stations": [
+        {
+          "Affiliation": "FOX",
+          "CallLetters": "WDBD 40.1",
+          "LegacyCallLetters": "WDBD",
+          "MinProgramsBlendedCpm": 0.133872392835149535462796862,
+          "Programs": [
+            {
+              "BlendedCpm": 0.133872392835149535462796862,
+              "Cost": 25.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-F 7AM-9AM",
+                "Id": 78
+              },
+              "DisplayCost": 25.0000,
+              "DisplayImpressions": 186745.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 186745.0,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 186745.0,
+              "ImpressionsPerSpot": 186745.0,
+              "ManifestDaypartId": 41556,
+              "ProgramId": 26585,
+              "ProgramName": "Fox40 Morning News",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 6173
+        }
+      ],
+      "TotalCost": 25.0000,
+      "TotalImpressions": 186745.0,
+      "TotalSpots": 1
+    }
+  ],
+  "OpenMarketTotals": {
+    "Cost": 260.0000,
+    "Coverage": 0.984,
+    "Cpm": 0.2988176017359004063919384000,
+    "Impressions": 870096.0
+  },
+  "PricingTotals": {
+    "Cost": 260.0000,
+    "Coverage": 0.984,
+    "Cpm": 0.2988176017359004063919384000,
+    "Impressions": 870096.0
+  },
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
+}
