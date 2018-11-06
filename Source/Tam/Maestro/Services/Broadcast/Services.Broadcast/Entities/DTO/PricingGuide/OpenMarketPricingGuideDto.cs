@@ -1,8 +1,6 @@
-﻿using Services.Broadcast.Entities.DTO;
-
-namespace Services.Broadcast.Entities
+﻿namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
-    public class OpenMarketPricingGuide
+    public class OpenMarketPricingGuideDto
     {
         public decimal? CpmMin { get; set; }
         public decimal? CpmMax { get; set; }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Services.Broadcast.Entities.DTO
+namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
     public class OpenMarketPricingGuideGridFilterDto
     {

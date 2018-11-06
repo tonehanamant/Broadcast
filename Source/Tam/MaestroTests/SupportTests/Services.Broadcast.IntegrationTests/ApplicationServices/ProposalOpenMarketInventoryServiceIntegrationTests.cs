@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
-using ApprovalUtilities.Utilities;
 using Common.Services;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
@@ -23,6 +21,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1874,7 +1873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26020,
                     ProposalDetailId = 9982,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         UnitCapPerStation = 100
                     }
@@ -1897,7 +1896,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26021,
                     ProposalDetailId = 9983,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         UnitCapPerStation = 10
                     }
@@ -2244,8 +2243,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // creating test programs with spots and without spots
             var station = dto.Markets.First().Stations.First();
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 0 });
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 5 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 0 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 5 });
 
             dto.Filter.SpotFilter = OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.AllPrograms;
             var amountOfProgramsBeforeFiltering = dto.Markets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Count();
@@ -2270,8 +2269,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // creating test programs with spots and without spots
             var station = dto.Markets.First().Stations.First();
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 0 });
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 5 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 0 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 5 });
 
             dto.Filter.SpotFilter = OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.ProgramWithSpots;
 
@@ -2295,8 +2294,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // creating test programs with spots and without spots
             var station = dto.Markets.First().Stations.First();
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 0 });
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 5 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 0 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 5 });
 
             dto.Filter.SpotFilter = OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.ProgramWithoutSpots;
 
@@ -2639,7 +2638,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProposalId = 26020,
                 ProposalDetailId = 9982,
                 BudgetGoal = 10000,
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     UnitCapPerStation = 100
                 }
@@ -2654,11 +2653,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket), "MarketId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation), "StationCode");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ProgramId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ManifestDaypartId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "Genres");
+            jsonResolver.Ignore(typeof(PricingGuideMarketDto), "MarketId");
+            jsonResolver.Ignore(typeof(PricingGuideStationDto), "StationCode");
+            jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ProgramId");
+            jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ManifestDaypartId");
+            jsonResolver.Ignore(typeof(PricingGuideProgramDto), "Genres");
 
             return new JsonSerializerSettings
             {

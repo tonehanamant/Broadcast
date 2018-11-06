@@ -1,4 +1,4 @@
-﻿namespace Services.Broadcast.Entities.DTO
+﻿namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
     public class PricingGuideMarketTotalsDto
     {

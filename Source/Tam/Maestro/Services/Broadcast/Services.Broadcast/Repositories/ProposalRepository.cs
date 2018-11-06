@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -19,6 +18,7 @@ using Tam.Maestro.Services.Clients;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using proposal = EntityFrameworkMapping.Broadcast.proposal;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.Repositories
 {
@@ -76,8 +76,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalDetailId">Proposal detail id to filter by</param>
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<MatchingProposalWeek> GetMatchingProposalWeeksByDetailId(int proposalDetailId);
-
-        PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -919,7 +917,7 @@ namespace Services.Broadcast.Repositories
                         AdjustmentMargin = version.adjustment_margin,
                         AdjustmentRate = version.adjustment_rate,
                         AdjustmentInflation = version.adjustment_inflation,
-                        OpenMarketPricing = new OpenMarketPricingGuide
+                        OpenMarketPricing = new OpenMarketPricingGuideDto
                         {
                             CpmMin = version.open_market_cpm_min,
                             CpmMax = version.open_market_cpm_max,
@@ -1124,7 +1122,7 @@ namespace Services.Broadcast.Repositories
                     Margin = pv.proposal_versions.margin,
                     GuaranteedAudience = pv.proposal_versions.guaranteed_audience_id
                 };
-                _PopoulateProposalDetailInventoryBase(pv, dto);
+                PopoulateProposalDetailInventoryBase(pv, dto);
                 dto.Criteria = new OpenMarketCriterion
                 {
                     CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
@@ -1529,7 +1527,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new ProposalDetailProprietaryInventoryDto();
 
-                _PopoulateProposalDetailInventoryBase(pv, dto);
+                PopoulateProposalDetailInventoryBase(pv, dto);
 
                 dto.Weeks = (from quarter in pv.proposal_version_detail_quarters
                              from week in quarter.proposal_version_detail_quarter_weeks
@@ -1548,7 +1546,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static void _PopoulateProposalDetailInventoryBase(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
+        public static void PopoulateProposalDetailInventoryBase(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
             baseDto.ProposalVersionId = pv.id;
@@ -1723,57 +1721,6 @@ namespace Services.Broadcast.Repositories
                         c.SaveChanges();
                     }                    
                 }                
-            });
-        }
-
-        public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var pv = context.proposal_version_details
-                    .Include(pvd => pvd.proposal_versions.proposal)
-                    .Include(pvd =>
-                        pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
-                    .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
-                    .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
-                    .Include(pvd => pvd.proposal_version_detail_criteria_genres)
-                    .Include(pvd => pvd.proposal_version_detail_criteria_programs)
-                    .Single(d => d.id == proposalDetailId,
-                        $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
-
-                var dto = new PricingGuideOpenMarketInventory
-                {
-                    MarketCoverage = pv.proposal_versions.market_coverage
-                };
-
-                _PopoulateProposalDetailInventoryBase(pv, dto);
-
-                dto.Criteria = new OpenMarketCriterion
-                {
-                    CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
-                        new CpmCriteria { Id = c.id, MinMax = (MinMaxEnum)c.min_max, Value = c.value }).ToList(),
-                    GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
-                            new GenreCriteria()
-                            {
-                                Id = c.id,
-                                Contain = (ContainTypeEnum)c.contain_type,
-                                Genre = new LookupDto(c.genre_id, c.genre.name)
-                            })
-                        .ToList(),
-                    ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
-                        new ProgramCriteria
-                        {
-                            Id = c.id,
-                            Contain = (ContainTypeEnum)c.contain_type,
-                            Program = new LookupDto
-                            {
-                                Id = c.program_name_id,
-                                Display = c.program_name
-                            }
-                        }).ToList()
-                };
-
-                return dto;
             });
         }
     }

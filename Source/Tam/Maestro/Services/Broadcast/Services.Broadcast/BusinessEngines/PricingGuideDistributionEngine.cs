@@ -1,10 +1,9 @@
 ﻿using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Services.Broadcast.Entities.DTO.PricingGuideOpenMarketInventory;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -70,7 +69,7 @@ namespace Services.Broadcast.BusinessEngines
             return _FindCheapestMarketsKnapsack(coverage, markets);
         }
 
-        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarket> markets)
+        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarketDto> markets)
         {
             return markets.Select(x => new DistributionMarket
             {
@@ -160,7 +159,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public void _SetPricingGuideMarkets(bool[,] itemsToSelect, int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
-            var selectedMarkets = new List<PricingGuideMarket>();
+            var selectedMarkets = new List<PricingGuideMarketDto>();
             var itemIndex = markets.Count;
             var remainingCoverage = coverage;
             var coverageCount = remainingCoverage;

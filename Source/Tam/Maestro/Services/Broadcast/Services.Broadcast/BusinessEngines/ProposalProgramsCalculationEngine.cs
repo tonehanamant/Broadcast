@@ -3,6 +3,7 @@ using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -50,8 +51,8 @@ namespace Services.Broadcast.BusinessEngines
 
         void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
         void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
-        void CalculateTotalCostForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs);
-        void CalculateTotalImpressionsForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs);
+        void CalculateTotalCostForPrograms(List<PricingGuideProgramDto> programs);
+        void CalculateTotalImpressionsForPrograms(List<PricingGuideProgramDto> programs);
 
         decimal CalculateSpotCost(int spots, decimal spotCost);
         double CalculateSpotImpressions(int spots, double unitImpressions);
@@ -325,7 +326,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
         
-        public void CalculateTotalCostForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
+        public void CalculateTotalCostForPrograms(List<PricingGuideProgramDto> programs)
         {
             foreach (var program in programs)
             {
@@ -333,7 +334,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public void CalculateTotalImpressionsForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
+        public void CalculateTotalImpressionsForPrograms(List<PricingGuideProgramDto> programs)
         {
             foreach (var program in programs)
             {
