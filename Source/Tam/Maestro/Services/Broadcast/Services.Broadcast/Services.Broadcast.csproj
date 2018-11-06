@@ -248,7 +248,6 @@
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
-    <Compile Include="Entities\AllocationGoal.cs" />
     <Compile Include="Entities\DTO\PricingGuide\BasePricingGuideDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideOpenMarketDistributionDto.cs" />

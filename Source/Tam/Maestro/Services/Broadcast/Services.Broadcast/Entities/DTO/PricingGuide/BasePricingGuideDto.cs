@@ -1,6 +1,6 @@
 ﻿namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
-    public class BasePricingGuideDto
+    public abstract class BasePricingGuideDto
     {
         public int ProposalDetailId { get; set; }
 
