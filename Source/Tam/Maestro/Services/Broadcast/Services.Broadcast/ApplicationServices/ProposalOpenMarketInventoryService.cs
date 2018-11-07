@@ -1281,11 +1281,11 @@ namespace Services.Broadcast.ApplicationServices
 
             _ApplyProgramAndGenreFilterForPricingGuide(inventory, inventory.Criteria);
 
-            _SetPricingGuideMarkets(inventory, request);
-
             _FilterByCpm(inventory, request);
 
             _RemoveEmptyStationsAndMarkets(inventory);
+
+            _SetPricingGuideMarkets(inventory, request);
 
             _AllocateSpots(inventory, request);
 
@@ -1440,7 +1440,8 @@ namespace Services.Broadcast.ApplicationServices
             _GetNextGoalAllocatableProgram(List<PricingGuideMarket> markets, int stationCap)
         {
             IEnumerable<PricingGuideMarket.PricingGuideStation> allocatableStations;
-            if(stationCap > 0)
+
+            if (stationCap > 0)
             {
                 allocatableStations = markets.SelectMany(m => m.Stations).Where(
                 s => s.Programs.Sum(p => p.Spots) < stationCap);
@@ -1449,9 +1450,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 allocatableStations = markets.SelectMany(m => m.Stations);
             }
+
             var program = allocatableStations.SelectMany(
                 s => s.Programs.Where(
                     p => p.BlendedCpm != 0)).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+
             return program;
         }
 

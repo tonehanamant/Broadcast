@@ -2831,5 +2831,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideMultipleIncludeMarketsFilterCpmShouldReachGoal()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26023);
+
+                proposal.MarketCoverage = 0.005;
+
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", new DateTime(2018, 10, 31));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26023,
+                    ProposalDetailId = 9985,
+                    OpenMarketPricing = new OpenMarketPricingGuide
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min,
+                        CpmMax = 5,
+                        CpmMin = 3
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
     }
 }
