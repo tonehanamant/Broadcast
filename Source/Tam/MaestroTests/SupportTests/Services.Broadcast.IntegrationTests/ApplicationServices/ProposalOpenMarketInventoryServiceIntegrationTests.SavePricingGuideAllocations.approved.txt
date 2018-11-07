@@ -1,13 +1,14 @@
 ﻿{
   "AllMarkets": [],
+  "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [],
     "Genres": [],
     "Markets": [],
     "ProgramNames": []
   },
-  "DistributionRequest": null,
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 0.0117602992290535840393922983,
@@ -52,6 +53,13 @@
       "TotalSpots": 5
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": null
+  },
   "OpenMarketTotals": {
     "Cost": 125.0000,
     "Coverage": 1.01,
@@ -64,6 +72,7 @@
     "Cpm": 0.0117602992290535840393923000,
     "Impressions": 10628981.25
   },
+  "ProposalDetailId": 0,
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

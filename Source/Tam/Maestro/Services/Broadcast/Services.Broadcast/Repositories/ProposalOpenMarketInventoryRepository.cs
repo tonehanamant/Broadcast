@@ -226,7 +226,12 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PricingGuideOpenMarketInventory
                 {
-                    MarketCoverage = pv.proposal_versions.market_coverage ?? default(double)
+                    MarketCoverage = pv.proposal_versions.market_coverage ?? 1,
+                    ProposalMarkets = pv.proposal_versions.proposal_version_markets.Select(x => new ProposalMarketDto
+                    {
+                        Id = x.market_code,
+                        IsBlackout = x.is_blackout
+                    }).ToList()
                 };
 
                 ProposalRepository.PopoulateProposalDetailInventoryBase(pv, dto);

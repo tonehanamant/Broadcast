@@ -12,6 +12,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": 10000.0,
   "DisplayFilter": {
     "Affiliations": [
       "PBS"
@@ -38,6 +39,7 @@
     ]
   },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 0.00708,
@@ -101,6 +103,13 @@
       "TotalSpots": 100
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": 100
+  },
   "OpenMarketTotals": {
     "Cost": 2500.0000,
     "Coverage": 1.01,
@@ -113,6 +122,7 @@
     "Cpm": 6.38082,
     "Impressions": 3056513014.70588
   },
+  "ProposalDetailId": 9982,
   "ProprietaryTotals": {
     "Cost": 19500553.03382,
     "Cpm": 9.66667,

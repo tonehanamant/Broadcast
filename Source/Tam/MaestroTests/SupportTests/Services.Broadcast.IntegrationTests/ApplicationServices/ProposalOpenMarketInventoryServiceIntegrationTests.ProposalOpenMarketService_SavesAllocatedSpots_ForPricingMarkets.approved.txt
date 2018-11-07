@@ -188,6 +188,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [
       "FOX"
@@ -203,21 +204,8 @@
       "Fox40 Morning News"
     ]
   },
-  "DistributionRequest": {
-    "BudgetGoal": null,
-    "HasPricingGuideChanges": null,
-    "ImpressionGoal": null,
-    "OpenMarketPricing": {
-      "CpmMax": null,
-      "CpmMin": null,
-      "DistributionReport": null,
-      "OpenMarketCpmTarget": null,
-      "UnitCapPerStation": null
-    },
-    "ProposalDetailId": 2290,
-    "ProposalId": 17616
-  },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 1.5484131241767508053425676186,
@@ -267,6 +255,13 @@
       "TotalSpots": 5
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": null
+  },
   "OpenMarketTotals": {
     "Cost": 125.0000,
     "Coverage": 0.273,
@@ -279,6 +274,7 @@
     "Cpm": 1.5484131241767477069273513000,
     "Impressions": 80727.80968352
   },
+  "ProposalDetailId": 2290,
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

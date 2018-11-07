@@ -1184,19 +1184,18 @@ namespace Services.Broadcast.ApplicationServices
 
         private ProprietaryTotalsDto _SumTotalsForProprietarySection(double openMarketImpressions, List<ProprietaryPricingDto> proprietaryPricingValues)
         {
-            var proprietaryBalance = proprietaryPricingValues.Sum(x => x.ImpressionsBalance) * 100;
-            var result = new ProprietaryTotalsDto();
-
-            if (openMarketImpressions == 0 || proprietaryBalance == 0)
+            var proprietaryImpressionsPercent = proprietaryPricingValues.Sum(x => x.ImpressionsBalance);
+            var result = new ProprietaryTotalsDto();
+            if (openMarketImpressions == 0 || proprietaryImpressionsPercent == 0)
             {
                 return result;
             }
 
-            var openMarketBalance = 100 - proprietaryBalance;
-            var impressionsPerOnePercentage = openMarketImpressions / openMarketBalance;
-            result.Impressions = proprietaryBalance * impressionsPerOnePercentage;
-            result.Cpm = (decimal)(proprietaryPricingValues.Sum(x => (x.ImpressionsBalance * 100) * (double)x.Cpm) / proprietaryBalance);
-            result.Cost = (decimal)(result.Impressions / 1000) * result.Cpm;
+            var openMarketImpressionsPercent = 1 - proprietaryImpressionsPercent;
+            var impressionsPerOnePercentage = openMarketImpressions / openMarketImpressionsPercent;
+            result.Impressions = proprietaryImpressionsPercent * impressionsPerOnePercentage;
+            result.Cpm = (decimal)(proprietaryPricingValues.Sum(x => x.ImpressionsBalance * (double)x.Cpm) / proprietaryImpressionsPercent);
+            result.Cost = result.Cpm * (decimal)result.Impressions / 1000;
 
             return result;
         }

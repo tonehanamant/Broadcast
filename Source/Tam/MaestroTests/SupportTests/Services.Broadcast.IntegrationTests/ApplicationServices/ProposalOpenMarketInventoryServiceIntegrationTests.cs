@@ -1876,11 +1876,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26020,
                     ProposalDetailId = 9982,
-                    BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricingGuideDto
-                    {
-                        UnitCapPerStation = 100
-                    }
+                    BudgetGoal = 10000
                 };
 
                 var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
@@ -2662,7 +2658,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-    [Test]
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ProposalOpenMarketService_SetsTotalsForPricingGrid()
         {
@@ -2678,7 +2674,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var result = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
-            var resultJson = IntegrationTestHelper.ConvertToJson(result, _GetPricingGuideJsonSerializerSettings());
+            var resultJson = IntegrationTestHelper.ConvertToJsonMoreRounding(result, _GetPricingGuideJsonSerializerSettings());
 
             Approvals.Verify(resultJson);
         }

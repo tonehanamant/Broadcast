@@ -188,6 +188,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [],
     "Genres": [],
@@ -195,7 +196,15 @@
     "ProgramNames": []
   },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": null
+  },
   "OpenMarketTotals": {
     "Cost": 0.0,
     "Coverage": 0.0,
@@ -208,6 +217,7 @@
     "Cpm": 0.0,
     "Impressions": 0.0
   },
+  "ProposalDetailId": 9985,
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

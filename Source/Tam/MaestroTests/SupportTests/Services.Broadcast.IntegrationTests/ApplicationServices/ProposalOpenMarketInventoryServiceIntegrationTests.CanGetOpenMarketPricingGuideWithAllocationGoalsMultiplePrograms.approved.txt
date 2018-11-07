@@ -188,6 +188,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": 10000.0,
   "DisplayFilter": {
     "Affiliations": [
       "ABC",
@@ -324,21 +325,8 @@
       "Wgem News Early Today"
     ]
   },
-  "DistributionRequest": {
-    "BudgetGoal": 10000.0,
-    "HasPricingGuideChanges": null,
-    "ImpressionGoal": null,
-    "OpenMarketPricing": {
-      "CpmMax": null,
-      "CpmMin": null,
-      "DistributionReport": null,
-      "OpenMarketCpmTarget": null,
-      "UnitCapPerStation": 10
-    },
-    "ProposalDetailId": 9983,
-    "ProposalId": 26021
-  },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 7.8218154564892878861086530481,
@@ -3157,6 +3145,13 @@
       "TotalSpots": 10
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": 10
+  },
   "OpenMarketTotals": {
     "Cost": 7530.0000,
     "Coverage": 3.381,
@@ -3169,6 +3164,7 @@
     "Cpm": 0.2704461121755162943782586000,
     "Impressions": 27842885.0
   },
+  "ProposalDetailId": 9983,
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,
