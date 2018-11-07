@@ -328,7 +328,7 @@
   "Markets": [
     {
       "AvgCpm": 4.5470572561039864794412934182,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 91348.27550893,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketId": 139,
@@ -389,7 +389,7 @@
             },
             {
               "BlendedCpm": 0.6568268493928552240459867535,
-              "Cost": 0.0000,
+              "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
                 "Display": "M-F 12PM-1PM",
@@ -401,12 +401,12 @@
               "EffectiveImpressionsPerSpot": 91348.27550893,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 91348.27550893,
               "ImpressionsPerSpot": 91348.27550893,
               "ManifestDaypartId": 55369,
               "ProgramId": 26630,
               "ProgramName": "America next morning",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -501,13 +501,13 @@
           "StationCode": 5942
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 60.0000,
+      "TotalImpressions": 91348.27550893,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 1.1642029275888743123258627527,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 21473.91954406,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
       "MarketId": 318,
@@ -524,7 +524,7 @@
           "Programs": [
             {
               "BlendedCpm": 1.1642029275888743123258627527,
-              "Cost": 0.0000,
+              "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -536,25 +536,25 @@
               "EffectiveImpressionsPerSpot": 21473.91954406,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 21473.91954406,
               "ImpressionsPerSpot": 21473.91954406,
               "ManifestDaypartId": 41556,
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6173
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 25.0000,
+      "TotalImpressions": 21473.91954406,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 42.33182489618650904103607849,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 590.57222459,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.214,
       "MarketId": 410,
@@ -615,7 +615,7 @@
             },
             {
               "BlendedCpm": 42.33182489618650904103607849,
-              "Cost": 0.0000,
+              "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -627,25 +627,25 @@
               "EffectiveImpressionsPerSpot": 590.57222459,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 590.57222459,
               "ImpressionsPerSpot": 590.57222459,
               "ManifestDaypartId": 41620,
               "ProgramId": 26649,
               "ProgramName": "Good Day Morning News",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 1045
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 25.0000,
+      "TotalImpressions": 590.57222459,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 3.0410891370733258260280813007,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 22790.40650181,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.194,
       "MarketId": 428,
@@ -750,7 +750,7 @@
             },
             {
               "BlendedCpm": 0.6581716740684582152809478467,
-              "Cost": 0.0000,
+              "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
                 "Display": "M-F 5AM-6AM",
@@ -762,12 +762,12 @@
               "EffectiveImpressionsPerSpot": 22790.40650181,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 22790.40650181,
               "ImpressionsPerSpot": 22790.40650181,
               "ManifestDaypartId": 41579,
               "ProgramId": 26602,
               "ProgramName": "Wake Up Central Coast",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -849,14 +849,14 @@
           "StationCode": 2784
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 15.0000,
+      "TotalImpressions": 22790.40650181,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 10.110399242982084500644801441,
-      "DisplayImpressions": 0.0,
-      "DisplayStationImpressions": 0.0,
+      "DisplayImpressions": 149503.72321279,
+      "DisplayStationImpressions": 6140.0,
       "MarketCoverage": 0.177,
       "MarketId": 200,
       "MarketName": "Corpus Christi",
@@ -872,7 +872,7 @@
           "Programs": [
             {
               "BlendedCpm": 4.8859934853420195439739413681,
-              "Cost": 0.0000,
+              "Cost": 30.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
                 "Display": "M-F 5AM-5:58AM",
@@ -884,12 +884,12 @@
               "EffectiveImpressionsPerSpot": 6140.0,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 6140.0,
               "ImpressionsPerSpot": 149503.72321279,
               "ManifestDaypartId": 41653,
               "ProgramId": 26682,
               "ProgramName": "3 News First Edition",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 6140.0
             },
             {
@@ -1050,13 +1050,13 @@
           "StationCode": 5319
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 30.0000,
+      "TotalImpressions": 6140.0,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 21.846055367818566839767214408,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 6060.34335516,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.136,
       "MarketId": 404,
@@ -1192,7 +1192,7 @@
             },
             {
               "BlendedCpm": 2.475107286988673146429302765,
-              "Cost": 0.0000,
+              "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -1204,25 +1204,25 @@
               "EffectiveImpressionsPerSpot": 6060.34335516,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 6060.34335516,
               "ImpressionsPerSpot": 6060.34335516,
               "ManifestDaypartId": 41596,
               "ProgramId": 26625,
               "ProgramName": "News Channel 3 on FOX 11",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 7011
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 15.0000,
+      "TotalImpressions": 6060.34335516,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 3.8107246990347655660373924399,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 5248.34554568,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.133,
       "MarketId": 343,
@@ -1336,7 +1336,7 @@
             },
             {
               "BlendedCpm": 3.8107246990347655660373924399,
-              "Cost": 0.0000,
+              "Cost": 20.0000,
               "CostPerSpot": 20.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -1348,25 +1348,25 @@
               "EffectiveImpressionsPerSpot": 5248.34554568,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 5248.34554568,
               "ImpressionsPerSpot": 5248.34554568,
               "ManifestDaypartId": 41628,
               "ProgramId": 26664,
               "ProgramName": "Good Morning America",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6072
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 20.0000,
+      "TotalImpressions": 5248.34554568,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 5.0152045367708738943969286057,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 9364.61857939,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.107,
       "MarketId": 358,
@@ -1449,7 +1449,7 @@
             },
             {
               "BlendedCpm": 0.5339245755300079850886082059,
-              "Cost": 0.0000,
+              "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
                 "Display": "M-F 5AM-6AM",
@@ -1461,12 +1461,12 @@
               "EffectiveImpressionsPerSpot": 9364.61857939,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 9364.61857939,
               "ImpressionsPerSpot": 9364.61857939,
               "ManifestDaypartId": 41568,
               "ProgramId": 26588,
               "ProgramName": "Business First with Angela Miles",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1548,13 +1548,13 @@
           "StationCode": 6444
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 5.0000,
+      "TotalImpressions": 9364.61857939,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 4.7688156369007953691514322617,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 145973.99841742,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.084,
       "MarketId": 317,
@@ -1884,7 +1884,7 @@
             },
             {
               "BlendedCpm": 0.5137901325791906672663171547,
-              "Cost": 0.0000,
+              "Cost": 75.0000,
               "CostPerSpot": 75.0000,
               "Daypart": {
                 "Display": "M-F 5:30AM-6AM",
@@ -1896,12 +1896,12 @@
               "EffectiveImpressionsPerSpot": 145973.99841742,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 145973.99841742,
               "ImpressionsPerSpot": 145973.99841742,
               "ManifestDaypartId": 41601,
               "ProgramId": 26629,
               "ProgramName": "Wgem News Early Today",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1996,13 +1996,13 @@
           "StationCode": 5198
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 75.0000,
+      "TotalImpressions": 145973.99841742,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 3.8899940640108602585092856898,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 20518.1602912,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.085,
       "MarketId": 364,
@@ -2063,7 +2063,7 @@
             },
             {
               "BlendedCpm": 0.4873731298554388004653875359,
-              "Cost": 0.0000,
+              "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
                 "Display": "M-F 5:30AM-6AM",
@@ -2075,12 +2075,12 @@
               "EffectiveImpressionsPerSpot": 20518.1602912,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 20518.1602912,
               "ImpressionsPerSpot": 20518.1602912,
               "ManifestDaypartId": 41614,
               "ProgramId": 26643,
               "ProgramName": "Early Today 2",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2153,9 +2153,9 @@
           "StationCode": 3503
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 10.0000,
+      "TotalImpressions": 20518.1602912,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 0.0,
@@ -2373,7 +2373,7 @@
     {
       "AvgCpm": 34.91114561766735679779158040,
       "DisplayImpressions": 0.0,
-      "DisplayStationImpressions": 0.0,
+      "DisplayStationImpressions": 2300.0,
       "MarketCoverage": 0.056,
       "MarketId": 360,
       "MarketName": "Twin Falls",
@@ -2389,7 +2389,7 @@
           "Programs": [
             {
               "BlendedCpm": 6.5217391304347826086956521739,
-              "Cost": 0.0000,
+              "Cost": 15.0000,
               "CostPerSpot": 15.0000,
               "Daypart": {
                 "Display": "SA 8AM-10AM",
@@ -2401,12 +2401,12 @@
               "EffectiveImpressionsPerSpot": 2300.0,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 2300.0,
               "ImpressionsPerSpot": 0.0,
               "ManifestDaypartId": 41637,
               "ProgramId": 26662,
               "ProgramName": "SATURDAY MORNING NEWS",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 2300.0
             },
             {
@@ -2589,13 +2589,13 @@
           "StationCode": 6269
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 15.0000,
+      "TotalImpressions": 2300.0,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 20.020410294088237873062061025,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 15255.23058707,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.047,
       "MarketId": 367,
@@ -2753,7 +2753,7 @@
             },
             {
               "BlendedCpm": 1.9665386130197855438451230727,
-              "Cost": 0.0000,
+              "Cost": 30.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
                 "Display": "M-F 5:30AM-7AM",
@@ -2765,12 +2765,12 @@
               "EffectiveImpressionsPerSpot": 15255.23058707,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 15255.23058707,
               "ImpressionsPerSpot": 15255.23058707,
               "ManifestDaypartId": 41644,
               "ProgramId": 26673,
               "ProgramName": "Good Morning Wyoming",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2799,13 +2799,13 @@
           "StationCode": 5408
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 30.0000,
+      "TotalImpressions": 15255.23058707,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 3.7259431958474367038983595712,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 2683.88418029,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.031,
       "MarketId": 345,
@@ -2888,7 +2888,7 @@
             },
             {
               "BlendedCpm": 3.7259431958474367038983595712,
-              "Cost": 0.0000,
+              "Cost": 10.0000,
               "CostPerSpot": 10.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -2900,25 +2900,25 @@
               "EffectiveImpressionsPerSpot": 2683.88418029,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 2683.88418029,
               "ImpressionsPerSpot": 2683.88418029,
               "ManifestDaypartId": 41649,
               "ProgramId": 26678,
               "ProgramName": "Good Morning America",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6069
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 10.0000,
+      "TotalImpressions": 2683.88418029,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 3.7177141719582338026584834013,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 1344.91242972,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.022,
       "MarketId": 347,
@@ -3001,7 +3001,7 @@
             },
             {
               "BlendedCpm": 3.7177141719582338026584834013,
-              "Cost": 0.0000,
+              "Cost": 5.0000,
               "CostPerSpot": 5.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -3013,25 +3013,25 @@
               "EffectiveImpressionsPerSpot": 1344.91242972,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 1344.91242972,
               "ImpressionsPerSpot": 1344.91242972,
               "ManifestDaypartId": 41558,
               "ProgramId": 26586,
               "ProgramName": "Good Morning America",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6684
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 5.0000,
+      "TotalImpressions": 1344.91242972,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 1290.6569616452655869109522004,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 30.99196858,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.004,
       "MarketId": 398,
@@ -3114,7 +3114,7 @@
             },
             {
               "BlendedCpm": 1290.6569616452655869109522004,
-              "Cost": 0.0000,
+              "Cost": 40.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {
                 "Display": "M-F 6AM-8AM",
@@ -3126,34 +3126,34 @@
               "EffectiveImpressionsPerSpot": 30.99196858,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 30.99196858,
               "ImpressionsPerSpot": 30.99196858,
               "ManifestDaypartId": 41557,
               "ProgramId": 26587,
               "ProgramName": "CBS This Morning",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5465
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 40.0000,
+      "TotalImpressions": 30.99196858,
+      "TotalSpots": 1
     }
   ],
   "OpenMarketTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 380.0000,
+    "Coverage": 3.239,
+    "Cpm": 1.0822398038836965007258747000,
+    "Impressions": 351123.6591339
   },
   "PricingTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 380.0000,
+    "Coverage": 3.239,
+    "Cpm": 1.0822398038836965007258747000,
+    "Impressions": 351123.6591339
   },
   "ProprietaryTotals": {
     "Cost": 0.0,
