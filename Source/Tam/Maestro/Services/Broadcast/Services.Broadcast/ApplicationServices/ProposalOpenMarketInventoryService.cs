@@ -1330,16 +1330,44 @@ namespace Services.Broadcast.ApplicationServices
 
             inventory.Markets = markets;
 
-            if (shouldRunDistribution)
-            {
-                var distributionRequest = _GetDistributionRequest(pricingGuideDto);
-                _PricingGuideDistributionEngine.CalculateMarketDistribution(inventory, distributionRequest);
-            }
-
+            _SetPricingGuideMarkets(inventory, _GetDistributionRequest(pricingGuideDto), shouldRunDistribution);
             _FilterMarketProgramsByCpm(inventory.Markets, pricingGuideDto.OpenMarketPricing);
             _RemoveEmptyStationsAndMarkets(inventory);
             _AllocateSpots(inventory, pricingGuideDto);
             _SetSelectedMarketsInAllMarketsObject(inventory);
+        }
+
+        private void _SetPricingGuideMarkets(
+            PricingGuideOpenMarketInventory inventory, 
+            PricingGuideOpenMarketInventoryRequestDto request,
+            bool shouldRunDistribution)
+        {
+            // Markets that need to be included.
+            var includedMarketCodes = inventory.ProposalMarkets.Where(x => !x.IsBlackout).Select(x => (int)x.Id).ToList();
+            // Only markets in the list are allowed.
+            var allowedMarkets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(inventory.ProposalId, inventory.ProposalVersion);
+            var allowedMarketsIds = allowedMarkets.Select(x => x.Id);
+            // Remove all markets that might have been blacklisted.
+            includedMarketCodes.RemoveAll(x => !allowedMarketsIds.Contains(x));
+            var includedMarkets = inventory.Markets.Where(x => includedMarketCodes.Contains(x.MarketId)).ToList();
+            var includedMarketsCoverage = includedMarkets.Sum(x => x.MarketCoverage);
+            inventory.Markets.RemoveAll(x => !allowedMarketsIds.Contains(x.MarketId));
+            if (includedMarketsCoverage >= (inventory.MarketCoverage * 100))
+            {
+                inventory.Markets.Clear();
+                inventory.Markets.AddRange(includedMarkets);
+                return;
+            }
+
+            inventory.Markets.RemoveAll(x => includedMarketCodes.Contains(x.MarketId));
+
+            if (shouldRunDistribution)
+            {
+                var desiredCoverage = inventory.MarketCoverage - (includedMarketsCoverage / 100);
+                _PricingGuideDistributionEngine.CalculateMarketDistribution(inventory, request, desiredCoverage);
+            }
+
+            inventory.Markets.AddRange(includedMarkets);
         }
 
         private PricingGuideOpenMarketInventoryRequestDto _GetDistributionRequest(BasePricingGuideDto dto)

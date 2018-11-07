@@ -378,16 +378,16 @@
     }
   ],
   "OpenMarketTotals": {
-    "Cost": 415.0000,
-    "Coverage": 0.888,
-    "Cpm": 0.2220758661995581760507767000,
-    "Impressions": 1868730.75
+    "Cost": 60.0000,
+    "Coverage": 1.676,
+    "Cpm": 0.2307781068502634716719874000,
+    "Impressions": 259990.0
   },
   "PricingTotals": {
-    "Cost": 415.0000,
-    "Coverage": 0.888,
-    "Cpm": 0.2220758661995581760507767000,
-    "Impressions": 1868730.75
+    "Cost": 60.0000,
+    "Coverage": 1.676,
+    "Cpm": 0.2307781068502634716719874000,
+    "Impressions": 259990.0
   },
   "ProprietaryTotals": {
     "Cost": 0.0,
