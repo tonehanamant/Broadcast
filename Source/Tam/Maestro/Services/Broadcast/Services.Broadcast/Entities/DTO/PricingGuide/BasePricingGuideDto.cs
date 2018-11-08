@@ -9,5 +9,7 @@
         public double? ImpressionGoal { get; set; }
 
         public OpenMarketPricingGuideDto OpenMarketPricing { get; set; } = new OpenMarketPricingGuideDto();
+
+        public decimal OpenMarketShare { get; set; }
     }
 }

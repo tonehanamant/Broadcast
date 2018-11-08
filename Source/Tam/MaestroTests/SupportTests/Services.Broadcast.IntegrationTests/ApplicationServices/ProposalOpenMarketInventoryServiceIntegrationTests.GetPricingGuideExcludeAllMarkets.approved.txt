@@ -205,6 +205,7 @@
     "OpenMarketCpmTarget": 1,
     "UnitCapPerStation": null
   },
+  "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
     "Cost": 0.0,
     "Coverage": 0.0,

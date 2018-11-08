@@ -3024,6 +3024,7 @@
     "OpenMarketCpmTarget": null,
     "UnitCapPerStation": null
   },
+  "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
     "Cost": 269.7500,
     "Coverage": 3.255,
