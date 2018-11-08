@@ -9,23 +9,23 @@
   "Filter": {},
   "Markets": [
     {
-      "AvgCpm": 0.0117602992290535840393922983,
-      "DisplayImpressions": 10628981.25,
+      "AvgCpm": 2.8224718149728601694541515914,
+      "DisplayImpressions": 44287.421875,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.0117602992290535840393922983,
-      "MinCpm": 0.0117602992290535840393922983,
+      "MaxCpm": 2.8224718149728601694541515914,
+      "MinCpm": 2.8224718149728601694541515914,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.0117602992290535840393922983,
+          "MinProgramsBlendedCpm": 2.8224718149728601694541515914,
           "Programs": [
             {
-              "BlendedCpm": 0.0117602992290535840393922983,
+              "BlendedCpm": 2.8224718149728601694541515914,
               "Cost": 125.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -33,12 +33,12 @@
                 "Id": 12
               },
               "DisplayCost": 125.0000,
-              "DisplayImpressions": 10628981.25,
+              "DisplayImpressions": 44287.421875,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 2125796.25,
+              "EffectiveImpressionsPerSpot": 8857.484375,
               "HasImpressions": true,
-              "Impressions": 10628981.25,
-              "ImpressionsPerSpot": 2125796.25,
+              "Impressions": 44287.421875,
+              "ImpressionsPerSpot": 8857.484375,
               "ProgramName": "Friends",
               "Spots": 5,
               "StationImpressionsPerSpot": 0.0
@@ -47,14 +47,14 @@
         }
       ],
       "TotalCost": 125.0000,
-      "TotalImpressions": 10628981.25,
+      "TotalImpressions": 44287.421875,
       "TotalSpots": 5
     }
   ],
   "OpenMarketTotals": {
     "Cost": 125.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0117602992290535840393923000,
-    "Impressions": 10628981.25
+    "Cpm": 2.8224718149728601694541516000,
+    "Impressions": 44287.421875
   }
 }
