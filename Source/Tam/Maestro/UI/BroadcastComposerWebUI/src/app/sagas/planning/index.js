@@ -1532,7 +1532,7 @@ export function* updateEditMarketsData(distributionRequest) {
   const params = Object.assign({}, openMarketData, {
     Filter: {},
     AllMarkets: activeMarkets,
-    DistributionRequest: distributionRequest
+    ...distributionRequest
   });
   try {
     yield put(setOverlayLoading({ id: "editMarketsUpdate", loading: true }));
