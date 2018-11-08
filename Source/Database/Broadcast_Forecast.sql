@@ -98,7 +98,7 @@ GO
 	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages] @posting_media_month_id, @demo, @ratings_request, @min_playback_type
 */
 --=============================================
-alter PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
 	@posting_media_month_id SMALLINT,
 	@demo VARCHAR(MAX),
 	@ratings_request RatingsInputWithId READONLY,
