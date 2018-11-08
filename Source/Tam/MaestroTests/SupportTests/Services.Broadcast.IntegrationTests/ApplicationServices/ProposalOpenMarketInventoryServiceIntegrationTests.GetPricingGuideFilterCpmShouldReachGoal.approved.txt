@@ -1,0 +1,453 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.273,
+      "Id": 318,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Jackson, MS",
+      "Programs": 1,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.022,
+      "Id": 347,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Juneau",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.004,
+      "Id": 398,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Glendive",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.107,
+      "Id": 358,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Idaho Fals-Pocatllo(Jcksn)",
+      "Programs": 7,
+      "Selected": true,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.069,
+      "Id": 334,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Jonesboro",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.194,
+      "Id": 428,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Monterey-Salinas",
+      "Programs": 8,
+      "Selected": true,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.084,
+      "Id": 317,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Quincy-Hannibal-Keokuk",
+      "Programs": 18,
+      "Selected": true,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 1.676,
+      "Id": 139,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Tampa-St. Pete (Sarasota)",
+      "Programs": 7,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.085,
+      "Id": 364,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Rapid City",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.073,
+      "Id": 244,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Alexandria, LA",
+      "Programs": 1,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.214,
+      "Id": 410,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Yakima-Pasco-Rchlnd-Knnwck",
+      "Programs": 3,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.133,
+      "Id": 343,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Anchorage",
+      "Programs": 5,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.056,
+      "Id": 360,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Twin Falls",
+      "Programs": 9,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.047,
+      "Id": 367,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Casper-Riverton",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.031,
+      "Id": 345,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Fairbanks",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.177,
+      "Id": 200,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Corpus Christi",
+      "Programs": 8,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
+  "DisplayFilter": {
+    "Affiliations": [
+      "ABC",
+      "CBS",
+      "FOX",
+      "NBC"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "Corpus Christi",
+        "Id": 200
+      },
+      {
+        "Display": "Idaho Fals-Pocatllo(Jcksn)",
+        "Id": 358
+      },
+      {
+        "Display": "Monterey-Salinas",
+        "Id": 428
+      },
+      {
+        "Display": "Quincy-Hannibal-Keokuk",
+        "Id": 317
+      }
+    ],
+    "ProgramNames": [
+      "CBS Saturday Morning News",
+      "Face The Nation",
+      "FOX News Sunday",
+      "Sunday Today",
+      "This Week In Agri-Business"
+    ]
+  },
+  "Filter": {},
+  "Markets": [
+    {
+      "AvgCpm": 3.9498624103105834791380193574,
+      "DisplayImpressions": 9531.625,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.194,
+      "MarketId": 428,
+      "MarketName": "Monterey-Salinas",
+      "MarketRank": 125,
+      "MaxCpm": 14.529428145923890012228935356,
+      "MinCpm": 0.3363734013854099158393749734,
+      "Stations": [
+        {
+          "Affiliation": "CBS",
+          "CallLetters": "KION-TV 46.1",
+          "LegacyCallLetters": "KION",
+          "MinProgramsBlendedCpm": 3.1474171508006242377349087905,
+          "Programs": [
+            {
+              "BlendedCpm": 3.1474171508006242377349087905,
+              "Cost": 30.0000,
+              "CostPerSpot": 30.0000,
+              "Daypart": {
+                "Display": "SA 5AM-7AM",
+                "Id": 36477
+              },
+              "DisplayCost": 30.0000,
+              "DisplayImpressions": 9531.625,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 9531.625,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 9531.625,
+              "ImpressionsPerSpot": 9531.625,
+              "ManifestDaypartId": 41582,
+              "ProgramId": 26610,
+              "ProgramName": "CBS Saturday Morning News",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 5927
+        }
+      ],
+      "TotalCost": 30.0000,
+      "TotalImpressions": 9531.625,
+      "TotalSpots": 1
+    },
+    {
+      "AvgCpm": 1.1884646478376725978292481676,
+      "DisplayImpressions": 6781.375,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.177,
+      "MarketId": 200,
+      "MarketName": "Corpus Christi",
+      "MarketRank": 129,
+      "MaxCpm": 4.4238815874361762916812593316,
+      "MinCpm": 0.1518500716753428595350983514,
+      "Stations": [
+        {
+          "Affiliation": "ABC",
+          "CallLetters": "KIII 3.1",
+          "LegacyCallLetters": "KIII",
+          "MinProgramsBlendedCpm": 4.4238815874361762916812593316,
+          "Programs": [
+            {
+              "BlendedCpm": 4.4238815874361762916812593316,
+              "Cost": 30.0000,
+              "CostPerSpot": 30.0000,
+              "Daypart": {
+                "Display": "SA 5AM-5:58AM",
+                "Id": 62774
+              },
+              "DisplayCost": 30.0000,
+              "DisplayImpressions": 6781.375,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 6781.375,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 6781.375,
+              "ImpressionsPerSpot": 6781.375,
+              "ManifestDaypartId": 41656,
+              "ProgramId": 26685,
+              "ProgramName": "This Week In Agri-Business",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 5319
+        }
+      ],
+      "TotalCost": 30.0000,
+      "TotalImpressions": 6781.375,
+      "TotalSpots": 1
+    },
+    {
+      "AvgCpm": 1.9548383604885271301867145893,
+      "DisplayImpressions": 8882.875,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.107,
+      "MarketId": 358,
+      "MarketName": "Idaho Fals-Pocatllo(Jcksn)",
+      "MarketRank": 163,
+      "MaxCpm": 4.096262160778289810547875064,
+      "MinCpm": 0.1744622202062143442837453549,
+      "Stations": [
+        {
+          "Affiliation": "CBS",
+          "CallLetters": "KIDK 3.1",
+          "LegacyCallLetters": "KIDK",
+          "MinProgramsBlendedCpm": 3.3772849443451585213120752009,
+          "Programs": [
+            {
+              "BlendedCpm": 3.3772849443451585213120752009,
+              "Cost": 30.0000,
+              "CostPerSpot": 30.0000,
+              "Daypart": {
+                "Display": "SU 9:30AM-10:30AM",
+                "Id": 36410
+              },
+              "DisplayCost": 30.0000,
+              "DisplayImpressions": 8882.875,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 8882.875,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 8882.875,
+              "ImpressionsPerSpot": 8882.875,
+              "ManifestDaypartId": 41578,
+              "ProgramId": 26609,
+              "ProgramName": "Face The Nation",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 5225
+        },
+        {
+          "Affiliation": "FOX",
+          "CallLetters": "KXPI-LD 34.2",
+          "LegacyCallLetters": "KXPI",
+          "MinProgramsBlendedCpm": 4.096262160778289810547875064,
+          "Programs": [
+            {
+              "BlendedCpm": 4.096262160778289810547875064,
+              "Cost": 0.0000,
+              "CostPerSpot": 8.0000,
+              "Daypart": {
+                "Display": "SU 8AM-9AM",
+                "Id": 31233
+              },
+              "DisplayCost": 8.0000,
+              "DisplayImpressions": 1953.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 1953.0,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 1953.0,
+              "ManifestDaypartId": 41580,
+              "ProgramId": 26611,
+              "ProgramName": "FOX News Sunday",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 6444
+        }
+      ],
+      "TotalCost": 30.0000,
+      "TotalImpressions": 8882.875,
+      "TotalSpots": 1
+    },
+    {
+      "AvgCpm": 2.8479047834772187594391452716,
+      "DisplayImpressions": 15502.125,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.084,
+      "MarketId": 317,
+      "MarketName": "Quincy-Hannibal-Keokuk",
+      "MarketRank": 170,
+      "MaxCpm": 15.086748805632386220769424189,
+      "MinCpm": 0.158506990950835886616779233,
+      "Stations": [
+        {
+          "Affiliation": "NBC",
+          "CallLetters": "WGEM-TV 10.1",
+          "LegacyCallLetters": "WGEM",
+          "MinProgramsBlendedCpm": 3.8704371174919567478652120274,
+          "Programs": [
+            {
+              "BlendedCpm": 3.8704371174919567478652120274,
+              "Cost": 60.0000,
+              "CostPerSpot": 60.0000,
+              "Daypart": {
+                "Display": "SU 7AM-8AM",
+                "Id": 35768
+              },
+              "DisplayCost": 60.0000,
+              "DisplayImpressions": 15502.125,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 15502.125,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 15502.125,
+              "ImpressionsPerSpot": 15502.125,
+              "ManifestDaypartId": 41611,
+              "ProgramId": 26639,
+              "ProgramName": "Sunday Today",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 5198
+        }
+      ],
+      "TotalCost": 60.0000,
+      "TotalImpressions": 15502.125,
+      "TotalSpots": 1
+    }
+  ],
+  "OpenMarketTotals": {
+    "Cost": 150.0000,
+    "Coverage": 0.562,
+    "Cpm": 3.6856848002358838272150966000,
+    "Impressions": 40698.0
+  },
+  "PricingTotals": {
+    "Cost": 150.0000,
+    "Coverage": 0.562,
+    "Cpm": 3.6856848002358838272150966000,
+    "Impressions": 40698.0
+  },
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
+}

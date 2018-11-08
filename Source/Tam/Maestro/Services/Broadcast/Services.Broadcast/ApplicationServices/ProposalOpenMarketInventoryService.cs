@@ -1329,9 +1329,9 @@ namespace Services.Broadcast.ApplicationServices
 
             inventory.Markets = markets;
 
-            _SetPricingGuideMarkets(inventory, _GetDistributionRequest(pricingGuideDto), shouldRunDistribution);
             _FilterMarketProgramsByCpm(inventory.Markets, pricingGuideDto.OpenMarketPricing);
             _RemoveEmptyStationsAndMarkets(inventory);
+            _SetPricingGuideMarkets(inventory, _GetDistributionRequest(pricingGuideDto), shouldRunDistribution);            
             _AllocateSpots(inventory, pricingGuideDto);
             _SetSelectedMarketsInAllMarketsObject(inventory);
         }
@@ -1499,23 +1499,46 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _AllocateSpotsWithoutGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, BasePricingGuideDto pricingGuideDto)
         {
-            var openMarketPricing = pricingGuideDto.OpenMarketPricing;
+            var cpmTarget = request.OpenMarketPricing.OpenMarketCpmTarget ?? OpenMarketCpmTarget.Min;
 
-            if (openMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Max)
-                _AllocateMaxSpots(pricingGuideOpenMarketInventory);
-            else if (openMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Min)
-                _AllocateMinSpots(pricingGuideOpenMarketInventory);
-            else if (openMarketPricing.OpenMarketCpmTarget == OpenMarketCpmTarget.Avg)
-                _AllocateAvgSpots(pricingGuideOpenMarketInventory);
+            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            {
+                var program = _GetProgramForTarget(market.Stations, cpmTarget);
+
+                if (program == null)
+                    continue;
+
+                _SetOneSpotProgram(program);
+            }
         }
 
         private void _AllocateSpotsWithGoals(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, BasePricingGuideDto pricingGuideDto)
         {
-            var unitCapPerStation = pricingGuideDto.OpenMarketPricing.UnitCapPerStation ?? 0;
-            var budgetGoal = pricingGuideDto.BudgetGoal ?? Decimal.MaxValue;
-            var impressionsGoal = pricingGuideDto.ImpressionGoal ?? Double.MaxValue;
-            var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation);
+            var unitCapPerStation = request.OpenMarketPricing.UnitCapPerStation ?? 0;
+            var budgetGoal = request.BudgetGoal ?? Decimal.MaxValue;
+            var impressionsGoal = request.ImpressionGoal ?? Double.MaxValue;
+            var cpmTarget = request.OpenMarketPricing.OpenMarketCpmTarget ?? OpenMarketCpmTarget.Min;
 
+            // First, we allocate one spot for a program in each market.
+            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            {
+                var program = _GetProgramForTarget(market.Stations, cpmTarget);
+                var hasBudget = budgetGoal > 0;
+                var hasImpressionsLeft = impressionsGoal > 0;
+
+                if (program == null)
+                    continue;
+
+                if (!hasBudget || !hasImpressionsLeft)
+                    break;
+
+                _SetOneSpotProgram(program);
+                impressionsGoal -= program.EffectiveImpressionsPerSpot;
+                budgetGoal -= program.CostPerSpot;
+            }
+
+            // Then, we allocate the rest of the budget one or multiple programs, taking the unit cap per station into consideration.
+            var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget);
             while (budgetGoal > 0 && impressionsGoal > 0 && allocatableProgram != null)
             {
                 allocatableProgram.Spots = allocatableProgram.Spots + 1;
@@ -1523,14 +1546,15 @@ namespace Services.Broadcast.ApplicationServices
                 allocatableProgram.Cost = allocatableProgram.Spots * allocatableProgram.CostPerSpot;
                 impressionsGoal -= allocatableProgram.EffectiveImpressionsPerSpot;
                 budgetGoal -= allocatableProgram.CostPerSpot;
-                allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation);
+                allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget);
             }
         }
 
-        private static PricingGuideProgramDto _GetNextGoalAllocatableProgram(List<PricingGuideMarketDto> markets, int stationCap)
+        private PricingGuideProgram _GetNextGoalAllocatableProgram(List<PricingGuideMarket> markets, int stationCap, OpenMarketCpmTarget cpmTarget)
         {
-            IEnumerable<PricingGuideStationDto> allocatableStations;
-            if(stationCap > 0)
+            IEnumerable<PricingGuideMarket.PricingGuideStation> allocatableStations;
+
+            if (stationCap > 0)
             {
                 allocatableStations = markets.SelectMany(m => m.Stations).Where(
                 s => s.Programs.Sum(p => p.Spots) < stationCap);
@@ -1539,74 +1563,70 @@ namespace Services.Broadcast.ApplicationServices
             {
                 allocatableStations = markets.SelectMany(m => m.Stations);
             }
-            var program = allocatableStations.SelectMany(
-                s => s.Programs.Where(
-                    p => p.BlendedCpm != 0)).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+
+            var program = _GetProgramForTarget(allocatableStations.ToList(), cpmTarget);
+
             return program;
         }
 
-        private void _AllocateMinSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        private PricingGuideProgram _GetProgramForTarget(List<PricingGuideStation> stations, OpenMarketCpmTarget cpmTarget)
         {
-            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            if (cpmTarget == OpenMarketCpmTarget.Max)
             {
-                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
-                var minProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
-
-                if (minProgram != null)
-                {
-                    minProgram.Spots = 1;
-                    minProgram.Impressions = minProgram.Spots * minProgram.EffectiveImpressionsPerSpot;
-                    minProgram.Cost = minProgram.Spots * minProgram.CostPerSpot;
-                }
-
+                return _GetMaxProgram(stations);
             }
+
+            if (cpmTarget == OpenMarketCpmTarget.Avg)
+            {
+                return _GetAvgProgram(stations);
+            }
+
+            return _GetMinProgram(stations);
         }
 
-        private void _AllocateAvgSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        private PricingGuideProgram _GetAvgProgram(List<PricingGuideStation> stations)
         {
-            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            var marketPrograms = stations.SelectMany(s => s.Programs);
+            var avgPrograms = marketPrograms.Where(x => x.BlendedCpm != 0);
+            var count = avgPrograms.Count();
+
+            if (count == 0)
+                return null;
+
+            var totalCpm = avgPrograms.Sum(x => x.BlendedCpm);
+            var averageCpm = totalCpm / count;
+            var programClosestToAvg = avgPrograms.First();
+            var distanceToAverage = Math.Abs(programClosestToAvg.BlendedCpm - averageCpm);
+
+            foreach (var program in avgPrograms)
             {
-                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
-                var avgPrograms = marketPrograms.Where(x => x.BlendedCpm != 0);
-                var count = avgPrograms.Count();
-
-                if (count == 0)
-                    continue;
-
-                var totalCpm = avgPrograms.Sum(x => x.BlendedCpm);
-                var averageCpm = totalCpm / count;
-                var programClosestToAvg = avgPrograms.First();
-                var distanceToAverage = Math.Abs(programClosestToAvg.BlendedCpm - averageCpm);
-
-                foreach (var program in avgPrograms)
+                if (Math.Abs(program.BlendedCpm - averageCpm) < distanceToAverage)
                 {
-                    if (Math.Abs(program.BlendedCpm - averageCpm) < distanceToAverage)
-                    {
-                        programClosestToAvg = program;
-                        distanceToAverage = Math.Abs(program.BlendedCpm - averageCpm);
-                    }
+                    programClosestToAvg = program;
+                    distanceToAverage = Math.Abs(program.BlendedCpm - averageCpm);
                 }
-
-                programClosestToAvg.Spots = 1;
-                programClosestToAvg.Impressions = programClosestToAvg.Spots * programClosestToAvg.EffectiveImpressionsPerSpot;
-                programClosestToAvg.Cost = programClosestToAvg.Spots * programClosestToAvg.CostPerSpot;
             }
+
+            return programClosestToAvg;
         }
 
-        private void _AllocateMaxSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
+        private PricingGuideProgram _GetMaxProgram(List<PricingGuideStation> stations)
         {
-            foreach (var market in pricingGuideOpenMarketInventory.Markets)
-            {
-                var marketPrograms = market.Stations.SelectMany(s => s.Programs);
-                var maxProgram = marketPrograms.Where(x => x.BlendedCpm != 0).OrderByDescending(x => x.BlendedCpm).FirstOrDefault();
+            var marketPrograms = stations.SelectMany(s => s.Programs);
+            return marketPrograms.Where(x => x.BlendedCpm != 0).OrderByDescending(x => x.BlendedCpm).FirstOrDefault();
+        }
 
-                if (maxProgram != null)
-                {
-                    maxProgram.Spots = 1;
-                    maxProgram.Impressions = maxProgram.Spots * maxProgram.EffectiveImpressionsPerSpot;
-                    maxProgram.Cost = maxProgram.Spots * maxProgram.CostPerSpot;
-                }
-            }
+        private PricingGuideProgram _GetMinProgram(List<PricingGuideStation> stations)
+        {
+            var marketPrograms = stations.SelectMany(s => s.Programs);
+            return marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
+        }
+
+        private void _SetOneSpotProgram(PricingGuideProgram program)
+        {
+            program.Spots = 1;
+            program.Impressions = program.Spots * program.EffectiveImpressionsPerSpot;
+            program.Cost = program.Spots * program.CostPerSpot;
         }
 
         private void _CalculateCpmForMarkets(List<PricingGuideMarketDto> markets)

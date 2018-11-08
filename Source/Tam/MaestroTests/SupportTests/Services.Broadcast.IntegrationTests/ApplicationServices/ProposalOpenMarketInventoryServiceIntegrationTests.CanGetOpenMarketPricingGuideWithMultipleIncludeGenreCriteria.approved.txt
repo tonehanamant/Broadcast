@@ -43,7 +43,7 @@
   "Markets": [
     {
       "AvgCpm": 0.0070829812630578446944124378,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 10392144.25,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
@@ -60,7 +60,7 @@
           "Programs": [
             {
               "BlendedCpm": 0.0024056632970621053494325774,
-              "Cost": 0.0000,
+              "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-SU 9AM-12AM",
@@ -77,12 +77,12 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 10392144.25,
               "ImpressionsPerSpot": 10392144.25,
               "ManifestDaypartId": 213351,
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -116,9 +116,9 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 25.0000,
+      "TotalImpressions": 10392144.25,
+      "TotalSpots": 1
     }
   ],
   "OpenMarketPricing": {
@@ -129,21 +129,21 @@
     "UnitCapPerStation": null
   },
   "OpenMarketTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.0024056632970621053494326000,
+    "Impressions": 10392144.25
   },
   "PricingTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 195030.53033823493218009401961,
+    "Coverage": 1.01,
+    "Cpm": 6.3808179255209941863321779000,
+    "Impressions": 30565130.147058818
   },
   "ProposalDetailId": 9982,
   "ProprietaryTotals": {
-    "Cost": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 195005.53033823493218009401961,
+    "Cpm": 9.66666666666666,
+    "Impressions": 20172985.897058818
   }
 }

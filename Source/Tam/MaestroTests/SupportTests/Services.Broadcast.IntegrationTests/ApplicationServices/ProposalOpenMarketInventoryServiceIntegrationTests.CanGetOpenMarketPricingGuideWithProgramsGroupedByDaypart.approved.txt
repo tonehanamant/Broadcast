@@ -33,7 +33,7 @@
   "Markets": [
     {
       "AvgCpm": 0.0117602992290535840393922983,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 2125796.25,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
@@ -50,7 +50,7 @@
           "Programs": [
             {
               "BlendedCpm": 0.0117602992290535840393922983,
-              "Cost": 0.0000,
+              "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 6AM-6PM",
@@ -62,21 +62,21 @@
               "EffectiveImpressionsPerSpot": 2125796.25,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 2125796.25,
               "ImpressionsPerSpot": 2125796.25,
               "ManifestDaypartId": 213349,
               "ProgramId": 162234,
               "ProgramName": "Friends|Friends 2",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5316
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 25.0000,
+      "TotalImpressions": 2125796.25,
+      "TotalSpots": 1
     }
   ],
   "OpenMarketPricing": {
@@ -87,16 +87,16 @@
     "UnitCapPerStation": null
   },
   "OpenMarketTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.0117602992290535840393923000,
+    "Impressions": 2125796.25
   },
   "PricingTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.0117602992290535840393923000,
+    "Impressions": 2125796.25
   },
   "ProposalDetailId": 9979,
   "ProprietaryTotals": {
