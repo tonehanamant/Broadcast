@@ -62,6 +62,8 @@ BEGIN
 	DROP PROCEDURE nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages
 END
 
+GO 
+
 ---- =============================================
 ---- Author:		
 ---- Create date: 08/21/2017
