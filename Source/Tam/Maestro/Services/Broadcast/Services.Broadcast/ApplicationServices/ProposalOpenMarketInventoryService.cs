@@ -1432,6 +1432,12 @@ namespace Services.Broadcast.ApplicationServices
             var impressionsGoal = request.ImpressionGoal ?? Double.MaxValue;
             var cpmTarget = request.OpenMarketPricing.OpenMarketCpmTarget ?? OpenMarketCpmTarget.Min;
 
+            if (request.BudgetGoal.HasValue)
+                budgetGoal *= request.OpenMarketShare;
+
+            if (request.ImpressionGoal.HasValue)
+                impressionsGoal *= (double)request.OpenMarketShare;
+
             // First, we allocate one spot for a program in each market.
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
