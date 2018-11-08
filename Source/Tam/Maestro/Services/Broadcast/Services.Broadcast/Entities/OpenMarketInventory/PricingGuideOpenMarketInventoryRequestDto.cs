@@ -8,5 +8,6 @@
         public bool? HasPricingGuideChanges { get; set; }
         public decimal? BudgetGoal { get; set; }
         public double? ImpressionGoal { get; set; }
+        public decimal OpenMarketShare { get; set; }
     }
 }

@@ -111,6 +111,7 @@ class PricingGuide extends Component {
     this.saveOpenMarket = this.saveOpenMarket.bind(this);
     this.cancelOpenMarket = this.cancelOpenMarket.bind(this);
     this.handleCpmTargetChange = this.handleCpmTargetChange.bind(this);
+    this.getOpenMarketShare = this.getOpenMarketShare.bind(this);
 
     this.onModalShow = this.onModalShow.bind(this);
 
@@ -348,6 +349,23 @@ class PricingGuide extends Component {
     this.setState({ editingOpenCpmTarget: val });
   }
 
+  getOpenMarketShare() {
+    const {
+      propImpressionsCNN,
+      propImpressionsSinclair,
+      propImpressionsTTNW,
+      propImpressionsTVB
+    } = this.state;
+
+    const balanceSum =
+      propImpressionsCNN +
+      propImpressionsSinclair +
+      propImpressionsTTNW +
+      propImpressionsTVB;
+    const share = 1 - balanceSum;
+    return Number(share.toFixed(2));
+  }
+
   clearState() {
     this.setState({
       editingImpression: "",
@@ -404,12 +422,14 @@ class PricingGuide extends Component {
       OpenMarketCpmTarget: openCpmTarget,
       UnitCapPerStation: openUnitCap || null
     };
+    const openMarketShare = this.getOpenMarketShare();
     const request = {
       ProposalId: proposalEditForm.Id,
       ProposalDetailId: detail.Id,
       BudgetGoal: budget || null,
       ImpressionGoal: impression || null,
-      OpenMarketPricing: openData
+      OpenMarketPricing: openData,
+      OpenMarketShare: openMarketShare
     };
     this.props.loadOpenMarketData(request);
   }
