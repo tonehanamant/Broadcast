@@ -209,7 +209,7 @@
   "Markets": [
     {
       "AvgCpm": 1.5484131241767508053425676186,
-      "DisplayImpressions": 80727.80968352,
+      "DisplayImpressions": 96873.37162022,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
       "MarketId": 318,
@@ -226,33 +226,33 @@
           "Programs": [
             {
               "BlendedCpm": 1.5484131241767508053425676186,
-              "Cost": 125.0000,
+              "Cost": 150.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
                 "Id": 78
               },
-              "DisplayCost": 125.0000,
-              "DisplayImpressions": 80727.80968352,
+              "DisplayCost": 150.0000,
+              "DisplayImpressions": 96873.37162022,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 16145.5619367,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 80727.80968352,
+              "Impressions": 96873.37162022,
               "ImpressionsPerSpot": 16145.5619367,
               "ManifestDaypartId": 41556,
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
-              "Spots": 5,
+              "Spots": 6,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6173
         }
       ],
-      "TotalCost": 125.0000,
-      "TotalImpressions": 80727.80968352,
-      "TotalSpots": 5
+      "TotalCost": 150.0000,
+      "TotalImpressions": 96873.37162022,
+      "TotalSpots": 6
     }
   ],
   "OpenMarketPricing": {
@@ -263,16 +263,16 @@
     "UnitCapPerStation": null
   },
   "OpenMarketTotals": {
-    "Cost": 125.0000,
+    "Cost": 150.0000,
     "Coverage": 0.273,
-    "Cpm": 1.5484131241767477069273513000,
-    "Impressions": 80727.80968352
+    "Cpm": 1.54841312417674674789407000,
+    "Impressions": 96873.37162022
   },
   "PricingTotals": {
-    "Cost": 125.0000,
+    "Cost": 150.0000,
     "Coverage": 0.273,
-    "Cpm": 1.5484131241767477069273513000,
-    "Impressions": 80727.80968352
+    "Cpm": 1.54841312417674674789407000,
+    "Impressions": 96873.37162022
   },
   "ProposalDetailId": 2290,
   "ProprietaryTotals": {

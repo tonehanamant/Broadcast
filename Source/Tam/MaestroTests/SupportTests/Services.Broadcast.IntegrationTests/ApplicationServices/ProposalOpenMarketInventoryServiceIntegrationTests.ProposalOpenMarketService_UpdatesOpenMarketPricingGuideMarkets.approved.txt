@@ -219,7 +219,7 @@
   "Markets": [
     {
       "AvgCpm": 1.5484131241767508053425676186,
-      "DisplayImpressions": 0.0,
+      "DisplayImpressions": 16145.5619367,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
       "MarketId": 318,
@@ -236,7 +236,7 @@
           "Programs": [
             {
               "BlendedCpm": 1.5484131241767508053425676186,
-              "Cost": 0.0000,
+              "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM",
@@ -248,26 +248,26 @@
               "EffectiveImpressionsPerSpot": 16145.5619367,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 16145.5619367,
               "ImpressionsPerSpot": 16145.5619367,
               "ManifestDaypartId": 41556,
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 6173
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 25.0000,
+      "TotalImpressions": 16145.5619367,
+      "TotalSpots": 1
     },
     {
       "AvgCpm": 10.110399242982084500644801441,
-      "DisplayImpressions": 0.0,
-      "DisplayStationImpressions": 0.0,
+      "DisplayImpressions": 18450.4476763,
+      "DisplayStationImpressions": 6140.0,
       "MarketCoverage": 0.177,
       "MarketId": 200,
       "MarketName": "Corpus Christi",
@@ -283,7 +283,7 @@
           "Programs": [
             {
               "BlendedCpm": 4.8859934853420195439739413681,
-              "Cost": 0.0000,
+              "Cost": 30.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
                 "Display": "M-F 5AM-5:58AM",
@@ -295,12 +295,12 @@
               "EffectiveImpressionsPerSpot": 6140.0,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 0.0,
+              "Impressions": 6140.0,
               "ImpressionsPerSpot": 18450.4476763,
               "ManifestDaypartId": 41653,
               "ProgramId": 26682,
               "ProgramName": "3 News First Edition",
-              "Spots": 0,
+              "Spots": 1,
               "StationImpressionsPerSpot": 6140.0
             },
             {
@@ -461,9 +461,9 @@
           "StationCode": 5319
         }
       ],
-      "TotalCost": 0.0000,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalCost": 30.0000,
+      "TotalImpressions": 6140.0,
+      "TotalSpots": 1
     }
   ],
   "OpenMarketPricing": {
@@ -474,16 +474,16 @@
     "UnitCapPerStation": null
   },
   "OpenMarketTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 55.0000,
+    "Coverage": 0.45,
+    "Cpm": 2.4679655893898514886872771000,
+    "Impressions": 22285.5619367
   },
   "PricingTotals": {
-    "Cost": 0.0000,
-    "Coverage": 0.0,
-    "Cpm": 0.0,
-    "Impressions": 0.0
+    "Cost": 55.0000,
+    "Coverage": 0.45,
+    "Cpm": 2.4679655893898514886872771000,
+    "Impressions": 22285.5619367
   },
   "ProposalDetailId": 2290,
   "ProprietaryTotals": {

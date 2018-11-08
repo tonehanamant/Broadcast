@@ -177,6 +177,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": 5000.0,
   "DisplayFilter": {
     "Affiliations": [
       "ABC",
@@ -305,6 +306,7 @@
     ]
   },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 7.8218154564892878861086530481,
@@ -2957,6 +2959,13 @@
       "TotalSpots": 20
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": 3,
+    "UnitCapPerStation": 20
+  },
   "OpenMarketTotals": {
     "Cost": 5158.0000,
     "Coverage": 3.245,
@@ -2969,6 +2978,7 @@
     "Cpm": 17.680747335504863662345029900,
     "Impressions": 291729.75
   },
+  "ProposalDetailId": 9985,
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

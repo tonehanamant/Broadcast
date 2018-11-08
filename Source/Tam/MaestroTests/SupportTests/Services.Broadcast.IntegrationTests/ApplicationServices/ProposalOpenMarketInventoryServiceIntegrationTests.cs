@@ -2880,7 +2880,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min,
                         CpmMax = 5,
@@ -2995,7 +2995,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Max,
                         UnitCapPerStation = 20
