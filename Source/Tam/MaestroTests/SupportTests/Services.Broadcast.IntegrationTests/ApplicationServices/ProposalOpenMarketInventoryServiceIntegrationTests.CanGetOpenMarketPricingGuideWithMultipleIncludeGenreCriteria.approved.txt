@@ -12,7 +12,6 @@
       "Stations": 1
     }
   ],
-  "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [
       "PBS"
@@ -39,27 +38,26 @@
     ]
   },
   "Filter": {},
-  "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 0.0070829812630578446944124378,
-      "DisplayImpressions": 10392144.25,
+      "AvgCpm": 1.8342378060247007219741218686,
+      "DisplayImpressions": 29550.69479167,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.0117602992290535840393922983,
-      "MinCpm": 0.0024056632970621053494325774,
+      "MaxCpm": 2.8224718149728601694541515914,
+      "MinCpm": 0.8460037970765412744940921458,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.0024056632970621053494325774,
+          "MinProgramsBlendedCpm": 0.8460037970765412744940921458,
           "Programs": [
             {
-              "BlendedCpm": 0.0024056632970621053494325774,
+              "BlendedCpm": 0.8460037970765412744940921458,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -67,9 +65,9 @@
                 "Id": 5
               },
               "DisplayCost": 25.0000,
-              "DisplayImpressions": 10392144.25,
+              "DisplayImpressions": 29550.69479167,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 10392144.25,
+              "EffectiveImpressionsPerSpot": 29550.69479167,
               "Genres": [
                 {
                   "Display": "Adventure",
@@ -77,8 +75,8 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 10392144.25,
-              "ImpressionsPerSpot": 10392144.25,
+              "Impressions": 29550.69479167,
+              "ImpressionsPerSpot": 29550.69479167,
               "ManifestDaypartId": 213351,
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
@@ -86,7 +84,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.0117602992290535840393922983,
+              "BlendedCpm": 2.8224718149728601694541515914,
               "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -94,9 +92,9 @@
                 "Id": 12
               },
               "DisplayCost": 25.0000,
-              "DisplayImpressions": 2125796.25,
+              "DisplayImpressions": 8857.484375,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 2125796.25,
+              "EffectiveImpressionsPerSpot": 8857.484375,
               "Genres": [
                 {
                   "Display": "Comedy",
@@ -105,7 +103,7 @@
               ],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 2125796.25,
+              "ImpressionsPerSpot": 8857.484375,
               "ManifestDaypartId": 213352,
               "ProgramId": 162237,
               "ProgramName": "Friends",
@@ -117,56 +115,14 @@
         }
       ],
       "TotalCost": 25.0000,
-      "TotalImpressions": 10392144.25,
+      "TotalImpressions": 29550.69479167,
       "TotalSpots": 1
     }
   ],
-  "OpenMarketPricing": {
-    "CpmMax": null,
-    "CpmMin": null,
-    "DistributionReport": null,
-    "OpenMarketCpmTarget": null,
-    "UnitCapPerStation": null
-  },
-  "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0024056632970621053494325774,
-    "Impressions": 10392144.25
-  },
-  "PricingTotals": {
-    "Cost": 195030.53033823493218009401961,
-    "Coverage": 1.01,
-    "Cpm": 6.3808179255209941863321778694,
-    "Impressions": 30565130.147058818
-  },
-  "ProposalDetailId": 9982,
-  "ProprietaryPricing": [
-    {
-      "Cpm": 14.0000,
-      "ImpressionsBalance": 0.05,
-      "InventorySource": 2
-    },
-    {
-      "Cpm": 12.0000,
-      "ImpressionsBalance": 0.09,
-      "InventorySource": 3
-    },
-    {
-      "Cpm": 8.0000,
-      "ImpressionsBalance": 0.3,
-      "InventorySource": 4
-    },
-    {
-      "Cpm": 10.0000,
-      "ImpressionsBalance": 0.22,
-      "InventorySource": 5
-    }
-  ],
-  "ProprietaryTotals": {
-    "Cost": 195005.53033823493218009401961,
-    "Cpm": 9.66666666666666,
-    "Impressions": 20172985.897058818
+    "Cpm": 0.8460037970765412744940921000,
+    "Impressions": 29550.69479167
   }
 }

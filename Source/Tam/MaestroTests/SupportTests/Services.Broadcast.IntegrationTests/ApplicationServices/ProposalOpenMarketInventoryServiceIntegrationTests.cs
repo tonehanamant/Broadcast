@@ -3113,6 +3113,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26016,
                     ProposalDetailId = 9978,
+                    OpenMarketPricing = new OpenMarketPricingGuide
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Max
+                    },
+                    BudgetGoal = 2000,
+                    ImpressionGoal = 8503184,
+                    OpenMarketShare = 0.5m
+                };
+
+                var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithBothGoalAndOpenMarketShare()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26016);
+
+                proposal.MarketCoverage = 0.5;
+
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", new DateTime(2018, 10, 31));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26016,
+                    ProposalDetailId = 9978,
                     OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Max
