@@ -100,16 +100,17 @@
   "OpenMarketTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0117602992290535840393923000,
+    "Cpm": 0.0117602992290535840393922983,
     "Impressions": 2125796.25
   },
   "PricingTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0117602992290535840393923000,
+    "Cpm": 0.0117602992290535840393922983,
     "Impressions": 2125796.25
   },
   "ProposalDetailId": 9980,
+  "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

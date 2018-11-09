@@ -111,11 +111,11 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Detail/PricingGuide/AllocateSpots")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request)
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> SavePricingGuideAllocations(PricingGuideOpenMarketDistributionDto dto)
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .SavePricingGuideAllocations(request));
+                    .SavePricingGuideAllocations(dto));
         }
 
         [HttpPost]
@@ -125,6 +125,15 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
                     .UpdateOpenMarketPricingGuideMarkets(dto));
+        }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/UpdateProprietaryCpms")]
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> UpdateProprietaryCpms(PricingGuideOpenMarketDistributionDto dto)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .UpdateProprietaryCpms(dto));
         }
     }
 }

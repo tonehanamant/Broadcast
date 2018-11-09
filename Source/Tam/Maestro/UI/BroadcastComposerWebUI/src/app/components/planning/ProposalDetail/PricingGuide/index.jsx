@@ -28,7 +28,8 @@ import {
   allocateSpots,
   clearOpenMarketData,
   showEditMarkets,
-  updateEditMarkets
+  updateEditMarkets,
+  updateProprietaryCpms
 } from "Ducks/planning";
 import PricingGuideGrid from "./PricingGuideGrid";
 import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
@@ -55,7 +56,8 @@ const mapStateToProps = ({
     openMarketLoading,
     openMarketLoaded,
     activeEditMarkets,
-    isEditMarketsActive
+    isEditMarketsActive,
+    hasActiveDistribution
   }
 }) => ({
   modal,
@@ -66,7 +68,8 @@ const mapStateToProps = ({
   openMarketLoading,
   openMarketLoaded,
   activeEditMarkets,
-  isEditMarketsActive
+  isEditMarketsActive,
+  hasActiveDistribution
 });
 
 const mapDispatchToProps = dispatch =>
@@ -78,6 +81,7 @@ const mapDispatchToProps = dispatch =>
       showEditMarkets,
       allocateSpots,
       updateEditMarkets,
+      updateProprietaryCpms,
       updateDetail: updateProposalEditFormDetail
     },
     dispatch
@@ -116,6 +120,8 @@ class PricingGuide extends Component {
     this.cancelOpenMarket = this.cancelOpenMarket.bind(this);
     this.handleCpmTargetChange = this.handleCpmTargetChange.bind(this);
     this.getOpenMarketShare = this.getOpenMarketShare.bind(this);
+    this.onUpdateProprietaryCpms = this.onUpdateProprietaryCpms.bind(this);
+    this.onAllocateSpots = this.onAllocateSpots.bind(this);
 
     this.onModalShow = this.onModalShow.bind(this);
 
@@ -134,10 +140,14 @@ class PricingGuide extends Component {
       editingImpressionInflation: "",
       // proprietary based on array - break down here (uses hard coded values for CPM for now)
       isProprietaryEditing: false,
-      propCpmCNN: 8.0,
-      propCpmSinclair: 10.0,
-      propCpmTTNW: 12.0,
-      propCpmTVB: 14.0,
+      propCpmCNN: 0,
+      propCpmSinclair: 0,
+      propCpmTTNW: 0,
+      propCpmTVB: 0,
+      editingPropCpmCNN: 0,
+      editingPropCpmSinclair: 0,
+      editingPropCpmTTNW: 0,
+      editingPropCpmTVB: 0,
       propImpressionsCNN: 0,
       propImpressionsSinclair: 0,
       propImpressionsTTNW: 0,
@@ -246,32 +256,40 @@ class PricingGuide extends Component {
 
   // PROPRIETARY
 
-  // set states from detail ProprietaryPricing array - NOT using CPM from BE as hard coded
-  // todo - possible compare with initial data id/objects?
+  // set states from detail ProprietaryPricing array
   // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
   setProprietaryPricing(guide) {
     // console.log('set pricing', detail.ProprietaryPricing, this);
     if (guide.ProprietaryPricing && guide.ProprietaryPricing.length) {
       const toUpdate = {};
       guide.ProprietaryPricing.forEach(item => {
-        const bal = item.ImpressionsBalance;
-        if (bal) {
+        const bal = item.ImpressionsBalance || 0;
+        const cpm = item.Cpm || 0;
+        if (bal || cpm) {
           const src = item.InventorySource;
           if (src === 3) {
             toUpdate.propImpressionsTVB = bal;
             toUpdate.editingPropImpressionsTVB = bal;
+            toUpdate.propCpmTVB = cpm;
+            toUpdate.editingPropCpmTVB = cpm;
           }
           if (src === 4) {
             toUpdate.propImpressionsTTNW = bal;
             toUpdate.editingPropImpressionsTTNW = bal;
+            toUpdate.propCpmTTNW = cpm;
+            toUpdate.editingPropCpmTTNW = cpm;
           }
           if (src === 5) {
             toUpdate.propImpressionsCNN = bal;
             toUpdate.editingPropImpressionsCNN = bal;
+            toUpdate.propCpmCNN = cpm;
+            toUpdate.editingPropCpmCNN = cpm;
           }
           if (src === 6) {
             toUpdate.propImpressionsSinclair = bal;
             toUpdate.editingPropImpressionsSinclair = bal;
+            toUpdate.propCpmSinclair = cpm;
+            toUpdate.editingPropCpmSinclair = cpm;
           }
         }
       });
@@ -285,23 +303,35 @@ class PricingGuide extends Component {
   }
 
   saveProprietary() {
-    // only dealing with Impresions Balances for now - not CPM
-    this.setState({
-      propImpressionsCNN: this.state.editingPropImpressionsCNN,
-      propImpressionsSinclair: this.state.editingPropImpressionsSinclair,
-      propImpressionsTTNW: this.state.editingPropImpressionsTTNW,
-      propImpressionsTVB: this.state.editingPropImpressionsTVB
-    });
+    this.setState(
+      {
+        propImpressionsCNN: this.state.editingPropImpressionsCNN,
+        propImpressionsSinclair: this.state.editingPropImpressionsSinclair,
+        propImpressionsTTNW: this.state.editingPropImpressionsTTNW,
+        propImpressionsTVB: this.state.editingPropImpressionsTVB,
+        propCpmCNN: this.state.editingPropCpmCNN,
+        propCpmSinclair: this.state.editingPropCpmSinclair,
+        propCpmTTNW: this.state.editingPropCpmTTNW,
+        propCpmTVB: this.state.editingPropCpmTVB
+      },
+      () => {
+        this.onUpdateProprietaryCpms();
+      }
+    );
     this.toggleProprietaryEditing();
+    // update totals if distribution active
   }
 
   cancelProprietary() {
-    // only dealing with Impresions Balances for now - not CPM
     this.setState({
       editingPropImpressionsCNN: this.state.propImpressionsCNN,
       editingPropImpressionsSinclair: this.state.propImpressionsSinclair,
       editingPropImpressionsTTNW: this.state.propImpressionsTTNW,
-      editingPropImpressionsTVB: this.state.propImpressionsTVB
+      editingPropImpressionsTVB: this.state.propImpressionsTVB,
+      editingPropCpmCNN: this.state.propCpmCNN,
+      editingPropCpmSinclair: this.state.propCpmSinclair,
+      editingPropCpmTTNW: this.state.propCpmTTNW,
+      editingPropCpmTVB: this.state.propCpmTVB
     });
     this.toggleProprietaryEditing();
   }
@@ -384,10 +414,14 @@ class PricingGuide extends Component {
       impressionInflation: "",
       isInventoryEditing: false,
       isProprietaryEditing: false,
-      // propCpmCNN: 8.00,
-      // propCpmSinclair: 10.00,
-      // propCpmTTNW: 12.00,
-      // propCpmTVB: 14.00,
+      propCpmCNN: 0,
+      propCpmSinclair: 0,
+      propCpmTTNW: 0,
+      propCpmTVB: 0,
+      editingPropCpmCNN: 0,
+      editingPropCpmSinclair: 0,
+      editingPropCpmTTNW: 0,
+      editingPropCpmTVB: 0,
       propImpressionsCNN: 0,
       propImpressionsSinclair: 0,
       propImpressionsTTNW: 0,
@@ -411,6 +445,7 @@ class PricingGuide extends Component {
 
   getDistributionRequest() {
     const { detail, proposalEditForm } = this.props;
+    const proprietaryData = this.saveProprietaryPricingDetail();
     const {
       openCpmMax,
       openCpmMin,
@@ -431,6 +466,7 @@ class PricingGuide extends Component {
       ProposalDetailId: detail.Id,
       BudgetGoal: budget || null,
       ImpressionGoal: impression || null,
+      ProprietaryPricing: proprietaryData,
       OpenMarketPricing: openData,
       OpenMarketShare: openMarketShare
     };
@@ -446,6 +482,13 @@ class PricingGuide extends Component {
   onUpdateEditMarkets() {
     const request = this.getDistributionRequest();
     this.props.updateEditMarkets(request);
+  }
+
+  onUpdateProprietaryCpms() {
+    if (this.props.hasActiveDistribution) {
+      const request = this.getDistributionRequest();
+      this.props.updateProprietaryCpms(request);
+    }
   }
 
   // change to inner object PricingGuide - need to combine call to updateDetail else each overrides other
@@ -471,27 +514,12 @@ class PricingGuide extends Component {
       ProprietaryPricing: proprietaryData
     };
     updateDetail({ id: detail.Id, key: "PricingGuide", value: guideUpdates });
-    /* updateDetail({ id: detail.Id, key: "GoalImpression", value: impression });
-    updateDetail({ id: detail.Id, key: "GoalBudget", value: budget });
-    updateDetail({ id: detail.Id, key: "AdjustmentMargin", value: margin });
-    updateDetail({
-      id: detail.Id,
-      key: "AdjustmentRate",
-      value: rateInflation
-    });
-    updateDetail({
-      id: detail.Id,
-      key: "AdjustmentInflation",
-      value: impressionInflation
-    }); */
     this.onCancel();
   }
 
-  // update detail - with proprietary pricing states (CPM set for future but is harcoded)
+  // update detail - with proprietary pricing states
   // // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
   saveProprietaryPricingDetail() {
-    // change inner object PricingGuide
-    // const { updateDetail, detail } = this.props;
     const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
     const {
       propImpressionsCNN,
@@ -521,28 +549,27 @@ class PricingGuide extends Component {
         Cpm: propCpmSinclair
       }
     ];
-    /*  updateDetail({
-      id: detail.Id,
-      key: "ProprietaryPricing",
-      value: proprietaryPricing
-    }); */
     return proprietaryPricing;
   }
 
   saveOpenMarketPricingDetail() {
     const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
-    // const { updateDetail, detail } = this.props;
-    // change inner object PricingGuide
     const openData = {
       CpmMax: openCpmMax || null,
       CpmMin: openCpmMin || null,
       OpenMarketCpmTarget: openCpmTarget,
       UnitCapPerStation: openUnitCap || null
     };
-    // const guideData = { OpenMarketPricing: openData };
-    // updateDetail({ id: detail.Id, key: "OpenMarketPricing", value: openData });
-    // updateDetail({ id: detail.Id, key: "PricingGuide", value: guideData });
     return openData;
+  }
+
+  // intercept from grid to update  distribution request
+  onAllocateSpots(openMarketData) {
+    const distribution = this.getDistributionRequest();
+    this.props.allocateSpots({
+      ...openMarketData,
+      ...distribution
+    });
   }
 
   handleChange(fieldName, value) {
@@ -568,7 +595,7 @@ class PricingGuide extends Component {
       hasOpenMarketData,
       isOpenMarketDataSortName,
       openMarketLoading,
-      allocateSpots,
+      // allocateSpots,
       openMarketLoaded,
       activeEditMarkets,
       isEditMarketsActive,
@@ -591,7 +618,16 @@ class PricingGuide extends Component {
       editingRateInflation,
       editingImpressionInflation
     } = this.state;
-    const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
+    const {
+      propCpmCNN,
+      propCpmSinclair,
+      propCpmTTNW,
+      propCpmTVB,
+      editingPropCpmCNN,
+      editingPropCpmSinclair,
+      editingPropCpmTTNW,
+      editingPropCpmTVB
+    } = this.state;
     const {
       propImpressionsCNN,
       propImpressionsSinclair,
@@ -1093,14 +1129,37 @@ class PricingGuide extends Component {
                               )}
                             </td>
                             <td>
-                              {/*  {!isProprietaryEditing &&
-                    <FormControl.Static>${propCpmCNN ? numeral(propCpmCNN).format('0,0.[00]') : '--'}</FormControl.Static>
-                    } */}
-                              <FormControl.Static>
-                                ${propCpmCNN
-                                  ? numeral(propCpmCNN).format("0,0.[00]")
-                                  : "--"}
-                              </FormControl.Static>
+                              {isProprietaryEditing && (
+                                <InputNumber
+                                  defaultValue={editingPropCpmCNN || null}
+                                  disabled={isReadOnly}
+                                  min={0}
+                                  precision={2}
+                                  style={{ width: "100%" }}
+                                  formatter={value =>
+                                    `$ ${value}`.replace(
+                                      /\B(?=(\d{3})+(?!\d))/g,
+                                      ","
+                                    )
+                                  }
+                                  parser={value =>
+                                    value.replace(/\$\s?|(,*)/g, "")
+                                  }
+                                  onChange={value => {
+                                    this.handleChange(
+                                      "editingPropCpmCNN",
+                                      value
+                                    );
+                                  }}
+                                />
+                              )}
+                              {!isProprietaryEditing && (
+                                <FormControl.Static>
+                                  ${propCpmCNN
+                                    ? numeral(propCpmCNN).format("0,0.[00]")
+                                    : "--"}
+                                </FormControl.Static>
+                              )}
                             </td>
                           </tr>
                           <tr>
@@ -1144,11 +1203,39 @@ class PricingGuide extends Component {
                               )}
                             </td>
                             <td>
-                              <FormControl.Static>
-                                ${propCpmSinclair
-                                  ? numeral(propCpmSinclair).format("0,0.[00]")
-                                  : "--"}
-                              </FormControl.Static>
+                              {isProprietaryEditing && (
+                                <InputNumber
+                                  defaultValue={editingPropCpmSinclair || null}
+                                  disabled={isReadOnly}
+                                  min={0}
+                                  precision={2}
+                                  style={{ width: "100%" }}
+                                  formatter={value =>
+                                    `$ ${value}`.replace(
+                                      /\B(?=(\d{3})+(?!\d))/g,
+                                      ","
+                                    )
+                                  }
+                                  parser={value =>
+                                    value.replace(/\$\s?|(,*)/g, "")
+                                  }
+                                  onChange={value => {
+                                    this.handleChange(
+                                      "editingPropCpmSinclair",
+                                      value
+                                    );
+                                  }}
+                                />
+                              )}
+                              {!isProprietaryEditing && (
+                                <FormControl.Static>
+                                  ${propCpmSinclair
+                                    ? numeral(propCpmSinclair).format(
+                                        "0,0.[00]"
+                                      )
+                                    : "--"}
+                                </FormControl.Static>
+                              )}
                             </td>
                           </tr>
                           <tr>
@@ -1192,11 +1279,37 @@ class PricingGuide extends Component {
                               )}
                             </td>
                             <td>
-                              <FormControl.Static>
-                                ${propCpmTTNW
-                                  ? numeral(propCpmTTNW).format("0,0.[00]")
-                                  : "--"}
-                              </FormControl.Static>
+                              {isProprietaryEditing && (
+                                <InputNumber
+                                  defaultValue={editingPropCpmTTNW || null}
+                                  disabled={isReadOnly}
+                                  min={0}
+                                  precision={2}
+                                  style={{ width: "100%" }}
+                                  formatter={value =>
+                                    `$ ${value}`.replace(
+                                      /\B(?=(\d{3})+(?!\d))/g,
+                                      ","
+                                    )
+                                  }
+                                  parser={value =>
+                                    value.replace(/\$\s?|(,*)/g, "")
+                                  }
+                                  onChange={value => {
+                                    this.handleChange(
+                                      "editingPropCpmTTNW",
+                                      value
+                                    );
+                                  }}
+                                />
+                              )}
+                              {!isProprietaryEditing && (
+                                <FormControl.Static>
+                                  ${propCpmTTNW
+                                    ? numeral(propCpmTTNW).format("0,0.[00]")
+                                    : "--"}
+                                </FormControl.Static>
+                              )}
                             </td>
                           </tr>
                           <tr>
@@ -1238,11 +1351,37 @@ class PricingGuide extends Component {
                               )}
                             </td>
                             <td>
-                              <FormControl.Static>
-                                ${propCpmTVB
-                                  ? numeral(propCpmTVB).format("0,0.[00]")
-                                  : "--"}
-                              </FormControl.Static>
+                              {isProprietaryEditing && (
+                                <InputNumber
+                                  defaultValue={editingPropCpmTVB || null}
+                                  disabled={isReadOnly}
+                                  min={0}
+                                  precision={2}
+                                  style={{ width: "100%" }}
+                                  formatter={value =>
+                                    `$ ${value}`.replace(
+                                      /\B(?=(\d{3})+(?!\d))/g,
+                                      ","
+                                    )
+                                  }
+                                  parser={value =>
+                                    value.replace(/\$\s?|(,*)/g, "")
+                                  }
+                                  onChange={value => {
+                                    this.handleChange(
+                                      "editingPropCpmTVB",
+                                      value
+                                    );
+                                  }}
+                                />
+                              )}
+                              {!isProprietaryEditing && (
+                                <FormControl.Static>
+                                  ${propCpmTVB
+                                    ? numeral(propCpmTVB).format("0,0.[00]")
+                                    : "--"}
+                                </FormControl.Static>
+                              )}
                             </td>
                           </tr>
                           <tr>
@@ -1517,7 +1656,8 @@ class PricingGuide extends Component {
                         openMarketLoading={openMarketLoading}
                         hasOpenMarketData={hasOpenMarketData}
                         isOpenMarketDataSortName={isOpenMarketDataSortName}
-                        allocateSpots={allocateSpots}
+                        // allocateSpots={allocateSpots}
+                        onAllocateSpots={this.onAllocateSpots}
                         detailId={detail && detail.Id}
                       />
                     )}
@@ -1559,6 +1699,7 @@ PricingGuide.propTypes = {
   updateDetail: PropTypes.func.isRequired,
   clearOpenMarketData: PropTypes.func.isRequired,
   loadOpenMarketData: PropTypes.func.isRequired,
+  updateProprietaryCpms: PropTypes.func.isRequired,
   detail: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   activeOpenMarketData: PropTypes.object,
@@ -1569,6 +1710,7 @@ PricingGuide.propTypes = {
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
   isEditMarketsActive: PropTypes.bool.isRequired,
+  hasActiveDistribution: PropTypes.bool.isRequired,
   showEditMarkets: PropTypes.func.isRequired,
   updateEditMarkets: PropTypes.func.isRequired
 };

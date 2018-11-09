@@ -110,7 +110,7 @@
           "QuarterText": "2017 Q1",
           "Weeks": [
             {
-              "Cost": 56385.00,
+              "Cost": 56385.0000,
               "EndDate": "2017-03-19T00:00:00",
               "Impressions": 4500000.0,
               "Iscis": [],
@@ -122,7 +122,7 @@
               "Week": "3/13/2017"
             },
             {
-              "Cost": 12530.00,
+              "Cost": 12530.0000,
               "EndDate": "2017-03-26T00:00:00",
               "Impressions": 1000000.0,
               "Iscis": [],
@@ -145,7 +145,7 @@
           "QuarterText": "2017 Q2",
           "Weeks": [
             {
-              "Cost": 5172694.21,
+              "Cost": 5172694.2100,
               "EndDate": "2017-04-02T00:00:00",
               "Impressions": 12589000.0,
               "Iscis": [],
@@ -190,7 +190,7 @@
       ],
       "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
-      "TotalCost": 5241609.21,
+      "TotalCost": 5241609.2100,
       "TotalImpressions": 18089000.0,
       "TotalUnits": 3
     },
@@ -262,7 +262,7 @@
           "QuarterText": "2017 Q3",
           "Weeks": [
             {
-              "Cost": 757800.00,
+              "Cost": 757800.0000,
               "EndDate": "2017-09-24T00:00:00",
               "Impressions": 9000000.0,
               "Iscis": [],
@@ -305,7 +305,7 @@
       "ShowTypeCriteria": [],
       "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
-      "TotalCost": 757800.00,
+      "TotalCost": 757800.0000,
       "TotalImpressions": 9000000.0,
       "TotalUnits": 1
     }
@@ -368,7 +368,7 @@
     }
   ],
   "Status": 1,
-  "TargetBudget": 5999409.21,
+  "TargetBudget": 5999409.2100,
   "TargetCPM": 221.47,
   "TargetImpressions": 27089000.0,
   "TargetUnits": 4,

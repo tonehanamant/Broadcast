@@ -12,12 +12,15 @@ class PricingGuideGrid extends Component {
   }
 
   onCellChange(...args) {
-    const { activeOpenMarketData, allocateSpots, detailId } = this.props;
+    // const { activeOpenMarketData, allocateSpots, detailId } = this.props;
+    const { activeOpenMarketData, onAllocateSpots } = this.props;
     const updatedMarkets = updateItem(activeOpenMarketData.Markets, ...args);
-    allocateSpots(
+    /* allocateSpots(
       { ...activeOpenMarketData, Markets: updatedMarkets },
       detailId
-    );
+    ); */
+    // intercept to update Distribution Request
+    onAllocateSpots({ ...activeOpenMarketData, Markets: updatedMarkets });
   }
 
   render() {
@@ -58,8 +61,9 @@ PricingGuideGrid.propTypes = {
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
   openMarketLoading: PropTypes.bool.isRequired,
-  detailId: PropTypes.number,
-  allocateSpots: PropTypes.func.isRequired
+  // detailId: PropTypes.number,
+  // allocateSpots: PropTypes.func.isRequired
+  onAllocateSpots: PropTypes.func.isRequired
 };
 
 PricingGuideGrid.defaultProps = {

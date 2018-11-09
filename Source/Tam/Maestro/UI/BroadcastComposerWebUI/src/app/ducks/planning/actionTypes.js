@@ -85,3 +85,6 @@ export const CHANGE_EDIT_MARKETS_DATA = "planning/CHANGE_EDIT_MARKETS_DATA";
 export const UPDATE_EDIT_MARKETS_DATA = createAction(
   "planning/UPDATE_EDIT_MARKETS_DATA"
 );
+export const UPDATE_PROPRIETARY_CPMS = createAction(
+  "planning/UPDATE_PROPRIETARY_CPMS"
+);

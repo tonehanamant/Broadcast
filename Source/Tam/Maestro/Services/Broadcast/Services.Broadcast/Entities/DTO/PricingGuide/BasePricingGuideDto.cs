@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities.DTO.PricingGuide
+﻿using System.Collections.Generic;
+
+namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
     public abstract class BasePricingGuideDto
     {
@@ -9,6 +11,8 @@
         public double? ImpressionGoal { get; set; }
 
         public OpenMarketPricingGuideDto OpenMarketPricing { get; set; } = new OpenMarketPricingGuideDto();
+        
+        public List<ProprietaryPricingDto> ProprietaryPricing { get; set; }
 
         public decimal OpenMarketShare { get; set; }
     }

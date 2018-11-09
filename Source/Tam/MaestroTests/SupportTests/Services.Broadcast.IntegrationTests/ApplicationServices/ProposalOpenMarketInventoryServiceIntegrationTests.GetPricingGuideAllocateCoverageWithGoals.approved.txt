@@ -2966,20 +2966,21 @@
     "OpenMarketCpmTarget": 3,
     "UnitCapPerStation": 20
   },
-  "OpenMarketShare": 0.0,
+  "OpenMarketShare": 1.0,
   "OpenMarketTotals": {
     "Cost": 5158.0000,
     "Coverage": 3.245,
-    "Cpm": 17.680747335504863662345029900,
+    "Cpm": 17.680747335504863662345029946,
     "Impressions": 291729.75
   },
   "PricingTotals": {
     "Cost": 5158.0000,
     "Coverage": 3.245,
-    "Cpm": 17.680747335504863662345029900,
+    "Cpm": 17.680747335504863662345029946,
     "Impressions": 291729.75
   },
   "ProposalDetailId": 9985,
+  "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

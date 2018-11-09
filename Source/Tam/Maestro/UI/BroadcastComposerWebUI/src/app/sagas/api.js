@@ -141,6 +141,12 @@ const planning = {
       `${apiBase}Inventory/Detail/PricingGuide/Grid/UpdateMarkets`,
       params
     ),
+  updateProprietaryCpms: params =>
+    call(
+      POST,
+      `${apiBase}Inventory/Detail/PricingGuide/UpdateProprietaryCpms`,
+      params
+    ),
   uploadSCXFile: params =>
     call(POST, `${apiBase}Proposals/UploadProposalDetailBuy`, params),
   allocateSpots: data =>

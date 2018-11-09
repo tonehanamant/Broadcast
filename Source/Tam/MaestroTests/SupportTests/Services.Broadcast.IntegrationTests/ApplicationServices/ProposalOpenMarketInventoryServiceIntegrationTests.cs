@@ -2589,7 +2589,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var program = station.Programs.First();
 
             program.Spots = 5;
-            var allocationRequest = new PricingGuideAllocationSaveRequestDto
+            var allocationRequest = new PricingGuideOpenMarketDistributionDto
             {
                 ProposalDetailId = proposalDetailId,
                 Markets = dto.Markets,
@@ -2611,7 +2611,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalId = 26016,
-                ProposalDetailId = 9978
+                ProposalDetailId = proposalDetailId
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             var market = dto.Markets.First(m => m.Stations.Any(s => s.Programs.Any()));
@@ -2621,7 +2621,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             program.Spots = program.Spots + 5;
             program.ImpressionsPerSpot = 0;
             program.StationImpressionsPerSpot = 0;
-            var allocationRequest = new PricingGuideAllocationSaveRequestDto
+            var allocationRequest = new PricingGuideOpenMarketDistributionDto
             {
                 ProposalDetailId = proposalDetailId,
                 Markets = dto.Markets,
@@ -3134,6 +3134,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UpdatesTotalsWithPassedProprietaryCpms()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26020,
+                ProposalDetailId = 9982,
+                BudgetGoal = 10000,
+                OpenMarketShare = 0.5m,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    UnitCapPerStation = 100
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            pricingGuideOpenMarketDto.ProprietaryPricing = new List<ProprietaryPricingDto>
+            {
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.11 },
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.13 },
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.15 },
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.17 }
+            };
+
+            var result = _ProposalOpenMarketInventoryService.UpdateProprietaryCpms(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result);
+
+            Approvals.Verify(resultJson);
         }
     }
 }

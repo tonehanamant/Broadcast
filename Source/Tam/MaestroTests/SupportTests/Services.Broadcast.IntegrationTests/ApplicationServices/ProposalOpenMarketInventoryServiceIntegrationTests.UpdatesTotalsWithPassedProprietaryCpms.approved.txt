@@ -42,23 +42,24 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 0.00708,
+      "AvgCpm": 0.0070829812630578446944124378,
       "DisplayImpressions": 1039214425.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
+      "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.01176,
-      "MinCpm": 0.00241,
+      "MaxCpm": 0.0117602992290535840393922983,
+      "MinCpm": 0.0024056632970621053494325774,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.00241,
+          "MinProgramsBlendedCpm": 0.0024056632970621053494325774,
           "Programs": [
             {
-              "BlendedCpm": 0.00241,
+              "BlendedCpm": 0.0024056632970621053494325774,
               "Cost": 2500.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -69,15 +70,23 @@
               "DisplayImpressions": 1039214425.0,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 10392144.25,
+              "Genres": [
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                }
+              ],
               "HasImpressions": true,
               "Impressions": 1039214425.0,
               "ImpressionsPerSpot": 10392144.25,
+              "ManifestDaypartId": 213351,
+              "ProgramId": 162236,
               "ProgramName": "Adventure Time",
               "Spots": 100,
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.01176,
+              "BlendedCpm": 0.0117602992290535840393922983,
               "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -88,14 +97,23 @@
               "DisplayImpressions": 2125796.25,
               "DisplayStationImpressions": 0.0,
               "EffectiveImpressionsPerSpot": 2125796.25,
+              "Genres": [
+                {
+                  "Display": "Comedy",
+                  "Id": 9
+                }
+              ],
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 2125796.25,
+              "ManifestDaypartId": 213352,
+              "ProgramId": 162237,
               "ProgramName": "Friends",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
             }
-          ]
+          ],
+          "StationCode": 5316
         }
       ],
       "TotalCost": 2500.0000,
@@ -110,45 +128,45 @@
     "OpenMarketCpmTarget": null,
     "UnitCapPerStation": 100
   },
-  "OpenMarketShare": 1.0,
+  "OpenMarketShare": 0.5,
   "OpenMarketTotals": {
     "Cost": 2500.0000,
     "Coverage": 1.01,
-    "Cpm": 0.00241,
+    "Cpm": 0.0024056632970621053494325774,
     "Impressions": 1039214425.0
   },
   "PricingTotals": {
-    "Cost": 19503053.03382,
+    "Cost": 6615682.70454545,
     "Coverage": 1.01,
-    "Cpm": 6.38082,
-    "Impressions": 3056513014.70588
+    "Cpm": 2.8010584918507064799676897675,
+    "Impressions": 2361850965.909091
   },
   "ProposalDetailId": 9982,
   "ProprietaryPricing": [
     {
-      "Cpm": 14.0000,
-      "ImpressionsBalance": 0.05,
-      "InventorySource": 2
+      "Cpm": 5.0,
+      "ImpressionsBalance": 0.11,
+      "InventorySource": 0
     },
     {
-      "Cpm": 12.0000,
-      "ImpressionsBalance": 0.09,
-      "InventorySource": 3
+      "Cpm": 5.0,
+      "ImpressionsBalance": 0.13,
+      "InventorySource": 0
     },
     {
-      "Cpm": 8.0000,
-      "ImpressionsBalance": 0.3,
-      "InventorySource": 4
+      "Cpm": 5.0,
+      "ImpressionsBalance": 0.15,
+      "InventorySource": 0
     },
     {
-      "Cpm": 10.0000,
-      "ImpressionsBalance": 0.22,
-      "InventorySource": 5
+      "Cpm": 5.0,
+      "ImpressionsBalance": 0.17,
+      "InventorySource": 0
     }
   ],
   "ProprietaryTotals": {
-    "Cost": 19500553.03382,
-    "Cpm": 9.66667,
-    "Impressions": 2017298589.70588
+    "Cost": 6613182.70454545,
+    "Cpm": 5.0,
+    "Impressions": 1322636540.909091
   }
 }

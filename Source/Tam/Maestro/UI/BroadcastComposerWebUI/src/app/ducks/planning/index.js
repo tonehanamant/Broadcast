@@ -11,6 +11,7 @@ const initialState = {
   activeOpenMarketData: undefined,
   openMarketData: undefined,
   hasOpenMarketData: false,
+  hasActiveDistribution: false,
   isOpenMarketDataSortName: false,
   activeEditMarkets: [],
   isEditMarketsActive: false,
@@ -374,6 +375,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         openMarketData: data.Data,
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
+        hasActiveDistribution: true,
         activeOpenMarketData: data.Data,
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
@@ -398,6 +400,7 @@ export default function reducer(state = initialState, action) {
         openMarketData: undefined,
         activeOpenMarketData: undefined,
         hasOpenMarketData: false,
+        hasActiveDistribution: false,
         isOpenMarketDataSortName: false
       };
     }
@@ -478,6 +481,22 @@ export default function reducer(state = initialState, action) {
         // openMarketLoaded: true,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
+      };
+    }
+    // update pricing/proprietary totals only on proprietary change if distribution active
+    case ACTIONS.UPDATE_PROPRIETARY_CPMS.success: {
+      return {
+        ...state,
+        openMarketData: {
+          ...state.openMarketData,
+          PricingTotals: data.Data.PricingTotals,
+          ProprietaryTotals: data.Data.ProprietaryTotals
+        },
+        activeOpenMarketData: {
+          ...state.activeOpenMarketData,
+          PricingTotals: data.Data.PricingTotals,
+          ProprietaryTotals: data.Data.ProprietaryTotals
+        }
       };
     }
 
@@ -640,6 +659,11 @@ export const clearOpenMarketData = () => ({
   type: ACTIONS.CLEAR_OPEN_MARKET_DATA
 });
 
+export const updateProprietaryCpms = params => ({
+  type: ACTIONS.UPDATE_PROPRIETARY_CPMS.request,
+  payload: params
+});
+
 export const uploadSCXFile = params => ({
   type: ACTIONS.SCX_FILE_UPLOAD.request,
   payload: params
@@ -675,7 +699,11 @@ export const setEstimatedId = (detailId, estimatedId) => ({
   }
 });
 
-export const allocateSpots = (data, detailId) => ({
+/* export const allocateSpots = (data, detailId) => ({
   type: ACTIONS.ALLOCATE_SPOTS.request,
   payload: { data, detailId }
+}); */
+export const allocateSpots = data => ({
+  type: ACTIONS.ALLOCATE_SPOTS.request,
+  payload: data
 });

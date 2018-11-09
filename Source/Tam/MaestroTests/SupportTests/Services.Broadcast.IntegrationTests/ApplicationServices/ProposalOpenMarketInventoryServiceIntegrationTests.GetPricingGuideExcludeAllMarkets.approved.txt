@@ -219,6 +219,7 @@
     "Impressions": 0.0
   },
   "ProposalDetailId": 9985,
+  "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,
     "Cpm": 0.0,

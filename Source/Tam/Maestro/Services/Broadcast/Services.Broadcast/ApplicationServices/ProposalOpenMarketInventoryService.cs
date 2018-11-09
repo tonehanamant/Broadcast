@@ -32,8 +32,9 @@ namespace Services.Broadcast.ApplicationServices
         void SavePricingGuideOpenMarketInventory(int proposalDetailId, PricingGuideOpenMarketDistributionDto pricingGuide);
         void DeleteExistingGeneratedPricingGuide(int proposalDetailId);
         PricingGuideOpenMarketDistributionDto ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketDistributionDto dto);
-        PricingGuideOpenMarketDistributionDto SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request);
+        PricingGuideOpenMarketDistributionDto SavePricingGuideAllocations(PricingGuideOpenMarketDistributionDto dto);
         PricingGuideOpenMarketDistributionDto UpdateOpenMarketPricingGuideMarkets(PricingGuideOpenMarketDistributionDto dto);
+        PricingGuideOpenMarketDistributionDto UpdateProprietaryCpms(PricingGuideOpenMarketDistributionDto dto);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -631,18 +632,22 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.TargetImpressions = program.TargetImpressions;
                             if (weekProgram.ProvidedUnitImpressions.HasValue)
                             {
-                                weekProgram.TotalImpressions = weekProgram.Spots == 0 ? weekProgram.ProvidedUnitImpressions.Value : weekProgram.Spots * weekProgram.ProvidedUnitImpressions.Value;
+                                weekProgram.TotalImpressions = weekProgram.Spots == 0 
+                                    ? weekProgram.ProvidedUnitImpressions.Value 
+                                    : _ProposalProgramsCalculationEngine.CalculateSpotImpressions(weekProgram.Spots, weekProgram.ProvidedUnitImpressions.Value);
                             }
                             else
                             {
-                                weekProgram.TotalImpressions = weekProgram.Spots == 0 ? weekProgram.UnitImpression : weekProgram.Spots * weekProgram.UnitImpression;
+                                weekProgram.TotalImpressions = weekProgram.Spots == 0 
+                                    ? weekProgram.UnitImpression 
+                                    : _ProposalProgramsCalculationEngine.CalculateSpotImpressions(weekProgram.Spots, weekProgram.UnitImpression);
                             }
 
                             weekProgram.HasImpressions = weekProgram.UnitImpression > 0 ||
                                 (weekProgram.ProvidedUnitImpressions.HasValue && weekProgram.ProvidedUnitImpressions.Value > 0);
 
                             weekProgram.Cost = weekProgram.Spots > 0
-                                ? weekProgram.Spots * weekProgram.UnitCost
+                                ? _ProposalProgramsCalculationEngine.CalculateSpotCost(weekProgram.Spots, weekProgram.UnitCost)
                                 : weekProgram.UnitCost;
 
                             weekStation.Programs.Add(weekProgram);
@@ -1082,18 +1087,6 @@ namespace Services.Broadcast.ApplicationServices
             markets.ForEach(x => x.Stations.ForEach(y => y.Programs.RemoveAll(z => programsToExclude.Contains(z))));
         }
 
-        public static PricingGuideOpenMarketInventory MapToPricingGuideOpenMarketInventory(open_market_pricing_guide pricingGuide)
-        {
-            if (pricingGuide == null)
-                return null;
-
-            var pricingGuideInventory = new PricingGuideOpenMarketInventory();
-
-
-
-            return pricingGuideInventory;
-        }
-
         private List<open_market_pricing_guide> _GetProposalDetailPricingGuide(int proposalId, int proposalDetailId)
         {
             var repository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
@@ -1156,10 +1149,10 @@ namespace Services.Broadcast.ApplicationServices
             return pricingGuideDto;
         }
 
-        private void _SumTotalsForPricingGuide(PricingGuideOpenMarketDistributionDto pricingGuideDto, List<ProprietaryPricingDto> proprietaryPricingValues)
+        private void _SumTotalsForPricingGuide(PricingGuideOpenMarketDistributionDto pricingGuideDto)
         {
             pricingGuideDto.OpenMarketTotals = _SumTotalsForOpenMarketSection(pricingGuideDto.Markets);
-            pricingGuideDto.ProprietaryTotals = _SumTotalsForProprietarySection(pricingGuideDto.OpenMarketTotals.Impressions, proprietaryPricingValues);
+            pricingGuideDto.ProprietaryTotals = _SumTotalsForProprietarySection(pricingGuideDto.OpenMarketTotals.Impressions, pricingGuideDto.ProprietaryPricing);
             pricingGuideDto.PricingTotals = _SumPricingTotals(pricingGuideDto.OpenMarketTotals, pricingGuideDto.ProprietaryTotals);
         }
 
@@ -1173,11 +1166,7 @@ namespace Services.Broadcast.ApplicationServices
                 Cost = openMarketTotals.Cost + proprietaryTotals.Cost,
                 Coverage = openMarketTotals.Coverage
             };
-
-            if (result.Impressions > 0)
-            {
-                result.Cpm = result.Cost / (decimal)result.Impressions * 1000;
-            }
+            result.Cpm = ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
 
             return result;
         }
@@ -1195,29 +1184,21 @@ namespace Services.Broadcast.ApplicationServices
             var impressionsPerOnePercentage = openMarketImpressions / openMarketImpressionsPercent;
             result.Impressions = proprietaryImpressionsPercent * impressionsPerOnePercentage;
             result.Cpm = (decimal)(proprietaryPricingValues.Sum(x => x.ImpressionsBalance * (double)x.Cpm) / proprietaryImpressionsPercent);
-            result.Cost = result.Cpm * (decimal)result.Impressions / 1000;
+            result.Cost = ProposalMath.CalculateCost(result.Cpm, result.Impressions);
 
             return result;
         }
 
         private OpenMarketTotalsDto _SumTotalsForOpenMarketSection(List<PricingGuideMarketDto> markets)
         {
-            List<PricingGuideMarketDto> marketsWithSpots = new List<PricingGuideMarketDto>();           
-            markets.ForEach(x =>
-            {
-                if( x.Stations.Any(y => y.Programs.Where(z => z.Spots != 0).Any()))
-                {
-                    marketsWithSpots.Add(x);
-                }
-            });
-
             var result = new OpenMarketTotalsDto
             {
                 Cost = markets.Sum(x => x.TotalCost),
-                Coverage = marketsWithSpots.Sum(x => x.MarketCoverage),
                 Impressions = markets.Sum(x => x.TotalImpressions)
             };
-            result.Cpm = result.Impressions == 0 ? 0 : result.Cost / (decimal)result.Impressions * 1000;
+            // Coverage: sum of coverage for each market with a spot allocated, only count each market once.
+            result.Coverage = markets.Where(x => x.TotalCost > 0).Sum(x => x.MarketCoverage);
+            result.Cpm = ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
 
             return result;
         }
@@ -1517,8 +1498,8 @@ namespace Services.Broadcast.ApplicationServices
             while (budgetGoal > 0 && impressionsGoal > 0 && allocatableProgram != null)
             {
                 allocatableProgram.Spots = allocatableProgram.Spots + 1;
-                allocatableProgram.Impressions = allocatableProgram.Spots * allocatableProgram.EffectiveImpressionsPerSpot;
-                allocatableProgram.Cost = allocatableProgram.Spots * allocatableProgram.CostPerSpot;
+                allocatableProgram.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(allocatableProgram.Spots, allocatableProgram.EffectiveImpressionsPerSpot);
+                allocatableProgram.Cost = _ProposalProgramsCalculationEngine.CalculateSpotCost(allocatableProgram.Spots, allocatableProgram.CostPerSpot);
                 impressionsGoal -= allocatableProgram.EffectiveImpressionsPerSpot;
                 budgetGoal -= allocatableProgram.CostPerSpot;
                 allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget);
@@ -1600,8 +1581,8 @@ namespace Services.Broadcast.ApplicationServices
         private void _SetOneSpotProgram(PricingGuideProgramDto program)
         {
             program.Spots = 1;
-            program.Impressions = program.Spots * program.EffectiveImpressionsPerSpot;
-            program.Cost = program.Spots * program.CostPerSpot;
+            program.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(program.Spots, program.EffectiveImpressionsPerSpot);
+            program.Cost = _ProposalProgramsCalculationEngine.CalculateSpotCost(program.Spots, program.CostPerSpot);
         }
 
         private void _CalculateCpmForMarkets(List<PricingGuideMarketDto> markets)
@@ -1633,20 +1614,13 @@ namespace Services.Broadcast.ApplicationServices
                 BudgetGoal = dto.BudgetGoal,
                 ImpressionGoal = dto.ImpressionGoal,
                 OpenMarketPricing = dto.OpenMarketPricing,
+                OpenMarketShare = dto.OpenMarketShare,
+                ProprietaryPricing = dto.ProprietaryPricing,
                 Markets = pricingGuideOpenMarketInventory.Markets,
                 AllMarkets = pricingGuideOpenMarketInventory.AllMarkets
             };
         }
 
-        private PricingGuideOpenMarketDistributionDto _ConvertPricingGuideOpenMarketDistributionDto(PricingGuideAllocationSaveRequestDto dto)
-        {
-            return new PricingGuideOpenMarketDistributionDto()
-            {
-                Markets = dto.Markets,
-                Filter = dto.Filter,
-                DisplayFilter = dto.DisplayFilter
-            };
-        }
         private void _CalculateProgramsCostsAndTotals(List<ProposalProgramDto> programs)
         {
             _ProposalProgramsCalculationEngine.CalculateBlendedCpmForProgramsRaw(programs);
@@ -1844,20 +1818,29 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public PricingGuideOpenMarketDistributionDto SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request)
+        public PricingGuideOpenMarketDistributionDto SavePricingGuideAllocations(PricingGuideOpenMarketDistributionDto dto)
         {
-            var dto = _ConvertPricingGuideOpenMarketDistributionDto(request);
             var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs).ToList();
             _ValidateAllocations(programs);
 
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
             ApplyFilterOnOpenMarketPricingGuideGrid(dto);
-
-            var detail = _ProposalRepository.GetProposalDetail(request.ProposalDetailId);
-            _SumTotalsForPricingGuide(dto, detail.PricingGuide.ProprietaryPricing);
+            dto.ProprietaryPricing = GetProprietaryPricings(dto);
+            _SumTotalsForPricingGuide(dto);
 
             return dto;
+        }
+
+        private List<ProprietaryPricingDto> GetProprietaryPricings(BasePricingGuideDto dto)
+        {
+            if (dto.ProprietaryPricing == null)
+            {
+                var detail = _ProposalRepository.GetProposalDetail(dto.ProposalDetailId);
+                return detail.PricingGuide.ProprietaryPricing;
+            }
+
+            return dto.ProprietaryPricing;
         }
 
         private void _ValidateAllocations(List<PricingGuideProgramDto> programs)
@@ -1898,7 +1881,8 @@ namespace Services.Broadcast.ApplicationServices
             _SetCanEditSpotsForPrograms(pricingGuideDto);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
             _SumTotalsForMarkets(pricingGuideDto.Markets);
-            _SumTotalsForPricingGuide(pricingGuideDto, proprietaryPricingValues);
+            pricingGuideDto.ProprietaryPricing = GetProprietaryPricings(pricingGuideDto);
+            _SumTotalsForPricingGuide(pricingGuideDto);
             return pricingGuideDto;
         }
 
@@ -1918,6 +1902,13 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
             _SumTotalsForMarkets(markets);
+        }
+
+        public PricingGuideOpenMarketDistributionDto UpdateProprietaryCpms(PricingGuideOpenMarketDistributionDto dto)
+        {
+            _SumTotalsForPricingGuide(dto);
+
+            return dto;
         }
     }
 }

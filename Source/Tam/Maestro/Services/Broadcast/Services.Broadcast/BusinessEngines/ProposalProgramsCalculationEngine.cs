@@ -351,7 +351,6 @@ namespace Services.Broadcast.BusinessEngines
 
         public double  CalculateSpotImpressions(int spots,double unitImpressions)
         {
-
             double totalImpressions = unitImpressions * spots;
 
             return totalImpressions;

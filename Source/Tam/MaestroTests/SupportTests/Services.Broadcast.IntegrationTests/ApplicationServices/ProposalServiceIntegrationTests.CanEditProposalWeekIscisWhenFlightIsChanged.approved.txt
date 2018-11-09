@@ -65,7 +65,7 @@
           "QuarterText": "2016 Q2",
           "Weeks": [
             {
-              "Cost": 2000.00,
+              "Cost": 2000.0000,
               "EndDate": "2016-06-05T00:00:00",
               "Impressions": 100000.0,
               "Iscis": [
@@ -177,7 +177,7 @@
       ],
       "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 2000.00,
+      "TotalCost": 2000.0000,
       "TotalImpressions": 100000.0,
       "TotalUnits": 10
     },
@@ -242,7 +242,7 @@
           "QuarterText": "2016 Q2",
           "Weeks": [
             {
-              "Cost": 20.00,
+              "Cost": 20.0000,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
               "Iscis": [
@@ -269,7 +269,7 @@
               "Week": "6/7/2016"
             },
             {
-              "Cost": 20.00,
+              "Cost": 20.0000,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
               "Iscis": [
@@ -296,7 +296,7 @@
               "Week": "6/7/2016"
             },
             {
-              "Cost": 20.00,
+              "Cost": 20.0000,
               "EndDate": "2016-06-14T00:00:00",
               "Impressions": 1000.0,
               "Iscis": [
@@ -338,7 +338,7 @@
       ],
       "SingleProjectionBookId": 410,
       "SpotLengthId": 1,
-      "TotalCost": 60.00,
+      "TotalCost": 60.0000,
       "TotalImpressions": 3000.0,
       "TotalUnits": 30
     },
@@ -431,7 +431,7 @@
     }
   ],
   "Status": 3,
-  "TargetBudget": 2060.00,
+  "TargetBudget": 2060.0000,
   "TargetCPM": 20.00,
   "TargetImpressions": 103000.0,
   "TargetUnits": 40,
