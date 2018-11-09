@@ -6,28 +6,11 @@ import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { toggleModal, createAlert } from "Ducks/app";
 import { getPost, getPostClientScrubbing } from "Ducks/post";
-import { Grid, Actions } from "react-redux-grid";
-import CustomPager from "Components/shared/CustomPager";
-import ContextMenuRow from "Components/shared/ContextMenuRow";
-import Sorter from "Utils/react-redux-grid-sorter";
+import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
 
-const { MenuActions, SelectionActions, GridActions } = Actions;
-const { showMenu, hideMenu } = MenuActions;
-const { selectRow, deselectAll } = SelectionActions;
-const { doLocalSort } = GridActions;
-
-const stateKey = "gridPostMain";
-
-const mapStateToProps = ({
-  post: { postGridData },
-  grid,
-  dataSource,
-  menu
-}) => ({
+const mapStateToProps = ({ post: { postGridData }, menu }) => ({
   postGridData,
-  grid,
-  dataSource,
   menu
 });
 
@@ -37,11 +20,6 @@ const mapDispatchToProps = dispatch =>
       getPost,
       createAlert,
       toggleModal,
-      showMenu,
-      hideMenu,
-      selectRow,
-      deselectAll,
-      doLocalSort,
       getPostClientScrubbing
     },
     dispatch
@@ -52,54 +30,15 @@ export class DataGridContainer extends Component {
     super(props, context);
     this.context = context;
     this.showscrubbingModal = this.showscrubbingModal.bind(this);
-    this.deselectAll = this.deselectAll.bind(this);
-    this.selectRow = this.selectRow.bind(this);
   }
 
   componentWillMount() {
     this.props.getPost();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.postGridData !== this.props.postGridData) {
-      // evaluate column sort direction
-      setTimeout(() => {
-        const cols = this.props.grid.get("gridPostMain").get("columns");
-        let sortCol = cols.find(x => x.sortDirection);
-        if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
-        if (sortCol) {
-          const datasource = this.props.dataSource.get("gridPostMain");
-          const sorted = Sorter.sortBy(
-            sortCol.dataIndex,
-            sortCol.sortDirection || sortCol.defaultSortDirection,
-            datasource
-          );
-
-          this.props.doLocalSort({
-            data: sorted,
-            stateKey: "gridPostMain"
-          });
-        }
-      }, 0);
-    }
-  }
-
   /* ////////////////////////////////// */
   /* // GRID ACTION METHOD BINDINGS
   /* ////////////////////////////////// */
-  hideContextMenu(ref) {
-    this.props.hideMenu(ref);
-  }
-  showContextMenu(ref) {
-    this.props.showMenu(ref);
-  }
-  selectRow(rowId) {
-    this.deselectAll();
-    this.props.selectRow({ rowId, stateKey });
-  }
-  deselectAll() {
-    this.props.deselectAll({ stateKey });
-  }
   showscrubbingModal(Id) {
     // change to params
     this.props.getPostClientScrubbing({
@@ -177,81 +116,70 @@ export class DataGridContainer extends Component {
 
     const columns = [
       {
-        name: "Contract",
-        dataIndex: "ContractName",
-        width: "15%"
+        Header: "Contract",
+        accessor: "ContractName",
+        minWidth: 15
       },
       {
-        name: "Contract Id",
-        dataIndex: "ContractId",
-        width: "10%"
+        Header: "Contract Id",
+        accessor: "ContractId",
+        minWidth: 10
       },
       {
-        name: "Contract Id",
-        dataIndex: "searchContractId",
-        hidden: true,
-        hideable: false,
-        width: "5%"
+        Header: "Contract Id",
+        accessor: "searchContractId",
+        show: false,
+        minWidth: 5
       },
       {
-        name: "Advertiser",
-        dataIndex: "Advertiser",
-        width: "15%"
+        Header: "Advertiser",
+        accessor: "Advertiser",
+        minWidth: 15
       },
       {
-        name: "Affidavit Upload Date",
-        dataIndex: "searchUploadDate",
-        defaultSortDirection: "ASC",
-        width: "15%"
+        Header: "Affidavit Upload Date",
+        accessor: "searchUploadDate",
+        minWidth: 15
       },
       {
-        name: "Spots in Spec",
-        dataIndex: "SpotsInSpec",
-        width: "15%"
+        Header: "Spots in Spec",
+        accessor: "SpotsInSpec",
+        minWidth: 15
       },
       {
-        name: "Spots in Spec",
-        dataIndex: "searchSpotsInSpec",
-        hidden: true,
-        hideable: false,
-        width: "5%"
+        Header: "Spots in Spec",
+        accessor: "searchSpotsInSpec",
+        show: false,
+        minWidth: 5
       },
       {
-        name: "Spots Out of Spec",
-        dataIndex: "SpotsOutOfSpec",
-        width: "15%"
+        Header: "Spots Out of Spec",
+        accessor: "SpotsOutOfSpec",
+        minWidth: 15
       },
       {
-        name: "Spots Out of Spec",
-        dataIndex: "searchSpotsOutOfSpec",
-        hidden: true,
-        hideable: false,
-        width: "5%"
+        Header: "Spots Out of Spec",
+        accessor: "searchSpotsOutOfSpec",
+        show: false,
+        minWidth: 5
       },
       {
-        name: "Primary Demo Booked",
-        dataIndex: "PrimaryAudienceBookedImpressions",
-        width: "15%",
-        renderer: ({ row }) =>
-          row.PrimaryAudienceBookedImpressions
-            ? numeral(row.PrimaryAudienceBookedImpressions / 1000).format(
-                "0,0.[000]"
-              )
-            : "-"
+        Header: "Primary Demo Booked",
+        accessor: "PrimaryAudienceBookedImpressions",
+        minWidth: 15,
+        Cell: row =>
+          row.value ? numeral(row.value / 1000).format("0,0.[000]") : "-"
       },
       {
-        // name: 'Primary Demo Imp',
-        name: "Primary Demo Delivered",
-        dataIndex: "PrimaryAudienceDeliveredImpressions",
-        width: "15%",
-        renderer: ({ row }) => {
+        Header: "Primary Demo Delivered",
+        accessor: "PrimaryAudienceDeliveredImpressions",
+        minWidth: 15,
+        Cell: row => {
           // handle equivalized indicator as badge if true
-          const val = row.PrimaryAudienceDeliveredImpressions
-            ? numeral(row.PrimaryAudienceDeliveredImpressions / 1000).format(
-                "0,0.[000]"
-              )
+          const val = row.value
+            ? numeral(row.value / 1000).format("0,0.[000]")
             : "-";
-          return row.Equivalized ? (
+          return row.original.Equivalized ? (
             <div>
               {val}
               <Badge style={{ fontSize: "9px", marginTop: "4px" }} pullRight>
@@ -264,32 +192,24 @@ export class DataGridContainer extends Component {
         }
       },
       {
-        name: "Primary Demo % Delivery",
-        dataIndex: "PrimaryAudienceDelivery",
-        width: "15%",
-        // renderer: ({ row }) => (
-        //   // row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0%') : '-'
-        //   row.PrimaryAudienceDelivery ? numeral(row.PrimaryAudienceDelivery).format('0,0.[00]%') : '-'
-        // ),
-        renderer: ({ row }) => {
-          const val = row.PrimaryAudienceDelivery
-            ? numeral(row.PrimaryAudienceDelivery).format("0,0.[00]")
-            : false;
+        Header: "Primary Demo % Delivery",
+        accessor: "PrimaryAudienceDelivery",
+        minWidth: 15,
+        Cell: row => {
+          const val = row.value ? numeral(row.value).format("0,0.[00]") : false;
           return val ? `${val}%` : "-";
         }
       },
       {
-        name: "Household Delivered",
-        dataIndex: "HouseholdDeliveredImpressions",
-        width: "15%",
-        renderer: ({ row }) => {
+        Header: "Household Delivered",
+        accessor: "HouseholdDeliveredImpressions",
+        minWidth: 15,
+        Cell: row => {
           // handle equivalized indicator as badge if true
-          const val = row.HouseholdDeliveredImpressions
-            ? numeral(row.HouseholdDeliveredImpressions / 1000).format(
-                "0,0.[000]"
-              )
+          const val = row.value
+            ? numeral(row.value / 1000).format("0,0.[000]")
             : "-";
-          return row.Equivalized ? (
+          return row.original.Equivalized ? (
             <div>
               {val}
               <Badge style={{ fontSize: "9px", marginTop: "4px" }} pullRight>
@@ -303,96 +223,36 @@ export class DataGridContainer extends Component {
       }
     ];
 
-    const plugins = {
-      COLUMN_MANAGER: {
-        resizable: true,
-        moveable: false,
-        sortable: {
-          enabled: true,
-          method: "local"
-        }
-      },
-      EDITOR: {
-        type: "inline",
-        enabled: false
-      },
-      PAGER: {
-        enabled: false,
-        pagingType: "local",
-        pagerComponent: (
-          <CustomPager stateKey={stateKey} idProperty="ContractId" />
-        )
-      },
-      // LOADER: {
-      //   enabled: false,
-      // },
-      SELECTION_MODEL: {
-        mode: "single",
-        enabled: true,
-        allowDeselect: true,
-        activeCls: "active",
-        selectionEvent: "singleclick"
-      },
-      ROW: {
-        enabled: true,
-        renderer: ({ cells, ...rowData }) => (
-          <ContextMenuRow
-            {...rowData}
-            menuItems={menuItems}
-            stateKey={stateKey}
-            beforeOpenMenu={this.selectRow}
-          >
-            {cells}
-          </ContextMenuRow>
-        )
-      }
-    };
-
-    const events = {
-      // HANDLE_BEFORE_SORT: () => {
-      //   this.deselectAll();
-      // },
-      HANDLE_ROW_DOUBLE_CLICK: row => {
-        const Id = row.row.ContractId;
-        this.showscrubbingModal(Id);
-      }
-    };
-
-    const grid = {
-      columns,
-      plugins,
-      events,
-      stateKey
-    };
     return (
-      <Grid
-        {...grid}
+      <Table
         data={this.props.postGridData}
-        store={this.context.store}
+        style={{ fontSize: "12px", marginBottom: "100px", maxHeight: "500px" }}
+        columns={columns}
+        getTrGroupProps={(state, rowInfo) => ({
+          onDoubleClick: () => {
+            const Id = rowInfo.original.ContractId;
+            this.showscrubbingModal(Id);
+          }
+        })}
+        contextMenu={{
+          isRender: true,
+          menuItems
+        }}
+        selection="single"
       />
     );
   }
 }
 
 DataGridContainer.propTypes = {
-  grid: PropTypes.object.isRequired,
-  dataSource: PropTypes.object.isRequired,
-  menu: PropTypes.object.isRequired,
   postGridData: PropTypes.array.isRequired,
 
   getPost: PropTypes.func.isRequired,
   getPostClientScrubbing: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  createAlert: PropTypes.func.isRequired,
-
-  showMenu: PropTypes.func.isRequired,
-  hideMenu: PropTypes.func.isRequired,
-  selectRow: PropTypes.func.isRequired,
-  deselectAll: PropTypes.func.isRequired,
-  doLocalSort: PropTypes.func.isRequired
+  createAlert: PropTypes.func.isRequired
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DataGridContainer);
+)(withGrid(DataGridContainer));
