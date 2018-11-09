@@ -8,15 +8,8 @@ import { getTracker, getTrackerClientScrubbing } from "Ducks/tracker";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
 
-const mapStateToProps = ({
-  tracker: { trackerGridData },
-  grid,
-  dataSource,
-  menu
-}) => ({
+const mapStateToProps = ({ tracker: { trackerGridData }, menu }) => ({
   trackerGridData,
-  grid,
-  dataSource,
   menu
 });
 
@@ -41,28 +34,6 @@ export class DataGridContainer extends Component {
     this.props.getTracker();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.trackerGridData !== this.props.trackerGridData) {
-      // evaluate column sort direction
-      // setTimeout(() => {
-      //   const cols = this.props.grid.get("gridTrackerMain").get("columns");
-      //   let sortCol = cols.find(x => x.sortDirection);
-      //   if (!sortCol) sortCol = cols.find(x => x.defaultSortDirection);
-      //   if (sortCol) {
-      //     const datasource = this.props.dataSource.get("gridTrackerMain");
-      //     const sorted = Sorter.sortBy(
-      //       sortCol.dataIndex,
-      //       sortCol.sortDirection || sortCol.defaultSortDirection,
-      //       datasource
-      //     );
-      //     this.props.doLocalSort({
-      //       data: sorted,
-      //       stateKey: "gridTrackerMain"
-      //     });
-      //   }
-      // }, 0);
-    }
-  }
   showscrubbingModal(Id) {
     // change to params
     this.props.getTrackerClientScrubbing({
@@ -91,75 +62,68 @@ export class DataGridContainer extends Component {
       {
         Header: "Contract",
         accessor: "ContractName",
-        minWidth: "15%"
+        minWidth: 15
       },
       {
         Header: "Contract Id",
         accessor: "ContractId",
-        minWidth: "10%"
+        minWidth: 10
       },
       {
         Header: "Contract Id",
         accessor: "searchContractId",
-        width: "10%",
+        width: 10,
         show: false
-        // hidden: true,
-        // hideable: true
       },
       {
         Header: "Advertiser",
         accessor: "Advertiser",
-        minWidth: "15%"
+        minWidth: 15
       },
       {
         Header: "Post Log Upload Date",
         accessor: "searchUploadDate",
-        minWidth: "15%"
+        minWidth: 15
       },
       {
         Header: "Spots in Spec",
         accessor: "SpotsInSpec",
-        minWidth: "15%"
+        minWidth: 15
       },
       {
         Header: "Spots in Spec",
         accessor: "searchSpotsInSpec",
-        width: "15%",
+        width: 15,
         show: false
-        // hidden: true,
-        // hideable: true
       },
       {
         Header: "Spots Out of Spec",
         accessor: "SpotsOutOfSpec",
-        minWidth: "15%"
+        minWidth: 15
       },
       {
         Header: "Spots Out of Spec",
         accessor: "searchSpotsOutOfSpec",
-        width: "15%",
+        width: 15,
         show: false
-        // hidden: true,
-        // hideable: true
       },
       {
         Header: "Primary Demo Booked",
         accessor: "PrimaryAudienceBookedImpressions",
-        minWidth: "15%",
+        minWidth: 15,
         Cell: row =>
           row.value ? numeral(row.value / 1000).format("0,0.[000]") : "-"
       },
       {
         Header: "Primary Demo Delivered",
         accessor: "PrimaryAudienceDeliveredImpressions",
-        minWidth: "15%",
+        minWidth: 15,
         Cell: row => {
           console.log(row);
           // handle equivalized indicator as badge if true
           const val = row.value
             ? numeral(row.value / 1000).format("0,0.[000]")
             : "-";
-          // return row.Equivalized ? (
           return row.original.Equivalized ? (
             <div>
               {val}
@@ -175,7 +139,7 @@ export class DataGridContainer extends Component {
       {
         Header: "Primary Demo % Delivery",
         accessor: "PrimaryAudienceDelivery",
-        minWidth: "15%",
+        minWidth: 15,
         Cell: row => {
           const val = row.value ? numeral(row.value).format("0,0.[00]") : false;
           return val ? `${val}%` : "-";
@@ -184,13 +148,12 @@ export class DataGridContainer extends Component {
       {
         Header: "Household Delivered",
         accessor: "HouseholdDeliveredImpressions",
-        minWidth: "15%",
+        minWidth: 15,
         Cell: row => {
           // handle equivalized indicator as badge if true
           const val = row.value
             ? numeral(row.value / 1000).format("0,0.[000]")
             : "-";
-          // return row.Equivalized ? (
           return row.original.Equivalized ? (
             <div>
               {val}
@@ -221,34 +184,17 @@ export class DataGridContainer extends Component {
           isRender: true,
           menuItems
         }}
-        // defaultPageSize={10}
         selection="single"
-        // sortable={false}
-        // defaultSorted={[
-        //   {
-        //     id: "searchUploadDate",
-        //     asc: true
-        //   }
-        // ]}
-        // loading={openMarketLoading}
-        // getTrProps={(state, rowInfo) => ({
-        //   style: { backgroundColor: rowColors[rowInfo.original.rowType] }
-        // })}
       />
     );
   }
 }
 
 DataGridContainer.propTypes = {
-  // grid: PropTypes.object.isRequired,
-  // dataSource: PropTypes.object.isRequired,
-  // menu: PropTypes.object.isRequired,
   trackerGridData: PropTypes.array.isRequired,
 
   getTracker: PropTypes.func.isRequired,
   getTrackerClientScrubbing: PropTypes.func.isRequired
-  // toggleModal: PropTypes.func.isRequired,
-  // createAlert: PropTypes.func.isRequired
 };
 
 export default connect(
