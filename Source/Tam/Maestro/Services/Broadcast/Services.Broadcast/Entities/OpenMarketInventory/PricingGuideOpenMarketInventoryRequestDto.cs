@@ -4,7 +4,10 @@
     {
         public int ProposalId { get; set; }
         public int ProposalDetailId { get; set; }
-        public OpenMarketPricing OpenMarketPricing { get; set; } = new OpenMarketPricing();
+        public OpenMarketPricingGuide OpenMarketPricing { get; set; } = new OpenMarketPricingGuide();
         public bool? HasPricingGuideChanges { get; set; }
+        public decimal? BudgetGoal { get; set; }
+        public double? ImpressionGoal { get; set; }
+        public decimal OpenMarketShare { get; set; }
     }
 }

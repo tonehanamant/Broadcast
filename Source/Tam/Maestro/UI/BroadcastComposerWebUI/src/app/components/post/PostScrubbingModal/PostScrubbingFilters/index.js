@@ -1,25 +1,34 @@
-
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import CSSModules from 'react-css-modules';
-import { Grid } from 'react-redux-grid';
-import { getScrubbingDataFiltered, clearScrubbingFiltersList } from 'Ducks/post';
-import styles from './index.scss';
-import FilterPopoverWrapper from './Filters/FilterPopoverWrapper';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Button } from "react-bootstrap";
+import CSSModules from "react-css-modules";
+import { Grid } from "react-redux-grid";
+import {
+  getScrubbingDataFiltered,
+  clearScrubbingFiltersList,
+  clearFilteredScrubbingData,
+  getClearScrubbingDataFiltered
+} from "Ducks/post";
+import styles from "./index.scss";
+import FilterPopoverWrapper from "./Filters/FilterPopoverWrapper";
 
 const mapStateToProps = (grid, dataSource) => ({
   grid,
-  dataSource,
+  dataSource
 });
 
-const mapDispatchToProps = dispatch => (bindActionCreators(
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
     {
       getScrubbingDataFiltered,
       clearScrubbingFiltersList,
-    }, dispatch)
-);
+      clearFilteredScrubbingData,
+      getClearScrubbingDataFiltered
+    },
+    dispatch
+  );
 
 export class PostScrubbingFilters extends Component {
   constructor(props, context) {
@@ -27,20 +36,12 @@ export class PostScrubbingFilters extends Component {
     this.context = context;
 
     this.applyFilter = this.applyFilter.bind(this);
+    this.onClear = this.onClear.bind(this);
     // remove as should not be needed - use saga/props
     /* this.state = {
       filterOptions: {},
     }; */
   }
-
-  /* componentWillReceiveProps(nextProps) {
-    console.log('filtergrid receive props', nextProps, this);
-  } */
-
-  /* shouldComponentUpdate(nextProps, nextState) {
-    console.log('filtergrid should component update', nextProps, nextState);
-    return true;
-  } */
 
   applyFilter(filter) {
     // ISSUE: Data changes but Object so does not update
@@ -54,40 +55,53 @@ export class PostScrubbingFilters extends Component {
     this.props.getScrubbingDataFiltered(filter);
   }
 
+  onClear() {
+    this.props.getClearScrubbingDataFiltered();
+  }
+
   render() {
-    const stateKey = 'PostScrubbingFiltersGrid';
-    const inactiveFilterStyle = { backgroundColor: '#bfbfbf', minHeight: '20px', maxHeight: '20px', width: '100%', borderRadius: '2px' };
+    const stateKey = "PostScrubbingFiltersGrid";
+    const inactiveFilterStyle = {
+      backgroundColor: "#bfbfbf",
+      minHeight: "20px",
+      maxHeight: "20px",
+      width: "100%",
+      borderRadius: "2px"
+    };
     const columns = [
       {
-        name: 'Status',
-        dataIndex: 'Status',
+        name: "Status",
+        dataIndex: "Status",
         // width: '3%',
         // test specific width
         width: 59,
+        // renderer: () => <div style={inactiveFilterStyle} />
         renderer: () => (
-          <div style={inactiveFilterStyle} />
-        ),
+          <Button bsSize="xsmall" onClick={this.onClear}>
+            Clear
+          </Button>
+        )
       },
       {
-        name: 'Sequence',
-        dataIndex: 'Sequence',
+        name: "Sequence",
+        dataIndex: "Sequence",
         width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch={false}
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch={false}
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Market',
-        dataIndex: 'Market',
+        name: "Market",
+        dataIndex: "Market",
         width: 150,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
@@ -100,131 +114,131 @@ export class PostScrubbingFilters extends Component {
             filterActive={value.active}
             applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Station',
-        dataIndex: 'Station',
+        name: "Station",
+        dataIndex: "Station",
         width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Affiliate',
-        dataIndex: 'Affiliate',
+        name: "Affiliate",
+        dataIndex: "Affiliate",
         width: 75,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Week Start',
-        dataIndex: 'WeekStart',
+        name: "Week Start",
+        dataIndex: "WeekStart",
         width: 100,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Day',
-        dataIndex: 'DayOfWeek',
+        name: "Day",
+        dataIndex: "DayOfWeek",
         width: 80,
         // renderer: ({ value, row }) => {
         renderer: ({ value }) => (
-            <FilterPopoverWrapper
-              filterDisplay={value.filterDisplay}
-              filterKey={value.filterKey}
-              hasTextSearch={false}
-              hasMatchSpec={value.hasMatchSpec}
-              matchOptions={value.matchOptions}
-              filterOptions={value.filterOptions}
-              filterActive={value.active}
-              applyFilter={this.applyFilter}
-            />
-          ),
+          <FilterPopoverWrapper
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch={false}
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
+          />
+        )
       },
       {
-        name: 'Date',
+        name: "Date",
         // we don't want to mix TimeAired and MatchTime
         // dataIndex: 'TimeAired',
-        dataIndex: 'DateAired',
+        dataIndex: "DateAired",
         width: 100,
         renderer: ({ value }) => (
           // <div style={inactiveFilterStyle} />
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          filterType="dateInput"
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            filterType="dateInput"
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Time Aired',
-        dataIndex: 'TimeAired',
+        name: "Time Aired",
+        dataIndex: "TimeAired",
         width: 100,
         renderer: ({ value }) => (
           // <div style={inactiveFilterStyle} />
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          filterType="timeInput"
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            filterType="timeInput"
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Program',
-        dataIndex: 'ProgramName',
+        name: "Program",
+        dataIndex: "ProgramName",
         width: 150,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Genre',
-        dataIndex: 'GenreName',
+        name: "Genre",
+        dataIndex: "GenreName",
         width: 100,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
@@ -237,11 +251,11 @@ export class PostScrubbingFilters extends Component {
             filterActive={value.active}
             applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Show Type',
-        dataIndex: 'ShowTypeName',
+        name: "Show Type",
+        dataIndex: "ShowTypeName",
         width: 100,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
@@ -254,90 +268,96 @@ export class PostScrubbingFilters extends Component {
             filterActive={value.active}
             applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Spot Length',
-        dataIndex: 'SpotLength',
+        name: "Spot Length",
+        dataIndex: "SpotLength",
         width: 95,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch={false}
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch={false}
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'House ISCI',
-        dataIndex: 'ISCI',
+        name: "House ISCI",
+        dataIndex: "ISCI",
         width: 150,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Client ISCI',
-        dataIndex: 'ClientISCI',
+        name: "Client ISCI",
+        dataIndex: "ClientISCI",
         width: 150,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
-          filterDisplay={value.filterDisplay}
-          filterKey={value.filterKey}
-          hasTextSearch
-          hasMatchSpec={value.hasMatchSpec}
-          matchOptions={value.matchOptions}
-          filterOptions={value.filterOptions}
-          filterActive={value.active}
-          applyFilter={this.applyFilter}
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
           />
-        ),
+        )
       },
       {
-        name: 'Comments',
-        dataIndex: 'Comments',
+        name: "Comments",
+        dataIndex: "Comments",
         // width: 150,
-        width: '100%',
-        renderer: () => (
-          <div style={inactiveFilterStyle} />
-        ),
-      },
-  ];
+        width: "100%",
+        renderer: () => <div style={inactiveFilterStyle} />
+      }
+    ];
 
     const plugins = {
       COLUMN_MANAGER: {
         resizable: false,
         moveable: false,
         sortable: {
-            enabled: false,
-            method: 'local',
-        },
-      },
+          enabled: false,
+          method: "local"
+        }
+      }
     };
 
     const grid = {
       columns,
       plugins,
-      stateKey,
+      stateKey
     };
 
     return (
-      <div style={{ maxHeight: '28px', overflow: 'hidden', marginBottom: '2px' }}>
-        <Grid {...grid} classNames={['filter-grid']} data={this.props.activeFilters} store={this.context.store} height={false} />
+      <div
+        style={{ maxHeight: "28px", overflow: "hidden", marginBottom: "2px" }}
+      >
+        <Grid
+          {...grid}
+          classNames={["filter-grid"]}
+          data={this.props.activeFilters}
+          store={this.context.store}
+          height={false}
+        />
       </div>
     );
   }
@@ -350,6 +370,11 @@ PostScrubbingFilters.propTypes = {
   // doLocalSort: PropTypes.func.isRequired,
   getScrubbingDataFiltered: PropTypes.func.isRequired,
   clearScrubbingFiltersList: PropTypes.func.isRequired,
+  clearFilteredScrubbingData: PropTypes.func.isRequired,
+  getClearScrubbingDataFiltered: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(PostScrubbingFilters, styles));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CSSModules(PostScrubbingFilters, styles));

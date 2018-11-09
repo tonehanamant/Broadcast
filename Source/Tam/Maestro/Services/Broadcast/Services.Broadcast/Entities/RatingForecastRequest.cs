@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -7,10 +8,10 @@ namespace Services.Broadcast.Entities
         public readonly short HutMediaMonthId;
         public readonly short ShareMediaMonthId;
         public readonly int MaestroAudienceId;
-        public readonly PlaybackType MinPlaybackType;
+        public readonly PlaybackTypeEnum MinPlaybackType;
         public readonly List<Program> Programs;
 
-        public RatingForecastRequest(short hutMonth, short shareMonth, int maestroAudienceId, PlaybackType minPlaybackType)
+        public RatingForecastRequest(short hutMonth, short shareMonth, int maestroAudienceId, PlaybackTypeEnum minPlaybackType)
         {
             HutMediaMonthId = hutMonth;
             ShareMediaMonthId = shareMonth;
@@ -19,7 +20,7 @@ namespace Services.Broadcast.Entities
             Programs = new List<Program>();
         }
 
-        public RatingForecastRequest(short hutMonth, short shareMonth, int maestroAudienceId, PlaybackType minPlaybackType, List<Program> programs) : this(hutMonth, shareMonth, maestroAudienceId, minPlaybackType)
+        public RatingForecastRequest(short hutMonth, short shareMonth, int maestroAudienceId, PlaybackTypeEnum minPlaybackType, List<Program> programs) : this(hutMonth, shareMonth, maestroAudienceId, minPlaybackType)
         {
             Programs = programs;
         }

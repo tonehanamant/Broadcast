@@ -1,4 +1,4 @@
-import accept from 'attr-accept';
+import accept from "attr-accept";
 
 export function getDataTransferItems({ dataTransfer, target }) {
   let dataTransferItemsList = [];
@@ -15,14 +15,16 @@ export function getDataTransferItems({ dataTransfer, target }) {
     dataTransferItemsList = target.files;
   }
   const fileArray = Array.prototype.slice.call(dataTransferItemsList);
-  return fileArray.filter(it => (it.kind === 'file' || it instanceof File || it instanceof Blob));
+  return fileArray.filter(
+    it => it.kind === "file" || it instanceof File || it instanceof Blob
+  );
 }
 
 export function validateFilesByExtension(accepted, rejected, extensions) {
   const acceptedFiles = accepted;
   const rejectedFiles = rejected;
-  acceptedFiles.filter((file) => {
-    const isAccept = accept({ name: file.name, type: '' }, extensions);
+  acceptedFiles.filter(file => {
+    const isAccept = accept({ name: file.name, type: "" }, extensions);
     if (isAccept) {
       return true;
     }

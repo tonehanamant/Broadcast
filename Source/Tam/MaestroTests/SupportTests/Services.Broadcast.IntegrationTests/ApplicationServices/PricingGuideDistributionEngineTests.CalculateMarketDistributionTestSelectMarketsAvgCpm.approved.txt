@@ -1,0 +1,32 @@
+﻿[
+  {
+    "AvgCpm": 6.0,
+    "DisplayImpressions": 0.0,
+    "DisplayStationImpressions": 0.0,
+    "MarketCoverage": 50.0,
+    "MarketId": 1,
+    "MarketName": null,
+    "MarketRank": 0,
+    "MaxCpm": 0.0,
+    "MinCpm": 0.0,
+    "Stations": [],
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0
+  },
+  {
+    "AvgCpm": 1.0,
+    "DisplayImpressions": 0.0,
+    "DisplayStationImpressions": 0.0,
+    "MarketCoverage": 10.0,
+    "MarketId": 4,
+    "MarketName": null,
+    "MarketRank": 0,
+    "MaxCpm": 0.0,
+    "MinCpm": 0.0,
+    "Stations": [],
+    "TotalCost": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalSpots": 0
+  }
+]

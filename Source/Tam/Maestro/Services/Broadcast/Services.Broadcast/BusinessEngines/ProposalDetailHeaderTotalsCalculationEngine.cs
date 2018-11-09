@@ -1,5 +1,6 @@
 ﻿using System;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
 
 namespace Services.Broadcast.BusinessEngines

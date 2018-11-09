@@ -2,6 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Aggregates;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;

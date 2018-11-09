@@ -4,15 +4,14 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Converters;
 using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {

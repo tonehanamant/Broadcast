@@ -1,5 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using System;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;

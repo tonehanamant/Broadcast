@@ -17,10 +17,10 @@ namespace Services.Broadcast.BusinessEngines
 
         public string StripStationSuffix(string stationLetters)
         {
-            if (stationLetters.Contains("-"))
-            {
-                return stationLetters.Substring(0, stationLetters.Length - stationLetters.LastIndexOf("-") + 1).Trim();
-            }
+
+            stationLetters = stationLetters.Split('-')[0].Trim();
+            stationLetters = stationLetters.Split('+')[0].Trim();
+
             return stationLetters;
         }
 

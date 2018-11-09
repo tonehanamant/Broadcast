@@ -2,11 +2,11 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
-using Services.Broadcast.ReportGenerators;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -46,21 +46,7 @@ namespace Services.Broadcast.ApplicationServices
         bool TrackSchedule(int scheduleId);
         bool DeleteBvsFile(int bvsFileId);
         List<DisplaySchedule> GetDisplaySchedulesWithAdjustedImpressions(DateTime? startDate, DateTime? endDate);
-        List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);
-
-        /// <summary>
-        /// Generates spot tracker report for requested proposal 
-        /// </summary>
-        /// <param name="proposalId">Proposal Identifier</param>
-        /// <returns>ReportOutput contains spot tracker report file name and the report which is represented as a stream of zip archive</returns>
-        ReportOutput GenerateSpotTrackerReport(int proposalId);
-
-        /// <summary>
-        /// Returns spot tracker report data for requested proposal 
-        /// </summary>
-        /// <param name="proposalId">Proposal Identifier</param>
-        /// <returns>Spot tracker report data model</returns>
-        SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId);
+        List<BvsTrackingDetail> GetBvsDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);       
     }
 
     public class TrackerService : ITrackerService
@@ -84,12 +70,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IFileService _FileService;
         private readonly IProposalRepository _ProposalRepository;
-        private readonly IProposalBuyRepository _ProposalBuyRepository;
-        private readonly ISpotTrackerRepository _SpotTrackerRepository;
-        private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
-
-        private readonly string _CsvFileExtension = ".csv";
-
+        
         public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBvsPostingEngine bvsPostingEngine
             , ITrackingEngine trackingEngine
@@ -121,10 +102,7 @@ namespace Services.Broadcast.ApplicationServices
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _NsiPostingBookService = nsiPostingBookService;
             _FileService = fileService;
-            _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-            _ProposalBuyRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
-            _SpotTrackerRepository = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotTrackerRepository>();
-            _MediaMonthAndWeekAggregateRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IMediaMonthAndWeekAggregateRepository>();
+            _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();            
         }
 
         public LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate)
@@ -858,151 +836,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             _BroadcastDataRepositoryFactory.GetDataRepository<IBvsRepository>().DeleteById(bvsFileId);
             return true;
-        }
-
-        public ReportOutput GenerateSpotTrackerReport(int proposalId)
-        {
-            var spotTrackerReportData = GetSpotTrackerReportDataForProposal(proposalId);
-            var reportGenerator = new SpotTrackerReportGenerator();
-            return reportGenerator.Generate(spotTrackerReportData);
-    }
-
-        public SpotTrackerReport GetSpotTrackerReportDataForProposal(int proposalId)
-        {
-            var proposal = _ProposalRepository.GetProposalById(proposalId);
-
-            var report = new SpotTrackerReport
-            {
-                Id = proposal.Id ?? default(int),
-                Name = proposal.ProposalName,
-                Details = proposal.Details.Select(d => new SpotTrackerReport.Detail
-                {
-                    Id = d.Id ?? default(int)
-                }).ToList()
-            };
-
-            _SetReportDetailBuys(report);
-
-            // We generate a report file only for details with proposal buys
-            report.Details = report.Details.Where(x => x.ProposalBuyFile != null).ToList();
-
-            _SetSpotsData(report);
-
-            return report;
-}
-
-        private void _SetReportDetailBuys(SpotTrackerReport report)
-        {
-            var detailIds = report.Details.Select(x => x.Id);
-            var proposalBuys = _ProposalBuyRepository.GetProposalBuyFilesForProposalDetails(detailIds);
-
-            foreach (var reportDetail in report.Details)
-            {
-                reportDetail.ProposalBuyFile = proposalBuys.SingleOrDefault(x => x.ProposalVersionDetailId == reportDetail.Id);
-            }
-        }
-
-        private void _SetSpotsData(SpotTrackerReport report)
-        {
-            var proposalBuys = report.Details.Select(x => x.ProposalBuyFile);
-            var estimateIds = proposalBuys.Select(x => x.EstimateId);
-            var spotTrackerFileDetails = _SpotTrackerRepository.GetSpotTrackerFileDetailsByEstimateIds(estimateIds);
-
-            foreach (var reportDetail in report.Details)
-            {
-                reportDetail.Weeks = _GetWeeklySpotsDataForReportDetail(reportDetail.ProposalBuyFile, spotTrackerFileDetails);
-            }
-        }
-
-        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForReportDetail(ProposalBuyFile buy, IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
-        {
-            var spotTrackerFileDetailsByEstimateId = spotTrackerFileDetails.Where(x => x.EstimateId == buy.EstimateId);
-            var deliveredSpotsData = _GetDeliveredSpotsData(spotTrackerFileDetailsByEstimateId);
-
-            return buy.Details
-                .SelectMany(x => x.Weeks, (detail, week) => new
-                {
-                    detail.Station,
-                    week.MediaWeek,
-                    week.Spots
-                })
-                .GroupBy(x => new { x.MediaWeek.Id, x.MediaWeek.WeekStartDate })
-                .Select(groupingByWeek => new SpotTrackerReport.Detail.Week
-                {
-                    MediaWeekId = groupingByWeek.Key.Id,
-                    StartDate = groupingByWeek.Key.WeekStartDate,
-                    StationSpotsValues = groupingByWeek
-                        .GroupBy(x => new StationGrouping
-                        {
-                            OriginMarket = x.Station.OriginMarket,
-                            Affiliation = x.Station.Affiliation,
-                            LegacyCallLetters = x.Station.LegacyCallLetters
-                        })
-                        .Select(groupingByStation => new SpotTrackerReport.Detail.Week.StationSpotsValue
-                        {
-                            Market = groupingByStation.Key.OriginMarket,
-                            Affiliate = groupingByStation.Key.Affiliation,
-                            Station = groupingByStation.Key.LegacyCallLetters,
-                            SpotsOrdered = groupingByStation.Sum(spots => spots.Spots),
-                            SpotsDelivered = _GetDeliveredSpotsForWeekAndStation(deliveredSpotsData, groupingByWeek.Key.Id, groupingByStation.Key.LegacyCallLetters)
-                        })
-                });
-        }
-
-        private int _GetDeliveredSpotsForWeekAndStation(
-            IEnumerable<DeliveredSpotsValueForStationsForWeek> deliveredSpotsData,
-            int mediaWeekId,
-            string station)
-        {
-            return deliveredSpotsData
-                .SingleOrDefault(x => x.MediaWeekId == mediaWeekId)
-                ?.DeliveredSpotsValueForStations.SingleOrDefault(x => x.Station.Equals(station, StringComparison.InvariantCultureIgnoreCase))?.Spots ?? 0;
-        }
-
-        private IEnumerable<DeliveredSpotsValueForStationsForWeek> _GetDeliveredSpotsData(IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
-        {
-            var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
-            var spotTrackerFileDetailsGroupedByMediaWeek = spotTrackerFileDetails.GroupBy(x => mediaMonthAggregate.GetMediaWeekContainingDate(x.DateAired).Id);
-
-            return spotTrackerFileDetailsGroupedByMediaWeek.Select(spotTrackerFileDetailsForMediaWeek => new DeliveredSpotsValueForStationsForWeek
-            {
-                MediaWeekId = spotTrackerFileDetailsForMediaWeek.Key,
-                DeliveredSpotsValueForStations = spotTrackerFileDetailsForMediaWeek
-                        .GroupBy(x => x.Station, StringComparer.InvariantCultureIgnoreCase)
-                        .Select(x => new DeliveredSpotsValueForStationsForWeek.DeliveredSpotsValueForStation
-                        {
-                            Station = x.Key,
-                            Spots = x.Count()
-                        })
-            });
-        }
-
-        // Only for case-insensitive comparison
-        private class StationGrouping
-        {
-            public string OriginMarket { get; set; }
-
-            public string Affiliation { get; set; }
-
-            public string LegacyCallLetters { get; set; }
-
-            public override bool Equals(object obj)
-            {
-                var stationGrouping = obj as StationGrouping;
-
-                return OriginMarket.Equals(stationGrouping.OriginMarket, StringComparison.InvariantCultureIgnoreCase) &&
-                    Affiliation.Equals(stationGrouping.Affiliation, StringComparison.InvariantCultureIgnoreCase) &&
-                    LegacyCallLetters.Equals(stationGrouping.LegacyCallLetters, StringComparison.InvariantCultureIgnoreCase);
-            }
-
-            public override int GetHashCode()
-            {
-                var hashCode = 1677836291;
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(OriginMarket);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Affiliation);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LegacyCallLetters);
-                return hashCode;
-            }
         }
     }
 }

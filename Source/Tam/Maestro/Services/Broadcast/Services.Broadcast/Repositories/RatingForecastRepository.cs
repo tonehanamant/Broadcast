@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,7 +21,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IRatingForecastRepository : IDataRepository
     {
-        List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackType playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions);
+        List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions);
         void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate);
         List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions);
@@ -34,7 +35,7 @@ namespace Services.Broadcast.Repositories
     {
         public RatingForecastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
 
-        public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackType playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions)
+        public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -124,22 +125,20 @@ namespace Services.Broadcast.Repositories
                         p.TimeAired,
                         p.TimeAired));
 
-                    //WriteTableSQLDebug(stationDetails);
+                    //WriteTableSQLDebug(stationDetails,postingBookId,audienceId.Value as string,((char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured) { Value = ratingsInput, TypeName = "RatingsInputWithId" };
 
                     var minPlaybackType = new SqlParameter("min_playback_type", SqlDbType.VarChar, 1) { Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType) };
 
-                    var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    //var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    if (useDayByDayImpressions)
+                        throw new InvalidOperationException("Day by Day Impression not supported");
+                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
 
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
             }
-        }
-
-        public void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate)
-        {
-            // TODO: Trigger Forecast via MicroService in AWS/Databricks
         }
 
         public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
@@ -184,11 +183,81 @@ namespace Services.Broadcast.Repositories
 
                     var minPlaybackType = new SqlParameter("min_playback_type", SqlDbType.VarChar, 1) { Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType) };
 
-                    var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    if (useDayByDayImpressions)
+                        throw new InvalidOperationException("Day by Day Impression not supported");
+
+                    //var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
 
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
             }
+        }
+
+
+        public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                return _InReadUncommitedTransaction(c =>
+                {
+                    var hut = new SqlParameter("hut_media_month_id", SqlDbType.SmallInt) { Value = hutMediaMonth };
+
+                    var share = new SqlParameter("share_media_month_id", SqlDbType.SmallInt) { Value = shareMediaMonth };
+
+                    var audienceId = new SqlParameter("demo", SqlDbType.NVarChar)
+                    {
+                        Value = string.Join(",", uniqueRatingsAudiences)
+                    };
+
+                    var ratingsInput = new DataTable();
+                    ratingsInput.Columns.Add("id");
+                    ratingsInput.Columns.Add("legacy_call_letters");
+                    ratingsInput.Columns.Add("mon");
+                    ratingsInput.Columns.Add("tue");
+                    ratingsInput.Columns.Add("wed");
+                    ratingsInput.Columns.Add("thu");
+                    ratingsInput.Columns.Add("fri");
+                    ratingsInput.Columns.Add("sat");
+                    ratingsInput.Columns.Add("sun");
+                    ratingsInput.Columns.Add("start_time");
+                    ratingsInput.Columns.Add("end_time");
+
+                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
+                        p.Id,
+                        p.LegacyCallLetters,
+                        p.DisplayDaypart.Monday,
+                        p.DisplayDaypart.Tuesday,
+                        p.DisplayDaypart.Wednesday,
+                        p.DisplayDaypart.Thursday,
+                        p.DisplayDaypart.Friday,
+                        p.DisplayDaypart.Saturday,
+                        p.DisplayDaypart.Sunday,
+                        p.DisplayDaypart.StartTime,
+                        p.DisplayDaypart.EndTime));
+
+                    var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured)
+                    {
+                        Value = ratingsInput,
+                        TypeName = "RatingsInputWithId"
+                    };
+
+                    var minPlaybackType = new SqlParameter("min_playback_type", SqlDbType.VarChar, 1)
+                    {
+                        Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
+                    };
+                    //WriteTableSQLDebug(stationDetails);
+                    var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
+
+                    return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
+                });
+            }
+        }
+
+
+        public void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate)
+        {
+            // TODO: Trigger Forecast via MicroService in AWS/Databricks
         }
 
         private static void WriteTableSQLDebug(IEnumerable<Program> programs)
@@ -210,8 +279,15 @@ namespace Services.Broadcast.Repositories
                             p.DisplayDaypart.StartTime,
                             p.DisplayDaypart.EndTime)));
         }
-        private static void WriteTableSQLDebug(List<StationDetailPointInTime> stationDetails)
+        private static void WriteTableSQLDebug(List<StationDetailPointInTime> stationDetails,int postingId,string demos,string playback)
         {
+            string declare = string.Format(@"	DECLARE
+		@posting_media_month_id SMALLINT = {0},
+		@demo VARCHAR(MAX) = '{1}',
+		@ratings_request RatingsInputWithId,
+		@min_playback_type VARCHAR(1) = '{2}'",postingId,demos,playback);
+
+            Debug.WriteLine(declare);
             stationDetails
                 .Distinct()
                 .ForEach(p =>
@@ -314,65 +390,6 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-
-        public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
-        {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(c =>
-                {
-                    var hut = new SqlParameter("hut_media_month_id", SqlDbType.SmallInt) { Value = hutMediaMonth };
-
-                    var share = new SqlParameter("share_media_month_id", SqlDbType.SmallInt) { Value = shareMediaMonth };
-
-                    var audienceId = new SqlParameter("demo", SqlDbType.NVarChar)
-                    {
-                        Value = string.Join(",", uniqueRatingsAudiences)
-                    };
-
-                    var ratingsInput = new DataTable();
-                    ratingsInput.Columns.Add("id");
-                    ratingsInput.Columns.Add("legacy_call_letters");
-                    ratingsInput.Columns.Add("mon");
-                    ratingsInput.Columns.Add("tue");
-                    ratingsInput.Columns.Add("wed");
-                    ratingsInput.Columns.Add("thu");
-                    ratingsInput.Columns.Add("fri");
-                    ratingsInput.Columns.Add("sat");
-                    ratingsInput.Columns.Add("sun");
-                    ratingsInput.Columns.Add("start_time");
-                    ratingsInput.Columns.Add("end_time");
-
-                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
-                        p.Id,
-                        p.LegacyCallLetters,
-                        p.DisplayDaypart.Monday,
-                        p.DisplayDaypart.Tuesday,
-                        p.DisplayDaypart.Wednesday,
-                        p.DisplayDaypart.Thursday,
-                        p.DisplayDaypart.Friday,
-                        p.DisplayDaypart.Saturday,
-                        p.DisplayDaypart.Sunday,
-                        p.DisplayDaypart.StartTime,
-                        p.DisplayDaypart.EndTime));
-
-                    var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured)
-                    {
-                        Value = ratingsInput,
-                        TypeName = "RatingsInputWithId"
-                    };
-
-                    var minPlaybackType = new SqlParameter("min_playback_type", SqlDbType.VarChar, 1)
-                    {
-                        Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
-                    };
-                    //WriteTableSQLDebug(stationDetails);
-                    var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
-
-                    return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
-                });
-            }
-        }
 
         public List<MarketPlaybackTypes> GetPlaybackForMarketBy(int mediaMonthId, ProposalEnums.ProposalPlaybackType? playbackType)
         {

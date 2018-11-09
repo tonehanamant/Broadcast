@@ -1,0 +1,23 @@
+﻿{
+  "Details": [
+    {
+      "FileName": "Test Advertiser 9 4214 Spot Traker Report.xlsx",
+      "Weeks": [
+        {
+          "MediaWeekId": 767,
+          "StartDate": "2018-09-03T00:00:00",
+          "StationSpotsValues": [
+            {
+              "Affiliate": "NBC",
+              "Market": "Atlanta",
+              "SpotsDelivered": 5,
+              "SpotsOrdered": 555,
+              "Station": "WXIA"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ZipFileName": "BCOP-3367 Spot Traker Report.zip"
+}

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Popover, Glyphicon, OverlayTrigger } from 'react-bootstrap';
-import FilterListInput from '../FilterListInput';
-import FilterDateInput from '../FilterDateInput';
-import FilterTimeInput from '../FilterTimeInput';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Popover, Glyphicon, OverlayTrigger } from "react-bootstrap";
+import FilterListInput from "../FilterListInput";
+import FilterDateInput from "../FilterDateInput";
+import FilterTimeInput from "../FilterTimeInput";
 
 export default class FilterPopoverWrapper extends Component {
   constructor(props) {
@@ -33,8 +33,8 @@ export default class FilterPopoverWrapper extends Component {
     this.props.applyFilter(filter);
     this.closePopover();
   }
- // may not need
- /*  clearFilter(filter) {
+  // may not need
+  /*  clearFilter(filter) {
     // console.log('clearFilter', this);
     this.props.applyFilter(filter);
     this.closePopover();
@@ -51,32 +51,37 @@ export default class FilterPopoverWrapper extends Component {
   }
 
   render() {
-    const { filterKey, filterDisplay, filterOptions, filterType, matchOptions, hasTextSearch, hasMatchSpec } = this.props;
+    const {
+      filterKey,
+      filterDisplay,
+      filterOptions,
+      filterType,
+      matchOptions,
+      hasTextSearch,
+      hasMatchSpec
+    } = this.props;
     const isActive = this.props.filterActive;
-    const activeColor = isActive ? 'green' : '#999';
+    const activeColor = isActive ? "green" : "#999";
     // console.log('render filter wrapper', filterOptions);
     const popoverFilter = (
-      <Popover
-        id="popover-positioned-scrolling-top"
-        title={filterDisplay}
-      >
-        {filterType === 'dateInput' &&
+      <Popover id="popover-positioned-scrolling-top" title={filterDisplay}>
+        {filterType === "dateInput" && (
           <FilterDateInput
             filterKey={filterKey}
             filterOptions={filterOptions}
             applySelection={this.setFilter}
           />
-        }
+        )}
 
-        {filterType === 'timeInput' &&
+        {filterType === "timeInput" && (
           <FilterTimeInput
             filterKey={filterKey}
             filterOptions={filterOptions}
             applySelection={this.setFilter}
           />
-        }
+        )}
 
-        {filterType === 'filterList' &&
+        {filterType === "filterList" && (
           <FilterListInput
             filterKey={filterKey}
             filterOptions={filterOptions}
@@ -85,31 +90,33 @@ export default class FilterPopoverWrapper extends Component {
             hasTextSearch={hasTextSearch}
             hasMatchSpec={hasMatchSpec}
           />
-        }
+        )}
       </Popover>
     );
 
     return (
-        <OverlayTrigger
-          trigger="click"
-          placement="bottom"
-          overlay={popoverFilter}
-          rootClose
-          ref={(ref) => { this.popover = ref; }}
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={popoverFilter}
+        rootClose
+        ref={ref => {
+          this.popover = ref;
+        }}
+      >
+        <div
+          style={{ backgroundColor: "white", cursor: "pointer" }}
+          className={"editable-cell"}
         >
-          <div
-            style={{ backgroundColor: 'white', cursor: 'pointer' }}
-            className={'editable-cell'}
-          >
-            <Glyphicon
-              className="pull-right"
-              style={{ marginTop: '4px', fontSize: '14px', color: activeColor }}
-              glyph="filter"
-            />
-          </div>
-        </OverlayTrigger>
+          <Glyphicon
+            className="pull-right"
+            style={{ marginTop: "4px", fontSize: "14px", color: activeColor }}
+            glyph="filter"
+          />
+        </div>
+      </OverlayTrigger>
     );
-	}
+  }
 }
 
 FilterPopoverWrapper.defaultProps = {
@@ -118,8 +125,8 @@ FilterPopoverWrapper.defaultProps = {
   hasMatchSpec: false,
   matchOptions: {},
   filterActive: false,
-  filterType: 'filterList',
-  filterDisplay: 'Filter',
+  filterType: "filterList",
+  filterDisplay: "Filter"
 };
 
 FilterPopoverWrapper.propTypes = {
@@ -131,9 +138,7 @@ FilterPopoverWrapper.propTypes = {
   filterKey: PropTypes.string.isRequired,
   filterDisplay: PropTypes.string.isRequired,
   // filterOptions: PropTypes.array.isRequired,
-  filterOptions: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object,
-  ]).isRequired,
-  filterActive: PropTypes.bool.isRequired,
+  filterOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+    .isRequired,
+  filterActive: PropTypes.bool.isRequired
 };

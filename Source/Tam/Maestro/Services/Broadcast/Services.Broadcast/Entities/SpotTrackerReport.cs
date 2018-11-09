@@ -7,10 +7,10 @@ namespace Services.Broadcast.Entities
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string ZipFileName { get; set; }
 
         public List<Detail> Details { get; set; }
-
+        
         public class Detail
         {
             public int Id { get; set; }
@@ -18,6 +18,8 @@ namespace Services.Broadcast.Entities
             public ProposalBuyFile ProposalBuyFile { get; set; }
 
             public IEnumerable<Week> Weeks { get; set; }
+
+            public string FileName { get; set; }
 
             public class Week
             {

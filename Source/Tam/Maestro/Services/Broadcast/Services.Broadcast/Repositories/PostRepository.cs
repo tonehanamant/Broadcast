@@ -5,7 +5,9 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -41,7 +43,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="ratingsAudiences">list of rating audiences</param>
         /// <returns></returns>
         List<PostImpressionsData> GetPostImpressionsData(int proposalId, List<int> ratingsAudiences);
-        
+
         /// <summary>
         /// Adds a 'Not a Cadent Isci' problem
         /// </summary>
@@ -102,41 +104,11 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var proposalVersions = context.proposal_versions
-                        .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted)
-                        .ToList();
-                    var posts = new List<PostedContracts>();
+                    context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
 
-                    foreach (var proposalVersion in proposalVersions)
-                    {
-                        var spots = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                     from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                     from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                     from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                     let affidavitFileDetail = affidavitFileScrub.affidavit_file_details
-                                     select affidavitFileScrub).ToList();
+                    var posts = context.Database.SqlQuery<PostedContracts>("usp_GetPostedProposals");
 
-                        posts.Add(new PostedContracts
-                        {
-                            ContractId = proposalVersion.proposal_id,
-                            Equivalized = proposalVersion.equivalized,
-                            ContractName = proposalVersion.proposal.name,
-                            UploadDate = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                          from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                          from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
-                                          from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
-                                          orderby affidavitFileScrub.affidavit_file_details.affidavit_files.created_date descending
-                                          select (DateTime?)affidavitFileScrub.affidavit_file_details.affidavit_files.created_date).FirstOrDefault(),
-                            SpotsInSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.InSpec),
-                            SpotsOutOfSpec = spots.Count(s => (ScrubbingStatus)s.status == ScrubbingStatus.OutOfSpec),
-                            AdvertiserId = proposalVersion.proposal.advertiser_id,
-                            GuaranteedAudienceId = proposalVersion.guaranteed_audience_id,
-                            PostType = (SchedulePostType)proposalVersion.post_type,
-                            PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
-                                                                from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
-                                                                select proposalVersionQuarters.impressions_goal).Sum(),
-                        });
-                    }
+
 
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
                 });
@@ -189,9 +161,9 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var iscis = from detail in _GetUnlinkedIscisQuery(context)
-                             from problem in detail.affidavit_file_detail_problems
-                             group detail by new { detail.isci, detail.spot_length_id, problem.problem_type } into g
-                             select new { g.Key.spot_length_id, g.Key.problem_type, g.Key.isci, count = g.Count() };
+                                from problem in detail.affidavit_file_detail_problems
+                                group detail by new { detail.isci, detail.spot_length_id, problem.problem_type } into g
+                                select new { g.Key.spot_length_id, g.Key.problem_type, g.Key.isci, count = g.Count() };
 
                     return iscis.ToList().Select(x => new UnlinkedIscis
                     {
@@ -254,7 +226,7 @@ namespace Services.Broadcast.Repositories
                     }).OrderBy(x => x.ISCI).ToList();
                 });
         }
-        
+
         /// <summary>
         /// Adds a 'Not a Cadent Isci' problem
         /// </summary>

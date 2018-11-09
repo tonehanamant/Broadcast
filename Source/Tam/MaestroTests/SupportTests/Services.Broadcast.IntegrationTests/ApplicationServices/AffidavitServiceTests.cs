@@ -15,6 +15,7 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1287,8 +1288,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalDetailId = ProposalTestHelper.GetPickleProposalDetailId(ref proposal);
                 var postingDate = new DateTime(2016, 4, 20);
 
-                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
-                    .GetDataRepository<IProposalRepository>();
+                var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
                 proposalRepository.UpdateProposalDetailSweepsBooks(proposalDetailId, 413, 416);
 
                 proposal.Details.First().Quarters.First().Weeks.First().Iscis = new List<ProposalWeekIsciDto>()
@@ -1448,6 +1448,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1475,6 +1477,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1502,6 +1506,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1535,6 +1541,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1631,6 +1639,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1693,6 +1703,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
                 jsonResolver.Ignore(typeof(GenreCriteria), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1754,6 +1766,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "SpotLengthId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1792,6 +1806,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -1825,6 +1841,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
                 jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
+                jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

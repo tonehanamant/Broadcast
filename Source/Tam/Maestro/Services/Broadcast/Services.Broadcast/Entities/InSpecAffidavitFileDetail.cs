@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
@@ -25,6 +26,7 @@ namespace Services.Broadcast.Entities
         public decimal ProposalWeekCPM { get; set; }
         public int Units { get; set; }
         public int? ProposalDetailPostingBookId { get; set; }
+        public ProposalEnums.ProposalPlaybackType? ProposalDetailPlaybackType { get; set; }
         public int ProposalWeekId { get; set; }
         public bool Adu { get; internal set; }
     }

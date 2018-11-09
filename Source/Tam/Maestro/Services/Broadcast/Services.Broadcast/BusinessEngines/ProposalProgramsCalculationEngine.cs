@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -43,12 +44,14 @@ namespace Services.Broadcast.BusinessEngines
         /// Calculates blended CPM for the programs across all program weeks assuming 1 spot per week (raw = no rounding).
         /// </summary>
         /// <returns></returns>
-        void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength);
+        void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs);
 
         void CalculateAvgCostForPrograms(List<ProposalProgramDto> programs);
 
         void CalculateTotalCostForPrograms(List<ProposalProgramDto> programs);
         void CalculateTotalImpressionsForPrograms(List<ProposalProgramDto> programs);
+        void CalculateTotalCostForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs);
+        void CalculateTotalImpressionsForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs);
 
         decimal CalculateSpotCost(int spots, decimal spotCost);
         double CalculateSpotImpressions(int spots, double unitImpressions);
@@ -280,14 +283,13 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Raw == no rounding
         /// </summary>
-        public void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs, int spotLength)
+        public void CalculateBlendedCpmForProgramsRaw(List<ProposalProgramDto> programs)
         {
             foreach (var program in programs)
             {
                 var activeWeeks = program.FlightWeeks.Where(w => !w.IsHiatus).ToList();
                 var totalCost = activeWeeks.Sum(w => w.Rate);
-                var unitImpressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
-                var totalImpressions = unitImpressions * activeWeeks.Count;
+                var totalImpressions = program.EffectiveImpressionsPerSpot * activeWeeks.Count;
 
                 program.TargetCpm = ProposalMath.CalculateCpmRaw(totalCost, totalImpressions);
             }
@@ -319,28 +321,37 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-                program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.UnitImpressions);
+                program.TotalImpressions = CalculateSpotImpressions(program.TotalSpots,program.EffectiveImpressionsPerSpot);
+            }
+        }
+        
+        public void CalculateTotalCostForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.Cost = CalculateSpotCost(program.Spots, program.CostPerSpot);
+            }
+        }
+
+        public void CalculateTotalImpressionsForPrograms(List<PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.Impressions = CalculateSpotImpressions(program.Spots, program.EffectiveImpressionsPerSpot);
             }
         }
 
         public decimal CalculateSpotCost(int spots, decimal spotCost)
         {
-            decimal totalSpotCost = 0;
-            if (spots == 0)
-                totalSpotCost = spotCost;
-            else
-                totalSpotCost = spotCost * spots;
+            decimal totalSpotCost = spotCost * spots;
 
             return totalSpotCost;
         }
 
         public double  CalculateSpotImpressions(int spots,double unitImpressions)
         {
-            double totalImpressions = 0;
-            if (spots == 0)
-                totalImpressions = unitImpressions;
-            else
-                totalImpressions = unitImpressions * spots;
+
+            double totalImpressions = unitImpressions * spots;
 
             return totalImpressions;
         }

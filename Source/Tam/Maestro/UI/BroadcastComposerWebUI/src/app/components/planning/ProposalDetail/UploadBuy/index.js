@@ -1,26 +1,40 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Modal, Button, Form, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { InputNumber } from 'antd';
-import { bindActionCreators } from 'redux';
-import UploadButton from 'Components/shared/UploadButton';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  Modal,
+  Button,
+  Form,
+  FormGroup,
+  ControlLabel,
+  Col
+} from "react-bootstrap";
+import { InputNumber } from "antd";
+import { bindActionCreators } from "redux";
+import UploadButton from "Components/shared/UploadButton";
 
-import { clearFile, storeFile } from 'Ducks/app';
-import { uploadSCXFile } from 'Ducks/planning';
+import { clearFile, storeFile } from "Ducks/app";
+import { uploadSCXFile } from "Ducks/planning";
 
-const mapStateToProps = ({ app: { modals: { uploadBuy: modal }, file } }) => ({
+const mapStateToProps = ({
+  app: {
+    modals: { uploadBuy: modal },
+    file
+  }
+}) => ({
   modal,
-  file,
+  file
 });
 
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
       // toggleModal,
       clearFile,
       storeFile,
-      uploadSCXFile,
-    }, dispatch)
+      uploadSCXFile
+    },
+    dispatch
   );
 // Notes:  need to revise to use adjusted upload button
 // as is cannot use existing upload button mechanism as dependent on mime
@@ -39,18 +53,24 @@ class UploadBuy extends Component {
     this.state = {
       estimateId: null,
       activeFile: false,
-      fileName: null,
+      fileName: null
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.clearState();
+    if (nextProps.file.name === "No File") {
+      this.clearState();
+    }
     if (this.state.activeFile) return;
-    if (nextProps.file && nextProps.file.base64 && nextProps.file.base64.length) {
-      console.log('recieve file', this, nextProps.file);
+    if (
+      nextProps.file &&
+      nextProps.file.base64 &&
+      nextProps.file.base64.length
+    ) {
+      console.log("recieve file", this, nextProps.file);
       this.setState({
         fileName: nextProps.file.name,
-        activeFile: true,
+        activeFile: true
       });
     }
   }
@@ -64,7 +84,7 @@ class UploadBuy extends Component {
     this.setState({
       estimateId: null,
       activeFile: false,
-      fileName: null,
+      fileName: null
     });
   }
 
@@ -74,17 +94,17 @@ class UploadBuy extends Component {
       ProposalVersionDetailId: this.props.modal.properties.detailId, // just get from modal props
       FileName: this.state.fileName,
       RawData: this.props.file.base64,
-      UserName: 'user',
+      UserName: "user"
     };
     this.props.uploadSCXFile(ret);
   }
 
   /* onChangeEstimateId(event) {
     const estimateId = event.target.value;
-    if (estimateId.length && estimateId !== '0') {
+    if (estimateId.length && estimateId !== "0") {
       this.setState({ estimateId });
     } else {
-      this.setState({ estimateId: '' });
+      this.setState({ estimateId: "" });
     }
   } */
   onChangeEstimateId(value) {
@@ -99,9 +119,9 @@ class UploadBuy extends Component {
 
   onCancel() {
     this.props.toggleModal({
-      modal: 'uploadBuy',
+      modal: "uploadBuy",
       active: false,
-      properties: this.props.modal.properties,
+      properties: this.props.modal.properties
     });
     this.clearState();
   }
@@ -115,20 +135,30 @@ class UploadBuy extends Component {
     const { activeFile, estimateId } = this.state;
     // const reg = /^(0|[1-9]\d{0})$/; // cant get the + to work
     const reg = /^\d+$/; // cant get the {0} to work
-    const valid = activeFile && estimateId && (estimateId > 0) && String(estimateId).match(reg);
+    const valid =
+      activeFile &&
+      estimateId &&
+      estimateId > 0 &&
+      String(estimateId).match(reg);
+    // console.log(activeFile, estimateId, estimateId > 0);
+    // console.log(String(estimateId).match(reg));
+    // console.log(valid);
     const { modal, detail } = this.props;
-    const show = (detail && modal && modal.properties.detailId === detail.Id) ? modal.active : false;
+    const show =
+      detail && modal && modal.properties.detailId === detail.Id
+        ? modal.active
+        : false;
     return (
       <div>
         <Modal show={show} onExit={this.onModalHide}>
           <Modal.Header>
             <Button
-                className="close"
-                bsStyle="link"
-                onClick={this.onCancel}
-                style={{ display: 'inline-block', float: 'right' }}
+              className="close"
+              bsStyle="link"
+              onClick={this.onCancel}
+              style={{ display: "inline-block", float: "right" }}
             >
-                <span>&times;</span>
+              <span>&times;</span>
             </Button>
             <Modal.Title>Upload SCX File</Modal.Title>
           </Modal.Header>
@@ -137,7 +167,7 @@ class UploadBuy extends Component {
             <Form horizontal>
               <FormGroup controlId="shareBook">
                 <Col componentClass={ControlLabel} sm={3}>
-                  Choose File <span style={{ color: 'red' }}>*</span>
+                  Choose File <span style={{ color: "red" }}>*</span>
                 </Col>
                 <Col sm={2}>
                   <UploadButton
@@ -148,17 +178,17 @@ class UploadBuy extends Component {
                     processFiles={this.processFile}
                   />
                 </Col>
-                <Col sm={7} style={{ paddingTop: '5px' }}>
+                <Col sm={7} style={{ paddingTop: "5px" }}>
                   <span>{this.state.fileName}</span>
                 </Col>
               </FormGroup>
 
               <FormGroup controlId="estimate_id">
                 <Col componentClass={ControlLabel} sm={3}>
-                  Estimate ID <span style={{ color: 'red' }}>*</span>
+                  Estimate ID <span style={{ color: "red" }}>*</span>
                 </Col>
                 <Col sm={9}>
-                 {/*  <FormControl
+                  {/*  <FormControl
                     type="number"
                     min="1"
                     value={this.state.estimateId}
@@ -184,14 +214,12 @@ class UploadBuy extends Component {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.onCancel} bsStyle="default">Cancel</Button>
-              <Button
-                disabled={!valid}
-                onClick={this.onSave}
-                bsStyle="success"
-              >
+            <Button onClick={this.onCancel} bsStyle="default">
+              Cancel
+            </Button>
+            <Button disabled={!valid} onClick={this.onSave} bsStyle="success">
               Save
-              </Button>
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -206,15 +234,18 @@ UploadBuy.propTypes = {
   storeFile: PropTypes.func.isRequired,
   file: PropTypes.object.isRequired,
   uploadSCXFile: PropTypes.func.isRequired,
-  detail: PropTypes.object,
+  detail: PropTypes.object
 };
 
 UploadBuy.defaultProps = {
   modal: null,
   file: {
-    name: 'No File',
+    name: "No File"
   },
-  detail: null,
+  detail: null
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadBuy);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UploadBuy);

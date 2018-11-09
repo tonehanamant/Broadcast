@@ -4,6 +4,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Linq;
 using System;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -31,14 +32,14 @@ namespace Services.Broadcast.BusinessEngines
 
         public void CalculatePartialOpenMarketTotals(ProposalDetailOpenMarketInventoryDto dto)
         {
-            _CalculateMarketsTotals(dto);
+            _CalculateWeekMarketTotals(dto);
 
             foreach (var inventoryWeek in dto.Weeks)
             {
                 _CalculateWeekTotals(dto, inventoryWeek);
             }
 
-            _CalculatePartialDetailTotals(dto);
+            _CalculateProposalDetailTotals(dto);
         }
 
         public void CalculateOpenMarketDetailTotals(ProposalDetailOpenMarketInventoryDto dto,
@@ -47,7 +48,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             _ClearTotals(dto);
 
-            _CalculateMarketsTotals(dto);
+            _CalculateWeekMarketTotals(dto);
 
             foreach (var inventoryWeek in dto.Weeks)
             {
@@ -97,19 +98,22 @@ namespace Services.Broadcast.BusinessEngines
                                     station => station.Programs.Where(a => a != null)))).ToList();
 
             foreach (var program in weekPrograms)
-            {
-                program.TotalImpressions = program.Spots == 0 ? program.UnitImpression : program.Spots * program.UnitImpression;
+            {                
 
                 if (program.ProvidedUnitImpressions.HasValue)
                 {
-                    program.TotalProvidedImpressions = program.Spots == 0 ? program.ProvidedUnitImpressions : program.Spots * program.ProvidedUnitImpressions;
+                    program.TotalImpressions = program.Spots == 0 ? program.ProvidedUnitImpressions.Value : program.Spots * program.ProvidedUnitImpressions.Value;
+                }
+                else
+                {
+                    program.TotalImpressions = program.Spots == 0 ? program.UnitImpression : program.Spots * program.UnitImpression;
                 }
 
                 program.Cost = program.Spots == 0 ? program.UnitCost : program.Spots * program.UnitCost;
             }
         }
 
-        private void _CalculatePartialDetailTotals(ProposalDetailOpenMarketInventoryDto dto)
+        private void _CalculateProposalDetailTotals(ProposalDetailOpenMarketInventoryDto dto)
         {
             dto.DetailTotalImpressions = dto.Weeks.Sum(w => w.ImpressionsTotal);
             dto.DetailTotalBudget = dto.Weeks.Sum(w => w.BudgetTotal);
@@ -132,7 +136,7 @@ namespace Services.Broadcast.BusinessEngines
 
         }
 
-        private void _CalculateMarketsTotals(ProposalDetailOpenMarketInventoryDto dto)
+        private void _CalculateWeekMarketTotals(ProposalDetailOpenMarketInventoryDto dto)
         {
             foreach (var marketWeek in dto.Weeks)
             {
@@ -145,7 +149,17 @@ namespace Services.Broadcast.BusinessEngines
                         market.Stations
                             .Select(a => a.Programs
                                             .Where(p => p != null && p.Spots > 0)
-                                            .Sum(p => p.TotalProvidedImpressions ?? p.TotalImpressions))
+                                            .Sum(p => p.TotalImpressions))
+                            .Sum();
+                    market.DisplayImpressions = market.Stations
+                            .Select(a => a.Programs
+                                            .Where(p => p != null && p.Spots > 0)
+                                            .Sum(p => p.UnitImpression * p.Spots))
+                            .Sum();
+                    market.DisplayStationImpressions = market.Stations
+                            .Select(a => a.Programs
+                                            .Where(p => p != null && p.Spots > 0 && p.ProvidedUnitImpressions.HasValue)
+                                            .Sum(p => p.ProvidedUnitImpressions.Value * p.Spots))
                             .Sum();
                 }
             }

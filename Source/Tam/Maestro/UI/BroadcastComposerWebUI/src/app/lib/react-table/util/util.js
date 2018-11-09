@@ -1,18 +1,15 @@
-import { isNaN } from 'lodash';
-import { multiSelectRow, singleSelectRow } from '../actions/actions';
+import { isNaN } from "lodash";
+import { multiSelectRow, singleSelectRow } from "../actions/actions";
 
 export const SELECTION = {
-  SINGLE: 'single',
-  MULTI: 'multi',
-  NONE: 'none',
+  SINGLE: "single",
+  MULTI: "multi",
+  NONE: "none"
 };
 
 export const rowSelection = {
   [SELECTION.SINGLE]: singleSelectRow,
-  [SELECTION.MULTI]: multiSelectRow,
+  [SELECTION.MULTI]: multiSelectRow
 };
 
-export const isNumeric = (val) => {
-  const parsedValue = parseFloat(val);
-  return !isNaN(parsedValue);
-};
+export const isNumeric = val => !isNaN(val);

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import numeral from 'numeral';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import numeral from "numeral";
 
 /* eslint-disable react/prefer-stateless-function */
 export default class CurrencyDollarWhole extends Component {
@@ -13,23 +13,18 @@ export default class CurrencyDollarWhole extends Component {
 
     // 0, null or undefined
     if (dash && !amount) {
-      return '-';
+      return "-";
     }
 
-    return (
-			<span>{ numeral(amount).format('$0,0') }</span>
-    );
-	}
+    return <span>{numeral(amount).format("$0,0")}</span>;
+  }
 }
 
 CurrencyDollarWhole.propTypes = {
-  amount: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  dash: PropTypes.bool,
+  amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  dash: PropTypes.bool
 };
 
 CurrencyDollarWhole.defaultProps = {
-  dash: false,
+  dash: false
 };

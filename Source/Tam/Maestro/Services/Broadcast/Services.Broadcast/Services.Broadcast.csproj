@@ -190,46 +190,37 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.5\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.16\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.DataLayer, Version=18.4.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.18.4.1.3\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.DataLayer, Version=18.4.1.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.18.4.1.14\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Logging, Version=18.2.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.2.1.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Logging, Version=18.4.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.4.1.10\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.4\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=18.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.18.3.1.1\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=18.4.1.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.18.4.1.11\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.4.1.12\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.4\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.12\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />
-    <Compile Include="ApplicationServices\BaseScrubbingService.cs" />
     <Compile Include="ApplicationServices\IsciService.cs" />
     <Compile Include="ApplicationServices\LogoService.cs" />
     <Compile Include="ApplicationServices\MarketService.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingService.cs" />
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
-    <Compile Include="ApplicationServices\AffidavitPickupFileValidation.cs" />
     <Compile Include="ApplicationServices\PostLogService.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
@@ -255,22 +246,24 @@
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
-    <Compile Include="Converters\KeepingTracConverter.cs" />
+    <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
-    <Compile Include="Entities\AffidaviteFileSourceEnum.cs" />
+    <Compile Include="Entities\DTO\PricingGuideOpenMarketDistributionDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuideMarketTotalsDto.cs" />
+    <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />
     <Compile Include="Entities\DTO\OpenMarketPricingGuideGridDisplayFilterDto.cs" />
     <Compile Include="Entities\DTO\OpenMarketPricingGuideGridFilterDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuideAllocationSaveRequestDto.cs" />
     <Compile Include="Entities\Enums\FileProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\FileDetailProblemTypeEnum.cs" />
     <Compile Include="Entities\MarketCoverage.cs" />
-    <Compile Include="Entities\DTO\PricingGuideOpenMarketInventory.cs" />
-    <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\OpenMarketInventory\PricingGuideOpenMarketInventoryRequestDto.cs" />
-    <Compile Include="Entities\OpenMarketPricing.cs" />
+    <Compile Include="Entities\OpenMarketPricingGuide.cs" />
     <Compile Include="Entities\SpotTrackerReport.cs" />
     <Compile Include="Entities\DTO\ProposalBuySaveRequestDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />
@@ -289,6 +282,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExcelWorksheetExtensions.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
@@ -297,9 +291,7 @@
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\TrackerFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
-    <Compile Include="Entities\FileValidationResult.cs" />
-    <Compile Include="Entities\FileSourceEnum.cs" />
-    <Compile Include="Entities\ProcessingStatusEnum.cs" />
+    <Compile Include="Entities\Enums\FileSourceEnum.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
@@ -351,7 +343,7 @@
     <Compile Include="Entities\FlightWeekGroup.cs" />
     <Compile Include="Entities\IHaveSingleSharedPostingBooks.cs" />
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
-    <Compile Include="Entities\InventorySourceEnum.cs" />
+    <Compile Include="Entities\Enums\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
     <Compile Include="Entities\DTO\NsiPostReport.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
@@ -367,9 +359,9 @@
     <Compile Include="Entities\ProgramSearchRequest.cs" />
     <Compile Include="Entities\ProposalChangeRequest.cs" />
     <Compile Include="Entities\DTO\ProposalDetailPostScrubbingDto.cs" />
-    <Compile Include="Entities\ProposalDetailSingleInventoryTotalsDto.cs" />
-    <Compile Include="Entities\ProposalDetailSingleWeekTotalsDto.cs" />
-    <Compile Include="Entities\ProposalDetailTotalsDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailSingleInventoryTotalsDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailSingleWeekTotalsDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailTotalsDto.cs" />
     <Compile Include="Entities\ProposalHeaderTotalsDto.cs" />
     <Compile Include="Entities\ProposalScrubbingDetailHeaderDto.cs" />
     <Compile Include="Entities\ProposalWeekIsciDto.cs" />
@@ -442,14 +434,14 @@
     <Compile Include="Entities\ReportOutput.cs" />
     <Compile Include="Converters\AssemblyScheduleConverter.cs" />
     <Compile Include="Entities\ForecastRatingsDefaultsDto.cs" />
-    <Compile Include="Entities\PlaybackType.cs" />
-    <Compile Include="Entities\IsciDto.cs" />
+    <Compile Include="Entities\Enums\PlaybackTypeEnum.cs" />
+    <Compile Include="Entities\DTO\IsciDto.cs" />
     <Compile Include="Entities\PostFileDetailImpression.cs" />
     <Compile Include="Entities\PostRequest.cs" />
     <Compile Include="Entities\ProposalConstants.cs" />
-    <Compile Include="Entities\ProposalDetailDto.cs" />
-    <Compile Include="Entities\ProposalDetailRequestDto.cs" />
-    <Compile Include="Entities\ProposalDetailProprietaryInventoryDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailRequestDto.cs" />
+    <Compile Include="Entities\DTO\ProposalDetailProprietaryInventoryDto.cs" />
     <Compile Include="Entities\ProposalMarketDto.cs" />
     <Compile Include="Entities\ProposalQuarterTotals.cs" />
     <Compile Include="Entities\ProposalMediaWeek.cs" />
@@ -503,8 +495,8 @@
     <Compile Include="Entities\ImpressionAndDeliveryDto.cs" />
     <Compile Include="Entities\NsiUniverseData.cs" />
     <Compile Include="Entities\ProgramMappingDto.cs" />
-    <Compile Include="Entities\ProposalDto.cs" />
-    <Compile Include="Entities\ProposalEnums.cs" />
+    <Compile Include="Entities\DTO\ProposalDto.cs" />
+    <Compile Include="Entities\Enums\ProposalEnums.cs" />
     <Compile Include="Entities\ProposalFlightWeek.cs" />
     <Compile Include="Entities\ProposalLoadDto.cs" />
     <Compile Include="Entities\OpenMarketCriterion.cs" />

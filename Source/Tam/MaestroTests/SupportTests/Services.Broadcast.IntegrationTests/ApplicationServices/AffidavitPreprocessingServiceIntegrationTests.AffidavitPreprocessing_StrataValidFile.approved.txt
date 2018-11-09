@@ -1,0 +1,11 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [],
+    "FileHash": "58-64-8C-F4-A1-2C-E2-EA-DB-21-39-71-85-99-9F-8B-FF-E0-7A-B1",
+    "FileName": "StrataSBMSInvoicePostExportValid.xlsx",
+    "FilePath": ".\\Files\\StrataSBMSInvoicePostExportValid.xlsx",
+    "Source": 3,
+    "Status": 1
+  }
+]

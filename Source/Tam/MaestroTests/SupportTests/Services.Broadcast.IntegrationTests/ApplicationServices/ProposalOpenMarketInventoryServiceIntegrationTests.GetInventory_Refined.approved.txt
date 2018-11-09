@@ -216,6 +216,8 @@
       "Markets": [
         {
           "Cost": 0.0,
+          "DisplayImpressions": 0.0,
+          "DisplayStationImpressions": 0.0,
           "Impressions": 0.0,
           "MarketId": 101,
           "Spots": 1,
@@ -224,14 +226,16 @@
               "Programs": [
                 {
                   "Cost": 0.0,
+                  "DisplayImpressions": 0.0,
+                  "DisplayStationImpressions": 0.0,
                   "EFF": 0.0,
+                  "HasImpressions": false,
                   "ProgramId": 162232,
                   "ProvidedUnitImpressions": null,
                   "Spots": 1,
                   "TargetCpm": 0.0,
                   "TargetImpressions": 0.0,
                   "TotalImpressions": 0.0,
-                  "TotalProvidedImpressions": null,
                   "UnitCost": 0.0,
                   "UnitImpression": 0.0
                 }

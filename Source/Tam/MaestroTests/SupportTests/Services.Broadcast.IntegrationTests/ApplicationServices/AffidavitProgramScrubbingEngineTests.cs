@@ -1,15 +1,11 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using EntityFrameworkMapping.Broadcast;
 using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using System;
+using Services.Broadcast.Entities.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests

@@ -1,3 +1,4 @@
+using Services.Broadcast.Entities.Enums;
 using System;
 
 namespace Services.Broadcast.Entities

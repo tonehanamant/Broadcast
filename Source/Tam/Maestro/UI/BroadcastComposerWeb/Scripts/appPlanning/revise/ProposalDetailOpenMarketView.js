@@ -27,6 +27,8 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     isMarketSortName: false,
     marketSortIndexMap: [], //index of active markets sort - determined from programs market data; used for sorting weeks (name or rank)
 
+    editSpotsTabMap: [],
+
     //change to use controller
     initView: function (controller) {
         var self = this;
@@ -292,13 +294,16 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             Spots: market.Spots,
             //EFF: market.EFF,
             Impressions: market.Impressions,
+            DisplayImpressions: market.DisplayImpressions,
+            DisplayStationImpressions: market.DisplayStationImpressions,
             isHiatus: isHiatus
         };
         return ret;
     },
 
     //program with indexes: [mIdx, sIdx, pIdx, weekIdx]
-    getWeekProgramItem: function (program, week, market, indexes) {
+    getWeekProgramItem: function (rec, program, week, market, indexes) {
+        // console.log(rec, program, week);
         var ret;
         if (!program) {//is null so not available throughout; 
             ret = { active: false };//isProgram?
@@ -317,6 +322,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             program.stationDataIdx = indexes[1]; //sIdx;
             program.programDataIdx = indexes[2]; //pIdx;
             program.weekIdx = indexes[3]; //weekIdx
+            if (program.HasImpressions && !week.IsHiatus) {
+                //var tabId = 'editTab_' + program.weekIdx + '_' + program.marketDataIdx + '_' + program.stationDataIdx + '_' + program.programDataIdx;
+                var tabId = 'program_week_spot_' + rec.recid + '_' + program.weekIdx;
+                //console.log(tabId, program.weekIdx);
+                //program.editTabId = tabId;
+                this.editSpotsTabMap.push(tabId);
+            }
             ret = program;
         }
 
@@ -343,7 +355,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                     //station does not need week data?
                     recIdx++;
                     $.each(station.Programs, function (pIdx, program) {
-                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(program, week, market, [mIdx, sIdx, pIdx, weekIdx]);
+                        recs[recIdx]['week' + weekIdx] = $scope.getWeekProgramItem(recs[recIdx], program, week, market, [mIdx, sIdx, pIdx, weekIdx]);
                         recIdx++
                     });
                 });
@@ -422,11 +434,23 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         }
     },
 
+    //get the next editable jquery el for tabbing to next
+    //gets too soon as need to deal with grid buffering - so return id
+    getNextEditable: function (currentEditId) {
+        var idx = this.editSpotsTabMap.indexOf(currentEditId);
+        var nextIdx = (idx === this.editSpotsTabMap.length - 1) ? 0 : idx + 1;
+        var nextEditId = this.editSpotsTabMap[nextIdx];
+        //var nextEditSpot = $('#' + nextEditId);
+        // return nextEditSpot;
+        return nextEditId;
+    },
 
-    //set spot in row for inline editing; handle eveents
+    //set spot in row for inline editing; handle events
+    //new deal with tabbing to next editable
     setEditSpot: function (record, week, evt) {
-
-        var editTarget = $('#program_week_spot_' + record.recid + '_' + week.weekIdx);
+        var editTargetId = 'program_week_spot_' + record.recid + '_' + week.weekIdx;
+        var editTarget = $('#' + editTargetId);
+        //console.log('setEditSpot', record, week, this.editSpotsTabMap, editTarget);
 
         if (editTarget.length && !editTarget.hasClass('is-editing')) {
             this.activeEditingRecord = record;
@@ -434,6 +458,9 @@ var ProposalDetailOpenMarketView = BaseView.extend({
             var $scope = this;
             //timeout to prevent blur event call initially
             //TODO change this out to new w2ui format used elsewhere?
+            //save next for tab
+            var nextSpot = null;
+            var me = this;
             setTimeout(function () {
                 var input = editTarget.find(".edit-input");
                 input.show();
@@ -445,10 +472,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                     return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
                     //return (event.keyCode == 8 || event.keyCode == 0) ? null : event.keyCode >= 48 && event.keyCode <= 57;
                 });
+                
                 input.keydown(function (event) {
                     if (event.keyCode === 9) {//TAB
                         event.preventDefault();
-                        //var nextCell = $("#rate-" + record.recid);
+                        //how to get next id?
+                        //nextSpot = $('#program_week_spot_' + record.recid + '_' + week.weekIdx);
+                        nextSpot = me.getNextEditable(editTargetId);
                         //nextCell.click();
                         //nextCell.find("input").focus();
                         input.blur();
@@ -461,7 +491,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
                 });
                 input.blur(function (event) {
                     // setTimeout(function () {
-                    this.onEditSpot(editTarget, input, record, week);
+                    this.onEditSpot(editTarget, input, record, week, nextSpot);
                     //input.off("keyup");
                     input.off("keypress");
                     input.off("keydown");
@@ -478,7 +508,7 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     //after a spot is edited send to api; handle return to update row and states
     //set back if user sets no value
-    onEditSpot: function (editTarget, input, record, week) {
+    onEditSpot: function (editTarget, input, record, week, nextSpot) {
         var spotVal = parseInt(input.val());
         var currentVal = week.Spots;
         // console.log('onEditSpot', spotVal);
@@ -487,10 +517,10 @@ var ProposalDetailOpenMarketView = BaseView.extend({
         if ((spotVal || (spotVal === 0)) && (spotVal !== currentVal)) {
             var $scope = this;
             this.updateEditSpot(record, spotVal, week);
-            this.endEditSpot(editTarget, input);
+            this.endEditSpot(editTarget, input, nextSpot);
 
         } else {
-            this.endEditSpot(editTarget, input);
+            this.endEditSpot(editTarget, input, nextSpot);
         }
     },
 
@@ -549,12 +579,21 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
         //update market row
         var marketChanges = {};
-        marketChanges['week' + week.weekIdx] = { Spots: marketDataItem.Spots, Cost: marketDataItem.Cost, Impressions: marketDataItem.Impressions };
+        marketChanges['week' + week.weekIdx] = {
+            Spots: marketDataItem.Spots,
+            Cost: marketDataItem.Cost,
+            DisplayImpressions: marketDataItem.DisplayImpressions,
+            DisplayStationImpressions: marketDataItem.DisplayStationImpressions
+        };
         this.openMarketsGrid.set('market_' + rec.MarketId, marketChanges);
 
         //update program row (spots already set)
         var weekProgramChanges = {};
-        weekProgramChanges['week' + week.weekIdx] = { Cost: programDataItem.Cost, TotalImpressions: programDataItem.TotalImpressions };
+        weekProgramChanges['week' + week.weekIdx] = {
+            Cost: programDataItem.Cost,
+            DisplayImpressions: programDataItem.DisplayImpressions,
+            DisplayStationImpressions: programDataItem.DisplayStationImpressions
+        };
         this.openMarketsGrid.set(rec.recid, weekProgramChanges);
 
         //reset with new data
@@ -562,10 +601,28 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     },
 
     //end spot editing; hide input; remove class and allow editing again
-    endEditSpot: function (editTarget, input) {
+    //set to next editable if tab - changed to id; deal with buffering got to next record first
+    endEditSpot: function (editTarget, input, nextSpot) {
         input.hide();
         editTarget.removeClass("is-editing");
         this.activeEditingRecord = null;
+        if (nextSpot) {
+            // need to deal buffer where record row may not be in dom
+            //split to get record id
+            var split = nextSpot.split('_');
+            var nextRecId = split[3];
+            //get index off next record and scroll to it
+            var nextRecIdx = this.openMarketsGrid.get(nextRecId, true);
+            this.openMarketsGrid.scrollIntoView(nextRecIdx);
+            //need to wait still until rendered before exists and can get/find input
+            setTimeout(function () {
+                var nextEditSpot = $('#' + nextSpot);
+                //console.log('endEditSpot next', nextRecIdx, nextRecId, nextEditSpot);
+                nextEditSpot.click();
+                nextEditSpot.find("input").focus();
+                //nextSpot = null;
+            }, 500);
+        }
     },
 
     // change to more specific item with weeks (not overall record)
@@ -672,8 +729,6 @@ var ProposalDetailOpenMarketView = BaseView.extend({
     //apply sorting; revise to handle future filtering/post processing
     saveInventory: function (isApply) {
         var $scope = this;
-
-        //if request.length etc?
         var continueSaveFn = function () {
             var request = $scope.getParamsForSave();
             //console.log('saveInventory', request);
@@ -711,12 +766,13 @@ var ProposalDetailOpenMarketView = BaseView.extend({
 
     //clear inventory ; reset
     onClearInventory: function (reset) {
-
         this.activeInventoryData = null;
         this.bypassCheckSave = false;
+        this.editSpotsTabMap = [];
         if (reset) {
             this.isMarketSortName = false;
             this.marketSortIndexMap = [];
+            this.editSpotsTabMap = [];
             this.OpenMarketVM.setSortByMarketName(false);
             this.activeProgramEditItems = [];
         }

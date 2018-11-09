@@ -96,7 +96,7 @@
     <Reference Include="ApprovalUtilities.Net45">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalUtilities.3.0.10\lib\net45\ApprovalUtilities.Net45.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMoq">
+    <Reference Include="AutoMoq, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\AutoMoq.1.6.2.0\lib\net35\AutoMoq.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -139,7 +139,6 @@
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.2.1408.717, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Moq.4.2.1408.0717\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -195,33 +194,26 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.5\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.16\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.DataLayer, Version=18.4.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.18.4.1.3\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.DataLayer, Version=18.4.1.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.DataLayer.18.4.1.14\lib\net45\Tam.Maestro.Common.DataLayer.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Logging, Version=18.2.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.2.1.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Logging, Version=18.4.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.4.1.10\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.4\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=18.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.18.3.1.1\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=18.4.1.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.18.4.1.11\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.3.1.1\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.4.1.12\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.4\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Tam.Maestro.Web.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Web.Common.18.4.1.12\lib\net45\Tam.Maestro.Web.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +228,7 @@
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
@@ -260,6 +253,7 @@
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Stubbs\FileServiceStubb.cs" />
     <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
     <Compile Include="Stubbs\FtpServiceStubb.cs" />
@@ -472,23 +466,23 @@
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac-BCOP3553.csv">
+    <None Include="Files\KeepingTrac_MissingData.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac-BCOP3553_RequiredColumnMissing.csv">
+    <None Include="Files\KeepingTrac_MissingHeaders.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv">
+    <None Include="Files\KeepingTrac_ValidFile.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_MissingData.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_MissingData.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_Clean.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_MissingHeaders.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\KeepingTrac_Test_MissingHeaders.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\KeepingTrac_ValidFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -689,6 +683,9 @@
     <None Include="Files\UpdateInventoryData.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\WithPlusS2Extensions.scx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -774,6 +771,7 @@
     <Content Include="Files\WWTV_KeepingTracValidFile.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="License.txt" />
     <Content Include="Penny_test.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

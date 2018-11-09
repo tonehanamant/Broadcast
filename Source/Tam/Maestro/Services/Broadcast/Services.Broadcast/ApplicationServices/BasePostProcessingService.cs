@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Newtonsoft.Json;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;

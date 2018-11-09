@@ -6,6 +6,12 @@
     "2Q'16: 1 week - 5/30"
   ],
   "GuaranteedDemo": "House Holds",
+  "PlaybackTypes": [
+    "Live+3"
+  ],
+  "PostingBooks": [
+    "November 2017"
+  ],
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -61,7 +67,7 @@
           },
           "DateAired": "2016-05-31T00:00:00",
           "DaypartName": "ADU",
-          "Isci": "NSIADU1",
+          "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "ProgramName": "Program Names R us",
@@ -87,7 +93,7 @@
           },
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NSIADU2",
-          "Isci": "NSIADU2",
+          "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "ProgramName": "Program Names R us",

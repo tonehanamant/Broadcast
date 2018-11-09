@@ -21,7 +21,7 @@ namespace Services.Broadcast.Repositories
         /// Saves processing validation results
         /// </summary>
         /// <param name="validationResults">List of FileValidationResult objects</param>
-        void SavePreprocessingValidationResults(List<FileValidationResult> validationResults);
+        void SavePreprocessingValidationResults(List<WWTVOutboundFileValidationResult> validationResults);
 
         /// <summary>
         /// Saves a post log file
@@ -171,7 +171,7 @@ namespace Services.Broadcast.Repositories
         /// Saves processing validation results
         /// </summary>
         /// <param name="validationResults">List of FileValidationResult objects</param>
-        public void SavePreprocessingValidationResults(List<FileValidationResult> validationResults)
+        public void SavePreprocessingValidationResults(List<WWTVOutboundFileValidationResult> validationResults)
         {
             _InReadUncommitedTransaction(context =>
             {

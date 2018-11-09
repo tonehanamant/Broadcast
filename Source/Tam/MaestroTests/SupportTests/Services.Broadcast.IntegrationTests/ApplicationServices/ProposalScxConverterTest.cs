@@ -6,10 +6,12 @@ using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Entities.spotcableXML;
@@ -88,6 +90,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Test_Proposal_Scx_Converter_ProposalDetail()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = ProposalTestHelper.CreateProposal();
+                var output = _ProposalService.GenerateScxFileDetail(proposal.Details.First().Id.Value);
+
+                var result = new StreamReader(output.Item2 as MemoryStream).ReadToEnd();
+
+                var finalResult = adx.Deserialize(result);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(document), "date");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalResult, jsonSettings));
             }
         }
     }

@@ -13,6 +13,7 @@ using System.Transactions;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {

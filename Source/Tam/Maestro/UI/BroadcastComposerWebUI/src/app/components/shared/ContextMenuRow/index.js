@@ -1,36 +1,47 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { ContextMenuProvider, Item, ContextMenu } from 'react-contexify';
-import { map } from 'lodash/fp';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { ContextMenuProvider, Item, ContextMenu } from "react-contexify";
+import { map } from "lodash/fp";
 
-import 'react-contexify/dist/ReactContexify.min.css';
-import './index.scss';
+import "react-contexify/dist/ReactContexify.min.css";
+import "./index.scss";
 
 const onClick = ({ data }) => {
   const { EVENT_HANDLER, row } = data;
   EVENT_HANDLER({ metaData: { rowData: row.toJS() } });
 };
 
-const generateMenuItems = row => map(({ key, text, EVENT_HANDLER }) => (
-  <Item key={key} onClick={onClick} data={{ EVENT_HANDLER, row }}>{text}</Item>
-));
+const generateMenuItems = row =>
+  map(({ key, text, EVENT_HANDLER }) => (
+    <Item key={key} onClick={onClick} data={{ EVENT_HANDLER, row }}>
+      {text}
+    </Item>
+  ));
 
-
-const ContextMenuRow = (props) => {
-  const { rowProps, row, menuItems, isRender, stateKey, beforeOpenMenu } = props;
+const ContextMenuRow = props => {
+  const {
+    rowProps,
+    row,
+    menuItems,
+    isRender,
+    stateKey,
+    beforeOpenMenu
+  } = props;
 
   if (!(isRender && menuItems)) {
     return (
       <tr
         {...rowProps}
-        onContextMenu={(e) => { e.preventDefault(); }}
+        onContextMenu={e => {
+          e.preventDefault();
+        }}
       >
         {props.children}
       </tr>
     );
   }
 
-  const rowId = row.get('_key');
+  const rowId = row.get("_key");
   const menuId = `${stateKey}-${rowId}`;
   return (
     <Fragment>
@@ -38,7 +49,7 @@ const ContextMenuRow = (props) => {
         id={menuId}
         storeRef={false}
         render={({ children, ...rest }) => {
-          const onContextMenu = (e) => {
+          const onContextMenu = e => {
             rest.onContextMenu(e);
             beforeOpenMenu(rowId);
           };
@@ -54,11 +65,9 @@ const ContextMenuRow = (props) => {
           );
         }}
       >
-          { props.children }
+        {props.children}
       </ContextMenuProvider>
-      <ContextMenu id={menuId}>
-        { generateMenuItems(row)(menuItems) }
-      </ContextMenu>
+      <ContextMenu id={menuId}>{generateMenuItems(row)(menuItems)}</ContextMenu>
     </Fragment>
   );
 };
@@ -66,18 +75,20 @@ const ContextMenuRow = (props) => {
 ContextMenuRow.defaultProps = {
   isRender: true,
   menuItems: undefined,
-  beforeOpenMenu: () => {},
+  beforeOpenMenu: () => {}
 };
 
 ContextMenuRow.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element
+  ]).isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.object),
   rowProps: PropTypes.any.isRequired,
   row: PropTypes.any.isRequired,
   stateKey: PropTypes.string.isRequired,
   isRender: PropTypes.bool,
-  beforeOpenMenu: PropTypes.func,
+  beforeOpenMenu: PropTypes.func
 };
 
 export default ContextMenuRow;
-

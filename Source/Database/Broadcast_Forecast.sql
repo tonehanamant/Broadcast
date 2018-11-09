@@ -53,83 +53,151 @@ INSERT INTO #previous_version
 
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS (NOLOCK) WHERE table_name='market_headers' AND column_name='collection_method' AND CHARACTER_MAXIMUM_LENGTH=1)
-BEGIN
-       SELECT * INTO temp_db_backup.dbo.market_headers_backup FROM nsi.market_headers;
 
-       /****** Object:  Table [nsi].[market_headers]    Script Date: 9/12/2018 3:16:19 PM ******/
-       DROP TABLE [nsi].[market_headers];
-
-       /****** Object:  Table [nsi].[market_headers]    Script Date: 9/12/2018 3:16:19 PM ******/
-       CREATE TABLE [nsi].[market_headers](
-              [media_month_id] [int] NOT NULL,
-              [file_name] [varchar](255) NOT NULL,
-              [dma_id] [int] NULL,
-              [format_version] [varchar](15) NOT NULL,
-              [market_code] [smallint] NOT NULL,
-              [dma_code] [smallint] NOT NULL,
-              [market_rank] [smallint] NULL,
-              [geography_indicator] [varchar](15) NOT NULL,
-              [geography_name] [varchar](31) NOT NULL,
-              [start_datetime_of_survey] [datetime] NOT NULL,
-              [end_datetime_of_survey] [datetime] NOT NULL,
-              [number_of_days_in_survey] [smallint] NOT NULL,
-              [number_of_weeks_in_survey] [smallint] NOT NULL,
-              [reporting_day_start_time] [time](7) NOT NULL,
-              [reporting_service] [varchar](1) NOT NULL,
-              [special_report_exclusion_indicator] [varchar](7) NOT NULL,
-              [subsample_indicator] [varchar](7) NOT NULL,
-              [header_sample_type] [varchar](1) NOT NULL,
-              [reissued] [bit] NOT NULL,
-              [data_accredited] [bit] NOT NULL,
-              [playback_type] [varchar](1) NOT NULL,
-              [time_interval] [int] NOT NULL,
-              [collection_method] [varchar](2) NOT NULL,
-              [contest_indicator] [bit] NOT NULL,
-              [report_period] [varchar](7) NOT NULL,
-              [report_year] [smallint] NOT NULL,
-              [market_time_zone] [smallint] NOT NULL,
-              [market_class_code] [varchar](1) NULL,
-              [distributor_or_market_exclusion_indicator] [bit] NOT NULL,
-              [daylight_savings_time_indicator] [bit] NOT NULL,
-       CONSTRAINT [PK_nsi_market_headers] PRIMARY KEY CLUSTERED 
-       (
-              [media_month_id] ASC,
-              [file_name] ASC
-       )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-       ) ON [PRIMARY]
-
-       INSERT INTO [nsi].[market_headers]
-              SELECT * FROM temp_db_backup.dbo.market_headers_backup;
-
-       DROP TABLE temp_db_backup.dbo.market_headers_backup;
-END
+/************************ START BCOP3889 **************************************************************************************/
 GO
-
-IF (SELECT COUNT(1) FROM nsi.codes WHERE code_set='Collection Method') <> 18
+IF EXISTS ( SELECT  * FROM sys.objects WHERE object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages')                  
+			AND type IN ( N'P', N'PC' ) ) 
 BEGIN
-       DELETE FROM nsi.codes WHERE code_set='Collection Method';
-
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('1','Set Meter','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('2','LPM','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('3','LPM Preliminary','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('4','Diary only','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('5','Set Meter Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('6','Code Reader','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('7','Code Reader Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('8','LPM + PPM Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('9','Set Meter + PPM Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('10','Set Meter + RPD Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('11','Code Reader + RPD Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('12','RPD Plus Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('13','Set Meter+ PPM+RPD Parallel/Impact Data','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('20','LPM + PPM','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('30','Set Meter + PPM','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('40','Set Meter + RPD','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('50','Code Reader + RPD','Collection Method');
-       INSERT INTO nsi.codes (code,name,code_set) VALUES ('60','RPD Plus','Collection Method');
+	DROP PROCEDURE nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages
 END
 
+GO 
+
+---- =============================================
+---- Author:		
+---- Create date: 08/21/2017
+---- Description:	
+---- =============================================
+/*
+	DECLARE
+		@posting_media_month_id SMALLINT = 410,
+		@demo VARCHAR(MAX) = '13,14,15,347,348',
+		@ratings_request RatingsInputWithId,
+		@min_playback_type VARCHAR(1) = '3'
+
+	INSERT INTO @ratings_request SELECT 1,'legacy_call_letters',1,1,1,1,1,0,0,77400,79199
+	INSERT INTO @ratings_request SELECT 2,'legacy_call_letters',1,1,1,1,1,0,0,25200,32399
+    INSERT INTO @ratings_request SELECT 4,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 5,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 6,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 7,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 8,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 9,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 10,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 11,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 12,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 13,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 14,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 15,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 16,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 17,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 18,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+    INSERT INTO @ratings_request SELECT 19,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
+	
+	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages] @posting_media_month_id, @demo, @ratings_request, @min_playback_type
+*/
+--=============================================
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
+	@posting_media_month_id SMALLINT,
+	@demo VARCHAR(MAX),
+	@ratings_request RatingsInputWithId READONLY,
+	@min_playback_type VARCHAR(1)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
+	CREATE TABLE #rating_requests ([id] [int] NOT NULL,	[legacy_call_letters] varchar(15) NOT NULL,	[mon] [bit] NOT NULL,	[tue] [bit] NOT NULL,	[wed] [bit] NOT NULL,	[thu] [bit] NOT NULL,	[fri] [bit] NOT NULL,	[sat] [bit] NOT NULL,	[sun] [bit] NOT NULL,	[start_time] [int] NOT NULL,	[end_time] [int] NOT NULL,
+		PRIMARY KEY CLUSTERED (	[id],	[legacy_call_letters],	[mon],	[tue],	[wed],	[thu],	[fri],	[sat],	[sun],	[start_time],	[end_time]))
+	INSERT into #rating_requests 
+		select * from @ratings_request 
+
+	CREATE TABLE #audience_ids (audience_id INT NOT NULL, 
+		PRIMARY KEY CLUSTERED(audience_id));
+	INSERT INTO #audience_ids
+		SELECT id FROM dbo.SplitIntegers(@demo);
+
+	CREATE TABLE #min_playback_types (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), PRIMARY KEY CLUSTERED(market_code))
+	INSERT INTO #min_playback_types
+		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id,@min_playback_type);
+
+	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters varchar(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT NULL,IsWeekday int 
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time,IsWeekday))
+	INSERT INTO #viewers
+
+		-- weekday viewers only
+		SELECT
+			rr.id, rr.legacy_call_letters,a.audience_id,v.market_code,v.start_time, v.end_time,
+			CASE WHEN rr.mon=1 OR rr.tue=1 OR rr.wed=1 OR rr.thu=1 OR rr.fri=1 THEN vd.weekday_viewers ELSE null END ,
+			1 as IsWeekday 
+		FROM
+			#rating_requests rr
+			JOIN nsi.viewers v (NOLOCK) ON v.media_month_id=@posting_media_month_id
+				AND v.legacy_call_letters=rr.legacy_call_letters
+				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
+			CROSS APPLY #audience_ids a
+			JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
+				AND vd.viewer_id=v.id
+				AND vd.audience_id=a.audience_id
+				AND vd.playback_type=mpt.available_playback_type
+
+	-- weekend viewers only
+	INSERT INTO #viewers
+		SELECT
+			rr.id, rr.legacy_call_letters,a.audience_id,v.market_code,v.start_time, v.end_time,
+			CASE WHEN rr.sat=1 OR rr.sun=1 THEN vd.weekend_viewers ELSE null END ,
+			0 as IsWeekday 
+		FROM
+			#rating_requests rr
+			JOIN nsi.viewers v (NOLOCK) ON v.media_month_id=@posting_media_month_id
+				AND v.legacy_call_letters=rr.legacy_call_letters
+				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
+			CROSS APPLY #audience_ids a
+			JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
+				AND vd.viewer_id=v.id
+				AND vd.audience_id=a.audience_id
+				AND vd.playback_type=mpt.available_playback_type
+
+	--SELECT
+	--	id,legacy_call_letters,audience_id,market_code,
+	--	viewers--SUM(viewers) 'impressions', avg(viewers)
+	--	,IsWeekday
+	--FROM #viewers
+	----GROUP BY 		id,legacy_call_letters,market_code,audience_id
+
+	SELECT 
+		market_averages.id,
+		legacy_call_letters,
+		audience_id, 
+		SUM(market_impression_avg) impressions	-- sum of market averages by call letter, audieince, etc
+	from 
+	(	-- get averages of impressions for each market
+		SELECT id,
+				legacy_call_letters,
+				market_code, 
+				audience_id, 
+				avg(viewers) market_impression_avg
+		FROM 
+			#viewers
+		GROUP BY 
+			id,legacy_call_letters,market_code, audience_id
+	) as market_averages
+	group by 
+		market_averages.id,legacy_call_letters, audience_id
+
+	IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
+	IF OBJECT_ID('tempdb..#min_playback_types') IS NOT NULL DROP TABLE #min_playback_types;
+	IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
+	IF OBJECT_ID('tempdb..#viewers') IS NOT NULL DROP TABLE #viewers;
+END
+
+go
+
+
+/************************ END BCOP3889 **************************************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
@@ -137,7 +205,7 @@ END
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '18.10.1' -- Current release version
+SET parameter_value = '18.11.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -148,8 +216,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '18.09.1' -- Previous release version
-		OR [version] = '18.10.1') -- Current release version
+		WHERE [version] = '18.10.1' -- Previous release version
+		OR [version] = '18.11.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

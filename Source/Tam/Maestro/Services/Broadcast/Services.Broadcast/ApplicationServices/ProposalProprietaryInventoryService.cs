@@ -68,7 +68,7 @@ namespace Services.Broadcast.ApplicationServices
             var relevantMediaWeeks = proposalDetailInventory.Weeks.Select(w => w.MediaWeekId).ToList();
             var spotLengthRepository = BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             var spotLengthMappings = spotLengthRepository.GetSpotLengths();
-            var proposalMarketIds = ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDetailInventory.ProposalId, proposalDetailInventory.ProposalVersion, detailId).Select(m => m.Id).ToList();
+            var proposalMarketIds = ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDetailInventory.ProposalId, proposalDetailInventory.ProposalVersion).Select(m => m.Id).ToList();
             var spotLengths = spotLengthMappings.Where(m => int.Parse(m.Display) >= proposalDetailInventory.DetailSpotLength && int.Parse(m.Display) <= 30).Select(m => m.Id);
             var sortedFilteredInventoryDetails = BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>().GetSortedFilteredInventoryDetails(relevantMediaWeeks, proposalMarketIds, spotLengths);
 
@@ -154,15 +154,15 @@ namespace Services.Broadcast.ApplicationServices
                                 if (!DisplayDaypart.IsContained(displayDaypart, proposalDetailDaypart))
                                     slotDto.HasWastage = true;
                                 throw new Exception("Should not have gotten this far");
-                                var detail = new ManifestDetailDaypart
-                                {
-                                    Id = component.Id,
-                                    LegacyCallLetters = "xyz",
-                                    DisplayDaypart = DisplayDaypart.Intersect(displayDaypart, proposalDetailDaypart)
-                                };
+                                //var detail = new ManifestDetailDaypart
+                                //{
+                                //    Id = component.Id,
+                                //    LegacyCallLetters = "xyz",
+                                //    DisplayDaypart = DisplayDaypart.Intersect(displayDaypart, proposalDetailDaypart)
+                                //};
 
-                                impressionRequests.Add(detail);
-                                stationDetailImpressions[detail.Id] = slotDto;
+                                //impressionRequests.Add(detail);
+                                //stationDetailImpressions[detail.Id] = slotDto;
                             }
 
                             daypartGroupDto.DaypartSlots.Add(slotDto);

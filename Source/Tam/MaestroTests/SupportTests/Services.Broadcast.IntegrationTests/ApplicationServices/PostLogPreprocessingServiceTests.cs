@@ -12,6 +12,7 @@ using Common.Services;
 using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Common.DataLayer;
 using Services.Broadcast.ApplicationServices.Helpers;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -45,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -67,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -90,7 +91,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -108,11 +109,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var fileNames = new List<string>() { @".\Files\StrataSBMSInvoicePostExportInvalidData.xlsx" };
+                var fileNames = new List<string>() { @".\Files\BCOP3666.txt" };
                 var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Unknown);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -167,13 +168,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PostLogPreprocessingService.ValidateFiles(
                     new List<string>
                     {
-                        @".\Files\KeepingTrac-BCOP3553.csv",
-                        @".\Files\KeepingTrac-BCOP3553_RequiredColumnMissing.csv",
-                        @".\Files\KeepingTrac-BCOP3553_RequiredDataMissing.csv"
+                        @".\Files\KeepingTrac_ValidFile.xlsx",
+                        @".\Files\KeepingTrac_MissingData.xlsx",
+                        @".\Files\KeepingTrac_MissingHeaders.xlsx",
+                        @".\Files\C786.Sigma.MissingColumns.csv"
                     },
                     userName, FileSourceEnum.KeepingTrac);
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(FileValidationResult), "CreatedDate");
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {

@@ -732,7 +732,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (postLogStation != null)
                     {
-                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal, scrub.PostingBookId.Value);
+                        var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposal);
 
                         var marketGeoName = postLogStation.OriginMarket;
                         if (markets.Any(m => m.Display == marketGeoName))

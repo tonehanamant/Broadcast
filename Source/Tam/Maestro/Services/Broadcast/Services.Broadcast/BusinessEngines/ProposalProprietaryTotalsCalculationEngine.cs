@@ -2,6 +2,7 @@
 using System.Linq;
 using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.BusinessEngines
 {

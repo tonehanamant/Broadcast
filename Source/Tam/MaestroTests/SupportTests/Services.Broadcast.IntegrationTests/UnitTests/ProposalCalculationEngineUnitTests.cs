@@ -4,6 +4,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using System.Linq;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {

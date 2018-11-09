@@ -1,4 +1,4 @@
-﻿using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Concurrent;
 using System.Runtime.Caching;

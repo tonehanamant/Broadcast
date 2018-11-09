@@ -54,7 +54,8 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetInitialProposalData(DateTime.Now));
+                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                        .GetInitialProposalData(DateTime.Now));
         }
 
         [HttpPost]
@@ -94,11 +95,12 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("generate_scx_archive/{proposalId}")]
+        [Route("GenerateScxArchive/{proposalId}")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public HttpResponseMessage GenerateScxArchive(int proposalId)
         {
-            var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>().GenerateScxFileArchive(proposalId);
+            var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                .GenerateScxFileArchive(proposalId);
 
             var result = Request.CreateResponse(HttpStatusCode.OK);
             result.Content = new StreamContent(archive.Item2);
@@ -106,7 +108,7 @@ namespace BroadcastComposerWeb.Controllers
             result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
                 FileName = archive.Item1
-            };  
+            };
 
             return result;
         }
@@ -114,7 +116,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPut]
         [Route("RerunScrubbing/{proposalId}/{proposalDetailId}")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<bool> RerunScrubbing(int proposalId,int proposalDetailId)
+        public BaseResponse<bool> RerunScrubbing(int proposalId, int proposalDetailId)
         {
             RescrubProposalDetailRequest request = new RescrubProposalDetailRequest()
             {
@@ -124,8 +126,8 @@ namespace BroadcastComposerWeb.Controllers
 
             return
                 _ConvertToBaseResponse(() =>
-                        _ApplicationServiceFactory.GetApplicationService<IAffidavitService>()
-                            .RescrubProposalDetail(request, Identity.Name, DateTime.Now));
+                    _ApplicationServiceFactory.GetApplicationService<IAffidavitService>()
+                        .RescrubProposalDetail(request, Identity.Name, DateTime.Now));
         }
 
         [HttpPost]
@@ -159,7 +161,8 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetProposalById(proposalId));
+                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                        .GetProposalById(proposalId));
         }
 
         [HttpGet]
@@ -169,7 +172,8 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetProposalByIdWithVersion(proposalId, version));
+                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                        .GetProposalByIdWithVersion(proposalId, version));
         }
 
         [HttpGet]
@@ -179,7 +183,8 @@ namespace BroadcastComposerWeb.Controllers
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().GetProposalVersionsByProposalId(proposalId));
+                    () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                        .GetProposalVersionsByProposalId(proposalId));
         }
 
         [HttpGet]
@@ -189,7 +194,8 @@ namespace BroadcastComposerWeb.Controllers
         {
             var key = string.Format("broadcast_proposal : {0}", proposalId);
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().LockObject(key));
+                () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>()
+                    .LockObject(key));
         }
 
         [HttpGet]
@@ -199,7 +205,8 @@ namespace BroadcastComposerWeb.Controllers
         {
             var key = string.Format("broadcast_proposal : {0}", proposalId);
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>().ReleaseObject(key));
+                () => _ApplicationServiceFactory.GetApplicationService<ILockingManagerApplicationService>()
+                    .ReleaseObject(key));
         }
 
         [HttpGet]
@@ -209,7 +216,8 @@ namespace BroadcastComposerWeb.Controllers
         {
 
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindGenres(genreSearchString));
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                    .FindGenres(genreSearchString));
         }
 
         [HttpGet]
@@ -219,7 +227,8 @@ namespace BroadcastComposerWeb.Controllers
         {
 
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindShowType(showTypeSearchString));
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                    .FindShowType(showTypeSearchString));
         }
 
         [HttpPost]
@@ -229,7 +238,8 @@ namespace BroadcastComposerWeb.Controllers
         {
 
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindPrograms(request, Request.RequestUri.ToString()));
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                    .FindPrograms(request, Request.RequestUri.ToString()));
         }
 
         [HttpPost]
@@ -238,7 +248,8 @@ namespace BroadcastComposerWeb.Controllers
         {
 
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>().FindProgramsExternalApi(request));
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                    .FindProgramsExternalApi(request));
         }
 
         [HttpPost]
@@ -263,6 +274,25 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             return response;
+        }
+
+        [HttpGet]
+        [Route("GenerateScxDetail/{proposalDetailId}")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public HttpResponseMessage GgenerateScxDetail(int proposalDetailId)
+        {
+            var archive = _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                .GenerateScxFileDetail(proposalDetailId);
+
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new StreamContent(archive.Item2);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = archive.Item1
+            };
+
+            return result;
         }
     }
 }

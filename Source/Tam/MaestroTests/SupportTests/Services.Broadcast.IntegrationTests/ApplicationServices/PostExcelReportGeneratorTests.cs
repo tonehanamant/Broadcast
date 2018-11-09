@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

@@ -287,25 +287,6 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<ITrackerService>().DeleteBvsFile(bvsFileId));
-        }
-
-        [HttpGet]
-        [Route("SpotTrackerReport/{proposalId}")]
-        public HttpResponseMessage GenerateSpotTrackerReport(int proposalId)
-        {
-            var report = _ApplicationServiceFactory
-                    .GetApplicationService<ITrackerService>()
-                    .GenerateSpotTrackerReport(proposalId);
-
-            var result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new StreamContent(report.Stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = report.Filename
-            };
-
-            return result;
-        }
+        }        
     }
 }

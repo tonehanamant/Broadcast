@@ -5,9 +5,6 @@
   "CanDelete": true,
   "Details": [
     {
-      "AdjustmentInflation": 2.0,
-      "AdjustmentMargin": 3.0,
-      "AdjustmentRate": 1.0,
       "Adu": false,
       "CpmCriteria": [],
       "Daypart": {
@@ -49,19 +46,26 @@
           }
         }
       ],
-      "GoalBudget": 100.0000,
-      "GoalImpression": 10000.0,
       "HasPostingDataChanged": false,
       "HutProjectionBookId": 410,
       "NtiConversionFactor": 0.2,
-      "OpenMarketPricing": {
-        "CpmMax": 55.9900,
-        "CpmMin": 9.9900,
-        "CpmTarget": 3,
-        "UnitCapPerStation": 100
-      },
       "PostingBookId": null,
       "PostingPlaybackType": null,
+      "PricingGuide": {
+        "AdjustmentInflation": 2.0,
+        "AdjustmentMargin": 3.0,
+        "AdjustmentRate": 1.0,
+        "GoalBudget": 100.0000,
+        "GoalImpression": 10000.0,
+        "OpenMarketPricing": {
+          "CpmMax": 55.9900,
+          "CpmMin": 9.9900,
+          "DistributionReport": null,
+          "OpenMarketCpmTarget": 3,
+          "UnitCapPerStation": 100
+        },
+        "ProprietaryPricing": []
+      },
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -78,7 +82,6 @@
       ],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
-      "ProprietaryPricing": [],
       "Quarters": [
         {
           "Cpm": 21.1300,

@@ -1,5 +1,37 @@
 ﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 1.01,
+      "Id": 160,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 2,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
   "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure",
+        "Id": 3
+      },
+      {
+        "Display": "Comedy",
+        "Id": 9
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
     "ProgramNames": [
       "Adventure Time",
       "Friends"
@@ -8,68 +40,89 @@
   "Filter": {},
   "Markets": [
     {
+      "AvgCpm": 1.8342378060247007219741218686,
+      "DisplayImpressions": 29550.69479167,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
+      "MaxCpm": 2.8224718149728601694541515914,
+      "MinCpm": 0.8460037970765412744940921458,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.8460037970765412744940921458,
           "Programs": [
             {
-              "BlendedCpm": 0.00,
+              "BlendedCpm": 0.8460037970765412744940921458,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-SU 9AM-12AM",
                 "Id": 5
               },
+              "DisplayCost": 25.0000,
+              "DisplayImpressions": 29550.69479167,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 29550.69479167,
               "Genres": [
                 {
                   "Display": "Adventure",
                   "Id": 3
                 }
               ],
-              "Impressions": 10392144.25,
-              "ImpressionsPerSpot": 10392144.25,
+              "HasImpressions": true,
+              "Impressions": 29550.69479167,
+              "ImpressionsPerSpot": 29550.69479167,
               "ManifestDaypartId": 213351,
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
-              "Spots": 0,
-              "StationImpressions": 0.0
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.01,
-              "Cost": 25.0000,
+              "BlendedCpm": 2.8224718149728601694541515914,
+              "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 6AM-6PM",
                 "Id": 12
               },
+              "DisplayCost": 25.0000,
+              "DisplayImpressions": 8857.484375,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 8857.484375,
               "Genres": [
                 {
                   "Display": "Comedy",
                   "Id": 9
                 }
               ],
-              "Impressions": 2125796.25,
-              "ImpressionsPerSpot": 2125796.25,
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 8857.484375,
               "ManifestDaypartId": 213352,
               "ProgramId": 162237,
               "ProgramName": "Friends",
               "Spots": 0,
-              "StationImpressions": 0.0
+              "StationImpressionsPerSpot": 0.0
             }
           ],
           "StationCode": 5316
         }
       ],
-      "TotalCost": 50.0000,
-      "TotalImpressions": 12517940.5,
-      "TotalSpots": 0,
-      "TotalStationImpressions": 0.0
+      "TotalCost": 25.0000,
+      "TotalImpressions": 29550.69479167,
+      "TotalSpots": 1
     }
-  ]
+  ],
+  "OpenMarketTotals": {
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.8460037970765412744940921000,
+    "Impressions": 29550.69479167
+  }
 }

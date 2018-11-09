@@ -2,11 +2,11 @@
   {
     "CreatedBy": "PostLogPreprocessing_User",
     "ErrorMessages": [
-      "Unknown PostLog file type for file: .\\Files\\StrataSBMSInvoicePostExportInvalidData.xlsx"
+      "Unknown extension type for file: .\\Files\\BCOP3666.txt"
     ],
-    "FileHash": "5D-E8-5C-CE-9A-69-A0-A3-52-E8-8A-95-16-F7-06-3E-F7-6B-F2-50",
-    "FileName": "StrataSBMSInvoicePostExportInvalidData.xlsx",
-    "FilePath": ".\\Files\\StrataSBMSInvoicePostExportInvalidData.xlsx",
+    "FileHash": "82-90-4D-5E-67-B6-5D-E1-F2-99-45-A3-DB-91-5E-7A-3E-D2-BC-97",
+    "FileName": "BCOP3666.txt",
+    "FilePath": ".\\Files\\BCOP3666.txt",
     "Source": 0,
     "Status": 2
   }

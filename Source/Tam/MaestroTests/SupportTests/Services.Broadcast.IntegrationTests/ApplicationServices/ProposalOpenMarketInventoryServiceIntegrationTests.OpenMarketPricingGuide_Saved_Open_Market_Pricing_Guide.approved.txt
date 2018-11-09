@@ -1,7 +1,7 @@
 ﻿[
   {
     "blended_cpm": 0.0000,
-    "cost": 300.0000,
+    "cost": 0.0000,
     "cost_per_spot": 300.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -14,7 +14,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 275.0000,
+    "cost": 0.0000,
     "cost_per_spot": 275.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -26,23 +26,23 @@
     "station_inventory_manifest_dayparts_id": 41612
   },
   {
-    "blended_cpm": 0.6600,
+    "blended_cpm": 0.6568,
     "cost": 60.0000,
     "cost_per_spot": 60.0000,
     "impressions": 91348.27550893,
     "impressions_per_spot": 91348.27550893,
     "market_code": 139,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5942,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 55369
   },
   {
-    "blended_cpm": 2.8500,
-    "cost": 250.0000,
+    "blended_cpm": 2.8531,
+    "cost": 0.0000,
     "cost_per_spot": 250.0000,
-    "impressions": 87623.17943776,
+    "impressions": 0.0,
     "impressions_per_spot": 87623.17943776,
     "market_code": 139,
     "proposal_version_detail_id": 8123,
@@ -52,10 +52,10 @@
     "station_inventory_manifest_dayparts_id": 41606
   },
   {
-    "blended_cpm": 3.5100,
-    "cost": 100.0000,
+    "blended_cpm": 3.5080,
+    "cost": 0.0000,
     "cost_per_spot": 100.0000,
-    "impressions": 28506.10132628,
+    "impressions": 0.0,
     "impressions_per_spot": 28506.10132628,
     "market_code": 139,
     "proposal_version_detail_id": 8123,
@@ -65,10 +65,10 @@
     "station_inventory_manifest_dayparts_id": 41602
   },
   {
-    "blended_cpm": 7.1600,
-    "cost": 150.0000,
+    "blended_cpm": 7.1576,
+    "cost": 0.0000,
     "cost_per_spot": 150.0000,
-    "impressions": 20956.66047932,
+    "impressions": 0.0,
     "impressions_per_spot": 20956.66047932,
     "market_code": 139,
     "proposal_version_detail_id": 8123,
@@ -78,10 +78,10 @@
     "station_inventory_manifest_dayparts_id": 41604
   },
   {
-    "blended_cpm": 8.5600,
-    "cost": 325.0000,
+    "blended_cpm": 8.5596,
+    "cost": 0.0000,
     "cost_per_spot": 325.0000,
-    "impressions": 37968.69484494,
+    "impressions": 0.0,
     "impressions_per_spot": 37968.69484494,
     "market_code": 139,
     "proposal_version_detail_id": 8123,
@@ -91,21 +91,21 @@
     "station_inventory_manifest_dayparts_id": 41608
   },
   {
-    "blended_cpm": 1.1600,
+    "blended_cpm": 1.1642,
     "cost": 25.0000,
     "cost_per_spot": 25.0000,
     "impressions": 21473.91954406,
     "impressions_per_spot": 21473.91954406,
     "market_code": 318,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 6173,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41556
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 20.0000,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -118,7 +118,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -130,21 +130,21 @@
     "station_inventory_manifest_dayparts_id": 41622
   },
   {
-    "blended_cpm": 42.3300,
+    "blended_cpm": 42.3318,
     "cost": 25.0000,
     "cost_per_spot": 25.0000,
     "impressions": 590.57222459,
     "impressions_per_spot": 590.57222459,
     "market_code": 410,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 1045,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41620
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -157,7 +157,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -170,7 +170,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 125.0000,
+    "cost": 0.0000,
     "cost_per_spot": 125.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -183,7 +183,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 150.0000,
+    "cost": 0.0000,
     "cost_per_spot": 150.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -195,23 +195,23 @@
     "station_inventory_manifest_dayparts_id": 41585
   },
   {
-    "blended_cpm": 0.6600,
+    "blended_cpm": 0.6581,
     "cost": 15.0000,
     "cost_per_spot": 15.0000,
     "impressions": 22790.40650181,
     "impressions_per_spot": 22790.40650181,
     "market_code": 428,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5927,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41579
   },
   {
-    "blended_cpm": 3.5400,
-    "cost": 75.0000,
+    "blended_cpm": 3.5362,
+    "cost": 0.0000,
     "cost_per_spot": 75.0000,
-    "impressions": 21209.1256847,
+    "impressions": 0.0,
     "impressions_per_spot": 21209.1256847,
     "market_code": 428,
     "proposal_version_detail_id": 8123,
@@ -221,10 +221,10 @@
     "station_inventory_manifest_dayparts_id": 41581
   },
   {
-    "blended_cpm": 4.9300,
-    "cost": 35.0000,
+    "blended_cpm": 4.9288,
+    "cost": 0.0000,
     "cost_per_spot": 35.0000,
-    "impressions": 7101.0017007,
+    "impressions": 0.0,
     "impressions_per_spot": 7101.0017007,
     "market_code": 428,
     "proposal_version_detail_id": 8123,
@@ -235,7 +235,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -247,21 +247,21 @@
     "station_inventory_manifest_dayparts_id": 41575
   },
   {
-    "blended_cpm": 4.8900,
+    "blended_cpm": 4.8859,
     "cost": 30.0000,
     "cost_per_spot": 30.0000,
-    "impressions": 149503.72321279,
+    "impressions": 6140.0,
     "impressions_per_spot": 149503.72321279,
     "market_code": 200,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5319,
     "station_impressions": 6140.0,
     "station_inventory_manifest_dayparts_id": 41653
   },
   {
-    "blended_cpm": 4.9400,
-    "cost": 40.0000,
+    "blended_cpm": 4.9443,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -273,8 +273,8 @@
     "station_inventory_manifest_dayparts_id": 41657
   },
   {
-    "blended_cpm": 6.5000,
-    "cost": 60.0000,
+    "blended_cpm": 6.5005,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -286,8 +286,8 @@
     "station_inventory_manifest_dayparts_id": 41658
   },
   {
-    "blended_cpm": 6.6800,
-    "cost": 30.0000,
+    "blended_cpm": 6.6815,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -299,8 +299,8 @@
     "station_inventory_manifest_dayparts_id": 41659
   },
   {
-    "blended_cpm": 7.1300,
-    "cost": 60.0000,
+    "blended_cpm": 7.1343,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -312,10 +312,10 @@
     "station_inventory_manifest_dayparts_id": 41660
   },
   {
-    "blended_cpm": 10.9800,
-    "cost": 180.0000,
+    "blended_cpm": 10.9823,
+    "cost": 0.0000,
     "cost_per_spot": 180.0000,
-    "impressions": 85113.07194443,
+    "impressions": 0.0,
     "impressions_per_spot": 85113.07194443,
     "market_code": 200,
     "proposal_version_detail_id": 8123,
@@ -325,10 +325,10 @@
     "station_inventory_manifest_dayparts_id": 41655
   },
   {
-    "blended_cpm": 14.7500,
-    "cost": 180.0000,
+    "blended_cpm": 14.7540,
+    "cost": 0.0000,
     "cost_per_spot": 180.0000,
-    "impressions": 163840.78050019,
+    "impressions": 0.0,
     "impressions_per_spot": 163840.78050019,
     "market_code": 200,
     "proposal_version_detail_id": 8123,
@@ -339,7 +339,7 @@
   },
   {
     "blended_cpm": 25.0000,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -352,7 +352,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -365,7 +365,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -378,7 +378,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -390,10 +390,10 @@
     "station_inventory_manifest_dayparts_id": 41594
   },
   {
-    "blended_cpm": 41.2200,
-    "cost": 10.0000,
+    "blended_cpm": 41.2170,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
-    "impressions": 242.61831679,
+    "impressions": 0.0,
     "impressions_per_spot": 242.61831679,
     "market_code": 404,
     "proposal_version_detail_id": 8123,
@@ -404,7 +404,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -416,21 +416,21 @@
     "station_inventory_manifest_dayparts_id": 41597
   },
   {
-    "blended_cpm": 2.4800,
+    "blended_cpm": 2.4751,
     "cost": 15.0000,
     "cost_per_spot": 15.0000,
     "impressions": 6060.34335516,
     "impressions_per_spot": 6060.34335516,
     "market_code": 404,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 7011,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41596
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -443,7 +443,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -456,7 +456,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 20.0000,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -469,7 +469,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -481,21 +481,21 @@
     "station_inventory_manifest_dayparts_id": 41634
   },
   {
-    "blended_cpm": 3.8100,
+    "blended_cpm": 3.8107,
     "cost": 20.0000,
     "cost_per_spot": 20.0000,
     "impressions": 5248.34554568,
     "impressions_per_spot": 5248.34554568,
     "market_code": 343,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 6072,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41628
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -508,7 +508,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 70.0000,
+    "cost": 0.0000,
     "cost_per_spot": 70.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -521,7 +521,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 30.0000,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -533,23 +533,23 @@
     "station_inventory_manifest_dayparts_id": 41578
   },
   {
-    "blended_cpm": 0.5300,
+    "blended_cpm": 0.5339,
     "cost": 5.0000,
     "cost_per_spot": 5.0000,
     "impressions": 9364.61857939,
     "impressions_per_spot": 9364.61857939,
     "market_code": 358,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5225,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41568
   },
   {
-    "blended_cpm": 2.4400,
-    "cost": 25.0000,
+    "blended_cpm": 2.4428,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 10233.95545822,
+    "impressions": 0.0,
     "impressions_per_spot": 10233.95545822,
     "market_code": 358,
     "proposal_version_detail_id": 8123,
@@ -559,10 +559,10 @@
     "station_inventory_manifest_dayparts_id": 41572
   },
   {
-    "blended_cpm": 12.0700,
-    "cost": 25.0000,
+    "blended_cpm": 12.0688,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 2071.44997677,
+    "impressions": 0.0,
     "impressions_per_spot": 2071.44997677,
     "market_code": 358,
     "proposal_version_detail_id": 8123,
@@ -573,7 +573,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 8.0000,
+    "cost": 0.0000,
     "cost_per_spot": 8.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -586,7 +586,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -599,7 +599,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 45.0000,
+    "cost": 0.0000,
     "cost_per_spot": 45.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -612,7 +612,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -624,10 +624,10 @@
     "station_inventory_manifest_dayparts_id": 41627
   },
   {
-    "blended_cpm": 2.1400,
-    "cost": 30.0000,
+    "blended_cpm": 2.1366,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
-    "impressions": 14040.66713056,
+    "impressions": 0.0,
     "impressions_per_spot": 14040.66713056,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -637,10 +637,10 @@
     "station_inventory_manifest_dayparts_id": 41623
   },
   {
-    "blended_cpm": 3.9100,
-    "cost": 20.0000,
+    "blended_cpm": 3.9086,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
-    "impressions": 5116.90138469,
+    "impressions": 0.0,
     "impressions_per_spot": 5116.90138469,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -651,7 +651,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -664,7 +664,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -677,7 +677,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -689,10 +689,10 @@
     "station_inventory_manifest_dayparts_id": 41591
   },
   {
-    "blended_cpm": 2.3500,
-    "cost": 15.0000,
+    "blended_cpm": 2.3503,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
-    "impressions": 6381.9695587,
+    "impressions": 0.0,
     "impressions_per_spot": 6381.9695587,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -702,10 +702,10 @@
     "station_inventory_manifest_dayparts_id": 41588
   },
   {
-    "blended_cpm": 12.8400,
-    "cost": 10.0000,
+    "blended_cpm": 12.8374,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
-    "impressions": 778.97292725,
+    "impressions": 0.0,
     "impressions_per_spot": 778.97292725,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -715,10 +715,10 @@
     "station_inventory_manifest_dayparts_id": 41586
   },
   {
-    "blended_cpm": 16.4100,
-    "cost": 15.0000,
+    "blended_cpm": 16.4117,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
-    "impressions": 913.97916796,
+    "impressions": 0.0,
     "impressions_per_spot": 913.97916796,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -729,7 +729,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -742,7 +742,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 60.0000,
+    "cost": 0.0000,
     "cost_per_spot": 60.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -754,23 +754,23 @@
     "station_inventory_manifest_dayparts_id": 41611
   },
   {
-    "blended_cpm": 0.5100,
+    "blended_cpm": 0.5137,
     "cost": 75.0000,
     "cost_per_spot": 75.0000,
     "impressions": 145973.99841742,
     "impressions_per_spot": 145973.99841742,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5198,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41601
   },
   {
-    "blended_cpm": 1.0100,
-    "cost": 25.0000,
+    "blended_cpm": 1.0090,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 24776.33399837,
+    "impressions": 0.0,
     "impressions_per_spot": 24776.33399837,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -780,10 +780,10 @@
     "station_inventory_manifest_dayparts_id": 41607
   },
   {
-    "blended_cpm": 1.4100,
-    "cost": 25.0000,
+    "blended_cpm": 1.4115,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 17711.35386071,
+    "impressions": 0.0,
     "impressions_per_spot": 17711.35386071,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -793,10 +793,10 @@
     "station_inventory_manifest_dayparts_id": 41600
   },
   {
-    "blended_cpm": 3.2100,
-    "cost": 170.0000,
+    "blended_cpm": 3.2132,
+    "cost": 0.0000,
     "cost_per_spot": 170.0000,
-    "impressions": 52905.79977459,
+    "impressions": 0.0,
     "impressions_per_spot": 52905.79977459,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -806,10 +806,10 @@
     "station_inventory_manifest_dayparts_id": 41605
   },
   {
-    "blended_cpm": 3.9000,
-    "cost": 175.0000,
+    "blended_cpm": 3.8957,
+    "cost": 0.0000,
     "cost_per_spot": 175.0000,
-    "impressions": 44920.75082183,
+    "impressions": 0.0,
     "impressions_per_spot": 44920.75082183,
     "market_code": 317,
     "proposal_version_detail_id": 8123,
@@ -820,7 +820,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 7.0000,
+    "cost": 0.0000,
     "cost_per_spot": 7.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -833,7 +833,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 7.0000,
+    "cost": 0.0000,
     "cost_per_spot": 7.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -845,23 +845,23 @@
     "station_inventory_manifest_dayparts_id": 41618
   },
   {
-    "blended_cpm": 0.4900,
+    "blended_cpm": 0.4873,
     "cost": 10.0000,
     "cost_per_spot": 10.0000,
     "impressions": 20518.1602912,
     "impressions_per_spot": 20518.1602912,
     "market_code": 364,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 3503,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41614
   },
   {
-    "blended_cpm": 2.0600,
-    "cost": 25.0000,
+    "blended_cpm": 2.0564,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 12156.81393922,
+    "impressions": 0.0,
     "impressions_per_spot": 12156.81393922,
     "market_code": 364,
     "proposal_version_detail_id": 8123,
@@ -871,10 +871,10 @@
     "station_inventory_manifest_dayparts_id": 41615
   },
   {
-    "blended_cpm": 2.1100,
-    "cost": 25.0000,
+    "blended_cpm": 2.1107,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 11844.35745675,
+    "impressions": 0.0,
     "impressions_per_spot": 11844.35745675,
     "market_code": 364,
     "proposal_version_detail_id": 8123,
@@ -884,10 +884,10 @@
     "station_inventory_manifest_dayparts_id": 41616
   },
   {
-    "blended_cpm": 10.9100,
-    "cost": 10.0000,
+    "blended_cpm": 10.9054,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
-    "impressions": 916.97408764,
+    "impressions": 0.0,
     "impressions_per_spot": 916.97408764,
     "market_code": 364,
     "proposal_version_detail_id": 8123,
@@ -898,7 +898,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 35.0000,
+    "cost": 0.0000,
     "cost_per_spot": 35.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -911,7 +911,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -924,7 +924,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -937,7 +937,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -950,7 +950,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -963,7 +963,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -976,7 +976,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -988,23 +988,23 @@
     "station_inventory_manifest_dayparts_id": 41571
   },
   {
-    "blended_cpm": 6.5200,
+    "blended_cpm": 6.5217,
     "cost": 15.0000,
     "cost_per_spot": 15.0000,
-    "impressions": 0.0,
+    "impressions": 2300.0,
     "impressions_per_spot": 0.0,
     "market_code": 360,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 6269,
     "station_impressions": 2300.0,
     "station_inventory_manifest_dayparts_id": 41637
   },
   {
     "blended_cpm": 10.0000,
-    "cost": 15.0000,
+    "cost": 0.0000,
     "cost_per_spot": 15.0000,
-    "impressions": 12272.16697896,
+    "impressions": 0.0,
     "impressions_per_spot": 12272.16697896,
     "market_code": 360,
     "proposal_version_detail_id": 8123,
@@ -1014,8 +1014,8 @@
     "station_inventory_manifest_dayparts_id": 41640
   },
   {
-    "blended_cpm": 14.2900,
-    "cost": 20.0000,
+    "blended_cpm": 14.2857,
+    "cost": 0.0000,
     "cost_per_spot": 20.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1028,9 +1028,9 @@
   },
   {
     "blended_cpm": 20.0000,
-    "cost": 50.0000,
+    "cost": 0.0000,
     "cost_per_spot": 50.0000,
-    "impressions": 11734.23300659,
+    "impressions": 0.0,
     "impressions_per_spot": 11734.23300659,
     "market_code": 360,
     "proposal_version_detail_id": 8123,
@@ -1040,8 +1040,8 @@
     "station_inventory_manifest_dayparts_id": 41635
   },
   {
-    "blended_cpm": 23.8100,
-    "cost": 50.0000,
+    "blended_cpm": 23.8095,
+    "cost": 0.0000,
     "cost_per_spot": 50.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1054,9 +1054,9 @@
   },
   {
     "blended_cpm": 31.2500,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
-    "impressions": 11744.47441559,
+    "impressions": 0.0,
     "impressions_per_spot": 11744.47441559,
     "market_code": 360,
     "proposal_version_detail_id": 8123,
@@ -1066,10 +1066,10 @@
     "station_inventory_manifest_dayparts_id": 41633
   },
   {
-    "blended_cpm": 33.3300,
-    "cost": 10.0000,
+    "blended_cpm": 33.3333,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
-    "impressions": 13966.05166186,
+    "impressions": 0.0,
     "impressions_per_spot": 13966.05166186,
     "market_code": 360,
     "proposal_version_detail_id": 8123,
@@ -1080,9 +1080,9 @@
   },
   {
     "blended_cpm": 50.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
-    "impressions": 1185.21323001,
+    "impressions": 0.0,
     "impressions_per_spot": 1185.21323001,
     "market_code": 360,
     "proposal_version_detail_id": 8123,
@@ -1093,7 +1093,7 @@
   },
   {
     "blended_cpm": 125.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1106,7 +1106,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 100.0000,
+    "cost": 0.0000,
     "cost_per_spot": 100.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1118,10 +1118,10 @@
     "station_inventory_manifest_dayparts_id": 41643
   },
   {
-    "blended_cpm": 26.1200,
-    "cost": 30.0000,
+    "blended_cpm": 26.1211,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
-    "impressions": 1148.4933525,
+    "impressions": 0.0,
     "impressions_per_spot": 1148.4933525,
     "market_code": 367,
     "proposal_version_detail_id": 8123,
@@ -1131,10 +1131,10 @@
     "station_inventory_manifest_dayparts_id": 41641
   },
   {
-    "blended_cpm": 47.1200,
-    "cost": 30.0000,
+    "blended_cpm": 47.1239,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
-    "impressions": 636.61881453,
+    "impressions": 0.0,
     "impressions_per_spot": 636.61881453,
     "market_code": 367,
     "proposal_version_detail_id": 8123,
@@ -1145,7 +1145,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1158,7 +1158,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1171,7 +1171,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 25.0000,
+    "cost": 0.0000,
     "cost_per_spot": 25.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1183,23 +1183,23 @@
     "station_inventory_manifest_dayparts_id": 41648
   },
   {
-    "blended_cpm": 1.9700,
+    "blended_cpm": 1.9665,
     "cost": 30.0000,
     "cost_per_spot": 30.0000,
     "impressions": 15255.23058707,
     "impressions_per_spot": 15255.23058707,
     "market_code": 367,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5408,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41644
   },
   {
-    "blended_cpm": 4.8700,
-    "cost": 30.0000,
+    "blended_cpm": 4.8699,
+    "cost": 0.0000,
     "cost_per_spot": 30.0000,
-    "impressions": 6160.2107669,
+    "impressions": 0.0,
     "impressions_per_spot": 6160.2107669,
     "market_code": 367,
     "proposal_version_detail_id": 8123,
@@ -1210,7 +1210,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1223,7 +1223,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1236,7 +1236,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 10.0000,
+    "cost": 0.0000,
     "cost_per_spot": 10.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1248,21 +1248,21 @@
     "station_inventory_manifest_dayparts_id": 41652
   },
   {
-    "blended_cpm": 3.7300,
+    "blended_cpm": 3.7259,
     "cost": 10.0000,
     "cost_per_spot": 10.0000,
     "impressions": 2683.88418029,
     "impressions_per_spot": 2683.88418029,
     "market_code": 345,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 6069,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41649
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1275,7 +1275,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1288,7 +1288,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 5.0000,
+    "cost": 0.0000,
     "cost_per_spot": 5.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1300,21 +1300,21 @@
     "station_inventory_manifest_dayparts_id": 41563
   },
   {
-    "blended_cpm": 3.7200,
+    "blended_cpm": 3.7177,
     "cost": 5.0000,
     "cost_per_spot": 5.0000,
     "impressions": 1344.91242972,
     "impressions_per_spot": 1344.91242972,
     "market_code": 347,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 6684,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41558
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1327,7 +1327,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1340,7 +1340,7 @@
   },
   {
     "blended_cpm": 0.0000,
-    "cost": 40.0000,
+    "cost": 0.0000,
     "cost_per_spot": 40.0000,
     "impressions": 0.0,
     "impressions_per_spot": 0.0,
@@ -1352,14 +1352,14 @@
     "station_inventory_manifest_dayparts_id": 41564
   },
   {
-    "blended_cpm": 1290.6600,
+    "blended_cpm": 1290.6569,
     "cost": 40.0000,
     "cost_per_spot": 40.0000,
     "impressions": 30.99196858,
     "impressions_per_spot": 30.99196858,
     "market_code": 398,
     "proposal_version_detail_id": 8123,
-    "spots": 0,
+    "spots": 1,
     "station_code": 5465,
     "station_impressions": 0.0,
     "station_inventory_manifest_dayparts_id": 41557

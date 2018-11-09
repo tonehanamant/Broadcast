@@ -25,6 +25,7 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System.Diagnostics;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -53,6 +54,7 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> FindShowType(string showTypeSearchString);
 
         List<string> SaveProposalBuy(ProposalBuySaveRequestDto proposalBuyRequest);
+        Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId);
     }
 
     public class ProposalService : IProposalService
@@ -674,7 +676,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (!proposalDetailDto.Id.HasValue)
                     continue;
 
-                var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDto.Id.Value, proposalDto.Version.Value, proposalDetailDto.Id.Value);
+                var markets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDto.Id.Value, proposalDto.Version.Value);
                 var marketIds = markets.Select(m => m.Id).ToList();
                 var proposalDetailWeeks = proposalDetailDto.Quarters.SelectMany(x => x.Weeks).Select(x => x.Id.HasValue ? x.Id.Value : -1).ToList();
                 var proposalInventorySlots = _ProposalInventoryRepository.GetProposalInventorySlotsByQuarterWeekIds(proposalDetailWeeks);
@@ -903,7 +905,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var proprietaryInventorySources = _GetProprietaryInventorySources();
 
-            foreach (var proprietaryPricingDto in detail.ProprietaryPricing)
+            foreach (var proprietaryPricingDto in detail.PricingGuide.ProprietaryPricing)
             {
                 if (!proprietaryInventorySources.Contains(proprietaryPricingDto.InventorySource))
                     throw new Exception($"Cannot save proposal detail that contains invalid inventory source for proprietary pricing: {proprietaryPricingDto.InventorySource}");
@@ -911,7 +913,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var proprietaryPricingInventorySource in proprietaryInventorySources)
             {
-                if (detail.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
+                if (detail.PricingGuide.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
                     throw new Exception("Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data");
             }
         }
@@ -1491,5 +1493,28 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySources;
         }
 
+        public Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId)
+        {
+            string fileNameTemplate = "{0}({1}) - {2} - Export.scx";
+            string detailInfoTemplate = "Flt {2:00} From {0} to {1}";
+
+            var proposal = _ProposalRepository.GetProposalByDetailId(proposalDetailId);
+            var proposalDetail = proposal.Details.Single(d => d.Id == proposalDetailId);
+            ProposalScxFile scxFile = null;
+            _ProposalScxConverter.ConvertProposalDetail(proposal,proposalDetail,ref scxFile);
+            if (scxFile == null)
+                throw new InvalidOperationException("Could not generate SCX file.");
+
+            string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
+
+            var detailName = string.Format(detailInfoTemplate,
+                _FileDateFormat(scxFile.ProposalDetailDto.FlightStartDate),
+                _FileDateFormat(scxFile.ProposalDetailDto.FlightEndDate),
+                1);
+
+            var detailFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
+
+            return new Tuple<string, Stream>(detailFileName, scxFile.ScxStream);
+        }
     }
 }

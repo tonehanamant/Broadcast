@@ -1,5 +1,8 @@
-@import './variables';
-@import './base/index';
-@import './grid/index';
-@import './app/index';
-@import 'react-bootstrap-typeahead/css/Typeahead.css';
+:global{
+  @import './variables';
+  @import './base/index';
+  @import './grid/index';
+  @import './app/index';
+  @import 'react-bootstrap-typeahead/css/Typeahead.css';
+}
+
