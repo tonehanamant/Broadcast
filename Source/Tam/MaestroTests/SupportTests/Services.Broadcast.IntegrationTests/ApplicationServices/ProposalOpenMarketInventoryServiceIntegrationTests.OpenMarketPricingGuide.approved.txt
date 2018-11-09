@@ -53,24 +53,24 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 0.0117602992290535840393922983,
-      "DisplayImpressions": 2125796.25,
+      "AvgCpm": 2.8224718149728601694541515914,
+      "DisplayImpressions": 8857.484375,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.0117602992290535840393922983,
-      "MinCpm": 0.0117602992290535840393922983,
+      "MaxCpm": 2.8224718149728601694541515914,
+      "MinCpm": 2.8224718149728601694541515914,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.0117602992290535840393922983,
+          "MinProgramsBlendedCpm": 2.8224718149728601694541515914,
           "Programs": [
             {
-              "BlendedCpm": 0.0117602992290535840393922983,
+              "BlendedCpm": 2.8224718149728601694541515914,
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -78,9 +78,9 @@
                 "Id": 12
               },
               "DisplayCost": 25.0000,
-              "DisplayImpressions": 2125796.25,
+              "DisplayImpressions": 8857.484375,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 2125796.25,
+              "EffectiveImpressionsPerSpot": 8857.484375,
               "Genres": [
                 {
                   "Display": "Action",
@@ -104,8 +104,8 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 2125796.25,
-              "ImpressionsPerSpot": 2125796.25,
+              "Impressions": 8857.484375,
+              "ImpressionsPerSpot": 8857.484375,
               "ManifestDaypartId": 213348,
               "ProgramId": 162233,
               "ProgramName": "Friends",
@@ -117,7 +117,7 @@
         }
       ],
       "TotalCost": 25.0000,
-      "TotalImpressions": 2125796.25,
+      "TotalImpressions": 8857.484375,
       "TotalSpots": 1
     }
   ],
@@ -132,14 +132,14 @@
   "OpenMarketTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0117602992290535840393922983,
-    "Impressions": 2125796.25
+    "Cpm": 2.8224718149728601694541515914,
+    "Impressions": 8857.484375
   },
   "PricingTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0117602992290535840393922983,
-    "Impressions": 2125796.25
+    "Cpm": 2.8224718149728601694541515914,
+    "Impressions": 8857.484375
   },
   "ProposalDetailId": 9978,
   "ProprietaryPricing": [],

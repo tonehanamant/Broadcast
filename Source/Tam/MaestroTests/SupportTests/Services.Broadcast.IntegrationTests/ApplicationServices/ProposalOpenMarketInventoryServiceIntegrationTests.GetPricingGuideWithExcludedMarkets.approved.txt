@@ -200,24 +200,24 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 7.8218154564892878861086530481,
-      "DisplayImpressions": 259990.0,
+      "AvgCpm": 41.110687543540384026148981251,
+      "DisplayImpressions": 12999.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
-      "MaxCpm": 25.443674066535207683989568094,
-      "MinCpm": 0.2307781068502634716719873841,
+      "MaxCpm": 101.77469626614083073595827237,
+      "MinCpm": 4.6155621370052694334397476826,
       "Stations": [
         {
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
           "LegacyCallLetters": "WWSB",
-          "MinProgramsBlendedCpm": 0.2307781068502634716719873841,
+          "MinProgramsBlendedCpm": 4.6155621370052694334397476826,
           "Programs": [
             {
-              "BlendedCpm": 0.2307781068502634716719873841,
+              "BlendedCpm": 4.6155621370052694334397476826,
               "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
@@ -225,13 +225,13 @@
                 "Id": 1617
               },
               "DisplayCost": 60.0000,
-              "DisplayImpressions": 259990.0,
+              "DisplayImpressions": 12999.5,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 259990.0,
+              "EffectiveImpressionsPerSpot": 12999.5,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 259990.0,
-              "ImpressionsPerSpot": 259990.0,
+              "Impressions": 12999.5,
+              "ImpressionsPerSpot": 12999.5,
               "ManifestDaypartId": 55369,
               "ProgramId": 26630,
               "ProgramName": "America next morning",
@@ -239,51 +239,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.6487887114756749149338185607,
-              "Cost": 0.0000,
-              "CostPerSpot": 325.0000,
-              "Daypart": {
-                "Display": "M-F 7AM-9AM",
-                "Id": 78
-              },
-              "DisplayCost": 325.0000,
-              "DisplayImpressions": 500933.5,
-              "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 500933.5,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 500933.5,
-              "ManifestDaypartId": 41608,
-              "ProgramId": 26638,
-              "ProgramName": "Good Morning America",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 0.0
-            },
-            {
-              "BlendedCpm": 1.1078540202914542356582757803,
-              "Cost": 0.0000,
-              "CostPerSpot": 250.0000,
-              "Daypart": {
-                "Display": "M-F 6AM-7AM",
-                "Id": 6447
-              },
-              "DisplayCost": 250.0000,
-              "DisplayImpressions": 225661.5,
-              "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 225661.5,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 225661.5,
-              "ManifestDaypartId": 41606,
-              "ProgramId": 26636,
-              "ProgramName": "Good Morning Suncoast",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 0.0
-            },
-            {
-              "BlendedCpm": 1.6754909188392198914281884592,
+              "BlendedCpm": 16.754909188392198914281884592,
               "Cost": 0.0000,
               "CostPerSpot": 100.0000,
               "Daypart": {
@@ -291,13 +247,13 @@
                 "Id": 32756
               },
               "DisplayCost": 100.0000,
-              "DisplayImpressions": 59684.0,
+              "DisplayImpressions": 5968.4,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 59684.0,
+              "EffectiveImpressionsPerSpot": 5968.4,
               "Genres": [],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 59684.0,
+              "ImpressionsPerSpot": 5968.4,
               "ManifestDaypartId": 41602,
               "ProgramId": 26632,
               "ProgramName": "Good Morning Suncoast",
@@ -305,7 +261,29 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 2.3227544771092546280882956402,
+              "BlendedCpm": 22.157080405829084713165515606,
+              "Cost": 0.0000,
+              "CostPerSpot": 250.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-7AM",
+                "Id": 6447
+              },
+              "DisplayCost": 250.0000,
+              "DisplayImpressions": 11283.075,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 11283.075,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 11283.075,
+              "ManifestDaypartId": 41606,
+              "ProgramId": 26636,
+              "ProgramName": "Good Morning Suncoast",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 23.227544771092546280882956402,
               "Cost": 0.0000,
               "CostPerSpot": 150.0000,
               "Daypart": {
@@ -313,13 +291,13 @@
                 "Id": 29947
               },
               "DisplayCost": 150.0000,
-              "DisplayImpressions": 64578.5,
+              "DisplayImpressions": 6457.85,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 64578.5,
+              "EffectiveImpressionsPerSpot": 6457.85,
               "Genres": [],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 64578.5,
+              "ImpressionsPerSpot": 6457.85,
               "ManifestDaypartId": 41604,
               "ProgramId": 26634,
               "ProgramName": "Good Morning Suncoast",
@@ -327,7 +305,29 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 23.323367894323940376990437419,
+              "BlendedCpm": 25.95154845902699659735274243,
+              "Cost": 0.0000,
+              "CostPerSpot": 325.0000,
+              "Daypart": {
+                "Display": "M-F 7AM-9AM",
+                "Id": 78
+              },
+              "DisplayCost": 325.0000,
+              "DisplayImpressions": 12523.3375,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 12523.3375,
+              "Genres": [],
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 12523.3375,
+              "ManifestDaypartId": 41608,
+              "ProgramId": 26638,
+              "ProgramName": "Good Morning America",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 93.29347157729576150796174968,
               "Cost": 0.0000,
               "CostPerSpot": 275.0000,
               "Daypart": {
@@ -335,13 +335,13 @@
                 "Id": 31233
               },
               "DisplayCost": 275.0000,
-              "DisplayImpressions": 11790.75,
+              "DisplayImpressions": 2947.6875,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 11790.75,
+              "EffectiveImpressionsPerSpot": 2947.6875,
               "Genres": [],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 11790.75,
+              "ImpressionsPerSpot": 2947.6875,
               "ManifestDaypartId": 41612,
               "ProgramId": 26641,
               "ProgramName": "Good Morning America Weekend",
@@ -349,7 +349,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 25.443674066535207683989568094,
+              "BlendedCpm": 101.77469626614083073595827237,
               "Cost": 0.0000,
               "CostPerSpot": 300.0000,
               "Daypart": {
@@ -357,13 +357,13 @@
                 "Id": 31239
               },
               "DisplayCost": 300.0000,
-              "DisplayImpressions": 11790.75,
+              "DisplayImpressions": 2947.6875,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 11790.75,
+              "EffectiveImpressionsPerSpot": 2947.6875,
               "Genres": [],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 11790.75,
+              "ImpressionsPerSpot": 2947.6875,
               "ManifestDaypartId": 41610,
               "ProgramId": 26640,
               "ProgramName": "Good Morning America Weekend",
@@ -375,7 +375,7 @@
         }
       ],
       "TotalCost": 60.0000,
-      "TotalImpressions": 259990.0,
+      "TotalImpressions": 12999.5,
       "TotalSpots": 1
     }
   ],
@@ -390,14 +390,14 @@
   "OpenMarketTotals": {
     "Cost": 60.0000,
     "Coverage": 1.676,
-    "Cpm": 0.2307781068502634716719873841,
-    "Impressions": 259990.0
+    "Cpm": 4.6155621370052694334397476826,
+    "Impressions": 12999.5
   },
   "PricingTotals": {
     "Cost": 60.0000,
     "Coverage": 1.676,
-    "Cpm": 0.2307781068502634716719873841,
-    "Impressions": 259990.0
+    "Cpm": 4.6155621370052694334397476826,
+    "Impressions": 12999.5
   },
   "ProposalDetailId": 9985,
   "ProprietaryPricing": [],

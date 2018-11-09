@@ -42,24 +42,24 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 0.0070829812630578446944124378,
-      "DisplayImpressions": 1039214425.0,
+      "AvgCpm": 1.8342378060247007219741218686,
+      "DisplayImpressions": 2955069.47916667,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.0117602992290535840393922983,
-      "MinCpm": 0.0024056632970621053494325774,
+      "MaxCpm": 2.8224718149728601694541515914,
+      "MinCpm": 0.8460037970765412744940921458,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.0024056632970621053494325774,
+          "MinProgramsBlendedCpm": 0.8460037970765412744940921458,
           "Programs": [
             {
-              "BlendedCpm": 0.0024056632970621053494325774,
+              "BlendedCpm": 0.8460037970765412744940921458,
               "Cost": 2500.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -67,9 +67,9 @@
                 "Id": 5
               },
               "DisplayCost": 2500.0000,
-              "DisplayImpressions": 1039214425.0,
+              "DisplayImpressions": 2955069.47916667,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 10392144.25,
+              "EffectiveImpressionsPerSpot": 29550.69479167,
               "Genres": [
                 {
                   "Display": "Adventure",
@@ -77,8 +77,8 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 1039214425.0,
-              "ImpressionsPerSpot": 10392144.25,
+              "Impressions": 2955069.47916667,
+              "ImpressionsPerSpot": 29550.69479167,
               "ManifestDaypartId": 213351,
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
@@ -86,7 +86,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 0.0117602992290535840393922983,
+              "BlendedCpm": 2.8224718149728601694541515914,
               "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -94,9 +94,9 @@
                 "Id": 12
               },
               "DisplayCost": 25.0000,
-              "DisplayImpressions": 2125796.25,
+              "DisplayImpressions": 8857.484375,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 2125796.25,
+              "EffectiveImpressionsPerSpot": 8857.484375,
               "Genres": [
                 {
                   "Display": "Comedy",
@@ -105,7 +105,7 @@
               ],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 2125796.25,
+              "ImpressionsPerSpot": 8857.484375,
               "ManifestDaypartId": 213352,
               "ProgramId": 162237,
               "ProgramName": "Friends",
@@ -117,7 +117,7 @@
         }
       ],
       "TotalCost": 2500.0000,
-      "TotalImpressions": 1039214425.0,
+      "TotalImpressions": 2955069.47916667,
       "TotalSpots": 100
     }
   ],
@@ -132,14 +132,14 @@
   "OpenMarketTotals": {
     "Cost": 2500.0000,
     "Coverage": 1.01,
-    "Cpm": 0.0024056632970621053494325774,
-    "Impressions": 1039214425.0
+    "Cpm": 0.8460037970765412744940921458,
+    "Impressions": 2955069.47916667
   },
   "PricingTotals": {
-    "Cost": 6615682.70454545,
+    "Cost": 21304.987594697,
     "Coverage": 1.01,
-    "Cpm": 2.8010584918507064799676897675,
-    "Impressions": 2361850965.909091
+    "Cpm": 3.1722416707136833789525139488,
+    "Impressions": 6716066.99810606
   },
   "ProposalDetailId": 9982,
   "ProprietaryPricing": [
@@ -165,8 +165,8 @@
     }
   ],
   "ProprietaryTotals": {
-    "Cost": 6613182.70454545,
+    "Cost": 18804.987594697,
     "Cpm": 5.0,
-    "Impressions": 1322636540.909091
+    "Impressions": 3760997.5189394
   }
 }
