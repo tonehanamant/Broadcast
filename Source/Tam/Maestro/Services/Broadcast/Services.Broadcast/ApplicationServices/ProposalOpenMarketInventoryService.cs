@@ -1475,12 +1475,6 @@ namespace Services.Broadcast.ApplicationServices
             if (pricingGuideDto.ImpressionGoal.HasValue)
                 impressionsGoal *= (double)pricingGuideDto.OpenMarketShare;
 
-            if (request.BudgetGoal.HasValue)
-                budgetGoal *= request.OpenMarketShare;
-
-            if (request.ImpressionGoal.HasValue)
-                impressionsGoal *= (double)request.OpenMarketShare;
-
             // First, we allocate one spot for a program in each market.
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {

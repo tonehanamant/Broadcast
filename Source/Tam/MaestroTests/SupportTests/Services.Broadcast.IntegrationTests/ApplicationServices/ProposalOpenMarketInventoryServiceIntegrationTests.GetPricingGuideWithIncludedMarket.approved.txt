@@ -188,6 +188,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [
       "ABC",
@@ -213,6 +214,7 @@
     ]
   },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 41.110687543540384026148981251,
@@ -441,10 +443,31 @@
       "TotalSpots": 1
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
     "Cost": 85.0000,
     "Coverage": 1.949,
-    "Cpm": 4.8109236265874279245816973000,
+    "Cpm": 4.8109236265874279245816972656,
     "Impressions": 17668.125
+  },
+  "PricingTotals": {
+    "Cost": 85.0000,
+    "Coverage": 1.949,
+    "Cpm": 4.8109236265874279245816972656,
+    "Impressions": 17668.125
+  },
+  "ProposalDetailId": 9984,
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   }
 }
