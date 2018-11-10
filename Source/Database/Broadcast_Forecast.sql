@@ -54,21 +54,60 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+
+
 /************************ START BCOP3889 **************************************************************************************/
+/************************ START BCOP3997 **************************************************************************************/
+
 GO
-IF EXISTS ( SELECT  * FROM sys.objects WHERE object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages')                  
-			AND type IN ( N'P', N'PC' ) ) 
+IF EXISTS(select * FROM sys.views where name = 'uvw_market_codes_call_letters')
 BEGIN
-	DROP PROCEDURE nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages
+	DROP VIEW [nsi].[uvw_market_codes_call_letters]
+END
+
+GO
+
+CREATE VIEW [nsi].[uvw_market_codes_call_letters]
+WITH SCHEMABINDING
+AS
+       SELECT
+              v.media_month_id,
+              v.legacy_call_letters,
+              v.market_code,             
+              COUNT_BIG(*) 'count'
+       FROM
+              [nsi].[viewers] v
+       GROUP BY
+              v.media_month_id,
+              v.legacy_call_letters,
+              v.market_code
+              
+GO
+IF EXISTS(SELECT * FROM sys.indexes WHERE name='IX_uvw_market_codes_call_letters' AND object_id = OBJECT_ID('nsi.uvw_market_codes_call_letters'))
+BEGIN
+	DROP INDEX IX_uvw_market_codes_call_letters ON [nsi].[uvw_market_codes_call_letters]
 END
 
 GO 
 
----- =============================================
----- Author:		
----- Create date: 08/21/2017
----- Description:	
----- =============================================
+CREATE UNIQUE CLUSTERED INDEX [IX_uvw_market_codes_call_letters] ON [nsi].[uvw_market_codes_call_letters]
+(
+       media_month_id ASC,
+       legacy_call_letters ASC,
+       market_code ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+
+
+
+
+
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test'))
+BEGIN
+	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test]
+END
+                   
+GO
 /*
 	DECLARE
 		@posting_media_month_id SMALLINT = 410,
@@ -84,21 +123,11 @@ GO
     INSERT INTO @ratings_request SELECT 7,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
     INSERT INTO @ratings_request SELECT 8,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
     INSERT INTO @ratings_request SELECT 9,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 10,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 11,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 12,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 13,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 14,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 15,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 16,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 17,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 18,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
-    INSERT INTO @ratings_request SELECT 19,'legacy_call_letters',1,1,1,1,1,1,1,25200,79199
 	
 	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages] @posting_media_month_id, @demo, @ratings_request, @min_playback_type
 */
 --=============================================
-CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test]
 	@posting_media_month_id SMALLINT,
 	@demo VARCHAR(MAX),
 	@ratings_request RatingsInputWithId READONLY,
@@ -122,44 +151,34 @@ BEGIN
 	INSERT INTO #min_playback_types
 		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id,@min_playback_type);
 
-	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters varchar(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT NULL,IsWeekday int 
-		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time,IsWeekday))
-	INSERT INTO #viewers
+	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters varchar(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT  
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time))
 
-		-- weekday viewers only
-		SELECT
-			rr.id, rr.legacy_call_letters,a.audience_id,v.market_code,v.start_time, v.end_time,
-			CASE WHEN rr.mon=1 OR rr.tue=1 OR rr.wed=1 OR rr.thu=1 OR rr.fri=1 THEN vd.weekday_viewers ELSE null END ,
-			1 as IsWeekday 
-		FROM
-			#rating_requests rr
-			JOIN nsi.viewers v (NOLOCK) ON v.media_month_id=@posting_media_month_id
-				AND v.legacy_call_letters=rr.legacy_call_letters
-				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
-			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
-			CROSS APPLY #audience_ids a
-			JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
-				AND vd.viewer_id=v.id
-				AND vd.audience_id=a.audience_id
-				AND vd.playback_type=mpt.available_playback_type
-
-	-- weekend viewers only
 	INSERT INTO #viewers
-		SELECT
-			rr.id, rr.legacy_call_letters,a.audience_id,v.market_code,v.start_time, v.end_time,
-			CASE WHEN rr.sat=1 OR rr.sun=1 THEN vd.weekend_viewers ELSE null END ,
-			0 as IsWeekday 
-		FROM
-			#rating_requests rr
-			JOIN nsi.viewers v (NOLOCK) ON v.media_month_id=@posting_media_month_id
-				AND v.legacy_call_letters=rr.legacy_call_letters
-				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
-			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
-			CROSS APPLY #audience_ids a
-			JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
-				AND vd.viewer_id=v.id
-				AND vd.audience_id=a.audience_id
-				AND vd.playback_type=mpt.available_playback_type
+	SELECT
+		rr.id, rr.legacy_call_letters,a.audience_id,v.market_code,v.start_time, v.end_time,
+		-- basically if weekday and weekend then avg the two, otherwise return one or other
+		CASE WHEN rr.mon=1 OR rr.tue=1 OR rr.wed=1 OR rr.thu=1 OR rr.fri=1 THEN 
+			CASE WHEN rr.sat=1 OR rr.sun=1 THEN (vd.weekend_viewers  + vd.weekday_viewers) / 2 
+				ELSE vd.weekday_viewers  
+			END  			
+		ELSE 
+			CASE WHEN rr.sat=1 OR rr.sun=1 THEN vd.weekend_viewers ELSE 0 END 
+		END 
+	FROM
+		#rating_requests rr
+        JOIN nsi.uvw_market_codes_call_letters mccl ON mccl.media_month_id=@posting_media_month_id
+            AND mccl.legacy_call_letters=rr.legacy_call_letters
+		JOIN nsi.viewers v (NOLOCK) ON v.media_month_id=@posting_media_month_id
+			AND v.legacy_call_letters=rr.legacy_call_letters
+			AND v.market_code=mccl.market_code
+			AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+		JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
+		CROSS APPLY #audience_ids a
+		JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
+			AND vd.viewer_id=v.id
+			AND vd.audience_id=a.audience_id
+			AND vd.playback_type=mpt.available_playback_type
 
 	--SELECT
 	--	id,legacy_call_letters,audience_id,market_code,
@@ -194,10 +213,10 @@ BEGIN
 	IF OBJECT_ID('tempdb..#viewers') IS NOT NULL DROP TABLE #viewers;
 END
 
-go
+/*************** END BCOP3997 **************************************************************************************/
+/*************** END BCOP3889 **************************************************************************************/
 
-
-/************************ END BCOP3889 **************************************************************************************/
+GO
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

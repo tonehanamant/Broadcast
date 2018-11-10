@@ -27,6 +27,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void RecalculateAffidavitImpressionsForProposalDetailTest()
         {
             var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
@@ -48,6 +49,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void CalculateAffidavitImpressionsForAffidavitFile()
         {
             var affidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory

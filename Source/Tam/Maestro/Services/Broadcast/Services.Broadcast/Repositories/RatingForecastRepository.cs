@@ -134,7 +134,7 @@ namespace Services.Broadcast.Repositories
                     //var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
                     if (useDayByDayImpressions)
                         throw new InvalidOperationException("Day by Day Impression not supported");
-                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Test";
 
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
@@ -187,7 +187,7 @@ namespace Services.Broadcast.Repositories
                         throw new InvalidOperationException("Day by Day Impression not supported");
 
                     //var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
-                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Test";
 
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });

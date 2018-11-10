@@ -57,6 +57,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("Impressions")]
         [UseReporter(typeof(DiffReporter))]
         public void AffPP_ValidFileContent_WithNullColumns()
         {

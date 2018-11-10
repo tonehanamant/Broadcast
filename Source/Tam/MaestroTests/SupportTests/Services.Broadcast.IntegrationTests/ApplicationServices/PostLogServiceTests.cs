@@ -126,6 +126,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveLargePostLogFile()
         {
             using (new TransactionScopeWrapper())
@@ -172,6 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFile()
         {
             using (new TransactionScopeWrapper())
@@ -187,6 +189,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFileWithShowTypes()
         {
             using (new TransactionScopeWrapper())
@@ -206,6 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFileWithLeadInEndTime()
         {
             using (new TransactionScopeWrapper())
@@ -223,6 +227,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFileWithLeadOutStartTime()
         {
             using (new TransactionScopeWrapper())
@@ -240,6 +245,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFileWithShowType()
         {
             using (new TransactionScopeWrapper())
@@ -257,6 +263,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFileMultipleIscis()
         {
             using (new TransactionScopeWrapper())
@@ -296,6 +303,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_ScrubUnlinkedIsci()
         {
             using (new TransactionScopeWrapper())
@@ -314,6 +322,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_MapIsci()
         {
             using (new TransactionScopeWrapper())
