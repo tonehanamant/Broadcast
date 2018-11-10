@@ -42,7 +42,7 @@ class PricingGuideGrid extends Component {
         />
         <Table
           data={data}
-          style={{ marginTop: "6px" }}
+          style={{ marginTop: "6px", maxHeight: "500px" }}
           columns={columns}
           selection="none"
           sortable={false}
