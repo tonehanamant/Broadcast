@@ -12,6 +12,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": 10000.0,
   "DisplayFilter": {
     "Affiliations": [
       "PBS"
@@ -38,6 +39,7 @@
     ]
   },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 1.8342378060247007219741218686,
@@ -119,10 +121,52 @@
       "TotalSpots": 400
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 1.0,
   "OpenMarketTotals": {
     "Cost": 10000.0000,
     "Coverage": 1.01,
-    "Cpm": 0.8460037970765398430492428000,
+    "Cpm": 0.8460037970765398430492428099,
     "Impressions": 11820277.91666667
+  },
+  "PricingTotals": {
+    "Cost": 231804.03855392181369836421569,
+    "Coverage": 1.01,
+    "Cpm": 6.6676412910060362957767473857,
+    "Impressions": 34765523.284313731
+  },
+  "ProposalDetailId": 9982,
+  "ProprietaryPricing": [
+    {
+      "Cpm": 14.0000,
+      "ImpressionsBalance": 0.05,
+      "InventorySource": 2
+    },
+    {
+      "Cpm": 12.0000,
+      "ImpressionsBalance": 0.09,
+      "InventorySource": 3
+    },
+    {
+      "Cpm": 8.0000,
+      "ImpressionsBalance": 0.3,
+      "InventorySource": 4
+    },
+    {
+      "Cpm": 10.0000,
+      "ImpressionsBalance": 0.22,
+      "InventorySource": 5
+    }
+  ],
+  "ProprietaryTotals": {
+    "Cost": 221804.03855392181369836421569,
+    "Cpm": 9.66666666666666,
+    "Impressions": 22945245.367647059
   }
 }

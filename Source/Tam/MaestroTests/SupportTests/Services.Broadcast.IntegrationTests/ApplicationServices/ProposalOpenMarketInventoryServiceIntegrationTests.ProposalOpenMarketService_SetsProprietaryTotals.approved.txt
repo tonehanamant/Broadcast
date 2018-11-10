@@ -1,0 +1,115 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 1.01,
+      "Id": 160,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 2,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
+  "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure",
+        "Id": 3
+      },
+      {
+        "Display": "Comedy",
+        "Id": 9
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
+    "ProgramNames": [
+      "Adventure Time",
+      "Friends"
+    ]
+  },
+  "Filter": {},
+  "Markets": [
+    {
+      "AvgCpm": 0.0070829812630578446944124378,
+      "DisplayImpressions": 1039214425.0,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 1.01,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 0.0117602992290535840393922983,
+      "MinCpm": 0.0024056632970621053494325774,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.0024056632970621053494325774,
+          "Programs": [
+            {
+              "BlendedCpm": 0.0024056632970621053494325774,
+              "Cost": 2500.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM",
+                "Id": 5
+              },
+              "DisplayCost": 2500.0000,
+              "DisplayImpressions": 1039214425.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 10392144.25,
+              "HasImpressions": true,
+              "Impressions": 1039214425.0,
+              "ImpressionsPerSpot": 10392144.25,
+              "ProgramName": "Adventure Time",
+              "Spots": 100,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 0.0117602992290535840393922983,
+              "Cost": 0.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-6PM",
+                "Id": 12
+              },
+              "DisplayCost": 25.0000,
+              "DisplayImpressions": 2125796.25,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 2125796.25,
+              "HasImpressions": true,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 2125796.25,
+              "ProgramName": "Friends",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ]
+        }
+      ],
+      "TotalCost": 2500.0000,
+      "TotalImpressions": 1039214425.0,
+      "TotalSpots": 100
+    }
+  ],
+  "OpenMarketTotals": {
+    "Cost": 2500.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.0024056632970621053494326000,
+    "Impressions": 1039214425.0
+  },
+  "ProprietaryTotals": {
+    "Cost": 19500553.033823493218009401961,
+    "Cpm": 9.66666666666666,
+    "Impressions": 2017298589.7058826
+  }
+}

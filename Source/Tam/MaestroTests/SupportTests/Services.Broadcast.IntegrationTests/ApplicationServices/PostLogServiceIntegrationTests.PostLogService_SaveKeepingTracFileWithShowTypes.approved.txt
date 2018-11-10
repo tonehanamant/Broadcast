@@ -138,7 +138,8 @@
       "ShowType": "Drama1",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "WWSB"
+      "Station": "WWSB",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "abc123",

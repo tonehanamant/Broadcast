@@ -1,0 +1,157 @@
+﻿{
+  "FileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "Affiliate": "CBS",
+      "AirTime": 81300,
+      "Archived": false,
+      "ClientScrubs": [
+        {
+          "ClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 2414.1
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 1099.7
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 198.65
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 2433.85
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 34867.45
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 56733.05
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 119525.8
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 2041.95
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 2808.95
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 3224.7
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 3690.3
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 17984.65
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 44661.1
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 64062.8
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 362701.1
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 4187.65
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 9788.6
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 35697.7
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 3114.95
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 43823.8
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 10295.5
+            }
+          ],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": null,
+          "EffectiveIsci": "AAAAAAAA",
+          "EffectiveProgramName": "Everybody Loves Raymond",
+          "EffectiveShowType": null,
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": false,
+          "MatchStation": true,
+          "MatchTime": false,
+          "ModifiedBy": "PostLog Post Processing Test User",
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 14,
+          "ProposalVersionDetailQuarterWeekId": 18,
+          "Status": 1
+        }
+      ],
+      "Demographics": [
+        {
+          "AudienceId": 36,
+          "Demographic": null,
+          "OvernightImpressions": 1928.0,
+          "OvernightRating": 2.3
+        }
+      ],
+      "EstimateId": 123,
+      "FileDetailProblems": [],
+      "Genre": null,
+      "InventorySource": 1,
+      "Isci": "AAAAAAAA",
+      "LeadInEndTime": null,
+      "LeadinGenre": null,
+      "LeadinProgramName": null,
+      "LeadInShowType": null,
+      "LeadoutGenre": null,
+      "LeadoutProgramName": null,
+      "LeadOutShowType": null,
+      "LeadOutStartTime": null,
+      "MappedIsci": null,
+      "Market": "New York",
+      "OriginalAirDate": "2017-12-26T00:00:00",
+      "ProgramName": null,
+      "ShowType": null,
+      "SpotCost": 315.25,
+      "SpotLengthId": 1,
+      "Station": "WCBS",
+      "SuppliedProgramName": "Everybody Loves Raymond"
+    }
+  ],
+  "FileHash": "02-5A-3C-10-3A-C5-F7-7C-CC-53-BB-01-9A-55-9F-D8-3F-5C-5D-B5",
+  "FileName": "WWTV_KeepingTracValidFile_WithNullValues.txt",
+  "FileProblems": [],
+  "SourceId": 1,
+  "Status": 1
+}

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Services.Broadcast.Entities.Enums;
-using System;
+﻿using Services.Broadcast.Entities.DTO.PricingGuide;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.DTO
@@ -17,6 +15,6 @@ namespace Services.Broadcast.Entities.DTO
         public double? AdjustmentInflation { get; set; }
 
         public List<ProprietaryPricingDto> ProprietaryPricing { get; set; } = new List<ProprietaryPricingDto>();
-        public OpenMarketPricingGuide OpenMarketPricing { get; set; } = new OpenMarketPricingGuide();
+        public OpenMarketPricingGuideDto OpenMarketPricing { get; set; } = new OpenMarketPricingGuideDto();
     }
 }

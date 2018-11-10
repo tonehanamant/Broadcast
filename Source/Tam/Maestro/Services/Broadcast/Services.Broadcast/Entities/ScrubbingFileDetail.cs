@@ -33,6 +33,7 @@ namespace Services.Broadcast.Entities
         public int? LeadOutStartTime { get; set; }
         public int? LeadInEndTime { get; set; }
         public bool Archived { get; set; }
-        public string MappedIsci { get; set; }        
+        public string MappedIsci { get; set; }
+        public string SuppliedProgramName { get; set; }
     }
 }

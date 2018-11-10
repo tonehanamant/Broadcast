@@ -5,13 +5,13 @@ using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
-using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -111,11 +111,29 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Detail/PricingGuide/AllocateSpots")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> SavePricingGuideAllocations(PricingGuideAllocationSaveRequestDto request)
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> SavePricingGuideAllocations(PricingGuideOpenMarketDistributionDto dto)
         {
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .SavePricingGuideAllocations(request));
+                    .SavePricingGuideAllocations(dto));
+        }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/Grid/UpdateMarkets")]
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> UpdateOpenMarketPricingGuideMarkets(PricingGuideOpenMarketDistributionDto dto)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .UpdateOpenMarketPricingGuideMarkets(dto));
+        }
+
+        [HttpPost]
+        [Route("Detail/PricingGuide/UpdateProprietaryCpms")]
+        public BaseResponse<PricingGuideOpenMarketDistributionDto> UpdateProprietaryCpms(PricingGuideOpenMarketDistributionDto dto)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
+                    .UpdateProprietaryCpms(dto));
         }
     }
 }

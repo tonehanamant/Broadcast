@@ -1,5 +1,4 @@
-﻿using ApprovalTests.Reporters;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -47,9 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.IsTrue(!result.Any());
         }
-        
-        
-        
+                
         [Test]
         public void ValidateAffidavitRecordInvalidAirTimeTest()
         {
@@ -107,46 +104,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.AreEqual("is required", result.ErrorMessage);
         }
 
-        [Test]
-        public void ValidateAffidavitRecordInvalidShowTypeTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.ShowType = "";
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "ShowType");
-
-            Assert.AreEqual("ShowType", result.InvalidField);
-            Assert.AreEqual("is required",result.ErrorMessage);
-        }
-        [Test]
-        public void ValidateAffidavitRecordInvalidLeadInShowTypeTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.LeadInShowType = "";
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "LeadInShowType");
-
-            Assert.AreEqual("LeadInShowType", result.InvalidField);
-            Assert.AreEqual("is required", result.ErrorMessage);
-        }
-        [Test]
-        public void ValidateAffidavitRecordInvalidLeadOutShowTypeTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            affidavitSaveRequestDetail.LeadOutShowType = "";
-
-            var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "LeadOutShowType");
-
-            Assert.AreEqual("LeadOutShowType", result.InvalidField);
-            Assert.AreEqual("is required", result.ErrorMessage);
-        }
-        
         [Test]
         public void ValidateAffidavitRecordInvalidAffiliateTest()
         {

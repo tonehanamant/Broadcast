@@ -234,7 +234,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             Assert.AreEqual(1, weekDto.Units);
             Assert.AreEqual(1843500, weekDto.Impressions);
-            Assert.AreEqual(23099.06m, weekDto.Cost);
+            Assert.AreEqual(23099.055m, weekDto.Cost);
         }
 
         [Test]
@@ -307,9 +307,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             proposalCalculationEngine.UpdateProposal(proposalDto);
 
-            Assert.AreEqual(41.77m, firstWeekDto.Cost);
-            Assert.AreEqual(41.77m, secondWeekDto.Cost);
-            Assert.AreEqual(41.78m, lastWeekDto.Cost);
+            Assert.AreEqual(41.7666666666666249m, firstWeekDto.Cost);
+            Assert.AreEqual(41.7666666666666249m, secondWeekDto.Cost);
+            Assert.AreEqual(41.7791966666666249m, lastWeekDto.Cost);
         }
 
 

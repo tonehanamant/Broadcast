@@ -81,7 +81,7 @@
           "QuarterText": "2017 Q1",
           "Weeks": [
             {
-              "Cost": 56385.00,
+              "Cost": 56385.0000,
               "EndDate": "2017-05-21T00:00:00",
               "Impressions": 4500000.0,
               "Iscis": [],
@@ -93,7 +93,7 @@
               "Week": "5/15/2017"
             },
             {
-              "Cost": 12530.00,
+              "Cost": 12530.0000,
               "EndDate": "2017-05-28T00:00:00",
               "Impressions": 1000000.0,
               "Iscis": [],
@@ -105,7 +105,7 @@
               "Week": "5/22/2017"
             },
             {
-              "Cost": 157740.17,
+              "Cost": 157740.1700,
               "EndDate": "2017-06-04T00:00:00",
               "Impressions": 12589000.0,
               "Iscis": [],
@@ -125,7 +125,7 @@
       "ShowTypeCriteria": [],
       "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
-      "TotalCost": 226655.17,
+      "TotalCost": 226655.1700,
       "TotalImpressions": 18089000.0,
       "TotalUnits": 3
     }
@@ -168,7 +168,7 @@
     }
   ],
   "Status": 1,
-  "TargetBudget": 226655.17,
+  "TargetBudget": 226655.1700,
   "TargetCPM": 12.53,
   "TargetImpressions": 18089000.0,
   "TargetUnits": 3,

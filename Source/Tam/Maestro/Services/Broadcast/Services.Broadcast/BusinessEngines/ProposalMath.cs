@@ -29,6 +29,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             return Math.Round(CalculateCpmRaw(totalCost,totalImpressions),2);
         }
+
         /// <summary>
         /// Calculates CPM w/o rounding
         /// </summary>
@@ -37,9 +38,10 @@ namespace Services.Broadcast.BusinessEngines
             if (totalImpressions == 0) return 0;
             return totalCost / (decimal)(totalImpressions / 1000);
         }
+
         public static decimal CalculateCost(decimal cpm, double impressions)
         {
-            return Math.Round(cpm * (decimal)impressions / 1000, 2);
+            return cpm * (decimal)impressions / 1000;
         }
 
         public static float CalculateTRP_GRP(double targetImpressions, double universe)

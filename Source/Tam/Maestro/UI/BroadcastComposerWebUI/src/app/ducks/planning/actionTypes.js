@@ -82,3 +82,9 @@ export const SORT_OPEN_MARKET_DATA = "planning/SORT_OPEN_MARKET_DATA";
 export const SHOW_EDIT_MARKETS = "planning/SHOW_EDIT_MARKETS";
 export const DISCARD_EDIT_MARKETS_DATA = "planning/DISCARD_EDIT_MARKETS_DATA";
 export const CHANGE_EDIT_MARKETS_DATA = "planning/CHANGE_EDIT_MARKETS_DATA";
+export const UPDATE_EDIT_MARKETS_DATA = createAction(
+  "planning/UPDATE_EDIT_MARKETS_DATA"
+);
+export const UPDATE_PROPRIETARY_CPMS = createAction(
+  "planning/UPDATE_PROPRIETARY_CPMS"
+);

@@ -1,17 +1,16 @@
-﻿using System;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using Services.Broadcast.Entities.DTO.PricingGuide;
+using Services.Broadcast.Entities;
+using Common.Services.Extensions;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Repositories
 {
@@ -23,9 +22,10 @@ namespace Services.Broadcast.Repositories
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
         Dictionary<int, List<station_inventory_manifest>> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds);
         List<open_market_pricing_guide> GetProposalDetailPricingGuide(int proposalDetailId);
-        void SaveProposalDetailPricingGuide(int proposalDetailId,List<PricingGuideOpenMarketInventory.PricingGuideMarket> openMarketsPricingGuide);
+        void SaveProposalDetailPricingGuide(int proposalDetailId, List<PricingGuideMarketDto> openMarketsPricingGuide);
         void SaveProposalDetailPricingGuide(int proposalDetailId, List<open_market_pricing_guide> pricingGuides);
         void DeleteProposalDetailPricingGuide(int proposalDetailId);
+        PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId);
     }
 
     public class ProposalOpenMarketInventoryRepository : BroadcastRepositoryBase, IProposalOpenMarketInventoryRepository
@@ -186,8 +186,7 @@ namespace Services.Broadcast.Repositories
 
         }
 
-        public void SaveProposalDetailPricingGuide(int proposalDetailId,
-            List<PricingGuideOpenMarketInventory.PricingGuideMarket> openMarketPricingGuides)
+        public void SaveProposalDetailPricingGuide(int proposalDetailId, List<PricingGuideMarketDto> openMarketPricingGuides)
         {
             var pricingGuides = openMarketPricingGuides
                 .SelectMany(m => m.Stations
@@ -210,6 +209,60 @@ namespace Services.Broadcast.Repositories
                 );
 
             SaveProposalDetailPricingGuide(proposalDetailId, pricingGuides.ToList());
+        }
+        
+        public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var pv = context.proposal_version_details
+                    .Include(pvd => pvd.proposal_versions.proposal)
+                    .Include(pvd => pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
+                    .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_genres)
+                    .Include(pvd => pvd.proposal_version_detail_criteria_programs)
+                    .Single(d => d.id == proposalDetailId, $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
+
+                var dto = new PricingGuideOpenMarketInventory
+                {
+                    MarketCoverage = pv.proposal_versions.market_coverage ?? 1,
+                    ProposalMarkets = pv.proposal_versions.proposal_version_markets.Select(x => new ProposalMarketDto
+                    {
+                        Id = x.market_code,
+                        IsBlackout = x.is_blackout
+                    }).ToList()
+                };
+
+                ProposalRepository.PopoulateProposalDetailInventoryBase(pv, dto);
+
+                dto.Criteria = new OpenMarketCriterion
+                {
+                    CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
+                        new CpmCriteria { Id = c.id, MinMax = (MinMaxEnum)c.min_max, Value = c.value }).ToList(),
+                    GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
+                            new GenreCriteria()
+                            {
+                                Id = c.id,
+                                Contain = (ContainTypeEnum)c.contain_type,
+                                Genre = new LookupDto(c.genre_id, c.genre.name)
+                            })
+                        .ToList(),
+                    ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
+                        new ProgramCriteria
+                        {
+                            Id = c.id,
+                            Contain = (ContainTypeEnum)c.contain_type,
+                            Program = new LookupDto
+                            {
+                                Id = c.program_name_id,
+                                Display = c.program_name
+                            }
+                        }).ToList()
+                };
+
+                return dto;
+            });
         }
     }
 }

@@ -43,11 +43,13 @@ namespace Services.Broadcast.BusinessEngines
                 (affidavitDetail.AirTime <= actualEndTime ||
                 affidavitDetail.AirTime >= adjustedEndTime);
 
-            if (_ProposalDetailMatchesProgram(proposalDetail, affidavitDetail.ProgramName) &&
+            string effectiveAffidavitProgramName = affidavitDetail.ProgramName ?? affidavitDetail.SuppliedProgramName;
+
+            if (_ProposalDetailMatchesProgram(proposalDetail, effectiveAffidavitProgramName) &&
                 _ProposalDetailMatchesGenre(proposalDetail, affidavitDetail.Genre) &&
                 _ProposalDetailMatchesShowType(proposalDetail, affidavitDetail.ShowType))
             {
-                scrub.EffectiveProgramName = affidavitDetail.ProgramName;
+                scrub.EffectiveProgramName = effectiveAffidavitProgramName;
                 scrub.MatchProgram = true;
                 scrub.EffectiveGenre = affidavitDetail.Genre;
                 scrub.MatchGenre = true;
@@ -80,7 +82,7 @@ namespace Services.Broadcast.BusinessEngines
             }
             else
             {
-                scrub.EffectiveProgramName = affidavitDetail.ProgramName;
+                scrub.EffectiveProgramName = effectiveAffidavitProgramName;
                 scrub.MatchProgram = _ProposalDetailMatchesProgram(proposalDetail, affidavitDetail.ProgramName);
                 scrub.EffectiveGenre = affidavitDetail.Genre;
                 scrub.MatchGenre = _ProposalDetailMatchesGenre(proposalDetail, affidavitDetail.Genre);
@@ -105,18 +107,18 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     matchesProgram = (matchedProgramCriteria == null);
                 }
-
             }
             return matchesProgram;
         }
 
-        private static bool _ProposalDetailMatchesGenre(ProposalDetailDto proposalDetail, string programGenre)
+        private static bool _ProposalDetailMatchesGenre(ProposalDetailDto proposalDetail, string genre)
         {
             var matchesGenre = true;
+
             if (proposalDetail.GenreCriteria.Any())
             {
                 var matchedGenreCriteria = proposalDetail.GenreCriteria.SingleOrDefault(pc =>
-                    pc.Genre.Display.Equals(programGenre, StringComparison.InvariantCultureIgnoreCase));
+                    pc.Genre.Display.Equals(genre, StringComparison.InvariantCultureIgnoreCase));
 
                 if (ContainTypeEnum.Include == proposalDetail.GenreCriteria.First().Contain)
                 {
@@ -130,13 +132,13 @@ namespace Services.Broadcast.BusinessEngines
             return matchesGenre;
         }
 
-        private static bool _ProposalDetailMatchesShowType(ProposalDetailDto proposalDetail, string programShowType)
+        private static bool _ProposalDetailMatchesShowType(ProposalDetailDto proposalDetail, string showType)
         {
             var matchesShowType = true;
             if (proposalDetail.ShowTypeCriteria.Any())
             {
                 var matchedShowTypeCriteria = proposalDetail.ShowTypeCriteria.SingleOrDefault(pc =>
-                    pc.ShowType.Display.Equals(programShowType, StringComparison.InvariantCultureIgnoreCase));
+                    pc.ShowType.Display.Equals(showType, StringComparison.InvariantCultureIgnoreCase));
 
                 if (ContainTypeEnum.Include == proposalDetail.ShowTypeCriteria.First().Contain)
                 {

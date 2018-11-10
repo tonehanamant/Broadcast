@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
@@ -21,6 +24,8 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1882,7 +1887,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanGetOpenMarketPricingGuideWithAllocationGoalsMultiplePrograms()
         {
@@ -1893,10 +1897,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalId = 26021,
                     ProposalDetailId = 9983,
                     BudgetGoal = 10000,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         UnitCapPerStation = 10
-                    }
+                    },
+                    OpenMarketShare = 1
                 };
 
                 var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
@@ -2240,8 +2245,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // creating test programs with spots and without spots
             var station = dto.Markets.First().Stations.First();
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 0 });
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 5 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 0 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 5 });
 
             dto.Filter.SpotFilter = OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.AllPrograms;
             var amountOfProgramsBeforeFiltering = dto.Markets.SelectMany(m => m.Stations).SelectMany(s => s.Programs).Count();
@@ -2266,8 +2271,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // creating test programs with spots and without spots
             var station = dto.Markets.First().Stations.First();
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 0 });
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 5 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 0 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 5 });
 
             dto.Filter.SpotFilter = OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.ProgramWithSpots;
 
@@ -2291,8 +2296,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // creating test programs with spots and without spots
             var station = dto.Markets.First().Stations.First();
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 0 });
-            station.Programs.Add(new PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram { Spots = 5 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 0 });
+            station.Programs.Add(new PricingGuideProgramDto { Spots = 5 });
 
             dto.Filter.SpotFilter = OpenMarketPricingGuideGridFilterDto.OpenMarketSpotFilter.ProgramWithoutSpots;
 
@@ -2572,10 +2577,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SavePricingGuideAllocations()
         {
+            const int proposalDetailId = 9978;
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalId = 26016,
-                ProposalDetailId = 9978
+                ProposalDetailId = proposalDetailId
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             var market = dto.Markets.First(m => m.Stations.Any(s => s.Programs.Any()));
@@ -2583,27 +2589,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var program = station.Programs.First();
 
             program.Spots = 5;
-            var allocationRequest = new PricingGuideAllocationSaveRequestDto
+            var allocationRequest = new PricingGuideOpenMarketDistributionDto
             {
+                ProposalDetailId = proposalDetailId,
                 Markets = dto.Markets,
                 Filter = dto.Filter,
             };
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
-
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket), "MarketId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation), "StationCode");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ProgramId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "ManifestDaypartId");
-            jsonResolver.Ignore(typeof(PricingGuideOpenMarketInventory.PricingGuideMarket.PricingGuideStation.PricingGuideProgram), "Genres");
-
-            var jsonSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-            var resultJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result, _GetPricingGuideJsonSerializerSettings());
 
             Approvals.Verify(resultJson);
         }
@@ -2613,10 +2607,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             MatchType = MessageMatch.Contains)]
         public void SavePricingGuideAllocations_WithoutImpressions()
         {
+            const int proposalDetailId = 9978;
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
                 ProposalId = 26016,
-                ProposalDetailId = 9978
+                ProposalDetailId = proposalDetailId
             };
             var dto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
             var market = dto.Markets.First(m => m.Stations.Any(s => s.Programs.Any()));
@@ -2626,15 +2621,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             program.Spots = program.Spots + 5;
             program.ImpressionsPerSpot = 0;
             program.StationImpressionsPerSpot = 0;
-            var allocationRequest = new PricingGuideAllocationSaveRequestDto
+            var allocationRequest = new PricingGuideOpenMarketDistributionDto
             {
+                ProposalDetailId = proposalDetailId,
                 Markets = dto.Markets,
                 Filter = dto.Filter,
             };
 
             var result = _ProposalOpenMarketInventoryService.SavePricingGuideAllocations(allocationRequest);
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithIncludedMarket()
@@ -2645,12 +2641,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26022,
                     ProposalDetailId = 9984,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
                 };
-
                 var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2667,6 +2662,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_SetsTotalsForPricingGrid()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26020,
+                ProposalDetailId = 9982,
+                BudgetGoal = 10000,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    UnitCapPerStation = 100
+                },
+                OpenMarketShare = 1
+            };
+
+            var result = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            var resultJson = IntegrationTestHelper.ConvertToJsonMoreRounding(result, _GetPricingGuideJsonSerializerSettings());
+
+            Approvals.Verify(resultJson);
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideWithExcludedMarkets()
         {
             using (new TransactionScopeWrapper())
@@ -2675,7 +2693,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
@@ -2711,7 +2729,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
@@ -2762,7 +2780,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
@@ -2780,6 +2798,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
             }
+        }
+
+        private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PricingGuideMarketDto), "MarketId");
+            jsonResolver.Ignore(typeof(PricingGuideStationDto), "StationCode");
+            jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ProgramId");
+            jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ManifestDaypartId");
+            jsonResolver.Ignore(typeof(PricingGuideProgramDto), "Genres");
+            
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
         }
 
         [Test]
@@ -2813,7 +2847,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
@@ -2849,7 +2883,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min,
                         CpmMax = 5,
@@ -2872,6 +2906,83 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void ProposalOpenMarketService_UpdatesOpenMarketPricingGuide_OnlyWithSelectedMarkets()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            pricingGuideOpenMarketDto.AllMarkets.ForEach(x => x.Selected = false);
+            var firstMarket = pricingGuideOpenMarketDto.AllMarkets.First();
+            var lastMarket = pricingGuideOpenMarketDto.AllMarkets.Last();
+            firstMarket.Selected = true;
+            lastMarket.Selected = true;
+
+            var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
+
+            var firstMarketIsInResultList = result.Markets.Any(x => x.MarketId == firstMarket.Id);
+            var lastMarketIsInResultList = result.Markets.Any(x => x.MarketId == lastMarket.Id);
+            
+            Assert.AreEqual(2, result.Markets.Count);
+            Assert.IsTrue(firstMarketIsInResultList);
+            Assert.IsTrue(lastMarketIsInResultList);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_UpdatesOpenMarketPricingGuideMarkets()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            pricingGuideOpenMarketDto.AllMarkets.ForEach(x => x.Selected = false);
+            pricingGuideOpenMarketDto.AllMarkets.First().Selected = true;
+            pricingGuideOpenMarketDto.AllMarkets.Last().Selected = true;
+
+            var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result);
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_SavesAllocatedSpots_ForPricingMarkets()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 17616,
+                ProposalDetailId = 2290
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            pricingGuideOpenMarketDto.AllMarkets.ForEach(x => x.Selected = false);
+            var firstMarket = pricingGuideOpenMarketDto.AllMarkets.First();
+            firstMarket.Selected = true;
+            var firstMarketProgram = pricingGuideOpenMarketDto.Markets
+                .Where(x => x.MarketId == firstMarket.Id)
+                .SelectMany(x => x.Stations)
+                .SelectMany(x => x.Programs)
+                .First();
+            firstMarketProgram.Spots = firstMarketProgram.Spots + 5;
+
+            var result = _ProposalOpenMarketInventoryService.UpdateOpenMarketPricingGuideMarkets(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result);
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingGuideAllocateCoverageWithGoals()
         {
@@ -2887,7 +2998,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26023,
                     ProposalDetailId = 9985,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Max,
                         UnitCapPerStation = 20
@@ -2926,7 +3037,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26016,
                     ProposalDetailId = 9978,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Max
                     },
@@ -2964,7 +3075,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26016,
                     ProposalDetailId = 9978,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Max
                     },
@@ -3002,7 +3113,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     ProposalId = 26016,
                     ProposalDetailId = 9978,
-                    OpenMarketPricing = new OpenMarketPricingGuide
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
                     {
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Max
                     },
@@ -3023,6 +3134,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UpdatesTotalsWithPassedProprietaryCpms()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26020,
+                ProposalDetailId = 9982,
+                BudgetGoal = 10000,
+                OpenMarketShare = 0.5m,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    UnitCapPerStation = 100
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+            pricingGuideOpenMarketDto.ProprietaryPricing = new List<ProprietaryPricingDto>
+            {
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.11 },
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.13 },
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.15 },
+                new ProprietaryPricingDto { Cpm = 5, ImpressionsBalance = 0.17 }
+            };
+
+            var result = _ProposalOpenMarketInventoryService.UpdateProprietaryCpms(pricingGuideOpenMarketDto);
+            var resultJson = IntegrationTestHelper.ConvertToJson(result);
+
+            Approvals.Verify(resultJson);
         }
     }
 }

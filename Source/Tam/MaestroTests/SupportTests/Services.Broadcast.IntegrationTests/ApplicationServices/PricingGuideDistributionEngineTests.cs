@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -22,21 +23,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 0.8d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 1,
                         MarketCoverage = 0.6d,
                         MinCpm = 6m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                     new PricingGuideMarketDto
                     {
                          MarketId = 2,
                         MarketCoverage = 0.2d,
                         MinCpm = 2m
                     },
-                      new PricingGuideOpenMarketInventory.PricingGuideMarket
+                      new PricingGuideMarketDto
                     {
                           MarketId = 3,
                         MarketCoverage = 0.2d,
@@ -47,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -65,19 +66,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 0.8d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.1d,
                         MinCpm = 6m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                     new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.2d,
                         MinCpm = 2m
                     },
-                      new PricingGuideOpenMarketInventory.PricingGuideMarket
+                      new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.2d,
                         MinCpm = 3m
@@ -87,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -105,24 +106,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 3d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.2d,
                         MinCpm = 6m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.5d,
                         MinCpm = 10m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.1d,
                         MinCpm = 3m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                     new PricingGuideMarketDto
                     {
                         MarketCoverage = 0.1d,
                         MinCpm = 1m
@@ -132,7 +133,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -151,27 +152,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 10d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 1,
                         MarketCoverage = 5d,
                         MaxCpm = 6m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 2,
                         MarketCoverage = 5d,
                         MaxCpm = 10m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 3,
                         MarketCoverage = 1d,
                         MaxCpm = 3m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                     new PricingGuideMarketDto
                     {
                          MarketId = 4,
                         MarketCoverage = 1d,
@@ -182,7 +183,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Max
                 }
@@ -200,27 +201,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 0.6d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 1,
                         MarketCoverage = 50d,
                         AvgCpm = 6m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 2,
                         MarketCoverage = 50d,
                         AvgCpm = 10m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 3,
                         MarketCoverage = 10d,
                         AvgCpm = 3m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                     new PricingGuideMarketDto
                     {
                          MarketId = 4,
                         MarketCoverage = 10d,
@@ -231,7 +232,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Avg
                 }
@@ -249,21 +250,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 0.8d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 1,
                         MarketCoverage = 0.0001d,
                         MinCpm = 6m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                          MarketId = 2,
                         MarketCoverage = 0.00002d,
                         MinCpm = 2m
                     },
-                      new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                           MarketId = 3,
                         MarketCoverage = 0.00002d,
@@ -274,7 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -292,21 +293,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 0.7d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 1,
                         MarketCoverage = 60,
                         MinCpm = 6m
                     },
-                     new PricingGuideOpenMarketInventory.PricingGuideMarket
+                     new PricingGuideMarketDto
                     {
                         MarketId = 2,
                         MarketCoverage = 20,
                         MinCpm = 2m
                     },
-                      new PricingGuideOpenMarketInventory.PricingGuideMarket
+                      new PricingGuideMarketDto
                     {
                         MarketId = 3,
                         MarketCoverage = 20,
@@ -317,7 +318,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }
@@ -335,33 +336,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var pricingGuide = new PricingGuideOpenMarketInventory
             {
                 MarketCoverage = 0.03d,
-                Markets = new List<PricingGuideOpenMarketInventory.PricingGuideMarket>
+                Markets = new List<PricingGuideMarketDto>
                 {
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 1,
                         MarketCoverage = 2,
                         MinCpm = 2m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 2,
                         MarketCoverage = 1,
                         MinCpm = 1m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 3,
                         MarketCoverage = 0.5,
                         MinCpm = 3m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 4,
                         MarketCoverage = 0.5,
                         MinCpm = 3m
                     },
-                    new PricingGuideOpenMarketInventory.PricingGuideMarket
+                    new PricingGuideMarketDto
                     {
                         MarketId = 5,
                         MarketCoverage = 0.1,
@@ -372,7 +373,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
-                OpenMarketPricing = new OpenMarketPricingGuide
+                OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                 }

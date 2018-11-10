@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public postlog_files()
         {
-            this.postlog_file_details = new HashSet<postlog_file_details>();
             this.postlog_file_problems = new HashSet<postlog_file_problems>();
+            this.postlog_file_details = new HashSet<postlog_file_details>();
         }
     
         public int id { get; set; }
@@ -27,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_date { get; set; }
         public int status { get; set; }
     
-        public virtual ICollection<postlog_file_details> postlog_file_details { get; set; }
         public virtual ICollection<postlog_file_problems> postlog_file_problems { get; set; }
+        public virtual ICollection<postlog_file_details> postlog_file_details { get; set; }
     }
 }

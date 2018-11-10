@@ -165,7 +165,8 @@
       "ShowType": "",
       "SpotCost": null,
       "SpotLengthId": 1,
-      "Station": "KAPP"
+      "Station": "KAPP",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "abc123",

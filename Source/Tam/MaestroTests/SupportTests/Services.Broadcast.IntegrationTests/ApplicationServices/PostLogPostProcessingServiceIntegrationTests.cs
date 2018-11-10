@@ -10,9 +10,9 @@ using Common.Services;
 using Tam.Maestro.Common.DataLayer;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
-using System;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -43,7 +43,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileContents = File.ReadAllText(filePath);
 
                 WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
-                VerifyResults(response);
+                VerifyPostLogFile(response.Id.Value);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PostLogPostProcessing_ValidFileContent_WithNullValues()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_KeepingTracValidFile_WithNullValues.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                VerifyPostLogFile(response.Id.Value);
             }
         }
 
@@ -164,6 +178,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
+
+        private void VerifyPostLogFile(int fileId)
+        {
+            var _PostLogRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostLogRepository>();
+            var response = _PostLogRepository.GetPostLogFile(fileId, true);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ModifiedDate");
+            jsonResolver.Ignore(typeof(ClientScrub), "Id");
+            jsonResolver.Ignore(typeof(ClientScrub), "ScrubbingFileDetailId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ModifiedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFileAudiences), "ClientScrubId");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
     }
 }

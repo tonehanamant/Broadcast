@@ -34,7 +34,8 @@
       "ShowType": "Comedy",
       "SpotCost": 315.25,
       "SpotLengthId": 1,
-      "Station": "WCBS"
+      "Station": "WCBS",
+      "SuppliedProgramName": null
     },
     {
       "AdjustedAirDate": "0001-01-01T00:00:00",
@@ -70,7 +71,8 @@
       "ShowType": "Comedy",
       "SpotCost": 222.0,
       "SpotLengthId": 1,
-      "Station": "WKYW"
+      "Station": "WKYW",
+      "SuppliedProgramName": null
     }
   ],
   "FileHash": "12-E4-DE-79-96-CD-D6-6E-B3-65-83-15-45-C3-4C-CB-8C-E0-F7-BB",

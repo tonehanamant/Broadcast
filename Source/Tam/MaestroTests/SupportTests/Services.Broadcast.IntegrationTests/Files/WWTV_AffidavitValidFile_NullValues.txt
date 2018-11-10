@@ -1,0 +1,21 @@
+[
+{
+	"EstimateId": 123,
+	"Market": "New York",
+	"Date": "12/26/2017",
+	"InventorySource": "Strata",
+	"Station": "WCBS",
+	"SpotLength": 30,
+	"Time": "1035P",
+	"SpotCost": 315.25,
+	"ISCI": "AAAAAAAA1",
+	"Affiliate": "CBS",
+	"SuppliedProgram": "Everybody Loves Raymond",
+	"Demographics": [{
+			"Demographic": "A25-49",
+			"OvernightRating": 2.3,
+			"OvernightImpressions": 1928
+		}
+	]
+}
+]

@@ -12,6 +12,7 @@
       "Stations": 1
     }
   ],
+  "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [
       "PBS"
@@ -33,6 +34,7 @@
     ]
   },
   "Filter": {},
+  "ImpressionGoal": null,
   "Markets": [
     {
       "AvgCpm": 1.8342378060247007219741218686,
@@ -87,10 +89,31 @@
       "TotalSpots": 1
     }
   ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 0.8460037970765412744940921000,
+    "Cpm": 0.8460037970765412744940921458,
     "Impressions": 29550.69479167
+  },
+  "PricingTotals": {
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 0.8460037970765412744940921458,
+    "Impressions": 29550.69479167
+  },
+  "ProposalDetailId": 9981,
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   }
 }

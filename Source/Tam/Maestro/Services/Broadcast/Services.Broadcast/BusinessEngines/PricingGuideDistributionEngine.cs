@@ -1,10 +1,9 @@
 ﻿using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.DTO.PricingGuide;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Services.Broadcast.Entities.DTO.PricingGuideOpenMarketInventory;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -75,7 +74,7 @@ namespace Services.Broadcast.BusinessEngines
             return _FindExpensiveMarketsKnapsack(coverage, markets);
         }
 
-        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarket> markets, OpenMarketCpmTarget target)
+        private List<DistributionMarket> _MapToDistributionMarkets(List<PricingGuideMarketDto> markets, OpenMarketCpmTarget target)
         {
             if(target == OpenMarketCpmTarget.Max)
             {
@@ -183,7 +182,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public void _SetPricingGuideMarkets(bool[,] itemsToSelect, int coverage, List<DistributionMarket> markets, PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideOpenMarketInventoryRequestDto request)
         {
-            var selectedMarkets = new List<PricingGuideMarket>();
+            var selectedMarkets = new List<PricingGuideMarketDto>();
             var itemIndex = markets.Count;
             var remainingCoverage = coverage;
             var coverageCount = remainingCoverage;

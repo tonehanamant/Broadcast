@@ -14,12 +14,6 @@
     },
     {
       "ProblemDescription": "Record: 2: Field: 'Isci' is invalid\r\nis required"
-    },
-    {
-      "ProblemDescription": "Record: 3: Field: 'ShowType' is invalid\r\nis required"
-    },
-    {
-      "ProblemDescription": "Record: 3: Field: 'LeadInShowType' is invalid\r\nis required"
     }
   ],
   "SourceId": 1,

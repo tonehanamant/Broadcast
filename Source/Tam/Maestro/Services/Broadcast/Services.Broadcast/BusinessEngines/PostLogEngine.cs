@@ -92,33 +92,6 @@ namespace Services.Broadcast.BusinessEngines
                 });
             }
 
-            if (string.IsNullOrWhiteSpace(requestDetail.ShowType))
-            {
-                validationResults.Add(new WWTVInboundFileValidationResult()
-                {
-                    InvalidField = "ShowType",
-                    ErrorMessage = "is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(requestDetail.LeadInShowType))
-            {
-                validationResults.Add(new WWTVInboundFileValidationResult()
-                {
-                    InvalidField = "LeadInShowType",
-                    ErrorMessage = "is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(requestDetail.LeadOutShowType))
-            {
-                validationResults.Add(new WWTVInboundFileValidationResult()
-                {
-                    InvalidField = "LeadOutShowType",
-                    ErrorMessage = "is required",
-                });
-            }
-
             return validationResults;
         }
     }

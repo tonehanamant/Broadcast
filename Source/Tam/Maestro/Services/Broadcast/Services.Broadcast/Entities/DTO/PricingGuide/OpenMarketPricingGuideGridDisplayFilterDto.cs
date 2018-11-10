@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
-namespace Services.Broadcast.Entities.DTO
+namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
     public class OpenMarketPricingGuideGridDisplayFilterDto
     {

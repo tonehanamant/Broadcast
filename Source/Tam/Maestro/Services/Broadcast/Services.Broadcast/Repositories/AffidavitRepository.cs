@@ -74,14 +74,14 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var affidavit_file = _MapFromAffidavitFile(affidavitFile);
+                    var affidavit_file = _MapFromScrubbingFile(affidavitFile);
                     context.affidavit_files.Add(affidavit_file);
                     context.SaveChanges();
                     return affidavit_file.id;
                 });
         }
 
-        private affidavit_files _MapFromAffidavitFile(ScrubbingFile affidavitFile)
+        private affidavit_files _MapFromScrubbingFile(ScrubbingFile affidavitFile)
         {
             var result = new affidavit_files
             {
@@ -114,15 +114,16 @@ namespace Services.Broadcast.Repositories
                     leadout_genre = d.LeadoutGenre,
                     leadin_program_name = d.LeadinProgramName,
                     leadout_program_name = d.LeadoutProgramName,
-                    leadin_end_time = d.LeadInEndTime.Value,
-                    leadout_start_time = d.LeadOutStartTime.Value,
+                    leadin_end_time = d.LeadInEndTime == null ? (int?)null : d.LeadInEndTime.Value,
+                    leadout_start_time = d.LeadOutStartTime == null ? (int?)null : d.LeadOutStartTime.Value,
                     program_show_type = d.ShowType,
                     leadin_show_type = d.LeadInShowType,
                     leadout_show_type = d.LeadOutShowType,
                     adjusted_air_date = d.AdjustedAirDate,
                     archived = d.Archived,
-                    affidavit_client_scrubs = _MapFromAffidavitClientScrubs(d.ClientScrubs),
-                    affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(d.FileDetailProblems),
+                    supplied_program_name = d.SuppliedProgramName,
+                    affidavit_client_scrubs = _MapFromClientScrubs(d.ClientScrubs),
+                    affidavit_file_detail_problems = _MapFromFileDetailProblems(d.FileDetailProblems),
                     affidavit_file_detail_demographics = d.Demographics.Select(demo =>
                         new affidavit_file_detail_demographics
                         {
@@ -136,7 +137,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        private ICollection<affidavit_file_detail_problems> _MapFromAffidavitFileDetailProblems(List<FileDetailProblem> affidavitFileDetailProblems)
+        private ICollection<affidavit_file_detail_problems> _MapFromFileDetailProblems(List<FileDetailProblem> affidavitFileDetailProblems)
         {
             var result = affidavitFileDetailProblems.Select(p =>
                         new affidavit_file_detail_problems
@@ -147,7 +148,7 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        private ICollection<affidavit_client_scrubs> _MapFromAffidavitClientScrubs(List<ClientScrub> affidavitClientScrubs)
+        private ICollection<affidavit_client_scrubs> _MapFromClientScrubs(List<ClientScrub> affidavitClientScrubs)
         {
             var result = affidavitClientScrubs.Select(s => new affidavit_client_scrubs
             {
@@ -190,8 +191,8 @@ namespace Services.Broadcast.Repositories
                         var detail = context.affidavit_file_details.Find(affidavitFileDetail.Id);
                         context.affidavit_file_detail_problems.RemoveRange(detail.affidavit_file_detail_problems);
                         context.affidavit_client_scrubs.RemoveRange(detail.affidavit_client_scrubs);
-                        detail.affidavit_file_detail_problems = _MapFromAffidavitFileDetailProblems(affidavitFileDetail.FileDetailProblems);
-                        detail.affidavit_client_scrubs = _MapFromAffidavitClientScrubs(affidavitFileDetail.ClientScrubs);
+                        detail.affidavit_file_detail_problems = _MapFromFileDetailProblems(affidavitFileDetail.FileDetailProblems);
+                        detail.affidavit_client_scrubs = _MapFromClientScrubs(affidavitFileDetail.ClientScrubs);
                         context.SaveChanges();
                     }
                 });
@@ -217,11 +218,11 @@ namespace Services.Broadcast.Repositories
 
                     var affidavitFile = query.Single(a => a.id == affidavitId, "Affidavit/Post not found in database");
 
-                    return _MapToAffidavitFile(affidavitFile);
+                    return _MapToScrubbingFile(affidavitFile);
                 });
         }
 
-        private ScrubbingFile _MapToAffidavitFile(affidavit_files affidavitFile)
+        private ScrubbingFile _MapToScrubbingFile(affidavit_files affidavitFile)
         {
             return new ScrubbingFile
             {
@@ -231,7 +232,7 @@ namespace Services.Broadcast.Repositories
                 SourceId = affidavitFile.source_id,
                 Status = (FileProcessingStatusEnum)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
-                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new ScrubbingFileProblem()
+                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new ScrubbingFileProblem
                 {
                     Id = p.id,
                     FileId = p.affidavit_file_id,
@@ -263,7 +264,8 @@ namespace Services.Broadcast.Repositories
                     EstimateId = d.estimate_id,
                     InventorySource = d.inventory_source.Value,
                     SpotCost = d.spot_cost,
-                    Demographics = d.affidavit_file_detail_demographics.Select(a => new ScrubbingDemographics()
+                    SuppliedProgramName = d.supplied_program_name,
+                    Demographics = d.affidavit_file_detail_demographics.Select(a => new ScrubbingDemographics
                     {
                         AudienceId = a.audience_id.Value,
                         OvernightImpressions = a.overnight_impressions.Value,
@@ -292,12 +294,9 @@ namespace Services.Broadcast.Repositories
                         ModifiedDate = a.modified_date,
                         LeadIn = a.lead_in,
                         EffectiveIsci = a.effective_isci,
-                        ProposalVersionDetailId = a.proposal_version_detail_quarter_weeks
-                            .proposal_version_detail_quarters.proposal_version_details.id,
-                        PostingBookId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
-                            .proposal_version_details.posting_book_id,
-                        PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)a
-                            .proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
+                        ProposalVersionDetailId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.id,
+                        PostingBookId = a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.posting_book_id,
+                        PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)a.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters
                             .proposal_version_details.posting_playback_type,
                         ClientScrubAudiences = a.affidavit_client_scrub_audiences.Select(sa =>
                             new ScrubbingFileAudiences
@@ -706,11 +705,11 @@ namespace Services.Broadcast.Repositories
                                             && !affidavitFileDetail.affidavit_client_scrubs.Any()
                                             select affidavitFileDetail).ToList();
 
-                    return _MapToAffidavitDetail(affidavitDetails);
+                    return _MapToScrubbingFileDetail(affidavitDetails);
                 });
         }
 
-        private List<ScrubbingFileDetail> _MapToAffidavitDetail(List<affidavit_file_details> affidavitDetails)
+        private List<ScrubbingFileDetail> _MapToScrubbingFileDetail(List<affidavit_file_details> affidavitDetails)
         {
             return affidavitDetails.Select(d => new ScrubbingFileDetail
             {
@@ -738,6 +737,7 @@ namespace Services.Broadcast.Repositories
                 EstimateId = d.estimate_id,
                 InventorySource = d.inventory_source.Value,
                 SpotCost = d.spot_cost,
+                SuppliedProgramName = d.supplied_program_name
             }).ToList();
         }
 
@@ -756,7 +756,7 @@ namespace Services.Broadcast.Repositories
                                            where affidavitScrubbingIds.Contains(affidavit_client_scrubs.id)
                                            select affidavitFileDetail).ToList();
 
-                   return _MapToAffidavitDetail(affidavitDetails);
+                   return _MapToScrubbingFileDetail(affidavitDetails);
                });
         }
     }

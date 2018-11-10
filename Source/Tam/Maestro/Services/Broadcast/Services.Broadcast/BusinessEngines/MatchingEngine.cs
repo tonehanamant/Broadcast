@@ -54,8 +54,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="fileDetail">File detail to match</param>
         /// <param name="proposalWeeks">Proposal weeks to find the match to.</param>
         /// <returns>List of MatchingProposalWeek objects containing the matched weeks</returns>
-        public List<MatchingProposalWeek> Match(ScrubbingFileDetail fileDetail
-            , List<MatchingProposalWeek> proposalWeeks)
+        public List<MatchingProposalWeek> Match(ScrubbingFileDetail fileDetail, List<MatchingProposalWeek> proposalWeeks)
         {
             _MatchingProposalWeeks = new List<MatchingProposalWeek>();
             _MatchingProblems = new List<FileDetailProblem>();
@@ -138,9 +137,7 @@ namespace Services.Broadcast.BusinessEngines
             return _MatchingProposalWeeks;
         }
 
-        private List<MatchingProposalWeek> _GetAirtimeMatchingProposalDetailWeeks
-    (System.Collections.Generic.IEnumerable<IGrouping<int, MatchingProposalWeek>> proposalWeeksByProposalDetail
-    , ScrubbingFileDetail affidavitDetail)
+        private List<MatchingProposalWeek> _GetAirtimeMatchingProposalDetailWeeks(IEnumerable<IGrouping<int, MatchingProposalWeek>> proposalWeeksByProposalDetail, ScrubbingFileDetail affidavitDetail)
         {
             var result = new List<MatchingProposalWeek>();
             var dayparts = _DaypartCache.GetDisplayDayparts(proposalWeeksByProposalDetail.Select(d => d.First().ProposalVersionDetailDaypartId));
