@@ -59,6 +59,13 @@ INSERT INTO #previous_version
 /************************ START BCOP3889 **************************************************************************************/
 /************************ START BCOP3997 **************************************************************************************/
 
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
 GO
 IF EXISTS(select * FROM sys.views where name = 'uvw_market_codes_call_letters')
 BEGIN
@@ -83,6 +90,7 @@ AS
               v.market_code
               
 GO
+
 IF EXISTS(SELECT * FROM sys.indexes WHERE name='IX_uvw_market_codes_call_letters' AND object_id = OBJECT_ID('nsi.uvw_market_codes_call_letters'))
 BEGIN
 	DROP INDEX IX_uvw_market_codes_call_letters ON [nsi].[uvw_market_codes_call_letters]
@@ -97,9 +105,6 @@ CREATE UNIQUE CLUSTERED INDEX [IX_uvw_market_codes_call_letters] ON [nsi].[uvw_m
        market_code ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-
-
-
 
 
 IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test'))
