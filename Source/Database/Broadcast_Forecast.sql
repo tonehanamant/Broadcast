@@ -106,10 +106,17 @@ CREATE UNIQUE CLUSTERED INDEX [IX_uvw_market_codes_call_letters] ON [nsi].[uvw_m
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 
-
-IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test'))
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Test'))
 BEGIN
-	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test]
+	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Test]
+END
+                   
+GO
+
+
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages'))
+BEGIN
+	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
 END
                    
 GO
@@ -132,7 +139,7 @@ GO
 	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages] @posting_media_month_id, @demo, @ratings_request, @min_playback_type
 */
 --=============================================
-CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_test]
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
 	@posting_media_month_id SMALLINT,
 	@demo VARCHAR(MAX),
 	@ratings_request RatingsInputWithId READONLY,
