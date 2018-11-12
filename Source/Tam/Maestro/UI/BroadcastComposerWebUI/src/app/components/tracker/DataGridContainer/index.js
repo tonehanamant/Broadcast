@@ -62,62 +62,61 @@ export class DataGridContainer extends Component {
       {
         Header: "Contract",
         accessor: "ContractName",
-        minWidth: 15
+        maxWidth: 150
       },
       {
         Header: "Contract Id",
         accessor: "ContractId",
-        minWidth: 10
+        maxWidth: 85
       },
       {
         Header: "Contract Id",
         accessor: "searchContractId",
-        width: 10,
         show: false
       },
       {
         Header: "Advertiser",
         accessor: "Advertiser",
-        minWidth: 15
+        maxWidth: 100
       },
       {
         Header: "Post Log Upload Date",
         accessor: "searchUploadDate",
-        minWidth: 15
+        maxWidth: 125
       },
       {
         Header: "Spots in Spec",
         accessor: "SpotsInSpec",
-        minWidth: 15
+        maxWidth: 85
       },
       {
         Header: "Spots in Spec",
         accessor: "searchSpotsInSpec",
-        width: 15,
         show: false
       },
       {
         Header: "Spots Out of Spec",
         accessor: "SpotsOutOfSpec",
-        minWidth: 15
+        maxWidth: 125
       },
       {
         Header: "Spots Out of Spec",
         accessor: "searchSpotsOutOfSpec",
-        width: 15,
         show: false
       },
       {
         Header: "Primary Demo Booked",
         accessor: "PrimaryAudienceBookedImpressions",
-        minWidth: 15,
+        // width: 15,
+        maxWidth: 125,
         Cell: row =>
           row.value ? numeral(row.value / 1000).format("0,0.[000]") : "-"
       },
       {
         Header: "Primary Demo Delivered",
         accessor: "PrimaryAudienceDeliveredImpressions",
-        minWidth: 15,
+        // width: 15,
+        maxWidth: 135,
         Cell: row => {
           console.log(row);
           // handle equivalized indicator as badge if true
@@ -139,7 +138,8 @@ export class DataGridContainer extends Component {
       {
         Header: "Primary Demo % Delivery",
         accessor: "PrimaryAudienceDelivery",
-        minWidth: 15,
+        // width: 15,
+        maxWidth: 125,
         Cell: row => {
           const val = row.value ? numeral(row.value).format("0,0.[00]") : false;
           return val ? `${val}%` : "-";
@@ -148,7 +148,8 @@ export class DataGridContainer extends Component {
       {
         Header: "Household Delivered",
         accessor: "HouseholdDeliveredImpressions",
-        minWidth: 15,
+        // width: 15,
+        maxWidth: 125,
         Cell: row => {
           // handle equivalized indicator as badge if true
           const val = row.value
@@ -171,7 +172,7 @@ export class DataGridContainer extends Component {
     return (
       <Table
         data={this.props.trackerGridData}
-        style={{ fontSize: "12px", marginBottom: "100px", maxHeight: "500px" }}
+        style={{ fontSize: "12px", marginBottom: "100px" }}
         columns={columns}
         getTrGroupProps={(state, rowInfo) => ({
           onDoubleClick: () => {
