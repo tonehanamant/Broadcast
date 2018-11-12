@@ -496,7 +496,7 @@ export default class ProposalForm extends Component {
             </Col>
             <Col md={5}>
               <Row>
-                <Col md={4}>
+                <Col md={3}>
                   <FormGroup controlId="proposalSpotLength">
                     <ControlLabel>
                       <strong>Spot Length</strong>
@@ -543,13 +543,14 @@ export default class ProposalForm extends Component {
                     </FormControl.Static>
                   </FormGroup>
                 </Col>
-                <Col md={4}>
+                <Col md={5}>
                   <FormGroup controlId="proposalNotes">
                     <ControlLabel>Notes</ControlLabel>
                     <FormControl
                       componentClass="textarea"
-                      defaultValue={proposalEditForm.Notes || ""}
+                      value={proposalEditForm.Notes || ""}
                       onChange={this.onChangeNotes}
+                      rows={4}
                       disabled={isReadOnly}
                     />
                   </FormGroup>

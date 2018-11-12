@@ -141,9 +141,8 @@ namespace Services.Broadcast.ApplicationServices
             var playbackTypes = inspecSpots.Select(x => x.ProposalDetailPlaybackType.Value).Distinct().ToList();
 
             return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings,
-                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, proposal.GuaranteedDemoId, flights,
-                                                withOvernightImpressions, proposal.Equivalized, proposal.ProposalName, _ImpressionAdjustmentEngine,
-                                                postingBooks, playbackTypes);
+                                                mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, flights,
+                                                withOvernightImpressions, _ImpressionAdjustmentEngine, postingBooks, playbackTypes, proposal);
         }
         /// <summary>
         /// 

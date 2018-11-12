@@ -1,0 +1,21 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "Daypart": null,
+  "Equivalized": false,
+  "FlightDates": [],
+  "GuaranteedDemo": "House Holds",
+  "PlaybackTypes": [],
+  "PostingBooks": [],
+  "ProposalAudiences": [
+    {
+      "Display": "HH",
+      "Id": 31
+    }
+  ],
+  "ProposalNotes": "third",
+  "QuarterTables": [],
+  "QuarterTabs": [],
+  "ReportName": "Proposal Versions Test - Test Advertiser 9 - Cadent Network Post Report with Overnights.xlsx",
+  "SpotLengthsDisplay": "",
+  "WithOvernightImpressions": true
+}

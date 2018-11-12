@@ -66,7 +66,8 @@ namespace Services.Broadcast.ReportGenerators
         private const string ADVERTISER = "Advertiser";
         private const string DAYPART = "Daypart";
 
-        private const string BACKGROUNT_COLOR_CODE = "#A1E5FD";
+        private const string BLUE_COLOR_CODE = "#A1E5FD";
+        private const string GRAY_COLOR_CODE = "#b4bac4";
         private const string IMPRESSIONS_FORMAT = "#,##0,";
         private const string MONEY_FORMAT = "$###,###,##0";
         private const string PERCENTAGE_FORMAT = "#0.00%";
@@ -75,7 +76,8 @@ namespace Services.Broadcast.ReportGenerators
         private const int FONT_SIZE_SUMMARY_TAB = 12;
         private const int FONT_SIZE_QUARTER_TAB = 8;
 
-        private Color BACKGROUND_COLOR = ColorTranslator.FromHtml(BACKGROUNT_COLOR_CODE);
+        private readonly Color HEADER_BACKGROUND_COLOR = ColorTranslator.FromHtml(BLUE_COLOR_CODE);
+        private readonly Color NOTES_BACKGROUND_COLOR = ColorTranslator.FromHtml(GRAY_COLOR_CODE);
 
         private readonly Image _Logo;
 
@@ -189,10 +191,23 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells.Style.Font.Size = FONT_SIZE_SUMMARY_TAB;
             wsSummary.Cells.Style.Font.Name = FONT_SUMMARY_TAB;
             int rowOffset = _AddSummaryTabHeader(wsSummary, reportData);
-            _AddSummaryTabQuartersTable(wsSummary, reportData, rowOffset);
+            rowOffset = _AddSummaryTabQuartersTable(wsSummary, reportData, rowOffset);
+            _AddProposalNotes(wsSummary, rowOffset, reportData.ProposalNotes);
         }
 
-        private void _AddSummaryTabQuartersTable(ExcelWorksheet wsSummary, NsiPostReport reportData, int rowOffset)
+        private void _AddProposalNotes(ExcelWorksheet wsSummary, int rowOffset, string proposalNotes)
+        {
+            int offset = proposalNotes.Length / 120 + proposalNotes.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries).Length - 1;
+            wsSummary.Cells[$"B{rowOffset}"].Value = proposalNotes;
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Merge = true;
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Style.WrapText = true;
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Style.Fill.BackgroundColor.SetColor(NOTES_BACKGROUND_COLOR);
+        }
+
+        private int _AddSummaryTabQuartersTable(ExcelWorksheet wsSummary, NsiPostReport reportData, int rowOffset)
         {
             foreach (var quarterTable in reportData.QuarterTables)
             {
@@ -241,6 +256,8 @@ namespace Services.Broadcast.ReportGenerators
 
                 rowOffset += 2;
             }
+
+            return rowOffset;
         }
 
         private void _ApplyStylesForSummaryQuarterTable(ExcelWorksheet wsSummary, int rowOffset, int firstTableRow)
@@ -252,10 +269,10 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"B{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Font.Bold = true;
 
             wsSummary.Cells[$"B{tableHeaderRowIndex}:K{tableHeaderRowIndex}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            wsSummary.Cells[$"B{tableHeaderRowIndex}:K{tableHeaderRowIndex}"].Style.Fill.BackgroundColor.SetColor(BACKGROUND_COLOR);
+            wsSummary.Cells[$"B{tableHeaderRowIndex}:K{tableHeaderRowIndex}"].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
 
             wsSummary.Cells[$"M{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            wsSummary.Cells[$"M{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Fill.BackgroundColor.SetColor(BACKGROUND_COLOR);
+            wsSummary.Cells[$"M{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
             wsSummary.Cells[$"B{tableHeaderRowIndex}:K{tableHeaderRowIndex}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);
             wsSummary.Cells[$"M{tableHeaderRowIndex - 1}:N{tableHeaderRowIndex}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);
 
@@ -271,11 +288,11 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"B{rowOffset}:N{rowOffset}"].Style.Font.Bold = true;
 
             wsSummary.Cells[$"B{rowOffset}:K{rowOffset}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            wsSummary.Cells[$"B{rowOffset}:K{rowOffset}"].Style.Fill.BackgroundColor.SetColor(BACKGROUND_COLOR);
+            wsSummary.Cells[$"B{rowOffset}:K{rowOffset}"].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
             wsSummary.Cells[$"B{rowOffset}:K{rowOffset}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);
 
             wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Fill.BackgroundColor.SetColor(BACKGROUND_COLOR);
+            wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
             wsSummary.Cells[$"M{rowOffset}:N{rowOffset}"].Style.Border.BorderAround(ExcelBorderStyle.Thick);
 
             wsSummary.Cells[$"M{rowOffset}:M{rowOffset}"].Style.Numberformat.Format = IMPRESSIONS_FORMAT;
@@ -310,7 +327,7 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var item in values)
             {
-                wsSummary.Cells[item.Key].Value = item.Value;                
+                wsSummary.Cells[item.Key].Value = item.Value;
             }
             int rowOffset = 17;
             foreach (var item in reportData.FlightDates)
@@ -322,7 +339,7 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"C{rowOffset++}"].Value = string.Join(", ", reportData.PostingBooks);
             wsSummary.Cells[$"B{rowOffset}"].Value = "Playback Type:";
             wsSummary.Cells[$"C{rowOffset++}"].Value = string.Join(", ", reportData.PlaybackTypes);
-            
+
             wsSummary.Cells[$"B9:B{rowOffset}"].Style.Font.Bold = true;
             wsSummary.Cells[$"B9:B{rowOffset}"].Style.Font.Size = 10;
             wsSummary.Cells[$"B9:B{rowOffset}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
@@ -351,7 +368,7 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Font.Bold = true;
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.BackgroundColor.SetColor(BACKGROUND_COLOR);
+            ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
         }
     }
