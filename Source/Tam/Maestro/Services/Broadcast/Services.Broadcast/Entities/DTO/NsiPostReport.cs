@@ -16,7 +16,6 @@ namespace Services.Broadcast.Entities.DTO
         public List<NsiPostReportQuarterSummaryTable> QuarterTables { get; set; } = new List<NsiPostReportQuarterSummaryTable>();
         public List<NsiPostReportQuarterTab> QuarterTabs { get; set; } = new List<NsiPostReportQuarterTab>();
         public List<LookupDto> ProposalAudiences { get; set; }
-        public int ProposalId { get; set; }
         public string GuaranteedDemo { get; set; }
         public string Daypart { get; set; }
         public List<string> FlightDates { get; set; }
@@ -25,6 +24,7 @@ namespace Services.Broadcast.Entities.DTO
         public string Advertiser { get; set; }
         public List<string> PostingBooks { get; set; }
         public List<string> PlaybackTypes { get; set; }
+        public string ProposalNotes { get; set; }
 
         private const string SUMMARY_TABLE_NAME_FORMAT = "{0}Q'{1}";
         private const string SPOT_DETAIL_TAB_NAME_FORMAT = "Spot Detail {0}Q{1}";
@@ -94,22 +94,23 @@ namespace Services.Broadcast.Entities.DTO
                             Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                             Dictionary<string, DisplayBroadcastStation> stationMappings,
                             Dictionary<int, Dictionary<int, int>> nsiMarketRankings,
-                            string guaranteedDemo, int guaranteedDemoId,
+                            string guaranteedDemo,
                             List<Tuple<DateTime, DateTime>> flights,
-                            bool withOvernightImpressions, bool equivalized, string proposalName,
+                            bool withOvernightImpressions,
                             IImpressionAdjustmentEngine impressionAdjustmentEngine,
                             List<MediaMonth> mediaMonths,
-                            List<ProposalEnums.ProposalPlaybackType> playbackTypes)
+                            List<ProposalEnums.ProposalPlaybackType> playbackTypes,
+                            ProposalDto proposal)
         {
-            ProposalId = proposalId;
             WithOvernightImpressions = withOvernightImpressions;
-            Equivalized = equivalized;
             GuaranteedDemo = guaranteedDemo;
             ProposalAudiences = proposalAudiences;
-            ReportName = _GenerateReportName(proposalName, inSpecAffidavitFileDetails, advertiser, withOvernightImpressions);
+            ReportName = _GenerateReportName(proposal.ProposalName, inSpecAffidavitFileDetails, advertiser, withOvernightImpressions);
             Advertiser = advertiser;
             PostingBooks = mediaMonths.Select(x => x.LongMonthNameAndYear).ToList();
             PlaybackTypes = playbackTypes.Select(x=>EnumHelper.GetDescriptionAttribute(x)).ToList();
+            ProposalNotes = proposal.Notes;
+            Equivalized = proposal.Equivalized;
 
             //map the data
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
@@ -139,13 +140,13 @@ namespace Services.Broadcast.Entities.DTO
                     new NsiPostReportQuarterSummaryTable()
                     {
                         TableName = String.Format(SUMMARY_TABLE_NAME_FORMAT, group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
-                        TableRows = _LoadNsiPostReportQuarterSummaryTableRows(tab.TabRows, guaranteedDemoId)
+                        TableRows = _LoadNsiPostReportQuarterSummaryTableRows(tab.TabRows, proposal.GuaranteedDemoId)
                     });
             }
 
             _ApplyAduAdjustments(QuarterTables);
             FlightDates = _GetFormattedFlights(flights, QuarterTables);
-            SpotLengthsDisplay = _GetFormattedSpotLengths(QuarterTables, equivalized);
+            SpotLengthsDisplay = _GetFormattedSpotLengths(QuarterTables, Equivalized);
         }
 
         private string _GetFormattedSpotLengths(List<NsiPostReportQuarterSummaryTable> quarterTables, bool equivalized)

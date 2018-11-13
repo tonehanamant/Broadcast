@@ -20,6 +20,7 @@
       "Id": 31
     }
   ],
+  "ProposalNotes": null,
   "QuarterTables": [
     {
       "TableName": "1Q'16",

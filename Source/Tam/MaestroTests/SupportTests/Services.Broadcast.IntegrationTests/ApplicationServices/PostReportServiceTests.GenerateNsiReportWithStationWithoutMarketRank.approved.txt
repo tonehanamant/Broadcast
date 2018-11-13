@@ -18,7 +18,7 @@
       "Id": 31
     }
   ],
-  "ProposalId": 3134,
+  "ProposalNotes": null,
   "QuarterTables": [
     {
       "TableName": "3Q'17",

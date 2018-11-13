@@ -148,6 +148,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNsiPostReportDataWithProposalNotes()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostReportService.GetNsiPostReportData(249, true);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+        
+        [Test]
         [Ignore]
         public void GenerateReportFile()
         {

@@ -226,7 +226,7 @@ export class DataGridContainer extends Component {
     return (
       <Table
         data={this.props.postGridData}
-        style={{ fontSize: "12px", marginBottom: "100px", maxHeight: "500px" }}
+        style={{ fontSize: "12px", marginBottom: "100px" }}
         columns={columns}
         getTrGroupProps={(state, rowInfo) => ({
           onDoubleClick: () => {

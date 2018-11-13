@@ -113,6 +113,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteService()
         {
             using (new TransactionScopeWrapper())
@@ -128,6 +129,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteServiceWithShowTypes()
         {
             using (new TransactionScopeWrapper())
@@ -147,6 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteServiceWithLeadInEndTime()
         {
             using (new TransactionScopeWrapper())
@@ -164,6 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteServiceWithLeadOutStartTime()
         {
             using (new TransactionScopeWrapper())
@@ -181,6 +185,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteServiceWithShowType()
         {
             using (new TransactionScopeWrapper())
@@ -198,6 +203,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteServiceMultipleIscis()
         {
             using (new TransactionScopeWrapper())
@@ -597,6 +603,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Station_Market_Scrub()
         {
             using (new TransactionScopeWrapper())
@@ -631,6 +638,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Station_Genre_Scrub_inclusive()
         {
             using (new TransactionScopeWrapper())
@@ -660,6 +668,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Station_Genre_Scrub_exclusive()
         {
             using (new TransactionScopeWrapper())
@@ -795,6 +804,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Scrub_Isci_Days_No_Match()
         {
             using (new TransactionScopeWrapper())
@@ -829,6 +839,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Scrub_Isci_Days_Match()
         {
             using (new TransactionScopeWrapper())
@@ -867,6 +878,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Match_Proposal_Week_Isci_Day_Without_Matching_Daypart_day()
         {
             using (new TransactionScopeWrapper())
@@ -909,6 +921,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void Affidavit_Match_Time_When_Daypart_Day_Does_Not_Match()
         {
             using (new TransactionScopeWrapper())
@@ -969,6 +982,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteService_Funky_Station_Name_BCOP3159()
         {
             using (new TransactionScopeWrapper())
@@ -987,6 +1001,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteService_Funky_Station_Name_BCOP3159_Dash_Only()
         {
             using (new TransactionScopeWrapper())
@@ -1027,6 +1042,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void ScrubUnlinkedIsci()
         {
             using (new TransactionScopeWrapper())
@@ -1045,6 +1061,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void MapIsci_EffectiveGenreNull()
         {
             using (new TransactionScopeWrapper())
@@ -1064,6 +1081,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void MapIsci()
         {
             using (new TransactionScopeWrapper())
@@ -1083,6 +1101,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SwapProposalDetail()
         {
             using (new TransactionScopeWrapper())
@@ -1159,6 +1178,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void SaveAffidaviteServiceSameIsciInSameDetailWithDifferentWeeks()
         {
             using (new TransactionScopeWrapper())
@@ -1174,6 +1194,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         // ensure saving affidavit + a rescrub changes nothing
+        [Category("Impressions")]
         public void ReScrubProposalDetail_Scrub_Rescrub_NoChange()
         {
             using (new TransactionScopeWrapper())
@@ -1210,6 +1231,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void ReScrubProposalDetail_Basic_Changes_Isci()
         {
             using (new TransactionScopeWrapper())
@@ -1280,6 +1302,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void ReScrubProposalDetail_Basic_Changes()
         {
             using (new TransactionScopeWrapper())

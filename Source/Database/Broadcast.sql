@@ -51,6 +51,14 @@ INSERT INTO #previous_version
 
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
+
+/*************************************** START BCOP-3888 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'notes' AND max_length = 256 AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_versions]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_versions]  ALTER COLUMN [notes] VARCHAR(4000)
+END
+/*************************************** END BCOP-3888 *****************************************************/
+
 /*************************************** START BCOP-3883 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'supplied_program_name' AND OBJECT_ID = OBJECT_ID('[dbo].[affidavit_file_details]'))
 BEGIN

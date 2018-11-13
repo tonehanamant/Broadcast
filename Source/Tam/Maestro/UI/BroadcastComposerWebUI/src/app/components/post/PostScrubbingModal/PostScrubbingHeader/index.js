@@ -232,7 +232,13 @@ export class PostScrubbingHeader extends Component {
                 </FormGroup>
               </Col>
               <Col md={4}>
-                <FormGroup controlId="proposalNotes">
+                <FormGroup
+                  controlId="proposalNotes"
+                  style={{
+                    maxHeight: 175,
+                    overflowY: notes !== null ? "scroll" : "hidden"
+                  }}
+                >
                   <ControlLabel>Notes</ControlLabel>
                   <FormControl.Static>{notes || "--"}</FormControl.Static>
                 </FormGroup>

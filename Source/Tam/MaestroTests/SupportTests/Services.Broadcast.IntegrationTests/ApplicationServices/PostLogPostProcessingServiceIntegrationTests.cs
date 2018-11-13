@@ -49,6 +49,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogPostProcessing_ValidFileContent_WithNullValues()
         {
             using (new TransactionScopeWrapper())

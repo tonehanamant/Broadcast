@@ -811,7 +811,7 @@
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
-          <Property Name="notes" Type="varchar" MaxLength="256" />
+          <Property Name="notes" Type="varchar" MaxLength="4000" />
           <Property Name="post_type" Type="tinyint" Nullable="false" />
           <Property Name="equivalized" Type="bit" Nullable="false" />
           <Property Name="blackout_markets" Type="tinyint" />
@@ -6088,7 +6088,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="target_budget" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="target_units" Type="Int32" />
           <Property Name="target_impressions" Type="Double" Nullable="false" />
-          <Property Name="notes" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="notes" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
           <Property Name="post_type" Type="Byte" Nullable="false" />
           <Property Name="equivalized" Type="Boolean" Nullable="false" />
           <Property Name="blackout_markets" Type="Byte" />
