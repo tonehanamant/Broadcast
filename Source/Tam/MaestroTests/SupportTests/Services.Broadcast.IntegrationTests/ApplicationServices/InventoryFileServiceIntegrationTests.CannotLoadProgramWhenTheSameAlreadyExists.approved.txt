@@ -1,8 +1,1 @@
-﻿[
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "There is already an existing program with the same flight and airtime.",
-    "ProgramName": "Harry",
-    "StationLetters": "WVTM"
-  }
-]
+﻿[]
