@@ -74,7 +74,7 @@ export class PostScrubbingDetail extends Component {
           </NavItem>
         </Nav>
 
-        <Well bsSize="small" style={{ width: "1750px", marginBottom: 0 }}>
+        <Well bsSize="small" style={{ width: "1800px", marginBottom: 0 }}>
           <Row style={{ marginTop: 4 }}>
             <Col md={12}>
               {hasData && (

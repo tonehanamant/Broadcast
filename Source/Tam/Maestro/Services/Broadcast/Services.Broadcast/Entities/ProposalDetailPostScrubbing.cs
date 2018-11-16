@@ -32,5 +32,6 @@ namespace Services.Broadcast.Entities
         public ScrubbingStatus Status { get; set; }
         public bool MatchShowType { get; set; }
         public bool MatchIsci { get; set; }
+        public string WWTVProgramName { get; set; }
     }
 }

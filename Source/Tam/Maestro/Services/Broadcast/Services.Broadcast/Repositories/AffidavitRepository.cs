@@ -340,7 +340,6 @@ namespace Services.Broadcast.Repositories
                     var posts = new List<ProposalDetailPostScrubbing>();
                     posts.AddRange(queryData.Select(x =>
                         {
-
                             return new ProposalDetailPostScrubbing()
                             {
                                 ScrubbingClientId = x.affidavitFileScrub.id,
@@ -366,7 +365,8 @@ namespace Services.Broadcast.Repositories
                                 ShowTypeName = x.affidavitFileScrub.effective_show_type,
                                 StatusOverride = x.affidavitFileScrub.status_override,
                                 Status = (ScrubbingStatus)x.affidavitFileScrub.status,
-                                MatchShowType = x.affidavitFileScrub.match_show_type
+                                MatchShowType = x.affidavitFileScrub.match_show_type,
+                                WWTVProgramName = x.affidavitDetails.program_name
                             };
                         }
                     ).ToList());

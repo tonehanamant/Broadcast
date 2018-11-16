@@ -222,7 +222,7 @@ export class PostScrubbingFilters extends Component {
       {
         name: "Program",
         dataIndex: "ProgramName",
-        width: 150,
+        width: 200,
         renderer: ({ value }) => (
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}

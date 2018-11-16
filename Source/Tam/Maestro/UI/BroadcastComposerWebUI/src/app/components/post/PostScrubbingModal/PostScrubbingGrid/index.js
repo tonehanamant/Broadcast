@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
 import { overrideStatus, undoScrubStatus } from "Ducks/post";
 import ContextMenuRow from "Components/shared/ContextMenuRow";
@@ -275,14 +276,23 @@ export class PostScrubbingGrid extends Component {
       {
         name: "Program",
         dataIndex: "ProgramName",
-        width: 150,
+        width: 200,
         renderer: ({ row }) => {
           const programName = row.MatchProgram ? (
             <span>{row.ProgramName || "-"}</span>
           ) : (
             <span style={style}>{row.ProgramName || "-"}</span>
           );
-          return programName;
+          return row.SupliedProgramNameIsUsed ? (
+            <div>
+              {programName}
+              <Badge style={{ fontSize: "9px", marginTop: "4px" }} pullRight>
+                SP
+              </Badge>
+            </div>
+          ) : (
+            programName
+          );
         }
       },
       {
