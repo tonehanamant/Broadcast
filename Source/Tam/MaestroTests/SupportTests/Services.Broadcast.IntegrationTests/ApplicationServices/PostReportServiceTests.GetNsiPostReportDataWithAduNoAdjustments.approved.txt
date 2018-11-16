@@ -66,12 +66,16 @@
           "AudienceImpressions": {
             "31": 500.0
           },
+          "Brand": null,
+          "Comment": null,
           "DateAired": "2016-05-31T00:00:00",
           "DaypartName": "ADU",
           "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "ProgramName": "Program Names R us",
+          "ProposalDetailPlaybackType": "Live+3",
+          "ProposalDetailPostingBook": "Nov 2017",
           "ProposalDetailSpotLength": 30,
           "ProposalWeekCost": 2.5000,
           "ProposalWeekCPM": 25.0000,
@@ -92,12 +96,16 @@
           "AudienceImpressions": {
             "31": 999.0
           },
+          "Brand": null,
+          "Comment": null,
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NSIADU4",
           "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "ProgramName": "Program Names R us",
+          "ProposalDetailPlaybackType": "Live+3",
+          "ProposalDetailPostingBook": "Nov 2017",
           "ProposalDetailSpotLength": 30,
           "ProposalWeekCost": 2.5000,
           "ProposalWeekCPM": 25.0000,

@@ -283,6 +283,7 @@
     <Compile Include="Entities\UnlinkedIscis.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\MediaMonthExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ExcelWorksheetExtensions.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />

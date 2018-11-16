@@ -409,6 +409,7 @@ namespace Services.Broadcast.Repositories
                         Station = x.affidavitFileDetails.station,
                         Isci = x.affidavitClientScrub.effective_client_isci,
                         ProgramName = x.affidavitClientScrub.effective_program_name,
+                        Comment = x.affidavitClientScrub.comment,
                         SpotLengthId = x.affidavitFileDetails.spot_length_id,
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,
@@ -427,7 +428,8 @@ namespace Services.Broadcast.Repositories
                         ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id,
                         ProposalDetailPlaybackType = (ProposalEnums.ProposalPlaybackType?)x.proposalVersionDetail.posting_playback_type,
                         ProposalDetailSpotLengthId = x.proposalVersionDetail.spot_length_id,
-                        Adu = x.proposalVersionDetail.adu
+                        Adu = x.proposalVersionDetail.adu,
+                        Brand = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.SingleOrDefault(i => i.house_isci == x.affidavitFileDetails.isci)?.brand
                     }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ThenBy(x=>x.Isci).ToList();
 
                     return inSpecAffidavitFileDetails;

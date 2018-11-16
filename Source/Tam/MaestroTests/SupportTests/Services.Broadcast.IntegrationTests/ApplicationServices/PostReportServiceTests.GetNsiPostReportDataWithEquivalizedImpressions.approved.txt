@@ -51,12 +51,16 @@
           "AudienceImpressions": {
             "31": 4000.0
           },
+          "Brand": null,
+          "Comment": null,
           "DateAired": "2016-05-29T00:00:00",
           "DaypartName": "ADU",
           "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "ProgramName": "Program Names R us",
+          "ProposalDetailPlaybackType": "Live+3",
+          "ProposalDetailPostingBook": "Nov 2017",
           "ProposalDetailSpotLength": 120,
           "ProposalWeekCost": 2.5000,
           "ProposalWeekCPM": 25.0000,
