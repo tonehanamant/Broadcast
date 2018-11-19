@@ -9,6 +9,7 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public string Isci { get; set; }
         public string ProgramName { get; set; }
+        public string Comment { get; set; }
         public int SpotLengthId { get; set; }
         public int AirTime { get; set; }
         public DateTime AirDate { get; set; }
@@ -29,5 +30,6 @@ namespace Services.Broadcast.Entities
         public ProposalEnums.ProposalPlaybackType? ProposalDetailPlaybackType { get; set; }
         public int ProposalWeekId { get; set; }
         public bool Adu { get; internal set; }
+        public string Brand { get; set; }
     }
 }

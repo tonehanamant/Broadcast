@@ -340,7 +340,6 @@ namespace Services.Broadcast.Repositories
                     var posts = new List<ProposalDetailPostScrubbing>();
                     posts.AddRange(queryData.Select(x =>
                         {
-
                             return new ProposalDetailPostScrubbing()
                             {
                                 ScrubbingClientId = x.affidavitFileScrub.id,
@@ -366,7 +365,8 @@ namespace Services.Broadcast.Repositories
                                 ShowTypeName = x.affidavitFileScrub.effective_show_type,
                                 StatusOverride = x.affidavitFileScrub.status_override,
                                 Status = (ScrubbingStatus)x.affidavitFileScrub.status,
-                                MatchShowType = x.affidavitFileScrub.match_show_type
+                                MatchShowType = x.affidavitFileScrub.match_show_type,
+                                WWTVProgramName = x.affidavitDetails.program_name
                             };
                         }
                     ).ToList());
@@ -409,6 +409,7 @@ namespace Services.Broadcast.Repositories
                         Station = x.affidavitFileDetails.station,
                         Isci = x.affidavitClientScrub.effective_client_isci,
                         ProgramName = x.affidavitClientScrub.effective_program_name,
+                        Comment = x.affidavitClientScrub.comment,
                         SpotLengthId = x.affidavitFileDetails.spot_length_id,
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,
@@ -427,7 +428,8 @@ namespace Services.Broadcast.Repositories
                         ProposalDetailPostingBookId = x.proposalVersionDetail.posting_book_id,
                         ProposalDetailPlaybackType = (ProposalEnums.ProposalPlaybackType?)x.proposalVersionDetail.posting_playback_type,
                         ProposalDetailSpotLengthId = x.proposalVersionDetail.spot_length_id,
-                        Adu = x.proposalVersionDetail.adu
+                        Adu = x.proposalVersionDetail.adu,
+                        Brand = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.SingleOrDefault(i => i.house_isci == x.affidavitFileDetails.isci)?.brand
                     }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ThenBy(x=>x.Isci).ToList();
 
                     return inSpecAffidavitFileDetails;

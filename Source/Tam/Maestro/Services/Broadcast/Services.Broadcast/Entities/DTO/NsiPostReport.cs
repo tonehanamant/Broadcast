@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
@@ -54,9 +55,13 @@ namespace Services.Broadcast.Entities.DTO
             public int TimeAired { get; set; }
             public DateTime DateAired { get; set; }
             public string ProgramName { get; set; }
+            public string Comment { get; set; }
             public int SpotLength { get; set; }
             public string Isci { get; set; }
             public string Advertiser { get; set; }
+            public string Brand { get; set; }
+            public string ProposalDetailPostingBook { get; set; }
+            public string ProposalDetailPlaybackType { get; set; }
             public string DaypartName { get; set; }
             public Dictionary<int, double> AudienceImpressions { get; set; } = new Dictionary<int, double>();
             public decimal ProposalWeekTotalCost { get; set; }
@@ -130,7 +135,7 @@ namespace Services.Broadcast.Entities.DTO
                         _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
                         _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key, ref audienceImpressions);
 
-                        return _MapNsiPostReportQuarterTabRow(advertiser, spotLengthMappings, mediaWeekMappings, r, audienceImpressions, stationMappings, nsiMarketRankings);
+                        return _MapNsiPostReportQuarterTabRow(advertiser, spotLengthMappings, mediaWeekMappings, r, audienceImpressions, stationMappings, nsiMarketRankings, mediaMonths);
                     }).ToList()
                 };
 
@@ -165,21 +170,22 @@ namespace Services.Broadcast.Entities.DTO
                                     InSpecAffidavitFileDetail inspecAffidavitDetailFile,
                                     Dictionary<int, double> audienceImpressions,
                                     Dictionary<string, DisplayBroadcastStation> stationMappings,
-                                    Dictionary<int, Dictionary<int, int>> nsiMarketRankings)
+                                    Dictionary<int, Dictionary<int, int>> nsiMarketRankings,
+                                    List<MediaMonth> mediaMonths)
         {
-            var foundStation = stationMappings.TryGetValue(new StationProcessingEngine().StripStationSuffix(inspecAffidavitDetailFile.Station),
-                out DisplayBroadcastStation currentStation);
-
+            var stationCallLetters = new StationProcessingEngine().StripStationSuffix(inspecAffidavitDetailFile.Station);
+            var foundStation = stationMappings.TryGetValue(stationCallLetters, out DisplayBroadcastStation currentStation);
             var rank = _CalculateRank(nsiMarketRankings, inspecAffidavitDetailFile.ProposalDetailPostingBookId, foundStation, currentStation);
 
             return new NsiPostReportQuarterTabRow()
             {
                 Rank = rank,
-                Market = foundStation ? currentStation.OriginMarket : "",
-                Station = inspecAffidavitDetailFile.Station,
-                NetworkAffiliate = foundStation ? currentStation.Affiliation : "",
+                Market = foundStation ? currentStation.OriginMarket : string.Empty,
+                Station = foundStation ? currentStation.LegacyCallLetters : stationCallLetters,
+                NetworkAffiliate = foundStation ? currentStation.Affiliation : string.Empty,
                 WeekStart = mediaWeekMappings[inspecAffidavitDetailFile.AirDate].StartDate,
                 ProgramName = inspecAffidavitDetailFile.ProgramName,
+                Comment = inspecAffidavitDetailFile.Comment,
                 Isci = inspecAffidavitDetailFile.Isci,
                 TimeAired = inspecAffidavitDetailFile.AirTime,
                 DateAired = inspecAffidavitDetailFile.AirDate,
@@ -195,7 +201,10 @@ namespace Services.Broadcast.Entities.DTO
                 ProposalWeekCPM = inspecAffidavitDetailFile.ProposalWeekCPM,
                 ProposalWeekId = inspecAffidavitDetailFile.ProposalWeekId,
                 ProposalDetailSpotLength = spotLengthMappings.Single(x => x.Value == inspecAffidavitDetailFile.ProposalDetailSpotLengthId).Key,
-                Adu = inspecAffidavitDetailFile.Adu
+                Adu = inspecAffidavitDetailFile.Adu,
+                Brand = inspecAffidavitDetailFile.Brand,
+                ProposalDetailPostingBook = mediaMonths.Single(x => x.Id == inspecAffidavitDetailFile.ProposalDetailPostingBookId).GetShortMonthNameAndYear(),
+                ProposalDetailPlaybackType = EnumHelper.GetDescriptionAttribute(inspecAffidavitDetailFile.ProposalDetailPlaybackType)
             };
         }
 
@@ -211,7 +220,7 @@ namespace Services.Broadcast.Entities.DTO
             {
                 var items = x.ToList();
                 var row = new NsiPostReportQuarterSummaryTableRow
-                {
+                {   
                     Contract = x.Key.DaypartName,
                     SpotLength = x.Key.ProposalDetailSpotLength,
                     WeekStartDate = x.Key.WeekStart,

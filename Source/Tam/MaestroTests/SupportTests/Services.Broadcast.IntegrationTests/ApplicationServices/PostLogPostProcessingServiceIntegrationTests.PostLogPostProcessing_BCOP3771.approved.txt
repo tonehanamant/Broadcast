@@ -29,6 +29,7 @@
       "Station": "WRGB",
       "Status": 1,
       "StatusOverride": false,
+      "SupliedProgramNameIsUsed": false,
       "TimeAired": 77280,
       "WeekStart": "2018-10-02T00:00:00"
     }

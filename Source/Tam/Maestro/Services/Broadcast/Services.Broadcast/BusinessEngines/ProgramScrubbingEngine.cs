@@ -22,6 +22,8 @@ namespace Services.Broadcast.BusinessEngines
 
         public void Scrub(ProposalDetailDto proposalDetail, ScrubbingFileDetail affidavitDetail, ClientScrub scrub)
         {
+            const string noWWTVDataForProgramComment = "No WWTV data for Program";
+
             var actualStartTime = affidavitDetail.LeadInEndTime;
             var actualEndTime = affidavitDetail.LeadOutStartTime;
             var adjustedStartTime = actualStartTime + _BroadcastMatchingBuffer >= 86400 ? actualStartTime + _BroadcastMatchingBuffer - 86400 : actualStartTime + _BroadcastMatchingBuffer;
@@ -43,7 +45,13 @@ namespace Services.Broadcast.BusinessEngines
                 (affidavitDetail.AirTime <= actualEndTime ||
                 affidavitDetail.AirTime >= adjustedEndTime);
 
-            string effectiveAffidavitProgramName = affidavitDetail.ProgramName ?? affidavitDetail.SuppliedProgramName;
+            var noWWTVDataForProgram = string.IsNullOrWhiteSpace(affidavitDetail.ProgramName);
+            var effectiveAffidavitProgramName = noWWTVDataForProgram ? affidavitDetail.SuppliedProgramName : affidavitDetail.ProgramName;
+
+            if (noWWTVDataForProgram)
+            {
+                scrub.Comment = noWWTVDataForProgramComment;
+            }
 
             if (_ProposalDetailMatchesProgram(proposalDetail, effectiveAffidavitProgramName) &&
                 _ProposalDetailMatchesGenre(proposalDetail, affidavitDetail.Genre) &&

@@ -853,7 +853,8 @@ namespace Services.Broadcast.ApplicationServices
                 Status = x.Status,
                 StatusOverride = x.StatusOverride,
                 TimeAired = x.TimeAired,
-                WeekStart = x.WeekStart
+                WeekStart = x.WeekStart,
+                SupliedProgramNameIsUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName)
             }).ToList();
         }
 

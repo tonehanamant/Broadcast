@@ -32,6 +32,6 @@ namespace Services.Broadcast.Entities.DTO
         public ScrubbingStatus Status { get; set; }
         public bool MatchShowType { get; set; }
         public bool MatchIsci { get; set; }
-
+        public bool SupliedProgramNameIsUsed { get; set; }
     }
 }

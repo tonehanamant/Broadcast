@@ -10,7 +10,6 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
-
     [TestFixture]
     public class ProgramScrubbingEngineTests
     {

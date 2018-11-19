@@ -19,13 +19,18 @@ namespace Services.Broadcast.ReportGenerators
             STATION,
             NETWORK,
             WEEK_START,
+            DAY,
             DATE,
             TIME,
             PROGRAM,
             LENGTH,
             ISCI,
             ADVERTISER,
-            DAYPART
+            BRAND,
+            DAYPART,
+            SPOT,
+            POSTING_BOOK,
+            PLAYBACK_TYPE
         };
 
         private static readonly HashSet<string> _QuarterSummaryTableHeader = new HashSet<string>
@@ -58,17 +63,24 @@ namespace Services.Broadcast.ReportGenerators
         private const string STATION = "Station";
         private const string NETWORK = "Network Affiliate";
         private const string WEEK_START = "Week Start";
+        private const string DAY = "Day";
         private const string DATE = "Date";
         private const string TIME = "Time";
         private const string PROGRAM = "Program";
         private const string LENGTH = "Length";
         private const string ISCI = "ISCI";
         private const string ADVERTISER = "Advertiser";
+        private const string BRAND = "Brand";
         private const string DAYPART = "Daypart";
+        private const string SPOT = "Spot";
+        private const string POSTING_BOOK = "Posting Book";
+        private const string PLAYBACK_TYPE = "Playback type";
+        private const string COMMENTS = "Comments";
 
         private const string BLUE_COLOR_CODE = "#A1E5FD";
         private const string GRAY_COLOR_CODE = "#b4bac4";
         private const string IMPRESSIONS_FORMAT = "#,##0,";
+        private const string QUARTER_TAB_IMPRESSIONS_FORMAT = "#,##0.0000";
         private const string MONEY_FORMAT = "$###,###,##0";
         private const string PERCENTAGE_FORMAT = "#0.00%";
         private const string FONT_SUMMARY_TAB = "Calibri";
@@ -139,8 +151,8 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells["I4"].Style.Font.Size = 10;
             ws.Cells["I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            int firstDataRow = 10;
-            var firstDataColumn = 2;
+            const int firstDataRow = 10;
+            const int firstDataColumn = 2;
             var columnOffset = firstDataColumn;
             var rowOffset = firstDataRow;
 
@@ -150,28 +162,34 @@ namespace Services.Broadcast.ReportGenerators
             // tables
             foreach (var row in quarterTab.TabRows)
             {
-                ws.Cells[$"B{rowOffset}"].Value = row.Rank;
-                ws.Cells[$"C{rowOffset}"].Value = row.Market;
-                ws.Cells[$"D{rowOffset}"].Value = row.Station;
-                ws.Cells[$"E{rowOffset}"].Value = row.NetworkAffiliate;
-                ws.Cells[$"F{rowOffset}"].Value = row.WeekStart.ToString(@"M\/d\/yyyy");
-                ws.Cells[$"G{rowOffset}"].Value = row.DateAired.ToString(@"M\/d\/yyyy");
-                ws.Cells[$"H{rowOffset}"].Value = row.DateAired.Add(TimeSpan.FromSeconds(row.TimeAired)).ToString(@"h\:mm\:ss tt");
-                ws.Cells[$"I{rowOffset}"].Value = row.ProgramName;
-                ws.Cells[$"J{rowOffset}"].Value = row.SpotLength;
-                ws.Cells[$"K{rowOffset}"].Value = row.Isci;
-                ws.Cells[$"L{rowOffset}"].Value = row.Advertiser;
-                ws.Cells[$"M{rowOffset}"].Value = row.DaypartName;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Market;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Station;
+                ws.Cells[rowOffset, columnOffset++].Value = row.NetworkAffiliate;
+                ws.Cells[rowOffset, columnOffset++].Value = row.WeekStart.ToString(@"M\/d\/yyyy");
+                ws.Cells[rowOffset, columnOffset++].Value = row.DateAired.DayOfWeek;
+                ws.Cells[rowOffset, columnOffset++].Value = row.DateAired.ToString(@"M\/d\/yyyy");
+                ws.Cells[rowOffset, columnOffset++].Value = row.DateAired.Add(TimeSpan.FromSeconds(row.TimeAired)).ToString(@"h\:mm\:ss tt");
+                ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
+                ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Isci;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Advertiser;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Brand ?? string.Empty;
+                ws.Cells[rowOffset, columnOffset++].Value = row.DaypartName;
+                ws.Cells[rowOffset, columnOffset++].Value = 1; // should be always 1 spot
+                ws.Cells[rowOffset, columnOffset++].Value = row.ProposalDetailPostingBook ?? string.Empty;
+                ws.Cells[rowOffset, columnOffset++].Value = row.ProposalDetailPlaybackType ?? string.Empty;
 
-                columnOffset = 14; //skip the columns with data 
                 foreach (var demo in reportData.ProposalAudiences.Select(a => a.Id).ToList())
                 {
-                    var value = row.AudienceImpressions.ContainsKey(demo) ? row.AudienceImpressions[demo] : 0;
-                    ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = IMPRESSIONS_FORMAT;
+                    var value = row.AudienceImpressions.ContainsKey(demo) ? row.AudienceImpressions[demo] / 1000 : 0;
+                    ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = QUARTER_TAB_IMPRESSIONS_FORMAT;
                     ws.Cells[rowOffset, columnOffset].Value = value;
                     columnOffset++;
                 }
-
+                
+                ws.Cells[rowOffset, columnOffset++].Value = row.Comment;
+                
                 //Apply formatting to every cell. Using ranges you cannot create the correct border
                 for (int i = firstDataColumn; i < columnOffset; i++)
                 {
@@ -179,7 +197,11 @@ namespace Services.Broadcast.ReportGenerators
                     ws.Cells[rowOffset, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 }
 
+                // Left alignment for comments
+                ws.Cells[rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
                 rowOffset++;
+                columnOffset = firstDataColumn;
             }
 
             ws.Cells.AutoFitColumns();
@@ -192,7 +214,11 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells.Style.Font.Name = FONT_SUMMARY_TAB;
             int rowOffset = _AddSummaryTabHeader(wsSummary, reportData);
             rowOffset = _AddSummaryTabQuartersTable(wsSummary, reportData, rowOffset);
-            _AddProposalNotes(wsSummary, rowOffset, reportData.ProposalNotes);
+
+            if (!string.IsNullOrEmpty(reportData.ProposalNotes))
+            {
+                _AddProposalNotes(wsSummary, rowOffset, reportData.ProposalNotes);
+            }
         }
 
         private void _AddProposalNotes(ExcelWorksheet wsSummary, int rowOffset, string proposalNotes)
@@ -365,11 +391,17 @@ namespace Services.Broadcast.ReportGenerators
             {
                 ws.Cells[rowOffset, columnOffset++].Value = $"{audience.Display} (000)";
             }
+
+            ws.Cells[rowOffset, columnOffset++].Value = COMMENTS;
+
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Font.Bold = true;
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            // Left alignment for comments 
+            ws.Cells[rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
         }
     }
 }
