@@ -1,7 +1,7 @@
 ﻿[
   {
     "Affiliation": "FOX",
-    "CallLetters": "KCYU-LD 41.1",
+    "CallLetters": "KCYU+",
     "Code": 1045,
     "LegacyCallLetters": "KCYU",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
@@ -10,7 +10,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KFNB 20.1",
+    "CallLetters": "KFNB+",
     "Code": 1160,
     "LegacyCallLetters": "KFNB",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
@@ -46,7 +46,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KNBN-DT 21.1",
+    "CallLetters": "KNBN+",
     "Code": 3503,
     "LegacyCallLetters": "KNBN",
     "ManifestMaxEndDate": "2017-09-24T00:00:00",
