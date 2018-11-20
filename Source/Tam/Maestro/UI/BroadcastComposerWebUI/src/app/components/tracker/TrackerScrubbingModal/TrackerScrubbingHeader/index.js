@@ -12,7 +12,8 @@ import {
   Tooltip,
   OverlayTrigger
 } from "react-bootstrap";
-import { Grid } from "react-redux-grid";
+// import { Grid } from "react-redux-grid";
+import Table, { withGrid } from "Lib/react-table";
 import CSSModules from "react-css-modules";
 import Select from "react-select";
 import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
@@ -55,21 +56,22 @@ export class TrackerScrubbingHeader extends Component {
       secondaryDemoOptions.push(option);
     });
 
-    const stateKey = "TrackerScrubbingDetailsGrid";
+    // const stateKey = "TrackerScrubbingDetailsGrid";
 
     const columns = [
       {
-        name: "ID",
-        dataIndex: "Sequence",
-        width: "10%"
+        Header: "ID",
+        accessor: "Sequence",
+        maxWidth: 65
       },
       {
-        name: "Flight",
-        dataIndex: "FlightStartDate",
-        width: "40%",
-        renderer: ({ row }) => {
+        Header: "Flight",
+        accessor: "FlightStartDate",
+        // maxWidth: 40
+        Cell: row => {
           let hasTip = false;
           const checkFlightWeeksTip = flightWeeks => {
+            console.log(row);
             if (flightWeeks.length < 1) return "";
             const tip = [<div key="flight">Hiatus Weeks</div>];
             flightWeeks.forEach((flight, idx) => {
@@ -88,9 +90,9 @@ export class TrackerScrubbingHeader extends Component {
             const display = tip;
             return <Tooltip id="flightstooltip">{display}</Tooltip>;
           };
-          const tooltip = checkFlightWeeksTip(row.FlightWeeks);
-          const start = getDateInFormat(row.FlightStartDate);
-          const end = getDateInFormat(row.FlightEndDate);
+          const tooltip = checkFlightWeeksTip(row.original.FlightWeeks);
+          const start = getDateInFormat(row.original.FlightStartDate);
+          const end = getDateInFormat(row.original.FlightEndDate);
           const display = `${start} - ${end}`;
           return (
             <div>
@@ -107,33 +109,16 @@ export class TrackerScrubbingHeader extends Component {
         }
       },
       {
-        name: "Daypart",
-        dataIndex: "DayPart",
-        width: "30%"
+        Header: "Daypart",
+        accessor: "DayPart"
+        // maxWidth: 30
       },
       {
-        name: "Spot Length",
-        dataIndex: "SpotLength",
-        width: "20%"
+        Header: "Spot Length",
+        accessor: "SpotLength"
+        // maxWidth: 20
       }
     ];
-
-    const plugins = {
-      COLUMN_MANAGER: {
-        resizable: false,
-        moveable: false,
-        sortable: {
-          enabled: false,
-          method: "local"
-        }
-      }
-    };
-
-    const grid = {
-      columns,
-      plugins,
-      stateKey
-    };
 
     return (
       <div>
@@ -190,11 +175,10 @@ export class TrackerScrubbingHeader extends Component {
                   </Panel.Heading>
                   <Panel.Collapse>
                     <Panel.Body style={{ padding: "10px" }}>
-                      <Grid
-                        {...grid}
+                      <Table
                         data={this.props.details}
-                        store={this.context.store}
-                        height={false}
+                        style={{ fontSize: "12px", margin: 0 }}
+                        columns={columns}
                       />
                     </Panel.Body>
                   </Panel.Collapse>
@@ -263,7 +247,7 @@ TrackerScrubbingHeader.propTypes = {
   details: PropTypes.array,
   guaranteedDemo: PropTypes.string,
   Id: PropTypes.number,
-  isReadOnly: PropTypes.bool,
+  // isReadOnly: PropTypes.bool,
   market: PropTypes.array,
   marketGroupId: PropTypes.number,
   name: PropTypes.string,
@@ -271,4 +255,4 @@ TrackerScrubbingHeader.propTypes = {
   secondaryDemo: PropTypes.array
 };
 
-export default CSSModules(TrackerScrubbingHeader, styles);
+export default CSSModules(withGrid(TrackerScrubbingHeader), styles);
