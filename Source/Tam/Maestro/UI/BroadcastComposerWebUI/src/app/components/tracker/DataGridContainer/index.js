@@ -62,61 +62,62 @@ export class DataGridContainer extends Component {
       {
         Header: "Contract",
         accessor: "ContractName",
-        maxWidth: 150
+        minWidth: 15
       },
       {
         Header: "Contract Id",
         accessor: "ContractId",
-        maxWidth: 85
+        minWidth: 15
       },
       {
         Header: "Contract Id",
         accessor: "searchContractId",
-        show: false
+        show: false,
+        minWidth: 5
       },
       {
         Header: "Advertiser",
         accessor: "Advertiser",
-        maxWidth: 100
+        minWidth: 15
       },
       {
         Header: "Post Log Upload Date",
         accessor: "searchUploadDate",
-        maxWidth: 125
+        minWidth: 15
       },
       {
         Header: "Spots in Spec",
         accessor: "SpotsInSpec",
-        maxWidth: 85
+        minWidth: 15
       },
       {
         Header: "Spots in Spec",
         accessor: "searchSpotsInSpec",
-        show: false
+        show: false,
+        minWidth: 5
       },
       {
         Header: "Spots Out of Spec",
         accessor: "SpotsOutOfSpec",
-        maxWidth: 125
+        minWidth: 15
       },
       {
         Header: "Spots Out of Spec",
         accessor: "searchSpotsOutOfSpec",
-        show: false
+        show: false,
+        minWidth: 5
       },
       {
         Header: "Primary Demo Booked",
         accessor: "PrimaryAudienceBookedImpressions",
-        // width: 15,
-        maxWidth: 125,
+        minWidth: 15,
         Cell: row =>
           row.value ? numeral(row.value / 1000).format("0,0.[000]") : "-"
       },
       {
         Header: "Primary Demo Delivered",
         accessor: "PrimaryAudienceDeliveredImpressions",
-        // width: 15,
-        maxWidth: 135,
+        minWidth: 15,
         Cell: row => {
           console.log(row);
           // handle equivalized indicator as badge if true
@@ -138,8 +139,7 @@ export class DataGridContainer extends Component {
       {
         Header: "Primary Demo % Delivery",
         accessor: "PrimaryAudienceDelivery",
-        // width: 15,
-        maxWidth: 125,
+        minWidth: 15,
         Cell: row => {
           const val = row.value ? numeral(row.value).format("0,0.[00]") : false;
           return val ? `${val}%` : "-";
@@ -148,8 +148,7 @@ export class DataGridContainer extends Component {
       {
         Header: "Household Delivered",
         accessor: "HouseholdDeliveredImpressions",
-        // width: 15,
-        maxWidth: 125,
+        minWidth: 15,
         Cell: row => {
           // handle equivalized indicator as badge if true
           const val = row.value

@@ -1321,7 +1321,7 @@
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
-            "CallLetters": "KAKE 10.1",
+            "CallLetters": "KAKE+",
             "Code": 297,
             "LegacyCallLetters": "KAKE",
             "ManifestMaxEndDate": null,
@@ -1794,7 +1794,7 @@
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
-            "CallLetters": "KAKE 10.1",
+            "CallLetters": "KAKE+",
             "Code": 297,
             "LegacyCallLetters": "KAKE",
             "ManifestMaxEndDate": null,
@@ -2267,7 +2267,7 @@
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
-            "CallLetters": "KAKE 10.1",
+            "CallLetters": "KAKE+",
             "Code": 297,
             "LegacyCallLetters": "KAKE",
             "ManifestMaxEndDate": null,
@@ -2674,7 +2674,7 @@
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
-            "CallLetters": "KAKE 10.1",
+            "CallLetters": "KAKE+",
             "Code": 297,
             "LegacyCallLetters": "KAKE",
             "ManifestMaxEndDate": null,
@@ -3081,7 +3081,7 @@
           "SpotsPerWeek": 1,
           "Station": {
             "Affiliation": "ABC",
-            "CallLetters": "KAKE 10.1",
+            "CallLetters": "KAKE+",
             "Code": 297,
             "LegacyCallLetters": "KAKE",
             "ManifestMaxEndDate": null,

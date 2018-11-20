@@ -14,6 +14,18 @@
     },
     {
       "AffectedProposals": null,
+      "ProblemDescription": "Invalid station: WHAG",
+      "ProgramName": null,
+      "StationLetters": null
+    },
+    {
+      "AffectedProposals": null,
+      "ProblemDescription": "Invalid station: WHAG",
+      "ProgramName": null,
+      "StationLetters": null
+    },
+    {
+      "AffectedProposals": null,
       "ProblemDescription": "Invalid daypart for station: KHOU",
       "ProgramName": null,
       "StationLetters": null
@@ -898,16 +910,7 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": {
-              "Affiliation": "NBC",
-              "CallLetters": "WHAG-TV 25.1",
-              "Code": 5733,
-              "LegacyCallLetters": "WHAG",
-              "ManifestMaxEndDate": null,
-              "MarketCode": 111,
-              "OriginMarket": "Washington, DC (Hagrstwn)",
-              "RateDataThrough": null
-            }
+            "Station": null
           },
           {
             "DaypartCode": "EM",
@@ -2162,7 +2165,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -5449,7 +5452,7 @@
             "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
-              "CallLetters": "KRQE 13.1",
+              "CallLetters": "KRQE+",
               "Code": 181,
               "LegacyCallLetters": "KRQE",
               "ManifestMaxEndDate": null,
@@ -7577,16 +7580,7 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": {
-              "Affiliation": "NBC",
-              "CallLetters": "WHAG-TV 25.1",
-              "Code": 5733,
-              "LegacyCallLetters": "WHAG",
-              "ManifestMaxEndDate": null,
-              "MarketCode": 111,
-              "OriginMarket": "Washington, DC (Hagrstwn)",
-              "RateDataThrough": null
-            }
+            "Station": null
           },
           {
             "DaypartCode": "EM",
@@ -8205,7 +8199,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -11386,7 +11380,7 @@
             "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
-              "CallLetters": "KRQE 13.1",
+              "CallLetters": "KRQE+",
               "Code": 181,
               "LegacyCallLetters": "KRQE",
               "ManifestMaxEndDate": null,
@@ -13823,16 +13817,7 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": {
-              "Affiliation": "NBC",
-              "CallLetters": "WHAG-TV 25.1",
-              "Code": 5733,
-              "LegacyCallLetters": "WHAG",
-              "ManifestMaxEndDate": null,
-              "MarketCode": 111,
-              "OriginMarket": "Washington, DC (Hagrstwn)",
-              "RateDataThrough": null
-            }
+            "Station": null
           },
           {
             "DaypartCode": "EM",
@@ -14460,7 +14445,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -17641,7 +17626,7 @@
             "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
-              "CallLetters": "KRQE 13.1",
+              "CallLetters": "KRQE+",
               "Code": 181,
               "LegacyCallLetters": "KRQE",
               "ManifestMaxEndDate": null,
@@ -20290,16 +20275,7 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": {
-              "Affiliation": "NBC",
-              "CallLetters": "WHAG-TV 25.1",
-              "Code": 5733,
-              "LegacyCallLetters": "WHAG",
-              "ManifestMaxEndDate": null,
-              "MarketCode": 111,
-              "OriginMarket": "Washington, DC (Hagrstwn)",
-              "RateDataThrough": null
-            }
+            "Station": null
           },
           {
             "DaypartCode": "EM",
@@ -21011,7 +20987,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -21117,7 +21093,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -21223,7 +21199,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -26616,16 +26592,7 @@
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
-            "Station": {
-              "Affiliation": "NBC",
-              "CallLetters": "WHAG-TV 25.1",
-              "Code": 5733,
-              "LegacyCallLetters": "WHAG",
-              "ManifestMaxEndDate": null,
-              "MarketCode": 111,
-              "OriginMarket": "Washington, DC (Hagrstwn)",
-              "RateDataThrough": null
-            }
+            "Station": null
           },
           {
             "DaypartCode": "EM",
@@ -27456,7 +27423,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -27562,7 +27529,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -30425,7 +30392,7 @@
             "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
-              "CallLetters": "KRQE 13.1",
+              "CallLetters": "KRQE+",
               "Code": 181,
               "LegacyCallLetters": "KRQE",
               "ManifestMaxEndDate": null,
@@ -33583,7 +33550,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -33689,7 +33656,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -36679,7 +36646,7 @@
             "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
-              "CallLetters": "KRQE 13.1",
+              "CallLetters": "KRQE+",
               "Code": 181,
               "LegacyCallLetters": "KRQE",
               "ManifestMaxEndDate": null,
@@ -39952,7 +39919,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -40058,7 +40025,7 @@
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
             "Station": {
-              "Affiliation": "NBC",
+              "Affiliation": "IND",
               "CallLetters": "WHDH 7.1",
               "Code": 5089,
               "LegacyCallLetters": "WHDH",
@@ -43048,7 +43015,7 @@
             "SpotsPerWeek": 1,
             "Station": {
               "Affiliation": "CBS",
-              "CallLetters": "KRQE 13.1",
+              "CallLetters": "KRQE+",
               "Code": 181,
               "LegacyCallLetters": "KRQE",
               "ManifestMaxEndDate": null,

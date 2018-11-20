@@ -192,7 +192,7 @@
           "DaypartName": "EMN",
           "Isci": "BCOP3296III",
           "Market": "Bakersfield",
-          "NetworkAffiliate": "ETV",
+          "NetworkAffiliate": "I-S",
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",

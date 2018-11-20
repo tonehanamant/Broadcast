@@ -866,6 +866,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void CannotLoadProgramWhenTheSameAlreadyExists()
         {
+            //Should report no errors anymore since we are skipping existing records. 
             using (new TransactionScopeWrapper())
             {
                 var request1 = new InventoryFileSaveRequest

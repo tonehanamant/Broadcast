@@ -665,7 +665,7 @@
       "Stations": [
         {
           "Affiliation": "FOX",
-          "CallLetters": "KCYU-LD 41.1",
+          "CallLetters": "KCYU+",
           "LegacyCallLetters": "KCYU",
           "MinProgramsBlendedCpm": 17.314402919474707652966090408,
           "Programs": [
@@ -2113,7 +2113,7 @@
       "Stations": [
         {
           "Affiliation": "NBC",
-          "CallLetters": "KNBN-DT 21.1",
+          "CallLetters": "KNBN+",
           "LegacyCallLetters": "KNBN",
           "MinProgramsBlendedCpm": 4.2332965052043961156015584114,
           "Programs": [
@@ -2706,7 +2706,7 @@
       "Stations": [
         {
           "Affiliation": "FOX",
-          "CallLetters": "KFNB 20.1",
+          "CallLetters": "KFNB+",
           "LegacyCallLetters": "KFNB",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [

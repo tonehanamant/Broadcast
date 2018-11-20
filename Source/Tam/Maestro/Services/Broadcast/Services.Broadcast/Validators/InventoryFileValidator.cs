@@ -29,7 +29,7 @@ namespace Services.Broadcast.Validators
         {
             var results = new InventoryFileValidatorResult();
             results.InventoryFileProblems.AddRange(_CheckForDuplicateRecords(inventoryFile));
-            results.InventoryFileProblems.AddRange(_CheckForExistingRecords(inventoryFile));
+            _CheckForExistingRecords(inventoryFile);
 
             return results;
         }
@@ -39,9 +39,9 @@ namespace Services.Broadcast.Validators
         {
             var result = new List<InventoryFileProblem>();
 
-            foreach (var manifest in inventoryFile.InventoryManifests)
+            foreach (var manifest in inventoryFile.InventoryManifests.ToList())
             {
-                foreach (var manifestDaypart in manifest.ManifestDayparts)
+                foreach (var manifestDaypart in manifest.ManifestDayparts.ToList())
                 {
                      var exists = _inventoryRepository.CheckIfManifestByStationProgramFlightDaypartExists(
                         manifest.Station.Code,
@@ -51,6 +51,11 @@ namespace Services.Broadcast.Validators
                         manifestDaypart.Daypart.Id);
                     if (exists)
                     {
+                        manifest.ManifestDayparts.Remove(manifestDaypart);
+                        if (!manifest.ManifestDayparts.Any())
+                        {
+                            inventoryFile.InventoryManifests.Remove(manifest);
+                        }
                         result.Add(new InventoryFileProblem()
                         {
                             ProblemDescription = "There is already an existing program with the same flight and airtime.",

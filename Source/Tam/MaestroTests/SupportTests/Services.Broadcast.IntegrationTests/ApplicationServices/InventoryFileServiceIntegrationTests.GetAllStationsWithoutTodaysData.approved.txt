@@ -1,7 +1,7 @@
 ﻿[
   {
     "Affiliation": "NBC",
-    "CallLetters": "KOB 4.1",
+    "CallLetters": "KOB+",
     "Code": 30,
     "LegacyCallLetters": "KOB",
     "ManifestMaxEndDate": null,
@@ -9,7 +9,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KSTP-TV 5.1",
+    "CallLetters": "KSTP+",
     "Code": 39,
     "LegacyCallLetters": "KSTP",
     "ManifestMaxEndDate": null,
@@ -17,7 +17,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "WRGB 6.1",
+    "CallLetters": "WRGB+",
     "Code": 100,
     "LegacyCallLetters": "WRGB",
     "ManifestMaxEndDate": null,
@@ -25,7 +25,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "WSAZ-TV 3.1",
+    "CallLetters": "WSAZ+",
     "Code": 101,
     "LegacyCallLetters": "WSAZ",
     "ManifestMaxEndDate": null,
@@ -33,7 +33,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "WCCO-TV 4.1",
+    "CallLetters": "WCCO+",
     "Code": 107,
     "LegacyCallLetters": "WCCO",
     "ManifestMaxEndDate": null,
@@ -41,7 +41,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "WTTV 4.1",
+    "CallLetters": "WTTV+",
     "Code": 110,
     "LegacyCallLetters": "WTTV",
     "ManifestMaxEndDate": null,
@@ -49,7 +49,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KOLN 10.1",
+    "CallLetters": "KOLN+",
     "Code": 136,
     "LegacyCallLetters": "KOLN",
     "ManifestMaxEndDate": null,
@@ -57,7 +57,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KXMC-TV 13.1",
+    "CallLetters": "KXMC+",
     "Code": 142,
     "LegacyCallLetters": "KXMC",
     "ManifestMaxEndDate": null,
@@ -65,7 +65,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KELO-TV 11.1",
+    "CallLetters": "KELO+",
     "Code": 145,
     "LegacyCallLetters": "KELO",
     "ManifestMaxEndDate": null,
@@ -73,7 +73,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KPNX 12.1",
+    "CallLetters": "KPNX+",
     "Code": 147,
     "LegacyCallLetters": "KPNX",
     "ManifestMaxEndDate": null,
@@ -81,7 +81,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WDAY-TV 6.1",
+    "CallLetters": "WDAY+",
     "Code": 150,
     "LegacyCallLetters": "WDAY",
     "ManifestMaxEndDate": null,
@@ -89,7 +89,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KWCH-DT 12.1",
+    "CallLetters": "KWCH+",
     "Code": 155,
     "LegacyCallLetters": "KWCH",
     "ManifestMaxEndDate": null,
@@ -97,7 +97,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KOBI 5.1",
+    "CallLetters": "KOBI+",
     "Code": 162,
     "LegacyCallLetters": "KOBI",
     "ManifestMaxEndDate": null,
@@ -105,7 +105,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KGWN-TV 5.1",
+    "CallLetters": "KGWN+",
     "Code": 179,
     "LegacyCallLetters": "KGWN",
     "ManifestMaxEndDate": null,
@@ -113,7 +113,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KRQE 13.1",
+    "CallLetters": "KRQE+",
     "Code": 181,
     "LegacyCallLetters": "KRQE",
     "ManifestMaxEndDate": null,
@@ -121,7 +121,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KXLF-TV 4.1",
+    "CallLetters": "KXLF+",
     "Code": 186,
     "LegacyCallLetters": "KXLF",
     "ManifestMaxEndDate": null,
@@ -129,7 +129,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KCEN-TV 6.1",
+    "CallLetters": "KCEN+",
     "Code": 211,
     "LegacyCallLetters": "KCEN",
     "ManifestMaxEndDate": null,
@@ -137,7 +137,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KFYR-TV 5.1",
+    "CallLetters": "KFYR+",
     "Code": 223,
     "LegacyCallLetters": "KFYR",
     "ManifestMaxEndDate": null,
@@ -145,7 +145,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KHGI-TV 13.1",
+    "CallLetters": "KHGI+",
     "Code": 224,
     "LegacyCallLetters": "KHGI",
     "ManifestMaxEndDate": null,
@@ -153,7 +153,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "WWTV 9.1",
+    "CallLetters": "WWTV+",
     "Code": 231,
     "LegacyCallLetters": "WWTV",
     "ManifestMaxEndDate": null,
@@ -161,7 +161,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WMAB-TV 2.1",
+    "CallLetters": "WMAB+",
     "Code": 242,
     "LegacyCallLetters": "WMAB",
     "ManifestMaxEndDate": null,
@@ -169,7 +169,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KBJR-TV 6.1",
+    "CallLetters": "KBJR+",
     "Code": 248,
     "LegacyCallLetters": "KBJR",
     "ManifestMaxEndDate": null,
@@ -177,7 +177,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KVAL-TV 13.1",
+    "CallLetters": "KVAL+",
     "Code": 258,
     "LegacyCallLetters": "KVAL",
     "ManifestMaxEndDate": null,
@@ -185,7 +185,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "WPBN-TV 7.1",
+    "CallLetters": "WPBN+",
     "Code": 290,
     "LegacyCallLetters": "WPBN",
     "ManifestMaxEndDate": null,
@@ -193,7 +193,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KAKE 10.1",
+    "CallLetters": "KAKE+",
     "Code": 297,
     "LegacyCallLetters": "KAKE",
     "ManifestMaxEndDate": null,
@@ -201,7 +201,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KREX-TV 5.1",
+    "CallLetters": "KREX+",
     "Code": 300,
     "LegacyCallLetters": "KREX",
     "ManifestMaxEndDate": null,
@@ -209,7 +209,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KLTV 7.1",
+    "CallLetters": "KLTV+",
     "Code": 301,
     "LegacyCallLetters": "KLTV",
     "ManifestMaxEndDate": null,
@@ -217,7 +217,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KECI-TV 13.1",
+    "CallLetters": "KECI+",
     "Code": 312,
     "LegacyCallLetters": "KECI",
     "ManifestMaxEndDate": null,
@@ -233,7 +233,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KOTA-TV 3.1",
+    "CallLetters": "KOTA+",
     "Code": 335,
     "LegacyCallLetters": "KOTA",
     "ManifestMaxEndDate": null,
@@ -241,7 +241,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KSNW 3.1",
+    "CallLetters": "KSNW+",
     "Code": 339,
     "LegacyCallLetters": "KSNW",
     "ManifestMaxEndDate": null,
@@ -249,7 +249,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WDIO-DT 10.1",
+    "CallLetters": "WDIO+",
     "Code": 368,
     "LegacyCallLetters": "WDIO",
     "ManifestMaxEndDate": null,
@@ -265,7 +265,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WDSE 8.1",
+    "CallLetters": "WDSE+",
     "Code": 418,
     "LegacyCallLetters": "WDSE",
     "ManifestMaxEndDate": null,
@@ -273,7 +273,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KVII-TV 7.1",
+    "CallLetters": "KVII+",
     "Code": 426,
     "LegacyCallLetters": "KVII",
     "ManifestMaxEndDate": null,
@@ -289,7 +289,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KEVN-LD 7.1",
+    "CallLetters": "KEVN+",
     "Code": 431,
     "LegacyCallLetters": "KEVN",
     "ManifestMaxEndDate": null,
@@ -297,7 +297,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KULR-TV 8.1",
+    "CallLetters": "KULR+",
     "Code": 441,
     "LegacyCallLetters": "KULR",
     "ManifestMaxEndDate": null,
@@ -305,7 +305,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WAOW 9.1",
+    "CallLetters": "WAOW+",
     "Code": 445,
     "LegacyCallLetters": "WAOW",
     "ManifestMaxEndDate": null,
@@ -313,7 +313,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KUID-TV 12.1",
+    "CallLetters": "KUID+",
     "Code": 453,
     "LegacyCallLetters": "KUID",
     "ManifestMaxEndDate": null,
@@ -321,7 +321,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WSIL-TV 3.1",
+    "CallLetters": "WSIL+",
     "Code": 486,
     "LegacyCallLetters": "WSIL",
     "ManifestMaxEndDate": null,
@@ -329,7 +329,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KWES-TV 9.1",
+    "CallLetters": "KWES+",
     "Code": 487,
     "LegacyCallLetters": "KWES",
     "ManifestMaxEndDate": null,
@@ -337,7 +337,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KUAT-TV 6.1",
+    "CallLetters": "KUAT+",
     "Code": 498,
     "LegacyCallLetters": "KUAT",
     "ManifestMaxEndDate": null,
@@ -345,7 +345,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KETS 2.1",
+    "CallLetters": "KETS+",
     "Code": 501,
     "LegacyCallLetters": "KETS",
     "ManifestMaxEndDate": null,
@@ -361,7 +361,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KPAX-TV 8.1",
+    "CallLetters": "KPAX+",
     "Code": 532,
     "LegacyCallLetters": "KPAX",
     "ManifestMaxEndDate": null,
@@ -377,7 +377,7 @@
   },
   {
     "Affiliation": "TEL",
-    "CallLetters": "KXXV 25.2",
+    "CallLetters": "TELD+",
     "Code": 602,
     "LegacyCallLetters": "TELD",
     "ManifestMaxEndDate": null,
@@ -385,7 +385,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KDLT-TV 46.1",
+    "CallLetters": "KDLT+",
     "Code": 622,
     "LegacyCallLetters": "KDLT",
     "ManifestMaxEndDate": null,
@@ -393,7 +393,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KSFY-TV 13.1",
+    "CallLetters": "KSFY+",
     "Code": 625,
     "LegacyCallLetters": "KSFY",
     "ManifestMaxEndDate": null,
@@ -401,7 +401,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KEZI 9.1",
+    "CallLetters": "KEZI+",
     "Code": 630,
     "LegacyCallLetters": "KEZI",
     "ManifestMaxEndDate": null,
@@ -417,7 +417,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WAIQ 26.1",
+    "CallLetters": "WAIQ+",
     "Code": 705,
     "LegacyCallLetters": "WAIQ",
     "ManifestMaxEndDate": null,
@@ -425,7 +425,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WXOW 19.1",
+    "CallLetters": "WXOW+",
     "Code": 711,
     "LegacyCallLetters": "WXOW",
     "ManifestMaxEndDate": null,
@@ -433,7 +433,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KIMA-TV 29.1",
+    "CallLetters": "KIMA+",
     "Code": 745,
     "LegacyCallLetters": "KIMA",
     "ManifestMaxEndDate": null,
@@ -441,7 +441,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WICS 20.1",
+    "CallLetters": "WICS+",
     "Code": 781,
     "LegacyCallLetters": "WICS",
     "ManifestMaxEndDate": null,
@@ -449,7 +449,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KGWN-TV 5.2",
+    "CallLetters": "NGWN+",
     "Code": 793,
     "LegacyCallLetters": "NGWN",
     "ManifestMaxEndDate": null,
@@ -457,7 +457,7 @@
   },
   {
     "Affiliation": "ION",
-    "CallLetters": "WPXW-TV 66.1",
+    "CallLetters": "WPXW+",
     "Code": 814,
     "LegacyCallLetters": "WPXW",
     "ManifestMaxEndDate": null,
@@ -465,7 +465,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "KTVW-DT 33.1",
+    "CallLetters": "KTVW+",
     "Code": 821,
     "LegacyCallLetters": "KTVW",
     "ManifestMaxEndDate": null,
@@ -473,7 +473,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KBME-TV 3.1",
+    "CallLetters": "KBME+",
     "Code": 865,
     "LegacyCallLetters": "KBME",
     "ManifestMaxEndDate": null,
@@ -481,7 +481,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "WTTV 4.2",
+    "CallLetters": "ETTV+",
     "Code": 907,
     "LegacyCallLetters": "ETTV",
     "ManifestMaxEndDate": null,
@@ -489,7 +489,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KAPP 35.1",
+    "CallLetters": "KAPP+",
     "Code": 916,
     "LegacyCallLetters": "KAPP",
     "ManifestMaxEndDate": null,
@@ -497,7 +497,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WGTU 29.1",
+    "CallLetters": "WGTU+",
     "Code": 928,
     "LegacyCallLetters": "WGTU",
     "ManifestMaxEndDate": null,
@@ -505,7 +505,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KHBS 40.1",
+    "CallLetters": "KHBS+",
     "Code": 930,
     "LegacyCallLetters": "KHBS",
     "ManifestMaxEndDate": null,
@@ -513,7 +513,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WKLE 46.1",
+    "CallLetters": "WKLE+",
     "Code": 946,
     "LegacyCallLetters": "WKLE",
     "ManifestMaxEndDate": null,
@@ -521,7 +521,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KNDO 23.1",
+    "CallLetters": "KNDO+",
     "Code": 958,
     "LegacyCallLetters": "KNDO",
     "ManifestMaxEndDate": null,
@@ -529,7 +529,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "WFUT-DT 68.1",
+    "CallLetters": "WFUT+",
     "Code": 966,
     "LegacyCallLetters": "WFUT",
     "ManifestMaxEndDate": null,
@@ -537,7 +537,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KBTC-TV 28.1",
+    "CallLetters": "KBTC+",
     "Code": 972,
     "LegacyCallLetters": "KBTC",
     "ManifestMaxEndDate": null,
@@ -553,7 +553,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "WFQX-TV 32.1",
+    "CallLetters": "WFQX+",
     "Code": 1008,
     "LegacyCallLetters": "WFQX",
     "ManifestMaxEndDate": null,
@@ -561,7 +561,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "KVTN-DT 25.1",
+    "CallLetters": "KVTN+",
     "Code": 1020,
     "LegacyCallLetters": "KVTN",
     "ManifestMaxEndDate": null,
@@ -585,14 +585,14 @@
   },
   {
     "Affiliation": "ION",
-    "CallLetters": "WEPX-TV 38.1",
+    "CallLetters": "WEPX+",
     "Code": 1040,
     "LegacyCallLetters": "WEPX",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Greenville-N.Bern-Washngtn"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "GRT",
     "CallLetters": "WRTV 6.2",
     "Code": 1043,
     "LegacyCallLetters": "ERTV",
@@ -617,7 +617,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KCWC-DT 4.1",
+    "CallLetters": "KCWC+",
     "Code": 1063,
     "LegacyCallLetters": "KCWC",
     "ManifestMaxEndDate": null,
@@ -625,7 +625,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KDRV 12.1",
+    "CallLetters": "KDRV+",
     "Code": 1067,
     "LegacyCallLetters": "KDRV",
     "ManifestMaxEndDate": null,
@@ -640,10 +640,10 @@
     "OriginMarket": "South Bend-Elkhart"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "MET",
     "CallLetters": "KOLO-TV 8.2",
     "Code": 1074,
-    "LegacyCallLetters": "QOLO",
+    "LegacyCallLetters": "NOLO",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Reno"
   },
@@ -689,7 +689,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KFXK-TV 51.1",
+    "CallLetters": "KFXK+",
     "Code": 1151,
     "LegacyCallLetters": "KFXK",
     "ManifestMaxEndDate": null,
@@ -776,8 +776,16 @@
     "OriginMarket": "Philadelphia"
   },
   {
+    "Affiliation": "IND",
+    "CallLetters": "KWHE+",
+    "Code": 1180,
+    "LegacyCallLetters": "KWHE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Honolulu"
+  },
+  {
     "Affiliation": "ABC",
-    "CallLetters": "KXXV 25.1",
+    "CallLetters": "KXXV+",
     "Code": 1181,
     "LegacyCallLetters": "KXXV",
     "ManifestMaxEndDate": null,
@@ -785,7 +793,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KBMY 17.1",
+    "CallLetters": "KBMY+",
     "Code": 1182,
     "LegacyCallLetters": "KBMY",
     "ManifestMaxEndDate": null,
@@ -841,6 +849,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WCBB 10.3",
+    "Code": 1226,
+    "LegacyCallLetters": "ICBB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Portland-Auburn"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WMEB-TV 12.3",
     "Code": 1228,
     "LegacyCallLetters": "IMEB",
@@ -849,7 +865,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KSAS-TV 24.1",
+    "CallLetters": "KSAS+",
     "Code": 1236,
     "LegacyCallLetters": "KSAS",
     "ManifestMaxEndDate": null,
@@ -878,6 +894,14 @@
     "LegacyCallLetters": "KCWT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca"
+  },
+  {
+    "Affiliation": "TEL",
+    "CallLetters": "WSOC-TV 9.2",
+    "Code": 1291,
+    "LegacyCallLetters": "ESOC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Charlotte"
   },
   {
     "Affiliation": "PBS",
@@ -913,7 +937,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "WLAX 25.1",
+    "CallLetters": "WLAX+",
     "Code": 1311,
     "LegacyCallLetters": "WLAX",
     "ManifestMaxEndDate": null,
@@ -945,7 +969,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KTTW 7.1",
+    "CallLetters": "KTTW+",
     "Code": 1341,
     "LegacyCallLetters": "KTTW",
     "ManifestMaxEndDate": null,
@@ -1008,7 +1032,7 @@
     "OriginMarket": "Sioux City"
   },
   {
-    "Affiliation": "ETV",
+    "Affiliation": "I-S",
     "CallLetters": "KBBV-CD 19.1",
     "Code": 1427,
     "LegacyCallLetters": "KBBV",
@@ -1072,6 +1096,14 @@
     "OriginMarket": "Yuma-El Centro"
   },
   {
+    "Affiliation": "IND",
+    "CallLetters": "WXOW 19.3",
+    "Code": 1494,
+    "LegacyCallLetters": "GXOW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "La Crosse-Eau Claire"
+  },
+  {
     "Affiliation": "I-S",
     "CallLetters": "KTMD 47.2",
     "Code": 1495,
@@ -1104,6 +1136,14 @@
     "OriginMarket": "Las Vegas"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KUSM-TV 9.5",
+    "Code": 1520,
+    "LegacyCallLetters": "RUSM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Butte-Bozeman"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "WGXA 24.2",
     "Code": 1523,
@@ -1120,8 +1160,8 @@
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
-    "Affiliation": "ION",
-    "CallLetters": "WHLT 22.3",
+    "Affiliation": "CW",
+    "CallLetters": "WHLT 22.2",
     "Code": 1537,
     "LegacyCallLetters": "EHLT",
     "ManifestMaxEndDate": null,
@@ -1144,7 +1184,7 @@
     "OriginMarket": "Bakersfield"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "KHSV 21.1",
     "Code": 1562,
     "LegacyCallLetters": "KHSV",
@@ -1224,6 +1264,14 @@
     "OriginMarket": "Wilkes Barre-Scranton-Hztn"
   },
   {
+    "Affiliation": "HI",
+    "CallLetters": "WWME-CD 23.2",
+    "Code": 1594,
+    "LegacyCallLetters": "EWME",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chicago"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "WDAM-TV 7.2",
     "Code": 1597,
@@ -1240,7 +1288,7 @@
     "OriginMarket": "Greenville-N.Bern-Washngtn"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "COZ",
     "CallLetters": "WTAE-TV 4.2",
     "Code": 1611,
     "LegacyCallLetters": "ETAE",
@@ -1304,6 +1352,14 @@
     "OriginMarket": "Columbus, GA (Opelika, AL)"
   },
   {
+    "Affiliation": "ION",
+    "CallLetters": "WSCG 34.6",
+    "Code": 1651,
+    "LegacyCallLetters": "GSCG",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Savannah"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "WOHL-CD 35.1",
     "Code": 1653,
@@ -1352,6 +1408,14 @@
     "OriginMarket": "Marquette"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KUSM-TV 9.3",
+    "Code": 1681,
+    "LegacyCallLetters": "QUSM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Butte-Bozeman"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WITI 6.2",
     "Code": 1684,
@@ -1366,6 +1430,54 @@
     "LegacyCallLetters": "MNBN",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Rapid City"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KJRE 19.4",
+    "Code": 1691,
+    "LegacyCallLetters": "MJRE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fargo-Valley City"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KDSE 9.4",
+    "Code": 1692,
+    "LegacyCallLetters": "QDSE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KWSE 4.4",
+    "Code": 1693,
+    "LegacyCallLetters": "MWSE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KSRE 6.4",
+    "Code": 1694,
+    "LegacyCallLetters": "MSRE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KBME-TV 3.4",
+    "Code": 1695,
+    "LegacyCallLetters": "RBME",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KFME 13.4",
+    "Code": 1696,
+    "LegacyCallLetters": "MFME",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fargo-Valley City"
   },
   {
     "Affiliation": "FOX",
@@ -1392,7 +1504,7 @@
     "OriginMarket": "Butte-Bozeman"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "CBS",
     "CallLetters": "WWAY 3.2",
     "Code": 1714,
     "LegacyCallLetters": "DWAY",
@@ -1401,7 +1513,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WJPM-TV 33.1",
+    "CallLetters": "WJPM+",
     "Code": 1721,
     "LegacyCallLetters": "WJPM",
     "ManifestMaxEndDate": null,
@@ -1409,7 +1521,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WMPN-TV 29.1",
+    "CallLetters": "WMPN+",
     "Code": 1730,
     "LegacyCallLetters": "WMPN",
     "ManifestMaxEndDate": null,
@@ -1441,7 +1553,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WNJS 23.1",
+    "CallLetters": "WNJS+",
     "Code": 1755,
     "LegacyCallLetters": "WNJS",
     "ManifestMaxEndDate": null,
@@ -1457,7 +1569,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WGVU-TV 35.1",
+    "CallLetters": "WGVU+",
     "Code": 1758,
     "LegacyCallLetters": "WGVU",
     "ManifestMaxEndDate": null,
@@ -1465,11 +1577,19 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WNJN 50.1",
+    "CallLetters": "WNJN+",
     "Code": 1761,
     "LegacyCallLetters": "WNJN",
     "ManifestMaxEndDate": null,
     "OriginMarket": "New York"
+  },
+  {
+    "Affiliation": "COM",
+    "CallLetters": "KFOX-TV 14.2",
+    "Code": 1765,
+    "LegacyCallLetters": "NFOX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "El Paso (Las Cruces)"
   },
   {
     "Affiliation": "CW",
@@ -1513,7 +1633,7 @@
   },
   {
     "Affiliation": "ION",
-    "CallLetters": "WBPX-TV 68.1",
+    "CallLetters": "WBPX+",
     "Code": 1804,
     "LegacyCallLetters": "WBPX",
     "ManifestMaxEndDate": null,
@@ -1521,7 +1641,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "WRSP-TV 55.1",
+    "CallLetters": "WRSP+",
     "Code": 1810,
     "LegacyCallLetters": "WRSP",
     "ManifestMaxEndDate": null,
@@ -1552,15 +1672,23 @@
     "OriginMarket": "Seattle-Tacoma"
   },
   {
+    "Affiliation": "TEL",
+    "CallLetters": "KLTV 7.3",
+    "Code": 1826,
+    "LegacyCallLetters": "NLTV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Tyler-Longview(Lfkn&Ncgd)"
+  },
+  {
     "Affiliation": "CBS",
-    "CallLetters": "KGWC-TV 14.1",
+    "CallLetters": "KGWC+",
     "Code": 1835,
     "LegacyCallLetters": "KGWC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Casper-Riverton"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "KMCI-TV 38.2",
     "Code": 1850,
     "LegacyCallLetters": "NMCI",
@@ -1601,7 +1729,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "WTTO 21.1",
+    "CallLetters": "WTTO+",
     "Code": 1890,
     "LegacyCallLetters": "WTTO",
     "ManifestMaxEndDate": null,
@@ -1633,7 +1761,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KMTR 16.1",
+    "CallLetters": "KMTR+",
     "Code": 1910,
     "LegacyCallLetters": "KMTR",
     "ManifestMaxEndDate": null,
@@ -1641,7 +1769,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "WFTC 9.2",
+    "CallLetters": "WFTC+",
     "Code": 1914,
     "LegacyCallLetters": "WFTC",
     "ManifestMaxEndDate": null,
@@ -1649,7 +1777,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KVRR 15.1",
+    "CallLetters": "KVRR+",
     "Code": 1931,
     "LegacyCallLetters": "KVRR",
     "ManifestMaxEndDate": null,
@@ -1664,8 +1792,16 @@
     "OriginMarket": "St. Louis"
   },
   {
+    "Affiliation": "UNI",
+    "CallLetters": "KVSN-DT 48.1",
+    "Code": 1937,
+    "LegacyCallLetters": "KVSN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Colorado Springs-Pueblo"
+  },
+  {
     "Affiliation": "FOX",
-    "CallLetters": "KDVR 31.1",
+    "CallLetters": "KDVR+",
     "Code": 1965,
     "LegacyCallLetters": "KDVR",
     "ManifestMaxEndDate": null,
@@ -1721,7 +1857,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KTMF 23.1",
+    "CallLetters": "KTMF+",
     "Code": 2022,
     "LegacyCallLetters": "KTMF",
     "ManifestMaxEndDate": null,
@@ -1761,7 +1897,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "KNVA 54.1",
+    "CallLetters": "KNVA+",
     "Code": 2038,
     "LegacyCallLetters": "KNVA",
     "ManifestMaxEndDate": null,
@@ -1785,14 +1921,14 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "KHBS 40.2",
+    "CallLetters": "NHBS+",
     "Code": 2057,
     "LegacyCallLetters": "NHBS",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WCIU-TV 26.5",
     "Code": 2058,
     "LegacyCallLetters": "HCIU",
@@ -1814,6 +1950,22 @@
     "LegacyCallLetters": "OJCT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Grand Junction-Montrose"
+  },
+  {
+    "Affiliation": "TEL",
+    "CallLetters": "KFXO-CD 39.2",
+    "Code": 2075,
+    "LegacyCallLetters": "NFXO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bend, OR"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMVT 36.2",
+    "Code": 2079,
+    "LegacyCallLetters": "EMVT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Milwaukee"
   },
   {
     "Affiliation": "PBS",
@@ -1840,16 +1992,16 @@
     "OriginMarket": "St. Joseph"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "ABC",
     "CallLetters": "KVHP 29.2",
     "Code": 2110,
-    "LegacyCallLetters": "NVHP",
+    "LegacyCallLetters": "MVHP",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Lake Charles"
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KFPH-DT 13.1",
+    "CallLetters": "KFPH+",
     "Code": 2124,
     "LegacyCallLetters": "KFPH",
     "ManifestMaxEndDate": null,
@@ -1857,7 +2009,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KTFF-DT 61.1",
+    "CallLetters": "KTFF+",
     "Code": 2129,
     "LegacyCallLetters": "KTFF",
     "ManifestMaxEndDate": null,
@@ -1886,6 +2038,14 @@
     "LegacyCallLetters": "EGNT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Norfolk-Portsmth-Newpt Nws"
+  },
+  {
+    "Affiliation": "TEL",
+    "CallLetters": "KFFX-TV 11.2",
+    "Code": 2183,
+    "LegacyCallLetters": "NFFX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Yakima-Pasco-Rchlnd-Knnwck"
   },
   {
     "Affiliation": "CW",
@@ -1921,7 +2081,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "KVPT 18.3",
+    "CallLetters": "KVPT 18.2",
     "Code": 2247,
     "LegacyCallLetters": "OVPT",
     "ManifestMaxEndDate": null,
@@ -1929,7 +2089,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "KATN 2.2",
+    "CallLetters": "KATN 2.3",
     "Code": 2260,
     "LegacyCallLetters": "NATN",
     "ManifestMaxEndDate": null,
@@ -1937,7 +2097,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KFXL-TV 51.1",
+    "CallLetters": "KFXL+",
     "Code": 2273,
     "LegacyCallLetters": "KFXL",
     "ManifestMaxEndDate": null,
@@ -1976,7 +2136,7 @@
     "OriginMarket": "Burlington-Plattsburgh"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "I-S",
     "CallLetters": "KRGV-TV 5.2",
     "Code": 2320,
     "LegacyCallLetters": "NRGV",
@@ -2025,7 +2185,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "KWYB 18.1",
+    "CallLetters": "KWYB+",
     "Code": 2402,
     "LegacyCallLetters": "KWYB",
     "ManifestMaxEndDate": null,
@@ -2040,12 +2200,20 @@
     "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
   {
-    "Affiliation": "MMX",
-    "CallLetters": "WXCW 46.3",
+    "Affiliation": "ETV",
+    "CallLetters": "WXCW 46.2",
     "Code": 2411,
     "LegacyCallLetters": "EXCW",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Ft. Myers-Naples"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WETK 33.2",
+    "Code": 2421,
+    "LegacyCallLetters": "DETK",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Burlington-Plattsburgh"
   },
   {
     "Affiliation": "NBC",
@@ -2054,6 +2222,14 @@
     "LegacyCallLetters": "KJAC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Beaumont-Port Arthur"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WTTW 11.4",
+    "Code": 2463,
+    "LegacyCallLetters": "HTTW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chicago"
   },
   {
     "Affiliation": "CW",
@@ -2137,7 +2313,7 @@
   },
   {
     "Affiliation": "ABC",
-    "CallLetters": "WBMA-LD 58.1",
+    "CallLetters": "WBMA+",
     "Code": 2558,
     "LegacyCallLetters": "WBMA",
     "ManifestMaxEndDate": null,
@@ -2177,7 +2353,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "WVUA 23.1",
+    "CallLetters": "WVUA+",
     "Code": 2594,
     "LegacyCallLetters": "WVUA",
     "ManifestMaxEndDate": null,
@@ -2257,7 +2433,7 @@
   },
   {
     "Affiliation": "TEL",
-    "CallLetters": "KDEN-TV 25.1",
+    "CallLetters": "KDEN+",
     "Code": 2685,
     "LegacyCallLetters": "KDEN",
     "ManifestMaxEndDate": null,
@@ -2385,7 +2561,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "WAGT 26.2",
+    "CallLetters": "WAGT-CD 26.2",
     "Code": 2752,
     "LegacyCallLetters": "EAGT",
     "ManifestMaxEndDate": null,
@@ -2464,6 +2640,14 @@
     "OriginMarket": "Ft. Wayne"
   },
   {
+    "Affiliation": "CW",
+    "CallLetters": "WWMB 21.2",
+    "Code": 2765,
+    "LegacyCallLetters": "EWMB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Myrtle Beach-Florence"
+  },
+  {
     "Affiliation": "MET",
     "CallLetters": "WIBW-TV 13.2",
     "Code": 2766,
@@ -2472,7 +2656,7 @@
     "OriginMarket": "Topeka"
   },
   {
-    "Affiliation": "CBS",
+    "Affiliation": "CW",
     "CallLetters": "KDLH 3.1",
     "Code": 2769,
     "LegacyCallLetters": "KDLH",
@@ -2648,7 +2832,7 @@
     "OriginMarket": "Colorado Springs-Pueblo"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "COM",
     "CallLetters": "WDSI-TV 61.2",
     "Code": 2800,
     "LegacyCallLetters": "EDSI",
@@ -2672,7 +2856,7 @@
     "OriginMarket": "Boise"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "IND",
     "CallLetters": "WDAY-TV 6.2",
     "Code": 2804,
     "LegacyCallLetters": "EDAY",
@@ -2785,6 +2969,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WCML 6.2",
+    "Code": 2910,
+    "LegacyCallLetters": "DCML",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Alpena"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WCMV 27.2",
     "Code": 2911,
     "LegacyCallLetters": "DCMV",
@@ -2800,6 +2992,14 @@
     "OriginMarket": "Lima"
   },
   {
+    "Affiliation": "CW",
+    "CallLetters": "KWAB-TV 4.2",
+    "Code": 2964,
+    "LegacyCallLetters": "NWAB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Odessa-Midland"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "KDAF 33.2",
     "Code": 2980,
@@ -2809,7 +3009,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "WAGM-TV 8.1",
+    "CallLetters": "WAGM-TV 8.2",
     "Code": 2995,
     "LegacyCallLetters": "EAGM",
     "ManifestMaxEndDate": null,
@@ -2849,7 +3049,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "WYFX-LD 19.1",
+    "CallLetters": "WYFX+",
     "Code": 3112,
     "LegacyCallLetters": "WYFX",
     "ManifestMaxEndDate": null,
@@ -2881,7 +3081,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "KWBQ 19.1",
+    "CallLetters": "KWBQ+",
     "Code": 3163,
     "LegacyCallLetters": "KWBQ",
     "ManifestMaxEndDate": null,
@@ -2912,8 +3112,16 @@
     "OriginMarket": "Kansas City"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WIIQ 41.2",
+    "Code": 3372,
+    "LegacyCallLetters": "EIIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
+  },
+  {
     "Affiliation": "FOX",
-    "CallLetters": "KNDX-LD 38.1",
+    "CallLetters": "KNDX+",
     "Code": 3385,
     "LegacyCallLetters": "KNDX",
     "ManifestMaxEndDate": null,
@@ -2929,11 +3137,43 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WGIQ 43.2",
+    "Code": 3416,
+    "LegacyCallLetters": "EGIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WGBH-TV 2.2",
     "Code": 3426,
     "LegacyCallLetters": "EGBH",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Boston (Manchester)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WFIQ 36.2",
+    "Code": 3448,
+    "LegacyCallLetters": "EFIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Huntsville-Decatur (Flor)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WEIQ 42.2",
+    "Code": 3461,
+    "LegacyCallLetters": "EEIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Mobile-Pensacola (Ft Walt)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WDIQ 2.2",
+    "Code": 3478,
+    "LegacyCallLetters": "EDIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
   },
   {
     "Affiliation": "ABC",
@@ -2968,7 +3208,7 @@
     "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WVUE-DT 8.2",
     "Code": 3562,
     "LegacyCallLetters": "DVUE",
@@ -2977,7 +3217,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "KUVE-DT 46.1",
+    "CallLetters": "KUVE+",
     "Code": 3567,
     "LegacyCallLetters": "KUVE",
     "ManifestMaxEndDate": null,
@@ -3040,12 +3280,36 @@
     "OriginMarket": "Albany-Schenectady-Troy"
   },
   {
+    "Affiliation": "IND",
+    "CallLetters": "WBFF 45.2",
+    "Code": 3761,
+    "LegacyCallLetters": "EBFF",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Baltimore"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "WALB 10.2",
     "Code": 3778,
     "LegacyCallLetters": "EALB",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Albany, GA"
+  },
+  {
+    "Affiliation": "MET",
+    "CallLetters": "WAKA 8.2",
+    "Code": 3779,
+    "LegacyCallLetters": "EAKA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WAIQ 26.2",
+    "Code": 3781,
+    "LegacyCallLetters": "EAIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
   },
   {
     "Affiliation": "IND",
@@ -3062,6 +3326,22 @@
     "LegacyCallLetters": "GBBJ",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Jackson, TN"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KUSM-TV 9.4",
+    "Code": 3853,
+    "LegacyCallLetters": "NUSM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Butte-Bozeman"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KIII 3.3",
+    "Code": 3864,
+    "LegacyCallLetters": "MIII",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Corpus Christi"
   },
   {
     "Affiliation": "CW",
@@ -3102,6 +3382,14 @@
     "LegacyCallLetters": "SSTC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Minneapolis-St. Paul"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WHIQ 25.2",
+    "Code": 3945,
+    "LegacyCallLetters": "EHIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Huntsville-Decatur (Flor)"
   },
   {
     "Affiliation": "IND",
@@ -3145,6 +3433,22 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WCNY-TV 24.4",
+    "Code": 4074,
+    "LegacyCallLetters": "HCNY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Syracuse"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KPTS 8.3",
+    "Code": 4094,
+    "LegacyCallLetters": "OPTS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wichita-Hutchinson Plus"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "KPBS 15.2",
     "Code": 4100,
     "LegacyCallLetters": "OPBS",
@@ -3158,6 +3462,14 @@
     "LegacyCallLetters": "KMYL",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Lubbock"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KBTX-TV 3.2",
+    "Code": 4108,
+    "LegacyCallLetters": "NBTX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Waco-Temple-Bryan"
   },
   {
     "Affiliation": "MET",
@@ -3272,7 +3584,31 @@
     "OriginMarket": "Springfield, MO"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "MET",
+    "CallLetters": "WSLS-TV 10.3",
+    "Code": 4169,
+    "LegacyCallLetters": "ESLS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Roanoke-Lynchburg"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WLJT-DT 11.2",
+    "Code": 4171,
+    "LegacyCallLetters": "ELJT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jackson, TN"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KEET 13.2",
+    "Code": 4173,
+    "LegacyCallLetters": "NEET",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Eureka"
+  },
+  {
+    "Affiliation": "COZ",
     "CallLetters": "WOWT-TV 6.2",
     "Code": 4175,
     "LegacyCallLetters": "EOWT",
@@ -3312,10 +3648,18 @@
     "OriginMarket": "Lincoln & Hastings-Krny"
   },
   {
-    "Affiliation": "CW",
-    "CallLetters": "KBJO-LD 21.1",
+    "Affiliation": "I-S",
+    "CallLetters": "KTFD-DT 50.2",
+    "Code": 4193,
+    "LegacyCallLetters": "NTFD",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Denver"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KCJO-LD 30.1",
     "Code": 4201,
-    "LegacyCallLetters": "KBJO",
+    "LegacyCallLetters": "KCJO",
     "ManifestMaxEndDate": null,
     "OriginMarket": "St. Joseph"
   },
@@ -3336,7 +3680,15 @@
     "OriginMarket": "Greenville-N.Bern-Washngtn"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
+    "CallLetters": "WUVC-DT 40.3",
+    "Code": 4213,
+    "LegacyCallLetters": "EUVC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Raleigh-Durham (Fayetvlle)"
+  },
+  {
+    "Affiliation": "HI",
     "CallLetters": "WPLG 10.3",
     "Code": 4253,
     "LegacyCallLetters": "GPLG",
@@ -3345,7 +3697,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KCWY-DT 13.1",
+    "CallLetters": "KCWY+",
     "Code": 4268,
     "LegacyCallLetters": "KCWY",
     "ManifestMaxEndDate": null,
@@ -3368,6 +3720,14 @@
     "OriginMarket": "Davenport-R.Island-Moline"
   },
   {
+    "Affiliation": "BOU",
+    "CallLetters": "WCWG 20.4",
+    "Code": 4349,
+    "LegacyCallLetters": "HCWG",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Greensboro-H.Point-W.Salem"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WECP-LD 18.2",
     "Code": 4350,
@@ -3376,7 +3736,7 @@
     "OriginMarket": "Panama City"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "COZ",
     "CallLetters": "WIWN 68.1",
     "Code": 4368,
     "LegacyCallLetters": "WIWN",
@@ -3457,7 +3817,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KFTU-DT 3.1",
+    "CallLetters": "KFTU+",
     "Code": 4436,
     "LegacyCallLetters": "KFTU",
     "ManifestMaxEndDate": null,
@@ -3472,7 +3832,7 @@
     "OriginMarket": "Boise"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "HI",
     "CallLetters": "KBCA 41.1",
     "Code": 4449,
     "LegacyCallLetters": "KBCA",
@@ -3504,7 +3864,7 @@
     "OriginMarket": "San Antonio"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "MET",
     "CallLetters": "WCTV 6.2",
     "Code": 4472,
     "LegacyCallLetters": "ECTV",
@@ -3520,7 +3880,7 @@
     "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WMC-TV 5.2",
     "Code": 4475,
     "LegacyCallLetters": "DMC",
@@ -3544,7 +3904,7 @@
     "OriginMarket": "Cedar Rapids-Wtrlo-IWC&Dub"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "CW",
     "CallLetters": "KWWL 7.2",
     "Code": 4482,
     "LegacyCallLetters": "NWWL",
@@ -3752,7 +4112,7 @@
     "OriginMarket": "Youngstown"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WMLW-TV 49.2",
     "Code": 4622,
     "LegacyCallLetters": "EMLW",
@@ -3801,6 +4161,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "KLTM-TV 13.2",
+    "Code": 4654,
+    "LegacyCallLetters": "RLTM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Monroe-El Dorado"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "KLTL-TV 18.2",
     "Code": 4655,
     "LegacyCallLetters": "RLTL",
@@ -3824,6 +4192,14 @@
     "OriginMarket": "Alexandria, LA"
   },
   {
+    "Affiliation": "TEL",
+    "CallLetters": "KNVN 24.2",
+    "Code": 4659,
+    "LegacyCallLetters": "NNVN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chico-Redding"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WRDW-TV 12.2",
     "Code": 4666,
@@ -3840,12 +4216,36 @@
     "OriginMarket": "South Bend-Elkhart"
   },
   {
+    "Affiliation": "TEL",
+    "CallLetters": "KKTM-LP",
+    "Code": 4691,
+    "LegacyCallLetters": "KKTM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wichita Falls & Lawton"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WETM-TV 18.2",
     "Code": 4692,
     "LegacyCallLetters": "EETM",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Elmira (Corning)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KTEJ 19.4",
+    "Code": 4719,
+    "LegacyCallLetters": "QTEJ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jonesboro"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KTEJ 19.3",
+    "Code": 4720,
+    "LegacyCallLetters": "OTEJ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jonesboro"
   },
   {
     "Affiliation": "PBS",
@@ -3856,6 +4256,54 @@
     "OriginMarket": "Jonesboro"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KETS 2.4",
+    "Code": 4722,
+    "LegacyCallLetters": "QETS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Little Rock-Pine Bluff"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KETS 2.2",
+    "Code": 4724,
+    "LegacyCallLetters": "NETS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Little Rock-Pine Bluff"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KETG 9.2",
+    "Code": 4727,
+    "LegacyCallLetters": "NETG",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Little Rock-Pine Bluff"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KEMV 6.3",
+    "Code": 4729,
+    "LegacyCallLetters": "OEMV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Little Rock-Pine Bluff"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KEMV 6.2",
+    "Code": 4730,
+    "LegacyCallLetters": "NEMV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Little Rock-Pine Bluff"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KAFT 13.2",
+    "Code": 4733,
+    "LegacyCallLetters": "NAFT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
+  },
+  {
     "Affiliation": "ION",
     "CallLetters": "WHTM-TV 27.2",
     "Code": 4736,
@@ -3864,7 +4312,7 @@
     "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "CW",
     "CallLetters": "KFMB-TV 8.2",
     "Code": 4743,
     "LegacyCallLetters": "NFMB",
@@ -3920,7 +4368,7 @@
     "OriginMarket": "Rochester, NY"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "CW",
     "CallLetters": "WSAV-TV 3.2",
     "Code": 4848,
     "LegacyCallLetters": "ESAV",
@@ -3952,7 +4400,7 @@
     "OriginMarket": "Ft. Myers-Naples"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "NBC",
     "CallLetters": "WPTA 21.2",
     "Code": 4864,
     "LegacyCallLetters": "EPTA",
@@ -3992,7 +4440,7 @@
     "OriginMarket": "San Antonio"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "BOU",
     "CallLetters": "WSB-TV 2.2",
     "Code": 4886,
     "LegacyCallLetters": "ESB",
@@ -4014,6 +4462,14 @@
     "LegacyCallLetters": "GLIW",
     "ManifestMaxEndDate": null,
     "OriginMarket": "New York"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WSWP-TV 9.2",
+    "Code": 4911,
+    "LegacyCallLetters": "ESWP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bluefield-Beckley-Oak Hill"
   },
   {
     "Affiliation": "TEL",
@@ -4046,6 +4502,14 @@
     "LegacyCallLetters": "EVLT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Knoxville"
+  },
+  {
+    "Affiliation": "MET",
+    "CallLetters": "KPIF 15.1",
+    "Code": 4984,
+    "LegacyCallLetters": "KPIF",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Idaho Fals-Pocatllo(Jcksn)"
   },
   {
     "Affiliation": "FOX",
@@ -4480,7 +4944,7 @@
     "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "IND",
     "CallLetters": "WGN-TV 9.1",
     "Code": 5066,
     "LegacyCallLetters": "WGN",
@@ -4664,7 +5128,7 @@
     "OriginMarket": "Memphis"
   },
   {
-    "Affiliation": "NBC",
+    "Affiliation": "IND",
     "CallLetters": "WHDH 7.1",
     "Code": 5089,
     "LegacyCallLetters": "WHDH",
@@ -5160,7 +5624,7 @@
     "OriginMarket": "Jonesboro"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "HI",
     "CallLetters": "KVOS-TV 12.1",
     "Code": 5161,
     "LegacyCallLetters": "KVOS",
@@ -5329,7 +5793,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KOIN-DT 6.1",
+    "CallLetters": "KOIN 6.1",
     "Code": 5185,
     "LegacyCallLetters": "KOIN",
     "ManifestMaxEndDate": null,
@@ -6793,7 +7257,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "WAGM-TV 8.2",
+    "CallLetters": "WAGM-TV 8.1",
     "Code": 5394,
     "LegacyCallLetters": "WAGM",
     "ManifestMaxEndDate": null,
@@ -7113,7 +7577,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KVIQ 17.1",
+    "CallLetters": "KVIQ-LP 14.1",
     "Code": 5442,
     "LegacyCallLetters": "KVIQ",
     "ManifestMaxEndDate": null,
@@ -7166,6 +7630,14 @@
     "LegacyCallLetters": "WGTV",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Atlanta"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMED-TV 13.1",
+    "Code": 5451,
+    "LegacyCallLetters": "WMED",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bangor"
   },
   {
     "Affiliation": "ABC",
@@ -7366,6 +7838,14 @@
     "LegacyCallLetters": "KBSH",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Wichita-Hutchinson Plus"
+  },
+  {
+    "Affiliation": "I-S",
+    "CallLetters": "XHBC-TD 4.1",
+    "Code": 5481,
+    "LegacyCallLetters": "XHBC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Yuma-El Centro"
   },
   {
     "Affiliation": "PBS",
@@ -7672,6 +8152,14 @@
     "OriginMarket": "Bluefield-Beckley-Oak Hill"
   },
   {
+    "Affiliation": "I-S",
+    "CallLetters": "XHAQ",
+    "Code": 5537,
+    "LegacyCallLetters": "XHAQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Yuma-El Centro"
+  },
+  {
     "Affiliation": "PBS",
     "CallLetters": "KTSC 8.1",
     "Code": 5539,
@@ -7737,7 +8225,7 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WNMU 13.2",
+    "CallLetters": "WNMU 13.1",
     "Code": 5551,
     "LegacyCallLetters": "WNMU",
     "ManifestMaxEndDate": null,
@@ -7753,7 +8241,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "KYLX-LP 13.1",
+    "CallLetters": "KYLX-LD 13.1",
     "Code": 5553,
     "LegacyCallLetters": "KYLX",
     "ManifestMaxEndDate": null,
@@ -7800,7 +8288,7 @@
     "OriginMarket": "Alpena"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "ION",
     "CallLetters": "KTRV-TV 12.1",
     "Code": 5562,
     "LegacyCallLetters": "KTRV",
@@ -7808,7 +8296,7 @@
     "OriginMarket": "Boise"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "HI",
     "CallLetters": "WTLH 49.1",
     "Code": 5563,
     "LegacyCallLetters": "WTLH",
@@ -7889,7 +8377,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "WSST-TV 51.1",
+    "CallLetters": "WSST-TV 22.1",
     "Code": 5581,
     "LegacyCallLetters": "WSST",
     "ManifestMaxEndDate": null,
@@ -7998,6 +8486,14 @@
     "LegacyCallLetters": "WENH",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Boston (Manchester)"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KGWR-TV 13.1",
+    "Code": 5617,
+    "LegacyCallLetters": "KGWR",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Casper-Riverton"
   },
   {
     "Affiliation": "PBS",
@@ -8113,7 +8609,7 @@
   },
   {
     "Affiliation": "I-S",
-    "CallLetters": "XEPM-TD 32.1",
+    "CallLetters": "XEPM-TD 2.2",
     "Code": 5644,
     "LegacyCallLetters": "XEPM",
     "ManifestMaxEndDate": null,
@@ -8121,7 +8617,7 @@
   },
   {
     "Affiliation": "I-S",
-    "CallLetters": "XHBR-TD 11.1",
+    "CallLetters": "XHBR-TD 4.1",
     "Code": 5645,
     "LegacyCallLetters": "XHBR",
     "ManifestMaxEndDate": null,
@@ -8400,6 +8896,22 @@
     "OriginMarket": "Lubbock"
   },
   {
+    "Affiliation": "I-S",
+    "CallLetters": "XEFE-TD 17.1",
+    "Code": 5690,
+    "LegacyCallLetters": "XEFE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Laredo"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "CFCF-DT 12.1",
+    "Code": 5693,
+    "LegacyCallLetters": "CFCF",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Burlington-Plattsburgh"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "WLNE-TV 6.1",
     "Code": 5696,
@@ -8664,10 +9176,10 @@
     "OriginMarket": "Minneapolis-St. Paul"
   },
   {
-    "Affiliation": "NBC",
-    "CallLetters": "WHAG-TV 25.1",
+    "Affiliation": "HI",
+    "CallLetters": "WDVM 25.1",
     "Code": 5733,
-    "LegacyCallLetters": "WHAG",
+    "LegacyCallLetters": "WDVM",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Washington, DC (Hagrstwn)"
   },
@@ -8801,7 +9313,7 @@
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "WIFR 23.1",
+    "CallLetters": "WIFR-LD 23.1",
     "Code": 5752,
     "LegacyCallLetters": "WIFR",
     "ManifestMaxEndDate": null,
@@ -9032,7 +9544,7 @@
     "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
   {
-    "Affiliation": "ABC",
+    "Affiliation": "COM",
     "CallLetters": "WHOI 19.1",
     "Code": 5784,
     "LegacyCallLetters": "WHOI",
@@ -9136,7 +9648,7 @@
     "OriginMarket": "Charlottesville"
   },
   {
-    "Affiliation": "NBC",
+    "Affiliation": "CW",
     "CallLetters": "WISE-TV 33.1",
     "Code": 5800,
     "LegacyCallLetters": "WISE",
@@ -9232,7 +9744,7 @@
     "OriginMarket": "New York"
   },
   {
-    "Affiliation": "MMX",
+    "Affiliation": "I-S",
     "CallLetters": "KWHY-TV 22.1",
     "Code": 5815,
     "LegacyCallLetters": "KWHY",
@@ -9257,7 +9769,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "WUNI 27.1",
+    "CallLetters": "WUNI 66.1",
     "Code": 5819,
     "LegacyCallLetters": "WUNI",
     "ManifestMaxEndDate": null,
@@ -9265,7 +9777,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "WFTT-DT 50.1",
+    "CallLetters": "WFTT-DT 62.1",
     "Code": 5821,
     "LegacyCallLetters": "WFTT",
     "ManifestMaxEndDate": null,
@@ -9280,10 +9792,10 @@
     "OriginMarket": "Minneapolis-St. Paul"
   },
   {
-    "Affiliation": "IND",
-    "CallLetters": "WLYH-TV 15.1",
+    "Affiliation": "COM",
+    "CallLetters": "WXBU 15.1",
     "Code": 5824,
-    "LegacyCallLetters": "WLYH",
+    "LegacyCallLetters": "WXBU",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Harrisburg-Lncstr-Leb-York"
   },
@@ -9360,7 +9872,7 @@
     "OriginMarket": "Champaign&Sprngfld-Decatur"
   },
   {
-    "Affiliation": "FOX",
+    "Affiliation": "HI",
     "CallLetters": "WSJV 28.1",
     "Code": 5834,
     "LegacyCallLetters": "WSJV",
@@ -9374,6 +9886,14 @@
     "LegacyCallLetters": "KICU",
     "ManifestMaxEndDate": null,
     "OriginMarket": "San Francisco-Oak-San Jose"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WFIQ 36.1",
+    "Code": 5837,
+    "LegacyCallLetters": "WFIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Huntsville-Decatur (Flor)"
   },
   {
     "Affiliation": "CBS",
@@ -9881,9 +10401,9 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WUSF-TV 16.1",
+    "CallLetters": "WEDQ 3.4",
     "Code": 5908,
-    "LegacyCallLetters": "WUSF",
+    "LegacyCallLetters": "WEDQ",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
@@ -9960,6 +10480,14 @@
     "OriginMarket": "Sacramnto-Stkton-Modesto"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KTIN 21.1",
+    "Code": 5919,
+    "LegacyCallLetters": "KTIN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Des Moines-Ames"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "WVNY 22.1",
     "Code": 5920,
@@ -10008,7 +10536,7 @@
     "OriginMarket": "Rochester, NY"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "CW",
     "CallLetters": "WUAB 43.1",
     "Code": 5926,
     "LegacyCallLetters": "WUAB",
@@ -10048,7 +10576,7 @@
     "OriginMarket": "Lubbock"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "COZ",
     "CallLetters": "WKPT-TV 19.1",
     "Code": 5934,
     "LegacyCallLetters": "WKPT",
@@ -10184,7 +10712,7 @@
     "OriginMarket": "Buffalo"
   },
   {
-    "Affiliation": "NBC",
+    "Affiliation": "CW",
     "CallLetters": "WNNE 31.1",
     "Code": 5956,
     "LegacyCallLetters": "WNNE",
@@ -10249,7 +10777,7 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "WAGT 26.1",
+    "CallLetters": "WAGT-CD 26.1",
     "Code": 5967,
     "LegacyCallLetters": "WAGT",
     "ManifestMaxEndDate": null,
@@ -10409,7 +10937,15 @@
   },
   {
     "Affiliation": "PBS",
-    "CallLetters": "WTVS 56.2",
+    "CallLetters": "KUSD-TV 2.2",
+    "Code": 5992,
+    "LegacyCallLetters": "MUSD",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Sioux Falls(Mitchell)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WTVS 56.4",
     "Code": 5995,
     "LegacyCallLetters": "GTVS",
     "ManifestMaxEndDate": null,
@@ -10697,6 +11233,14 @@
   },
   {
     "Affiliation": "IND",
+    "CallLetters": "KJNP-TV 4.1",
+    "Code": 6076,
+    "LegacyCallLetters": "KJNP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fairbanks"
+  },
+  {
+    "Affiliation": "IND",
     "CallLetters": "WNDY-TV 23.1",
     "Code": 6078,
     "LegacyCallLetters": "WNDY",
@@ -10737,7 +11281,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KIDY 19.1",
+    "CallLetters": "KIDY 6.1",
     "Code": 6085,
     "LegacyCallLetters": "KIDY",
     "ManifestMaxEndDate": null,
@@ -11001,6 +11545,14 @@
   },
   {
     "Affiliation": "IND",
+    "CallLetters": "KLUJ-TV 44.1",
+    "Code": 6165,
+    "LegacyCallLetters": "KLUJ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca"
+  },
+  {
+    "Affiliation": "IND",
     "CallLetters": "WBFS-TV 33.1",
     "Code": 6168,
     "LegacyCallLetters": "WBFS",
@@ -11065,7 +11617,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "WUTF-DT 66.1",
+    "CallLetters": "WUTF-DT 27.1",
     "Code": 6177,
     "LegacyCallLetters": "WUTF",
     "ManifestMaxEndDate": null,
@@ -11328,12 +11880,20 @@
     "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "IND",
     "CallLetters": "WBNX-TV 55.1",
     "Code": 6252,
     "LegacyCallLetters": "WBNX",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Cleveland-Akron (Canton)"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WRNN-TV 48.1",
+    "Code": 6253,
+    "LegacyCallLetters": "WRNN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "New York"
   },
   {
     "Affiliation": "IND",
@@ -11416,7 +11976,7 @@
     "OriginMarket": "Mobile-Pensacola (Ft Walt)"
   },
   {
-    "Affiliation": "TEL",
+    "Affiliation": "AZA",
     "CallLetters": "XHAS-TD 33.1",
     "Code": 6272,
     "LegacyCallLetters": "XHAS",
@@ -11480,12 +12040,20 @@
     "OriginMarket": "Greensboro-H.Point-W.Salem"
   },
   {
-    "Affiliation": "ION",
+    "Affiliation": "IND",
     "CallLetters": "WBNA 21.1",
     "Code": 6281,
     "LegacyCallLetters": "WBNA",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Louisville"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "KNLJ 25.1",
+    "Code": 6283,
+    "LegacyCallLetters": "KNLJ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Columbia-Jefferson City"
   },
   {
     "Affiliation": "FOX",
@@ -11617,9 +12185,9 @@
   },
   {
     "Affiliation": "MET",
-    "CallLetters": "KTGF 16.1",
+    "CallLetters": "KJJC 16.1",
     "Code": 6303,
-    "LegacyCallLetters": "KTGF",
+    "LegacyCallLetters": "KJJC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Great Falls"
   },
@@ -11817,7 +12385,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "KLUZ-TV 41.1",
+    "CallLetters": "KLUZ-TV 14.1",
     "Code": 6340,
     "LegacyCallLetters": "KLUZ",
     "ManifestMaxEndDate": null,
@@ -11881,7 +12449,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "WVEN-TV 26.1",
+    "CallLetters": "WVEN-TV 43.1",
     "Code": 6352,
     "LegacyCallLetters": "WVEN",
     "ManifestMaxEndDate": null,
@@ -12160,12 +12728,20 @@
     "OriginMarket": "Eugene"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "KDCG-CD 22.1",
     "Code": 6490,
     "LegacyCallLetters": "KDCG",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Lafayette, LA"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WMNT-CD 48.1",
+    "Code": 6491,
+    "LegacyCallLetters": "WMNT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Toledo"
   },
   {
     "Affiliation": "TEL",
@@ -12174,6 +12750,14 @@
     "LegacyCallLetters": "KVTX",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Victoria"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KMOS-TV 6.3",
+    "Code": 6497,
+    "LegacyCallLetters": "OMOS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Columbia-Jefferson City"
   },
   {
     "Affiliation": "FOX",
@@ -12190,6 +12774,14 @@
     "LegacyCallLetters": "WXAX",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Tampa-St. Pete (Sarasota)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KNVO 48.4",
+    "Code": 6529,
+    "LegacyCallLetters": "NNVO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca"
   },
   {
     "Affiliation": "NBC",
@@ -12209,7 +12801,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KTFD-DT 14.1",
+    "CallLetters": "KTFD-DT 50.1",
     "Code": 6543,
     "LegacyCallLetters": "KTFD",
     "ManifestMaxEndDate": null,
@@ -12224,7 +12816,7 @@
     "OriginMarket": "Little Rock-Pine Bluff"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WCSC-TV 5.2",
     "Code": 6548,
     "LegacyCallLetters": "GCSC",
@@ -12344,6 +12936,14 @@
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KUSM-TV 9.2",
+    "Code": 6670,
+    "LegacyCallLetters": "OUSM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Butte-Bozeman"
+  },
+  {
     "Affiliation": "FOX",
     "CallLetters": "KFFX-TV 11.1",
     "Code": 6674,
@@ -12432,6 +13032,14 @@
     "OriginMarket": "Pittsburgh"
   },
   {
+    "Affiliation": "I-S",
+    "CallLetters": "XHMEE-TD 10.",
+    "Code": 6693,
+    "LegacyCallLetters": "XHME",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Yuma-El Centro"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WKBS-TV 47.1",
     "Code": 6700,
@@ -12513,6 +13121,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WACS-TV 25.1",
+    "Code": 6710,
+    "LegacyCallLetters": "WACS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Albany, GA"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WCVN-TV 54.1",
     "Code": 6712,
     "LegacyCallLetters": "WCVN",
@@ -12544,12 +13160,36 @@
     "OriginMarket": "Shreveport"
   },
   {
+    "Affiliation": "AZA",
+    "CallLetters": "KYDF",
+    "Code": 6719,
+    "LegacyCallLetters": "KYDF",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Corpus Christi"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WIIQ 41.1",
+    "Code": 6720,
+    "LegacyCallLetters": "WIIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
+  },
+  {
     "Affiliation": "PBS",
     "CallLetters": "WKGB-TV 53.1",
     "Code": 6722,
     "LegacyCallLetters": "WKGB",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Bowling Green"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKMA-TV 35.1",
+    "Code": 6723,
+    "LegacyCallLetters": "WKMA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Evansville"
   },
   {
     "Affiliation": "PBS",
@@ -12574,6 +13214,14 @@
     "LegacyCallLetters": "WKMU",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Paducah-Cape Girard-Harsbg"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKPI-TV 22.1",
+    "Code": 6727,
+    "LegacyCallLetters": "WKPI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Charleston-Huntington"
   },
   {
     "Affiliation": "PBS",
@@ -12644,6 +13292,14 @@
     "CallLetters": "WPBS-DT 16.1",
     "Code": 6738,
     "LegacyCallLetters": "WPBS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Watertown"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WNPI-DT 18.1",
+    "Code": 6739,
+    "LegacyCallLetters": "WNPI",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Watertown"
   },
@@ -12862,6 +13518,14 @@
     "LegacyCallLetters": "KOZK",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Springfield, MO"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMEA-TV 26.1",
+    "Code": 6778,
+    "LegacyCallLetters": "WMEA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Portland-Auburn"
   },
   {
     "Affiliation": "PBS",
@@ -13094,6 +13758,14 @@
     "LegacyCallLetters": "KOCB",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Oklahoma City"
+  },
+  {
+    "Affiliation": "I-S",
+    "CallLetters": "XHMEX-TD 5.1",
+    "Code": 6822,
+    "LegacyCallLetters": "XHMX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Yuma-El Centro"
   },
   {
     "Affiliation": "UMA",
@@ -13384,6 +14056,14 @@
     "OriginMarket": "Philadelphia"
   },
   {
+    "Affiliation": "I-S",
+    "CallLetters": "XHBM-TD 2.1",
+    "Code": 6869,
+    "LegacyCallLetters": "XHBM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Yuma-El Centro"
+  },
+  {
     "Affiliation": "CW",
     "CallLetters": "WUPA 69.1",
     "Code": 6870,
@@ -13528,7 +14208,7 @@
     "OriginMarket": "Macon"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "CW",
     "CallLetters": "WPWR-TV 50.1",
     "Code": 6892,
     "LegacyCallLetters": "WPWR",
@@ -13552,6 +14232,14 @@
     "OriginMarket": "Columbus, GA (Opelika, AL)"
   },
   {
+    "Affiliation": "ION",
+    "CallLetters": "WKOI-TV 43.1",
+    "Code": 6896,
+    "LegacyCallLetters": "WKOI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Indianapolis"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WTLW 44.1",
     "Code": 6897,
@@ -13569,7 +14257,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "WOTF-DT 43.1",
+    "CallLetters": "WOTF-DT 26.1",
     "Code": 6899,
     "LegacyCallLetters": "WOTF",
     "ManifestMaxEndDate": null,
@@ -13608,7 +14296,7 @@
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "MET",
     "CallLetters": "KNLC 24.1",
     "Code": 6906,
     "LegacyCallLetters": "KNLC",
@@ -13793,11 +14481,19 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "WBKI-TV 34.1",
+    "CallLetters": "WBKI-TV 58.1",
     "Code": 6939,
     "LegacyCallLetters": "WBKI",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Louisville"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WINM 12.1",
+    "Code": 6940,
+    "LegacyCallLetters": "WINM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ft. Wayne"
   },
   {
     "Affiliation": "FOX",
@@ -13865,9 +14561,9 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "WBIN-TV 50.1",
+    "CallLetters": "WWJE-TV 50.1",
     "Code": 6967,
-    "LegacyCallLetters": "WBIN",
+    "LegacyCallLetters": "WWJE",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Boston (Manchester)"
   },
@@ -14049,7 +14745,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "KYES-TV 5.4",
+    "CallLetters": "KYES-TV 5.1",
     "Code": 7000,
     "LegacyCallLetters": "KYES",
     "ManifestMaxEndDate": null,
@@ -14145,7 +14841,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "KCEC 50.1",
+    "CallLetters": "KCEC 14.1",
     "Code": 7019,
     "LegacyCallLetters": "KCEC",
     "ManifestMaxEndDate": null,
@@ -14185,6 +14881,14 @@
   },
   {
     "Affiliation": "AZA",
+    "CallLetters": "KJLA 57.1",
+    "Code": 7027,
+    "LegacyCallLetters": "KJLA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Los Angeles"
+  },
+  {
+    "Affiliation": "AZA",
     "CallLetters": "KAZD 55.1",
     "Code": 7028,
     "LegacyCallLetters": "KAZD",
@@ -14217,22 +14921,22 @@
   },
   {
     "Affiliation": "NBC",
-    "CallLetters": "KBGF-LD 50.1",
+    "CallLetters": "KTGF-LD 50.1",
     "Code": 7069,
-    "LegacyCallLetters": "KBGF",
+    "LegacyCallLetters": "KTGF",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Great Falls"
   },
   {
     "Affiliation": "CBS",
-    "CallLetters": "K13XD-D 13.1",
+    "CallLetters": "KXDF-CD 13.1",
     "Code": 7072,
-    "LegacyCallLetters": "KXD",
+    "LegacyCallLetters": "KXDF",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Fairbanks"
   },
   {
-    "Affiliation": "CBS",
+    "Affiliation": "IND",
     "CallLetters": "WILM-LD 10.1",
     "Code": 7074,
     "LegacyCallLetters": "WILM",
@@ -14256,8 +14960,8 @@
     "OriginMarket": "South Bend-Elkhart"
   },
   {
-    "Affiliation": "IND",
-    "CallLetters": "KCSG 14.1",
+    "Affiliation": "HI",
+    "CallLetters": "KCSG 8.1",
     "Code": 7098,
     "LegacyCallLetters": "KCSG",
     "ManifestMaxEndDate": null,
@@ -14273,7 +14977,7 @@
   },
   {
     "Affiliation": "UNI",
-    "CallLetters": "WVEA-TV 62.1",
+    "CallLetters": "WVEA-TV 50.1",
     "Code": 7108,
     "LegacyCallLetters": "WVEA",
     "ManifestMaxEndDate": null,
@@ -14392,10 +15096,10 @@
     "OriginMarket": "Twin Falls"
   },
   {
-    "Affiliation": "CW",
-    "CallLetters": "WGSA 35.1",
+    "Affiliation": "HI",
+    "CallLetters": "WSCG 34.1",
     "Code": 7127,
-    "LegacyCallLetters": "WGSA",
+    "LegacyCallLetters": "WSCG",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Savannah"
   },
@@ -14440,6 +15144,14 @@
     "OriginMarket": "Tucson (Sierra Vista)"
   },
   {
+    "Affiliation": "UNI",
+    "CallLetters": "KXUN-LD 43.1",
+    "Code": 7141,
+    "LegacyCallLetters": "KXUN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
+  },
+  {
     "Affiliation": "UMA",
     "CallLetters": "WFPA-CD 28.1",
     "Code": 7143,
@@ -14473,7 +15185,7 @@
   },
   {
     "Affiliation": "TEL",
-    "CallLetters": "WRDM-CD 50.1",
+    "CallLetters": "WRDM-CD 19.1",
     "Code": 7159,
     "LegacyCallLetters": "WRDM",
     "ManifestMaxEndDate": null,
@@ -14553,7 +15265,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KCRP-CD 28.2",
+    "CallLetters": "KCRP-CD 41.1",
     "Code": 7189,
     "LegacyCallLetters": "KCRP",
     "ManifestMaxEndDate": null,
@@ -14632,7 +15344,7 @@
     "OriginMarket": "Miami-Ft. Lauderdale"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "WGWG 4.1",
     "Code": 7250,
     "LegacyCallLetters": "WGWG",
@@ -14665,7 +15377,7 @@
   },
   {
     "Affiliation": "I-S",
-    "CallLetters": "XHJUB-TD56.1",
+    "CallLetters": "XHJUB-TD5.1",
     "Code": 7259,
     "LegacyCallLetters": "XHJU",
     "ManifestMaxEndDate": null,
@@ -14736,6 +15448,14 @@
     "OriginMarket": "Tucson (Sierra Vista)"
   },
   {
+    "Affiliation": "UNI",
+    "CallLetters": "KUTH-DT 32.1",
+    "Code": 7277,
+    "LegacyCallLetters": "KUTH",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Salt Lake City"
+  },
+  {
     "Affiliation": "ETV",
     "CallLetters": "KMPX 29.1",
     "Code": 7283,
@@ -14753,7 +15473,7 @@
   },
   {
     "Affiliation": "TEL",
-    "CallLetters": "WRIW-CD 50.1",
+    "CallLetters": "WRIW-CD 51.1",
     "Code": 7285,
     "LegacyCallLetters": "WRIW",
     "ManifestMaxEndDate": null,
@@ -14816,7 +15536,7 @@
     "OriginMarket": "Knoxville"
   },
   {
-    "Affiliation": "MMX",
+    "Affiliation": "ETV",
     "CallLetters": "KCBT-LD 34.1",
     "Code": 7303,
     "LegacyCallLetters": "KCBT",
@@ -15080,6 +15800,14 @@
     "OriginMarket": "Buffalo"
   },
   {
+    "Affiliation": "AZA",
+    "CallLetters": "KMCE",
+    "Code": 7409,
+    "LegacyCallLetters": "KMCE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Monterey-Salinas"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "KHBB-LD 21.1",
     "Code": 7415,
@@ -15169,7 +15897,7 @@
   },
   {
     "Affiliation": "MET",
-    "CallLetters": "KWYF-LD 27.2",
+    "CallLetters": "KWYF-LD 20.2",
     "Code": 7482,
     "LegacyCallLetters": "KWYF",
     "ManifestMaxEndDate": null,
@@ -15190,6 +15918,14 @@
     "LegacyCallLetters": "WBXX",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Knoxville"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WXVO-LD 7.1",
+    "Code": 7490,
+    "LegacyCallLetters": "WXVO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Biloxi-Gulfport"
   },
   {
     "Affiliation": "IND",
@@ -15264,7 +16000,15 @@
     "OriginMarket": "Las Vegas"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "HI",
+    "CallLetters": "WYCI 40.1",
+    "Code": 7521,
+    "LegacyCallLetters": "WYCI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Burlington-Plattsburgh"
+  },
+  {
+    "Affiliation": "UMA",
     "CallLetters": "KRNS-CD 46.1",
     "Code": 7527,
     "LegacyCallLetters": "KRNS",
@@ -15313,7 +16057,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KFXO-LD 39.1",
+    "CallLetters": "KFXO-CD 39.1",
     "Code": 7560,
     "LegacyCallLetters": "KFXO",
     "ManifestMaxEndDate": null,
@@ -15328,12 +16072,20 @@
     "OriginMarket": "Cincinnati"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "LAF",
     "CallLetters": "WFTV-TV 9.2",
     "Code": 7563,
     "LegacyCallLetters": "EFTV",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
+  },
+  {
+    "Affiliation": "MET",
+    "CallLetters": "WYFF 4.2",
+    "Code": 7575,
+    "LegacyCallLetters": "EYFF",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Greenvll-Spart-Ashevll-And"
   },
   {
     "Affiliation": "NBC",
@@ -15400,6 +16152,14 @@
     "OriginMarket": "Fresno-Visalia"
   },
   {
+    "Affiliation": "I-S",
+    "CallLetters": "XHNAT-TD 6.1",
+    "Code": 7626,
+    "LegacyCallLetters": "XHNT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Laredo"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "KFOR-TV 4.2",
     "Code": 7629,
@@ -15456,12 +16216,20 @@
     "OriginMarket": "Hartford & New Haven"
   },
   {
-    "Affiliation": "MMX",
+    "Affiliation": "ETV",
     "CallLetters": "WGEN-TV 8.1",
     "Code": 7672,
     "LegacyCallLetters": "WGEN",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Miami-Ft. Lauderdale"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KAIL 7.4",
+    "Code": 7674,
+    "LegacyCallLetters": "NAIL",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fresno-Visalia"
   },
   {
     "Affiliation": "ABC",
@@ -15480,7 +16248,7 @@
     "OriginMarket": "Jonesboro"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "HI",
     "CallLetters": "KRET-CD 45.1",
     "Code": 7685,
     "LegacyCallLetters": "KRET",
@@ -15504,7 +16272,7 @@
     "OriginMarket": "Providence-New Bedford"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "FOX",
     "CallLetters": "WSBT-TV 22.2",
     "Code": 7693,
     "LegacyCallLetters": "ESBT",
@@ -15592,6 +16360,14 @@
     "OriginMarket": "Charleston-Huntington"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WETK 33.4",
+    "Code": 7878,
+    "LegacyCallLetters": "HETK",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Burlington-Plattsburgh"
+  },
+  {
     "Affiliation": "ION",
     "CallLetters": "KFPX-TV 39.1",
     "Code": 7881,
@@ -15608,6 +16384,14 @@
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WMAB-TV 2.3",
+    "Code": 7957,
+    "LegacyCallLetters": "GMAB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Columbus-Tupelo-W Pnt-Hstn"
+  },
+  {
     "Affiliation": "ABC",
     "CallLetters": "KTMF-LD 23.1",
     "Code": 7977,
@@ -15622,6 +16406,22 @@
     "LegacyCallLetters": "OGMC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Fresno-Visalia"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMPN-TV 29.3",
+    "Code": 8043,
+    "LegacyCallLetters": "GMPN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jackson, MS"
+  },
+  {
+    "Affiliation": "MET",
+    "CallLetters": "KFFV 44.1",
+    "Code": 8114,
+    "LegacyCallLetters": "KFFV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Seattle-Tacoma"
   },
   {
     "Affiliation": "CW",
@@ -15648,7 +16448,7 @@
     "OriginMarket": "Toledo"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "IND",
     "CallLetters": "KVME-TV 20.1",
     "Code": 8135,
     "LegacyCallLetters": "KVME",
@@ -15705,6 +16505,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WMPN-TV 29.2",
+    "Code": 8220,
+    "LegacyCallLetters": "DMPN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jackson, MS"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "KCTS-TV 9.3",
     "Code": 8235,
     "LegacyCallLetters": "OCTS",
@@ -15713,7 +16521,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KTFQ-DT 14.1",
+    "CallLetters": "KTFQ-DT 41.1",
     "Code": 8262,
     "LegacyCallLetters": "KTFQ",
     "ManifestMaxEndDate": null,
@@ -15776,12 +16584,20 @@
     "OriginMarket": "Austin"
   },
   {
-    "Affiliation": "CW",
-    "CallLetters": "WBUW 57.1",
+    "Affiliation": "IND",
+    "CallLetters": "WIFS 57.1",
     "Code": 8312,
-    "LegacyCallLetters": "WBUW",
+    "LegacyCallLetters": "WIFS",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Madison"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WBIH 29.1",
+    "Code": 8317,
+    "LegacyCallLetters": "WBIH",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
   },
   {
     "Affiliation": "ION",
@@ -15801,7 +16617,7 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "XDTV-TD 49.2",
+    "CallLetters": "XDTV-TD 49.1",
     "Code": 8327,
     "LegacyCallLetters": "XDTV",
     "ManifestMaxEndDate": null,
@@ -15824,7 +16640,7 @@
     "OriginMarket": "Portland-Auburn"
   },
   {
-    "Affiliation": "CW",
+    "Affiliation": "IND",
     "CallLetters": "KWKB 20.1",
     "Code": 8349,
     "LegacyCallLetters": "KWKB",
@@ -15864,7 +16680,7 @@
     "OriginMarket": "South Bend-Elkhart"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "WTSN-CD 20.1",
     "Code": 8364,
     "LegacyCallLetters": "WTSN",
@@ -15921,7 +16737,7 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "WZAW-LD 55.1",
+    "CallLetters": "WZAW-LD 33.1",
     "Code": 8387,
     "LegacyCallLetters": "WZAW",
     "ManifestMaxEndDate": null,
@@ -15952,12 +16768,20 @@
     "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "MET",
     "CallLetters": "KPRC-TV 2.2",
     "Code": 8416,
     "LegacyCallLetters": "NPRC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Houston"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WCBB 10.2",
+    "Code": 8447,
+    "LegacyCallLetters": "ECBB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Portland-Auburn"
   },
   {
     "Affiliation": "MET",
@@ -16065,11 +16889,19 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "WHNT-TV 19.2",
+    "CallLetters": "WHNT-TV 19.3",
     "Code": 8577,
     "LegacyCallLetters": "EHNT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Huntsville-Decatur (Flor)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KUAT-TV 6.3",
+    "Code": 8586,
+    "LegacyCallLetters": "QUAT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Tucson (Sierra Vista)"
   },
   {
     "Affiliation": "PBS",
@@ -16078,6 +16910,14 @@
     "LegacyCallLetters": "OUAT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Tucson (Sierra Vista)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WGTE-TV 30.2",
+    "Code": 8605,
+    "LegacyCallLetters": "EGTE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Toledo"
   },
   {
     "Affiliation": "IND",
@@ -16120,6 +16960,14 @@
     "OriginMarket": "Binghamton"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KUED 7.3",
+    "Code": 8753,
+    "LegacyCallLetters": "OUED",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Salt Lake City"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "KMTW 36.1",
     "Code": 8776,
@@ -16153,7 +17001,7 @@
   },
   {
     "Affiliation": "TEL",
-    "CallLetters": "WZDC-CD 25.1",
+    "CallLetters": "WZDC-CD 44.1",
     "Code": 8837,
     "LegacyCallLetters": "WZDC",
     "ManifestMaxEndDate": null,
@@ -16185,9 +17033,9 @@
   },
   {
     "Affiliation": "IND",
-    "CallLetters": "KLPN-LD 47.1",
+    "CallLetters": "KTPN-LD 48.1",
     "Code": 8859,
-    "LegacyCallLetters": "KLPN",
+    "LegacyCallLetters": "KTPN",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Tyler-Longview(Lfkn&Ncgd)"
   },
@@ -16257,7 +17105,7 @@
   },
   {
     "Affiliation": "I-S",
-    "CallLetters": "XHJCI-TD 2.1",
+    "CallLetters": "XHJCI-TD 32.",
     "Code": 8880,
     "LegacyCallLetters": "XHJC",
     "ManifestMaxEndDate": null,
@@ -16368,6 +17216,22 @@
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WPBT 2.2",
+    "Code": 8930,
+    "LegacyCallLetters": "GPBT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Miami-Ft. Lauderdale"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KVIE 6.3",
+    "Code": 8931,
+    "LegacyCallLetters": "OVIE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Sacramnto-Stkton-Modesto"
+  },
+  {
     "Affiliation": "MET",
     "CallLetters": "KMBC-TV 9.2",
     "Code": 8935,
@@ -16385,6 +17249,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WMAW-TV 14.2",
+    "Code": 8961,
+    "LegacyCallLetters": "EMAW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Meridian"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WMAO-TV 23.2",
     "Code": 8962,
     "LegacyCallLetters": "EMAO",
@@ -16393,7 +17265,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "KVTV 13.2",
+    "CallLetters": "KYLX-LD 13.2",
     "Code": 8974,
     "LegacyCallLetters": "NYLX",
     "ManifestMaxEndDate": null,
@@ -16417,9 +17289,25 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "KLRU 18.4",
+    "Code": 8985,
+    "LegacyCallLetters": "QLRU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Austin"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "KLRU 18.3",
     "Code": 8986,
     "LegacyCallLetters": "OLRU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Austin"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KLRU 18.2",
+    "Code": 8987,
+    "LegacyCallLetters": "NLRU",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Austin"
   },
@@ -16430,6 +17318,30 @@
     "LegacyCallLetters": "WSHM",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Springfield-Holyoke"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WVPT 51.3",
+    "Code": 9013,
+    "LegacyCallLetters": "GVPT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Harrisonburg"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WBGU-TV 27.3",
+    "Code": 9023,
+    "LegacyCallLetters": "GBGU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lima"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WBGU-TV 27.2",
+    "Code": 9024,
+    "LegacyCallLetters": "EBGU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lima"
   },
   {
     "Affiliation": "AZA",
@@ -16544,6 +17456,14 @@
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
+    "Affiliation": "BOU",
+    "CallLetters": "KUMY-LD 22.1",
+    "Code": 9196,
+    "LegacyCallLetters": "KUMY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Beaumont-Port Arthur"
+  },
+  {
     "Affiliation": "FOX",
     "CallLetters": "KSVT-LD 14.1",
     "Code": 9208,
@@ -16592,7 +17512,7 @@
     "OriginMarket": "Philadelphia"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "COZ",
     "CallLetters": "WRAL-TV 5.2",
     "Code": 9242,
     "LegacyCallLetters": "ERAL",
@@ -16606,6 +17526,14 @@
     "LegacyCallLetters": "ERDQ",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KUSD-TV 2.3",
+    "Code": 9252,
+    "LegacyCallLetters": "OUSD",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Sioux Falls(Mitchell)"
   },
   {
     "Affiliation": "FOX",
@@ -16744,7 +17672,7 @@
     "OriginMarket": "Rochestr-Mason City-Austin"
   },
   {
-    "Affiliation": "AZA",
+    "Affiliation": "MET",
     "CallLetters": "KAZA-TV 54.1",
     "Code": 9350,
     "LegacyCallLetters": "KAZA",
@@ -16816,6 +17744,14 @@
     "OriginMarket": "Bend, OR"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KUED 7.2",
+    "Code": 9406,
+    "LegacyCallLetters": "MUED",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Salt Lake City"
+  },
+  {
     "Affiliation": "FOX",
     "CallLetters": "KOCW 17.1",
     "Code": 9413,
@@ -16841,6 +17777,14 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WVPT 51.4",
+    "Code": 9428,
+    "LegacyCallLetters": "EVPT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Harrisonburg"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WKLE 46.2",
     "Code": 9439,
     "LegacyCallLetters": "EKLE",
@@ -16857,7 +17801,7 @@
   },
   {
     "Affiliation": "CW",
-    "CallLetters": "WSTQ-LP",
+    "CallLetters": "WSTQ-LP 14.1",
     "Code": 9449,
     "LegacyCallLetters": "WSTQ",
     "ManifestMaxEndDate": null,
@@ -16929,7 +17873,7 @@
   },
   {
     "Affiliation": "UMA",
-    "CallLetters": "KTSB-CD 35.2",
+    "CallLetters": "KTSB-CD 35.1",
     "Code": 9484,
     "LegacyCallLetters": "KTSB",
     "ManifestMaxEndDate": null,
@@ -16960,6 +17904,14 @@
     "OriginMarket": "Palm Springs"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WUNC-TV 4.2",
+    "Code": 9491,
+    "LegacyCallLetters": "GUNC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Raleigh-Durham (Fayetvlle)"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WQAD-TV 8.2",
     "Code": 9494,
@@ -16968,7 +17920,7 @@
     "OriginMarket": "Davenport-R.Island-Moline"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WTXL-TV 27.2",
     "Code": 9537,
     "LegacyCallLetters": "GTXL",
@@ -17033,6 +17985,14 @@
   },
   {
     "Affiliation": "MET",
+    "CallLetters": "WBND-LD 57.2",
+    "Code": 9635,
+    "LegacyCallLetters": "DBND",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "South Bend-Elkhart"
+  },
+  {
+    "Affiliation": "MET",
     "CallLetters": "WCVB-TV 5.2",
     "Code": 9646,
     "LegacyCallLetters": "ECVB",
@@ -17056,7 +18016,7 @@
     "OriginMarket": "Bangor"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WBTV 3.2",
     "Code": 9730,
     "LegacyCallLetters": "GBTV",
@@ -17096,7 +18056,7 @@
     "OriginMarket": "Eugene"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WMAR-TV 2.3",
     "Code": 9740,
     "LegacyCallLetters": "EMAR",
@@ -17104,7 +18064,7 @@
     "OriginMarket": "Baltimore"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "BOU",
     "CallLetters": "WXYZ-TV 7.2",
     "Code": 9742,
     "LegacyCallLetters": "EXYZ",
@@ -17113,9 +18073,9 @@
   },
   {
     "Affiliation": "FOX",
-    "CallLetters": "KUQI 38.1",
+    "CallLetters": "KSCC 38.1",
     "Code": 9754,
-    "LegacyCallLetters": "KUQI",
+    "LegacyCallLetters": "KSCC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Corpus Christi"
   },
@@ -17201,6 +18161,30 @@
   },
   {
     "Affiliation": "IND",
+    "CallLetters": "KHQ-TV 6.2",
+    "Code": 9815,
+    "LegacyCallLetters": "NHQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Spokane"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WGBY-TV 57.4",
+    "Code": 9818,
+    "LegacyCallLetters": "HGBY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Springfield-Holyoke"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WGBY-TV 57.3",
+    "Code": 9819,
+    "LegacyCallLetters": "GGBY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Springfield-Holyoke"
+  },
+  {
+    "Affiliation": "IND",
     "CallLetters": "WSYX 6.2",
     "Code": 9820,
     "LegacyCallLetters": "ESYX",
@@ -17208,7 +18192,7 @@
     "OriginMarket": "Columbus, OH"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "KBJR-TV 6.3",
     "Code": 9827,
     "LegacyCallLetters": "OBJR",
@@ -17248,7 +18232,7 @@
     "OriginMarket": "Salisbury"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "CW",
     "CallLetters": "WNAC-TV 64.2",
     "Code": 9841,
     "LegacyCallLetters": "ENAC",
@@ -17305,11 +18289,27 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WGBY-TV 57.2",
+    "Code": 9893,
+    "LegacyCallLetters": "EGBY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Springfield-Holyoke"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WMAH-TV 19.2",
     "Code": 9900,
     "LegacyCallLetters": "DMAH",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Biloxi-Gulfport"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMAB-TV 2.2",
+    "Code": 9902,
+    "LegacyCallLetters": "DMAB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Columbus-Tupelo-W Pnt-Hstn"
   },
   {
     "Affiliation": "MET",
@@ -17336,6 +18336,22 @@
     "OriginMarket": "Dayton"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KUON-TV 12.2",
+    "Code": 9914,
+    "LegacyCallLetters": "NUON",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lincoln & Hastings-Krny"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KUON-TV 12.3",
+    "Code": 9915,
+    "LegacyCallLetters": "OUON",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lincoln & Hastings-Krny"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WTVO-DT 17.2",
     "Code": 9926,
@@ -17350,6 +18366,14 @@
     "LegacyCallLetters": "NOSA",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Odessa-Midland"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KPTS 8.2",
+    "Code": 9966,
+    "LegacyCallLetters": "NPTS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wichita-Hutchinson Plus"
   },
   {
     "Affiliation": "PBS",
@@ -17372,6 +18396,14 @@
     "CallLetters": "WCNY-TV 24.2",
     "Code": 9970,
     "LegacyCallLetters": "ECNY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Syracuse"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WCNY-TV 24.3",
+    "Code": 9971,
+    "LegacyCallLetters": "GCNY",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Syracuse"
   },
@@ -17416,6 +18448,14 @@
     "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WVUT 22.3",
+    "Code": 10018,
+    "LegacyCallLetters": "GVUT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Terre Haute"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WQAD-TV 8.3",
     "Code": 10022,
@@ -17438,6 +18478,14 @@
     "LegacyCallLetters": "OTIV",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Sioux City"
+  },
+  {
+    "Affiliation": "HI",
+    "CallLetters": "WMLW-TV 49.3",
+    "Code": 10047,
+    "LegacyCallLetters": "GMLW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Milwaukee"
   },
   {
     "Affiliation": "CW",
@@ -17566,6 +18614,14 @@
     "LegacyCallLetters": "QOED",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Tulsa"
+  },
+  {
+    "Affiliation": "TEL",
+    "CallLetters": "KSNW 3.2",
+    "Code": 10155,
+    "LegacyCallLetters": "NSNW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wichita-Hutchinson Plus"
   },
   {
     "Affiliation": "TEL",
@@ -17721,9 +18777,9 @@
   },
   {
     "Affiliation": "MET",
-    "CallLetters": "KJCX-LD 7.1",
+    "CallLetters": "KJJC-LD  7.1",
     "Code": 10376,
-    "LegacyCallLetters": "KJCX",
+    "LegacyCallLetters": "KJJ",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Helena"
   },
@@ -17736,12 +18792,20 @@
     "OriginMarket": "Grand Junction-Montrose"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "KCCI 8.3",
     "Code": 10384,
     "LegacyCallLetters": "MCCI",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Des Moines-Ames"
+  },
+  {
+    "Affiliation": "BOU",
+    "CallLetters": "WUVP-DT 65.2",
+    "Code": 10389,
+    "LegacyCallLetters": "EUVP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Philadelphia"
   },
   {
     "Affiliation": "I-S",
@@ -17792,7 +18856,7 @@
     "OriginMarket": "Sioux City"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "HI",
     "CallLetters": "KTTC 10.3",
     "Code": 10419,
     "LegacyCallLetters": "OTTC",
@@ -17864,12 +18928,36 @@
     "OriginMarket": "Springfield-Holyoke"
   },
   {
+    "Affiliation": "BOU",
+    "CallLetters": "KUVN-DT 23.2",
+    "Code": 10483,
+    "LegacyCallLetters": "NUVN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Dallas-Ft. Worth"
+  },
+  {
     "Affiliation": "ION",
     "CallLetters": "WKRG-TV 5.2",
     "Code": 10485,
     "LegacyCallLetters": "GKRG",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Mobile-Pensacola (Ft Walt)"
+  },
+  {
+    "Affiliation": "NBC",
+    "CallLetters": "KYOU-TV 15.2",
+    "Code": 10493,
+    "LegacyCallLetters": "OYOU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ottumwa-Kirksville"
+  },
+  {
+    "Affiliation": "BOU",
+    "CallLetters": "WFDC-DT 14.4",
+    "Code": 10563,
+    "LegacyCallLetters": "GFDC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Washington, DC (Hagrstwn)"
   },
   {
     "Affiliation": "ETV",
@@ -17934,6 +19022,22 @@
     "LegacyCallLetters": "NGBT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Harlingen-Wslco-Brnsvl-Mca"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WVTV 24.1",
+    "Code": 10801,
+    "LegacyCallLetters": "EVTV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Milwaukee"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WIPL 35.1",
+    "Code": 10903,
+    "LegacyCallLetters": "WIPL",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Portland-Auburn"
   },
   {
     "Affiliation": "IND",
@@ -18025,7 +19129,7 @@
   },
   {
     "Affiliation": "ION",
-    "CallLetters": "WANE-TV 15.3",
+    "CallLetters": "WANE-TV 15.2",
     "Code": 11023,
     "LegacyCallLetters": "GANE",
     "ManifestMaxEndDate": null,
@@ -18065,7 +19169,7 @@
   },
   {
     "Affiliation": "ION",
-    "CallLetters": "WTHI-TV 10.3",
+    "CallLetters": "WTHI-TV 10.4",
     "Code": 11047,
     "LegacyCallLetters": "GTHI",
     "ManifestMaxEndDate": null,
@@ -18078,6 +19182,14 @@
     "LegacyCallLetters": "NELO",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Sioux Falls(Mitchell)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KCLO-TV 15.3",
+    "Code": 11050,
+    "LegacyCallLetters": "NCLO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Rapid City"
   },
   {
     "Affiliation": "IND",
@@ -18184,6 +19296,14 @@
     "OriginMarket": "Columbus, OH"
   },
   {
+    "Affiliation": "CW",
+    "CallLetters": "WLFI-TV 18.2",
+    "Code": 11134,
+    "LegacyCallLetters": "GLFI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lafayette, IN"
+  },
+  {
     "Affiliation": "IND",
     "CallLetters": "WFLI-TV 53.2",
     "Code": 11144,
@@ -18240,7 +19360,7 @@
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
-    "Affiliation": "MET",
+    "Affiliation": "ION",
     "CallLetters": "KVUI 31.1",
     "Code": 11171,
     "LegacyCallLetters": "KVUI",
@@ -18273,7 +19393,7 @@
   },
   {
     "Affiliation": "MET",
-    "CallLetters": "KHME 23.1",
+    "CallLetters": "KHME+",
     "Code": 11184,
     "LegacyCallLetters": "KHME",
     "ManifestMaxEndDate": null,
@@ -18286,6 +19406,14 @@
     "LegacyCallLetters": "NHME",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Rapid City"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WDAY-TV 6.4",
+    "Code": 11197,
+    "LegacyCallLetters": "HDAY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fargo-Valley City"
   },
   {
     "Affiliation": "ETV",
@@ -18304,6 +19432,30 @@
     "OriginMarket": "Raleigh-Durham (Fayetvlle)"
   },
   {
+    "Affiliation": "HI",
+    "CallLetters": "KJWP 2.4",
+    "Code": 11307,
+    "LegacyCallLetters": "OJWP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Philadelphia"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WLBZ 2.3",
+    "Code": 11308,
+    "LegacyCallLetters": "GLBZ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bangor"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "KOAT-TV 7.3",
+    "Code": 11351,
+    "LegacyCallLetters": "OOAT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Albuquerque-Santa Fe"
+  },
+  {
     "Affiliation": "PBS",
     "CallLetters": "KMOS-TV 6.4",
     "Code": 11352,
@@ -18312,7 +19464,7 @@
     "OriginMarket": "Columbia-Jefferson City"
   },
   {
-    "Affiliation": "CBS",
+    "Affiliation": "CW",
     "CallLetters": "KXMA-TV 2.1",
     "Code": 11371,
     "LegacyCallLetters": "KXMA",
@@ -18320,7 +19472,7 @@
     "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
   },
   {
-    "Affiliation": "IND",
+    "Affiliation": "CBS",
     "CallLetters": "KBJR-TV 6.2",
     "Code": 11381,
     "LegacyCallLetters": "NBJR",
@@ -18350,6 +19502,14 @@
     "LegacyCallLetters": "GEEK",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Peoria-Bloomington"
+  },
+  {
+    "Affiliation": "HI",
+    "CallLetters": "KNDB 26.1",
+    "Code": 11405,
+    "LegacyCallLetters": "KNDB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
   },
   {
     "Affiliation": "CW",
@@ -18432,6 +19592,14 @@
     "OriginMarket": "Boston (Manchester)"
   },
   {
+    "Affiliation": "MET",
+    "CallLetters": "KHBS 40.3",
+    "Code": 11710,
+    "LegacyCallLetters": "OHBS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
+  },
+  {
     "Affiliation": "NBC",
     "CallLetters": "WVNC-LD 45.1",
     "Code": 11718,
@@ -18473,6 +19641,22 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WHRM-TV 20.4",
+    "Code": 11731,
+    "LegacyCallLetters": "EHRM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wausau-Rhinelander"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WLEF-TV 36.4",
+    "Code": 11732,
+    "LegacyCallLetters": "ELEF",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wausau-Rhinelander"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "KPBS 15.4",
     "Code": 11734,
     "LegacyCallLetters": "QPBS",
@@ -18504,6 +19688,14 @@
     "OriginMarket": "Detroit"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "KAFT 13.4",
+    "Code": 11750,
+    "LegacyCallLetters": "QAFT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ft. Smith-Fay-Sprngdl-Rgrs"
+  },
+  {
     "Affiliation": "ETV",
     "CallLetters": "KHSC-LP 16.5",
     "Code": 11751,
@@ -18520,12 +19712,28 @@
     "OriginMarket": "Fresno-Visalia"
   },
   {
-    "Affiliation": "MMX",
-    "CallLetters": "KGMC 43.1",
+    "Affiliation": "ETV",
+    "CallLetters": "KGMC+",
     "Code": 11756,
     "LegacyCallLetters": "KGMC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Fresno-Visalia"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WTCI 45.3",
+    "Code": 11764,
+    "LegacyCallLetters": "GTCI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chattanooga"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKLE 46.4",
+    "Code": 11770,
+    "LegacyCallLetters": "HKLE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lexington"
   },
   {
     "Affiliation": "PBS",
@@ -18536,12 +19744,60 @@
     "OriginMarket": "Memphis"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WKSO-TV 29.4",
+    "Code": 11772,
+    "LegacyCallLetters": "HKSO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lexington"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKMR 38.4",
+    "Code": 11773,
+    "LegacyCallLetters": "HKMR",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lexington"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WFSG 56.4",
+    "Code": 11775,
+    "LegacyCallLetters": "GFSG",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Panama City"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKAR-TV 23.4",
+    "Code": 11776,
+    "LegacyCallLetters": "EKAR",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lansing"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKOH 31.4",
+    "Code": 11777,
+    "LegacyCallLetters": "HKOH",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Evansville"
+  },
+  {
     "Affiliation": "NBC",
-    "CallLetters": "KNOP-TV 2.1",
+    "CallLetters": "KNOP +",
     "Code": 11781,
     "LegacyCallLetters": "KNOP",
     "ManifestMaxEndDate": null,
     "OriginMarket": "North Platte"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WKHA 35.4",
+    "Code": 11782,
+    "LegacyCallLetters": "HKHA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lexington"
   },
   {
     "Affiliation": "PBS",
@@ -18601,31 +19857,31 @@
   },
   {
     "Affiliation": "AZA",
-    "CallLetters": "KMSG-LD 43.2",
+    "CallLetters": "KMSG+",
     "Code": 11801,
     "LegacyCallLetters": "KMSG",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Fresno-Visalia"
   },
   {
-    "Affiliation": "FOX",
-    "CallLetters": "KASA-TV 2.1",
+    "Affiliation": "TEL",
+    "CallLetters": "KASA+",
     "Code": 11802,
     "LegacyCallLetters": "KASA",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
-    "Affiliation": "IND",
-    "CallLetters": "KUPT 29.1",
+    "Affiliation": "HI",
+    "CallLetters": "KUPT+",
     "Code": 11803,
     "LegacyCallLetters": "KUPT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
-    "Affiliation": "MET",
-    "CallLetters": "KRTN-TV 33.1",
+    "Affiliation": "IND",
+    "CallLetters": "KRTN+",
     "Code": 11804,
     "LegacyCallLetters": "KRTN",
     "ManifestMaxEndDate": null,
@@ -18648,12 +19904,20 @@
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
-    "Affiliation": "TEL",
-    "CallLetters": "KTEL-TV 25.1",
+    "Affiliation": "MET",
+    "CallLetters": "KTEL+",
     "Code": 11808,
     "LegacyCallLetters": "KTEL",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Albuquerque-Santa Fe"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WJZY 46.6",
+    "Code": 11810,
+    "LegacyCallLetters": "HJZY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Charlotte"
   },
   {
     "Affiliation": "PBS",
@@ -18680,8 +19944,24 @@
     "OriginMarket": "Traverse City-Cadillac"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WFIQ 36.4",
+    "Code": 11819,
+    "LegacyCallLetters": "HFIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Huntsville-Decatur (Flor)"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WDIQ 2.4",
+    "Code": 11824,
+    "LegacyCallLetters": "HDIQ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
+  },
+  {
     "Affiliation": "ABC",
-    "CallLetters": "KSPR 33.1",
+    "CallLetters": "KSPR-LD 33.1",
     "Code": 11836,
     "LegacyCallLetters": "KSPR",
     "ManifestMaxEndDate": null,
@@ -18705,6 +19985,38 @@
   },
   {
     "Affiliation": "ION",
+    "CallLetters": "WCAX-TV 3.3",
+    "Code": 11854,
+    "LegacyCallLetters": "GCAX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Burlington-Plattsburgh"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WPSU-TV 3.4",
+    "Code": 11855,
+    "LegacyCallLetters": "HPSU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Johnstown-Altoona-St Colge"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMEM-TV 10.4",
+    "Code": 11857,
+    "LegacyCallLetters": "GMEM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Presque Isle"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMED-TV 13.4",
+    "Code": 11859,
+    "LegacyCallLetters": "GMED",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bangor"
+  },
+  {
+    "Affiliation": "ION",
     "CallLetters": "KJTV-TV 34.3",
     "Code": 11860,
     "LegacyCallLetters": "NJTV",
@@ -18713,11 +20025,27 @@
   },
   {
     "Affiliation": "ION",
+    "CallLetters": "WKBT-DT 8.3",
+    "Code": 11862,
+    "LegacyCallLetters": "GKBT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "La Crosse-Eau Claire"
+  },
+  {
+    "Affiliation": "ION",
     "CallLetters": "WISC-TV 3.3",
     "Code": 11864,
     "LegacyCallLetters": "EISC",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Madison"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WABW-TV 14.4",
+    "Code": 11867,
+    "LegacyCallLetters": "HABW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Albany, GA"
   },
   {
     "Affiliation": "CBS",
@@ -18736,7 +20064,7 @@
     "OriginMarket": "Buffalo"
   },
   {
-    "Affiliation": "MMX",
+    "Affiliation": "AZA",
     "CallLetters": "KXOF-CD 39.2",
     "Code": 11874,
     "LegacyCallLetters": "MXOF",
@@ -18744,7 +20072,7 @@
     "OriginMarket": "Laredo"
   },
   {
-    "Affiliation": "MMX",
+    "Affiliation": "AZA",
     "CallLetters": "KVYE 7.2",
     "Code": 11875,
     "LegacyCallLetters": "NVYE",
@@ -18761,11 +20089,59 @@
   },
   {
     "Affiliation": "PBS",
+    "CallLetters": "WNGH-TV 18.4",
+    "Code": 11888,
+    "LegacyCallLetters": "HNGH",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chattanooga"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WACS-TV 25.4",
+    "Code": 11899,
+    "LegacyCallLetters": "HACS",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Albany, GA"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WMUM-TV 29.4",
+    "Code": 11900,
+    "LegacyCallLetters": "HMUM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Macon"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WCES-TV 20.4",
+    "Code": 11901,
+    "LegacyCallLetters": "HCES",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Augusta-Aiken"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WJSP-TV 28.4",
+    "Code": 11906,
+    "LegacyCallLetters": "HJSP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Columbus, GA (Opelika, AL)"
+  },
+  {
+    "Affiliation": "PBS",
     "CallLetters": "WXGA-TV 8.4",
     "Code": 11907,
     "LegacyCallLetters": "HXGA",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Jacksonville"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "WVAN-TV 9.4",
+    "Code": 11908,
+    "LegacyCallLetters": "HVAN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Savannah"
   },
   {
     "Affiliation": "MMX",
@@ -18774,6 +20150,14 @@
     "LegacyCallLetters": "DDTV",
     "ManifestMaxEndDate": null,
     "OriginMarket": "San Diego"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KUON-TV 12.4",
+    "Code": 11936,
+    "LegacyCallLetters": "QUON",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lincoln & Hastings-Krny"
   },
   {
     "Affiliation": "PBS",
@@ -18792,6 +20176,14 @@
     "OriginMarket": "Louisville"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WVPB-TV 33.3",
+    "Code": 11944,
+    "LegacyCallLetters": "GVPB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Charleston-Huntington"
+  },
+  {
     "Affiliation": "ION",
     "CallLetters": "KRBK 49.4",
     "Code": 11953,
@@ -18806,6 +20198,30 @@
     "LegacyCallLetters": "MGTV",
     "ManifestMaxEndDate": null,
     "OriginMarket": "San Diego"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KBMY 17.4",
+    "Code": 11971,
+    "LegacyCallLetters": "QBMY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KMCY 14.4",
+    "Code": 11972,
+    "LegacyCallLetters": "QMCY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Minot-Bsmrck-Dcknsn(Wlstn)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WICZ-TV 40.3",
+    "Code": 11976,
+    "LegacyCallLetters": "EICZ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Binghamton"
   },
   {
     "Affiliation": "ION",
@@ -18864,11 +20280,515 @@
     "OriginMarket": "Springfield, MO"
   },
   {
+    "Affiliation": "PBS",
+    "CallLetters": "WPBT 2.4",
+    "Code": 12058,
+    "LegacyCallLetters": "HPBT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Miami-Ft. Lauderdale"
+  },
+  {
+    "Affiliation": "ABC",
+    "CallLetters": "WPBY-LD 35.1",
+    "Code": 12059,
+    "LegacyCallLetters": "WPBY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lafayette, IN"
+  },
+  {
     "Affiliation": "CBS",
-    "CallLetters": "WXVT 15.1",
+    "CallLetters": "WXVT-LD 17.1",
     "Code": 12068,
     "LegacyCallLetters": "WXVT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Greenwood-Greenville"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KMVU-DT 26.3",
+    "Code": 12073,
+    "LegacyCallLetters": "OMVU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Medford-Klamath Falls"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KHSL-TV 12.5",
+    "Code": 12081,
+    "LegacyCallLetters": "MHSL",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chico-Redding"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KEZI 9.3",
+    "Code": 12083,
+    "LegacyCallLetters": "MEZI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Eugene"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WAKA 8.3",
+    "Code": 12093,
+    "LegacyCallLetters": "DAKA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Montgomery-Selma"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WAAY-TV 31.2",
+    "Code": 12094,
+    "LegacyCallLetters": "DAAY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Huntsville-Decatur (Flor)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WTVA 9.3",
+    "Code": 12095,
+    "LegacyCallLetters": "DTVA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Columbus-Tupelo-W Pnt-Hstn"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KPLC 7.2",
+    "Code": 12138,
+    "LegacyCallLetters": "MPLC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lake Charles"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KCLO-TV 15.2",
+    "Code": 12153,
+    "LegacyCallLetters": "MCLO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Rapid City"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "WTHI-TV 10.3",
+    "Code": 12158,
+    "LegacyCallLetters": "DTHI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Terre Haute"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WPRI-TV 12.2",
+    "Code": 12169,
+    "LegacyCallLetters": "EPRI",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Providence-New Bedford"
+  },
+  {
+    "Affiliation": "TEL",
+    "CallLetters": "WBOC-LD 42.1",
+    "Code": 12171,
+    "LegacyCallLetters": "WCOB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Salisbury"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KATN 2.4",
+    "Code": 12184,
+    "LegacyCallLetters": "MATN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fairbanks"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WDIO-DT 10.3",
+    "Code": 12185,
+    "LegacyCallLetters": "GDIO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Duluth-Superior"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KODE-TV 12.4",
+    "Code": 12201,
+    "LegacyCallLetters": "MODE",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Joplin-Pittsburg"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KHMT 4.4",
+    "Code": 12203,
+    "LegacyCallLetters": "MHMT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Billings"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WTVW 7.4",
+    "Code": 12204,
+    "LegacyCallLetters": "DTVW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Evansville"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WVLA-TV 33.3",
+    "Code": 12205,
+    "LegacyCallLetters": "DVLA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Baton Rouge"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KSHV-TV 45.3",
+    "Code": 12206,
+    "LegacyCallLetters": "MSHV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Shreveport"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KARZ-TV 42.3",
+    "Code": 12207,
+    "LegacyCallLetters": "MARZ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Little Rock-Pine Bluff"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KETK-TV 56.3",
+    "Code": 12208,
+    "LegacyCallLetters": "METK",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Tyler-Longview(Lfkn&Ncgd)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KTAB-TV 32.4",
+    "Code": 12209,
+    "LegacyCallLetters": "MTAB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Abilene-Sweetwater"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KSAN-TV 3.4",
+    "Code": 12213,
+    "LegacyCallLetters": "MSAN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "San Angelo"
+  },
+  {
+    "Affiliation": "FOX",
+    "CallLetters": "KATN 2.2",
+    "Code": 12220,
+    "LegacyCallLetters": "OATN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Fairbanks"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WHEC-TV 10.4",
+    "Code": 12223,
+    "LegacyCallLetters": "DHEC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Rochester, NY"
+  },
+  {
+    "Affiliation": "MET",
+    "CallLetters": "EWTV+",
+    "Code": 12253,
+    "LegacyCallLetters": "EWTV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Traverse City-Cadillac"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WMDT 47.4",
+    "Code": 12276,
+    "LegacyCallLetters": "DMDT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Salisbury"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KEET 13.5",
+    "Code": 12310,
+    "LegacyCallLetters": "MEET",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Eureka"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KYOU-TV 15.4",
+    "Code": 12319,
+    "LegacyCallLetters": "MYOU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Ottumwa-Kirksville"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WMLW-TV 49.4",
+    "Code": 12334,
+    "LegacyCallLetters": "DMLW",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Milwaukee"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WLFG 68.3",
+    "Code": 12357,
+    "LegacyCallLetters": "DLFG",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Tri-Cities, TN-VA"
+  },
+  {
+    "Affiliation": "TEL",
+    "CallLetters": "KUAN-LD 48.1",
+    "Code": 12405,
+    "LegacyCallLetters": "KUAN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "San Diego"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "WBKI-TV 58.3",
+    "Code": 12440,
+    "LegacyCallLetters": "YMYO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Louisville"
+  },
+  {
+    "Affiliation": "IND",
+    "CallLetters": "KSCC 38.3",
+    "Code": 12493,
+    "LegacyCallLetters": "OSCC",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Corpus Christi"
+  },
+  {
+    "Affiliation": "PBS",
+    "CallLetters": "KAID 4.5",
+    "Code": 12516,
+    "LegacyCallLetters": "MAID",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Boise"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KVIA-TV 7.3",
+    "Code": 12523,
+    "LegacyCallLetters": "OVIA",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "El Paso (Las Cruces)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KION-TV 46.3",
+    "Code": 12528,
+    "LegacyCallLetters": "MION",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Monterey-Salinas"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KTVZ 21.4",
+    "Code": 12574,
+    "LegacyCallLetters": "MTVZ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bend, OR"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WYFX-LD 19.3",
+    "Code": 12681,
+    "LegacyCallLetters": "DYFX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Youngstown"
+  },
+  {
+    "Affiliation": "CBS",
+    "CallLetters": "KPSP-CD 38.1",
+    "Code": 12743,
+    "LegacyCallLetters": "KPSP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Palm Springs"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WENY-TV 36.4",
+    "Code": 12745,
+    "LegacyCallLetters": "DENY",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Elmira (Corning)"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WLFB 40.3",
+    "Code": 12767,
+    "LegacyCallLetters": "ELFB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Bluefield-Beckley-Oak Hill"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KPMR-DT 38.2",
+    "Code": 12792,
+    "LegacyCallLetters": "OPMR",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Santabarbra-Sanmar-Sanluob"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WRCB 3.3",
+    "Code": 12802,
+    "LegacyCallLetters": "DRCB",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Chattanooga"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KTVN 2.3",
+    "Code": 12803,
+    "LegacyCallLetters": "MTVN",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Reno"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WCTV 6.3",
+    "Code": 12804,
+    "LegacyCallLetters": "DCTV",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Tallahassee-Thomasville"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KVHP 29.3",
+    "Code": 12916,
+    "LegacyCallLetters": "NVHP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Lake Charles"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KAUZ-TV 6.3",
+    "Code": 12922,
+    "LegacyCallLetters": "MAUZ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wichita Falls & Lawton"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WSFX-TV 26.4",
+    "Code": 12924,
+    "LegacyCallLetters": "DSFX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Wilmington"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KAIT 8.3",
+    "Code": 12929,
+    "LegacyCallLetters": "MAIT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jonesboro"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KOLO-TV 8.3",
+    "Code": 12930,
+    "LegacyCallLetters": "OOLO",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Reno"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KVCT 19.3",
+    "Code": 12931,
+    "LegacyCallLetters": "OVCT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Victoria"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "WNBJ-LD 39.2",
+    "Code": 12932,
+    "LegacyCallLetters": "ENBJ",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Jackson, TN"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "WAGM-TV 8.3",
+    "Code": 12934,
+    "LegacyCallLetters": "GAGM",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Presque Isle"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KFJX 14.2",
+    "Code": 12937,
+    "LegacyCallLetters": "NFJX",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Joplin-Pittsburg"
+  },
+  {
+    "Affiliation": "CW",
+    "CallLetters": "KIIT-CD 11.2",
+    "Code": 12981,
+    "LegacyCallLetters": "NIIT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "North Platte"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KMCT-TV 39.2",
+    "Code": 13001,
+    "LegacyCallLetters": "MMCT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Monroe-El Dorado"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WIFR-LD 23.4",
+    "Code": 13028,
+    "LegacyCallLetters": "DIFR",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Rockford"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KNOP-TV 2.3",
+    "Code": 13030,
+    "LegacyCallLetters": "MNOP",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "North Platte"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "WJHG-TV 7.4",
+    "Code": 13035,
+    "LegacyCallLetters": "DJHG",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Panama City"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KEYU 31.3",
+    "Code": 13042,
+    "LegacyCallLetters": "MEYU",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Amarillo"
+  },
+  {
+    "Affiliation": "ION",
+    "CallLetters": "KJCT-LP 8.3",
+    "Code": 13043,
+    "LegacyCallLetters": "MJCT",
+    "ManifestMaxEndDate": null,
+    "OriginMarket": "Grand Junction-Montrose"
   }
 ]
