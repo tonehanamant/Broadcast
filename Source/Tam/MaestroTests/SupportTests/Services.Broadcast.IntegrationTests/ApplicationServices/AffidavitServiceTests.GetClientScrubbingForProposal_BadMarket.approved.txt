@@ -126,7 +126,7 @@
     {
       "Affiliate": null,
       "ClientISCI": null,
-      "Comments": null,
+      "Comments": "Client Scrub Comment",
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
@@ -186,7 +186,7 @@
     {
       "Affiliate": "NBC",
       "ClientISCI": null,
-      "Comments": null,
+      "Comments": "BCOP-2997",
       "DateAired": "2016-06-05T00:00:00",
       "DayOfWeek": 0,
       "GenreName": "Do It Yourself",
@@ -216,7 +216,7 @@
     {
       "Affiliate": "NBC",
       "ClientISCI": null,
-      "Comments": null,
+      "Comments": "BCOP-2952",
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
