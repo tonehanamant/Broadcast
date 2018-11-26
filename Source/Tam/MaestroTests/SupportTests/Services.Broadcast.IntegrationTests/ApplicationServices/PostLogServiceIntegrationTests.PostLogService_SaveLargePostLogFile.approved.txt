@@ -9545,11 +9545,11 @@
               "Impressions": 0.0
             }
           ],
-          "Comment": null,
+          "Comment": "No WWTV data for Program",
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
           "EffectiveIsci": "FFFFFF",
-          "EffectiveProgramName": "Program Names R us",
+          "EffectiveProgramName": "SuppliedProgramName",
           "EffectiveShowType": "News",
           "LeadIn": false,
           "MatchDate": false,
@@ -9586,12 +9586,12 @@
       "MappedIsci": null,
       "Market": "New York",
       "OriginalAirDate": "2016-05-31T00:00:00",
-      "ProgramName": "Program Names R us",
+      "ProgramName": null,
       "ShowType": "News",
       "SpotCost": null,
       "SpotLengthId": 1,
       "Station": "HPIX",
-      "SuppliedProgramName": null
+      "SuppliedProgramName": "SuppliedProgramName"
     }
   ],
   "FileHash": "abc123",

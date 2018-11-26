@@ -695,6 +695,7 @@ namespace Services.Broadcast.Repositories
         {
             var result = clientScrubs.Select(s => new postlog_client_scrubs
             {
+                comment = s.Comment,
                 proposal_version_detail_quarter_week_id = s.ProposalVersionDetailQuarterWeekId,
                 match_program = s.MatchProgram,
                 match_genre = s.MatchGenre,

@@ -93,7 +93,7 @@
               "Impressions": 10295.5
             }
           ],
-          "Comment": null,
+          "Comment": "No WWTV data for Program",
           "EffectiveClientIsci": null,
           "EffectiveGenre": null,
           "EffectiveIsci": "AAAAAAAA",

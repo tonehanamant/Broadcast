@@ -1551,6 +1551,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var proposalId = 253;
                 var aff = _AffidavitRepository.GetAffidavit(157);
                 aff.FileDetails[0].Station = "bad station";
+                aff.FileDetails[0].ClientScrubs[0].Comment = "Client Scrub Comment";
                 _AffidavitRepository.SaveAffidavitFile(aff);
 
                 var scrubbingRequest = new ProposalScrubbingRequest();

@@ -579,6 +579,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
             }
 
+            var lastDetail = request.Details.Last();
+            lastDetail.ProgramName = null;
+            lastDetail.SuppliedProgramName = "SuppliedProgramName";
+            
             return request;
         }
 

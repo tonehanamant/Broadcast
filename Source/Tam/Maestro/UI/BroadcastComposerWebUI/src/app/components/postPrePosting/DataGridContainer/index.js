@@ -90,23 +90,23 @@ export class DataGridContainer extends Component {
       {
         Header: "File Name",
         accessor: "FileName",
-        maxWidth: 400
+        minWidth: 20
       },
       {
         Header: "Demos",
         accessor: "DisplayDemos",
-        maxWidth: 400
+        minWidth: 20
       },
       {
         Header: "Upload Date",
         accessor: "DisplayUploadDate",
-        maxWidth: 200,
+        minWidth: 10,
         Cell: row => <span>{row.value}</span>
       },
       {
         Header: "Last Modified",
         accessor: "DisplayModifiedDate",
-        maxWidth: 200,
+        minWidth: 10,
         Cell: row => <span>{row.value}</span>
       }
     ];
