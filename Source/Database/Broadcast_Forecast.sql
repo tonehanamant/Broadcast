@@ -224,6 +224,7 @@ BEGIN
 	IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
 	IF OBJECT_ID('tempdb..#viewers') IS NOT NULL DROP TABLE #viewers;
 END
+GO
 
 /*************** END BCOP3997 **************************************************************************************/
 /*************** END BCOP3889 **************************************************************************************/
