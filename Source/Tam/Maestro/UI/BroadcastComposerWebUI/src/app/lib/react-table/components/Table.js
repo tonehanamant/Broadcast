@@ -7,7 +7,7 @@ import "react-table/react-table.css";
 
 import Row from "./Row";
 import { rowStyle, selectedRowStyle } from "../style/Selection";
-import { rowSelection, SELECTION } from "../util/util";
+import { rowSelection, SELECTION, generetaColumns } from "../util/util";
 import { DynamicMenu } from "./ConextMenu/index";
 import {
   ContextMenuProps,
@@ -127,13 +127,18 @@ class Table extends Component {
       showPagination,
       showPageSizeOptions,
       defaultPageSize,
+      columns,
+      hocState: { displayColumns },
       data
     } = this.props;
+
+    const tableColumns = generetaColumns(columns, displayColumns);
 
     return (
       <Fragment>
         <ReactTable
           {...this.props}
+          columns={tableColumns}
           getTrProps={this._getTrProps}
           getTrGroupProps={this._getTrGroupProps}
           TrGroupComponent={this._TrGroupComponent}
@@ -156,6 +161,7 @@ class Table extends Component {
 
 Table.defaultProps = {
   data: [],
+  columns: [],
   selection: SELECTION.NONE,
   contextMenu: {},
   getTrGroupProps: undefined,
@@ -166,6 +172,7 @@ Table.defaultProps = {
 };
 
 Table.propTypes = {
+  columns: PropTypes.any,
   data: PropTypes.any,
   hocState: HocStateProps.isRequired,
   dispatch: PropTypes.func.isRequired,
