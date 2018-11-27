@@ -1289,18 +1289,6 @@ namespace Services.Broadcast.ApplicationServices
             return programs;
         }
 
-        private void _EquivalizeStationImpressions(List<ProposalProgramDto> programs, PricingGuideOpenMarketInventory inventory)
-        {
-            foreach(var program in programs)
-            {
-                if (program.ProvidedUnitImpressions.HasValue)
-                {
-                    program.ProvidedUnitImpressions =
-                        _ImpressionAdjustmentEngine.AdjustImpression(program.ProvidedUnitImpressions.Value, inventory.Equivalized, inventory.DetailSpotLength);
-                }
-            }
-        }
-
         private void _PopulatePricingGuideMarketsAndFilterByIds(
             PricingGuideOpenMarketInventory inventory, 
             List<int> marketIdsFilter,
