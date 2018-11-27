@@ -18,5 +18,15 @@ namespace Services.Broadcast.Extensions
                 monday = monday.AddDays(1);
             }
         }
+
+        public static DateTime GetWeekMonday(this DateTime date)
+        {
+            var differenceToMonday = (date.DayOfWeek - DayOfWeek.Monday);
+
+            if (differenceToMonday < 0)
+                differenceToMonday += 7;
+
+            return date.AddDays(-differenceToMonday);
+        }
     }
 }

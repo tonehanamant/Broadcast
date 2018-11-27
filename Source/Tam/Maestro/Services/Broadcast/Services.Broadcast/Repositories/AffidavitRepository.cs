@@ -11,6 +11,7 @@ using Tam.Maestro.Services.Clients;
 using System;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -328,8 +329,7 @@ namespace Services.Broadcast.Repositories
                                  {
                                      proposalDetailId = proposalVersionDetail.id,
                                      affidavitDetails,
-                                     affidavitFileScrub,
-                                     proposalVersionWeeks
+                                     affidavitFileScrub
                                  });
                     if (status.HasValue)
                     {
@@ -362,7 +362,7 @@ namespace Services.Broadcast.Repositories
                                 MatchIsciDays = x.affidavitFileScrub.match_isci_days,
                                 Comments = x.affidavitFileScrub.comment,
                                 ClientISCI = x.affidavitFileScrub.effective_client_isci,
-                                WeekStart = x.proposalVersionWeeks.start_date,
+                                WeekStart = x.affidavitDetails.original_air_date.GetWeekMonday(),
                                 ShowTypeName = x.affidavitFileScrub.effective_show_type,
                                 StatusOverride = x.affidavitFileScrub.status_override,
                                 Status = (ScrubbingStatus)x.affidavitFileScrub.status,
