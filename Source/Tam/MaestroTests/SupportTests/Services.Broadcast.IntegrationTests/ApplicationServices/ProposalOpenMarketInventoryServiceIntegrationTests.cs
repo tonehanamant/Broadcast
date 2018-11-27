@@ -3196,5 +3196,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(resultJson);
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]        
+        public void GetPricingGuideWithEquivalizedImpressions()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26024,
+                ProposalDetailId = 9986,
+                OpenMarketShare = 1,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _ProposalOpenMarketInventoryService.GetPricingGuideOpenMarketInventory(request);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
     }
 }

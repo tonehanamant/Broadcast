@@ -482,6 +482,22 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
+    "ContractId": 26024,
+    "ContractName": "Pricing Guide Test 9",
+    "Equivalized": true,
+    "GuaranteedAudienceId": 31,
+    "HouseholdDeliveredImpressions": 0.0,
+    "PostType": 1,
+    "PrimaryAudienceBookedImpressions": 100000.0,
+    "PrimaryAudienceDeliveredImpressions": 0.0,
+    "PrimaryAudienceDelivery": 0.0,
+    "SpotsInSpec": 0,
+    "SpotsOutOfSpec": 0,
+    "UploadDate": null
+  },
+  {
+    "Advertiser": null,
+    "AdvertiserId": 37444,
     "ContractId": 33029,
     "ContractName": "Proposal BCOP-3771",
     "Equivalized": false,

@@ -15,7 +15,7 @@ namespace Services.Broadcast.ApplicationServices
         protected readonly IDataRepositoryFactory BroadcastDataRepositoryFactory;
         protected readonly IDaypartCache DaypartCache;
         protected readonly IProposalMarketsCalculationEngine ProposalMarketsCalculationEngine;
-        private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        protected readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IProposalTotalsCalculationEngine _proposalTotalsCalculationEngine;
 
         public BaseProposalInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
