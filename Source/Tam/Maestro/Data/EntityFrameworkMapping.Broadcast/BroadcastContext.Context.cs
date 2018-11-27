@@ -117,5 +117,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<postlog_client_scrubs> postlog_client_scrubs { get; set; }
         public virtual DbSet<postlog_file_details> postlog_file_details { get; set; }
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
+        public virtual DbSet<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
     }
 }

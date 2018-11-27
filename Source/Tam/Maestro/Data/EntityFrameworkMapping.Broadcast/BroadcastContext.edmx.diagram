@@ -220,6 +220,13 @@
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_demographics_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_file_detail_problems_affidavit_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_files_affidavit_file_details" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_staging" Width="1.5" PointX="18.125" PointY="27.125" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_inventory_files" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_rate_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

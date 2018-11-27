@@ -3359,6 +3359,7 @@
     }
   ],
   "InventoryManifests": [],
+  "InventoryManifestsStaging": [],
   "InventorySource": null,
   "PlaybackType": null,
   "RatingBook": null,

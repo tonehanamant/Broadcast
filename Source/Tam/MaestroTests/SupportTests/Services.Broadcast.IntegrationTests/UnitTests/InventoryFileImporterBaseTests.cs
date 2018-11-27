@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using Services.Broadcast.Converters.RateImport;
@@ -10,8 +9,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     [TestFixture]
     class InventoryFileImporterBaseTests : InventoryFileImporterBase
     {
-        public override InventorySource InventorySource { get; set; }
-        
         public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
         }

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.StationInventory
 {
-    public class StationInventoryManifest
+    public abstract class StationInventoryManifestBase
     {
         public int? Id { get; set; }
-        public DisplayBroadcastStation Station { get; set; }
         public string DaypartCode { get; set; }
-        public int SpotLengthId { get; set; } 
+        public int SpotLengthId { get; set; }
         public int? SpotsPerWeek { get; set; }
         public int? SpotsPerDay { get; set; }
         public List<StationInventoryManifestDaypart> ManifestDayparts { get; set; }
@@ -20,8 +19,8 @@ namespace Services.Broadcast.Entities
         public List<StationInventoryManifestAudience> ManifestAudiencesReferences { get; set; }
 
         public List<StationInventoryManifestRate> ManifestRates { get; set; }
-        
-        public StationInventoryManifest()
+
+        public StationInventoryManifestBase()
         {
             ManifestDayparts = new List<StationInventoryManifestDaypart>();
             ManifestAudiences = new List<StationInventoryManifestAudience>();

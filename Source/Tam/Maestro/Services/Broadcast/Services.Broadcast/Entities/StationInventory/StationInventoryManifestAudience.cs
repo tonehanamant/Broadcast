@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.StationInventory
 {
     public class StationInventoryManifestAudience
     {

@@ -699,6 +699,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
