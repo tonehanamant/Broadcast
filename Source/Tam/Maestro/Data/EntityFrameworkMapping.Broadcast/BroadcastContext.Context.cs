@@ -90,7 +90,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<show_types> show_types { get; set; }
         public virtual DbSet<affidavit_file_problems> affidavit_file_problems { get; set; }
         public virtual DbSet<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
-        public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
         public virtual DbSet<isci_mapping> isci_mapping { get; set; }
         public virtual DbSet<postlog_outbound_file_problems> postlog_outbound_file_problems { get; set; }
         public virtual DbSet<postlog_outbound_files> postlog_outbound_files { get; set; }
@@ -119,5 +118,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual DbSet<pricing_guide_distribution_proprietary_inventory> pricing_guide_distribution_proprietary_inventory { get; set; }
         public virtual DbSet<pricing_guide_distributions> pricing_guide_distributions { get; set; }
+        public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
     }
 }
