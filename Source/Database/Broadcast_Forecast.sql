@@ -346,6 +346,332 @@ GO
 /*************** END BCOP4064 **************************************************************************************/
 
 GO
+
+
+GO
+/********************************** START BCOP-3995 *****************************************************/
+GO
+
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages'))
+BEGIN
+	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages]
+END
+                   
+GO
+/*
+DECLARE
+		@hut_media_month_id SMALLINT = 434,
+		@share_media_month_id SMALLINT = 442,
+		@demo VARCHAR(MAX) = '31',--'6,7,8,9,10,11,12,13,14,15,21,22,23,24,25,26,27,28,29,30,6,7,13,14,15,21,22,28,29,30,284,290,347,348', --A18+
+		@ratings_request RatingsInputWithId,
+		@min_playback_type VARCHAR(1) = '3'
+
+	INSERT INTO @ratings_request SELECT 1,'WPIX',1,1,1,1,1,0,0,39600,43200-1--'M-F 11a-12n JERRY SPRINGER - 93',
+	INSERT INTO @ratings_request SELECT 2,'WPIX',0,0,0,0,0,0,1,28800,32400-1--'Su 8a-9a PAID - 5',
+	INSERT INTO @ratings_request SELECT 3,'WPHL',0,0,0,1,0,0,0,10800,14400-1--'Th 3a-4a CRME WATCH DLY - 14',
+	INSERT INTO @ratings_request SELECT 4,'WPHL',1,1,1,1,1,0,0,68400,70200-1--'M-F 7p-7:30p big bang - 65',
+	INSERT INTO @ratings_request SELECT 5,'KRON',0,0,0,0,0,0,1,75600,79200-1--'Su 9p-10p KRON 4-NGHT LV - 21',
+	INSERT INTO @ratings_request SELECT 6,'KTLA',0,0,0,0,0,1,0,61200,63000-1--'Sa 5p-5:30p DOG WHISPER-CW - 18',
+	INSERT INTO @ratings_request SELECT 7,'KTXL',1,1,1,1,0,0,0,84600,86400-1--'M-Th 11:30p-12m SEINFELD B< - 6',
+	INSERT INTO @ratings_request SELECT 8,'WJW',1,1,1,0,0,0,0,82800,84600-1--'M-W 11p-11:30p BG BNG THRY B< - 55',
+	INSERT INTO @ratings_request SELECT 9,'KASW',1,1,1,1,1,1,1,64800,68400-1--'M-Su 6p-7p VARIOUS	-21',
+	INSERT INTO @ratings_request SELECT 10,'WKCF',0,0,0,0,0,1,1,68400,70200-1--'Sa-Su 7p-7:30p 2BRK GIRLS WK - 11',
+	INSERT INTO @ratings_request SELECT 12,'KHOU',0,0,0,0,0,0,1,1800,5400-1
+	INSERT INTO @ratings_request SELECT 13,'KHOU',0,0,0,0,0,0,1,5400,9000-1
+	INSERT INTO @ratings_request SELECT 18,'WBNX',0,0,0,0,0,1,0,70200,72000-1
+	INSERT INTO @ratings_request SELECT 19,'WBNX',0,0,0,0,0,1,0,82800,86400-1
+	INSERT INTO @ratings_request SELECT 20,'KHOU',1,1,1,1,1,0,0,45000,46800-1
+	INSERT INTO @ratings_request SELECT 21,'KHOU',1,1,1,1,1,0,0,66480,67200-1
+	INSERT INTO @ratings_request SELECT 22,'KHOU',1,1,1,1,1,0,0,39600-2*60*60,43200-1
+	INSERT INTO @ratings_request SELECT 23,'KHOU',1,1,1,1,1,0,0,39600,43200-1
+	INSERT INTO @ratings_request SELECT 24,'WKCF',0,0,0,0,0,0,1,3600,7200-1
+	INSERT INTO @ratings_request SELECT 25,'WBNX',1,0,0,0,0,0,0,3600,10800-1
+
+	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_TwoBooks] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type
+	
+	*/
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages]
+	@hut_media_month_id SMALLINT,
+	@share_media_month_id SMALLINT,
+	@demo VARCHAR(MAX),
+	@ratings_request RatingsInputWithId READONLY,
+	@min_playback_type VARCHAR(1)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
+	CREATE TABLE #rating_requests (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, mon BIT NOT NULL, tue BIT NOT NULL, wed BIT NOT NULL, thu BIT NOT NULL, fri BIT NOT NULL, sat BIT NOT NULL, sun BIT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL,
+		PRIMARY KEY CLUSTERED (id, legacy_call_letters, mon, tue, wed, thu, fri, sat, sun, start_time, end_time));
+	INSERT into #rating_requests 
+		SELECT * FROM @ratings_request;
+
+	CREATE TABLE #audience_ids (audience_id INT NOT NULL, 
+		PRIMARY KEY CLUSTERED(audience_id));
+	INSERT INTO #audience_ids
+		SELECT DISTINCT id FROM dbo.SplitIntegers(@demo);
+
+	CREATE TABLE #hut_market_codes (id INT NOT NULL, market_code SMALLINT NOT NULL, playback_type VARCHAR(1), 
+		PRIMARY KEY CLUSTERED(id, market_code, playback_type));
+	INSERT INTO #hut_market_codes
+		SELECT DISTINCT
+			rr.id,
+			v.market_code,
+			mpt.available_playback_type
+		FROM
+			#rating_requests rr
+			JOIN nsi.viewers v (NOLOCK) ON @hut_media_month_id = v.media_month_id
+				AND v.legacy_call_letters=rr.legacy_call_letters
+				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			JOIN (
+			SELECT * FROM nsi.udf_GetMinPlaybackTypes(@hut_media_month_id,@min_playback_type)
+			) mpt ON mpt.market_code=v.market_code;
+
+	CREATE TABLE #share_market_codes(id INT NOT NULL, market_code SMALLINT NOT NULL, playback_type VARCHAR(1) NOT NULL, 
+		PRIMARY KEY CLUSTERED(id, market_code, playback_type));
+	INSERT INTO #share_market_codes
+		SELECT DISTINCT
+			rr.id,
+			v.market_code,
+			mpt.available_playback_type
+		FROM
+			#rating_requests rr
+			JOIN nsi.viewers v (NOLOCK) ON @share_media_month_id = v.media_month_id
+				AND v.legacy_call_letters=rr.legacy_call_letters
+				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			JOIN (
+			SELECT * FROM nsi.udf_GetMinPlaybackTypes(@share_media_month_id,@min_playback_type)
+			) mpt on mpt.market_code = v.market_code;
+
+	CREATE TABLE #hut_usage_days (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, playback_type VARCHAR(1) NOT NULL, weekly_avg FLOAT NOT NULL --,weekday_usage FLOAT NOT NULL ,weekend_usage FLOAT NOT NULL
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, start_time, end_time, market_code, audience_id));
+	INSERT INTO #hut_usage_days
+		SELECT
+			rr.id,rr.legacy_call_letters,u.start_time,u.end_time,hmc.market_code,a.audience_id,hmc.playback_type,
+			-- calc average FROM weekday values
+			(
+				CASE rr.mon WHEN 1 THEN u.mon_usage ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN u.tue_usage ELSE 0  END +
+				CASE rr.wed WHEN 1 THEN u.wed_usage ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN u.thu_usage ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN u.fri_usage ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN u.sat_usage ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN u.sun_usage ELSE 0 END 
+			) 
+			/ 
+			(
+				CASE rr.mon WHEN 1 THEN 1 ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.wed WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN 1 ELSE 0 END 
+			) weekly_avg
+		FROM
+			#rating_requests rr
+			JOIN #hut_market_codes hmc ON hmc.id=rr.id
+			CROSS APPLY #audience_ids a
+			JOIN nsi.usages u (NOLOCK) ON u.media_month_id=@hut_media_month_id
+				AND u.playback_type=hmc.playback_type
+				AND u.audience_id=a.audience_id
+				AND (u.start_time<=rr.end_time AND u.end_time>=rr.start_time)
+				AND u.market_code=hmc.market_code;
+                
+	CREATE TABLE #hut_univ (market_code SMALLINT NOT NULL, audience_id INT NOT NULL, playback_type VARCHAR(1) NOT NULL, universe FLOAT NOT NULL
+		PRIMARY KEY CLUSTERED(market_code, audience_id,playback_type));
+	INSERT INTO #hut_univ
+		SELECT 
+			u.market_code,
+			u.audience_id,
+			u.playback_type,
+			u.universe as universe
+		FROM 
+			nsi.universes u
+			JOIN #hut_market_codes hmc ON hmc.market_code=u.market_code
+				AND u.playback_type = hmc.playback_type
+			JOIN #audience_ids a on a.audience_id = u.audience_id 
+		WHERE 
+			u.media_month_id = @hut_media_month_id
+		GROUP BY 
+			u.market_code,u.audience_id,u.playback_type,u.universe;
+
+	CREATE TABLE #hut (id INT NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, HUT FLOAT NOT NULL
+		PRIMARY KEY CLUSTERED(id,market_code, audience_id));
+	INSERT INTO #hut
+		SELECT 
+			USAGE.id,
+			univ.market_code , 
+			univ.audience_id, 
+			weekly_avg/universe HUT
+		FROM (
+			SELECT 
+				d.id,
+				d.legacy_call_letters, 
+				d.market_code , 
+				d.audience_id ,
+				AVG(weekly_avg) weekly_avg
+			FROM 
+				#hut_usage_days d
+			GROUP BY 
+				d.id, d.legacy_call_letters, d.market_code, d.audience_id
+		) USAGE
+		JOIN #hut_univ UNIV ON UNIV.audience_id = USAGE.audience_id 
+			AND UNIV.market_code = USAGE.market_code;
+
+	--SELECT * FROM #hut
+
+	CREATE TABLE #share_usage_days (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, playback_type VARCHAR(1) NOT NULL, weekly_avg FLOAT NOT NULL --,weekday_usage FLOAT NOT NULL ,weekend_usage FLOAT NOT NULL
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, start_time, end_time, market_code, audience_id));
+	INSERT INTO #share_usage_days
+		SELECT
+			rr.id,
+			rr.legacy_call_letters,
+			u.start_time,
+			u.end_time,
+			smc.market_code,
+			a.audience_id,
+			smc.playback_type,
+			-- calc average FROM weekday values
+			(
+				CASE rr.mon WHEN 1 THEN u.mon_usage ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN u.tue_usage ELSE 0  END +
+				CASE rr.wed WHEN 1 THEN u.wed_usage ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN u.thu_usage ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN u.fri_usage ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN u.sat_usage ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN u.sun_usage ELSE 0 END 
+			) 
+			/ 
+			(
+				CASE rr.mon WHEN 1 THEN 1 ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.wed WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN 1 ELSE 0 END 
+			) weekly_avg
+		FROM
+			#rating_requests rr
+			JOIN #share_market_codes smc ON smc.id=rr.id
+			CROSS APPLY #audience_ids a
+			JOIN nsi.usages u (NOLOCK) ON u.media_month_id=@share_media_month_id
+				AND u.playback_type=smc.playback_type
+				AND u.audience_id=a.audience_id
+				AND (u.start_time<=rr.end_time AND u.end_time>=rr.start_time)
+				AND u.market_code=smc.market_code;
+               
+	CREATE TABLE #share_viewer_days (id INT NOT NULL, [legacy_call_letters] VARCHAR(15) NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, weekly_avg FLOAT NOT NULL --,weekday_usage FLOAT NOT NULL ,weekend_usage FLOAT NOT NULL
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, start_time, end_time, market_code, audience_id));
+	INSERT INTO #share_viewer_days
+		SELECT
+			rr.id,
+			rr.legacy_call_letters,
+			v.start_time,
+			v.end_time,
+			mc.market_code,
+			a.audience_id,
+			-- calc average FROM weekday values
+			(
+				CASE rr.mon WHEN 1 THEN vd.mon_viewers ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN vd.tue_viewers ELSE 0  END +
+				CASE rr.wed WHEN 1 THEN vd.wed_viewers ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN vd.thu_viewers ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN vd.fri_viewers ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN vd.sat_viewers ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN vd.sun_viewers ELSE 0 END 
+			) 
+			/ 
+			(
+				CASE rr.mon WHEN 1 THEN 1 ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.wed WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN 1 ELSE 0 END 
+			) weekly_avg
+		FROM
+		#rating_requests rr
+		JOIN #share_market_codes mc ON mc.id=rr.id
+		JOIN nsi.viewers v (NOLOCK) ON v.media_month_id=@share_media_month_id
+			AND v.legacy_call_letters=rr.legacy_call_letters
+			AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			AND v.market_code = mc.market_code
+		CROSS APPLY #audience_ids a
+		JOIN nsi.viewer_details vd (NOLOCK) ON vd.media_month_id=v.media_month_id
+			AND vd.viewer_id=v.id
+			AND vd.audience_id=a.audience_id
+			AND vd.playback_type=mc.playback_type;
+
+	--SELECT * FROM #share_viewer_days where weekly_avg>0
+
+	CREATE TABLE #share (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, SHARE FLOAT NOT NULL
+		PRIMARY KEY CLUSTERED(id,legacy_call_letters,market_code, audience_id));
+	INSERT INTO #share
+		SELECT 
+			v.id,v.legacy_call_letters, v.market_code,v.audience_id,AVG(v.weekly_avg)/AVG(u.weekly_avg) SHARE
+		FROM 
+			#share_viewer_days v
+			JOIN #share_usage_days u ON v.audience_id = u.audience_id
+				AND v.start_time = u.start_time
+				AND v.end_time = u.end_time
+				AND v.market_code = u.market_code
+				AND v.legacy_call_letters = u.legacy_call_letters
+		GROUP BY 
+			v.id,v.legacy_call_letters, v.market_code,v.audience_id;
+                                
+	--SELECT * FROM #share 
+
+	SELECT 
+		id,
+		legacy_call_letters,
+		SUM(hut_per_market) impressions
+	FROM (
+		SELECT 
+			s.id,
+			s.legacy_call_letters,
+			s.market_code,
+			s.audience_id,
+			SUM(h.hut) * SUM(s.share) * SUM(u.universe) AS hut_per_market
+		FROM 
+			#share s
+			JOIN #hut h ON s.audience_id = h.audience_id
+				AND s.id = h.id
+				AND s.market_code = h.market_code
+			JOIN #hut_univ u ON u.audience_id = h.audience_id 
+				AND u.market_code = h.market_code 
+		GROUP BY 
+			s.id,s.legacy_call_letters,s.market_code,s.audience_id
+		) hut_share_univ
+	GROUP BY 
+		id,legacy_call_letters
+	ORDER BY 
+		id;
+
+	IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
+	IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
+
+	IF OBJECT_ID('tempdb..#hut_univ') IS NOT NULL DROP TABLE #hut_univ;
+                
+	IF OBJECT_ID('tempdb..#hut_market_codes') IS NOT NULL DROP TABLE #hut_market_codes;
+	IF OBJECT_ID('tempdb..#share_market_codes') IS NOT NULL DROP TABLE #share_market_codes;
+                
+	IF OBJECT_ID('tempdb..#hut_usage_days') IS NOT NULL DROP TABLE #hut_usage_days;
+	IF OBJECT_ID('tempdb..#share_usage_days') IS NOT NULL DROP TABLE #share_usage_days;
+                
+	IF OBJECT_ID('tempdb..#share_viewer_days') IS NOT NULL DROP TABLE #share_viewer_days;
+
+	IF OBJECT_ID('tempdb..#hut') IS NOT NULL DROP TABLE #hut;
+	IF OBJECT_ID('tempdb..#share') IS NOT NULL DROP TABLE #share;
+END
+GO
+/********************************** END BCOP-3995 *****************************************************/
+
+
+
+GO
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
