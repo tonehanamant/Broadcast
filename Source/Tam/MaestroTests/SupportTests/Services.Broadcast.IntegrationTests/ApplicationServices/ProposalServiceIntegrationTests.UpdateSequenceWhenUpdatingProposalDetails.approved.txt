@@ -54,21 +54,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "PricingGuide": {
-        "AdjustmentInflation": 2.0,
-        "AdjustmentMargin": 3.0,
-        "AdjustmentRate": 1.0,
-        "GoalBudget": 100.0000,
-        "GoalImpression": 10000.0,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -207,21 +192,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "PricingGuide": {
-        "AdjustmentInflation": 2.0,
-        "AdjustmentMargin": 3.0,
-        "AdjustmentRate": 1.0,
-        "GoalBudget": 100.0000,
-        "GoalImpression": 10000.0,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [
         {
           "Contain": 1,
@@ -360,21 +330,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "PricingGuide": {
-        "AdjustmentInflation": 2.0,
-        "AdjustmentMargin": 3.0,
-        "AdjustmentRate": 1.0,
-        "GoalBudget": 100.0000,
-        "GoalImpression": 10000.0,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [
         {
           "Contain": 1,

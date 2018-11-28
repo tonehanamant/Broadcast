@@ -223,6 +223,7 @@
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
     <Compile Include="ApplicationServices\PostLogService.cs" />
     <Compile Include="ApplicationServices\PostReportService.cs" />
+    <Compile Include="ApplicationServices\PricingGuideService.cs" />
     <Compile Include="ApplicationServices\Security\ImpersonateUser.cs" />
     <Compile Include="ApplicationServices\SpotTrackerService.cs" />
     <Compile Include="ApplicationServices\Security\SharedNetworkConnection.cs" />
@@ -248,13 +249,17 @@
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
-    <Compile Include="Entities\DTO\PricingGuide\BasePricingGuideDto.cs" />
+    <Compile Include="Entities\DistributionProgram.cs" />
+    <Compile Include="Entities\DTO\PricingGuide\OpenMarketTotalsDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuide\PricingGuideDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketDto.cs" />
-    <Compile Include="Entities\DTO\PricingGuide\PricingGuideOpenMarketDistributionDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideProgramDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideStationDto.cs" />
-    <Compile Include="Entities\DTO\ProposalDetailPricingGuideDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketTotalsDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuide\PricingTotalsDto.cs" />
+    <Compile Include="Entities\DTO\PricingGuide\ProprietaryTotalsDto.cs" />
+    <Compile Include="Entities\PricingGuideOpenMarketDistributionSaveRequest.cs" />
+    <Compile Include="Entities\ProposalDetailPricingGuideSaveRequest.cs" />
     <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />
@@ -273,7 +278,7 @@
     <Compile Include="Entities\PostedContracts.cs" />
     <Compile Include="Entities\ProposalBuyFile.cs" />
     <Compile Include="Entities\MarketGroupDto.cs" />
-    <Compile Include="Entities\ProprietaryPricingDto.cs" />
+    <Compile Include="Entities\DTO\ProprietaryPricingDto.cs" />
     <Compile Include="Entities\RescrubProposalDetailRequest.cs" />
     <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="Entities\ScxFile.cs" />
@@ -554,6 +559,7 @@
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
     <Compile Include="Repositories\IsciRepository.cs" />
+    <Compile Include="Repositories\PricingGuideRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\BvsRepository.cs" />
     <Compile Include="Repositories\BvsTestDataGeneratorRepository.cs" />

@@ -1510,11 +1510,6 @@ export function* rerunPostScrubing({ propId, propdetailid }) {
   }
 }
 
-/* export function* loadOpenMarketData({ propId, propdetailid }) {
-  const { loadOpenMarketData } = api.planning;
-  return yield loadOpenMarketData(propId, propdetailid);
-} */
-
 export function* loadOpenMarketData(params) {
   const { loadOpenMarketData } = api.planning;
   try {
@@ -1708,6 +1703,36 @@ export function* allocateSpots(data) {
   }
 }
 
+export function* loadPricingData({ detailId }) {
+  const { loadPricingData } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: "loadPricingGuide", loading: true }));
+    return yield loadPricingData(detailId);
+  } finally {
+    yield put(setOverlayLoading({ id: "loadPricingGuide", loading: false }));
+  }
+}
+
+export function* loadPricingDataSuccess({ payload: { detailId } }) {
+  yield put(
+    toggleModal({
+      modal: "pricingGuide",
+      active: true,
+      properties: { detailId }
+    })
+  );
+}
+
+export function* savePricingData(data) {
+  const { savePricingData } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: "savePricingGuide", loading: true }));
+    return yield savePricingData(data);
+  } finally {
+    yield put(setOverlayLoading({ id: "savePricingGuide", loading: false }));
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1843,12 +1868,22 @@ export function* watchAllocateSpots() {
   );
 }
 
-/* export function* watchUploadSCXFile() {
-	yield takeEvery(ACTIONS.SCX_FILE_UPLOAD.request, sagaWrapper(uploadSCXFile, ACTIONS.SCX_FILE_UPLOAD));
-} */
+export function* watchLoadPricingData() {
+  yield takeEvery(
+    ACTIONS.LOAD_PRICING_DATA.request,
+    sagaWrapper(loadPricingData, ACTIONS.LOAD_PRICING_DATA)
+  );
+}
 
-/* export function* watchUploadSCXFileSuccess() {
-  yield takeEvery(ACTIONS.SCX_FILE_UPLOAD.success, uploadSCXFileSuccess);
-} */
+export function* watchLoadPricingDataSuccess() {
+  yield takeEvery(ACTIONS.LOAD_PRICING_DATA.success, loadPricingDataSuccess);
+}
+
+export function* watchSavePricingData() {
+  yield takeEvery(
+    ACTIONS.SAVE_PRICING_GUIDE.request,
+    sagaWrapper(savePricingData, ACTIONS.SAVE_PRICING_GUIDE)
+  );
+}
 
 // if assign watcher > assign in sagas/index rootSaga also

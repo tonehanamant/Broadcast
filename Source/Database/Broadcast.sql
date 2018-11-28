@@ -52,6 +52,158 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-3769 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distributions]'))
+BEGIN
+	CREATE TABLE [dbo].[pricing_guide_distributions](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[proposal_version_detail_id] [int] NOT NULL,
+		[adjustment_margin] [float] NULL,
+		[adjustment_rate] [float] NULL,
+		[adjustment_inflation] [float] NULL,
+		[goal_impression] [float] NULL,
+		[goal_budget] [MONEY] NULL,
+		[open_market_cpm_min] [MONEY] NULL,
+		[open_market_cpm_max] [MONEY] NULL,
+		[open_market_unit_cap_per_station] [int] NULL,
+		[open_market_cpm_target] [tinyint] NULL,
+		[total_open_market_cpm] [FLOAT] NOT NULL,
+		[total_open_market_cost] [MONEY] NOT NULL,
+		[total_open_market_impressions] [FLOAT] NOT NULL,
+		[total_open_market_coverage] [FLOAT] NOT NULL,
+		[total_proprietary_cpm] [FLOAT] NOT NULL,
+		[total_proprietary_cost] [MONEY] NOT NULL,
+		[total_proprietary_impressions] [FLOAT] NOT NULL,
+		[created_date] [DATETIME] NOT NULL,
+		[created_by] [VARCHAR](63) NOT NULL,
+		 CONSTRAINT [PK_pricing_guide_distributions] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+		) ON [PRIMARY]
+	
+		ALTER TABLE [dbo].[pricing_guide_distributions]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distributions_proposal_versions] FOREIGN KEY([proposal_version_detail_id])
+		REFERENCES [dbo].[proposal_version_details] ([id])
+		ON DELETE CASCADE
+		ALTER TABLE [dbo].[pricing_guide_distributions] CHECK CONSTRAINT [FK_pricing_guide_distributions_proposal_versions]
+		CREATE INDEX IX_pricing_guide_distributions_proposal_version_detail_id ON [pricing_guide_distributions] ([proposal_version_detail_id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distribution_proprietary_inventory]'))
+BEGIN
+	CREATE TABLE [dbo].[pricing_guide_distribution_proprietary_inventory](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[pricing_guide_distribution_id] [int] NOT NULL,
+		[inventory_source] [tinyint] NOT NULL,
+		[impressions_balance_percent] [float] NOT NULL,
+		[cpm] [money] NOT NULL,
+		 CONSTRAINT [PK_pricing_guide_distribution_proprietary_inventory] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+		) ON [PRIMARY] 
+	
+		ALTER TABLE [dbo].[pricing_guide_distribution_proprietary_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions] FOREIGN KEY([pricing_guide_distribution_id])
+		REFERENCES [dbo].[pricing_guide_distributions] ([id])
+		ON DELETE CASCADE
+		ALTER TABLE [dbo].[pricing_guide_distribution_proprietary_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions]
+		CREATE INDEX IX_pricing_guide_distribution_proprietary_inventory_pricing_guide_distribution_id ON [pricing_guide_distribution_proprietary_inventory] ([pricing_guide_distribution_id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distribution_open_market_inventory]'))
+BEGIN
+	CREATE TABLE [dbo].[pricing_guide_distribution_open_market_inventory](
+	[id] [INT] IDENTITY(1,1) NOT NULL,
+	[pricing_guide_distribution_id] [int] NOT NULL,
+	[market_code] [smallint] NOT NULL,
+	[station_code] [smallint] NOT NULL,
+	[station_inventory_manifest_dayparts_id] [int] NOT NULL,
+	[daypart_id] INT NOT NULL,
+	[program_name] VARCHAR(255),
+	[blended_cpm] [money] NOT NULL,
+	[spots] [int] NOT NULL,
+	[forecasted_impressions_per_spot] [float] NOT NULL,
+	[station_impressions_per_spot] [float] NOT NULL,
+	[cost_per_spot] [money] NOT NULL,	
+	 CONSTRAINT [PK_pricing_guide_distribution_open_market_inventory] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution] FOREIGN KEY([pricing_guide_distribution_id])
+	REFERENCES [dbo].[pricing_guide_distributions] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution_id ON [pricing_guide_distribution_open_market_inventory] ([pricing_guide_distribution_id])
+
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_markets] FOREIGN KEY([market_code])
+	REFERENCES [dbo].[markets] ([market_code])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_markets]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_market_code ON [pricing_guide_distribution_open_market_inventory] ([market_code])
+
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_stations] FOREIGN KEY([station_code])
+	REFERENCES [dbo].[stations] ([station_code])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_stations]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_station_code ON [pricing_guide_distribution_open_market_inventory] ([station_code])
+
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_[station_inventory_manifest_dayparts] FOREIGN KEY([station_inventory_manifest_dayparts_id])
+	REFERENCES [dbo].[station_inventory_manifest_dayparts] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_[station_inventory_manifest_dayparts]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_station_inventory_manifest_dayparts_id ON [pricing_guide_distribution_open_market_inventory] ([station_inventory_manifest_dayparts_id])
+
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_dayparts] FOREIGN KEY([daypart_id])
+	REFERENCES [dbo].dayparts ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_dayparts]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_daypart_id ON [pricing_guide_distribution_open_market_inventory] ([daypart_id])
+END
+
+IF EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_detail_proprietary_pricing]'))
+BEGIN
+	DROP TABLE [dbo].[proposal_version_detail_proprietary_pricing]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_margin' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [adjustment_margin]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_rate' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [adjustment_rate]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adjustment_inflation' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [adjustment_inflation]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_impression' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [goal_impression]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_budget' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [goal_budget]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'open_market_cpm_min' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [open_market_cpm_min]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'open_market_cpm_max' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [open_market_cpm_max]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'open_market_unit_cap_per_station' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [open_market_unit_cap_per_station]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'open_market_cpm_target' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details]  DROP COLUMN [open_market_cpm_target]
+END
+/*************************************** END BCOP-3769 *****************************************************/
+
 /*************************************** START BCOP-3534 *****************************************************/
 IF OBJECT_ID('station_inventory_manifest_staging', 'U') IS NULL
 BEGIN
@@ -117,6 +269,7 @@ BEGIN
 	CREATE INDEX IX_station_inventory_manifest_staging_rate_spot_length_id ON [station_inventory_manifest_staging] ([rate_spot_length_id])
 END
 /*************************************** END BCOP-3534 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

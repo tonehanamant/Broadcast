@@ -100,6 +100,9 @@ const tracker = {
 const planning = {
   getProposalInitialData: () =>
     call(GET, `${apiBase}Proposals/InitialData`, {}),
+  loadPricingData: detailId =>
+    call(GET, `${apiBase}PricingGuide/${detailId}`, {}),
+  savePricingData: params => call(POST, `${apiBase}PricingGuide/Save`, params),
   getProposals: () => call(GET, `${apiBase}Proposals/GetProposals`, {}),
   getProposalLock: id =>
     call(GET, `${apiBase}Proposals/Proposal/${id}/Lock`, {}),
@@ -130,33 +133,22 @@ const planning = {
     call(GET, `${apiBase}Proposals/FindShowType/${query}`, {}),
   rerunPostScrubing: (propId, propdetailid) =>
     call(PUT, `${apiBase}Proposals/RerunScrubbing/${propId}/${propdetailid}`),
-  /* loadOpenMarketData: (propId, propdetailid) => (
-    call(GET, `${apiBase}Inventory/Detail/PricingGuide/Grid/${propId}/${propdetailid}`)
-  ), */
   loadOpenMarketData: params =>
-    call(POST, `${apiBase}Inventory/Detail/PricingGuide/Grid`, params),
+    call(POST, `${apiBase}PricingGuide/Distribution`, params),
   updateOpenEditMarketsData: params =>
-    call(
-      POST,
-      `${apiBase}Inventory/Detail/PricingGuide/Grid/UpdateMarkets`,
-      params
-    ),
+    call(POST, `${apiBase}PricingGuide/Distribution/UpdateMarkets`, params),
   updateProprietaryCpms: params =>
     call(
       POST,
-      `${apiBase}Inventory/Detail/PricingGuide/UpdateProprietaryCpms`,
+      `${apiBase}PricingGuide/Distribution/UpdateProprietaryCpms`,
       params
     ),
   uploadSCXFile: params =>
     call(POST, `${apiBase}Proposals/UploadProposalDetailBuy`, params),
   allocateSpots: data =>
-    call(POST, `${apiBase}Inventory/Detail/PricingGuide/AllocateSpots`, data),
+    call(POST, `${apiBase}PricingGuide/Distribution/AllocateSpots`, data),
   filterOpenMarketData: params =>
-    call(
-      POST,
-      `${apiBase}Inventory/Detail/PricingGuide/Grid/ApplyFilter`,
-      params
-    )
+    call(POST, `${apiBase}PricingGuide/Distribution/ApplyFilter`, params)
 };
 
 // Calls

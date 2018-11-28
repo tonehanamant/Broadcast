@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BroadcastControllerBase\" />
+    <Folder Include="Views\PricingGuide\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Controllers\MarketController.cs" />
     <Compile Include="Controllers\PostApiController.cs" />
     <Compile Include="Controllers\PostLogController.cs" />
+    <Compile Include="Controllers\PricingGuideController.cs" />
     <Compile Include="Controllers\SpotTrackerController.cs" />
     <Compile Include="Controllers\TrafficApiController.cs" />
     <Compile Include="Controllers\TrafficController.cs" />

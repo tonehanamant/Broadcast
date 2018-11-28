@@ -2,7 +2,6 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -21,11 +20,6 @@ namespace Services.Broadcast.Repositories
         void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, int guaranteedAudienceId);
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
         Dictionary<int, List<station_inventory_manifest>> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds);
-        List<open_market_pricing_guide> GetProposalDetailPricingGuide(int proposalDetailId);
-        void SaveProposalDetailPricingGuide(int proposalDetailId, List<PricingGuideMarketDto> openMarketsPricingGuide);
-        void SaveProposalDetailPricingGuide(int proposalDetailId, List<open_market_pricing_guide> pricingGuides);
-        void DeleteProposalDetailPricingGuide(int proposalDetailId);
-        PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId);
     }
 
     public class ProposalOpenMarketInventoryRepository : BroadcastRepositoryBase, IProposalOpenMarketInventoryRepository
@@ -143,125 +137,6 @@ namespace Services.Broadcast.Repositories
 
                 return list.GroupBy(sis => sis.proposal_version_detail_quarter_week_id.Value)
                             .ToDictionary(k => k.Key, v => v.Select(m => m.station_inventory_manifest).ToList());
-            });
-        }
-
-        public List<open_market_pricing_guide> GetProposalDetailPricingGuide(int proposalDetailId)
-        {
-            return _InReadUncommitedTransaction(c =>
-            {
-                var rawPricingGuide =
-                    c.open_market_pricing_guide
-                            .Include(pg => pg.market.market_coverages)
-                            .Include(pg => pg.station)
-                            .Include(pg => pg.station_inventory_manifest_dayparts.daypart)
-                        .Where(pg => pg.proposal_version_detail_id == proposalDetailId);
-                return rawPricingGuide.ToList();
-            });
-        }
-
-        public void SaveProposalDetailPricingGuide(int proposalDetailId, List<open_market_pricing_guide> pricingGuides)
-        {
-            _InReadUncommitedTransaction(c =>
-            {
-                var proposalDetailPricingGuides =
-                    c.open_market_pricing_guide.Where(g => g.proposal_version_detail_id == proposalDetailId);
-
-                c.open_market_pricing_guide.RemoveRange(proposalDetailPricingGuides);
-
-                c.open_market_pricing_guide.AddRange(pricingGuides);
-                c.SaveChanges();
-            });
-        }
-
-        public void DeleteProposalDetailPricingGuide(int proposalDetailId)
-        {
-            _InReadUncommitedTransaction(c =>
-            {
-                var proposalDetailPricingGuides =
-                    c.open_market_pricing_guide.Where(g => g.proposal_version_detail_id == proposalDetailId);
-                c.open_market_pricing_guide.RemoveRange(proposalDetailPricingGuides);
-                c.SaveChanges();
-            });
-
-        }
-
-        public void SaveProposalDetailPricingGuide(int proposalDetailId, List<PricingGuideMarketDto> openMarketPricingGuides)
-        {
-            var pricingGuides = openMarketPricingGuides
-                .SelectMany(m => m.Stations
-                    .SelectMany(s => s.Programs
-                        .Select(p => new open_market_pricing_guide()
-                        {
-                            proposal_version_detail_id = proposalDetailId,
-                            market_code = (short) m.MarketId,
-                            station_code = (short) s.StationCode,
-                            station_inventory_manifest_dayparts_id = p.ManifestDaypartId,
-                            blended_cpm = p.BlendedCpm,
-                            spots = p.Spots,
-                            impressions_per_spot = p.ImpressionsPerSpot,
-                            impressions = p.Impressions,
-                            station_impressions = p.StationImpressionsPerSpot,
-                            cost_per_spot = p.CostPerSpot,
-                            cost = p.Cost
-                        })
-                    )
-                );
-
-            SaveProposalDetailPricingGuide(proposalDetailId, pricingGuides.ToList());
-        }
-        
-        public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var pv = context.proposal_version_details
-                    .Include(pvd => pvd.proposal_versions.proposal)
-                    .Include(pvd => pvd.proposal_version_detail_quarters.Select(dq => dq.proposal_version_detail_quarter_weeks))
-                    .Include(pvd => pvd.proposal_versions.proposal_version_flight_weeks)
-                    .Include(pvd => pvd.proposal_version_detail_criteria_cpm)
-                    .Include(pvd => pvd.proposal_version_detail_criteria_genres)
-                    .Include(pvd => pvd.proposal_version_detail_criteria_programs)
-                    .Single(d => d.id == proposalDetailId, $"The proposal detail information you have entered [{proposalDetailId}] does not exist.");
-
-                var dto = new PricingGuideOpenMarketInventory
-                {
-                    MarketCoverage = pv.proposal_versions.market_coverage ?? 1,
-                    ProposalMarkets = pv.proposal_versions.proposal_version_markets.Select(x => new ProposalMarketDto
-                    {
-                        Id = x.market_code,
-                        IsBlackout = x.is_blackout
-                    }).ToList()
-                };
-
-                ProposalRepository.PopoulateProposalDetailInventoryBase(pv, dto);
-
-                dto.Criteria = new OpenMarketCriterion
-                {
-                    CpmCriteria = pv.proposal_version_detail_criteria_cpm.Select(c =>
-                        new CpmCriteria { Id = c.id, MinMax = (MinMaxEnum)c.min_max, Value = c.value }).ToList(),
-                    GenreSearchCriteria = pv.proposal_version_detail_criteria_genres.Select(c =>
-                            new GenreCriteria()
-                            {
-                                Id = c.id,
-                                Contain = (ContainTypeEnum)c.contain_type,
-                                Genre = new LookupDto(c.genre_id, c.genre.name)
-                            })
-                        .ToList(),
-                    ProgramNameSearchCriteria = pv.proposal_version_detail_criteria_programs.Select(c =>
-                        new ProgramCriteria
-                        {
-                            Id = c.id,
-                            Contain = (ContainTypeEnum)c.contain_type,
-                            Program = new LookupDto
-                            {
-                                Id = c.program_name_id,
-                                Display = c.program_name
-                            }
-                        }).ToList()
-                };
-
-                return dto;
             });
         }
     }

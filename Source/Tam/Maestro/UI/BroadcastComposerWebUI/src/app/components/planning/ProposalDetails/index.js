@@ -40,7 +40,7 @@ export default class ProposalDetails extends Component {
             initialdata={initialdata}
             updateProposalEditFormDetail={updateProposalEditFormDetail}
             updateProposalEditFormDetailGrid={updateProposalEditFormDetailGrid}
-            onUpdateProposal={() => this.onUpdateProposal()}
+            onUpdateProposal={this.onUpdateProposal}
             deleteProposalDetail={deleteProposalDetail}
             toggleModal={toggleModal}
             isReadOnly={this.props.isReadOnly}

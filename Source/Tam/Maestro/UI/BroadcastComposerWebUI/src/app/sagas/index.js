@@ -74,6 +74,9 @@ export default function* rootSaga() {
     planningSaga.watchAllocateSpots(),
     // planningSaga.watchUploadSCXFileSuccess(),
     planningSaga.watchFilterOpenMarketData(),
+    planningSaga.watchLoadPricingDataSuccess(),
+    planningSaga.watchLoadPricingData(),
+    planningSaga.watchSavePricingData(),
 
     trackerSaga.watchUploadTrackerFile(),
     trackerSaga.watchUploadTrackerFileSuccess(),

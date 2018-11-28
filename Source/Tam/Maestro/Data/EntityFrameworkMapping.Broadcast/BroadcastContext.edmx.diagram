@@ -161,8 +161,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_versions_proposals" />
-        <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_proprietary_pricing" Width="1.5" PointX="31.75" PointY="14" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_proprietary_pricing_proposal_version_details" />
         <EntityTypeShape EntityType="BroadcastModel.spot_tracker_file_details" Width="1.5" PointX="5" PointY="22" />
         <EntityTypeShape EntityType="BroadcastModel.spot_tracker_files" Width="1.5" PointX="2.75" PointY="30.25" />
         <AssociationConnector Association="BroadcastModel.FK_spot_tracker_file_details_spot_lengths" />
@@ -197,11 +195,6 @@
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_daypart_genres" Width="1.5" PointX="21.5" PointY="30" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_genres_genres" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_genres_station_inventory_manifest_dayparts" />
-        <EntityTypeShape EntityType="BroadcastModel.open_market_pricing_guide" Width="1.5" PointX="31.25" PointY="9" />
-        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_market_code" />
-        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_proposal_version_detail_id" />
-        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_station_code" />
-        <AssociationConnector Association="BroadcastModel.FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="25.875" PointY="12.875" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrub_audiences" Width="1.5" PointX="28.125" PointY="5.75" />
@@ -227,6 +220,16 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_rate_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_staging_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.pricing_guide_distribution_open_market_inventory" Width="1.5" PointX="33.5" PointY="7.125" />
+        <EntityTypeShape EntityType="BroadcastModel.pricing_guide_distribution_proprietary_inventory" Width="1.5" PointX="33.5" PointY="3.5" />
+        <EntityTypeShape EntityType="BroadcastModel.pricing_guide_distributions" Width="1.5" PointX="31.25" PointY="1.875" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

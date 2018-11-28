@@ -158,11 +158,6 @@ export default function reducer(state = initialState, action) {
         proposalEditForm: {
           ...state.proposalEditForm,
           Details: [
-            // ...state.proposalEditForm.Details,
-            // [detailIndex]: {
-            //   ...state.proposalEditForm.Details[detailIndex],
-            //   [payload.key]: payload.value,
-            // },
             ...state.proposalEditForm.Details.slice(0, detailIndex),
             {
               ...state.proposalEditForm.Details[detailIndex],
@@ -370,6 +365,7 @@ export default function reducer(state = initialState, action) {
         openMarketLoaded: true
       };
     }
+    case ACTIONS.LOAD_PRICING_DATA.success:
     case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
       return {
         ...state,
@@ -470,15 +466,12 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.UPDATE_EDIT_MARKETS_DATA.success: {
-      // console.log("UPDATE_EDIT_MARKETS_DATA success", data.Data);
       return {
         ...state,
         openMarketData: data.Data,
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         activeOpenMarketData: data.Data,
         isOpenMarketDataSortName: false,
-        // openMarketLoading: false,
-        // openMarketLoaded: true,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };
@@ -645,11 +638,6 @@ export const rerunPostScrubing = (propId, propdetailid) => ({
   payload: { propId, propdetailid }
 });
 
-/* export const loadOpenMarketData = (propId, propdetailid) => ({
-  type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
-  payload: { propId, propdetailid },
-}); */
-
 export const loadOpenMarketData = params => ({
   type: ACTIONS.LOAD_OPEN_MARKET_DATA.request,
   payload: params
@@ -705,5 +693,15 @@ export const setEstimatedId = (detailId, estimatedId) => ({
 }); */
 export const allocateSpots = data => ({
   type: ACTIONS.ALLOCATE_SPOTS.request,
+  payload: data
+});
+
+export const loadPricingData = detailId => ({
+  type: ACTIONS.LOAD_PRICING_DATA.request,
+  payload: { detailId }
+});
+
+export const savePricingData = data => ({
+  type: ACTIONS.SAVE_PRICING_GUIDE.request,
   payload: data
 });

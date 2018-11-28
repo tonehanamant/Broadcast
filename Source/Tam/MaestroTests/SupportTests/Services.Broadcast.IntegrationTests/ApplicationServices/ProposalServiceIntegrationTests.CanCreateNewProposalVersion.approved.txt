@@ -38,21 +38,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "PricingGuide": {
-        "AdjustmentInflation": null,
-        "AdjustmentMargin": null,
-        "AdjustmentRate": null,
-        "GoalBudget": null,
-        "GoalImpression": null,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
@@ -123,21 +108,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "PricingGuide": {
-        "AdjustmentInflation": null,
-        "AdjustmentMargin": null,
-        "AdjustmentRate": null,
-        "GoalBudget": null,
-        "GoalImpression": null,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
