@@ -181,6 +181,12 @@ namespace Services.Broadcast.IntegrationTests
                 case "WWTV_KeepingTracFtpInboundFolder":
                     result = @"D:\temp\wwtv\WWTV_KeepingTracFtpInboundFolder";
                     break;
+                case "ImpressionStartEndTimeAdjustment":
+                    result = "450";
+                    break;
+                case "ImpressionStartOfDayForAdjustment":
+                    result = @"18000";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

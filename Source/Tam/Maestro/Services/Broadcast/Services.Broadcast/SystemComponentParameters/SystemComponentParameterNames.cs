@@ -369,6 +369,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastComposerWeb" ; }
         }
 	  
+		public static string ImpressionStartEndTimeAdjustment  
+		{
+            get { return "ImpressionStartEndTimeAdjustment"; }
+        }
+	 
+		public static string ImpressionStartOfDayForAdjustment  
+		{
+            get { return "ImpressionStartOfDayForAdjustment"; }
+        }
+	 
 		public static string UseDayByDayImpressions  
 		{
             get { return "UseDayByDayImpressions"; }
@@ -395,6 +405,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string BroadcastMatchingBuffer  
 		{
             get { return "BroadcastMatchingBuffer"; }
+        }
+	 
+		public static string BroadcastNTIUploadApiUrl  
+		{
+            get { return "BroadcastNTIUploadApiUrl"; }
         }
 	 
 		public static string DefaultMarketCoverage  
@@ -750,6 +765,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ImsNotificationCcEmailAddresses  
 		{
             get { return "ImsNotificationCcEmailAddresses"; }
+        }
+	 
+		public static string InventoryWebApiURL  
+		{
+            get { return "InventoryWebApiURL"; }
         }
 	 
 		public static string RExecutableFilePath  
@@ -1457,6 +1477,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ReleaseComposer" ; }
         }
 	  
+		public static string EditCopySplitFeatureEnabled  
+		{
+            get { return "EditCopySplitFeatureEnabled"; }
+        }
+	 
 		public static string MsoFeatureManagerEnabled  
 		{
             get { return "MsoFeatureManagerEnabled"; }
@@ -1668,6 +1693,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string DivisionsEditorUrl  
 		{
             get { return "DivisionsEditorUrl"; }
+        }
+	 
+		public static string FreezeCoverageUniverseIgnorePrimaryFlags  
+		{
+            get { return "FreezeCoverageUniverseIgnorePrimaryFlags"; }
         }
 	 
 		public static string MvpdMinSpotCostEditorUrl  
