@@ -18,7 +18,7 @@ export const generetaColumns = (columns, displayColumns) =>
   columns.map(c => {
     const isShow = displayColumns[c.id];
     return {
-      ...c,
-      show: isNil(isShow) ? true : isShow
+      show: isNil(isShow) ? true : isShow,
+      ...c
     };
   });

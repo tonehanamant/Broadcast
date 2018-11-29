@@ -5,13 +5,14 @@ import { bindActionCreators } from "redux";
 import { getPlanningFiltered } from "Ducks/planning";
 import { Glyphicon, Button } from "react-bootstrap";
 import { Checkbox, Menu, Dropdown } from "antd";
+import { isNil } from "lodash";
 import SearchInputButton from "Components/shared/SearchInputButton";
 
 import "./index.scss";
 
 const generateColumnItems = (columns, onVisible) => (
   <Menu>
-    {columns.map(c => (
+    {columns.filter(c => isNil(c.show)).map(c => (
       <Menu.Item key={`column-item-${c.id}`}>
         <Checkbox
           defaultChecked
