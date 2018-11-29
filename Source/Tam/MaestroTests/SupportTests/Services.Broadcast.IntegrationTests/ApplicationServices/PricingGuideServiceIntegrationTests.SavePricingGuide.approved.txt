@@ -65,7 +65,7 @@
       "AvgCpm": 0.0,
       "DisplayImpressions": 10.0,
       "DisplayStationImpressions": 43156.671875,
-      "MarketCoverage": 0.0,
+      "MarketCoverage": 6.309,
       "MarketName": "New York",
       "MarketRank": 0,
       "MaxCpm": 0.0,

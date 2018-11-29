@@ -158,6 +158,7 @@ namespace Services.Broadcast.ApplicationServices
                 p.Impressions = p.ImpressionsPerSpot * p.Spots;
                 p.Cost = p.CostPerSpot * p.Spots;
             })));
+            _ApplyInventoryMarketCoverages(inventoryMarkets);
             return inventoryMarkets;
         }
 
