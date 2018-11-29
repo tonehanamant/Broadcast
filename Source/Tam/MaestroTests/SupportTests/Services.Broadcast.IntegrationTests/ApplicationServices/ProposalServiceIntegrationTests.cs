@@ -357,6 +357,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CanLoadProprietaryPricingInventorySources()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _ProposalService.GetInitialProposalData(_CurrentDateTime);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.ProprietaryPricingInventorySources));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetAllProposalVersionsForAProposal()
         {
             using (new TransactionScopeWrapper())

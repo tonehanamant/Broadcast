@@ -155,7 +155,7 @@ namespace Services.Broadcast.ApplicationServices
                 InventorySources = Enum.GetValues(typeof(InventorySourceEnum))
                     .Cast<InventorySourceEnum>()
                     .Where(e => e != InventorySourceEnum.Blank)
-                    .Select(e => new LookupDto { Display = e.ToString(), Id = (int)e })
+                    .Select(e => new LookupDto { Display = e.Description(), Id = (int)e })
                     .ToList(),
                 SchedulePostTypes = Enum.GetValues(typeof(SchedulePostType))
                     .Cast<SchedulePostType>()

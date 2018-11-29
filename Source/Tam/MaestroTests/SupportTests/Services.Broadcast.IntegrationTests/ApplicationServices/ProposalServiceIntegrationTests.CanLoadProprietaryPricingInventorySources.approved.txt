@@ -1,0 +1,30 @@
+﻿[
+  {
+    "Display": "TVB",
+    "Id": 3
+  },
+  {
+    "Display": "TTNW",
+    "Id": 4
+  },
+  {
+    "Display": "CNN",
+    "Id": 5
+  },
+  {
+    "Display": "Sinclair",
+    "Id": 6
+  },
+  {
+    "Display": "LilaMax",
+    "Id": 7
+  },
+  {
+    "Display": "Ferenc Media",
+    "Id": 8
+  },
+  {
+    "Display": "O&O",
+    "Id": 9
+  }
+]

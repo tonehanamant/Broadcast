@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import { InputNumber } from "antd";
 import numeral from "numeral";
-import { numberRender } from "../util";
+import { numberRender, calculateBalanceSum } from "../util";
 import PricingGuideGrid from "./PricingGuideGrid";
 import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
 
@@ -110,14 +110,11 @@ class PricingOpenMarkets extends Component {
       activeEditMarkets,
       isEditMarketsActive,
       activeOpenMarketData,
-      propImpressionsCNN,
-      propImpressionsSinclair,
-      propImpressionsTTNW,
-      propImpressionsTVB,
       openCpmMin,
       openCpmMax,
       openUnitCap,
       openCpmTarget,
+      initialdata,
       proposalEditForm
     } = this.props;
 
@@ -131,11 +128,10 @@ class PricingOpenMarkets extends Component {
       proposalEditForm && proposalEditForm.MarketCoverage
         ? proposalEditForm.MarketCoverage
         : 0;
-    const balanceSum =
-      propImpressionsCNN +
-      propImpressionsSinclair +
-      propImpressionsTTNW +
-      propImpressionsTVB;
+    const balanceSum = calculateBalanceSum(
+      initialdata.ProprietaryPricingInventorySources,
+      this.props
+    );
 
     return (
       <Panel
@@ -395,18 +391,16 @@ PricingOpenMarkets.propTypes = {
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
   isEditMarketsActive: PropTypes.bool.isRequired,
-  activeOpenMarketData: PropTypes.object.isRequired,
+  activeOpenMarketData: PropTypes.object,
+  initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   openCpmMin: PropTypes.number,
   openCpmMax: PropTypes.number,
   openUnitCap: PropTypes.number,
-  openCpmTarget: PropTypes.number,
-  propImpressionsCNN: PropTypes.number,
-  propImpressionsSinclair: PropTypes.number,
-  propImpressionsTTNW: PropTypes.number,
-  propImpressionsTVB: PropTypes.number
+  openCpmTarget: PropTypes.number
 };
 PricingOpenMarkets.defaultProps = {
+  activeOpenMarketData: {},
   propCpmCNN: 0,
   propCpmSinclair: 0,
   propCpmTTNW: 0,

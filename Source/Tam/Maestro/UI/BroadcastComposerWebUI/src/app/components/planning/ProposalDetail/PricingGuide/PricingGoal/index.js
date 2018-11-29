@@ -317,20 +317,21 @@ class PricingGoal extends Component {
 
 PricingGoal.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
-  impression: PropTypes.string,
-  budget: PropTypes.string,
-  margin: PropTypes.string,
-  rateInflation: PropTypes.string,
-  impressionInflation: PropTypes.string,
-  activeOpenMarketData: PropTypes.object.isRequired,
+  impression: PropTypes.number,
+  budget: PropTypes.number,
+  margin: PropTypes.number,
+  rateInflation: PropTypes.number,
+  impressionInflation: PropTypes.number,
+  activeOpenMarketData: PropTypes.object,
   submit: PropTypes.func.isRequired
 };
 PricingGoal.defaultProps = {
-  impression: "",
-  budget: "",
-  margin: "",
-  rateInflation: "",
-  impressionInflation: ""
+  activeOpenMarketData: {},
+  impression: 0,
+  budget: 0,
+  margin: 0,
+  rateInflation: 0,
+  impressionInflation: 0
 };
 
 export default PricingGoal;

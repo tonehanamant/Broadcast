@@ -1,19 +1,10 @@
 /* eslint-disable react/no-did-mount-set-state */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Button,
-  Panel,
-  FormControl,
-  Glyphicon,
-  Row,
-  Col,
-  Table,
-  Label
-} from "react-bootstrap";
-import { InputNumber } from "antd";
+import { Button, Panel, Glyphicon, Row, Col, Table } from "react-bootstrap";
 import numeral from "numeral";
-import { numberRender, invSrcEnum } from "../util";
+import { numberRender, calculateBalanceSum } from "../util";
+import { transformInvetorySrc, transformInvetoryLabel } from "./util";
 
 class PricingProprietary extends Component {
   constructor(props) {
@@ -21,14 +12,7 @@ class PricingProprietary extends Component {
 
     this.state = {
       isEditing: false,
-      editingPropCpmCNN: 0,
-      editingPropCpmSinclair: 0,
-      editingPropCpmTTNW: 0,
-      editingPropCpmTVB: 0,
-      editingPropImpressionsCNN: 0,
-      editingPropImpressionsSinclair: 0,
-      editingPropImpressionsTTNW: 0,
-      editingPropImpressionsTVB: 0
+      values: {}
     };
 
     this.toggleEditing = this.toggleEditing.bind(this);
@@ -38,20 +22,19 @@ class PricingProprietary extends Component {
   }
 
   componentDidMount() {
-    const { activeOpenMarketData } = this.props;
-    if (activeOpenMarketData.ProprietaryPricing) {
-      const toUpdate = {};
-      activeOpenMarketData.ProprietaryPricing.forEach(item => {
-        const bal = item.ImpressionsBalance || 0;
-        const cpm = item.Cpm || 0;
-        if (bal || cpm) {
-          const src = item.InventorySource;
-          toUpdate[`editingPropImpressions${invSrcEnum[src]}`] = bal;
-          toUpdate[`editingPropCpm${invSrcEnum[src]}`] = cpm;
-        }
-      });
-      this.setState(toUpdate);
-    }
+    const {
+      activeOpenMarketData: { ProprietaryPricing },
+      initialdata
+    } = this.props;
+    const { ProprietaryPricingInventorySources: invSrcEnum } = initialdata;
+    const toUpdate = {};
+    invSrcEnum.forEach(({ Id }) => {
+      const { ImpressionsBalance: bal = 0, Cpm: cpm = 0 } =
+        (ProprietaryPricing || []).find(it => Id === it.InventorySource) || {};
+      toUpdate[`editingPropImpressions${Id}`] = bal;
+      toUpdate[`editingPropCpm${Id}`] = cpm;
+    });
+    this.setState({ values: toUpdate });
   }
 
   toggleEditing() {
@@ -61,99 +44,53 @@ class PricingProprietary extends Component {
   }
 
   handleChange(name, value) {
-    this.setState({ [name]: value });
+    const { values } = this.state;
+    this.setState({ values: { ...values, [name]: value } });
   }
 
   onSave() {
-    const { onUpdateProprietaryCpms, submit } = this.props;
     const {
-      editingPropImpressionsCNN,
-      editingPropImpressionsSinclair,
-      editingPropImpressionsTTNW,
-      editingPropImpressionsTVB,
-      editingPropCpmCNN,
-      editingPropCpmTTNW,
-      editingPropCpmTVB,
-      editingPropCpmSinclair
-    } = this.state;
-    submit({
-      propImpressionsCNN: editingPropImpressionsCNN,
-      propImpressionsSinclair: editingPropImpressionsSinclair,
-      propImpressionsTTNW: editingPropImpressionsTTNW,
-      propImpressionsTVB: editingPropImpressionsTVB,
-      propCpmCNN: editingPropCpmCNN,
-      propCpmSinclair: editingPropCpmSinclair,
-      propCpmTTNW: editingPropCpmTTNW,
-      propCpmTVB: editingPropCpmTVB
+      onUpdateProprietaryCpms,
+      submit,
+      initialdata: { ProprietaryPricingInventorySources: invSrcEnum }
+    } = this.props;
+    const { values } = this.state;
+    const newValues = {};
+    invSrcEnum.forEach(({ Display, Id }) => {
+      newValues[`propImpressions${Display}`] =
+        values[`editingPropImpressions${Id}`];
+      newValues[`propCpm${Display}`] = values[`editingPropCpm${Id}`];
     });
-    onUpdateProprietaryCpms();
+
+    submit(newValues, onUpdateProprietaryCpms);
     this.toggleEditing();
   }
 
   onCancel() {
     const {
-      propImpressionsCNN,
-      propImpressionsSinclair,
-      propImpressionsTTNW,
-      propImpressionsTVB,
-      propCpmCNN,
-      propCpmSinclair,
-      propCpmTTNW,
-      propCpmTVB
+      initialdata: { ProprietaryPricingInventorySources: invSrcEnum }
     } = this.props;
-    this.setState({
-      editingPropImpressionsCNN: propImpressionsCNN,
-      editingPropImpressionsSinclair: propImpressionsSinclair,
-      editingPropImpressionsTTNW: propImpressionsTTNW,
-      editingPropImpressionsTVB: propImpressionsTVB,
-      editingPropCpmCNN: propCpmCNN,
-      editingPropCpmSinclair: propCpmSinclair,
-      editingPropCpmTTNW: propCpmTTNW,
-      editingPropCpmTVB: propCpmTVB
+    const oldValues = {};
+    invSrcEnum.forEach(({ Display, Id }) => {
+      oldValues[`editingPropImpressions${Id}`] = this.props[
+        `propImpressions${Display}`
+      ];
+      oldValues[`editingPropCpm${Id}`] = this.props[`propCpm${Display}`];
     });
+    this.setState({ values: oldValues });
     this.toggleEditing();
   }
 
   render() {
-    const {
-      isReadOnly,
-      propImpressionsCNN,
-      propImpressionsSinclair,
-      propImpressionsTTNW,
-      activeOpenMarketData,
-      propImpressionsTVB,
-      propCpmCNN,
-      propCpmSinclair,
-      propCpmTTNW,
-      propCpmTVB
-    } = this.props;
-    const {
-      isEditing,
-      editingPropCpmCNN,
-      editingPropCpmSinclair,
-      editingPropCpmTTNW,
-      editingPropCpmTVB,
-      editingPropImpressionsCNN,
-      editingPropImpressionsSinclair,
-      editingPropImpressionsTTNW,
-      editingPropImpressionsTVB
-    } = this.state;
+    const { isReadOnly, activeOpenMarketData, initialdata } = this.props;
+    const { isEditing, values } = this.state;
 
-    const balanceSum =
-      propImpressionsCNN +
-      propImpressionsSinclair +
-      propImpressionsTTNW +
-      propImpressionsTVB;
+    const balanceSum = calculateBalanceSum(
+      initialdata.ProprietaryPricingInventorySources,
+      this.props
+    );
 
     const isBalanceWarning = balanceSum > 1;
-    const CNNActive =
-      propImpressionsCNN > 0 ? "tag-label active" : "tag-label inactive";
-    const sinclairActive =
-      propImpressionsSinclair > 0 ? "tag-label active" : "tag-label inactive";
-    const TTNWActive =
-      propImpressionsTTNW > 0 ? "tag-label active" : "tag-label inactive";
-    const TVBActive =
-      propImpressionsTVB > 0 ? "tag-label active" : "tag-label inactive";
 
     return (
       <Panel
@@ -163,7 +100,7 @@ class PricingProprietary extends Component {
       >
         <Panel.Heading>
           <Panel.Title toggle>
-            <Glyphicon glyph="chevron-up" /> PROPRIETARY
+            <Glyphicon glyph="chevron-up" /> PRE OWNED INVENTORY
           </Panel.Title>
           <Row>
             <Col sm={1}>
@@ -175,10 +112,10 @@ class PricingProprietary extends Component {
             </Col>
             <Col sm={5}>
               <div style={{ marginTop: "12px" }}>
-                <Label className={CNNActive}>CNN</Label>
-                <Label className={sinclairActive}>SINCLAIR</Label>
-                <Label className={TTNWActive}>TTWN</Label>
-                <Label className={TVBActive}>TVB</Label>
+                {transformInvetoryLabel(
+                  initialdata.ProprietaryPricingInventorySources,
+                  this.props
+                )}
               </div>
             </Col>
             <Col sm={6}>
@@ -257,245 +194,13 @@ class PricingProprietary extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>CNN</td>
-                      <td>
-                        {!isEditing && (
-                          <FormControl.Static>
-                            {propImpressionsCNN
-                              ? numeral(propImpressionsCNN * 100).format(
-                                  "0,0.[00]"
-                                )
-                              : "--"}%
-                          </FormControl.Static>
-                        )}
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropImpressionsCNN * 100}
-                            disabled={isReadOnly}
-                            min={0}
-                            max={100}
-                            precision={2}
-                            // style={{ width: '100px' }}
-                            formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/%\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange(
-                                "editingPropImpressionsCNN",
-                                value / 100
-                              );
-                            }}
-                          />
-                        )}
-                      </td>
-                      <td>
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropCpmCNN || null}
-                            disabled={isReadOnly}
-                            min={0}
-                            precision={2}
-                            style={{ width: "100%" }}
-                            formatter={value =>
-                              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/\$\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange("editingPropCpmCNN", value);
-                            }}
-                          />
-                        )}
-                        {!isEditing && (
-                          <FormControl.Static>
-                            ${propCpmCNN
-                              ? numeral(propCpmCNN).format("0,0.[00]")
-                              : "--"}
-                          </FormControl.Static>
-                        )}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>SINCLAIR</td>
-                      <td>
-                        {!isEditing && (
-                          <FormControl.Static>
-                            {propImpressionsSinclair
-                              ? numeral(propImpressionsSinclair * 100).format(
-                                  "0,0.[00]"
-                                )
-                              : "--"}%
-                          </FormControl.Static>
-                        )}
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropImpressionsSinclair * 100}
-                            disabled={isReadOnly}
-                            min={0}
-                            max={100}
-                            precision={2}
-                            // style={{ width: '100px' }}
-                            formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/%\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange(
-                                "editingPropImpressionsSinclair",
-                                value / 100
-                              );
-                            }}
-                          />
-                        )}
-                      </td>
-                      <td>
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropCpmSinclair || null}
-                            disabled={isReadOnly}
-                            min={0}
-                            precision={2}
-                            style={{ width: "100%" }}
-                            formatter={value =>
-                              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/\$\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange(
-                                "editingPropCpmSinclair",
-                                value
-                              );
-                            }}
-                          />
-                        )}
-                        {!isEditing && (
-                          <FormControl.Static>
-                            ${propCpmSinclair
-                              ? numeral(propCpmSinclair).format("0,0.[00]")
-                              : "--"}
-                          </FormControl.Static>
-                        )}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>TTNW</td>
-                      <td>
-                        {!isEditing && (
-                          <FormControl.Static>
-                            {propImpressionsTTNW
-                              ? numeral(propImpressionsTTNW * 100).format(
-                                  "0,0.[00]"
-                                )
-                              : "--"}%
-                          </FormControl.Static>
-                        )}
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropImpressionsTTNW * 100}
-                            disabled={isReadOnly}
-                            min={0}
-                            max={100}
-                            precision={2}
-                            // style={{ width: '100px' }}
-                            formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/%\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange(
-                                "editingPropImpressionsTTNW",
-                                value / 100
-                              );
-                            }}
-                          />
-                        )}
-                      </td>
-                      <td>
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropCpmTTNW || null}
-                            disabled={isReadOnly}
-                            min={0}
-                            precision={2}
-                            style={{ width: "100%" }}
-                            formatter={value =>
-                              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/\$\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange("editingPropCpmTTNW", value);
-                            }}
-                          />
-                        )}
-                        {!isEditing && (
-                          <FormControl.Static>
-                            ${propCpmTTNW
-                              ? numeral(propCpmTTNW).format("0,0.[00]")
-                              : "--"}
-                          </FormControl.Static>
-                        )}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>TVB</td>
-                      <td>
-                        {!isEditing && (
-                          <FormControl.Static>
-                            {propImpressionsTVB
-                              ? numeral(propImpressionsTVB * 100).format(
-                                  "0,0.[00]"
-                                )
-                              : "--"}%
-                          </FormControl.Static>
-                        )}
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropImpressionsTVB * 100}
-                            disabled={isReadOnly}
-                            min={0}
-                            max={100}
-                            precision={2}
-                            // style={{ width: '100px' }}
-                            formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/%\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange(
-                                "editingPropImpressionsTVB",
-                                value / 100
-                              );
-                            }}
-                          />
-                        )}
-                      </td>
-                      <td>
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingPropCpmTVB || null}
-                            disabled={isReadOnly}
-                            min={0}
-                            precision={2}
-                            style={{ width: "100%" }}
-                            formatter={value =>
-                              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/\$\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.handleChange("editingPropCpmTVB", value);
-                            }}
-                          />
-                        )}
-                        {!isEditing && (
-                          <FormControl.Static>
-                            ${propCpmTVB
-                              ? numeral(propCpmTVB).format("0,0.[00]")
-                              : "--"}
-                          </FormControl.Static>
-                        )}
-                      </td>
-                    </tr>
+                    {transformInvetorySrc(
+                      initialdata.ProprietaryPricingInventorySources,
+                      this.props,
+                      values,
+                      this.handleChange,
+                      isEditing
+                    )}
                     <tr>
                       <td>
                         <strong>TOTALS</strong>
@@ -529,31 +234,12 @@ PricingProprietary.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   submit: PropTypes.func.isRequired,
   onUpdateProprietaryCpms: PropTypes.func.isRequired,
-  activeOpenMarketData: PropTypes.object.isRequired,
-  propCpmCNN: PropTypes.number,
-  propCpmSinclair: PropTypes.number,
-  propCpmTTNW: PropTypes.number,
-  propCpmTVB: PropTypes.number,
-  propImpressionsCNN: PropTypes.number,
-  propImpressionsSinclair: PropTypes.number,
-  propImpressionsTTNW: PropTypes.number,
-  propImpressionsTVB: PropTypes.number
+  activeOpenMarketData: PropTypes.object,
+  initialdata: PropTypes.object.isRequired
 };
 
 PricingProprietary.defaultProps = {
-  propCpmCNN: 0,
-  propCpmSinclair: 0,
-  propCpmTTNW: 0,
-  propCpmTVB: 0,
-  propImpressionsCNN: 0,
-  propImpressionsSinclair: 0,
-  propImpressionsTTNW: 0,
-  propImpressionsTVB: 0,
-  // open market
-  openCpmMin: null,
-  openCpmMax: null,
-  openUnitCap: null,
-  openCpmTarget: 1
+  activeOpenMarketData: {}
 };
 
 export default PricingProprietary;

@@ -19,7 +19,7 @@ import {
   panelsList,
   numberRender,
   initialState,
-  invSrcEnum,
+  calculateBalanceSum,
   parsePrograms
 } from "./util";
 import "./index.scss";
@@ -111,12 +111,15 @@ class PricingGuide extends Component {
     }
   }
 
-  submitChanges(nextValues) {
-    this.setState({
-      ...nextValues,
-      isDistributionRunned: false,
-      isGuideChanged: true
-    });
+  submitChanges(nextValues, cb) {
+    this.setState(
+      {
+        ...nextValues,
+        isDistributionRunned: false,
+        isGuideChanged: true
+      },
+      cb
+    );
   }
 
   onModalShow() {
@@ -147,19 +150,17 @@ class PricingGuide extends Component {
   // set states from detail ProprietaryPricing array
   // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
   setProprietaryPricing({ ProprietaryPricing }) {
-    if (ProprietaryPricing && ProprietaryPricing.length) {
-      const toUpdate = {};
-      ProprietaryPricing.forEach(item => {
-        const bal = item.ImpressionsBalance || 0;
-        const cpm = item.Cpm || 0;
-        if (bal || cpm) {
-          const src = item.InventorySource;
-          toUpdate[`propImpressions${invSrcEnum[src]}`] = bal;
-          toUpdate[`propCpm${invSrcEnum[src]}`] = cpm;
-        }
-      });
-      this.setState(toUpdate);
-    }
+    const {
+      initialdata: { ProprietaryPricingInventorySources }
+    } = this.props;
+    const toUpdate = {};
+    ProprietaryPricingInventorySources.forEach(({ Id, Display }) => {
+      const { ImpressionsBalance: bal = 0, Cpm: cpm = 0 } =
+        (ProprietaryPricing || []).find(it => Id === it.InventorySource) || {};
+      toUpdate[`propImpressions${Display}`] = bal;
+      toUpdate[`propCpm${Display}`] = cpm;
+    });
+    this.setState(toUpdate);
   }
 
   setOpenMarketPricing(guide) {
@@ -176,18 +177,12 @@ class PricingGuide extends Component {
   }
 
   getOpenMarketShare() {
-    const {
-      propImpressionsCNN,
-      propImpressionsSinclair,
-      propImpressionsTTNW,
-      propImpressionsTVB
-    } = this.state;
+    const { initialdata } = this.props;
 
-    const balanceSum =
-      propImpressionsCNN +
-      propImpressionsSinclair +
-      propImpressionsTTNW +
-      propImpressionsTVB;
+    const balanceSum = calculateBalanceSum(
+      initialdata.ProprietaryPricingInventorySources,
+      this.state
+    );
     const share = 1 - balanceSum;
     return Number(share.toFixed(2));
   }
@@ -287,37 +282,15 @@ class PricingGuide extends Component {
   }
 
   // update detail - with proprietary pricing states
-  // // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
   saveProprietaryPricingDetail() {
-    const { propCpmCNN, propCpmSinclair, propCpmTTNW, propCpmTVB } = this.state;
     const {
-      propImpressionsCNN,
-      propImpressionsSinclair,
-      propImpressionsTTNW,
-      propImpressionsTVB
-    } = this.state;
-    const proprietaryPricing = [
-      {
-        InventorySource: 3,
-        ImpressionsBalance: propImpressionsTVB,
-        Cpm: propCpmTVB
-      },
-      {
-        InventorySource: 4,
-        ImpressionsBalance: propImpressionsTTNW,
-        Cpm: propCpmTTNW
-      },
-      {
-        InventorySource: 5,
-        ImpressionsBalance: propImpressionsCNN,
-        Cpm: propCpmCNN
-      },
-      {
-        InventorySource: 6,
-        ImpressionsBalance: propImpressionsSinclair,
-        Cpm: propCpmSinclair
-      }
-    ];
+      initialdata: { ProprietaryPricingInventorySources: invSrcEnum }
+    } = this.props;
+    const proprietaryPricing = invSrcEnum.map(i => ({
+      InventorySource: i.Id,
+      ImpressionsBalance: this.state[`propImpressions${i.Display}`],
+      Cpm: this.state[`propCpm${i.Display}`]
+    }));
     return proprietaryPricing;
   }
 
@@ -458,6 +431,7 @@ class PricingGuide extends Component {
           <Modal.Body className="modalBodyScroll">
             {panelsList.map(panel =>
               panel.render({
+                key: `prcing-guide-panel#${panel.id}`,
                 ...this.props,
                 ...this.state,
                 modal: modal && modal.active,
@@ -547,8 +521,9 @@ PricingGuide.propTypes = {
   clearOpenMarketData: PropTypes.func.isRequired,
   loadOpenMarketData: PropTypes.func.isRequired,
   updateProprietaryCpms: PropTypes.func.isRequired,
-  detail: PropTypes.object.isRequired,
+  detail: PropTypes.object,
   proposalEditForm: PropTypes.object.isRequired,
+  initialdata: PropTypes.object.isRequired,
   activeOpenMarketData: PropTypes.object,
   allocateSpots: PropTypes.func.isRequired,
   hasActiveDistribution: PropTypes.bool.isRequired,

@@ -338,7 +338,10 @@
     "3": "TVB",
     "4": "TTNW",
     "5": "CNN",
-    "6": "Sinclair"
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
   },
   "Markets": [
     {

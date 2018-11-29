@@ -5,37 +5,18 @@ import PricingGoal from "./PricingGoal";
 import PricingOpenMarkets from "./PricingOpenMarkets";
 import PricingProprietary from "./PricingProprietary";
 
-export const invSrcEnum = {
-  0: "Blank",
-  1: "OpenMarket",
-  2: "Assembly",
-  3: "TVB",
-  4: "TTNW",
-  5: "CNN",
-  6: "Sinclair"
-};
-
 export const initialState = {
   isDistributionRunned: false,
   isGuideChanged: false,
   distribution: false,
   discard: false,
   // goals/adjustments - editing version separate state to cancel/save individually
-  impression: "",
-  budget: "",
-  margin: "",
-  rateInflation: "",
-  impressionInflation: "",
+  impression: 0,
+  budget: 0,
+  margin: 0,
+  rateInflation: 0,
+  impressionInflation: 0,
 
-  // proprietary based on array - break down here (uses hard coded values for CPM for now)
-  propCpmCNN: 0,
-  propCpmSinclair: 0,
-  propCpmTTNW: 0,
-  propCpmTVB: 0,
-  propImpressionsCNN: 0,
-  propImpressionsSinclair: 0,
-  propImpressionsTTNW: 0,
-  propImpressionsTVB: 0,
   // open market
   openCpmMin: null,
   openCpmMax: null,
@@ -51,12 +32,15 @@ export const numberRender = (data, path, format, divideBy) => {
 
 export const panelsList = [
   {
+    id: "goal",
     render: props => <PricingGoal {...props} />
   },
   {
+    id: "proprietary",
     render: props => <PricingProprietary {...props} />
   },
   {
+    id: "open-markets",
     render: props => <PricingOpenMarkets {...props} />
   }
 ];
@@ -83,3 +67,10 @@ export const parsePrograms = (data = []) => {
   });
   return programs;
 };
+
+export const calculateBalanceSum = (inventorySrc, props) =>
+  inventorySrc.reduce(
+    (currentValue, i) =>
+      (props[`propImpressions${i.Display}`] || 0) + currentValue,
+    0
+  );
