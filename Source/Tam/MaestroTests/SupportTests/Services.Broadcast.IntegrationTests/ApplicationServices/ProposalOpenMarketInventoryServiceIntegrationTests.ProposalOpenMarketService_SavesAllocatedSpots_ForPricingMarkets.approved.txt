@@ -208,24 +208,24 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 1.5484131241767508053425676186,
-      "DisplayImpressions": 96873.37162022,
+      "AvgCpm": 7.4345253234864090035412526262,
+      "DisplayImpressions": 20176.13680407,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
       "MarketId": 318,
       "MarketName": "Jackson, MS",
       "MarketRank": 95,
-      "MaxCpm": 1.5484131241767508053425676186,
-      "MinCpm": 1.5484131241767508053425676186,
+      "MaxCpm": 7.4345253234864090035412526262,
+      "MinCpm": 7.4345253234864090035412526262,
       "Stations": [
         {
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
           "LegacyCallLetters": "WDBD",
-          "MinProgramsBlendedCpm": 1.5484131241767508053425676186,
+          "MinProgramsBlendedCpm": 7.4345253234864090035412526262,
           "Programs": [
             {
-              "BlendedCpm": 1.5484131241767508053425676186,
+              "BlendedCpm": 7.4345253234864090035412526262,
               "Cost": 150.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -233,13 +233,13 @@
                 "Id": 78
               },
               "DisplayCost": 150.0000,
-              "DisplayImpressions": 96873.37162022,
+              "DisplayImpressions": 20176.13680407,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 16145.5619367,
+              "EffectiveImpressionsPerSpot": 3362.68946735,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 96873.37162022,
-              "ImpressionsPerSpot": 16145.5619367,
+              "Impressions": 20176.13680407,
+              "ImpressionsPerSpot": 3362.68946735,
               "ManifestDaypartId": 41556,
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
@@ -251,7 +251,7 @@
         }
       ],
       "TotalCost": 150.0000,
-      "TotalImpressions": 96873.37162022,
+      "TotalImpressions": 20176.13680407,
       "TotalSpots": 6
     }
   ],
@@ -266,14 +266,14 @@
   "OpenMarketTotals": {
     "Cost": 150.0000,
     "Coverage": 0.273,
-    "Cpm": 1.5484131241767467478940700262,
-    "Impressions": 96873.37162022
+    "Cpm": 7.4345253234864005001309779245,
+    "Impressions": 20176.13680407
   },
   "PricingTotals": {
     "Cost": 150.0000,
     "Coverage": 0.273,
-    "Cpm": 1.5484131241767467478940700262,
-    "Impressions": 96873.37162022
+    "Cpm": 7.4345253234864005001309779245,
+    "Impressions": 20176.13680407
   },
   "ProposalDetailId": 2290,
   "ProprietaryPricing": [],

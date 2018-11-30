@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 startTime = (SecPerHour);  // 1:00
                 endTime = ((SecPerHour * 2) + (60 * 8)) - 1;    // 2:00
                 daypart = new DisplayDaypart(2, startTime, endTime, false, false, false, false, false, true, true);
-                manifestDayparts.Add(new ManifestDetailDaypart() { Id = 4, LegacyCallLetters = "WNBC", DisplayDaypart = daypart });
+                manifestDayparts.Add(new ManifestDetailDaypart() { Id = 4, LegacyCallLetters = "WNBC", DisplayDaypart = daypart }); 
 
                 // mon-su w/o wed...so should be m,t,w,f,sa,su
                 startTime = (SecPerHour);  // 1:00

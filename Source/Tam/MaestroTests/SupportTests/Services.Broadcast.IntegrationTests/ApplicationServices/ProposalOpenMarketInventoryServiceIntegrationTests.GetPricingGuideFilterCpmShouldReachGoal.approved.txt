@@ -197,14 +197,14 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 41.110687543540384026148981251,
+      "AvgCpm": 41.102766392777755806232747603,
       "DisplayImpressions": 12999.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
-      "MaxCpm": 101.77469626614083073595827237,
+      "MaxCpm": 100.96548242569571527733955954,
       "MinCpm": 4.6155621370052694334397476826,
       "Stations": [
         {
