@@ -182,7 +182,7 @@ namespace Services.Broadcast.IntegrationTests
                     result = @"D:\temp\wwtv\WWTV_KeepingTracFtpInboundFolder";
                     break;
                 case "ImpressionStartEndTimeAdjustment":
-                    result = "450";
+                    result = "420";
                     break;
                 case "ImpressionStartOfDayForAdjustment":
                     result = @"18000";

@@ -13,5 +13,8 @@
         public static string EMAIL_PROFILE_SEED = "34oqdfn201@#4-u34nssk10Q@94ihaefje34092";
 
         public const int LogoCachingDurationInMinutes = 60;
+
+        public const int NeilsonTimeSlotInSeconds = 900;    // 15 minute timeslot should be moved to System_Settings
+
     }
 }

@@ -28,7 +28,7 @@ namespace Services.Broadcast.Repositories
         List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions);
         List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
-        List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
+        List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
         List<MarketPlaybackTypes> GetPlaybackForMarketBy(int mediaMonthId, ProposalEnums.ProposalPlaybackType? playbackType);
         Dictionary<short, List<universe>> GetMarketUniverseDataByAudience(int mediaMonth, List<int> audienceIds, List<short> marketIds, List<string> playbackTypes);
         IEnumerable<ManifestDetailDaypart> AdjustDayparts(List<ManifestDetailDaypart> stationDetails);
@@ -144,8 +144,12 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+
+
         public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
+            var adjustedDetals = AdjustDayparts(stationDetails);
+
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(c =>
@@ -167,7 +171,7 @@ namespace Services.Broadcast.Repositories
                     ratingsInput.Columns.Add("start_time");
                     ratingsInput.Columns.Add("end_time");
 
-                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
+                    adjustedDetals.Distinct().ForEach(p => ratingsInput.Rows.Add(
                         p.Id,
                         p.LegacyCallLetters, 
                         p.DisplayDaypart.Monday,
@@ -190,7 +194,7 @@ namespace Services.Broadcast.Repositories
                         throw new InvalidOperationException("Day by Day Impression not supported");
 
                     //var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
-                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
+                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projected";
 
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
@@ -198,8 +202,10 @@ namespace Services.Broadcast.Repositories
         }
 
 
-        public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
+        public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
+            var adjustedDetails = AdjustDayparts(stationDetails);
+
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(c =>
@@ -226,7 +232,7 @@ namespace Services.Broadcast.Repositories
                     ratingsInput.Columns.Add("start_time");
                     ratingsInput.Columns.Add("end_time");
 
-                    stationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
+                    adjustedDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
                         p.Id,
                         p.LegacyCallLetters,
                         p.DisplayDaypart.Monday,
@@ -261,6 +267,8 @@ namespace Services.Broadcast.Repositories
         {
             var timeAdjust = BroadcastComposerWebSystemParameter.ImpressionStartEndTimeAdjustment;
             var startOfNextDay = BroadcastComposerWebSystemParameter.ImpressionStartOfDayForAdjustment;
+            var neilsonTimeSlotInSeconds = BroadcastConstants.NeilsonTimeSlotInSeconds;
+
             List<ManifestDetailDaypart> adjustedDetails = new List<ManifestDetailDaypart>();
 
             stationDetails.ForEach(d =>
@@ -273,8 +281,8 @@ namespace Services.Broadcast.Repositories
                 adjustedDetails.Add(adjustedDetail);
                 // use the clone to keep track of original days being used.
                 var clonedDaypart = adjustedDetail.DisplayDaypart;
-                var timediff = clonedDaypart.EndTime - clonedDaypart.StartTime;
-                if (timediff > 0 && timediff > 2 * timeAdjust) // timeajust should be half the timeslot size (15 minutes)
+                var timediff = clonedDaypart.EndTime - clonedDaypart.StartTime - 1;
+                if (timediff > 0 && timediff > neilsonTimeSlotInSeconds) // timeajust should be half the timeslot size (15 minutes)
                 {
                     clonedDaypart.StartTime += timeAdjust;
                     clonedDaypart.EndTime -= timeAdjust;
@@ -313,70 +321,6 @@ namespace Services.Broadcast.Repositories
                 }
             });
             return adjustedDetails;
-        }
-        public List<StationImpressions> GetImpressionsDaypart2BookProjected(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, IEnumerable<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
-        {
-            var adjustedStationDetails = AdjustDayparts(stationDetails.ToList());
-
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(c =>
-                {
-                    var hut = new SqlParameter("hut_media_month_id", SqlDbType.SmallInt) { Value = hutMediaMonth };
-
-                    var share = new SqlParameter("share_media_month_id", SqlDbType.SmallInt) { Value = shareMediaMonth };
-
-                    var audienceId = new SqlParameter("demo", SqlDbType.NVarChar)
-                    {
-                        Value = string.Join(",", uniqueRatingsAudiences)
-                    };
-
-                    var ratingsInput = new DataTable();
-                    ratingsInput.Columns.Add("id");
-                    ratingsInput.Columns.Add("legacy_call_letters");
-                    ratingsInput.Columns.Add("mon");
-                    ratingsInput.Columns.Add("tue");
-                    ratingsInput.Columns.Add("wed");
-                    ratingsInput.Columns.Add("thu");
-                    ratingsInput.Columns.Add("fri");
-                    ratingsInput.Columns.Add("sat");
-                    ratingsInput.Columns.Add("sun");
-                    ratingsInput.Columns.Add("start_time");
-                    ratingsInput.Columns.Add("end_time");
-
-                    adjustedStationDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
-                        p.Id,
-                        p.LegacyCallLetters,
-                        p.DisplayDaypart.Monday,
-                        p.DisplayDaypart.Tuesday,
-                        p.DisplayDaypart.Wednesday,
-                        p.DisplayDaypart.Thursday,
-                        p.DisplayDaypart.Friday,
-                        p.DisplayDaypart.Saturday,
-                        p.DisplayDaypart.Sunday,
-                        p.DisplayDaypart.StartTime ,
-                        p.DisplayDaypart.EndTime));
-
-                    var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured)
-                    {
-                        Value = ratingsInput,
-                        TypeName = "RatingsInputWithId"
-                    };
-
-                    var minPlaybackType = new SqlParameter("min_playback_type", SqlDbType.VarChar, 1)
-                    {
-                        Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
-                    };
-
-                    var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_TwoBooks_Projected";
-
-                    var demos = audienceId.Value as string;
-                    var playback = ((char) PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString();
-                    WriteTableSQLDebug(storedProcedureName,stationDetails,hutMediaMonth,shareMediaMonth,demos,playback);
-
-                    return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
-                });
-            }
         }
 
         public void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate)
