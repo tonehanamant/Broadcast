@@ -404,6 +404,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class BroadcastComposerWebSystemParameter 
 	{ 
+		public static int ImpressionStartEndTimeAdjustment  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.ImpressionStartEndTimeAdjustment); }
+        }
+	 
+		public static int ImpressionStartOfDayForAdjustment  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.ImpressionStartOfDayForAdjustment); }
+        }
+	 
 		public static bool UseDayByDayImpressions  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -429,6 +441,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<int>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastMatchingBuffer); }
+        }
+	 
+		public static string BroadcastNTIUploadApiUrl  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastNTIUploadApiUrl); }
         }
 	 
 		public static float DefaultMarketCoverage  
@@ -822,6 +840,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(InventoryServiceSystemParameterNames.ComponentID , InventoryServiceSystemParameterNames.ImsNotificationCcEmailAddresses); }
+        }
+	 
+		public static string InventoryWebApiURL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(InventoryServiceSystemParameterNames.ComponentID , InventoryServiceSystemParameterNames.InventoryWebApiURL); }
         }
 	 
 		public static string RExecutableFilePath  
@@ -1604,6 +1628,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class ReleaseComposerSystemParameter 
 	{ 
+		public static bool EditCopySplitFeatureEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ReleaseComposerSystemParameterNames.ComponentID , ReleaseComposerSystemParameterNames.EditCopySplitFeatureEnabled); }
+        }
+	 
 		public static bool MsoFeatureManagerEnabled  
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
@@ -1818,6 +1848,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(SystemComposerSystemParameterNames.ComponentID , SystemComposerSystemParameterNames.DivisionsEditorUrl); }
+        }
+	 
+		public static bool FreezeCoverageUniverseIgnorePrimaryFlags  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(SystemComposerSystemParameterNames.ComponentID , SystemComposerSystemParameterNames.FreezeCoverageUniverseIgnorePrimaryFlags); }
         }
 	 
 		public static string MvpdMinSpotCostEditorUrl  

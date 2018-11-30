@@ -1174,7 +1174,8 @@ namespace Services.Broadcast.ApplicationServices
         private ProprietaryTotalsDto _SumTotalsForProprietarySection(double openMarketImpressions, List<ProprietaryPricingDto> proprietaryPricingValues)
         {
             var proprietaryImpressionsPercent = proprietaryPricingValues.Sum(x => x.ImpressionsBalance);
-            var result = new ProprietaryTotalsDto();
+            var result = new ProprietaryTotalsDto();
+
             if (openMarketImpressions == 0 || proprietaryImpressionsPercent == 0)
             {
                 return result;
@@ -1323,15 +1324,19 @@ namespace Services.Broadcast.ApplicationServices
             bool shouldRunDistribution)
         {
             // Markets that need to be included.
-            var includedMarketCodes = inventory.ProposalMarkets.Where(x => !x.IsBlackout).Select(x => (int)x.Id).ToList();
+            var includedMarketCodes = inventory.ProposalMarkets.Where(x => !x.IsBlackout).Select(x => (int)x.Id).ToList();
+
             // Only markets in the list are allowed.
             var allowedMarkets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(inventory.ProposalId, inventory.ProposalVersion);
-            var allowedMarketsIds = allowedMarkets.Select(x => x.Id);
+            var allowedMarketsIds = allowedMarkets.Select(x => x.Id);
+
             // Remove all markets that might have been blacklisted.
-            includedMarketCodes.RemoveAll(x => !allowedMarketsIds.Contains(x));
+            includedMarketCodes.RemoveAll(x => !allowedMarketsIds.Contains(x));
+
             var includedMarkets = inventory.Markets.Where(x => includedMarketCodes.Contains(x.MarketId)).ToList();
             var includedMarketsCoverage = includedMarkets.Sum(x => x.MarketCoverage);
-            inventory.Markets.RemoveAll(x => !allowedMarketsIds.Contains(x.MarketId));
+            inventory.Markets.RemoveAll(x => !allowedMarketsIds.Contains(x.MarketId));
+
             if (includedMarketsCoverage >= (inventory.MarketCoverage * 100))
             {
                 inventory.Markets.Clear();

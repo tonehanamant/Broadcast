@@ -1,0 +1,107 @@
+﻿[
+  {
+    "DisplayDaypart": {
+      "_Code": "CUS",
+      "_EndTime": 43079,
+      "_Friday": false,
+      "_Id": 2,
+      "_Is24Hour": false,
+      "_LastEndTime": 0,
+      "_LastStartTime": 0,
+      "_Monday": true,
+      "_Name": "Custom",
+      "_Saturday": false,
+      "_StartTime": 39900,
+      "_Sunday": false,
+      "_Thursday": false,
+      "_Tuesday": false,
+      "_Wednesday": false
+    },
+    "Id": 2,
+    "LegacyCallLetters": "WNBC"
+  },
+  {
+    "DisplayDaypart": {
+      "_Code": "CUS",
+      "_EndTime": 40259,
+      "_Friday": false,
+      "_Id": 2,
+      "_Is24Hour": false,
+      "_LastEndTime": 0,
+      "_LastStartTime": 0,
+      "_Monday": true,
+      "_Name": "Custom",
+      "_Saturday": false,
+      "_StartTime": 39900,
+      "_Sunday": false,
+      "_Thursday": false,
+      "_Tuesday": false,
+      "_Wednesday": false
+    },
+    "Id": 2,
+    "LegacyCallLetters": "WNBC"
+  },
+  {
+    "DisplayDaypart": {
+      "_Code": "CUS",
+      "_EndTime": 36899,
+      "_Friday": false,
+      "_Id": 2,
+      "_Is24Hour": false,
+      "_LastEndTime": 0,
+      "_LastStartTime": 0,
+      "_Monday": true,
+      "_Name": "Custom",
+      "_Saturday": false,
+      "_StartTime": 36000,
+      "_Sunday": false,
+      "_Thursday": false,
+      "_Tuesday": false,
+      "_Wednesday": false
+    },
+    "Id": 1,
+    "LegacyCallLetters": "WNBC"
+  },
+  {
+    "DisplayDaypart": {
+      "_Code": "CUS",
+      "_EndTime": 36839,
+      "_Friday": false,
+      "_Id": 2,
+      "_Is24Hour": false,
+      "_LastEndTime": 0,
+      "_LastStartTime": 0,
+      "_Monday": true,
+      "_Name": "Custom",
+      "_Saturday": false,
+      "_StartTime": 36000,
+      "_Sunday": false,
+      "_Thursday": false,
+      "_Tuesday": false,
+      "_Wednesday": false
+    },
+    "Id": 1,
+    "LegacyCallLetters": "WNBC"
+  },
+  {
+    "DisplayDaypart": {
+      "_Code": "CUS",
+      "_EndTime": 39179,
+      "_Friday": false,
+      "_Id": 2,
+      "_Is24Hour": false,
+      "_LastEndTime": 0,
+      "_LastStartTime": 0,
+      "_Monday": true,
+      "_Name": "Custom",
+      "_Saturday": false,
+      "_StartTime": 36420,
+      "_Sunday": false,
+      "_Thursday": false,
+      "_Tuesday": false,
+      "_Wednesday": false
+    },
+    "Id": 1,
+    "LegacyCallLetters": "WNBC"
+  }
+]

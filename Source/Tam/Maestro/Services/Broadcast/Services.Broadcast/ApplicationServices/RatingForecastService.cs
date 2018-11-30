@@ -66,18 +66,6 @@ namespace Services.Broadcast.ApplicationServices
         public List<MediaMonthCrunchStatus> GetMediaMonthCrunchStatuses()
         {
             return _MediaMonthCrunchCache.GetMediaMonthCrunchStatuses();
-            //var sweepsMonths = _MediaMonthAndWeekAggregateCache.GetAllSweepsMonthsBeforeCurrentMonth();
-
-            //using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            //{
-            //    var nielsonMarkets = _ExternalRatingRepository.GetNielsonMarkets(sweepsMonths);
-            //    var forecastDetails = _RatingForecastRepository.GetForecastDetails(sweepsMonths);
-            //    return forecastDetails.Select(s =>
-            //            new MediaMonthCrunchStatus(s, nielsonMarkets.First(m => m.Item1 == s.MediaMonth).Item2))
-            //        .OrderByDescending(d => d.MediaMonth.Id)
-            //        .ToList();
-            //}
-
         }
 
         /// <summary>

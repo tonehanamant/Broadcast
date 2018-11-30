@@ -365,7 +365,7 @@
                       {
                         "type": 1,
                         "typeSpecified": true,
-                        "Value": "243"
+                        "Value": "61"
                       }
                     ]
                   }
@@ -614,116 +614,6 @@
             "affiliateSplit": 0.0,
             "breakoutMonth": null,
             "comment": "OK",
-            "detailLine": null,
-            "key": [
-              {
-                "codeDescription": "UseZonePop",
-                "codeOwner": "Strata",
-                "createDateSpecified": false,
-                "id": "false",
-                "statusSpecified": false,
-                "subStatusSpecified": false,
-                "updateDateSpecified": false,
-                "version": null
-              }
-            ],
-            "populations": [
-              {
-                "demoRank": 1,
-                "Value": "99050"
-              }
-            ],
-            "specialCommissionSpecified": false,
-            "system": [
-              {
-                "name": "",
-                "syscode": ""
-              }
-            ],
-            "totals": {
-              "cost": {
-                "currency": "USD",
-                "Value": 13.0000
-              },
-              "spots": "2"
-            },
-            "weeks": {
-              "count": "3",
-              "week": [
-                {
-                  "number": "1",
-                  "startDate": "2017-06-26T00:00:00"
-                },
-                {
-                  "number": "2",
-                  "startDate": "2017-07-03T00:00:00"
-                },
-                {
-                  "number": "3",
-                  "startDate": "2017-07-10T00:00:00"
-                }
-              ]
-            }
-          },
-          {
-            "affiliateSplit": 0.0,
-            "breakoutMonth": null,
-            "comment": "OK",
-            "detailLine": null,
-            "key": [
-              {
-                "codeDescription": "UseZonePop",
-                "codeOwner": "Strata",
-                "createDateSpecified": false,
-                "id": "false",
-                "statusSpecified": false,
-                "subStatusSpecified": false,
-                "updateDateSpecified": false,
-                "version": null
-              }
-            ],
-            "populations": [
-              {
-                "demoRank": 1,
-                "Value": "99050"
-              }
-            ],
-            "specialCommissionSpecified": false,
-            "system": [
-              {
-                "name": "",
-                "syscode": ""
-              }
-            ],
-            "totals": {
-              "cost": {
-                "currency": "USD",
-                "Value": 13.0000
-              },
-              "spots": "2"
-            },
-            "weeks": {
-              "count": "3",
-              "week": [
-                {
-                  "number": "1",
-                  "startDate": "2017-06-26T00:00:00"
-                },
-                {
-                  "number": "2",
-                  "startDate": "2017-07-03T00:00:00"
-                },
-                {
-                  "number": "3",
-                  "startDate": "2017-07-10T00:00:00"
-                }
-              ]
-            }
-          },
-          {
-            "affiliateSplit": 0.0,
-            "breakoutMonth": null,
-            "comment": "OK",
             "detailLine": [
               {
                 "comment": "",
@@ -750,7 +640,7 @@
                       {
                         "type": 1,
                         "typeSpecified": true,
-                        "Value": "779"
+                        "Value": "75"
                       }
                     ]
                   }
@@ -822,6 +712,116 @@
                 }
               }
             ],
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              }
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "99050"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 13.0000
+              },
+              "spots": "2"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          },
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": null,
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              }
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "99050"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 13.0000
+              },
+              "spots": "2"
+            },
+            "weeks": {
+              "count": "3",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2017-06-26T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2017-07-03T00:00:00"
+                },
+                {
+                  "number": "3",
+                  "startDate": "2017-07-10T00:00:00"
+                }
+              ]
+            }
+          },
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": null,
             "key": [
               {
                 "codeDescription": "UseZonePop",

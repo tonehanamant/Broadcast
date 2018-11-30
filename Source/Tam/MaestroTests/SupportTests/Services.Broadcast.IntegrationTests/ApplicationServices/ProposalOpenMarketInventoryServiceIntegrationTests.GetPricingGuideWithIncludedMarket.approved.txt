@@ -118,7 +118,7 @@
       "MinCpm": 0.0,
       "Name": "Alexandria, LA",
       "Programs": 1,
-      "Selected": false,
+      "Selected": true,
       "Stations": 1
     },
     {
@@ -197,6 +197,10 @@
     "Genres": [],
     "Markets": [
       {
+        "Display": "Alexandria, LA",
+        "Id": 244
+      },
+      {
         "Display": "Jackson, MS",
         "Id": 318
       },
@@ -207,6 +211,7 @@
     ],
     "ProgramNames": [
       "America next morning",
+      "Fox News Sunday",
       "Fox40 Morning News",
       "Good Morning America",
       "Good Morning America Weekend",
@@ -217,14 +222,14 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 41.110687543540384026148981251,
+      "AvgCpm": 41.102766392777755806232747603,
       "DisplayImpressions": 12999.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
       "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
-      "MaxCpm": 101.77469626614083073595827237,
+      "MaxCpm": 100.96548242569571527733955954,
       "MinCpm": 4.6155621370052694334397476826,
       "Stations": [
         {
@@ -344,7 +349,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 93.29347157729576150796174968,
+              "BlendedCpm": 94.04723736240247942716682697,
               "Cost": 0.0000,
               "CostPerSpot": 275.0000,
               "Daypart": {
@@ -352,13 +357,13 @@
                 "Id": 31233
               },
               "DisplayCost": 275.0000,
-              "DisplayImpressions": 2947.6875,
+              "DisplayImpressions": 2924.0625,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 2947.6875,
+              "EffectiveImpressionsPerSpot": 2924.0625,
               "Genres": [],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 2947.6875,
+              "ImpressionsPerSpot": 2924.0625,
               "ManifestDaypartId": 41612,
               "ProgramId": 26641,
               "ProgramName": "Good Morning America Weekend",
@@ -366,7 +371,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 101.77469626614083073595827237,
+              "BlendedCpm": 100.96548242569571527733955954,
               "Cost": 0.0000,
               "CostPerSpot": 300.0000,
               "Daypart": {
@@ -374,13 +379,13 @@
                 "Id": 31239
               },
               "DisplayCost": 300.0000,
-              "DisplayImpressions": 2947.6875,
+              "DisplayImpressions": 2971.3125,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 2947.6875,
+              "EffectiveImpressionsPerSpot": 2971.3125,
               "Genres": [],
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 2947.6875,
+              "ImpressionsPerSpot": 2971.3125,
               "ManifestDaypartId": 41610,
               "ProgramId": 26640,
               "ProgramName": "Good Morning America Weekend",
@@ -441,6 +446,53 @@
       "TotalCost": 25.0000,
       "TotalImpressions": 4668.625,
       "TotalSpots": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.073,
+      "MarketId": 244,
+      "MarketName": "Alexandria, LA",
+      "MarketRank": 179,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Stations": [
+        {
+          "Affiliation": "FOX",
+          "CallLetters": "WNTZ-TV 48.1",
+          "LegacyCallLetters": "WNTZ",
+          "MinProgramsBlendedCpm": 0.0,
+          "Programs": [
+            {
+              "BlendedCpm": 0.0,
+              "Cost": 0.0000,
+              "CostPerSpot": 35.0000,
+              "Daypart": {
+                "Display": "SU 8AM-9AM",
+                "Id": 31233
+              },
+              "DisplayCost": 35.0000,
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
+              "Genres": [],
+              "HasImpressions": false,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 0.0,
+              "ManifestDaypartId": 41619,
+              "ProgramId": 26648,
+              "ProgramName": "Fox News Sunday",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 6433
+        }
+      ],
+      "TotalCost": 0.0000,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     }
   ],
   "OpenMarketPricing": {

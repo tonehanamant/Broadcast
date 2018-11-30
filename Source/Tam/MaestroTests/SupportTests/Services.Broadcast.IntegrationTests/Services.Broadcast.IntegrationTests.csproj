@@ -253,6 +253,7 @@
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Stubbs\FileServiceStubb.cs" />
     <Compile Include="Stubbs\ImpersonateUserStubb.cs" />

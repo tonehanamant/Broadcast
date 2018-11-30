@@ -42,23 +42,23 @@
   "ImpressionGoal": null,
   "Markets": [
     {
-      "AvgCpm": 1.83424,
-      "DisplayImpressions": 2955069.47917,
+      "AvgCpm": 1.91643,
+      "DisplayImpressions": 2474320.05952,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 2.82247,
-      "MinCpm": 0.84600,
+      "MinCpm": 1.01038,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.84600,
+          "MinProgramsBlendedCpm": 1.01038,
           "Programs": [
             {
-              "BlendedCpm": 0.84600,
+              "BlendedCpm": 1.01038,
               "Cost": 2500.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -66,12 +66,12 @@
                 "Id": 5
               },
               "DisplayCost": 2500.0000,
-              "DisplayImpressions": 2955069.47917,
+              "DisplayImpressions": 2474320.05952,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 29550.69479,
+              "EffectiveImpressionsPerSpot": 24743.2006,
               "HasImpressions": true,
-              "Impressions": 2955069.47917,
-              "ImpressionsPerSpot": 29550.69479,
+              "Impressions": 2474320.05952,
+              "ImpressionsPerSpot": 24743.2006,
               "ProgramName": "Adventure Time",
               "Spots": 100,
               "StationImpressionsPerSpot": 0.0
@@ -99,7 +99,7 @@
         }
       ],
       "TotalCost": 2500.0000,
-      "TotalImpressions": 2955069.47917,
+      "TotalImpressions": 2474320.05952,
       "TotalSpots": 100
     }
   ],
@@ -114,14 +114,14 @@
   "OpenMarketTotals": {
     "Cost": 2500.0000,
     "Coverage": 1.01,
-    "Cpm": 0.84600,
-    "Impressions": 2955069.47917
+    "Cpm": 1.01038,
+    "Impressions": 2474320.05952
   },
   "PricingTotals": {
-    "Cost": 57951.00964,
+    "Cost": 48929.88818,
     "Coverage": 1.01,
-    "Cpm": 6.66764,
-    "Impressions": 8691380.82108
+    "Cpm": 6.72353,
+    "Impressions": 7277411.93978
   },
   "ProposalDetailId": 9982,
   "ProprietaryPricing": [
@@ -147,8 +147,8 @@
     }
   ],
   "ProprietaryTotals": {
-    "Cost": 55451.00964,
+    "Cost": 46429.88818,
     "Cpm": 9.66667,
-    "Impressions": 5736311.34191
+    "Impressions": 4803091.88025
   }
 }
