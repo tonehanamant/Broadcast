@@ -427,7 +427,6 @@ namespace Services.Broadcast.Repositories
                             existingDetail.program_name = pair.newDetail.program_name;
                             result.Updated.Add(_MapFromBvsFileDetail(pair.newDetail));
                         }
-                        context.SaveChanges();
                     }
                 }
 
