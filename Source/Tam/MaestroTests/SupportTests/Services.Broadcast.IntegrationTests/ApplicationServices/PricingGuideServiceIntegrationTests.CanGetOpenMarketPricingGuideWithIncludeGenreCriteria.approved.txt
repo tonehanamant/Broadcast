@@ -53,7 +53,7 @@
   },
   "Markets": [
     {
-      "AvgCpm": 1.8342378060247007219741218686,
+      "AvgCpm": 1.9164251998694721108826899496,
       "DisplayImpressions": 8857.484375,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
@@ -61,7 +61,7 @@
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 2.8224718149728601694541515914,
-      "MinCpm": 0.8460037970765412744940921458,
+      "MinCpm": 1.0103785847660840523112283077,
       "Stations": [
         {
           "Affiliation": "PBS",

@@ -34,7 +34,7 @@
   "DetailTargetImpressions": 1000000.0,
   "Equivalized": false,
   "GuaranteedAudience": 31,
-  "HutPostingBookId": 410,
+  "HutProjectionBookId": 410,
   "Margin": 20.0,
   "PlaybackType": 4,
   "PostType": 1,
@@ -52,8 +52,8 @@
   "ProposalName": "Proposal Test",
   "ProposalVersion": 1,
   "ProposalVersionId": 41,
-  "SharePostingBookId": 413,
-  "SinglePostingBookId": null,
+  "ShareProjectionBookId": 413,
+  "SingleProjectionBookId": null,
   "Weeks": [
     {
       "Budget": 25.0000,

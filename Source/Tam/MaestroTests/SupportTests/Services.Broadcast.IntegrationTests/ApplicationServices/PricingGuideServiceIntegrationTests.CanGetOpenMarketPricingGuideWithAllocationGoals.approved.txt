@@ -58,24 +58,24 @@
   },
   "Markets": [
     {
-      "AvgCpm": 1.8342378060247007219741218686,
-      "DisplayImpressions": 11820277.91666667,
+      "AvgCpm": 1.9164251998694721108826899496,
+      "DisplayImpressions": 9897280.23809524,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 2.8224718149728601694541515914,
-      "MinCpm": 0.8460037970765412744940921458,
+      "MinCpm": 1.0103785847660840523112283077,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.8460037970765412744940921458,
+          "MinProgramsBlendedCpm": 1.0103785847660840523112283077,
           "Programs": [
             {
-              "BlendedCpm": 0.8460037970765412744940921458,
+              "BlendedCpm": 1.0103785847660840523112283077,
               "Cost": 10000.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
@@ -83,9 +83,9 @@
                 "Id": 5
               },
               "DisplayCost": 10000.0000,
-              "DisplayImpressions": 11820277.91666667,
+              "DisplayImpressions": 9897280.23809524,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 29550.69479167,
+              "EffectiveImpressionsPerSpot": 24743.20059524,
               "Genres": [
                 {
                   "Display": "Adventure",
@@ -93,8 +93,8 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 11820277.91666667,
-              "ImpressionsPerSpot": 29550.69479167,
+              "Impressions": 9897280.23809524,
+              "ImpressionsPerSpot": 24743.20059524,
               "ManifestDaypartId": 213351,
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
@@ -133,7 +133,7 @@
         }
       ],
       "TotalCost": 10000.0000,
-      "TotalImpressions": 11820277.91666667,
+      "TotalImpressions": 9897280.23809524,
       "TotalSpots": 400
     }
   ],
@@ -147,14 +147,14 @@
   "OpenMarketTotals": {
     "Cost": 10000.0000,
     "Coverage": 1.01,
-    "Cpm": 0.8460038,
-    "Impressions": 11820277.91666667
+    "Cpm": 1.01037858,
+    "Impressions": 9897280.23809524
   },
   "PricingTotals": {
     "Cost": 10000.0000,
     "Coverage": 1.01,
-    "Cpm": 0.8460038,
-    "Impressions": 11820277.91666667
+    "Cpm": 1.01037858,
+    "Impressions": 9897280.23809524
   },
   "ProposalDetailId": 9982,
   "ProposalId": 0,

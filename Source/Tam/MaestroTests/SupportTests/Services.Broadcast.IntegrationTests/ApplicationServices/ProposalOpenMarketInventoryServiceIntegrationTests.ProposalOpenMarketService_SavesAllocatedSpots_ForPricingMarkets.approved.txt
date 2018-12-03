@@ -1,7 +1,4 @@
 ﻿{
-  "AdjustmentInflation": null,
-  "AdjustmentMargin": null,
-  "AdjustmentRate": null,
   "AllMarkets": [
     {
       "AvgCpm": 0.0,
@@ -11,7 +8,7 @@
       "MinCpm": 0.0,
       "Name": "Jackson, MS",
       "Programs": 1,
-      "Selected": false,
+      "Selected": true,
       "Stations": 1
     },
     {
@@ -82,13 +79,24 @@
     },
     {
       "AvgCpm": 0.0,
+      "Coverage": 0.136,
+      "Id": 404,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Palm Springs",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
       "Coverage": 1.676,
       "Id": 139,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
       "Name": "Tampa-St. Pete (Sarasota)",
       "Programs": 7,
-      "Selected": true,
+      "Selected": false,
       "Stations": 1
     },
     {
@@ -183,105 +191,91 @@
   "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [
-      "ABC"
+      "FOX"
     ],
     "Genres": [],
     "Markets": [
       {
-        "Display": "Tampa-St. Pete (Sarasota)",
-        "Id": 139
+        "Display": "Jackson, MS",
+        "Id": 318
       }
     ],
     "ProgramNames": [
-      "America next morning"
+      "Fox40 Morning News"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
-  "InventorySourceEnum": {
-    "0": "Blank",
-    "1": "OpenMarket",
-    "2": "Assembly",
-    "3": "TVB",
-    "4": "TTNW",
-    "5": "CNN",
-    "6": "Sinclair",
-    "7": "LilaMax",
-    "8": "FerencMedia",
-    "9": "OAndO"
-  },
   "Markets": [
     {
-      "AvgCpm": 41.102766392777755806232747603,
-      "DisplayImpressions": 12999.5,
+      "AvgCpm": 7.4345253234864090035412526262,
+      "DisplayImpressions": 20176.13680407,
       "DisplayStationImpressions": 0.0,
-      "MarketCoverage": 1.676,
-      "MarketId": 139,
-      "MarketName": "Tampa-St. Pete (Sarasota)",
-      "MarketRank": 11,
-      "MaxCpm": 100.96548242569571527733955954,
-      "MinCpm": 4.6155621370052694334397476826,
+      "MarketCoverage": 0.273,
+      "MarketId": 318,
+      "MarketName": "Jackson, MS",
+      "MarketRank": 95,
+      "MaxCpm": 7.4345253234864090035412526262,
+      "MinCpm": 7.4345253234864090035412526262,
       "Stations": [
         {
-          "Affiliation": "ABC",
-          "CallLetters": "WWSB 40.1",
-          "LegacyCallLetters": "WWSB",
-          "MinProgramsBlendedCpm": 4.6155621370052694334397476826,
+          "Affiliation": "FOX",
+          "CallLetters": "WDBD 40.1",
+          "LegacyCallLetters": "WDBD",
+          "MinProgramsBlendedCpm": 7.4345253234864090035412526262,
           "Programs": [
             {
-              "BlendedCpm": 4.6155621370052694334397476826,
-              "Cost": 60.0000,
-              "CostPerSpot": 60.0000,
+              "BlendedCpm": 7.4345253234864090035412526262,
+              "Cost": 150.0000,
+              "CostPerSpot": 25.0000,
               "Daypart": {
-                "Display": "M-F 12PM-1PM",
-                "Id": 1617
+                "Display": "M-F 7AM-9AM",
+                "Id": 78
               },
-              "DisplayCost": 60.0000,
-              "DisplayImpressions": 12999.5,
+              "DisplayCost": 150.0000,
+              "DisplayImpressions": 20176.13680407,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 12999.5,
+              "EffectiveImpressionsPerSpot": 3362.68946735,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 12999.5,
-              "ImpressionsPerSpot": 12999.5,
-              "ManifestDaypartId": 55369,
-              "ProgramId": 26630,
-              "ProgramName": "America next morning",
-              "Spots": 1,
+              "Impressions": 20176.13680407,
+              "ImpressionsPerSpot": 3362.68946735,
+              "ManifestDaypartId": 41556,
+              "ProgramId": 26585,
+              "ProgramName": "Fox40 Morning News",
+              "Spots": 6,
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5942
+          "StationCode": 6173
         }
       ],
-      "TotalCost": 60.0000,
-      "TotalImpressions": 12999.5,
-      "TotalSpots": 1
+      "TotalCost": 150.0000,
+      "TotalImpressions": 20176.13680407,
+      "TotalSpots": 6
     }
   ],
   "OpenMarketPricing": {
-    "CpmMax": 5.0,
-    "CpmMin": 3.0,
-    "OpenMarketCpmTarget": 1,
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
     "UnitCapPerStation": null
   },
   "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
-    "Cost": 60.0000,
-    "Coverage": 1.676,
-    "Cpm": 4.61556214,
-    "Impressions": 12999.5
+    "Cost": 150.0000,
+    "Coverage": 0.273,
+    "Cpm": 7.4345253234864005001309779245,
+    "Impressions": 20176.13680407
   },
   "PricingTotals": {
-    "Cost": 60.0000,
-    "Coverage": 1.676,
-    "Cpm": 4.61556214,
-    "Impressions": 12999.5
+    "Cost": 150.0000,
+    "Coverage": 0.273,
+    "Cpm": 7.4345253234864005001309779245,
+    "Impressions": 20176.13680407
   },
-  "ProposalDetailId": 9985,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
+  "ProposalDetailId": 2290,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

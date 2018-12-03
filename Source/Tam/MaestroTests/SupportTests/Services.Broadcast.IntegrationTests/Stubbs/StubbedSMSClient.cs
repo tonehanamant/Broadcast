@@ -184,7 +184,12 @@ namespace Services.Broadcast.IntegrationTests
                 case "DefaultMarketCoverage":
                     result = "0";
                     break;
-
+                case "ImpressionStartEndTimeAdjustment":
+                    result = "420";
+                    break;
+                case "ImpressionStartOfDayForAdjustment":
+                    result = @"18000";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }
