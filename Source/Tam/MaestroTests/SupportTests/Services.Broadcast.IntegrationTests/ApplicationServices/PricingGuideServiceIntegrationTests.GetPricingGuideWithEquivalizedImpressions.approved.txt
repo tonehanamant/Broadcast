@@ -53,31 +53,31 @@
   },
   "Markets": [
     {
-      "AvgCpm": 0.9615421597775376059138688995,
-      "DisplayImpressions": 43706.14642857,
-      "DisplayStationImpressions": 51999.8,
+      "AvgCpm": 0.0,
+      "DisplayImpressions": 0.0,
+      "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
       "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
-      "MaxCpm": 0.9615421597775376059138688995,
-      "MinCpm": 0.9615421597775376059138688995,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
       "Stations": [
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
           "LegacyCallLetters": "WUNC",
-          "MinProgramsBlendedCpm": 0.9615421597775376059138688995,
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
-              "BlendedCpm": 0.9615421597775376059138688995,
-              "Cost": 50.0000,
-              "CostPerSpot": 50.0000,
+              "BlendedCpm": 0.0,
+              "Cost": 0.0,
+              "CostPerSpot": 0.0,
               "Daypart": {
                 "Display": "M-SU 9AM-12AM",
                 "Id": 5
               },
-              "DisplayCost": 50.0000,
+              "DisplayCost": 0.0,
               "DisplayImpressions": 43706.14642857,
               "DisplayStationImpressions": 51999.8,
               "EffectiveImpressionsPerSpot": 51999.8,
@@ -88,21 +88,21 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 51999.8,
+              "Impressions": 0.0,
               "ImpressionsPerSpot": 43706.14642857,
               "ManifestDaypartId": 213353,
               "ProgramId": 162238,
               "ProgramName": "Adventure Time",
-              "Spots": 1,
+              "Spots": 0,
               "StationImpressionsPerSpot": 51999.8
             }
           ],
           "StationCode": 5316
         }
       ],
-      "TotalCost": 50.0000,
-      "TotalImpressions": 51999.8,
-      "TotalSpots": 1
+      "TotalCost": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
     }
   ],
   "OpenMarketPricing": {
@@ -113,16 +113,16 @@
   },
   "OpenMarketShare": 1.0,
   "OpenMarketTotals": {
-    "Cost": 50.0000,
-    "Coverage": 1.01,
-    "Cpm": 0.96154216,
-    "Impressions": 51999.8
+    "Cost": 0.0,
+    "Coverage": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   },
   "PricingTotals": {
-    "Cost": 50.0000,
-    "Coverage": 1.01,
-    "Cpm": 0.96154216,
-    "Impressions": 51999.8
+    "Cost": 0.0,
+    "Coverage": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   },
   "ProposalDetailId": 9986,
   "ProposalId": 0,

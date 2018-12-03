@@ -458,7 +458,7 @@
       "TotalSpots": 0
     },
     {
-      "AvgCpm": 68.99569390077660447912608576,
+      "AvgCpm": 68.995693900776597813477516676,
       "DisplayImpressions": 10165.84573254,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
@@ -497,7 +497,7 @@
               "StationImpressionsPerSpot": 0.0
             },
             {
-              "BlendedCpm": 44.400062661065243979510059776,
+              "BlendedCpm": 44.40006266106519731997007619,
               "Cost": 0.0000,
               "CostPerSpot": 325.0000,
               "Daypart": {
