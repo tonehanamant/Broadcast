@@ -374,6 +374,8 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+
+
         private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
         {
             return new ProposalWeekIsciDto
@@ -445,16 +447,6 @@ namespace Services.Broadcast.Repositories
 
                     return inSpecAffidavitFileDetails;
                 });
-        }
-
-        private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
-        {
-            return new ProposalWeekIsciDto
-            {
-                HouseIsci = isci.house_isci,
-                MarriedHouseIsci = isci.married_house_iscii,
-                Brand = isci.brand
-            };
         }
 
         /// <summary>
