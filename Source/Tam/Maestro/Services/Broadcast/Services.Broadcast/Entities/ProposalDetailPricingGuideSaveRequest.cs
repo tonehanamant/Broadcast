@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities
     public class ProposalDetailPricingGuideSaveRequest
     {
         public int ProposalDetailId { get; set; }
-        public double? AdjustmentRate { get; set; }
+        public double? AdjustmentImpressionLoss { get; set; }
         public double? AdjustmentMargin { get; set; }
         public double? GoalImpression { get; set; }
         public decimal? GoalBudget { get; set; }

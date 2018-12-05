@@ -47,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     AdjustmentInflation = 1,
                     AdjustmentMargin = 1,
-                    AdjustmentRate = 1,
+                    AdjustmentImpressionLoss = 1,
                     CpmMax = 10,
                     CpmMin = 10,
                     GoalBudget = 10000,
@@ -1390,6 +1390,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProposalId = 26024,
                 ProposalDetailId = 9986,
                 OpenMarketShare = 1,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithIndexing()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26024,
+                ProposalDetailId = 9986,
+                OpenMarketShare = 1,
+                Margin = 0.2,
+                Inflation = 0.1,
+                ImpressionLoss = 0.2,
                 OpenMarketPricing = new OpenMarketPricingGuideDto
                 {
                     OpenMarketCpmTarget = OpenMarketCpmTarget.Min

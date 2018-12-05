@@ -587,7 +587,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_version_detail_id" Type="int" Nullable="false" />
           <Property Name="adjustment_margin" Type="float" />
-          <Property Name="adjustment_rate" Type="float" />
+          <Property Name="adjustment_impression_loss" Type="float" />
           <Property Name="adjustment_inflation" Type="float" />
           <Property Name="goal_impression" Type="float" />
           <Property Name="goal_budget" Type="money" />
@@ -4165,7 +4165,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="pricing_guide_distribution_open_market_inventory" EntityType="BroadcastModel.pricing_guide_distribution_open_market_inventory" />
           <EntitySet Name="pricing_guide_distribution_proprietary_inventory" EntityType="BroadcastModel.pricing_guide_distribution_proprietary_inventory" />
-          <EntitySet Name="pricing_guide_distributions" EntityType="BroadcastModel.pricing_guide_distributions" />
           <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_dayparts" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts">
             <End Role="daypart" EntitySet="dayparts" />
             <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
@@ -4178,17 +4177,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
             <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
-            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
           <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_stations" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations">
             <End Role="station" EntitySet="stations" />
             <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" Association="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions">
-            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
-            <End Role="pricing_guide_distribution_proprietary_inventory" EntitySet="pricing_guide_distribution_proprietary_inventory" />
           </AssociationSet>
           <EntitySet Name="proposal_version_details" EntityType="BroadcastModel.proposal_version_details" />
           <AssociationSet Name="FK_proposal_version_details_dayparts" Association="BroadcastModel.FK_proposal_version_details_dayparts">
@@ -4210,10 +4201,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_version_details_single_media_months" Association="BroadcastModel.FK_proposal_version_details_single_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distributions_proposal_versions" Association="BroadcastModel.FK_pricing_guide_distributions_proposal_versions">
-            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
-            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
           </AssociationSet>
           <AssociationSet Name="FK_proposal_buy_files_proposal_version_details" Association="BroadcastModel.FK_proposal_buy_files_proposal_version_details">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
@@ -4246,6 +4233,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_proposal_version_details_spot_lengths" Association="BroadcastModel.FK_proposal_version_details_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+          </AssociationSet>
+          <EntitySet Name="pricing_guide_distributions" EntityType="BroadcastModel.pricing_guide_distributions" />
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
+            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" Association="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions">
+            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
+            <End Role="pricing_guide_distribution_proprietary_inventory" EntitySet="pricing_guide_distribution_proprietary_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distributions_proposal_versions" Association="BroadcastModel.FK_pricing_guide_distributions_proposal_versions">
+            <End Role="proposal_version_details" EntitySet="proposal_version_details" />
+            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -7073,8 +7073,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="daypart" />
           <NavigationProperty Name="market" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="market" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station_inventory_manifest_dayparts" />
-          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="pricing_guide_distributions" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station" />
+          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="pricing_guide_distributions" />
         </EntityType>
         <EntityType Name="pricing_guide_distribution_proprietary_inventory">
           <Key>
@@ -7086,34 +7086,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="impressions_balance_percent" Type="Double" Nullable="false" />
           <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" FromRole="pricing_guide_distribution_proprietary_inventory" ToRole="pricing_guide_distributions" />
-        </EntityType>
-        <EntityType Name="pricing_guide_distributions">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
-          <Property Name="adjustment_margin" Type="Double" />
-          <Property Name="adjustment_rate" Type="Double" />
-          <Property Name="adjustment_inflation" Type="Double" />
-          <Property Name="goal_impression" Type="Double" />
-          <Property Name="goal_budget" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="open_market_cpm_min" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="open_market_cpm_max" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="open_market_unit_cap_per_station" Type="Int32" />
-          <Property Name="open_market_cpm_target" Type="Byte" />
-          <Property Name="total_open_market_cpm" Type="Double" Nullable="false" />
-          <Property Name="total_open_market_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="total_open_market_impressions" Type="Double" Nullable="false" />
-          <Property Name="total_open_market_coverage" Type="Double" Nullable="false" />
-          <Property Name="total_proprietary_cpm" Type="Double" Nullable="false" />
-          <Property Name="total_proprietary_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="total_proprietary_impressions" Type="Double" Nullable="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_open_market_inventory" />
-          <NavigationProperty Name="pricing_guide_distribution_proprietary_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_proprietary_inventory" />
-          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" FromRole="pricing_guide_distributions" ToRole="proposal_version_details" />
         </EntityType>
         <Association Name="FK_pricing_guide_distribution_open_market_inventory_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1">
@@ -7157,20 +7129,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
-          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pricing_guide_distributions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="pricing_guide_distribution_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_pricing_guide_distribution_open_market_inventory_stations">
           <End Type="BroadcastModel.station" Role="station" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -7182,20 +7140,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="pricing_guide_distribution_open_market_inventory">
               <PropertyRef Name="station_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions">
-          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_proprietary_inventory" Role="pricing_guide_distribution_proprietary_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pricing_guide_distributions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_proprietary_inventory">
-              <PropertyRef Name="pricing_guide_distribution_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7231,7 +7175,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_proposal_version_details_posting_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="media_months2" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="media_months3" Relationship="BroadcastModel.FK_proposal_version_details_single_media_months" FromRole="proposal_version_details" ToRole="media_months" />
-          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" FromRole="proposal_version_details" ToRole="pricing_guide_distributions" />
           <NavigationProperty Name="proposal_buy_files" Relationship="BroadcastModel.FK_proposal_buy_files_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_buy_files" />
           <NavigationProperty Name="proposal_version_detail_criteria_cpm" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_cpm_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_cpm" />
           <NavigationProperty Name="proposal_version_detail_criteria_genres" Relationship="BroadcastModel.FK_proposal_version_detail_criteria_genres_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_criteria_genres" />
@@ -7240,6 +7183,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarters" Relationship="BroadcastModel.FK_proposal_version_detail_quarters_proposal_version_details" FromRole="proposal_version_details" ToRole="proposal_version_detail_quarters" />
           <NavigationProperty Name="proposal_versions" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_version_details" ToRole="proposal_versions" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="proposal_version_details" ToRole="spot_lengths" />
+          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" FromRole="proposal_version_details" ToRole="pricing_guide_distributions" />
         </EntityType>
         <Association Name="FK_proposal_version_details_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -7298,20 +7242,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="proposal_version_details">
               <PropertyRef Name="single_projection_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pricing_guide_distributions_proposal_versions">
-          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal_version_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distributions">
-              <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7420,6 +7350,76 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="proposal_version_details">
               <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="pricing_guide_distributions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proposal_version_detail_id" Type="Int32" Nullable="false" />
+          <Property Name="adjustment_margin" Type="Double" />
+          <Property Name="adjustment_impression_loss" Type="Double" />
+          <Property Name="adjustment_inflation" Type="Double" />
+          <Property Name="goal_impression" Type="Double" />
+          <Property Name="goal_budget" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="open_market_cpm_min" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="open_market_cpm_max" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="open_market_unit_cap_per_station" Type="Int32" />
+          <Property Name="open_market_cpm_target" Type="Byte" />
+          <Property Name="total_open_market_cpm" Type="Double" Nullable="false" />
+          <Property Name="total_open_market_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_open_market_impressions" Type="Double" Nullable="false" />
+          <Property Name="total_open_market_coverage" Type="Double" Nullable="false" />
+          <Property Name="total_proprietary_cpm" Type="Double" Nullable="false" />
+          <Property Name="total_proprietary_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_proprietary_impressions" Type="Double" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_open_market_inventory" />
+          <NavigationProperty Name="pricing_guide_distribution_proprietary_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_proprietary_inventory" />
+          <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" FromRole="pricing_guide_distributions" ToRole="proposal_version_details" />
+        </EntityType>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
+          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pricing_guide_distributions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="pricing_guide_distribution_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions">
+          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_proprietary_inventory" Role="pricing_guide_distribution_proprietary_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pricing_guide_distributions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_proprietary_inventory">
+              <PropertyRef Name="pricing_guide_distribution_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distributions_proposal_versions">
+          <End Type="BroadcastModel.proposal_version_details" Role="proposal_version_details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal_version_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distributions">
+              <PropertyRef Name="proposal_version_detail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8686,32 +8686,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="pricing_guide_distributions">
-            <EntityTypeMapping TypeName="BroadcastModel.pricing_guide_distributions">
-              <MappingFragment StoreEntitySet="pricing_guide_distributions">
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="total_proprietary_impressions" ColumnName="total_proprietary_impressions" />
-                <ScalarProperty Name="total_proprietary_cost" ColumnName="total_proprietary_cost" />
-                <ScalarProperty Name="total_proprietary_cpm" ColumnName="total_proprietary_cpm" />
-                <ScalarProperty Name="total_open_market_coverage" ColumnName="total_open_market_coverage" />
-                <ScalarProperty Name="total_open_market_impressions" ColumnName="total_open_market_impressions" />
-                <ScalarProperty Name="total_open_market_cost" ColumnName="total_open_market_cost" />
-                <ScalarProperty Name="total_open_market_cpm" ColumnName="total_open_market_cpm" />
-                <ScalarProperty Name="open_market_cpm_target" ColumnName="open_market_cpm_target" />
-                <ScalarProperty Name="open_market_unit_cap_per_station" ColumnName="open_market_unit_cap_per_station" />
-                <ScalarProperty Name="open_market_cpm_max" ColumnName="open_market_cpm_max" />
-                <ScalarProperty Name="open_market_cpm_min" ColumnName="open_market_cpm_min" />
-                <ScalarProperty Name="goal_budget" ColumnName="goal_budget" />
-                <ScalarProperty Name="goal_impression" ColumnName="goal_impression" />
-                <ScalarProperty Name="adjustment_inflation" ColumnName="adjustment_inflation" />
-                <ScalarProperty Name="adjustment_rate" ColumnName="adjustment_rate" />
-                <ScalarProperty Name="adjustment_margin" ColumnName="adjustment_margin" />
-                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="proposal_version_details">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_version_details">
               <MappingFragment StoreEntitySet="proposal_version_details">
@@ -8737,6 +8711,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="proposal_version_id" ColumnName="proposal_version_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pricing_guide_distributions">
+            <EntityTypeMapping TypeName="BroadcastModel.pricing_guide_distributions">
+              <MappingFragment StoreEntitySet="pricing_guide_distributions">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="total_proprietary_impressions" ColumnName="total_proprietary_impressions" />
+                <ScalarProperty Name="total_proprietary_cost" ColumnName="total_proprietary_cost" />
+                <ScalarProperty Name="total_proprietary_cpm" ColumnName="total_proprietary_cpm" />
+                <ScalarProperty Name="total_open_market_coverage" ColumnName="total_open_market_coverage" />
+                <ScalarProperty Name="total_open_market_impressions" ColumnName="total_open_market_impressions" />
+                <ScalarProperty Name="total_open_market_cost" ColumnName="total_open_market_cost" />
+                <ScalarProperty Name="total_open_market_cpm" ColumnName="total_open_market_cpm" />
+                <ScalarProperty Name="open_market_cpm_target" ColumnName="open_market_cpm_target" />
+                <ScalarProperty Name="open_market_unit_cap_per_station" ColumnName="open_market_unit_cap_per_station" />
+                <ScalarProperty Name="open_market_cpm_max" ColumnName="open_market_cpm_max" />
+                <ScalarProperty Name="open_market_cpm_min" ColumnName="open_market_cpm_min" />
+                <ScalarProperty Name="goal_budget" ColumnName="goal_budget" />
+                <ScalarProperty Name="goal_impression" ColumnName="goal_impression" />
+                <ScalarProperty Name="adjustment_inflation" ColumnName="adjustment_inflation" />
+                <ScalarProperty Name="adjustment_impression_loss" ColumnName="adjustment_impression_loss" />
+                <ScalarProperty Name="adjustment_margin" ColumnName="adjustment_margin" />
+                <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

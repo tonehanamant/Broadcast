@@ -505,6 +505,9 @@ namespace Services.Broadcast.ApplicationServices
                 ProposalDetailId = dto.ProposalDetailId,
                 BudgetGoal = dto.BudgetGoal,
                 ImpressionGoal = dto.ImpressionGoal,
+                Margin = dto.Margin,
+                Inflation = dto.Inflation,
+                ImpressionLoss = dto.ImpressionLoss,
                 OpenMarketPricing = dto.OpenMarketPricing,
                 OpenMarketShare = dto.OpenMarketShare,
                 ProprietaryPricing = dto.ProprietaryPricing,
@@ -519,7 +522,7 @@ namespace Services.Broadcast.ApplicationServices
             PricingGuideDto pricingGuideDto,
             bool shouldRunDistribution)
         {
-            var programs = _GetPricingGuidePrograms(inventory);
+            var programs = _GetPricingGuidePrograms(inventory, pricingGuideDto);
             var markets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
             var postingBookId = ProposalServiceHelper.GetBookId(inventory);
             ApplyInventoryMarketRankings(postingBookId, markets);
@@ -931,21 +934,62 @@ namespace Services.Broadcast.ApplicationServices
                 }).ToList();
         }
 
-        private List<ProposalProgramDto> _GetPricingGuidePrograms(PricingGuideOpenMarketInventory inventory)
+        private List<ProposalProgramDto> _GetPricingGuidePrograms(PricingGuideOpenMarketInventory inventory, PricingGuideDto pricingGuideDto)
         {
             var programs = _GetPrograms(inventory);
             _FilterProgramsByDaypart(inventory, programs);
             ApplyDaypartNames(programs);
             _ApplyProjectedImpressions(programs, inventory);
             ApplyStationImpressions(programs, inventory);
-            _CalculateProgramsCostsAndTotals(programs);
+            _CalculateProgramsCpmAndCost(programs);
+            _CalculateIndexingForPrograms(programs, pricingGuideDto);
+            _CalculateProgramsTotals(programs);
             return programs;
         }
 
-        private void _CalculateProgramsCostsAndTotals(List<ProposalProgramDto> programs)
+        private void _CalculateIndexingForPrograms(List<ProposalProgramDto> programs, PricingGuideDto pricingGuideDto)
+        {
+            var hasIndexingAdjustment = pricingGuideDto.Margin.HasValue ||
+                                        pricingGuideDto.Inflation.HasValue ||
+                                        pricingGuideDto.ImpressionLoss.HasValue;
+
+            if (!hasIndexingAdjustment)
+                return;
+
+            foreach (var program in programs)
+            {
+                if (pricingGuideDto.Margin.HasValue)
+                {
+                    var marginIncrease = program.SpotCost * (decimal)pricingGuideDto.Margin.Value;
+                    program.SpotCost += marginIncrease;
+                }
+
+                if (pricingGuideDto.Inflation.HasValue)
+                {
+                    var inflationIncrease = program.SpotCost * (decimal)pricingGuideDto.Inflation.Value;
+                    program.SpotCost += inflationIncrease;
+                }
+
+                if (pricingGuideDto.ImpressionLoss.HasValue)
+                {
+                    var impressionsLoss = pricingGuideDto.ImpressionLoss.Value;
+                    var unitImpressionsDecrease = program.UnitImpressions * impressionsLoss;
+                    var providedUnitImpressionsDecrease = program.ProvidedUnitImpressions * impressionsLoss;
+
+                    program.UnitImpressions -= unitImpressionsDecrease;
+                    program.ProvidedUnitImpressions -= providedUnitImpressionsDecrease;
+                }
+            }
+        }
+
+        private void _CalculateProgramsCpmAndCost(List<ProposalProgramDto> programs)
         {
             _ProposalProgramsCalculationEngine.CalculateBlendedCpmForProgramsRaw(programs);
             _ProposalProgramsCalculationEngine.CalculateAvgCostForPrograms(programs);
+        }
+
+        private void _CalculateProgramsTotals(List<ProposalProgramDto> programs)
+        {
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
         }

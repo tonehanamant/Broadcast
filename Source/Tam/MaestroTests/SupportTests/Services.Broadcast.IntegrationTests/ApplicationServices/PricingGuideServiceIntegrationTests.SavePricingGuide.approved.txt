@@ -1,7 +1,4 @@
 ﻿{
-  "AdjustmentInflation": 1.0,
-  "AdjustmentMargin": 1.0,
-  "AdjustmentRate": 1.0,
   "AllMarkets": [
     {
       "AvgCpm": 0.0,
@@ -48,6 +45,8 @@
   },
   "Filter": {},
   "ImpressionGoal": 10000.0,
+  "ImpressionLoss": 1.0,
+  "Inflation": 1.0,
   "InventorySourceEnum": {
     "0": "Blank",
     "1": "OpenMarket",
@@ -60,6 +59,7 @@
     "8": "FerencMedia",
     "9": "OAndO"
   },
+  "Margin": 1.0,
   "Markets": [
     {
       "AvgCpm": 0.0,

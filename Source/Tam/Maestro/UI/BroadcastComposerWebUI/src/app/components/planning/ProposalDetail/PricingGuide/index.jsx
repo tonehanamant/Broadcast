@@ -139,9 +139,9 @@ class PricingGuide extends Component {
     this.setState({
       impression: guide.ImpressionGoal,
       budget: guide.BudgetGoal,
-      margin: guide.AdjustmentMargin,
-      rateInflation: guide.AdjustmentRate,
-      impressionInflation: guide.AdjustmentInflation
+      margin: guide.Margin,
+      impressionLoss: guide.ImpressionLoss,
+      inflation: guide.Inflation
     });
   }
 
@@ -200,23 +200,27 @@ class PricingGuide extends Component {
       openCpmTarget,
       openUnitCap,
       budget,
+      margin,
+      impressionLoss,
+      inflation,
       impression
     } = this.state;
-    const openData = {
-      CpmMax: openCpmMax || null,
-      CpmMin: openCpmMin || null,
-      OpenMarketCpmTarget: openCpmTarget,
-      UnitCapPerStation: openUnitCap || null
-    };
-    const openMarketShare = this.getOpenMarketShare();
     const request = {
+      Margin: margin || null,
+      ImpressionLoss: impressionLoss || null,
+      Inflation: inflation || null,
       ProposalId: proposalEditForm.Id,
       ProposalDetailId: detail.Id,
       BudgetGoal: budget || null,
       ImpressionGoal: impression || null,
       ProprietaryPricing: proprietaryData,
-      OpenMarketPricing: openData,
-      OpenMarketShare: openMarketShare
+      OpenMarketPricing: {
+        CpmMax: openCpmMax || null,
+        CpmMin: openCpmMin || null,
+        OpenMarketCpmTarget: openCpmTarget,
+        UnitCapPerStation: openUnitCap || null
+      },
+      OpenMarketShare: this.getOpenMarketShare()
     };
     return request;
   }
@@ -247,8 +251,8 @@ class PricingGuide extends Component {
       impression,
       budget,
       margin,
-      rateInflation,
-      impressionInflation
+      impressionLoss,
+      inflation
     } = this.state;
     const { savePricingData, detail, activeOpenMarketData = {} } = this.props;
     const proprietaryData = this.saveProprietaryPricingDetail();
@@ -259,9 +263,9 @@ class PricingGuide extends Component {
       ProposalDetailId: detail.Id,
       GoalImpression: impression || null,
       GoalBudget: budget || null,
-      AdjustmentMargin: margin || null,
-      AdjustmentRate: rateInflation || null,
-      AdjustmentInflation: impressionInflation || null,
+      Margin: margin || null,
+      ImpressionLoss: impressionLoss || null,
+      Inflation: inflation || null,
       ProprietaryPricing: proprietaryData,
       ProprietaryTotals: activeOpenMarketData.ProprietaryTotals,
       OpenMarketTotals: activeOpenMarketData.OpenMarketTotals,

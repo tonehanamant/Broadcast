@@ -117,7 +117,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
         public virtual DbSet<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual DbSet<pricing_guide_distribution_proprietary_inventory> pricing_guide_distribution_proprietary_inventory { get; set; }
-        public virtual DbSet<pricing_guide_distributions> pricing_guide_distributions { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
+        public virtual DbSet<pricing_guide_distributions> pricing_guide_distributions { get; set; }
     }
 }

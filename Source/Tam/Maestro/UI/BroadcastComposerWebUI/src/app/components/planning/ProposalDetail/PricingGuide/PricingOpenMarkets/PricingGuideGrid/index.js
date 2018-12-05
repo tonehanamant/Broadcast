@@ -20,7 +20,6 @@ class PricingGuideGrid extends Component {
   render() {
     const {
       activeOpenMarketData,
-      openMarketLoading,
       hasOpenMarketData,
       isOpenMarketDataSortName
     } = this.props;
@@ -40,7 +39,6 @@ class PricingGuideGrid extends Component {
           columns={columns}
           selection="none"
           sortable={false}
-          loading={openMarketLoading}
           getTrProps={(state, rowInfo) => ({
             style: { backgroundColor: rowColors[rowInfo.original.rowType] }
           })}
@@ -54,7 +52,6 @@ PricingGuideGrid.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
-  openMarketLoading: PropTypes.bool.isRequired,
   onAllocateSpots: PropTypes.func.isRequired
 };
 

@@ -294,9 +294,9 @@ namespace Services.Broadcast.Repositories
                         ProposalDetailId = proposalDetailId,
                         BudgetGoal = data.goal_budget,
                         ImpressionGoal = data.goal_impression,
-                        AdjustmentMargin = data.adjustment_margin,
-                        AdjustmentRate = data.adjustment_rate,
-                        AdjustmentInflation = data.adjustment_inflation,
+                        Margin = data.adjustment_margin,
+                        Inflation = data.adjustment_inflation,
+                        ImpressionLoss = data.adjustment_impression_loss,
                         OpenMarketPricing = new OpenMarketPricingGuideDto
                         {
                             CpmMin = data.open_market_cpm_min,
@@ -369,7 +369,7 @@ namespace Services.Broadcast.Repositories
                 {
                     adjustment_inflation = model.AdjustmentInflation,
                     adjustment_margin = model.AdjustmentMargin,
-                    adjustment_rate = model.AdjustmentRate,
+                    adjustment_impression_loss = model.AdjustmentImpressionLoss,
                     goal_budget = model.GoalBudget,
                     goal_impression = model.GoalImpression,
                     open_market_cpm_max = model.CpmMax,

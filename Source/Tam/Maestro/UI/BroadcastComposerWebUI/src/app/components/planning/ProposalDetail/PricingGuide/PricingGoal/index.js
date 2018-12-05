@@ -13,19 +13,22 @@ import {
 } from "react-bootstrap";
 import { InputNumber } from "antd";
 import numeral from "numeral";
+import { parseFromPercent, parseToPercent } from "../util";
+
+const initialState = {
+  isEditing: false,
+  editingImpression: 0,
+  editingBudget: 0,
+  editingMargin: 0,
+  editingImpressionLoss: 0,
+  editingInflation: 0
+};
 
 class PricingGoal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isEditing: false,
-      editingImpression: "",
-      editingBudget: "",
-      editingMargin: "",
-      editingRateInflation: "",
-      editingImpressionInflation: ""
-    };
+    this.state = initialState;
 
     this.toggleEditing = this.toggleEditing.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -38,9 +41,9 @@ class PricingGoal extends Component {
     this.setState({
       editingImpression: activeOpenMarketData.ImpressionGoal,
       editingBudget: activeOpenMarketData.BudgetGoal,
-      editingMargin: activeOpenMarketData.AdjustmentMargin,
-      editingRateInflation: activeOpenMarketData.AdjustmentRate,
-      editingImpressionInflation: activeOpenMarketData.AdjustmentInflation
+      editingMargin: activeOpenMarketData.Margin,
+      editingImpressionLoss: activeOpenMarketData.ImpressionLoss,
+      editingInflation: activeOpenMarketData.Inflation
     });
   }
 
@@ -56,15 +59,15 @@ class PricingGoal extends Component {
       editingImpression,
       editingBudget,
       editingMargin,
-      editingRateInflation,
-      editingImpressionInflation
+      editingImpressionLoss,
+      editingInflation
     } = this.state;
     submit({
       impression: editingImpression,
       budget: editingBudget,
       margin: editingMargin,
-      rateInflation: editingRateInflation,
-      impressionInflation: editingImpressionInflation
+      impressionLoss: editingImpressionLoss,
+      inflation: editingInflation
     });
     this.toggleEditing();
   }
@@ -74,15 +77,15 @@ class PricingGoal extends Component {
       impression,
       budget,
       margin,
-      rateInflation,
-      impressionInflation
+      impressionLoss,
+      inflation
     } = this.state;
     this.setState({
       editingImpression: impression,
       editingBudget: budget,
       editingMargin: margin,
-      editingRateInflation: rateInflation,
-      editingImpressionInflation: impressionInflation
+      editingImpressionLoss: impressionLoss,
+      editingInflation: inflation
     });
     this.toggleEditing();
   }
@@ -97,16 +100,16 @@ class PricingGoal extends Component {
       impression,
       budget,
       margin,
-      rateInflation,
-      impressionInflation
+      impressionLoss,
+      inflation
     } = this.props;
     const {
       isEditing,
       editingImpression,
       editingBudget,
       editingMargin,
-      editingRateInflation,
-      editingImpressionInflation
+      editingImpressionLoss,
+      editingInflation
     } = this.state;
 
     return (
@@ -221,63 +224,7 @@ class PricingGoal extends Component {
                         <ControlLabel>MARGIN</ControlLabel>
                         {isEditing && (
                           <InputNumber
-                            defaultValue={editingMargin || null}
-                            disabled={isReadOnly}
-                            min={1}
-                            max={1000}
-                            precision={2}
-                            style={{ width: "100%" }}
-                            formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/%\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.onChange("editingMargin", value);
-                            }}
-                          />
-                        )}
-                        {!isEditing && (
-                          <FormControl.Static>
-                            {margin ? numeral(margin).format("0,0.[00]") : "--"}%
-                          </FormControl.Static>
-                        )}
-                      </FormGroup>
-                    </Col>
-                    <Col sm={4}>
-                      <FormGroup>
-                        <ControlLabel>RATE INFLATION</ControlLabel>
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingRateInflation || null}
-                            disabled={isReadOnly}
-                            min={1}
-                            max={1000}
-                            precision={2}
-                            style={{ width: "100%" }}
-                            formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
-                            parser={value => value.replace(/%\s?|(,*)/g, "")}
-                            onChange={value => {
-                              this.onChange("editingRateInflation", value);
-                            }}
-                          />
-                        )}
-                        {!isEditing && (
-                          <FormControl.Static>
-                            {rateInflation
-                              ? numeral(rateInflation).format("0,0.[00]")
-                              : "--"}%
-                          </FormControl.Static>
-                        )}
-                      </FormGroup>
-                    </Col>
-                    <Col sm={4}>
-                      <FormGroup>
-                        <ControlLabel>IMPRESSIONS LOSS</ControlLabel>
-                        {isEditing && (
-                          <InputNumber
-                            defaultValue={editingImpressionInflation || null}
+                            defaultValue={parseToPercent(editingMargin || null)}
                             disabled={isReadOnly}
                             min={1}
                             max={1000}
@@ -289,16 +236,90 @@ class PricingGoal extends Component {
                             parser={value => value.replace(/%\s?|(,*)/g, "")}
                             onChange={value => {
                               this.onChange(
-                                "editingImpressionInflation",
-                                value
+                                "editingMargin",
+                                parseFromPercent(value)
                               );
                             }}
                           />
                         )}
                         {!isEditing && (
                           <FormControl.Static>
-                            {impressionInflation
-                              ? numeral(impressionInflation).format("0,0.[00]")
+                            {margin
+                              ? numeral(parseToPercent(margin)).format(
+                                  "0,0.[00]"
+                                )
+                              : "--"}%
+                          </FormControl.Static>
+                        )}
+                      </FormGroup>
+                    </Col>
+                    <Col sm={4}>
+                      <FormGroup>
+                        <ControlLabel>RATE INFLATION</ControlLabel>
+                        {isEditing && (
+                          <InputNumber
+                            defaultValue={parseToPercent(
+                              editingInflation || null
+                            )}
+                            disabled={isReadOnly}
+                            min={1}
+                            max={1000}
+                            precision={2}
+                            style={{ width: "100%" }}
+                            formatter={value =>
+                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            }
+                            parser={value => value.replace(/%\s?|(,*)/g, "")}
+                            onChange={value => {
+                              this.onChange(
+                                "editingInflation",
+                                parseFromPercent(value)
+                              );
+                            }}
+                          />
+                        )}
+                        {!isEditing && (
+                          <FormControl.Static>
+                            {inflation
+                              ? numeral(parseToPercent(inflation)).format(
+                                  "0,0.[00]"
+                                )
+                              : "--"}%
+                          </FormControl.Static>
+                        )}
+                      </FormGroup>
+                    </Col>
+                    <Col sm={4}>
+                      <FormGroup>
+                        <ControlLabel>IMPRESSIONS LOSS</ControlLabel>
+                        {isEditing && (
+                          <InputNumber
+                            defaultValue={parseToPercent(
+                              editingImpressionLoss || null
+                            )}
+                            disabled={isReadOnly}
+                            min={1}
+                            max={100}
+                            precision={2}
+                            style={{ width: "100%" }}
+                            formatter={value =>
+                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            }
+                            parser={value => value.replace(/%\s?|(,*)/g, "")}
+                            onChange={value => {
+                              this.onChange(
+                                "editingImpressionLoss",
+                                parseFromPercent(value)
+                              );
+                            }}
+                          />
+                        )}
+                        {!isEditing && (
+                          <FormControl.Static>
+                            {impressionLoss
+                              ? numeral(parseToPercent(impressionLoss)).format(
+                                  "0,0.[00]"
+                                )
                               : "--"}%
                           </FormControl.Static>
                         )}
@@ -320,8 +341,8 @@ PricingGoal.propTypes = {
   impression: PropTypes.number,
   budget: PropTypes.number,
   margin: PropTypes.number,
-  rateInflation: PropTypes.number,
-  impressionInflation: PropTypes.number,
+  impressionLoss: PropTypes.number,
+  inflation: PropTypes.number,
   activeOpenMarketData: PropTypes.object,
   submit: PropTypes.func.isRequired
 };
@@ -330,8 +351,8 @@ PricingGoal.defaultProps = {
   impression: 0,
   budget: 0,
   margin: 0,
-  rateInflation: 0,
-  impressionInflation: 0
+  impressionLoss: 0,
+  inflation: 0
 };
 
 export default PricingGoal;

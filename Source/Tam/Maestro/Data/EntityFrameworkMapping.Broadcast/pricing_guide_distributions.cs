@@ -23,7 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int proposal_version_detail_id { get; set; }
         public Nullable<double> adjustment_margin { get; set; }
-        public Nullable<double> adjustment_rate { get; set; }
+        public Nullable<double> adjustment_impression_loss { get; set; }
         public Nullable<double> adjustment_inflation { get; set; }
         public Nullable<double> goal_impression { get; set; }
         public Nullable<decimal> goal_budget { get; set; }

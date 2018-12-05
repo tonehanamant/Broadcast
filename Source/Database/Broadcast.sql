@@ -280,6 +280,16 @@ END
 /*************************************** END BCOP-3534 *****************************************************/
 
 
+/*************************************** START BCOP-3958 *****************************************************/
+
+if  exists (select 1 from sys.columns where name = 'adjustment_rate' and object_name(object_id) = 'pricing_guide_distributions') AND
+	not exists (select 1 from sys.columns where name = 'adjustment_impression_loss' and object_name(object_id) = 'pricing_guide_distributions')
+BEGIN
+	EXEC sp_RENAME 'pricing_guide_distributions.adjustment_rate', 'adjustment_impression_loss', 'COLUMN';
+END
+
+/*************************************** END BCOP-3958 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------

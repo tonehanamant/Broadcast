@@ -14,8 +14,8 @@ export const initialState = {
   impression: 0,
   budget: 0,
   margin: 0,
-  rateInflation: 0,
-  impressionInflation: 0,
+  impressionLoss: 0,
+  inflation: 0,
 
   // open market
   openCpmMin: null,
@@ -74,3 +74,6 @@ export const calculateBalanceSum = (inventorySrc, props) =>
       (props[`propImpressions${i.Display}`] || 0) + currentValue,
     0
   );
+
+export const parseToPercent = value => (value ? value * 100 : value);
+export const parseFromPercent = value => (value ? value / 100 : value);

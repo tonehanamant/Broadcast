@@ -1,7 +1,4 @@
 ﻿{
-  "AdjustmentInflation": null,
-  "AdjustmentMargin": null,
-  "AdjustmentRate": null,
   "AllMarkets": [],
   "BudgetGoal": null,
   "DisplayFilter": {
@@ -12,6 +9,8 @@
   },
   "Filter": {},
   "ImpressionGoal": null,
+  "ImpressionLoss": null,
+  "Inflation": null,
   "InventorySourceEnum": {
     "0": "Blank",
     "1": "OpenMarket",
@@ -24,6 +23,7 @@
     "8": "FerencMedia",
     "9": "OAndO"
   },
+  "Margin": null,
   "Markets": [],
   "OpenMarketPricing": {
     "CpmMax": null,
