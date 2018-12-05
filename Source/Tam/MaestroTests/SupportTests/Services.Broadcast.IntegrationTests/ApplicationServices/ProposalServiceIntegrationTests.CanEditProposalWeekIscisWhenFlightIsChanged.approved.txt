@@ -60,7 +60,7 @@
                   "Days": null,
                   "Friday": false,
                   "HouseIsci": "AAAAAAAA",
-                  "MarriedHouseIsci": false,
+                  "MarriedHouseIsci": true,
                   "Monday": false,
                   "Saturday": false,
                   "Sunday": false,

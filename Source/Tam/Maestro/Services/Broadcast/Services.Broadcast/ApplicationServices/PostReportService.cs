@@ -122,6 +122,7 @@ namespace Services.Broadcast.ApplicationServices
                 x.ProposalWeekCost = x.ProposalWeekTotalCost / x.Units;
                 x.ProposalWeekImpressionsGoal = x.ProposalWeekTotalImpressionsGoal / x.Units;
                 x.ProposalWeekCPM = x.ProposalWeekTotalCost / (decimal)x.ProposalWeekTotalImpressionsGoal * 1000;
+                x.Brand = x.WeekIscis.SingleOrDefault(i => i.HouseIsci == x.HouseIsci)?.Brand;
             });
 
             var proposalAdvertiser = _SmsClient.FindAdvertiserById(proposal.AdvertiserId);

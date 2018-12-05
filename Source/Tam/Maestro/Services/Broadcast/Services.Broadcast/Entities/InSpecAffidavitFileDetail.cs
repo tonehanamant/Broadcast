@@ -31,5 +31,7 @@ namespace Services.Broadcast.Entities
         public int ProposalWeekId { get; set; }
         public bool Adu { get; internal set; }
         public string Brand { get; set; }
+        public string HouseIsci { get; set; }
+        public List<ProposalWeekIsciDto> WeekIscis { get; set; }
     }
 }

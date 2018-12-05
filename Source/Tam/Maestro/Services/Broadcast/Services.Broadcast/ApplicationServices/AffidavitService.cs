@@ -824,37 +824,48 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData, Dictionary<int, int> spotsLengths)
         {
-            return clientScrubsData.Select(x => new ProposalDetailPostScrubbingDto()
-            {
-                SpotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key,
-                Affiliate = x.Affiliate,
-                ClientISCI = x.ClientISCI,
-                Comments = x.Comments,
-                DateAired = x.DateAired,
-                DayOfWeek = x.DayOfWeek,
-                GenreName = x.GenreName,
-                ISCI = x.ISCI,
-                Market = x.Market,
-                MatchDate = x.MatchDate,
-                MatchGenre = x.MatchGenre,
-                MatchIsci = x.MatchIsci,
-                MatchIsciDays = x.MatchIsciDays,
-                MatchMarket = x.MatchMarket,
-                MatchProgram = x.MatchProgram,
-                MatchShowType = x.MatchShowType,
-                MatchStation = x.MatchStation,
-                MatchTime = x.MatchTime,
-                ProgramName = x.ProgramName,
-                ProposalDetailId = x.ProposalDetailId,
-                ScrubbingClientId = x.ScrubbingClientId,
-                Sequence = x.Sequence,
-                ShowTypeName = x.ShowTypeName,
-                Station = x.Station,
-                Status = x.Status,
-                StatusOverride = x.StatusOverride,
-                TimeAired = x.TimeAired,
-                WeekStart = x.WeekStart,
-                SupliedProgramNameIsUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName)
+            return clientScrubsData.Select(x => {
+                var spotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key;
+                var isIsciMarried = x.WeekIscis.SingleOrDefault(i => i.HouseIsci == x.ISCI)?.MarriedHouseIsci ?? false;
+
+                if (isIsciMarried)
+                {
+                    // We assume that married ISCIs are always two. So that married spot length is half of what is received
+                    spotLength /= 2;
+                }
+
+                return new ProposalDetailPostScrubbingDto()
+                {
+                    SpotLength = spotLength,
+                    Affiliate = x.Affiliate,
+                    ClientISCI = x.ClientISCI,
+                    Comments = x.Comments,
+                    DateAired = x.DateAired,
+                    DayOfWeek = x.DayOfWeek,
+                    GenreName = x.GenreName,
+                    ISCI = x.ISCI,
+                    Market = x.Market,
+                    MatchDate = x.MatchDate,
+                    MatchGenre = x.MatchGenre,
+                    MatchIsci = x.MatchIsci,
+                    MatchIsciDays = x.MatchIsciDays,
+                    MatchMarket = x.MatchMarket,
+                    MatchProgram = x.MatchProgram,
+                    MatchShowType = x.MatchShowType,
+                    MatchStation = x.MatchStation,
+                    MatchTime = x.MatchTime,
+                    ProgramName = x.ProgramName,
+                    ProposalDetailId = x.ProposalDetailId,
+                    ScrubbingClientId = x.ScrubbingClientId,
+                    Sequence = x.Sequence,
+                    ShowTypeName = x.ShowTypeName,
+                    Station = x.Station,
+                    Status = x.Status,
+                    StatusOverride = x.StatusOverride,
+                    TimeAired = x.TimeAired,
+                    WeekStart = x.WeekStart,
+                    SupliedProgramNameIsUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName)
+                };
             }).ToList();
         }
 

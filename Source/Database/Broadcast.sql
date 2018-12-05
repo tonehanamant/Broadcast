@@ -52,6 +52,15 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-4029 *****************************************************/
+update proposal_version_detail_quarter_week_iscis set married_house_iscii = 1 where proposal_version_detail_quarter_week_id in
+	(select id from proposal_version_detail_quarter_weeks where proposal_version_quarter_id in
+		(select id from proposal_version_detail_quarters where proposal_version_detail_id in
+			(select id from proposal_version_details where proposal_version_id in 
+				(select id from proposal_versions where proposal_id in 
+					(select id from proposals where id = 253))))) and house_isci = 'AAAAAAAA'
+/*************************************** END BCOP-4029 *****************************************************/
+
 /*************************************** START BCOP-3769 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distributions]'))
 BEGIN
