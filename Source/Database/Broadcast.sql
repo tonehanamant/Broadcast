@@ -52,16 +52,6 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-/*************************************** START BCOP-4095 *****************************************************/
-if (select count(id) from proposal_version_detail_quarter_week_iscis where proposal_version_detail_quarter_week_id = 29 and brand is not null) = 1
-begin
-	insert into proposal_version_detail_quarter_week_iscis(
-	proposal_version_detail_quarter_week_id, client_isci, house_isci, brand, married_house_iscii,
-	monday, tuesday, wednesday, thursday, friday, saturday, sunday)
-	values(29, 'NSI3_v2', 'NSI3', 'Test 2', 0, null, null, null, null, null, null, null)
-end
-/*************************************** END BCOP-4095 *****************************************************/
-
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
