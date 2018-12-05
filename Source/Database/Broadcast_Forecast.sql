@@ -664,7 +664,7 @@ BEGIN
 	CREATE TABLE #hut_univ (market_code SMALLINT NOT NULL, audience_id INT NOT NULL, playback_type VARCHAR(1) NOT NULL, universe FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(market_code,audience_id,playback_type));
 	INSERT INTO #hut_univ
-		SELECT 
+		SELECT DISTINCT
 			u.market_code,
 			u.audience_id,
 			u.playback_type,
@@ -797,7 +797,8 @@ BEGIN
 			AVG(v.weekly_avg) / AVG(u.weekly_avg) SHARE
 		FROM 
 			#share_viewer_days v
-			JOIN #share_usage_days u ON v.audience_id=u.audience_id
+			JOIN #share_usage_days u ON v.id = u.id
+				AND v.audience_id=u.audience_id
 				AND v.start_time=u.start_time
 				AND v.end_time=u.end_time
 				AND v.market_code=u.market_code
