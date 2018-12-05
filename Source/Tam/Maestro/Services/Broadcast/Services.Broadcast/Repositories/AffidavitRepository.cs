@@ -447,6 +447,16 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
+        {
+            return new ProposalWeekIsciDto
+            {
+                HouseIsci = isci.house_isci,
+                MarriedHouseIsci = isci.married_house_iscii,
+                Brand = isci.brand
+            };
+        }
+
         /// <summary>
         /// Persists a List of OutboundAffidavitFileValidationResultDto objects
         /// </summary>
