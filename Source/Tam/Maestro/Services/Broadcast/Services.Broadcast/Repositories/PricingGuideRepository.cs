@@ -367,9 +367,9 @@ namespace Services.Broadcast.Repositories
 
                 context.pricing_guide_distributions.Add(new pricing_guide_distributions
                 {
-                    adjustment_inflation = model.AdjustmentInflation,
-                    adjustment_margin = model.AdjustmentMargin,
-                    adjustment_impression_loss = model.AdjustmentImpressionLoss,
+                    adjustment_inflation = model.Inflation,
+                    adjustment_margin = model.Margin,
+                    adjustment_impression_loss = model.ImpressionLoss,
                     goal_budget = model.GoalBudget,
                     goal_impression = model.GoalImpression,
                     open_market_cpm_max = model.CpmMax,

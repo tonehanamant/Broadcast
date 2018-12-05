@@ -7,11 +7,11 @@ namespace Services.Broadcast.Entities
     public class ProposalDetailPricingGuideSaveRequest
     {
         public int ProposalDetailId { get; set; }
-        public double? AdjustmentImpressionLoss { get; set; }
-        public double? AdjustmentMargin { get; set; }
+        public double? ImpressionLoss { get; set; }
+        public double? Margin { get; set; }
         public double? GoalImpression { get; set; }
         public decimal? GoalBudget { get; set; }
-        public double? AdjustmentInflation { get; set; }
+        public double? Inflation { get; set; }
         public decimal? CpmMin { get; set; }
         public decimal? CpmMax { get; set; }
         public int? UnitCapPerStation { get; set; }

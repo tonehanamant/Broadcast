@@ -45,9 +45,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 ProposalDetailPricingGuideSaveRequest request = new ProposalDetailPricingGuideSaveRequest
                 {
-                    AdjustmentInflation = 1,
-                    AdjustmentMargin = 1,
-                    AdjustmentImpressionLoss = 1,
+                    Inflation = 1,
+                    Margin = 1,
+                    ImpressionLoss = 1,
                     CpmMax = 10,
                     CpmMin = 10,
                     GoalBudget = 10000,
