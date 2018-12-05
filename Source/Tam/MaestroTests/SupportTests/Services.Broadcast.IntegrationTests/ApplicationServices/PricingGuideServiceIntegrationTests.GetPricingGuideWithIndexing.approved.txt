@@ -54,7 +54,7 @@
   "Markets": [
     {
       "AvgCpm": 0.9615421597775376059138688995,
-      "DisplayImpressions": 41287.703,
+      "DisplayImpressions": 34964.91714286,
       "DisplayStationImpressions": 41599.84,
       "MarketCoverage": 1.01,
       "MarketId": 160,
@@ -78,7 +78,7 @@
                 "Id": 5
               },
               "DisplayCost": 66.000000,
-              "DisplayImpressions": 41287.703,
+              "DisplayImpressions": 34964.91714286,
               "DisplayStationImpressions": 41599.84,
               "EffectiveImpressionsPerSpot": 41599.84,
               "Genres": [
@@ -89,7 +89,7 @@
               ],
               "HasImpressions": true,
               "Impressions": 41599.84,
-              "ImpressionsPerSpot": 41287.703,
+              "ImpressionsPerSpot": 34964.91714286,
               "ManifestDaypartId": 213353,
               "ProgramId": 162238,
               "ProgramName": "Adventure Time",
