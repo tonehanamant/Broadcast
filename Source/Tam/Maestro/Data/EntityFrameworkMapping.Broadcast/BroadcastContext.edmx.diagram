@@ -230,6 +230,13 @@
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" />
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" />
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_transmittals_file_problems" Width="1.5" PointX="35.625" PointY="26" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_transmittals_file_report_ratings" Width="1.5" PointX="37.875" PointY="21.875" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_transmittals_file_reports" Width="1.5" PointX="35.625" PointY="21.125" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_transmittals_files" Width="1.5" PointX="33.375" PointY="23.25" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_transmittals_file_problems_nti_transmittals_files" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_transmittals_file_reports_nti_transmittals_files" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

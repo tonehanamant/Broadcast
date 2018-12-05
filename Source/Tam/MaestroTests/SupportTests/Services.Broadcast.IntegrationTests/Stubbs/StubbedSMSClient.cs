@@ -184,6 +184,9 @@ namespace Services.Broadcast.IntegrationTests
                 case "DefaultMarketCoverage":
                     result = "0";
                     break;
+                case "BroadcastNTIUploadApiUrl":
+                    result = "http://devvmqa2.dev.crossmw.com/BroadcastNtiWeb/api/broadcastnti";
+                    break;
                 case "ImpressionStartEndTimeAdjustment":
                     result = "420";
                     break;

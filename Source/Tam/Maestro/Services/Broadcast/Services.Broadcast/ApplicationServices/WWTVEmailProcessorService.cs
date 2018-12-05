@@ -160,7 +160,7 @@ namespace Services.Broadcast.BusinessEngines
                 SourceId = (int)AffidavitFileSourceEnum.Strata
             };
 
-            affidavitFile.FileProblems.Add(new ScrubbingFileProblem
+            affidavitFile.FileProblems.Add(new FileProblem
             {
                 ProblemDescription = errorMessage
             });

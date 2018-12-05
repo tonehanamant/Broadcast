@@ -202,8 +202,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var response = _AffidavitRepository.GetAffidavit(affidavitId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "Id");
-            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
+            jsonResolver.Ignore(typeof(FileProblem), "Id");
+            jsonResolver.Ignore(typeof(FileProblem), "FileId");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ModifiedDate");

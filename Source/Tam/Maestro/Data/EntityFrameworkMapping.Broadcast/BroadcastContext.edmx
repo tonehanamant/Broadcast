@@ -370,6 +370,55 @@
           <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
         </EntityType>
+        <EntityType Name="nti_transmittals_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nti_transmittals_file_id" Type="int" Nullable="false" />
+          <Property Name="problem_description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nti_transmittals_file_report_ratings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nti_transmittals_file_report_id" Type="int" Nullable="false" />
+          <Property Name="category_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="subcategory_name" Type="varchar" MaxLength="255" />
+          <Property Name="percent" Type="float" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="VPVH" Type="int" />
+        </EntityType>
+        <EntityType Name="nti_transmittals_file_reports">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nti_transmittals_file_id" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="advertiser" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="report_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="program_id" Type="int" Nullable="false" />
+          <Property Name="stream" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="program_type" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="program_duration" Type="int" Nullable="false" />
+          <Property Name="stations" Type="int" Nullable="false" />
+          <Property Name="CVG" Type="int" Nullable="false" />
+          <Property Name="TbyC" Type="int" Nullable="false" />
+          <Property Name="TA" Type="float" Nullable="false" />
+          <Property Name="week_ending" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nti_transmittals_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
             <PropertyRef Name="post_file_id" />
@@ -1551,6 +1600,48 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="nsi_component_audiences">
               <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_transmittals_file_problems_nti_transmittals_files">
+          <End Role="nti_transmittals_files" Type="Self.nti_transmittals_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="nti_transmittals_file_problems" Type="Self.nti_transmittals_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_transmittals_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_transmittals_file_problems">
+              <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports">
+          <End Role="nti_transmittals_file_reports" Type="Self.nti_transmittals_file_reports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="nti_transmittals_file_report_ratings" Type="Self.nti_transmittals_file_report_ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_transmittals_file_reports">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_transmittals_file_report_ratings">
+              <PropertyRef Name="nti_transmittals_file_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_transmittals_file_reports_nti_transmittals_files">
+          <End Role="nti_transmittals_files" Type="Self.nti_transmittals_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="nti_transmittals_file_reports" Type="Self.nti_transmittals_file_reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_transmittals_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_transmittals_file_reports">
+              <PropertyRef Name="nti_transmittals_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3007,6 +3098,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_weeks" EntityType="Self.media_weeks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nsi_component_audiences" EntityType="Self.nsi_component_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_transmittals_file_problems" EntityType="Self.nti_transmittals_file_problems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_transmittals_file_report_ratings" EntityType="Self.nti_transmittals_file_report_ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_transmittals_file_reports" EntityType="Self.nti_transmittals_file_reports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nti_transmittals_files" EntityType="Self.nti_transmittals_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_detail_impressions" EntityType="Self.post_file_detail_impressions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_details" EntityType="Self.post_file_details" Schema="dbo" store:Type="Tables" />
@@ -3186,6 +3281,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_nsi_component_audiences_audiences" Association="Self.FK_nsi_component_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="nsi_component_audiences" EntitySet="nsi_component_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_transmittals_file_problems_nti_transmittals_files" Association="Self.FK_nti_transmittals_file_problems_nti_transmittals_files">
+            <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
+            <End Role="nti_transmittals_file_problems" EntitySet="nti_transmittals_file_problems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports" Association="Self.FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports">
+            <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
+            <End Role="nti_transmittals_file_report_ratings" EntitySet="nti_transmittals_file_report_ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_transmittals_file_reports_nti_transmittals_files" Association="Self.FK_nti_transmittals_file_reports_nti_transmittals_files">
+            <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
+            <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
           </AssociationSet>
           <AssociationSet Name="FK_post_file_demos_post_files" Association="Self.FK_post_file_demos_post_files">
             <End Role="post_files" EntitySet="post_files" />
@@ -4246,6 +4353,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_pricing_guide_distributions_proposal_versions" Association="BroadcastModel.FK_pricing_guide_distributions_proposal_versions">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
+          </AssociationSet>
+          <EntitySet Name="nti_transmittals_file_problems" EntityType="BroadcastModel.nti_transmittals_file_problems" />
+          <EntitySet Name="nti_transmittals_file_report_ratings" EntityType="BroadcastModel.nti_transmittals_file_report_ratings" />
+          <EntitySet Name="nti_transmittals_file_reports" EntityType="BroadcastModel.nti_transmittals_file_reports" />
+          <EntitySet Name="nti_transmittals_files" EntityType="BroadcastModel.nti_transmittals_files" />
+          <AssociationSet Name="FK_nti_transmittals_file_problems_nti_transmittals_files" Association="BroadcastModel.FK_nti_transmittals_file_problems_nti_transmittals_files">
+            <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
+            <End Role="nti_transmittals_file_problems" EntitySet="nti_transmittals_file_problems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports" Association="BroadcastModel.FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports">
+            <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
+            <End Role="nti_transmittals_file_report_ratings" EntitySet="nti_transmittals_file_report_ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_nti_transmittals_file_reports_nti_transmittals_files" Association="BroadcastModel.FK_nti_transmittals_file_reports_nti_transmittals_files">
+            <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
+            <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -7423,6 +7546,103 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="nti_transmittals_file_problems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nti_transmittals_file_id" Type="Int32" Nullable="false" />
+          <Property Name="problem_description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="nti_transmittals_files" Relationship="BroadcastModel.FK_nti_transmittals_file_problems_nti_transmittals_files" FromRole="nti_transmittals_file_problems" ToRole="nti_transmittals_files" />
+        </EntityType>
+        <EntityType Name="nti_transmittals_file_report_ratings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nti_transmittals_file_report_id" Type="Int32" Nullable="false" />
+          <Property Name="category_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="subcategory_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="percent" Type="Double" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="VPVH" Type="Int32" />
+          <NavigationProperty Name="nti_transmittals_file_reports" Relationship="BroadcastModel.FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports" FromRole="nti_transmittals_file_report_ratings" ToRole="nti_transmittals_file_reports" />
+        </EntityType>
+        <EntityType Name="nti_transmittals_file_reports">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nti_transmittals_file_id" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="advertiser" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="report_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="program_id" Type="Int32" Nullable="false" />
+          <Property Name="stream" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="program_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="program_duration" Type="Int32" Nullable="false" />
+          <Property Name="stations" Type="Int32" Nullable="false" />
+          <Property Name="CVG" Type="Int32" Nullable="false" />
+          <Property Name="TbyC" Type="Int32" Nullable="false" />
+          <Property Name="TA" Type="Double" Nullable="false" />
+          <Property Name="week_ending" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="nti_transmittals_file_report_ratings" Relationship="BroadcastModel.FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports" FromRole="nti_transmittals_file_reports" ToRole="nti_transmittals_file_report_ratings" />
+          <NavigationProperty Name="nti_transmittals_files" Relationship="BroadcastModel.FK_nti_transmittals_file_reports_nti_transmittals_files" FromRole="nti_transmittals_file_reports" ToRole="nti_transmittals_files" />
+        </EntityType>
+        <EntityType Name="nti_transmittals_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="nti_transmittals_file_problems" Relationship="BroadcastModel.FK_nti_transmittals_file_problems_nti_transmittals_files" FromRole="nti_transmittals_files" ToRole="nti_transmittals_file_problems" />
+          <NavigationProperty Name="nti_transmittals_file_reports" Relationship="BroadcastModel.FK_nti_transmittals_file_reports_nti_transmittals_files" FromRole="nti_transmittals_files" ToRole="nti_transmittals_file_reports" />
+        </EntityType>
+        <Association Name="FK_nti_transmittals_file_problems_nti_transmittals_files">
+          <End Type="BroadcastModel.nti_transmittals_files" Role="nti_transmittals_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.nti_transmittals_file_problems" Role="nti_transmittals_file_problems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_transmittals_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_transmittals_file_problems">
+              <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports">
+          <End Type="BroadcastModel.nti_transmittals_file_reports" Role="nti_transmittals_file_reports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.nti_transmittals_file_report_ratings" Role="nti_transmittals_file_report_ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_transmittals_file_reports">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_transmittals_file_report_ratings">
+              <PropertyRef Name="nti_transmittals_file_report_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_nti_transmittals_file_reports_nti_transmittals_files">
+          <End Type="BroadcastModel.nti_transmittals_files" Role="nti_transmittals_files" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.nti_transmittals_file_reports" Role="nti_transmittals_file_reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nti_transmittals_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="nti_transmittals_file_reports">
+              <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8737,6 +8957,59 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="adjustment_impression_loss" ColumnName="adjustment_impression_loss" />
                 <ScalarProperty Name="adjustment_margin" ColumnName="adjustment_margin" />
                 <ScalarProperty Name="proposal_version_detail_id" ColumnName="proposal_version_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_transmittals_file_problems">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_transmittals_file_problems">
+              <MappingFragment StoreEntitySet="nti_transmittals_file_problems">
+                <ScalarProperty Name="problem_description" ColumnName="problem_description" />
+                <ScalarProperty Name="nti_transmittals_file_id" ColumnName="nti_transmittals_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_transmittals_file_report_ratings">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_transmittals_file_report_ratings">
+              <MappingFragment StoreEntitySet="nti_transmittals_file_report_ratings">
+                <ScalarProperty Name="VPVH" ColumnName="VPVH" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="percent" ColumnName="percent" />
+                <ScalarProperty Name="subcategory_name" ColumnName="subcategory_name" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="nti_transmittals_file_report_id" ColumnName="nti_transmittals_file_report_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_transmittals_file_reports">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_transmittals_file_reports">
+              <MappingFragment StoreEntitySet="nti_transmittals_file_reports">
+                <ScalarProperty Name="week_ending" ColumnName="week_ending" />
+                <ScalarProperty Name="TA" ColumnName="TA" />
+                <ScalarProperty Name="TbyC" ColumnName="TbyC" />
+                <ScalarProperty Name="CVG" ColumnName="CVG" />
+                <ScalarProperty Name="stations" ColumnName="stations" />
+                <ScalarProperty Name="program_duration" ColumnName="program_duration" />
+                <ScalarProperty Name="program_type" ColumnName="program_type" />
+                <ScalarProperty Name="stream" ColumnName="stream" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="report_name" ColumnName="report_name" />
+                <ScalarProperty Name="advertiser" ColumnName="advertiser" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="nti_transmittals_file_id" ColumnName="nti_transmittals_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nti_transmittals_files">
+            <EntityTypeMapping TypeName="BroadcastModel.nti_transmittals_files">
+              <MappingFragment StoreEntitySet="nti_transmittals_files">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

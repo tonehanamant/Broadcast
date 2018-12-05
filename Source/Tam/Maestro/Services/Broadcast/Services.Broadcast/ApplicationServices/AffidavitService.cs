@@ -106,7 +106,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
         /// <returns>ClientPostScrubbingProposalDto object</returns>
-        ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request);
+        ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request);        
     }
 
 
@@ -573,13 +573,13 @@ namespace Services.Broadcast.ApplicationServices
             return null;
         }
 
-        public List<ScrubbingFileProblem> _MapValidationErrorToAffidavitFileProblem(List<WWTVInboundFileValidationResult> affidavitValidationResults)
+        public List<FileProblem> _MapValidationErrorToAffidavitFileProblem(List<WWTVInboundFileValidationResult> affidavitValidationResults)
         {
-            List<ScrubbingFileProblem> problems = new List<ScrubbingFileProblem>();
+            List<FileProblem> problems = new List<FileProblem>();
 
             affidavitValidationResults.ForEach(v =>
             {
-                ScrubbingFileProblem problem = new ScrubbingFileProblem();
+                FileProblem problem = new FileProblem();
                 var description = v.ErrorMessage;
                 if (!string.IsNullOrEmpty(v.InvalidField))
                 {
@@ -698,11 +698,8 @@ namespace Services.Broadcast.ApplicationServices
             double deliveredImpressions = 0;
             foreach (var impressionData in impressionsDataGuaranteed)
             {
-                double impressions = impressionData.Impressions;
-                if (equivalized)
-                {
-                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, true, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
-                }
+                var impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                
                 if (type == SchedulePostType.NTI)
                 {
                     impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor);

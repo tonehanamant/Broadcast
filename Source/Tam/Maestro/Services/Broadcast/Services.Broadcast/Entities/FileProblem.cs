@@ -1,6 +1,6 @@
 ﻿namespace Services.Broadcast.Entities
 {
-    public class ScrubbingFileProblem
+    public class FileProblem
     {
         public long Id { get; set; }
         public int FileId { get; set; }

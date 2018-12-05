@@ -484,13 +484,13 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         #region Private Methods
-        private List<ScrubbingFileProblem> _MapValidationErrorToWWTVFileProblem(List<WWTVInboundFileValidationResult> validationResults)
+        private List<FileProblem> _MapValidationErrorToWWTVFileProblem(List<WWTVInboundFileValidationResult> validationResults)
         {
-            List<ScrubbingFileProblem> problems = new List<ScrubbingFileProblem>();
+            List<FileProblem> problems = new List<FileProblem>();
 
             validationResults.ForEach(v =>
             {
-                ScrubbingFileProblem problem = new ScrubbingFileProblem();
+                FileProblem problem = new FileProblem();
                 var description = v.ErrorMessage;
                 if (!string.IsNullOrEmpty(v.InvalidField))
                 {
@@ -931,11 +931,8 @@ namespace Services.Broadcast.ApplicationServices
             double deliveredImpressions = 0;
             foreach (var impressionData in impressionsDataGuaranteed)
             {
-                double impressions = impressionData.Impressions;
-                if (equivalized)
-                {
-                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, true, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
-                }
+                double impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                
                 if (type == SchedulePostType.NTI)
                 {
                     impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor);

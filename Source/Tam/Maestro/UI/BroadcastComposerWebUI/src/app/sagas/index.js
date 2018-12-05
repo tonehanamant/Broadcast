@@ -34,6 +34,8 @@ export default function* rootSaga() {
     postSaga.watchUndoScrubStatus(),
     postSaga.watchUndoScrubStatusSuccess(),
     postSaga.watchRequestClearFilteredScrubbingData(),
+    postSaga.watchRequestProcessNtiFile(),
+    postSaga.watchProcessNtiFileSuccess(),
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),

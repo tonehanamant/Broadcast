@@ -1056,6 +1056,37 @@ export function* undoScrubStatusSuccess({
   );
 }
 
+export function* requestProcessNtiFile(payload) {
+  const { uploadNtiTransmittal } = api.post;
+  try {
+    yield put(setOverlayLoading({ id: "PostNTIUpload", loading: true }));
+    return yield uploadNtiTransmittal(payload);
+  } finally {
+    yield put(setOverlayLoading({ id: "PostNTIUpload", loading: false }));
+  }
+}
+
+export function* processNtiFileSuccess() {
+  yield put({
+    type: ACTIONS.TOGGLE_MODAL,
+    modal: {
+      modal: "confirmModal",
+      active: true,
+      properties: {
+        titleText: "Upload Complete",
+        bodyText: "File Processed, NTI data processed.",
+        closeButtonDisabled: true,
+        // closeButtonText: "Continue",
+        // closeButtonBsStyle: "success",
+        actionButtonText: "OK",
+        actionButtonBsStyle: "success",
+        action: () => {},
+        dismiss: () => {}
+      }
+    }
+  });
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1199,4 +1230,15 @@ export function* watchRequestClearFilteredScrubbingData() {
     ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
     clearFilteredScrubbingData
   );
+}
+
+export function* watchRequestProcessNtiFile() {
+  yield takeEvery(
+    ACTIONS.PROCESS_NTI_FILE.request,
+    sagaWrapper(requestProcessNtiFile, ACTIONS.PROCESS_NTI_FILE)
+  );
+}
+
+export function* watchProcessNtiFileSuccess() {
+  yield takeEvery(ACTIONS.PROCESS_NTI_FILE.success, processNtiFileSuccess);
 }

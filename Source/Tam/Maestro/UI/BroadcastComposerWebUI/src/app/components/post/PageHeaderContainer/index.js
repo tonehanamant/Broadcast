@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { createAlert, toggleModal } from "Ducks/app";
-import { getPostFiltered, getUnlinkedIscis } from "Ducks/post";
+import { getPostFiltered, getUnlinkedIscis, processNtiFile } from "Ducks/post";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Components/shared/SearchInputButton";
+import UploadButton from "Components/shared/UploadButton";
 import UnlinkedIsciModal from "./UnlinkedIsciModal";
 
 const mapStateToProps = ({
@@ -18,7 +19,13 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { createAlert, getPostFiltered, getUnlinkedIscis, toggleModal },
+    {
+      createAlert,
+      getPostFiltered,
+      getUnlinkedIscis,
+      toggleModal,
+      processNtiFile
+    },
     dispatch
   );
 
@@ -28,6 +35,7 @@ export class PageHeaderContainer extends Component {
     this.SearchInputAction = this.SearchInputAction.bind(this);
     this.SearchSubmitAction = this.SearchSubmitAction.bind(this);
     this.openUnlinkedIscis = this.openUnlinkedIscis.bind(this);
+    this.processNTIFile = this.processNTIFile.bind(this);
   }
 
   SearchInputAction() {
@@ -40,6 +48,12 @@ export class PageHeaderContainer extends Component {
 
   openUnlinkedIscis() {
     this.props.getUnlinkedIscis();
+  }
+
+  processNTIFile(file, isAccepted, fileExtension) {
+    const req = { Filename: file.name, RawData: file.base64 };
+    console.log("processNTIFile", file, isAccepted, fileExtension, req);
+    this.props.processNtiFile(req);
   }
 
   render() {
@@ -58,7 +72,16 @@ export class PageHeaderContainer extends Component {
               </Button>
             )}
           </Col>
-          <Col xs={6}>
+          <Col xs={6} style={{ textAlign: "right" }}>
+            <UploadButton
+              multiple={false}
+              text="Upload NTI Transmittals"
+              bsStyle="success"
+              style={{ marginRight: "8px" }}
+              bsSize="small"
+              fileTypeExtension=".pdf"
+              processFiles={this.processNTIFile}
+            />
             <SearchInputButton
               inputAction={this.SearchInputAction}
               submitAction={this.SearchSubmitAction}
@@ -79,6 +102,7 @@ export class PageHeaderContainer extends Component {
 PageHeaderContainer.propTypes = {
   getPostFiltered: PropTypes.func.isRequired,
   getUnlinkedIscis: PropTypes.func.isRequired,
+  processNtiFile: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   unlinkedIscisData: PropTypes.array.isRequired,
   archivedIscisData: PropTypes.array.isRequired,

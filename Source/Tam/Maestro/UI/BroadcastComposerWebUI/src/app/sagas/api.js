@@ -49,7 +49,9 @@ const post = {
   swapProposalDetail: params =>
     call(POST, `${apiBase}Post/SwapProposalDetail`, params),
   undoScrubStatus: params =>
-    call(PUT, `${apiBase}Post/UndoOverrideStatus`, params)
+    call(PUT, `${apiBase}Post/UndoOverrideStatus`, params),
+  uploadNtiTransmittal: params =>
+    call(POST, `${apiBase}Post/UploadNtiTransmittals`, params)
 };
 
 const postPrePosting = {

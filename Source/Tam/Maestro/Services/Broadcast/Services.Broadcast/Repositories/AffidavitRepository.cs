@@ -234,7 +234,7 @@ namespace Services.Broadcast.Repositories
                 SourceId = affidavitFile.source_id,
                 Status = (FileProcessingStatusEnum)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
-                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new ScrubbingFileProblem
+                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new FileProblem
                 {
                     Id = p.id,
                     FileId = p.affidavit_file_id,

@@ -219,6 +219,7 @@
     <Compile Include="ApplicationServices\IsciService.cs" />
     <Compile Include="ApplicationServices\LogoService.cs" />
     <Compile Include="ApplicationServices\MarketService.cs" />
+    <Compile Include="ApplicationServices\NtiTransmittalsService.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingService.cs" />
     <Compile Include="ApplicationServices\PostLogPreprocessingService.cs" />
     <Compile Include="ApplicationServices\PostLogService.cs" />
@@ -258,6 +259,8 @@
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\ProprietaryTotalsDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingCategory.cs" />
+    <Compile Include="Entities\Nti\NtiRatingDocument.cs" />
     <Compile Include="Entities\PricingGuideOpenMarketDistributionSaveRequest.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSaveRequest.cs" />
     <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
@@ -269,6 +272,12 @@
     <Compile Include="Entities\Enums\FileProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\FileDetailProblemTypeEnum.cs" />
     <Compile Include="Entities\MarketCoverage.cs" />
+    <Compile Include="Entities\Nti\NtiPdfDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingCategoryDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingDocumentDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingHeaderDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingSubCategoryDto.cs" />
+    <Compile Include="Entities\Nti\NtiFile.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideOpenMarketInventoryRequestDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\OpenMarketPricingGuideDto.cs" />
@@ -308,7 +317,7 @@
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
     <Compile Include="FtpService.cs" />
-    <Compile Include="Entities\ScrubbingFileProblem.cs" />
+    <Compile Include="Entities\FileProblem.cs" />
     <Compile Include="Entities\InboundFileSaveRequest.cs" />
     <Compile Include="Entities\WWTVInboundFileValidationResult.cs" />
     <Compile Include="BusinessEngines\ImpressionAdjustmentEngine.cs" />
@@ -559,6 +568,7 @@
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
     <Compile Include="Repositories\IsciRepository.cs" />
+    <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\BvsRepository.cs" />

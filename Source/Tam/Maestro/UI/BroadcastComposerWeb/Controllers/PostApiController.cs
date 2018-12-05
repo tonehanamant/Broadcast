@@ -174,5 +174,12 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().SwapProposalDetails(requestData, DateTime.Now, Identity.Name));
         }
+
+        [HttpPost]
+        [Route("UploadNtiTransmittals")]
+        public BaseResponse UploadNtiTransmittals(FileRequest request)
+        {
+            return _ApplicationServiceFactory.GetApplicationService<INtiTransmittalsService>().UploadNtiTransmittalsFile(request, Identity.Name);
+        }
     }
 }

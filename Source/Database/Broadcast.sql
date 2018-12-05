@@ -279,7 +279,6 @@ BEGIN
 END
 /*************************************** END BCOP-3534 *****************************************************/
 
-
 /*************************************** START BCOP-3958 *****************************************************/
 
 if  exists (select 1 from sys.columns where name = 'adjustment_rate' and object_name(object_id) = 'pricing_guide_distributions') AND
@@ -289,6 +288,93 @@ BEGIN
 END
 
 /*************************************** END BCOP-3958 *****************************************************/
+
+/*************************************** BEGIN BCOP-3974 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_files]'))
+BEGIN
+	CREATE TABLE [dbo].[nti_transmittals_files](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [varchar](255) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[status] [int] NOT NULL,
+	 CONSTRAINT [PK_nti_transmittals_files] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_file_problems]'))
+BEGIN
+	CREATE TABLE [dbo].[nti_transmittals_file_problems](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[nti_transmittals_file_id] [int] NOT NULL,
+		[problem_description] [nvarchar](max) NOT NULL
+	 CONSTRAINT [PK_nti_transmittals_file_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[nti_transmittals_file_problems]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_file_problems_nti_transmittals_files] FOREIGN KEY([nti_transmittals_file_id])
+	REFERENCES [dbo].[nti_transmittals_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[nti_transmittals_file_problems] CHECK CONSTRAINT [FK_nti_transmittals_file_problems_nti_transmittals_files]
+	CREATE INDEX IX_nti_transmittals_file_problems_nti_transmittals_file_id ON [nti_transmittals_file_problems] ([nti_transmittals_file_id])
+END
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_file_reports]'))
+BEGIN
+	CREATE TABLE [dbo].[nti_transmittals_file_reports](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[nti_transmittals_file_id] [int] NOT NULL,
+		[date] [DATE] NOT NULL,
+		[advertiser] [VARCHAR](63) NOT NULL,
+		[report_name] [VARCHAR](255) NOT NULL,
+		[program_id] [INT] NOT NULL,
+		[stream] [VARCHAR](16) NOT NULL,
+		[program_type] [VARCHAR](4) NOT NULL,
+		[program_duration] [int] NOT NULL,
+		[stations] [int] NOT NULL,
+		[CVG] [INT] NOT NULL,
+		[TbyC] [INT] NOT NULL,
+		[TA] [FLOAT] NOT NULL,
+		[week_ending] [DATE] NOT NULL
+	 CONSTRAINT [PK_nti_transmittals_file_reports] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[nti_transmittals_file_reports]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_file_reports_nti_transmittals_files] FOREIGN KEY([nti_transmittals_file_id])
+	REFERENCES [dbo].[nti_transmittals_files] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[nti_transmittals_file_reports] CHECK CONSTRAINT [FK_nti_transmittals_file_reports_nti_transmittals_files]
+	CREATE INDEX IX_nti_transmittals_file_reports_nti_transmittals_file_id ON [nti_transmittals_file_reports] ([nti_transmittals_file_id])
+END
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_file_report_ratings]'))
+BEGIN
+	CREATE TABLE [dbo].[nti_transmittals_file_report_ratings](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[nti_transmittals_file_report_id] [INT] NOT NULL,
+		[category_name] [VARCHAR](255) NOT NULL,
+		[subcategory_name] [VARCHAR](255) NULL,
+		[percent] [FLOAT] NOT NULL,
+		[impressions] [FLOAT] NOT NULL,
+		[VPVH] [INT] NULL
+	 CONSTRAINT [PK_nti_transmittals_file_report_ratings] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[nti_transmittals_file_report_ratings]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports] FOREIGN KEY([nti_transmittals_file_report_id])
+	REFERENCES [dbo].[nti_transmittals_file_reports] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[nti_transmittals_file_report_ratings] CHECK CONSTRAINT [FK_nti_transmittals_file_report_ratings_nti_transmittals_file_reports]
+	CREATE INDEX IX_nti_transmittals_file_report_ratings_nti_transmittals_file_report_id ON [nti_transmittals_file_report_ratings] ([nti_transmittals_file_report_id])
+END
+/*************************************** END BCOP-3974 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

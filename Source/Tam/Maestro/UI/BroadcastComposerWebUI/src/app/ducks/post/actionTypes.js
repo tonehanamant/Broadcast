@@ -8,6 +8,7 @@ export const RESCRUB_UNLIKED_ISCI = createAction("post/RESCRUB_UNLIKED_ISCI");
 export const MAP_UNLINKED_ISCI = createAction("post/MAP_UNLINKED_ISCI");
 export const UNDO_ARCHIVED_ISCI = createAction("post/UNDO_ARCHIVED_ISCI");
 export const UNDO_SCRUB_STATUS = createAction("post/UNDO_SCRUB_STATUS");
+export const PROCESS_NTI_FILE = createAction("post/PROCESS_NTI_FILE");
 
 export const REQUEST_CLEAR_FILTERED_SCRUBBING_DATA =
   "post/REQUEST_CLEAR_FILTERED_SCRUBBING_DATA";
