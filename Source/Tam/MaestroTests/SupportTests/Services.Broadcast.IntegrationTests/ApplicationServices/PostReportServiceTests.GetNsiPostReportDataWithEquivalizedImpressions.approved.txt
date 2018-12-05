@@ -51,7 +51,7 @@
           "AudienceImpressions": {
             "31": 4000.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2016-05-29T00:00:00",
           "DaypartName": "ADU",

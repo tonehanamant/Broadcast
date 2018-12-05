@@ -430,11 +430,22 @@ namespace Services.Broadcast.Repositories
                         ProposalDetailPlaybackType = (ProposalEnums.ProposalPlaybackType?)x.proposalVersionDetail.posting_playback_type,
                         ProposalDetailSpotLengthId = x.proposalVersionDetail.spot_length_id,
                         Adu = x.proposalVersionDetail.adu,
-                        Brand = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.SingleOrDefault(i => i.house_isci == x.affidavitFileDetails.isci)?.brand
+                        HouseIsci = x.affidavitFileDetails.isci,
+                        WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList()
                     }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ThenBy(x=>x.Isci).ToList();
 
                     return inSpecAffidavitFileDetails;
                 });
+        }
+
+        private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
+        {
+            return new ProposalWeekIsciDto
+            {
+                HouseIsci = isci.house_isci,
+                MarriedHouseIsci = isci.married_house_iscii,
+                Brand = isci.brand
+            };
         }
 
         /// <summary>

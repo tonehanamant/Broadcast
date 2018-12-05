@@ -61,7 +61,7 @@
             "5": 0.0,
             "6": 0.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -93,7 +93,7 @@
             "5": 1802.85,
             "6": 833.3
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -125,7 +125,7 @@
             "5": 500.0,
             "6": 500.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": "BCOP-2952",
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -157,7 +157,7 @@
             "5": 1802.85,
             "6": 833.3
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NAV",
@@ -189,7 +189,7 @@
             "5": 0.0,
             "6": 0.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": "BCOP-2997",
           "DateAired": "2016-06-05T00:00:00",
           "DaypartName": "NAV",

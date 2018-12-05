@@ -126,7 +126,7 @@
           "AudienceImpressions": {
             "31": 486.9
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2017-07-10T00:00:00",
           "DaypartName": "EMN",
@@ -156,7 +156,7 @@
           "AudienceImpressions": {
             "31": 84.55
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2017-07-17T00:00:00",
           "DaypartName": "EMN",
@@ -186,7 +186,7 @@
           "AudienceImpressions": {
             "31": 0.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2017-07-27T00:00:00",
           "DaypartName": "EMN",
@@ -216,7 +216,7 @@
           "AudienceImpressions": {
             "31": 0.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2017-08-02T00:00:00",
           "DaypartName": "EMN",
@@ -246,7 +246,7 @@
           "AudienceImpressions": {
             "31": 259294.75
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2017-08-02T00:00:00",
           "DaypartName": "ADU",
@@ -276,7 +276,7 @@
           "AudienceImpressions": {
             "31": 41651.15
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2017-07-17T00:00:00",
           "DaypartName": "ADU",

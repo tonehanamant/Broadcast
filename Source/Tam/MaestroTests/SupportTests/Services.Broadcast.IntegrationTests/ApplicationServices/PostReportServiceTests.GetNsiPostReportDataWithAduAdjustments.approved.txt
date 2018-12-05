@@ -66,7 +66,7 @@
           "AudienceImpressions": {
             "31": 500.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2016-05-31T00:00:00",
           "DaypartName": "ADU",
@@ -96,7 +96,7 @@
           "AudienceImpressions": {
             "31": 1500.0
           },
-          "Brand": null,
+          "Brand": "",
           "Comment": null,
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NSIADU2",
