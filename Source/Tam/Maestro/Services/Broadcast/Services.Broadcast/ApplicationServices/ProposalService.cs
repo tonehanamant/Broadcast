@@ -26,6 +26,7 @@ using System.Diagnostics;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -873,9 +874,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var detail in proposalDto.Details)
             {
                 _ValidateProposalProjectionBooks(detail);
-
-                _ValidateProprietaryPricing(detail);
-
+                
                 if (detail.FlightEndDate == default(DateTime) || detail.FlightStartDate == default(DateTime))
                     throw new Exception("Cannot save proposal detail without specifying flight start/end date.");
 
@@ -898,23 +897,6 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
-            }
-        }
-
-        private void _ValidateProprietaryPricing(ProposalDetailDto detail)
-        {
-            var proprietaryInventorySources = _GetProprietaryInventorySources();
-
-            foreach (var proprietaryPricingDto in detail.PricingGuide.ProprietaryPricing)
-            {
-                if (!proprietaryInventorySources.Contains(proprietaryPricingDto.InventorySource))
-                    throw new Exception($"Cannot save proposal detail that contains invalid inventory source for proprietary pricing: {proprietaryPricingDto.InventorySource}");
-            }
-
-            foreach (var proprietaryPricingInventorySource in proprietaryInventorySources)
-            {
-                if (detail.PricingGuide.ProprietaryPricing.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
-                    throw new Exception("Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data");
             }
         }
 
@@ -1219,7 +1201,7 @@ namespace Services.Broadcast.ApplicationServices
                     .OrderBy(m => m.Display).ToList(),
                 DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4,
                     MidpointRounding.AwayFromZero),
-                ProprietaryPricingInventorySources = _GetProprietaryInventorySources().Select(p => new LookupDto
+                ProprietaryPricingInventorySources = EnumHelper.GetProprietaryInventorySources().Select(p => new LookupDto
                 {
                     Id = (int)p,
                     Display = p.Description()
@@ -1480,19 +1462,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return proposalBuy.Errors;
         }
-
-
-        private List<InventorySourceEnum> _GetProprietaryInventorySources()
-        {
-            var inventorySources = Enum.GetValues(typeof(InventorySourceEnum)).Cast<InventorySourceEnum>().ToList();
-
-            inventorySources.Remove(InventorySourceEnum.Blank);
-            inventorySources.Remove(InventorySourceEnum.Assembly);
-            inventorySources.Remove(InventorySourceEnum.OpenMarket);
-
-            return inventorySources;
-        }
-
+        
         public Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId)
         {
             string fileNameTemplate = "{0}({1}) - {2} - Export.scx";

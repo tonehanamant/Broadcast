@@ -1,5 +1,4 @@
-﻿using EntityFrameworkMapping.Broadcast;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using System.Text.RegularExpressions;
-using Common.Services.Repositories;
+using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -43,8 +42,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         }
 
-        public override InventorySource InventorySource { get; set; }
-
         public override void ExtractFileData(System.IO.Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
             var spotLengthId = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds()[_TTNWStandardSpotLength];
@@ -66,7 +63,7 @@ namespace Services.Broadcast.Converters.RateImport
                     return;
                 }
 
-                var validStations = _GetValidStations(ttnwRecords.Select(r => r.StationLetters).Distinct().ToList());
+                var validStations = FindStations(ttnwRecords.Select(r => r.StationLetters).Distinct().ToList());
 
                 if (validStations == null || validStations.Count == 0)
                 {
@@ -138,20 +135,6 @@ namespace Services.Broadcast.Converters.RateImport
 
                 inventoryFile.InventoryGroups.AddRange(inventoryGroups.Values);
             }
-        }
-
-        private Dictionary<string, DisplayBroadcastStation> _GetValidStations(List<string> stationNameList)
-        {
-            var stationsDictionary = new Dictionary<string, DisplayBroadcastStation>();
-            foreach (var stationName in stationNameList)
-            {
-                var station = _ParseStationCallLetters(stationName);
-                if (station != null)
-                {
-                    stationsDictionary.Add(stationName, station);
-                }
-            }
-            return stationsDictionary;
         }
 
         private List<StationInventoryManifestAudience> _ParseManifestAudiences(Dictionary<string, double> audiencesWithImpressions)
@@ -250,27 +233,6 @@ namespace Services.Broadcast.Converters.RateImport
 
             FileProblems.AddRange(daypartProblems);
             return dayparts;
-        }
-
-        private DisplayBroadcastStation _ParseStationCallLetters(string stationName)
-        {
-            // check if it is legacy or the call letters
-            var foundStation = _GetDisplayBroadcastStation(stationName);
-
-            if (foundStation == null)
-            {
-                var station = stationName.Replace("-TV", "").Trim();
-                foundStation = _GetDisplayBroadcastStation(station);
-            }
-
-            return foundStation;
-        }
-
-        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
-        {
-            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
-                                _stationRepository.GetBroadcastStationByCallLetters(stationName);
         }
 
         private List<TTNWFileRecord> _GetTTNWRecords(ExcelWorksheet sheet, SpreadsheetTableDescriptor dataTable)
@@ -500,6 +462,5 @@ namespace Services.Broadcast.Converters.RateImport
             return tableDescriptor;
 
     }
-
-}
+    }
 }

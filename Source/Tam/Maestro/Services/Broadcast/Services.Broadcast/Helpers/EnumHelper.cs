@@ -1,5 +1,8 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace Services.Broadcast.Helpers
@@ -34,5 +37,15 @@ namespace Services.Broadcast.Helpers
             else return source.ToString();
         }
 
+        public static List<InventorySourceEnum> GetProprietaryInventorySources()
+        {
+            var inventorySources = Enum.GetValues(typeof(InventorySourceEnum)).Cast<InventorySourceEnum>().ToList();
+
+            inventorySources.Remove(InventorySourceEnum.Blank);
+            inventorySources.Remove(InventorySourceEnum.Assembly);
+            inventorySources.Remove(InventorySourceEnum.OpenMarket);
+
+            return inventorySources;
+        }
     }
 }

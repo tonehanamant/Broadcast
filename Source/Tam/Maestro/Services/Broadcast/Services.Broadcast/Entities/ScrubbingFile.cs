@@ -13,6 +13,6 @@ namespace Services.Broadcast.Entities
         public DateTime CreatedDate { get; set; }
         public FileProcessingStatusEnum Status { get; set; }
         public List<ScrubbingFileDetail> FileDetails { get; set; } = new List<ScrubbingFileDetail>();
-        public List<ScrubbingFileProblem> FileProblems { get; set; } = new List<ScrubbingFileProblem>();
+        public List<FileProblem> FileProblems { get; set; } = new List<FileProblem>();
     }
 }

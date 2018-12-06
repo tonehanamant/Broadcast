@@ -19,7 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_contacts = new HashSet<station_contacts>();
             this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
             this.proposal_buy_file_details = new HashSet<proposal_buy_file_details>();
-            this.open_market_pricing_guide = new HashSet<open_market_pricing_guide>();
+            this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
         }
     
         public short station_code { get; set; }
@@ -34,6 +34,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual ICollection<proposal_buy_file_details> proposal_buy_file_details { get; set; }
-        public virtual ICollection<open_market_pricing_guide> open_market_pricing_guide { get; set; }
+        public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
     }
 }

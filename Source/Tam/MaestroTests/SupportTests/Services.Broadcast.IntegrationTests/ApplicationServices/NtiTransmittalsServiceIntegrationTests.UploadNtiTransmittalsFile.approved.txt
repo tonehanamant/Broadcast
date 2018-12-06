@@ -1,0 +1,5 @@
+﻿{
+  "Data": null,
+  "Message": "File processed, NTI data processed",
+  "Success": true
+}

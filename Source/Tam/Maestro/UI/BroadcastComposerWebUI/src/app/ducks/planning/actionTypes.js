@@ -74,6 +74,7 @@ export const LOAD_OPEN_MARKET_DATA = createAction(
   "planning/LOAD_OPEN_MARKET_DATA"
 );
 export const SCX_FILE_UPLOAD = createAction("planning/SCX_FILE_UPLOAD");
+export const LOAD_PRICING_DATA = createAction("planning/LOAD_PRICING_DATA");
 export const ALLOCATE_SPOTS = createAction("planning/ALLOCATE_SPOTS");
 export const FILTER_OPEN_MARKET_DATA = createAction(
   "planning/FILTER_OPEN_MARKET_DATA"
@@ -88,3 +89,4 @@ export const UPDATE_EDIT_MARKETS_DATA = createAction(
 export const UPDATE_PROPRIETARY_CPMS = createAction(
   "planning/UPDATE_PROPRIETARY_CPMS"
 );
+export const SAVE_PRICING_GUIDE = createAction("planning/SAVE_PRICING_GUIDE");

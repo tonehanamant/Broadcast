@@ -6,11 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Common.Services.Extensions;
-using Common.Services.Repositories;
 using Microsoft.Practices.ObjectBuilder2;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Validators;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -77,14 +77,6 @@ namespace Services.Broadcast.Converters.RateImport
         
         private bool _FoundGoodDaypart;
 
-        public override InventorySource InventorySource { get; set; }
-
-        public override InventoryFile GetPendingInventoryFile()
-        {
-            var result = new InventoryFile();
-            return HydrateInventoryFile(result);
-        }
-
         public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
             _EffectiveDate = effectiveDate;
@@ -103,7 +95,7 @@ namespace Services.Broadcast.Converters.RateImport
                             break; // empty row, done!
 
                         var stationName = _GetCellValue(row, "Customer Name").ToUpper();
-                        var station = _ParseStationCallLetters(stationName);
+                        var station = ParseStationCallLetters(stationName);
 
                         var daypartCode = _GetCellValue(row, "Barter Network");
                         if (!_ValidDaypartCodes.Contains(daypartCode))
@@ -179,6 +171,7 @@ namespace Services.Broadcast.Converters.RateImport
         }
 
         private Dictionary<string, List<StationInventoryGroup>> _InventoryGroups = new Dictionary<string, List<StationInventoryGroup>>();
+
         private void _AddNewInventory(CNNFileDto dto)
         {
             var groups = EnsureGroup(dto.DaypartCode);
@@ -218,16 +211,6 @@ namespace Services.Broadcast.Converters.RateImport
                 if (slotToUse > maxSlots)
                     slotToUse = 1;
             }
-        }
-
-        public void AddGroup(StationInventoryGroup group)
-        {
-            List<StationInventoryGroup> groups;
-            if (!_InventoryGroups.TryGetValue(group.DaypartCode, out groups))
-            {
-                throw new Exception("Daypart Code not found in group; disaster");
-            }
-            groups.Add(group);
         }
 
         /// <summary>
@@ -406,31 +389,17 @@ namespace Services.Broadcast.Converters.RateImport
             return SpothLengths.Contains(spotLength);
         }
 
-        private DisplayBroadcastStation _ParseStationCallLetters(string stationName)
+        protected override DisplayBroadcastStation ParseStationCallLetters(string stationName)
         {
-            // check if it is legacy or the call letters
-            var foundStation = _GetDisplayBroadcastStation(stationName);
+            var foundStation = base.ParseStationCallLetters(stationName);
 
             if (foundStation == null)
             {
-                var station = stationName.Replace("-TV", "").Trim();
-                foundStation = _GetDisplayBroadcastStation(station);
+                _AddProblem($"Invalid station: {stationName}");
             }
-
-            if (foundStation == null)
-                _AddProblem(string.Format("Invalid station: {0}", stationName));
-
+            
             return foundStation;
         }
-
-        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
-        {
-            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
-                                _stationRepository.GetBroadcastStationByCallLetters(stationName);
-        }
-
-
 
         private string _GetCellValue(int row, string columnName)
         {
@@ -441,6 +410,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             return _Worksheet.Cells[row, column].Text.Trim();
         }
+
         private bool _IsEmptyRow(int row)
         {
             for (int c = 1; c < _Worksheet.Dimension.End.Column; c++)
@@ -448,6 +418,5 @@ namespace Services.Broadcast.Converters.RateImport
                     return false;
             return true;
         }
-
     }
 }

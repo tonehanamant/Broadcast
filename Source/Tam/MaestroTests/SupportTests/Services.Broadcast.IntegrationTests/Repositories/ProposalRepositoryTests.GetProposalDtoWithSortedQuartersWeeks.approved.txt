@@ -21,23 +21,6 @@
       "NtiConversionFactor": 0.0,
       "PostingBookId": null,
       "PostingPlaybackType": null,
-      "PricingGuide": {
-        "AdjustmentInflation": null,
-        "AdjustmentMargin": null,
-        "AdjustmentRate": null,
-        "GoalBudget": null,
-        "GoalImpression": null,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProposalDetailId": 0,
-        "ProposalId": 0,
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 0,
       "ProposalFlightWeeks": [],

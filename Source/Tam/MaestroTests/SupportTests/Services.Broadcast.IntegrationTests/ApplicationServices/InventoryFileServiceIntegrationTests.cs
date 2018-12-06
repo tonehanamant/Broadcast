@@ -17,6 +17,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -648,73 +649,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var deleted = _InventoryFileService.DeleteStationContact(stationContact.Id, "system");
 
                 Assert.IsTrue(deleted);
-            }
-        }
-
-        [Test]
-        public void ThrowsExceptionWhenLoadingAllUnknownStation()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
-
-                request.StreamData = new FileStream(
-                    @".\Files\unknown_station_rate_file_zyxw.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.FileName = "unknown_station_rate_file_zyxw.xml";
-                request.RatingBook = 416;
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                Assert.IsTrue(problems.Any());
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void LoadsInventoryFileWithKnownAndUnknownStations()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest();
-
-                request.StreamData = new FileStream(
-                    @".\Files\known_and_unknown_station_rate_file_zyxw.xml",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request.UserName = "IntegrationTestUser";
-                request.FileName = "known_and_unknown_station_rate_file_zyxw.xml";
-                request.RatingBook = 416;
-
-                List<InventoryFileProblem> problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var result = _InventoryFileService.SaveInventoryFile(request);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
-                jsonResolver.Ignore(typeof(InventoryFileProblem), "AffectedProposals");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(problems, jsonSettings));
-
             }
         }
 
@@ -3720,6 +3654,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var stationDetailContainsProgramWithExpectedGenre = stationDetail.Programs.Any(x => x.Genres.Any(g => g.Id == genreId));
 
                 Assert.True(stationDetailContainsProgramWithExpectedGenre);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithUnknownStation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(StationInventoryManifestStaging), "ManifestId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var result = _InventoryFileService.SaveInventoryFile(request);
+
+                var manifests = _InventoryRepository.GetManifestsStagingByFileId(result.FileId);
+
+                // sort manifests in order to get the same results for several test runs
+                manifests = manifests
+                    .OrderBy(x => x.EffectiveDate)
+                    .ThenBy(x => x.EndDate)
+                    .ThenBy(x => x.ManifestAudiencesReferences.FirstOrDefault()?.Impressions ?? 0)
+                    .ThenBy(x => x.ManifestDayparts.FirstOrDefault()?.ProgramName ?? string.Empty)
+                    .ToList();
+
+                var manifestsJson = IntegrationTestHelper.ConvertToJson(manifests, jsonSettings);
+
+                Approvals.Verify(manifestsJson);
             }
         }
     }

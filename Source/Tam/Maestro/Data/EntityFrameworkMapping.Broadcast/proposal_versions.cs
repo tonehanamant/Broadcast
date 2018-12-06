@@ -17,10 +17,10 @@ namespace EntityFrameworkMapping.Broadcast
         public proposal_versions()
         {
             this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
-            this.proposal_version_details = new HashSet<proposal_version_details>();
             this.proposal_version_flight_weeks = new HashSet<proposal_version_flight_weeks>();
             this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
+            this.proposal_version_details = new HashSet<proposal_version_details>();
         }
     
         public int id { get; set; }
@@ -49,10 +49,10 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> market_coverage { get; set; }
     
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
-        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }
         public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual proposal proposal { get; set; }
+        public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
     }
 }

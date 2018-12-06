@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Practices.ObjectBuilder2;
-using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.BusinessEngines
 {

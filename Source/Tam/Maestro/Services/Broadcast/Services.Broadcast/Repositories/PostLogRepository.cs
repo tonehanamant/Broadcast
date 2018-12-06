@@ -777,7 +777,7 @@ namespace Services.Broadcast.Repositories
                 SourceId = postlogFile.source_id,
                 Status = (FileProcessingStatusEnum)postlogFile.status,
                 CreatedDate = postlogFile.created_date,
-                FileProblems = postlogFile.postlog_file_problems.Select(p => new ScrubbingFileProblem()
+                FileProblems = postlogFile.postlog_file_problems.Select(p => new FileProblem()
                 {
                     Id = p.id,
                     FileId = p.postlog_file_id,

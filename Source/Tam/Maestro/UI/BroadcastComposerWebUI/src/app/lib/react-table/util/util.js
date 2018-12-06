@@ -1,4 +1,4 @@
-import { isNaN } from "lodash";
+import { isNaN, isNil } from "lodash";
 import { multiSelectRow, singleSelectRow } from "../actions/actions";
 
 export const SELECTION = {
@@ -13,3 +13,12 @@ export const rowSelection = {
 };
 
 export const isNumeric = val => !isNaN(val);
+
+export const generetaColumns = (columns, displayColumns) =>
+  columns.map(c => {
+    const isShow = displayColumns[c.id];
+    return {
+      show: isNil(isShow) ? true : isShow,
+      ...c
+    };
+  });

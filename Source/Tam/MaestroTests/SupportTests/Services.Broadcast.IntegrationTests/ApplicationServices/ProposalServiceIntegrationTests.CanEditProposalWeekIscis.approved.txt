@@ -26,21 +26,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
-      "PricingGuide": {
-        "AdjustmentInflation": null,
-        "AdjustmentMargin": null,
-        "AdjustmentRate": null,
-        "GoalBudget": null,
-        "GoalImpression": null,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
@@ -63,7 +48,7 @@
                   "Days": null,
                   "Friday": false,
                   "HouseIsci": "AAAAAAAA",
-                  "MarriedHouseIsci": false,
+                  "MarriedHouseIsci": true,
                   "Monday": false,
                   "Saturday": false,
                   "Sunday": false,
@@ -203,21 +188,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
-      "PricingGuide": {
-        "AdjustmentInflation": null,
-        "AdjustmentMargin": null,
-        "AdjustmentRate": null,
-        "GoalBudget": null,
-        "GoalImpression": null,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],
@@ -345,21 +315,6 @@
       "NtiConversionFactor": 0.2,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
-      "PricingGuide": {
-        "AdjustmentInflation": null,
-        "AdjustmentMargin": null,
-        "AdjustmentRate": null,
-        "GoalBudget": null,
-        "GoalImpression": null,
-        "OpenMarketPricing": {
-          "CpmMax": null,
-          "CpmMin": null,
-          "DistributionReport": null,
-          "OpenMarketCpmTarget": null,
-          "UnitCapPerStation": null
-        },
-        "ProprietaryPricing": []
-      },
       "ProgramCriteria": [],
       "ProjectionPlaybackType": 4,
       "ProposalFlightWeeks": [],

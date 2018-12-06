@@ -11,6 +11,7 @@ using Tam.Maestro.Services.Clients;
 using System;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -233,7 +234,7 @@ namespace Services.Broadcast.Repositories
                 SourceId = affidavitFile.source_id,
                 Status = (FileProcessingStatusEnum)affidavitFile.status,
                 CreatedDate = affidavitFile.created_date,
-                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new ScrubbingFileProblem
+                FileProblems = affidavitFile.affidavit_file_problems.Select(p => new FileProblem
                 {
                     Id = p.id,
                     FileId = p.affidavit_file_id,
@@ -337,42 +338,52 @@ namespace Services.Broadcast.Repositories
                     }
 
                     var queryData = query.ToList();
-                    
-                    var posts = new List<ProposalDetailPostScrubbing>();
-                    posts.AddRange(queryData.Select(x =>
+
+                    return queryData.Select(x =>
+                    {
+                        return new ProposalDetailPostScrubbing()
                         {
-                            return new ProposalDetailPostScrubbing()
-                            {
-                                ScrubbingClientId = x.affidavitFileScrub.id,
-                                ProposalDetailId = x.proposalDetailId,
-                                Station = x.affidavitDetails.station,
-                                ISCI = x.affidavitDetails.isci,
-                                ProgramName = x.affidavitFileScrub.effective_program_name,
-                                SpotLengthId = x.affidavitDetails.spot_length_id,
-                                TimeAired = x.affidavitDetails.air_time,
-                                DateAired = x.affidavitDetails.original_air_date,
-                                DayOfWeek = x.affidavitDetails.original_air_date.DayOfWeek,
-                                GenreName = x.affidavitFileScrub.effective_genre,
-                                MatchGenre = x.affidavitFileScrub.match_genre,
-                                MatchMarket = x.affidavitFileScrub.match_market,
-                                MatchProgram = x.affidavitFileScrub.match_program,
-                                MatchStation = x.affidavitFileScrub.match_station,
-                                MatchTime = x.affidavitFileScrub.match_time,
-                                MatchDate = x.affidavitFileScrub.match_date,
-                                MatchIsciDays = x.affidavitFileScrub.match_isci_days,
-                                Comments = x.affidavitFileScrub.comment,
-                                ClientISCI = x.affidavitFileScrub.effective_client_isci,
-                                WeekStart = x.proposalVersionWeeks.start_date,
-                                ShowTypeName = x.affidavitFileScrub.effective_show_type,
-                                StatusOverride = x.affidavitFileScrub.status_override,
-                                Status = (ScrubbingStatus)x.affidavitFileScrub.status,
-                                MatchShowType = x.affidavitFileScrub.match_show_type,
-                                WWTVProgramName = x.affidavitDetails.program_name
-                            };
-                        }
-                    ).ToList());
-                    return posts;
+                            ScrubbingClientId = x.affidavitFileScrub.id,
+                            ProposalDetailId = x.proposalDetailId,
+                            Station = x.affidavitDetails.station,
+                            ISCI = x.affidavitDetails.isci,
+                            ProgramName = x.affidavitFileScrub.effective_program_name,
+                            SpotLengthId = x.affidavitDetails.spot_length_id,
+                            TimeAired = x.affidavitDetails.air_time,
+                            DateAired = x.affidavitDetails.original_air_date,
+                            DayOfWeek = x.affidavitDetails.original_air_date.DayOfWeek,
+                            GenreName = x.affidavitFileScrub.effective_genre,
+                            MatchGenre = x.affidavitFileScrub.match_genre,
+                            MatchMarket = x.affidavitFileScrub.match_market,
+                            MatchProgram = x.affidavitFileScrub.match_program,
+                            MatchStation = x.affidavitFileScrub.match_station,
+                            MatchTime = x.affidavitFileScrub.match_time,
+                            MatchDate = x.affidavitFileScrub.match_date,
+                            MatchIsciDays = x.affidavitFileScrub.match_isci_days,
+                            Comments = x.affidavitFileScrub.comment,
+                            ClientISCI = x.affidavitFileScrub.effective_client_isci,
+                            WeekStart = x.affidavitDetails.original_air_date.GetWeekMonday(),
+                            ShowTypeName = x.affidavitFileScrub.effective_show_type,
+                            StatusOverride = x.affidavitFileScrub.status_override,
+                            Status = (ScrubbingStatus)x.affidavitFileScrub.status,
+                            MatchShowType = x.affidavitFileScrub.match_show_type,
+                            WWTVProgramName = x.affidavitDetails.program_name,
+                            WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList()
+                        };
+                    }).ToList();
                 });
+        }
+
+
+
+        private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
+        {
+            return new ProposalWeekIsciDto
+            {
+                HouseIsci = isci.house_isci,
+                MarriedHouseIsci = isci.married_house_iscii,
+                Brand = isci.brand
+            };
         }
 
         /// <summary>
@@ -436,16 +447,6 @@ namespace Services.Broadcast.Repositories
 
                     return inSpecAffidavitFileDetails;
                 });
-        }
-
-        private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
-        {
-            return new ProposalWeekIsciDto
-            {
-                HouseIsci = isci.house_isci,
-                MarriedHouseIsci = isci.married_house_iscii,
-                Brand = isci.brand
-            };
         }
 
         /// <summary>

@@ -34,6 +34,8 @@ export default function* rootSaga() {
     postSaga.watchUndoScrubStatus(),
     postSaga.watchUndoScrubStatusSuccess(),
     postSaga.watchRequestClearFilteredScrubbingData(),
+    postSaga.watchRequestProcessNtiFile(),
+    postSaga.watchProcessNtiFileSuccess(),
 
     postPrePostingSaga.watchRequestPostPrePostingInitialData(),
     postPrePostingSaga.watchRequestPostPrePosting(),
@@ -74,6 +76,9 @@ export default function* rootSaga() {
     planningSaga.watchAllocateSpots(),
     // planningSaga.watchUploadSCXFileSuccess(),
     planningSaga.watchFilterOpenMarketData(),
+    planningSaga.watchLoadPricingDataSuccess(),
+    planningSaga.watchLoadPricingData(),
+    planningSaga.watchSavePricingData(),
 
     trackerSaga.watchUploadTrackerFile(),
     trackerSaga.watchUploadTrackerFileSuccess(),

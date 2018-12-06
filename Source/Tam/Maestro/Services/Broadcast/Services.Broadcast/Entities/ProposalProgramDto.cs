@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Services.Broadcast.Repositories;
+using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities

@@ -6,7 +6,5 @@
         public decimal? CpmMax { get; set; }
         public int? UnitCapPerStation { get; set; }
         public OpenMarketCpmTarget? OpenMarketCpmTarget { get; set; }
-
-        public PricingGuideOpenMarketDistributionDto DistributionReport { get; set; }
     }
 }

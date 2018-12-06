@@ -1,0 +1,1822 @@
+﻿[
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-03T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 50000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.4
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 32413,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "CASTLE"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 195.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 300.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 450.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 900.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 1800.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 3000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-03T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 73000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 2.1
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 36211,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "CASTLE"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 260.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 400.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 800.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 1600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 4000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 30000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 0.9
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 62733,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "SCANDAL"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 162.5000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 250.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 375.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 500.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 750.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 1000.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 1500.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 2500.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 44000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.3
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 62681,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "SCANDAL"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 227.5000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 350.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 525.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 700.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1050.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 1400.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 2100.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 3500.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 48000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.4
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 62739,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "ABC7 LATE NEWS (R)"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 97.5000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 150.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 225.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 300.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 450.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 900.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 1500.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 53000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.5
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 67442,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "WINDY CITY LIVE B"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 260.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 400.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 800.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 1600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 4000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 60000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.7
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 31065,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "WINDY CITY LIVE"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 520.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 800.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1600.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 3200.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 4800.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 8000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 66000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.9
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 36143,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "WINDY CITY WKND"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 390.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 900.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1800.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 3600.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 6000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 82000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 2.4
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 62719,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "NIGHTLINE"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 422.5000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 650.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 975.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1300.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1950.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 2600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 3900.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 6500.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 86000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 2.5
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 31193,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "GENERAL HOSPITAL"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 650.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 1000.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1500.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 2000.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 3000.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 4000.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 6000.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 10000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 91000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 2.6
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 1617,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "THE CHEW"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 520.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 800.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1600.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 3200.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 4800.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 8000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 94000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 2.7
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 37529,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "INSIDE EDITION W"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 650.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 1000.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1500.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 2000.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 3000.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 4000.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 6000.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 10000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 103000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 3.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 6724,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "LIVE WITH KELLY"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 585.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 900.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1350.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1800.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 2700.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 3600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 5400.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 9000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 103000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 3.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 6817,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "THE VIEW"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 715.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 1100.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1650.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 2200.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 3300.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 4400.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 6600.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 11000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 114000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 3.3
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 31338,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "INSIDE EDITION"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 520.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 800.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1600.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 3200.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 4800.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 8000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 123000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 3.5
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 62674,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "JIMMY KIMMEL"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 845.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 1300.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1950.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 2600.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 3900.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 5200.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 7800.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 13000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-09-26T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 169000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 4.9
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 31474,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "JEOPARDY"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 585.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 900.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 1350.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1800.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 2700.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 3600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 5400.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 9000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-12-10T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 43000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.2
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 29705,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "ABC7 LATE NEWS (R)"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 65.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 100.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 150.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 200.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 300.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 400.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 1000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-12-10T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 59000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 1.7
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 29555,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "CASTLE"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 260.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 400.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 600.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 800.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1200.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 1600.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 2400.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 4000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  },
+  {
+    "DaypartCode": null,
+    "EffectiveDate": "2016-12-10T00:00:00",
+    "EndDate": "2016-12-25T00:00:00",
+    "FileId": null,
+    "Id": null,
+    "InventorySourceId": 0,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": null,
+          "Id": 31
+        },
+        "Impressions": 107000.0,
+        "IsReference": true,
+        "Rate": 0.0000,
+        "Rating": 3.1
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "",
+          "_EndTime": 0,
+          "_Friday": false,
+          "_Id": 14849,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Genres": [],
+        "Id": null,
+        "ProgramName": "CASTLE"
+      }
+    ],
+    "ManifestRates": [
+      {
+        "Id": 0,
+        "Rate": 325.0000,
+        "SpotLengthId": 3
+      },
+      {
+        "Id": 0,
+        "Rate": 500.0000,
+        "SpotLengthId": 1
+      },
+      {
+        "Id": 0,
+        "Rate": 750.0000,
+        "SpotLengthId": 8
+      },
+      {
+        "Id": 0,
+        "Rate": 1000.0000,
+        "SpotLengthId": 2
+      },
+      {
+        "Id": 0,
+        "Rate": 1500.0000,
+        "SpotLengthId": 7
+      },
+      {
+        "Id": 0,
+        "Rate": 2000.0000,
+        "SpotLengthId": 4
+      },
+      {
+        "Id": 0,
+        "Rate": 3000.0000,
+        "SpotLengthId": 5
+      },
+      {
+        "Id": 0,
+        "Rate": 5000.0000,
+        "SpotLengthId": 6
+      }
+    ],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": "WLS_UNKNOWN"
+  }
+]

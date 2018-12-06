@@ -1,0 +1,136 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 1.01,
+      "Id": 160,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
+  "BudgetGoal": null,
+  "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure",
+        "Id": 3
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
+    "ProgramNames": [
+      "Adventure Time"
+    ]
+  },
+  "DistributionId": 0,
+  "Filter": {},
+  "ImpressionGoal": null,
+  "ImpressionLoss": 0.2,
+  "Inflation": 0.1,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": 0.2,
+  "Markets": [
+    {
+      "AvgCpm": 0.9615421597775376059138688995,
+      "DisplayImpressions": 34964.91714286,
+      "DisplayStationImpressions": 41599.84,
+      "MarketCoverage": 1.01,
+      "MarketId": 160,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 0.9615421597775376059138688995,
+      "MinCpm": 0.9615421597775376059138688995,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.9615421597775376059138688995,
+          "Programs": [
+            {
+              "BlendedCpm": 0.9615421597775376059138688995,
+              "Cost": 66.000000,
+              "CostPerSpot": 66.000000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM",
+                "Id": 5
+              },
+              "DisplayCost": 66.000000,
+              "DisplayImpressions": 34964.91714286,
+              "DisplayStationImpressions": 41599.84,
+              "EffectiveImpressionsPerSpot": 41599.84,
+              "Genres": [
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                }
+              ],
+              "HasImpressions": true,
+              "Impressions": 41599.84,
+              "ImpressionsPerSpot": 34964.91714286,
+              "ManifestDaypartId": 213353,
+              "ProgramId": 162238,
+              "ProgramName": "Adventure Time",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 41599.84
+            }
+          ],
+          "StationCode": 5316
+        }
+      ],
+      "TotalCost": 66.000000,
+      "TotalImpressions": 41599.84,
+      "TotalSpots": 1
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 1.0,
+  "OpenMarketTotals": {
+    "Cost": 66.000000,
+    "Coverage": 1.01,
+    "Cpm": 1.58654456,
+    "Impressions": 41599.84
+  },
+  "PricingTotals": {
+    "Cost": 66.000000,
+    "Coverage": 1.01,
+    "Cpm": 1.58654456,
+    "Impressions": 41599.84
+  },
+  "ProposalDetailId": 9986,
+  "ProposalId": 0,
+  "ProposalVersionId": 0,
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
+}

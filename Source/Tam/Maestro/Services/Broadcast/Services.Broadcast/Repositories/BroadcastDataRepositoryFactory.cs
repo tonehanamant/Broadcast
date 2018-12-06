@@ -64,6 +64,8 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ITrafficRepository, TrafficRepository>();
             instance.RegisterType<IStationProgramRepository, StationProgramRepository>();
             instance.RegisterType<IShowTypeRepository, ShowTypeRepository>();
+            instance.RegisterType<INtiTransmittalsRepository, NtiTransmittalsRepository>();
+            instance.RegisterType<IPricingGuideRepository, PricingGuideRepository>();
 
             instance.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();

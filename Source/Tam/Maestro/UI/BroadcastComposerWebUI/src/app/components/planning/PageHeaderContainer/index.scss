@@ -1,0 +1,30 @@
+.planning-grid-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
+
+  .planning-grid-header_actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    
+    > div {
+      margin: 0 10px;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    .dropdown-menu {
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+
+      .ant-checkbox-wrapper {
+        margin-left: 0;
+      }
+    }
+  }
+}

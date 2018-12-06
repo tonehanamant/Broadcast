@@ -13,6 +13,7 @@ using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.Repositories
 {
@@ -42,6 +43,7 @@ namespace Services.Broadcast.Repositories
         bool CheckIfManifestByStationProgramFlightDaypartExists(int stationCode, string programName, DateTime startDate, DateTime endDate, int daypartId);
         void ExpireManifest(int manifestId, DateTime endDate);
         bool HasSpotsAllocated(int manifestId);
+        List<StationInventoryManifestStaging> GetManifestsStagingByFileId(int fileId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -218,6 +220,56 @@ namespace Services.Broadcast.Repositories
                                 }).ToList();
 
                     context.station_inventory_manifest.AddRange(newManifests);
+
+                    // OpenMarket manifests staging
+                    var newManifestsStaging =
+                        inventoryFile.InventoryManifestsStaging
+                            .Where(m => m.Id == null)
+                            .SelectMany(x => x.ManifestAudiences.Union(x.ManifestAudiencesReferences), (manifest, audience) => new
+                            {
+                                manifest,
+                                audience
+                            })
+                            .SelectMany(x => x.manifest.ManifestDayparts, (parent, daypart) => new
+                            {
+                                parent.manifest,
+                                parent.audience,
+                                daypart
+                            })
+                            .SelectMany(x => x.manifest.ManifestRates, (parent, rate) => new
+                            {
+                                parent.manifest,
+                                parent.audience,
+                                parent.daypart,
+                                rate
+                            })
+                            .Select(x => new station_inventory_manifest_staging
+                            {
+                                file_id = inventoryFile.Id,
+                                inventory_source_id = inventoryFile.InventorySource.Id,
+
+                                manifest_id = x.manifest.ManifestId,
+                                station = x.manifest.Station,
+                                manifest_spot_length_id = x.manifest.SpotLengthId,
+                                spots_per_week = null,
+                                spots_per_day = x.manifest.SpotsPerDay,
+                                effective_date = x.manifest.EffectiveDate,
+                                end_date = x.manifest.EndDate,
+
+                                audience_id = x.audience.Audience.Id,
+                                impressions = x.audience.Impressions,
+                                rating = x.audience.Rating,
+                                audience_rate = x.audience.Rate,
+                                is_reference = x.audience.IsReference,
+
+                                daypart_id = x.daypart.Daypart.Id,
+                                program_name = x.daypart.ProgramName,
+
+                                rate = x.rate.Rate,
+                                rate_spot_length_id = x.rate.SpotLengthId
+                            });
+
+                    context.station_inventory_manifest_staging.AddRange(newManifestsStaging);
 
                     context.SaveChanges();
                 });
@@ -937,6 +989,89 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => context.station_inventory_spots.Any(s => s.station_inventory_manifest_id == manifestId));
+        }
+
+        // Simple mapping for tests
+        public List<StationInventoryManifestStaging> GetManifestsStagingByFileId(int fileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.station_inventory_manifest_staging
+                        .Where(x => x.file_id == fileId)
+                        .GroupBy(x => new
+                        {
+                            x.manifest_id,
+                            x.station,
+                            x.manifest_spot_length_id,
+                            x.spots_per_week,
+                            x.spots_per_day,
+                            x.effective_date,
+                            x.end_date
+                        })
+                        .Select(g => new
+                        {
+                            manifest = g.Key,
+
+                            audiences = g.GroupBy(x => new
+                            {
+                                x.audience_id,
+                                x.impressions,
+                                x.rating,
+                                x.audience_rate,
+                                x.is_reference
+                            }).Select(x => x.Key),
+
+                            dayparts = g.GroupBy(x => new
+                            {
+                                x.daypart_id,
+                                x.program_name
+                            }).Select(x => x.Key),
+
+                            rates = g.GroupBy(x => new
+                            {
+                                x.rate,
+                                x.rate_spot_length_id
+                            }).Select(x => x.Key)
+                        })
+                        .ToList()
+                        .Select(x => new StationInventoryManifestStaging
+                        {
+                            ManifestId = x.manifest.manifest_id,
+                            Station = x.manifest.station,
+                            SpotLengthId = x.manifest.manifest_spot_length_id,
+                            SpotsPerWeek = x.manifest.spots_per_week,
+                            SpotsPerDay = x.manifest.spots_per_day,
+                            EffectiveDate = x.manifest.effective_date,
+                            EndDate = x.manifest.end_date,
+                            ManifestAudiences = x.audiences.Where(a => !a.is_reference).Select(a => new StationInventoryManifestAudience
+                            {
+                                Audience = new DisplayAudience { Id = a.audience_id },
+                                Impressions = a.impressions,
+                                Rating = a.rating,
+                                Rate = a.audience_rate,
+                                IsReference = a.is_reference
+                            }).ToList(),
+                            ManifestAudiencesReferences = x.audiences.Where(a => a.is_reference).Select(a => new StationInventoryManifestAudience
+                            {
+                                Audience = new DisplayAudience { Id = a.audience_id },
+                                Impressions = a.impressions,
+                                Rating = a.rating,
+                                Rate = a.audience_rate,
+                                IsReference = a.is_reference
+                            }).ToList(),
+                            ManifestDayparts = x.dayparts.Select(d => new StationInventoryManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart { Id = d.daypart_id },
+                                ProgramName = d.program_name
+                            }).ToList(),
+                            ManifestRates = x.rates.Select(r => new StationInventoryManifestRate
+                            {
+                                Rate = r.rate,
+                                SpotLengthId = r.rate_spot_length_id
+                            }).ToList()
+                        }).ToList();
+                });
         }
     }
 }

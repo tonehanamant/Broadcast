@@ -1,11 +1,10 @@
 ﻿using Common.Services;
-using Microsoft.Practices.Unity.InterceptionExtension;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
@@ -25,15 +24,8 @@ namespace Services.Broadcast.Converters.RateImport
         protected Dictionary<int, double> _SpotLengthMultipliers;
         
         private Dictionary<int, int> _SpotLengths;
-        private string _fileHash;
-        private List<InventoryFileProblem> _FileProblems = new List<InventoryFileProblem>();
 
-        public List<InventoryFileProblem> FileProblems
-        {
-            get { return _FileProblems; }
-            set { _FileProblems = value;  }
-        } 
-
+        public List<InventoryFileProblem> FileProblems { get; set; } = new List<InventoryFileProblem>();
         public InventoryFileSaveRequest Request { get; private set; }
 
         public BroadcastDataDataRepositoryFactory BroadcastDataDataRepository
@@ -73,10 +65,9 @@ namespace Services.Broadcast.Converters.RateImport
 
         public void CheckFileHash()
         {
-
             //check if file has already been loaded
             if (_BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>()
-                    .GetInventoryFileIdByHash(_fileHash) > 0)
+                    .GetInventoryFileIdByHash(FileHash) > 0)
             {
                 throw new BroadcastDuplicateInventoryFileException(
                     "Unable to load rate file. The selected rate file has already been loaded or is already loading.");
@@ -86,29 +77,55 @@ namespace Services.Broadcast.Converters.RateImport
         public void LoadFromSaveRequest(InventoryFileSaveRequest request)
         {
             Request = request;
-            _fileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData));
+            FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData));
             _SpotLengthMultipliers = _GetSpotLengthAndMultipliers();
         }
 
-        public string FileHash
-        {
-            get { return _fileHash; }
+        public string FileHash { get; private set; }
 
-        }
+        public InventorySource InventorySource { get; set; }
 
-        public abstract InventorySource InventorySource { get; set; }
-
-        public virtual InventoryFile GetPendingInventoryFile()
+        public InventoryFile GetPendingInventoryFile()
         {
             var result = new InventoryFile();
             return HydrateInventoryFile(result);
+        }
+
+        protected DisplayBroadcastStation GetDisplayBroadcastStation(string stationName)
+        {
+            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
+                   _stationRepository.GetBroadcastStationByCallLetters(stationName);
+        }
+
+        protected virtual DisplayBroadcastStation ParseStationCallLetters(string stationName)
+        {
+            stationName = stationName.Replace("-TV", "").Trim();
+            return GetDisplayBroadcastStation(stationName);
+        }
+
+        protected Dictionary<string, DisplayBroadcastStation> FindStations(List<string> stationNameList)
+        {
+            var foundStations = new Dictionary<string, DisplayBroadcastStation>();
+
+            foreach (var stationName in stationNameList)
+            {
+                var station = ParseStationCallLetters(stationName);
+
+                if (station != null)
+                {
+                    foundStations.Add(stationName, station);
+                }
+            }
+
+            return foundStations;
         }
 
         protected InventoryFile HydrateInventoryFile(InventoryFile inventoryFileToHydrate)
         {
             inventoryFileToHydrate.FileName = Request.FileName == null ? "unknown" : Request.FileName;
             inventoryFileToHydrate.FileStatus = InventoryFile.FileStatusEnum.Pending;
-            inventoryFileToHydrate.Hash = _fileHash;
+            inventoryFileToHydrate.Hash = FileHash;
             inventoryFileToHydrate.RatingBook = Request.RatingBook;
             inventoryFileToHydrate.PlaybackType = Request.PlaybackType;
             inventoryFileToHydrate.InventorySource = InventorySource;

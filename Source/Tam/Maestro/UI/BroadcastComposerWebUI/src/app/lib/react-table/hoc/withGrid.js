@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { isEqual } from "lodash";
 import reducer, { initialState } from "../actions/reducer";
+import { visibleColumn } from "../actions/actions";
 
 export const GridContext = React.createContext();
 
@@ -10,6 +11,7 @@ function withGrid(WrappedComponent) {
       super(props);
       this.dispatch = this.dispatch.bind(this);
       this.handleAction = this.handleAction.bind(this);
+      this.visibleColumn = this.visibleColumn.bind(this);
 
       this.state = initialState;
     }
@@ -33,6 +35,10 @@ function withGrid(WrappedComponent) {
       }
     }
 
+    visibleColumn(id, value) {
+      this.dispatch(visibleColumn(id, value));
+    }
+
     render() {
       return (
         <GridContext.Provider
@@ -41,6 +47,7 @@ function withGrid(WrappedComponent) {
           <WrappedComponent
             {...this.props}
             {...this.state}
+            visibleColumn={this.visibleColumn}
             dispatch={this.dispatch}
           />
         </GridContext.Provider>

@@ -1,0 +1,100 @@
+﻿{
+  "AllMarkets": [],
+  "BudgetGoal": null,
+  "DisplayFilter": {
+    "Affiliations": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": []
+  },
+  "DistributionId": 0,
+  "Filter": {},
+  "ImpressionGoal": null,
+  "ImpressionLoss": null,
+  "Inflation": null,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": null,
+  "Markets": [
+    {
+      "AvgCpm": 2.8224718149728601694541515914,
+      "DisplayImpressions": 44287.421875,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 1.01,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 2.8224718149728601694541515914,
+      "MinCpm": 2.8224718149728601694541515914,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 2.8224718149728601694541515914,
+          "Programs": [
+            {
+              "BlendedCpm": 2.8224718149728601694541515914,
+              "Cost": 125.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-F 6AM-6PM",
+                "Id": 12
+              },
+              "DisplayCost": 125.0000,
+              "DisplayImpressions": 44287.421875,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 8857.484375,
+              "HasImpressions": true,
+              "Impressions": 44287.421875,
+              "ImpressionsPerSpot": 8857.484375,
+              "ProgramName": "Friends",
+              "Spots": 5,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ]
+        }
+      ],
+      "TotalCost": 125.0000,
+      "TotalImpressions": 44287.421875,
+      "TotalSpots": 5
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 0.0,
+  "OpenMarketTotals": {
+    "Cost": 125.0000,
+    "Coverage": 1.01,
+    "Cpm": 2.82247181,
+    "Impressions": 44287.421875
+  },
+  "PricingTotals": {
+    "Cost": 125.0000,
+    "Coverage": 1.01,
+    "Cpm": 2.82247181,
+    "Impressions": 44287.421875
+  },
+  "ProposalDetailId": 9978,
+  "ProposalId": 0,
+  "ProposalVersionId": 0,
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
+}

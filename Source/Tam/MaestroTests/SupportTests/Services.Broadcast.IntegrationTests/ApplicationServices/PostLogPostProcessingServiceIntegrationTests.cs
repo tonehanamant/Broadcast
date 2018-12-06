@@ -169,8 +169,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
             jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
             jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
-            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalId");
-            jsonResolver.Ignore(typeof(ProposalDetailPricingGuideDto), "ProposalDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -187,8 +185,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var response = _PostLogRepository.GetPostLogFile(fileId, true);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "Id");
-            jsonResolver.Ignore(typeof(ScrubbingFileProblem), "FileId");
+            jsonResolver.Ignore(typeof(FileProblem), "Id");
+            jsonResolver.Ignore(typeof(FileProblem), "FileId");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
             jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ModifiedDate");

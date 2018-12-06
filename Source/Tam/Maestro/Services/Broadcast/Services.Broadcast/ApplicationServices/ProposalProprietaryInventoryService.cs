@@ -29,8 +29,15 @@ namespace Services.Broadcast.ApplicationServices
         internal static readonly string MissingGuaranteedAudienceErorMessage = "Unable to get proprietary inventory information due to null guaranteed audience";
         private readonly IProposalWeeklyTotalCalculationEngine _ProposalWeeklyTotalCalculationEngine;
 
-        public ProposalProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine, IProposalWeeklyTotalCalculationEngine proposalWeeklyTotalCalculationEngine, IImpressionAdjustmentEngine impressionAdjustmentEngine, IProposalTotalsCalculationEngine proposalTotalsCalculationEngine)
-            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine, impressionAdjustmentEngine, proposalTotalsCalculationEngine)
+        public ProposalProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
+            , IDaypartCache daypartCache
+            , IProposalMarketsCalculationEngine proposalMarketsCalculationEngine
+            , IProposalWeeklyTotalCalculationEngine proposalWeeklyTotalCalculationEngine
+            , IProposalTotalsCalculationEngine proposalTotalsCalculationEngine
+            , MediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine
+                  , proposalTotalsCalculationEngine, mediaMonthAndWeekAggregateCache, impressionAdjustmentEngine)
         {
             _ProposalWeeklyTotalCalculationEngine = proposalWeeklyTotalCalculationEngine;
         }
@@ -47,10 +54,17 @@ namespace Services.Broadcast.ApplicationServices
 
         private ProposalDetailProprietaryInventoryDto GetProposalDetailDto(int proposalDetailId)
         {
-            var dto = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProprietaryProposalDetailInventory(proposalDetailId);
+            var dto = BroadcastDataRepositoryFactory.GetDataRepository<IPricingGuideRepository>().GetProprietaryProposalDetailInventory(proposalDetailId);
             _SetProposalInventoryDetailSpotLength(dto);
             _SetProposalInventoryDetailDaypart(dto);
             return dto;
+        }
+
+        private void _SetProposalInventoryDetailSpotLength(ProposalDetailInventoryBase proposalInventory)
+        {
+            if (proposalInventory == null) return;
+            proposalInventory.DetailSpotLength =
+                BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthById(proposalInventory.DetailSpotLengthId);
         }
 
         internal void _SetProprietaryInventoryDaypartAndWeekInfo(ProposalDetailProprietaryInventoryDto proposalDetailInventory, int detailId)
@@ -68,7 +82,7 @@ namespace Services.Broadcast.ApplicationServices
             var relevantMediaWeeks = proposalDetailInventory.Weeks.Select(w => w.MediaWeekId).ToList();
             var spotLengthRepository = BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             var spotLengthMappings = spotLengthRepository.GetSpotLengths();
-            var proposalMarketIds = ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDetailInventory.ProposalId, proposalDetailInventory.ProposalVersion).Select(m => m.Id).ToList();
+            var proposalMarketIds = _ProposalMarketsCalculationEngine.GetProposalMarketsList(proposalDetailInventory.ProposalId, proposalDetailInventory.ProposalVersion).Select(m => m.Id).ToList();
             var spotLengths = spotLengthMappings.Where(m => int.Parse(m.Display) >= proposalDetailInventory.DetailSpotLength && int.Parse(m.Display) <= 30).Select(m => m.Id);
             var sortedFilteredInventoryDetails = BroadcastDataRepositoryFactory.GetDataRepository<IProposalInventoryRepository>().GetSortedFilteredInventoryDetails(relevantMediaWeeks, proposalMarketIds, spotLengths);
 

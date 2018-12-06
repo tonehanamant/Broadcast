@@ -439,10 +439,19 @@
     <Compile Include="nsi_component_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="postlog_client_scrubs.cs">
+    <Compile Include="nti_transmittals_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="open_market_pricing_guide.cs">
+    <Compile Include="nti_transmittals_file_problems.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nti_transmittals_file_reports.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nti_transmittals_file_report_ratings.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="postlog_client_scrubs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="postlog_client_scrub_audiences.cs">
@@ -479,6 +488,15 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="post_file_detail_impressions.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pricing_guide_distributions.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pricing_guide_distribution_open_market_inventory.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pricing_guide_distribution_proprietary_inventory.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="program_names.cs">
@@ -519,9 +537,6 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="proposal_version_detail_criteria_show_types.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="proposal_version_detail_proprietary_pricing.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="proposal_version_detail_quarters.cs">
@@ -613,6 +628,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_manifest_rates.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="station_inventory_manifest_staging.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station_inventory_spots.cs">

@@ -632,3 +632,8 @@ export const clearFilteredScrubbingData = () => ({
 export const getClearScrubbingDataFiltered = () => ({
   type: ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA
 });
+
+export const processNtiFile = params => ({
+  type: ACTIONS.PROCESS_NTI_FILE.request,
+  payload: params
+});

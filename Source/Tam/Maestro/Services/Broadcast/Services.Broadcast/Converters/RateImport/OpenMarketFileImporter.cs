@@ -9,6 +9,12 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using System.Xml.Serialization;
 using System.Xml;
 using Services.Broadcast.Extensions;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.Period;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes.AvailLineWithPeriodsDayTimesDayTime;
+using Services.Broadcast.Entities.StationInventory;
+using System.Diagnostics;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -16,208 +22,91 @@ namespace Services.Broadcast.Converters.RateImport
     {
         private const int SecondsPerMinute = 60;
 
-        public override InventorySource InventorySource { get; set; }
-
         public override void ExtractFileData(Stream rawStream, InventoryFile inventoryFile, DateTime effecitveDate)
         {
             try
             {
                 var message = _DeserializeAaaaMessage(rawStream);
 
-                System.Diagnostics.Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
+                Debug.WriteLine(message.Proposal.uniqueIdentifier + " parsed successfully !");
 
-                var resultFile = BuildRatesFile(message, inventoryFile);
-                resultFile.StationContacts = _ExtractContactData(message);
+                BuildRatesFile(message, inventoryFile);
             }
             catch (Exception e)
             {
-                throw new Exception(string.Format("Unable to parse rates file: {0} The file may be invalid: {1}", e.Message, inventoryFile.FileName), e);
+                throw new Exception($"Unable to parse rates file: {e.Message} The file may be invalid: {inventoryFile.FileName}", e);
             }
         }
 
-        private InventoryFile BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile)
+        private void BuildRatesFile(AAAAMessage message, InventoryFile inventoryFile)
         {
+            var proposal = message.Proposal;
 
-            inventoryFile.UniqueIdentifier = message.Proposal.uniqueIdentifier;
-            inventoryFile.StartDate = message.Proposal.startDate;
-            inventoryFile.EndDate = message.Proposal.endDate;
+            inventoryFile.UniqueIdentifier = proposal.uniqueIdentifier;
+            inventoryFile.StartDate = proposal.startDate;
+            inventoryFile.EndDate = proposal.endDate;
 
-            inventoryFile.InventoryManifests.AddRange(_BuildStationProgramList(message.Proposal));
+            _PopulateStationProgramList(message.Proposal, inventoryFile);
 
-            return inventoryFile;
+            inventoryFile.StationContacts = _ExtractContactData(message);
         }
 
-        private List<StationInventoryManifest> _BuildStationProgramList(AAAAMessageProposal proposal)
+        private void _PopulateStationProgramList(AAAAMessageProposal proposal, InventoryFile inventoryFile)
         {
-            List<StationInventoryManifest> manifests = new List<StationInventoryManifest>();
-
-            var audienceMap = _GetAudienceMap(proposal.AvailList.DemoCategories);
-
-            var invalidStations = new List<string>();
-            var allStationNames = proposal.Outlets.Select(o => o.callLetters).Distinct().ToList();
-            var validStations = _GetValidStations(allStationNames, invalidStations);
-
-            if (validStations == null || validStations.Count == 0)
-            {
-                FileProblems.Add(new InventoryFileProblem("There are no known stations in the file"));
-                return manifests;
-            }
-
-            if (invalidStations.Any())
-            {
-                FileProblems.AddRange(invalidStations.Select(s => new InventoryFileProblem("Invalid station: " + s)));
-                return manifests;
-            }
-
-            if (proposal.AvailList == null || (proposal.AvailList.AvailLineWithDetailedPeriods == null && proposal.AvailList.AvailLineWithPeriods == null))
+            if (!IsValid(proposal.AvailList))
             {
                 throw new Exception("Can't find XML elements in order to build station programs from.");
             }
 
+            var availLines = new List<AvailLineWithPeriods>();
+
             if (proposal.AvailList.AvailLineWithDetailedPeriods != null)
             {
-                BuildProgramsFromAvailLineWithDetailedPeriods(proposal, FileProblems, audienceMap, validStations, manifests);
+                availLines.AddRange(proposal.AvailList.AvailLineWithDetailedPeriods.Select(_Map));
             }
 
             if (proposal.AvailList.AvailLineWithPeriods != null)
             {
-                BuildProgramsFromAvailLineWithPeriods(proposal, FileProblems, audienceMap, validStations, manifests);
+                availLines.AddRange(proposal.AvailList.AvailLineWithPeriods.Select(_Map));
             }
 
-            return manifests;
+            _PopulateProgramsFromAvailLineWithPeriods(proposal, availLines, inventoryFile, FileProblems);
         }
 
-        //TODO: Move to base class
-        private Dictionary<string, DisplayBroadcastStation> _GetValidStations(List<string> stationNameList,List<string> invalidStations)
+        private bool IsValid(AAAAMessageProposalAvailList availList)
         {
-            var stationsDictionary = new Dictionary<string, DisplayBroadcastStation>();
-            foreach (var stationName in stationNameList)
+            return availList != null && (availList.AvailLineWithDetailedPeriods != null || availList.AvailLineWithPeriods != null);
+        }
+        
+        private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
+        {
+            return !SpotLengths.ContainsKey(spotLength) ? new InventoryFileProblem()
             {
-                var station = _ParseStationCallLetters(stationName);
-                if (station != null)
-                {
-                    stationsDictionary.Add(stationName, station);
-                }
-                else
-                {
-                    invalidStations.Add(stationName);
-                }
-            }
-            return stationsDictionary;
+                ProblemDescription = $"Unknown spot length found: {spotLength}",
+                ProgramName = programName,
+                StationLetters = stationLetters
+            } : null;
         }
 
-        //TODO: move to base class
-        private DisplayBroadcastStation _ParseStationCallLetters(string stationName)
-        {
-            // check if it is legacy or the call letters
-            var foundStation = _GetDisplayBroadcastStation(stationName);
-
-            if (foundStation == null)
-            {
-                var station = stationName.Replace("-TV", "").Trim();
-                foundStation = _GetDisplayBroadcastStation(station);
-            }
-
-            return foundStation;
-        }
-
-        //TODO: move to base class
-        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
-        {
-            var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
-                                _stationRepository.GetBroadcastStationByCallLetters(stationName);
-        }
-
-        private void BuildProgramsFromAvailLineWithDetailedPeriods(AAAAMessageProposal proposal, List<InventoryFileProblem> fileProblems,
-            Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations,
-            List<StationInventoryManifest> manifests)
-        {
-            foreach (var availLine in proposal.AvailList.AvailLineWithDetailedPeriods)
-            {
-                string programName = availLine.AvailName;
-
-                try
-                {
-                    var outletRef = proposal.AvailList.OutletReferences
-                        .Where(a => a.outletForListId == availLine.OutletReference.outletFromListRef)
-                        .Select(a => a.outletFromProposalRef).First();
-                    var callLetters = proposal.Outlets.Where(a => a.outletId == outletRef)
-                        .Select(a => a.callLetters).First();
-
-                    if (!validStations.ContainsKey(callLetters))
-                        throw new Exception(string.Format("Could not find station with call letters \"{0}\"", callLetters));
-
-                    var station = validStations[callLetters];
-
-                    var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
-                                         availLine.SpotLength.Second;
-
-                    var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
-                    if (spotLengthProblem != null)
-                    {
-                        fileProblems.Add(spotLengthProblem);
-                        continue;
-                    }
-
-                    var spotLengthId = SpotLengths[spotLength];
-                    var periods = availLine.Periods.GetAllPeriods();
-                
-                    if (periods.Count() > 0)
-                    {
-
-                        //create a manifest for each period
-                        foreach (var availLinePeriod in periods)
-                        {
-                            var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
-
-                            var manifestAudiences = _GetManifestAudienceListForAvailLine(
-                                proposal,
-                                audienceMap,
-                                _ToDemoValueDict(availLinePeriod.DemoValues));
-
-                            var periodManifest = new StationInventoryManifest()
-                            {
-                                Station = station,
-                                DaypartCode = availLine.DaypartName,
-                                SpotsPerWeek = null,
-                                SpotLengthId = spotLengthId,
-                                ManifestDayparts = _GetDaypartsListForAvailLineWithDetailedPeriods(availLine),
-                                ManifestAudiencesReferences = manifestAudiences,
-                                ManifestRates = manifestRates,
-                                EffectiveDate = availLinePeriod.startDate,
-                                EndDate = availLinePeriod.endDate
-                            };
-
-                            manifests.Add(periodManifest);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        "Error while processing program " + availLine.AvailName + ": " + e.Message);
-                    throw;
-                }
-            }
-
-        }
-
-        private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithPeriods(int spotLengthId,
-            AAAAMessageProposalAvailListAvailLineWithPeriods availLine, string stationCallLetters, List<InventoryFileProblem> fileProblems)
+        private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(
+            int spotLengthId,
+            int spotLength,
+            string linePeriodRate,
+            string programName,
+            string stationCallLetters,
+            List<InventoryFileProblem> fileProblems)
         {
             var manifestRates = new List<StationInventoryManifestRate>();
-            var spotLength = SpotLengths.Single(x=>x.Value == spotLengthId).Key;
+            var availLineRate = string.IsNullOrEmpty(linePeriodRate) ? 0 : decimal.Parse(linePeriodRate);
 
-            var availLineRate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
-
-            if (spotLength == 30) //only create other spot length rates if 30s rate is provided
+            if (spotLength == 30)
             {
                 manifestRates.AddRange(_GetManifestRatesFromMultipliers(availLineRate));
             }
             else
             {
-                var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, availLine.AvailName);
+                var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, programName);
+
                 if (spotLengthProblem != null)
                 {
                     fileProblems.Add(spotLengthProblem);
@@ -229,141 +118,109 @@ namespace Services.Broadcast.Converters.RateImport
                         SpotLengthId = spotLengthId,
                         Rate = availLineRate
                     };
-                    manifestRates.Add(manifestRate);    
+                    manifestRates.Add(manifestRate);
                 }
-
             }
 
             return manifestRates;
         }
 
-        private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
+        private void _PopulateProgramsFromAvailLineWithPeriods(
+            AAAAMessageProposal proposal,
+            List<AvailLineWithPeriods> availLines,
+            InventoryFile inventoryFile,
+            List<InventoryFileProblem> fileProblems)
         {
-            return !SpotLengths.ContainsKey(spotLength) ? new InventoryFileProblem()
-            {
-                ProblemDescription = $"Unknown spot length found: {spotLength}",
-                ProgramName = programName,
-                StationLetters = stationLetters
-            } : null;
-        }
+            var audienceMap = _GetAudienceMap(proposal.AvailList.DemoCategories);
+            var allStationNames = proposal.Outlets.Select(o => o.callLetters).Distinct().ToList();
+            var foundStations = FindStations(allStationNames);
 
-            private List<StationInventoryManifestRate> _GetManifestRatesforAvailLineWithDetailedPeriods(int spotLengthId, int spotLength,
-                string linePeriodRate, string programName, string stationCallLetters, List<InventoryFileProblem> fileProblems)
+            foreach (var availLine in availLines)
             {
-                var manifestRates = new List<StationInventoryManifestRate>();
-                var availLineRate = string.IsNullOrEmpty(linePeriodRate) ? 0 : decimal.Parse(linePeriodRate);
+                var programName = availLine.AvailName;
 
-                if (spotLength == 30)
+                try
                 {
-                    manifestRates.AddRange(_GetManifestRatesFromMultipliers(availLineRate));
-                }
-                else
-                {
-                    var spotLengthProblem = _CheckSpotLength(spotLength, stationCallLetters, programName);
+                    var outletRef = proposal.AvailList.OutletReferences
+                        .Where(a => a.outletForListId == availLine.OutletReference.OutletFromListRef)
+                        .Select(a => a.outletFromProposalRef)
+                        .First();
+                    var callLetters = proposal.Outlets
+                        .Where(a => a.outletId == outletRef)
+                        .Select(a => a.callLetters)
+                        .First();
+
+                    var station = foundStations.ContainsKey(callLetters) ? foundStations[callLetters] : null;
+                    var spotLength = availLine.SpotLength.Minute * SecondsPerMinute + availLine.SpotLength.Second;
+                    var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
+
                     if (spotLengthProblem != null)
                     {
                         fileProblems.Add(spotLengthProblem);
+                        continue;
                     }
-                    else
+
+                    var spotLengthId = SpotLengths[spotLength];
+
+                    foreach (var availLinePeriod in availLine.Periods)
                     {
-                        var manifestRate = new StationInventoryManifestRate()
+                        var manifestAudiences = _GetManifestAudienceListForAvailLine(proposal, audienceMap, _ToDemoValueDict(availLinePeriod.DemoValues));
+                        var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
+
+                        if (station == null)
                         {
-                            SpotLengthId = spotLengthId,
-                            Rate = availLineRate
-                        };
-                        manifestRates.Add(manifestRate);
-                    }
-                }
-
-                return manifestRates;
-            }
-
-            private void BuildProgramsFromAvailLineWithPeriods(AAAAMessageProposal proposal, List<InventoryFileProblem> fileProblems,
-                Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, DisplayBroadcastStation> validStations,
-                List<StationInventoryManifest> manifests)
-            {
-                foreach (var availLine in proposal.AvailList.AvailLineWithPeriods)
-                {
-                    var availLineManifests = new List<StationInventoryManifest>();
-                    var programName = availLine.AvailName;
-
-                    try
-                    {
-                        var outletRef = proposal.AvailList.OutletReferences
-                            .Where(a => a.outletForListId == availLine.OutletReference.outletFromListRef)
-                            .Select(a => a.outletFromProposalRef).First();
-                        var callLetters = proposal.Outlets.Where(a => a.outletId == outletRef)
-                            .Select(a => a.callLetters).First();
-
-                        var station = validStations[callLetters];
-
-                        var spotLength = availLine.SpotLength.Minute * SecondsPerMinute +
-                                             availLine.SpotLength.Second;
-
-                        var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
-                        if (spotLengthProblem != null)
-                        {
-                            fileProblems.Add(spotLengthProblem);
-                            continue;
-                        }
-
-                        var spotLengthId = SpotLengths[spotLength];
-
-                        var manifestAudiences = _GetManifestAudienceListForAvailLine(
-                            proposal,
-                            audienceMap,
-                            _ToDemoValueDict(availLine.DemoValues));
-
-                        if (availLine.Periods != null && availLine.Periods.Count() > 0)
-                        {
-                            //create a manifest for each period
-                            foreach (var availLinePeriod in availLine.Periods)
+                            inventoryFile.InventoryManifestsStaging.Add(new StationInventoryManifestStaging
                             {
-                                var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLine.Rate, programName, callLetters, fileProblems);
-
-                                var periodManifest = new StationInventoryManifest()
-                                {
-                                    Station = station,
-                                    DaypartCode = availLine.DaypartName,
-                                    SpotsPerWeek = null,
-                                    SpotLengthId = spotLengthId,
-                                    ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
-                                    ManifestAudiencesReferences = manifestAudiences,
-                                    ManifestRates = manifestRates,
-                                    EffectiveDate = availLinePeriod.startDate,
-                                    EndDate = availLinePeriod.endDate
-                                };
-                                manifests.Add(periodManifest);
-                            }
-
-                            //var rate = string.IsNullOrEmpty(availLine.Rate) ? 0 : decimal.Parse(availLine.Rate);
-
+                                Station = callLetters,
+                                DaypartCode = availLine.DaypartName,
+                                SpotsPerWeek = null,
+                                SpotLengthId = spotLengthId,
+                                ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
+                                ManifestAudiencesReferences = manifestAudiences,
+                                ManifestRates = manifestRates,
+                                EffectiveDate = availLinePeriod.StartDate,
+                                EndDate = availLinePeriod.EndDate
+                            });
+                        }
+                        else
+                        {
+                            inventoryFile.InventoryManifests.Add(new StationInventoryManifest
+                            {
+                                Station = station,
+                                DaypartCode = availLine.DaypartName,
+                                SpotsPerWeek = null,
+                                SpotLengthId = spotLengthId,
+                                ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),
+                                ManifestAudiencesReferences = manifestAudiences,
+                                ManifestRates = manifestRates,
+                                EffectiveDate = availLinePeriod.StartDate,
+                                EndDate = availLinePeriod.EndDate
+                            });
                         }
                     }
-                    catch (Exception e)
-                    {
-                        System.Diagnostics.Debug.WriteLine(
-                            "Error while processing program " + availLine.AvailName + ": " + e.Message);
-                        throw;
-                    }
-                    manifests.AddRange(availLineManifests);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while processing program " + availLine.AvailName + ": " + e.Message);
+                    throw;
                 }
             }
+        }
 
-        private List<StationInventoryManifestAudience> _GetManifestAudienceListForAvailLine(AAAAMessageProposal proposal, 
-            Dictionary<string, DisplayAudience> audienceMap, Dictionary<string, decimal> demoValues)
+        private List<StationInventoryManifestAudience> _GetManifestAudienceListForAvailLine(
+            AAAAMessageProposal proposal,
+            Dictionary<string, DisplayAudience> audienceMap,
+            Dictionary<string, decimal> demoValues)
         {
-                List<StationInventoryManifestAudience> manifestAudiences = new List<StationInventoryManifestAudience>();
+            var manifestAudiences = new List<StationInventoryManifestAudience>();
 
             foreach (var demoValue in demoValues)
             {
-
                 var demo = proposal.AvailList.DemoCategories.Where(a => a.DemoId == demoValue.Key).First();
                 var audience = audienceMap[demo.DemoId];
-
                 var manifestAudience = manifestAudiences.Where(a => a.Audience.Id == audience.Id).FirstOrDefault();
-
                 var newManifestAudience = false;
+
                 if (manifestAudience == null)
                 {
                     newManifestAudience = true;
@@ -375,10 +232,10 @@ namespace Services.Broadcast.Converters.RateImport
                 switch (demo.DemoType)
                 {
                     case "Impression":
-                        manifestAudience.Impressions = (double) demoValue.Value * 1000;
+                        manifestAudience.Impressions = (double)demoValue.Value * 1000;
                         break;
                     case "Rating":
-                        manifestAudience.Rating = (double) demoValue.Value;
+                        manifestAudience.Rating = (double)demoValue.Value;
                         break;
                     default:
                         throw new Exception("Unknown DemoType [" + demo.DemoType + "] in rate file.");
@@ -389,13 +246,13 @@ namespace Services.Broadcast.Converters.RateImport
                     manifestAudiences.Add(manifestAudience);
                 }
             }
+
             return manifestAudiences;
         }
 
-        private List<StationInventoryManifestDaypart> _GetDaypartsListForAvailLineWithPeriods(AAAAMessageProposalAvailListAvailLineWithPeriods availLine)
+        private List<StationInventoryManifestDaypart> _GetDaypartsListForAvailLineWithPeriods(AvailLineWithPeriods availLine)
         {
             var programName = availLine.AvailName;
-
             var daypart = _GetDisplayDaypartForProgram(availLine);
             var manifestDaypart = new StationInventoryManifestDaypart()
             {
@@ -409,51 +266,9 @@ namespace Services.Broadcast.Converters.RateImport
             };
         }
 
-        private List<StationInventoryManifestDaypart> _GetDaypartsListForAvailLineWithDetailedPeriods(AAAAMessageProposalAvailListAvailLineWithDetailedPeriods availLine)
+        private Dictionary<string, decimal> _ToDemoValueDict(IEnumerable<DemoValue> periodsDemoValues)
         {
-            var programName = availLine.AvailName;
-
-            var daypart = _GetDisplayDaypartForProgram(availLine);
-            var manifestDaypart = new StationInventoryManifestDaypart()
-            {
-                Daypart = daypart,
-                ProgramName = programName
-            };
-
-            return new List<StationInventoryManifestDaypart>()
-            {
-                manifestDaypart
-            };
-        }
-
-        private Dictionary<string, decimal> _ToDemoValueDict(AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] periodsDemoValues)
-        {
-            var demoValues = new Dictionary<string, decimal>();
-
-            if (periodsDemoValues != null)
-            {
-                foreach (var demo in periodsDemoValues)
-                {
-                    demoValues.Add(demo.demoRef, demo.Value);
-                }
-            }
-
-            return demoValues;
-        }
-
-        private Dictionary<string, decimal> _ToDemoValueDict(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriodDemoValue[] detailedPeriodDemoValues)
-        {
-            var demoValues = new Dictionary<string, decimal>();
-
-            if (detailedPeriodDemoValues != null)
-            {
-                foreach (var demo in detailedPeriodDemoValues)
-                {
-                    demoValues.Add(demo.demoRef, demo.Value);
-                }
-            }
-
-            return demoValues;
+            return periodsDemoValues.ToDictionary(x => x.DemoRef, x => x.Value);
         }
 
         private Dictionary<string, DisplayAudience> _GetAudienceMap(AAAAMessageProposalAvailListDemoCategory[] demos)
@@ -467,13 +282,14 @@ namespace Services.Broadcast.Converters.RateImport
                     result.Add(demo.DemoId, _GetAudienceForDemo(demo));
                 }
             }
-            
+
             return result;
         }
 
         private DisplayAudience _GetAudienceForDemo(AAAAMessageProposalAvailListDemoCategory demo)
         {
             string audienceSubcategory = null;
+
             switch (demo.Group.ToString())
             {
                 case "Homes":
@@ -505,14 +321,13 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (result == null)
             {
-                throw new Exception(
-                    String.Format("Unable to find audience for subcategory {0} and age {1}-{2}", audienceSubcategory, demo.AgeFrom, demo.AgeTo));
+                throw new Exception($"Unable to find audience for subcategory {audienceSubcategory} and age {demo.AgeFrom}-{demo.AgeTo}");
             }
 
             return result;
         }
 
-        private DisplayDaypart _GetDisplayDaypartForProgram(AAAAMessageProposalAvailListAvailLineWithDetailedPeriods availLine)
+        private DisplayDaypart _GetDisplayDaypartForProgram(AvailLineWithPeriods availLine)
         {
             DisplayDaypart daypart = new DisplayDaypart();
 
@@ -527,35 +342,9 @@ namespace Services.Broadcast.Converters.RateImport
 
             daypart.StartTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
 
-            //We substract 1 second because the end is not included in the daypart/timespan
+            // We substract 1 second because the end is not included in the daypart/timespan
             daypart.EndTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
-            if (daypart.EndTime < 0)
-            {
-                daypart.EndTime += AssemblyImportHelper.SecondsPerDay;
-            }
 
-            daypart.Id = _DaypartCache.GetIdByDaypart(daypart);
-
-            return daypart;
-        }
-
-        private DisplayDaypart _GetDisplayDaypartForProgram(AAAAMessageProposalAvailListAvailLineWithPeriods availLine)
-        {
-            DisplayDaypart daypart = new DisplayDaypart();
-
-            //TODO: Need updated file to be able to handle multiple dayparts?
-            daypart.Monday = availLine.DayTimes.DayTime.Days.Monday.ToUpper().Equals("Y");
-            daypart.Tuesday = availLine.DayTimes.DayTime.Days.Tuesday.ToUpper().Equals("Y");
-            daypart.Wednesday = availLine.DayTimes.DayTime.Days.Wednesday.ToUpper().Equals("Y");
-            daypart.Thursday = availLine.DayTimes.DayTime.Days.Thursday.ToUpper().Equals("Y");
-            daypart.Friday = availLine.DayTimes.DayTime.Days.Friday.ToUpper().Equals("Y");
-            daypart.Saturday = availLine.DayTimes.DayTime.Days.Saturday.ToUpper().Equals("Y");
-            daypart.Sunday = availLine.DayTimes.DayTime.Days.Sunday.ToUpper().Equals("Y");
-
-            daypart.StartTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.StartTime);
-
-            //We substract 1 second because the end is not included in the daypart/timespan
-            daypart.EndTime = _GetTimeInSecondsFrom24HourTimeString(availLine.DayTimes.DayTime.EndTime) - 1;
             if (daypart.EndTime < 0)
             {
                 daypart.EndTime += AssemblyImportHelper.SecondsPerDay;
@@ -568,9 +357,9 @@ namespace Services.Broadcast.Converters.RateImport
 
         private int _GetTimeInSecondsFrom24HourTimeString(string timeString) // "24:30" => 1800
         {
-            var hour = System.Convert.ToInt32(timeString.Substring(0, 2)) % 24;
-            var minutes = System.Convert.ToInt32(timeString.Substring(3, 2));
-            return hour *AssemblyImportHelper.SecondsPerHour + minutes *AssemblyImportHelper.SecondsPerMinute; //in seconds
+            var hour = Convert.ToInt32(timeString.Substring(0, 2)) % 24;
+            var minutes = Convert.ToInt32(timeString.Substring(3, 2));
+            return hour * AssemblyImportHelper.SecondsPerHour + minutes * AssemblyImportHelper.SecondsPerMinute; //in seconds
         }
 
         private AAAAMessage _DeserializeAaaaMessage(Stream stream)
@@ -618,8 +407,7 @@ namespace Services.Broadcast.Converters.RateImport
                         .FirstOrDefault() : null;
                 stationContact.StationCode = proposalStation.Value.Code;
 
-                if (
-                    proposalStations.Select(s => s.Value.LegacyCallLetters.Trim().ToUpper())
+                if (proposalStations.Select(s => s.Value.LegacyCallLetters.Trim().ToUpper())
                         .ToList()
                         .Contains(stationContact.Company.Trim().ToUpper()))
                 {
@@ -643,6 +431,317 @@ namespace Services.Broadcast.Converters.RateImport
         private static bool _IsContactARep(List<string> repTeamNames, StationContact stationContact)
         {
             return repTeamNames.Where(rt => stationContact.Company.ToUpper().Contains(rt.ToUpper())).Count() > 0;
+        }
+
+        #region Mappings AvailLineWithDetailedPeriods
+
+        private AvailLineWithPeriods _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriods model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            var result = new AvailLineWithPeriods
+            {
+                AvailName = model.AvailName,
+                DaypartName = model.DaypartName,
+                SpotLength = model.SpotLength,
+                OutletReference = _Map(model.OutletReference),
+                Periods = _Map(model.Periods),
+                DayTimes = _Map(model.DayTimes)
+            };
+
+            return result;
+        }
+
+        private AvailLineWithPeriodsDayTimes _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new AvailLineWithPeriodsDayTimes
+            {
+                DayTime = _Map(model.DayTime)
+            };
+        }
+
+        private AvailLineWithPeriodsDayTimesDayTime _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTime model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new AvailLineWithPeriodsDayTimesDayTime
+            {
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                Days = _Map(model.Days)
+            };
+        }
+
+        private AvailLineWithPeriodsDayTimesDayTimeDays _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimesDayTimeDays model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new AvailLineWithPeriodsDayTimesDayTimeDays
+            {
+                Monday = model.Monday,
+                Tuesday = model.Tuesday,
+                Wednesday = model.Wednesday,
+                Thursday = model.Thursday,
+                Friday = model.Friday,
+                Saturday = model.Saturday,
+                Sunday = model.Sunday
+            };
+        }
+
+        private OutletRef _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsOutletReference model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new OutletRef
+            {
+                OutletFromListRef = model.outletFromListRef
+            };
+        }
+
+        private List<Period> _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriods model)
+        {
+            if (model == null)
+            {
+                return new List<Period>();
+            }
+
+            return model
+                .GetAllPeriods()
+                .Select(_Map)
+                .ToList();
+        }
+
+        private Period _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriod model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new Period
+            {
+                Rate = model.Rate,
+                StartDate = model.startDate,
+                EndDate = model.endDate,
+                DemoValues = model.DemoValues == null ? new List<DemoValue>() : model.DemoValues.Select(_Map).ToList()
+            };
+        }
+
+        private DemoValue _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsDetailedPeriodDemoValue model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new DemoValue
+            {
+                DemoRef = model.demoRef,
+                Value = model.Value
+            };
+        }
+
+        #endregion
+
+        #region Mappings AvailLineWithPeriods
+
+        private AvailLineWithPeriods _Map(AAAAMessageProposalAvailListAvailLineWithPeriods model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            var result = new AvailLineWithPeriods
+            {
+                AvailName = model.AvailName,
+                DaypartName = model.DaypartName,
+                SpotLength = model.SpotLength,
+                OutletReference = _Map(model.OutletReference),
+                Periods = model.Periods == null ? new List<Period>() : model.Periods.Select(x => _Map(x, model.Rate, model.DemoValues)).ToList(),
+                DayTimes = _Map(model.DayTimes)
+            };
+
+            return result;
+        }
+
+        private Period _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod model, string rate, AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] demoValues)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new Period
+            {
+                Rate = rate,
+                StartDate = model.startDate,
+                EndDate = model.endDate,
+                DemoValues = demoValues == null ? new List<DemoValue>() : demoValues.Select(_Map).ToList()
+            };
+        }
+
+        private DemoValue _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new DemoValue
+            {
+                DemoRef = model.demoRef,
+                Value = model.Value
+            };
+        }
+
+        private OutletRef _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsOutletReference model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new OutletRef
+            {
+                OutletFromListRef = model.outletFromListRef
+            };
+        }
+
+        private AvailLineWithPeriodsDayTimes _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimes model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new AvailLineWithPeriodsDayTimes
+            {
+                DayTime = _Map(model.DayTime)
+            };
+        }
+
+        private AvailLineWithPeriodsDayTimesDayTime _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTime model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new AvailLineWithPeriodsDayTimesDayTime
+            {
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                Days = _Map(model.Days)
+            };
+        }
+
+        private AvailLineWithPeriodsDayTimesDayTimeDays _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsDayTimesDayTimeDays model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            return new AvailLineWithPeriodsDayTimesDayTimeDays
+            {
+                Monday = model.Monday,
+                Tuesday = model.Tuesday,
+                Wednesday = model.Wednesday,
+                Thursday = model.Thursday,
+                Friday = model.Friday,
+                Saturday = model.Saturday,
+                Sunday = model.Sunday
+            };
+        }
+
+        #endregion
+
+        // This class is used to apply the same logic for AvailLineWithDetailedPeriods and AvailLineWithPeriods
+        internal class AvailLineWithPeriods
+        {
+            public string AvailName { get; set; }
+
+            public string DaypartName { get; set; }
+
+            public DateTime SpotLength { get; set; }
+
+            public OutletRef OutletReference { get; set; }
+
+            public List<Period> Periods { get; set; }
+
+            public AvailLineWithPeriodsDayTimes DayTimes { get; set; }
+
+            internal class OutletRef
+            {
+                public string OutletFromListRef { get; set; }
+            }
+
+            internal class Period
+            {
+                public string Rate { get; set; }
+
+                public DateTime StartDate { get; set; }
+
+                public DateTime EndDate { get; set; }
+
+                public List<DemoValue> DemoValues { get; set; }
+
+                internal class DemoValue
+                {
+                    public string DemoRef { get; set; }
+
+                    public decimal Value { get; set; }
+                }
+            }
+
+            internal class AvailLineWithPeriodsDayTimes
+            {
+                public AvailLineWithPeriodsDayTimesDayTime DayTime { get; set; }
+
+                internal class AvailLineWithPeriodsDayTimesDayTime
+                {
+                    public string StartTime { get; set; }
+
+                    public string EndTime { get; set; }
+
+                    public AvailLineWithPeriodsDayTimesDayTimeDays Days { get; set; }
+
+                    internal class AvailLineWithPeriodsDayTimesDayTimeDays
+                    {
+                        public string Monday { get; set; }
+
+                        public string Tuesday { get; set; }
+
+                        public string Wednesday { get; set; }
+
+                        public string Thursday { get; set; }
+
+                        public string Friday { get; set; }
+
+                        public string Saturday { get; set; }
+
+                        public string Sunday { get; set; }
+                    }
+                }
+            }
         }
     }
 }

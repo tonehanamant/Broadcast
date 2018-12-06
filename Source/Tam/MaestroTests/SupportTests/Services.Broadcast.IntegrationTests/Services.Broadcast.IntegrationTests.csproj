@@ -227,9 +227,11 @@
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\NtiTransmittalsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
+    <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
@@ -561,6 +563,9 @@
     <None Include="Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\TLA1217 P3 TRANSMITTALS.PDF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\TTNW_UPDATE_06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -700,6 +705,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using OfficeOpenXml;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace Services.Broadcast.Converters.Post
                 else
                 {
                     bvsDetail.date = date;
-                    bvsDetail.weekstart = _GetWeekStartDate(date);
+                    bvsDetail.weekstart = date.GetWeekMonday();
                     bvsDetail.day = _GetDayOfWeek(date);
                 }
 
@@ -228,16 +229,6 @@ namespace Services.Broadcast.Converters.Post
         private string _ParseInventorySource(string value)
         {
             return value.Split(_EstimateInventorySourceSeparator)[1];
-        }
-
-        private DateTime _GetWeekStartDate(DateTime date)
-        {
-            var differenceToMonday = (date.DayOfWeek - DayOfWeek.Monday);
-
-            if (differenceToMonday < 0)
-                differenceToMonday += 7;
-
-            return date.AddDays(-differenceToMonday);
         }
 
         private string _GetDayOfWeek(DateTime date)

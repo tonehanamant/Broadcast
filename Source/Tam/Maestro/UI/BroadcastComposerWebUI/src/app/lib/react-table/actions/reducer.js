@@ -2,7 +2,9 @@ import {
   MULTI_SELECT_ROW,
   SINGLE_SELECT_ROW,
   DESELECT_ROW,
-  DESELECT_ROWS
+  DESELECT_ROWS,
+  INIT_TABLE,
+  VISIBLE_COLUMN
 } from "./actions";
 
 /** ================================================================================== */
@@ -10,7 +12,8 @@ import {
 /** ================================================================================== */
 
 export const initialState = {
-  selected: []
+  selected: [],
+  displayColumns: {}
 };
 
 /** ================================================================================== */
@@ -46,6 +49,19 @@ const deselectRows = prevState => ({
   selected: []
 });
 
+const visibleColumn = (prevState, { rowIdx, value }) => ({
+  ...prevState,
+  displayColumns: {
+    ...prevState.displayColumns,
+    [rowIdx]: value
+  }
+});
+
+const initTable = (prevState, payload) => ({
+  ...prevState,
+  ...payload
+});
+
 /** ================================================================================== */
 /** REDUCER */
 /** ================================================================================== */
@@ -54,7 +70,9 @@ const reducer = {
   [MULTI_SELECT_ROW]: multiSelect,
   [SINGLE_SELECT_ROW]: singleSelect,
   [DESELECT_ROW]: deselectRow,
-  [DESELECT_ROWS]: deselectRows
+  [DESELECT_ROWS]: deselectRows,
+  [VISIBLE_COLUMN]: visibleColumn,
+  [INIT_TABLE]: initTable
 };
 
 export default reducer;

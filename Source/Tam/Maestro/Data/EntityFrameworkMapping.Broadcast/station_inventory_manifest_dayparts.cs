@@ -17,7 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public station_inventory_manifest_dayparts()
         {
             this.station_inventory_manifest_daypart_genres = new HashSet<station_inventory_manifest_daypart_genres>();
-            this.open_market_pricing_guide = new HashSet<open_market_pricing_guide>();
+            this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
         }
     
         public int daypart_id { get; set; }
@@ -28,6 +28,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
-        public virtual ICollection<open_market_pricing_guide> open_market_pricing_guide { get; set; }
+        public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
     }
 }

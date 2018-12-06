@@ -90,50 +90,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>().GetInventoryTotals(request));
         }
-
-        [HttpPost]
-        [Route("Detail/PricingGuide/Grid/")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> GetOpenMarketPricingGuide(PricingGuideOpenMarketInventoryRequestDto request)
-        {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .GetPricingGuideOpenMarketInventory(request));
-        }
-
-        [HttpPost]
-        [Route("Detail/PricingGuide/Grid/ApplyFilter")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> ApplyFilterOnOpenMarketPricingGuideGrid(PricingGuideOpenMarketDistributionDto dto)
-        {
-            return _ConvertToBaseResponse(() => 
-                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .ApplyFilterOnOpenMarketPricingGuideGrid(dto));
-        }
-
-        [HttpPost]
-        [Route("Detail/PricingGuide/AllocateSpots")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> SavePricingGuideAllocations(PricingGuideOpenMarketDistributionDto dto)
-        {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .SavePricingGuideAllocations(dto));
-        }
-
-        [HttpPost]
-        [Route("Detail/PricingGuide/Grid/UpdateMarkets")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> UpdateOpenMarketPricingGuideMarkets(PricingGuideOpenMarketDistributionDto dto)
-        {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .UpdateOpenMarketPricingGuideMarkets(dto));
-        }
-
-        [HttpPost]
-        [Route("Detail/PricingGuide/UpdateProprietaryCpms")]
-        public BaseResponse<PricingGuideOpenMarketDistributionDto> UpdateProprietaryCpms(PricingGuideOpenMarketDistributionDto dto)
-        {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
-                    .UpdateProprietaryCpms(dto));
-        }
+                
+        
     }
 }

@@ -37,7 +37,6 @@ namespace Services.Broadcast.Entities.DTO
         public ProposalEnums.ProposalPlaybackType? PostingPlaybackType { get; set; }
         public bool HasPostingDataChanged { get; set; }
         public double? NtiConversionFactor { get; set; }
-        public ProposalDetailPricingGuideDto PricingGuide { get; set; } = new ProposalDetailPricingGuideDto();
         public int? EstimateId { get; set; }
     }
 }

@@ -1,0 +1,17 @@
+﻿{
+  "AdjustmentInflation": 2.0,
+  "AdjustmentMargin": 3.0,
+  "AdjustmentRate": 1.0,
+  "GoalBudget": 100.0000,
+  "GoalImpression": 10000.0,
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "DistributionReport": null,
+    "OpenMarketCpmTarget": null,
+    "UnitCapPerStation": null
+  },
+  "ProposalDetailId": 13402,
+  "ProposalId": 31689,
+  "ProprietaryPricing": []
+}

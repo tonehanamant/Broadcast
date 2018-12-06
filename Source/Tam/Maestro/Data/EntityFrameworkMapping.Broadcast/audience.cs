@@ -29,6 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.postlog_file_detail_demographics = new HashSet<postlog_file_detail_demographics>();
             this.postlog_client_scrub_audiences = new HashSet<postlog_client_scrub_audiences>();
             this.affidavit_client_scrub_audiences = new HashSet<affidavit_client_scrub_audiences>();
+            this.station_inventory_manifest_staging = new HashSet<station_inventory_manifest_staging>();
         }
     
         public int id { get; set; }
@@ -54,5 +55,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<postlog_file_detail_demographics> postlog_file_detail_demographics { get; set; }
         public virtual ICollection<postlog_client_scrub_audiences> postlog_client_scrub_audiences { get; set; }
         public virtual ICollection<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }
+        public virtual ICollection<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
     }
 }

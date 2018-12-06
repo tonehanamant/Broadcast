@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -33,5 +34,6 @@ namespace Services.Broadcast.Entities
         public bool MatchShowType { get; set; }
         public bool MatchIsci { get; set; }
         public string WWTVProgramName { get; set; }
+        public List<ProposalWeekIsciDto> WeekIscis { get; set; }
     }
 }

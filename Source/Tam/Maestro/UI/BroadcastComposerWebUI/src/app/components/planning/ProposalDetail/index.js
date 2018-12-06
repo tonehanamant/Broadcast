@@ -26,7 +26,7 @@ import {
 import FlightPicker from "Components/shared/FlightPicker";
 import DayPartPicker from "Components/shared/DayPartPicker";
 import ProposalDetailGrid from "Components/planning/ProposalDetailGrid";
-import { rerunPostScrubing } from "Ducks/planning";
+import { rerunPostScrubing, loadPricingData } from "Ducks/planning";
 import Sweeps from "./Sweeps";
 import ProgramGenre from "./ProgramGenre";
 import PostingBook from "./PostingBook";
@@ -40,7 +40,7 @@ const mapStateToProps = ({ planning: { isISCIEdited, isGridCellEdited } }) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ rerunPostScrubing }, dispatch);
+  bindActionCreators({ rerunPostScrubing, loadPricingData }, dispatch);
 
 export class ProposalDetail extends Component {
   constructor(props) {
@@ -63,6 +63,7 @@ export class ProposalDetail extends Component {
     this.checkValidNtiLength = this.checkValidNtiLength.bind(this);
     this.openInventory = this.openInventory.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.openPricingGuide = this.openPricingGuide.bind(this);
     this.rerunPostScrubing = this.rerunPostScrubing.bind(this);
     this.generateSCX = this.generateSCX.bind(this);
     this.onDayPartPickerApply = this.onDayPartPickerApply.bind(this);
@@ -77,6 +78,11 @@ export class ProposalDetail extends Component {
         NtiLength: null
       }
     };
+  }
+
+  openPricingGuide() {
+    const { detail, loadPricingData } = this.props;
+    loadPricingData(detail.Id);
   }
 
   onFlightPickerApply(flight) {
@@ -577,7 +583,7 @@ export class ProposalDetail extends Component {
                     >
                       <MenuItem
                         eventKey="pricingGuide"
-                        onSelect={this.openModal}
+                        onSelect={this.openPricingGuide}
                       >
                         Pricing Guide
                       </MenuItem>
@@ -740,6 +746,7 @@ ProposalDetail.propTypes = {
   proposalValidationStates: PropTypes.object,
   isISCIEdited: PropTypes.bool.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired,
+  loadPricingData: PropTypes.func.isRequired,
   // toggleEditIsciClass: PropTypes.func.isRequired,
   // toggleEditGridCellClass: PropTypes.func.isRequired,
   // withRouter props:
