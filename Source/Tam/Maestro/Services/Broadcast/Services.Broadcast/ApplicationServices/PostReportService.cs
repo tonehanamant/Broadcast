@@ -122,7 +122,6 @@ namespace Services.Broadcast.ApplicationServices
                 x.ProposalWeekCost = x.ProposalWeekTotalCost / x.Units;
                 x.ProposalWeekImpressionsGoal = x.ProposalWeekTotalImpressionsGoal / x.Units;
                 x.ProposalWeekCPM = x.ProposalWeekTotalCost / (decimal)x.ProposalWeekTotalImpressionsGoal * 1000;
-                x.Brand = x.WeekIscis.SingleOrDefault(i => i.HouseIsci == x.HouseIsci)?.Brand;
                 var iscis = x.WeekIscis.Where(i => i.HouseIsci == x.HouseIsci && !string.IsNullOrWhiteSpace(i.Brand));
                 x.Brand = string.Join(", ", iscis.Select(i => i.Brand));
             });
