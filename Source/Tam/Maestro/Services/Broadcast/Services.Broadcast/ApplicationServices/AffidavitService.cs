@@ -823,7 +823,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             return clientScrubsData.Select(x => {
                 var spotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key;
-                var isIsciMarried = x.WeekIscis.SingleOrDefault(i => i.HouseIsci == x.ISCI)?.MarriedHouseIsci ?? false;
+                var isIsciMarried = x.WeekIscis.Where(i => i.HouseIsci == x.ISCI).Any(i => i.MarriedHouseIsci);
 
                 if (isIsciMarried)
                 {
