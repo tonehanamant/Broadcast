@@ -299,7 +299,7 @@ class PricingGoal extends Component {
                             )}
                             disabled={isReadOnly}
                             min={1}
-                            max={100}
+                            max={99.99}
                             precision={2}
                             style={{ width: "100%" }}
                             formatter={value =>

@@ -32,8 +32,7 @@ export const defaultFiltersItems = [
   { Display: "Program name", Id: "ProgramNames", order: 1 },
   { Display: "Airing Time", Id: "DayParts", order: 2 },
   { Display: "Affilate", Id: "Affiliations", order: 3 },
-  { Display: "Market", Id: "Markets", order: 4 },
-  { Display: "Genre", Id: "Genres", order: 5 }
+  { Display: "Genre", Id: "Genres", order: 4 }
 ];
 
 export const filterMap = {
@@ -74,24 +73,6 @@ export const filterMap = {
     preTransformer: values => values.map(item => ({ Display: item, Id: item }))
   },
   Genres: {
-    render: (value, onFilterChange, options) => (
-      <Select
-        value={value}
-        multi
-        onChange={onFilterChange}
-        options={options}
-        labelKey="Display"
-        valueKey="Id"
-        clearable={false}
-      />
-    ),
-    getInitialData: filterOptions => filterOptions,
-    postTransformer: values => values.map(({ Id }) => Id),
-    validator: value => isArray(value) && !!value.length,
-    preTransformer: (values, options) =>
-      options.filter(({ Id }) => values.includes(Id))
-  },
-  Markets: {
     render: (value, onFilterChange, options) => (
       <Select
         value={value}
