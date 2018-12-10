@@ -618,6 +618,7 @@
           <Property Name="forecasted_impressions_per_spot" Type="float" Nullable="false" />
           <Property Name="station_impressions_per_spot" Type="float" Nullable="false" />
           <Property Name="cost_per_spot" Type="money" Nullable="false" />
+          <Property Name="manifest_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="pricing_guide_distribution_proprietary_inventory">
           <Key>
@@ -4270,24 +4271,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="station_inventory_manifest_staging" EntitySet="station_inventory_manifest_staging" />
           </AssociationSet>
-          <EntitySet Name="pricing_guide_distribution_open_market_inventory" EntityType="BroadcastModel.pricing_guide_distribution_open_market_inventory" />
           <EntitySet Name="pricing_guide_distribution_proprietary_inventory" EntityType="BroadcastModel.pricing_guide_distribution_proprietary_inventory" />
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_dayparts" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts">
-            <End Role="daypart" EntitySet="dayparts" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_markets" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts">
-            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_stations" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
           <EntitySet Name="proposal_version_details" EntityType="BroadcastModel.proposal_version_details" />
           <AssociationSet Name="FK_proposal_version_details_dayparts" Association="BroadcastModel.FK_proposal_version_details_dayparts">
             <End Role="daypart" EntitySet="dayparts" />
@@ -4342,10 +4326,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
           </AssociationSet>
           <EntitySet Name="pricing_guide_distributions" EntityType="BroadcastModel.pricing_guide_distributions" />
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
-            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
           <AssociationSet Name="FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" Association="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions">
             <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
             <End Role="pricing_guide_distribution_proprietary_inventory" EntitySet="pricing_guide_distribution_proprietary_inventory" />
@@ -4369,6 +4349,27 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_nti_transmittals_file_reports_nti_transmittals_files" Association="BroadcastModel.FK_nti_transmittals_file_reports_nti_transmittals_files">
             <End Role="nti_transmittals_files" EntitySet="nti_transmittals_files" />
             <End Role="nti_transmittals_file_reports" EntitySet="nti_transmittals_file_reports" />
+          </AssociationSet>
+          <EntitySet Name="pricing_guide_distribution_open_market_inventory" EntityType="BroadcastModel.pricing_guide_distribution_open_market_inventory" />
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_dayparts" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts">
+            <End Role="daypart" EntitySet="dayparts" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_markets" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts">
+            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
+            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_stations" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -4497,8 +4498,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="daypart" ToRole="station_inventory_manifest_dayparts" />
           <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_dayparts" FromRole="daypart" ToRole="proposal_buy_file_details" />
           <NavigationProperty Name="station_inventory_manifest_staging" Relationship="BroadcastModel.FK_station_inventory_manifest_staging_dayparts" FromRole="daypart" ToRole="station_inventory_manifest_staging" />
-          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts" FromRole="daypart" ToRole="pricing_guide_distribution_open_market_inventory" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="daypart" ToRole="proposal_version_details" />
+          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts" FromRole="daypart" ToRole="pricing_guide_distribution_open_market_inventory" />
         </EntityType>
         <EntityType Name="day">
           <Key>
@@ -7177,28 +7178,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="pricing_guide_distribution_open_market_inventory">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pricing_guide_distribution_id" Type="Int32" Nullable="false" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="station_code" Type="Int16" Nullable="false" />
-          <Property Name="station_inventory_manifest_dayparts_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="blended_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="forecasted_impressions_per_spot" Type="Double" Nullable="false" />
-          <Property Name="station_impressions_per_spot" Type="Double" Nullable="false" />
-          <Property Name="cost_per_spot" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="daypart" />
-          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="market" />
-          <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station_inventory_manifest_dayparts" />
-          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station" />
-          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="pricing_guide_distributions" />
-        </EntityType>
         <EntityType Name="pricing_guide_distribution_proprietary_inventory">
           <Key>
             <PropertyRef Name="id" />
@@ -7210,62 +7189,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" FromRole="pricing_guide_distribution_proprietary_inventory" ToRole="pricing_guide_distributions" />
         </EntityType>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="market">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts">
-          <End Type="BroadcastModel.station_inventory_manifest_dayparts" Role="station_inventory_manifest_dayparts" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_inventory_manifest_dayparts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="station_inventory_manifest_dayparts_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="station_code" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="station_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="proposal_version_details">
           <Key>
             <PropertyRef Name="id" />
@@ -7500,24 +7423,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="total_proprietary_impressions" Type="Double" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_open_market_inventory" />
           <NavigationProperty Name="pricing_guide_distribution_proprietary_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_proprietary_inventory" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" FromRole="pricing_guide_distributions" ToRole="proposal_version_details" />
+          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_open_market_inventory" />
         </EntityType>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
-          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pricing_guide_distributions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="pricing_guide_distribution_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions">
           <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -7640,6 +7549,99 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="nti_transmittals_file_reports">
               <PropertyRef Name="nti_transmittals_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="pricing_guide_distribution_open_market_inventory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pricing_guide_distribution_id" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="station_code" Type="Int16" Nullable="false" />
+          <Property Name="station_inventory_manifest_dayparts_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="blended_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="forecasted_impressions_per_spot" Type="Double" Nullable="false" />
+          <Property Name="station_impressions_per_spot" Type="Double" Nullable="false" />
+          <Property Name="cost_per_spot" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="manifest_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_dayparts" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="daypart" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="market" />
+          <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station_inventory_manifest_dayparts" />
+          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="pricing_guide_distributions" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station" />
+        </EntityType>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory_dayparts">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory__station_inventory_manifest_dayparts">
+          <End Type="BroadcastModel.station_inventory_manifest_dayparts" Role="station_inventory_manifest_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="station_inventory_manifest_dayparts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
+          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pricing_guide_distributions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="pricing_guide_distribution_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="station_code" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="station_code" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8877,24 +8879,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="pricing_guide_distribution_open_market_inventory">
-            <EntityTypeMapping TypeName="BroadcastModel.pricing_guide_distribution_open_market_inventory">
-              <MappingFragment StoreEntitySet="pricing_guide_distribution_open_market_inventory">
-                <ScalarProperty Name="cost_per_spot" ColumnName="cost_per_spot" />
-                <ScalarProperty Name="station_impressions_per_spot" ColumnName="station_impressions_per_spot" />
-                <ScalarProperty Name="forecasted_impressions_per_spot" ColumnName="forecasted_impressions_per_spot" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="blended_cpm" ColumnName="blended_cpm" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="station_inventory_manifest_dayparts_id" ColumnName="station_inventory_manifest_dayparts_id" />
-                <ScalarProperty Name="station_code" ColumnName="station_code" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="pricing_guide_distribution_id" ColumnName="pricing_guide_distribution_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="pricing_guide_distribution_proprietary_inventory">
             <EntityTypeMapping TypeName="BroadcastModel.pricing_guide_distribution_proprietary_inventory">
               <MappingFragment StoreEntitySet="pricing_guide_distribution_proprietary_inventory">
@@ -9010,6 +8994,25 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pricing_guide_distribution_open_market_inventory">
+            <EntityTypeMapping TypeName="BroadcastModel.pricing_guide_distribution_open_market_inventory">
+              <MappingFragment StoreEntitySet="pricing_guide_distribution_open_market_inventory">
+                <ScalarProperty Name="manifest_id" ColumnName="manifest_id" />
+                <ScalarProperty Name="cost_per_spot" ColumnName="cost_per_spot" />
+                <ScalarProperty Name="station_impressions_per_spot" ColumnName="station_impressions_per_spot" />
+                <ScalarProperty Name="forecasted_impressions_per_spot" ColumnName="forecasted_impressions_per_spot" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="blended_cpm" ColumnName="blended_cpm" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
+                <ScalarProperty Name="station_inventory_manifest_dayparts_id" ColumnName="station_inventory_manifest_dayparts_id" />
+                <ScalarProperty Name="station_code" ColumnName="station_code" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="pricing_guide_distribution_id" ColumnName="pricing_guide_distribution_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

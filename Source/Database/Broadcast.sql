@@ -115,6 +115,7 @@ BEGIN
 	CREATE TABLE [dbo].[pricing_guide_distribution_open_market_inventory](
 	[id] [INT] IDENTITY(1,1) NOT NULL,
 	[pricing_guide_distribution_id] [int] NOT NULL,
+	[manifest_id] [int] NOT NULL,
 	[market_code] [smallint] NOT NULL,
 	[station_code] [smallint] NOT NULL,
 	[station_inventory_manifest_dayparts_id] [int] NOT NULL,
@@ -149,12 +150,12 @@ BEGIN
 	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_stations]
 	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_station_code ON [pricing_guide_distribution_open_market_inventory] ([station_code])
 
-	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_[station_inventory_manifest_dayparts] FOREIGN KEY([station_inventory_manifest_dayparts_id])
-	REFERENCES [dbo].[station_inventory_manifest_dayparts] ([id])
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD CONSTRAINT [FK_pricing_guide_distribution_open_market_station_inventory_manifest] FOREIGN KEY([manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
 	ON DELETE CASCADE
-	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_[station_inventory_manifest_dayparts]
-	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_station_inventory_manifest_dayparts_id ON [pricing_guide_distribution_open_market_inventory] ([station_inventory_manifest_dayparts_id])
-
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_station_inventory_manifest]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_manifest_id ON [pricing_guide_distribution_open_market_inventory] ([manifest_id])
+	
 	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_dayparts] FOREIGN KEY([daypart_id])
 	REFERENCES [dbo].dayparts ([id])
 	ON DELETE CASCADE
@@ -279,6 +280,7 @@ BEGIN
 END
 
 /*************************************** END BCOP-3958 *****************************************************/
+
 
 /*************************************** BEGIN BCOP-3974 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_files]'))

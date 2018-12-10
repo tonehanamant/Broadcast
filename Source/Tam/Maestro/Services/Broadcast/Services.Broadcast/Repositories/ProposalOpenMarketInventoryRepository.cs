@@ -16,9 +16,8 @@ namespace Services.Broadcast.Repositories
     public interface IProposalOpenMarketInventoryRepository : IDataRepository
     {
         List<OpenMarketInventoryAllocation> GetProposalDetailAllocations(int proposalVersionDetailId);
-        void RemoveAllocations(List<OpenMarketInventoryAllocation> allocationToRemove);
-        void AddAllocations(List<OpenMarketInventoryAllocation> allocationToAdd, int guaranteedAudienceId);
         void RemoveAllocations(List<int> programIds, int proposalDetailId);
+        void SaveAllocations(AllocationsChangeRequest allocationsChangeRequest, int guaranteedAudienceId);
         Dictionary<int, List<station_inventory_manifest>> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds);
     }
 
@@ -48,29 +47,35 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void RemoveAllocations(List<OpenMarketInventoryAllocation> allocations)
+        public void RemoveAllocations(List<int> programIds, int proposalDetailId)
         {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    foreach (var allocation in allocations)
-                    {
-                        var programAllocation =
-                            context.station_inventory_spots.First(f => f.id == allocation.Id);
+            _InReadUncommitedTransaction(c =>
+            {
+                var proposalVersionDetailQuarterWeekIds =
+                    c.proposal_version_details.Where(pvd => pvd.id == proposalDetailId)
+                        .SelectMany(
+                            pvd =>
+                                pvd.proposal_version_detail_quarters.SelectMany(
+                                    q => q.proposal_version_detail_quarter_weeks.Select(qw => qw.id)));
 
-                        context.station_inventory_spots.Remove(programAllocation);
-                    }
+                var matchingAllocations =
+                    c.station_inventory_spots.Where(
+                        spfp =>
+                            proposalVersionDetailQuarterWeekIds.Contains(spfp.proposal_version_detail_quarter_week_id ?? 0) &&
+                            programIds.Contains(spfp.station_inventory_manifest_id));
 
-                    context.SaveChanges();
-                });
+                c.station_inventory_spots.RemoveRange(matchingAllocations);
+
+                c.SaveChanges();
+            });
         }
 
-        public void AddAllocations(List<OpenMarketInventoryAllocation> allocations, int guaranteedAudienceId)
+        public void SaveAllocations(AllocationsChangeRequest allocationsChangeRequest, int guaranteedAudienceId)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    foreach (var allocation in allocations)
+                    foreach (var allocation in allocationsChangeRequest.AllocationsToAdd)
                     {
                         var proposalQuarterWeekId =
                             context.proposal_version_detail_quarter_weeks.Where(
@@ -99,31 +104,17 @@ namespace Services.Broadcast.Repositories
                             context.station_inventory_spots.Add(programAllocation);
                         }
                     }
+
+                    foreach (var allocation in allocationsChangeRequest.AllocationsToRemove)
+                    {
+                        var programAllocation =
+                            context.station_inventory_spots.First(f => f.id == allocation.Id);
+
+                        context.station_inventory_spots.Remove(programAllocation);
+                    }
+
                     context.SaveChanges();
                 });
-        }
-
-        public void RemoveAllocations(List<int> programIds, int proposalDetailId)
-        {
-            _InReadUncommitedTransaction(c =>
-            {
-                var proposalVersionDetailQuarterWeekIds =
-                    c.proposal_version_details.Where(pvd => pvd.id == proposalDetailId)
-                        .SelectMany(
-                            pvd =>
-                                pvd.proposal_version_detail_quarters.SelectMany(
-                                    q => q.proposal_version_detail_quarter_weeks.Select(qw => qw.id)));
-
-                var matchingAllocations =
-                    c.station_inventory_spots.Where(
-                        spfp =>
-                            proposalVersionDetailQuarterWeekIds.Contains(spfp.proposal_version_detail_quarter_week_id ?? 0) &&
-                            programIds.Contains(spfp.station_inventory_manifest_id));
-
-                c.station_inventory_spots.RemoveRange(matchingAllocations);
-
-                c.SaveChanges();
-            });
         }
 
         public Dictionary<int, List<station_inventory_manifest>> GetStationManifestFromQuarterWeeks(List<int> quarterWeekIds)

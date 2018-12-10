@@ -81,5 +81,24 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() =>
                 _ApplicationServiceFactory.GetApplicationService<IPricingGuideService>().UpdateProprietaryCpms(dto));
         }
+
+        [HttpGet]
+        [Route("CopyToBuy/{proposalDetailId}")]
+        public BaseResponse<bool> CopyPricingModelToBuy(int proposalDetailId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPricingGuideService>()
+                    .CopyPricingGuideAllocationsToOpenMarket(proposalDetailId));
+        }
+
+        [HttpGet]
+        [Route("HasSpotsAllocated/{proposalDetailId}")]
+        public BaseResponse<bool> HasSpotsAllocated(int proposalDetailId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () =>
+                        _ApplicationServiceFactory.GetApplicationService<IPricingGuideService>()
+                            .HasSpotsAllocated(proposalDetailId));
+        }
     }
 }

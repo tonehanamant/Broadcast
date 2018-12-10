@@ -11,6 +11,8 @@ const initialState = {
   activeOpenMarketData: undefined,
   openMarketData: undefined,
   hasOpenMarketData: false,
+  isSpotsCopied: false,
+  hasSpotsAllocated: false,
   hasActiveDistribution: false,
   isOpenMarketDataSortName: false,
   activeEditMarkets: [],
@@ -476,6 +478,28 @@ export default function reducer(state = initialState, action) {
         isEditMarketsActive: false
       };
     }
+
+    case ACTIONS.HAS_SPOTS_ALLOCATED: {
+      return {
+        ...state,
+        hasSpotsAllocated: payload.value
+      };
+    }
+
+    case ACTIONS.COPY_TO_BUY.request: {
+      return {
+        ...state,
+        hasSpotsAllocated: false
+      };
+    }
+
+    case ACTIONS.COPY_TO_BUY.success:
+    case ACTIONS.ON_SPOTS_CONFIRMATION_MESSAGE: {
+      return {
+        ...state,
+        isSpotsCopied: !state.isSpotsCopied
+      };
+    }
     // update pricing/proprietary totals only on proprietary change if distribution active
     case ACTIONS.UPDATE_PROPRIETARY_CPMS.success: {
       return {
@@ -704,4 +728,23 @@ export const loadPricingData = detailId => ({
 export const savePricingData = data => ({
   type: ACTIONS.SAVE_PRICING_GUIDE.request,
   payload: data
+});
+
+export const copyToBuy = detailId => ({
+  type: ACTIONS.COPY_TO_BUY.request,
+  payload: { detailId }
+});
+
+export const hasSpotsAllocate = (detailId, value) => ({
+  type: ACTIONS.HAS_SPOTS_ALLOCATED,
+  payload: { detailId, value }
+});
+
+export const copyToBuyFlow = detailId => ({
+  type: ACTIONS.RUN_COPY_TO_BUY_FLOW,
+  payload: { detailId }
+});
+
+export const onCopyConfirmMsg = () => ({
+  type: ACTIONS.ON_SPOTS_CONFIRMATION_MESSAGE
 });

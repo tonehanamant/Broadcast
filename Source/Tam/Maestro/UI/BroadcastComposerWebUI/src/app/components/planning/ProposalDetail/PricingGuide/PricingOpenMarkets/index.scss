@@ -1,0 +1,11 @@
+.pricing-guide_open-market {
+  .open-market_toolbox {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+
+    > button {
+      margin-left: 10px;
+    }
+  }
+}

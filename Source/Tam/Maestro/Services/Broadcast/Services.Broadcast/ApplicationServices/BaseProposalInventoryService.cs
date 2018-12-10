@@ -8,6 +8,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.PricingGuide;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
+using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -209,12 +210,12 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (hasManifestAudiences)
                 {
-                    program.ProvidedUnitImpressions = 
+                    program.ProvidedUnitImpressions =
                         _ImpressionAdjustmentEngine.AdjustImpression(manifestAudienceForProposal.Impressions.Value, proposalDetail.Equivalized, proposalDetail.DetailSpotLength);
                 }
             }
         }
-        
+
         protected PricingGuideOpenMarketInventory GetPricingGuideInventory(int proposalDetailId)
         {
             var inventory = BroadcastDataRepositoryFactory.GetDataRepository<IPricingGuideRepository>().GetProposalDetailPricingGuideInventory(proposalDetailId);
@@ -253,5 +254,5 @@ namespace Services.Broadcast.ApplicationServices
 
             return flighWeeks;
         }
-    }
+    }   
 }

@@ -8,7 +8,6 @@ import {
   sortOpenMarketData,
   showEditMarkets
 } from "Ducks/planning";
-// import { getPlanningGuideFiltered } from 'Ducks/planning';
 import {
   Row,
   Col,
@@ -54,30 +53,28 @@ class PricingGuideGridHeader extends Component {
   }
 
   applyFilters(filterObject, isModal) {
+    const { activeOpenMarketData } = this.props;
     // adjust if call is from modal where SpotFilter omitted: TODO change and split in reducer?
     let filters = filterObject;
-    if (isModal && this.props.activeOpenMarketData.Filter.SpotFilter) {
+    if (isModal && activeOpenMarketData.Filter.SpotFilter) {
       filters = merge(filterObject, {
         Filter: {
-          SpotFilter: this.props.activeOpenMarketData.Filter.SpotFilter
+          SpotFilter: activeOpenMarketData.Filter.SpotFilter
         }
       });
     }
-    // console.log('header apply filters', filterObject, filters);
     this.props.filterOpenMarketData(filters);
   }
 
   onFilterSpots(value) {
-    const filterObject = this.props.activeOpenMarketData.Filter || {};
+    const { activeOpenMarketData } = this.props;
+    const filterObject = activeOpenMarketData.Filter || {};
     const filters = Object.assign({}, filterObject, { SpotFilter: value.Id });
-    // console.log('onFilterSpots', filters, filterObject);
     this.applyFilters({ Filter: filters });
   }
 
   sortMarket(sortKey) {
-    const sortByName = sortKey === "sortMarketName";
-    this.props.sortOpenMarketData(sortByName);
-    // console.log("sortMarket", sortByName, sortKey, this);
+    this.props.sortOpenMarketData(sortKey === "sortMarketName");
   }
 
   onOpenEditMarkets() {
@@ -85,12 +82,11 @@ class PricingGuideGridHeader extends Component {
   }
 
   render() {
-    // const hasData = this.props.activeOpenMarketData && this.props.activeOpenMarketData.Markets.length;
     // change to determine by master data set - not active which could be empty by filter
-    const hasData = this.props.hasOpenMarketData;
     const {
       activeOpenMarketData,
       toggleModal,
+      hasOpenMarketData: hasData,
       isOpenMarketDataSortName
     } = this.props;
     // FOR INDICATOR - check modal specific filters active (not spot)
@@ -140,9 +136,7 @@ class PricingGuideGridHeader extends Component {
                   <Select
                     name="spotFilters"
                     style={{ width: "220px" }}
-                    // wrapperStyle={{ height: '18px' }}
                     value={spotFilterValue}
-                    // placeholder=""
                     disabled={!hasData}
                     options={spotFilterOptions}
                     labelKey="Display"
@@ -188,11 +182,7 @@ class PricingGuideGridHeader extends Component {
           </Col>
           <Col xs={4}>
             <div style={{ textAlign: "right" }}>
-              <Button
-                bsStyle="success"
-                onClick={this.onOpenEditMarkets}
-                // disabled={!hasData}
-              >
+              <Button bsStyle="success" onClick={this.onOpenEditMarkets}>
                 Edit Markets
               </Button>
             </div>

@@ -26,11 +26,12 @@ namespace EntityFrameworkMapping.Broadcast
         public double forecasted_impressions_per_spot { get; set; }
         public double station_impressions_per_spot { get; set; }
         public decimal cost_per_spot { get; set; }
+        public int manifest_id { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual market market { get; set; }
         public virtual station_inventory_manifest_dayparts station_inventory_manifest_dayparts { get; set; }
-        public virtual station station { get; set; }
         public virtual pricing_guide_distributions pricing_guide_distributions { get; set; }
+        public virtual station station { get; set; }
     }
 }
