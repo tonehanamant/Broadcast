@@ -52,7 +52,7 @@ export const columns = [
     id: "Id",
     accessor: "Id",
     hideable: false,
-    defaultSortDirection: "ASC",
+    // defaultSortDirection: "ASC",
     width: "5%"
   },
   {

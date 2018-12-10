@@ -31,6 +31,12 @@ export function PlanningGrid({ visibleColumn, planningProposals }) {
             showProposalDetail(rowInfo.original.Id);
           }
         })}
+        defaultSorted={[
+          {
+            id: "Id",
+            desc: true
+          }
+        ]}
         selection="single"
       />
     </Fragment>
