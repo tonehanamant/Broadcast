@@ -54,28 +54,24 @@ namespace Common.Services
 
                     var lMessage = BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, @from, pTos, attachFileNames);
 
-                    if (SMSClient.Handler.TamEnvironment == TAMEnvironment.PROD.ToString())
+                    var whiteList = BroadcastServiceSystemParameter.EmailWhiteList;
+                    if (string.IsNullOrEmpty(whiteList))
                     {
                         lSmtpClient.Send(lMessage);
                     }
                     else
                     {
-                        var whiteList = BroadcastServiceSystemParameter.EmailWhiteList;
-                        if (!string.IsNullOrEmpty(whiteList))
-                        {
-                            lMessage.Subject = string.Format("To:{0};From:{1};Subject:{2}", lMessage.To, lMessage.From,
-                                lMessage.Subject);
+                        lMessage.Subject = string.Format("To:{0};From:{1};Subject:{2}", lMessage.To, lMessage.From,
+                            lMessage.Subject);
 
-                            lMessage.To.Clear();
-                            string[] lTos = whiteList.Split(new char[] { ';' });
-                            foreach (string lTo in lTos)
-                                lMessage.To.Add(new MailAddress(lTo));
+                        lMessage.To.Clear();
+                        string[] lTos = whiteList.Split(new char[] { ';' });
+                        foreach (string lTo in lTos)
+                            lMessage.To.Add(new MailAddress(lTo));
 
-                            lSmtpClient.Send(lMessage);
-                        }
+                        lSmtpClient.Send(lMessage);
                     }
                 }
-
                 return true;
             }
             catch (System.Exception exc)
