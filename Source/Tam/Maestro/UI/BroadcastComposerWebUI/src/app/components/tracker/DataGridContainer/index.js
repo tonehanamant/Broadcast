@@ -171,7 +171,7 @@ export class DataGridContainer extends Component {
     return (
       <Table
         data={this.props.trackerGridData}
-        style={{ fontSize: "12px", marginBottom: "100px" }}
+        style={{ marginBottom: "100px" }}
         columns={columns}
         getTrGroupProps={(state, rowInfo) => ({
           onDoubleClick: () => {

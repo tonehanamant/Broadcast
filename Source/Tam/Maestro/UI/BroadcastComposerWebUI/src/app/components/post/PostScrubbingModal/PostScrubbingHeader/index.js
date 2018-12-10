@@ -190,7 +190,7 @@ export class PostScrubbingHeader extends Component {
                     <Panel.Body style={{ padding: "10px" }}>
                       <Table
                         data={this.props.details}
-                        style={{ fontSize: "12px", margin: 0 }}
+                        style={{ margin: 0 }}
                         columns={columns}
                       />
                     </Panel.Body>

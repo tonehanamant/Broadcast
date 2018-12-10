@@ -131,7 +131,7 @@ export class ProposalSwitchVersionModal extends Component {
         <Modal.Body>
           <Table
             data={this.props.versions}
-            style={{ fontSize: "12px", marginBottom: "100px" }}
+            style={{ marginBottom: "100px" }}
             columns={columns}
             getTrGroupProps={() => ({
               onDoubleClick: () => {

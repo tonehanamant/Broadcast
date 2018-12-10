@@ -4,11 +4,12 @@
 
 
 .rt-th {
-   text-align: left; 
+   text-align: left;
 }
 
 .ReactTable {
   margin: 20px 0;
   min-height: 130px;
+  font-size: 12px;
 }
 
