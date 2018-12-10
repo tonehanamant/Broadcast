@@ -1827,9 +1827,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore] // Ignore until the SingleOrDefault bug in AffidavitService.GetClientScrubbingForProposal isn't fixed
-        [UseReporter(typeof(DiffReporter))]
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ClientScrubbing_UndoOverride()
         {
             using (new TransactionScopeWrapper())

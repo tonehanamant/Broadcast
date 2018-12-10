@@ -374,8 +374,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-
-
         private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
         {
             return new ProposalWeekIsciDto
