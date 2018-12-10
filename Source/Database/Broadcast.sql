@@ -368,6 +368,21 @@ BEGIN
 END
 /*************************************** END BCOP-3974 *****************************************************/
 
+/*************************************** START BCOP-3769 Code Review *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distributions]') 
+			AND  name = 'total_proprietary_cpm'
+			AND system_type_id = (SELECT system_type_id FROM sys.types WHERE name = 'float'))
+BEGIN
+	ALTER TABLE [dbo].[pricing_guide_distributions]  ALTER COLUMN [total_proprietary_cpm] [MONEY] NOT NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distributions]') 
+			AND  name = 'total_open_market_cpm'
+			AND system_type_id = (SELECT system_type_id FROM sys.types WHERE name = 'float'))
+BEGIN
+	ALTER TABLE [dbo].[pricing_guide_distributions]  ALTER COLUMN [total_open_market_cpm] [MONEY] NOT NULL
+END
+/*************************************** START BCOP-3769 Code Review *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------

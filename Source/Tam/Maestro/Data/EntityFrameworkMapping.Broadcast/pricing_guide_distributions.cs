@@ -16,8 +16,8 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public pricing_guide_distributions()
         {
-            this.pricing_guide_distribution_proprietary_inventory = new HashSet<pricing_guide_distribution_proprietary_inventory>();
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
+            this.pricing_guide_distribution_proprietary_inventory = new HashSet<pricing_guide_distribution_proprietary_inventory>();
         }
     
         public int id { get; set; }
@@ -31,18 +31,18 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> open_market_cpm_max { get; set; }
         public Nullable<int> open_market_unit_cap_per_station { get; set; }
         public Nullable<byte> open_market_cpm_target { get; set; }
-        public double total_open_market_cpm { get; set; }
+        public decimal total_open_market_cpm { get; set; }
         public decimal total_open_market_cost { get; set; }
         public double total_open_market_impressions { get; set; }
         public double total_open_market_coverage { get; set; }
-        public double total_proprietary_cpm { get; set; }
+        public decimal total_proprietary_cpm { get; set; }
         public decimal total_proprietary_cost { get; set; }
         public double total_proprietary_impressions { get; set; }
         public System.DateTime created_date { get; set; }
         public string created_by { get; set; }
     
+        public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual ICollection<pricing_guide_distribution_proprietary_inventory> pricing_guide_distribution_proprietary_inventory { get; set; }
         public virtual proposal_version_details proposal_version_details { get; set; }
-        public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
     }
 }

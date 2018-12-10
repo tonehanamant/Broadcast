@@ -47,6 +47,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cost_total { get; set; }
         public double impressions_total { get; set; }
         public Nullable<double> market_coverage { get; set; }
+        public Nullable<System.DateTime> snapshot_date { get; set; }
     
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual ICollection<proposal_version_flight_weeks> proposal_version_flight_weeks { get; set; }

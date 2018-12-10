@@ -131,7 +131,7 @@
   "OpenMarketTotals": {
     "Cost": 1000.0000,
     "Coverage": 80.0,
-    "Cpm": 10.0,
+    "Cpm": 10.0000,
     "Impressions": 10000.0
   },
   "PricingTotals": {
@@ -149,7 +149,7 @@
   ],
   "ProprietaryTotals": {
     "Cost": 10.0000,
-    "Cpm": 10.0,
+    "Cpm": 10.0000,
     "Impressions": 10000.0
   }
 }

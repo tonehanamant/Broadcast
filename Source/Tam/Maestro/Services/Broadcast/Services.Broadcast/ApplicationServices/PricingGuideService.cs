@@ -426,8 +426,8 @@ namespace Services.Broadcast.ApplicationServices
             var openMarketImpressionsPercent = 1 - proprietaryImpressionsPercent;
             var impressionsPerOnePercentage = openMarketImpressions / openMarketImpressionsPercent;
             result.Impressions = proprietaryImpressionsPercent * impressionsPerOnePercentage;
-            result.Cpm = (proprietaryPricingValues.Sum(x => x.ImpressionsBalance * (double)x.Cpm) / proprietaryImpressionsPercent);
-            result.Cost = ProposalMath.CalculateCost((decimal)result.Cpm, result.Impressions);
+            result.Cpm = (proprietaryPricingValues.Sum(x => (decimal)x.ImpressionsBalance * x.Cpm) / (decimal)proprietaryImpressionsPercent);
+            result.Cost = ProposalMath.CalculateCost(result.Cpm, result.Impressions);
 
             return result;
         }
@@ -441,7 +441,7 @@ namespace Services.Broadcast.ApplicationServices
             };
             // Coverage: sum of coverage for each market with a spot allocated, only count each market once.
             result.Coverage = markets.Where(x => x.TotalCost > 0).Sum(x => x.MarketCoverage);
-            result.Cpm = (double)ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
+            result.Cpm = ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
 
             return result;
         }

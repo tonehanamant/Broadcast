@@ -147,7 +147,7 @@
   "OpenMarketTotals": {
     "Cost": 25.0000,
     "Coverage": 1.01,
-    "Cpm": 1.01037858,
+    "Cpm": 1.0103785847660840523112283077,
     "Impressions": 24743.20059524
   },
   "PricingTotals": {
