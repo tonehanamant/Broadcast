@@ -31,11 +31,11 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> open_market_cpm_max { get; set; }
         public Nullable<int> open_market_unit_cap_per_station { get; set; }
         public Nullable<byte> open_market_cpm_target { get; set; }
-        public double total_open_market_cpm { get; set; }
+        public decimal total_open_market_cpm { get; set; }
         public decimal total_open_market_cost { get; set; }
         public double total_open_market_impressions { get; set; }
         public double total_open_market_coverage { get; set; }
-        public double total_proprietary_cpm { get; set; }
+        public decimal total_proprietary_cpm { get; set; }
         public decimal total_proprietary_cost { get; set; }
         public double total_proprietary_impressions { get; set; }
         public System.DateTime created_date { get; set; }

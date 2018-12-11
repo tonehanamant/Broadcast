@@ -57,6 +57,7 @@ export const parsePrograms = (data = []) => {
           ManifestDaypartId: program.ManifestDaypartId,
           ProgramName: program.ProgramName,
           BlendedCpm: program.BlendedCpm,
+          ProgramId: program.ProgramId,
           Spots: program.Spots,
           ImpressionsPerSpot: program.ImpressionsPerSpot,
           StationImpressionsPerSpot: program.StationImpressionsPerSpot,

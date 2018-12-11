@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                ProposalDetailPricingGuideSaveRequest request = new ProposalDetailPricingGuideSaveRequest
+                var request = new ProposalDetailPricingGuideSaveRequest
                 {
                     Inflation = 1,
                     Margin = 1,
@@ -67,6 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Markets = new List<PricingGuideSaveMarketRequest>() {
                         new PricingGuideSaveMarketRequest
                         {
+                            ProgramId = 26589,
                             BlendedCpm = 7.530701184311377M,
                             CostPerSpot = 1,
                             DaypartId = 1,
@@ -80,9 +81,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     }
                 };
+
                 _PricingGuideService.SaveDistribution(request, "integration test");
 
-                PricingGuideDto proposalInventory = _PricingGuideService.GetPricingGuideForProposalDetail(13402);
+                var proposalInventory = _PricingGuideService.GetPricingGuideForProposalDetail(13402);
+
                 _VerifyPricingGuideModel(proposalInventory);
             }
         }
@@ -675,81 +678,84 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ProposalOpenMarketInventoryService_ReturnsPricingGuideOpenMarketInventory_WithProgramsFilteredByName()
         {
-            const int proposalId = 26017;
-            const int proposalDetailId = 9979;
-
-            var request = new PricingGuideOpenMarketInventoryRequestDto
+            using (new TransactionScopeWrapper())
             {
-                ProposalId = proposalId,
-                ProposalDetailId = proposalDetailId
-            };
+                const int proposalId = 26017;
+                const int proposalDetailId = 9979;
 
-            // Setting program criteria empty
-            var proposal = _ProposalService.GetProposalById(proposalId);
-            var detail = proposal.Details.First(x => x.Id == proposalDetailId);
-            detail.ProgramCriteria = new List<ProgramCriteria>();
-            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
-
-            var dto = _PricingGuideService.GetOpenMarketInventory(request);
-            var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
-            Assert.IsTrue(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
-
-
-            // Setting program criteria for excluding 'Friends' program
-            proposal = _ProposalService.GetProposalById(proposalId);
-            detail = proposal.Details.First(x => x.Id == proposalDetailId);
-            detail.ProgramCriteria = new List<ProgramCriteria>
-            {
-                new ProgramCriteria
+                var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
-                    Contain = ContainTypeEnum.Exclude,
-                    Program = new LookupDto
-                    {
-                        Id = 100,
-                        Display = "Friends"
-                    }
-                }
-            };
-            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+                    ProposalId = proposalId,
+                    ProposalDetailId = proposalDetailId
+                };
 
-            dto = _PricingGuideService.GetOpenMarketInventory(request);
-            programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
+                // Setting program criteria empty
+                var proposal = _ProposalService.GetProposalById(proposalId);
+                var detail = proposal.Details.First(x => x.Id == proposalDetailId);
+                detail.ProgramCriteria = new List<ProgramCriteria>();
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+                var dto = _PricingGuideService.GetOpenMarketInventory(request);
+                var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+                Assert.IsTrue(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
 
 
-            // Setting program criteria for excluding 'Friends 2' program
-            proposal = _ProposalService.GetProposalById(proposalId);
-            detail = proposal.Details.First(x => x.Id == proposalDetailId);
-            detail.ProgramCriteria = new List<ProgramCriteria>
-            {
-                new ProgramCriteria
+                // Setting program criteria for excluding 'Friends' program
+                proposal = _ProposalService.GetProposalById(proposalId);
+                detail = proposal.Details.First(x => x.Id == proposalDetailId);
+                detail.ProgramCriteria = new List<ProgramCriteria>
                 {
-                    Contain = ContainTypeEnum.Exclude,
-                    Program = new LookupDto
+                    new ProgramCriteria
                     {
-                        Id = 101,
-                        Display = "Friends 2"
+                        Contain = ContainTypeEnum.Exclude,
+                        Program = new LookupDto
+                        {
+                            Id = 100,
+                            Display = "Friends"
+                        }
                     }
-                }
-            };
-            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+                };
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
 
-            dto = _PricingGuideService.GetOpenMarketInventory(request);
-            programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
-            Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
+                dto = _PricingGuideService.GetOpenMarketInventory(request);
+                programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
 
 
-            // Setting program criteria empty as it was initially
-            proposal = _ProposalService.GetProposalById(proposalId);
-            detail = proposal.Details.First(x => x.Id == proposalDetailId);
-            detail.ProgramCriteria = new List<ProgramCriteria>();
-            _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+                // Setting program criteria for excluding 'Friends 2' program
+                proposal = _ProposalService.GetProposalById(proposalId);
+                detail = proposal.Details.First(x => x.Id == proposalDetailId);
+                detail.ProgramCriteria = new List<ProgramCriteria>
+                {
+                    new ProgramCriteria
+                    {
+                        Contain = ContainTypeEnum.Exclude,
+                        Program = new LookupDto
+                        {
+                            Id = 101,
+                            Display = "Friends 2"
+                        }
+                    }
+                };
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+
+                dto = _PricingGuideService.GetOpenMarketInventory(request);
+                programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
+                Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
+
+
+                // Setting program criteria empty as it was initially
+                proposal = _ProposalService.GetProposalById(proposalId);
+                detail = proposal.Details.First(x => x.Id == proposalDetailId);
+                detail.ProgramCriteria = new List<ProgramCriteria>();
+                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
+            }
         }
 
         [Test]
@@ -1426,6 +1432,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
 
             Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CopyToBuyTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _PricingGuideService.CopyPricingGuideAllocationsToOpenMarket(9987);
+
+                var proposalOpenMarketInventoryService =
+                    IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
+
+                var inventory = proposalOpenMarketInventoryService.GetInventory(9987);
+
+                var resultJson = IntegrationTestHelper.ConvertToJson(inventory);
+
+                Approvals.Verify(resultJson);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void HasSpotsAllocatedTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PricingGuideService.HasSpotsAllocated(9987);
+
+                Assert.True(result);
+            }
         }
 
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()

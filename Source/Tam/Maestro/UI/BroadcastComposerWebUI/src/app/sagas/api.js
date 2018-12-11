@@ -104,6 +104,10 @@ const planning = {
     call(GET, `${apiBase}Proposals/InitialData`, {}),
   loadPricingData: detailId =>
     call(GET, `${apiBase}PricingGuide/${detailId}`, {}),
+  copyToBuy: detailId =>
+    call(GET, `${apiBase}PricingGuide/CopyToBuy/${detailId}`),
+  hasSpotsAllocated: detailId =>
+    call(GET, `${apiBase}PricingGuide/HasSpotsAllocated/${detailId}`),
   savePricingData: params => call(POST, `${apiBase}PricingGuide/Save`, params),
   getProposals: () => call(GET, `${apiBase}Proposals/GetProposals`, {}),
   getProposalLock: id =>

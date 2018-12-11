@@ -25,6 +25,7 @@ namespace Services.Broadcast.Entities
 
     public class PricingGuideSaveMarketRequest
     {
+        public int ProgramId { get; set; }
         public int MarketId { get; set; }
         public int StationCode { get; set; }
         public int ManifestDaypartId { get; set; }

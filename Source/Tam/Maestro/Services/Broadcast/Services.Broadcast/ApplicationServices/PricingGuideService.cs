@@ -16,7 +16,7 @@ using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using static Services.Broadcast.Entities.DTO.PricingGuide.PricingGuideDto;
+using static Services.Broadcast.Entities.OpenMarketInventory.OpenMarketAllocationSaveRequest;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -46,6 +46,15 @@ namespace Services.Broadcast.ApplicationServices
         PricingGuideDto UpdateOpenMarketMarkets(PricingGuideDto dto);
 
         PricingGuideDto UpdateProprietaryCpms(PricingGuideDto dto);
+
+        bool HasSpotsAllocated(int proposalDetailId);
+
+        /// <summary>
+        /// Copies the saved allocated spots in the distribution to Open Market Buy grid
+        /// </summary>
+        /// <param name="proposalDetailId">Proposal detail id</param>
+        /// <returns>bool</returns>
+        bool CopyPricingGuideAllocationsToOpenMarket(int proposalDetailId);
     }
 
     public class PricingGuideService : BaseProposalInventoryService, IPricingGuideService
@@ -57,6 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IPricingGuideDistributionEngine _PricingGuideDistributionEngine;
+        private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
 
         /// <summary>
         /// Constructor
@@ -68,7 +78,8 @@ namespace Services.Broadcast.ApplicationServices
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IProposalTotalsCalculationEngine proposalTotalsCalculationEngine
             , IPricingGuideDistributionEngine pricingGuideDistributionEngine
-            , IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            , IImpressionAdjustmentEngine impressionAdjustmentEngine
+            , IProposalOpenMarketInventoryService proposalOpenMarketInventoryService)
             : base(broadcastDataRepositoryFactory, daypartCache, proposalMarketsCalculationEngine
                 , proposalTotalsCalculationEngine, mediaMonthAndWeekAggregateCache, impressionAdjustmentEngine)
         {
@@ -79,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _PricingGuideDistributionEngine = pricingGuideDistributionEngine;
+            _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
         }
 
         /// <summary>
@@ -141,6 +153,7 @@ namespace Services.Broadcast.ApplicationServices
                             StationCode = s.First().Station.StationCode,
                             Programs = s.Select(x => new PricingGuideProgramDto
                             {
+                                ProgramId = x.ProgramId,
                                 Spots = x.Spots,
                                 BlendedCpm = x.BlendedCpm,
                                 CostPerSpot = x.CostPerSpot,
@@ -220,7 +233,8 @@ namespace Services.Broadcast.ApplicationServices
 
             //I need the second mapping because the objects changed
             distributionDto = _MapToPricingGuideDto(request, pricingGuideOpenMarketInventory);
-            return _GetPricingGuideOpenMarketInventoryDto(distributionDto, _GetProprietaryPricings(distributionDto.ProprietaryPricing, request.ProposalDetailId));
+            var dto =  _GetPricingGuideOpenMarketInventoryDto(distributionDto, _GetProprietaryPricings(distributionDto.ProprietaryPricing, request.ProposalDetailId));
+            return dto;
         }
 
         public PricingGuideDto UpdateOpenMarketMarkets(PricingGuideDto dto)
@@ -412,8 +426,8 @@ namespace Services.Broadcast.ApplicationServices
             var openMarketImpressionsPercent = 1 - proprietaryImpressionsPercent;
             var impressionsPerOnePercentage = openMarketImpressions / openMarketImpressionsPercent;
             result.Impressions = proprietaryImpressionsPercent * impressionsPerOnePercentage;
-            result.Cpm = (proprietaryPricingValues.Sum(x => x.ImpressionsBalance * (double)x.Cpm) / proprietaryImpressionsPercent);
-            result.Cost = ProposalMath.CalculateCost((decimal)result.Cpm, result.Impressions);
+            result.Cpm = (proprietaryPricingValues.Sum(x => (decimal)x.ImpressionsBalance * x.Cpm) / (decimal)proprietaryImpressionsPercent);
+            result.Cost = ProposalMath.CalculateCost(result.Cpm, result.Impressions);
 
             return result;
         }
@@ -427,7 +441,7 @@ namespace Services.Broadcast.ApplicationServices
             };
             // Coverage: sum of coverage for each market with a spot allocated, only count each market once.
             result.Coverage = markets.Where(x => x.TotalCost > 0).Sum(x => x.MarketCoverage);
-            result.Cpm = (double)ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
+            result.Cpm = ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
 
             return result;
         }
@@ -919,7 +933,7 @@ namespace Services.Broadcast.ApplicationServices
             return programs.Where(x => x.DayParts.Any()).GroupBy(s => s.DayParts.Single().Id)
                 .Select(p => new PricingGuideProgramDto
                 {
-                    ProgramId = p.First().ManifestId,
+                    ProgramId = _GetProgramIdForCheapestProgram(p.ToList()),
                     ProgramName = string.Join("|", p.Select(x => x.ManifestDayparts.First().ProgramName).Distinct()),
                     BlendedCpm = p.Average(x => x.TargetCpm),
                     ImpressionsPerSpot = p.Average(x => x.UnitImpressions),
@@ -932,6 +946,16 @@ namespace Services.Broadcast.ApplicationServices
                     Spots = p.Sum(x => x.TotalSpots),
                     Genres = p.SelectMany(x => x.Genres).ToList()
                 }).ToList();
+        }
+
+        private int _GetProgramIdForCheapestProgram(List<ProposalProgramDto> programs)
+        {
+            var nonZeroCpmPrograms = programs.Where(x => x.TargetCpm != 0);
+
+            if (!nonZeroCpmPrograms.Any())
+                return programs.First().ManifestId;
+
+            return nonZeroCpmPrograms.OrderBy(x => x.TargetCpm).First().ManifestId;
         }
 
         private List<ProposalProgramDto> _GetPricingGuidePrograms(PricingGuideOpenMarketInventory inventory, PricingGuideDto pricingGuideDto)
@@ -1038,6 +1062,82 @@ namespace Services.Broadcast.ApplicationServices
                 if (proprietaryPricingList.Count(g => g.InventorySource == proprietaryPricingInventorySource) > 1)
                     throw new Exception("Cannot save proposal detail that contains duplicated inventory sources in proprietary pricing data");
             }
+        }
+
+        public bool HasSpotsAllocated(int proposalDetailId)
+        {
+            var openMarketInventoryRepository = 
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
+
+            var existingAllocations =
+                openMarketInventoryRepository.GetProposalDetailAllocations(proposalDetailId);
+
+            return existingAllocations.Any();
+        }
+
+        public bool CopyPricingGuideAllocationsToOpenMarket(int proposalDetailId)
+        {
+            var proposal = _ProposalRepository.GetProposalByDetailId(proposalDetailId);
+
+            if (proposal.Status != ProposalEnums.ProposalStatusType.AgencyOnHold)
+                throw new Exception("Proposal must be in Agency on Hold status to copy the pricing model");
+
+            var pricingGuide = GetPricingGuideForProposalDetail(proposalDetailId);
+
+            if (pricingGuide.DistributionId == 0)
+                throw new Exception("Pricing guide must be saved to copy spots");
+
+            var proposalDetailWeeks = _ProposalRepository.GetProposalDetailWeeks(proposalDetailId);
+            var pricingGuidePrograms = pricingGuide.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs).Where(x => x.Spots != 0).ToList();
+            var stationProgramRepository = BroadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+            var programs = stationProgramRepository.GetStationPrograms(pricingGuidePrograms.Select(x => x.ProgramId).ToList());
+
+            foreach (var program in programs)
+            {
+                var pricingGuideProgram = pricingGuidePrograms.First(x => x.ProgramId == program.ManifestId);
+                program.TotalSpots = pricingGuideProgram.Spots;
+                program.TotalImpressions = pricingGuideProgram.Impressions;
+                program.SpotCost = pricingGuideProgram.CostPerSpot;
+                program.UnitImpressions = pricingGuideProgram.ImpressionsPerSpot;
+            }
+
+            SetFlightWeeks(programs);
+
+            var request = new OpenMarketAllocationSaveRequest
+            {
+                ProposalVersionDetailId = proposalDetailId,
+                Weeks = proposalDetailWeeks.Where(x => !x.IsHiatus).Select(x => new OpenMarketAllocationWeek()
+                {
+                    MediaWeekId = x.MediaWeekId,
+                    Programs = new List<OpenMarketAllocationWeekProgram>()
+                }).ToList()
+            };
+
+            foreach (var week in request.Weeks)
+            {
+                foreach (var program in programs)
+                {
+                    var programFlightweek =
+                              program.FlightWeeks.SingleOrDefault(
+                                  f => f.MediaWeekId == week.MediaWeekId && f.IsHiatus == false);
+
+                    if (programFlightweek == null)
+                        continue;
+
+                    week.Programs.Add(new OpenMarketAllocationWeekProgram()
+                    {
+                        ProgramId = program.ManifestId,
+                        Spots = program.TotalSpots,
+                        TotalImpressions = program.TotalImpressions,
+                        UnitCost = program.SpotCost,
+                        UnitImpressions = program.UnitImpressions
+                    });
+                }
+            }
+
+            _ProposalOpenMarketInventoryService.AllocateOpenMarketSpots(request);
+
+            return true;
         }
     }
 }

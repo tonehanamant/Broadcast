@@ -70,13 +70,13 @@ namespace Services.Broadcast.Repositories
         List<MatchingProposalWeek> GetMatchingProposalWeeksByHouseIsci(string isci);
         ProposalDto MapToProposalDto(proposal proposal, proposal_versions proposalVersion);
         void UpdateProposalDetailPostingBooks(List<ProposalDetailPostingData> list);
-
         /// <summary>
         /// Gets all weeks for a proposal detail
         /// </summary>
         /// <param name="proposalDetailId">Proposal detail id to filter by</param>
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<MatchingProposalWeek> GetMatchingProposalWeeksByDetailId(int proposalDetailId);
+        List<ProposalOpenMarketInventoryWeekDto> GetProposalDetailWeeks(int proposalDetailId);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1616,6 +1616,29 @@ namespace Services.Broadcast.Repositories
                     }                    
                 }                
             });
-        }        
+        }
+
+        public List<ProposalOpenMarketInventoryWeekDto> GetProposalDetailWeeks(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(c =>
+            {
+                var quarterAndWeeks = (from quarter in c.proposal_version_detail_quarters
+                                      from week in quarter.proposal_version_detail_quarter_weeks
+                                      where quarter.proposal_version_detail_id == proposalDetailId
+                                      orderby week.start_date
+                                      select new { week, quarter }).ToList();
+
+                return quarterAndWeeks.Select(x => new ProposalOpenMarketInventoryWeekDto
+                {
+                    ProposalVersionDetailQuarterWeekId = x.week.id,
+                    ImpressionsGoal = x.week.impressions_goal,
+                    Budget = x.week.cost,
+                    QuarterText = string.Format("Q{0}", x.quarter.quarter),
+                    Week = x.week.start_date.ToShortDateString(),
+                    IsHiatus = x.week.is_hiatus,
+                    MediaWeekId = x.week.media_week_id
+                }).ToList();
+            });
+        }
     }
 }

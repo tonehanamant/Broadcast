@@ -214,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="Entities\OpenMarketInventory\AllocationsChangeRequest.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />
     <Compile Include="ApplicationServices\IsciService.cs" />

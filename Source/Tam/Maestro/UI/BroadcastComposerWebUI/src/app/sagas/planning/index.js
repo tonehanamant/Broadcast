@@ -14,8 +14,9 @@ import {
 import { receiveFilteredPlanning, setEstimatedId } from "Ducks/planning/index";
 import * as appActions from "Ducks/app/actionTypes";
 import * as planningActions from "Ducks/planning/actionTypes";
+import { hasSpotsAllocate, copyToBuy } from "Ducks/planning";
 
-import sagaWrapper from "../wrapper";
+import sagaWrapper, { errorBuilder } from "../wrapper";
 import api from "../api";
 
 const ACTIONS = { ...appActions, ...planningActions };
@@ -1733,6 +1734,38 @@ export function* savePricingData(data) {
   }
 }
 
+export function* copyToBuySaga({ detailId }) {
+  const { copyToBuy } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: "copyToBuy", loading: true }));
+    return yield copyToBuy(detailId);
+  } finally {
+    yield put(setOverlayLoading({ id: "copyToBuy", loading: false }));
+  }
+}
+
+export function* copyToBuyFlow({ payload: { detailId } }) {
+  const { hasSpotsAllocated } = api.planning;
+  try {
+    yield put(setOverlayLoading({ id: "copyToBuy", loading: true }));
+    const {
+      status,
+      data: { Success, Data }
+    } = yield hasSpotsAllocated(detailId);
+    if (status !== 200 || !Success) {
+      yield call(errorBuilder);
+    } else if (Data) {
+      yield put(hasSpotsAllocate(detailId, Data));
+    } else {
+      yield put(copyToBuy(detailId));
+    }
+  } catch (e) {
+    yield call(errorBuilder);
+  } finally {
+    yield put(setOverlayLoading({ id: "copyToBuy", loading: false }));
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1884,6 +1917,17 @@ export function* watchSavePricingData() {
     ACTIONS.SAVE_PRICING_GUIDE.request,
     sagaWrapper(savePricingData, ACTIONS.SAVE_PRICING_GUIDE)
   );
+}
+
+export function* watchCopyToBuySaga() {
+  yield takeEvery(
+    ACTIONS.COPY_TO_BUY.request,
+    sagaWrapper(copyToBuySaga, ACTIONS.COPY_TO_BUY)
+  );
+}
+
+export function* watchCopyToBuyFlow() {
+  yield takeEvery(ACTIONS.RUN_COPY_TO_BUY_FLOW, copyToBuyFlow);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also

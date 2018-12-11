@@ -142,7 +142,7 @@ export class DataGridContainer extends Component {
     return (
       <Table
         data={this.props.post}
-        style={{ fontSize: "12px", marginBottom: "100px" }}
+        style={{ marginBottom: "100px" }}
         columns={columns}
         contextMenu={{
           isRender: true,

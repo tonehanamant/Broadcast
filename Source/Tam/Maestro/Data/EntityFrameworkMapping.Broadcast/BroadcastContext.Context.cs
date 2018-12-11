@@ -115,13 +115,13 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<postlog_file_details> postlog_file_details { get; set; }
         public virtual DbSet<affidavit_file_details> affidavit_file_details { get; set; }
         public virtual DbSet<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
-        public virtual DbSet<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual DbSet<pricing_guide_distribution_proprietary_inventory> pricing_guide_distribution_proprietary_inventory { get; set; }
         public virtual DbSet<proposal_version_details> proposal_version_details { get; set; }
-        public virtual DbSet<pricing_guide_distributions> pricing_guide_distributions { get; set; }
         public virtual DbSet<nti_transmittals_file_problems> nti_transmittals_file_problems { get; set; }
         public virtual DbSet<nti_transmittals_file_report_ratings> nti_transmittals_file_report_ratings { get; set; }
         public virtual DbSet<nti_transmittals_file_reports> nti_transmittals_file_reports { get; set; }
         public virtual DbSet<nti_transmittals_files> nti_transmittals_files { get; set; }
+        public virtual DbSet<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
+        public virtual DbSet<pricing_guide_distributions> pricing_guide_distributions { get; set; }
     }
 }

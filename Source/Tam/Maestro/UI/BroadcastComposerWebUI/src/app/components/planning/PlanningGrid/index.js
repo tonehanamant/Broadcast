@@ -24,13 +24,19 @@ export function PlanningGrid({ visibleColumn, planningProposals }) {
       <PageHeaderContainer columns={columns} visibleColumn={visibleColumn} />
       <Table
         data={planningProposals}
-        style={{ fontSize: "12px", marginBottom: "100px" }}
+        style={{ marginBottom: "100px" }}
         columns={columns}
         getTrGroupProps={(state, rowInfo) => ({
           onDoubleClick: () => {
             showProposalDetail(rowInfo.original.Id);
           }
         })}
+        defaultSorted={[
+          {
+            id: "Id",
+            desc: true
+          }
+        ]}
         selection="single"
       />
     </Fragment>

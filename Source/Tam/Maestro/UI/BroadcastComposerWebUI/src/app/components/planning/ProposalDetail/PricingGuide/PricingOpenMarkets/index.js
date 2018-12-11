@@ -20,6 +20,8 @@ import { numberRender, calculateBalanceSum } from "../util";
 import PricingGuideGrid from "./PricingGuideGrid";
 import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
 
+import "./index.scss";
+
 class PricingOpenMarkets extends Component {
   constructor(props) {
     super(props);
@@ -110,6 +112,7 @@ class PricingOpenMarkets extends Component {
       activeEditMarkets,
       isEditMarketsActive,
       activeOpenMarketData,
+      onCopyToBuy,
       openCpmMin,
       openCpmMax,
       openUnitCap,
@@ -137,7 +140,7 @@ class PricingOpenMarkets extends Component {
       <Panel
         id="pricing_openmarket_panel"
         defaultExpanded
-        className="panelCard"
+        className="panelCard pricing-guide_open-market"
       >
         <Panel.Heading>
           <Panel.Title toggle>
@@ -340,16 +343,21 @@ class PricingOpenMarkets extends Component {
                   </Row>
                 </form>
               </Col>
-              <Col sm={4}>
-                <div style={{ textAlign: "right", marginTop: "20px" }}>
-                  <Button
-                    bsStyle="primary"
-                    onClick={onRunDistribution}
-                    disabled={isEditMarketsActive}
-                  >
-                    Run Distribution
-                  </Button>
-                </div>
+              <Col sm={4} className="open-market_toolbox">
+                <Button
+                  bsStyle="primary"
+                  onClick={onCopyToBuy}
+                  disabled={isEditMarketsActive}
+                >
+                  Copy to Buy
+                </Button>
+                <Button
+                  bsStyle="primary"
+                  onClick={onRunDistribution}
+                  disabled={isEditMarketsActive}
+                >
+                  Run Distribution
+                </Button>
               </Col>
             </Row>
             {openMarketLoaded &&
@@ -384,6 +392,7 @@ PricingOpenMarkets.propTypes = {
   submit: PropTypes.func.isRequired,
   onRunDistribution: PropTypes.func.isRequired,
   onUpdateEditMarkets: PropTypes.func.isRequired,
+  onCopyToBuy: PropTypes.func.isRequired,
   onAllocateSpots: PropTypes.func.isRequired,
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,

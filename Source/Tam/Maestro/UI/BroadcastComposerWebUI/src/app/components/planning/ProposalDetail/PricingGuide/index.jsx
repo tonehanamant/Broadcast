@@ -13,6 +13,10 @@ import {
   savePricingData,
   showEditMarkets,
   updateEditMarkets,
+  copyToBuy,
+  copyToBuyFlow,
+  hasSpotsAllocate,
+  onCopyConfirmMsg,
   updateProprietaryCpms
 } from "Ducks/planning";
 import {
@@ -34,6 +38,8 @@ const mapStateToProps = ({
   planning: {
     proposalEditForm,
     activeOpenMarketData,
+    hasSpotsAllocated,
+    isSpotsCopied,
     hasOpenMarketData,
     isOpenMarketDataSortName,
     openMarketLoading,
@@ -47,6 +53,8 @@ const mapStateToProps = ({
   proposalEditForm,
   activeOpenMarketData,
   hasOpenMarketData,
+  hasSpotsAllocated,
+  isSpotsCopied,
   isOpenMarketDataSortName,
   openMarketLoading,
   openMarketLoaded,
@@ -60,6 +68,7 @@ const mapDispatchToProps = dispatch =>
     {
       toggleModal,
       createAlert,
+      onCopyConfirmMsg,
       loadOpenMarketData,
       clearOpenMarketData,
       showEditMarkets,
@@ -67,6 +76,9 @@ const mapDispatchToProps = dispatch =>
       savePricingData,
       updateEditMarkets,
       updateProprietaryCpms,
+      copyToBuy,
+      copyToBuyFlow,
+      hasSpotsAllocate,
       updateDetail: updateProposalEditFormDetail
     },
     dispatch
@@ -85,6 +97,9 @@ class PricingGuide extends Component {
     this.onClickToSave = this.onClickToSave.bind(this);
     this.onClickToDiscard = this.onClickToDiscard.bind(this);
 
+    this.onCopyToBuy = this.onCopyToBuy.bind(this);
+    this.hasSpotsAllocate = this.hasSpotsAllocate.bind(this);
+    this.copyToBuyFlow = this.copyToBuyFlow.bind(this);
     this.setInventory = this.setInventory.bind(this);
     this.onRunDistribution = this.onRunDistribution.bind(this);
     this.getDistributionRequest = this.getDistributionRequest.bind(this);
@@ -276,13 +291,28 @@ class PricingGuide extends Component {
   }
 
   onSave() {
-    const { toggleModal } = this.props;
+    const { toggleModal, detail } = this.props;
     this.onApply();
     toggleModal({
       modal: "pricingGuide",
       active: false,
-      properties: { detailId: this.props.detail.Id }
+      properties: { detailId: detail.Id }
     });
+  }
+
+  hasSpotsAllocate() {
+    const { detail, hasSpotsAllocate, activeOpenMarketData } = this.props;
+    hasSpotsAllocate(detail.Id, activeOpenMarketData.hasSpotsAllocated);
+  }
+
+  onCopyToBuy() {
+    const { detail, copyToBuy } = this.props;
+    copyToBuy(detail.Id);
+  }
+
+  copyToBuyFlow() {
+    const { detail, copyToBuyFlow } = this.props;
+    copyToBuyFlow(detail.Id);
   }
 
   // update detail - with proprietary pricing states
@@ -357,7 +387,15 @@ class PricingGuide extends Component {
   }
 
   render() {
-    const { modal, detail, isReadOnly, activeOpenMarketData } = this.props;
+    const {
+      modal,
+      detail,
+      isReadOnly,
+      activeOpenMarketData,
+      hasSpotsAllocated,
+      onCopyConfirmMsg,
+      isSpotsCopied
+    } = this.props;
     const { distribution, discard } = this.state;
     const show = isActiveDialog(detail, modal);
     return (
@@ -443,7 +481,8 @@ class PricingGuide extends Component {
                 onUpdateProprietaryCpms: this.onUpdateProprietaryCpms,
                 onUpdateEditMarkets: this.onUpdateEditMarkets,
                 onAllocateSpots: this.onAllocateSpots,
-                onRunDistribution: this.onRunDistribution
+                onRunDistribution: this.onRunDistribution,
+                onCopyToBuy: this.copyToBuyFlow
               })
             )}
           </Modal.Body>
@@ -507,10 +546,52 @@ class PricingGuide extends Component {
           </Modal.Header>
           <Modal.Body>Are you sure you want to discard changes?</Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.onCancel} bsStyle="warning">
+            <Button onClick={this.onCancel} bsStyle="primary">
               Discard
             </Button>
             <Button onClick={() => this.onError("discard")}>Cancel</Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={hasSpotsAllocated}>
+          <Modal.Header>
+            <Button
+              className="close"
+              bsStyle="link"
+              onClick={this.hasSpotsAllocate}
+              style={{ display: "inline-block", float: "right" }}
+            >
+              <span>&times;</span>
+            </Button>
+            <Modal.Title>Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Proposal has spots allocated in Open Market buy already Continuing
+            will overwrite any existing spot allocated. Cancel will stop copy.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.onCopyToBuy} bsStyle="primary">
+              Continue
+            </Button>
+            <Button onClick={this.hasSpotsAllocate}>Cancel</Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={isSpotsCopied}>
+          <Modal.Header>
+            <Button
+              className="close"
+              bsStyle="link"
+              onClick={onCopyConfirmMsg}
+              style={{ display: "inline-block", float: "right" }}
+            >
+              <span>&times;</span>
+            </Button>
+            <Modal.Title>Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Spots copied succesfully to Open Market Buy.</Modal.Body>
+          <Modal.Footer>
+            <Button onClick={onCopyConfirmMsg} bsStyle="success">
+              Ok
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -522,8 +603,11 @@ PricingGuide.propTypes = {
   modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool,
+  hasSpotsAllocated: PropTypes.bool.isRequired,
+  isSpotsCopied: PropTypes.bool.isRequired,
   clearOpenMarketData: PropTypes.func.isRequired,
   loadOpenMarketData: PropTypes.func.isRequired,
+  onCopyConfirmMsg: PropTypes.func.isRequired,
   updateProprietaryCpms: PropTypes.func.isRequired,
   detail: PropTypes.object,
   proposalEditForm: PropTypes.object.isRequired,
@@ -533,6 +617,9 @@ PricingGuide.propTypes = {
   hasActiveDistribution: PropTypes.bool.isRequired,
   showEditMarkets: PropTypes.func.isRequired,
   savePricingData: PropTypes.func.isRequired,
+  copyToBuy: PropTypes.func.isRequired,
+  copyToBuyFlow: PropTypes.func.isRequired,
+  hasSpotsAllocate: PropTypes.func.isRequired,
   updateEditMarkets: PropTypes.func.isRequired
 };
 

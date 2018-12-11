@@ -90,7 +90,5 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>().GetInventoryTotals(request));
         }
-                
-        
     }
 }

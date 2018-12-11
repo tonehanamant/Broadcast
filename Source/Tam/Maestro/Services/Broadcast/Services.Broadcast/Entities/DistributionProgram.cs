@@ -5,6 +5,7 @@ namespace Services.Broadcast.Entities
 {
     public class DistributionProgram
     {
+        public int ProgramId { get; set; }
         public LookupDto Market { get; set; }
         public DisplayScheduleStation Station { get; set; }
         public LookupDto ManifestDaypart { get; set; }

@@ -394,6 +394,7 @@ namespace Services.Broadcast.Repositories
                     }).ToList(),
                     pricing_guide_distribution_open_market_inventory = model.Markets.Select(x => new pricing_guide_distribution_open_market_inventory
                     {
+                        manifest_id = x.ProgramId,
                         market_code = (short)x.MarketId,
                         blended_cpm = x.BlendedCpm,
                         cost_per_spot = x.CostPerSpot,
@@ -419,6 +420,7 @@ namespace Services.Broadcast.Repositories
                         where distribution.id == distributionId
                         select new DistributionProgram
                         {
+                            ProgramId = program.manifest_id,
                             BlendedCpm = program.blended_cpm,
                             CostPerSpot = program.cost_per_spot,
                             ImpressionsPerSpot = program.forecasted_impressions_per_spot,

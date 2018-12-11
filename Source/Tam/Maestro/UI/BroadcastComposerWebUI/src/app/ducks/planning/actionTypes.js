@@ -70,6 +70,11 @@ export const FILTERED_PLANNING_PROPOSALS = createAction(
   "planning/FILTERED_PLANNING_PROPOSALS"
 );
 export const RERUN_POST_SCRUBING = createAction("planning/RERUN_POST_SCRUBING");
+export const COPY_TO_BUY = createAction("planning/COPY_TO_BUY");
+export const HAS_SPOTS_ALLOCATED = "planning/HAS_SPOTS_ALLOCATED";
+export const RUN_COPY_TO_BUY_FLOW = "planning/RUN_COPY_TO_BUY_FLOW";
+export const ON_SPOTS_CONFIRMATION_MESSAGE =
+  "planning/ON_SPOTS_CONFIRMATION_MESSAGE";
 export const LOAD_OPEN_MARKET_DATA = createAction(
   "planning/LOAD_OPEN_MARKET_DATA"
 );

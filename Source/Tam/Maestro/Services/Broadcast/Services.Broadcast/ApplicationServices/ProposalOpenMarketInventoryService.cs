@@ -25,7 +25,8 @@ namespace Services.Broadcast.ApplicationServices
         ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request);
         ProposalDetailOpenMarketInventoryDto UpdateOpenMarketInventoryTotals(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
-        List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);        
+        List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
+        void AllocateOpenMarketSpots(OpenMarketAllocationSaveRequest request);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -696,47 +697,12 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request)
         {
-            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
-            var openMarketInventoryRepository =
-                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
-            var existingAllocations =
-                openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
-            var guaranteedAudienceId =
-                proposalRepository.GetProposalDetailGuaranteedAudienceId(request.ProposalVersionDetailId);
-            var allocationToRemove = _GetAllocationsToRemove(request, existingAllocations);
-            var allocationToAdd = _GetAllocationsToCreate(request, existingAllocations);
+            AllocateOpenMarketSpots(request);
 
-            _ValidateSpotsAllocation(allocationToAdd);
-
-            using (var transaction = new TransactionScopeWrapper())
-            {
-                openMarketInventoryRepository.RemoveAllocations(allocationToRemove);
-
-                openMarketInventoryRepository.AddAllocations(allocationToAdd, guaranteedAudienceId);
-
-                var inventoryDto = GetInventory(request.ProposalVersionDetailId, null);
-
-                _ProposalOpenMarketsTotalsCalculationEngine.CalculatePartialOpenMarketTotals(inventoryDto);
-
-                var proposalDetailTotals = _GetProposalDetailTotals(inventoryDto);
-
-                BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
-                    .SaveProposalDetailOpenMarketInventoryTotals(inventoryDto.DetailId, proposalDetailTotals);
-
-                BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
-                    .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
-
-                _UpdateProposalTotals(inventoryDto.ProposalVersionId);
-
-                _CalculateOpenMarketTotals(inventoryDto);
-
-                transaction.Complete();
-
-                return GetInventory(request.ProposalVersionDetailId, request.Filter);
-            }
+            return GetInventory(request.ProposalVersionDetailId, request.Filter);
         }
 
-        private void _ValidateSpotsAllocation(IEnumerable<OpenMarketInventoryAllocation> allocations)
+        private void _ValidateSpotsAllocation(List<OpenMarketInventoryAllocation> allocations)
         {
             if (
                 allocations.Any(
@@ -757,66 +723,87 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private static List<OpenMarketInventoryAllocation> _GetAllocationsToCreate(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
+        public AllocationsChangeRequest _GetAllocationsToChange(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
         {
-            var allocationsToAdd = new List<OpenMarketInventoryAllocation>();
+            var allocationsChangeRequest = new AllocationsChangeRequest();
 
             foreach (var week in request.Weeks)
             {
                 foreach (var program in week.Programs)
                 {
-                    var numberOfPreviousAllocations = existingAllocations.Count(x => x.ManifestId == program.ProgramId);
+                    var numberOfPreviousAllocations = existingAllocations.Count(x => x.ManifestId == program.ProgramId &&
+                                                                                x.MediaWeekId == week.MediaWeekId);
 
-                    if (program.Spots < numberOfPreviousAllocations)
+                    if (program.Spots == numberOfPreviousAllocations)
                         continue;
-
-                    var numberOfSpotsDifference = program.Spots - numberOfPreviousAllocations;
-
-                    allocationsToAdd.Add(new OpenMarketInventoryAllocation
+                    
+                    if (program.Spots < numberOfPreviousAllocations)
                     {
-                        ManifestId = program.ProgramId,
-                        MediaWeekId = week.MediaWeekId,
-                        ProposalVersionDetailId = request.ProposalVersionDetailId,
-                        Spots = numberOfSpotsDifference,
-                        TotalImpressions = program.TotalImpressions,
-                        UnitImpressions = program.UnitImpressions,
-                        SpotCost = program.UnitCost,
-                        Rate = ProposalMath.CalculateManifestSpotAudienceRate(program.UnitImpressions, program.UnitCost)
-                    });
+                        var numberOfSpotsDifference = numberOfPreviousAllocations - program.Spots;
+
+                        allocationsChangeRequest.AllocationsToRemove.AddRange(
+                            existingAllocations.Where(
+                                    x => x.MediaWeekId == week.MediaWeekId && 
+                                         x.ManifestId == program.ProgramId)
+                                .Take(numberOfSpotsDifference));
+                    }
+                    else
+                    {
+                        var numberOfSpotsDifference = program.Spots - numberOfPreviousAllocations;
+
+                        allocationsChangeRequest.AllocationsToAdd.Add(new OpenMarketInventoryAllocation
+                        {
+                            ManifestId = program.ProgramId,
+                            MediaWeekId = week.MediaWeekId,
+                            ProposalVersionDetailId = request.ProposalVersionDetailId,
+                            Spots = numberOfSpotsDifference,
+                            TotalImpressions = program.TotalImpressions,
+                            UnitImpressions = program.UnitImpressions,
+                            SpotCost = program.UnitCost,
+                            Rate = ProposalMath.CalculateManifestSpotAudienceRate(program.UnitImpressions, program.UnitCost)
+                        });
+                    }
                 }
             }
 
-            return allocationsToAdd;
+            return allocationsChangeRequest;
         }
 
-        private static List<OpenMarketInventoryAllocation> _GetAllocationsToRemove(OpenMarketAllocationSaveRequest request, List<OpenMarketInventoryAllocation> existingAllocations)
+        public void AllocateOpenMarketSpots(OpenMarketAllocationSaveRequest request)
         {
-            var allocationsToRemove = new List<OpenMarketInventoryAllocation>();
+            var proposalRepository = BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            var openMarketInventoryRepository =
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalOpenMarketInventoryRepository>();
+            var existingAllocations =
+                openMarketInventoryRepository.GetProposalDetailAllocations(request.ProposalVersionDetailId);
+            var guaranteedAudienceId =
+                proposalRepository.GetProposalDetailGuaranteedAudienceId(request.ProposalVersionDetailId);
+            var allocationChangeRequest = _GetAllocationsToChange(request, existingAllocations);
 
-            foreach (var week in request.Weeks)
+            _ValidateSpotsAllocation(allocationChangeRequest.AllocationsToAdd);
+
+            using (var transaction = new TransactionScopeWrapper())
             {
-                foreach (var program in week.Programs)
-                {
-                    var numberOfPreviousAllocations = existingAllocations.Count(x => x.ManifestId == program.ProgramId);
+                openMarketInventoryRepository.SaveAllocations(allocationChangeRequest, guaranteedAudienceId);
 
-                    if (program.Spots >= numberOfPreviousAllocations)
-                        continue;
+                var inventoryDto = GetInventory(request.ProposalVersionDetailId, null);
 
-                    var numberOfSpotsDifference = numberOfPreviousAllocations - program.Spots;
+                _ProposalOpenMarketsTotalsCalculationEngine.CalculatePartialOpenMarketTotals(inventoryDto);
 
-                    allocationsToRemove.AddRange(
-                        existingAllocations.Where(
-                                x => x.MediaWeekId == week.MediaWeekId && x.ManifestId == program.ProgramId)
-                            .Take(numberOfSpotsDifference));
-                }
+                var proposalDetailTotals = _GetProposalDetailTotals(inventoryDto);
+
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                    .SaveProposalDetailOpenMarketInventoryTotals(inventoryDto.DetailId, proposalDetailTotals);
+
+                BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>()
+                    .SaveProposalDetailOpenMarketWeekInventoryTotals(inventoryDto);
+
+                _UpdateProposalTotals(inventoryDto.ProposalVersionId);
+
+                _CalculateOpenMarketTotals(inventoryDto);
+
+                transaction.Complete();
             }
-
-            return allocationsToRemove;
-        }  
-
-
-
-
-
+        }
     }
 }
