@@ -887,7 +887,6 @@
           <Property Name="cost_total" Type="money" Nullable="false" />
           <Property Name="impressions_total" Type="float" Nullable="false" />
           <Property Name="market_coverage" Type="float" />
-          <Property Name="snapshot_date" Type="datetime" />
         </EntityType>
         <EntityType Name="proposals">
           <Key>
@@ -6255,7 +6254,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_spot_length" Relationship="BroadcastModel.FK_proposal_version_spot_length_proposal_versions" FromRole="proposal_versions" ToRole="proposal_version_spot_length" />
           <NavigationProperty Name="proposal" Relationship="BroadcastModel.FK_proposal_versions_proposals" FromRole="proposal_versions" ToRole="proposal" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_proposal_versions" FromRole="proposal_versions" ToRole="proposal_version_details" />
-          <Property Name="snapshot_date" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_proposal_version_audiences_proposal_versions">
           <End Type="BroadcastModel.proposal_versions" Role="proposal_versions" Multiplicity="1">
@@ -8529,7 +8527,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="proposal_versions">
             <EntityTypeMapping TypeName="BroadcastModel.proposal_versions">
               <MappingFragment StoreEntitySet="proposal_versions">
-                <ScalarProperty Name="snapshot_date" ColumnName="snapshot_date" />
                 <ScalarProperty Name="market_coverage" ColumnName="market_coverage" />
                 <ScalarProperty Name="impressions_total" ColumnName="impressions_total" />
                 <ScalarProperty Name="cost_total" ColumnName="cost_total" />
