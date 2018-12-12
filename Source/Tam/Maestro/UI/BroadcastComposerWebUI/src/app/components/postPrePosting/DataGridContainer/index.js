@@ -99,15 +99,17 @@ export class DataGridContainer extends Component {
       },
       {
         Header: "Upload Date",
-        accessor: "DisplayUploadDate",
+        // accessor: "DisplayUploadDate",
+        accessor: "UploadDate",
         minWidth: 10,
-        Cell: row => <span>{row.value}</span>
+        Cell: row => <span>{row.original.DisplayUploadDate}</span>
       },
       {
         Header: "Last Modified",
-        accessor: "DisplayModifiedDate",
+        // accessor: "DisplayModifiedDate",
+        accessor: "ModifiedDate",
         minWidth: 10,
-        Cell: row => <span>{row.value}</span>
+        Cell: row => <span>{row.original.DisplayModifiedDate}</span>
       }
     ];
 

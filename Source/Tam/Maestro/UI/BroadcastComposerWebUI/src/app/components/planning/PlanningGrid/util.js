@@ -89,7 +89,9 @@ export const columns = [
   {
     Header: "Last Modified",
     id: "displayLastModified",
-    accessor: "displayLastModified",
-    width: "10%"
+    // accessor: "displayLastModified",
+    accessor: "LastModified",
+    width: "10%",
+    Cell: row => <span>{row.original.displayLastModified}</span>
   }
 ];
