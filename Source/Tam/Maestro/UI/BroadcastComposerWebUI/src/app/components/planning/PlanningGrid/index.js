@@ -33,7 +33,7 @@ export function PlanningGrid({ visibleColumn, planningProposals }) {
         })}
         defaultSorted={[
           {
-            id: "Id",
+            id: "displayLastModified",
             desc: true
           }
         ]}
