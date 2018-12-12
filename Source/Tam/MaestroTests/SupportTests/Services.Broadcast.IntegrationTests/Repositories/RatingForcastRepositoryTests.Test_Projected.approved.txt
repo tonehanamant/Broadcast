@@ -1,0 +1,688 @@
+﻿[
+  {
+    "audience_id": 6,
+    "id": 5,
+    "impressions": 0.0,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 7,
+    "id": 5,
+    "impressions": 50.0125,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.0007433
+  },
+  {
+    "audience_id": 13,
+    "id": 5,
+    "impressions": 77.4,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00072564
+  },
+  {
+    "audience_id": 14,
+    "id": 5,
+    "impressions": 1682.6375,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00803233
+  },
+  {
+    "audience_id": 15,
+    "id": 5,
+    "impressions": 3972.675,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.01558792
+  },
+  {
+    "audience_id": 21,
+    "id": 5,
+    "impressions": 51.625,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00093152
+  },
+  {
+    "audience_id": 22,
+    "id": 5,
+    "impressions": 0.0,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 28,
+    "id": 5,
+    "impressions": 69.8375,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00071941
+  },
+  {
+    "audience_id": 29,
+    "id": 5,
+    "impressions": 581.8,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00311501
+  },
+  {
+    "audience_id": 30,
+    "id": 5,
+    "impressions": 1180.3,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00599697
+  },
+  {
+    "audience_id": 284,
+    "id": 5,
+    "impressions": 451.125,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00246089
+  },
+  {
+    "audience_id": 290,
+    "id": 5,
+    "impressions": 220.325,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00085201
+  },
+  {
+    "audience_id": 347,
+    "id": 5,
+    "impressions": 1442.2125,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00512706
+  },
+  {
+    "audience_id": 348,
+    "id": 5,
+    "impressions": 341.4125,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00175964
+  },
+  {
+    "audience_id": 6,
+    "id": 7,
+    "impressions": 0.0,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 7,
+    "id": 7,
+    "impressions": 128.0625,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00190331
+  },
+  {
+    "audience_id": 13,
+    "id": 7,
+    "impressions": 125.3,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00117472
+  },
+  {
+    "audience_id": 14,
+    "id": 7,
+    "impressions": 4269.5875,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.02038155
+  },
+  {
+    "audience_id": 15,
+    "id": 7,
+    "impressions": 6452.225,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.02531714
+  },
+  {
+    "audience_id": 21,
+    "id": 7,
+    "impressions": 0.0,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 22,
+    "id": 7,
+    "impressions": 57.35,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00085307
+  },
+  {
+    "audience_id": 28,
+    "id": 7,
+    "impressions": 52.9625,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00054558
+  },
+  {
+    "audience_id": 29,
+    "id": 7,
+    "impressions": 378.325,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00202559
+  },
+  {
+    "audience_id": 30,
+    "id": 7,
+    "impressions": 1117.7125,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00567897
+  },
+  {
+    "audience_id": 284,
+    "id": 7,
+    "impressions": 313.2375,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00170871
+  },
+  {
+    "audience_id": 290,
+    "id": 7,
+    "impressions": 58.05,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00022448
+  },
+  {
+    "audience_id": 347,
+    "id": 7,
+    "impressions": 1416.9125,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00503712
+  },
+  {
+    "audience_id": 348,
+    "id": 7,
+    "impressions": 456.9875,
+    "legacy_call_letters": "WMAR",
+    "rating": 0.00235531
+  },
+  {
+    "audience_id": 6,
+    "id": 71,
+    "impressions": 0.0,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 7,
+    "id": 71,
+    "impressions": 173.2875,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00203786
+  },
+  {
+    "audience_id": 13,
+    "id": 71,
+    "impressions": 2324.475,
+    "legacy_call_letters": "WESH",
+    "rating": 0.01710443
+  },
+  {
+    "audience_id": 14,
+    "id": 71,
+    "impressions": 6478.0125,
+    "legacy_call_letters": "WESH",
+    "rating": 0.02253653
+  },
+  {
+    "audience_id": 15,
+    "id": 71,
+    "impressions": 13229.8875,
+    "legacy_call_letters": "WESH",
+    "rating": 0.02929993
+  },
+  {
+    "audience_id": 21,
+    "id": 71,
+    "impressions": 0.0,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 22,
+    "id": 71,
+    "impressions": 67.85,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00078572
+  },
+  {
+    "audience_id": 28,
+    "id": 71,
+    "impressions": 914.3,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0072579
+  },
+  {
+    "audience_id": 29,
+    "id": 71,
+    "impressions": 2898.3,
+    "legacy_call_letters": "WESH",
+    "rating": 0.01151343
+  },
+  {
+    "audience_id": 30,
+    "id": 71,
+    "impressions": 10594.0125,
+    "legacy_call_letters": "WESH",
+    "rating": 0.02782063
+  },
+  {
+    "audience_id": 284,
+    "id": 71,
+    "impressions": 270.025,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00118509
+  },
+  {
+    "audience_id": 290,
+    "id": 71,
+    "impressions": 1813.1125,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00534618
+  },
+  {
+    "audience_id": 347,
+    "id": 71,
+    "impressions": 2477.9625,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00687294
+  },
+  {
+    "audience_id": 348,
+    "id": 71,
+    "impressions": 237.8875,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00104106
+  },
+  {
+    "audience_id": 6,
+    "id": 77,
+    "impressions": 0.0,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 7,
+    "id": 77,
+    "impressions": 0.0,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 13,
+    "id": 77,
+    "impressions": 1146.5125,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0084365
+  },
+  {
+    "audience_id": 14,
+    "id": 77,
+    "impressions": 4144.95,
+    "legacy_call_letters": "WESH",
+    "rating": 0.01441998
+  },
+  {
+    "audience_id": 15,
+    "id": 77,
+    "impressions": 8822.3375,
+    "legacy_call_letters": "WESH",
+    "rating": 0.01953863
+  },
+  {
+    "audience_id": 21,
+    "id": 77,
+    "impressions": 0.0,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 22,
+    "id": 77,
+    "impressions": 67.85,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00078572
+  },
+  {
+    "audience_id": 28,
+    "id": 77,
+    "impressions": 381.475,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00302823
+  },
+  {
+    "audience_id": 29,
+    "id": 77,
+    "impressions": 1602.8875,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00636744
+  },
+  {
+    "audience_id": 30,
+    "id": 77,
+    "impressions": 8505.2,
+    "legacy_call_letters": "WESH",
+    "rating": 0.02233526
+  },
+  {
+    "audience_id": 284,
+    "id": 77,
+    "impressions": 0.0,
+    "legacy_call_letters": "WESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 290,
+    "id": 77,
+    "impressions": 704.2125,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00207645
+  },
+  {
+    "audience_id": 347,
+    "id": 77,
+    "impressions": 3058.725,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00848376
+  },
+  {
+    "audience_id": 348,
+    "id": 77,
+    "impressions": 126.8,
+    "legacy_call_letters": "WESH",
+    "rating": 0.00055491
+  },
+  {
+    "audience_id": 6,
+    "id": 89,
+    "impressions": 403.9,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00571004
+  },
+  {
+    "audience_id": 7,
+    "id": 89,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 13,
+    "id": 89,
+    "impressions": 1741.225,
+    "legacy_call_letters": "EESH",
+    "rating": 0.01281264
+  },
+  {
+    "audience_id": 14,
+    "id": 89,
+    "impressions": 375.3625,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00130586
+  },
+  {
+    "audience_id": 15,
+    "id": 89,
+    "impressions": 2587.4375,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00573034
+  },
+  {
+    "audience_id": 21,
+    "id": 89,
+    "impressions": 440.2,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00609864
+  },
+  {
+    "audience_id": 22,
+    "id": 89,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 28,
+    "id": 89,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 29,
+    "id": 89,
+    "impressions": 271.05,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00107674
+  },
+  {
+    "audience_id": 30,
+    "id": 89,
+    "impressions": 696.1875,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00182824
+  },
+  {
+    "audience_id": 284,
+    "id": 89,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 290,
+    "id": 89,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 347,
+    "id": 89,
+    "impressions": 34.975,
+    "legacy_call_letters": "EESH",
+    "rating": 9.701E-05
+  },
+  {
+    "audience_id": 348,
+    "id": 89,
+    "impressions": 93.375,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00040863
+  },
+  {
+    "audience_id": 6,
+    "id": 90,
+    "impressions": 102.6,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00145048
+  },
+  {
+    "audience_id": 7,
+    "id": 90,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 13,
+    "id": 90,
+    "impressions": 308.4625,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00226979
+  },
+  {
+    "audience_id": 14,
+    "id": 90,
+    "impressions": 395.55,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00137609
+  },
+  {
+    "audience_id": 15,
+    "id": 90,
+    "impressions": 1533.7,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00339665
+  },
+  {
+    "audience_id": 21,
+    "id": 90,
+    "impressions": 111.2,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00154059
+  },
+  {
+    "audience_id": 22,
+    "id": 90,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 28,
+    "id": 90,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 29,
+    "id": 90,
+    "impressions": 767.225,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00304778
+  },
+  {
+    "audience_id": 30,
+    "id": 90,
+    "impressions": 173.7875,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00045638
+  },
+  {
+    "audience_id": 284,
+    "id": 90,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 290,
+    "id": 90,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 347,
+    "id": 90,
+    "impressions": 184.3875,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00051142
+  },
+  {
+    "audience_id": 348,
+    "id": 90,
+    "impressions": 75.5,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00033041
+  },
+  {
+    "audience_id": 6,
+    "id": 91,
+    "impressions": 130.8,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00184916
+  },
+  {
+    "audience_id": 7,
+    "id": 91,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 13,
+    "id": 91,
+    "impressions": 169.825,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00124964
+  },
+  {
+    "audience_id": 14,
+    "id": 91,
+    "impressions": 348.55,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00121258
+  },
+  {
+    "audience_id": 15,
+    "id": 91,
+    "impressions": 2022.0875,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00447827
+  },
+  {
+    "audience_id": 21,
+    "id": 91,
+    "impressions": 139.125,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00192747
+  },
+  {
+    "audience_id": 22,
+    "id": 91,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 28,
+    "id": 91,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 29,
+    "id": 91,
+    "impressions": 830.875,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00330063
+  },
+  {
+    "audience_id": 30,
+    "id": 91,
+    "impressions": 148.9625,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00039119
+  },
+  {
+    "audience_id": 284,
+    "id": 91,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 290,
+    "id": 91,
+    "impressions": 0.0,
+    "legacy_call_letters": "EESH",
+    "rating": 0.0
+  },
+  {
+    "audience_id": 347,
+    "id": 91,
+    "impressions": 187.675,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00052054
+  },
+  {
+    "audience_id": 348,
+    "id": 91,
+    "impressions": 75.5,
+    "legacy_call_letters": "EESH",
+    "rating": 0.00033041
+  }
+]
