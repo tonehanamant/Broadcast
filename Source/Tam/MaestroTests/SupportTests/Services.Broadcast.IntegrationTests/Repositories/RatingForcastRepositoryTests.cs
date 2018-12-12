@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.IntegrationTests.ApplicationServices;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -23,6 +24,178 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     {
         IRatingForecastRepository _Repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
         const int SecPerHour = 60 * 60;
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Test_Projected()
+        {
+            int posting_media_month_id = 437;
+            string demos = "6,7,347,348,13,14,15,21,22,28,29,30,284,290";//', --A18 +
+            char min_playback_type = '3';
+
+            List<ManifestDetailDaypart> details = new List<ManifestDetailDaypart>();
+            DisplayDaypart dp = new DisplayDaypart(1, 32400, 35999, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 5,
+                LegacyCallLetters = "WMAR",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 36000, 35999, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 6,
+                LegacyCallLetters = "WMAR",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 39600, 43199, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 7,
+                LegacyCallLetters = "WMAR",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 32400, 35999, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 71,
+                LegacyCallLetters = "WESH",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 36000, 35999, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 74,
+                LegacyCallLetters = "WESH",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 39600, 43199, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 77,
+                LegacyCallLetters = "WESH",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 32400, 35999, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 89,
+                LegacyCallLetters = "EESH",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 36000, 39599, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 90,
+                LegacyCallLetters = "EESH",
+                DisplayDaypart = dp,
+            });
+            dp = new DisplayDaypart(1, 39600, 43199, true, true, true, true, true, false, false);
+            details.Add(new ManifestDetailDaypart()
+            {
+                Id = 91,
+                LegacyCallLetters = "EESH",
+                DisplayDaypart = dp,
+            });
+
+            var results = _Repo.GetImpressionsDaypart(posting_media_month_id, demos.Split(',').Select(i => Int32.Parse(i)).ToList(), details,ProposalEnums.ProposalPlaybackType.LivePlus3,false);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Test_PointInTime()
+        {
+            int posting_media_month_id = 437;
+            string demos = "6,7,347,348,13,14,15,21,22,28,29,30,284,290";//', --A18 +
+            char min_playback_type = '3';
+
+            List<StationDetailPointInTime> details = new List<StationDetailPointInTime>();
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 5,
+                LegacyCallLetters = "WMAR",
+                TimeAired = 32400,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 6,
+                LegacyCallLetters = "WMAR",
+                TimeAired = 36000,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 7,
+                LegacyCallLetters = "WMAR",
+                TimeAired = 39600,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 71,
+                LegacyCallLetters = "WESH",
+                TimeAired = 32400,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 74,
+                LegacyCallLetters = "WESH",
+                TimeAired = 36000,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 77,
+                LegacyCallLetters = "WESH",
+                TimeAired = 39600,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 89,
+                LegacyCallLetters = "EESH",
+                TimeAired = 32400,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 90,
+                LegacyCallLetters = "EESH",
+                TimeAired = 36000,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+            details.Add(new StationDetailPointInTime()
+            {
+                Id = 91,
+                LegacyCallLetters = "EESH",
+                TimeAired = 39600,
+                DayOfWeek = DayOfWeek.Thursday
+            });
+
+            var results = _Repo.GetImpressionsPointInTime(posting_media_month_id, demos.Split(',').Select(i => Int32.Parse(i)).ToList(), details, ProposalEnums.ProposalPlaybackType.LivePlus3, false);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

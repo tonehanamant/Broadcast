@@ -348,176 +348,6 @@ GO
 
 GO
 
-IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections'))
-BEGIN
-	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections]
-END
-
-GO
-/*
-	DECLARE
-		@posting_media_month_id SMALLINT=437,
-		@demo VARCHAR(MAX)='6,7,347,348,13,14,15,21,22,28,29,30,284,290', --A18+
-		@ratings_request RatingsInputWithId,
-		@min_playback_type VARCHAR(1)='3'
-
-	INSERT INTO @ratings_request SELECT 5,'WMAR',1,1,1,1,1,0,0,32400,35999
-	INSERT INTO @ratings_request SELECT 6,'WMAR',1,1,1,1,1,0,0,36000,39599
-	INSERT INTO @ratings_request SELECT 7,'WMAR',1,1,1,1,1,0,0,39600,43199
-	INSERT INTO @ratings_request SELECT 71,'WESH',1,1,1,1,1,0,0,32400,35999
-	INSERT INTO @ratings_request SELECT 74,'WESH',1,1,1,1,1,0,0,36000,39599
-	INSERT INTO @ratings_request SELECT 77,'WESH',1,1,1,1,1,0,0,39600,43199
-	INSERT INTO @ratings_request SELECT 89,'EESH',1,1,1,1,1,0,0,32400,35999
-	INSERT INTO @ratings_request SELECT 90,'EESH',1,1,1,1,1,0,0,36000,39599
-	INSERT INTO @ratings_request SELECT 91,'EESH',1,1,1,1,1,0,0,39600,43199
-		
-	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections] @posting_media_month_id, @demo, @ratings_request, @min_playback_type
-*/
-CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections]
-	@posting_media_month_id SMALLINT,
-	@demo VARCHAR(MAX),
-	@ratings_request RatingsInputWithId READONLY,
-	@min_playback_type VARCHAR(1)
-AS
-BEGIN
-	DECLARE @posting_media_month_id_sniff SMALLINT=@posting_media_month_id;
-	DECLARE @min_playback_type_sniff VARCHAR(1)=@min_playback_type;
-	DECLARE @demo_sniff VARCHAR(MAX)=@demo;
-
-	SET NOCOUNT ON;
-	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-
-	CREATE TABLE #rating_requests (id int NOT NULL,	legacy_call_letters varchar(15) NOT NULL, mon bit NOT NULL, tue bit NOT NULL, wed bit NOT NULL, thu bit NOT NULL, fri bit NOT NULL, sat bit NOT NULL, sun bit NOT NULL, start_time int NOT NULL, end_time int NOT NULL,
-		PRIMARY KEY CLUSTERED (id,legacy_call_letters,mon,tue,wed,thu,fri,sat,sun,start_time,end_time));
-	INSERT into #rating_requests
-		SELECT * FROM @ratings_request;
-
-	CREATE TABLE #audience_ids (audience_id INT NOT NULL, 
-		PRIMARY KEY CLUSTERED(audience_id));
-	INSERT INTO #audience_ids
-		SELECT id FROM dbo.SplitIntegers(@demo_sniff);
-
-	CREATE TABLE #min_playback_types (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), 
-		PRIMARY KEY CLUSTERED(market_code));
-	INSERT INTO #min_playback_types
-		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
-
-	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT, universe FLOAT,  
-		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time));
-	INSERT INTO #viewers
-		SELECT
-			rr.id, 
-			rr.legacy_call_letters,
-			a.audience_id,
-			v.market_code,
-			v.start_time, 
-			v.end_time,
-			(
-				CASE rr.mon WHEN 1 THEN vd.mon_viewers ELSE 0 END + 
-				CASE rr.tue WHEN 1 THEN vd.tue_viewers ELSE 0 END +
-				CASE rr.wed WHEN 1 THEN vd.wed_viewers ELSE 0 END +
-				CASE rr.thu WHEN 1 THEN vd.thu_viewers ELSE 0 END +
-				CASE rr.fri WHEN 1 THEN vd.fri_viewers ELSE 0 END +
-				CASE rr.sat WHEN 1 THEN vd.sat_viewers ELSE 0 END +
-				CASE rr.sun WHEN 1 THEN vd.sun_viewers ELSE 0 END 
-			) 
-			/ 
-			(
-				CASE rr.mon WHEN 1 THEN 1 ELSE 0 END + 
-				CASE rr.tue WHEN 1 THEN 1 ELSE 0 END +
-				CASE rr.wed WHEN 1 THEN 1 ELSE 0 END +
-				CASE rr.thu WHEN 1 THEN 1 ELSE 0 END +
-				CASE rr.fri WHEN 1 THEN 1 ELSE 0 END +
-				CASE rr.sat WHEN 1 THEN 1 ELSE 0 END +
-				CASE rr.sun WHEN 1 THEN 1 ELSE 0 END 
-			) 'viewers',
-			u.universe
-		FROM
-			#rating_requests rr
-			JOIN nsi.uvw_market_codes_call_letters mccl ON mccl.media_month_id=@posting_media_month_id_sniff
-				AND mccl.legacy_call_letters=rr.legacy_call_letters
-			JOIN nsi.viewers v ON v.media_month_id=@posting_media_month_id_sniff
-				AND v.legacy_call_letters=rr.legacy_call_letters
-				AND v.market_code=mccl.market_code
-				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
-			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
-			CROSS APPLY #audience_ids a
-			JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
-				AND vd.viewer_id=v.id
-				AND vd.audience_id=a.audience_id
-				AND vd.playback_type=mpt.available_playback_type
-			JOIN nsi.universes u ON u.media_month_id=v.media_month_id
-				AND u.playback_type=mpt.available_playback_type
-				AND u.market_code=v.market_code
-				AND u.audience_id=a.audience_id;
-
-	CREATE TABLE #pre_output (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, impressions_per_market FLOAT NOT NULL, universe FLOAT NOT NULL,
-		PRIMARY KEY CLUSTERED(id,legacy_call_letters,market_code,audience_id));
-	INSERT INTO #pre_output
-		-- get averages of impressions for each market (aggregating out start_time and end_time dimensions)
-		SELECT 
-			id,
-			legacy_call_letters,
-			market_code, 
-			audience_id, 
-			AVG(viewers) market_impression_avg,
-			AVG(universe) market_universe_avg
-		FROM 
-			#viewers
-		GROUP BY 
-			id,legacy_call_letters,market_code,audience_id;
-
-	CREATE TABLE #primary_market_universes (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, audience_id INT NOT NULL, universe FLOAT NOT NULL,
-		PRIMARY KEY CLUSTERED(id,legacy_call_letters,audience_id));
-	INSERT INTO #primary_market_universes
-		SELECT
-			po.id,
-			po.legacy_call_letters,
-			po.audience_id,
-			MAX(po.universe)
-		FROM 
-			#pre_output po
-		GROUP BY 
-			po.id,po.legacy_call_letters,po.audience_id;
-
-	-- zero out universe of bleed market      
-	UPDATE
-		#pre_output
-	SET
-		universe=0
-	FROM
-		#pre_output po
-		JOIN #primary_market_universes pmu ON pmu.id=po.id
-			AND pmu.legacy_call_letters=po.legacy_call_letters
-			AND pmu.audience_id=po.audience_id
-	WHERE
-		po.universe<>pmu.universe; 
-	
-	SELECT
-		po.id,
-		po.legacy_call_letters,
-		SUM(po.impressions_per_market) 'impressions',
-		CASE WHEN SUM(po.universe)>0 THEN 
-			SUM(po.impressions_per_market) / SUM(po.universe)
-		ELSE 
-			NULL 
-		END 'rating'
-	FROM
-		#pre_output po
-	GROUP BY 
-		po.id,
-		po.legacy_call_letters
-	ORDER BY 
-		po.id;
-
-	IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
-	IF OBJECT_ID('tempdb..#min_playback_types') IS NOT NULL DROP TABLE #min_playback_types;
-	IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
-	IF OBJECT_ID('tempdb..#viewers') IS NOT NULL DROP TABLE #viewers;
-	IF OBJECT_ID('tempdb..#pre_output') IS NOT NULL DROP TABLE #pre_output;
-	IF OBJECT_ID('tempdb..#primary_market_universes') IS NOT NULL DROP TABLE #primary_market_universes;
-END
-GO
 
 
 
@@ -899,6 +729,181 @@ GO
 
 
 
+/*********************************** START BCOP-4117 **************************************************/
+
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections'))
+BEGIN
+	DROP PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections]
+END
+
+GO
+/*
+	DECLARE
+		@posting_media_month_id SMALLINT=437,
+		@demo VARCHAR(MAX)='6,7,347,348,13,14,15,21,22,28,29,30,284,290', --A18+
+		@ratings_request RatingsInputWithId,
+		@min_playback_type VARCHAR(1)='3'
+
+	INSERT INTO @ratings_request SELECT 5,'WMAR',1,1,1,1,1,0,0,32400,35999
+	INSERT INTO @ratings_request SELECT 6,'WMAR',1,1,1,1,1,0,0,36000,39599
+	INSERT INTO @ratings_request SELECT 7,'WMAR',1,1,1,1,1,0,0,39600,43199
+	INSERT INTO @ratings_request SELECT 71,'WESH',1,1,1,1,1,0,0,32400,35999
+	INSERT INTO @ratings_request SELECT 74,'WESH',1,1,1,1,1,0,0,36000,39599
+	INSERT INTO @ratings_request SELECT 77,'WESH',1,1,1,1,1,0,0,39600,43199
+	INSERT INTO @ratings_request SELECT 89,'EESH',1,1,1,1,1,0,0,32400,35999
+	INSERT INTO @ratings_request SELECT 90,'EESH',1,1,1,1,1,0,0,36000,39599
+	INSERT INTO @ratings_request SELECT 91,'EESH',1,1,1,1,1,0,0,39600,43199
+		
+	EXEC [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections] @posting_media_month_id, @demo, @ratings_request, @min_playback_type
+*/
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections]
+	@posting_media_month_id SMALLINT,
+	@demo VARCHAR(MAX),
+	@ratings_request RatingsInputWithId READONLY,
+	@min_playback_type VARCHAR(1)
+AS
+BEGIN
+	DECLARE @posting_media_month_id_sniff SMALLINT=@posting_media_month_id;
+	DECLARE @min_playback_type_sniff VARCHAR(1)=@min_playback_type;
+	DECLARE @demo_sniff VARCHAR(MAX)=@demo;
+
+	SET NOCOUNT ON;
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
+	CREATE TABLE #rating_requests (id int NOT NULL,	legacy_call_letters varchar(15) NOT NULL, mon bit NOT NULL, tue bit NOT NULL, wed bit NOT NULL, thu bit NOT NULL, fri bit NOT NULL, sat bit NOT NULL, sun bit NOT NULL, start_time int NOT NULL, end_time int NOT NULL,
+		PRIMARY KEY CLUSTERED (id,legacy_call_letters,mon,tue,wed,thu,fri,sat,sun,start_time,end_time));
+	INSERT into #rating_requests
+		SELECT * FROM @ratings_request;
+
+	CREATE TABLE #audience_ids (audience_id INT NOT NULL, 
+		PRIMARY KEY CLUSTERED(audience_id));
+	INSERT INTO #audience_ids
+		SELECT id FROM dbo.SplitIntegers(@demo_sniff);
+
+	CREATE TABLE #min_playback_types (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), 
+		PRIMARY KEY CLUSTERED(market_code));
+	INSERT INTO #min_playback_types
+		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
+
+	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT, universe FLOAT,  
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time));
+	INSERT INTO #viewers
+		SELECT
+			rr.id, 
+			rr.legacy_call_letters,
+			a.audience_id,
+			v.market_code,
+			v.start_time, 
+			v.end_time,
+			(
+				CASE rr.mon WHEN 1 THEN vd.mon_viewers ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN vd.tue_viewers ELSE 0 END +
+				CASE rr.wed WHEN 1 THEN vd.wed_viewers ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN vd.thu_viewers ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN vd.fri_viewers ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN vd.sat_viewers ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN vd.sun_viewers ELSE 0 END 
+			) 
+			/ 
+			(
+				CASE rr.mon WHEN 1 THEN 1 ELSE 0 END + 
+				CASE rr.tue WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.wed WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.thu WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.fri WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sat WHEN 1 THEN 1 ELSE 0 END +
+				CASE rr.sun WHEN 1 THEN 1 ELSE 0 END 
+			) 'viewers',
+			u.universe
+		FROM
+			#rating_requests rr
+			JOIN nsi.uvw_market_codes_call_letters mccl ON mccl.media_month_id=@posting_media_month_id_sniff
+				AND mccl.legacy_call_letters=rr.legacy_call_letters
+			JOIN nsi.viewers v ON v.media_month_id=@posting_media_month_id_sniff
+				AND v.legacy_call_letters=rr.legacy_call_letters
+				AND v.market_code=mccl.market_code
+				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
+			CROSS APPLY #audience_ids a
+			JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
+				AND vd.viewer_id=v.id
+				AND vd.audience_id=a.audience_id
+				AND vd.playback_type=mpt.available_playback_type
+			JOIN nsi.universes u ON u.media_month_id=v.media_month_id
+				AND u.playback_type=mpt.available_playback_type
+				AND u.market_code=v.market_code
+				AND u.audience_id=a.audience_id;
+
+	CREATE TABLE #pre_output (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, impressions_per_market FLOAT NOT NULL, universe FLOAT NOT NULL,
+		PRIMARY KEY CLUSTERED(id,legacy_call_letters,market_code,audience_id));
+	INSERT INTO #pre_output
+		-- get averages of impressions for each market (aggregating out start_time and end_time dimensions)
+		SELECT 
+			id,
+			legacy_call_letters,
+			market_code, 
+			audience_id, 
+			AVG(viewers) market_impression_avg,
+			AVG(universe) market_universe_avg
+		FROM 
+			#viewers
+		GROUP BY 
+			id,legacy_call_letters,market_code,audience_id;
+
+	CREATE TABLE #primary_market_universes (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, audience_id INT NOT NULL, universe FLOAT NOT NULL,
+		PRIMARY KEY CLUSTERED(id,legacy_call_letters,audience_id));
+	INSERT INTO #primary_market_universes
+		SELECT
+			po.id,
+			po.legacy_call_letters,
+			po.audience_id,
+			MAX(po.universe)
+		FROM 
+			#pre_output po
+		GROUP BY 
+			po.id,po.legacy_call_letters,po.audience_id;
+
+	-- zero out universe of bleed market      
+	UPDATE
+		#pre_output
+	SET
+		universe=0
+	FROM
+		#pre_output po
+		JOIN #primary_market_universes pmu ON pmu.id=po.id
+			AND pmu.legacy_call_letters=po.legacy_call_letters
+			AND pmu.audience_id=po.audience_id
+	WHERE
+		po.universe<>pmu.universe; 
+	
+	SELECT
+		po.id,
+		po.legacy_call_letters,
+		audience_id,
+		SUM(po.impressions_per_market) 'impressions',
+		CASE WHEN SUM(po.universe)>0 THEN 
+			SUM(po.impressions_per_market) / SUM(po.universe)
+		ELSE 
+			NULL 
+		END 'rating'
+	FROM
+		#pre_output po
+	GROUP BY 
+		po.id,
+		po.legacy_call_letters,
+		audience_id
+	ORDER BY 
+		po.id;
+
+	--IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
+	--IF OBJECT_ID('tempdb..#min_playback_types') IS NOT NULL DROP TABLE #min_playback_types;
+	--IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
+	--IF OBJECT_ID('tempdb..#viewers') IS NOT NULL DROP TABLE #viewers;
+	--IF OBJECT_ID('tempdb..#pre_output') IS NOT NULL DROP TABLE #pre_output;
+	--IF OBJECT_ID('tempdb..#primary_market_universes') IS NOT NULL DROP TABLE #primary_market_universes;
+END
+GO
+/*********************************** END BCOP-4117 **************************************************/
 
 
 
