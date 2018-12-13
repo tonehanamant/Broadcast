@@ -748,3 +748,11 @@ export const copyToBuyFlow = detailId => ({
 export const onCopyConfirmMsg = () => ({
   type: ACTIONS.ON_SPOTS_CONFIRMATION_MESSAGE
 });
+
+export const generateScx = (detailIds, isSingle) => ({
+  type: ACTIONS.GENERATE_SCX.request,
+  payload: {
+    ProposalDetailIds: detailIds,
+    isSingle
+  }
+});

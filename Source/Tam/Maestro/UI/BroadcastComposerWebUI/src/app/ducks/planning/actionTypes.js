@@ -95,3 +95,4 @@ export const UPDATE_PROPRIETARY_CPMS = createAction(
   "planning/UPDATE_PROPRIETARY_CPMS"
 );
 export const SAVE_PRICING_GUIDE = createAction("planning/SAVE_PRICING_GUIDE");
+export const GENERATE_SCX = createAction("planning/GENERATE_SCX");

@@ -252,6 +252,7 @@
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\DistributionProgram.cs" />
+    <Compile Include="Entities\DTO\CheckForAllocatedSpotsRequestDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\OpenMarketTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketDto.cs" />

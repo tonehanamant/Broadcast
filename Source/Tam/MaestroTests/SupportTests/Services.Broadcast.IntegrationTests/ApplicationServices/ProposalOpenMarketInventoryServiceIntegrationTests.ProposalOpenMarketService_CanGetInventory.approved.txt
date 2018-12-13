@@ -5,10 +5,10 @@
     "ProgramNameSearchCriteria": []
   },
   "DetailBudgetMarginAchieved": false,
-  "DetailBudgetPercent": 0.0,
+  "DetailBudgetPercent": 20.0,
   "DetailCpm": 0.06,
-  "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 0.0,
+  "DetailCpmMarginAchieved": true,
+  "DetailCpmPercent": 14738.39,
   "DetailDaypart": {
     "endTime": 36000,
     "fri": true,
@@ -24,22 +24,39 @@
   "DetailDaypartId": 6724,
   "DetailFlightEndDate": "2016-06-06T00:00:00",
   "DetailFlightStartDate": "2016-05-30T00:00:00",
-  "DetailFlightWeeks": [],
+  "DetailFlightWeeks": [
+    {
+      "EndDate": "2016-06-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 649,
+      "StartDate": "2016-05-30T00:00:00"
+    }
+  ],
   "DetailId": 10799,
   "DetailImpressionsMarginAchieved": false,
-  "DetailImpressionsPercent": 0.0,
+  "DetailImpressionsPercent": 0.14,
   "DetailSpotLength": 30,
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 60.0000,
   "DetailTargetImpressions": 1000000.0,
-  "DetailTotalBudget": 0.00,
-  "DetailTotalCpm": 0.0,
-  "DetailTotalImpressions": 0.0,
+  "DetailTotalBudget": 10.00,
+  "DetailTotalCpm": 7.37,
+  "DetailTotalImpressions": 1357.0,
   "DisplayFilter": {
-    "Affiliations": [],
+    "Affiliations": [
+      "NBC"
+    ],
     "Genres": [],
-    "Markets": [],
-    "ProgramNames": []
+    "Markets": [
+      {
+        "Display": "New York",
+        "Id": 101
+      }
+    ],
+    "ProgramNames": [
+      "New Program Name",
+      "Test Program"
+    ]
   },
   "Equivalized": true,
   "Filter": {
@@ -59,7 +76,7 @@
       "MarketId": 101,
       "MarketName": "New York",
       "MarketRank": 1,
-      "MarketSubscribers": 0.0,
+      "MarketSubscribers": 7368320.0,
       "Stations": [
         {
           "Affiliation": "NBC",
@@ -116,7 +133,7 @@
               "StationCode": 5013,
               "TargetCpm": 0.0,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 0.0
+              "UnitImpressions": 176559.20833333
             },
             {
               "Dayparts": [
@@ -130,7 +147,7 @@
                   "Allocations": [
                     {
                       "MediaWeekId": 649,
-                      "Spots": 2
+                      "Spots": 3
                     }
                   ],
                   "EndDate": "2016-06-05T00:00:00",
@@ -163,7 +180,7 @@
               "StationCode": 5013,
               "TargetCpm": 7.37,
               "TargetImpressions": 0.0,
-              "UnitImpressions": 0.0
+              "UnitImpressions": 162877.875
             }
           ],
           "StationCode": 5013
@@ -199,6 +216,68 @@
     "Test Program"
   ],
   "ShareProjectionBookId": null,
-  "SingleProjectionBookId": 410,
-  "Weeks": []
+  "SingleProjectionBookId": 413,
+  "Weeks": [
+    {
+      "Budget": 25.0000,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 48.0,
+      "BudgetTotal": 10.00,
+      "ImpressionsGoal": 100000.0,
+      "ImpressionsMarginAchieved": false,
+      "ImpressionsPercent": 1.36,
+      "ImpressionsTotal": 1357.0,
+      "IsHiatus": false,
+      "Markets": [
+        {
+          "Cost": 10.0000,
+          "DisplayImpressions": 162877.875,
+          "DisplayStationImpressions": 1357.0,
+          "Impressions": 1357.0,
+          "MarketId": 101,
+          "Spots": 1,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 0.0,
+                  "DisplayImpressions": 176559.20833333,
+                  "DisplayStationImpressions": 0.0,
+                  "EFF": 0.0,
+                  "HasImpressions": true,
+                  "ProgramId": 162232,
+                  "ProvidedUnitImpressions": null,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 176559.20833333,
+                  "UnitCost": 0.0,
+                  "UnitImpression": 176559.20833333
+                },
+                {
+                  "Cost": 10.0000,
+                  "DisplayImpressions": 162877.875,
+                  "DisplayStationImpressions": 1357.0,
+                  "EFF": 0.0,
+                  "HasImpressions": true,
+                  "ProgramId": 46003,
+                  "ProvidedUnitImpressions": 1357.0,
+                  "Spots": 1,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 1357.0,
+                  "UnitCost": 10.0000,
+                  "UnitImpression": 162877.875
+                }
+              ],
+              "StationCode": 5013
+            }
+          ]
+        }
+      ],
+      "MediaWeekId": 649,
+      "QuarterText": "Q3",
+      "Week": "5/30/2016"
+    }
+  ]
 }

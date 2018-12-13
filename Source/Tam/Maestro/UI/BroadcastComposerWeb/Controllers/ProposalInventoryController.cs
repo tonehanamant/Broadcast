@@ -75,6 +75,7 @@ namespace BroadcastComposerWeb.Controllers
                         _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>()
                             .SaveInventoryAllocations(request));
         }
+
         [HttpPost]
         [Route("Proprietary")]
         public BaseResponse<List<ProprietaryInventoryAllocationConflict>> SaveProprietaryInventoryAllocations(HttpRequestMessage request)
@@ -89,6 +90,13 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<ProposalInventoryTotalsDto> CalculateProposalDetailInventoryTotals(ProposalInventoryTotalsRequestDto request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>().GetInventoryTotals(request));
+        }
+
+        [HttpPost]
+        [Route("OpenMarket/CheckForAllocatedSpots")]
+        public BaseResponse<bool> CheckForAllocatedSpots(CheckForAllocatedSpotsRequestDto request)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>().CheckForAllocatedSpots(request));
         }
     }
 }

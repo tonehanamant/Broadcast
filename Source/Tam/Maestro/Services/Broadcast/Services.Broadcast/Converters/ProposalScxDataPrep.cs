@@ -54,7 +54,7 @@ namespace Services.Broadcast.Converters
         /// </summary>
         public ScxData GetDataFromProposalDetail(ProposalDto dto, ProposalDetailDto proposalDetailDto)
         {
-            var proposalDetailInventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailDto.Id.Value);
+            var proposalDetailInventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailDto.Id.Value, impressionsEquivalized: false);
 
             var data = new ScxData();
             data.ProposalDto = dto;

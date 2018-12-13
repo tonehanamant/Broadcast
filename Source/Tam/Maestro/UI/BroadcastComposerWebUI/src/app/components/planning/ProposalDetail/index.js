@@ -26,7 +26,11 @@ import {
 import FlightPicker from "Components/shared/FlightPicker";
 import DayPartPicker from "Components/shared/DayPartPicker";
 import ProposalDetailGrid from "Components/planning/ProposalDetailGrid";
-import { rerunPostScrubing, loadPricingData } from "Ducks/planning";
+import {
+  rerunPostScrubing,
+  loadPricingData,
+  generateScx
+} from "Ducks/planning";
 import Sweeps from "./Sweeps";
 import ProgramGenre from "./ProgramGenre";
 import PostingBook from "./PostingBook";
@@ -40,7 +44,10 @@ const mapStateToProps = ({ planning: { isISCIEdited, isGridCellEdited } }) => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ rerunPostScrubing, loadPricingData }, dispatch);
+  bindActionCreators(
+    { rerunPostScrubing, loadPricingData, generateScx },
+    dispatch
+  );
 
 export class ProposalDetail extends Component {
   constructor(props) {
@@ -339,8 +346,9 @@ export class ProposalDetail extends Component {
   }
 
   generateSCX() {
-    const { detail, toggleModal } = this.props;
-    const modalUrl = `${__API__}Proposals/GenerateScxDetail/${detail.Id}`;
+    const { detail, generateScx } = this.props;
+    generateScx([detail.Id], true);
+    /* const modalUrl = `${__API__}Proposals/GenerateScxDetail/${detail.Id}`;
     toggleModal({
       modal: "confirmModal",
       active: true,
@@ -358,7 +366,7 @@ export class ProposalDetail extends Component {
         },
         dismiss: () => {}
       }
-    });
+    }); */
   }
 
   componentWillReceiveProps(nextProps) {
@@ -747,6 +755,7 @@ ProposalDetail.propTypes = {
   isISCIEdited: PropTypes.bool.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired,
   loadPricingData: PropTypes.func.isRequired,
+  generateScx: PropTypes.func.isRequired,
   // toggleEditIsciClass: PropTypes.func.isRequired,
   // toggleEditGridCellClass: PropTypes.func.isRequired,
   // withRouter props:

@@ -23,6 +23,7 @@ import {
   modelNewProposalDetail,
   updateProposalEditFormDetailGrid,
   unorderProposal,
+  generateScx,
   setProposalValidationState
 } from "Ducks/planning";
 
@@ -75,7 +76,8 @@ const mapDispatchToProps = dispatch =>
       modelNewProposalDetail,
       updateProposalEditFormDetailGrid,
       unorderProposal,
-      setProposalValidationState
+      setProposalValidationState,
+      generateScx
     },
     dispatch
   );
@@ -298,7 +300,8 @@ export class SectionPlanningProposal extends Component {
       updateProposalEditFormDetailGrid,
       unorderProposal,
       proposalValidationStates,
-      setProposalValidationState
+      setProposalValidationState,
+      generateScx
     } = this.props;
     const isReadOnly =
       proposal.Status != null
@@ -333,6 +336,7 @@ export class SectionPlanningProposal extends Component {
                 versions={versions}
                 isReadOnly={isReadOnly}
                 proposalValidationStates={proposalValidationStates}
+                generateScx={generateScx}
               />
               <ProposalDetails
                 proposalEditForm={proposalEditForm}
@@ -415,6 +419,7 @@ SectionPlanningProposal.propTypes = {
   saveProposalAsVersion: PropTypes.func.isRequired,
   unorderProposal: PropTypes.func.isRequired,
   modelNewProposalDetail: PropTypes.func.isRequired,
+  generateScx: PropTypes.func.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired

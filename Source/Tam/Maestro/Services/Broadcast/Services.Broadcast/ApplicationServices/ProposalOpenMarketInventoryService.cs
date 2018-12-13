@@ -7,26 +7,25 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Linq;
-using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Tam.Maestro.Common;
-using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.ApplicationServices
 {
     public interface IProposalOpenMarketInventoryService : IApplicationService
     {
-        ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId, ProposalOpenMarketFilter openMarketFilter = null);
-        ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request, ProposalOpenMarketFilter openMarketFilter = null);
+        ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId, ProposalOpenMarketFilter openMarketFilter = null, bool? impressionsEquivalized = null);
+        ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request, ProposalOpenMarketFilter openMarketFilter = null, bool? impressionsEquivalized = null);
         ProposalDetailOpenMarketInventoryDto SaveInventoryAllocations(OpenMarketAllocationSaveRequest request);
         ProposalDetailOpenMarketInventoryDto UpdateOpenMarketInventoryTotals(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         ProposalDetailOpenMarketInventoryDto ApplyFilterOnOpenMarketInventory(ProposalDetailOpenMarketInventoryDto proposalInventoryDto);
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
         void AllocateOpenMarketSpots(OpenMarketAllocationSaveRequest request);
+        bool CheckForAllocatedSpots(CheckForAllocatedSpotsRequestDto request);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -63,8 +62,10 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCache = daypartCache;
         }
 
-        public ProposalDetailOpenMarketInventoryDto GetInventory(int proposalDetailId,
-            ProposalOpenMarketFilter openMarketFilter = null)
+        public ProposalDetailOpenMarketInventoryDto GetInventory(
+            int proposalDetailId,
+            ProposalOpenMarketFilter openMarketFilter = null,
+            bool? impressionsEquivalized = null)
         {
             var proposalDetail = _ProposalRepository.GetProposalDetail(proposalDetailId);
             var request = new OpenMarketRefineProgramsRequest
@@ -77,7 +78,7 @@ namespace Services.Broadcast.ApplicationServices
                     CpmCriteria = proposalDetail.CpmCriteria
                 }
             };
-            return RefinePrograms(request, openMarketFilter);
+            return RefinePrograms(request, openMarketFilter, impressionsEquivalized);
         }
 
         private static void _SetProposalOpenMarketDisplayFilters(ProposalDetailOpenMarketInventoryDto dto)
@@ -118,8 +119,10 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
-        public ProposalDetailOpenMarketInventoryDto RefinePrograms(OpenMarketRefineProgramsRequest request,
-            ProposalOpenMarketFilter openMarketFilter)
+        public ProposalDetailOpenMarketInventoryDto RefinePrograms(
+            OpenMarketRefineProgramsRequest request,
+            ProposalOpenMarketFilter openMarketFilter,
+            bool? impressionsEquivalized = null)
         {
             if (request.Criteria.CpmCriteria.GroupBy(c => c.MinMax).Any(g => g.Count() > 1))
             {
@@ -127,6 +130,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var dto = _PricingGuideRepository.GetOpenMarketProposalDetailInventory(request.ProposalDetailId);
+            dto.Equivalized = impressionsEquivalized ?? dto.Equivalized;
+
             UpdateCriteria(dto, request.Criteria);
             _PopulateMarkets(dto, request.IgnoreExistingAllocation);
             _ApplyProgramAndGenreFilter(dto, request.Criteria);
@@ -365,7 +370,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
         }
-
+        
         private void _PopulateMarkets(ProposalDetailOpenMarketInventoryDto dto, bool ignoreExistingAllocation)
         {
             _SetProposalInventoryDetailDaypart(dto);
@@ -804,6 +809,20 @@ namespace Services.Broadcast.ApplicationServices
 
                 transaction.Complete();
             }
+        }
+
+        public bool CheckForAllocatedSpots(CheckForAllocatedSpotsRequestDto request)
+        {
+            var totalSpots = 0;
+
+            foreach(var detailId in request.ProposalDetailIds)
+            {
+                var inventory = GetInventory(detailId);
+                var spots = inventory.Weeks.SelectMany(x => x.Markets).Sum(x => x.Spots);
+                totalSpots += spots;
+            }
+
+            return totalSpots > 0;
         }
     }
 }
