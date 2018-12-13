@@ -101,12 +101,12 @@
                 "Id": 12
               },
               "DisplayCost": 25.0000,
-              "DisplayImpressions": 8857.48437,
+              "DisplayImpressions": 8857.48438,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 8857.48437,
+              "EffectiveImpressionsPerSpot": 8857.48438,
               "HasImpressions": true,
               "Impressions": 0.0,
-              "ImpressionsPerSpot": 8857.48437,
+              "ImpressionsPerSpot": 8857.48438,
               "ProgramName": "Friends",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
