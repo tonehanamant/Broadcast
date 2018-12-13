@@ -382,7 +382,39 @@ IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_
 BEGIN
 	ALTER TABLE [dbo].[pricing_guide_distributions]  ALTER COLUMN [total_open_market_cpm] [MONEY] NOT NULL
 END
-/*************************************** START BCOP-3769 Code Review *****************************************************/
+/*************************************** END BCOP-3769 Code Review *****************************************************/
+
+/*************************************** START BCOP-4119 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE NAME = N'manifest_id'
+			  AND OBJECT_ID = OBJECT_ID(N'pricing_guide_distribution_open_market_inventory'))
+BEGIN
+    ALTER TABLE pricing_guide_distribution_open_market_inventory
+	ADD manifest_id INT NOT NULL CONSTRAINT DF_pricing_guide_distribution_open_market_inventory_manifest_id DEFAULT 0
+	
+	DROP INDEX pricing_guide_distribution_open_market_inventory.IX_pricing_guide_distribution_open_market_inventory_station_inventory_manifest_dayparts_id
+	
+	ALTER TABLE [pricing_guide_distribution_open_market_inventory]
+	DROP CONSTRAINT [FK_pricing_guide_distribution_open_market_inventory_[station_inventory_manifest_dayparts]
+
+	EXEC('UPDATE pricing_guide_distribution_open_market_inventory
+		  SET manifest_id = (SELECT station_inventory_manifest_id FROM station_inventory_manifest_dayparts simd
+						     WHERE simd.id = pricing_guide_distribution_open_market_inventory.station_inventory_manifest_dayparts_id)')
+	
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory]  WITH CHECK ADD CONSTRAINT [FK_pricing_guide_distribution_open_market_station_inventory_manifest] FOREIGN KEY([manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] CHECK CONSTRAINT [FK_pricing_guide_distribution_open_market_station_inventory_manifest]
+	CREATE INDEX IX_pricing_guide_distribution_open_market_inventory_manifest_id ON [pricing_guide_distribution_open_market_inventory] ([manifest_id])
+
+    ALTER TABLE [pricing_guide_distribution_open_market_inventory]
+	DROP CONSTRAINT DF_pricing_guide_distribution_open_market_inventory_manifest_id
+END
+
+/*************************************** END BCOP-4119 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 ------------------------------------------------------------------------------------------------------------------
