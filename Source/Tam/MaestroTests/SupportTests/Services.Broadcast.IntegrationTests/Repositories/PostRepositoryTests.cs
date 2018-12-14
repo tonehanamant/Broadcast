@@ -30,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 var result = _Repo.GetAllPostedProposals();
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

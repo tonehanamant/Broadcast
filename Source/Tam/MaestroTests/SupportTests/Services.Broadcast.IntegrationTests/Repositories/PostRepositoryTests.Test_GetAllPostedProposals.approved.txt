@@ -2,7 +2,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37674,
-    "ContractId": 3134,
     "ContractName": "BCOP-3296",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -18,7 +17,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37674,
-    "ContractId": 3132,
     "ContractName": "BCOP-3282 II",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,
@@ -34,7 +32,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 253,
     "ContractName": "Proposal Test",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,
@@ -50,7 +47,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26000,
     "ContractName": "NSI Report Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -66,7 +62,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26001,
     "ContractName": "MYEvents Test Proposal",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -82,7 +77,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26002,
     "ContractName": "MYEvents Test Proposal 2",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -98,7 +92,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26003,
     "ContractName": "MYEvents Test Proposal 3",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -114,7 +107,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26004,
     "ContractName": "Post Impressions Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -130,7 +122,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26005,
     "ContractName": "Affidavit Impressions Calculation Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -146,7 +137,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26006,
     "ContractName": "Impressions Recalculation Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -162,7 +152,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26007,
     "ContractName": "MyEvents Naming Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -178,7 +167,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26008,
     "ContractName": "MyEvents Naming Test 2",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -194,7 +182,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26009,
     "ContractName": "NSI ADU Adjustment Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -210,7 +197,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26010,
     "ContractName": "NSI ADU Adjustment Test 2",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -226,7 +212,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26011,
     "ContractName": "NTI Adjustment Post Test",
     "Equivalized": true,
     "GuaranteedAudienceId": 34,
@@ -242,7 +227,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26012,
     "ContractName": "NTI Adjustment Post Test 2",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -258,7 +242,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26013,
     "ContractName": "MyEvents Date Sorting",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -274,7 +257,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26014,
     "ContractName": "MyEvents Spot Start and End Date",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -290,7 +272,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26015,
     "ContractName": "NSI Report with Equivalized Impressions",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,
@@ -306,7 +287,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 25999,
     "ContractName": "Proposal Test 5",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -322,7 +302,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 255,
     "ContractName": "Proposal Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -338,7 +317,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37674,
-    "ContractId": 3131,
     "ContractName": "BCOP-3282",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,
@@ -354,7 +332,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26016,
     "ContractName": "Pricing Guide Test",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -370,7 +347,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26017,
     "ContractName": "Pricing Guide Test 2",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -386,7 +362,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26018,
     "ContractName": "Pricing Guide Test 3",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -402,7 +377,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26019,
     "ContractName": "Pricing Guide Test 4",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -418,7 +392,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26020,
     "ContractName": "Pricing Guide Test 5",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -434,7 +407,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26021,
     "ContractName": "Pricing Guide Test 6",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -450,7 +422,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26022,
     "ContractName": "Pricing Guide Test 7",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -466,7 +437,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26023,
     "ContractName": "Pricing Guide Test 8",
     "Equivalized": false,
     "GuaranteedAudienceId": 34,
@@ -482,7 +452,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 26024,
     "ContractName": "Pricing Guide Test 9",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,
@@ -498,7 +467,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 33029,
     "ContractName": "Proposal BCOP-3771",
     "Equivalized": false,
     "GuaranteedAudienceId": 31,
@@ -514,7 +482,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 36037,
     "ContractName": "MarriedIsci1",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,
@@ -530,7 +497,6 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37444,
-    "ContractId": 36038,
     "ContractName": "MarriedIsci2",
     "Equivalized": true,
     "GuaranteedAudienceId": 31,

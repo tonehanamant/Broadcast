@@ -112,8 +112,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 17665,
-          "ProposalVersionDetailQuarterWeekId": 19854,
           "Status": 1
         },
         {
@@ -222,8 +220,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 17666,
-          "ProposalVersionDetailQuarterWeekId": 19855,
           "Status": 1
         }
       ],

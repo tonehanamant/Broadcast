@@ -264,6 +264,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ScrubbingFile), "MediaMonthId");
             jsonResolver.Ignore(typeof(FileProblem), "Id");
             jsonResolver.Ignore(typeof(FileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ProposalVersionDetailQuarterWeekId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ProposalVersionDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
