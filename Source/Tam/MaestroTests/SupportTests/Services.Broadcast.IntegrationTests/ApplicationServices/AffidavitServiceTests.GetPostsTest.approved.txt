@@ -479,6 +479,36 @@
       "SpotsInSpec": 0,
       "SpotsOutOfSpec": 0,
       "UploadDate": null
+    },
+    {
+      "Advertiser": "Test Advertiser 9",
+      "AdvertiserId": 37444,
+      "ContractName": "MarriedIsci1",
+      "Equivalized": true,
+      "GuaranteedAudienceId": 31,
+      "HouseholdDeliveredImpressions": 0.0,
+      "PostType": 1,
+      "PrimaryAudienceBookedImpressions": 100000.0,
+      "PrimaryAudienceDeliveredImpressions": 0.0,
+      "PrimaryAudienceDelivery": 0.0,
+      "SpotsInSpec": 0,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": null
+    },
+    {
+      "Advertiser": "Test Advertiser 9",
+      "AdvertiserId": 37444,
+      "ContractName": "MarriedIsci2",
+      "Equivalized": true,
+      "GuaranteedAudienceId": 31,
+      "HouseholdDeliveredImpressions": 0.0,
+      "PostType": 1,
+      "PrimaryAudienceBookedImpressions": 100000.0,
+      "PrimaryAudienceDeliveredImpressions": 0.0,
+      "PrimaryAudienceDelivery": 0.0,
+      "SpotsInSpec": 0,
+      "SpotsOutOfSpec": 0,
+      "UploadDate": null
     }
   ],
   "UnlinkedIscis": 3
