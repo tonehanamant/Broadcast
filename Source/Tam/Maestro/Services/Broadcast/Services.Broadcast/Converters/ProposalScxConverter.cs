@@ -279,16 +279,16 @@ namespace Services.Broadcast.Converters
                     ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
                 }
 
-                string imp = string.Empty;
-                if (demo.Impressions.Any())
-                {
-                    var impValue = demo.Impressions.Single(i => i.id == programInfo.ProgramId).impressions;
-                    imp = string.Format("{0:####}", impValue);
-                }
-                var impressionDisplay = imp;
+                var impressions = programInfo.ProvidedUnitImpressions ?? demo.Impressions.SingleOrDefault(i => i.id == programInfo.ProgramId)?.impressions;
+                var impressionsDisplay = string.Empty;
 
-                demoValue.value[0] = new demoValueValue() { type=demoValueValueType.Ratings,Value=ratingDisplay, typeSpecified = true };
-                demoValue.value[1] = new demoValueValue() { type=demoValueValueType.Impressions , Value = impressionDisplay,typeSpecified=true };
+                if (impressions.HasValue)
+                {
+                    impressionsDisplay = string.Format("{0:####}", impressions);
+                }
+
+                demoValue.value[0] = new demoValueValue() { type = demoValueValueType.Ratings, Value = ratingDisplay, typeSpecified = true };
+                demoValue.value[1] = new demoValueValue() { type = demoValueValueType.Impressions , Value = impressionsDisplay, typeSpecified = true };
 
                 detLine.demoValue[demoValueIndex++] = demoValue;
             }

@@ -75,9 +75,12 @@ export default class ProposalHeaderActions extends Component {
   }
 
   onGenerateSCX() {
-    const { proposal, toggleModal } = this.props;
-    const modalUrl = `${__API__}Proposals/GenerateScxArchive/${proposal.Id}`;
-    toggleModal({
+    const { proposal, generateScx } = this.props;
+    // const modalUrl = `${__API__}Proposals/GenerateScxArchive/${proposal.Id}`;
+    const detailIds = proposal.Details.map(dt => dt.Id);
+    console.log("Generate Scx details", detailIds);
+    generateScx(detailIds, false);
+    /*  toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
@@ -94,7 +97,7 @@ export default class ProposalHeaderActions extends Component {
         },
         dismiss: () => {}
       }
-    });
+    }); */
   }
 
   render() {
@@ -199,5 +202,6 @@ ProposalHeaderActions.propTypes = {
   saveProposalAsVersion: PropTypes.func.isRequired,
   unorderProposal: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  generateScx: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired
 };

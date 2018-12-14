@@ -154,7 +154,9 @@ const planning = {
   allocateSpots: data =>
     call(POST, `${apiBase}PricingGuide/Distribution/AllocateSpots`, data),
   filterOpenMarketData: params =>
-    call(POST, `${apiBase}PricingGuide/Distribution/ApplyFilter`, params)
+    call(POST, `${apiBase}PricingGuide/Distribution/ApplyFilter`, params),
+  checkAllocatedSpots: params =>
+    call(POST, `${apiBase}Inventory/OpenMarket/CheckForAllocatedSpots`, params)
 };
 
 // Calls

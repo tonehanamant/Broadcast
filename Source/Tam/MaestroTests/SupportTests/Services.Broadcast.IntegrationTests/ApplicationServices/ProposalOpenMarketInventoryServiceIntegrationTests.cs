@@ -1536,7 +1536,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ProposalOpenMarketService_CanGetInventory()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);
-            var inventoryJson = IntegrationTestHelper.ConvertToJson(inventory);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto), "ProposalVersionDetailQuarterWeekId");
+
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var inventoryJson = IntegrationTestHelper.ConvertToJson(inventory, jsonSettings);
 
             Approvals.Verify(inventoryJson);
         }
@@ -1702,6 +1711,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var programsWithoutImpressionsHavePropertySetFalse = programsWithoutImpressions.All(x => !x.HasImpressions);
 
             Assert.True(programsWithoutImpressionsHavePropertySetFalse);
+        }
+
+        [Test]
+        public void ProposalOpenMarketService_ChecksForAllocatedSpots()
+        {
+            var firstDetailId = 10799;
+            var secondDetailId = 9979;
+
+            var request = new CheckForAllocatedSpotsRequestDto { ProposalDetailIds = new List<int> { firstDetailId } };
+            var firstDetailHasAllocatedSpots = _ProposalOpenMarketInventoryService.CheckForAllocatedSpots(request);
+
+            request.ProposalDetailIds = new List<int> { secondDetailId };
+            var secondDetailHasAllocatedSpots = _ProposalOpenMarketInventoryService.CheckForAllocatedSpots(request);
+
+            request.ProposalDetailIds = new List<int> { firstDetailId, secondDetailId };
+            var severalDetailsHaveAllocatedSpots = _ProposalOpenMarketInventoryService.CheckForAllocatedSpots(request);
+
+            Assert.True(firstDetailHasAllocatedSpots);
+            Assert.False(secondDetailHasAllocatedSpots);
+            Assert.True(severalDetailsHaveAllocatedSpots);
         }
     }
 }

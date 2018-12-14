@@ -332,7 +332,14 @@
       "FlightEdited": false,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
-      "FlightWeeks": [],
+      "FlightWeeks": [
+        {
+          "EndDate": "2016-06-06T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 649,
+          "StartDate": "2016-05-30T00:00:00"
+        }
+      ],
       "GenreCriteria": [],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
@@ -347,21 +354,34 @@
           "Cpm": 20.0000,
           "DistributeGoals": false,
           "Id": 10794,
-          "ImpressionGoal": 0.0,
+          "ImpressionGoal": 100000.0,
           "Quarter": 3,
           "QuarterText": "2016 Q3",
-          "Weeks": [],
+          "Weeks": [
+            {
+              "Cost": 2000.0000,
+              "EndDate": "2016-06-06T00:00:00",
+              "Impressions": 100000.0,
+              "Iscis": [],
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "MyEventsReportName": "Test Adve NAV 30 05-30-16",
+              "StartDate": "2016-05-30T00:00:00",
+              "Units": 10,
+              "Week": "5/30/2016"
+            }
+          ],
           "Year": 2016
         }
       ],
       "Sequence": 3,
-      "ShareProjectionBookId": 410,
+      "ShareProjectionBookId": 413,
       "ShowTypeCriteria": [],
-      "SingleProjectionBookId": 410,
+      "SingleProjectionBookId": 413,
       "SpotLengthId": 1,
-      "TotalCost": 0.0,
-      "TotalImpressions": 0.0,
-      "TotalUnits": 0
+      "TotalCost": 2000.0000,
+      "TotalImpressions": 100000.0,
+      "TotalUnits": 10
     }
   ],
   "Equivalized": true,
@@ -401,10 +421,10 @@
     }
   ],
   "Status": 3,
-  "TargetBudget": 2060.0000,
+  "TargetBudget": 4060.0000,
   "TargetCPM": 20.00,
-  "TargetImpressions": 103000.0,
-  "TargetUnits": 40,
+  "TargetImpressions": 203000.0,
+  "TargetUnits": 50,
   "TotalCost": 0.0000,
   "TotalCostMarginAchieved": false,
   "TotalCostPercent": 0.0,

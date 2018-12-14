@@ -1,0 +1,490 @@
+﻿{
+  "campaign": {
+    "advertiser": {
+      "ID": [
+        {
+          "code": {
+            "codeDescription": null,
+            "codeOwner": "Agency",
+            "Value": null
+          },
+          "comment": null
+        }
+      ],
+      "name": "Test Advertiser 9"
+    },
+    "buyType": 0,
+    "company": [
+      {
+        "contact": [
+          {
+            "email": [
+              ""
+            ],
+            "firstName": "",
+            "ID": null,
+            "lastName": "",
+            "officeName": null,
+            "phone": [
+              {
+                "country": "US",
+                "type": 1,
+                "Value": null
+              }
+            ],
+            "role": "AE"
+          }
+        ],
+        "ID": null,
+        "name": "",
+        "office": [
+          {
+            "address": {
+              "city": "",
+              "country": "US",
+              "postalCode": "00000",
+              "state": {
+                "code": "__",
+                "Value": null
+              },
+              "street": "",
+              "type": "mailing"
+            },
+            "ID": null,
+            "name": "",
+            "phone": [
+              {
+                "country": "US",
+                "type": 1,
+                "Value": null
+              }
+            ],
+            "role": null,
+            "type": null
+          }
+        ],
+        "role": null,
+        "type": 1,
+        "typeSpecified": true
+      },
+      {
+        "contact": [
+          {
+            "email": [
+              ""
+            ],
+            "firstName": "",
+            "ID": null,
+            "lastName": "",
+            "officeName": null,
+            "phone": [
+              {
+                "country": "US",
+                "type": 1,
+                "Value": null
+              }
+            ],
+            "role": "Buyer"
+          }
+        ],
+        "ID": [
+          {
+            "code": {
+              "codeDescription": null,
+              "codeOwner": "Agency",
+              "Value": null
+            },
+            "comment": null
+          }
+        ],
+        "name": "",
+        "office": null,
+        "role": null,
+        "type": 0,
+        "typeSpecified": true
+      }
+    ],
+    "dateRange": {
+      "endDate": "2016-06-06T00:00:00",
+      "startDate": "2016-05-30T00:00:00"
+    },
+    "demo": [
+      {
+        "ageFrom": "0",
+        "ageTo": "99",
+        "demoRank": 1,
+        "group": 0
+      },
+      {
+        "ageFrom": "15",
+        "ageTo": "17",
+        "demoRank": 2,
+        "group": 3
+      },
+      {
+        "ageFrom": "18",
+        "ageTo": "20",
+        "demoRank": 3,
+        "group": 3
+      }
+    ],
+    "estimate": {
+      "desc": "",
+      "ID": {
+        "code": {
+          "codeDescription": null,
+          "codeOwner": "Agency",
+          "Value": "309"
+        },
+        "comment": null
+      }
+    },
+    "key": [
+      {
+        "codeDescription": "CampaignID",
+        "codeOwner": "NCC",
+        "createDateSpecified": false,
+        "id": "",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      },
+      {
+        "codeDescription": "DMA Override",
+        "codeOwner": "Strata",
+        "createDateSpecified": false,
+        "id": "0",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      },
+      {
+        "codeDescription": "Zone Pops",
+        "codeOwner": "Strata",
+        "createDateSpecified": false,
+        "id": "max",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      },
+      {
+        "codeDescription": "CampaignName",
+        "codeOwner": "VIEW32",
+        "createDateSpecified": false,
+        "id": "",
+        "statusSpecified": false,
+        "subStatusSpecified": false,
+        "updateDateSpecified": false,
+        "version": null
+      }
+    ],
+    "makeGoodPolicy": [
+      {
+        "code": {
+          "codeDescription": null,
+          "codeOwner": null,
+          "Value": null
+        },
+        "comment": null
+      }
+    ],
+    "order": [
+      {
+        "breakoutMonth": null,
+        "comment": "",
+        "key": [
+          {
+            "codeDescription": "Market",
+            "codeOwner": "NCC",
+            "createDateSpecified": false,
+            "id": "101",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          },
+          {
+            "codeDescription": "Pops",
+            "codeOwner": "Strata",
+            "createDateSpecified": false,
+            "id": "dma;book",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          },
+          {
+            "codeDescription": "UseBroadcastWeeks",
+            "codeOwner": "Strata",
+            "createDateSpecified": false,
+            "id": "0",
+            "statusSpecified": false,
+            "subStatusSpecified": false,
+            "updateDateSpecified": false,
+            "version": null
+          }
+        ],
+        "market": {
+          "name": "New York",
+          "nsi_id": 101
+        },
+        "populations": [
+          {
+            "demoRank": 1,
+            "Value": "7368320"
+          },
+          {
+            "demoRank": 2,
+            "Value": "378484"
+          },
+          {
+            "demoRank": 3,
+            "Value": "428537"
+          }
+        ],
+        "survey": {
+          "comment": [
+            {
+              "codeOwner": "Spotcable",
+              "Value": "Feb16 DMA Nielsen Live+3"
+            }
+          ],
+          "geography": "",
+          "profile": "",
+          "PUTBook": "",
+          "ratingService": "",
+          "shareBook": ""
+        },
+        "systemOrder": [
+          {
+            "affiliateSplit": 0.0,
+            "breakoutMonth": null,
+            "comment": "OK",
+            "detailLine": [
+              {
+                "comment": "",
+                "dayOfWeek": {
+                  "Friday": "Y",
+                  "Monday": "Y",
+                  "Saturday": "N",
+                  "Sunday": "N",
+                  "Thursday": "Y",
+                  "Tuesday": "Y",
+                  "Wednesday": "Y"
+                },
+                "daypartCode": "NAV",
+                "demoValue": [
+                  {
+                    "demoRank": "1",
+                    "override": false,
+                    "value": [
+                      {
+                        "type": 0,
+                        "typeSpecified": true,
+                        "Value": "2.21"
+                      },
+                      {
+                        "type": 1,
+                        "typeSpecified": true,
+                        "Value": "1357"
+                      }
+                    ]
+                  },
+                  {
+                    "demoRank": "2",
+                    "override": false,
+                    "value": [
+                      {
+                        "type": 0,
+                        "typeSpecified": true,
+                        "Value": "0.58"
+                      },
+                      {
+                        "type": 1,
+                        "typeSpecified": true,
+                        "Value": "1357"
+                      }
+                    ]
+                  },
+                  {
+                    "demoRank": "3",
+                    "override": false,
+                    "value": [
+                      {
+                        "type": 0,
+                        "typeSpecified": true,
+                        "Value": "0.12"
+                      },
+                      {
+                        "type": 1,
+                        "typeSpecified": true,
+                        "Value": "1357"
+                      }
+                    ]
+                  }
+                ],
+                "detailLineID": 0,
+                "endTime": "0001-01-01T10:00:00",
+                "length": "PT30S",
+                "network": [
+                  {
+                    "ID": [
+                      {
+                        "code": {
+                          "codeDescription": "5013",
+                          "codeOwner": "Spotcable",
+                          "Value": "WNBC"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Station",
+                          "codeOwner": "Strata",
+                          "Value": "WNBC-TV"
+                        },
+                        "comment": null
+                      },
+                      {
+                        "code": {
+                          "codeDescription": "Band",
+                          "codeOwner": "Strata",
+                          "Value": "TV"
+                        },
+                        "comment": null
+                      }
+                    ],
+                    "name": "WNBC-TV"
+                  }
+                ],
+                "program": "Test Program",
+                "spot": [
+                  {
+                    "id": null,
+                    "quantity": "1",
+                    "weekNumber": "1"
+                  },
+                  {
+                    "id": null,
+                    "quantity": "0",
+                    "weekNumber": "2"
+                  }
+                ],
+                "spotCost": {
+                  "currency": "USD",
+                  "Value": 10.0000
+                },
+                "startDay": 0,
+                "startTime": "0001-01-01T09:00:00",
+                "totals": {
+                  "cost": {
+                    "currency": "USD",
+                    "Value": 10.0000
+                  },
+                  "spots": "1"
+                }
+              }
+            ],
+            "key": [
+              {
+                "codeDescription": "UseZonePop",
+                "codeOwner": "Strata",
+                "createDateSpecified": false,
+                "id": "false",
+                "statusSpecified": false,
+                "subStatusSpecified": false,
+                "updateDateSpecified": false,
+                "version": null
+              }
+            ],
+            "populations": [
+              {
+                "demoRank": 1,
+                "Value": "7368320"
+              },
+              {
+                "demoRank": 2,
+                "Value": "378484"
+              },
+              {
+                "demoRank": 3,
+                "Value": "428537"
+              }
+            ],
+            "specialCommissionSpecified": false,
+            "system": [
+              {
+                "name": "",
+                "syscode": ""
+              }
+            ],
+            "totals": {
+              "cost": {
+                "currency": "USD",
+                "Value": 10.0000
+              },
+              "spots": "1"
+            },
+            "weeks": {
+              "count": "2",
+              "week": [
+                {
+                  "number": "1",
+                  "startDate": "2016-05-30T00:00:00"
+                },
+                {
+                  "number": "2",
+                  "startDate": "2016-06-06T00:00:00"
+                }
+              ]
+            }
+          }
+        ],
+        "totals": {
+          "cost": {
+            "currency": "USD",
+            "Value": 10.0000
+          },
+          "spots": "1"
+        }
+      }
+    ],
+    "populations": [
+      {
+        "demoRank": 1,
+        "Value": "7368320"
+      },
+      {
+        "demoRank": 2,
+        "Value": "378484"
+      },
+      {
+        "demoRank": 3,
+        "Value": "428537"
+      }
+    ],
+    "product": {
+      "ID": [
+        {
+          "code": {
+            "codeDescription": null,
+            "codeOwner": "Agency",
+            "Value": null
+          },
+          "comment": null
+        }
+      ],
+      "name": ""
+    }
+  },
+  "document": {
+    "documentCode": "",
+    "documentType": "",
+    "mediaType": 0,
+    "name": "",
+    "schemaVersion": "1.0"
+  }
+}

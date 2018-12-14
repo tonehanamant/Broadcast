@@ -25,7 +25,8 @@ export default class ProposalHeader extends Component {
       deleteProposal,
       saveProposalAsVersion,
       unorderProposal,
-      proposalValidationStates
+      proposalValidationStates,
+      generateScx
     } = this.props;
     return (
       <div id="proposal-header">
@@ -58,6 +59,7 @@ export default class ProposalHeader extends Component {
                 deleteProposal={deleteProposal}
                 saveProposalAsVersion={saveProposalAsVersion}
                 unorderProposal={unorderProposal}
+                generateScx={generateScx}
                 toggleModal={toggleModal}
                 isReadOnly={this.props.isReadOnly}
                 proposal={proposal}
@@ -120,6 +122,7 @@ ProposalHeader.propTypes = {
   deleteProposal: PropTypes.func,
   saveProposalAsVersion: PropTypes.func,
   unorderProposal: PropTypes.func,
+  generateScx: PropTypes.func.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired

@@ -92,6 +92,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Test_Proposal_Scx_Converter_ProposalDetail()
@@ -103,6 +104,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = new StreamReader(output.Item2 as MemoryStream).ReadToEnd();
 
+                var finalResult = adx.Deserialize(result);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(document), "date");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalResult, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Test_Proposal_Scx_Converter_ProposalDetail_WithProvidedStationImpressions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var output = _ProposalService.GenerateScxFileDetail(proposalDetailId: 10799);
+                var result = new StreamReader(output.Item2 as MemoryStream).ReadToEnd();
                 var finalResult = adx.Deserialize(result);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();

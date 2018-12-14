@@ -81,6 +81,8 @@ export default function* rootSaga() {
     planningSaga.watchSavePricingData(),
     planningSaga.watchCopyToBuyFlow(),
     planningSaga.watchCopyToBuySaga(),
+    planningSaga.watchGenerateScx(),
+    planningSaga.watchGenerateScxSuccess(),
 
     trackerSaga.watchUploadTrackerFile(),
     trackerSaga.watchUploadTrackerFileSuccess(),

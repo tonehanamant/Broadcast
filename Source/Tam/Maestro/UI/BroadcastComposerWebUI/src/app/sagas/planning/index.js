@@ -1766,6 +1766,65 @@ export function* copyToBuyFlow({ payload: { detailId } }) {
   }
 }
 
+export function* generateScx(payload) {
+  const { checkAllocatedSpots } = api.planning;
+  // const params = payload.ProposalDetailIds;
+  try {
+    yield put(setOverlayLoading({ id: "generateScx", loading: true }));
+    return yield checkAllocatedSpots(payload);
+  } finally {
+    yield put(setOverlayLoading({ id: "generateScx", loading: false }));
+  }
+}
+
+export function* generateScxSuccess({
+  data: { Data },
+  payload: { ProposalDetailIds, isSingle }
+}) {
+  console.log(Data, ProposalDetailIds, isSingle);
+  if (Data) {
+    const proposalId = yield select(
+      state => state.planning.proposalEditForm.Id
+    );
+    const bodyText = isSingle
+      ? "Operation will produce a single SCX file for this Proposal Detail."
+      : "Operation will produce SCX files for all Open Market Inventory in each Proposal Detail.";
+    let modalUrl = `${__API__}Proposals/GenerateScxArchive/${proposalId}`;
+    if (isSingle) {
+      const detailId = ProposalDetailIds[0];
+      modalUrl = `${__API__}Proposals/GenerateScxDetail/${detailId}`;
+    }
+    yield put(
+      toggleModal({
+        modal: "confirmModal",
+        active: true,
+        properties: {
+          titleText: "Generate SCX file",
+          bodyText,
+          bodyList: ["Select Continue to proceed", "Select Cancel to cancel"],
+          closeButtonText: "Cancel",
+          actionButtonText: "Continue",
+          actionButtonBsStyle: "success",
+          action: () => {
+            window.open(modalUrl, "_blank");
+          },
+          dismiss: () => {}
+        }
+      })
+    );
+  } else {
+    yield put({
+      type: ACTIONS.CREATE_ALERT,
+      alert: {
+        type: "warning",
+        headline: "Generate SCX Unavailable",
+        message:
+          "There are no spots allocated for any buy on this proposal, no file will be generated"
+      }
+    });
+  }
+}
+
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
@@ -1919,6 +1978,13 @@ export function* watchSavePricingData() {
   );
 }
 
+export function* watchGenerateScx() {
+  yield takeEvery(
+    ACTIONS.GENERATE_SCX.request,
+    sagaWrapper(generateScx, ACTIONS.GENERATE_SCX)
+  );
+}
+
 export function* watchCopyToBuySaga() {
   yield takeEvery(
     ACTIONS.COPY_TO_BUY.request,
@@ -1928,6 +1994,10 @@ export function* watchCopyToBuySaga() {
 
 export function* watchCopyToBuyFlow() {
   yield takeEvery(ACTIONS.RUN_COPY_TO_BUY_FLOW, copyToBuyFlow);
+}
+
+export function* watchGenerateScxSuccess() {
+  yield takeEvery(ACTIONS.GENERATE_SCX.success, generateScxSuccess);
 }
 
 // if assign watcher > assign in sagas/index rootSaga also
