@@ -51,6 +51,7 @@ class PricingGoal extends Component {
     const { isEditing } = this.state;
 
     this.setState({ isEditing: !isEditing });
+    this.props.onSetGuideEditing(!isEditing);
   }
 
   onSubmit() {
@@ -101,7 +102,9 @@ class PricingGoal extends Component {
       budget,
       margin,
       impressionLoss,
-      inflation
+      inflation,
+      isEditMarketsActive,
+      isGuideEditing
     } = this.props;
     const {
       isEditing,
@@ -128,7 +131,11 @@ class PricingGoal extends Component {
             <div className="formEditToggle">
               {!isReadOnly &&
                 !isEditing && (
-                  <Button onClick={this.toggleEditing} bsStyle="link">
+                  <Button
+                    onClick={this.toggleEditing}
+                    disabled={isEditMarketsActive || isGuideEditing}
+                    bsStyle="link"
+                  >
                     <Glyphicon glyph="edit" /> Edit
                   </Button>
                 )}
@@ -338,13 +345,16 @@ class PricingGoal extends Component {
 
 PricingGoal.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
+  isEditMarketsActive: PropTypes.bool.isRequired,
+  isGuideEditing: PropTypes.bool.isRequired,
   impression: PropTypes.number,
   budget: PropTypes.number,
   margin: PropTypes.number,
   impressionLoss: PropTypes.number,
   inflation: PropTypes.number,
   activeOpenMarketData: PropTypes.object,
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  onSetGuideEditing: PropTypes.func.isRequired
 };
 PricingGoal.defaultProps = {
   activeOpenMarketData: {},

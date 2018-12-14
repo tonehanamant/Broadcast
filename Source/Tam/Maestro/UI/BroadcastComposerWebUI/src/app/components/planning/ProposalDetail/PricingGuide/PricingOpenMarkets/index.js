@@ -62,6 +62,7 @@ class PricingOpenMarkets extends Component {
     const { isEditing } = this.state;
 
     this.setState({ isEditing: !isEditing });
+    this.props.onSetGuideEditing(!isEditing);
   }
 
   onSubmit() {
@@ -111,6 +112,7 @@ class PricingOpenMarkets extends Component {
       openMarketLoaded,
       activeEditMarkets,
       isEditMarketsActive,
+      isGuideEditing,
       activeOpenMarketData,
       onCopyToBuy,
       openCpmMin,
@@ -206,7 +208,11 @@ class PricingOpenMarkets extends Component {
             <div className="formEditToggle">
               {!isReadOnly &&
                 !isEditing && (
-                  <Button onClick={this.toggleEditing} bsStyle="link">
+                  <Button
+                    onClick={this.toggleEditing}
+                    disabled={isEditMarketsActive || isGuideEditing}
+                    bsStyle="link"
+                  >
                     <Glyphicon glyph="edit" /> Edit
                   </Button>
                 )}
@@ -347,14 +353,14 @@ class PricingOpenMarkets extends Component {
                 <Button
                   bsStyle="primary"
                   onClick={onCopyToBuy}
-                  disabled={isEditMarketsActive}
+                  disabled={isEditMarketsActive || isGuideEditing}
                 >
                   Copy to Buy
                 </Button>
                 <Button
                   bsStyle="primary"
                   onClick={onRunDistribution}
-                  disabled={isEditMarketsActive}
+                  disabled={isEditMarketsActive || isGuideEditing}
                 >
                   Run Distribution
                 </Button>
@@ -369,6 +375,7 @@ class PricingOpenMarkets extends Component {
                   hasOpenMarketData={hasOpenMarketData}
                   isOpenMarketDataSortName={isOpenMarketDataSortName}
                   onAllocateSpots={onAllocateSpots}
+                  isGuideEditing={isGuideEditing}
                 />
               )}
             {openMarketLoaded &&
@@ -400,13 +407,15 @@ PricingOpenMarkets.propTypes = {
   openMarketLoaded: PropTypes.bool.isRequired,
   activeEditMarkets: PropTypes.array.isRequired,
   isEditMarketsActive: PropTypes.bool.isRequired,
+  isGuideEditing: PropTypes.bool.isRequired,
   activeOpenMarketData: PropTypes.object,
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
   openCpmMin: PropTypes.number,
   openCpmMax: PropTypes.number,
   openUnitCap: PropTypes.number,
-  openCpmTarget: PropTypes.number
+  openCpmTarget: PropTypes.number,
+  onSetGuideEditing: PropTypes.func.isRequired
 };
 PricingOpenMarkets.defaultProps = {
   activeOpenMarketData: {},

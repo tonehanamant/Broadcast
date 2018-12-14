@@ -87,7 +87,8 @@ class PricingGuideGridHeader extends Component {
       activeOpenMarketData,
       toggleModal,
       hasOpenMarketData: hasData,
-      isOpenMarketDataSortName
+      isOpenMarketDataSortName,
+      isGuideEditing
     } = this.props;
     // FOR INDICATOR - check modal specific filters active (not spot)
     const hasActiveModalFilter =
@@ -182,7 +183,11 @@ class PricingGuideGridHeader extends Component {
           </Col>
           <Col xs={4}>
             <div style={{ textAlign: "right" }}>
-              <Button bsStyle="success" onClick={this.onOpenEditMarkets}>
+              <Button
+                bsStyle="success"
+                disabled={isGuideEditing}
+                onClick={this.onOpenEditMarkets}
+              >
                 Edit Markets
               </Button>
             </div>
@@ -205,7 +210,8 @@ PricingGuideGridHeader.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   filterOpenMarketData: PropTypes.func.isRequired,
   sortOpenMarketData: PropTypes.func.isRequired,
-  showEditMarkets: PropTypes.func.isRequired
+  showEditMarkets: PropTypes.func.isRequired,
+  isGuideEditing: PropTypes.bool.isRequired
 };
 
 export default connect(

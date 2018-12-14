@@ -21,7 +21,8 @@ class PricingGuideGrid extends Component {
     const {
       activeOpenMarketData,
       hasOpenMarketData,
-      isOpenMarketDataSortName
+      isOpenMarketDataSortName,
+      isGuideEditing
     } = this.props;
     const data = generateData(activeOpenMarketData.Markets);
     const columns = generateColumns(this.onCellChange);
@@ -32,6 +33,7 @@ class PricingGuideGrid extends Component {
           activeOpenMarketData={activeOpenMarketData}
           hasOpenMarketData={hasOpenMarketData}
           isOpenMarketDataSortName={isOpenMarketDataSortName}
+          isGuideEditing={isGuideEditing}
         />
         <Table
           data={data}
@@ -52,7 +54,8 @@ PricingGuideGrid.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
-  onAllocateSpots: PropTypes.func.isRequired
+  onAllocateSpots: PropTypes.func.isRequired,
+  isGuideEditing: PropTypes.bool.isRequired
 };
 
 PricingGuideGrid.defaultProps = {
