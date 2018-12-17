@@ -445,7 +445,7 @@ namespace Services.Broadcast.Repositories
                             },
                             Daypart = new LookupDto
                             {
-                                Display = program.daypart.name,
+                                Display = program.daypart.daypart_text,
                                 Id = program.daypart_id
                             },
                             Genres = program.station_inventory_manifest_dayparts.station_inventory_manifest_daypart_genres.Select(x=> new LookupDto {
