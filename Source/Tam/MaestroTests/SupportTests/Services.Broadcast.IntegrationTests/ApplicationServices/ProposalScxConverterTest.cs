@@ -66,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileStream.Close();
             }
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Test_Proposal_Scx_Converter()
