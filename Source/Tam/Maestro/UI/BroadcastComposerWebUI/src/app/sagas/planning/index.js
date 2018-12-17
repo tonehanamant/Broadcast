@@ -1747,7 +1747,7 @@ export function* copyToBuySaga({ detailId }) {
 export function* copyToBuyFlow({ payload: { detailId } }) {
   const { hasSpotsAllocated } = api.planning;
   try {
-    yield put(setOverlayLoading({ id: "copyToBuy", loading: true }));
+    yield put(setOverlayLoading({ id: "copyToBuyFlow", loading: true }));
     const {
       status,
       data: { Success, Data }
@@ -1762,7 +1762,7 @@ export function* copyToBuyFlow({ payload: { detailId } }) {
   } catch (e) {
     yield call(errorBuilder);
   } finally {
-    yield put(setOverlayLoading({ id: "copyToBuy", loading: false }));
+    yield put(setOverlayLoading({ id: "copyToBuyFlow", loading: false }));
   }
 }
 
