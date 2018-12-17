@@ -1003,12 +1003,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (pricingGuideDto.ImpressionLoss.HasValue)
                 {
-                    var impressionsLoss = pricingGuideDto.ImpressionLoss.Value;
-                    var unitImpressionsDecrease = program.UnitImpressions * impressionsLoss;
-                    var providedUnitImpressionsDecrease = program.ProvidedUnitImpressions * impressionsLoss;
+                    var unitImpressionsDecrease = program.UnitImpressions * pricingGuideDto.ImpressionLoss.Value;
 
                     program.UnitImpressions -= unitImpressionsDecrease;
-                    program.ProvidedUnitImpressions -= providedUnitImpressionsDecrease;
                 }
             }
         }

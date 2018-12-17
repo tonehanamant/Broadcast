@@ -1465,6 +1465,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithIndexingOnlyProjectedImpressionsAreAdjusted()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26024,
+                ProposalDetailId = 9986,
+                OpenMarketShare = 1,
+                ImpressionLoss = 0.5,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
+
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
