@@ -41,6 +41,7 @@ class PricingProprietary extends Component {
     const { isEditing } = this.state;
 
     this.setState({ isEditing: !isEditing });
+    this.props.onSetGuideEditing(!isEditing);
   }
 
   handleChange(name, value) {
@@ -82,7 +83,13 @@ class PricingProprietary extends Component {
   }
 
   render() {
-    const { isReadOnly, activeOpenMarketData, initialdata } = this.props;
+    const {
+      isReadOnly,
+      activeOpenMarketData,
+      initialdata,
+      isEditMarketsActive,
+      isGuideEditing
+    } = this.props;
     const { isEditing, values } = this.state;
 
     const balanceSum = calculateBalanceSum(
@@ -160,7 +167,11 @@ class PricingProprietary extends Component {
             <div className="formEditToggle">
               {!isReadOnly &&
                 !isEditing && (
-                  <Button onClick={this.toggleEditing} bsStyle="link">
+                  <Button
+                    onClick={this.toggleEditing}
+                    disabled={isEditMarketsActive || isGuideEditing}
+                    bsStyle="link"
+                  >
                     <Glyphicon glyph="edit" /> Edit
                   </Button>
                 )}
@@ -232,10 +243,13 @@ class PricingProprietary extends Component {
 
 PricingProprietary.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
+  isEditMarketsActive: PropTypes.bool.isRequired,
+  isGuideEditing: PropTypes.bool.isRequired,
   submit: PropTypes.func.isRequired,
   onUpdateProprietaryCpms: PropTypes.func.isRequired,
   activeOpenMarketData: PropTypes.object,
-  initialdata: PropTypes.object.isRequired
+  initialdata: PropTypes.object.isRequired,
+  onSetGuideEditing: PropTypes.func.isRequired
 };
 
 PricingProprietary.defaultProps = {

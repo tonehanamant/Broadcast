@@ -8,6 +8,7 @@ import PricingProprietary from "./PricingProprietary";
 export const initialState = {
   isDistributionRunned: false,
   isGuideChanged: false,
+  isGuideEditing: false,
   distribution: false,
   discard: false,
   // goals/adjustments - editing version separate state to cancel/save individually

@@ -112,8 +112,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 430,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 3248,
-          "ProposalVersionDetailQuarterWeekId": 3916,
           "Status": 1
         }
       ],
@@ -253,8 +251,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 430,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 3248,
-          "ProposalVersionDetailQuarterWeekId": 3917,
           "Status": 2
         }
       ],

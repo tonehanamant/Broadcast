@@ -112,8 +112,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 8123,
-          "ProposalVersionDetailQuarterWeekId": 8522,
           "Status": 2
         }
       ],

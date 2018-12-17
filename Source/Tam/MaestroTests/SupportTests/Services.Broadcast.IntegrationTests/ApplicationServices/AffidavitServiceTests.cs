@@ -129,6 +129,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SaveAffidaviteService_MarriedIscis()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupAffidavit();
+                var detail = request.Details.First();
+                detail.SpotLength = 60;
+                detail.Isci = "DDDDDDDDD1996";
+
+                var postingDate = new DateTime(2016, 4, 20);
+
+                var result = _AffidavitService.SaveAffidavit(request, "test user", postingDate);
+
+                VerifyAffidavit(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
         public void SaveAffidaviteServiceWithShowTypes()
         {
@@ -245,6 +264,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ScrubbingFile), "MediaMonthId");
             jsonResolver.Ignore(typeof(FileProblem), "Id");
             jsonResolver.Ignore(typeof(FileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ProposalVersionDetailQuarterWeekId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ProposalVersionDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {

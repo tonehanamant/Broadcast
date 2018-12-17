@@ -150,6 +150,12 @@ export class DataGridContainer extends Component {
           isRender: true,
           menuItems
         }}
+        defaultSorted={[
+          {
+            id: "ModifiedDate",
+            desc: true
+          }
+        ]}
         selection="single"
       />
     );

@@ -1,4 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
@@ -300,7 +301,7 @@ namespace Services.Broadcast.ApplicationServices
                 Isci = d.Isci,
                 ProgramName = d.ProgramName,
                 Genre = d.Genre,
-                SpotLengthId = _GetSpotlength(d.SpotLength),
+                SpotLengthId = _GetSpotlengthId(d.SpotLength),
                 Station = d.Station,
                 Market = d.Market,
                 Affiliate = d.Affiliate,
@@ -637,11 +638,14 @@ namespace Services.Broadcast.ApplicationServices
                     proposalWeeks = _ProposalRepository.GetMatchingProposalWeeksByHouseIsci(affidavitDetail.Isci);
                 }
 
-                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+                var spotLengthId = _GetAffidavitDetailSpotLengthId(affidavitDetail, proposalWeeks);
+                var matchedProposalWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, spotLengthId);
+
                 if (!matchedProposalWeeks.Any() && !string.IsNullOrWhiteSpace(affidavitDetail.MappedIsci))
                 {
                     proposalWeeks = _ProposalRepository.GetMatchingProposalWeeksByHouseIsci(affidavitDetail.MappedIsci);
-                    matchedProposalWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+                    spotLengthId = _GetAffidavitDetailSpotLengthId(affidavitDetail, proposalWeeks);
+                    matchedProposalWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, spotLengthId);
                     isIsciMapped = true;
                 }
 
@@ -658,13 +662,38 @@ namespace Services.Broadcast.ApplicationServices
             return matchedAffidavitDetails;
         }
 
-        private int _GetSpotlength(int spotLength)
+        private int _GetAffidavitDetailSpotLengthId(ScrubbingFileDetail affidavitFileDetail, List<MatchingProposalWeek> proposalWeeks)
         {
+            var spotLengthId = affidavitFileDetail.SpotLengthId;
 
+            if (proposalWeeks != null)
+            {
+                var iscisMarried = proposalWeeks.Where(i => i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId).Count() > 1;
+
+                // take a half of spot length for married iscis
+                if (iscisMarried)
+                {
+                    var spotLength = _GetSpotlength(spotLengthId);
+                    spotLength /= 2;
+                    spotLengthId = _GetSpotlengthId(spotLength);
+                }
+            }
+
+            return spotLengthId;
+        }
+
+        private int _GetSpotlengthId(int spotLength)
+        {
             if (!_SpotLengthsDict.ContainsKey(spotLength))
                 throw new Exception(string.Format("Invalid spot length '{0}' found.", spotLength));
 
             return _SpotLengthsDict[spotLength];
+        }
+
+        private int _GetSpotlength(int spotLengthId)
+        {
+            var spotLenght = _SpotLengthsDict.Single(x => x.Value == spotLengthId, $"Invalid spot length id '{spotLengthId}' found.");
+            return spotLenght.Key;
         }
 
         /// <summary>

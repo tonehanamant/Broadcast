@@ -96,6 +96,7 @@ class PricingGuide extends Component {
     this.submitChanges = this.submitChanges.bind(this);
     this.onClickToSave = this.onClickToSave.bind(this);
     this.onClickToDiscard = this.onClickToDiscard.bind(this);
+    this.setGuideEditing = this.setGuideEditing.bind(this);
 
     this.onCopyToBuy = this.onCopyToBuy.bind(this);
     this.hasSpotsAllocate = this.hasSpotsAllocate.bind(this);
@@ -386,6 +387,10 @@ class PricingGuide extends Component {
     this.setState({ [errorName]: !error });
   }
 
+  setGuideEditing(edit) {
+    this.setState({ isGuideEditing: edit });
+  }
+
   render() {
     const {
       modal,
@@ -394,9 +399,10 @@ class PricingGuide extends Component {
       activeOpenMarketData,
       hasSpotsAllocated,
       onCopyConfirmMsg,
-      isSpotsCopied
+      isSpotsCopied,
+      isEditMarketsActive
     } = this.props;
-    const { distribution, discard } = this.state;
+    const { distribution, discard, isGuideEditing } = this.state;
     const show = isActiveDialog(detail, modal);
     return (
       <div>
@@ -482,23 +488,28 @@ class PricingGuide extends Component {
                 onUpdateEditMarkets: this.onUpdateEditMarkets,
                 onAllocateSpots: this.onAllocateSpots,
                 onRunDistribution: this.onRunDistribution,
-                onCopyToBuy: this.copyToBuyFlow
+                onCopyToBuy: this.copyToBuyFlow,
+                onSetGuideEditing: this.setGuideEditing
               })
             )}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.onClickToDiscard} bsStyle="default">
+            <Button
+              onClick={this.onClickToDiscard}
+              disabled={isGuideEditing || isEditMarketsActive}
+              bsStyle="default"
+            >
               Cancel
             </Button>
             <Button
-              disabled={isReadOnly}
+              disabled={isReadOnly || isGuideEditing || isEditMarketsActive}
               onClick={this.onClickToSave(this.onApply)}
               bsStyle="success"
             >
               Apply
             </Button>
             <Button
-              disabled={isReadOnly}
+              disabled={isReadOnly || isGuideEditing || isEditMarketsActive}
               onClick={this.onClickToSave(this.onSave)}
               bsStyle="success"
             >
@@ -604,6 +615,7 @@ PricingGuide.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool,
   hasSpotsAllocated: PropTypes.bool.isRequired,
+  isEditMarketsActive: PropTypes.bool.isRequired,
   isSpotsCopied: PropTypes.bool.isRequired,
   clearOpenMarketData: PropTypes.func.isRequired,
   loadOpenMarketData: PropTypes.func.isRequired,

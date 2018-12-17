@@ -27,8 +27,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 428,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 9951,
-          "ProposalVersionDetailQuarterWeekId": 9951,
           "Status": 2
         }
       ],
@@ -83,8 +81,6 @@
           "ModifiedBy": "sroibu",
           "PostingBookId": 428,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 9951,
-          "ProposalVersionDetailQuarterWeekId": 9951,
           "Status": 2
         }
       ],
@@ -224,8 +220,6 @@
           "ModifiedBy": "test-user",
           "PostingBookId": 428,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 9951,
-          "ProposalVersionDetailQuarterWeekId": 9951,
           "Status": 1
         }
       ],
