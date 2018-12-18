@@ -78,30 +78,47 @@ var RateMainController = BaseController.extend({
         if (!withFilter) this.view.StationsTextSearch = null;//reset state to clear text search
     },
 
-    //REVISED from upload manager to view process multiple files
+    //REVISED from upload manager to view process multiple files; CHANGE sequential
+    //apiQueueInventoryFiles: function (fileRequests) {
+    //    var queue = [];
+    //    //this.importFileQueue.length = fileRequests.length;
+    //    $.each(fileRequests, function (idx, req) {
+    //        //console.log('req', req, idx);
+    //        queue.push(req.FileName);
+    //    });
+    //    this.importFileQueue = queue;
+    //    //console.log(queue, fileRequests, this.importFileQueue);
+    //    this.importFileQueueOriginalLength = fileRequests.length;
+    //    var $scope = this;
+    //    $.each(fileRequests, function (index, rateFileRequest) {
+    //        $scope.apiUploadQueueInventoryFile(rateFileRequest);
+    //    });
+    //},
+
     apiQueueInventoryFiles: function (fileRequests) {
         var queue = [];
-        //this.importFileQueue.length = fileRequests.length;
         $.each(fileRequests, function (idx, req) {
-            //console.log('req', req, idx);
-            queue.push(req.FileName);
+            queue.push(req);
         });
         this.importFileQueue = queue;
         //console.log(queue, fileRequests, this.importFileQueue);
         this.importFileQueueOriginalLength = fileRequests.length;
         var $scope = this;
-        $.each(fileRequests, function (index, rateFileRequest) {
-            $scope.apiUploadQueueInventoryFile(rateFileRequest);
-        });
+        //$.each(fileRequests, function (index, rateFileRequest) {
+        //    $scope.apiUploadQueueInventoryFile(rateFileRequest);
+        //});
+        this.apiUploadQueueInventoryFile(fileRequests[0]);
     },
 
     //upload Rate file
     //REVISING to queue uploads and handle aggregated errors/ success
+    //FURTHER REVISION to process sequentially -complete and process next
 
     //need to distinguish between types - and not use Queue if single thirdparty
     apiUploadQueueInventoryFile: function (rateFileRequest, callback) {
         var url = baseUrl + 'api/RatesManager/UploadInventoryFile';
         var jsonObj = JSON.stringify(rateFileRequest);
+        console.log('apiUploadQueueInventoryFile', rateFileRequest);
         httpService.post(url,
             this.onApiUploadQueueInventoryFile.bind(this, callback),
             this.onApiUploadQueueInventoryFileErrorProblems.bind(this, rateFileRequest.FileName),  //add the fileName
@@ -131,17 +148,28 @@ var RateMainController = BaseController.extend({
             });
     },
 
+    //checkImportFileQueue: function () {
+    //    //console.log('check queue', this.importFileQueue);
+    //    this.importFileQueue.pop();
+    //    if (this.importFileQueue.length == 0) {
+    //        return true;
+    //    } else {
+    //        return false;
+    //    }
+    //},
+
     checkImportFileQueue: function () {
         //console.log('check queue', this.importFileQueue);
-        this.importFileQueue.pop();
+        this.importFileQueue.shift();
         if (this.importFileQueue.length == 0) {
             return true;
         } else {
+            this.apiUploadQueueInventoryFile(this.importFileQueue[0]);
             return false;
         }
     },
 
-    //handdle aggregated erros if needed and success responses to notify
+    //handle aggregated erros if needed and success responses to notify
     resolveFileImportsComplete: function () {
         var notifyType = 'success';
         var notifyMessage = 'Rate File(s) Uploaded';
