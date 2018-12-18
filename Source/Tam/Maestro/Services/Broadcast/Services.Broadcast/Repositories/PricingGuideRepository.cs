@@ -283,7 +283,7 @@ namespace Services.Broadcast.Repositories
                             ProposalDetailId = proposalDetailId,
                             ProposalId = (from version in context.proposal_versions
                                           from detail in version.proposal_version_details
-                                          where detail.id == proposalDetailId
+                                          where detail.id == proposalDetailId && version.snapshot_date == null
                                           select version.proposal_id).Single()
                         };
                     }

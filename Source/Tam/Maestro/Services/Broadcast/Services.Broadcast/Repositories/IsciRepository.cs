@@ -78,7 +78,7 @@ namespace Services.Broadcast.Repositories
                            from proposalDetailQuarter in proposalDetail.proposal_version_detail_quarters
                            from proposalDetailQuarterWeek in proposalDetailQuarter.proposal_version_detail_quarter_weeks
                            from proposalDetailQuarterWeekIsci in proposalDetailQuarterWeek.proposal_version_detail_quarter_week_iscis
-                           where proposalVersion.status == (int)ProposalEnums.ProposalStatusType.Contracted
+                           where proposalVersion.status == (int)ProposalEnums.ProposalStatusType.Contracted && proposalVersion.snapshot_date == null
                                 && proposalDetailQuarterWeekIsci.client_isci.StartsWith(isci)
                            select new ValidIsciDto
                            {

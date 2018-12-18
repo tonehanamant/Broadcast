@@ -81,6 +81,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService;
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
         private readonly IImpressionsService _AffidavitImpressionsService;
+        private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
         const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -96,7 +97,8 @@ namespace Services.Broadcast.ApplicationServices
             IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
             IProposalProprietaryInventoryService proposalProprietaryInventoryService,
             IImpressionsService affidavitImpressionsService,
-            IMyEventsReportNamingEngine myEventsReportNamingEngine)
+            IMyEventsReportNamingEngine myEventsReportNamingEngine,
+            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -120,6 +122,7 @@ namespace Services.Broadcast.ApplicationServices
             _ShowTypeReporitory = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             _AffidavitImpressionsService = affidavitImpressionsService;
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
+            _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -1361,6 +1364,8 @@ namespace Services.Broadcast.ApplicationServices
             var proposal = GetProposalById(proposalId);
             var scxFiles = _ProposalScxConverter.ConvertProposal(proposal);
 
+            _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposal.Id.Value, proposal.Details.Select(x => x.Id.Value).ToList());
+
             MemoryStream archiveFile = new MemoryStream();
 
             string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
@@ -1474,6 +1479,8 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalScxConverter.ConvertProposalDetail(proposal,proposalDetail,ref scxFile);
             if (scxFile == null)
                 throw new InvalidOperationException("Could not generate SCX file.");
+
+            _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposal.Id.Value, new List<int> { proposalDetailId });
 
             string proposalName = proposal.ProposalName.PrepareForUsingInFileName();
 

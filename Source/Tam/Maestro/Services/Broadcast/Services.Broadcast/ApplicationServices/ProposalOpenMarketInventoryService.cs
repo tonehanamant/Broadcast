@@ -13,6 +13,9 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Tam.Maestro.Common;
+using Tam.Maestro.Data.Entities;
+using Common.Services.Extensions;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter.ProposalVersionDetailQuarterWeek;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -26,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId);
         void AllocateOpenMarketSpots(OpenMarketAllocationSaveRequest request);
         bool CheckForAllocatedSpots(CheckForAllocatedSpotsRequestDto request);
+        ProposalVersionSnapshot SaveInventorySnapshot(int proposalId, List<int> proposalDetailIds);
     }
 
     public class ProposalOpenMarketInventoryService : BaseProposalInventoryService, IProposalOpenMarketInventoryService
@@ -823,6 +827,43 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return totalSpots > 0;
+        }
+
+        public ProposalVersionSnapshot SaveInventorySnapshot(int proposalId, List<int> proposalDetailIds)
+        {
+            var stationInventorySpotsSnapshotData = _ProposalOpenMarketInventoryRepository.GetStationInventorySpotsSnapshotData(proposalId, proposalDetailIds);
+            _SetRanks(stationInventorySpotsSnapshotData);
+            return _ProposalOpenMarketInventoryRepository.SaveProposalVersionSnapshot(proposalId, proposalDetailIds, stationInventorySpotsSnapshotData);
+        }
+
+        private void _SetRanks(List<StationInventorySpotSnapshot> snapshots)
+        {
+            var nsiMarketRepository = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>();
+            var mediaWeeks = snapshots.Select(x => x.MediaWeekId).Distinct();
+            var weekMonthMapping = new Dictionary<int, MediaMonth>();
+
+            foreach (var weekId in mediaWeeks)
+            {
+                weekMonthMapping[weekId] = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingMediaWeekId(weekId);
+            }
+
+            var mediaMonths = weekMonthMapping.Values.Select(x => x.Id);
+            var marketRankingsByMediaMonths = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonths(mediaMonths);
+
+            foreach (var snapshot in snapshots)
+            {
+                var mediaMonthId = weekMonthMapping[snapshot.MediaWeekId].Id;
+                var marketRankings = marketRankingsByMediaMonths.Single(x => x.MediaMonthId == mediaMonthId, $"Rank for media month {mediaMonthId} is not found");
+
+                if (marketRankings.MarketCodeRankMappings.TryGetValue(snapshot.StationMarketCode, out var rank))
+                {
+                    snapshot.StationMarketRank = rank;
+                }
+                else
+                {
+                    throw new Exception($"Rank for market: {snapshot.StationMarketCode} is not found");
+                }
+            }
         }
     }
 }

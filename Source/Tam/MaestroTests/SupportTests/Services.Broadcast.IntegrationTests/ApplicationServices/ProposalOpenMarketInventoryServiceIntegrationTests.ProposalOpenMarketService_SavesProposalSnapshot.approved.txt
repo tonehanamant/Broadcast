@@ -1,0 +1,107 @@
+﻿{
+  "BlackoutMarkets": null,
+  "CostTotal": 0.0000,
+  "CreatedBy": "IntegrationTestUser",
+  "CreatedDate": "2016-11-17T17:48:20.377",
+  "EndDate": "2017-01-29T00:00:00",
+  "Equivalized": false,
+  "GuaranteedAudienceId": 34,
+  "ImpressionsTotal": 0.0,
+  "Margin": 20.0,
+  "MarketCoverage": null,
+  "Markets": 1,
+  "ModifiedBy": "IntegrationTestUser",
+  "Notes": null,
+  "PostType": 1,
+  "Proposal_Version": 1,
+  "ProposalVersionAudiences": [],
+  "ProposalVersionDetails": [
+    {
+      "Adu": true,
+      "CostTotal": 50.0000,
+      "DaypartCode": "AAA",
+      "DaypartId": 6724,
+      "EndDate": "2017-01-29T00:00:00",
+      "HutProjectionBookId": null,
+      "ImpressionsTotal": 5000.0,
+      "NtiConversionFactor": 0.2,
+      "OpenMarketCostTotal": 0.0000,
+      "OpenMarketImpressionsTotal": 0.0,
+      "PostingBookId": 434,
+      "PostingPlaybackType": 4,
+      "ProjectionPlaybackType": 4,
+      "ProposalVersionDetailCriteriaCpms": [],
+      "ProposalVersionDetailCriteriaGenres": [],
+      "ProposalVersionDetailCriteriaPrograms": [],
+      "ProposalVersionDetailCriteriaShowTypes": [],
+      "ProposalVersionDetailQuarters": [
+        {
+          "Cpm": 20.0000,
+          "ImpressionsGoal": 100000.0,
+          "ProposalVersionDetailQuarterWeeks": [
+            {
+              "Cost": 25.0000,
+              "EndDate": "2017-01-29T00:00:00",
+              "ImpressionsGoal": 1000.0,
+              "IsHiatus": false,
+              "MediaWeekId": 649,
+              "MyEventsReportName": "MyEventsReport",
+              "OpenMarketCostTotal": 0.0000,
+              "OpenMarketImpressionsTotal": 0.0,
+              "ProposalVersionDetailQuarterWeekIscis": [],
+              "ProprietaryCostTotal": 0.0000,
+              "ProprietaryImpressionsTotal": 0.0,
+              "StartDate": "2017-01-23T00:00:00",
+              "StationInventorySpotSnapshots": [
+                {
+                  "AudienceId": 31,
+                  "DaypartId": 6724,
+                  "MediaWeekId": 649,
+                  "ProgramName": "Test Program",
+                  "SpotCost": 10.0000,
+                  "SpotImpressions": 100.0,
+                  "SpotLengthId": 1,
+                  "StationCallLetters": "WNBC",
+                  "StationCode": 5013,
+                  "StationMarketCode": 101,
+                  "StationMarketRank": 1
+                }
+              ],
+              "Units": 10
+            }
+          ],
+          "Quarter": 2,
+          "Year": 2016
+        }
+      ],
+      "ProprietaryCostTotal": 0.0000,
+      "ProprietaryImpressionsTotal": 0.0,
+      "Sequence": 1,
+      "ShareProjectionBookId": null,
+      "SingleProjectionBookId": 413,
+      "SpotLengthId": 1,
+      "StartDate": "2017-01-23T00:00:00",
+      "UnitsTotal": 200
+    }
+  ],
+  "ProposalVersionFlightWeeks": [
+    {
+      "Active": true,
+      "EndDate": "2017-01-29T00:00:00",
+      "MediaWeekId": 649,
+      "StartDate": "2017-01-23T00:00:00"
+    }
+  ],
+  "ProposalVersionMarkets": [],
+  "ProposalVersionSpotLengths": [
+    {
+      "SpotLengthId": 1
+    }
+  ],
+  "StartDate": "2017-01-23T00:00:00",
+  "Status": 3,
+  "TargetBudget": 0.0000,
+  "TargetCpm": 0.0000,
+  "TargetImpressions": 0.0,
+  "TargetUnits": 0
+}

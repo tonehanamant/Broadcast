@@ -52,6 +52,69 @@ INSERT INTO #previous_version
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-3936 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[station_inventory_spot_snapshots]'))
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_spot_snapshots](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[proposal_version_detail_quarter_week_id] [int] NULL,
+		[media_week_id] [int] NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[program_name] [varchar](255) NULL,
+		[daypart_id] [int] NOT NULL,
+		[station_code] [smallint] NOT NULL,
+		[station_call_letters] [varchar](15) NOT NULL,
+		[station_market_code] [smallint] NOT NULL,
+		[station_market_rank] [int] NOT NULL,
+		[spot_impressions] [float] NULL,
+		[spot_cost] [money] NULL,
+		[audience_id] [int] NOT NULL
+
+		CONSTRAINT [PK_station_inventory_spot_snapshots] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+		) ON [PRIMARY]
+	
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_snapshots_proposal_version_detail_quarter_weeks] FOREIGN KEY([proposal_version_detail_quarter_week_id])
+		REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
+		ON DELETE SET NULL
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] CHECK CONSTRAINT [FK_station_inventory_spot_snapshots_proposal_version_detail_quarter_weeks]
+
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_snapshots_spot_lengths] FOREIGN KEY([spot_length_id])
+		REFERENCES [dbo].[spot_lengths] ([id])
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] CHECK CONSTRAINT [FK_station_inventory_spot_snapshots_spot_lengths]
+
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_snapshots_dayparts] FOREIGN KEY([daypart_id])
+		REFERENCES [dbo].[dayparts] ([id])
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] CHECK CONSTRAINT [FK_station_inventory_spot_snapshots_dayparts]
+
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_snapshots_stations] FOREIGN KEY([station_code])
+		REFERENCES [dbo].[stations] ([station_code])
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] CHECK CONSTRAINT [FK_station_inventory_spot_snapshots_stations]
+
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] WITH CHECK ADD CONSTRAINT [FK_station_inventory_spot_snapshots_markets] FOREIGN KEY([station_market_code])
+		REFERENCES [dbo].[markets] ([market_code])
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] CHECK CONSTRAINT [FK_station_inventory_spot_snapshots_markets]
+
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_spot_snapshots_audiences] FOREIGN KEY([audience_id])
+		REFERENCES [dbo].[audiences] ([id])
+		ALTER TABLE [dbo].[station_inventory_spot_snapshots] CHECK CONSTRAINT [FK_station_inventory_spot_snapshots_audiences]
+
+		CREATE INDEX IX_station_inventory_spot_snapshots_proposal_version_detail_quarter_week_id ON [station_inventory_spot_snapshots] ([proposal_version_detail_quarter_week_id])
+		CREATE INDEX IX_station_inventory_spot_snapshots_spot_length_id ON [station_inventory_spot_snapshots] ([spot_length_id])
+		CREATE INDEX IX_station_inventory_spot_snapshots_daypart_id ON [station_inventory_spot_snapshots] ([daypart_id])
+		CREATE INDEX IX_station_inventory_spot_snapshots_station_code ON [station_inventory_spot_snapshots] ([station_code])
+		CREATE INDEX IX_station_inventory_spot_snapshots_station_market_code ON [station_inventory_spot_snapshots] ([station_market_code])
+		CREATE INDEX IX_station_inventory_spot_snapshots_audience_id ON [station_inventory_spot_snapshots] ([audience_id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'snapshot_date' AND OBJECT_ID = OBJECT_ID('[dbo].[proposal_versions]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_versions]  ADD [snapshot_date] datetime NULL
+END
+/*************************************** END BCOP-3936 *****************************************************/
+
 /*************************************** START BCOP-3769 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[pricing_guide_distributions]'))
 BEGIN

@@ -20,6 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_detail_quarter_week_iscis = new HashSet<proposal_version_detail_quarter_week_iscis>();
             this.affidavit_client_scrubs = new HashSet<affidavit_client_scrubs>();
             this.postlog_client_scrubs = new HashSet<postlog_client_scrubs>();
+            this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
         }
     
         public int id { get; set; }
@@ -43,5 +44,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_detail_quarter_week_iscis> proposal_version_detail_quarter_week_iscis { get; set; }
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual ICollection<postlog_client_scrubs> postlog_client_scrubs { get; set; }
+        public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
     }
 }

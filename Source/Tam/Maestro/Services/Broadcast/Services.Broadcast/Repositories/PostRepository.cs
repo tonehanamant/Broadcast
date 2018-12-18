@@ -128,7 +128,8 @@ namespace Services.Broadcast.Repositories
                             from affidavitClientScrubAudience in affidavitClientScrub.affidavit_client_scrub_audiences
                             where proposal.id == proposalId &&
                                   (ScrubbingStatus)affidavitClientScrub.status == ScrubbingStatus.InSpec &&
-                                  ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id)
+                                  ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id) &&
+                                  proposalVersion.snapshot_date == null
                             select new PostImpressionsData
                             {
                                 Impressions = affidavitClientScrubAudience.impressions,

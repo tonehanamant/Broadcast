@@ -323,7 +323,7 @@ namespace Services.Broadcast.Repositories
                                  from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                  from affidavitFileScrub in proposalVersionWeeks.affidavit_client_scrubs
                                  let affidavitDetails = affidavitFileScrub.affidavit_file_details
-                                 where proposalVersions.proposal_id == proposalId
+                                 where proposalVersions.proposal_id == proposalId && proposalVersions.snapshot_date == null
                                  orderby proposalVersionDetail.id
                                  select new
                                  {
@@ -402,7 +402,8 @@ namespace Services.Broadcast.Repositories
                                          from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
                                          let affidavitFileDetails = affidavitClientScrub.affidavit_file_details
                                          where proposal.id == proposalId &&
-                                               affidavitClientScrub.status == (int)ScrubbingStatus.InSpec
+                                               affidavitClientScrub.status == (int)ScrubbingStatus.InSpec &&
+                                               proposalVersion.snapshot_date == null
                                          select new
                                          {
                                              affidavitFileDetails,
@@ -490,7 +491,8 @@ namespace Services.Broadcast.Repositories
                                          let affidavitFileDetail = affidavitClientScrub.affidavit_file_details
                                          where proposalVersionDetail.proposal_versions.proposal_id == proposalId &&
                                                affidavitClientScrub.status == (int)ScrubbingStatus.InSpec &&
-                                               proposalVersionWeeks.myevents_report_name != null
+                                               proposalVersionWeeks.myevents_report_name != null &&
+                                               proposalVersion.snapshot_date == null
                                          select new { affidavitFileDetail, affidavitClientScrub, proposal, proposalVersionDetail, proposalVersionWeeks })
                         .ToList();
 
