@@ -238,6 +238,7 @@
   "Markets": [
     {
       "AvgCpm": 41.102766392777755806232747603,
+      "CPM": 4.6155621370052694334397476826,
       "DisplayImpressions": 12999.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
@@ -417,6 +418,7 @@
     },
     {
       "AvgCpm": 6.4278664276124321470385444059,
+      "CPM": 3.4504770284491830995635146559,
       "DisplayImpressions": 8694.45,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.177,
@@ -618,6 +620,7 @@
     },
     {
       "AvgCpm": 35.995558010262792455589774165,
+      "CPM": 17.897091722595078299776286353,
       "DisplayImpressions": 1117.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.133,
@@ -762,6 +765,7 @@
     },
     {
       "AvgCpm": 0.0,
+      "CPM": 0.0,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,

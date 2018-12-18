@@ -21,9 +21,14 @@ class Table extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isSelectedFirstTime: false
+    };
+
     this.onShowContextMenu = this.onShowContextMenu.bind(this);
     this.onHideContextMenu = this.onHideContextMenu.bind(this);
     this.onRowClick = this.onRowClick.bind(this);
+    this.onFirstSelect = this.onFirstSelect.bind(this);
     this._getTrProps = this._getTrProps.bind(this);
     this._getTrGroupProps = this._getTrGroupProps.bind(this);
     this._TrGroupComponent = this._TrGroupComponent.bind(this);
@@ -54,20 +59,30 @@ class Table extends Component {
     }
   }
 
-  onRowClick(index) {
+  onRowClick(index, row) {
     const {
       dispatch,
       selection,
+      onSelect,
       hocState: { selected }
     } = this.props;
     if (rowSelection[selection] && !selected.includes(index)) {
+      onSelect(index, row);
       dispatch(rowSelection[selection](index));
+    }
+  }
+
+  onFirstSelect(onClick) {
+    const { isSelectedFirstTime } = this.state;
+    const { selectOnRender } = this.props;
+    if (selectOnRender && !isSelectedFirstTime) {
+      onClick();
+      this.setState({ isSelectedFirstTime: true });
     }
   }
 
   _getTrProps(state, rowInfo) {
     if (!rowInfo) return {};
-
     const {
       hocState: { selected },
       getTrProps
@@ -79,14 +94,18 @@ class Table extends Component {
     if (getTrProps) {
       trProps = getTrProps(state, rowInfo);
     }
+    const onClick = () => {
+      this.onRowClick(rowInfo.index, rowInfo);
+      if (trProps.onClick) {
+        trProps.onClick();
+      }
+    };
+    if (rowInfo.index === 0) {
+      this.onFirstSelect(onClick);
+    }
     return {
       ...trProps,
-      onClick: () => {
-        this.onRowClick(rowInfo.index, rowInfo);
-        if (trProps.onClick) {
-          trProps.onClick();
-        }
-      },
+      onClick,
       style: Object.assign({}, rowStyles, trProps.style)
     };
   }
@@ -168,6 +187,8 @@ Table.defaultProps = {
   getTrProps: undefined,
   showPageSizeOptions: false,
   showPagination: false,
+  selectOnRender: false,
+  onSelect: () => {},
   defaultPageSize: undefined
 };
 
@@ -177,11 +198,13 @@ Table.propTypes = {
   hocState: HocStateProps.isRequired,
   dispatch: PropTypes.func.isRequired,
   getTrGroupProps: PropTypes.func,
+  onSelect: PropTypes.func,
   getTrProps: PropTypes.func,
   contextMenu: ContextMenuProps,
   selection: SelectionProps,
   showPagination: PropTypes.bool,
   showPageSizeOptions: PropTypes.bool,
+  selectOnRender: PropTypes.bool,
   defaultPageSize: PropTypes.number
 };
 

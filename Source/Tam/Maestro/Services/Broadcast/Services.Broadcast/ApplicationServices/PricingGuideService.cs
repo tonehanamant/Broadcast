@@ -468,6 +468,7 @@ namespace Services.Broadcast.ApplicationServices
             markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
             markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
             markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
+            markets.ForEach(m => m.CPM = ProposalMath.CalculateCpmRaw(m.TotalCost, m.TotalImpressions));
         }
 
         private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideDto dto)

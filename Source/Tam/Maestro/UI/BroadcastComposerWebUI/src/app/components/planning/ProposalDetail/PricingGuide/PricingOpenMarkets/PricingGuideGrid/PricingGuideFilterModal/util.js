@@ -11,6 +11,7 @@ import {
   flatten,
   keyBy,
   concat,
+  pick,
   sortBy
 } from "lodash/fp";
 import { generate as generateId } from "shortid";
@@ -34,6 +35,8 @@ export const defaultFiltersItems = [
   { Display: "Affilate", Id: "Affiliations", order: 3 },
   { Display: "Genre", Id: "Genres", order: 4 }
 ];
+
+const filtersIds = defaultFiltersItems.map(it => it.Id);
 
 export const filterMap = {
   ProgramNames: {
@@ -151,8 +154,9 @@ const convertFiltersToArray = (filters, filter) =>
 
 export const getFilterValuesFromResponse = (filterValues, displayFilter) => {
   const selectedFilters = keys(filterValues);
-  const filtersOptions = mapValuesWithKeys((value, key) =>
-    filterMap[key].getInitialData(value)
+  const filtersOptions = pipe(
+    pick(filtersIds),
+    mapValuesWithKeys((value, key) => filterMap[key].getInitialData(value))
   )(displayFilter);
   const selectedFiltersValue = pipe(
     filter(f => selectedFilters.includes(f.Id)),

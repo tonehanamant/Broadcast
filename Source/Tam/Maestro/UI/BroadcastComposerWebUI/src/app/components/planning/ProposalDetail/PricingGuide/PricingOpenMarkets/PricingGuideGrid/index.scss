@@ -1,0 +1,19 @@
+.pricing-open-market-grid {
+
+  .pricing-open-market-tables {
+    display: flex;
+    flex-direction: row;
+
+    .ReactTable {
+      margin-top: 6px;
+      height: 500px;
+    }
+    
+    .ReactTable:first-child {
+      width: 40%;
+    }
+    .ReactTable:last-child {
+      width: 60%;
+    }
+  }
+}

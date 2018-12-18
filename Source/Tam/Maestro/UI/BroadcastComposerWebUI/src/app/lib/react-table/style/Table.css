@@ -12,6 +12,10 @@
   min-height: 130px;
   font-size: 12px;
 }
+
+.ReactTable .rt-tr-group {
+  flex: 0 0 auto;
+}
 /* override bottom border removal (context menu wrapper issue) */
 .ReactTable .rt-tbody .rt-tr-group:last-child {
   border-bottom: solid 1px rgba(0, 0, 0, 0.05);
