@@ -39,6 +39,11 @@ namespace Services.Broadcast.ApplicationServices
 
         PricingGuideDto SaveAllocations(PricingGuideDto dto);
 
+        /// <summary>
+        /// Distribution
+        /// </summary>
+        /// <param name="request">PricingGuideOpenMarketInventoryRequestDto request object</param>
+        /// <returns>PricingGuideDto object</returns>
         PricingGuideDto GetOpenMarketInventory(PricingGuideOpenMarketInventoryRequestDto request);
 
         PricingGuideDto ApplyFilterOnOpenMarketGrid(PricingGuideDto dto);
@@ -105,7 +110,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var proposal = _ProposalRepository.GetProposalById(distribution.ProposalId);
                 distribution.PricingTotals = _SumPricingTotals(distribution.OpenMarketTotals, distribution.ProprietaryTotals);
-                distribution.Markets = _LoadMarketsForDistribution(distribution.DistributionId);
+                distribution.Markets = _LoadMarketsForDistribution(distribution.DistributionId, proposal.Details.Single(x=>x.Id == proposalDetailId));
                 distribution.AllMarkets = _LoadAllMarketsForDistribution(proposal, distribution.ProposalDetailId, distribution.Markets);
                 _SetProposalOpenMarketPricingGuideGridDisplayFilters(distribution);
                 _SumTotalsForMarkets(distribution.Markets);
@@ -126,7 +131,7 @@ namespace Services.Broadcast.ApplicationServices
             });
             _FilterProgramsByDaypart(new ProposalDetailInventoryBase
             {
-                DetailDaypartId = proposal.Details.First(x => x.Id == detailId).DaypartId
+                DetailDaypartId = proposal.Details.Single(x => x.Id == detailId).DaypartId
             }, programs);
             ApplyDaypartNames(programs);
             var markets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
@@ -136,7 +141,7 @@ namespace Services.Broadcast.ApplicationServices
             return allMarkets;
         }
 
-        private List<PricingGuideMarketDto> _LoadMarketsForDistribution(int distributionId)
+        private List<PricingGuideMarketDto> _LoadMarketsForDistribution(int distributionId, ProposalDetailDto proposalDetail)
         {
             var distributionMarkets = _PricingGuideRepository.GetDistributionMarkets(distributionId);
             var inventoryMarkets = distributionMarkets.GroupBy(p => p.Market.Id).Select(
@@ -171,6 +176,8 @@ namespace Services.Broadcast.ApplicationServices
                 p.Impressions = p.ImpressionsPerSpot * p.Spots;
                 p.Cost = p.CostPerSpot * p.Spots;
             })));
+            var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
+            ApplyInventoryMarketRankings(postingBookId, inventoryMarkets);
             _ApplyInventoryMarketCoverages(inventoryMarkets);
             return inventoryMarkets;
         }
@@ -996,12 +1003,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (pricingGuideDto.ImpressionLoss.HasValue)
                 {
-                    var impressionsLoss = pricingGuideDto.ImpressionLoss.Value;
-                    var unitImpressionsDecrease = program.UnitImpressions * impressionsLoss;
-                    var providedUnitImpressionsDecrease = program.ProvidedUnitImpressions * impressionsLoss;
+                    var unitImpressionsDecrease = program.UnitImpressions * pricingGuideDto.ImpressionLoss.Value;
 
                     program.UnitImpressions -= unitImpressionsDecrease;
-                    program.ProvidedUnitImpressions -= providedUnitImpressionsDecrease;
                 }
             }
         }

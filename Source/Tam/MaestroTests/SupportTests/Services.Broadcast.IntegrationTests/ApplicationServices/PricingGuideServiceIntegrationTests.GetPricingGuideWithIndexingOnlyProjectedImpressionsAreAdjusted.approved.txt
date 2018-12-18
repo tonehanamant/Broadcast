@@ -36,8 +36,8 @@
   "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
-  "ImpressionLoss": 0.2,
-  "Inflation": 0.1,
+  "ImpressionLoss": 0.5,
+  "Inflation": null,
   "InventorySourceEnum": {
     "0": "Blank",
     "1": "OpenMarket",
@@ -50,11 +50,11 @@
     "8": "FerencMedia",
     "9": "OAndO"
   },
-  "Margin": 0.2,
+  "Margin": null,
   "Markets": [
     {
       "AvgCpm": 0.9615421597775376059138688995,
-      "DisplayImpressions": 34964.91714286,
+      "DisplayImpressions": 21853.07321429,
       "DisplayStationImpressions": 51999.8,
       "MarketCoverage": 1.01,
       "MarketId": 160,
@@ -71,14 +71,14 @@
           "Programs": [
             {
               "BlendedCpm": 0.9615421597775376059138688995,
-              "Cost": 66.000000,
-              "CostPerSpot": 66.000000,
+              "Cost": 50.0000,
+              "CostPerSpot": 50.0000,
               "Daypart": {
                 "Display": "M-SU 9AM-12AM",
                 "Id": 5
               },
-              "DisplayCost": 66.000000,
-              "DisplayImpressions": 34964.91714286,
+              "DisplayCost": 50.0000,
+              "DisplayImpressions": 21853.07321429,
               "DisplayStationImpressions": 51999.8,
               "EffectiveImpressionsPerSpot": 51999.8,
               "Genres": [
@@ -89,7 +89,7 @@
               ],
               "HasImpressions": true,
               "Impressions": 51999.8,
-              "ImpressionsPerSpot": 34964.91714286,
+              "ImpressionsPerSpot": 21853.07321429,
               "ManifestDaypartId": 213353,
               "ProgramId": 162238,
               "ProgramName": "Adventure Time",
@@ -100,7 +100,7 @@
           "StationCode": 5316
         }
       ],
-      "TotalCost": 66.000000,
+      "TotalCost": 50.0000,
       "TotalImpressions": 51999.8,
       "TotalSpots": 1
     }
@@ -113,15 +113,15 @@
   },
   "OpenMarketShare": 1.0,
   "OpenMarketTotals": {
-    "Cost": 66.000000,
+    "Cost": 50.0000,
     "Coverage": 1.01,
-    "Cpm": 1.2692356509063496398063069473,
+    "Cpm": 0.9615421597775376059138688995,
     "Impressions": 51999.8
   },
   "PricingTotals": {
-    "Cost": 66.000000,
+    "Cost": 50.0000,
     "Coverage": 1.01,
-    "Cpm": 1.26923565,
+    "Cpm": 0.96154216,
     "Impressions": 51999.8
   },
   "ProposalDetailId": 9986,

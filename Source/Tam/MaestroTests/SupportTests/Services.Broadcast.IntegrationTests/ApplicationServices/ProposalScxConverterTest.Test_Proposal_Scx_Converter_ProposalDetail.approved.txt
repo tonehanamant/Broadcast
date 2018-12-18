@@ -264,7 +264,7 @@
                       {
                         "type": 0,
                         "typeSpecified": true,
-                        "Value": null
+                        "Value": "0.00"
                       },
                       {
                         "type": 1,
@@ -360,7 +360,7 @@
                       {
                         "type": 0,
                         "typeSpecified": true,
-                        "Value": null
+                        "Value": "0.20"
                       },
                       {
                         "type": 1,
@@ -635,7 +635,7 @@
                       {
                         "type": 0,
                         "typeSpecified": true,
-                        "Value": null
+                        "Value": "0.38"
                       },
                       {
                         "type": 1,

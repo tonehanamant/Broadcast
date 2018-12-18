@@ -23,8 +23,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IRatingForecastRepository : IDataRepository
     {
-        List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions);
-        void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate);
+        List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, List<ManifestDetailDaypart> programs, bool useDayByDayImpressions);
         List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths);
         List<StationImpressionsWithAudience> GetImpressionsPointInTime(int postingBookId, List<int> uniqueRatingsAudiences, List<StationDetailPointInTime> stationDetails, ProposalEnums.ProposalPlaybackType playbackType, bool useDayByDayImpressions);
         List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions);
@@ -39,34 +38,22 @@ namespace Services.Broadcast.Repositories
         public RatingForecastRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper) : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper) { }
 
 
-        public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, IEnumerable<Program> programs, bool useDayByDayImpressions)
+        public List<RatingsResult> ForecastRatings(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> audience, PlaybackTypeEnum playbackType, List<ManifestDetailDaypart> manifestDayparts, bool useDayByDayImpressions)
         {
             int index = 1;
-            Dictionary<int, Program> programDict = programs.ToDictionary(key => index++, value => value);
-
-            List<ManifestDetailDaypart> stationDetails = programDict.Select(p => new ManifestDetailDaypart()
-            {
-                Id = p.Key,
-                DisplayDaypart = p.Value.DisplayDaypart,
-                LegacyCallLetters = p.Value.StationCode.ToString()
-            }).ToList();
-
+        
             var playback = PlaybackTypeConverter.ForecastPlaybackTypeToProposalPlaybackType(playbackType);
-            var result = GetImpressionsDaypart(hutMediaMonth, shareMediaMonth, audience, stationDetails, playback, useDayByDayImpressions);
+            var result = GetImpressionsDaypart(hutMediaMonth, shareMediaMonth, audience, manifestDayparts, playback, useDayByDayImpressions);
 
-            return result.Select(r => new RatingsResult()
+            return result.Select(r =>
             {
-                sun = programDict[r.id].DisplayDaypart.Sunday,
-                mon = programDict[r.id].DisplayDaypart.Monday,
-                tue = programDict[r.id].DisplayDaypart.Tuesday,
-                wed = programDict[r.id].DisplayDaypart.Wednesday,
-                thu = programDict[r.id].DisplayDaypart.Thursday,
-                fri = programDict[r.id].DisplayDaypart.Friday,
-                sat = programDict[r.id].DisplayDaypart.Saturday,
-                start_time = programDict[r.id].DisplayDaypart.StartTime,
-                end_time = programDict[r.id].DisplayDaypart.EndTime,
-                rating = r.rating,
-                station_code = programDict[r.id].StationCode
+                var manifestDaypart = manifestDayparts.First(m => m.Id == r.id);
+                return new RatingsResult()
+                {
+                    Daypart = manifestDaypart.DisplayDaypart,
+                    Rating = r.rating,
+                    LegacyCallLetters = manifestDaypart.LegacyCallLetters
+                };
             }).ToList();
         }
 
@@ -299,30 +286,7 @@ namespace Services.Broadcast.Repositories
             return adjustedDetails;
         }
 
-        public void CrunchMonth(short mediaMonthId, DateTime startDate, DateTime endDate)
-        {
-            // TODO: Trigger Forecast via MicroService in AWS/Databricks
-        }
 
-        private static void WriteTableSQLDebug(IEnumerable<Program> programs)
-        {
-            programs
-                .Distinct()
-                .ForEach(p =>
-                    Debug.WriteLine(
-                        string.Format(
-                            "INSERT INTO @ratings_request SELECT {0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
-                            string.Format("'{0}'", p.LegacyCallLetters),
-                            p.DisplayDaypart.Monday ? "1" : "0",
-                            p.DisplayDaypart.Tuesday ? "1" : "0",
-                            p.DisplayDaypart.Wednesday ? "1" : "0",
-                            p.DisplayDaypart.Thursday ? "1" : "0",
-                            p.DisplayDaypart.Friday ? "1" : "0",
-                            p.DisplayDaypart.Saturday ? "1" : "0",
-                            p.DisplayDaypart.Sunday ? "1" : "0",
-                            p.DisplayDaypart.StartTime,
-                            p.DisplayDaypart.EndTime)));
-        }
         private static void WriteTableSQLDebug(List<StationDetailPointInTime> stationDetails,int postingId,string demos,string playback)
         {
             string declare = string.Format(@"	DECLARE

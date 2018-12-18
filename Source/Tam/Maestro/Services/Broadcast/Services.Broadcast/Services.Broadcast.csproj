@@ -474,10 +474,6 @@
     <Compile Include="Entities\StationImpressionsWithAudience.cs" />
     <Compile Include="Entities\SchedulePostType.cs" />
     <Compile Include="Entities\ScheduleHeaderDto.cs" />
-    <Compile Include="Entities\RatingForecastResponse.cs" />
-    <Compile Include="Entities\ProgramRating.cs" />
-    <Compile Include="Entities\RatingForecastRequest.cs" />
-    <Compile Include="Entities\Program.cs" />
     <Compile Include="Entities\OutOfSpecToDateDto.cs" />
     <Compile Include="Entities\SpotsAndImpressionsDeliveryByAdvertiser.cs" />
     <Compile Include="Entities\SpotsAndImpressionsDeliveryBySource.cs" />

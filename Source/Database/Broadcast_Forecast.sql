@@ -906,8 +906,21 @@ GO
 /*********************************** END BCOP-4117 **************************************************/
 
 
+/****************************** START BCOP-4090 *****************************************************/
+GO
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_ForecastNsiRatingsForMultiplePrograms'))
+BEGIN
+	DROP PROCEDURE [nsi].[usp_ForecastNsiRatingsForMultiplePrograms]
+END
 
+GO
+IF EXISTS ( SELECT  * FROM    sys.objects WHERE   object_id = OBJECT_ID(N'nsi.usp_ForecastNsiRatingsForMultiplePrograms_Averages'))
+BEGIN
+	DROP PROCEDURE [nsi].[usp_ForecastNsiRatingsForMultiplePrograms_Averages]
+END
+GO
 
+/****************************** END BCOP-4090 ******************************************************/
 
 
 /*************************************** END UPDATE SCRIPT *******************************************************/

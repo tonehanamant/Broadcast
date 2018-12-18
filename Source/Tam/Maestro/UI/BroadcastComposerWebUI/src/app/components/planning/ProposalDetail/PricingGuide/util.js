@@ -6,7 +6,7 @@ import PricingOpenMarkets from "./PricingOpenMarkets";
 import PricingProprietary from "./PricingProprietary";
 
 export const initialState = {
-  isDistributionRunned: false,
+  isDistributionRunned: true,
   isGuideChanged: false,
   isGuideEditing: false,
   distribution: false,

@@ -141,7 +141,7 @@ namespace Services.Broadcast.Converters
 
             foreach (var demo in data.Demos)
             {
-                var marketIds = data.MarketIds.Select(m => (short) m).Distinct().ToList();
+                var marketIds = data.MarketIds.Select(m => (short)m).Distinct().ToList();
                 var audienceUniversData =
                     _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>()
                         .GetMarketUniverseDataByAudience(postingBookMonthId.Value,
@@ -162,8 +162,8 @@ namespace Services.Broadcast.Converters
                             u => u.playback_type == marketPlaybackTypes.Single(pb => pb.market_code == mrkId)
                                      .ForecastPlaybackType.ToString()).Sum(u => u.universe1);
 
-                    demo.MarketPopulations.Add(mrkId,univ);
-                 });
+                    demo.MarketPopulations.Add(mrkId, univ);
+                });
             }
         }
 
@@ -222,8 +222,6 @@ namespace Services.Broadcast.Converters
         }
         private void _GetDemoRatingData(ScxData data, ProposalDetailDto proposalDetailDto)
         {
-            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-
             bool isSingleBook = proposalDetailDto.SingleProjectionBookId.HasValue;
 
             foreach (var demo in data.Demos)
@@ -234,101 +232,31 @@ namespace Services.Broadcast.Converters
                     .SelectMany(s => s.Programs)
                     .Where(p => p != null && p.Spots > 0)
                     .Select(dd => dd.ProgramId);
-                var programs = data.ProposalInventoryMarkets
+                var manifestInfo = data.ProposalInventoryMarkets
                     .SelectMany(pm => pm.Value.Stations)
                     .SelectMany(s => s.Programs
                         .Where(p => programIds.Contains(p.ProgramId))
                         .SelectMany(p =>
                             p.Dayparts.Select(dp => 
-                                new Program((short)s.StationCode, _DaypartCache.GetDisplayDaypart(dp.Id))))
-                     );
-                var p1 = data.ProposalInventoryMarkets
-                    .SelectMany(pm => pm.Value.Stations)
-                    .SelectMany(s => s.Programs
-                        .Where(p => programIds.Contains(p.ProgramId))
-                     );
-                if (isSingleBook)
+                                new ManifestDetailDaypart() { Id = p.ProgramId,LegacyCallLetters = s.LegacyCallLetters,DisplayDaypart = _DaypartCache.GetDisplayDaypart(dp.Id)})));
+
+                demo.Ratings = new List<Ratingdata>();
+                foreach (var impressionData in demo.Impressions)
                 {
-                    _GetDemo1BookRatingData(data, demo, p1);
+                    var manifestDetail = manifestInfo.First(m => m.Id == impressionData.id);
+
+                    Ratingdata demoRating = new Ratingdata()
+                    {
+                        DaypartId = manifestDetail.DisplayDaypart.Id,
+                        Rating = impressionData.rating * manifestDetail.DisplayDaypart.ActiveDays * 100,
+                        LegacyCallLetters= impressionData.legacy_call_letters
+                    };
+                    demo.Ratings.Add(demoRating);
                 }
-                else
-                {
-                    _GetDemo2BookRatingData(proposalDetailDto, repo, demo, programs);
-                }
+
             }
         }
 
-        private void _GetDemo2BookRatingData(ProposalDetailDto proposalDetailDto,
-                                                IRatingForecastRepository repo,
-                                                DemoData demo,
-                                                IEnumerable<Program> programs)
-        {
-            var audienceIds = demo.RatingAudienceIds; //new List<int>() { demo.AudienceId };
-            var playbackType =
-                    PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(
-                    proposalDetailDto.PostingPlaybackType);
-
-            List<RatingsResult> ratings = null;
-            ratings = repo.ForecastRatings(
-                (short)proposalDetailDto.HutProjectionBookId.Value
-                , (short)proposalDetailDto.ShareProjectionBookId.Value
-                , audienceIds
-                , playbackType
-                , programs
-                , BroadcastComposerWebSystemParameter.UseDayByDayImpressions);
-
-            demo.Ratings = new List<Ratingdata>();
-            foreach (var rating in ratings)
-            {
-                DisplayDaypart dp = new DisplayDaypart();
-                dp.StartTime = rating.start_time;
-                dp.EndTime = rating.end_time;
-                dp.Monday = rating.mon;
-                dp.Tuesday = rating.tue;
-                dp.Wednesday = rating.wed;
-                dp.Thursday = rating.thu;
-                dp.Friday = rating.fri;
-                dp.Saturday = rating.sat;
-                dp.Sunday = rating.sun;
-
-                var daypartId = _DaypartCache.GetIdByDaypart(dp);
-                Ratingdata demoRating = new Ratingdata()
-                {
-                    DaypartId = daypartId,
-                    Rating = (rating.rating.HasValue ? rating.rating.Value : 0) * dp.ActiveDays * 100,
-                    StationCode = rating.station_code
-                };
-                demo.Ratings.Add(demoRating);
-            }
-        }
-
-        private static void _GetDemo1BookRatingData(ScxData data, DemoData demo, IEnumerable<ProposalInventoryMarketDto.InventoryMarketStationProgram> programs)
-        {
-            demo.Ratings = new List<Ratingdata>();
-            foreach (var program in programs)
-            {
-                var marketIds = data.WeekData.Where(wd => wd.InventoryWeek != null)
-                    .SelectMany(w => w.InventoryWeek.Markets)
-                    .Where(m => m.Stations.Any(s => s.StationCode == program.StationCode))
-                    .Select(m => (short)m.MarketId).Distinct()
-                    .ToList();
-    
-                var demoRating = new Ratingdata();
-
-                demoRating.DaypartId = program.Dayparts.Single().Id;
-                demoRating.StationCode = program.StationCode;
-                var impressions = demo.Impressions
-                    .Where(i => i.id == program.ProgramId)
-                    .Sum(i => i.impressions);
-
-                double univSize = 0;
-                marketIds.Where(mId => demo.MarketPopulations.ContainsKey(mId))
-                    .ForEach(marketId => univSize += demo.MarketPopulations[marketId]);
-                demoRating.Rating = impressions/univSize*100;
-
-                demo.Ratings.Add(demoRating);
-            }
-        }
 
         private List<ScxMarketStationProgramSpotWeek> _SetProgramWeeks(ScxData data,
             ProposalDetailOpenMarketInventoryDto detail)
@@ -398,7 +326,7 @@ namespace Services.Broadcast.Converters
 
     public class Ratingdata
     {
-        public int StationCode { get; set; }
+        public string LegacyCallLetters { get; set; }
         public int DaypartId { get; set; }
         public double Rating { get; set; }
     }

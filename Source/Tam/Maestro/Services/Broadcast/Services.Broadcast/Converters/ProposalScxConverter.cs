@@ -200,7 +200,7 @@ namespace Services.Broadcast.Converters
                 detLine.comment = " ";
 
                 _SetDetailLineNetworkInfo(detLine,station);
-                _SetDetailLineDemoValue(detLine, data,station.StationCode,program);
+                _SetDetailLineDemoValue(detLine, data,station.LegacyCallLetters,program);
                 _SetDetailLineTotalsAndCost(detLine, market.MarketId, station, data.WeekData, program);
                 _SetSpotWeekQuantities(market.MarketId,station, data.WeekData, program, detLine);
 
@@ -261,7 +261,7 @@ namespace Services.Broadcast.Converters
             detLine.daypartCode = daypartCode;
         }
 
-        private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, int stationCode ,ProposalInventoryMarketDto.InventoryMarketStationProgram programInfo)
+        private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, string legacyCallLetters, ProposalInventoryMarketDto.InventoryMarketStationProgram programInfo)
         {
             detLine.demoValue = new demoValue[data.Demos.Count];
             int demoValueIndex = 0;
@@ -275,7 +275,7 @@ namespace Services.Broadcast.Converters
                 var ratingDisplay = string.Empty;
                 if (demo.Ratings.Any())
                 {
-                    ratingValue = demo.Ratings.Single(r => programInfo.Dayparts.Any(dp => dp.Id ==  r.DaypartId) && r.StationCode == stationCode);
+                    ratingValue = demo.Ratings.Single(r => programInfo.Dayparts.Any(dp => dp.Id ==  r.DaypartId) && r.LegacyCallLetters == legacyCallLetters);
                     ratingDisplay = string.Format("{0:#0.00}", ratingValue.Rating);
                 }
 

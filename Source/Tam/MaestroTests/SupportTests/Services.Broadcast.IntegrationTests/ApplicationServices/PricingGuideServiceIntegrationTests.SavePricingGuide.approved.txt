@@ -67,7 +67,7 @@
       "DisplayStationImpressions": 43156.671875,
       "MarketCoverage": 6.309,
       "MarketName": "New York",
-      "MarketRank": 0,
+      "MarketRank": 1,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
       "Stations": [
@@ -82,7 +82,7 @@
               "Cost": 1.0000,
               "CostPerSpot": 1.0000,
               "Daypart": {
-                "Display": "Total Broadcast Day"
+                "Display": "M-SU 6AM-12AM"
               },
               "DisplayCost": 1.0000,
               "DisplayImpressions": 10.0,
