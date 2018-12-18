@@ -22,6 +22,8 @@ import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
 
 import "./index.scss";
 
+const defaultSort = [{ id: "MarketRank", desc: false }];
+
 class PricingOpenMarkets extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +33,7 @@ class PricingOpenMarkets extends Component {
       editingOpenCpmMin: null,
       editingOpenCpmMax: null,
       editingOpenUnitCap: null,
+      sorted: defaultSort,
       editingOpenCpmTarget: 1
     };
 
@@ -38,6 +41,8 @@ class PricingOpenMarkets extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onRunDistribution = this.onRunDistribution.bind(this);
+    this.onSortedChange = this.onSortedChange.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +61,16 @@ class PricingOpenMarkets extends Component {
 
   handleChange(name, value) {
     this.setState({ [name]: value });
+  }
+
+  onRunDistribution() {
+    const { onRunDistribution } = this.props;
+    onRunDistribution();
+    this.setState({ sorted: defaultSort });
+  }
+
+  onSortedChange(nextValue) {
+    this.setState({ sorted: nextValue });
   }
 
   toggleEditing() {
@@ -99,7 +114,8 @@ class PricingOpenMarkets extends Component {
       editingOpenCpmMin,
       editingOpenCpmMax,
       editingOpenUnitCap,
-      editingOpenCpmTarget
+      editingOpenCpmTarget,
+      sorted
     } = this.state;
     const {
       isReadOnly,
@@ -107,7 +123,6 @@ class PricingOpenMarkets extends Component {
       isOpenMarketDataSortName,
       onUpdateEditMarkets,
       onAllocateSpots,
-      onRunDistribution,
       openMarketLoading,
       openMarketLoaded,
       activeEditMarkets,
@@ -359,7 +374,7 @@ class PricingOpenMarkets extends Component {
                 </Button>
                 <Button
                   bsStyle="primary"
-                  onClick={onRunDistribution}
+                  onClick={this.onRunDistribution}
                   disabled={isEditMarketsActive || isGuideEditing}
                 >
                   Run Distribution
@@ -375,6 +390,8 @@ class PricingOpenMarkets extends Component {
                   hasOpenMarketData={hasOpenMarketData}
                   isOpenMarketDataSortName={isOpenMarketDataSortName}
                   onAllocateSpots={onAllocateSpots}
+                  sorted={sorted}
+                  onSortedChange={this.onSortedChange}
                   isGuideEditing={isGuideEditing}
                 />
               )}

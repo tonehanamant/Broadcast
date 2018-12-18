@@ -147,7 +147,7 @@ namespace Services.Broadcast.Repositories
         private static int _CreateProposalVersion(BroadcastContext context, ProposalDto proposalDto, string userName)
         {
             var timestamp = DateTime.Now;
-            var maxProposalVersion = context.proposal_versions.Where(q => q.proposal_id == proposalDto.Id.Value)
+            var maxProposalVersion = context.proposal_versions.Where(q => q.proposal_id == proposalDto.Id.Value && q.snapshot_date == null)
                 .Select(v => v.proposal_version)
                 .DefaultIfEmpty()
                 .Max();
@@ -254,7 +254,7 @@ namespace Services.Broadcast.Repositories
 
             var dbProposalVersion =
                 context.proposal_versions.Single(
-                    pv => pv.proposal_id == proposalDto.Id.Value && pv.proposal_version == proposalDto.Version,
+                    pv => pv.proposal_id == proposalDto.Id.Value && pv.proposal_version == proposalDto.Version && pv.snapshot_date == null,
                     string.Format("Cannot find proposal version {0}", proposalDto.Version));
 
             dbProposalVersion.start_date = proposalDto.FlightStartDate;
@@ -694,8 +694,8 @@ namespace Services.Broadcast.Repositories
                 string.Format("Cannot find proposal {0}.", proposalId));
 
             var proposalVersions = proposalToUpdate.proposal_versions.Where(pv =>
-                pv.status == (int)ProposalEnums.ProposalStatusType.AgencyOnHold ||
-                pv.status == (int)ProposalEnums.ProposalStatusType.Contracted).ToList();
+                (pv.status == (int)ProposalEnums.ProposalStatusType.AgencyOnHold ||
+                pv.status == (int)ProposalEnums.ProposalStatusType.Contracted) && pv.snapshot_date == null).ToList();
             proposalToUpdate.primary_version_id =
                 proposalVersions.Any() ? proposalVersions.First().id : primaryVersionId;
 
@@ -711,7 +711,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context => (from p in context.proposals
                             join v in context.proposal_versions on p.id equals v.proposal_id
-                            where p.primary_version_id == v.id
+                            where p.primary_version_id == v.id && v.snapshot_date == null
                             select new DisplayProposal
                             {
                                 Id = p.id,
@@ -738,7 +738,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                     context.proposal_versions.Single(
-                        q => q.proposal_id == proposalId && q.proposal_version == versionId,
+                        q => q.proposal_id == proposalId && q.proposal_version == versionId && q.snapshot_date == null,
                         string.Format("Cannot find proposal version {0}-{1}.", proposalId, versionId)).id);
         }
 
@@ -750,7 +750,7 @@ namespace Services.Broadcast.Repositories
                     return (from p in context.proposals
                             join v in context.proposal_versions on p.id equals v.proposal_id
                             where p.primary_version_id == v.id
-                                  && p.id == proposalId
+                                  && p.id == proposalId && v.snapshot_date == null
                             select new { p, v })
                         .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
                         .OrderBy(p => p.Id)
@@ -769,7 +769,7 @@ namespace Services.Broadcast.Repositories
                             join v in context.proposal_versions on p.id equals v.proposal_id
                             join d in context.proposal_version_details on v.id equals d.proposal_version_id
                             where p.primary_version_id == v.id
-                                  && d.id == proposalDetailId
+                                  && d.id == proposalDetailId && v.snapshot_date == null
                             select new { p, v })
                         .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
                         .OrderBy(p => p.Id)
@@ -785,7 +785,7 @@ namespace Services.Broadcast.Repositories
                 context => (from p in context.proposals
                             join v in context.proposal_versions on p.id equals v.proposal_id
                             where p.primary_version_id == v.id
-                                  && p.id == proposalId
+                                  && p.id == proposalId && v.snapshot_date == null
                             select v.proposal_version)
                     .Single(string.Format("Cannot find primary version number for proposal {0}.", proposalId)));
         }
@@ -795,7 +795,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context => (from p in context.proposals
                             join v in context.proposal_versions on p.id equals v.proposal_id
-                            where p.id == proposalId && v.proposal_version == version
+                            where p.id == proposalId && v.proposal_version == version && v.snapshot_date == null
                             select new { p, v })
                     .ToList().Select(pv => MapToProposalDto(pv.p, pv.v))
                     .Single(string.Format("Cannot find version {0} for proposal {1}.", version, proposalId)));
@@ -941,7 +941,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => (from x in context.proposal_versions
-                            where x.proposal_id == proposalId
+                            where x.proposal_id == proposalId && x.snapshot_date == null
                             select x).Max(q => q.proposal_version));
         }
 
@@ -993,7 +993,7 @@ namespace Services.Broadcast.Repositories
             {
                 return _InReadUncommitedTransaction(
                     context => (from x in context.proposal_versions
-                                where x.proposal_id == proposalId
+                                where x.proposal_id == proposalId && x.snapshot_date == null
                                 select x).ToList().Select(_MapToProposalVersion).ToList());
             }
         }
@@ -1417,7 +1417,7 @@ namespace Services.Broadcast.Repositories
             {
                 var proposal =
                     c.proposal_versions.Single(
-                        p => p.proposal_id == proposalId && p.proposal_version == proposalVersion);
+                        p => p.proposal_id == proposalId && p.proposal_version == proposalVersion && p.snapshot_date == null);
                 proposal.cost_total = 0;
                 proposal.impressions_total = 0;
                 proposal.proposal_version_details.ForEach(pvd =>
@@ -1508,7 +1508,7 @@ namespace Services.Broadcast.Repositories
                                  join q in context.proposal_version_detail_quarters on d.id equals q.proposal_version_detail_id
                                  join qw in context.proposal_version_detail_quarter_weeks on q.id equals qw
                                      .proposal_version_quarter_id
-                                 where quarterWeekIds.Contains(qw.id)
+                                 where quarterWeekIds.Contains(qw.id) && v.snapshot_date == null
                                  select new { p, v, pd = d, quarterWeekId = qw.id })
                     .GroupBy(g => g.quarterWeekId).ToList()
                     .ToDictionary(k => k.Key, val => val.Select(v => MapToProposalDto(v.p, v.v)).Single());

@@ -19,6 +19,10 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter.ProposalVersionDetailQuarterWeek;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1731,6 +1735,48 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.True(firstDetailHasAllocatedSpots);
             Assert.False(secondDetailHasAllocatedSpots);
             Assert.True(severalDetailsHaveAllocatedSpots);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProposalOpenMarketService_SavesProposalSnapshot()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalId = 26017;
+                var proposalDetailIds = new List<int> { 9979 };
+
+                var result = _ProposalOpenMarketInventoryService.SaveInventorySnapshot(proposalId, proposalDetailIds);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(ProposalVersionSnapshot), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionSnapshot), "SnapshotDate");
+                jsonResolver.Ignore(typeof(ProposalVersionSnapshot), "ModifiedDate");
+                jsonResolver.Ignore(typeof(ProposalVersionAudience), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetail), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailCriteriaCpm), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailCriteriaGenre), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailCriteriaProgram), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailCriteriaShowType), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailQuarter), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailQuarterWeek), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionDetailQuarterWeekIsci), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionFlightWeek), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionMarket), "Id");
+                jsonResolver.Ignore(typeof(ProposalVersionSpotLength), "Id");
+                jsonResolver.Ignore(typeof(StationInventorySpotSnapshot), "Id");
+                jsonResolver.Ignore(typeof(StationInventorySpotSnapshot), "ProposalVersionDetailQuarterWeekId");
+
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var resultJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                Approvals.Verify(resultJson);
+            }
         }
     }
 }

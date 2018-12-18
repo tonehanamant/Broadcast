@@ -46,63 +46,67 @@ const rowColors = {
 
 const boldRowTypes = [rowTypes.TITLE, rowTypes.SUB_TITLE];
 
-const generateData = markets => {
+const generateProgramData = (markets, selectedMarket) => {
   const data = [];
+  if (!selectedMarket) return data;
   // should add Ids for future?
-  markets.forEach(market => {
+  const market = markets.find(m => m.MarketId === selectedMarket);
+  market.Stations.forEach(station => {
+    // station TotalStationImpressions?
     data.push({
-      rowType: rowTypes.TITLE,
-      AiringTime: `${market.MarketRank}. ${market.MarketName}`,
-      Spots: market.TotalSpots,
-      Impressions: market.DisplayImpressions
-        ? market.DisplayImpressions / 1000
-        : market.DisplayImpressions,
-      StationImpressions: market.DisplayStationImpressions
-        ? market.DisplayStationImpressions / 1000
-        : market.DisplayStationImpressions,
-      // OvernightImpressions: market.TotalOvernightImpressions,
-      Cost: market.TotalCost,
+      rowType: rowTypes.SUB_TITLE,
+      AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
+      isStation: true,
       MarketId: market.MarketId,
-      isMarket: true // need for future use
+      StationCode: station.StationCode
     });
-    market.Stations.forEach(station => {
-      // station TotalStationImpressions?
+
+    station.Programs.forEach(program => {
       data.push({
-        rowType: rowTypes.SUB_TITLE,
-        AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
-        isStation: true,
+        rowType: rowTypes.DATA_ROW,
+        AiringTime: program.Daypart.Display,
+        Program: program.ProgramName,
+        CPM: program.BlendedCpm,
+        Spots: program.Spots,
+        Impressions: program.DisplayImpressions
+          ? program.DisplayImpressions / 1000
+          : program.DisplayImpressions,
+        StationImpressions: program.DisplayStationImpressions
+          ? program.DisplayStationImpressions / 1000
+          : program.DisplayStationImpressions,
+        HasImpressions: program.HasImpressions,
         MarketId: market.MarketId,
-        StationCode: station.StationCode
+        StationCode: station.StationCode,
+        ProgramId: program.ProgramId,
+        Cost: program.DisplayCost,
+        isProgram: true // need for future use
       });
-
-      station.Programs.forEach(program => {
-        data.push({
-          rowType: rowTypes.DATA_ROW,
-          AiringTime: program.Daypart.Display,
-          Program: program.ProgramName,
-          CPM: program.BlendedCpm,
-          Spots: program.Spots,
-          Impressions: program.DisplayImpressions
-            ? program.DisplayImpressions / 1000
-            : program.DisplayImpressions,
-          StationImpressions: program.DisplayStationImpressions
-            ? program.DisplayStationImpressions / 1000
-            : program.DisplayStationImpressions,
-          HasImpressions: program.HasImpressions,
-          MarketId: market.MarketId,
-          StationCode: station.StationCode,
-          ProgramId: program.ProgramId,
-          Cost: program.DisplayCost,
-          isProgram: true // need for future use
-        });
-      });
-
-      data.push({ rowType: rowTypes.EMPTY_ROW });
     });
+
+    data.push({ rowType: rowTypes.EMPTY_ROW });
   });
 
   return data;
 };
+
+const generateMarketData = markets =>
+  markets.map(market => ({
+    rowType: rowTypes.TITLE,
+    MarketRank: market.MarketRank,
+    MarketName: market.MarketName,
+    CPM: market.CPM,
+    Spots: market.TotalSpots,
+    Impressions: market.TotalImpressions
+      ? market.TotalImpressions / 1000
+      : market.TotalImpressions,
+    StationImpressions: market.DisplayStationImpressions
+      ? market.DisplayStationImpressions / 1000
+      : market.DisplayStationImpressions,
+    // OvernightImpressions: market.TotalOvernightImpressions,
+    Cost: market.TotalCost,
+    MarketId: market.MarketId,
+    isMarket: true // need for future use
+  }));
 
 const GreyDisplay = (value, isGrey) => {
   const color = isGrey ? "#8f8f8f" : "black";
@@ -160,17 +164,17 @@ const SpotCell = onChange => ({ value, original }) =>
     NumberCell({ value, original })
   );
 
-const generateColumns = onChange => [
+const generateProgramColumns = onChange => [
   {
     Header: "Airing Time",
     accessor: "AiringTime",
-    minWidth: 150,
+    minWidth: 90,
     Cell: GroupingCell
   },
   {
     Header: "Program",
     accessor: "Program",
-    minWidth: 200
+    minWidth: 150
   },
   {
     Header: "CPM",
@@ -199,4 +203,46 @@ const generateColumns = onChange => [
   }
 ];
 
-export { generateColumns, generateData, rowColors, rowTypes };
+const marketColumns = [
+  {
+    Header: "#",
+    accessor: "MarketRank",
+    minWidth: 25,
+    Cell: GroupingCell
+  },
+  {
+    Header: "Market",
+    accessor: "MarketName",
+    minWidth: 110,
+    Cell: GroupingCell
+  },
+  {
+    Header: "CPM",
+    accessor: "CPM",
+    Cell: DollarCell
+  },
+  {
+    Header: "Spots",
+    accessor: "Spots",
+    Cell: NumberCell
+  },
+  {
+    Header: "Impressions(000)",
+    accessor: "Impressions",
+    Cell: ImpressionCell
+  },
+  {
+    Header: "Cost",
+    accessor: "Cost",
+    Cell: DollarCell
+  }
+];
+
+export {
+  generateProgramColumns,
+  marketColumns,
+  generateMarketData,
+  generateProgramData,
+  rowColors,
+  rowTypes
+};

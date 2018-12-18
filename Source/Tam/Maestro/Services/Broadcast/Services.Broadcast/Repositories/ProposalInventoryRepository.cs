@@ -123,7 +123,7 @@ namespace Services.Broadcast.Repositories
                 c.inventory_detail_slot_proposal.RemoveRange(inventoryDetailSlotProposals);
                 */
 
-                var openMarket = from pv in context.proposals.Find(proposalId).proposal_versions
+                var openMarket = from pv in context.proposals.Find(proposalId).proposal_versions.Where(x => x.snapshot_date == null)
                                  from pvd in pv.proposal_version_details
                                  from pdq in pvd.proposal_version_detail_quarters
                                  from pdqw in pdq.proposal_version_detail_quarter_weeks

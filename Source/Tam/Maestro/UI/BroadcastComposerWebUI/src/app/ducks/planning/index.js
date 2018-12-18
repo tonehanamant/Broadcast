@@ -367,7 +367,6 @@ export default function reducer(state = initialState, action) {
         openMarketLoaded: true
       };
     }
-    case ACTIONS.LOAD_PRICING_DATA.success:
     case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
       return {
         ...state,
@@ -378,6 +377,19 @@ export default function reducer(state = initialState, action) {
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
         openMarketLoaded: true,
+        activeEditMarkets: cloneDeep(data.Data.AllMarkets),
+        isEditMarketsActive: false
+      };
+    }
+
+    case ACTIONS.LOAD_PRICING_DATA.success: {
+      return {
+        ...state,
+        openMarketData: data.Data,
+        hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
+        hasActiveDistribution: true,
+        activeOpenMarketData: data.Data,
+        isOpenMarketDataSortName: false,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };

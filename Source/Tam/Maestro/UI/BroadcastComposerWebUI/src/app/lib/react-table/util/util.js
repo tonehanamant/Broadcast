@@ -19,6 +19,7 @@ export const generetaColumns = (columns, displayColumns) =>
     const isShow = displayColumns[c.id];
     return {
       show: isNil(isShow) ? true : isShow,
+      minWidth: c.minWidth || 40,
       ...c
     };
   });

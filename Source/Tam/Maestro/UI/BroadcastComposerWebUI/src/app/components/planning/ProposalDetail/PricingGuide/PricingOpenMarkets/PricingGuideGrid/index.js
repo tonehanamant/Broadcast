@@ -1,50 +1,58 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Table, { withGrid } from "Lib/react-table";
 import PricingGuideGridHeader from "./PricingGuideGridHeader";
-import { generateData, rowColors, generateColumns, updateItem } from "./util";
+import PricingGuideViewGrid from "./PricingGuideViewGrid";
+import PricingGuideMasterGrid from "./PricingGuideMasterGrid";
+
+import "./index.scss";
 
 class PricingGuideGrid extends Component {
   constructor(props) {
     super(props);
 
-    this.onCellChange = this.onCellChange.bind(this);
+    this.onSelectMarket = this.onSelectMarket.bind(this);
+    this.state = {
+      selectedMarket: null
+    };
   }
 
-  onCellChange(...args) {
-    const { activeOpenMarketData, onAllocateSpots } = this.props;
-    const updatedMarkets = updateItem(activeOpenMarketData.Markets, ...args);
-    onAllocateSpots({ ...activeOpenMarketData, Markets: updatedMarkets });
+  onSelectMarket(rowIndex, row) {
+    this.setState({ selectedMarket: row.original.MarketId });
   }
 
   render() {
     const {
       activeOpenMarketData,
       hasOpenMarketData,
+      onAllocateSpots,
+      onSortedChange,
+      sorted,
       isOpenMarketDataSortName,
       isGuideEditing
     } = this.props;
-    const data = generateData(activeOpenMarketData.Markets);
-    const columns = generateColumns(this.onCellChange);
+    const { selectedMarket } = this.state;
 
     return (
-      <div>
+      <div className="pricing-open-market-grid">
         <PricingGuideGridHeader
           activeOpenMarketData={activeOpenMarketData}
           hasOpenMarketData={hasOpenMarketData}
           isOpenMarketDataSortName={isOpenMarketDataSortName}
           isGuideEditing={isGuideEditing}
         />
-        <Table
-          data={data}
-          style={{ marginTop: "6px", maxHeight: "500px" }}
-          columns={columns}
-          selection="none"
-          sortable={false}
-          getTrProps={(state, rowInfo) => ({
-            style: { backgroundColor: rowColors[rowInfo.original.rowType] }
-          })}
-        />
+        <div className="pricing-open-market-tables">
+          <PricingGuideMasterGrid
+            activeOpenMarketData={activeOpenMarketData}
+            onSelectMarket={this.onSelectMarket}
+            onSortedChange={onSortedChange}
+            sorted={sorted}
+          />
+          <PricingGuideViewGrid
+            activeOpenMarketData={activeOpenMarketData}
+            onAllocateSpots={onAllocateSpots}
+            selectedMarket={selectedMarket}
+          />
+        </div>
       </div>
     );
   }
@@ -55,6 +63,8 @@ PricingGuideGrid.propTypes = {
   hasOpenMarketData: PropTypes.bool.isRequired,
   isOpenMarketDataSortName: PropTypes.bool.isRequired,
   onAllocateSpots: PropTypes.func.isRequired,
+  onSortedChange: PropTypes.func.isRequired,
+  sorted: PropTypes.array.isRequired,
   isGuideEditing: PropTypes.bool.isRequired
 };
 
@@ -62,4 +72,4 @@ PricingGuideGrid.defaultProps = {
   detailId: null
 };
 
-export default withGrid(PricingGuideGrid);
+export default PricingGuideGrid;

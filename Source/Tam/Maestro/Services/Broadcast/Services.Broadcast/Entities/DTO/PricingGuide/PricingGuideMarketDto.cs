@@ -16,6 +16,7 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
         public decimal MinCpm { get; set; }
         public decimal AvgCpm { get; set; }
         public decimal MaxCpm { get; set; }
+        public decimal CPM { get; set; }
         public List<PricingGuideStationDto> Stations { get; set; } = new List<PricingGuideStationDto>();
         public double DisplayImpressions
         {

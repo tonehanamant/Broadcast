@@ -288,7 +288,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var proposalVersions = context.proposal_versions
-                        .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted)
+                        .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted && p.snapshot_date == null)
                         .ToList();
                     var posts = new List<PostedContracts>();
 
@@ -407,7 +407,8 @@ namespace Services.Broadcast.Repositories
                             from postlogClientScrubAudience in postlogClientScrub.postlog_client_scrub_audiences
                             where proposal.id == proposalId &&
                                   (ScrubbingStatus)postlogClientScrub.status == ScrubbingStatus.InSpec &&
-                                  ratingsAudiences.Contains(postlogClientScrubAudience.audience_id)
+                                  ratingsAudiences.Contains(postlogClientScrubAudience.audience_id) &&
+                                  proposalVersion.snapshot_date == null
                             select new PostImpressionsData
                             {
                                 Impressions = postlogClientScrubAudience.impressions,
@@ -553,7 +554,7 @@ namespace Services.Broadcast.Repositories
                                  from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                  from postlogFileScrub in proposalVersionWeeks.postlog_client_scrubs
                                  let postlogDetails = postlogFileScrub.postlog_file_details
-                                 where proposalVersions.proposal_id == proposalId
+                                 where proposalVersions.proposal_id == proposalId && proposalVersions.snapshot_date == null
                                  orderby proposalVersionDetail.id
                                  select new
                                  {

@@ -54,6 +54,7 @@
   "Markets": [
     {
       "AvgCpm": 0.9615421597775376059138688995,
+      "CPM": 1.2692356509063496398063069473,
       "DisplayImpressions": 34964.91714286,
       "DisplayStationImpressions": 51999.8,
       "MarketCoverage": 1.01,

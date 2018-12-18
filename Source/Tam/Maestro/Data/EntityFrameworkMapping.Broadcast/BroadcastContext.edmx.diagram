@@ -238,6 +238,13 @@
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" />
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" />
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_spot_snapshots" Width="1.5" PointX="29" PointY="12" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_proposal_version_detail_quarter_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

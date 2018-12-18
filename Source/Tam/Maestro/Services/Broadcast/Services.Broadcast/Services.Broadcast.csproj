@@ -261,6 +261,7 @@
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\ProprietaryTotalsDto.cs" />
+    <Compile Include="Entities\MarketRankingsByMediaMonth.cs" />
     <Compile Include="Entities\Nti\NtiRatingCategory.cs" />
     <Compile Include="Entities\Nti\NtiRatingDocument.cs" />
     <Compile Include="Entities\PricingGuideOpenMarketDistributionSaveRequest.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideOpenMarketInventoryRequestDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\OpenMarketPricingGuideDto.cs" />
     <Compile Include="Entities\PricingGuideOpenMarketInventory.cs" />
+    <Compile Include="Entities\OpenMarketInventory\ProposalVersionSnapshot.cs" />
     <Compile Include="Entities\SpotTrackerReport.cs" />
     <Compile Include="Entities\DTO\ProposalBuySaveRequestDto.cs" />
     <Compile Include="Entities\PostedContracts.cs" />

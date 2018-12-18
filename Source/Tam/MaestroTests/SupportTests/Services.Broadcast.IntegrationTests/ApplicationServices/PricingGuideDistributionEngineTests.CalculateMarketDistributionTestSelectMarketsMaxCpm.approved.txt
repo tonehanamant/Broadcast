@@ -1,6 +1,7 @@
 ﻿[
   {
     "AvgCpm": 0.0,
+    "CPM": 0.0,
     "DisplayImpressions": 0.0,
     "DisplayStationImpressions": 0.0,
     "MarketCoverage": 5.0,
@@ -16,6 +17,7 @@
   },
   {
     "AvgCpm": 0.0,
+    "CPM": 0.0,
     "DisplayImpressions": 0.0,
     "DisplayStationImpressions": 0.0,
     "MarketCoverage": 5.0,
@@ -31,6 +33,7 @@
   },
   {
     "AvgCpm": 0.0,
+    "CPM": 0.0,
     "DisplayImpressions": 0.0,
     "DisplayStationImpressions": 0.0,
     "MarketCoverage": 1.0,
@@ -46,6 +49,7 @@
   },
   {
     "AvgCpm": 0.0,
+    "CPM": 0.0,
     "DisplayImpressions": 0.0,
     "DisplayStationImpressions": 0.0,
     "MarketCoverage": 1.0,

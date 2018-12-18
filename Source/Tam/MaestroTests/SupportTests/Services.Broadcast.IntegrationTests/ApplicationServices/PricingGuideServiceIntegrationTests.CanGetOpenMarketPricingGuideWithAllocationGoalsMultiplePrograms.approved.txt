@@ -346,6 +346,7 @@
   "Markets": [
     {
       "AvgCpm": 41.102766392777755806232747603,
+      "CPM": 4.6155621370052694334397476826,
       "DisplayImpressions": 129995.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
@@ -525,6 +526,7 @@
     },
     {
       "AvgCpm": 5.3548957134059814185118744812,
+      "CPM": 5.3548957134059814185118744812,
       "DisplayImpressions": 46686.25,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
@@ -572,6 +574,7 @@
     },
     {
       "AvgCpm": 37.86777318881543223253608557,
+      "CPM": 17.481244081870493116760142763,
       "DisplayImpressions": 34322.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.214,
@@ -663,6 +666,7 @@
     },
     {
       "AvgCpm": 23.046703568789945497714606561,
+      "CPM": 9.345008363782485585324598866,
       "DisplayImpressions": 133761.25,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.194,
@@ -873,6 +877,7 @@
     },
     {
       "AvgCpm": 6.4278664276124321470385444059,
+      "CPM": 3.4504770284491830995635146559,
       "DisplayImpressions": 86944.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.177,
@@ -1074,6 +1079,7 @@
     },
     {
       "AvgCpm": 118.96080832836246976344852648,
+      "CPM": 40.993686972206280232844142002,
       "DisplayImpressions": 6098.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.136,
@@ -1240,6 +1246,7 @@
     },
     {
       "AvgCpm": 35.995558010262792455589774165,
+      "CPM": 31.397174254317111459968602826,
       "DisplayImpressions": 19110.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.133,
@@ -1384,6 +1391,7 @@
     },
     {
       "AvgCpm": 9.388585348532289254676934019,
+      "CPM": 7.1476435112798749162385526022,
       "DisplayImpressions": 53164.375,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.107,
@@ -1572,6 +1580,7 @@
     },
     {
       "AvgCpm": 13.866321469941659253223759907,
+      "CPM": 7.6695938950032595774053763853,
       "DisplayImpressions": 91269.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.084,
@@ -2020,6 +2029,7 @@
     },
     {
       "AvgCpm": 12.08123166740335624492774655,
+      "CPM": 4.4632182991950266996094683988,
       "DisplayImpressions": 15683.75,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.085,
@@ -2177,6 +2187,7 @@
     },
     {
       "AvgCpm": 0.0,
+      "CPM": 0.0,
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,
@@ -2224,6 +2235,7 @@
     },
     {
       "AvgCpm": 25.46023846944146309628001013,
+      "CPM": 20.348467506040951290855907414,
       "DisplayImpressions": 4914.375,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.069,
@@ -2390,6 +2402,7 @@
     },
     {
       "AvgCpm": 18.094197863941345373911458533,
+      "CPM": 4.6051116739580934837669813493,
       "DisplayImpressions": 32572.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.056,
@@ -2613,6 +2626,7 @@
     },
     {
       "AvgCpm": 116.86726455985559403607296926,
+      "CPM": 21.504412884727386765825903857,
       "DisplayImpressions": 27901.25,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.047,
@@ -2823,6 +2837,7 @@
     },
     {
       "AvgCpm": 193.17814029560531836431499034,
+      "CPM": 29.551373215374101915298376521,
       "DisplayImpressions": 3383.9375,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.031,
@@ -2936,6 +2951,7 @@
     },
     {
       "AvgCpm": 23.516859108610983778826097422,
+      "CPM": 15.191796429927838966957842765,
       "DisplayImpressions": 3291.25,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.022,
@@ -3049,6 +3065,7 @@
     },
     {
       "AvgCpm": 1566.3624529947387053911438499,
+      "CPM": 467.83625730994152046783625731,
       "DisplayImpressions": 855.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.004,
