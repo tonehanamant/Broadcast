@@ -869,6 +869,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         OpenMarketCpmTarget = OpenMarketCpmTarget.Min
                     }
                 };
+
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1486,6 +1487,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
 
             Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CopyToBuyNoProjectedImpressionsTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _PricingGuideService.CopyPricingGuideAllocationsToOpenMarket(9988);
+
+                var proposalOpenMarketInventoryService =
+                    IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
+
+                var inventory = proposalOpenMarketInventoryService.GetInventory(9988);
+
+                var resultJson = IntegrationTestHelper.ConvertToJson(inventory);
+
+                Approvals.Verify(resultJson);
+            }
         }
 
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
