@@ -93,11 +93,9 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Move invalid files to invalid files folder. Notify users about failed files
         /// </summary>
-        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the files to process</param>
-        public void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> validationList)
+        /// <param name="files">List of OutboundAffidavitFileValidationResultDto objects representing the invalid files to process</param>
+        public void ProcessAndSendInvalidDataFiles(List<WWTVOutboundFileValidationResult> invalidFiles)
         {
-            var invalidFiles = validationList.Where(v => v.Status == FileProcessingStatusEnum.Invalid);
-
             foreach (var invalidFile in invalidFiles)
             {
                 var invalidFilePath = _FileService.Move(invalidFile.FilePath, WWTVSharedNetworkHelper.GetLocalErrorFolder());

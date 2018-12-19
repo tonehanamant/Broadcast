@@ -12,13 +12,6 @@ namespace Services.Broadcast.Helpers
     public interface IExcelHelper : IApplicationService
     {
         /// <summary>
-        /// Checks if a certain file has .xlsx extention
-        /// </summary>
-        /// <param name="fileInfo">FileInfo Object</param>
-        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>
-        void CheckForExcelFileType(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult);
-
-        /// <summary>
         /// Get worksheet to process based on worksheet name
         /// </summary>
         /// <param name="fileInfo">FileInfo object</param>
@@ -49,21 +42,6 @@ namespace Services.Broadcast.Helpers
 
     public class ExcelHelper : IExcelHelper
     {
-
-        /// <summary>
-        /// Checks if a certain file has .xlsx extention
-        /// </summary>
-        /// <param name="fileInfo">FileInfo Object</param>
-        /// <param name="fileValidationResult">WWTVOutboundFileValidationResult object for error loading</param>
-        public void CheckForExcelFileType(FileInfo fileInfo, WWTVOutboundFileValidationResult fileValidationResult)
-        {
-            if (!fileInfo.Extension.Equals(".xlsx", StringComparison.InvariantCultureIgnoreCase))
-            {
-                fileValidationResult.ErrorMessages.Add($"Unknown extension type for file {fileValidationResult.FilePath}");
-                fileValidationResult.Status = FileProcessingStatusEnum.Invalid;
-            }
-        }
-
         /// <summary>
         /// Get worksheet to process based on worksheet name
         /// </summary>

@@ -214,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\OpenMarketInventory\AllocationsChangeRequest.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />
@@ -250,7 +251,7 @@
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
-    <Compile Include="Converters\PostLogBaseFileConverter.cs" />
+    <Compile Include="Helpers\CsvHelper.cs" />
     <Compile Include="Entities\DistributionProgram.cs" />
     <Compile Include="Entities\DTO\CheckForAllocatedSpotsRequestDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\OpenMarketTotalsDto.cs" />
