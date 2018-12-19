@@ -1101,7 +1101,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var pricingGuideProgram = pricingGuidePrograms.First(x => x.ProgramId == program.ManifestId);
                 program.TotalSpots = pricingGuideProgram.Spots;
-                program.TotalImpressions = pricingGuideProgram.Impressions;
+                program.TotalImpressions = pricingGuideProgram.DisplayStationImpressions == 0 ? 
+                    pricingGuideProgram.DisplayImpressions : pricingGuideProgram.DisplayStationImpressions;
                 program.SpotCost = pricingGuideProgram.CostPerSpot;
                 program.UnitImpressions = pricingGuideProgram.ImpressionsPerSpot;
             }
