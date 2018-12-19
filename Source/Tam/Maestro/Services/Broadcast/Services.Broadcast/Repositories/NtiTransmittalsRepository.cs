@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Nti;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -15,6 +18,13 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="file">NtiFile object to save</param>
         void SaveFile(NtiFile file);
+
+        /// <summary>
+        /// Gets the proposal weeks by myevents report name
+        /// </summary>
+        /// <param name="reportName">Report name to filter by</param>
+        /// <returns>List of NtiProposalVersionDetailWeek objects</returns>
+        List<NtiProposalVersionDetailWeek> GetProposalWeeksByReportName(string reportName);
     }
 
     public class NtiTransmittalsRepository : BroadcastRepositoryBase, INtiTransmittalsRepository
@@ -26,6 +36,29 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <summary>
+        /// Gets the proposal weeks by myevents report name
+        /// </summary>
+        /// <param name="reportName">Report name to filter by</param>
+        /// <returns>List of NtiProposalVersionDetailWeek objects</returns>
+        public List<NtiProposalVersionDetailWeek> GetProposalWeeksByReportName(string reportName)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var data = (from week in context.proposal_version_detail_quarter_weeks
+                                from affidavitClientScrub in week.affidavit_client_scrubs
+                                where week.myevents_report_name == reportName
+                                select new { week, affidavitClientScrub })
+                                .GroupBy(x => x.week.id);
+                    return data.Select(x => new NtiProposalVersionDetailWeek
+                    {
+                        WeekId = x.Key,
+                        NsiImpressions = x.Sum(y=>y.affidavitClientScrub.affidavit_client_scrub_audiences.Sum(w=>w.impressions))
+                    }).ToList();
+                });
+        }
+
+        /// <summary>
         /// Save a nti file to nti tables
         /// </summary>
         /// <param name="file">NtiFile object to save</param>
@@ -34,13 +67,17 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var nti_transmittals_file = _MapFromScrubbingFile(ntiFile);
+                    var nti_transmittals_file = _MapFromNtiFile(ntiFile);
+                    var weekIds = nti_transmittals_file.nti_transmittals_file_reports.SelectMany(y => y.nti_transmittals_audiences.Select(w => w.proposal_version_detail_quarter_week_id)).Distinct().ToList();
+                    var previouslyAudiences = context.nti_transmittals_audiences.Where(x => weekIds.Contains(x.proposal_version_detail_quarter_week_id)).ToList();
+
+                    context.nti_transmittals_audiences.RemoveRange(previouslyAudiences);
                     context.nti_transmittals_files.Add(nti_transmittals_file);
                     context.SaveChanges();
                 });
         }
 
-        private nti_transmittals_files _MapFromScrubbingFile(NtiFile ntiFile)
+        private nti_transmittals_files _MapFromNtiFile(NtiFile ntiFile)
         {
             return new nti_transmittals_files
             {
@@ -70,7 +107,13 @@ namespace Services.Broadcast.Repositories
                         impressions = y.Impressions,
                         percent = y.Percent,
                         VPVH = y.VPVH
-                    }).ToList()
+                    }).ToList(),
+                    nti_transmittals_audiences = x.ProposalWeeks.SelectMany(y => y.Audiences.Select(w => new nti_transmittals_audiences
+                    {
+                        audience_id = w.AudienceId,
+                        impressions = w.Impressions,
+                        proposal_version_detail_quarter_week_id = y.WeekId
+                    }).ToList()).ToList()
                 }).ToList()
             };
         }

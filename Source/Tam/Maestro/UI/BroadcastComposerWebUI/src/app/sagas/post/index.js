@@ -1066,15 +1066,23 @@ export function* requestProcessNtiFile(payload) {
   }
 }
 
-export function* processNtiFileSuccess() {
+export function* processNtiFileSuccess(req) {
+  const list =
+    Array.isArray(req.data.Data) || req.data.Data.length ? req.data.Data : "";
+  const scrollable =
+    Array.isArray(req.data.Data) || req.data.Data.length
+      ? "modalBodyScroll"
+      : null;
   yield put({
     type: ACTIONS.TOGGLE_MODAL,
     modal: {
       modal: "confirmModal",
       active: true,
       properties: {
+        bodyClass: scrollable,
         titleText: "Upload Complete",
-        bodyText: "File Processed, NTI data processed.",
+        bodyText: req.data.Message,
+        bodyList: list,
         closeButtonDisabled: true,
         // closeButtonText: "Continue",
         // closeButtonBsStyle: "success",

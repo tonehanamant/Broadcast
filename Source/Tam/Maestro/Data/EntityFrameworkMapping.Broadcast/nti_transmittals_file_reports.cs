@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public nti_transmittals_file_reports()
         {
             this.nti_transmittals_file_report_ratings = new HashSet<nti_transmittals_file_report_ratings>();
+            this.nti_transmittals_audiences = new HashSet<nti_transmittals_audiences>();
         }
     
         public int id { get; set; }
@@ -36,5 +37,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<nti_transmittals_file_report_ratings> nti_transmittals_file_report_ratings { get; set; }
         public virtual nti_transmittals_files nti_transmittals_files { get; set; }
+        public virtual ICollection<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
     }
 }

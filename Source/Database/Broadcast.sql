@@ -51,6 +51,39 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START BCOP-2801 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_audiences]'))
+BEGIN
+	CREATE TABLE [dbo].[nti_transmittals_audiences](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nti_transmittals_file_report_id] [INT] NOT NULL,
+	[proposal_version_detail_quarter_week_id] [INT] NOT NULL,
+	[audience_id] [INT] NOT NULL,
+	[impressions] [FLOAT] NOT NULL
+	 CONSTRAINT [PK_nti_transmittals_audiences] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[nti_transmittals_audiences]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_audiences_nti_transmittals_file_reports] FOREIGN KEY([nti_transmittals_file_report_id])
+	REFERENCES [dbo].[nti_transmittals_file_reports] ([id])
+	ON DELETE CASCADE
+	ALTER TABLE [dbo].[nti_transmittals_audiences] CHECK CONSTRAINT [FK_nti_transmittals_audiences_nti_transmittals_file_reports]
+	CREATE INDEX IX_nti_transmittals_audiences_nti_transmittals_file_report_id ON [nti_transmittals_audiences] ([nti_transmittals_file_report_id])
+
+	ALTER TABLE [dbo].[nti_transmittals_audiences]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_audiences_proposal_version_detail_quarter_weeks] FOREIGN KEY([proposal_version_detail_quarter_week_id])
+	REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
+	ALTER TABLE [dbo].[nti_transmittals_audiences] CHECK CONSTRAINT [FK_nti_transmittals_audiences_proposal_version_detail_quarter_weeks]
+	CREATE INDEX IX_nti_transmittals_audiences_proposal_version_detail_quarter_week_id ON [nti_transmittals_audiences] ([proposal_version_detail_quarter_week_id])
+
+	ALTER TABLE [dbo].[nti_transmittals_audiences]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_audiences_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[nti_transmittals_audiences] CHECK CONSTRAINT [FK_nti_transmittals_audiences_audiences]
+	CREATE INDEX IX_nti_transmittals_audiences_audience_id ON [nti_transmittals_audiences] ([audience_id])
+END
+/*************************************** END BCOP-2801 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -439,6 +439,9 @@
     <Compile Include="nsi_component_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="nti_transmittals_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="nti_transmittals_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

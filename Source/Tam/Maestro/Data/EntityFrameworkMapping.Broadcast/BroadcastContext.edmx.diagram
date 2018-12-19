@@ -245,6 +245,10 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_proposal_version_detail_quarter_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
+        <EntityTypeShape EntityType="BroadcastModel.nti_transmittals_audiences" Width="1.5" PointX="39.875" PointY="14.125" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_transmittals_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_transmittals_audiences_nti_transmittals_file_reports" />
+        <AssociationConnector Association="BroadcastModel.FK_nti_transmittals_audiences_proposal_version_detail_quarter_weeks" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
