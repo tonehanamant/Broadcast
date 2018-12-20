@@ -80,7 +80,7 @@ class PricingGoal extends Component {
       margin,
       impressionLoss,
       inflation
-    } = this.state;
+    } = this.props;
     this.setState({
       editingImpression: impression,
       editingBudget: budget,
