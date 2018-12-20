@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.OpenMarketInventory
@@ -268,7 +269,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
                         public bool? Sunday { get; set; }
                     }
 
-                    public class StationInventorySpotSnapshot
+                    public class StationInventorySpotSnapshot : IHaveSingleSharedPostingBooks
                     {
                         public int Id { get; set; }
 
@@ -295,6 +296,19 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
                         public decimal? SpotCost { get; set; }
 
                         public int AudienceId { get; set; }
+
+                        #region Temporary data for market rank calculation
+
+                        [JsonIgnore]
+                        public int? SingleProjectionBookId { get; set; }
+
+                        [JsonIgnore]
+                        public int? ShareProjectionBookId { get; set; }
+
+                        [JsonIgnore]
+                        public int BookId { get; set; }
+
+                        #endregion
                     }
                 }
             }
