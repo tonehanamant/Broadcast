@@ -7,6 +7,7 @@ function PricingGuideGridView({
   activeOpenMarketData,
   onSelectMarket,
   onSortedChange,
+  selectedMarket,
   sorted
 }) {
   const market = generateMarketData(activeOpenMarketData.Markets);
@@ -19,6 +20,7 @@ function PricingGuideGridView({
       onSelect={onSelectMarket}
       onSortedChange={onSortedChange}
       sorted={sorted}
+      selected={[selectedMarket.rowIndex]}
     />
   );
 }
@@ -27,7 +29,8 @@ PricingGuideGridView.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
   onSelectMarket: PropTypes.func.isRequired,
   onSortedChange: PropTypes.func.isRequired,
-  sorted: PropTypes.array.isRequired
+  sorted: PropTypes.array.isRequired,
+  selectedMarket: PropTypes.object.isRequired
 };
 
 PricingGuideGridView.defaultProps = {};

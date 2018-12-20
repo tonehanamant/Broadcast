@@ -60,14 +60,11 @@ class Table extends Component {
   }
 
   onRowClick(index, row) {
-    const {
-      dispatch,
-      selection,
-      onSelect,
-      hocState: { selected }
-    } = this.props;
-    if (rowSelection[selection] && !selected.includes(index)) {
-      onSelect(index, row);
+    const { dispatch, selection, onSelect, hocState, selected } = this.props;
+    const selectedValues = onSelect ? selected : hocState.selected;
+    if (onSelect) {
+      onSelect(index, row.original, row);
+    } else if (rowSelection[selection] && !selectedValues.includes(index)) {
       dispatch(rowSelection[selection](index));
     }
   }
@@ -83,11 +80,10 @@ class Table extends Component {
 
   _getTrProps(state, rowInfo) {
     if (!rowInfo) return {};
-    const {
-      hocState: { selected },
-      getTrProps
-    } = this.props;
-    const rowStyles = selected.includes(rowInfo.index)
+    const { hocState, getTrProps, selected, onSelect } = this.props;
+
+    const selectedValues = onSelect ? selected : hocState.selected;
+    const rowStyles = selectedValues.includes(rowInfo.index)
       ? selectedRowStyle
       : rowStyle;
     let trProps = {};
@@ -187,8 +183,9 @@ Table.defaultProps = {
   getTrProps: undefined,
   showPageSizeOptions: false,
   showPagination: false,
+  selected: undefined,
   selectOnRender: false,
-  onSelect: () => {},
+  onSelect: null,
   defaultPageSize: undefined
 };
 
@@ -202,6 +199,7 @@ Table.propTypes = {
   getTrProps: PropTypes.func,
   contextMenu: ContextMenuProps,
   selection: SelectionProps,
+  selected: PropTypes.array,
   showPagination: PropTypes.bool,
   showPageSizeOptions: PropTypes.bool,
   selectOnRender: PropTypes.bool,

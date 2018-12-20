@@ -49,10 +49,8 @@ const boldRowTypes = [rowTypes.TITLE, rowTypes.SUB_TITLE];
 const generateProgramData = (markets, selectedMarket) => {
   const data = [];
   if (!selectedMarket) return data;
-  // should add Ids for future?
   const market = markets.find(m => m.MarketId === selectedMarket);
-  market.Stations.forEach(station => {
-    // station TotalStationImpressions?
+  market.Stations.forEach((station, idx) => {
     data.push({
       rowType: rowTypes.SUB_TITLE,
       AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
@@ -82,8 +80,9 @@ const generateProgramData = (markets, selectedMarket) => {
         isProgram: true // need for future use
       });
     });
-
-    data.push({ rowType: rowTypes.EMPTY_ROW });
+    if (idx + 1 === station.length) {
+      data.push({ rowType: rowTypes.EMPTY_ROW });
+    }
   });
 
   return data;
@@ -122,6 +121,14 @@ const NumberCell = ({ value, original }) => {
   return GreyDisplay(retVal, inactive);
 };
 
+const SpotCell = ({ value, original }) => {
+  if (isNil(value)) return "-";
+  const inactive = original.isProgram
+    ? original.Spots === 0 || original.Impressions > 0
+    : false;
+  return GreyDisplay(numeral(value).format("0,0"), inactive);
+};
+
 const ImpressionCell = ({ value, original }) => {
   if (isNil(value)) return "";
   const inactive = original.isProgram
@@ -150,9 +157,11 @@ GroupingCell.propTypes = {
   value: PropTypes.string.isRequired
 };
 
-const SpotCell = onChange => ({ value, original }) =>
+const renderSpots = onChange => ({ value, original }) =>
   original.HasImpressions ? (
     <EditableCell
+      allowSubmitEmpty
+      clearEmptyValue={false}
       mask="integer"
       value={value}
       onChange={(...arg) => {
@@ -161,7 +170,7 @@ const SpotCell = onChange => ({ value, original }) =>
       id="Spots"
     />
   ) : (
-    NumberCell({ value, original })
+    SpotCell({ value, original })
   );
 
 const generateProgramColumns = onChange => [
@@ -184,7 +193,7 @@ const generateProgramColumns = onChange => [
   {
     Header: "Spots",
     accessor: "Spots",
-    Cell: SpotCell(onChange)
+    Cell: renderSpots(onChange)
   },
   {
     Header: "Impressions(000)",

@@ -63,6 +63,9 @@ const getMask = mask => {
   }
 };
 
+const isSubmit = (isAllow, prevValue, nextValue) =>
+  isAllow || (nextValue && nextValue !== prevValue);
+
 class EditableCell extends Component {
   constructor(props) {
     super(props);
@@ -111,7 +114,7 @@ class EditableCell extends Component {
       value: clearEmptyValue ? parsedValue || pVal || null : newValue,
       isFocused: false
     });
-    if ((allowSubmitEmpty || parsedValue) && parsedValue !== pVal) {
+    if (isSubmit(allowSubmitEmpty, pVal, parsedValue)) {
       this.onSubmit(parsedValue);
     }
   }

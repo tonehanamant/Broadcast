@@ -376,7 +376,6 @@ export default function reducer(state = initialState, action) {
         activeOpenMarketData: data.Data,
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
-        openMarketLoaded: true,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };
@@ -387,14 +386,16 @@ export default function reducer(state = initialState, action) {
         ...state,
         openMarketData: data.Data,
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
-        hasActiveDistribution: true,
         activeOpenMarketData: data.Data,
         isOpenMarketDataSortName: false,
+        openMarketLoading: false,
+        openMarketLoaded: true,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };
     }
 
+    case ACTIONS.LOAD_PRICING_DATA.failure:
     case ACTIONS.LOAD_OPEN_MARKET_DATA.failure: {
       return {
         ...state,
