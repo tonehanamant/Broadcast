@@ -12,16 +12,19 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class market_coverages
+    public partial class market_coverage_files
     {
-        public int id { get; set; }
-        public int rank { get; set; }
-        public int tv_homes { get; set; }
-        public double percentage_of_us { get; set; }
-        public short market_code { get; set; }
-        public int market_coverage_file_id { get; set; }
+        public market_coverage_files()
+        {
+            this.market_coverages = new HashSet<market_coverages>();
+        }
     
-        public virtual market market { get; set; }
-        public virtual market_coverage_files market_coverage_files { get; set; }
+        public int id { get; set; }
+        public string file_name { get; set; }
+        public string file_hash { get; set; }
+        public System.DateTime created_date { get; set; }
+        public string created_by { get; set; }
+    
+        public virtual ICollection<market_coverages> market_coverages { get; set; }
     }
 }

@@ -217,6 +217,8 @@
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\Nti\NtiProposalVersionDetailWeek.cs" />
+	<Compile Include="Entities\MarketCoverageDto.cs" />
+    <Compile Include="Entities\MarketCoverageFile.cs" />
     <Compile Include="Entities\OpenMarketInventory\AllocationsChangeRequest.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />

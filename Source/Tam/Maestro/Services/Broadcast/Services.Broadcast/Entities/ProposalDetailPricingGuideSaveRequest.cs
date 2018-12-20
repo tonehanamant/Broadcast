@@ -7,6 +7,7 @@ namespace Services.Broadcast.Entities
     public class ProposalDetailPricingGuideSaveRequest
     {
         public int ProposalDetailId { get; set; }
+        public int MarketCoverageFileId { get; set; }
         public double? ImpressionLoss { get; set; }
         public double? Margin { get; set; }
         public double? GoalImpression { get; set; }
@@ -16,7 +17,6 @@ namespace Services.Broadcast.Entities
         public decimal? CpmMax { get; set; }
         public int? UnitCapPerStation { get; set; }
         public OpenMarketCpmTarget? OpenMarketCpmTarget { get; set; }
-
         public List<ProprietaryPricingDto> ProprietaryPricing { get; set; } = new List<ProprietaryPricingDto>();
         public List<PricingGuideSaveMarketRequest> Markets { get; set; } = new List<PricingGuideSaveMarketRequest>();
         public OpenMarketTotalsDto OpenMarketTotals { get; set; }

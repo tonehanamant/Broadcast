@@ -84,6 +84,70 @@ BEGIN
 END
 /*************************************** END BCOP-2801 *****************************************************/
 
+/*************************************** START BCOP-4036 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[market_coverage_files]'))
+BEGIN
+	CREATE TABLE [dbo].[market_coverage_files]
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[file_name] [varchar](255) NOT NULL,
+		[file_hash] [varchar](255) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+	 CONSTRAINT [PK_market_coverage_files] PRIMARY KEY CLUSTERED 
+	 (
+		[id] ASC
+	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	SET IDENTITY_INSERT [dbo].[market_coverage_files] ON 
+	INSERT [dbo].[market_coverage_files] ([id], [file_name], [file_hash], [created_date], [created_by]) 
+	VALUES (1, N'Market_Coverages.xlsx', N'3E-E1-54-2A-6F-8C-C7-0E-5A-F3-1F-80-DA-01-EF-B8-C0-78-62-0B', CAST(N'2018-12-18T00:00:00.000' AS DateTime), N'CROSSMW\bbotelho')
+	SET IDENTITY_INSERT [dbo].[market_coverage_files] OFF
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'market_coverage_file_id'
+          AND Object_ID = Object_ID(N'[dbo].[market_coverages]'))
+BEGIN
+	ALTER TABLE [market_coverages]
+	ADD [market_coverage_file_id] INT NULL
+
+	EXEC('UPDATE [market_coverages]
+		  SET [market_coverage_file_id] = 1')
+
+	ALTER TABLE [market_coverages]
+	ALTER COLUMN [market_coverage_file_id] INT NOT NULL
+
+	ALTER TABLE [dbo].[market_coverages]  WITH CHECK ADD  CONSTRAINT [FK_market_coverages_market_coverage_files] FOREIGN KEY([market_coverage_file_id])
+	REFERENCES [dbo].[market_coverage_files] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[market_coverages] CHECK CONSTRAINT [FK_market_coverages_market_coverage_files]
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'market_coverage_file_id'
+          AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distributions]'))
+BEGIN
+	ALTER TABLE [dbo].[pricing_guide_distributions]
+	ADD market_coverage_file_id INT NULL
+
+	exec('update pricing_guide_distributions
+	      set market_coverage_file_id = (select top 1 id from market_coverage_files order by created_date desc)')
+
+	ALTER TABLE [dbo].[pricing_guide_distributions]
+	ALTER COLUMN market_coverage_file_id INT NOT NULL
+	
+	ALTER TABLE [dbo].[pricing_guide_distributions]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distributions_market_coverage_files] FOREIGN KEY([market_coverage_file_id])
+	REFERENCES [dbo].[market_coverage_files] ([id])
+	
+	ALTER TABLE [dbo].[pricing_guide_distributions] CHECK CONSTRAINT [FK_pricing_guide_distributions_market_coverage_files]
+END
+
+/*************************************** END BCOP-4036 *******************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

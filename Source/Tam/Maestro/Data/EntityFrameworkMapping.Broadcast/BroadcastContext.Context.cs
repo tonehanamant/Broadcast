@@ -125,5 +125,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<pricing_guide_distributions> pricing_guide_distributions { get; set; }
         public virtual DbSet<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual DbSet<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
+        public virtual DbSet<market_coverage_files> market_coverage_files { get; set; }
     }
 }

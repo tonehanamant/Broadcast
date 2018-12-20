@@ -23,6 +23,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class PricingGuideServiceIntegrationTests
     {
         private readonly IPricingGuideService _PricingGuideService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPricingGuideService>();
+        private readonly IMarketService _MarketService = IntegrationTestApplicationServiceFactory.GetApplicationService<IMarketService>();
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
         private readonly IDaypartCache _DaypartCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartCache>();
 
@@ -64,6 +65,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryTotals = new ProprietaryTotalsDto { Cost = 10, Cpm = 10, Impressions = 10000 },
                     UnitCapPerStation = 1,
                     ProposalDetailId = 13402,
+                    MarketCoverageFileId = 1,
                     Markets = new List<PricingGuideSaveMarketRequest>() {
                         new PricingGuideSaveMarketRequest
                         {
@@ -1433,6 +1435,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
 
             Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithLatestCoverage()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                const string filename = @".\Files\Market_Coverages_Pricing_Guide.xlsx";
+
+                _MarketService.LoadCoverages(filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+
+                var request = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 26024,
+                    ProposalDetailId = 9986,
+                    OpenMarketShare = 1,
+                    OpenMarketPricing = new OpenMarketPricingGuideDto
+                    {
+                        OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                    }
+                };
+
+                var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+
+                jsonResolver.Ignore(typeof(PricingGuideDto), "MarketCoverageFileId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings);
+
+                Approvals.Verify(resultJson);
+            }
         }
 
         [Test]

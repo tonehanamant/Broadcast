@@ -490,6 +490,12 @@
     <None Include="Files\Market_Coverages.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Market_Coverages_2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Market_Coverages_Pricing_Guide.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Market_Coverages_With_Not_Existing_Markets.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
