@@ -12,6 +12,7 @@ using System;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -561,7 +562,6 @@ namespace Services.Broadcast.Repositories
                                      proposalDetailId = proposalVersionDetail.id,
                                      postlogDetails,
                                      postlogFileScrub,
-                                     proposalVersionWeeks
                                  });
                     if (status.HasValue)
                     {
@@ -595,7 +595,7 @@ namespace Services.Broadcast.Repositories
                             MatchIsciDays = x.postlogFileScrub.match_isci_days,
                             Comments = x.postlogFileScrub.comment,
                             ClientISCI = x.postlogFileScrub.effective_client_isci,
-                            WeekStart = x.proposalVersionWeeks.start_date,
+                            WeekStart = x.postlogDetails.original_air_date.GetWeekMonday(),
                             ShowTypeName = x.postlogFileScrub.effective_show_type,
                             StatusOverride = x.postlogFileScrub.status_override,
                             Status = (ScrubbingStatus)x.postlogFileScrub.status,

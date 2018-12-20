@@ -151,7 +151,7 @@
       "StatusOverride": false,
       "SupliedProgramNameIsUsed": false,
       "TimeAired": 32400,
-      "WeekStart": "2016-06-07T00:00:00"
+      "WeekStart": "2016-05-30T00:00:00"
     }
   ],
   "Details": [
@@ -260,12 +260,11 @@
       "WNBC-TV"
     ],
     "DistinctWeekStarts": [
-      "2016-05-30T00:00:00",
-      "2016-06-07T00:00:00"
+      "2016-05-30T00:00:00"
     ],
     "TimeAiredEnd": 32400,
     "TimeAiredStart": 10900,
-    "WeekEnd": "2016-06-14T00:00:00",
+    "WeekEnd": "2016-06-06T00:00:00",
     "WeekStart": "2016-05-30T00:00:00"
   },
   "GuaranteedDemo": "House Holds",
