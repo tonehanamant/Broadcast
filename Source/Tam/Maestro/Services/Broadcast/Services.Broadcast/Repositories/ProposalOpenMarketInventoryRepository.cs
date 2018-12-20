@@ -148,6 +148,9 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.station_inventory_manifest.station.market)
                     .Include(x => x.station_inventory_manifest.station.market.market_coverages)
                     .Include(x => x.station_inventory_spot_audiences)
+                    .Include(x => x.proposal_version_detail_quarter_weeks)
+                    .Include(x => x.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters)
+                    .Include(x => x.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details)
                     .Where(x => x.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.proposal_versions.proposal_id == proposalId &&
                                 proposalDetailIds.Contains(x.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details.id))
                     .ToList();
@@ -160,7 +163,8 @@ namespace Services.Broadcast.Repositories
                         manifest = source.spot.station_inventory_manifest,
                         source.spot.station_inventory_manifest.station,
                         source.audience,
-                        daypart
+                        daypart,
+                        detail = source.spot.proposal_version_detail_quarter_weeks.proposal_version_detail_quarters.proposal_version_details
                     })
                     .Select(x => new StationInventorySpotSnapshot
                     {
@@ -174,7 +178,9 @@ namespace Services.Broadcast.Repositories
                         StationMarketCode = x.station.market_code,
                         SpotImpressions = x.audience.calculated_impressions,
                         SpotCost = x.audience.calculated_rate,
-                        AudienceId = x.audience.audience_id
+                        AudienceId = x.audience.audience_id,
+                        SingleProjectionBookId = x.detail.single_projection_book_id,
+                        ShareProjectionBookId = x.detail.share_projection_book_id
                     })
                     .ToList();
             });

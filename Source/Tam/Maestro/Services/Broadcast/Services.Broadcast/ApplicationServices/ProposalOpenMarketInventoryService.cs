@@ -838,22 +838,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetRanks(List<StationInventorySpotSnapshot> snapshots)
         {
-            var nsiMarketRepository = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>();
-            var mediaWeeks = snapshots.Select(x => x.MediaWeekId).Distinct();
-            var weekMonthMapping = new Dictionary<int, MediaMonth>();
+            snapshots.ForEach(x => x.BookId = ProposalServiceHelper.GetBookId(x));
 
-            foreach (var weekId in mediaWeeks)
-            {
-                weekMonthMapping[weekId] = _MediaMonthAndWeekAggregateCache.GetMediaMonthContainingMediaWeekId(weekId);
-            }
-
-            var mediaMonths = weekMonthMapping.Values.Select(x => x.Id);
-            var marketRankingsByMediaMonths = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonths(mediaMonths);
+            var bookIds = snapshots.Select(x => x.BookId).Distinct();
+            var marketRankingsByMediaMonths = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonths(bookIds);
 
             foreach (var snapshot in snapshots)
             {
-                var mediaMonthId = weekMonthMapping[snapshot.MediaWeekId].Id;
-                var marketRankings = marketRankingsByMediaMonths.Single(x => x.MediaMonthId == mediaMonthId, $"Rank for media month {mediaMonthId} is not found");
+                var marketRankings = marketRankingsByMediaMonths.Single(x => x.MediaMonthId == snapshot.BookId, $"Rank for media month {snapshot.BookId} is not found");
 
                 if (marketRankings.MarketCodeRankMappings.TryGetValue(snapshot.StationMarketCode, out var rank))
                 {
