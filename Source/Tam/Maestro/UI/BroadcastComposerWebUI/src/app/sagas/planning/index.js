@@ -1734,6 +1734,16 @@ export function* savePricingData(data) {
   }
 }
 
+export function* savePricingDataSuccess() {
+  yield put(
+    createAlert({
+      type: "success",
+      headline: "Pricing Guide Saved",
+      message: `Pricing Guide was successfully saved.`
+    })
+  );
+}
+
 export function* copyToBuySaga({ detailId }) {
   const { copyToBuy } = api.planning;
   try {
@@ -1969,6 +1979,10 @@ export function* watchLoadPricingData() {
 
 export function* watchLoadPricingDataSuccess() {
   yield takeEvery(ACTIONS.LOAD_PRICING_DATA.success, loadPricingDataSuccess);
+}
+
+export function* watchSavePricingDataSuccess() {
+  yield takeEvery(ACTIONS.SAVE_PRICING_GUIDE.success, savePricingDataSuccess);
 }
 
 export function* watchSavePricingData() {
