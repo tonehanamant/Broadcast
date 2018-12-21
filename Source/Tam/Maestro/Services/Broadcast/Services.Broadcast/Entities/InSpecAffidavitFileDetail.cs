@@ -9,7 +9,6 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public string Isci { get; set; }
         public string ProgramName { get; set; }
-        public string Comment { get; set; }
         public int SpotLengthId { get; set; }
         public int AirTime { get; set; }
         public DateTime AirDate { get; set; }

@@ -74,7 +74,6 @@ namespace Services.Broadcast.ReportGenerators
         private const string SPOT = "Spot";
         private const string POSTING_BOOK = "Posting Book";
         private const string PLAYBACK_TYPE = "Playback type";
-        private const string COMMENTS = "Comments";
 
         private const string BLUE_COLOR_CODE = "#A1E5FD";
         private const string GRAY_COLOR_CODE = "#b4bac4";
@@ -186,19 +185,14 @@ namespace Services.Broadcast.ReportGenerators
                     ws.Cells[rowOffset, columnOffset].Value = value;
                     columnOffset++;
                 }
-                
-                ws.Cells[rowOffset, columnOffset++].Value = row.Comment;
-                
+                                
                 //Apply formatting to every cell. Using ranges you cannot create the correct border
                 for (int i = firstDataColumn; i < columnOffset; i++)
                 {
                     ws.Cells[rowOffset, i].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     ws.Cells[rowOffset, i].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 }
-
-                // Left alignment for comments
-                ws.Cells[rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-
+                
                 rowOffset++;
                 columnOffset = firstDataColumn;
             }
@@ -390,17 +384,12 @@ namespace Services.Broadcast.ReportGenerators
             {
                 ws.Cells[rowOffset, columnOffset++].Value = $"{audience.Display} (000)";
             }
-
-            ws.Cells[rowOffset, columnOffset++].Value = COMMENTS;
-
+            
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Font.Bold = true;
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Border.BorderAround(ExcelBorderStyle.Thin);
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.Fill.BackgroundColor.SetColor(HEADER_BACKGROUND_COLOR);
             ws.Cells[rowOffset, 2, rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            // Left alignment for comments 
-            ws.Cells[rowOffset, columnOffset - 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
         }
     }
 }

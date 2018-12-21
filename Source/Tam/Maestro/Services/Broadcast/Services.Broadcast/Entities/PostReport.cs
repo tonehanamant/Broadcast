@@ -58,7 +58,6 @@ namespace Services.Broadcast.Entities
             public int TimeAired { get; set; }
             public DateTime DateAired { get; set; }
             public string ProgramName { get; set; }
-            public string Comment { get; set; }
             public int SpotLength { get; set; }
             public string Isci { get; set; }
             public string Advertiser { get; set; }
@@ -200,7 +199,6 @@ namespace Services.Broadcast.Entities
                 NetworkAffiliate = foundStation ? currentStation.Affiliation : string.Empty,
                 WeekStart = mediaWeekMappings[inspecAffidavitDetailFile.AirDate].StartDate,
                 ProgramName = inspecAffidavitDetailFile.ProgramName,
-                Comment = inspecAffidavitDetailFile.Comment,
                 Isci = inspecAffidavitDetailFile.Isci,
                 TimeAired = inspecAffidavitDetailFile.AirTime,
                 DateAired = inspecAffidavitDetailFile.AirDate,
@@ -219,7 +217,7 @@ namespace Services.Broadcast.Entities
                 ProposalDetailSpotLength = spotLengthMappings.Single(x => x.Value == inspecAffidavitDetailFile.ProposalDetailSpotLengthId).Key,
                 Adu = inspecAffidavitDetailFile.Adu,
                 Brand = inspecAffidavitDetailFile.Brand,
-                ProposalDetailPostingBook = mediaMonths.Single(x => x.Id == inspecAffidavitDetailFile.ProposalDetailPostingBookId).GetShortMonthNameAndYear(),
+                ProposalDetailPostingBook = mediaMonths.Single(x => x.Id == inspecAffidavitDetailFile.ProposalDetailPostingBookId).GetCompactMonthNameAndYear(),
                 ProposalDetailPlaybackType = EnumHelper.GetDescriptionAttribute(inspecAffidavitDetailFile.ProposalDetailPlaybackType)
             };
         }

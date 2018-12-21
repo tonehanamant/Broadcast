@@ -421,7 +421,6 @@ namespace Services.Broadcast.Repositories
                         Station = x.affidavitFileDetails.station,
                         Isci = x.affidavitClientScrub.effective_client_isci,
                         ProgramName = x.affidavitClientScrub.effective_program_name,
-                        Comment = x.affidavitClientScrub.comment,
                         SpotLengthId = x.affidavitFileDetails.spot_length_id,
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,
