@@ -161,7 +161,6 @@ const renderSpots = onChange => ({ value, original }) =>
   original.HasImpressions ? (
     <EditableCell
       allowSubmitEmpty
-      clearEmptyValue={false}
       mask="integer"
       value={value}
       onChange={(...arg) => {
