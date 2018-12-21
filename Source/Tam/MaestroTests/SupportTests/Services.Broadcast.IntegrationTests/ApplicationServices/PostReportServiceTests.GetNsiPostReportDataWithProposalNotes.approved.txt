@@ -4,8 +4,10 @@
   "Equivalized": false,
   "FlightDates": [],
   "GuaranteedDemo": "House Holds",
+  "IsNtiReport": false,
   "PlaybackTypes": [],
   "PostingBooks": [],
+  "PostType": "NSI",
   "ProposalAudiences": [
     {
       "Display": "HH",

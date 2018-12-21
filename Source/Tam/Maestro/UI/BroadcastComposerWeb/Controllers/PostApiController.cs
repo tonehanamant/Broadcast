@@ -44,7 +44,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadNSIPostReport/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReport(int proposalId)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateNSIPostReport(proposalId);
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GeneratePostReport(proposalId);
             var result = Request.CreateResponse(HttpStatusCode.OK);
 
             result.Content = new StreamContent(report.Stream);
@@ -61,7 +61,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("DownloadNSIPostReportWithOvernight/{proposalId}")]
         public HttpResponseMessage DownloadNSIPostReportWithOvernight(int proposalId)
         {
-            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GenerateNSIPostReport(proposalId, true);
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GeneratePostReport(proposalId, withOvernightImpressions: true);
             var result = Request.CreateResponse(HttpStatusCode.OK);
 
             result.Content = new StreamContent(report.Stream);
@@ -120,7 +120,7 @@ namespace BroadcastComposerWeb.Controllers
         [Route("ArchiveUnlinkedIsci")]
         public BaseResponse<bool> ArchiveUnlinkedIsci(List<string> iscis)
         {
-            return _ConvertToBaseResponse(() => 
+            return _ConvertToBaseResponse(() =>
             _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().ArchiveUnlinkedIsci(iscis, Identity.Name));
         }
 
@@ -136,7 +136,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpGet]
         [Route("FindValidIscis/{isci}")]
         public BaseResponse<List<string>> FindValidIscis(string isci)
-        { 
+        {
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IIsciService>().FindValidIscis(isci));
         }
@@ -166,7 +166,7 @@ namespace BroadcastComposerWeb.Controllers
             _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IAffidavitService>().UndoOverrideScrubbingStatus(request));
         }
-        
+
         [HttpPost]
         [Route("SwapProposalDetail")]
         public BaseResponse<bool> SwapProposalDetail(SwapProposalDetailRequest requestData)
@@ -180,6 +180,23 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse UploadNtiTransmittals(FileRequest request)
         {
             return _ApplicationServiceFactory.GetApplicationService<INtiTransmittalsService>().UploadNtiTransmittalsFile(request, Identity.Name);
+        }
+
+        [HttpGet]
+        [Route("DownloadNTIReport/{proposalId}")]
+        public HttpResponseMessage DownloadNTIReport(int proposalId)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostReportService>().GeneratePostReport(proposalId, isNtiReport: true);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
         }
     }
 }

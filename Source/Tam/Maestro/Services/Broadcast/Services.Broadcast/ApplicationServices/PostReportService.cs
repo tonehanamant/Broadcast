@@ -19,12 +19,13 @@ namespace Services.Broadcast.ApplicationServices
     public interface IPostReportService : IApplicationService
     {
         /// <summary>
-        /// Generates the excep NSI Post Report for a specific proposal
+        /// Generates the excel NSI or NTI Post Report for a specific proposal
         /// </summary>
         /// <param name="proposalId">Proposal id to generate the report for</param>
         /// <param name="withOvernightImpressions">Optional parameter used to generate the NSI report with overnight impressions</param>
+        /// <param name="isNtiReport">Optional parameter used to generate the NTI report</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
-        ReportOutput GenerateNSIPostReport(int proposalId, bool withOvernightImpressions = false);
+        ReportOutput GeneratePostReport(int proposalId, bool withOvernightImpressions = false, bool isNtiReport = false);
 
         /// <summary>
         /// Generates My Events report
@@ -34,12 +35,13 @@ namespace Services.Broadcast.ApplicationServices
         ReportOutput GenerateMyEventsReport(int proposalId);
 
         /// <summary>
-        /// Gets the NSI Post Report data
+        /// Gets the NSI/NTI Post Report data
         /// </summary>
         /// <param name="proposalId">Proposal Id to get the data for</param>
         /// <param name="withOvernightImpressions">Switch for overnight impressions</param>
-        /// <returns>List of NSIPostReportDto objects</returns>
-        NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions = false);
+        /// <param name="isNtiReport">Switch for NTI report</param>
+        /// <returns>List of PostReportDto objects</returns>
+        PostReport GetPostReportData(int proposalId, bool withOvernightImpressions = false, bool isNtiReport = false);
 
         /// <summary>
         /// Gets the My Events Report data
@@ -92,25 +94,27 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <summary>
-        /// Generates the excel NSI Post Report for a specific proposal
+        /// Generates the excel NSI or NTI Post Report for a specific proposal
         /// </summary>
         /// <param name="proposalId">Proposal id to generate the report for</param>
         /// <param name="withOvernightImpressions">Optional parameter used to generate the NSI report with overnight impressions</param>
+        /// <param name="isNtiReport">Optional parameter used to generate the NTI report</param>
         /// <returns>ReportOutput object containing the report and the filename</returns>
-        public ReportOutput GenerateNSIPostReport(int proposalId, bool withOvernightImpressions = false)
+        public ReportOutput GeneratePostReport(int proposalId, bool withOvernightImpressions = false, bool isNtiReport = false)
         {
-            var nsiPostReport = GetNsiPostReportData(proposalId, withOvernightImpressions);
-            var reportGenerator = new NSIPostReportGenerator(_LogoImage.Value);
+            var nsiPostReport = GetPostReportData(proposalId, withOvernightImpressions, isNtiReport);
+            var reportGenerator = new PostReportGenerator(_LogoImage.Value);
             return reportGenerator.Generate(nsiPostReport);
         }
 
         /// <summary>
-        /// Gets the NSI Post Report data
+        /// Gets the NSI/NTI Post Report data
         /// </summary>
         /// <param name="proposalId">Proposal Id to get the data for</param>
         /// <param name="withOvernightImpressions">Switch for overnight impressions</param>
-        /// <returns>List of NSIPostReportDto objects</returns>
-        public NsiPostReport GetNsiPostReportData(int proposalId, bool withOvernightImpressions)
+        /// <param name="isNtiReport">Switch for NTI report</param>
+        /// <returns>List of PostReportDto objects</returns>
+        public PostReport GetPostReportData(int proposalId, bool withOvernightImpressions, bool isNtiReport)
         {
             var proposal = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>().GetProposalById(proposalId);
             
@@ -142,9 +146,9 @@ namespace Services.Broadcast.ApplicationServices
             var postingBooks = _MediaMonthAndWeekCache.GetMediaMonthsByIds(inspecSpots.Select(x => x.ProposalDetailPostingBookId.Value).Distinct().ToList());
             var playbackTypes = inspecSpots.Select(x => x.ProposalDetailPlaybackType.Value).Distinct().ToList();
 
-            return new NsiPostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings,
+            return new PostReport(proposalId, inspecSpots, proposalAdvertiser.Display, proposalAudiences, audiencesMappings, spotLengthMappings,
                                                 mediaWeeks, stationMappings, nsiMarketRankings, guaranteedDemo, flights,
-                                                withOvernightImpressions, _ImpressionAdjustmentEngine, postingBooks, playbackTypes, proposal);
+                                                withOvernightImpressions, _ImpressionAdjustmentEngine, postingBooks, playbackTypes, proposal, isNtiReport);
         }
         /// <summary>
         /// 

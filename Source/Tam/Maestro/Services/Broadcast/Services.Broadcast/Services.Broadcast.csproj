@@ -216,6 +216,7 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
+    <Compile Include="Entities\Nti\NtiPdfDto.cs" />
     <Compile Include="Entities\Nti\NtiProposalVersionDetailWeek.cs" />
 	<Compile Include="Entities\MarketCoverageDto.cs" />
     <Compile Include="Entities\MarketCoverageFile.cs" />
@@ -268,7 +269,6 @@
     <Compile Include="Entities\DTO\PricingGuide\ProprietaryTotalsDto.cs" />
     <Compile Include="Entities\Nti\NtiFile.cs" />
     <Compile Include="Entities\MarketRankingsByMediaMonth.cs" />
-    <Compile Include="Entities\Nti\NtiPdfDto.cs" />
     <Compile Include="Entities\Nti\NtiRatingCategory.cs" />
     <Compile Include="Entities\Nti\NtiRatingCategoryDto.cs" />
     <Compile Include="Entities\Nti\NtiRatingDocument.cs" />
@@ -375,7 +375,7 @@
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\Enums\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
-    <Compile Include="Entities\DTO\NsiPostReport.cs" />
+    <Compile Include="Entities\PostReport.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
@@ -436,7 +436,7 @@
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
     <Compile Include="ReportGenerators\MyEventsReportGenerator.cs" />
-    <Compile Include="ReportGenerators\NSIPostReportGenerator.cs" />
+    <Compile Include="ReportGenerators\PostReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
     <Compile Include="Entities\InventoryDetail.cs" />
     <Compile Include="Entities\InventoryDetailSlot.cs" />

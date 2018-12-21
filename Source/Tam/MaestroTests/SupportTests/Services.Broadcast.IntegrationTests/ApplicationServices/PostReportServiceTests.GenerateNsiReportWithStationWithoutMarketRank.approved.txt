@@ -6,12 +6,14 @@
     "3Q'17: 4 weeks - 7/10, 7/17, 7/24, 7/31"
   ],
   "GuaranteedDemo": "House Holds",
+  "IsNtiReport": false,
   "PlaybackTypes": [
     "Live+3"
   ],
   "PostingBooks": [
     "July 2017"
   ],
+  "PostType": "NSI",
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -133,6 +135,9 @@
           "Isci": "BCOP3296VI",
           "Market": "Detroit",
           "NetworkAffiliate": "IND",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",
@@ -163,6 +168,9 @@
           "Isci": "BCOP3296II",
           "Market": "South Bend-Elkhart",
           "NetworkAffiliate": "PBS",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",
@@ -193,6 +201,9 @@
           "Isci": "BCOP3296III",
           "Market": "Bakersfield",
           "NetworkAffiliate": "I-S",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",
@@ -223,6 +234,9 @@
           "Isci": "BCOP3296IV",
           "Market": "Juneau",
           "NetworkAffiliate": "PBS",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",
@@ -253,6 +267,9 @@
           "Isci": "BCOP3296V",
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",
@@ -283,6 +300,9 @@
           "Isci": "BCOP3296I",
           "Market": "Raleigh-Durham (Fayetvlle)",
           "NetworkAffiliate": "PBS",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "Jul 2017",

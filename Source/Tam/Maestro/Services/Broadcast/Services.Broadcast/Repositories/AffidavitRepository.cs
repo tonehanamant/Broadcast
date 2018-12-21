@@ -27,6 +27,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="proposalId">Proposal Id to get the data for</param>
         /// <returns>List of NSIPostReportDto objects</returns>
         List<InSpecAffidavitFileDetail> GetInSpecSpotsForProposal(int proposalId);
+
         /// <summary>
         /// Persists a List of OutboundAffidavitFileValidationResultDto objects
         /// </summary>
@@ -415,7 +416,7 @@ namespace Services.Broadcast.Repositories
                                              affidavitClientScrub
                                          }).ToList();
 
-                    var inSpecAffidavitFileDetails = inSpecDetails.Select(x =>  new InSpecAffidavitFileDetail()
+                    var inSpecAffidavitFileDetails = inSpecDetails.Select(x => new InSpecAffidavitFileDetail()
                     {
                         Station = x.affidavitFileDetails.station,
                         Isci = x.affidavitClientScrub.effective_client_isci,
@@ -425,10 +426,9 @@ namespace Services.Broadcast.Repositories
                         AirTime = x.affidavitFileDetails.air_time,
                         AirDate = x.affidavitFileDetails.original_air_date,
                         DaypartName = x.proposalVersionDetail.daypart_code,
-                        AudienceImpressions = x.affidavitClientScrub.affidavit_client_scrub_audiences
-                             .ToDictionary(i => i.audience_id, j => j.impressions),
-                        OvernightImpressions = x.affidavitFileDetails.affidavit_file_detail_demographics
-                             .ToDictionary(i => i.audience_id.Value, j => j.overnight_impressions.Value),
+                        NsiImpressions = x.affidavitClientScrub.affidavit_client_scrub_audiences.ToDictionary(i => i.audience_id, j => j.impressions),
+                        OvernightImpressions = x.affidavitFileDetails.affidavit_file_detail_demographics.ToDictionary(i => i.audience_id.Value, j => j.overnight_impressions.Value),
+                        NtiImpressions = x.proposalVersionWeeks.nti_transmittals_audiences.ToDictionary(i => i.audience_id, j => j.impressions),
                         Quarter = x.proposalVersionQuarters.quarter,
                         Year = x.proposalVersionQuarters.year,
                         AdvertiserId = x.proposal.advertiser_id,
@@ -442,7 +442,8 @@ namespace Services.Broadcast.Repositories
                         Adu = x.proposalVersionDetail.adu,
                         HouseIsci = x.affidavitFileDetails.isci,
                         WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList()
-                    }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ThenBy(x=>x.Isci).ToList();
+
+                    }).OrderBy(x => x.Station).ThenBy(x => x.AirDate).ThenBy(x => x.AirTime).ThenBy(x => x.Isci).ToList();
 
                     return inSpecAffidavitFileDetails;
                 });

@@ -1,7 +1,6 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +9,7 @@ using System.Linq;
 
 namespace Services.Broadcast.ReportGenerators
 {
-    public class NSIPostReportGenerator : IReportGenerator<NsiPostReport>
+    public class PostReportGenerator : IReportGenerator<PostReport>
     {
         private static readonly HashSet<string> _QuarterTableHeader = new HashSet<string>
         {
@@ -97,7 +96,7 @@ namespace Services.Broadcast.ReportGenerators
         /// Constructor
         /// </summary>
         /// <param name="logo">Image object used as logo</param>
-        public NSIPostReportGenerator(Image logo)
+        public PostReportGenerator(Image logo)
         {
             _Logo = logo;
         }
@@ -107,7 +106,7 @@ namespace Services.Broadcast.ReportGenerators
         /// </summary>
         /// <param name="reportData">Data object used to generate the report</param>
         /// <returns>ReportOutput object containing the generated file stream</returns>
-        public ReportOutput Generate(NsiPostReport reportData)
+        public ReportOutput Generate(PostReport reportData)
         {
             var output = new ReportOutput(reportData.ReportName);
 
@@ -120,7 +119,7 @@ namespace Services.Broadcast.ReportGenerators
             return output;
         }
 
-        private ExcelPackage _GenerateExcelPackage(NsiPostReport reportData)
+        private ExcelPackage _GenerateExcelPackage(PostReport reportData)
         {
             var package = new ExcelPackage(new MemoryStream());
 
@@ -136,7 +135,7 @@ namespace Services.Broadcast.ReportGenerators
             return package;
         }
 
-        private void _AddQuarterTab(ExcelWorksheet ws, NsiPostReport reportData, NsiPostReport.NsiPostReportQuarterTab quarterTab)
+        private void _AddQuarterTab(ExcelWorksheet ws, PostReport reportData, PostReport.NsiPostReportQuarterTab quarterTab)
         {
             var excelPicture = ws.Drawings.AddPicture("logo", _Logo);
             excelPicture.SetPosition(1, 0, 1, 0);
@@ -207,7 +206,7 @@ namespace Services.Broadcast.ReportGenerators
             ws.Cells.AutoFitColumns();
         }
 
-        private void _AddSummaryTab(ExcelWorksheet wsSummary, NsiPostReport reportData)
+        private void _AddSummaryTab(ExcelWorksheet wsSummary, PostReport reportData)
         {
             wsSummary.View.ShowGridLines = false;
             wsSummary.Cells.Style.Font.Size = FONT_SIZE_SUMMARY_TAB;
@@ -233,7 +232,7 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"B{rowOffset}:K{rowOffset + offset}"].Style.Fill.BackgroundColor.SetColor(NOTES_BACKGROUND_COLOR);
         }
 
-        private int _AddSummaryTabQuartersTable(ExcelWorksheet wsSummary, NsiPostReport reportData, int rowOffset)
+        private int _AddSummaryTabQuartersTable(ExcelWorksheet wsSummary, PostReport reportData, int rowOffset)
         {
             foreach (var quarterTable in reportData.QuarterTables)
             {
@@ -326,7 +325,7 @@ namespace Services.Broadcast.ReportGenerators
             wsSummary.Cells[$"B{tableHeaderRowIndex}:N{rowOffset}"].AutoFitColumns();
         }
 
-        private int _AddSummaryTabHeader(ExcelWorksheet wsSummary, NsiPostReport reportData)
+        private int _AddSummaryTabHeader(ExcelWorksheet wsSummary, PostReport reportData)
         {
             var excelPicture1 = wsSummary.Drawings.AddPicture("logo", _Logo);
             excelPicture1.SetPosition(1, 0, 1, 0);
@@ -346,7 +345,7 @@ namespace Services.Broadcast.ReportGenerators
                 { "I12", "Date:"},
                 { "I13", "Report:"},
                 { "J9", reportData.GuaranteedDemo },
-                { "J10", "NSI"},
+                { "J10", reportData.PostType},
                 { "J11", reportData.SpotLengthsDisplay},
                 { "J12", DateTime.Now.ToShortDateString()},
             };
@@ -377,7 +376,7 @@ namespace Services.Broadcast.ReportGenerators
             return ++rowOffset;
         }
 
-        private void _BuildCommonHeader(ExcelWorksheet ws, NsiPostReport reportData)
+        private void _BuildCommonHeader(ExcelWorksheet ws, PostReport reportData)
         {
             // header
             var rowOffset = 9;

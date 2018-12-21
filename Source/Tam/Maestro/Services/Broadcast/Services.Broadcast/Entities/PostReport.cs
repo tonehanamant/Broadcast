@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -8,13 +9,14 @@ using System.Linq;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
-namespace Services.Broadcast.Entities.DTO
+namespace Services.Broadcast.Entities
 {
-    public class NsiPostReport
+    public class PostReport
     {
         public bool Equivalized { get; set; }
         public bool WithOvernightImpressions { get; set; } = false;
-        public List<NsiPostReportQuarterSummaryTable> QuarterTables { get; set; } = new List<NsiPostReportQuarterSummaryTable>();
+        public bool IsNtiReport { get; set; } = false;
+        public List<PostReportQuarterSummaryTable> QuarterTables { get; set; } = new List<PostReportQuarterSummaryTable>();
         public List<NsiPostReportQuarterTab> QuarterTabs { get; set; } = new List<NsiPostReportQuarterTab>();
         public List<LookupDto> ProposalAudiences { get; set; }
         public string GuaranteedDemo { get; set; }
@@ -26,6 +28,7 @@ namespace Services.Broadcast.Entities.DTO
         public List<string> PostingBooks { get; set; }
         public List<string> PlaybackTypes { get; set; }
         public string ProposalNotes { get; set; }
+        public string PostType { get; set; }
 
         private const string SUMMARY_TABLE_NAME_FORMAT = "{0}Q'{1}";
         private const string SPOT_DETAIL_TAB_NAME_FORMAT = "Spot Detail {0}Q{1}";
@@ -38,7 +41,7 @@ namespace Services.Broadcast.Entities.DTO
             public List<NsiPostReportQuarterTabRow> TabRows { get; set; }
         }
 
-        public class NsiPostReportQuarterSummaryTable
+        public class PostReportQuarterSummaryTable
         {
             public string TableName { get; set; }
             public List<NsiPostReportQuarterSummaryTableRow> TableRows { get; set; }
@@ -64,6 +67,7 @@ namespace Services.Broadcast.Entities.DTO
             public string ProposalDetailPlaybackType { get; set; }
             public string DaypartName { get; set; }
             public Dictionary<int, double> AudienceImpressions { get; set; } = new Dictionary<int, double>();
+            public Dictionary<int, double> NtiImpressions { get; set; } = new Dictionary<int, double>();
             public decimal ProposalWeekTotalCost { get; set; }
             public decimal ProposalWeekCost { get; set; }
             public decimal ProposalWeekCPM { get; set; }
@@ -92,7 +96,7 @@ namespace Services.Broadcast.Entities.DTO
             public bool Adu { get; set; }
         }
 
-        public NsiPostReport(int proposalId, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails,
+        public PostReport(int proposalId, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails,
                             string advertiser, List<LookupDto> proposalAudiences,
                             Dictionary<int, List<int>> audienceMappings,
                             Dictionary<int, int> spotLengthMappings,
@@ -105,17 +109,20 @@ namespace Services.Broadcast.Entities.DTO
                             IImpressionAdjustmentEngine impressionAdjustmentEngine,
                             List<MediaMonth> mediaMonths,
                             List<ProposalEnums.ProposalPlaybackType> playbackTypes,
-                            ProposalDto proposal)
+                            ProposalDto proposal,
+                            bool isNtiReport)
         {
             WithOvernightImpressions = withOvernightImpressions;
             GuaranteedDemo = guaranteedDemo;
             ProposalAudiences = proposalAudiences;
-            ReportName = _GenerateReportName(proposal.ProposalName, inSpecAffidavitFileDetails, advertiser, withOvernightImpressions);
+            ReportName = _GenerateReportName(proposal.ProposalName, inSpecAffidavitFileDetails, advertiser, withOvernightImpressions, isNtiReport);
             Advertiser = advertiser;
             PostingBooks = mediaMonths.Select(x => x.LongMonthNameAndYear).ToList();
-            PlaybackTypes = playbackTypes.Select(x=>EnumHelper.GetDescriptionAttribute(x)).ToList();
+            PlaybackTypes = playbackTypes.Select(x => EnumHelper.GetDescriptionAttribute(x)).ToList();
             ProposalNotes = proposal.Notes;
             Equivalized = proposal.Equivalized;
+            IsNtiReport = isNtiReport;
+            PostType = proposal.PostType.ToString();
 
             //map the data
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
@@ -127,37 +134,44 @@ namespace Services.Broadcast.Entities.DTO
                     Title = string.Format(SPOT_DETAIL_TAB_TITLE_FORMAT, advertiser, group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
                     TabRows = group.Select(r =>
                     {
-                        var audienceImpressions = ProposalAudiences
-                        .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.AudienceImpressions
+                        var nsiImpressions = ProposalAudiences
+                        .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.NsiImpressions
                             .Where(i => audienceMappings.Where(m => m.Key == proposalAudience.Id).SelectMany(m => m.Value).Contains(i.Key))
                             .Select(i => i.Value).Sum());
-                        
-                        _ApplyOvernightImpressions(audienceImpressions, r.OvernightImpressions);
-                        _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key, ref audienceImpressions);
 
-                        return _MapNsiPostReportQuarterTabRow(advertiser, spotLengthMappings, mediaWeekMappings, r, audienceImpressions, stationMappings, nsiMarketRankings, mediaMonths);
+                        var ntiImpressions = ProposalAudiences
+                                        .ToDictionary(proposalAudience => proposalAudience.Id, proposalAudience => r.NtiImpressions
+                                            .Where(i => audienceMappings.Where(m => m.Key == proposalAudience.Id).SelectMany(m => m.Value).Contains(i.Key))
+                                            .Select(i => i.Value).Sum());
+                        _ApplyOvernightImpressions(nsiImpressions, r.OvernightImpressions);
+
+                        _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key, ref nsiImpressions);
+                        _EquivalizeImpressions(impressionAdjustmentEngine, spotLengthMappings.Single(x => x.Value == r.ProposalDetailSpotLengthId).Key, ref ntiImpressions);
+
+                        return _MapNsiPostReportQuarterTabRow(advertiser, spotLengthMappings, mediaWeekMappings, r, nsiImpressions,
+                                         ntiImpressions, stationMappings, nsiMarketRankings, mediaMonths);
                     }).ToList()
                 };
 
                 QuarterTabs.Add(tab);
 
                 QuarterTables.Add(
-                    new NsiPostReportQuarterSummaryTable()
+                    new PostReportQuarterSummaryTable()
                     {
                         TableName = String.Format(SUMMARY_TABLE_NAME_FORMAT, group.Key.Quarter, group.Key.Year.ToString().Substring(2)),
-                        TableRows = _LoadNsiPostReportQuarterSummaryTableRows(tab.TabRows, proposal.GuaranteedDemoId)
+                        TableRows = _LoadPostReportQuarterSummaryTableRows(tab.TabRows, proposal.GuaranteedDemoId, isNtiReport)
                     });
             }
 
             _ApplyAduAdjustments(QuarterTables);
             FlightDates = _GetFormattedFlights(flights, QuarterTables);
-            SpotLengthsDisplay = _GetFormattedSpotLengths(QuarterTables, Equivalized);
+            SpotLengthsDisplay = _GetFormattedSpotLengths(QuarterTables);
         }
 
-        private string _GetFormattedSpotLengths(List<NsiPostReportQuarterSummaryTable> quarterTables, bool equivalized)
+        private string _GetFormattedSpotLengths(List<PostReportQuarterSummaryTable> quarterTables)
         {
             string result = string.Join(" & ", quarterTables.SelectMany(x => x.TableRows.Select(y => y.SpotLength)).Distinct().OrderBy(x => x).Select(x => $":{x}s").ToList());
-            if (equivalized)
+            if (Equivalized)
             {
                 result += " (Equivalized)";
             }
@@ -169,6 +183,7 @@ namespace Services.Broadcast.Entities.DTO
                                     Dictionary<DateTime, MediaWeek> mediaWeekMappings,
                                     InSpecAffidavitFileDetail inspecAffidavitDetailFile,
                                     Dictionary<int, double> audienceImpressions,
+                                    Dictionary<int, double> ntiImpressions,
                                     Dictionary<string, DisplayBroadcastStation> stationMappings,
                                     Dictionary<int, Dictionary<int, int>> nsiMarketRankings,
                                     List<MediaMonth> mediaMonths)
@@ -193,6 +208,7 @@ namespace Services.Broadcast.Entities.DTO
                 Advertiser = advertiser,
                 DaypartName = inspecAffidavitDetailFile.Adu ? "ADU" : inspecAffidavitDetailFile.DaypartName,
                 AudienceImpressions = audienceImpressions,
+                NtiImpressions = ntiImpressions,
                 ProposalWeekTotalCost = inspecAffidavitDetailFile.ProposalWeekTotalCost,
                 ProposalWeekCost = inspecAffidavitDetailFile.ProposalWeekCost,
                 ProposalWeekTotalImpressionsGoal = inspecAffidavitDetailFile.ProposalWeekTotalImpressionsGoal,
@@ -208,7 +224,7 @@ namespace Services.Broadcast.Entities.DTO
             };
         }
 
-        private List<NsiPostReportQuarterSummaryTableRow> _LoadNsiPostReportQuarterSummaryTableRows(List<NsiPostReportQuarterTabRow> tabRows, int guaranteedDemoId)
+        private List<NsiPostReportQuarterSummaryTableRow> _LoadPostReportQuarterSummaryTableRows(List<NsiPostReportQuarterTabRow> tabRows, int guaranteedDemoId, bool isNtiReport)
         {
             return tabRows.GroupBy(x => new
             {
@@ -220,12 +236,14 @@ namespace Services.Broadcast.Entities.DTO
             {
                 var items = x.ToList();
                 var row = new NsiPostReportQuarterSummaryTableRow
-                {   
+                {
                     Contract = x.Key.DaypartName,
                     SpotLength = x.Key.ProposalDetailSpotLength,
                     WeekStartDate = x.Key.WeekStart,
                     Spots = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekUnits }).Select(y => y.Key.ProposalWeekUnits).Sum(),
-                    ActualImpressions = items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
+                    ActualImpressions = isNtiReport
+                    ? items.Select(y => y.NtiImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum()
+                    : items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
                     ProposalWeekTotalCost = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalCost }).Select(y => y.Key.ProposalWeekTotalCost).Sum(),
                     ProposalWeekTotalImpressionsGoal = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalImpressionsGoal }).Select(y => y.Key.ProposalWeekTotalImpressionsGoal).Sum()
                 };
@@ -255,7 +273,7 @@ namespace Services.Broadcast.Entities.DTO
             return rank;
         }
 
-        private string _GenerateReportName(string proposalName, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails, string advertiser, bool withOvernightImpressions)
+        private string _GenerateReportName(string proposalName, List<InSpecAffidavitFileDetail> inSpecAffidavitFileDetails, string advertiser, bool withOvernightImpressions, bool isNtiReport)
         {
             var quartersGroup = inSpecAffidavitFileDetails.GroupBy(d => new { d.Year, d.Quarter }).OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Quarter);
 
@@ -263,19 +281,24 @@ namespace Services.Broadcast.Entities.DTO
             {
                 string firstQuarter = $"{quartersGroup.Select(x => x.Key.Quarter).First() }Q{ quartersGroup.Select(x => x.Key.Year.ToString().Substring(2)).First()}";
                 string lastQuarter = $"{quartersGroup.Select(x => x.Key.Quarter).Last() }Q{ quartersGroup.Select(x => x.Key.Year.ToString().Substring(2)).Last()}";
-                return String.Format("{0} - {1} - Cadent Network {2} Post Report{3}.xlsx",
+                return String.Format("{0} - {1} - Cadent Network {2} Post Report{3}{4}.xlsx",
                     proposalName,
                     advertiser,
                     firstQuarter.Equals(lastQuarter) ? firstQuarter : $"{firstQuarter}-{lastQuarter}",
+                    isNtiReport ? " - NTI" : string.Empty,
                     WithOvernightImpressions ? " with Overnights" : string.Empty);
             }
             else
             {
-                return $"{proposalName} - {advertiser} - Cadent Network Post Report{(WithOvernightImpressions ? " with Overnights" : string.Empty)}.xlsx";
+                return String.Format("{0} - {1} - Cadent Network Post Report{2}{3}.xlsx",
+                    proposalName,
+                    advertiser,
+                    isNtiReport ? " - NTI" : string.Empty,
+                    WithOvernightImpressions ? " with Overnights" : string.Empty);
             }
         }
 
-        private void _ApplyAduAdjustments(List<NsiPostReportQuarterSummaryTable> quarterTables)
+        private void _ApplyAduAdjustments(List<PostReportQuarterSummaryTable> quarterTables)
         {
             foreach (var quarterTable in quarterTables)
             {
@@ -339,7 +362,7 @@ namespace Services.Broadcast.Entities.DTO
             }
         }
 
-        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<NsiPostReportQuarterSummaryTable> quarterTables)
+        private List<string> _GetFormattedFlights(List<Tuple<DateTime, DateTime>> flightDates, List<PostReportQuarterSummaryTable> quarterTables)
         {
             List<string> flights = new List<string>();
             if (quarterTables.Count() > 1)

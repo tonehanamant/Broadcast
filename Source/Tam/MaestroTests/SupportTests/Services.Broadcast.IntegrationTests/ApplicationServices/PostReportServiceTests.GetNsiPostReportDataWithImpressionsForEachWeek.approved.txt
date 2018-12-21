@@ -8,12 +8,14 @@
     "2Q'16: 2 weeks - 5/30, 6/6"
   ],
   "GuaranteedDemo": "House Holds",
+  "IsNtiReport": false,
   "PlaybackTypes": [
     "Live+3"
   ],
   "PostingBooks": [
     "May 2016"
   ],
+  "PostType": "NSI",
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -110,6 +112,9 @@
           "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "May 2016",
@@ -140,6 +145,9 @@
           "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "May 2016",
@@ -176,6 +184,9 @@
           "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "May 2016",
@@ -206,6 +217,9 @@
           "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "May 2016",
@@ -236,6 +250,9 @@
           "Isci": null,
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
           "ProposalDetailPostingBook": "May 2016",
