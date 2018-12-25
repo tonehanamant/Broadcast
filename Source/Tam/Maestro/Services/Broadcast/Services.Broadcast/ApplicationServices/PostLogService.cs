@@ -138,7 +138,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramScrubbingEngine _ProgramScrubbingEngine;
         private readonly IMatchingEngine _MatchingEngine;
         private readonly IIsciService _IsciService;
-        
+
         private readonly Dictionary<int, int> _SpotLengthsDict;
         private const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
@@ -520,36 +520,47 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData, Dictionary<int, int> spotsLengths)
         {
-            return clientScrubsData.Select(x => new ProposalDetailPostScrubbingDto()
+            return clientScrubsData.Select(x =>
             {
-                SpotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key,
-                Affiliate = x.Affiliate,
-                ClientISCI = x.ClientISCI,
-                Comments = x.Comments,
-                DateAired = x.DateAired,
-                DayOfWeek = x.DayOfWeek,
-                GenreName = x.GenreName,
-                ISCI = x.ISCI,
-                Market = x.Market,
-                MatchDate = x.MatchDate,
-                MatchGenre = x.MatchGenre,
-                MatchIsci = x.MatchIsci,
-                MatchIsciDays = x.MatchIsciDays,
-                MatchMarket = x.MatchMarket,
-                MatchProgram = x.MatchProgram,
-                MatchShowType = x.MatchShowType,
-                MatchStation = x.MatchStation,
-                MatchTime = x.MatchTime,
-                ProgramName = x.ProgramName,
-                ProposalDetailId = x.ProposalDetailId,
-                ScrubbingClientId = x.ScrubbingClientId,
-                Sequence = x.Sequence,
-                ShowTypeName = x.ShowTypeName,
-                Station = x.Station,
-                Status = x.Status,
-                StatusOverride = x.StatusOverride,
-                TimeAired = x.TimeAired,
-                WeekStart = x.WeekStart
+                var spotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key;
+                var isIsciMarried = x.WeekIscis.SingleOrDefault(i => i.HouseIsci == x.ISCI)?.MarriedHouseIsci ?? false;
+
+                if (isIsciMarried)
+                {
+                    // We assume that married ISCIs are always two. So that married spot length is half of what is received
+                    spotLength /= 2;
+                }
+                return new ProposalDetailPostScrubbingDto()
+                {
+                    SpotLength = spotLength,
+                    Affiliate = x.Affiliate,
+                    ClientISCI = x.ClientISCI,
+                    Comments = x.Comments,
+                    DateAired = x.DateAired,
+                    DayOfWeek = x.DayOfWeek,
+                    GenreName = x.GenreName,
+                    ISCI = x.ISCI,
+                    Market = x.Market,
+                    MatchDate = x.MatchDate,
+                    MatchGenre = x.MatchGenre,
+                    MatchIsci = x.MatchIsci,
+                    MatchIsciDays = x.MatchIsciDays,
+                    MatchMarket = x.MatchMarket,
+                    MatchProgram = x.MatchProgram,
+                    MatchShowType = x.MatchShowType,
+                    MatchStation = x.MatchStation,
+                    MatchTime = x.MatchTime,
+                    ProgramName = x.ProgramName,
+                    ProposalDetailId = x.ProposalDetailId,
+                    ScrubbingClientId = x.ScrubbingClientId,
+                    Sequence = x.Sequence,
+                    ShowTypeName = x.ShowTypeName,
+                    Station = x.Station,
+                    Status = x.Status,
+                    StatusOverride = x.StatusOverride,
+                    TimeAired = x.TimeAired,
+                    WeekStart = x.WeekStart
+                };
             }).ToList();
         }
 
@@ -741,7 +752,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     _ProgramScrubbingEngine.Scrub(proposalDetail, detail, scrub);
 
-                    scrub.Status = (scrub.MatchStation && scrub.MatchMarket && scrub.MatchGenre && scrub.MatchProgram && scrub.MatchTime 
+                    scrub.Status = (scrub.MatchStation && scrub.MatchMarket && scrub.MatchGenre && scrub.MatchProgram && scrub.MatchTime
                         && scrub.MatchIsciDays && scrub.MatchDate && scrub.MatchShowType && scrub.MatchIsci)
                         ? ScrubbingStatus.InSpec
                         : ScrubbingStatus.OutOfSpec;
@@ -862,7 +873,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return matchedPostLogDetails;
         }
-        
+
         private List<ScrubbingFileDetail> _MapToScrubbingFileDetails(List<InboundFileSaveRequestDetail> details)
         {
             var result = details.Select(d => new ScrubbingFileDetail()
@@ -918,7 +929,7 @@ namespace Services.Broadcast.ApplicationServices
             };
             return postLogFile;
         }
-        
+
         private void _SetPostAdvertiser(PostedContracts post)
         {
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
@@ -932,7 +943,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var impressionData in impressionsDataGuaranteed)
             {
                 double impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
-                
+
                 if (type == SchedulePostType.NTI)
                 {
                     impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor);

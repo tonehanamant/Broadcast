@@ -182,7 +182,7 @@ namespace Services.Broadcast.Repositories
                         created_date = item.CreatedDate,
                         file_hash = item.FileHash,
                         file_name = item.FileName,
-                        source_id = (int) item.Source,
+                        source_id = (int)item.Source,
                         status = (int)item.Status,
                         created_by = item.CreatedBy,
                         postlog_outbound_file_problems = item.ErrorMessages.Select(y =>
@@ -349,7 +349,7 @@ namespace Services.Broadcast.Repositories
                     }
                 });
         }
-        
+
         /// <summary>
         /// Removes not a cadent entries for specific post log file details
         /// </summary>
@@ -444,9 +444,9 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var details = (from fileDetail in context.postlog_file_details
-                                            where fileDetail.isci.Equals(isci)
-                                            && !fileDetail.postlog_client_scrubs.Any()
-                                            select fileDetail).ToList();
+                                   where fileDetail.isci.Equals(isci)
+                                   && !fileDetail.postlog_client_scrubs.Any()
+                                   select fileDetail).ToList();
 
                     return _MapToScrubbingFileDetail(details);
                 });
@@ -520,7 +520,7 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var query = context.postlog_files
-                        .Include(a=> a.postlog_file_details)
+                        .Include(a => a.postlog_file_details)
                         .Include(a => a.postlog_file_problems);
 
                     if (includeScrubbingDetail)
@@ -562,6 +562,7 @@ namespace Services.Broadcast.Repositories
                                      proposalDetailId = proposalVersionDetail.id,
                                      postlogDetails,
                                      postlogFileScrub,
+                                     proposalVersionWeeks
                                  });
                     if (status.HasValue)
                     {
@@ -573,7 +574,6 @@ namespace Services.Broadcast.Repositories
                     var posts = new List<ProposalDetailPostScrubbing>();
                     posts.AddRange(queryData.Select(x =>
                     {
-
                         return new ProposalDetailPostScrubbing()
                         {
                             ScrubbingClientId = x.postlogFileScrub.id,
@@ -599,12 +599,23 @@ namespace Services.Broadcast.Repositories
                             ShowTypeName = x.postlogFileScrub.effective_show_type,
                             StatusOverride = x.postlogFileScrub.status_override,
                             Status = (ScrubbingStatus)x.postlogFileScrub.status,
-                            MatchShowType = x.postlogFileScrub.match_show_type
+                            MatchShowType = x.postlogFileScrub.match_show_type,
+                            WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList()
                         };
                     }
                     ).ToList());
                     return posts;
                 });
+        }
+
+        private ProposalWeekIsciDto _MapToProposalWeekIsciDto(proposal_version_detail_quarter_week_iscis isci)
+        {
+            return new ProposalWeekIsciDto
+            {
+                HouseIsci = isci.house_isci,
+                MarriedHouseIsci = isci.married_house_iscii,
+                Brand = isci.brand
+            };
         }
 
         /// <summary>
@@ -684,9 +695,9 @@ namespace Services.Broadcast.Repositories
                context =>
                {
                    var details = (from fileDetails in context.postlog_file_details
-                                           from clientScrubs in fileDetails.postlog_client_scrubs
-                                           where scrubbingIds.Contains(clientScrubs.id)
-                                           select fileDetails).ToList();
+                                  from clientScrubs in fileDetails.postlog_client_scrubs
+                                  where scrubbingIds.Contains(clientScrubs.id)
+                                  select fileDetails).ToList();
 
                    return _MapToScrubbingFileDetail(details);
                });
@@ -914,7 +925,7 @@ namespace Services.Broadcast.Repositories
 
             return result;
         }
-        
+
         private ICollection<postlog_file_detail_problems> _MapFromFileDetailProblems(List<FileDetailProblem> fileDetailProblems)
         {
             var result = fileDetailProblems.Select(p =>
