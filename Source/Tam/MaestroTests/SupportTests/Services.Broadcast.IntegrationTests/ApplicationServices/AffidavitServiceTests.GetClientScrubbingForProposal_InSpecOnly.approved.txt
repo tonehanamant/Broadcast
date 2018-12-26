@@ -29,7 +29,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "SupliedProgramNameIsUsed": true,
+      "SuppliedProgramNameUsed": true,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -59,7 +59,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "SupliedProgramNameIsUsed": false,
+      "SuppliedProgramNameUsed": false,
       "TimeAired": 10900,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -89,7 +89,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "SupliedProgramNameIsUsed": false,
+      "SuppliedProgramNameUsed": false,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -119,7 +119,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "SupliedProgramNameIsUsed": false,
+      "SuppliedProgramNameUsed": false,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     },
@@ -149,7 +149,7 @@
       "Station": "WNBC-TV",
       "Status": 2,
       "StatusOverride": false,
-      "SupliedProgramNameIsUsed": true,
+      "SuppliedProgramNameUsed": true,
       "TimeAired": 32400,
       "WeekStart": "2016-05-30T00:00:00"
     }
