@@ -600,7 +600,8 @@ namespace Services.Broadcast.Repositories
                             StatusOverride = x.postlogFileScrub.status_override,
                             Status = (ScrubbingStatus)x.postlogFileScrub.status,
                             MatchShowType = x.postlogFileScrub.match_show_type,
-                            WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList()
+                            WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList(),
+                            WWTVProgramName = x.postlogDetails.program_name
                         };
                     }
                     ).ToList());
