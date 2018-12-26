@@ -1576,6 +1576,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryTotals = new ProprietaryTotalsDto { Cost = 10, Cpm = 10, Impressions = 10000 },
                     UnitCapPerStation = 1,
                     ProposalDetailId = 13402,
+                    MarketCoverageFileId = 1,
                     Markets = new List<PricingGuideSaveMarketRequest>() {
                         new PricingGuideSaveMarketRequest
                         {
