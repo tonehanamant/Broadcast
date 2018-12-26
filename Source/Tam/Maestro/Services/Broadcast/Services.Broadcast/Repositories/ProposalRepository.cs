@@ -26,7 +26,7 @@ namespace Services.Broadcast.Repositories
     {
         List<DisplayProposal> GetAllProposals();
         ProposalDto GetProposalById(int proposalId);
-        
+
         ProposalDto GetProposalByDetailId(int proposalDetailId);
         int GetPrimaryProposalVersionNumber(int proposalId);
         short GetLatestProposalVersion(int proposalId);
@@ -36,9 +36,9 @@ namespace Services.Broadcast.Repositories
         void UpdateProposal(ProposalDto proposalDto, string userName);
         void CreateProposal(ProposalDto proposalDto, string userName);
         int GetProposalVersionId(int proposalId, short versionId);
-        
+
         List<int> GetProposalDetailQuarterWeekIdsByProposalVersionId(int proposalVersionId);
-        
+
         ProposalDetailDto GetProposalDetail(int proposalDetailId);
         int GetProposalDetailSpotLengthId(int proposalDetailId);
 
@@ -345,13 +345,14 @@ namespace Services.Broadcast.Repositories
                     projection_playback_type = (byte)proposalDetail.ProjectionPlaybackType,
                     posting_book_id = proposalDetail.PostingBookId,
                     posting_playback_type = (byte?)proposalDetail.PostingPlaybackType,
-                    nti_conversion_factor = proposalDetail.NtiConversionFactor.Value,
+                    nti_conversion_factor = proposalDetail.NtiConversionFactor,
                     proposal_version_detail_criteria_genres = proposalDetail.GenreCriteria.Select(g => new proposal_version_detail_criteria_genres()
                     {
                         genre_id = g.Genre.Id,
                         contain_type = (byte)g.Contain
                     }).ToList(),
-                    proposal_version_detail_criteria_show_types = proposalDetail.ShowTypeCriteria.Select(st => new proposal_version_detail_criteria_show_types {
+                    proposal_version_detail_criteria_show_types = proposalDetail.ShowTypeCriteria.Select(st => new proposal_version_detail_criteria_show_types
+                    {
                         contain_type = (byte)st.Contain,
                         show_type_id = st.ShowType.Id
                     }).ToList(),
@@ -360,7 +361,7 @@ namespace Services.Broadcast.Repositories
                         program_name = p.Program.Display,
                         program_name_id = p.Program.Id,
                         contain_type = (byte)p.Contain
-                    }).ToList(),                    
+                    }).ToList(),
                     proposal_version_detail_quarters =
                         proposalDetail.Quarters.Select(quarter => new proposal_version_detail_quarters
                         {
@@ -457,8 +458,8 @@ namespace Services.Broadcast.Repositories
                     updatedDetail.posting_book_id = detail.PostingBookId;
                     updatedDetail.posting_playback_type = (byte?)detail.PostingPlaybackType;
                     updatedDetail.sequence = detail.Sequence;
-                    updatedDetail.nti_conversion_factor = detail.NtiConversionFactor.Value;
-                    
+                    updatedDetail.nti_conversion_factor = detail.NtiConversionFactor;
+
                     //update proposal detail genre criteria
                     context.proposal_version_detail_criteria_genres.RemoveRange(
                         context.proposal_version_detail_criteria_genres.Where(g => g.proposal_version_detail_id == detail.Id));
@@ -871,7 +872,7 @@ namespace Services.Broadcast.Repositories
                     PostingBookId = version.posting_book_id,
                     PostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)version.posting_playback_type,
                     NtiConversionFactor = version.nti_conversion_factor,
-                                    EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
+                    EstimateId = version.proposal_buy_files.SingleOrDefault()?.estimate_id,
                     GenreCriteria = version.proposal_version_detail_criteria_genres.Select(c => new GenreCriteria()
                     {
                         Id = c.id,
@@ -1040,7 +1041,7 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
                 });
         }
-        
+
 
         public ProposalDetailOpenMarketInventoryDto GetOpenMarketProposalDetailInventory(int proposalDetailId)
         {
@@ -1439,7 +1440,7 @@ namespace Services.Broadcast.Repositories
                 c.SaveChanges();
             });
         }
-                
+
         public static void PopoulateProposalDetailInventoryBase(proposal_version_details pvd, ProposalDetailInventoryBase baseDto)
         {
             var pv = pvd.proposal_versions;
@@ -1575,11 +1576,11 @@ namespace Services.Broadcast.Repositories
                context =>
                {
                    var weeks = (from detail in context.proposal_version_details
-                               from quarter in detail.proposal_version_detail_quarters
-                               from week in quarter.proposal_version_detail_quarter_weeks
-                               from isci in week.proposal_version_detail_quarter_week_iscis
-                               where detail.id == proposalDetailId
-                               select new { detail, quarter, week, isci }).ToList();
+                                from quarter in detail.proposal_version_detail_quarters
+                                from week in quarter.proposal_version_detail_quarter_weeks
+                                from isci in week.proposal_version_detail_quarter_week_iscis
+                                where detail.id == proposalDetailId
+                                select new { detail, quarter, week, isci }).ToList();
                    return weeks.Select(
                            i => new MatchingProposalWeek()
                            {
@@ -1597,7 +1598,7 @@ namespace Services.Broadcast.Repositories
                                MarriedHouseIsci = i.isci.married_house_iscii,
                                Brand = i.isci.brand,
                                SpotLengthId = i.detail.spot_length_id
-                           }).ToList();                   
+                           }).ToList();
                });
         }
 
@@ -1605,16 +1606,16 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(c =>
             {
-                foreach(var detailData in detailPostingData)
+                foreach (var detailData in detailPostingData)
                 {
                     var detail = c.proposal_version_details.Find(detailData.ProposalVersionDetailId);
-                    if(detail.posting_book_id == null)
+                    if (detail.posting_book_id == null)
                     {
                         detail.posting_book_id = detailData.PostingBookId;
                         detail.posting_playback_type = (byte)detailData.PostingPlaybackType.Value;
                         c.SaveChanges();
-                    }                    
-                }                
+                    }
+                }
             });
         }
 
@@ -1623,10 +1624,10 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(c =>
             {
                 var quarterAndWeeks = (from quarter in c.proposal_version_detail_quarters
-                                      from week in quarter.proposal_version_detail_quarter_weeks
-                                      where quarter.proposal_version_detail_id == proposalDetailId
-                                      orderby week.start_date
-                                      select new { week, quarter }).ToList();
+                                       from week in quarter.proposal_version_detail_quarter_weeks
+                                       where quarter.proposal_version_detail_id == proposalDetailId
+                                       orderby week.start_date
+                                       select new { week, quarter }).ToList();
 
                 return quarterAndWeeks.Select(x => new ProposalOpenMarketInventoryWeekDto
                 {

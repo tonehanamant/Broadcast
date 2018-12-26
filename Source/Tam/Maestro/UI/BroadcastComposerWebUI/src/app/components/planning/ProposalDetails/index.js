@@ -51,6 +51,7 @@ export default class ProposalDetails extends Component {
         ))}
         <ProposalDetail
           initialdata={initialdata}
+          proposalEditForm={proposalEditForm}
           modelNewProposalDetail={modelNewProposalDetail}
           isReadOnly={this.props.isReadOnly}
           isDirty={this.props.isDirty}

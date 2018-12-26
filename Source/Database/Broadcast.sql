@@ -159,9 +159,17 @@ BEGIN
 	ALTER TABLE pricing_guide_distribution_open_market_inventory
 	ALTER COLUMN program_name VARCHAR(MAX) NULL
 END
-
 /*************************************** END BCOP-4192 *****************************************************/
 
+/*************************************** START BCOP-4138 *******************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'nti_conversion_factor'
+		  AND is_nullable = 0
+          AND Object_ID = Object_ID(N'[dbo].[proposal_version_details]'))
+BEGIN
+	ALTER TABLE [dbo].[proposal_version_details] ALTER COLUMN [nti_conversion_factor] FLOAT NULL
+END
+/*************************************** END BCOP-4138 *******************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

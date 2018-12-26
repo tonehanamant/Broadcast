@@ -70,8 +70,6 @@ export default class ProposalActions extends Component {
   save() {
     if (this.checkValid()) {
       this.props.saveProposal({ proposal: this.props.proposalEditForm });
-      /* this.props.toggleEditIsciClass(false);
-			this.props.toggleEditGridCellClass(false); */
     } else {
       this.props.createAlert({
         type: "danger",
@@ -116,7 +114,6 @@ ProposalActions.defaultProps = {
   getProposalUnlock: () => {}
 };
 
-/* eslint-disable react/no-unused-prop-types */
 ProposalActions.propTypes = {
   proposal: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,
@@ -130,6 +127,4 @@ ProposalActions.propTypes = {
   isValidProposalForm: PropTypes.func.isRequired,
   isValidProposalDetails: PropTypes.func.isRequired,
   isValidProposalDetailGrids: PropTypes.func.isRequired
-  // toggleEditIsciClass: PropTypes.func.isRequired,
-  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };

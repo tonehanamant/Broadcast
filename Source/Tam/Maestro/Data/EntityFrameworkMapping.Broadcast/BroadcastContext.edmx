@@ -851,7 +851,7 @@
           <Property Name="sequence" Type="int" />
           <Property Name="posting_book_id" Type="int" />
           <Property Name="posting_playback_type" Type="tinyint" />
-          <Property Name="nti_conversion_factor" Type="float" Nullable="false" />
+          <Property Name="nti_conversion_factor" Type="float" />
         </EntityType>
         <EntityType Name="proposal_version_flight_weeks">
           <Key>
@@ -2022,6 +2022,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="pricing_guide_distribution_proprietary_inventory">
               <PropertyRef Name="pricing_guide_distribution_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distributions_market_coverage_files">
+          <End Role="market_coverage_files" Type="Self.market_coverage_files" Multiplicity="1" />
+          <End Role="pricing_guide_distributions" Type="Self.pricing_guide_distributions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market_coverage_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distributions">
+              <PropertyRef Name="market_coverage_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3563,6 +3575,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
             <End Role="pricing_guide_distribution_proprietary_inventory" EntitySet="pricing_guide_distribution_proprietary_inventory" />
           </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distributions_market_coverage_files" Association="Self.FK_pricing_guide_distributions_market_coverage_files">
+            <End Role="market_coverage_files" EntitySet="market_coverage_files" />
+            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
+          </AssociationSet>
           <AssociationSet Name="FK_pricing_guide_distributions_proposal_versions" Association="Self.FK_pricing_guide_distributions_proposal_versions">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
@@ -4625,6 +4641,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_market_coverages_market_coverage_files" Association="BroadcastModel.FK_market_coverages_market_coverage_files">
             <End Role="market_coverage_files" EntitySet="market_coverage_files" />
             <End Role="market_coverages" EntitySet="market_coverages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distributions_market_coverage_files" Association="BroadcastModel.FK_pricing_guide_distributions_market_coverage_files">
+            <End Role="market_coverage_files" EntitySet="market_coverage_files" />
+            <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -7482,7 +7502,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="sequence" Type="Int32" />
           <Property Name="posting_book_id" Type="Int32" />
           <Property Name="posting_playback_type" Type="Byte" />
-          <Property Name="nti_conversion_factor" Type="Double" Nullable="false" />
+          <Property Name="nti_conversion_factor" Type="Double" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_proposal_version_details_dayparts" FromRole="proposal_version_details" ToRole="daypart" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="proposal_version_details" ToRole="media_months" />
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_proposal_version_details_posting_media_months" FromRole="proposal_version_details" ToRole="media_months" />
@@ -7886,6 +7906,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="pricing_guide_distribution_proprietary_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_proprietary_inventory_pricing_guide_distributions" FromRole="pricing_guide_distributions" ToRole="pricing_guide_distribution_proprietary_inventory" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_pricing_guide_distributions_proposal_versions" FromRole="pricing_guide_distributions" ToRole="proposal_version_details" />
           <Property Name="market_coverage_file_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="market_coverage_files" Relationship="BroadcastModel.FK_pricing_guide_distributions_market_coverage_files" FromRole="pricing_guide_distributions" ToRole="market_coverage_files" />
         </EntityType>
         <Association Name="FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution">
           <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="1">
@@ -8086,6 +8107,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="market_coverages" Relationship="BroadcastModel.FK_market_coverages_market_coverage_files" FromRole="market_coverage_files" ToRole="market_coverages" />
+          <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distributions_market_coverage_files" FromRole="market_coverage_files" ToRole="pricing_guide_distributions" />
         </EntityType>
         <Association Name="FK_market_coverages_market_coverage_files">
           <End Type="BroadcastModel.market_coverage_files" Role="market_coverage_files" Multiplicity="1">
@@ -8097,6 +8119,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="market_coverages">
+              <PropertyRef Name="market_coverage_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distributions_market_coverage_files">
+          <End Type="BroadcastModel.market_coverage_files" Role="market_coverage_files" Multiplicity="1" />
+          <End Type="BroadcastModel.pricing_guide_distributions" Role="pricing_guide_distributions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market_coverage_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distributions">
               <PropertyRef Name="market_coverage_file_id" />
             </Dependent>
           </ReferentialConstraint>

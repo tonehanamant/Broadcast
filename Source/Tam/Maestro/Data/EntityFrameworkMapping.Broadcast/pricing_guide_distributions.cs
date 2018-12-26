@@ -45,5 +45,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual ICollection<pricing_guide_distribution_proprietary_inventory> pricing_guide_distribution_proprietary_inventory { get; set; }
         public virtual proposal_version_details proposal_version_details { get; set; }
+        public virtual market_coverage_files market_coverage_files { get; set; }
     }
 }

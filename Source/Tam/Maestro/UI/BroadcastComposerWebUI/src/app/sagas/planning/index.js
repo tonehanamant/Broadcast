@@ -9,7 +9,8 @@ import {
   deployError,
   createAlert,
   toggleModal,
-  setOverlayLoading
+  setOverlayLoading,
+  setOverlayProcessing
 } from "Ducks/app/index";
 import { receiveFilteredPlanning, setEstimatedId } from "Ducks/planning/index";
 import * as appActions from "Ducks/app/actionTypes";
@@ -1086,52 +1087,23 @@ export function* unorderProposal({ payload: id }) {
 /* REQUEST MODEL PROPOSAL DETAIL */
 /* ////////////////////////////////// */
 
-export function* modelNewProposalDetail({ payload: params }) {
-  /* eslint-disable no-shadow */
+const assignIdFlightWeeks = (data, flightWeeks) => {
+  let detail = { ...data, Id: moment().unix() * -1 }; // Negative identifies as unsaved
+  detail = { ...detail, FlightWeeks: flightWeeks };
+  return detail;
+};
+
+export function* modelNewProposalDetail({ payload: flight }) {
   const { getProposalDetail } = api.planning;
-  const assignIdFlightWeeks = (data, flightWeeks) => {
-    let detail = { ...data, Id: moment().unix() * -1 }; // Negative identifies as unsaved
-    detail = { ...detail, FlightWeeks: flightWeeks };
-    return detail;
-  };
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "modelNewProposalDetail",
         processing: true
-      }
-    });
-    const flight = { ...params };
-    const response = yield getProposalDetail(flight);
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
-        id: "modelNewProposalDetail",
-        processing: false
-      }
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "New detail not modeled.",
-          message: `The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "New detail not modeled.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs."
-        }
-      });
+      })
+    );
+    const { status, data } = yield getProposalDetail(flight);
+    if (status !== 200 || !data.Success) {
       throw new Error();
     }
     const payload = yield assignIdFlightWeeks(data.Data, flight.FlightWeeks);
@@ -1165,9 +1137,8 @@ export function* modelNewProposalDetail({ payload: params }) {
         payload.DefaultProjectionBooks.DefaultShareBook.HasWarning = false; // Reset to stop repeat unless BE explicit changes
       }
     }
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
+    yield put(
+      toggleModal({
         modal: "confirmModal",
         active: warnings.length > 0,
         properties: {
@@ -1181,32 +1152,40 @@ export function* modelNewProposalDetail({ payload: params }) {
           action: () => {},
           dismiss: () => {}
         }
-      }
-    });
+      })
+    );
     yield put({
       type: ACTIONS.RECEIVE_NEW_PROPOSAL_DETAIL,
       payload
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "New detail not modeled.",
           message:
             "The server encountered an error processing the request (model new detail). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
+      yield put(
+        deployError({
+          type: ACTIONS.DEPLOY_ERROR,
+          error: {
+            message: e.message
+          }
+        })
+      );
     }
+  } finally {
+    yield put(
+      setOverlayProcessing({
+        id: "modelNewProposalDetail",
+        processing: false
+      })
+    );
   }
 }
 

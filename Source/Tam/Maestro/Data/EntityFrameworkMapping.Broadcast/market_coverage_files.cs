@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public market_coverage_files()
         {
             this.market_coverages = new HashSet<market_coverages>();
+            this.pricing_guide_distributions = new HashSet<pricing_guide_distributions>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
     
         public virtual ICollection<market_coverages> market_coverages { get; set; }
+        public virtual ICollection<pricing_guide_distributions> pricing_guide_distributions { get; set; }
     }
 }

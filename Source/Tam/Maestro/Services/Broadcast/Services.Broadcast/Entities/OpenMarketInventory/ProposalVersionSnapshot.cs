@@ -146,7 +146,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
 
             public byte? PostingPlaybackType { get; set; }
 
-            public double NtiConversionFactor { get; set; }
+            public double? NtiConversionFactor { get; set; }
 
             public ICollection<ProposalVersionDetailCriteriaCpm> ProposalVersionDetailCriteriaCpms { get; set; }
 

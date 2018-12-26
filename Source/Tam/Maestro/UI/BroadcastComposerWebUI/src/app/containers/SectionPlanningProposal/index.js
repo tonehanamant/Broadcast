@@ -27,13 +27,10 @@ import {
   setProposalValidationState
 } from "Ducks/planning";
 
-// import { loadLocalStorageState } from 'SRCRoot/index.store.localstorage.js';
-
 import ProposalHeader from "Components/planning/ProposalHeader";
 import ProposalActions from "Components/planning/ProposalActions";
 import ProposalSwitchVersionModal from "Components/planning/ProposalSwitchVersionModal";
 import ProposalDetails from "Components/planning/ProposalDetails";
-// import { toggleEditIsciClass, toggleEditGridCellClass } from '../../ducks/planning';
 
 const mapStateToProps = ({
   app: { employee },
@@ -97,7 +94,6 @@ export class SectionPlanningProposal extends Component {
   }
 
   onUnload() {
-    // console.log('CALLLLLLLLLLLLLLLEEEEEEEEEED');
     this.props.getProposalUnlock(this.props.proposal.Id);
   }
 
@@ -115,15 +111,6 @@ export class SectionPlanningProposal extends Component {
 
     this.props.getProposalLock(id);
     this.props.getProposalInitialData();
-
-    // const localStorageState = loadLocalStorageState();
-    // const { planning } = localStorageState;
-    // const { proposal } = planning;
-
-    // if (proposal && proposal.Id === id) {
-    //   console.log('!!!! RESTORING PROPOSAL !!!!');
-    //   this.props.restorePlanningProposal(planning);
-    // } else
 
     if (id && version) {
       this.props.getProposalVersion(id, version);
@@ -210,21 +197,23 @@ export class SectionPlanningProposal extends Component {
         return valid.required && valid.alphaNumeric && valid.maxChar10;
       };
 
-      const validNti = value => {
+      const validNti = (value, postType) => {
         const valid = {
-          required: !isNaN(value) && value !== "" && value !== null
+          required:
+            postType === 2
+              ? !isNaN(value) && value !== "" && value !== null
+              : true
         };
         return valid.required;
       };
 
       const validDetail =
         validSpothLength(detail.SpothLengthId) &&
-        validNti(detail.NtiConversionFactor) &&
+        validNti(detail.NtiConversionFactor, proposalEditForm.PostType) &&
         validDaypart(detail.Daypart) &&
         validDaypartCode(detail.DaypartCode);
       validDetails.push(validDetail);
     });
-    // console.log('VALID DETAILS', validDetails);
 
     return !validDetails.includes(null || false);
   }
@@ -249,8 +238,6 @@ export class SectionPlanningProposal extends Component {
         });
       });
     });
-    // console.log('VALID DETAIL GRIDS', validDetailQuarters, validDetailQuarterWeeks);
-
     return validDetailQuarters && validDetailQuarterWeeks;
   }
 
@@ -307,7 +294,6 @@ export class SectionPlanningProposal extends Component {
       proposal.Status != null
         ? proposal.Status === 3 || proposal.Status === 4
         : false;
-    // console.log('proposal is read only', proposal, isReadOnly);
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
         {this.props.proposalLock.Success &&
