@@ -1508,6 +1508,59 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePricingGuideWithExtensiveProgramName()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new ProposalDetailPricingGuideSaveRequest
+                {
+                    Inflation = 1,
+                    Margin = 1,
+                    ImpressionLoss = 1,
+                    CpmMax = 10,
+                    CpmMin = 10,
+                    GoalBudget = 10000,
+                    GoalImpression = 10000,
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min,
+                    OpenMarketTotals = new OpenMarketTotalsDto
+                    {
+                        Cost = 1000,
+                        Coverage = 80,
+                        Cpm = 10,
+                        Impressions = 10000
+                    },
+                    ProprietaryPricing = new List<ProprietaryPricingDto>() { new ProprietaryPricingDto { Cpm = 10, ImpressionsBalance = 10, InventorySource = InventorySourceEnum.CNN } },
+                    ProprietaryTotals = new ProprietaryTotalsDto { Cost = 10, Cpm = 10, Impressions = 10000 },
+                    UnitCapPerStation = 1,
+                    ProposalDetailId = 13402,
+                    Markets = new List<PricingGuideSaveMarketRequest>() {
+                        new PricingGuideSaveMarketRequest
+                        {
+                            ProgramId = 26589,
+                            BlendedCpm = 7.530701184311377M,
+                            CostPerSpot = 1,
+                            DaypartId = 1,
+                            ImpressionsPerSpot = 10,
+                            ManifestDaypartId = 213348,
+                            MarketId = 101,
+                            ProgramName = "CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News",
+                            Spots = 1,
+                            StationCode = 5060,
+                            StationImpressionsPerSpot = 43156.671875
+                        }
+                    }
+                };
+
+                _PricingGuideService.SaveDistribution(request, "integration test");
+
+                var proposalInventory = _PricingGuideService.GetPricingGuideForProposalDetail(13402);
+
+                _VerifyPricingGuideModel(proposalInventory);
+            }
+        }
+
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
