@@ -634,7 +634,7 @@
           <Property Name="station_code" Type="smallint" Nullable="false" />
           <Property Name="station_inventory_manifest_dayparts_id" Type="int" Nullable="false" />
           <Property Name="daypart_id" Type="int" Nullable="false" />
-          <Property Name="program_name" Type="varchar" MaxLength="255" />
+          <Property Name="program_name" Type="varchar(max)" />
           <Property Name="blended_cpm" Type="money" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
           <Property Name="forecasted_impressions_per_spot" Type="float" Nullable="false" />
@@ -7774,7 +7774,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="station_code" Type="Int16" Nullable="false" />
           <Property Name="station_inventory_manifest_dayparts_id" Type="Int32" Nullable="false" />
           <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="program_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="blended_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="spots" Type="Int32" Nullable="false" />
           <Property Name="forecasted_impressions_per_spot" Type="Double" Nullable="false" />

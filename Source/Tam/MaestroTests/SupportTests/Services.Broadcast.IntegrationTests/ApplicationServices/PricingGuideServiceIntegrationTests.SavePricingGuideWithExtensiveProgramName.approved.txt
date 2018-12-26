@@ -1,0 +1,156 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 6.309,
+      "Id": 101,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "New York",
+      "Programs": 2,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
+  "BudgetGoal": 10000.0000,
+  "DisplayFilter": {
+    "Affiliations": [
+      "ABC"
+    ],
+    "Genres": [
+      {
+        "Display": "Action"
+      },
+      {
+        "Display": "Adult"
+      },
+      {
+        "Display": "Adventure"
+      },
+      {
+        "Display": "Anthology"
+      },
+      {
+        "Display": "Auction"
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "New York"
+      }
+    ],
+    "ProgramNames": [
+      "CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News"
+    ]
+  },
+  "Filter": {},
+  "ImpressionGoal": 10000.0,
+  "ImpressionLoss": 1.0,
+  "Inflation": 1.0,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": 1.0,
+  "Markets": [
+    {
+      "AvgCpm": 0.0,
+      "CPM": 100.00,
+      "DisplayImpressions": 10.0,
+      "DisplayStationImpressions": 43156.671875,
+      "MarketCoverage": 6.309,
+      "MarketName": "New York",
+      "MarketRank": 1,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Stations": [
+        {
+          "Affiliation": "ABC",
+          "CallLetters": "WLS-TV 7.1",
+          "LegacyCallLetters": "WLS",
+          "MinProgramsBlendedCpm": 7.5307,
+          "Programs": [
+            {
+              "BlendedCpm": 7.5307,
+              "Cost": 1.0000,
+              "CostPerSpot": 1.0000,
+              "Daypart": {
+                "Display": "M-SU 6AM-12AM"
+              },
+              "DisplayCost": 1.0000,
+              "DisplayImpressions": 10.0,
+              "DisplayStationImpressions": 43156.671875,
+              "EffectiveImpressionsPerSpot": 43156.671875,
+              "Genres": [
+                {
+                  "Display": "Action"
+                },
+                {
+                  "Display": "Adult"
+                },
+                {
+                  "Display": "Adventure"
+                },
+                {
+                  "Display": "Anthology"
+                },
+                {
+                  "Display": "Auction"
+                }
+              ],
+              "HasImpressions": true,
+              "Impressions": 10.0,
+              "ImpressionsPerSpot": 10.0,
+              "ProgramName": "CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News|CBS Morning News",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 43156.671875
+            }
+          ],
+          "StationCode": 5060
+        }
+      ],
+      "TotalCost": 1.0000,
+      "TotalImpressions": 10.0,
+      "TotalSpots": 1
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": 10.0000,
+    "CpmMin": 10.0000,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": 1
+  },
+  "OpenMarketShare": 0.0,
+  "OpenMarketTotals": {
+    "Cost": 1000.0000,
+    "Coverage": 80.0,
+    "Cpm": 10.0000,
+    "Impressions": 10000.0
+  },
+  "PricingTotals": {
+    "Cost": 1010.0000,
+    "Coverage": 80.0,
+    "Cpm": 50.5,
+    "Impressions": 20000.0
+  },
+  "ProprietaryPricing": [
+    {
+      "Cpm": 10.0000,
+      "ImpressionsBalance": 10.0,
+      "InventorySource": 5
+    }
+  ],
+  "ProprietaryTotals": {
+    "Cost": 10.0000,
+    "Cpm": 10.0000,
+    "Impressions": 10000.0
+  }
+}

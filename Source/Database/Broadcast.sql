@@ -148,6 +148,21 @@ END
 
 /*************************************** END BCOP-4036 *******************************************************/
 
+/*************************************** START BCOP-4192 *****************************************************/
+
+IF (SELECT character_maximum_length
+	FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE 
+		TABLE_NAME = 'pricing_guide_distribution_open_market_inventory' AND 
+		COLUMN_NAME = 'program_name') = 255
+BEGIN
+	ALTER TABLE pricing_guide_distribution_open_market_inventory
+	ALTER COLUMN program_name VARCHAR(MAX) NULL
+END
+
+/*************************************** END BCOP-4192 *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
