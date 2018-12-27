@@ -973,8 +973,9 @@ namespace Services.Broadcast.ApplicationServices
             ApplyDaypartNames(programs);
             _ApplyProjectedImpressions(programs, inventory);
             ApplyStationImpressions(programs, inventory);
-            _CalculateProgramsCpmAndCost(programs);
+            _CalculateProgramsCost(programs);
             _CalculateIndexingForPrograms(programs, pricingGuideDto);
+            _CalculateProgramsBlendedCpm(programs);
             _CalculateProgramsTotals(programs);
             return programs;
         }
@@ -1011,10 +1012,14 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _CalculateProgramsCpmAndCost(List<ProposalProgramDto> programs)
+        private void _CalculateProgramsCost(List<ProposalProgramDto> programs)
+        {
+            _ProposalProgramsCalculationEngine.CalculateAvgCostForPrograms(programs);
+        }
+
+        private void _CalculateProgramsBlendedCpm(List<ProposalProgramDto> programs)
         {
             _ProposalProgramsCalculationEngine.CalculateBlendedCpmForProgramsRaw(programs);
-            _ProposalProgramsCalculationEngine.CalculateAvgCostForPrograms(programs);
         }
 
         private void _CalculateProgramsTotals(List<ProposalProgramDto> programs)

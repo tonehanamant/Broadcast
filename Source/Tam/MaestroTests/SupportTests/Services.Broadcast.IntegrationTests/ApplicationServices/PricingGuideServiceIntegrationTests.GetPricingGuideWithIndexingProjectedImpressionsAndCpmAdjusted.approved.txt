@@ -1,0 +1,137 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 1.01,
+      "Id": 160,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
+  "BudgetGoal": null,
+  "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure",
+        "Id": 3
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)",
+        "Id": 160
+      }
+    ],
+    "ProgramNames": [
+      "Ricky and Morty"
+    ]
+  },
+  "DistributionId": 0,
+  "Filter": {},
+  "ImpressionGoal": null,
+  "ImpressionLoss": 0.8,
+  "Inflation": null,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": null,
+  "Markets": [
+    {
+      "AvgCpm": 5.7200192748306686972316331321,
+      "CPM": 5.7200192748306686972316331321,
+      "DisplayImpressions": 4370.61464286,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 1.01,
+      "MarketId": 160,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 5.7200192748306686972316331321,
+      "MinCpm": 5.7200192748306686972316331321,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 5.7200192748306686972316331321,
+          "Programs": [
+            {
+              "BlendedCpm": 5.7200192748306686972316331321,
+              "Cost": 25.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM",
+                "Id": 5
+              },
+              "DisplayCost": 25.0000,
+              "DisplayImpressions": 4370.61464286,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 4370.61464286,
+              "Genres": [
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                }
+              ],
+              "HasImpressions": true,
+              "Impressions": 4370.61464286,
+              "ImpressionsPerSpot": 4370.61464286,
+              "ManifestDaypartId": 213354,
+              "ProgramId": 162239,
+              "ProgramName": "Ricky and Morty",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 5316
+        }
+      ],
+      "TotalCost": 25.0000,
+      "TotalImpressions": 4370.61464286,
+      "TotalSpots": 1
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 1.0,
+  "OpenMarketTotals": {
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 5.7200192748306686972316331321,
+    "Impressions": 4370.61464286
+  },
+  "PricingTotals": {
+    "Cost": 25.0000,
+    "Coverage": 1.01,
+    "Cpm": 5.72001927,
+    "Impressions": 4370.61464286
+  },
+  "ProposalDetailId": 9989,
+  "ProposalId": 0,
+  "ProposalVersionId": 0,
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
+}
