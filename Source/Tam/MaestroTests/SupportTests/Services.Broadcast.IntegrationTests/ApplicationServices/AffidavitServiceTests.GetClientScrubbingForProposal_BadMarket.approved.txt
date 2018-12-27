@@ -379,6 +379,11 @@
       "NBC"
     ],
     "DistinctClientIscis": [],
+    "DistinctComments": [
+      "BCOP-2952",
+      "BCOP-2997",
+      "Client Scrub Comment"
+    ],
     "DistinctDayOfWeek": [
       0,
       5

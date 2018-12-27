@@ -262,6 +262,10 @@
     "DistinctClientIscis": [
       "FFFFFF"
     ],
+    "DistinctComments": [
+      "BCOP-2952",
+      "BCOP-2997"
+    ],
     "DistinctDayOfWeek": [
       0,
       4,

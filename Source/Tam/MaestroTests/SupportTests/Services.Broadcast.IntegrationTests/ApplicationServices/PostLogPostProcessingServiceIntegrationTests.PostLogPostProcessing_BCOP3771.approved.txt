@@ -63,6 +63,7 @@
     "DistinctClientIscis": [
       "Clinet_BCOP3471STORY"
     ],
+    "DistinctComments": null,
     "DistinctDayOfWeek": [
       2
     ],
