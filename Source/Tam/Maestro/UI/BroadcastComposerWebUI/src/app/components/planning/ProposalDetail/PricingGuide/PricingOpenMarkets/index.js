@@ -24,6 +24,14 @@ import "./index.scss";
 
 const defaultSort = [{ id: "MarketRank", desc: false }];
 
+const shouldMarketRender = (isLoaded, data, isEdit) =>
+  isLoaded && data && isEdit;
+
+const shouldGridRender = (isLoaded, data, isEdit) =>
+  shouldMarketRender(isLoaded, data, !isEdit) &&
+  data.Markets &&
+  data.Markets.length > 0;
+
 class PricingOpenMarkets extends Component {
   constructor(props) {
     super(props);
@@ -151,6 +159,17 @@ class PricingOpenMarkets extends Component {
     const balanceSum = calculateBalanceSum(
       initialdata.ProprietaryPricingInventorySources,
       this.props
+    );
+
+    const isRenderGrid = shouldGridRender(
+      openMarketLoaded,
+      activeOpenMarketData,
+      isEditMarketsActive
+    );
+    const isRenderMarkets = shouldMarketRender(
+      openMarketLoaded,
+      activeOpenMarketData,
+      isEditMarketsActive
     );
 
     return (
@@ -381,29 +400,25 @@ class PricingOpenMarkets extends Component {
                 </Button>
               </Col>
             </Row>
-            {openMarketLoaded &&
-              activeOpenMarketData &&
-              !isEditMarketsActive && (
-                <PricingGuideGrid
-                  activeOpenMarketData={activeOpenMarketData}
-                  openMarketLoading={openMarketLoading}
-                  hasOpenMarketData={hasOpenMarketData}
-                  isOpenMarketDataSortName={isOpenMarketDataSortName}
-                  onAllocateSpots={onAllocateSpots}
-                  sorted={sorted}
-                  onSortedChange={this.onSortedChange}
-                  isGuideEditing={isGuideEditing}
-                />
-              )}
-            {openMarketLoaded &&
-              activeOpenMarketData &&
-              isEditMarketsActive && (
-                <PricingGuideEditMarkets
-                  activeEditMarkets={activeEditMarkets}
-                  marketCoverageGoal={coverage}
-                  onUpdateEditMarkets={onUpdateEditMarkets}
-                />
-              )}
+            {isRenderGrid && (
+              <PricingGuideGrid
+                activeOpenMarketData={activeOpenMarketData}
+                openMarketLoading={openMarketLoading}
+                hasOpenMarketData={hasOpenMarketData}
+                isOpenMarketDataSortName={isOpenMarketDataSortName}
+                onAllocateSpots={onAllocateSpots}
+                sorted={sorted}
+                onSortedChange={this.onSortedChange}
+                isGuideEditing={isGuideEditing}
+              />
+            )}
+            {isRenderMarkets && (
+              <PricingGuideEditMarkets
+                activeEditMarkets={activeEditMarkets}
+                marketCoverageGoal={coverage}
+                onUpdateEditMarkets={onUpdateEditMarkets}
+              />
+            )}
           </Panel.Body>
         </Panel.Collapse>
       </Panel>

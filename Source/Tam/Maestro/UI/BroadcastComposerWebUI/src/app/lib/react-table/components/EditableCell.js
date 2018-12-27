@@ -63,6 +63,11 @@ const getMask = mask => {
   }
 };
 
+const isSubmit = (isAllow, prevValue, nextValue) => {
+  const isEqual = nextValue !== prevValue;
+  return isAllow ? isEqual : nextValue && isEqual;
+};
+
 class EditableCell extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +84,7 @@ class EditableCell extends Component {
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.updateValue = this.updateValue.bind(this);
+    this.setValue = this.setValue.bind(this);
   }
 
   componentDidUpdate({ value: prevValue }) {
@@ -89,15 +95,24 @@ class EditableCell extends Component {
   }
 
   updateValue() {
-    const { value } = this.props;
-    this.setState({ value });
+    const { value, clearEmptyValue } = this.props;
+    this.setState({ value: clearEmptyValue ? value || null : value });
+  }
+
+  setValue(parsedValue) {
+    const { value: newValue } = this.state;
+    const { value: pVal, allowSubmitEmpty, clearEmptyValue } = this.props;
+    if (clearEmptyValue) {
+      return parsedValue || (!allowSubmitEmpty && pVal) || null;
+    }
+    return newValue;
   }
 
   onFocus() {
     const { mask, value: propsValue, clearEmptyValue } = this.props;
     const { value } = this.state;
     this.setState({
-      value: clearEmptyValue ? value || propsValue : propsValue,
+      value: clearEmptyValue ? propsValue || value || 0 : propsValue,
       mask: getMask(mask),
       isFocused: true
     });
@@ -105,13 +120,13 @@ class EditableCell extends Component {
 
   onBlur() {
     const { value: newValue } = this.state;
-    const { value: pVal, allowSubmitEmpty, clearEmptyValue, mask } = this.props;
+    const { value: pVal, allowSubmitEmpty, mask } = this.props;
     const parsedValue = parseValue(newValue, mask);
     this.setState({
-      value: clearEmptyValue ? parsedValue || pVal || null : newValue,
+      value: this.setValue(parsedValue),
       isFocused: false
     });
-    if ((allowSubmitEmpty || parsedValue) && parsedValue !== pVal) {
+    if (isSubmit(allowSubmitEmpty, pVal, parsedValue)) {
       this.onSubmit(parsedValue);
     }
   }

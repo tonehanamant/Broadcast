@@ -153,6 +153,7 @@ GroupingCell.propTypes = {
 const SpotCell = onChange => ({ value, original }) =>
   original.HasImpressions ? (
     <EditableCell
+      allowSubmitEmpty
       mask="integer"
       value={value}
       onChange={(...arg) => {
