@@ -50,40 +50,42 @@ const generateProgramData = (markets, selectedMarket) => {
   const data = [];
   if (!selectedMarket) return data;
   const market = markets.find(m => m.MarketId === selectedMarket);
-  market.Stations.forEach((station, idx) => {
-    data.push({
-      rowType: rowTypes.SUB_TITLE,
-      AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
-      isStation: true,
-      MarketId: market.MarketId,
-      StationCode: station.StationCode
-    });
-
-    station.Programs.forEach(program => {
+  market.Stations.filter(({ Programs }) => Programs && Programs.length).forEach(
+    (station, idx) => {
       data.push({
-        rowType: rowTypes.DATA_ROW,
-        AiringTime: program.Daypart.Display,
-        Program: program.ProgramName,
-        CPM: program.BlendedCpm,
-        Spots: program.Spots,
-        Impressions: program.DisplayImpressions
-          ? program.DisplayImpressions / 1000
-          : program.DisplayImpressions,
-        StationImpressions: program.DisplayStationImpressions
-          ? program.DisplayStationImpressions / 1000
-          : program.DisplayStationImpressions,
-        HasImpressions: program.HasImpressions,
+        rowType: rowTypes.SUB_TITLE,
+        AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
+        isStation: true,
         MarketId: market.MarketId,
-        StationCode: station.StationCode,
-        ProgramId: program.ProgramId,
-        Cost: program.DisplayCost,
-        isProgram: true // need for future use
+        StationCode: station.StationCode
       });
-    });
-    if (idx + 1 === station.length) {
-      data.push({ rowType: rowTypes.EMPTY_ROW });
+
+      station.Programs.forEach(program => {
+        data.push({
+          rowType: rowTypes.DATA_ROW,
+          AiringTime: program.Daypart.Display,
+          Program: program.ProgramName,
+          CPM: program.BlendedCpm,
+          Spots: program.Spots,
+          Impressions: program.DisplayImpressions
+            ? program.DisplayImpressions / 1000
+            : program.DisplayImpressions,
+          StationImpressions: program.DisplayStationImpressions
+            ? program.DisplayStationImpressions / 1000
+            : program.DisplayStationImpressions,
+          HasImpressions: program.HasImpressions,
+          MarketId: market.MarketId,
+          StationCode: station.StationCode,
+          ProgramId: program.ProgramId,
+          Cost: program.DisplayCost,
+          isProgram: true // need for future use
+        });
+      });
+      if (idx + 1 === station.length) {
+        data.push({ rowType: rowTypes.EMPTY_ROW });
+      }
     }
-  });
+  );
 
   return data;
 };
