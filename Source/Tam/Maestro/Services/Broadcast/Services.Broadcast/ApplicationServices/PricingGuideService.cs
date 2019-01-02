@@ -985,8 +985,8 @@ namespace Services.Broadcast.ApplicationServices
             ApplyDaypartNames(programs);
             _ApplyProjectedImpressions(programs, inventory);
             ApplyStationImpressions(programs, inventory);
-            _CalculateProgramsCost(programs);
             _CalculateIndexingForPrograms(programs, pricingGuideDto);
+            _CalculateProgramsCost(programs);
             _CalculateProgramsBlendedCpm(programs);
             _CalculateProgramsTotals(programs);
             return programs;
@@ -1003,16 +1003,22 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var program in programs)
             {
-                if (pricingGuideDto.Margin.HasValue)
+                if (pricingGuideDto.Margin.HasValue || pricingGuideDto.Inflation.HasValue)
                 {
-                    var marginIncrease = program.SpotCost * (decimal)pricingGuideDto.Margin.Value;
-                    program.SpotCost += marginIncrease;
-                }
+                    foreach(var flightWeek in program.FlightWeeks)
+                    {
+                        if (pricingGuideDto.Margin.HasValue)
+                        {
+                            var marginIncrease = flightWeek.Rate * (decimal)pricingGuideDto.Margin.Value;
+                            flightWeek.Rate += marginIncrease;
+                        }
 
-                if (pricingGuideDto.Inflation.HasValue)
-                {
-                    var inflationIncrease = program.SpotCost * (decimal)pricingGuideDto.Inflation.Value;
-                    program.SpotCost += inflationIncrease;
+                        if (pricingGuideDto.Inflation.HasValue)
+                        {
+                            var inflationIncrease = flightWeek.Rate * (decimal)pricingGuideDto.Inflation.Value;
+                            flightWeek.Rate += inflationIncrease;
+                        }
+                    }
                 }
 
                 if (pricingGuideDto.ImpressionLoss.HasValue)

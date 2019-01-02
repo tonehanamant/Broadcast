@@ -275,9 +275,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (var program in programs)
             {
-                var impressions = program.ProvidedUnitImpressions ?? program.UnitImpressions;
-
-                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, impressions);
+                program.TargetCpm = ProposalMath.CalculateCpm(program.SpotCost, program.EffectiveImpressionsPerSpot);
             }
         }
 
