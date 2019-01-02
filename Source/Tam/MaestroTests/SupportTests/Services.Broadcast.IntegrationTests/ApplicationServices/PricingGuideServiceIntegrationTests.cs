@@ -1419,6 +1419,76 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithInflationIndexingUpdatesToCpm()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26024,
+                ProposalDetailId = 9986,
+                OpenMarketShare = 1,
+                Inflation = 0.5,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithMarginIndexingUpdatesToCpm()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26024,
+                ProposalDetailId = 9986,
+                OpenMarketShare = 1,
+                Margin = 0.5,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideWithMarginAndInflationIndexingUpdatesToCpm()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26024,
+                ProposalDetailId = 9986,
+                OpenMarketShare = 1,
+                Margin = 0.5,
+                Inflation = 0.5,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CopyToBuyTest()
         {
             using (new TransactionScopeWrapper())
