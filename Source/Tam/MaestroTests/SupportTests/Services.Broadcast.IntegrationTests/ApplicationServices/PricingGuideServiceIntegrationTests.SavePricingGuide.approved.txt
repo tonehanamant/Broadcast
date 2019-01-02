@@ -63,7 +63,7 @@
   "Markets": [
     {
       "AvgCpm": 0.0,
-      "CPM": 100.00,
+      "CPM": 0.0231713882594196218936310181,
       "DisplayImpressions": 10.0,
       "DisplayStationImpressions": 43156.671875,
       "MarketCoverage": 6.309,
@@ -107,7 +107,7 @@
                 }
               ],
               "HasImpressions": true,
-              "Impressions": 10.0,
+              "Impressions": 43156.671875,
               "ImpressionsPerSpot": 10.0,
               "ProgramName": "CBS Morning News",
               "Spots": 1,
@@ -118,7 +118,7 @@
         }
       ],
       "TotalCost": 1.0000,
-      "TotalImpressions": 10.0,
+      "TotalImpressions": 43156.671875,
       "TotalSpots": 1
     }
   ],
