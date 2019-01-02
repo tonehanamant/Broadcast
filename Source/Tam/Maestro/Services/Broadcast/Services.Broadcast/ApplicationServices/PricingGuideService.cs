@@ -174,7 +174,7 @@ namespace Services.Broadcast.ApplicationServices
                 }).ToList();
             inventoryMarkets.ForEach(x => x.Stations.ForEach(y => y.Programs.ForEach(p =>
             {
-                p.Impressions = p.ImpressionsPerSpot * p.Spots;
+                p.Impressions = p.EffectiveImpressionsPerSpot * p.Spots;
                 p.Cost = p.CostPerSpot * p.Spots;
             })));
             var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
