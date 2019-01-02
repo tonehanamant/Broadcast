@@ -13,5 +13,6 @@ namespace Services.Broadcast.Entities
         public List<ProposalMarketDto> ProposalMarkets { get; set; }
         public ProposalEnums.ProposalMarketGroups? MarketGroupId { get; set; }
         public ProposalEnums.ProposalMarketGroups? BlackoutMarketGroupId { get; set; }
+        public int MarketCoverageFileId { get; set; }
     }
 }

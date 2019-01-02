@@ -22,8 +22,6 @@ import PricingGuideEditMarkets from "./PricingGuideEditMarkets";
 
 import "./index.scss";
 
-const defaultSort = [{ id: "MarketRank", desc: false }];
-
 const shouldMarketRender = (isLoaded, data, isEdit) =>
   isLoaded && data && isEdit;
 
@@ -31,6 +29,9 @@ const shouldGridRender = (isLoaded, data, isEdit) =>
   shouldMarketRender(isLoaded, data, !isEdit) &&
   data.Markets &&
   data.Markets.length > 0;
+
+const defaultSort = [{ id: "MarketRank", desc: false }];
+const FIRST_ROW_INDEX = 0;
 
 class PricingOpenMarkets extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class PricingOpenMarkets extends Component {
       editingOpenCpmMax: null,
       editingOpenUnitCap: null,
       sorted: defaultSort,
+      selectedMarket: {},
       editingOpenCpmTarget: 1
     };
 
@@ -51,6 +53,9 @@ class PricingOpenMarkets extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onRunDistribution = this.onRunDistribution.bind(this);
     this.onSortedChange = this.onSortedChange.bind(this);
+    this.onSelectMarket = this.onSelectMarket.bind(this);
+    this.resetTable = this.resetTable.bind(this);
+    this.onUpdateEditMarkets = this.onUpdateEditMarkets.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +72,15 @@ class PricingOpenMarkets extends Component {
     }
   }
 
+  onSelectMarket(rowIndex, row) {
+    this.setState({
+      selectedMarket: {
+        marketId: row.MarketId,
+        rowIndex
+      }
+    });
+  }
+
   handleChange(name, value) {
     this.setState({ [name]: value });
   }
@@ -74,7 +88,21 @@ class PricingOpenMarkets extends Component {
   onRunDistribution() {
     const { onRunDistribution } = this.props;
     onRunDistribution();
-    this.setState({ sorted: defaultSort });
+    this.resetTable();
+  }
+
+  onUpdateEditMarkets() {
+    const { onUpdateEditMarkets } = this.props;
+    onUpdateEditMarkets();
+    this.resetTable();
+  }
+
+  resetTable() {
+    const {
+      activeOpenMarketData: { Markets }
+    } = this.props;
+    this.onSortedChange(defaultSort);
+    this.onSelectMarket(FIRST_ROW_INDEX, Markets[FIRST_ROW_INDEX]);
   }
 
   onSortedChange(nextValue) {
@@ -123,13 +151,13 @@ class PricingOpenMarkets extends Component {
       editingOpenCpmMax,
       editingOpenUnitCap,
       editingOpenCpmTarget,
-      sorted
+      sorted,
+      selectedMarket
     } = this.state;
     const {
       isReadOnly,
       hasOpenMarketData,
       isOpenMarketDataSortName,
-      onUpdateEditMarkets,
       onAllocateSpots,
       openMarketLoading,
       openMarketLoaded,
@@ -408,7 +436,9 @@ class PricingOpenMarkets extends Component {
                 isOpenMarketDataSortName={isOpenMarketDataSortName}
                 onAllocateSpots={onAllocateSpots}
                 sorted={sorted}
+                selectedMarket={selectedMarket}
                 onSortedChange={this.onSortedChange}
+                onSelectMarket={this.onSelectMarket}
                 isGuideEditing={isGuideEditing}
               />
             )}
@@ -416,7 +446,7 @@ class PricingOpenMarkets extends Component {
               <PricingGuideEditMarkets
                 activeEditMarkets={activeEditMarkets}
                 marketCoverageGoal={coverage}
-                onUpdateEditMarkets={onUpdateEditMarkets}
+                onUpdateEditMarkets={this.onUpdateEditMarkets}
               />
             )}
           </Panel.Body>
@@ -463,6 +493,7 @@ PricingOpenMarkets.defaultProps = {
   openCpmMin: null,
   openCpmMax: null,
   openUnitCap: null,
+  hasActiveDistribution: false,
   openCpmTarget: 1
 };
 

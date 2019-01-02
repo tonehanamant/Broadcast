@@ -49,42 +49,43 @@ const boldRowTypes = [rowTypes.TITLE, rowTypes.SUB_TITLE];
 const generateProgramData = (markets, selectedMarket) => {
   const data = [];
   if (!selectedMarket) return data;
-  // should add Ids for future?
   const market = markets.find(m => m.MarketId === selectedMarket);
-  market.Stations.forEach(station => {
-    // station TotalStationImpressions?
-    data.push({
-      rowType: rowTypes.SUB_TITLE,
-      AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
-      isStation: true,
-      MarketId: market.MarketId,
-      StationCode: station.StationCode
-    });
-
-    station.Programs.forEach(program => {
+  market.Stations.filter(({ Programs }) => Programs && Programs.length).forEach(
+    (station, idx) => {
       data.push({
-        rowType: rowTypes.DATA_ROW,
-        AiringTime: program.Daypart.Display,
-        Program: program.ProgramName,
-        CPM: program.BlendedCpm,
-        Spots: program.Spots,
-        Impressions: program.DisplayImpressions
-          ? program.DisplayImpressions / 1000
-          : program.DisplayImpressions,
-        StationImpressions: program.DisplayStationImpressions
-          ? program.DisplayStationImpressions / 1000
-          : program.DisplayStationImpressions,
-        HasImpressions: program.HasImpressions,
+        rowType: rowTypes.SUB_TITLE,
+        AiringTime: `${station.CallLetters} (${station.LegacyCallLetters})`,
+        isStation: true,
         MarketId: market.MarketId,
-        StationCode: station.StationCode,
-        ProgramId: program.ProgramId,
-        Cost: program.DisplayCost,
-        isProgram: true // need for future use
+        StationCode: station.StationCode
       });
-    });
 
-    data.push({ rowType: rowTypes.EMPTY_ROW });
-  });
+      station.Programs.forEach(program => {
+        data.push({
+          rowType: rowTypes.DATA_ROW,
+          AiringTime: program.Daypart.Display,
+          Program: program.ProgramName,
+          CPM: program.BlendedCpm,
+          Spots: program.Spots,
+          Impressions: program.DisplayImpressions
+            ? program.DisplayImpressions / 1000
+            : program.DisplayImpressions,
+          StationImpressions: program.DisplayStationImpressions
+            ? program.DisplayStationImpressions / 1000
+            : program.DisplayStationImpressions,
+          HasImpressions: program.HasImpressions,
+          MarketId: market.MarketId,
+          StationCode: station.StationCode,
+          ProgramId: program.ProgramId,
+          Cost: program.DisplayCost,
+          isProgram: true // need for future use
+        });
+      });
+      if (idx + 1 === station.length) {
+        data.push({ rowType: rowTypes.EMPTY_ROW });
+      }
+    }
+  );
 
   return data;
 };
@@ -122,6 +123,14 @@ const NumberCell = ({ value, original }) => {
   return GreyDisplay(retVal, inactive);
 };
 
+const SpotCell = ({ value, original }) => {
+  if (isNil(value)) return "-";
+  const inactive = original.isProgram
+    ? original.Spots === 0 || original.Impressions > 0
+    : false;
+  return GreyDisplay(numeral(value).format("0,0"), inactive);
+};
+
 const ImpressionCell = ({ value, original }) => {
   if (isNil(value)) return "";
   const inactive = original.isProgram
@@ -150,7 +159,7 @@ GroupingCell.propTypes = {
   value: PropTypes.string.isRequired
 };
 
-const SpotCell = onChange => ({ value, original }) =>
+const renderSpots = onChange => ({ value, original }) =>
   original.HasImpressions ? (
     <EditableCell
       allowSubmitEmpty
@@ -162,7 +171,7 @@ const SpotCell = onChange => ({ value, original }) =>
       id="Spots"
     />
   ) : (
-    NumberCell({ value, original })
+    SpotCell({ value, original })
   );
 
 const generateProgramColumns = onChange => [
@@ -185,7 +194,7 @@ const generateProgramColumns = onChange => [
   {
     Header: "Spots",
     accessor: "Spots",
-    Cell: SpotCell(onChange)
+    Cell: renderSpots(onChange)
   },
   {
     Header: "Impressions(000)",

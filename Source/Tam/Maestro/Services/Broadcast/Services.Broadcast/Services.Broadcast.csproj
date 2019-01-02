@@ -214,6 +214,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
+    <Compile Include="Converters\PostLogBaseFileConverter.cs" />
+    <Compile Include="Entities\Nti\NtiPdfDto.cs" />
+    <Compile Include="Entities\Nti\NtiProposalVersionDetailWeek.cs" />
+	<Compile Include="Entities\MarketCoverageDto.cs" />
+    <Compile Include="Entities\MarketCoverageFile.cs" />
     <Compile Include="Entities\OpenMarketInventory\AllocationsChangeRequest.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />
     <Compile Include="ApplicationServices\BasePostProcessingService.cs" />
@@ -250,7 +256,7 @@
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
-    <Compile Include="Converters\PostLogBaseFileConverter.cs" />
+    <Compile Include="Helpers\CsvHelper.cs" />
     <Compile Include="Entities\DistributionProgram.cs" />
     <Compile Include="Entities\DTO\CheckForAllocatedSpotsRequestDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\OpenMarketTotalsDto.cs" />
@@ -261,9 +267,14 @@
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideMarketTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingTotalsDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\ProprietaryTotalsDto.cs" />
+    <Compile Include="Entities\Nti\NtiFile.cs" />
     <Compile Include="Entities\MarketRankingsByMediaMonth.cs" />
     <Compile Include="Entities\Nti\NtiRatingCategory.cs" />
+    <Compile Include="Entities\Nti\NtiRatingCategoryDto.cs" />
     <Compile Include="Entities\Nti\NtiRatingDocument.cs" />
+    <Compile Include="Entities\Nti\NtiRatingDocumentDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingHeaderDto.cs" />
+    <Compile Include="Entities\Nti\NtiRatingSubCategoryDto.cs" />
     <Compile Include="Entities\PricingGuideOpenMarketDistributionSaveRequest.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSaveRequest.cs" />
     <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
@@ -275,12 +286,6 @@
     <Compile Include="Entities\Enums\FileProcessingStatusEnum.cs" />
     <Compile Include="Entities\Enums\FileDetailProblemTypeEnum.cs" />
     <Compile Include="Entities\MarketCoverage.cs" />
-    <Compile Include="Entities\Nti\NtiPdfDto.cs" />
-    <Compile Include="Entities\Nti\NtiRatingCategoryDto.cs" />
-    <Compile Include="Entities\Nti\NtiRatingDocumentDto.cs" />
-    <Compile Include="Entities\Nti\NtiRatingHeaderDto.cs" />
-    <Compile Include="Entities\Nti\NtiRatingSubCategoryDto.cs" />
-    <Compile Include="Entities\Nti\NtiFile.cs" />
     <Compile Include="Entities\OpenMarketCpmTarget.cs" />
     <Compile Include="Entities\DTO\PricingGuide\PricingGuideOpenMarketInventoryRequestDto.cs" />
     <Compile Include="Entities\DTO\PricingGuide\OpenMarketPricingGuideDto.cs" />
@@ -370,7 +375,7 @@
     <Compile Include="Entities\InSpecAffidavitFileDetail.cs" />
     <Compile Include="Entities\Enums\InventorySourceEnum.cs" />
     <Compile Include="Entities\MarketPlaybackTypes.cs" />
-    <Compile Include="Entities\DTO\NsiPostReport.cs" />
+    <Compile Include="Entities\PostReport.cs" />
     <Compile Include="Entities\OpenMarketInventoryAllocationSnapshotDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\BaseProposalInventoryWeekDto.cs" />
     <Compile Include="Entities\OpenMarketInventory\OpenMarketAllocationSaveRequest.cs" />
@@ -431,7 +436,7 @@
     <Compile Include="Extensions\Bvs.cs" />
     <Compile Include="ReportGenerators\IReportGenerator.cs" />
     <Compile Include="ReportGenerators\MyEventsReportGenerator.cs" />
-    <Compile Include="ReportGenerators\NSIPostReportGenerator.cs" />
+    <Compile Include="ReportGenerators\PostReportGenerator.cs" />
     <Compile Include="ReportGenerators\PostExcelReportGenerator.cs" />
     <Compile Include="Entities\InventoryDetail.cs" />
     <Compile Include="Entities\InventoryDetailSlot.cs" />

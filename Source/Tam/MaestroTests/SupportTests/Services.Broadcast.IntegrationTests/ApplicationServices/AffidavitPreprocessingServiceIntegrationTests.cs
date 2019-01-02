@@ -102,6 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore("Source changed to Sigma")]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPreprocessing_KeepingTracInvalidHeadersCount()
         {
@@ -146,6 +147,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore("Source changed to Sigma")]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPreprocessing_KeepingTracInvalidData()
         {
@@ -190,6 +192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore("Source changed to Sigma")]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPreprocessing_KeepingTracValidFile()
         {
@@ -212,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Used for manual testing")]
         [UseReporter(typeof(DiffReporter))]
         public void AffidavitPreprocessing_ManualTestForZipArchives()
         {
@@ -220,10 +223,76 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var fileNames = new List<string>()
                 {
-                    @".\Files\KeepingTrac_ValidFile.xlsx",
+                    @".\Files\Sigma-ValidFile.csv",
                     @".\Files\StrataSBMSInvoicePostExportValid.xlsx"
                 };
-               // _AffidavitPreprocessingService.CreateAndUploadZipArchiveToWWTV(fileNames);                
+                //_AffidavitPreprocessingService._CreateAndUploadZipArchiveToWWTV(fileNames);                
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_SigmaMissingRequiredColumn()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\Sigma-MissingRequiredColumn.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_SigmaMissingRequiredData()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\Sigma-MissingRequiredData.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffidavitPreprocessing_Sigma_ValidFile()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileNames = new List<string>() { @".\Files\Sigma-ValidFile.csv" };
+                var validations = _AffidavitPreprocessingService.ValidateFiles(fileNames, USERNAME);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(validations, jsonSettings));
             }
         }
     }

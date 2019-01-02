@@ -6,12 +6,14 @@
     "3Q'17: 4 weeks - 7/10, 7/17, 7/24, 7/31"
   ],
   "GuaranteedDemo": "House Holds",
+  "IsNtiReport": false,
   "PlaybackTypes": [
     "Live+3"
   ],
   "PostingBooks": [
     "July 2017"
   ],
+  "PostType": "NSI",
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -127,15 +129,17 @@
             "31": 486.9
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2017-07-10T00:00:00",
           "DaypartName": "EMN",
           "Isci": "BCOP3296VI",
           "Market": "Detroit",
           "NetworkAffiliate": "IND",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Jul 2017",
+          "ProposalDetailPostingBook": "0717",
           "ProposalDetailSpotLength": 15,
           "ProposalWeekCost": 100.0000,
           "ProposalWeekCPM": 10.0000,
@@ -157,15 +161,17 @@
             "31": 84.55
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2017-07-17T00:00:00",
           "DaypartName": "EMN",
           "Isci": "BCOP3296II",
           "Market": "South Bend-Elkhart",
           "NetworkAffiliate": "PBS",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Jul 2017",
+          "ProposalDetailPostingBook": "0717",
           "ProposalDetailSpotLength": 15,
           "ProposalWeekCost": 460.0000,
           "ProposalWeekCPM": 59.999999999999973913043478300,
@@ -187,15 +193,17 @@
             "31": 0.0
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2017-07-27T00:00:00",
           "DaypartName": "EMN",
           "Isci": "BCOP3296III",
           "Market": "Bakersfield",
           "NetworkAffiliate": "I-S",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Jul 2017",
+          "ProposalDetailPostingBook": "0717",
           "ProposalDetailSpotLength": 15,
           "ProposalWeekCost": 460.0000,
           "ProposalWeekCPM": 59.999999999999973913043478300,
@@ -217,15 +225,17 @@
             "31": 0.0
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2017-08-02T00:00:00",
           "DaypartName": "EMN",
           "Isci": "BCOP3296IV",
           "Market": "Juneau",
           "NetworkAffiliate": "PBS",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Jul 2017",
+          "ProposalDetailPostingBook": "0717",
           "ProposalDetailSpotLength": 15,
           "ProposalWeekCost": 460.1200,
           "ProposalWeekCPM": 59.999999999999973919846996400,
@@ -247,15 +257,17 @@
             "31": 259294.75
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2017-08-02T00:00:00",
           "DaypartName": "ADU",
           "Isci": "BCOP3296V",
           "Market": "New York",
           "NetworkAffiliate": "NBC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Jul 2017",
+          "ProposalDetailPostingBook": "0717",
           "ProposalDetailSpotLength": 15,
           "ProposalWeekCost": 0.0000,
           "ProposalWeekCPM": 0.0000,
@@ -277,15 +289,17 @@
             "31": 41651.15
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2017-07-17T00:00:00",
           "DaypartName": "ADU",
           "Isci": "BCOP3296I",
           "Market": "Raleigh-Durham (Fayetvlle)",
           "NetworkAffiliate": "PBS",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Middle",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Jul 2017",
+          "ProposalDetailPostingBook": "0717",
           "ProposalDetailSpotLength": 15,
           "ProposalWeekCost": 0.0000,
           "ProposalWeekCPM": 0.0000,

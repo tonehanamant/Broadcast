@@ -93,8 +93,9 @@ export class ProposalDetail extends Component {
   }
 
   onFlightPickerApply(flight) {
-    if (this.props.detail) {
-      this.props.toggleModal({
+    const { detail, toggleModal } = this.props;
+    if (detail) {
+      toggleModal({
         modal: "confirmModal",
         active: true,
         properties: {
@@ -181,38 +182,45 @@ export class ProposalDetail extends Component {
   }
 
   flightPickerApply(flight) {
-    if (this.props.detail) {
-      this.props.updateProposalEditFormDetail({
-        id: this.props.detail.Id,
+    const {
+      detail,
+      updateProposalEditFormDetail,
+      onUpdateProposal,
+      proposalEditForm: { PostType },
+      modelNewProposalDetail
+    } = this.props;
+    if (detail) {
+      updateProposalEditFormDetail({
+        id: detail.Id,
         key: "FlightStartDate",
         value: flight.StartDate
       });
-      this.props.updateProposalEditFormDetail({
-        id: this.props.detail.Id,
+      updateProposalEditFormDetail({
+        id: detail.Id,
         key: "FlightEndDate",
         value: flight.EndDate
       });
-      this.props.updateProposalEditFormDetail({
-        id: this.props.detail.Id,
+      updateProposalEditFormDetail({
+        id: detail.Id,
         key: "FlightWeeks",
         value: flight.FlightWeeks
       });
-      this.props.updateProposalEditFormDetail({
-        id: this.props.detail.Id,
+      updateProposalEditFormDetail({
+        id: detail.Id,
         key: "FlightEdited",
         value: true
       });
       // Need a hard clearing of the data or the rendered cells in swetail grid get mixed up (state is not properly re-rendered)
       // clear the grid data - GridQuarterWeeks - while maintainig the overall state changes in the edited values (detail)
-      this.props.updateProposalEditFormDetail({
-        id: this.props.detail.Id,
+      updateProposalEditFormDetail({
+        id: detail.Id,
         key: "GridQuarterWeeks",
         value: []
       });
       // reset the data from the edited details processed by the BE
-      this.props.onUpdateProposal();
+      onUpdateProposal();
     } else {
-      this.props.modelNewProposalDetail(flight);
+      modelNewProposalDetail({ ...flight, PostType });
     }
   }
 
@@ -286,7 +294,7 @@ export class ProposalDetail extends Component {
   }
 
   openInventory(type) {
-    const { location } = this.props;
+    const { location, proposalEditForm, detail } = this.props;
 
     const isDirty = this.props.isDirty();
     if (isDirty) {
@@ -298,27 +306,25 @@ export class ProposalDetail extends Component {
       return;
     }
 
-    const detailId = this.props.detail.Id;
-    const version = this.props.proposalEditForm.Version;
-    const proposalId = this.props.proposalEditForm.Id;
+    const detailId = detail.Id;
+    const version = proposalEditForm.Version;
+    const proposalId = proposalEditForm.Id;
     // change readOnly determination to specific inventory variations (1 proposed and 4)
     // const readOnly = this.props.isReadOnly;
     // adjust to check route location for version mode
-    const status = this.props.proposalEditForm.Status;
+    const status = proposalEditForm.Status;
     const readOnly = status != null ? status === 1 || status === 4 : false;
     const fromVersion = location.pathname.indexOf("/version/") !== -1;
     // console.log('fromVersion', fromVersion);
     const modalUrl = fromVersion
       ? `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}&version=${version}`
       : `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}`;
-    // console.log('openInventory', modalUrl, type, detailId, proposalId, readOnly, this.props.proposalEditForm);
     if (readOnly) {
       const title =
         type === "inventory"
           ? "Inventory Read Only"
           : "Open Market Inventory Read Only";
       const { Statuses } = this.props.initialdata;
-      // const status = this.props.proposalEditForm.Status;
       const statusDisplay = Statuses.find(
         statusItem => statusItem.Id === status
       );
@@ -348,25 +354,6 @@ export class ProposalDetail extends Component {
   generateSCX() {
     const { detail, generateScx } = this.props;
     generateScx([detail.Id], true);
-    /* const modalUrl = `${__API__}Proposals/GenerateScxDetail/${detail.Id}`;
-    toggleModal({
-      modal: "confirmModal",
-      active: true,
-      properties: {
-        titleText: "Generate SCX file",
-        bodyText:
-          "Operation will produce a single SCX file for this Proposal Detail.",
-        bodyList: ["Select Continue to proceed", "Select Cancel to cancel"],
-        closeButtonText: "Cancel",
-        actionButtonText: "Continue",
-        actionButtonBsStyle: "success",
-        // href: `${__API__}Proposals/GenerateScxDetail/${detail.Id}`,
-        action: () => {
-          window.open(modalUrl, "_blank");
-        },
-        dismiss: () => {}
-      }
-    }); */
   }
 
   componentWillReceiveProps(nextProps) {
@@ -384,7 +371,8 @@ export class ProposalDetail extends Component {
       onUpdateProposal,
       isReadOnly,
       toggleModal,
-      proposalValidationStates
+      proposalValidationStates,
+      proposalEditForm
     } = this.props;
     const { isISCIEdited, isGridCellEdited } = this.props;
 
@@ -410,7 +398,7 @@ export class ProposalDetail extends Component {
                   flightWeeks={
                     detail && detail.FlightWeeks ? detail.FlightWeeks : null
                   }
-                  onApply={flight => this.onFlightPickerApply(flight)}
+                  onApply={this.onFlightPickerApply}
                   isReadOnly={isReadOnly}
                 />
               </FormGroup>
@@ -507,38 +495,39 @@ export class ProposalDetail extends Component {
                   />
                 </FormGroup>
               )}
-              {detail && (
-                <FormGroup
-                  controlId="proposalDetailNtiConversionFactor"
-                  validationState={this.state.validationStates.NtiLength}
-                  className="proposal-detail-form-item"
-                >
-                  <div className="proposal-form-label">
-                    <ControlLabel>NTI</ControlLabel>
-                    {this.state.validationStates.NtiLength != null && (
-                      <HelpBlock>
-                        <span className="text-danger">Required.</span>
-                      </HelpBlock>
-                    )}
-                  </div>
-                  <InputGroup>
-                    <InputNumber
-                      min={0}
-                      max={99.99}
-                      className="form-control"
-                      style={{ width: "75px" }}
-                      precision={2}
-                      defaultValue={
-                        detail && detail.NtiConversionFactor
-                          ? detail.NtiConversionFactor * 100
-                          : 0
-                      }
-                      onChange={this.onChangeNti}
-                    />
-                    <InputGroup.Addon>%</InputGroup.Addon>
-                  </InputGroup>
-                </FormGroup>
-              )}
+              {detail &&
+                proposalEditForm.PostType === 2 && (
+                  <FormGroup
+                    controlId="proposalDetailNtiConversionFactor"
+                    validationState={this.state.validationStates.NtiLength}
+                    className="proposal-detail-form-item"
+                  >
+                    <div className="proposal-form-label">
+                      <ControlLabel>NTI</ControlLabel>
+                      {this.state.validationStates.NtiLength != null && (
+                        <HelpBlock>
+                          <span className="text-danger">Required.</span>
+                        </HelpBlock>
+                      )}
+                    </div>
+                    <InputGroup>
+                      <InputNumber
+                        min={0}
+                        max={99.99}
+                        className="form-control"
+                        style={{ width: "75px" }}
+                        precision={2}
+                        defaultValue={
+                          detail && detail.NtiConversionFactor
+                            ? detail.NtiConversionFactor * 100
+                            : 0
+                        }
+                        onChange={this.onChangeNti}
+                      />
+                      <InputGroup.Addon>%</InputGroup.Addon>
+                    </InputGroup>
+                  </FormGroup>
+                )}
               {detail && (
                 <FormGroup
                   controlId="proposalDetailADU"

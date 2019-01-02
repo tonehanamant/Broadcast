@@ -6,12 +6,14 @@
     "2Q'16: 1 week - 5/30"
   ],
   "GuaranteedDemo": "House Holds",
+  "IsNtiReport": false,
   "PlaybackTypes": [
     "Live+3"
   ],
   "PostingBooks": [
     "November 2017"
   ],
+  "PostType": "NSI",
   "ProposalAudiences": [
     {
       "Display": "HH",
@@ -67,15 +69,17 @@
             "31": 500.0
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2016-05-31T00:00:00",
           "DaypartName": "ADU",
           "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Nov 2017",
+          "ProposalDetailPostingBook": "1117",
           "ProposalDetailSpotLength": 30,
           "ProposalWeekCost": 2.5000,
           "ProposalWeekCPM": 25.0000,
@@ -97,15 +101,17 @@
             "31": 1500.0
           },
           "Brand": "",
-          "Comment": null,
           "DateAired": "2016-06-03T00:00:00",
           "DaypartName": "NSIADU2",
           "Isci": null,
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
+          "NtiImpressions": {
+            "31": 0.0
+          },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "Nov 2017",
+          "ProposalDetailPostingBook": "1117",
           "ProposalDetailSpotLength": 30,
           "ProposalWeekCost": 2.5000,
           "ProposalWeekCPM": 25.0000,

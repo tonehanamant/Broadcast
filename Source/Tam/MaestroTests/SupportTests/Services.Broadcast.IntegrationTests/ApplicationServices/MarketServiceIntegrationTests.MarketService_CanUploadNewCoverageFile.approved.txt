@@ -1,0 +1,2928 @@
+﻿[
+  {
+    "Market": "New York",
+    "MarketCode": 101,
+    "PercentageOfUS": 6.309,
+    "Rank": 1,
+    "TVHomes": 7074750
+  },
+  {
+    "Market": "Los Angeles",
+    "MarketCode": 403,
+    "PercentageOfUS": 4.743,
+    "Rank": 2,
+    "TVHomes": 5318630
+  },
+  {
+    "Market": "Chicago",
+    "MarketCode": 202,
+    "PercentageOfUS": 2.942,
+    "Rank": 3,
+    "TVHomes": 3299720
+  },
+  {
+    "Market": "Philadelphia",
+    "MarketCode": 104,
+    "PercentageOfUS": 2.559,
+    "Rank": 4,
+    "TVHomes": 2869580
+  },
+  {
+    "Market": "Dallas-Ft. Worth",
+    "MarketCode": 223,
+    "PercentageOfUS": 2.362,
+    "Rank": 5,
+    "TVHomes": 2648490
+  },
+  {
+    "Market": "Washington, DC (Hagrstwn)",
+    "MarketCode": 111,
+    "PercentageOfUS": 2.222,
+    "Rank": 6,
+    "TVHomes": 2492170
+  },
+  {
+    "Market": "Houston",
+    "MarketCode": 218,
+    "PercentageOfUS": 2.2,
+    "Rank": 7,
+    "TVHomes": 2467140
+  },
+  {
+    "Market": "San Francisco-Oak-San Jose",
+    "MarketCode": 407,
+    "PercentageOfUS": 2.186,
+    "Rank": 8,
+    "TVHomes": 2451640
+  },
+  {
+    "Market": "Atlanta",
+    "MarketCode": 124,
+    "PercentageOfUS": 2.184,
+    "Rank": 9,
+    "TVHomes": 2449460
+  },
+  {
+    "Market": "Boston (Manchester)",
+    "MarketCode": 106,
+    "PercentageOfUS": 2.163,
+    "Rank": 10,
+    "TVHomes": 2425440
+  },
+  {
+    "Market": "Phoenix (Prescott)",
+    "MarketCode": 353,
+    "PercentageOfUS": 1.712,
+    "Rank": 11,
+    "TVHomes": 1919930
+  },
+  {
+    "Market": "Seattle-Tacoma",
+    "MarketCode": 419,
+    "PercentageOfUS": 1.677,
+    "Rank": 12,
+    "TVHomes": 1880750
+  },
+  {
+    "Market": "Tampa-St. Pete (Sarasota)",
+    "MarketCode": 139,
+    "PercentageOfUS": 1.676,
+    "Rank": 13,
+    "TVHomes": 1879760
+  },
+  {
+    "Market": "Detroit",
+    "MarketCode": 105,
+    "PercentageOfUS": 1.587,
+    "Rank": 14,
+    "TVHomes": 1779380
+  },
+  {
+    "Market": "Minneapolis-St. Paul",
+    "MarketCode": 213,
+    "PercentageOfUS": 1.543,
+    "Rank": 15,
+    "TVHomes": 1730430
+  },
+  {
+    "Market": "Miami-Ft. Lauderdale",
+    "MarketCode": 128,
+    "PercentageOfUS": 1.496,
+    "Rank": 16,
+    "TVHomes": 1677850
+  },
+  {
+    "Market": "Denver",
+    "MarketCode": 351,
+    "PercentageOfUS": 1.417,
+    "Rank": 17,
+    "TVHomes": 1589560
+  },
+  {
+    "Market": "Orlando-Daytona Bch-Melbrn",
+    "MarketCode": 134,
+    "PercentageOfUS": 1.365,
+    "Rank": 18,
+    "TVHomes": 1531130
+  },
+  {
+    "Market": "Cleveland-Akron (Canton)",
+    "MarketCode": 110,
+    "PercentageOfUS": 1.291,
+    "Rank": 19,
+    "TVHomes": 1447310
+  },
+  {
+    "Market": "Sacramnto-Stkton-Modesto",
+    "MarketCode": 462,
+    "PercentageOfUS": 1.26,
+    "Rank": 20,
+    "TVHomes": 1412940
+  },
+  {
+    "Market": "St. Louis",
+    "MarketCode": 209,
+    "PercentageOfUS": 1.061,
+    "Rank": 21,
+    "TVHomes": 1189890
+  },
+  {
+    "Market": "Portland, OR",
+    "MarketCode": 420,
+    "PercentageOfUS": 1.053,
+    "Rank": 22,
+    "TVHomes": 1180980
+  },
+  {
+    "Market": "Charlotte",
+    "MarketCode": 117,
+    "PercentageOfUS": 1.021,
+    "Rank": 23,
+    "TVHomes": 1145270
+  },
+  {
+    "Market": "Pittsburgh",
+    "MarketCode": 108,
+    "PercentageOfUS": 1.018,
+    "Rank": 24,
+    "TVHomes": 1141950
+  },
+  {
+    "Market": "Raleigh-Durham (Fayetvlle)",
+    "MarketCode": 160,
+    "PercentageOfUS": 1.01,
+    "Rank": 25,
+    "TVHomes": 1133160
+  },
+  {
+    "Market": "Baltimore",
+    "MarketCode": 112,
+    "PercentageOfUS": 0.988,
+    "Rank": 26,
+    "TVHomes": 1108010
+  },
+  {
+    "Market": "Nashville",
+    "MarketCode": 259,
+    "PercentageOfUS": 0.919,
+    "Rank": 27,
+    "TVHomes": 1030650
+  },
+  {
+    "Market": "Indianapolis",
+    "MarketCode": 127,
+    "PercentageOfUS": 0.915,
+    "Rank": 28,
+    "TVHomes": 1026260
+  },
+  {
+    "Market": "San Diego",
+    "MarketCode": 425,
+    "PercentageOfUS": 0.894,
+    "Rank": 29,
+    "TVHomes": 1002770
+  },
+  {
+    "Market": "Salt Lake City",
+    "MarketCode": 370,
+    "PercentageOfUS": 0.846,
+    "Rank": 30,
+    "TVHomes": 948840
+  },
+  {
+    "Market": "San Antonio",
+    "MarketCode": 241,
+    "PercentageOfUS": 0.824,
+    "Rank": 31,
+    "TVHomes": 924480
+  },
+  {
+    "Market": "Hartford & New Haven",
+    "MarketCode": 133,
+    "PercentageOfUS": 0.822,
+    "Rank": 32,
+    "TVHomes": 921500
+  },
+  {
+    "Market": "Kansas City",
+    "MarketCode": 216,
+    "PercentageOfUS": 0.803,
+    "Rank": 33,
+    "TVHomes": 901020
+  },
+  {
+    "Market": "Columbus, OH",
+    "MarketCode": 135,
+    "PercentageOfUS": 0.8,
+    "Rank": 34,
+    "TVHomes": 896980
+  },
+  {
+    "Market": "Cincinnati",
+    "MarketCode": 115,
+    "PercentageOfUS": 0.778,
+    "Rank": 35,
+    "TVHomes": 871970
+  },
+  {
+    "Market": "Milwaukee",
+    "MarketCode": 217,
+    "PercentageOfUS": 0.774,
+    "Rank": 36,
+    "TVHomes": 868500
+  },
+  {
+    "Market": "West Palm Beach-Ft. Pierce",
+    "MarketCode": 148,
+    "PercentageOfUS": 0.739,
+    "Rank": 37,
+    "TVHomes": 829110
+  },
+  {
+    "Market": "Greenvll-Spart-Ashevll-And",
+    "MarketCode": 167,
+    "PercentageOfUS": 0.722,
+    "Rank": 38,
+    "TVHomes": 809190
+  },
+  {
+    "Market": "Austin",
+    "MarketCode": 235,
+    "PercentageOfUS": 0.706,
+    "Rank": 39,
+    "TVHomes": 791480
+  },
+  {
+    "Market": "Las Vegas",
+    "MarketCode": 439,
+    "PercentageOfUS": 0.675,
+    "Rank": 40,
+    "TVHomes": 757400
+  },
+  {
+    "Market": "Oklahoma City",
+    "MarketCode": 250,
+    "PercentageOfUS": 0.629,
+    "Rank": 41,
+    "TVHomes": 705840
+  },
+  {
+    "Market": "Jacksonville",
+    "MarketCode": 161,
+    "PercentageOfUS": 0.625,
+    "Rank": 42,
+    "TVHomes": 700890
+  },
+  {
+    "Market": "Grand Rapids-Kalmzoo-B.Crk",
+    "MarketCode": 163,
+    "PercentageOfUS": 0.615,
+    "Rank": 43,
+    "TVHomes": 689950
+  },
+  {
+    "Market": "Birmingham (Ann and Tusc)",
+    "MarketCode": 230,
+    "PercentageOfUS": 0.613,
+    "Rank": 44,
+    "TVHomes": 687180
+  },
+  {
+    "Market": "Harrisburg-Lncstr-Leb-York",
+    "MarketCode": 166,
+    "PercentageOfUS": 0.609,
+    "Rank": 45,
+    "TVHomes": 682460
+  },
+  {
+    "Market": "Albuquerque-Santa Fe",
+    "MarketCode": 390,
+    "PercentageOfUS": 0.602,
+    "Rank": 46,
+    "TVHomes": 674930
+  },
+  {
+    "Market": "Norfolk-Portsmth-Newpt Nws",
+    "MarketCode": 144,
+    "PercentageOfUS": 0.601,
+    "Rank": 47,
+    "TVHomes": 673820
+  },
+  {
+    "Market": "Greensboro-H.Point-W.Salem",
+    "MarketCode": 118,
+    "PercentageOfUS": 0.6,
+    "Rank": 48,
+    "TVHomes": 672650
+  },
+  {
+    "Market": "Louisville",
+    "MarketCode": 129,
+    "PercentageOfUS": 0.586,
+    "Rank": 49,
+    "TVHomes": 657030
+  },
+  {
+    "Market": "Memphis",
+    "MarketCode": 240,
+    "PercentageOfUS": 0.579,
+    "Rank": 50,
+    "TVHomes": 649360
+  },
+  {
+    "Market": "New Orleans",
+    "MarketCode": 222,
+    "PercentageOfUS": 0.569,
+    "Rank": 51,
+    "TVHomes": 638020
+  },
+  {
+    "Market": "Providence-New Bedford",
+    "MarketCode": 121,
+    "PercentageOfUS": 0.533,
+    "Rank": 52,
+    "TVHomes": 597990
+  },
+  {
+    "Market": "Buffalo",
+    "MarketCode": 114,
+    "PercentageOfUS": 0.529,
+    "Rank": 53,
+    "TVHomes": 592750
+  },
+  {
+    "Market": "Fresno-Visalia",
+    "MarketCode": 466,
+    "PercentageOfUS": 0.512,
+    "Rank": 54,
+    "TVHomes": 574610
+  },
+  {
+    "Market": "Richmond-Petersburg",
+    "MarketCode": 156,
+    "PercentageOfUS": 0.506,
+    "Rank": 55,
+    "TVHomes": 566930
+  },
+  {
+    "Market": "Ft. Myers-Naples",
+    "MarketCode": 171,
+    "PercentageOfUS": 0.49,
+    "Rank": 56,
+    "TVHomes": 549760
+  },
+  {
+    "Market": "Wilkes Barre-Scranton-Hztn",
+    "MarketCode": 177,
+    "PercentageOfUS": 0.467,
+    "Rank": 57,
+    "TVHomes": 523450
+  },
+  {
+    "Market": "Little Rock-Pine Bluff",
+    "MarketCode": 293,
+    "PercentageOfUS": 0.466,
+    "Rank": 58,
+    "TVHomes": 522530
+  },
+  {
+    "Market": "Mobile-Pensacola (Ft Walt)",
+    "MarketCode": 286,
+    "PercentageOfUS": 0.466,
+    "Rank": 59,
+    "TVHomes": 522260
+  },
+  {
+    "Market": "Albany-Schenectady-Troy",
+    "MarketCode": 132,
+    "PercentageOfUS": 0.465,
+    "Rank": 60,
+    "TVHomes": 521820
+  },
+  {
+    "Market": "Knoxville",
+    "MarketCode": 157,
+    "PercentageOfUS": 0.461,
+    "Rank": 61,
+    "TVHomes": 516920
+  },
+  {
+    "Market": "Tulsa",
+    "MarketCode": 271,
+    "PercentageOfUS": 0.461,
+    "Rank": 62,
+    "TVHomes": 516540
+  },
+  {
+    "Market": "Lexington",
+    "MarketCode": 141,
+    "PercentageOfUS": 0.41,
+    "Rank": 63,
+    "TVHomes": 459300
+  },
+  {
+    "Market": "Dayton",
+    "MarketCode": 142,
+    "PercentageOfUS": 0.405,
+    "Rank": 64,
+    "TVHomes": 453960
+  },
+  {
+    "Market": "Tucson (Sierra Vista)",
+    "MarketCode": 389,
+    "PercentageOfUS": 0.386,
+    "Rank": 65,
+    "TVHomes": 433330
+  },
+  {
+    "Market": "Honolulu",
+    "MarketCode": 344,
+    "PercentageOfUS": 0.374,
+    "Rank": 66,
+    "TVHomes": 419540
+  },
+  {
+    "Market": "Wichita-Hutchinson Plus",
+    "MarketCode": 278,
+    "PercentageOfUS": 0.371,
+    "Rank": 67,
+    "TVHomes": 416400
+  },
+  {
+    "Market": "Des Moines-Ames",
+    "MarketCode": 279,
+    "PercentageOfUS": 0.371,
+    "Rank": 68,
+    "TVHomes": 416020
+  },
+  {
+    "Market": "Green Bay-Appleton",
+    "MarketCode": 258,
+    "PercentageOfUS": 0.371,
+    "Rank": 69,
+    "TVHomes": 415890
+  },
+  {
+    "Market": "Roanoke-Lynchburg",
+    "MarketCode": 173,
+    "PercentageOfUS": 0.37,
+    "Rank": 70,
+    "TVHomes": 414620
+  },
+  {
+    "Market": "Flint-Saginaw-Bay City",
+    "MarketCode": 113,
+    "PercentageOfUS": 0.367,
+    "Rank": 71,
+    "TVHomes": 411210
+  },
+  {
+    "Market": "Spokane",
+    "MarketCode": 481,
+    "PercentageOfUS": 0.366,
+    "Rank": 72,
+    "TVHomes": 410900
+  },
+  {
+    "Market": "Charleston-Huntington",
+    "MarketCode": 164,
+    "PercentageOfUS": 0.362,
+    "Rank": 73,
+    "TVHomes": 406310
+  },
+  {
+    "Market": "Omaha",
+    "MarketCode": 252,
+    "PercentageOfUS": 0.356,
+    "Rank": 74,
+    "TVHomes": 399010
+  },
+  {
+    "Market": "Springfield, MO",
+    "MarketCode": 219,
+    "PercentageOfUS": 0.348,
+    "Rank": 75,
+    "TVHomes": 389750
+  },
+  {
+    "Market": "Rochester, NY",
+    "MarketCode": 138,
+    "PercentageOfUS": 0.343,
+    "Rank": 76,
+    "TVHomes": 384380
+  },
+  {
+    "Market": "Columbia, SC",
+    "MarketCode": 146,
+    "PercentageOfUS": 0.343,
+    "Rank": 77,
+    "TVHomes": 384190
+  },
+  {
+    "Market": "Toledo",
+    "MarketCode": 147,
+    "PercentageOfUS": 0.338,
+    "Rank": 78,
+    "TVHomes": 379120
+  },
+  {
+    "Market": "Portland-Auburn",
+    "MarketCode": 100,
+    "PercentageOfUS": 0.328,
+    "Rank": 79,
+    "TVHomes": 367720
+  },
+  {
+    "Market": "Huntsville-Decatur (Flor)",
+    "MarketCode": 291,
+    "PercentageOfUS": 0.328,
+    "Rank": 80,
+    "TVHomes": 367510
+  },
+  {
+    "Market": "Madison",
+    "MarketCode": 269,
+    "PercentageOfUS": 0.327,
+    "Rank": 81,
+    "TVHomes": 366690
+  },
+  {
+    "Market": "Paducah-Cape Girard-Harsbg",
+    "MarketCode": 232,
+    "PercentageOfUS": 0.316,
+    "Rank": 82,
+    "TVHomes": 354790
+  },
+  {
+    "Market": "Shreveport",
+    "MarketCode": 212,
+    "PercentageOfUS": 0.314,
+    "Rank": 83,
+    "TVHomes": 352540
+  },
+  {
+    "Market": "Harlingen-Wslco-Brnsvl-Mca",
+    "MarketCode": 236,
+    "PercentageOfUS": 0.314,
+    "Rank": 84,
+    "TVHomes": 351810
+  },
+  {
+    "Market": "Syracuse",
+    "MarketCode": 155,
+    "PercentageOfUS": 0.312,
+    "Rank": 85,
+    "TVHomes": 350100
+  },
+  {
+    "Market": "Waco-Temple-Bryan",
+    "MarketCode": 225,
+    "PercentageOfUS": 0.309,
+    "Rank": 86,
+    "TVHomes": 346750
+  },
+  {
+    "Market": "Colorado Springs-Pueblo",
+    "MarketCode": 352,
+    "PercentageOfUS": 0.307,
+    "Rank": 87,
+    "TVHomes": 344250
+  },
+  {
+    "Market": "Champaign&Sprngfld-Decatur",
+    "MarketCode": 248,
+    "PercentageOfUS": 0.307,
+    "Rank": 88,
+    "TVHomes": 344180
+  },
+  {
+    "Market": "Chattanooga",
+    "MarketCode": 175,
+    "PercentageOfUS": 0.3,
+    "Rank": 89,
+    "TVHomes": 336580
+  },
+  {
+    "Market": "Savannah",
+    "MarketCode": 107,
+    "PercentageOfUS": 0.293,
+    "Rank": 90,
+    "TVHomes": 328860
+  },
+  {
+    "Market": "Cedar Rapids-Wtrlo-IWC&Dub",
+    "MarketCode": 237,
+    "PercentageOfUS": 0.29,
+    "Rank": 91,
+    "TVHomes": 325780
+  },
+  {
+    "Market": "Charleston, SC",
+    "MarketCode": 119,
+    "PercentageOfUS": 0.286,
+    "Rank": 92,
+    "TVHomes": 320980
+  },
+  {
+    "Market": "El Paso (Las Cruces)",
+    "MarketCode": 365,
+    "PercentageOfUS": 0.284,
+    "Rank": 93,
+    "TVHomes": 318260
+  },
+  {
+    "Market": "Baton Rouge",
+    "MarketCode": 316,
+    "PercentageOfUS": 0.281,
+    "Rank": 94,
+    "TVHomes": 314970
+  },
+  {
+    "Market": "Jackson, MS",
+    "MarketCode": 318,
+    "PercentageOfUS": 0.273,
+    "Rank": 95,
+    "TVHomes": 306410
+  },
+  {
+    "Market": "South Bend-Elkhart",
+    "MarketCode": 188,
+    "PercentageOfUS": 0.265,
+    "Rank": 96,
+    "TVHomes": 297680
+  },
+  {
+    "Market": "Burlington-Plattsburgh",
+    "MarketCode": 123,
+    "PercentageOfUS": 0.262,
+    "Rank": 97,
+    "TVHomes": 294020
+  },
+  {
+    "Market": "Ft. Smith-Fay-Sprngdl-Rgrs",
+    "MarketCode": 270,
+    "PercentageOfUS": 0.261,
+    "Rank": 98,
+    "TVHomes": 292160
+  },
+  {
+    "Market": "Tri-Cities, TN-VA",
+    "MarketCode": 131,
+    "PercentageOfUS": 0.259,
+    "Rank": 99,
+    "TVHomes": 290530
+  },
+  {
+    "Market": "Greenville-N.Bern-Washngtn",
+    "MarketCode": 145,
+    "PercentageOfUS": 0.255,
+    "Rank": 100,
+    "TVHomes": 285650
+  },
+  {
+    "Market": "Myrtle Beach-Florence",
+    "MarketCode": 170,
+    "PercentageOfUS": 0.251,
+    "Rank": 101,
+    "TVHomes": 281550
+  },
+  {
+    "Market": "Davenport-R.Island-Moline",
+    "MarketCode": 282,
+    "PercentageOfUS": 0.248,
+    "Rank": 102,
+    "TVHomes": 277950
+  },
+  {
+    "Market": "Evansville",
+    "MarketCode": 249,
+    "PercentageOfUS": 0.236,
+    "Rank": 103,
+    "TVHomes": 264890
+  },
+  {
+    "Market": "Boise",
+    "MarketCode": 357,
+    "PercentageOfUS": 0.236,
+    "Rank": 104,
+    "TVHomes": 264300
+  },
+  {
+    "Market": "Reno",
+    "MarketCode": 411,
+    "PercentageOfUS": 0.235,
+    "Rank": 105,
+    "TVHomes": 263990
+  },
+  {
+    "Market": "Lincoln & Hastings-Krny",
+    "MarketCode": 322,
+    "PercentageOfUS": 0.235,
+    "Rank": 106,
+    "TVHomes": 263110
+  },
+  {
+    "Market": "Johnstown-Altoona-St Colge",
+    "MarketCode": 174,
+    "PercentageOfUS": 0.234,
+    "Rank": 107,
+    "TVHomes": 262020
+  },
+  {
+    "Market": "Tallahassee-Thomasville",
+    "MarketCode": 130,
+    "PercentageOfUS": 0.23,
+    "Rank": 108,
+    "TVHomes": 257570
+  },
+  {
+    "Market": "Tyler-Longview(Lfkn&Ncgd)",
+    "MarketCode": 309,
+    "PercentageOfUS": 0.226,
+    "Rank": 109,
+    "TVHomes": 253230
+  },
+  {
+    "Market": "Sioux Falls(Mitchell)",
+    "MarketCode": 325,
+    "PercentageOfUS": 0.225,
+    "Rank": 110,
+    "TVHomes": 252660
+  },
+  {
+    "Market": "Ft. Wayne",
+    "MarketCode": 109,
+    "PercentageOfUS": 0.222,
+    "Rank": 111,
+    "TVHomes": 249130
+  },
+  {
+    "Market": "Augusta-Aiken",
+    "MarketCode": 120,
+    "PercentageOfUS": 0.222,
+    "Rank": 112,
+    "TVHomes": 249090
+  },
+  {
+    "Market": "Fargo-Valley City",
+    "MarketCode": 324,
+    "PercentageOfUS": 0.214,
+    "Rank": 113,
+    "TVHomes": 240560
+  },
+  {
+    "Market": "Yakima-Pasco-Rchlnd-Knnwck",
+    "MarketCode": 410,
+    "PercentageOfUS": 0.214,
+    "Rank": 114,
+    "TVHomes": 239760
+  },
+  {
+    "Market": "Lansing",
+    "MarketCode": 151,
+    "PercentageOfUS": 0.213,
+    "Rank": 115,
+    "TVHomes": 238990
+  },
+  {
+    "Market": "Springfield-Holyoke",
+    "MarketCode": 143,
+    "PercentageOfUS": 0.212,
+    "Rank": 116,
+    "TVHomes": 237580
+  },
+  {
+    "Market": "Youngstown",
+    "MarketCode": 136,
+    "PercentageOfUS": 0.209,
+    "Rank": 117,
+    "TVHomes": 234120
+  },
+  {
+    "Market": "Traverse City-Cadillac",
+    "MarketCode": 140,
+    "PercentageOfUS": 0.208,
+    "Rank": 118,
+    "TVHomes": 233370
+  },
+  {
+    "Market": "Eugene",
+    "MarketCode": 401,
+    "PercentageOfUS": 0.206,
+    "Rank": 119,
+    "TVHomes": 231570
+  },
+  {
+    "Market": "Macon",
+    "MarketCode": 103,
+    "PercentageOfUS": 0.199,
+    "Rank": 120,
+    "TVHomes": 222970
+  },
+  {
+    "Market": "Lafayette, LA",
+    "MarketCode": 242,
+    "PercentageOfUS": 0.198,
+    "Rank": 121,
+    "TVHomes": 222450
+  },
+  {
+    "Market": "Peoria-Bloomington",
+    "MarketCode": 275,
+    "PercentageOfUS": 0.198,
+    "Rank": 122,
+    "TVHomes": 222210
+  },
+  {
+    "Market": "Santabarbra-Sanmar-Sanluob",
+    "MarketCode": 455,
+    "PercentageOfUS": 0.198,
+    "Rank": 123,
+    "TVHomes": 222190
+  },
+  {
+    "Market": "Montgomery-Selma",
+    "MarketCode": 298,
+    "PercentageOfUS": 0.195,
+    "Rank": 124,
+    "TVHomes": 218740
+  },
+  {
+    "Market": "Monterey-Salinas",
+    "MarketCode": 428,
+    "PercentageOfUS": 0.194,
+    "Rank": 125,
+    "TVHomes": 217560
+  },
+  {
+    "Market": "Bakersfield",
+    "MarketCode": 400,
+    "PercentageOfUS": 0.189,
+    "Rank": 126,
+    "TVHomes": 212180
+  },
+  {
+    "Market": "Columbus, GA (Opelika, AL)",
+    "MarketCode": 122,
+    "PercentageOfUS": 0.184,
+    "Rank": 127,
+    "TVHomes": 206520
+  },
+  {
+    "Market": "Corpus Christi",
+    "MarketCode": 200,
+    "PercentageOfUS": 0.177,
+    "Rank": 128,
+    "TVHomes": 198820
+  },
+  {
+    "Market": "La Crosse-Eau Claire",
+    "MarketCode": 302,
+    "PercentageOfUS": 0.175,
+    "Rank": 129,
+    "TVHomes": 196160
+  },
+  {
+    "Market": "Wilmington",
+    "MarketCode": 150,
+    "PercentageOfUS": 0.171,
+    "Rank": 130,
+    "TVHomes": 191440
+  },
+  {
+    "Market": "Amarillo",
+    "MarketCode": 234,
+    "PercentageOfUS": 0.16,
+    "Rank": 131,
+    "TVHomes": 179920
+  },
+  {
+    "Market": "Chico-Redding",
+    "MarketCode": 468,
+    "PercentageOfUS": 0.16,
+    "Rank": 132,
+    "TVHomes": 179370
+  },
+  {
+    "Market": "Columbus-Tupelo-W Pnt-Hstn",
+    "MarketCode": 273,
+    "PercentageOfUS": 0.154,
+    "Rank": 133,
+    "TVHomes": 172520
+  },
+  {
+    "Market": "Wausau-Rhinelander",
+    "MarketCode": 305,
+    "PercentageOfUS": 0.148,
+    "Rank": 134,
+    "TVHomes": 166030
+  },
+  {
+    "Market": "Columbia-Jefferson City",
+    "MarketCode": 204,
+    "PercentageOfUS": 0.146,
+    "Rank": 135,
+    "TVHomes": 163790
+  },
+  {
+    "Market": "Medford-Klamath Falls",
+    "MarketCode": 413,
+    "PercentageOfUS": 0.146,
+    "Rank": 136,
+    "TVHomes": 163600
+  },
+  {
+    "Market": "Monroe-El Dorado",
+    "MarketCode": 228,
+    "PercentageOfUS": 0.144,
+    "Rank": 137,
+    "TVHomes": 161950
+  },
+  {
+    "Market": "Rockford",
+    "MarketCode": 210,
+    "PercentageOfUS": 0.144,
+    "Rank": 138,
+    "TVHomes": 161530
+  },
+  {
+    "Market": "Topeka",
+    "MarketCode": 205,
+    "PercentageOfUS": 0.144,
+    "Rank": 139,
+    "TVHomes": 161010
+  },
+  {
+    "Market": "Duluth-Superior",
+    "MarketCode": 276,
+    "PercentageOfUS": 0.14,
+    "Rank": 140,
+    "TVHomes": 157070
+  },
+  {
+    "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
+    "MarketCode": 287,
+    "PercentageOfUS": 0.139,
+    "Rank": 141,
+    "TVHomes": 156240
+  },
+  {
+    "Market": "Beaumont-Port Arthur",
+    "MarketCode": 292,
+    "PercentageOfUS": 0.139,
+    "Rank": 142,
+    "TVHomes": 156020
+  },
+  {
+    "Market": "Salisbury",
+    "MarketCode": 176,
+    "PercentageOfUS": 0.138,
+    "Rank": 143,
+    "TVHomes": 155240
+  },
+  {
+    "Market": "Odessa-Midland",
+    "MarketCode": 233,
+    "PercentageOfUS": 0.137,
+    "Rank": 144,
+    "TVHomes": 153830
+  },
+  {
+    "Market": "Lubbock",
+    "MarketCode": 251,
+    "PercentageOfUS": 0.137,
+    "Rank": 145,
+    "TVHomes": 153370
+  },
+  {
+    "Market": "Palm Springs",
+    "MarketCode": 404,
+    "PercentageOfUS": 0.136,
+    "Rank": 146,
+    "TVHomes": 152840
+  },
+  {
+    "Market": "Anchorage",
+    "MarketCode": 343,
+    "PercentageOfUS": 0.133,
+    "Rank": 147,
+    "TVHomes": 149120
+  },
+  {
+    "Market": "Sioux City",
+    "MarketCode": 224,
+    "PercentageOfUS": 0.129,
+    "Rank": 148,
+    "TVHomes": 144180
+  },
+  {
+    "Market": "Wichita Falls & Lawton",
+    "MarketCode": 227,
+    "PercentageOfUS": 0.127,
+    "Rank": 149,
+    "TVHomes": 142990
+  },
+  {
+    "Market": "Erie",
+    "MarketCode": 116,
+    "PercentageOfUS": 0.126,
+    "Rank": 150,
+    "TVHomes": 141020
+  },
+  {
+    "Market": "Panama City",
+    "MarketCode": 256,
+    "PercentageOfUS": 0.123,
+    "Rank": 151,
+    "TVHomes": 137830
+  },
+  {
+    "Market": "Joplin-Pittsburg",
+    "MarketCode": 203,
+    "PercentageOfUS": 0.122,
+    "Rank": 152,
+    "TVHomes": 136740
+  },
+  {
+    "Market": "Rochestr-Mason City-Austin",
+    "MarketCode": 211,
+    "PercentageOfUS": 0.12,
+    "Rank": 153,
+    "TVHomes": 134990
+  },
+  {
+    "Market": "Albany, GA",
+    "MarketCode": 125,
+    "PercentageOfUS": 0.12,
+    "Rank": 154,
+    "TVHomes": 134510
+  },
+  {
+    "Market": "Terre Haute",
+    "MarketCode": 181,
+    "PercentageOfUS": 0.114,
+    "Rank": 155,
+    "TVHomes": 127470
+  },
+  {
+    "Market": "Bangor",
+    "MarketCode": 137,
+    "PercentageOfUS": 0.112,
+    "Rank": 156,
+    "TVHomes": 125970
+  },
+  {
+    "Market": "Biloxi-Gulfport",
+    "MarketCode": 346,
+    "PercentageOfUS": 0.111,
+    "Rank": 157,
+    "TVHomes": 124130
+  },
+  {
+    "Market": "Wheeling-Steubenville",
+    "MarketCode": 154,
+    "PercentageOfUS": 0.108,
+    "Rank": 158,
+    "TVHomes": 121320
+  },
+  {
+    "Market": "Gainesville",
+    "MarketCode": 192,
+    "PercentageOfUS": 0.108,
+    "Rank": 159,
+    "TVHomes": 121060
+  },
+  {
+    "Market": "Sherman-Ada",
+    "MarketCode": 257,
+    "PercentageOfUS": 0.107,
+    "Rank": 160,
+    "TVHomes": 120100
+  },
+  {
+    "Market": "Binghamton",
+    "MarketCode": 102,
+    "PercentageOfUS": 0.107,
+    "Rank": 161,
+    "TVHomes": 120060
+  },
+  {
+    "Market": "Idaho Fals-Pocatllo(Jcksn)",
+    "MarketCode": 358,
+    "PercentageOfUS": 0.107,
+    "Rank": 162,
+    "TVHomes": 119590
+  },
+  {
+    "Market": "Bluefield-Beckley-Oak Hill",
+    "MarketCode": 159,
+    "PercentageOfUS": 0.106,
+    "Rank": 163,
+    "TVHomes": 118520
+  },
+  {
+    "Market": "Missoula",
+    "MarketCode": 362,
+    "PercentageOfUS": 0.101,
+    "Rank": 164,
+    "TVHomes": 113110
+  },
+  {
+    "Market": "Abilene-Sweetwater",
+    "MarketCode": 262,
+    "PercentageOfUS": 0.096,
+    "Rank": 165,
+    "TVHomes": 107760
+  },
+  {
+    "Market": "Yuma-El Centro",
+    "MarketCode": 371,
+    "PercentageOfUS": 0.094,
+    "Rank": 166,
+    "TVHomes": 105690
+  },
+  {
+    "Market": "Billings",
+    "MarketCode": 356,
+    "PercentageOfUS": 0.094,
+    "Rank": 167,
+    "TVHomes": 105470
+  },
+  {
+    "Market": "Hattiesburg-Laurel",
+    "MarketCode": 310,
+    "PercentageOfUS": 0.092,
+    "Rank": 168,
+    "TVHomes": 102840
+  },
+  {
+    "Market": "Clarksburg-Weston",
+    "MarketCode": 198,
+    "PercentageOfUS": 0.087,
+    "Rank": 169,
+    "TVHomes": 97020
+  },
+  {
+    "Market": "Rapid City",
+    "MarketCode": 364,
+    "PercentageOfUS": 0.085,
+    "Rank": 170,
+    "TVHomes": 95320
+  },
+  {
+    "Market": "Utica",
+    "MarketCode": 126,
+    "PercentageOfUS": 0.084,
+    "Rank": 171,
+    "TVHomes": 93930
+  },
+  {
+    "Market": "Quincy-Hannibal-Keokuk",
+    "MarketCode": 317,
+    "PercentageOfUS": 0.084,
+    "Rank": 172,
+    "TVHomes": 93920
+  },
+  {
+    "Market": "Dothan",
+    "MarketCode": 206,
+    "PercentageOfUS": 0.082,
+    "Rank": 173,
+    "TVHomes": 92300
+  },
+  {
+    "Market": "Lake Charles",
+    "MarketCode": 243,
+    "PercentageOfUS": 0.082,
+    "Rank": 174,
+    "TVHomes": 91490
+  },
+  {
+    "Market": "Harrisonburg",
+    "MarketCode": 169,
+    "PercentageOfUS": 0.077,
+    "Rank": 175,
+    "TVHomes": 86700
+  },
+  {
+    "Market": "Elmira (Corning)",
+    "MarketCode": 165,
+    "PercentageOfUS": 0.077,
+    "Rank": 176,
+    "TVHomes": 86230
+  },
+  {
+    "Market": "Jackson, TN",
+    "MarketCode": 239,
+    "PercentageOfUS": 0.076,
+    "Rank": 177,
+    "TVHomes": 85540
+  },
+  {
+    "Market": "Alexandria, LA",
+    "MarketCode": 244,
+    "PercentageOfUS": 0.073,
+    "Rank": 178,
+    "TVHomes": 82270
+  },
+  {
+    "Market": "Watertown",
+    "MarketCode": 149,
+    "PercentageOfUS": 0.073,
+    "Rank": 179,
+    "TVHomes": 81630
+  },
+  {
+    "Market": "Marquette",
+    "MarketCode": 153,
+    "PercentageOfUS": 0.07,
+    "Rank": 180,
+    "TVHomes": 78000
+  },
+  {
+    "Market": "Bowling Green",
+    "MarketCode": 336,
+    "PercentageOfUS": 0.069,
+    "Rank": 181,
+    "TVHomes": 77360
+  },
+  {
+    "Market": "Jonesboro",
+    "MarketCode": 334,
+    "PercentageOfUS": 0.069,
+    "Rank": 182,
+    "TVHomes": 76860
+  },
+  {
+    "Market": "Charlottesville",
+    "MarketCode": 184,
+    "PercentageOfUS": 0.064,
+    "Rank": 183,
+    "TVHomes": 72320
+  },
+  {
+    "Market": "Laredo",
+    "MarketCode": 349,
+    "PercentageOfUS": 0.063,
+    "Rank": 184,
+    "TVHomes": 70980
+  },
+  {
+    "Market": "Butte-Bozeman",
+    "MarketCode": 354,
+    "PercentageOfUS": 0.062,
+    "Rank": 185,
+    "TVHomes": 69060
+  },
+  {
+    "Market": "Bend, OR",
+    "MarketCode": 421,
+    "PercentageOfUS": 0.06,
+    "Rank": 186,
+    "TVHomes": 67170
+  },
+  {
+    "Market": "Grand Junction-Montrose",
+    "MarketCode": 373,
+    "PercentageOfUS": 0.06,
+    "Rank": 187,
+    "TVHomes": 67150
+  },
+  {
+    "Market": "Lafayette, IN",
+    "MarketCode": 182,
+    "PercentageOfUS": 0.059,
+    "Rank": 188,
+    "TVHomes": 66710
+  },
+  {
+    "Market": "Lima",
+    "MarketCode": 158,
+    "PercentageOfUS": 0.056,
+    "Rank": 189,
+    "TVHomes": 62840
+  },
+  {
+    "Market": "Twin Falls",
+    "MarketCode": 360,
+    "PercentageOfUS": 0.056,
+    "Rank": 190,
+    "TVHomes": 62360
+  },
+  {
+    "Market": "Meridian",
+    "MarketCode": 311,
+    "PercentageOfUS": 0.055,
+    "Rank": 191,
+    "TVHomes": 61460
+  },
+  {
+    "Market": "Great Falls",
+    "MarketCode": 355,
+    "PercentageOfUS": 0.054,
+    "Rank": 192,
+    "TVHomes": 60220
+  },
+  {
+    "Market": "Greenwood-Greenville",
+    "MarketCode": 247,
+    "PercentageOfUS": 0.052,
+    "Rank": 193,
+    "TVHomes": 58410
+  },
+  {
+    "Market": "Parkersburg",
+    "MarketCode": 197,
+    "PercentageOfUS": 0.051,
+    "Rank": 194,
+    "TVHomes": 56980
+  },
+  {
+    "Market": "Eureka",
+    "MarketCode": 402,
+    "PercentageOfUS": 0.051,
+    "Rank": 195,
+    "TVHomes": 56660
+  },
+  {
+    "Market": "San Angelo",
+    "MarketCode": 261,
+    "PercentageOfUS": 0.048,
+    "Rank": 196,
+    "TVHomes": 54100
+  },
+  {
+    "Market": "Cheyenne-Scottsbluf",
+    "MarketCode": 359,
+    "PercentageOfUS": 0.048,
+    "Rank": 197,
+    "TVHomes": 53720
+  },
+  {
+    "Market": "Casper-Riverton",
+    "MarketCode": 367,
+    "PercentageOfUS": 0.047,
+    "Rank": 198,
+    "TVHomes": 52190
+  },
+  {
+    "Market": "Mankato",
+    "MarketCode": 337,
+    "PercentageOfUS": 0.044,
+    "Rank": 199,
+    "TVHomes": 49610
+  },
+  {
+    "Market": "Ottumwa-Kirksville",
+    "MarketCode": 231,
+    "PercentageOfUS": 0.038,
+    "Rank": 200,
+    "TVHomes": 42990
+  },
+  {
+    "Market": "St. Joseph",
+    "MarketCode": 238,
+    "PercentageOfUS": 0.038,
+    "Rank": 201,
+    "TVHomes": 42230
+  },
+  {
+    "Market": "Fairbanks",
+    "MarketCode": 345,
+    "PercentageOfUS": 0.031,
+    "Rank": 202,
+    "TVHomes": 35180
+  },
+  {
+    "Market": "Victoria",
+    "MarketCode": 226,
+    "PercentageOfUS": 0.028,
+    "Rank": 203,
+    "TVHomes": 31380
+  },
+  {
+    "Market": "Zanesville",
+    "MarketCode": 196,
+    "PercentageOfUS": 0.027,
+    "Rank": 204,
+    "TVHomes": 30550
+  },
+  {
+    "Market": "Helena",
+    "MarketCode": 366,
+    "PercentageOfUS": 0.024,
+    "Rank": 205,
+    "TVHomes": 27430
+  },
+  {
+    "Market": "Presque Isle",
+    "MarketCode": 152,
+    "PercentageOfUS": 0.023,
+    "Rank": 206,
+    "TVHomes": 25480
+  },
+  {
+    "Market": "Juneau",
+    "MarketCode": 347,
+    "PercentageOfUS": 0.022,
+    "Rank": 207,
+    "TVHomes": 24390
+  },
+  {
+    "Market": "Alpena",
+    "MarketCode": 183,
+    "PercentageOfUS": 0.014,
+    "Rank": 208,
+    "TVHomes": 15360
+  },
+  {
+    "Market": "North Platte",
+    "MarketCode": 340,
+    "PercentageOfUS": 0.012,
+    "Rank": 209,
+    "TVHomes": 13640
+  },
+  {
+    "Market": "Glendive",
+    "MarketCode": 398,
+    "PercentageOfUS": 0.004,
+    "Rank": 210,
+    "TVHomes": 4030
+  },
+  {
+    "Market": "New York",
+    "MarketCode": 101,
+    "PercentageOfUS": 10.0,
+    "Rank": 1,
+    "TVHomes": 7074750
+  },
+  {
+    "Market": "Los Angeles",
+    "MarketCode": 403,
+    "PercentageOfUS": 4.743,
+    "Rank": 2,
+    "TVHomes": 5318630
+  },
+  {
+    "Market": "Chicago",
+    "MarketCode": 202,
+    "PercentageOfUS": 2.942,
+    "Rank": 3,
+    "TVHomes": 3299720
+  },
+  {
+    "Market": "Philadelphia",
+    "MarketCode": 104,
+    "PercentageOfUS": 2.559,
+    "Rank": 4,
+    "TVHomes": 2869580
+  },
+  {
+    "Market": "Dallas-Ft. Worth",
+    "MarketCode": 223,
+    "PercentageOfUS": 2.362,
+    "Rank": 5,
+    "TVHomes": 2648490
+  },
+  {
+    "Market": "Washington, DC (Hagrstwn)",
+    "MarketCode": 111,
+    "PercentageOfUS": 2.222,
+    "Rank": 6,
+    "TVHomes": 2492170
+  },
+  {
+    "Market": "Houston",
+    "MarketCode": 218,
+    "PercentageOfUS": 2.2,
+    "Rank": 7,
+    "TVHomes": 2467140
+  },
+  {
+    "Market": "San Francisco-Oak-San Jose",
+    "MarketCode": 407,
+    "PercentageOfUS": 2.186,
+    "Rank": 8,
+    "TVHomes": 2451640
+  },
+  {
+    "Market": "Atlanta",
+    "MarketCode": 124,
+    "PercentageOfUS": 2.184,
+    "Rank": 9,
+    "TVHomes": 2449460
+  },
+  {
+    "Market": "Boston (Manchester)",
+    "MarketCode": 106,
+    "PercentageOfUS": 2.163,
+    "Rank": 10,
+    "TVHomes": 2425440
+  },
+  {
+    "Market": "Phoenix (Prescott)",
+    "MarketCode": 353,
+    "PercentageOfUS": 1.712,
+    "Rank": 11,
+    "TVHomes": 1919930
+  },
+  {
+    "Market": "Seattle-Tacoma",
+    "MarketCode": 419,
+    "PercentageOfUS": 1.677,
+    "Rank": 12,
+    "TVHomes": 1880750
+  },
+  {
+    "Market": "Tampa-St. Pete (Sarasota)",
+    "MarketCode": 139,
+    "PercentageOfUS": 1.676,
+    "Rank": 13,
+    "TVHomes": 1879760
+  },
+  {
+    "Market": "Detroit",
+    "MarketCode": 105,
+    "PercentageOfUS": 1.587,
+    "Rank": 14,
+    "TVHomes": 1779380
+  },
+  {
+    "Market": "Minneapolis-St. Paul",
+    "MarketCode": 213,
+    "PercentageOfUS": 1.543,
+    "Rank": 15,
+    "TVHomes": 1730430
+  },
+  {
+    "Market": "Miami-Ft. Lauderdale",
+    "MarketCode": 128,
+    "PercentageOfUS": 1.496,
+    "Rank": 16,
+    "TVHomes": 1677850
+  },
+  {
+    "Market": "Denver",
+    "MarketCode": 351,
+    "PercentageOfUS": 1.417,
+    "Rank": 17,
+    "TVHomes": 1589560
+  },
+  {
+    "Market": "Orlando-Daytona Bch-Melbrn",
+    "MarketCode": 134,
+    "PercentageOfUS": 1.365,
+    "Rank": 18,
+    "TVHomes": 1531130
+  },
+  {
+    "Market": "Cleveland-Akron (Canton)",
+    "MarketCode": 110,
+    "PercentageOfUS": 1.291,
+    "Rank": 19,
+    "TVHomes": 1447310
+  },
+  {
+    "Market": "Sacramnto-Stkton-Modesto",
+    "MarketCode": 462,
+    "PercentageOfUS": 1.26,
+    "Rank": 20,
+    "TVHomes": 1412940
+  },
+  {
+    "Market": "St. Louis",
+    "MarketCode": 209,
+    "PercentageOfUS": 1.061,
+    "Rank": 21,
+    "TVHomes": 1189890
+  },
+  {
+    "Market": "Portland, OR",
+    "MarketCode": 420,
+    "PercentageOfUS": 1.053,
+    "Rank": 22,
+    "TVHomes": 1180980
+  },
+  {
+    "Market": "Charlotte",
+    "MarketCode": 117,
+    "PercentageOfUS": 1.021,
+    "Rank": 23,
+    "TVHomes": 1145270
+  },
+  {
+    "Market": "Pittsburgh",
+    "MarketCode": 108,
+    "PercentageOfUS": 1.018,
+    "Rank": 24,
+    "TVHomes": 1141950
+  },
+  {
+    "Market": "Raleigh-Durham (Fayetvlle)",
+    "MarketCode": 160,
+    "PercentageOfUS": 1.01,
+    "Rank": 25,
+    "TVHomes": 1133160
+  },
+  {
+    "Market": "Baltimore",
+    "MarketCode": 112,
+    "PercentageOfUS": 0.988,
+    "Rank": 26,
+    "TVHomes": 1108010
+  },
+  {
+    "Market": "Nashville",
+    "MarketCode": 259,
+    "PercentageOfUS": 0.919,
+    "Rank": 27,
+    "TVHomes": 1030650
+  },
+  {
+    "Market": "Indianapolis",
+    "MarketCode": 127,
+    "PercentageOfUS": 0.915,
+    "Rank": 28,
+    "TVHomes": 1026260
+  },
+  {
+    "Market": "San Diego",
+    "MarketCode": 425,
+    "PercentageOfUS": 0.894,
+    "Rank": 29,
+    "TVHomes": 1002770
+  },
+  {
+    "Market": "Salt Lake City",
+    "MarketCode": 370,
+    "PercentageOfUS": 0.846,
+    "Rank": 30,
+    "TVHomes": 948840
+  },
+  {
+    "Market": "San Antonio",
+    "MarketCode": 241,
+    "PercentageOfUS": 0.824,
+    "Rank": 31,
+    "TVHomes": 924480
+  },
+  {
+    "Market": "Hartford & New Haven",
+    "MarketCode": 133,
+    "PercentageOfUS": 0.822,
+    "Rank": 32,
+    "TVHomes": 921500
+  },
+  {
+    "Market": "Kansas City",
+    "MarketCode": 216,
+    "PercentageOfUS": 0.803,
+    "Rank": 33,
+    "TVHomes": 901020
+  },
+  {
+    "Market": "Columbus, OH",
+    "MarketCode": 135,
+    "PercentageOfUS": 0.8,
+    "Rank": 34,
+    "TVHomes": 896980
+  },
+  {
+    "Market": "Cincinnati",
+    "MarketCode": 115,
+    "PercentageOfUS": 0.778,
+    "Rank": 35,
+    "TVHomes": 871970
+  },
+  {
+    "Market": "Milwaukee",
+    "MarketCode": 217,
+    "PercentageOfUS": 0.774,
+    "Rank": 36,
+    "TVHomes": 868500
+  },
+  {
+    "Market": "West Palm Beach-Ft. Pierce",
+    "MarketCode": 148,
+    "PercentageOfUS": 0.739,
+    "Rank": 37,
+    "TVHomes": 829110
+  },
+  {
+    "Market": "Greenvll-Spart-Ashevll-And",
+    "MarketCode": 167,
+    "PercentageOfUS": 0.722,
+    "Rank": 38,
+    "TVHomes": 809190
+  },
+  {
+    "Market": "Austin",
+    "MarketCode": 235,
+    "PercentageOfUS": 0.706,
+    "Rank": 39,
+    "TVHomes": 791480
+  },
+  {
+    "Market": "Las Vegas",
+    "MarketCode": 439,
+    "PercentageOfUS": 0.675,
+    "Rank": 40,
+    "TVHomes": 757400
+  },
+  {
+    "Market": "Oklahoma City",
+    "MarketCode": 250,
+    "PercentageOfUS": 0.629,
+    "Rank": 41,
+    "TVHomes": 705840
+  },
+  {
+    "Market": "Jacksonville",
+    "MarketCode": 161,
+    "PercentageOfUS": 0.625,
+    "Rank": 42,
+    "TVHomes": 700890
+  },
+  {
+    "Market": "Grand Rapids-Kalmzoo-B.Crk",
+    "MarketCode": 163,
+    "PercentageOfUS": 0.615,
+    "Rank": 43,
+    "TVHomes": 689950
+  },
+  {
+    "Market": "Birmingham (Ann and Tusc)",
+    "MarketCode": 230,
+    "PercentageOfUS": 0.613,
+    "Rank": 44,
+    "TVHomes": 687180
+  },
+  {
+    "Market": "Harrisburg-Lncstr-Leb-York",
+    "MarketCode": 166,
+    "PercentageOfUS": 0.609,
+    "Rank": 45,
+    "TVHomes": 682460
+  },
+  {
+    "Market": "Albuquerque-Santa Fe",
+    "MarketCode": 390,
+    "PercentageOfUS": 0.602,
+    "Rank": 46,
+    "TVHomes": 674930
+  },
+  {
+    "Market": "Norfolk-Portsmth-Newpt Nws",
+    "MarketCode": 144,
+    "PercentageOfUS": 0.601,
+    "Rank": 47,
+    "TVHomes": 673820
+  },
+  {
+    "Market": "Greensboro-H.Point-W.Salem",
+    "MarketCode": 118,
+    "PercentageOfUS": 0.6,
+    "Rank": 48,
+    "TVHomes": 672650
+  },
+  {
+    "Market": "Louisville",
+    "MarketCode": 129,
+    "PercentageOfUS": 0.586,
+    "Rank": 49,
+    "TVHomes": 657030
+  },
+  {
+    "Market": "Memphis",
+    "MarketCode": 240,
+    "PercentageOfUS": 0.579,
+    "Rank": 50,
+    "TVHomes": 649360
+  },
+  {
+    "Market": "New Orleans",
+    "MarketCode": 222,
+    "PercentageOfUS": 0.569,
+    "Rank": 51,
+    "TVHomes": 638020
+  },
+  {
+    "Market": "Providence-New Bedford",
+    "MarketCode": 121,
+    "PercentageOfUS": 0.533,
+    "Rank": 52,
+    "TVHomes": 597990
+  },
+  {
+    "Market": "Buffalo",
+    "MarketCode": 114,
+    "PercentageOfUS": 0.529,
+    "Rank": 53,
+    "TVHomes": 592750
+  },
+  {
+    "Market": "Fresno-Visalia",
+    "MarketCode": 466,
+    "PercentageOfUS": 0.512,
+    "Rank": 54,
+    "TVHomes": 574610
+  },
+  {
+    "Market": "Richmond-Petersburg",
+    "MarketCode": 156,
+    "PercentageOfUS": 0.506,
+    "Rank": 55,
+    "TVHomes": 566930
+  },
+  {
+    "Market": "Ft. Myers-Naples",
+    "MarketCode": 171,
+    "PercentageOfUS": 0.49,
+    "Rank": 56,
+    "TVHomes": 549760
+  },
+  {
+    "Market": "Wilkes Barre-Scranton-Hztn",
+    "MarketCode": 177,
+    "PercentageOfUS": 0.467,
+    "Rank": 57,
+    "TVHomes": 523450
+  },
+  {
+    "Market": "Little Rock-Pine Bluff",
+    "MarketCode": 293,
+    "PercentageOfUS": 0.466,
+    "Rank": 58,
+    "TVHomes": 522530
+  },
+  {
+    "Market": "Mobile-Pensacola (Ft Walt)",
+    "MarketCode": 286,
+    "PercentageOfUS": 0.466,
+    "Rank": 59,
+    "TVHomes": 522260
+  },
+  {
+    "Market": "Albany-Schenectady-Troy",
+    "MarketCode": 132,
+    "PercentageOfUS": 0.465,
+    "Rank": 60,
+    "TVHomes": 521820
+  },
+  {
+    "Market": "Knoxville",
+    "MarketCode": 157,
+    "PercentageOfUS": 0.461,
+    "Rank": 61,
+    "TVHomes": 516920
+  },
+  {
+    "Market": "Tulsa",
+    "MarketCode": 271,
+    "PercentageOfUS": 0.461,
+    "Rank": 62,
+    "TVHomes": 516540
+  },
+  {
+    "Market": "Lexington",
+    "MarketCode": 141,
+    "PercentageOfUS": 0.41,
+    "Rank": 63,
+    "TVHomes": 459300
+  },
+  {
+    "Market": "Dayton",
+    "MarketCode": 142,
+    "PercentageOfUS": 0.405,
+    "Rank": 64,
+    "TVHomes": 453960
+  },
+  {
+    "Market": "Tucson (Sierra Vista)",
+    "MarketCode": 389,
+    "PercentageOfUS": 0.386,
+    "Rank": 65,
+    "TVHomes": 433330
+  },
+  {
+    "Market": "Honolulu",
+    "MarketCode": 344,
+    "PercentageOfUS": 0.374,
+    "Rank": 66,
+    "TVHomes": 419540
+  },
+  {
+    "Market": "Wichita-Hutchinson Plus",
+    "MarketCode": 278,
+    "PercentageOfUS": 0.371,
+    "Rank": 67,
+    "TVHomes": 416400
+  },
+  {
+    "Market": "Des Moines-Ames",
+    "MarketCode": 279,
+    "PercentageOfUS": 0.371,
+    "Rank": 68,
+    "TVHomes": 416020
+  },
+  {
+    "Market": "Green Bay-Appleton",
+    "MarketCode": 258,
+    "PercentageOfUS": 0.371,
+    "Rank": 69,
+    "TVHomes": 415890
+  },
+  {
+    "Market": "Roanoke-Lynchburg",
+    "MarketCode": 173,
+    "PercentageOfUS": 0.37,
+    "Rank": 70,
+    "TVHomes": 414620
+  },
+  {
+    "Market": "Flint-Saginaw-Bay City",
+    "MarketCode": 113,
+    "PercentageOfUS": 0.367,
+    "Rank": 71,
+    "TVHomes": 411210
+  },
+  {
+    "Market": "Spokane",
+    "MarketCode": 481,
+    "PercentageOfUS": 0.366,
+    "Rank": 72,
+    "TVHomes": 410900
+  },
+  {
+    "Market": "Charleston-Huntington",
+    "MarketCode": 164,
+    "PercentageOfUS": 0.362,
+    "Rank": 73,
+    "TVHomes": 406310
+  },
+  {
+    "Market": "Omaha",
+    "MarketCode": 252,
+    "PercentageOfUS": 0.356,
+    "Rank": 74,
+    "TVHomes": 399010
+  },
+  {
+    "Market": "Springfield, MO",
+    "MarketCode": 219,
+    "PercentageOfUS": 0.348,
+    "Rank": 75,
+    "TVHomes": 389750
+  },
+  {
+    "Market": "Rochester, NY",
+    "MarketCode": 138,
+    "PercentageOfUS": 0.343,
+    "Rank": 76,
+    "TVHomes": 384380
+  },
+  {
+    "Market": "Columbia, SC",
+    "MarketCode": 146,
+    "PercentageOfUS": 0.343,
+    "Rank": 77,
+    "TVHomes": 384190
+  },
+  {
+    "Market": "Toledo",
+    "MarketCode": 147,
+    "PercentageOfUS": 0.338,
+    "Rank": 78,
+    "TVHomes": 379120
+  },
+  {
+    "Market": "Portland-Auburn",
+    "MarketCode": 100,
+    "PercentageOfUS": 0.328,
+    "Rank": 79,
+    "TVHomes": 367720
+  },
+  {
+    "Market": "Huntsville-Decatur (Flor)",
+    "MarketCode": 291,
+    "PercentageOfUS": 0.328,
+    "Rank": 80,
+    "TVHomes": 367510
+  },
+  {
+    "Market": "Madison",
+    "MarketCode": 269,
+    "PercentageOfUS": 0.327,
+    "Rank": 81,
+    "TVHomes": 366690
+  },
+  {
+    "Market": "Paducah-Cape Girard-Harsbg",
+    "MarketCode": 232,
+    "PercentageOfUS": 0.316,
+    "Rank": 82,
+    "TVHomes": 354790
+  },
+  {
+    "Market": "Shreveport",
+    "MarketCode": 212,
+    "PercentageOfUS": 0.314,
+    "Rank": 83,
+    "TVHomes": 352540
+  },
+  {
+    "Market": "Harlingen-Wslco-Brnsvl-Mca",
+    "MarketCode": 236,
+    "PercentageOfUS": 0.314,
+    "Rank": 84,
+    "TVHomes": 351810
+  },
+  {
+    "Market": "Syracuse",
+    "MarketCode": 155,
+    "PercentageOfUS": 0.312,
+    "Rank": 85,
+    "TVHomes": 350100
+  },
+  {
+    "Market": "Waco-Temple-Bryan",
+    "MarketCode": 225,
+    "PercentageOfUS": 0.309,
+    "Rank": 86,
+    "TVHomes": 346750
+  },
+  {
+    "Market": "Colorado Springs-Pueblo",
+    "MarketCode": 352,
+    "PercentageOfUS": 0.307,
+    "Rank": 87,
+    "TVHomes": 344250
+  },
+  {
+    "Market": "Champaign&Sprngfld-Decatur",
+    "MarketCode": 248,
+    "PercentageOfUS": 0.307,
+    "Rank": 88,
+    "TVHomes": 344180
+  },
+  {
+    "Market": "Chattanooga",
+    "MarketCode": 175,
+    "PercentageOfUS": 0.3,
+    "Rank": 89,
+    "TVHomes": 336580
+  },
+  {
+    "Market": "Savannah",
+    "MarketCode": 107,
+    "PercentageOfUS": 0.293,
+    "Rank": 90,
+    "TVHomes": 328860
+  },
+  {
+    "Market": "Cedar Rapids-Wtrlo-IWC&Dub",
+    "MarketCode": 237,
+    "PercentageOfUS": 0.29,
+    "Rank": 91,
+    "TVHomes": 325780
+  },
+  {
+    "Market": "Charleston, SC",
+    "MarketCode": 119,
+    "PercentageOfUS": 0.286,
+    "Rank": 92,
+    "TVHomes": 320980
+  },
+  {
+    "Market": "El Paso (Las Cruces)",
+    "MarketCode": 365,
+    "PercentageOfUS": 0.284,
+    "Rank": 93,
+    "TVHomes": 318260
+  },
+  {
+    "Market": "Baton Rouge",
+    "MarketCode": 316,
+    "PercentageOfUS": 0.281,
+    "Rank": 94,
+    "TVHomes": 314970
+  },
+  {
+    "Market": "Jackson, MS",
+    "MarketCode": 318,
+    "PercentageOfUS": 0.273,
+    "Rank": 95,
+    "TVHomes": 306410
+  },
+  {
+    "Market": "South Bend-Elkhart",
+    "MarketCode": 188,
+    "PercentageOfUS": 0.265,
+    "Rank": 96,
+    "TVHomes": 297680
+  },
+  {
+    "Market": "Burlington-Plattsburgh",
+    "MarketCode": 123,
+    "PercentageOfUS": 0.262,
+    "Rank": 97,
+    "TVHomes": 294020
+  },
+  {
+    "Market": "Ft. Smith-Fay-Sprngdl-Rgrs",
+    "MarketCode": 270,
+    "PercentageOfUS": 0.261,
+    "Rank": 98,
+    "TVHomes": 292160
+  },
+  {
+    "Market": "Tri-Cities, TN-VA",
+    "MarketCode": 131,
+    "PercentageOfUS": 0.259,
+    "Rank": 99,
+    "TVHomes": 290530
+  },
+  {
+    "Market": "Greenville-N.Bern-Washngtn",
+    "MarketCode": 145,
+    "PercentageOfUS": 0.255,
+    "Rank": 100,
+    "TVHomes": 285650
+  },
+  {
+    "Market": "Myrtle Beach-Florence",
+    "MarketCode": 170,
+    "PercentageOfUS": 0.251,
+    "Rank": 101,
+    "TVHomes": 281550
+  },
+  {
+    "Market": "Davenport-R.Island-Moline",
+    "MarketCode": 282,
+    "PercentageOfUS": 0.248,
+    "Rank": 102,
+    "TVHomes": 277950
+  },
+  {
+    "Market": "Evansville",
+    "MarketCode": 249,
+    "PercentageOfUS": 0.236,
+    "Rank": 103,
+    "TVHomes": 264890
+  },
+  {
+    "Market": "Boise",
+    "MarketCode": 357,
+    "PercentageOfUS": 0.236,
+    "Rank": 104,
+    "TVHomes": 264300
+  },
+  {
+    "Market": "Reno",
+    "MarketCode": 411,
+    "PercentageOfUS": 0.235,
+    "Rank": 105,
+    "TVHomes": 263990
+  },
+  {
+    "Market": "Lincoln & Hastings-Krny",
+    "MarketCode": 322,
+    "PercentageOfUS": 0.235,
+    "Rank": 106,
+    "TVHomes": 263110
+  },
+  {
+    "Market": "Johnstown-Altoona-St Colge",
+    "MarketCode": 174,
+    "PercentageOfUS": 0.234,
+    "Rank": 107,
+    "TVHomes": 262020
+  },
+  {
+    "Market": "Tallahassee-Thomasville",
+    "MarketCode": 130,
+    "PercentageOfUS": 0.23,
+    "Rank": 108,
+    "TVHomes": 257570
+  },
+  {
+    "Market": "Tyler-Longview(Lfkn&Ncgd)",
+    "MarketCode": 309,
+    "PercentageOfUS": 0.226,
+    "Rank": 109,
+    "TVHomes": 253230
+  },
+  {
+    "Market": "Sioux Falls(Mitchell)",
+    "MarketCode": 325,
+    "PercentageOfUS": 0.225,
+    "Rank": 110,
+    "TVHomes": 252660
+  },
+  {
+    "Market": "Ft. Wayne",
+    "MarketCode": 109,
+    "PercentageOfUS": 0.222,
+    "Rank": 111,
+    "TVHomes": 249130
+  },
+  {
+    "Market": "Augusta-Aiken",
+    "MarketCode": 120,
+    "PercentageOfUS": 0.222,
+    "Rank": 112,
+    "TVHomes": 249090
+  },
+  {
+    "Market": "Yakima-Pasco-Rchlnd-Knnwck",
+    "MarketCode": 410,
+    "PercentageOfUS": 0.214,
+    "Rank": 114,
+    "TVHomes": 239760
+  },
+  {
+    "Market": "Lansing",
+    "MarketCode": 151,
+    "PercentageOfUS": 0.213,
+    "Rank": 115,
+    "TVHomes": 238990
+  },
+  {
+    "Market": "Springfield-Holyoke",
+    "MarketCode": 143,
+    "PercentageOfUS": 0.212,
+    "Rank": 116,
+    "TVHomes": 237580
+  },
+  {
+    "Market": "Youngstown",
+    "MarketCode": 136,
+    "PercentageOfUS": 0.209,
+    "Rank": 117,
+    "TVHomes": 234120
+  },
+  {
+    "Market": "Traverse City-Cadillac",
+    "MarketCode": 140,
+    "PercentageOfUS": 0.208,
+    "Rank": 118,
+    "TVHomes": 233370
+  },
+  {
+    "Market": "Eugene",
+    "MarketCode": 401,
+    "PercentageOfUS": 0.206,
+    "Rank": 119,
+    "TVHomes": 231570
+  },
+  {
+    "Market": "Macon",
+    "MarketCode": 103,
+    "PercentageOfUS": 0.199,
+    "Rank": 120,
+    "TVHomes": 222970
+  },
+  {
+    "Market": "Lafayette, LA",
+    "MarketCode": 242,
+    "PercentageOfUS": 0.198,
+    "Rank": 121,
+    "TVHomes": 222450
+  },
+  {
+    "Market": "Peoria-Bloomington",
+    "MarketCode": 275,
+    "PercentageOfUS": 0.198,
+    "Rank": 122,
+    "TVHomes": 222210
+  },
+  {
+    "Market": "Santabarbra-Sanmar-Sanluob",
+    "MarketCode": 455,
+    "PercentageOfUS": 0.198,
+    "Rank": 123,
+    "TVHomes": 222190
+  },
+  {
+    "Market": "Montgomery-Selma",
+    "MarketCode": 298,
+    "PercentageOfUS": 0.195,
+    "Rank": 124,
+    "TVHomes": 218740
+  },
+  {
+    "Market": "Monterey-Salinas",
+    "MarketCode": 428,
+    "PercentageOfUS": 0.194,
+    "Rank": 125,
+    "TVHomes": 217560
+  },
+  {
+    "Market": "Bakersfield",
+    "MarketCode": 400,
+    "PercentageOfUS": 0.189,
+    "Rank": 126,
+    "TVHomes": 212180
+  },
+  {
+    "Market": "Columbus, GA (Opelika, AL)",
+    "MarketCode": 122,
+    "PercentageOfUS": 0.184,
+    "Rank": 127,
+    "TVHomes": 206520
+  },
+  {
+    "Market": "Corpus Christi",
+    "MarketCode": 200,
+    "PercentageOfUS": 0.177,
+    "Rank": 128,
+    "TVHomes": 198820
+  },
+  {
+    "Market": "La Crosse-Eau Claire",
+    "MarketCode": 302,
+    "PercentageOfUS": 0.175,
+    "Rank": 129,
+    "TVHomes": 196160
+  },
+  {
+    "Market": "Wilmington",
+    "MarketCode": 150,
+    "PercentageOfUS": 0.171,
+    "Rank": 130,
+    "TVHomes": 191440
+  },
+  {
+    "Market": "Amarillo",
+    "MarketCode": 234,
+    "PercentageOfUS": 0.16,
+    "Rank": 131,
+    "TVHomes": 179920
+  },
+  {
+    "Market": "Chico-Redding",
+    "MarketCode": 468,
+    "PercentageOfUS": 0.16,
+    "Rank": 132,
+    "TVHomes": 179370
+  },
+  {
+    "Market": "Columbus-Tupelo-W Pnt-Hstn",
+    "MarketCode": 273,
+    "PercentageOfUS": 0.154,
+    "Rank": 133,
+    "TVHomes": 172520
+  },
+  {
+    "Market": "Wausau-Rhinelander",
+    "MarketCode": 305,
+    "PercentageOfUS": 0.148,
+    "Rank": 134,
+    "TVHomes": 166030
+  },
+  {
+    "Market": "Columbia-Jefferson City",
+    "MarketCode": 204,
+    "PercentageOfUS": 0.146,
+    "Rank": 135,
+    "TVHomes": 163790
+  },
+  {
+    "Market": "Medford-Klamath Falls",
+    "MarketCode": 413,
+    "PercentageOfUS": 0.146,
+    "Rank": 136,
+    "TVHomes": 163600
+  },
+  {
+    "Market": "Monroe-El Dorado",
+    "MarketCode": 228,
+    "PercentageOfUS": 0.144,
+    "Rank": 137,
+    "TVHomes": 161950
+  },
+  {
+    "Market": "Rockford",
+    "MarketCode": 210,
+    "PercentageOfUS": 0.144,
+    "Rank": 138,
+    "TVHomes": 161530
+  },
+  {
+    "Market": "Topeka",
+    "MarketCode": 205,
+    "PercentageOfUS": 0.144,
+    "Rank": 139,
+    "TVHomes": 161010
+  },
+  {
+    "Market": "Duluth-Superior",
+    "MarketCode": 276,
+    "PercentageOfUS": 0.14,
+    "Rank": 140,
+    "TVHomes": 157070
+  },
+  {
+    "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
+    "MarketCode": 287,
+    "PercentageOfUS": 0.139,
+    "Rank": 141,
+    "TVHomes": 156240
+  },
+  {
+    "Market": "Beaumont-Port Arthur",
+    "MarketCode": 292,
+    "PercentageOfUS": 0.139,
+    "Rank": 142,
+    "TVHomes": 156020
+  },
+  {
+    "Market": "Salisbury",
+    "MarketCode": 176,
+    "PercentageOfUS": 0.138,
+    "Rank": 143,
+    "TVHomes": 155240
+  },
+  {
+    "Market": "Odessa-Midland",
+    "MarketCode": 233,
+    "PercentageOfUS": 0.137,
+    "Rank": 144,
+    "TVHomes": 153830
+  },
+  {
+    "Market": "Lubbock",
+    "MarketCode": 251,
+    "PercentageOfUS": 0.137,
+    "Rank": 145,
+    "TVHomes": 153370
+  },
+  {
+    "Market": "Palm Springs",
+    "MarketCode": 404,
+    "PercentageOfUS": 0.136,
+    "Rank": 146,
+    "TVHomes": 152840
+  },
+  {
+    "Market": "Anchorage",
+    "MarketCode": 343,
+    "PercentageOfUS": 0.133,
+    "Rank": 147,
+    "TVHomes": 149120
+  },
+  {
+    "Market": "Sioux City",
+    "MarketCode": 224,
+    "PercentageOfUS": 0.129,
+    "Rank": 148,
+    "TVHomes": 144180
+  },
+  {
+    "Market": "Wichita Falls & Lawton",
+    "MarketCode": 227,
+    "PercentageOfUS": 0.127,
+    "Rank": 149,
+    "TVHomes": 142990
+  },
+  {
+    "Market": "Erie",
+    "MarketCode": 116,
+    "PercentageOfUS": 0.126,
+    "Rank": 150,
+    "TVHomes": 141020
+  },
+  {
+    "Market": "Panama City",
+    "MarketCode": 256,
+    "PercentageOfUS": 0.123,
+    "Rank": 151,
+    "TVHomes": 137830
+  },
+  {
+    "Market": "Joplin-Pittsburg",
+    "MarketCode": 203,
+    "PercentageOfUS": 0.122,
+    "Rank": 152,
+    "TVHomes": 136740
+  },
+  {
+    "Market": "Rochestr-Mason City-Austin",
+    "MarketCode": 211,
+    "PercentageOfUS": 0.12,
+    "Rank": 153,
+    "TVHomes": 134990
+  },
+  {
+    "Market": "Albany, GA",
+    "MarketCode": 125,
+    "PercentageOfUS": 0.12,
+    "Rank": 154,
+    "TVHomes": 134510
+  },
+  {
+    "Market": "Terre Haute",
+    "MarketCode": 181,
+    "PercentageOfUS": 0.114,
+    "Rank": 155,
+    "TVHomes": 127470
+  },
+  {
+    "Market": "Bangor",
+    "MarketCode": 137,
+    "PercentageOfUS": 0.112,
+    "Rank": 156,
+    "TVHomes": 125970
+  },
+  {
+    "Market": "Biloxi-Gulfport",
+    "MarketCode": 346,
+    "PercentageOfUS": 0.111,
+    "Rank": 157,
+    "TVHomes": 124130
+  },
+  {
+    "Market": "Wheeling-Steubenville",
+    "MarketCode": 154,
+    "PercentageOfUS": 0.108,
+    "Rank": 158,
+    "TVHomes": 121320
+  },
+  {
+    "Market": "Gainesville",
+    "MarketCode": 192,
+    "PercentageOfUS": 0.108,
+    "Rank": 159,
+    "TVHomes": 121060
+  },
+  {
+    "Market": "Sherman-Ada",
+    "MarketCode": 257,
+    "PercentageOfUS": 0.107,
+    "Rank": 160,
+    "TVHomes": 120100
+  },
+  {
+    "Market": "Binghamton",
+    "MarketCode": 102,
+    "PercentageOfUS": 0.107,
+    "Rank": 161,
+    "TVHomes": 120060
+  },
+  {
+    "Market": "Idaho Fals-Pocatllo(Jcksn)",
+    "MarketCode": 358,
+    "PercentageOfUS": 0.107,
+    "Rank": 162,
+    "TVHomes": 119590
+  },
+  {
+    "Market": "Bluefield-Beckley-Oak Hill",
+    "MarketCode": 159,
+    "PercentageOfUS": 0.106,
+    "Rank": 163,
+    "TVHomes": 118520
+  },
+  {
+    "Market": "Missoula",
+    "MarketCode": 362,
+    "PercentageOfUS": 0.101,
+    "Rank": 164,
+    "TVHomes": 113110
+  },
+  {
+    "Market": "Abilene-Sweetwater",
+    "MarketCode": 262,
+    "PercentageOfUS": 0.096,
+    "Rank": 165,
+    "TVHomes": 107760
+  },
+  {
+    "Market": "Yuma-El Centro",
+    "MarketCode": 371,
+    "PercentageOfUS": 0.094,
+    "Rank": 166,
+    "TVHomes": 105690
+  },
+  {
+    "Market": "Billings",
+    "MarketCode": 356,
+    "PercentageOfUS": 0.094,
+    "Rank": 167,
+    "TVHomes": 105470
+  },
+  {
+    "Market": "Hattiesburg-Laurel",
+    "MarketCode": 310,
+    "PercentageOfUS": 0.092,
+    "Rank": 168,
+    "TVHomes": 102840
+  },
+  {
+    "Market": "Clarksburg-Weston",
+    "MarketCode": 198,
+    "PercentageOfUS": 0.087,
+    "Rank": 169,
+    "TVHomes": 97020
+  },
+  {
+    "Market": "Rapid City",
+    "MarketCode": 364,
+    "PercentageOfUS": 0.085,
+    "Rank": 170,
+    "TVHomes": 95320
+  },
+  {
+    "Market": "Utica",
+    "MarketCode": 126,
+    "PercentageOfUS": 0.084,
+    "Rank": 171,
+    "TVHomes": 93930
+  },
+  {
+    "Market": "Quincy-Hannibal-Keokuk",
+    "MarketCode": 317,
+    "PercentageOfUS": 0.084,
+    "Rank": 172,
+    "TVHomes": 93920
+  },
+  {
+    "Market": "Dothan",
+    "MarketCode": 206,
+    "PercentageOfUS": 0.082,
+    "Rank": 173,
+    "TVHomes": 92300
+  },
+  {
+    "Market": "Lake Charles",
+    "MarketCode": 243,
+    "PercentageOfUS": 0.082,
+    "Rank": 174,
+    "TVHomes": 91490
+  },
+  {
+    "Market": "Harrisonburg",
+    "MarketCode": 169,
+    "PercentageOfUS": 0.077,
+    "Rank": 175,
+    "TVHomes": 86700
+  },
+  {
+    "Market": "Elmira (Corning)",
+    "MarketCode": 165,
+    "PercentageOfUS": 0.077,
+    "Rank": 176,
+    "TVHomes": 86230
+  },
+  {
+    "Market": "Jackson, TN",
+    "MarketCode": 239,
+    "PercentageOfUS": 0.076,
+    "Rank": 177,
+    "TVHomes": 85540
+  },
+  {
+    "Market": "Alexandria, LA",
+    "MarketCode": 244,
+    "PercentageOfUS": 0.073,
+    "Rank": 178,
+    "TVHomes": 82270
+  },
+  {
+    "Market": "Watertown",
+    "MarketCode": 149,
+    "PercentageOfUS": 0.073,
+    "Rank": 179,
+    "TVHomes": 81630
+  },
+  {
+    "Market": "Marquette",
+    "MarketCode": 153,
+    "PercentageOfUS": 0.07,
+    "Rank": 180,
+    "TVHomes": 78000
+  },
+  {
+    "Market": "Bowling Green",
+    "MarketCode": 336,
+    "PercentageOfUS": 0.069,
+    "Rank": 181,
+    "TVHomes": 77360
+  },
+  {
+    "Market": "Jonesboro",
+    "MarketCode": 334,
+    "PercentageOfUS": 0.069,
+    "Rank": 182,
+    "TVHomes": 76860
+  },
+  {
+    "Market": "Charlottesville",
+    "MarketCode": 184,
+    "PercentageOfUS": 0.064,
+    "Rank": 183,
+    "TVHomes": 72320
+  },
+  {
+    "Market": "Laredo",
+    "MarketCode": 349,
+    "PercentageOfUS": 0.063,
+    "Rank": 184,
+    "TVHomes": 70980
+  },
+  {
+    "Market": "Butte-Bozeman",
+    "MarketCode": 354,
+    "PercentageOfUS": 0.062,
+    "Rank": 185,
+    "TVHomes": 69060
+  },
+  {
+    "Market": "Bend, OR",
+    "MarketCode": 421,
+    "PercentageOfUS": 0.06,
+    "Rank": 186,
+    "TVHomes": 67170
+  },
+  {
+    "Market": "Grand Junction-Montrose",
+    "MarketCode": 373,
+    "PercentageOfUS": 0.06,
+    "Rank": 187,
+    "TVHomes": 67150
+  },
+  {
+    "Market": "Lafayette, IN",
+    "MarketCode": 182,
+    "PercentageOfUS": 0.059,
+    "Rank": 188,
+    "TVHomes": 66710
+  },
+  {
+    "Market": "Lima",
+    "MarketCode": 158,
+    "PercentageOfUS": 0.056,
+    "Rank": 189,
+    "TVHomes": 62840
+  },
+  {
+    "Market": "Twin Falls",
+    "MarketCode": 360,
+    "PercentageOfUS": 0.056,
+    "Rank": 190,
+    "TVHomes": 62360
+  },
+  {
+    "Market": "Meridian",
+    "MarketCode": 311,
+    "PercentageOfUS": 0.055,
+    "Rank": 191,
+    "TVHomes": 61460
+  },
+  {
+    "Market": "Great Falls",
+    "MarketCode": 355,
+    "PercentageOfUS": 0.054,
+    "Rank": 192,
+    "TVHomes": 60220
+  },
+  {
+    "Market": "Greenwood-Greenville",
+    "MarketCode": 247,
+    "PercentageOfUS": 0.052,
+    "Rank": 193,
+    "TVHomes": 58410
+  },
+  {
+    "Market": "Parkersburg",
+    "MarketCode": 197,
+    "PercentageOfUS": 0.051,
+    "Rank": 194,
+    "TVHomes": 56980
+  },
+  {
+    "Market": "Eureka",
+    "MarketCode": 402,
+    "PercentageOfUS": 0.051,
+    "Rank": 195,
+    "TVHomes": 56660
+  },
+  {
+    "Market": "San Angelo",
+    "MarketCode": 261,
+    "PercentageOfUS": 0.048,
+    "Rank": 196,
+    "TVHomes": 54100
+  },
+  {
+    "Market": "Casper-Riverton",
+    "MarketCode": 367,
+    "PercentageOfUS": 0.047,
+    "Rank": 198,
+    "TVHomes": 52190
+  },
+  {
+    "Market": "Mankato",
+    "MarketCode": 337,
+    "PercentageOfUS": 0.044,
+    "Rank": 199,
+    "TVHomes": 49610
+  },
+  {
+    "Market": "Ottumwa-Kirksville",
+    "MarketCode": 231,
+    "PercentageOfUS": 0.038,
+    "Rank": 200,
+    "TVHomes": 42990
+  },
+  {
+    "Market": "St. Joseph",
+    "MarketCode": 238,
+    "PercentageOfUS": 0.038,
+    "Rank": 201,
+    "TVHomes": 42230
+  },
+  {
+    "Market": "Fairbanks",
+    "MarketCode": 345,
+    "PercentageOfUS": 0.031,
+    "Rank": 202,
+    "TVHomes": 35180
+  },
+  {
+    "Market": "Victoria",
+    "MarketCode": 226,
+    "PercentageOfUS": 0.028,
+    "Rank": 203,
+    "TVHomes": 31380
+  },
+  {
+    "Market": "Zanesville",
+    "MarketCode": 196,
+    "PercentageOfUS": 0.027,
+    "Rank": 204,
+    "TVHomes": 30550
+  },
+  {
+    "Market": "Helena",
+    "MarketCode": 366,
+    "PercentageOfUS": 0.024,
+    "Rank": 205,
+    "TVHomes": 27430
+  },
+  {
+    "Market": "Presque Isle",
+    "MarketCode": 152,
+    "PercentageOfUS": 0.023,
+    "Rank": 206,
+    "TVHomes": 25480
+  },
+  {
+    "Market": "Juneau",
+    "MarketCode": 347,
+    "PercentageOfUS": 0.022,
+    "Rank": 207,
+    "TVHomes": 24390
+  },
+  {
+    "Market": "Alpena",
+    "MarketCode": 183,
+    "PercentageOfUS": 0.014,
+    "Rank": 208,
+    "TVHomes": 15360
+  },
+  {
+    "Market": "North Platte",
+    "MarketCode": 340,
+    "PercentageOfUS": 0.012,
+    "Rank": 209,
+    "TVHomes": 13640
+  },
+  {
+    "Market": "Glendive",
+    "MarketCode": 398,
+    "PercentageOfUS": 0.004,
+    "Rank": 210,
+    "TVHomes": 4030
+  }
+]

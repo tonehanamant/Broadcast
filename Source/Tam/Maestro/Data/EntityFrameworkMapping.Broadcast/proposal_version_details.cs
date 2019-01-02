@@ -47,7 +47,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> sequence { get; set; }
         public Nullable<int> posting_book_id { get; set; }
         public Nullable<byte> posting_playback_type { get; set; }
-        public double nti_conversion_factor { get; set; }
+        public Nullable<double> nti_conversion_factor { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual media_months media_months { get; set; }

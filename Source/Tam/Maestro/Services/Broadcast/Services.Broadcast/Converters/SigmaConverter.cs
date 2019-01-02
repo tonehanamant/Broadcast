@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using Microsoft.VisualBasic.FileIO;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace Services.Broadcast.Converters
              "AIR START TIME",
              "ISCI/AD-ID"
         };
-        
+
         private static readonly List<string> _SigmaFileFields = new List<string>()
         {
             "IDENTIFIER 1",
@@ -58,7 +59,7 @@ namespace Services.Broadcast.Converters
 
         private static readonly List<string> _SpotTrackerFileFields = new List<string>()
         {
-            "CLIENT", 
+            "CLIENT",
             "CLIENT NAME",
             "PRODUCT",
             "RELEASE NAME",
@@ -86,19 +87,19 @@ namespace Services.Broadcast.Converters
             "DISCID"
         };
 
-        private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDateAdjustmentEngine _DateAdjustmentEngine;
         private readonly IPostLogBaseFileConverter _PostLogBaseFileConverter;
+        private readonly Dictionary<int, int> _SpotLengthsAndIds;
 
         public SigmaConverter(IDataRepositoryFactory dataRepositoryFactory
             , IDateAdjustmentEngine dateAdjustmentEngine
             , IPostLogBaseFileConverter postLogBaseFileConverter)
         {
-            _DataRepositoryFactory = dataRepositoryFactory;
-            _DateAdjustmentEngine = dateAdjustmentEngine;            
+            _DateAdjustmentEngine = dateAdjustmentEngine;
             _PostLogBaseFileConverter = postLogBaseFileConverter;
+            _SpotLengthsAndIds = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
         }
-        
+
         public List<string> GetValidationResults(string filePath)
         {
             var validationResults = new List<string>();
@@ -123,7 +124,7 @@ namespace Services.Broadcast.Converters
                     rowNumber++;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 validationResults.Add(e.Message);
             }
@@ -138,7 +139,11 @@ namespace Services.Broadcast.Converters
             return validationResults;
         }
 
-        public TrackerFile<BvsFileDetail> ExtractSigmaData(Stream rawStream, string hash, string userName, string bvsFileName, out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
+        public TrackerFile<BvsFileDetail> ExtractSigmaData(Stream rawStream
+            , string hash
+            , string userName
+            , string bvsFileName
+            , out Dictionary<TrackerFileDetailKey<BvsFileDetail>, int> lineInfo)
         {
             lineInfo = new Dictionary<TrackerFileDetailKey<BvsFileDetail>, int>();
             var bvsFile = new TrackerFile<BvsFileDetail>();
@@ -151,13 +156,13 @@ namespace Services.Broadcast.Converters
                 {
                     rowNumber++;
                     var fields = parser.ReadFields();
-                    _PostLogBaseFileConverter.ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
+                    _ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
 
                     BvsFileDetail bvsDetail = _LoadBvsSigmaFileDetail(fields, headers, rowNumber);
                     lineInfo[new TrackerFileDetailKey<BvsFileDetail>(bvsDetail)] = rowNumber;
                     bvsFile.FileDetails.Add(bvsDetail);
-    }
-}
+                }
+            }
 
             if (!bvsFile.FileDetails.Any())
             {
@@ -182,7 +187,12 @@ namespace Services.Broadcast.Converters
         /// <param name="fileName">File name</param>
         /// <param name="lineInfo">Lines info</param>
         /// <returns></returns>
-        public TrackerFile<SpotTrackerFileDetail> ExtractSigmaDataExtended(Stream streamData, string hash, string username, string fileName, out Dictionary<TrackerFileDetailKey<SpotTrackerFileDetail>, int> lineInfo)
+        public TrackerFile<SpotTrackerFileDetail> ExtractSigmaDataExtended(Stream streamData
+            , string hash
+            , string username
+            , string fileName
+            , out Dictionary<TrackerFileDetailKey<SpotTrackerFileDetail>
+                , int> lineInfo)
         {
             lineInfo = new Dictionary<TrackerFileDetailKey<SpotTrackerFileDetail>, int>();
             var spotTrackerFile = new TrackerFile<SpotTrackerFileDetail>();
@@ -195,7 +205,7 @@ namespace Services.Broadcast.Converters
                 {
                     rowNumber++;
                     var fields = parser.ReadFields();
-                    _PostLogBaseFileConverter.ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
+                    _ValidateSigmaFieldData(fields, headers, rowNumber, _RequiredSigmaFields);
 
                     SpotTrackerFileDetail fileDetail = _LoadExtendedSigmaFileDetail(fields, headers, rowNumber);
                     lineInfo[new TrackerFileDetailKey<SpotTrackerFileDetail>(fileDetail)] = rowNumber;
@@ -219,7 +229,6 @@ namespace Services.Broadcast.Converters
 
         private BvsFileDetail _LoadBvsSigmaFileDetail(string[] fields, Dictionary<string, int> headers, int row)
         {
-            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             if (!int.TryParse(fields[headers["RANK"]].Trim(), out int rankNumber))
             {
                 throw new ExtractBvsException("Invalid 'rank'", row);
@@ -254,7 +263,7 @@ namespace Services.Broadcast.Converters
 
 
             var spot_length = fields[headers["DURATION"]].Trim();
-            _PostLogBaseFileConverter.SetSpotLengths(bvsDetail, spot_length);
+            _SetSpotLengths(bvsDetail, spot_length);
 
             return bvsDetail;
         }
@@ -276,7 +285,6 @@ namespace Services.Broadcast.Converters
                 throw new ExtractBvsException("Invalid 'identifier 1'", row);
             }
             DateTime encodedDate = DateTime.Parse(fields[headers["ENCODE DATE"]].Trim() + " " + fields[headers["ENCODE TIME"]].Trim());
-
 
             SpotTrackerFileDetail fileDetail = new SpotTrackerFileDetail()
             {
@@ -307,11 +315,37 @@ namespace Services.Broadcast.Converters
                 StationName = fields[headers["STATION NAME"]].Trim().ToUpper()
             };
 
-
             var spot_length = fields[headers["DURATION"]].Trim();
-            _PostLogBaseFileConverter.SetSpotLengths(fileDetail, spot_length);
+            _SetSpotLengths(fileDetail, spot_length);
 
             return fileDetail;
-        }         
+        }
+
+        private void _SetSpotLengths(TrackerFileDetail detail, string spot_length)
+        {
+            spot_length = spot_length.Trim().Replace(":", "");
+
+            if (!int.TryParse(spot_length, out int spotLength))
+            {
+                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+            }
+
+            if (!_SpotLengthsAndIds.ContainsKey(spotLength))
+                throw new ExtractBvsException(string.Format("Invalid spot length '{0}' found.", spotLength));
+
+            detail.SpotLength = spotLength;
+            detail.SpotLengthId = _SpotLengthsAndIds[spotLength];
+        }
+
+        private void _ValidateSigmaFieldData(string[] fields, Dictionary<string, int> headers, int rowNumber, List<string> requiredFields)
+        {
+            var rowValidationErrors = _PostLogBaseFileConverter.GetRowValidationResults(fields, headers, requiredFields, rowNumber);
+            if (rowValidationErrors.Any())
+            {
+                string message = "";
+                rowValidationErrors.ForEach(err => message += err + "<br />" + Environment.NewLine);
+                throw new ExtractBvsException(message);
+            }
+        }
     }
 }

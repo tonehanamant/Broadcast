@@ -111,6 +111,25 @@ export class DataGridContainer extends Component {
             });
           }
         }
+      },
+      {
+        text: "NTI Post Report",
+        key: "menu-post-download-nti-report",
+        isShow: rowDetail => rowDetail.original.PostType === 2,
+        EVENT_HANDLER: ({ metaData }) => {
+          if (metaData.rowData.PostType === 2) {
+            window.open(
+              `${__API__}Post/DownloadNTIReport/${metaData.rowData.ContractId}`,
+              "_blank"
+            );
+          } else {
+            this.props.createAlert({
+              type: "warning",
+              headline: "NTI Post Report Unavailable",
+              message: "Please select a different proposal"
+            });
+          }
+        }
       }
     ];
 

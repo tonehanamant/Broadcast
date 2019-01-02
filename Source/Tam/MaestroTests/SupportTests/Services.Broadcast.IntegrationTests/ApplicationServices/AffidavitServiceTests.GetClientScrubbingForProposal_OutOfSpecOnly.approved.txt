@@ -76,6 +76,7 @@
     "DateAiredStart": null,
     "DistinctAffiliates": [],
     "DistinctClientIscis": [],
+    "DistinctComments": [],
     "DistinctDayOfWeek": [],
     "DistinctGenres": [],
     "DistinctHouseIscis": [],

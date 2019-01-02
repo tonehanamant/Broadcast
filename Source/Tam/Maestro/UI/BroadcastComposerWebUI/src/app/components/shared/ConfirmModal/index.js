@@ -74,7 +74,7 @@ export class ConfirmModal extends Component {
             <span>&times;</span>
           </Button>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={properties.bodyClass}>
           {properties.bodyText && <p>{properties.bodyText}</p>}
           {properties.bodyList && (
             <ul>
@@ -114,6 +114,7 @@ ConfirmModal.defaultProps = {
       closeButtonText: "Close",
       closeButtonBsStyle: "default",
       closeButtonDisabled: false,
+      bodyClass: null, // string
       actionButtonText: "Action",
       actionButtonBsStyle: "warning",
       href: undefined,

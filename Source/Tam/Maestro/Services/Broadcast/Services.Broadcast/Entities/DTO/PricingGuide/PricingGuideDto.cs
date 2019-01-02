@@ -16,7 +16,6 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
         public double? Margin { get; set; }
         public double? Inflation { get; set; }
         public double? ImpressionLoss { get; set; }
-
         public OpenMarketPricingGuideDto OpenMarketPricing { get; set; } = new OpenMarketPricingGuideDto();
         public List<ProprietaryPricingDto> ProprietaryPricing { get; set; }
         public Dictionary<int, string> InventorySourceEnum { get; set; } = Enum.GetValues(typeof(InventorySourceEnum))
@@ -34,5 +33,6 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
         public OpenMarketTotalsDto OpenMarketTotals { get; set; }
         public ProprietaryTotalsDto ProprietaryTotals { get; set; }
         public PricingTotalsDto PricingTotals { get; set; }
+        public int MarketCoverageFileId { get; set; }
     }
 }

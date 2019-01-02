@@ -9,13 +9,13 @@ namespace Services.Broadcast.Entities
         public string Station { get; set; }
         public string Isci { get; set; }
         public string ProgramName { get; set; }
-        public string Comment { get; set; }
         public int SpotLengthId { get; set; }
         public int AirTime { get; set; }
         public DateTime AirDate { get; set; }
         public string DaypartName { get; set; }
-        public Dictionary<int, double> AudienceImpressions { get; set; }
+        public Dictionary<int, double> NsiImpressions { get; set; }
         public Dictionary<int, double> OvernightImpressions { get; set; }
+        public Dictionary<int, double> NtiImpressions { get; set; }
         public int Quarter { get; set; }
         public int Year { get; set; }
         public int AdvertiserId { get; set; }

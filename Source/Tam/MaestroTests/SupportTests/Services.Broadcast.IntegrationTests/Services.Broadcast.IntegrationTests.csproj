@@ -490,6 +490,12 @@
     <None Include="Files\Market_Coverages.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Market_Coverages_2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Market_Coverages_Pricing_Guide.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Market_Coverages_With_Not_Existing_Markets.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -520,6 +526,15 @@
     </None>
     <None Include="Files\SCX Overlapping Fields.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Sigma-MissingRequiredColumn.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Sigma-MissingRequiredData.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Sigma-ValidFile.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\SigmaImport.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

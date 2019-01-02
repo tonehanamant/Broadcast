@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
 import { overrideStatus, undoScrubStatus } from "Ducks/tracker";
 import ContextMenuRow from "Components/shared/ContextMenuRow";
@@ -282,7 +283,16 @@ export class TrackerScrubbingGrid extends Component {
           ) : (
             <span style={style}>{row.ProgramName || "-"}</span>
           );
-          return programName;
+          return (
+            <div>
+              {programName}
+              {row.SupliedProgramNameIsUsed && (
+                <Badge style={{ fontSize: "9px", marginTop: "4px" }} pullRight>
+                  SP
+                </Badge>
+              )}
+            </div>
+          );
         }
       },
       {

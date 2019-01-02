@@ -26,10 +26,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(253);
+                var result = _PostReportService.GetPostReportData(253);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -48,10 +48,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(25999);
+                var result = _PostReportService.GetPostReportData(25999);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -69,10 +69,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(26000);
+                var result = _PostReportService.GetPostReportData(26000);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -90,10 +90,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(253, true);
+                var result = _PostReportService.GetPostReportData(253, withOvernightImpressions: true);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -111,10 +111,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(26009, false);
+                var result = _PostReportService.GetPostReportData(26009);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -132,10 +132,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(26010, false);
+                var result = _PostReportService.GetPostReportData(26010);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -153,10 +153,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(249, true);
+                var result = _PostReportService.GetPostReportData(249, withOvernightImpressions: true);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(NsiPostReport), "ProposalId");
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
 
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -173,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GenerateReportFile()
         {
             const int proposalId = 253;
-            var report = _PostReportService.GenerateNSIPostReport(proposalId);
+            var report = _PostReportService.GeneratePostReport(proposalId);
             File.WriteAllBytes(@"\\tsclient\cadent\" + @"NSIPostReport" + proposalId + ".xlsx", report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
                                                                                                                            //            File.WriteAllBytes(string.Format("..\\bvsreport{0}.xlsx", scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
             Assert.IsNotNull(report.Stream);
@@ -327,7 +327,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GenerateNsiReportWithStationWithoutMarketRank()
         {
-            var result = _PostReportService.GetNsiPostReportData(3134);
+            var result = _PostReportService.GetPostReportData(3134);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -382,9 +382,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PostReportService.GetNsiPostReportData(26015);
+                var result = _PostReportService.GetPostReportData(26015);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNtiPostReportData()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                //because there are no nti impressions in db at this moment I need to parse a document to have some
+                IntegrationTestApplicationServiceFactory.GetApplicationService<INtiTransmittalsService>().UploadNtiTransmittalsFile(new FileRequest
+                {
+                    FileName = "TLA1217 P3 TRANSMITTALS.PDF",
+                    RawData = Convert.ToBase64String(File.ReadAllBytes(@".\Files\TLA1217 P3 TRANSMITTALS.PDF"))
+                }, "integration test user");
+                
+                var result = _PostReportService.GetPostReportData(26006, isNtiReport: true);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
     }

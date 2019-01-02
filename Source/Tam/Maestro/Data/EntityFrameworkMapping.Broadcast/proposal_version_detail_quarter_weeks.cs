@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.affidavit_client_scrubs = new HashSet<affidavit_client_scrubs>();
             this.postlog_client_scrubs = new HashSet<postlog_client_scrubs>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
+            this.nti_transmittals_audiences = new HashSet<nti_transmittals_audiences>();
         }
     
         public int id { get; set; }
@@ -45,5 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual ICollection<postlog_client_scrubs> postlog_client_scrubs { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
+        public virtual ICollection<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
     }
 }

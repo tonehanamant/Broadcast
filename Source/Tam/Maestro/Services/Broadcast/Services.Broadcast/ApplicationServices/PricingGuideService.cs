@@ -135,7 +135,8 @@ namespace Services.Broadcast.ApplicationServices
             }, programs);
             ApplyDaypartNames(programs);
             var markets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
-            _ApplyInventoryMarketCoverages(markets);
+            var marketCoverageDto = _GetMarketCoverages(markets);
+            _ApplyInventoryMarketCoverages(markets, marketCoverageDto);
             var allMarkets = _MapAllMarketsObject(markets);
             _SetSelectedMarketsInAllMarketsObject(selectedMarkets, allMarkets);
             return allMarkets;
@@ -178,7 +179,8 @@ namespace Services.Broadcast.ApplicationServices
             })));
             var postingBookId = ProposalServiceHelper.GetBookId(proposalDetail);
             ApplyInventoryMarketRankings(postingBookId, inventoryMarkets);
-            _ApplyInventoryMarketCoverages(inventoryMarkets);
+            var marketCoverageDto = _GetMarketCoverages(inventoryMarkets);
+            _ApplyInventoryMarketCoverages(inventoryMarkets, marketCoverageDto);
             return inventoryMarkets;
         }
 
@@ -525,6 +527,7 @@ namespace Services.Broadcast.ApplicationServices
             return new PricingGuideDto
             {
                 ProposalDetailId = dto.ProposalDetailId,
+                MarketCoverageFileId = pricingGuideOpenMarketInventory.MarketCoverageFileId,
                 BudgetGoal = dto.BudgetGoal,
                 ImpressionGoal = dto.ImpressionGoal,
                 Margin = dto.Margin,
@@ -548,7 +551,9 @@ namespace Services.Broadcast.ApplicationServices
             var markets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
             var postingBookId = ProposalServiceHelper.GetBookId(inventory);
             ApplyInventoryMarketRankings(postingBookId, markets);
-            _ApplyInventoryMarketCoverages(markets);
+            var marketCoverageDto = _GetMarketCoverages(markets);
+            _ApplyInventoryMarketCoverages(markets, marketCoverageDto);
+            inventory.MarketCoverageFileId = marketCoverageDto.MarketCoverageFileId;
 
             inventory.AllMarkets = _MapAllMarketsObject(markets);
 
@@ -860,15 +865,22 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _ApplyInventoryMarketCoverages(IEnumerable<IInventoryMarket> inventoryMarkets)
+        private MarketCoverageDto _GetMarketCoverages(IEnumerable<IInventoryMarket> inventoryMarkets)
         {
             var marketsList = inventoryMarkets.ToList();
 
-            var marketCoverages = BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketCoverages(marketsList.Select(x => x.MarketId));
+            var marketCoverageRepository = BroadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
+
+            return marketCoverageRepository.GetLatestMarketCoverages(marketsList.Select(x => x.MarketId));
+        }
+
+        private void _ApplyInventoryMarketCoverages(IEnumerable<IInventoryMarket> inventoryMarkets, MarketCoverageDto marketCoverageDto)
+        {
+            var marketsList = inventoryMarkets.ToList();
 
             foreach (var inventoryMarket in marketsList)
             {
-                marketCoverages.TryGetValue(inventoryMarket.MarketId, out var coverage);
+                marketCoverageDto.MarketCoveragesByMarketCode.TryGetValue(inventoryMarket.MarketId, out var coverage);
                 inventoryMarket.MarketCoverage = coverage;
             }
         }

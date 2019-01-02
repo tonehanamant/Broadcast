@@ -32,7 +32,7 @@ namespace BroadcastComposerWeb.Controllers
             {
                 var serverPathToCoveragesFile = System.Web.Hosting.HostingEnvironment.MapPath(BroadcastServiceSystemParameter.RelativePathToMarketCoveragesFile);
                 var marketService = _ApplicationServiceFactory.GetApplicationService<IMarketService>();
-                marketService.LoadCoverages(serverPathToCoveragesFile);
+                marketService.LoadCoverages(serverPathToCoveragesFile, Identity.Name, DateTime.Now);
             }
             catch(Exception e)
             {

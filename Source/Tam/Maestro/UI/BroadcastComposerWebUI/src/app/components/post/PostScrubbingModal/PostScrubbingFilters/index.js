@@ -61,13 +61,13 @@ export class PostScrubbingFilters extends Component {
 
   render() {
     const stateKey = "PostScrubbingFiltersGrid";
-    const inactiveFilterStyle = {
+    /* const inactiveFilterStyle = {
       backgroundColor: "#bfbfbf",
       minHeight: "20px",
       maxHeight: "20px",
       width: "100%",
       borderRadius: "2px"
-    };
+    }; */
     const columns = [
       {
         name: "Status",
@@ -326,7 +326,18 @@ export class PostScrubbingFilters extends Component {
         dataIndex: "Comments",
         // width: 150,
         width: "100%",
-        renderer: () => <div style={inactiveFilterStyle} />
+        renderer: ({ value }) => (
+          <FilterPopoverWrapper
+            filterDisplay={value.filterDisplay}
+            filterKey={value.filterKey}
+            hasTextSearch
+            hasMatchSpec={value.hasMatchSpec}
+            matchOptions={value.matchOptions}
+            filterOptions={value.filterOptions}
+            filterActive={value.active}
+            applyFilter={this.applyFilter}
+          />
+        )
       }
     ];
 

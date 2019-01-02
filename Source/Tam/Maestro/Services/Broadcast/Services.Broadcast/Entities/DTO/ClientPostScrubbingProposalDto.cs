@@ -55,5 +55,6 @@ namespace Services.Broadcast.Entities.DTO
         public List<int> DistinctSequences { get; set; }
         public int? TimeAiredStart { get; set; }
         public int? TimeAiredEnd { get; set; }
+        public List<string> DistinctComments { get; set; }
     }
 }

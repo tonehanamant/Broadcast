@@ -427,6 +427,9 @@
     <Compile Include="market_coverages.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="market_coverage_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="market_dma_map.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -437,6 +440,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="nsi_component_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nti_transmittals_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="nti_transmittals_files.cs">

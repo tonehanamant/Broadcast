@@ -23,7 +23,7 @@
       "GenreCriteria": [],
       "HasPostingDataChanged": false,
       "HutProjectionBookId": null,
-      "NtiConversionFactor": 0.2,
+      "NtiConversionFactor": null,
       "PostingBookId": 416,
       "PostingPlaybackType": 4,
       "ProgramCriteria": [],
@@ -129,7 +129,7 @@
               ],
               "IsHiatus": false,
               "MediaWeekId": 649,
-              "MyEventsReportName": "Test Adve NAV 30 05-30-16",
+              "MyEventsReportName": "SOMA EMN 15 11-27-17",
               "StartDate": "2016-05-30T00:00:00",
               "Units": 10,
               "Week": "5/30/2016"

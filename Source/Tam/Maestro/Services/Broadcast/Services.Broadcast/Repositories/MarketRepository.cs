@@ -16,14 +16,6 @@ namespace Services.Broadcast.Repositories
         List<market> GetMarkets();
         List<market> GetMarketsByMarketCodes(List<int> marketCodes);
         List<LookupDto> GetMarketDtos();
-
-        /// <summary>
-        /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
-        /// </summary>
-        /// <param name="marketIds">Market id list.</param>
-        /// <returns>Dictionary of market code and percentage coverage</returns>
-        Dictionary<int, double> GetMarketCoverages(IEnumerable<int> marketIds);
-
         /// <summary>
         /// Returns a list of markets which are filtered by their geography names
         /// </summary>
@@ -70,20 +62,6 @@ namespace Services.Broadcast.Repositories
                     (from m in context.markets
                      where geographyNames.Contains(m.geography_name)
                      select m).ToList());
-        }
-
-        /// <summary>
-        /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
-        /// </summary>
-        /// <param name="marketIds">Market id list.</param>
-        /// <returns>Dictionary of market code and percentage coverage</returns>
-        public Dictionary<int, double> GetMarketCoverages(IEnumerable<int> marketIds)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                    (from m in context.market_coverages
-                     where marketIds.Contains(m.market_code)
-                     select m).ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us));
         }
     }    
 }

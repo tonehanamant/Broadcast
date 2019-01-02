@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Nti;
 using System;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
@@ -47,6 +48,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }, "integration test user");
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UploadNtiTransmittalsFile_ProcessFile()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var nielsenDocument = _NtiTransmittalsService.SendPdfDocumentToNielson(new FileRequest
+                {
+                    FileName = "TLA1217 P3 TRANSMITTALS.PDF",
+                    RawData = Convert.ToBase64String(File.ReadAllBytes(@".\Files\TLA1217 P3 TRANSMITTALS.PDF"))
+                });
+                NtiFile ntiFile = new NtiFile
+                {
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = "integration test user",
+                    FileName = "TLA1217 P3 TRANSMITTALS.PDF"
+                };
+                _NtiTransmittalsService.ProcessFileContent(ntiFile, nielsenDocument);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(NtiFile), "CreatedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(ntiFile, jsonSettings));
             }
         }
 

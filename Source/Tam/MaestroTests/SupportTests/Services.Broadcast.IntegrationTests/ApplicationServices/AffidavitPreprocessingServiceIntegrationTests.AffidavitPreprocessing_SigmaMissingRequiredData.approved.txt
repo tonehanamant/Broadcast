@@ -1,0 +1,18 @@
+﻿[
+  {
+    "CreatedBy": "AffidavitPreprocessing_User",
+    "ErrorMessages": [
+      "Required field ISCI/AD-ID is null or empty in row 2",
+      "Required field IDENTIFIER 1 is null or empty in row 22",
+      "Required field IDENTIFIER 1 is null or empty in row 23",
+      "Required field IDENTIFIER 1 is null or empty in row 24",
+      "Required field AIR START TIME is null or empty in row 24",
+      "Required field IDENTIFIER 1 is null or empty in row 25"
+    ],
+    "FileHash": "A9-6F-A4-07-F7-35-CA-0F-51-2A-8A-68-28-B3-11-50-8C-52-93-C1",
+    "FileName": "Sigma-MissingRequiredData.csv",
+    "FilePath": ".\\Files\\Sigma-MissingRequiredData.csv",
+    "Source": 0,
+    "Status": 2
+  }
+]

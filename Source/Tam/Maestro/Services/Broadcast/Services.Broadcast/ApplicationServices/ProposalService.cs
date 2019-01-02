@@ -518,11 +518,14 @@ namespace Services.Broadcast.ApplicationServices
             var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
             proposalDto.Details.ForEach(detail =>
             {
-                //set default value for NTI Conversion factor
-                detail.NtiConversionFactor = detail.NtiConversionFactor == null
-                        ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 4, MidpointRounding.AwayFromZero)
-                        : Math.Round(detail.NtiConversionFactor.Value, 4, MidpointRounding.AwayFromZero);
-
+                if (proposalDto.PostType.Equals(SchedulePostType.NTI))
+                {
+                    //set default value for NTI Conversion factor
+                    detail.NtiConversionFactor = detail.NtiConversionFactor == null
+                            ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 4, MidpointRounding.AwayFromZero)
+                            : Math.Round(detail.NtiConversionFactor.Value, 4, MidpointRounding.AwayFromZero);
+                }
+                
                 //set default value for My Events Report Name
                 detail.Quarters.ForEach(y => y.Weeks.ForEach(week =>
                 {
@@ -1085,7 +1088,9 @@ namespace Services.Broadcast.ApplicationServices
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
                 DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate),
-                NtiConversionFactor = Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
+                NtiConversionFactor = proposalDetailRequestDto.PostType.Equals(SchedulePostType.NTI)
+                    ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
+                    : (double?)null
             };
 
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);

@@ -8,6 +8,12 @@ import {
   updateItem
 } from "../util";
 
+const WARN_MESSAGE_NOT_SELECTED = "Please select market to display programs.";
+const WARN_MESSAGE_NO_DATA = "No data found.";
+
+const getPlaceholder = selectedMarket =>
+  selectedMarket ? WARN_MESSAGE_NO_DATA : WARN_MESSAGE_NOT_SELECTED;
+
 class PricingGuideGridView extends Component {
   constructor(props) {
     super(props);
@@ -25,13 +31,14 @@ class PricingGuideGridView extends Component {
     const { activeOpenMarketData, selectedMarket } = this.props;
     const programs = generateProgramData(
       activeOpenMarketData.Markets,
-      selectedMarket
+      selectedMarket.marketId
     );
     const programsColumns = generateProgramColumns(this.onCellChange);
+    const placeholder = getPlaceholder(selectedMarket);
     return (
       <Table
         data={programs}
-        noDataText="Please select market to display programs."
+        noDataText={placeholder}
         columns={programsColumns}
         selection="none"
         sortable={false}
@@ -45,12 +52,10 @@ class PricingGuideGridView extends Component {
 
 PricingGuideGridView.propTypes = {
   activeOpenMarketData: PropTypes.object.isRequired,
-  selectedMarket: PropTypes.number,
+  selectedMarket: PropTypes.object.isRequired,
   onAllocateSpots: PropTypes.func.isRequired
 };
 
-PricingGuideGridView.defaultProps = {
-  selectedMarket: null
-};
+PricingGuideGridView.defaultProps = {};
 
 export default withGrid(PricingGuideGridView);

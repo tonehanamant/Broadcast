@@ -79,6 +79,7 @@ export default function* rootSaga() {
     planningSaga.watchLoadPricingDataSuccess(),
     planningSaga.watchLoadPricingData(),
     planningSaga.watchSavePricingData(),
+    planningSaga.watchSavePricingDataSuccess(),
     planningSaga.watchCopyToBuyFlow(),
     planningSaga.watchCopyToBuySaga(),
     planningSaga.watchGenerateScx(),

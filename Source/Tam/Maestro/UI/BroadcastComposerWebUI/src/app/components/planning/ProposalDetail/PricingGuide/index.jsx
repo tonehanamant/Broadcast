@@ -285,7 +285,8 @@ class PricingGuide extends Component {
       ProprietaryPricing: proprietaryData,
       ProprietaryTotals: activeOpenMarketData.ProprietaryTotals,
       OpenMarketTotals: activeOpenMarketData.OpenMarketTotals,
-      Markets: parsePrograms(activeOpenMarketData.Markets)
+      Markets: parsePrograms(activeOpenMarketData.Markets),
+      MarketCoverageFileId: activeOpenMarketData.MarketCoverageFileId
     };
     savePricingData(guideUpdates);
     this.setState({ isGuideChanged: false });

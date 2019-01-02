@@ -8,5 +8,10 @@ namespace Services.Broadcast.Extensions
         {
             return $"{mediaMonth.Abbreviation} {mediaMonth.Year}";
         }
+
+        public static string GetCompactMonthNameAndYear(this MediaMonth mediaMonth)
+        {
+            return $"{(mediaMonth.Month <=9 ? $"0{mediaMonth.Month}" : mediaMonth.Month.ToString())}{mediaMonth.Year.ToString().Substring(2)}";
+        }
     }
 }

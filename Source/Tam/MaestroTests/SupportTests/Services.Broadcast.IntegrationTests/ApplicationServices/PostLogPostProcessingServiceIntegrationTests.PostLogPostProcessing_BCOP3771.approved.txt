@@ -29,9 +29,9 @@
       "Station": "WRGB",
       "Status": 1,
       "StatusOverride": false,
-      "SupliedProgramNameIsUsed": false,
+      "SuppliedProgramNameUsed": false,
       "TimeAired": 77280,
-      "WeekStart": "2018-10-02T00:00:00"
+      "WeekStart": "2018-10-01T00:00:00"
     }
   ],
   "Details": [
@@ -63,6 +63,7 @@
     "DistinctClientIscis": [
       "Clinet_BCOP3471STORY"
     ],
+    "DistinctComments": null,
     "DistinctDayOfWeek": [
       2
     ],
@@ -89,12 +90,12 @@
       "WRGB"
     ],
     "DistinctWeekStarts": [
-      "2018-10-02T00:00:00"
+      "2018-10-01T00:00:00"
     ],
     "TimeAiredEnd": 77280,
     "TimeAiredStart": 77280,
-    "WeekEnd": "2018-10-09T00:00:00",
-    "WeekStart": "2018-10-02T00:00:00"
+    "WeekEnd": "2018-10-08T00:00:00",
+    "WeekStart": "2018-10-01T00:00:00"
   },
   "GuaranteedDemo": "House Holds",
   "Id": 33029,

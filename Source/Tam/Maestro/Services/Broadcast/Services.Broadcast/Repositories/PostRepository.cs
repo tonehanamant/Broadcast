@@ -107,9 +107,7 @@ namespace Services.Broadcast.Repositories
                     context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
 
                     var posts = context.Database.SqlQuery<PostedContracts>("usp_GetPostedProposals");
-
-
-
+                    
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
                 });
         }

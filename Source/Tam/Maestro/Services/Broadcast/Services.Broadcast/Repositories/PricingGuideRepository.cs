@@ -292,6 +292,7 @@ namespace Services.Broadcast.Repositories
                         DistributionId = data.id,
                         ProposalId = data.proposal_version_details.proposal_versions.proposal_id,
                         ProposalDetailId = proposalDetailId,
+                        MarketCoverageFileId = data.market_coverage_file_id,
                         BudgetGoal = data.goal_budget,
                         ImpressionGoal = data.goal_impression,
                         Margin = data.adjustment_margin,
@@ -386,6 +387,7 @@ namespace Services.Broadcast.Repositories
                     total_proprietary_impressions = model.ProprietaryTotals.Impressions,
                     created_by = username,
                     created_date = DateTime.Now,
+                    market_coverage_file_id = model.MarketCoverageFileId,
                     pricing_guide_distribution_proprietary_inventory = model.ProprietaryPricing.Select(x => new pricing_guide_distribution_proprietary_inventory
                     {
                         cpm = x.Cpm,

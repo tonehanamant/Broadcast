@@ -40,9 +40,11 @@ namespace EntityFrameworkMapping.Broadcast
         public double total_proprietary_impressions { get; set; }
         public System.DateTime created_date { get; set; }
         public string created_by { get; set; }
+        public int market_coverage_file_id { get; set; }
     
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual ICollection<pricing_guide_distribution_proprietary_inventory> pricing_guide_distribution_proprietary_inventory { get; set; }
         public virtual proposal_version_details proposal_version_details { get; set; }
+        public virtual market_coverage_files market_coverage_files { get; set; }
     }
 }

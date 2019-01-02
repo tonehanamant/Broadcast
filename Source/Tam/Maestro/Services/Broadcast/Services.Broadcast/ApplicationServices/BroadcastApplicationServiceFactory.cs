@@ -59,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
             unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
+            unityContainer.RegisterType<ICsvHelper, CsvHelper>();
             unityContainer.RegisterType<IPostLogBaseFileConverter, PostLogBaseFileConverter>();
             unityContainer.RegisterType<IBvsConverter, BvsConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
@@ -100,7 +101,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostFileParser, PostFileParser>();
             unityContainer.RegisterType<IPostFileParserFactory, PostFileParserFactory>();
             unityContainer.RegisterType<IReportGenerator<PostPrePostingFile>, PostExcelReportGenerator>();
-            unityContainer.RegisterType<IReportGenerator<NsiPostReport>, NSIPostReportGenerator>();
+            unityContainer.RegisterType<IReportGenerator<PostReport>, PostReportGenerator>();
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();

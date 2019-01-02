@@ -51,6 +51,7 @@
     "9": "OAndO"
   },
   "Margin": 0.2,
+  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 1.2692356509063496398063069473,
