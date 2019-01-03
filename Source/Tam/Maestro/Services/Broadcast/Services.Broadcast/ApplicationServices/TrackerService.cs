@@ -20,7 +20,6 @@ using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
-
     public interface ITrackerService : IApplicationService
     {
         LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate);
@@ -150,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
             var ret = new BvsLoadDto
             {
                 Advertisers = _SmsClient.GetActiveAdvertisers(),
-                Quarters = GetQuarters(),
+                Quarters = _GetQuarters(),
                 PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths(),
                 InventorySources = Enum.GetValues(typeof(InventorySourceEnum))
                     .Cast<InventorySourceEnum>()
@@ -167,17 +166,12 @@ namespace Services.Broadcast.ApplicationServices
                     .ToList(),
                 Audiences = _AudiencesCache.GetAllLookups()
             };
-            ret.CurrentQuarter = ret.Quarters.Find(
-                    x =>
-                        x.StartDate.Month <= currentDateTime.Month && x.EndDate.Month >= currentDateTime.Month &&
-                        x.StartDate.Year == currentDateTime.Year);
+            ret.CurrentQuarter = ret.Quarters.Single(x => x.StartDate <= currentDateTime && x.EndDate >= currentDateTime);
 
             return ret;
         }
 
-        /// <summary>
-        /// </summary>
-        public List<Quarter> GetQuarters()
+        private List<Quarter> _GetQuarters()
         {
             var years = new List<int>();
 
