@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Transactions;
+using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -696,21 +697,33 @@ namespace Services.Broadcast.ApplicationServices
             return spotLenght.Key;
         }
 
+        private Dictionary<int,List<int>> _ratingsAudiencesIds; 
+
         /// <summary>
         /// Returns a list of the posts and unlinked iscis count in the system
         /// </summary>
         /// <returns>List of PostDto objects</returns>
         public PostedContractedProposalsDto GetPosts()
         {
+
             var postedProposals = _PostRepository.GetAllPostedProposals();
+
+            var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
+            var audiences = new List<int>(postedProposals.Select(p => p.GuaranteedAudienceId));
+            audiences.Add(houseHoldAudienceId);
+
+            _ratingsAudiencesIds = _BroadcastAudienceRepository
+                .GetRatingsAudiencesByMaestroAudience(audiences).GroupBy(a => a.custom_audience_id)
+                .ToDictionary(key => key.Key,val => val.Select(v => v.rating_audience_id).ToList());
+
+            var proposalImpressions = _GetPostedProposalImpresssions(postedProposals.Select(p => p.ContractId).ToList(), _ratingsAudiencesIds.Values.SelectMany(v => v).Distinct().ToList());
 
             foreach (var post in postedProposals)
             {
                 _SetPostAdvertiser(post);
 
-                var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
-                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
-                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(post.ContractId, post.PostType, houseHoldAudienceId, post.Equivalized);
+                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions,post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
+                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, post.PostType, houseHoldAudienceId, post.Equivalized);
                 post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
             }
 
@@ -721,20 +734,31 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private double _GetImpressionsForAudience(int contractId, SchedulePostType type, int audienceId, bool equivalized)
+        private Dictionary<int, List<PostImpressionsData>> _GetPostedProposalImpresssions(List<int> contractIds,List<int> audiences)
         {
-            var impressionsDataGuaranteed = _GetPostImpressionsData(contractId, audienceId);
+            var postedProposalImpresssionData = _GetPostImpressionsData(contractIds, audiences).GroupBy(g => g.ProposalId).ToDictionary(key => key.Key,val => val.ToList());
+            return postedProposalImpresssionData;
+        }
+        private double _GetImpressionsForAudience(Dictionary<int,List<PostImpressionsData>> contractImpressionsData,int contractId, SchedulePostType type, int audienceId, bool equivalized)
+        {
             double deliveredImpressions = 0;
-            foreach (var impressionData in impressionsDataGuaranteed)
+            if (contractImpressionsData.ContainsKey(contractId))
             {
-                var impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
-                
-                if (type == SchedulePostType.NTI)
+                foreach (var impressionData in contractImpressionsData[contractId].Where(i => _ratingsAudiencesIds[audienceId].Contains(i.AudienceId)))
                 {
-                    impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions, impressionData.NtiConversionFactor.Value);
+                    var impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions,
+                        equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
+
+                    if (type == SchedulePostType.NTI)
+                    {
+                        impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressions,
+                            impressionData.NtiConversionFactor.Value);
+                    }
+
+                    deliveredImpressions += impressions;
                 }
-                deliveredImpressions += impressions;
             }
+
             return deliveredImpressions;
         }
 
@@ -742,6 +766,11 @@ namespace Services.Broadcast.ApplicationServices
         {
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;
+        }
+
+        private List<PostImpressionsData> _GetPostImpressionsData(List<int> contractIds,List<int> audiences)
+        {
+            return _PostRepository.GetPostImpressionsData(contractIds,audiences);
         }
 
         private List<PostImpressionsData> _GetPostImpressionsData(int contractId, int maestroAudienceId)
