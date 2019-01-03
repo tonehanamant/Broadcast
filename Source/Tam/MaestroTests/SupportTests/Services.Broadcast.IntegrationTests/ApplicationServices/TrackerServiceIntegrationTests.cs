@@ -919,7 +919,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                var response = _TrackerService.GetBvsLoadData(new DateTime(2017, 05, 05));
+                var response = _TrackerService.GetBvsLoadData(new DateTime(2019, 01, 01));
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(Quarter), "Id");
                 jsonResolver.Ignore(typeof(BvsLoadDto), "CurrentQuarter");
@@ -928,6 +928,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
+                Assert.AreEqual(response.CurrentQuarter.Display, "2019Q1");
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
             }
         }
