@@ -36,6 +36,8 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of UnlinkedIscisDto objects</returns>
         List<ArchivedIscisDto> GetArchivedIscis();
 
+        List<PostImpressionsData> GetPostImpressionsData(List<int> proposalId, List<int> ratingsAudiences);
+
         /// <summary>
         /// Gets the impressions and NTI conversion factor for a contract and rating audiences
         /// </summary>
@@ -104,11 +106,36 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-
                     var posts = context.Database.SqlQuery<PostedContracts>("usp_GetPostedProposals");
                     
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
+                });
+        }
+
+        public List<PostImpressionsData> GetPostImpressionsData(List<int> proposalIds, List<int> ratingsAudiences)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from proposal in context.proposals
+                        from proposalVersion in proposal.proposal_versions
+                        from proposalVersionDetail in proposalVersion.proposal_version_details
+                        from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                        from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                        from affidavitClientScrub in proposalVersionWeeks.affidavit_client_scrubs
+                        from affidavitClientScrubAudience in affidavitClientScrub.affidavit_client_scrub_audiences
+                        where proposalIds.Contains(proposal.id)  &&
+                              (ScrubbingStatus)affidavitClientScrub.status == ScrubbingStatus.InSpec &&
+                              proposalVersion.snapshot_date == null &&
+                              ratingsAudiences.Contains(affidavitClientScrubAudience.audience_id)
+                        select new PostImpressionsData
+                        {
+                            ProposalId = proposal.id,
+                            Impressions = affidavitClientScrubAudience.impressions,
+                            NtiConversionFactor = proposalVersionDetail.nti_conversion_factor,
+                            SpotLengthId = proposalVersionDetail.spot_length_id,
+                            AudienceId = affidavitClientScrubAudience.audience_id
+                        }).ToList();
                 });
         }
 

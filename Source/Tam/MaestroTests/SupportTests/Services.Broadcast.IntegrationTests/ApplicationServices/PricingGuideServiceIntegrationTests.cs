@@ -600,7 +600,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketInventoryService_SortsMarketsByRankAsc_WhenGettingPricingGuideOpenMarketInventory()
+        public void SortsMarketsByRankAsc_WhenGettingPricingGuideOpenMarketInventory()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -628,7 +628,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketInventoryService_SortsMarketsByRankAsc_WhenApplyingPricingGuideOpenMarketInventory()
+        public void SortsMarketsByRankAsc_WhenApplyingPricingGuideOpenMarketInventory()
         {
             var random = new Random();
             var request = new PricingGuideOpenMarketInventoryRequestDto
@@ -659,7 +659,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketInventoryService_ReturnsPricingGuideOpenMarketInventory_WithProgramsFilteredByName()
+        public void ReturnsPricingGuideOpenMarketInventory_WithProgramsFilteredByName()
         {
             using (new TransactionScopeWrapper())
             {
@@ -742,7 +742,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_SetsHasImpressionsPropertyTrue_ForPricingModel_ForProgramsThatHaveImpressions()
+        public void SetsHasImpressionsPropertyTrue_ForProgramsThatHaveImpressions()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -760,7 +760,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_SetsHasImpressionsPropertyFalse_ForPricingModel_ForProgramsThatDoNotHaveImpressions()
+        public void SetsHasImpressionsPropertyFalse_ForProgramsThatDoNotHaveImpressions()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -870,7 +870,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
-        public void ProposalOpenMarketService_SetsTotalsForPricingGrid()
+        public void SetsTotalsForPricingGrid()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -1101,7 +1101,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_UpdatesOpenMarketPricingGuide_OnlyWithSelectedMarkets()
+        public void UpdatesOpenMarketPricingGuide_OnlyWithSelectedMarkets()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -1131,7 +1131,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
         [Category("2book")]
-        public void ProposalOpenMarketService_UpdatesOpenMarketPricingGuideMarkets()
+        public void UpdatesOpenMarketPricingGuideMarkets()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
@@ -1155,7 +1155,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
         [Category("2book")]
-        public void ProposalOpenMarketService_SavesAllocatedSpots_ForPricingMarkets()
+        public void SavesAllocatedSpots_ForPricingMarkets()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
             {
