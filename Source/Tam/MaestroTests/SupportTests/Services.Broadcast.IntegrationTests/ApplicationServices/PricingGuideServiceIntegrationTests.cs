@@ -1122,7 +1122,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var firstMarketIsInResultList = result.Markets.Any(x => x.MarketId == firstMarket.Id);
             var lastMarketIsInResultList = result.Markets.Any(x => x.MarketId == lastMarket.Id);
 
-            Assert.AreEqual(17, result.Markets.Count);
+            Assert.AreEqual(2, result.Markets.Count);
             Assert.IsTrue(firstMarketIsInResultList);
             Assert.IsTrue(lastMarketIsInResultList);
         }

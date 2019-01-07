@@ -55,7 +55,7 @@ class PricingGuideEditMarkets extends Component {
   }
 
   render() {
-    const { activeEditMarkets, marketCoverageGoal } = this.props;
+    const { activeEditMarkets, marketCoverageGoal, openCpmTarget } = this.props;
     const partitionedMarkets = partition(activeEditMarkets, "Selected");
     const usedMarkets = partitionedMarkets[0];
     const availableMarkets = partitionedMarkets[1];
@@ -137,6 +137,7 @@ class PricingGuideEditMarkets extends Component {
                   editMarketsData={usedMarkets}
                   isAvailableMarkets={false}
                   editMarketAction={this.removeUsedMarket}
+                  openCpmTarget={openCpmTarget}
                 />
               </Col>
               <Col xs={6}>
@@ -144,6 +145,7 @@ class PricingGuideEditMarkets extends Component {
                   editMarketsData={availableMarkets}
                   isAvailableMarkets
                   editMarketAction={this.addAvailableMarket}
+                  openCpmTarget={openCpmTarget}
                 />
               </Col>
             </Row>
@@ -181,8 +183,8 @@ PricingGuideEditMarkets.propTypes = {
   changeEditMarkets: PropTypes.func.isRequired,
   discardEditMarkets: PropTypes.func.isRequired,
   onUpdateEditMarkets: PropTypes.func.isRequired,
-  marketCoverageGoal: PropTypes.number.isRequired
-  // hasOpenMarketData: PropTypes.bool.isRequired,
+  marketCoverageGoal: PropTypes.number.isRequired,
+  openCpmTarget: PropTypes.number.isRequired
 };
 
 // export default PricingGuideEditMarkets;

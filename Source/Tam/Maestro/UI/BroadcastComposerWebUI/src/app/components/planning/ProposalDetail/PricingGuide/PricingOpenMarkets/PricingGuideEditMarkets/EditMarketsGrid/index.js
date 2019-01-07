@@ -6,6 +6,11 @@ import { Button, Glyphicon } from "react-bootstrap";
 import numeral from "numeral";
 // import { rowTypes } from "../../PricingGuideGrid/util";
 // import { generateData, rowColors, columns } from "./util";
+const cpmTargetsMap = {
+  1: "MinCpm",
+  2: "AvgCpm",
+  3: "MaxCpm"
+};
 
 class EditMarketsGrid extends Component {
   constructor(props) {
@@ -19,8 +24,8 @@ class EditMarketsGrid extends Component {
   }
 
   render() {
-    const { editMarketsData, isAvailableMarkets } = this.props;
-    // console.log(editMarketsData, isAvailableMarkets);
+    const { editMarketsData, isAvailableMarkets, openCpmTarget } = this.props;
+    // console.log("RENDER EDIT MARKETS GRID", editMarketsData, openCpmTarget);
     const glyph = isAvailableMarkets ? (
       <Glyphicon style={{ color: "green" }} glyph="plus" />
     ) : (
@@ -50,6 +55,18 @@ class EditMarketsGrid extends Component {
         Header: "Programs",
         accessor: "Programs"
         // minWidth: 70
+      },
+      {
+        Header: "CPM",
+        // minWidth: 50,
+        // accessor: "Cpm",
+        Cell: row => {
+          const mapped = cpmTargetsMap[openCpmTarget];
+          const val = row.original[mapped] || 0;
+          // console.log("Render CPM", mapped, val, openCpmTarget);
+          const display = numeral(val).format("0,0.[00]");
+          return `$${display}`;
+        }
       },
       {
         Header: "Action",
@@ -93,7 +110,8 @@ class EditMarketsGrid extends Component {
 EditMarketsGrid.propTypes = {
   editMarketsData: PropTypes.array.isRequired,
   isAvailableMarkets: PropTypes.bool.isRequired,
-  editMarketAction: PropTypes.func.isRequired
+  editMarketAction: PropTypes.func.isRequired,
+  openCpmTarget: PropTypes.number.isRequired
 };
 
 EditMarketsGrid.defaultProps = {
