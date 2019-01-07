@@ -433,7 +433,7 @@ namespace Services.Broadcast.ApplicationServices
                 Cost = openMarketTotals.Cost + proprietaryTotals.Cost,
                 Coverage = openMarketTotals.Coverage
             };
-            result.Cpm = (double)ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
+            result.Cpm = (double)ProposalMath.CalculateCpm(result.Cost, result.Impressions);
 
             return result;
         }
@@ -465,7 +465,7 @@ namespace Services.Broadcast.ApplicationServices
             };
             // Coverage: sum of coverage for each market with a spot allocated, only count each market once.
             result.Coverage = markets.Where(x => x.TotalCost > 0).Sum(x => x.MarketCoverage);
-            result.Cpm = ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
+            result.Cpm = ProposalMath.CalculateCpm(result.Cost, result.Impressions);
 
             return result;
         }
@@ -485,7 +485,7 @@ namespace Services.Broadcast.ApplicationServices
             markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
             markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
             markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            markets.ForEach(m => m.CPM = ProposalMath.CalculateCpmRaw(m.TotalCost, m.TotalImpressions));
+            markets.ForEach(m => m.CPM = ProposalMath.CalculateCpm(m.TotalCost, m.TotalImpressions));
         }
 
         private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideDto dto)

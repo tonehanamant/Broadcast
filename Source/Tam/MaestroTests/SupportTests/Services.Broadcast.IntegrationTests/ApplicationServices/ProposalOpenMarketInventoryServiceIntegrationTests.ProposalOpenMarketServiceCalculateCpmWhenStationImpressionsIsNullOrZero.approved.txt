@@ -6,7 +6,7 @@
   },
   "DetailBudgetMarginAchieved": false,
   "DetailBudgetPercent": 0.0,
-  "DetailCpm": 10.00,
+  "DetailCpm": 10.0000,
   "DetailCpmMarginAchieved": false,
   "DetailCpmPercent": 0.0,
   "DetailDaypart": {
@@ -39,7 +39,7 @@
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 5000.0,
-  "DetailTotalBudget": 0.00,
+  "DetailTotalBudget": 0.0000,
   "DetailTotalCpm": 0.0,
   "DetailTotalImpressions": 0.0,
   "DisplayFilter": {
@@ -117,7 +117,7 @@
               "ProvidedUnitImpressions": 0.0,
               "Spots": 0,
               "StationCode": 5316,
-              "TargetCpm": 1.14,
+              "TargetCpm": 1.1440038549661337394463266264,
               "TargetImpressions": 0.0,
               "UnitImpressions": 21853.07321429
             }
@@ -147,7 +147,7 @@
       "Budget": 25.0000,
       "BudgetMarginAchieved": false,
       "BudgetPercent": 0.0,
-      "BudgetTotal": 0.00,
+      "BudgetTotal": 0.0000,
       "ImpressionsGoal": 1000.0,
       "ImpressionsMarginAchieved": false,
       "ImpressionsPercent": 0.0,

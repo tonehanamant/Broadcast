@@ -6,9 +6,9 @@
   },
   "DetailBudgetMarginAchieved": true,
   "DetailBudgetPercent": 6000.0,
-  "DetailCpm": 10.00,
+  "DetailCpm": 10.0000,
   "DetailCpmMarginAchieved": false,
-  "DetailCpmPercent": 11.54,
+  "DetailCpmPercent": 11.53850592,
   "DetailDaypart": {
     "endTime": 86400,
     "fri": true,
@@ -39,8 +39,8 @@
   "DetailSpotLengthId": 2,
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 5000.0,
-  "DetailTotalBudget": 2500.00,
-  "DetailTotalCpm": 0.96,
+  "DetailTotalBudget": 2500.0000,
+  "DetailTotalCpm": 0.9615421597775376059138688995,
   "DetailTotalImpressions": 2599990.0,
   "DisplayFilter": {
     "Affiliations": [
@@ -117,7 +117,7 @@
               "ProvidedUnitImpressions": 51999.8,
               "Spots": 0,
               "StationCode": 5316,
-              "TargetCpm": 0.96,
+              "TargetCpm": 0.9615421597775376059138688995,
               "TargetImpressions": 0.0,
               "UnitImpressions": 43706.14642857
             }
@@ -147,7 +147,7 @@
       "Budget": 25.0000,
       "BudgetMarginAchieved": true,
       "BudgetPercent": 12000.0,
-      "BudgetTotal": 2500.00,
+      "BudgetTotal": 2500.0000,
       "ImpressionsGoal": 1000.0,
       "ImpressionsMarginAchieved": true,
       "ImpressionsPercent": 259999.0,

@@ -62,8 +62,8 @@ namespace Services.Broadcast.BusinessEngines
             var totals = new ProposalDetailHeaderTotalsDto();
 
             // totals
-            totals.TotalImpressions = Math.Round(impressions + otherInventoryTotals.TotalImpressions, 3);
-            totals.TotalCost = Math.Round(cost + otherInventoryTotals.TotalCost, 2);
+            totals.TotalImpressions = impressions + otherInventoryTotals.TotalImpressions;
+            totals.TotalCost = cost + otherInventoryTotals.TotalCost;
             totals.TotalCpm = ProposalMath.CalculateCpm(totals.TotalCost, totals.TotalImpressions);
 
             // percent

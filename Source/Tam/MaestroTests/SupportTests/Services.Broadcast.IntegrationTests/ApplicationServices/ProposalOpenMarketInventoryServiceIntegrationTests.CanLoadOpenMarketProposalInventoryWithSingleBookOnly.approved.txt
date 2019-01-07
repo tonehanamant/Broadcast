@@ -95,7 +95,7 @@
             "ProvidedUnitImpressions": 1357.0,
             "Spots": 0,
             "StationCode": 5013,
-            "TargetCpm": 7.37,
+            "TargetCpm": 7.3691967575534266764922623434,
             "TargetImpressions": 0.0,
             "UnitImpressions": 0.0
           }
