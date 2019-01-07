@@ -1,11 +1,11 @@
 ﻿{
   "AllMarkets": [
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 1.2692356509063496398063069473,
       "Coverage": 1.01,
       "Id": 160,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 1.2692356509063496398063069473,
+      "MinCpm": 1.2692356509063496398063069473,
       "Name": "Raleigh-Durham (Fayetvlle)",
       "Programs": 1,
       "Selected": true,
