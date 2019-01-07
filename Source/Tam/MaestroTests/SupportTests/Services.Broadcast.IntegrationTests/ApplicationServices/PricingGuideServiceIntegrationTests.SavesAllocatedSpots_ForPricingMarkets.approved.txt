@@ -1,11 +1,11 @@
 ﻿{
   "AllMarkets": [
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 7.4345253234864090035412526262,
       "Coverage": 0.273,
       "Id": 318,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 7.4345253234864090035412526262,
+      "MinCpm": 7.4345253234864090035412526262,
       "Name": "Jackson, MS",
       "Programs": 1,
       "Selected": true,
@@ -56,22 +56,22 @@
       "Stations": 2
     },
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 50.606697763914244618976771423,
       "Coverage": 0.194,
       "Id": 428,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 182.35513188441597430473909948,
+      "MinCpm": 17.778251831574046924196019488,
       "Name": "Monterey-Salinas",
       "Programs": 8,
       "Selected": false,
       "Stations": 2
     },
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 18.547021599984025047735006129,
       "Coverage": 0.084,
       "Id": 317,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 41.439013752165525619215468528,
+      "MinCpm": 5.8666846839036673852013536418,
       "Name": "Quincy-Hannibal-Keokuk",
       "Programs": 18,
       "Selected": false,
@@ -89,11 +89,11 @@
       "Stations": 2
     },
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 68.32514335792869163169270990,
       "Coverage": 1.676,
       "Id": 139,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 186.56100550367776807498574943,
+      "MinCpm": 5.902115926073118962616827158,
       "Name": "Tampa-St. Pete (Sarasota)",
       "Programs": 7,
       "Selected": false,
@@ -111,11 +111,11 @@
       "Stations": 1
     },
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 76.955013162738919167850415819,
       "Coverage": 0.073,
       "Id": 244,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 76.955013162738919167850415819,
+      "MinCpm": 76.955013162738919167850415819,
       "Name": "Alexandria, LA",
       "Programs": 1,
       "Selected": false,
@@ -144,11 +144,11 @@
       "Stations": 2
     },
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 34.91114561766735679779158040,
       "Coverage": 0.056,
       "Id": 360,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 125.000,
+      "MinCpm": 6.5217391304347826086956521739,
       "Name": "Twin Falls",
       "Programs": 9,
       "Selected": false,
@@ -177,11 +177,11 @@
       "Stations": 1
     },
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 10.110399242982084500644801441,
       "Coverage": 0.177,
       "Id": 200,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 25.000,
+      "MinCpm": 4.8859934853420195439739413681,
       "Name": "Corpus Christi",
       "Programs": 8,
       "Selected": false,
