@@ -13,7 +13,7 @@
   },
   "DetailBudgetMarginAchieved": true,
   "DetailBudgetPercent": 2400.0,
-  "DetailCpm": 0.05,
+  "DetailCpm": 0.0500,
   "DetailCpmMarginAchieved": true,
   "DetailCpmPercent": 2400000.0,
   "DetailDaypart": {
@@ -46,8 +46,8 @@
   "DetailSpotLengthId": 1,
   "DetailTargetBudget": 50.0000,
   "DetailTargetImpressions": 1000000.0,
-  "DetailTotalBudget": 1000.00,
-  "DetailTotalCpm": 1000.00,
+  "DetailTotalBudget": 1000.0000,
+  "DetailTotalCpm": 1000.0000,
   "DetailTotalImpressions": 1000.0,
   "DisplayFilter": {
     "Affiliations": [
@@ -201,7 +201,7 @@
       "Budget": 25.0000,
       "BudgetMarginAchieved": false,
       "BudgetPercent": 0.0,
-      "BudgetTotal": 0.00,
+      "BudgetTotal": 0.0000,
       "ImpressionsGoal": 100000.0,
       "ImpressionsMarginAchieved": false,
       "ImpressionsPercent": 0.0,

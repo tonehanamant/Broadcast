@@ -23,7 +23,7 @@
   "GenreCriteria": [],
   "HasPostingDataChanged": false,
   "HutProjectionBookId": null,
-  "NtiConversionFactor": null,
+  "NtiConversionFactor": 0.20000000298023224,
   "PostingBookId": null,
   "PostingPlaybackType": null,
   "ProgramCriteria": [],
