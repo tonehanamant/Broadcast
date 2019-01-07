@@ -7,6 +7,15 @@
     .ReactTable {
       margin-top: 6px;
       height: 500px;
+
+      .rt-thead {
+        padding-right: 17px;
+      }
+      
+      .rt-tbody {
+        overflow-y: scroll;
+        overflow-x: auto;
+      }
     }
     
     .ReactTable:first-child {

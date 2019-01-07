@@ -19,6 +19,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly INtiTransmittalsService _NtiTransmittalsService = IntegrationTestApplicationServiceFactory.GetApplicationService<INtiTransmittalsService>();
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SendPdfDocumentToNielson()
@@ -35,6 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UploadNtiTransmittalsFile()
@@ -51,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UploadNtiTransmittalsFile_ProcessFile()
@@ -82,6 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UploadNtiTransmittalsFile_InvalidFile()
