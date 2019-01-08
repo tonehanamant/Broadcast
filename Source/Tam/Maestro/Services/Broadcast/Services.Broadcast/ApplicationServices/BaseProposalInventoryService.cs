@@ -9,6 +9,7 @@ using Services.Broadcast.Entities.DTO.PricingGuide;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -96,9 +97,14 @@ namespace Services.Broadcast.ApplicationServices
 
         protected void SetFlightWeeks(IEnumerable<ProposalProgramDto> programs)
         {
+            var startDate = programs.Min(p => p.StartDate);
+            var endDate = programs.Max(p => p.EndDate) ?? DateTime.MaxValue;
+
+            var mediaWeeksToUse = _MediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(startDate, endDate);
+
             foreach (var program in programs)
             {
-                program.FlightWeeks = _GetFlightWeeks(program);
+                program.FlightWeeks = _GetFlightWeeks(program,mediaWeeksToUse);
             }
         }
 
@@ -223,7 +229,7 @@ namespace Services.Broadcast.ApplicationServices
             return inventory;
         }
 
-        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto)
+        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto,List<MediaWeek> mediaWeeksToUse = null)
         {
             var nonNullableEndDate = programDto.EndDate ?? programDto.StartDate.AddYears(1);
 

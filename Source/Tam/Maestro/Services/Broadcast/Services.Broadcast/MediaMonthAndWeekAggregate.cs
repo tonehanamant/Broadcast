@@ -16,6 +16,9 @@ namespace Services.Broadcast
         MediaMonth GetMediaMonthByYearAndMonth(int year, int month);
         MediaMonth GetMediaMonthById(int id);
         List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate);
+
+        List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate,List<MediaWeek> mediaWeeks);
+        List<MediaWeek> GetMediaWeeksByFlight(DateTime startDate, DateTime endDate);
         List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId);
         LookupDto FindMediaWeekLookup(int mediaWeekId);
         MediaWeek GetMediaWeekContainingDate(DateTime date);
@@ -98,7 +101,23 @@ namespace Services.Broadcast
 
         public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate)
         {
+            return GetDisplayMediaWeekByFlight(startDate, endDate, _MediaWeeks);
+        }
+
+        public List<MediaWeek> GetMediaWeeksByFlight(DateTime startDate, DateTime endDate)
+        {
             return (from mw in _MediaWeeks
+                where mw.StartDate <= endDate
+                      && mw.EndDate >= startDate
+                select mw).ToList();
+        }
+
+        public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate, List<MediaWeek> mediaWeeks = null)
+        {
+            if (mediaWeeks == null)
+                mediaWeeks = _MediaWeeks;
+
+            return (from mw in mediaWeeks
                     join mm in _MediaMonths on mw.MediaMonthId equals mm.Id
                     where mw.StartDate <= endDate
                           && mw.EndDate >= startDate
@@ -140,11 +159,6 @@ namespace Services.Broadcast
         public List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId)
         {
             return _MediaWeeks.Where(x => x.MediaMonthId == mediaMonthId).ToList();
-        }
-
-        public List<MediaWeek> GetAllMediaWeeks()
-        {
-            return _MediaWeeks;
         }
 
         public LookupDto FindMediaWeekLookup(int mediaWeekId)

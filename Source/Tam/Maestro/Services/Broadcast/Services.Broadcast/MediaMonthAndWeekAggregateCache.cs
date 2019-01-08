@@ -55,6 +55,10 @@ namespace Services.Broadcast
         {
             return _MediaMonthAndWeekAggregate.GetMediaMonthById(id);
         }
+        public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate,List<MediaWeek> mediaWeeksToUse)
+        {
+            return _MediaMonthAndWeekAggregate.GetDisplayMediaWeekByFlight(startDate, endDate,mediaWeeksToUse);
+        }
 
         public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate)
         {
@@ -66,6 +70,10 @@ namespace Services.Broadcast
             return _MediaMonthAndWeekAggregate.GetDisplayMediaWeekById(ids);
         }
 
+        public List<MediaWeek> GetMediaWeeksByFlight(DateTime startDate, DateTime endDate)
+        {
+            return _MediaMonthAndWeekAggregate.GetMediaWeeksByFlight(startDate, endDate);
+        }
         public List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId)
         {
             return _MediaMonthAndWeekAggregate.GetMediaWeeksByMediaMonth(mediaMonthId);
