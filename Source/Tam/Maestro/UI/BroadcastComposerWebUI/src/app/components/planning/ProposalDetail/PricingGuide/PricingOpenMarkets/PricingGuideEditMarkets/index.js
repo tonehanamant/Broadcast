@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import { toggleModal } from "Ducks/app";
 import {
   showEditMarkets,
   changeEditMarkets,
@@ -23,9 +22,17 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+const mapStateToProps = ({ planning: { changedMarkets } }) => ({
+  changedMarkets
+});
+
 class PricingGuideEditMarkets extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      sortedAddedMarket: [],
+      sortedAvailableMarket: []
+    };
     this.onDismissEditMarkets = this.onDismissEditMarkets.bind(this);
     this.onUpdateEditMarkets = this.onUpdateEditMarkets.bind(this);
     this.removeUsedMarket = this.removeUsedMarket.bind(this);
@@ -36,33 +43,40 @@ class PricingGuideEditMarkets extends Component {
     this.props.discardEditMarkets();
     this.props.showEditMarkets(false);
   }
-  // call parent as needs params
   onUpdateEditMarkets() {
-    // this.props.discardEditMarkets();
-    // this.props.showEditMarkets(false);
     this.props.onUpdateEditMarkets();
   }
 
-  // handle update via action todo
   removeUsedMarket(rec) {
-    // console.log("removeUsedMarket", rec, this);
-    this.props.changeEditMarkets(rec.Id, false);
+    const { changeEditMarkets } = this.props;
+    changeEditMarkets(rec.Id, false);
+    this.setState({ sortedAvailableMarket: [{ id: "newItem", desc: true }] });
   }
 
   addAvailableMarket(rec) {
-    // console.log("addAvailableMarket", rec, this);
-    this.props.changeEditMarkets(rec.Id, true);
+    const { changeEditMarkets } = this.props;
+    changeEditMarkets(rec.Id, true);
+    this.setState({ sortedAddedMarket: [{ id: "newItem", desc: true }] });
+  }
+
+  onSortedChange(path, nextValue) {
+    this.setState({ [path]: nextValue });
   }
 
   render() {
-    const { activeEditMarkets, marketCoverageGoal, openCpmTarget } = this.props;
+    const {
+      activeEditMarkets,
+      marketCoverageGoal,
+      openCpmTarget,
+      changedMarkets
+    } = this.props;
+    const { sortedAddedMarket, sortedAvailableMarket } = this.state;
     const partitionedMarkets = partition(activeEditMarkets, "Selected");
     const usedMarkets = partitionedMarkets[0];
     const availableMarkets = partitionedMarkets[1];
     const currentCoverage = sumBy(usedMarkets, "Coverage");
     const usedCount = usedMarkets.length;
     const availableCount = availableMarkets.length;
-    // console.log("Edit Markets", activeEditMarkets, partitionedMarkets);
     return (
       <div>
         <Panel>
@@ -90,7 +104,6 @@ class PricingGuideEditMarkets extends Component {
                   <Button
                     bsStyle="primary"
                     bsSize="small"
-                    // disabled={!this.state.isValidSelection}
                     style={{ float: "unset", marginLeft: "10px" }}
                     onClick={this.onUpdateEditMarkets}
                   >
@@ -135,14 +148,24 @@ class PricingGuideEditMarkets extends Component {
               <Col xs={6}>
                 <EditMarketsGrid
                   editMarketsData={usedMarkets}
+                  changedMarkets={changedMarkets}
                   isAvailableMarkets={false}
                   editMarketAction={this.removeUsedMarket}
                   openCpmTarget={openCpmTarget}
+                  sorted={sortedAddedMarket}
+                  onSortedChange={v =>
+                    this.onSortedChange("sortedAddedMarket", v)
+                  }
                 />
               </Col>
               <Col xs={6}>
                 <EditMarketsGrid
+                  changedMarkets={changedMarkets}
                   editMarketsData={availableMarkets}
+                  sorted={sortedAvailableMarket}
+                  onSortedChange={v =>
+                    this.onSortedChange("sortedAvailableMarket", v)
+                  }
                   isAvailableMarkets
                   editMarketAction={this.addAvailableMarket}
                   openCpmTarget={openCpmTarget}
@@ -150,27 +173,6 @@ class PricingGuideEditMarkets extends Component {
               </Col>
             </Row>
           </Panel.Body>
-          {/* <Panel.Footer style={{ textAlign: "right" }}>
-            <ButtonToolbar>
-              <Button
-                bsStyle="default"
-                bsSize="small"
-                style={{ float: "unset" }}
-                onClick={this.onDismissEditMarkets}
-              >
-                Discard
-              </Button>
-              <Button
-                bsStyle="primary"
-                bsSize="small"
-                // disabled={!this.state.isValidSelection}
-                style={{ float: "unset", marginLeft: "10px" }}
-                onClick={this.onUpdateEditMarkets}
-              >
-                Update Markets
-              </Button>
-            </ButtonToolbar>
-          </Panel.Footer> */}
         </Panel>
       </div>
     );
@@ -184,11 +186,11 @@ PricingGuideEditMarkets.propTypes = {
   discardEditMarkets: PropTypes.func.isRequired,
   onUpdateEditMarkets: PropTypes.func.isRequired,
   marketCoverageGoal: PropTypes.number.isRequired,
+  changedMarkets: PropTypes.array.isRequired,
   openCpmTarget: PropTypes.number.isRequired
 };
 
-// export default PricingGuideEditMarkets;
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PricingGuideEditMarkets);
