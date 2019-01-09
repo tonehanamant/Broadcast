@@ -189,6 +189,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesKeepingTracFile_WithMarriedIscis()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _SetupPostLog();
+                var detail = request.Details.First();
+                detail.SpotLength = 60;
+                detail.Isci = "DDDDDDDDD1996";
+                var postingDate = new DateTime(2016, 4, 20);
+
+                var result = _PostLogService.SaveKeepingTracFile(request, "test user", postingDate);
+
+                VerifyPostLog(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
         public void PostLogService_SaveKeepingTracFileWithShowTypes()
         {
@@ -475,6 +493,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(ScrubbingFile), "MediaMonthId");
             jsonResolver.Ignore(typeof(FileProblem), "Id");
             jsonResolver.Ignore(typeof(FileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ProposalVersionDetailQuarterWeekId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ProposalVersionDetailId");
 
             var jsonSettings = new JsonSerializerSettings()
             {

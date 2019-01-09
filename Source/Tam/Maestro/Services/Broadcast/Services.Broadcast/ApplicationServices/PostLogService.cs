@@ -1,4 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
@@ -138,8 +139,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramScrubbingEngine _ProgramScrubbingEngine;
         private readonly IMatchingEngine _MatchingEngine;
         private readonly IIsciService _IsciService;
-
-        private readonly Dictionary<int, int> _SpotLengthsDict;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
+        
         private const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
 
@@ -155,11 +156,11 @@ namespace Services.Broadcast.ApplicationServices
             , INsiPostingBookService nsiPostingBookService
             , IProgramScrubbingEngine programScrubbingEngine
             , IMatchingEngine matchingEngine
-            , IIsciService isciService)
+            , IIsciService isciService
+            , ISpotLengthEngine spotLengthEngine)
         {
             _PostLogRepository = dataRepositoryFactory.GetDataRepository<IPostLogRepository>();
             _PostLogEngine = postLogEngine;
-            _SpotLengthsDict = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _PostRepository = dataRepositoryFactory.GetDataRepository<IPostRepository>();
             _StationRepository = dataRepositoryFactory.GetDataRepository<IStationRepository>();
             _ProposalRepository = dataRepositoryFactory.GetDataRepository<IProposalRepository>();
@@ -175,6 +176,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramScrubbingEngine = programScrubbingEngine;
             _MatchingEngine = matchingEngine;
             _IsciService = isciService;
+            _SpotLengthEngine = spotLengthEngine;
         }
 
         /// <summary>
@@ -227,7 +229,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Count = x.Count,
                 ISCI = x.ISCI,
-                SpotLength = _SpotLengthsDict.Single(y => y.Value == x.SpotLengthId).Key,
+                SpotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLengthId),
                 UnlinkedReason = EnumHelper.GetFileDetailProblemDescription(x.ProblemType)
             }).ToList();
         }
@@ -363,7 +365,7 @@ namespace Services.Broadcast.ApplicationServices
 
             iscis.ForEach(x =>
             {
-                x.SpotLength = _SpotLengthsDict.Single(y => y.Value == x.SpotLength).Key;
+                x.SpotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLength);
             });
 
             return iscis;
@@ -399,7 +401,7 @@ namespace Services.Broadcast.ApplicationServices
                 ///Load all Client Scrubs
                 if (clientScrubs == null)
                 {
-                    clientScrubs = _MapClientScrubDataToDto(_PostLogRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter), _SpotLengthsDict);
+                    clientScrubs = _MapClientScrubDataToDto(_PostLogRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter));
                     _SetClientScrubsMarketAndAffiliate(clientScrubs);
                 }
 
@@ -518,12 +520,12 @@ namespace Services.Broadcast.ApplicationServices
             }).OrderBy(x => x.Sequence).ToList();
         }
 
-        private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData, Dictionary<int, int> spotsLengths)
+        private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData)
         {
             return clientScrubsData.Select(x =>
             {
-                var spotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key;
-                var isIsciMarried = x.WeekIscis.SingleOrDefault(i => i.HouseIsci == x.ISCI)?.MarriedHouseIsci ?? false;
+                var spotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLengthId);
+                var isIsciMarried = x.WeekIscis.Where(i => i.HouseIsci == x.ISCI).Any(i => i.MarriedHouseIsci);
 
                 if (isIsciMarried)
                 {
@@ -854,11 +856,14 @@ namespace Services.Broadcast.ApplicationServices
                     proposalWeeks = _ProposalRepository.GetMatchingProposalWeeksByHouseIsci(detail.Isci);
                 }
 
-                var matchedProposalWeeks = _MatchingEngine.Match(detail, proposalWeeks);
+                var spotLengthId = _GetScubbingFileDetailSpotLengthId(detail, proposalWeeks);
+                var matchedProposalWeeks = _MatchingEngine.Match(detail, proposalWeeks, spotLengthId);
+
                 if (!matchedProposalWeeks.Any() && !string.IsNullOrWhiteSpace(detail.MappedIsci))
                 {
                     proposalWeeks = _ProposalRepository.GetMatchingProposalWeeksByHouseIsci(detail.MappedIsci);
-                    matchedProposalWeeks = _MatchingEngine.Match(detail, proposalWeeks);
+                    spotLengthId = _GetScubbingFileDetailSpotLengthId(detail, proposalWeeks);
+                    matchedProposalWeeks = _MatchingEngine.Match(detail, proposalWeeks, spotLengthId);
                     isIsciMapped = true;
                 }
 
@@ -884,7 +889,7 @@ namespace Services.Broadcast.ApplicationServices
                 Isci = d.Isci,
                 ProgramName = d.ProgramName,
                 Genre = d.Genre,
-                SpotLengthId = _GetSpotlength(d.SpotLength),
+                SpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(d.SpotLength),
                 Station = d.Station,
                 Market = d.Market,
                 Affiliate = d.Affiliate,
@@ -906,12 +911,24 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private int _GetSpotlength(int spotLength)
+        private int _GetScubbingFileDetailSpotLengthId(ScrubbingFileDetail scubbingFileDetail, List<MatchingProposalWeek> proposalWeeks)
         {
-            if (!_SpotLengthsDict.ContainsKey(spotLength))
-                throw new Exception(string.Format("Invalid spot length '{0}' found.", spotLength));
+            var spotLengthId = scubbingFileDetail.SpotLengthId;
 
-            return _SpotLengthsDict[spotLength];
+            if (proposalWeeks != null)
+            {
+                var iscisMarried = proposalWeeks.Where(i => i.MarriedHouseIsci).GroupBy(g => g.ProposalVersionId).Count() > 1;
+
+                // take a half of spot length for married iscis
+                if (iscisMarried)
+                {
+                    var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
+                    spotLength /= 2;
+                    spotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(spotLength);
+                }
+            }
+
+            return spotLengthId;
         }
 
         private static ScrubbingFile _MapInboundFileSaveRequestToPostLogFile(InboundFileSaveRequest saveRequest, DateTime currentDateTime)
@@ -943,7 +960,7 @@ namespace Services.Broadcast.ApplicationServices
             double deliveredImpressions = 0;
             foreach (var impressionData in impressionsDataGuaranteed)
             {
-                double impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                double impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions, equivalized, _SpotLengthEngine.GetSpotLengthValueById(impressionData.SpotLengthId));
 
                 if (type == SchedulePostType.NTI)
                 {

@@ -17,7 +17,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="fileDetail">File detail to match</param>
         /// <param name="proposalWeeks">Proposal weeks to find the match to.</param>
         /// <returns>List of MatchingProposalWeek objects containing the matched weeks</returns>
-        List<MatchingProposalWeek> Match(ScrubbingFileDetail affidavitFileDetail, List<MatchingProposalWeek> proposalWeeks, int? spotLenghtId = null);
+        List<MatchingProposalWeek> Match(ScrubbingFileDetail affidavitFileDetail, List<MatchingProposalWeek> proposalWeeks, int spotLenghtId);
 
         /// <summary>
         /// Access to matching problems object
@@ -54,7 +54,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="fileDetail">File detail to match</param>
         /// <param name="proposalWeeks">Proposal weeks to find the match to.</param>
         /// <returns>List of MatchingProposalWeek objects containing the matched weeks</returns>
-        public List<MatchingProposalWeek> Match(ScrubbingFileDetail fileDetail, List<MatchingProposalWeek> proposalWeeks, int? spotLenghtId = null)
+        public List<MatchingProposalWeek> Match(ScrubbingFileDetail fileDetail, List<MatchingProposalWeek> proposalWeeks, int spotLenghtId)
         {
             _MatchingProposalWeeks = new List<MatchingProposalWeek>();
             _MatchingProblems = new List<FileDetailProblem>();
@@ -92,7 +92,6 @@ namespace Services.Broadcast.BusinessEngines
                 return _MatchingProposalWeeks;
             }
 
-            spotLenghtId = spotLenghtId ?? fileDetail.SpotLengthId;
             proposalWeeks = proposalWeeks.Where(x => x.SpotLengthId == spotLenghtId).ToList();
             if (!proposalWeeks.Any())
             {
