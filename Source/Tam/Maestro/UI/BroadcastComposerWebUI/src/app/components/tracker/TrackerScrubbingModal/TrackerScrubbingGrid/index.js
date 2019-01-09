@@ -286,7 +286,7 @@ export class TrackerScrubbingGrid extends Component {
           return (
             <div>
               {programName}
-              {row.SupliedProgramNameIsUsed && (
+              {row.SuppliedProgramNameUsed && (
                 <Badge style={{ fontSize: "9px", marginTop: "4px" }} pullRight>
                   SP
                 </Badge>
