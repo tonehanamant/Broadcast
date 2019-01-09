@@ -124,10 +124,14 @@ const NumberCell = ({ value, original }) => {
   return GreyDisplay(retVal, inactive);
 };
 
-const PercentCell = ({ value }) => {
+const PercentCell = ({ value, original }) => {
   if (isNil(value)) return "";
   const retVal = value !== 0 ? numeral(value).format("0,0.[000]") : "-";
-  return `${retVal}%`;
+  const inactive = original.isProgram
+    ? original.Spots === 0 || original.Impressions > 0
+    : false;
+  const displayVal = `${retVal}%`;
+  return GreyDisplay(displayVal, inactive);
 };
 
 const SpotCell = ({ value, original }) => {
