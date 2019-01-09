@@ -1,11 +1,11 @@
 ﻿{
   "AllMarkets": [
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 7.5307,
       "Coverage": 6.309,
       "Id": 101,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 7.5307,
+      "MinCpm": 7.5307,
       "Name": "New York",
       "Programs": 2,
       "Selected": true,
@@ -63,15 +63,15 @@
   "MarketCoverageFileId": 1,
   "Markets": [
     {
-      "AvgCpm": 0.0,
+      "AvgCpm": 7.5307,
       "CPM": 0.0231713882594196218936310181,
       "DisplayImpressions": 10.0,
       "DisplayStationImpressions": 43156.671875,
       "MarketCoverage": 6.309,
       "MarketName": "New York",
       "MarketRank": 1,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
+      "MaxCpm": 7.5307,
+      "MinCpm": 7.5307,
       "Stations": [
         {
           "Affiliation": "ABC",

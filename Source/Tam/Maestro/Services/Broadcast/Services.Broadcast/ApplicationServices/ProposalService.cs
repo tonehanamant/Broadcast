@@ -508,7 +508,7 @@ namespace Services.Broadcast.ApplicationServices
             proposalDto.TargetCPM = proposalDto.TargetCPM ?? 0;
             proposalDto.Margin = proposalDto.Margin ?? ProposalConstants.ProposalDefaultMargin;
             if (proposalDto.MarketCoverage.HasValue)
-                proposalDto.MarketCoverage = Math.Round(proposalDto.MarketCoverage.Value, 4, MidpointRounding.AwayFromZero);
+                proposalDto.MarketCoverage = proposalDto.MarketCoverage.Value;
         }
 
         private void _SetProposalDetailsDefaultValues(ProposalDto proposalDto)
@@ -522,8 +522,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     //set default value for NTI Conversion factor
                     detail.NtiConversionFactor = detail.NtiConversionFactor == null
-                            ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 4, MidpointRounding.AwayFromZero)
-                            : Math.Round(detail.NtiConversionFactor.Value, 4, MidpointRounding.AwayFromZero);
+                        ? BroadcastServiceSystemParameter.DefaultNtiConversionFactor
+                        : detail.NtiConversionFactor.Value;
                 }
                 
                 //set default value for My Events Report Name
@@ -1088,9 +1088,7 @@ namespace Services.Broadcast.ApplicationServices
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
                 DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate),
-                NtiConversionFactor = proposalDetailRequestDto.PostType.Equals(SchedulePostType.NTI)
-                    ? Math.Round(BroadcastServiceSystemParameter.DefaultNtiConversionFactor, 2, MidpointRounding.AwayFromZero)
-                    : (double?)null
+                NtiConversionFactor = BroadcastServiceSystemParameter.DefaultNtiConversionFactor
             };
 
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);
@@ -1207,8 +1205,7 @@ namespace Services.Broadcast.ApplicationServices
                         .ToList(),
                 Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
                     .OrderBy(m => m.Display).ToList(),
-                DefaultMarketCoverage = Math.Round(BroadcastServiceSystemParameter.DefaultMarketCoverage, 4,
-                    MidpointRounding.AwayFromZero),
+                DefaultMarketCoverage = BroadcastServiceSystemParameter.DefaultMarketCoverage,
                 ProprietaryPricingInventorySources = EnumHelper.GetProprietaryInventorySources().Select(p => new LookupDto
                 {
                     Id = (int)p,

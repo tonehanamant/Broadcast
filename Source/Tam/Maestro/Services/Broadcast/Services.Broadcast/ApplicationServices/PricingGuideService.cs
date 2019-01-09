@@ -138,8 +138,21 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoverageDto = _GetMarketCoverages(markets);
             _ApplyInventoryMarketCoverages(markets, marketCoverageDto);
             var allMarkets = _MapAllMarketsObject(markets);
+            _SetMarketCpms(allMarkets, selectedMarkets);
             _SetSelectedMarketsInAllMarketsObject(selectedMarkets, allMarkets);
             return allMarkets;
+        }
+
+        private void _SetMarketCpms(List<PricingGuideMarketTotalsDto> allMarkets, List<PricingGuideMarketDto> selectedMarkets)
+        {
+            foreach (var selectedMarket in selectedMarkets)
+            {
+                var market = allMarkets.Single(x => x.Id == selectedMarket.MarketId);
+
+                market.MinCpm = selectedMarket.MinCpm;
+                market.AvgCpm = selectedMarket.AvgCpm;
+                market.MaxCpm = selectedMarket.MaxCpm;
+            }
         }
 
         private List<PricingGuideMarketDto> _LoadMarketsForDistribution(int distributionId, ProposalDetailDto proposalDetail)
@@ -181,6 +194,7 @@ namespace Services.Broadcast.ApplicationServices
             ApplyInventoryMarketRankings(postingBookId, inventoryMarkets);
             var marketCoverageDto = _GetMarketCoverages(inventoryMarkets);
             _ApplyInventoryMarketCoverages(inventoryMarkets, marketCoverageDto);
+            _CalculateCpmForMarkets(inventoryMarkets);
             return inventoryMarkets;
         }
 
@@ -258,6 +272,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _PopulatePricingGuideMarketsAndFilterByIds(inventory, selectedMarketIds, dto, false);
             _SetAllocatedSpots(inventory.Markets, programSpots);
+            dto.Markets = inventory.Markets;
             return _GetPricingGuideOpenMarketInventoryDto(dto, _GetProprietaryPricings(dto.ProprietaryPricing, dto.ProposalDetailId));
         }
 
@@ -418,7 +433,7 @@ namespace Services.Broadcast.ApplicationServices
                 Cost = openMarketTotals.Cost + proprietaryTotals.Cost,
                 Coverage = openMarketTotals.Coverage
             };
-            result.Cpm = (double)ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
+            result.Cpm = (double)ProposalMath.CalculateCpm(result.Cost, result.Impressions);
 
             return result;
         }
@@ -450,7 +465,7 @@ namespace Services.Broadcast.ApplicationServices
             };
             // Coverage: sum of coverage for each market with a spot allocated, only count each market once.
             result.Coverage = markets.Where(x => x.TotalCost > 0).Sum(x => x.MarketCoverage);
-            result.Cpm = ProposalMath.CalculateCpmRaw(result.Cost, result.Impressions);
+            result.Cpm = ProposalMath.CalculateCpm(result.Cost, result.Impressions);
 
             return result;
         }
@@ -470,7 +485,7 @@ namespace Services.Broadcast.ApplicationServices
             markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
             markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
             markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            markets.ForEach(m => m.CPM = ProposalMath.CalculateCpmRaw(m.TotalCost, m.TotalImpressions));
+            markets.ForEach(m => m.CPM = ProposalMath.CalculateCpm(m.TotalCost, m.TotalImpressions));
         }
 
         private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideDto dto)
@@ -550,17 +565,22 @@ namespace Services.Broadcast.ApplicationServices
             var programs = _GetPricingGuidePrograms(inventory, pricingGuideDto);
             var markets = _GroupProgramsByMarketAndStationForPricingGuide(programs);
             var postingBookId = ProposalServiceHelper.GetBookId(inventory);
+
             ApplyInventoryMarketRankings(postingBookId, markets);
+
             var marketCoverageDto = _GetMarketCoverages(markets);
+
             _ApplyInventoryMarketCoverages(markets, marketCoverageDto);
+
             inventory.MarketCoverageFileId = marketCoverageDto.MarketCoverageFileId;
+
+            _SumTotalsForMarkets(markets);
+            _CalculateCpmForMarkets(markets);
 
             inventory.AllMarkets = _MapAllMarketsObject(markets);
 
             markets = _FilterMarketsByIds(markets, marketIdsFilter);
             markets = markets.OrderBy(m => m.MarketRank).ToList();
-            _SumTotalsForMarkets(markets);
-            _CalculateCpmForMarkets(markets);
             markets = ApplyDefaultSortingForPricingGuideMarkets(markets);
             _ApplyProgramAndGenreFilterForMarkets(markets, inventory.Criteria);
 

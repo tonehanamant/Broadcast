@@ -95,6 +95,7 @@ const generateMarketData = markets =>
     rowType: rowTypes.TITLE,
     MarketRank: market.MarketRank,
     MarketName: market.MarketName,
+    MarketCoverage: market.MarketCoverage,
     CPM: market.CPM,
     Spots: market.TotalSpots,
     Impressions: market.TotalImpressions
@@ -121,6 +122,12 @@ const NumberCell = ({ value, original }) => {
     ? original.Spots === 0 || original.Impressions > 0
     : false;
   return GreyDisplay(retVal, inactive);
+};
+
+const PercentCell = ({ value }) => {
+  if (isNil(value)) return "";
+  const retVal = value !== 0 ? numeral(value).format("0,0.[000]") : "-";
+  return `${retVal}%`;
 };
 
 const SpotCell = ({ value, original }) => {
@@ -225,6 +232,11 @@ const marketColumns = [
     accessor: "MarketName",
     minWidth: 110,
     Cell: GroupingCell
+  },
+  {
+    Header: "Coverage",
+    accessor: "MarketCoverage",
+    Cell: PercentCell
   },
   {
     Header: "CPM",

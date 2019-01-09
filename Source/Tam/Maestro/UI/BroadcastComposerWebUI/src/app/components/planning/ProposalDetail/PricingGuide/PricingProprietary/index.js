@@ -200,8 +200,8 @@ class PricingProprietary extends Component {
                   <thead>
                     <tr>
                       <th className="cardLabel">SOURCE</th>
-                      <th className="cardLabel">BALANCE</th>
-                      <th className="cardLabel">CPM</th>
+                      <th className="cardLabel">BALANCE (%)</th>
+                      <th className="cardLabel">CPM ($)</th>
                     </tr>
                   </thead>
                   <tbody>

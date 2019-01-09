@@ -191,7 +191,7 @@ class PricingGoal extends Component {
                     </Col>
                     <Col sm={6}>
                       <FormGroup>
-                        <ControlLabel>BUDGET</ControlLabel>
+                        <ControlLabel>BUDGET ($)</ControlLabel>
                         {isEditing && (
                           <InputNumber
                             defaultValue={editingBudget || null}
@@ -228,7 +228,7 @@ class PricingGoal extends Component {
                   <Row>
                     <Col sm={4}>
                       <FormGroup>
-                        <ControlLabel>MARGIN</ControlLabel>
+                        <ControlLabel>MARGIN (%)</ControlLabel>
                         {isEditing && (
                           <InputNumber
                             defaultValue={parseToPercent(editingMargin || null)}
@@ -238,7 +238,7 @@ class PricingGoal extends Component {
                             precision={2}
                             style={{ width: "100%" }}
                             formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                              `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
                             parser={value => value.replace(/%\s?|(,*)/g, "")}
                             onChange={value => {
@@ -262,7 +262,7 @@ class PricingGoal extends Component {
                     </Col>
                     <Col sm={4}>
                       <FormGroup>
-                        <ControlLabel>RATE INFLATION</ControlLabel>
+                        <ControlLabel>RATE INFLATION (%)</ControlLabel>
                         {isEditing && (
                           <InputNumber
                             defaultValue={parseToPercent(
@@ -274,7 +274,7 @@ class PricingGoal extends Component {
                             precision={2}
                             style={{ width: "100%" }}
                             formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                              `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
                             parser={value => value.replace(/%\s?|(,*)/g, "")}
                             onChange={value => {
@@ -298,7 +298,7 @@ class PricingGoal extends Component {
                     </Col>
                     <Col sm={4}>
                       <FormGroup>
-                        <ControlLabel>IMPRESSIONS LOSS</ControlLabel>
+                        <ControlLabel>IMPRESSIONS LOSS (%)</ControlLabel>
                         {isEditing && (
                           <InputNumber
                             defaultValue={parseToPercent(
@@ -310,7 +310,7 @@ class PricingGoal extends Component {
                             precision={2}
                             style={{ width: "100%" }}
                             formatter={value =>
-                              `${value}%`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                              `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             }
                             parser={value => value.replace(/%\s?|(,*)/g, "")}
                             onChange={value => {

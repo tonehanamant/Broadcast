@@ -290,7 +290,7 @@ namespace Services.Broadcast.BusinessEngines
                 var totalCost = activeWeeks.Sum(w => w.Rate);
                 var totalImpressions = program.EffectiveImpressionsPerSpot * activeWeeks.Count;
 
-                program.TargetCpm = ProposalMath.CalculateCpmRaw(totalCost, totalImpressions);
+                program.TargetCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
             }
         }
 

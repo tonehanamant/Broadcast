@@ -447,6 +447,7 @@ class PricingOpenMarkets extends Component {
                 activeEditMarkets={activeEditMarkets}
                 marketCoverageGoal={coverage}
                 onUpdateEditMarkets={this.onUpdateEditMarkets}
+                openCpmTarget={openCpmTarget}
               />
             )}
           </Panel.Body>

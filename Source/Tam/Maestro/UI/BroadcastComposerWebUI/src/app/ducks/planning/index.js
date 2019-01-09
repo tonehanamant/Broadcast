@@ -16,6 +16,7 @@ const initialState = {
   hasActiveDistribution: false,
   isOpenMarketDataSortName: false,
   activeEditMarkets: [],
+  changedMarkets: [],
   isEditMarketsActive: false,
   openMarketLoading: false,
   openMarketLoaded: false,
@@ -88,6 +89,13 @@ const sortMarketsData = (markets, isSortByName) => {
   const sortByType = isSortByName ? "MarketName" : "MarketRank";
   const sortedMarkets = sortBy(markets, sortByType);
   return sortedMarkets;
+};
+
+const addOrRemoveMarket = (markets = [], marketId) => {
+  if (markets.includes(marketId)) {
+    return markets.filter(m => m !== marketId);
+  }
+  return markets.concat(marketId);
 };
 
 // Reducer
@@ -412,6 +420,7 @@ export default function reducer(state = initialState, action) {
         activeOpenMarketData: undefined,
         hasOpenMarketData: false,
         hasActiveDistribution: false,
+        changedMarkets: [],
         isOpenMarketDataSortName: false
       };
     }
@@ -465,10 +474,20 @@ export default function reducer(state = initialState, action) {
       const editMarkets = [...state.activeEditMarkets];
       const market = find(editMarkets, { Id: payload.id });
       if (market) market.Selected = payload.isAdd;
-      // console.log("Change Edit Markets", market, payload, editMarkets);
+      const changedMarkets = addOrRemoveMarket(
+        state.changedMarkets,
+        payload.id
+      );
       return {
         ...state,
-        activeEditMarkets: editMarkets
+        activeEditMarkets: editMarkets,
+        changedMarkets
+      };
+    }
+    case ACTIONS.SAVE_PRICING_GUIDE.success: {
+      return {
+        ...state,
+        changedMarkets: []
       };
     }
 
@@ -476,7 +495,8 @@ export default function reducer(state = initialState, action) {
       const openMarketsData = { ...state.openMarketData };
       return {
         ...state,
-        activeEditMarkets: cloneDeep(openMarketsData.AllMarkets)
+        activeEditMarkets: cloneDeep(openMarketsData.AllMarkets),
+        changedMarkets: []
       };
     }
 

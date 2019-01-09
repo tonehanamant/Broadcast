@@ -52,7 +52,6 @@ export const columns = [
     id: "Id",
     accessor: "Id",
     hideable: false,
-    // defaultSortDirection: "ASC",
     width: "5%"
   },
   {
@@ -89,9 +88,7 @@ export const columns = [
   {
     Header: "Last Modified",
     id: "displayLastModified",
-    // accessor: "displayLastModified",
-    accessor: "LastModified",
-    width: "10%",
-    Cell: row => <span>{row.original.displayLastModified}</span>
+    accessor: "displayLastModified",
+    width: "10%"
   }
 ];
