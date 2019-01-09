@@ -131,13 +131,13 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAffidavitValidationEngine _AffidavitValidationEngine;
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IImpressionsService _ImpressionsService;
-        private readonly Dictionary<int, int> _SpotLengthsDict;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IIsciService _IsciService;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
 
         public AffidavitService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IMatchingEngine affidavitMatchingEngine
@@ -152,7 +152,8 @@ namespace Services.Broadcast.ApplicationServices
             , IImpressionAdjustmentEngine impressionAdjustmentEngine
             , IBroadcastAudiencesCache audiencesCache
             , ISMSClient smsClient
-            , IIsciService isciService)
+            , IIsciService isciService
+            , ISpotLengthEngine spotLengthEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitMatchingEngine = affidavitMatchingEngine;
@@ -166,13 +167,13 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitValidationEngine = affidavitValidationEngine;
             _NsiPostingBookService = nsiPostingBookService;
             _ImpressionsService = affidavitImpressionsService;
-            _SpotLengthsDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _StationProcessingEngine = stationProcessingEngine;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _AudiencesCache = audiencesCache;
             _SmsClient = smsClient;
             _BroadcastAudienceRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _IsciService = isciService;
+            _SpotLengthEngine = spotLengthEngine;
         }
 
         public WWTVSaveResult SaveAffidavitValidationErrors(InboundFileSaveRequest saveRequest, string userName, List<WWTVInboundFileValidationResult> affidavitValidationResults)
@@ -302,7 +303,7 @@ namespace Services.Broadcast.ApplicationServices
                 Isci = d.Isci,
                 ProgramName = d.ProgramName,
                 Genre = d.Genre,
-                SpotLengthId = _GetSpotlengthId(d.SpotLength),
+                SpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(d.SpotLength),
                 Station = d.Station,
                 Market = d.Market,
                 Affiliate = d.Affiliate,
@@ -674,27 +675,13 @@ namespace Services.Broadcast.ApplicationServices
                 // take a half of spot length for married iscis
                 if (iscisMarried)
                 {
-                    var spotLength = _GetSpotlength(spotLengthId);
+                    var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
                     spotLength /= 2;
-                    spotLengthId = _GetSpotlengthId(spotLength);
+                    spotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(spotLength);
                 }
             }
 
             return spotLengthId;
-        }
-
-        private int _GetSpotlengthId(int spotLength)
-        {
-            if (!_SpotLengthsDict.ContainsKey(spotLength))
-                throw new Exception(string.Format("Invalid spot length '{0}' found.", spotLength));
-
-            return _SpotLengthsDict[spotLength];
-        }
-
-        private int _GetSpotlength(int spotLengthId)
-        {
-            var spotLenght = _SpotLengthsDict.Single(x => x.Value == spotLengthId, $"Invalid spot length id '{spotLengthId}' found.");
-            return spotLenght.Key;
         }
 
         private Dictionary<int,List<int>> _ratingsAudiencesIds; 
@@ -747,7 +734,7 @@ namespace Services.Broadcast.ApplicationServices
                 foreach (var impressionData in contractImpressionsData[contractId].Where(i => _ratingsAudiencesIds[audienceId].Contains(i.AudienceId)))
                 {
                     var impressions = _ImpressionAdjustmentEngine.AdjustImpression(impressionData.Impressions,
-                        equivalized, _SpotLengthsDict.Single(x => x.Value == impressionData.SpotLengthId).Key);
+                        equivalized, _SpotLengthEngine.GetSpotLengthValueById(impressionData.SpotLengthId));
 
                     if (type == SchedulePostType.NTI)
                     {
@@ -813,7 +800,7 @@ namespace Services.Broadcast.ApplicationServices
                 ///Load all Client Scrubs
                 if (clientScrubs == null)
                 {
-                    clientScrubs = _MapClientScrubDataToDto(_AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter), _SpotLengthsDict);
+                    clientScrubs = _MapClientScrubDataToDto(_AffidavitRepository.GetProposalDetailPostScrubbing(proposalId, proposalScrubbingRequest.ScrubbingStatusFilter));
                     _SetClientScrubsMarketAndAffiliate(clientScrubs);
                 }
 
@@ -878,10 +865,10 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData, Dictionary<int, int> spotsLengths)
+        private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData)
         {
             return clientScrubsData.Select(x => {
-                var spotLength = spotsLengths.Single(y => y.Value == x.SpotLengthId).Key;
+                var spotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLengthId);
                 var isIsciMarried = x.WeekIscis.Where(i => i.HouseIsci == x.ISCI).Any(i => i.MarriedHouseIsci);
 
                 if (isIsciMarried)
@@ -955,7 +942,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Count = x.Count,
                 ISCI = x.ISCI,
-                SpotLength = _SpotLengthsDict.Single(y => y.Value == x.SpotLengthId).Key,
+                SpotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLengthId),
                 UnlinkedReason = EnumHelper.GetFileDetailProblemDescription(x.ProblemType)
             }).ToList();
         }
@@ -970,7 +957,7 @@ namespace Services.Broadcast.ApplicationServices
 
             iscis.ForEach(x =>
             {
-                x.SpotLength = _SpotLengthsDict.Single(y => y.Value == x.SpotLength).Key;
+                x.SpotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLength);
             });
 
             return iscis;

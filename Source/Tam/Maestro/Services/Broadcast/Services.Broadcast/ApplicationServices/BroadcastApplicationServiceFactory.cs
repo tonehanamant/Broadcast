@@ -148,6 +148,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IExcelHelper, ExcelHelper>();
 
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
+            unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

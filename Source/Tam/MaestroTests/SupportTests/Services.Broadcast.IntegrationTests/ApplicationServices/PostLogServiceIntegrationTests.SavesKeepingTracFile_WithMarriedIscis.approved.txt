@@ -96,9 +96,9 @@
           "Comment": null,
           "EffectiveClientIsci": null,
           "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": "DDDDDDDD",
+          "EffectiveIsci": "DDDDDDDDD1996",
           "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "Drama",
+          "EffectiveShowType": "News",
           "LeadIn": false,
           "MatchDate": false,
           "MatchGenre": true,
@@ -106,7 +106,115 @@
           "MatchIsciDays": false,
           "MatchMarket": true,
           "MatchProgram": true,
-          "MatchShowType": false,
+          "MatchShowType": true,
+          "MatchStation": true,
+          "MatchTime": false,
+          "ModifiedBy": "test user",
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
+          "Status": 1
+        },
+        {
+          "ClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 2826.05
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 2803.75
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 2151.45
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 189.65
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 703.25
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 9141.6
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 233.95
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 128.75
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 446.4
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 343.6
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 0.0
+            }
+          ],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "DDDDDDDDD1996",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "News",
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": true,
           "MatchStation": true,
           "MatchTime": false,
           "ModifiedBy": "test user",
@@ -120,7 +228,7 @@
       "FileDetailProblems": [],
       "Genre": "Do It Yourself",
       "InventorySource": 2,
-      "Isci": "DDDDDDDD",
+      "Isci": "DDDDDDDDD1996",
       "LeadInEndTime": 30660,
       "LeadinGenre": "News",
       "LeadinProgramName": "LeadInProgramName",
@@ -133,9 +241,9 @@
       "Market": "Tampa-St. Pete (Sarasota)",
       "OriginalAirDate": "2017-06-29T00:00:00",
       "ProgramName": "Program Names R us",
-      "ShowType": "Drama",
+      "ShowType": "News",
       "SpotCost": null,
-      "SpotLengthId": 1,
+      "SpotLengthId": 2,
       "Station": "WWSB",
       "SuppliedProgramName": null
     }
