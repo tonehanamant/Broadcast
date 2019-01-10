@@ -489,9 +489,9 @@
       "HouseholdDeliveredImpressions": 0.0,
       "IsActiveThisWeek": true,
       "PostType": 1,
-      "PrimaryAudienceBookedImpressions": 0.0,
+      "PrimaryAudienceBookedImpressions": 100000.0,
       "PrimaryAudienceDeliveredImpressions": 0.0,
-      "PrimaryAudienceDelivery": "NaN",
+      "PrimaryAudienceDelivery": 0.0,
       "SpotsInSpec": 0,
       "SpotsOutOfSpec": 0
     },
