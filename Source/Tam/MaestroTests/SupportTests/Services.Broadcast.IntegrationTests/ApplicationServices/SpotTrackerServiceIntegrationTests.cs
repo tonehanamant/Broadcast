@@ -126,13 +126,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SpotTracker_GenerateEmptyReport_WithoutBuys()
         {
-            var newProposalDto = ProposalServiceIntegrationTests.SetupProposalDto();
-            var newProposalDetailDto = ProposalServiceIntegrationTests.SetupProposalDetailDto();
-            newProposalDto.Details.Add(newProposalDetailDto);
-            var newProposal = _ProposalService.SaveProposal(newProposalDto, "IntegrationTestUser", DateTime.Now);
+            using (new TransactionScopeWrapper())
+            {
+                var newProposalDto = ProposalServiceIntegrationTests.SetupProposalDto();
+                var newProposalDetailDto = ProposalServiceIntegrationTests.SetupProposalDetailDto();
+                newProposalDto.Details.Add(newProposalDetailDto);
+                var newProposal = _ProposalService.SaveProposal(newProposalDto, "IntegrationTestUser", DateTime.Now);
 
-            var spotTrackerReportData = _SpotTrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
-            ApproveResults(spotTrackerReportData);
+                var spotTrackerReportData = _SpotTrackerService.GetSpotTrackerReportDataForProposal(newProposal.Id.Value);
+                ApproveResults(spotTrackerReportData);
+            }
         }
         
         [Test]

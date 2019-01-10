@@ -5,6 +5,7 @@
   "Equivalized": false,
   "GuaranteedAudienceId": 34,
   "HouseholdDeliveredImpressions": 2000.0,
+  "IsActiveThisWeek": false,
   "PostType": 1,
   "PrimaryAudienceBookedImpressions": 200000.0,
   "PrimaryAudienceDeliveredImpressions": 2400.0,

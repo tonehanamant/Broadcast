@@ -195,7 +195,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var reportDetail in report.Details)
             {
-                reportDetail.Weeks = _GetWeeklySpotsDataForReportDetail(reportDetail.ProposalBuyFile, spotTrackerFileDetails);
+                reportDetail.Weeks = _GetWeeklySpotsDataForSpotTrackerReport(reportDetail.ProposalBuyFile, spotTrackerFileDetails);
             }
         }
 
@@ -242,7 +242,7 @@ namespace Services.Broadcast.ApplicationServices
             });
         }
         
-        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForReportDetail(ProposalBuyFile buy, IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
+        private IEnumerable<SpotTrackerReport.Detail.Week> _GetWeeklySpotsDataForSpotTrackerReport(ProposalBuyFile buy, IEnumerable<SpotTrackerFileDetail> spotTrackerFileDetails)
         {
             var spotTrackerFileDetailsByEstimateId = spotTrackerFileDetails.Where(x => x.EstimateId == buy.EstimateId);
             var deliveredSpotsData = _GetDeliveredSpotsData(spotTrackerFileDetailsByEstimateId);

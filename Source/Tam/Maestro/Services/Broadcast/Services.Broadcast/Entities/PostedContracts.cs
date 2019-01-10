@@ -18,5 +18,6 @@ namespace Services.Broadcast.Entities
         public string Advertiser { get; set; }
         public SchedulePostType PostType { get; set; }
         public bool Equivalized { get; set; }
+        public bool IsActiveThisWeek { get; set; }
     }
 }

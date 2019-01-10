@@ -47,7 +47,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Returns a list of the posts and the number of unlinked iscis
         /// </summary>
         /// <returns>List of PostDto objects and the number of unlinked iscis</returns>
-        PostedContractedProposalsDto GetPostLogs();
+        PostedContractedProposalsDto GetPostLogs(DateTime currentWeekDate);
 
         /// <summary>
         /// Returns a list of archived iscis
@@ -139,8 +139,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramScrubbingEngine _ProgramScrubbingEngine;
         private readonly IMatchingEngine _MatchingEngine;
         private readonly IIsciService _IsciService;
+        private readonly IProposalBuyRepository _ProposalBuyRepository;
+        private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
         private readonly ISpotLengthEngine _SpotLengthEngine;
-        
         private const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
 
@@ -176,6 +177,8 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramScrubbingEngine = programScrubbingEngine;
             _MatchingEngine = matchingEngine;
             _IsciService = isciService;
+            _ProposalBuyRepository = dataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
+            _MediaMonthAndWeekAggregateRepository = dataRepositoryFactory.GetDataRepository<IMediaMonthAndWeekAggregateRepository>();
             _SpotLengthEngine = spotLengthEngine;
         }
 
@@ -238,9 +241,11 @@ namespace Services.Broadcast.ApplicationServices
         /// Returns a list of the posts and unlinked iscis count in the system
         /// </summary>
         /// <returns>List of PostDto objects</returns>
-        public PostedContractedProposalsDto GetPostLogs()
+        public PostedContractedProposalsDto GetPostLogs(DateTime currentWeekDate)
         {
             var postedProposals = _PostLogRepository.GetAllPostedProposals();
+
+            _SetIsActiveThisWeekProperty(postedProposals, currentWeekDate);
 
             foreach (var post in postedProposals)
             {
@@ -257,6 +262,36 @@ namespace Services.Broadcast.ApplicationServices
                 Posts = postedProposals,
                 UnlinkedIscis = _PostLogRepository.CountUnlinkedIscis()
             };
+        }
+
+        /// <summary>
+        /// Sets IsActiveThisWeek property true if proposal has spots bought this week
+        /// </summary>
+        private void _SetIsActiveThisWeekProperty(List<PostedContracts> posts, DateTime currentWeekDate)
+        {
+            var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
+            var mediaWeekId = mediaMonthAggregate.GetMediaWeekContainingDate(currentWeekDate).Id;
+            var allProposalIds = posts.Select(x => x.ContractId);
+            var allProposals = _ProposalRepository.GetProposalsWithDetails(allProposalIds);
+            var allProposalDetailIds = allProposals.SelectMany(x => x.Details).Select(x => x.Id.Value);
+            var allProposalBuys = _ProposalBuyRepository.GetProposalBuyFilesForProposalDetails(allProposalDetailIds);
+
+            foreach(var post in posts)
+            {
+                var proposal = allProposals.SingleOrDefault(x => x.Id == post.ContractId);
+
+                if (proposal != null)
+                {
+                    var detailIds = proposal.Details.Select(x => x.Id);
+                    var buys = allProposalBuys.Where(x => detailIds.Contains(x.ProposalVersionDetailId));
+                    var weeks = buys
+                        .SelectMany(x => x.Details)
+                        .SelectMany(x => x.Weeks)
+                        .Where(x => x.MediaWeek.Id == mediaWeekId);
+
+                    post.IsActiveThisWeek = weeks.Any(x => x.Spots > 0);
+                }
+            }
         }
 
         /// <summary>
