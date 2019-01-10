@@ -112,8 +112,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -253,8 +251,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -394,8 +390,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -535,8 +529,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -676,8 +668,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -732,8 +722,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -788,8 +776,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -929,8 +915,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1070,8 +1054,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1211,8 +1193,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1352,8 +1332,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1408,8 +1386,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1549,8 +1525,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -1605,8 +1579,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1661,8 +1633,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1717,8 +1687,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1773,8 +1741,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1829,8 +1795,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -1885,8 +1849,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -2026,8 +1988,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2082,8 +2042,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2138,8 +2096,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2194,8 +2150,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2250,8 +2204,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2391,8 +2343,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -2447,8 +2397,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2503,8 +2451,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2559,8 +2505,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2700,8 +2644,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2841,8 +2783,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -2897,8 +2837,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -2953,8 +2891,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3009,8 +2945,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3150,8 +3084,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3291,8 +3223,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3432,8 +3362,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3573,8 +3501,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -3629,8 +3555,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3685,8 +3609,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3741,8 +3663,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3797,8 +3717,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3938,8 +3856,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -3994,8 +3910,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -4135,8 +4049,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4191,8 +4103,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4332,8 +4242,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4388,8 +4296,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4444,8 +4350,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4500,8 +4404,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -4641,8 +4543,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4697,8 +4597,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4838,8 +4736,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -4979,8 +4875,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5120,8 +5014,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5261,8 +5153,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -5317,8 +5207,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5373,8 +5261,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5514,8 +5400,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5655,8 +5539,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5796,8 +5678,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -5937,8 +5817,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -5993,8 +5871,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6134,8 +6010,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6190,8 +6064,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6246,8 +6118,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6302,8 +6172,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6358,8 +6226,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -6414,8 +6280,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6470,8 +6334,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6611,8 +6473,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6667,8 +6527,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6723,8 +6581,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6779,8 +6635,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -6835,8 +6689,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -6976,8 +6828,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7032,8 +6882,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7088,8 +6936,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7144,8 +6990,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7285,8 +7129,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -7426,8 +7268,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7482,8 +7322,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7538,8 +7376,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7594,8 +7430,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7735,8 +7569,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -7876,8 +7708,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -8017,8 +7847,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8158,8 +7986,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8214,8 +8040,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8270,8 +8094,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8326,8 +8148,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8382,8 +8202,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -8523,8 +8341,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8579,8 +8395,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8720,8 +8534,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8776,8 +8588,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8917,8 +8727,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -8973,8 +8781,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],
@@ -9029,8 +8835,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -9085,8 +8889,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -9226,8 +9028,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -9282,8 +9082,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -9423,8 +9221,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 14,
-          "ProposalVersionDetailQuarterWeekId": 18,
           "Status": 1
         }
       ],
@@ -9564,8 +9360,6 @@
           "ModifiedBy": "test user",
           "PostingBookId": 416,
           "PostingPlaybackType": 4,
-          "ProposalVersionDetailId": 15,
-          "ProposalVersionDetailQuarterWeekId": 19,
           "Status": 1
         }
       ],

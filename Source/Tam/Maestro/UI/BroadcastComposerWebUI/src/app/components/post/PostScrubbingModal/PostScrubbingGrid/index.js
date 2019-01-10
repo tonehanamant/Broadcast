@@ -283,7 +283,7 @@ export class PostScrubbingGrid extends Component {
           ) : (
             <span style={style}>{row.ProgramName || "-"}</span>
           );
-          return row.SupliedProgramNameIsUsed ? (
+          return row.SuppliedProgramNameUsed ? (
             <div>
               {programName}
               <Badge style={{ fontSize: "9px", marginTop: "4px" }} pullRight>

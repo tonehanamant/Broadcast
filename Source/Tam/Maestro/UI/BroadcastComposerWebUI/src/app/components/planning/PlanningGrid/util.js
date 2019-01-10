@@ -87,8 +87,9 @@ export const columns = [
   },
   {
     Header: "Last Modified",
-    id: "displayLastModified",
-    accessor: "displayLastModified",
-    width: "10%"
+    id: "LastModified",
+    accessor: "LastModified",
+    width: "10%",
+    Cell: row => row.original.displayLastModified
   }
 ];

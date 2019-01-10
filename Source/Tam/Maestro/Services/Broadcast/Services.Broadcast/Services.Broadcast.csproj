@@ -214,11 +214,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\Nti\NtiPdfDto.cs" />
     <Compile Include="Entities\Nti\NtiProposalVersionDetailWeek.cs" />
-	<Compile Include="Entities\MarketCoverageDto.cs" />
+    <Compile Include="Entities\MarketCoverageDto.cs" />
     <Compile Include="Entities\MarketCoverageFile.cs" />
     <Compile Include="Entities\OpenMarketInventory\AllocationsChangeRequest.cs" />
     <Compile Include="ApplicationServices\ImpressionsService.cs" />

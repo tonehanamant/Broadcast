@@ -233,7 +233,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var nonNullableEndDate = programDto.EndDate ?? programDto.StartDate.AddYears(1);
 
-            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate);
+            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate,mediaWeeksToUse);
 
             var flighWeeks = new List<ProposalProgramFlightWeek>();
 

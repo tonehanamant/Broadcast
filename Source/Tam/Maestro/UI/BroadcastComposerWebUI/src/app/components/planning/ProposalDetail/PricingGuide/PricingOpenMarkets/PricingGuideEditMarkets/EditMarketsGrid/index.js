@@ -111,7 +111,6 @@ class EditMarketsGrid extends Component {
     return (
       <Table
         data={data}
-        style={{ marginTop: "6px", maxHeight: "300px" }}
         columns={columns}
         selection="none"
         sortable

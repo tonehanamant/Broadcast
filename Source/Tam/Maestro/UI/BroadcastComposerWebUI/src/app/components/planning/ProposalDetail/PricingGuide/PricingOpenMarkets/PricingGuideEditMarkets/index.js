@@ -12,6 +12,8 @@ import numeral from "numeral";
 import { partition, sumBy } from "lodash";
 import EditMarketsGrid from "./EditMarketsGrid";
 
+import "./index.scss";
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -144,7 +146,7 @@ class PricingGuideEditMarkets extends Component {
                 </div>
               </Col>
             </Row>
-            <Row style={{ marginTop: "10px" }}>
+            <Row className="pricing-guide_edit-markets">
               <Col xs={6}>
                 <EditMarketsGrid
                   editMarketsData={usedMarkets}

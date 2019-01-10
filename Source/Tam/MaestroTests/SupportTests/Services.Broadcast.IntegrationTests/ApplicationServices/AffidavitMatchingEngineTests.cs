@@ -34,7 +34,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var proposalWeeks = new List<MatchingProposalWeek>();
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 MarriedHouseIsci = false
             });
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
@@ -116,7 +116,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 MarriedHouseIsci = false
             });
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(FileDetailProblem), "DetailId");
@@ -159,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 MarriedHouseIsci = false
             });
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(_AffidavitMatchingEngine.GetMatchingProblems()));
         }
@@ -206,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
@@ -253,7 +253,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
@@ -300,7 +300,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
@@ -347,7 +347,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
@@ -394,7 +394,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
@@ -441,7 +441,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
@@ -474,7 +474,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     SpotLengthId = 1
                 }
             };
-            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks);
+            var matchedWeeks = _AffidavitMatchingEngine.Match(affidavitDetail, proposalWeeks, affidavitDetail.SpotLengthId);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(matchedWeeks));
         }
