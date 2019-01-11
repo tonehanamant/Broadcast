@@ -151,7 +151,7 @@ namespace Services.Broadcast.ReportGenerators
             
             foreach (var row in reportData)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank == 0 ? string.Empty : row.Rank.ToString();
                 ws.Cells[rowOffset, columnOffset++].Value = row.Market;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
@@ -229,7 +229,7 @@ namespace Services.Broadcast.ReportGenerators
             columnOffset = 1;
             foreach (BvsReportData row in reportData)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank == 0 ? string.Empty : row.Rank.ToString();
                 ws.Cells[rowOffset, columnOffset++].Value = row.Market;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
@@ -303,7 +303,7 @@ namespace Services.Broadcast.ReportGenerators
             columnOffset = 1;
             foreach (BvsReportData row in reportData)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank == 0 ? string.Empty : row.Rank.ToString();
                 ws.Cells[rowOffset, columnOffset++].Value = row.Market;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
@@ -421,7 +421,7 @@ namespace Services.Broadcast.ReportGenerators
             var outOfSpecCol = 1;
             foreach (var row in reportData)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank == 0 ? string.Empty : row.Rank.ToString();
                 ws.Cells[rowOffset, columnOffset++].Value = row.Market;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
@@ -515,7 +515,7 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var row in reportData)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank == 0 ? string.Empty : row.Rank.ToString();
                 ws.Cells[rowOffset, columnOffset++].Value = row.Market;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
@@ -708,7 +708,7 @@ namespace Services.Broadcast.ReportGenerators
 
             foreach (var row in reportData)
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                ws.Cells[rowOffset, columnOffset++].Value = row.Rank == 0 ? string.Empty : row.Rank.ToString();
                 ws.Cells[rowOffset, columnOffset++].Value = row.Market;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Station;
                 ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;

@@ -12,6 +12,7 @@ using Services.Broadcast.Aggregates;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -23,11 +24,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void ClientReport_RelatedSchedules_UsePostType_OfOriginalSchedule()
         {
+            var stationProcessingEngine = new StationProcessingEngine();
+
             var aggregate = new SchedulesAggregate(new schedule { markets = new List<market>() }, new List<ScheduleAudience>(), null, null, null, null, new List<bvs_file_details>(), null, null,
-                SchedulePostType.NSI, InventorySourceEnum.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null);
+                SchedulePostType.NSI, InventorySourceEnum.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null, stationProcessingEngine);
 
             var relatedAggregate = new SchedulesAggregate(new schedule(), null, null, null, null, null, new List<bvs_file_details>(), null, null,
-                SchedulePostType.NTI, InventorySourceEnum.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null);
+                SchedulePostType.NTI, InventorySourceEnum.Assembly, true, DateTime.MaxValue, DateTime.MaxValue, null, stationProcessingEngine);
 
             var scheduleReportDto = new ScheduleReportDto { ScheduleId = 420 };
 

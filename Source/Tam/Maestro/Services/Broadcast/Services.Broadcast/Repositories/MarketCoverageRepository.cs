@@ -4,6 +4,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
@@ -22,12 +23,15 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         List<MarketCoverage> GetAll();
         bool HasFile(string fileHash);
+
         /// <summary>
         /// Returns a dictionary of market code and percentage coverage based on the market ids sent.
         /// </summary>
         /// <param name="marketIds">Market id list.</param>
         /// <returns>Dictionary of market code and percentage coverage</returns>
         MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds);
+
+        MarketCoverageByStation GetLatestMarketCoveragesWithStations();
     }
 
     public class MarketCoverageRepository : BroadcastRepositoryBase, IMarketCoverageRepository
@@ -94,6 +98,33 @@ namespace Services.Broadcast.Repositories
                         MarketCoveragesByMarketCode = marketCoveragesByMarketCode
                     };
                  });
+        }
+
+        public MarketCoverageByStation GetLatestMarketCoveragesWithStations()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var lastMarketCoverageFile = context.market_coverage_files
+                            .Include(x => x.market_coverages)
+                            .Include(x => x.market_coverages.Select(mc => mc.market.stations))
+                            .OrderByDescending(x => x.created_date)
+                            .First();
+                    
+                    return new MarketCoverageByStation
+                    {
+                        MarketCoverageFileId = lastMarketCoverageFile.id,
+                        Markets = lastMarketCoverageFile.market_coverages.Select(x => new MarketCoverageByStation.Market
+                        {
+                            MarketCode = x.market_code,
+                            Rank = x.rank,
+                            Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
+                            {
+                                LegacyCallLetters = s.legacy_call_letters
+                            }).ToList()
+                        }).ToList()
+                    };
+                });
         }
 
         private market_coverage_files _ToDbModel(MarketCoverageFile marketCoverageFile)

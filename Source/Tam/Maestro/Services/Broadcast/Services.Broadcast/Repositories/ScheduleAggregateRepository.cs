@@ -1,8 +1,10 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Aggregates;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,12 +22,16 @@ namespace Services.Broadcast.Repositories
 
     public class ScheduleAggregateRepository : BroadcastRepositoryBase, IScheduleAggregateRepository
     {
+        private readonly IStationProcessingEngine _StationProcessingEngine;
+
         public ScheduleAggregateRepository(
             ISMSClient pSmsClient,
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper)
+            ITransactionHelper pTransactionHelper,
+            IStationProcessingEngine stationProcessingEngine)
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public SchedulesAggregate Find(int scheduleId, List<DisplayMediaWeek> mediaWeeks, int HouseHoldAudienceId)
@@ -68,10 +74,10 @@ namespace Services.Broadcast.Repositories
                         .Where(bfd => bfd.estimate_id == schedule.estimate_id).ToList();
 
                     var bvsPostDetails = bvsFileDetails.SelectMany(fd => fd.bvs_post_details).ToList();
-                    var stationNames = scheduleDetails.Select(d => SchedulesAggregate.CleanStatioName(d.network)).Distinct().ToList();
+                    var stationNames = scheduleDetails.Select(d => _StationProcessingEngine.StripStationSuffix(d.network)).Distinct().ToList();
                     var stationToAffiliateDict =
                         context.stations.Where(s => stationNames.Contains(s.legacy_call_letters))
-                            .ToDictionary(k => k.legacy_call_letters.ToLower(), v => v.affiliation);
+                            .ToDictionary(k => k.legacy_call_letters, v => v.affiliation, StringComparer.OrdinalIgnoreCase);
                     
                     return new SchedulesAggregate(
                         schedule,
@@ -88,7 +94,8 @@ namespace Services.Broadcast.Repositories
                         schedule.equivalized,
                         schedule.start_date,
                         schedule.end_date,
-                        stationToAffiliateDict);
+                        stationToAffiliateDict,
+                        _StationProcessingEngine);
                 });
         }
     }
