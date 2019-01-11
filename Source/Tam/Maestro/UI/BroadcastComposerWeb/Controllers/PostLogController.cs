@@ -30,7 +30,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PostedContractedProposalsDto> GetPostLogList()
         {
             return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IPostLogService>().GetPostLogs());
+                _ApplicationServiceFactory.GetApplicationService<IPostLogService>().GetPostLogs(DateTime.Now));
         }
 
         [HttpPost]

@@ -62,7 +62,22 @@ export class DataGridContainer extends Component {
       {
         Header: "Contract",
         accessor: "ContractName",
-        minWidth: 15
+        minWidth: 20,
+        Cell: row => {
+          // handle active indicator as icon if IsActiveThisWeek true
+          const val = row.value;
+          return row.original.IsActiveThisWeek ? (
+            <div>
+              {val}
+              <span className="fa-stack pull-right">
+                <i className="fa fa-circle fa-stack-2x text-success" />
+                <i className="fa fa-bolt fa-stack-1x fa-inverse" />
+              </span>
+            </div>
+          ) : (
+            val
+          );
+        }
       },
       {
         Header: "Contract Id",
@@ -119,7 +134,7 @@ export class DataGridContainer extends Component {
         accessor: "PrimaryAudienceDeliveredImpressions",
         minWidth: 15,
         Cell: row => {
-          console.log(row);
+          // console.log(row);
           // handle equivalized indicator as badge if true
           const val = row.value
             ? numeral(row.value / 1000).format("0,0.[000]")

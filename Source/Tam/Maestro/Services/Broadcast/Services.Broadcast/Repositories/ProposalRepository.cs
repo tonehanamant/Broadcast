@@ -18,7 +18,6 @@ using Tam.Maestro.Services.Clients;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using proposal = EntityFrameworkMapping.Broadcast.proposal;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.Repositories
 {
@@ -26,6 +25,7 @@ namespace Services.Broadcast.Repositories
     {
         List<DisplayProposal> GetAllProposals();
         ProposalDto GetProposalById(int proposalId);
+        List<ProposalDto> GetProposalsWithDetails(IEnumerable<int> proposalIds);
 
         ProposalDto GetProposalByDetailId(int proposalDetailId);
         int GetPrimaryProposalVersionNumber(int proposalId);
@@ -1640,6 +1640,33 @@ namespace Services.Broadcast.Repositories
                     MediaWeekId = x.week.media_week_id
                 }).ToList();
             });
+        }
+
+        public List<ProposalDto> GetProposalsWithDetails(IEnumerable<int> proposalIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var data = (from proposal in context.proposals
+                                join version in context.proposal_versions on proposal.id equals version.proposal_id
+                                join detail in context.proposal_version_details on version.id equals detail.proposal_version_id
+                                where proposal.primary_version_id == version.id && proposalIds.Contains(proposal.id) && version.snapshot_date == null
+                                select new
+                                {
+                                    proposalId = proposal.id,
+                                    detailId = detail.id
+                                })
+                                .ToList();
+
+                    return data
+                            .GroupBy(x => x.proposalId)
+                            .Select(group => new ProposalDto
+                            {
+                                Id = group.Key,
+                                Details = group.Select(d => new ProposalDetailDto { Id = d.detailId }).ToList()
+                            })
+                            .ToList();
+                });
         }
     }
 }

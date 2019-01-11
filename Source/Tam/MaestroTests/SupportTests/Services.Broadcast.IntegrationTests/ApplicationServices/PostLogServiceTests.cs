@@ -33,13 +33,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _PostLogService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogService>();
             _PostLogRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostLogRepository>();
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void PostLogService_GetPostsTest()
         {
-            var result = _PostLogService.GetPostLogs();
+            var date = new DateTime(2018, 9, 3);
+            var result = _PostLogService.GetPostLogs(date);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
