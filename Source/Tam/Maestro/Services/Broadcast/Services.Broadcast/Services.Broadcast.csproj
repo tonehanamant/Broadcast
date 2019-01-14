@@ -215,6 +215,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
+    <Compile Include="Entities\MarketCoverageByStation.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
     <Compile Include="Entities\Nti\NtiPdfDto.cs" />

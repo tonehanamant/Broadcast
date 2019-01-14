@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Microsoft.Practices.Unity;
+using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
@@ -78,6 +79,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IPostLogRepository, PostLogRepository>();
             instance.RegisterType<IProposalBuyRepository, ProposalBuyRepository>();
             instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
+            instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
 
             WasRegistered = true;
         }

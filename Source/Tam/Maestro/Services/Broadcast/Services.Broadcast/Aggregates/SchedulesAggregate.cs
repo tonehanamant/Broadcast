@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
@@ -32,6 +33,7 @@ namespace Services.Broadcast.Aggregates
         private List<DisplayDaypart> _RestrictedDayparts;
         private List<market> _RestrictedMarkets;
         private Dictionary<string, string> _StationToAffiliateDict;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public SchedulesAggregate(schedule schedule,
                                     List<ScheduleAudience> scheduleAudiences,
@@ -47,7 +49,8 @@ namespace Services.Broadcast.Aggregates
                                     bool isEquivalized,
                                     DateTime startDate,
                                     DateTime endDate,
-                                    Dictionary<string, string> stationToAffiliateDict)
+                                    Dictionary<string, string> stationToAffiliateDict,
+                                    IStationProcessingEngine stationProcessingEngine)
         {
             _Schedule = schedule;
             _RestrictedDayparts = _Schedule.schedule_restriction_dayparts.Select(rdp => DaypartCache.Instance.GetDisplayDaypart(rdp.daypart_id)).ToList();
@@ -66,6 +69,7 @@ namespace Services.Broadcast.Aggregates
             IsEquivalized = isEquivalized;
             _StartDate = startDate;
             _EndDate = endDate;
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public int ScheduleId
@@ -170,13 +174,9 @@ namespace Services.Broadcast.Aggregates
             return _ScheduleDetails;
         }
 
-        public static string CleanStatioName(string stationName)
-        {
-            return stationName.ToLower().Replace("-tv", "").Replace("+s2", "").Trim();
-        }
         public string GetDetailAffiliateFromScheduleDetailId(string stationName)
         {
-            var adjName = CleanStatioName(stationName);
+            var adjName = _StationProcessingEngine.StripStationSuffix(stationName);
 
             string affiliate;
             if (_StationToAffiliateDict.TryGetValue(adjName, out affiliate))

@@ -31,7 +31,7 @@ import "./index.scss";
 const transformTimeFromSeconds = time =>
   moment()
     .startOf("day")
-    .add(time, "seconds");
+    .add(time % 3600, "seconds");
 
 const transformDayPart = ({
   Text: text,
@@ -64,6 +64,9 @@ const generateInitialState = (dayPart, allowEmpty) => {
     show: false
   };
 };
+
+const tranformTime = time =>
+  time.seconds(0).diff(moment().startOf("day"), "seconds");
 
 export default class DayPartPicker extends Component {
   constructor(props) {
@@ -130,8 +133,8 @@ export default class DayPartPicker extends Component {
     const { text, days, startTime, endTime } = this.state;
     this.props.onApply({
       Text: text,
-      startTime: moment(startTime).diff(moment().startOf("day"), "seconds"),
-      endTime: moment(endTime).diff(moment().startOf("day"), "seconds"),
+      startTime: tranformTime(startTime),
+      endTime: tranformTime(endTime),
       ...days
     });
     this.setState({ show: false });

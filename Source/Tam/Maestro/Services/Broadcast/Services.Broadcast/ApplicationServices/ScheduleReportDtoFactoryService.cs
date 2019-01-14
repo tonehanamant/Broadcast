@@ -36,16 +36,19 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public ScheduleReportDtoFactoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IDaypartCache daypartCache, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IBroadcastAudiencesCache audiencesCache, IImpressionAdjustmentEngine impressionAdjustmentEngine)
+            IBroadcastAudiencesCache audiencesCache, IImpressionAdjustmentEngine impressionAdjustmentEngine,
+            IStationProcessingEngine stationProcessingEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _AudiencesCache = audiencesCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public ScheduleReportDto GenereteScheduleReportData(SchedulesAggregate schedulesAggregate,
@@ -466,26 +469,18 @@ namespace Services.Broadcast.ApplicationServices
             List<ScheduleAudience> scheduleAudiences,
             List<AdvertiserCoreData> coreDataList)
         {
-            var marketNamedRanks = GetMarketRanks(schedulesAggregate);
+            var marketRanksByStations = GetMarketRanksByStations(schedulesAggregate);
             var spotLengthRepo = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             var bvsDetailList = schedulesAggregate.GetBvsDetails();
             var details = schedulesAggregate.GetScheduleDetails();
 
             foreach (var scheduleDetail in details) //in-spec
             {
-                int rank;
                 var affiliate = schedulesAggregate.GetDetailAffiliateFromScheduleDetailId(scheduleDetail.network);
                 var spotLength = spotLengthRepo.GetSpotLengthById(scheduleDetail.spot_length_id.Value);
-
                 var bvsDetails = schedulesAggregate.GetBvsDetailsByScheduleId(scheduleDetail.id);
-
-                if (!marketNamedRanks.TryGetValue(scheduleDetail.market.ToLower(), out rank))
-                    if (bvsDetails.Any())
-                        rank = bvsDetails.First().rank;
-
                 var coreReportData = new AdvertiserCoreData
                 {
-                    Rank = rank,
                     Market = scheduleDetail.market,
                     Station = scheduleDetail.network,
                     Affiliate = affiliate,
@@ -496,15 +491,24 @@ namespace Services.Broadcast.ApplicationServices
                     BvsDetails = bvsDetails
                 };
 
+                if (marketRanksByStations.TryGetValue(_StationProcessingEngine.StripStationSuffix(scheduleDetail.network), out var rank))
+                {
+                    coreReportData.Rank = rank;
+                }
+
                 coreDataList.Add(coreReportData);
             }
 
             foreach (var bvsFileDetail in bvsDetailList)
             {
-                int rank;
-
-                if (marketNamedRanks.TryGetValue(bvsFileDetail.market.ToLower(), out rank))
+                if (marketRanksByStations.TryGetValue(bvsFileDetail.station, out var rank))
+                {
                     bvsFileDetail.rank = rank;
+                }
+                else
+                {
+                    bvsFileDetail.rank = 0;
+                }
             }
 
             return bvsDetailList;
@@ -771,18 +775,19 @@ namespace Services.Broadcast.ApplicationServices
             return schedulesAggregate.PostType == SchedulePostType.NSI ? bvsDetail.nsi_date : bvsDetail.nti_date;
         }
 
-        private Dictionary<string, int> GetMarketRanks(SchedulesAggregate schedulesAggregate)
+        private Dictionary<string, int> GetMarketRanksByStations(SchedulesAggregate schedulesAggregate)
         {
-            var marketRanks = _BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>()
-                .GetMarketRankingsByMediaMonth(schedulesAggregate.PostingBookId);
-            var dmaMarkets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketDmaMapRepository>()
-                .GetMarketMapFromMarketCodes(marketRanks.Select(m => m.Key).ToList())
-                .ToDictionary(k => k.market_code, v => v.dma_mapped_value);
+            var marketCoveragesWithStations = _BroadcastDataRepositoryFactory
+                .GetDataRepository<IMarketCoverageRepository>()
+                .GetLatestMarketCoveragesWithStations();
 
-            var marketNamedRanks = new Dictionary<string, int>();
-            marketRanks.ForEach(mr => marketNamedRanks.Add(dmaMarkets[(short) mr.Key].ToLower(), mr.Value));
-
-            return marketNamedRanks;
+            return marketCoveragesWithStations.Markets
+                .SelectMany(x => x.Stations, (market, station) => new
+                {
+                    station = station.LegacyCallLetters,
+                    rank = market.Rank
+                })
+                .ToDictionary(x => x.station, x => x.rank, StringComparer.OrdinalIgnoreCase);
         }
 
         private string CombineBvsProgramNames(IEnumerable<string> names)

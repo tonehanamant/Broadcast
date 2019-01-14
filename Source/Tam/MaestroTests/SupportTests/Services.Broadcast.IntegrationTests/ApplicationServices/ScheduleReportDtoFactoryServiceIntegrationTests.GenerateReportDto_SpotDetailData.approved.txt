@@ -74,141 +74,6 @@
     },
     {
       "Advertiser": null,
-      "Affiliate": "CW",
-      "AirTime": 50988,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-02T00:00:00",
-      "DateAired": "06/02/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174H",
-          "House": "17UPLC5174H",
-          "Id": 6
-        }
-      ],
-      "Length": 60,
-      "Market": "BOSTON",
-      "ProgramName": "JERRY SPRINGER",
-      "Rank": 8,
-      "Station": "WLVI",
-      "TimeAired": "2:09 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CW",
-      "AirTime": 42015,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-03T00:00:00",
-      "DateAired": "06/03/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174H",
-          "House": "17UPLC5174H",
-          "Id": 6
-        }
-      ],
-      "Length": 60,
-      "Market": "BOSTON",
-      "ProgramName": "JERRY SPRINGER",
-      "Rank": 8,
-      "Station": "WLVI",
-      "TimeAired": "11:40 AM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CW",
-      "AirTime": 42651,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-06T00:00:00",
-      "DateAired": "06/06/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174H",
-          "House": "17UPLC5174H",
-          "Id": 6
-        }
-      ],
-      "Length": 60,
-      "Market": "BOSTON",
-      "ProgramName": "JERRY SPRINGER",
-      "Rank": 8,
-      "Station": "WLVI",
-      "TimeAired": "11:50 AM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CW",
-      "AirTime": 53473,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-09T00:00:00",
-      "DateAired": "06/09/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174H",
-          "House": "17UPLC5174H",
-          "Id": 6
-        }
-      ],
-      "Length": 60,
-      "Market": "BOSTON",
-      "ProgramName": "JERRY SPRINGER",
-      "Rank": 8,
-      "Station": "WLVI",
-      "TimeAired": "2:51 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "MNTV",
-      "AirTime": 38244,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-08T00:00:00",
-      "DateAired": "06/08/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "ATLANTA",
-      "ProgramName": "MAURY",
-      "Rank": 9,
-      "Station": "WATL",
-      "TimeAired": "10:37 AM"
-    },
-    {
-      "Advertiser": null,
       "Affiliate": "MNTV",
       "AirTime": 52098,
       "AudienceImpressions": [
@@ -243,7 +108,7 @@
       "Length": 60,
       "Market": "HOUSTON",
       "ProgramName": "DIVORCE COURT",
-      "Rank": 10,
+      "Rank": 7,
       "Station": "KTXH",
       "TimeAired": "2:28 PM"
     },
@@ -270,9 +135,144 @@
       "Length": 60,
       "Market": "HOUSTON",
       "ProgramName": "DIVORCE COURT",
-      "Rank": 10,
+      "Rank": 7,
       "Station": "KTXH",
       "TimeAired": "2:24 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "MNTV",
+      "AirTime": 38244,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-08T00:00:00",
+      "DateAired": "06/08/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "ATLANTA",
+      "ProgramName": "MAURY",
+      "Rank": 9,
+      "Station": "WATL",
+      "TimeAired": "10:37 AM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CW",
+      "AirTime": 50988,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-02T00:00:00",
+      "DateAired": "06/02/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174H",
+          "House": "17UPLC5174H",
+          "Id": 6
+        }
+      ],
+      "Length": 60,
+      "Market": "BOSTON",
+      "ProgramName": "JERRY SPRINGER",
+      "Rank": 10,
+      "Station": "WLVI",
+      "TimeAired": "2:09 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CW",
+      "AirTime": 42015,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-03T00:00:00",
+      "DateAired": "06/03/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174H",
+          "House": "17UPLC5174H",
+          "Id": 6
+        }
+      ],
+      "Length": 60,
+      "Market": "BOSTON",
+      "ProgramName": "JERRY SPRINGER",
+      "Rank": 10,
+      "Station": "WLVI",
+      "TimeAired": "11:40 AM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CW",
+      "AirTime": 42651,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-06T00:00:00",
+      "DateAired": "06/06/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174H",
+          "House": "17UPLC5174H",
+          "Id": 6
+        }
+      ],
+      "Length": 60,
+      "Market": "BOSTON",
+      "ProgramName": "JERRY SPRINGER",
+      "Rank": 10,
+      "Station": "WLVI",
+      "TimeAired": "11:50 AM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CW",
+      "AirTime": 53473,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-09T00:00:00",
+      "DateAired": "06/09/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174H",
+          "House": "17UPLC5174H",
+          "Id": 6
+        }
+      ],
+      "Length": 60,
+      "Market": "BOSTON",
+      "ProgramName": "JERRY SPRINGER",
+      "Rank": 10,
+      "Station": "WLVI",
+      "TimeAired": "2:51 PM"
     },
     {
       "Advertiser": null,
@@ -297,89 +297,9 @@
       "Length": 60,
       "Market": "PHOENIX",
       "ProgramName": "ARIZONA MIDDAY",
-      "Rank": 12,
+      "Rank": 11,
       "Station": "KPNX",
       "TimeAired": "1:31 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CW",
-      "AirTime": 47801,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 35249.2275,
-          "Impressions": 0.0,
-          "NsiDelivery": 35249.2275
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 32991.4575,
-          "Impressions": 0.0,
-          "NsiDelivery": 32991.4575
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-03T00:00:00",
-      "DateAired": "06/03/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174H",
-          "House": "17UPLC5174H",
-          "Id": 6
-        }
-      ],
-      "Length": 60,
-      "Market": "DETROIT",
-      "ProgramName": "PEOPLES COURT",
-      "Rank": 13,
-      "Station": "WKBD",
-      "TimeAired": "1:16 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CW",
-      "AirTime": 48243,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 35249.2275,
-          "Impressions": 0.0,
-          "NsiDelivery": 35249.2275
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 32991.4575,
-          "Impressions": 0.0,
-          "NsiDelivery": 32991.4575
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-09T00:00:00",
-      "DateAired": "06/09/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "DETROIT",
-      "ProgramName": "PEOPLES COURT",
-      "Rank": 13,
-      "Station": "WKBD",
-      "TimeAired": "1:24 PM"
     },
     {
       "Advertiser": null,
@@ -417,7 +337,7 @@
       "Length": 60,
       "Market": "SEATTLE",
       "ProgramName": "JUDGE MATHIS",
-      "Rank": 14,
+      "Rank": 12,
       "Station": "KZJO",
       "TimeAired": "1:17 PM"
     },
@@ -457,9 +377,89 @@
       "Length": 60,
       "Market": "SEATTLE",
       "ProgramName": "JUDGE MATHIS",
-      "Rank": 14,
+      "Rank": 12,
       "Station": "KZJO",
       "TimeAired": "1:28 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CW",
+      "AirTime": 47801,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 35249.2275,
+          "Impressions": 0.0,
+          "NsiDelivery": 35249.2275
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 32991.4575,
+          "Impressions": 0.0,
+          "NsiDelivery": 32991.4575
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-03T00:00:00",
+      "DateAired": "06/03/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174H",
+          "House": "17UPLC5174H",
+          "Id": 6
+        }
+      ],
+      "Length": 60,
+      "Market": "DETROIT",
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 14,
+      "Station": "WKBD",
+      "TimeAired": "1:16 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CW",
+      "AirTime": 48243,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 35249.2275,
+          "Impressions": 0.0,
+          "NsiDelivery": 35249.2275
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 32991.4575,
+          "Impressions": 0.0,
+          "NsiDelivery": 32991.4575
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-09T00:00:00",
+      "DateAired": "06/09/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "DETROIT",
+      "ProgramName": "PEOPLES COURT",
+      "Rank": 14,
+      "Station": "WKBD",
+      "TimeAired": "1:24 PM"
     },
     {
       "Advertiser": null,
@@ -497,7 +497,7 @@
       "Length": 60,
       "Market": "ORLANDO",
       "ProgramName": "JUDGE JUDY",
-      "Rank": 19,
+      "Rank": 18,
       "Station": "WRBW",
       "TimeAired": "1:48 PM"
     },
@@ -537,7 +537,7 @@
       "Length": 60,
       "Market": "ORLANDO",
       "ProgramName": "THE WENDY WILLIAMS SHOW",
-      "Rank": 19,
+      "Rank": 18,
       "Station": "WRBW",
       "TimeAired": "4:52 PM"
     },
@@ -564,7 +564,7 @@
       "Length": 60,
       "Market": "ORLANDO",
       "ProgramName": "DIVORCE COURT",
-      "Rank": 19,
+      "Rank": 18,
       "Station": "WRBW",
       "TimeAired": "12:59 PM"
     },
@@ -591,7 +591,7 @@
       "Length": 60,
       "Market": "ORLANDO",
       "ProgramName": "THE WENDY WILLIAMS SHOW",
-      "Rank": 19,
+      "Rank": 18,
       "Station": "WRBW",
       "TimeAired": "4:49 PM"
     },
@@ -832,7 +832,7 @@
       "Length": 60,
       "Market": "NASHVILLE",
       "ProgramName": "NEWS 2 AT 11AM",
-      "Rank": 29,
+      "Rank": 27,
       "Station": "WKRN",
       "TimeAired": "11:19 AM"
     },
@@ -859,7 +859,7 @@
       "Length": 60,
       "Market": "NASHVILLE",
       "ProgramName": "DR. PHIL",
-      "Rank": 29,
+      "Rank": 27,
       "Station": "WKRN",
       "TimeAired": "3:27 PM"
     },
@@ -886,7 +886,7 @@
       "Length": 60,
       "Market": "SALT LAKE CITY",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 34,
+      "Rank": 30,
       "Station": "KJZZ",
       "TimeAired": "7:56 PM"
     },
@@ -913,7 +913,7 @@
       "Length": 60,
       "Market": "SALT LAKE CITY",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 34,
+      "Rank": 30,
       "Station": "KJZZ",
       "TimeAired": "7:55 PM"
     },
@@ -940,7 +940,7 @@
       "Length": 60,
       "Market": "MILWAUKEE",
       "ProgramName": "THE CHEW",
-      "Rank": 35,
+      "Rank": 36,
       "Station": "WISN",
       "TimeAired": "12:31 PM"
     },
@@ -967,7 +967,7 @@
       "Length": 60,
       "Market": "MILWAUKEE",
       "ProgramName": "THE CHEW",
-      "Rank": 35,
+      "Rank": 36,
       "Station": "WISN",
       "TimeAired": "12:29 PM"
     },
@@ -1007,7 +1007,7 @@
       "Length": 60,
       "Market": "GREENVILLE,SC",
       "ProgramName": "RACHAEL RAY",
-      "Rank": 37,
+      "Rank": 38,
       "Station": "WLOS",
       "TimeAired": "9:40 AM"
     },
@@ -1047,7 +1047,7 @@
       "Length": 60,
       "Market": "GREENVILLE,SC",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 37,
+      "Rank": 38,
       "Station": "WYCW",
       "TimeAired": "10:24 AM"
     },
@@ -1087,7 +1087,7 @@
       "Length": 60,
       "Market": "GREENVILLE,SC",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 37,
+      "Rank": 38,
       "Station": "WYCW",
       "TimeAired": "10:52 AM"
     },
@@ -1200,114 +1200,6 @@
     },
     {
       "Advertiser": null,
-      "Affiliate": "ABC",
-      "AirTime": 45900,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-03T00:00:00",
-      "DateAired": "06/03/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174",
-          "House": "17UPLC5174",
-          "Id": 7
-        }
-      ],
-      "Length": 60,
-      "Market": "GRAND RAPIDS",
-      "ProgramName": "WZZM 13 NEWS AT NOON",
-      "Rank": 41,
-      "Station": "WZZM",
-      "TimeAired": "12:45 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "ABC",
-      "AirTime": 58363,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-03T00:00:00",
-      "DateAired": "06/03/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174",
-          "House": "17UPLC5174",
-          "Id": 7
-        }
-      ],
-      "Length": 60,
-      "Market": "GRAND RAPIDS",
-      "ProgramName": "JUDGE JUDY",
-      "Rank": 41,
-      "Station": "WZZM",
-      "TimeAired": "4:12 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "ABC",
-      "AirTime": 44106,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-08T00:00:00",
-      "DateAired": "06/08/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "GRAND RAPIDS",
-      "ProgramName": "WZZM 13 NEWS AT NOON",
-      "Rank": 41,
-      "Station": "WZZM",
-      "TimeAired": "12:15 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "ABC",
-      "AirTime": 58760,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-10T00:00:00",
-      "DateAired": "06/10/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "GRAND RAPIDS",
-      "ProgramName": "JUDGE JUDY",
-      "Rank": 41,
-      "Station": "WZZM",
-      "TimeAired": "4:19 PM"
-    },
-    {
-      "Advertiser": null,
       "Affiliate": "NBC",
       "AirTime": 55205,
       "AudienceImpressions": [
@@ -1342,7 +1234,7 @@
       "Length": 60,
       "Market": "OKLAHOMA CITY",
       "ProgramName": "INSIDE EDITION",
-      "Rank": 43,
+      "Rank": 41,
       "Station": "KFOR",
       "TimeAired": "3:20 PM"
     },
@@ -1382,7 +1274,7 @@
       "Length": 60,
       "Market": "OKLAHOMA CITY",
       "ProgramName": "JEOPARDY!",
-      "Rank": 43,
+      "Rank": 41,
       "Station": "KFOR",
       "TimeAired": "3:54 PM"
     },
@@ -1422,7 +1314,7 @@
       "Length": 60,
       "Market": "OKLAHOMA CITY",
       "ProgramName": "JEOPARDY!",
-      "Rank": 43,
+      "Rank": 41,
       "Station": "KFOR",
       "TimeAired": "3:54 PM"
     },
@@ -1462,9 +1354,157 @@
       "Length": 60,
       "Market": "OKLAHOMA CITY",
       "ProgramName": "INSIDE EDITION",
-      "Rank": 43,
+      "Rank": 41,
       "Station": "KFOR",
       "TimeAired": "3:20 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "IND",
+      "AirTime": 59999,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 16617.6375,
+          "Impressions": 0.0,
+          "NsiDelivery": 16617.6375
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 13154.745,
+          "Impressions": 0.0,
+          "NsiDelivery": 13154.745
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-09T00:00:00",
+      "DateAired": "06/09/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "JACKSONVILLE",
+      "ProgramName": "THE DR. OZ SHOW",
+      "Rank": 42,
+      "Station": "WJXT",
+      "TimeAired": "4:39 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "ABC",
+      "AirTime": 45900,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-03T00:00:00",
+      "DateAired": "06/03/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174",
+          "House": "17UPLC5174",
+          "Id": 7
+        }
+      ],
+      "Length": 60,
+      "Market": "GRAND RAPIDS",
+      "ProgramName": "WZZM 13 NEWS AT NOON",
+      "Rank": 43,
+      "Station": "WZZM",
+      "TimeAired": "12:45 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "ABC",
+      "AirTime": 58363,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-03T00:00:00",
+      "DateAired": "06/03/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174",
+          "House": "17UPLC5174",
+          "Id": 7
+        }
+      ],
+      "Length": 60,
+      "Market": "GRAND RAPIDS",
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 43,
+      "Station": "WZZM",
+      "TimeAired": "4:12 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "ABC",
+      "AirTime": 44106,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-08T00:00:00",
+      "DateAired": "06/08/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "GRAND RAPIDS",
+      "ProgramName": "WZZM 13 NEWS AT NOON",
+      "Rank": 43,
+      "Station": "WZZM",
+      "TimeAired": "12:15 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "ABC",
+      "AirTime": 58760,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-10T00:00:00",
+      "DateAired": "06/10/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "GRAND RAPIDS",
+      "ProgramName": "JUDGE JUDY",
+      "Rank": 43,
+      "Station": "WZZM",
+      "TimeAired": "4:19 PM"
     },
     {
       "Advertiser": null,
@@ -1489,7 +1529,7 @@
       "Length": 60,
       "Market": "HARRISBURG",
       "ProgramName": "RACHAEL RAY",
-      "Rank": 44,
+      "Rank": 45,
       "Station": "WHTM",
       "TimeAired": "10:38 AM"
     },
@@ -1516,7 +1556,7 @@
       "Length": 60,
       "Market": "HARRISBURG",
       "ProgramName": "HOT BENCH",
-      "Rank": 44,
+      "Rank": 45,
       "Station": "WHTM",
       "TimeAired": "3:39 PM"
     },
@@ -1543,7 +1583,7 @@
       "Length": 60,
       "Market": "HARRISBURG",
       "ProgramName": "RACHAEL RAY",
-      "Rank": 44,
+      "Rank": 45,
       "Station": "WHTM",
       "TimeAired": "10:52 AM"
     },
@@ -1570,7 +1610,7 @@
       "Length": 60,
       "Market": "HARRISBURG",
       "ProgramName": "HOT BENCH",
-      "Rank": 44,
+      "Rank": 45,
       "Station": "WHTM",
       "TimeAired": "3:41 PM"
     },
@@ -1597,7 +1637,7 @@
       "Length": 60,
       "Market": "GREENSBORO",
       "ProgramName": "LET'S MAKE A DEAL",
-      "Rank": 46,
+      "Rank": 48,
       "Station": "WFMY",
       "TimeAired": "10:59 AM"
     },
@@ -1624,7 +1664,7 @@
       "Length": 60,
       "Market": "GREENSBORO",
       "ProgramName": "PRICE IS RIGHT",
-      "Rank": 46,
+      "Rank": 48,
       "Station": "WFMY",
       "TimeAired": "11:58 AM"
     },
@@ -1664,7 +1704,7 @@
       "Length": 60,
       "Market": "GREENSBORO",
       "ProgramName": "THE WENDY WILLIAMS SHOW",
-      "Rank": 46,
+      "Rank": 48,
       "Station": "WGHP",
       "TimeAired": "1:56 PM"
     },
@@ -1704,49 +1744,9 @@
       "Length": 60,
       "Market": "GREENSBORO",
       "ProgramName": "THE WENDY WILLIAMS SHOW",
-      "Rank": 46,
+      "Rank": 48,
       "Station": "WGHP",
       "TimeAired": "1:41 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "IND",
-      "AirTime": 59999,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 16617.6375,
-          "Impressions": 0.0,
-          "NsiDelivery": 16617.6375
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 13154.745,
-          "Impressions": 0.0,
-          "NsiDelivery": 13154.745
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-09T00:00:00",
-      "DateAired": "06/09/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "JACKSONVILLE",
-      "ProgramName": "THE DR. OZ SHOW",
-      "Rank": 47,
-      "Station": "WJXT",
-      "TimeAired": "4:39 PM"
     },
     {
       "Advertiser": null,
@@ -1784,7 +1784,7 @@
       "Length": 60,
       "Market": "RICHMOND",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 56,
+      "Rank": 55,
       "Station": "WRIC",
       "TimeAired": "12:47 PM"
     },
@@ -1811,7 +1811,7 @@
       "Length": 60,
       "Market": "RICHMOND",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 56,
+      "Rank": 55,
       "Station": "WRIC",
       "TimeAired": "12:58 PM"
     },
@@ -1838,7 +1838,7 @@
       "Length": 60,
       "Market": "ALBANY,NY",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 59,
+      "Rank": 60,
       "Station": "WNYT",
       "TimeAired": "12:47 PM"
     },
@@ -1865,7 +1865,7 @@
       "Length": 60,
       "Market": "ALBANY,NY",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 59,
+      "Rank": 60,
       "Station": "WNYT",
       "TimeAired": "12:54 PM"
     },
@@ -1892,7 +1892,7 @@
       "Length": 60,
       "Market": "ALBANY,NY",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 59,
+      "Rank": 60,
       "Station": "WNYT",
       "TimeAired": "12:45 PM"
     },
@@ -1932,7 +1932,7 @@
       "Length": 60,
       "Market": "KNOXVILLE",
       "ProgramName": "DR. PHIL",
-      "Rank": 62,
+      "Rank": 61,
       "Station": "WBIR",
       "TimeAired": "3:30 PM"
     },
@@ -1959,7 +1959,7 @@
       "Length": 60,
       "Market": "KNOXVILLE",
       "ProgramName": "DR. PHIL",
-      "Rank": 62,
+      "Rank": 61,
       "Station": "WBIR",
       "TimeAired": "3:19 PM"
     },
@@ -1989,6 +1989,73 @@
       "Rank": 63,
       "Station": "EKYT",
       "TimeAired": "6:19 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "FOX",
+      "AirTime": 34933,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 2369.395,
+          "Impressions": 0.0,
+          "NsiDelivery": 2369.395
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 1489.6,
+          "Impressions": 0.0,
+          "NsiDelivery": 1489.6
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-03T00:00:00",
+      "DateAired": "06/03/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174",
+          "House": "17UPLC5174",
+          "Id": 7
+        }
+      ],
+      "Length": 60,
+      "Market": "TUCSON",
+      "ProgramName": "THE DOCTORS",
+      "Rank": 65,
+      "Station": "KMSB",
+      "TimeAired": "9:42 AM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "FOX",
+      "AirTime": 34698,
+      "AudienceImpressions": [],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-08T00:00:00",
+      "DateAired": "06/08/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721",
+          "House": "17LPLC0721",
+          "Id": 9
+        }
+      ],
+      "Length": 60,
+      "Market": "TUCSON",
+      "ProgramName": "THE DOCTORS",
+      "Rank": 65,
+      "Station": "KMSB",
+      "TimeAired": "9:38 AM"
     },
     {
       "Advertiser": null,
@@ -2026,7 +2093,7 @@
       "Length": 60,
       "Market": "GREEN BAY",
       "ProgramName": "DR. PHIL",
-      "Rank": 68,
+      "Rank": 69,
       "Station": "WBAY",
       "TimeAired": "3:22 PM"
     },
@@ -2066,7 +2133,7 @@
       "Length": 60,
       "Market": "GREEN BAY",
       "ProgramName": "INSIDE EDITION",
-      "Rank": 68,
+      "Rank": 69,
       "Station": "WBAY",
       "TimeAired": "4:51 PM"
     },
@@ -2093,7 +2160,7 @@
       "Length": 60,
       "Market": "GREEN BAY",
       "ProgramName": "DR. PHIL",
-      "Rank": 68,
+      "Rank": 69,
       "Station": "WBAY",
       "TimeAired": "3:26 PM"
     },
@@ -2133,7 +2200,7 @@
       "Length": 60,
       "Market": "GREEN BAY",
       "ProgramName": "INSIDE EDITION",
-      "Rank": 68,
+      "Rank": 69,
       "Station": "WBAY",
       "TimeAired": "4:52 PM"
     },
@@ -2173,7 +2240,7 @@
       "Length": 60,
       "Market": "ROANOKE",
       "ProgramName": "JUDGE JUDY",
-      "Rank": 69,
+      "Rank": 70,
       "Station": "WFXR",
       "TimeAired": "5:56 PM"
     },
@@ -2213,7 +2280,7 @@
       "Length": 60,
       "Market": "ROANOKE",
       "ProgramName": "TODAY SHOW",
-      "Rank": 69,
+      "Rank": 70,
       "Station": "WSLS",
       "TimeAired": "9:58 AM"
     },
@@ -2253,76 +2320,9 @@
       "Length": 60,
       "Market": "ROANOKE",
       "ProgramName": "TODAY SHOW",
-      "Rank": 69,
+      "Rank": 70,
       "Station": "WSLS",
       "TimeAired": "9:58 AM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "FOX",
-      "AirTime": 34933,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 2369.395,
-          "Impressions": 0.0,
-          "NsiDelivery": 2369.395
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 1489.6,
-          "Impressions": 0.0,
-          "NsiDelivery": 1489.6
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-03T00:00:00",
-      "DateAired": "06/03/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174",
-          "House": "17UPLC5174",
-          "Id": 7
-        }
-      ],
-      "Length": 60,
-      "Market": "TUCSON",
-      "ProgramName": "THE DOCTORS",
-      "Rank": 70,
-      "Station": "KMSB",
-      "TimeAired": "9:42 AM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "FOX",
-      "AirTime": 34698,
-      "AudienceImpressions": [],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-08T00:00:00",
-      "DateAired": "06/08/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721",
-          "House": "17LPLC0721",
-          "Id": 9
-        }
-      ],
-      "Length": 60,
-      "Market": "TUCSON",
-      "ProgramName": "THE DOCTORS",
-      "Rank": 70,
-      "Station": "KMSB",
-      "TimeAired": "9:38 AM"
     },
     {
       "Advertiser": null,
@@ -2614,7 +2614,7 @@
       "Length": 60,
       "Market": "TOLEDO",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 77,
+      "Rank": 78,
       "Station": "WUPW",
       "TimeAired": "3:16 PM"
     },
@@ -2654,49 +2654,9 @@
       "Length": 60,
       "Market": "TOLEDO",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 77,
+      "Rank": 78,
       "Station": "WUPW",
       "TimeAired": "3:14 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "ABC",
-      "AirTime": 43115,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 10787.725,
-          "Impressions": 0.0,
-          "NsiDelivery": 10787.725
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 9863.1375,
-          "Impressions": 0.0,
-          "NsiDelivery": 9863.1375
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-10T00:00:00",
-      "DateAired": "06/10/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "HUNTSVILLE",
-      "ProgramName": "WAAY 31 HOMETOWN NEWS AT 11",
-      "Rank": 79,
-      "Station": "WAAY",
-      "TimeAired": "11:58 AM"
     },
     {
       "Advertiser": null,
@@ -2734,9 +2694,49 @@
       "Length": 60,
       "Market": "PORTLAND,ME",
       "ProgramName": "WHO WANTS TO BE A MILLIONAIRE",
-      "Rank": 80,
+      "Rank": 79,
       "Station": "WCSH",
       "TimeAired": "12:47 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "ABC",
+      "AirTime": 43115,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 10787.725,
+          "Impressions": 0.0,
+          "NsiDelivery": 10787.725
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 9863.1375,
+          "Impressions": 0.0,
+          "NsiDelivery": 9863.1375
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-10T00:00:00",
+      "DateAired": "06/10/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "HUNTSVILLE",
+      "ProgramName": "WAAY 31 HOMETOWN NEWS AT 11",
+      "Rank": 80,
+      "Station": "WAAY",
+      "TimeAired": "11:58 AM"
     },
     {
       "Advertiser": null,
@@ -2788,7 +2788,7 @@
       "Length": 60,
       "Market": "CHAMPAIGN",
       "ProgramName": "JEOPARDY!",
-      "Rank": 85,
+      "Rank": 88,
       "Station": "WAND",
       "TimeAired": "4:35 PM"
     },
@@ -2815,7 +2815,7 @@
       "Length": 60,
       "Market": "CHAMPAIGN",
       "ProgramName": "JEOPARDY!",
-      "Rank": 85,
+      "Rank": 88,
       "Station": "WAND",
       "TimeAired": "4:54 PM"
     },
@@ -2842,7 +2842,7 @@
       "Length": 60,
       "Market": "CHATTANOOGA",
       "ProgramName": "PRICE IS RIGHT",
-      "Rank": 88,
+      "Rank": 89,
       "Station": "WDEF",
       "TimeAired": "11:59 AM"
     },
@@ -2869,7 +2869,7 @@
       "Length": 60,
       "Market": "CHATTANOOGA",
       "ProgramName": "PRICE IS RIGHT",
-      "Rank": 88,
+      "Rank": 89,
       "Station": "WDEF",
       "TimeAired": "11:29 AM"
     },
@@ -2909,7 +2909,7 @@
       "Length": 60,
       "Market": "CHARLESTON,SC",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 94,
+      "Rank": 92,
       "Station": "WTAT",
       "TimeAired": "2:13 PM"
     },
@@ -2949,7 +2949,7 @@
       "Length": 60,
       "Market": "CHARLESTON,SC",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 94,
+      "Rank": 92,
       "Station": "WTAT",
       "TimeAired": "2:24 PM"
     },
@@ -2976,7 +2976,7 @@
       "Length": 60,
       "Market": "CHARLESTON,SC",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 94,
+      "Rank": 92,
       "Station": "WTAT",
       "TimeAired": "2:58 PM"
     },
@@ -3003,89 +3003,9 @@
       "Length": 60,
       "Market": "CHARLESTON,SC",
       "ProgramName": "PEOPLES COURT",
-      "Rank": 94,
+      "Rank": 92,
       "Station": "WTAT",
       "TimeAired": "2:23 PM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CBS",
-      "AirTime": 39292,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 7847.1425,
-          "Impressions": 0.0,
-          "NsiDelivery": 7847.1425
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 8132.6175,
-          "Impressions": 0.0,
-          "NsiDelivery": 8132.6175
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-03T00:00:00",
-      "DateAired": "06/03/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17UPLC5174H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17UPLC5174H",
-          "House": "17UPLC5174H",
-          "Id": 6
-        }
-      ],
-      "Length": 60,
-      "Market": "TRI CITIES",
-      "ProgramName": "DAYTIME TRI-CITIES",
-      "Rank": 97,
-      "Station": "WJHL",
-      "TimeAired": "10:54 AM"
-    },
-    {
-      "Advertiser": null,
-      "Affiliate": "CBS",
-      "AirTime": 38817,
-      "AudienceImpressions": [
-        {
-          "AudienceId": 31,
-          "Delivery": 7847.1425,
-          "Impressions": 0.0,
-          "NsiDelivery": 7847.1425
-        },
-        {
-          "AudienceId": 42,
-          "Delivery": 8132.6175,
-          "Impressions": 0.0,
-          "NsiDelivery": 8132.6175
-        }
-      ],
-      "Brand": "",
-      "Campaign": 3417,
-      "Date": "2016-06-10T00:00:00",
-      "DateAired": "06/10/2016",
-      "DaypartId": 0,
-      "InventorySource": 1,
-      "Isci": "17LPLC0721H",
-      "IsciDto": [
-        {
-          "Brand": null,
-          "Client": "17LPLC0721H",
-          "House": "17LPLC0721H",
-          "Id": 8
-        }
-      ],
-      "Length": 60,
-      "Market": "TRI CITIES",
-      "ProgramName": "DAYTIME TRI-CITIES",
-      "Rank": 97,
-      "Station": "WJHL",
-      "TimeAired": "10:46 AM"
     },
     {
       "Advertiser": null,
@@ -3123,7 +3043,7 @@
       "Length": 60,
       "Market": "BURLINGTON",
       "ProgramName": "RACHAEL RAY",
-      "Rank": 98,
+      "Rank": 97,
       "Station": "WCAX",
       "TimeAired": "9:23 AM"
     },
@@ -3163,7 +3083,7 @@
       "Length": 60,
       "Market": "BURLINGTON",
       "ProgramName": "THE DOCTORS",
-      "Rank": 98,
+      "Rank": 97,
       "Station": "WCAX",
       "TimeAired": "10:53 AM"
     },
@@ -3190,7 +3110,7 @@
       "Length": 60,
       "Market": "BURLINGTON",
       "ProgramName": "RACHAEL RAY",
-      "Rank": 98,
+      "Rank": 97,
       "Station": "WCAX",
       "TimeAired": "9:24 AM"
     },
@@ -3217,7 +3137,7 @@
       "Length": 60,
       "Market": "BURLINGTON",
       "ProgramName": "THE DOCTORS",
-      "Rank": 98,
+      "Rank": 97,
       "Station": "WCAX",
       "TimeAired": "10:35 AM"
     },
@@ -3244,7 +3164,7 @@
       "Length": 60,
       "Market": "FT SMITH",
       "ProgramName": "JUDGE JUDY",
-      "Rank": 100,
+      "Rank": 98,
       "Station": "KNWA",
       "TimeAired": "4:19 PM"
     },
@@ -3284,7 +3204,7 @@
       "Length": 60,
       "Market": "FT SMITH",
       "ProgramName": "JUDGE JUDY",
-      "Rank": 100,
+      "Rank": 98,
       "Station": "KNWA",
       "TimeAired": "4:11 PM"
     },
@@ -3311,7 +3231,7 @@
       "Length": 60,
       "Market": "FT SMITH",
       "ProgramName": "JUDGE JUDY",
-      "Rank": 100,
+      "Rank": 98,
       "Station": "KNWA",
       "TimeAired": "4:18 PM"
     },
@@ -3338,9 +3258,89 @@
       "Length": 60,
       "Market": "FT SMITH",
       "ProgramName": "JUDGE JUDY",
-      "Rank": 100,
+      "Rank": 98,
       "Station": "KNWA",
       "TimeAired": "4:17 PM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CBS",
+      "AirTime": 39292,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7847.1425,
+          "Impressions": 0.0,
+          "NsiDelivery": 7847.1425
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8132.6175,
+          "Impressions": 0.0,
+          "NsiDelivery": 8132.6175
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-03T00:00:00",
+      "DateAired": "06/03/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17UPLC5174H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17UPLC5174H",
+          "House": "17UPLC5174H",
+          "Id": 6
+        }
+      ],
+      "Length": 60,
+      "Market": "TRI CITIES",
+      "ProgramName": "DAYTIME TRI-CITIES",
+      "Rank": 99,
+      "Station": "WJHL",
+      "TimeAired": "10:54 AM"
+    },
+    {
+      "Advertiser": null,
+      "Affiliate": "CBS",
+      "AirTime": 38817,
+      "AudienceImpressions": [
+        {
+          "AudienceId": 31,
+          "Delivery": 7847.1425,
+          "Impressions": 0.0,
+          "NsiDelivery": 7847.1425
+        },
+        {
+          "AudienceId": 42,
+          "Delivery": 8132.6175,
+          "Impressions": 0.0,
+          "NsiDelivery": 8132.6175
+        }
+      ],
+      "Brand": "",
+      "Campaign": 3417,
+      "Date": "2016-06-10T00:00:00",
+      "DateAired": "06/10/2016",
+      "DaypartId": 0,
+      "InventorySource": 1,
+      "Isci": "17LPLC0721H",
+      "IsciDto": [
+        {
+          "Brand": null,
+          "Client": "17LPLC0721H",
+          "House": "17LPLC0721H",
+          "Id": 8
+        }
+      ],
+      "Length": 60,
+      "Market": "TRI CITIES",
+      "ProgramName": "DAYTIME TRI-CITIES",
+      "Rank": 99,
+      "Station": "WJHL",
+      "TimeAired": "10:46 AM"
     }
   ]
 }
