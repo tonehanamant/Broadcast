@@ -171,6 +171,63 @@ BEGIN
 END
 /*************************************** END BCOP-4138 *******************************************************/
 
+/************************************** START BCOP-4041 *******************************************************/
+
+IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_inventory_source_id' AND object_id = OBJECT_ID('station_inventory_manifest'))
+BEGIN
+	DROP INDEX IX_station_inventory_manifest_inventory_source_id ON station_inventory_manifest;
+END
+GO
+CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_inventory_source_id] ON [dbo].[station_inventory_manifest]
+(
+	[inventory_source_id] ASC
+)
+INCLUDE ( 
+	[id],
+	[station_code],
+	[spot_length_id],
+	[spots_per_week],
+	[effective_date],
+	[station_inventory_group_id],
+	[file_id],
+	[spots_per_day],
+	[end_date])
+GO
+
+IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_rates_station_inventory_manifest_id' AND object_id = OBJECT_ID('station_inventory_manifest_rates'))
+BEGIN
+	DROP INDEX IX_station_inventory_manifest_rates_station_inventory_manifest_id ON station_inventory_manifest_rates;
+END
+GO
+CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_rates_station_inventory_manifest_id] 
+	ON [dbo].[station_inventory_manifest_rates]
+(
+	[station_inventory_manifest_id] ASC
+)
+INCLUDE ( 
+	[spot_length_id],
+	[rate]) 
+GO
+IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_audiences_station_inventory_manifest_id' AND object_id = OBJECT_ID('station_inventory_manifest_audiences'))
+BEGIN
+	DROP INDEX IX_station_inventory_manifest_audiences_station_inventory_manifest_id ON station_inventory_manifest_audiences;
+END
+GO
+CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_audiences_station_inventory_manifest_id] 
+	ON [dbo].[station_inventory_manifest_audiences]
+( 
+	[station_inventory_manifest_id] ASC
+)
+INCLUDE ( 
+	[audience_id], 
+	[impressions], 
+	[rate], 
+	[is_reference], 
+	[rating]) ;
+GO
+
+/*************************************** END BCOP-4041 *******************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
