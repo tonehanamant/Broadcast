@@ -496,5 +496,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EmailerServiceStubb.ClearLastMessage();
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffPP_ValidFileContent_BCOP4270()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_AffidavitValidFile_BCOP4270.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+
+                VerifyAffidavit(response.Id.Value);
+            }
+        }
     }
 }

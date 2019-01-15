@@ -1,0 +1,157 @@
+﻿{
+  "FileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "Affiliate": "PBS",
+      "AirTime": 64800,
+      "Archived": false,
+      "ClientScrubs": [
+        {
+          "ClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 321.7
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 390.75
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 7574.15
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 19778.95
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 5662.65
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 365.8
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 156.7
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 233.45
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 3623.75
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 17888.8
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 16526.95
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 78814.05
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 1887.9
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 4206.4
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 5258.5
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 2017.05
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 6922.4
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 2785.05
+            }
+          ],
+          "Comment": "No WWTV data for Program",
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Talk Show",
+          "EffectiveIsci": "1PRGEXCL",
+          "EffectiveProgramName": "Modern Family",
+          "EffectiveShowType": "News",
+          "LeadIn": false,
+          "MatchDate": true,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": false,
+          "MatchShowType": true,
+          "MatchStation": true,
+          "MatchTime": true,
+          "ModifiedBy": "PostLog Post Processing Test User",
+          "PostingBookId": 437,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 256,
+          "ProposalVersionDetailQuarterWeekId": 256,
+          "Status": 1
+        }
+      ],
+      "Demographics": [
+        {
+          "AudienceId": 31,
+          "Demographic": null,
+          "OvernightImpressions": 555.0,
+          "OvernightRating": 1.0
+        }
+      ],
+      "EstimateId": 2802,
+      "FileDetailProblems": [],
+      "Genre": "Talk Show",
+      "InventorySource": 1,
+      "Isci": "1PRGEXCL",
+      "LeadInEndTime": 50400,
+      "LeadinGenre": "Series",
+      "LeadinProgramName": "LIProgram",
+      "LeadInShowType": "Series",
+      "LeadoutGenre": "News",
+      "LeadoutProgramName": "10 News Nightbeat",
+      "LeadOutShowType": "Series",
+      "LeadOutStartTime": 50400,
+      "MappedIsci": null,
+      "Market": "Chicago",
+      "OriginalAirDate": "2019-02-04T00:00:00",
+      "ProgramName": "",
+      "ShowType": "News",
+      "SpotCost": 0.0,
+      "SpotLengthId": 6,
+      "Station": "WGN",
+      "SuppliedProgramName": "Modern Family"
+    }
+  ],
+  "FileHash": "7B-33-3B-B2-C7-38-F9-47-CA-32-47-62-92-A8-79-FC-A3-22-E0-4B",
+  "FileName": "WWTV_AffidavitValidFile_BCOP4270.txt",
+  "FileProblems": [],
+  "SourceId": 1,
+  "Status": 1
+}

@@ -780,6 +780,9 @@
     <Content Include="Files\WWTV_AffidavitValidFileContent_SpotCost.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\WWTV_AffidavitValidFile_BCOP4270.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\WWTV_AffidavitValidFile_NullValues.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

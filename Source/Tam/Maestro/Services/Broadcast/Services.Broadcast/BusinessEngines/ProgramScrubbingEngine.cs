@@ -91,7 +91,7 @@ namespace Services.Broadcast.BusinessEngines
             else
             {
                 scrub.EffectiveProgramName = effectiveAffidavitProgramName;
-                scrub.MatchProgram = _ProposalDetailMatchesProgram(proposalDetail, affidavitDetail.ProgramName);
+                scrub.MatchProgram = _ProposalDetailMatchesProgram(proposalDetail, effectiveAffidavitProgramName);
                 scrub.EffectiveGenre = affidavitDetail.Genre;
                 scrub.MatchGenre = _ProposalDetailMatchesGenre(proposalDetail, affidavitDetail.Genre);
                 scrub.EffectiveShowType = affidavitDetail.ShowType;
