@@ -6,6 +6,7 @@
   "GuaranteedAudienceId": 34,
   "HouseholdDeliveredImpressions": 650.0,
   "IsActiveThisWeek": false,
+  "LastBuyDate": null,
   "PostType": 2,
   "PrimaryAudienceBookedImpressions": 200000.0,
   "PrimaryAudienceDeliveredImpressions": 705.0,

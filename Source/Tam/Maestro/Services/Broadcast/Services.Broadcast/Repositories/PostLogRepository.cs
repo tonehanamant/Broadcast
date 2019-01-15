@@ -289,6 +289,12 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var proposalVersions = context.proposal_versions
+                        .Include(x => x.proposal)
+                        .Include(x => x.proposal_version_details)
+                        .Include(x => x.proposal_version_details.Select(d => d.proposal_version_detail_quarters))
+                        .Include(x => x.proposal_version_details.Select(d => d.proposal_version_detail_quarters.Select(q => q.proposal_version_detail_quarter_weeks)))
+                        .Include(x => x.proposal_version_details.Select(d => d.proposal_version_detail_quarters.Select(q => q.proposal_version_detail_quarter_weeks.Select(w => w.postlog_client_scrubs))))
+                        .Include(x => x.proposal_version_details.Select(d => d.proposal_buy_files))
                         .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted && p.snapshot_date == null)
                         .ToList();
                     var posts = new List<PostedContracts>();
@@ -299,7 +305,6 @@ namespace Services.Broadcast.Repositories
                                      from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                      from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
                                      from postlogFileScrub in proposalVersionWeeks.postlog_client_scrubs
-                                     let ScrubbingFileDetail = postlogFileScrub.postlog_file_details
                                      select postlogFileScrub).ToList();
 
                         posts.Add(new PostedContracts
@@ -321,6 +326,10 @@ namespace Services.Broadcast.Repositories
                             PrimaryAudienceBookedImpressions = (from proposalVersionDetail in proposalVersion.proposal_version_details
                                                                 from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
                                                                 select proposalVersionQuarters.impressions_goal).Sum(),
+                            LastBuyDate = (from proposalVersionDetail in proposalVersion.proposal_version_details
+                                           from proposalBuyFile in proposalVersionDetail.proposal_buy_files
+                                           orderby proposalBuyFile.created_date descending
+                                           select (DateTime?)proposalBuyFile.created_date).FirstOrDefault()
                         });
                     }
 

@@ -19,5 +19,6 @@ namespace Services.Broadcast.Entities
         public SchedulePostType PostType { get; set; }
         public bool Equivalized { get; set; }
         public bool IsActiveThisWeek { get; set; }
+        public DateTime? LastBuyDate { get; set; }
     }
 }
