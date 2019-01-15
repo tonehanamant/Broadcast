@@ -76,6 +76,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "WLS-TV 7.1",
+          "CPM": 0.0231713882594196218936310181,
           "LegacyCallLetters": "WLS",
           "MinProgramsBlendedCpm": 7.5307,
           "Programs": [
@@ -115,7 +116,10 @@
               "StationImpressionsPerSpot": 43156.671875
             }
           ],
-          "StationCode": 5060
+          "StationCode": 5060,
+          "TotalCost": 1.0000,
+          "TotalImpressions": 43156.671875,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 1.0000,

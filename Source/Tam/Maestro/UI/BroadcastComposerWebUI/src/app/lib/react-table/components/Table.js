@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import ReactTable from "react-table";
+import classNames from "classnames";
 
 import "react-table/react-table.css";
 
@@ -143,6 +144,8 @@ class Table extends Component {
       showPageSizeOptions,
       defaultPageSize,
       columns,
+      id,
+      className,
       hocState: { displayColumns },
       data
     } = this.props;
@@ -153,6 +156,7 @@ class Table extends Component {
       <Fragment>
         <ReactTable
           {...this.props}
+          className={classNames(id, className)}
           columns={tableColumns}
           getTrProps={this._getTrProps}
           getTrGroupProps={this._getTrGroupProps}
@@ -175,6 +179,8 @@ class Table extends Component {
 }
 
 Table.defaultProps = {
+  id: "",
+  className: "",
   data: [],
   columns: [],
   selection: SELECTION.NONE,
@@ -190,6 +196,8 @@ Table.defaultProps = {
 };
 
 Table.propTypes = {
+  id: PropTypes.string,
+  className: PropTypes.string,
   columns: PropTypes.any,
   data: PropTypes.any,
   hocState: HocStateProps.isRequired,

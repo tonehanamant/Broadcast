@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Table, { withGrid } from "Lib/react-table";
-import { marketColumns, generateMarketData } from "../util";
+import { marketColumns, generateMarketData } from "./util";
 
 function PricingGuideGridView({
   activeOpenMarketData,
@@ -13,6 +13,7 @@ function PricingGuideGridView({
   const market = generateMarketData(activeOpenMarketData.Markets);
   return (
     <Table
+      id="pricing-guide-master-table"
       selectOnRender
       data={market}
       columns={marketColumns}

@@ -237,6 +237,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
+          "CPM": 4.6155621370052694334397476826,
           "LegacyCallLetters": "WWSB",
           "MinProgramsBlendedCpm": 4.6155621370052694334397476826,
           "Programs": [
@@ -395,7 +396,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5942
+          "StationCode": 5942,
+          "TotalCost": 60.0000,
+          "TotalImpressions": 12999.5,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 60.0000,
@@ -417,6 +421,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "WNTZ-TV 48.1",
+          "CPM": 0.0,
           "LegacyCallLetters": "WNTZ",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -443,7 +448,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6433
+          "StationCode": 6433,
+          "TotalCost": 0.0000,
+          "TotalImpressions": 0.0,
+          "TotalSpots": 0
         }
       ],
       "TotalCost": 0.0000,

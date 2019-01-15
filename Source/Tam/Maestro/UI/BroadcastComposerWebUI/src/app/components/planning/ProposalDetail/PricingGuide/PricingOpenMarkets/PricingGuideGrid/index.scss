@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: row;
 
-    .ReactTable {
+    .pricing-guide-master-table,
+    .pricing-guide-detail-table {
       margin-top: 6px;
       height: 500px;
 
@@ -18,11 +19,22 @@
       }
     }
     
-    .ReactTable:first-child {
+    .pricing-guide-master-table {
       width: 40%;
     }
-    .ReactTable:last-child {
+    .pricing-guide-detail-table {
       width: 60%;
+
+      .ReactTable {
+        margin: 10px;
+        .rt-thead {
+          padding-right: 0;
+        }
+        
+        .rt-tbody {
+          overflow: auto;
+        }
+      }
     }
   }
 }
