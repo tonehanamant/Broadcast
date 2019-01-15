@@ -171,6 +171,88 @@ BEGIN
 END
 /*************************************** END BCOP-4138 *******************************************************/
 
+/************************************** START BCOP-4041 *******************************************************/
+
+IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_inventory_source_id' AND object_id = OBJECT_ID('station_inventory_manifest'))
+BEGIN
+	DROP INDEX IX_station_inventory_manifest_inventory_source_id ON station_inventory_manifest;
+END
+GO
+CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_inventory_source_id] ON [dbo].[station_inventory_manifest]
+(
+	[inventory_source_id] ASC
+)
+INCLUDE ( 
+	[id],
+	[station_code],
+	[spot_length_id],
+	[spots_per_week],
+	[effective_date],
+	[station_inventory_group_id],
+	[file_id],
+	[spots_per_day],
+	[end_date])
+GO
+
+IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_rates_station_inventory_manifest_id' AND object_id = OBJECT_ID('station_inventory_manifest_rates'))
+BEGIN
+	DROP INDEX IX_station_inventory_manifest_rates_station_inventory_manifest_id ON station_inventory_manifest_rates;
+END
+GO
+CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_rates_station_inventory_manifest_id] 
+	ON [dbo].[station_inventory_manifest_rates]
+(
+	[station_inventory_manifest_id] ASC
+)
+INCLUDE ( 
+	[spot_length_id],
+	[rate]) 
+GO
+IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_audiences_station_inventory_manifest_id' AND object_id = OBJECT_ID('station_inventory_manifest_audiences'))
+BEGIN
+	DROP INDEX IX_station_inventory_manifest_audiences_station_inventory_manifest_id ON station_inventory_manifest_audiences;
+END
+GO
+CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_audiences_station_inventory_manifest_id] 
+	ON [dbo].[station_inventory_manifest_audiences]
+( 
+	[station_inventory_manifest_id] ASC
+)
+INCLUDE ( 
+	[audience_id], 
+	[impressions], 
+	[rate], 
+	[is_reference], 
+	[rating]) ;
+GO
+
+/*************************************** END BCOP-4041 *******************************************************/
+
+/*************************************** START BCOP-4142 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[station_inventory_loaded]'))
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_loaded]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[station_code] [SMALLINT] NOT NULL,
+		[inventory_source_id] [INT] NOT NULL,
+		[last_loaded] [DATETIME] NOT NULL
+	 CONSTRAINT [PK_station_inventory_loaded] PRIMARY KEY CLUSTERED 
+	 (
+		[id] ASC
+	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[station_inventory_loaded]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_loaded_stations] FOREIGN KEY([station_code])
+	REFERENCES [dbo].[stations] ([station_code])
+	ALTER TABLE [dbo].[station_inventory_loaded] CHECK CONSTRAINT [FK_station_inventory_loaded_stations]
+	CREATE INDEX IX_station_inventory_loaded_station_code ON [station_inventory_loaded] ([station_code])
+	ALTER TABLE [dbo].[station_inventory_loaded]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_loaded_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].[station_inventory_loaded] CHECK CONSTRAINT [FK_station_inventory_loaded_inventory_sources]
+	CREATE INDEX IX_station_inventory_loaded_inventory_source_id ON [station_inventory_loaded] ([inventory_source_id])
+END
+/*************************************** END BCOP-4142 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

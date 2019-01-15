@@ -239,6 +239,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
+          "CPM": 7.4345253234864005001309779245,
           "LegacyCallLetters": "WDBD",
           "MinProgramsBlendedCpm": 7.4345253234864090035412526262,
           "Programs": [
@@ -265,7 +266,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6173
+          "StationCode": 6173,
+          "TotalCost": 150.0000,
+          "TotalImpressions": 20176.13680407,
+          "TotalSpots": 6
         }
       ],
       "TotalCost": 150.0000,

@@ -11,7 +11,7 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "EffectiveDate": "2017-06-01T00:00:00",
+        "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -55,12 +55,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 736.2600,
+            "Rate": 73.6260,
             "SpotLengthId": 1
           }
         ],
@@ -71,8 +72,8 @@
           "Affiliation": "CW",
           "CallLetters": "WNCT-TV 9.2",
           "Code": 2796,
-          "FlightWeeks": [],
           "LegacyCallLetters": "ENCT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 145,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -125,12 +126,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 527.7300,
+            "Rate": 52.7730,
             "SpotLengthId": 1
           }
         ],
@@ -141,8 +143,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAEF-TV 23.1",
           "Code": 6342,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAEF",
+          "ManifestMaxEndDate": null,
           "MarketCode": 402,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -195,6 +197,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -214,12 +217,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 2999.3500,
+            "Rate": 173.4048,
             "SpotLengthId": 1
           }
         ],
@@ -230,8 +234,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAMC 28.1",
           "Code": 5933,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAMC",
+          "ManifestMaxEndDate": null,
           "MarketCode": 251,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -284,12 +288,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 1354.9200,
+            "Rate": 135.4920,
             "SpotLengthId": 1
           }
         ],
@@ -300,8 +305,8 @@
           "Affiliation": "IND",
           "CallLetters": "KAUT-TV 43.1",
           "Code": 6844,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAUT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 250,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -354,12 +359,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 425.5100,
+            "Rate": 30.3937,
             "SpotLengthId": 1
           }
         ],
@@ -370,8 +376,8 @@
           "Affiliation": "CW",
           "CallLetters": "KBCW 44.1",
           "Code": 5890,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KBCW",
+          "ManifestMaxEndDate": null,
           "MarketCode": 407,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -395,7 +401,7 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "EffectiveDate": "2017-06-01T00:00:00",
+        "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -439,12 +445,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 736.2600,
+            "Rate": 73.6260,
             "SpotLengthId": 1
           }
         ],
@@ -455,8 +462,8 @@
           "Affiliation": "CW",
           "CallLetters": "WNCT-TV 9.2",
           "Code": 2796,
-          "FlightWeeks": [],
           "LegacyCallLetters": "ENCT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 145,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -509,12 +516,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 527.7300,
+            "Rate": 52.7730,
             "SpotLengthId": 1
           }
         ],
@@ -525,8 +533,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAEF-TV 23.1",
           "Code": 6342,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAEF",
+          "ManifestMaxEndDate": null,
           "MarketCode": 402,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -579,6 +587,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -598,12 +607,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 2999.3500,
+            "Rate": 173.4048,
             "SpotLengthId": 1
           }
         ],
@@ -614,8 +624,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAMC 28.1",
           "Code": 5933,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAMC",
+          "ManifestMaxEndDate": null,
           "MarketCode": 251,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -668,12 +678,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 1354.9200,
+            "Rate": 135.4920,
             "SpotLengthId": 1
           }
         ],
@@ -684,8 +695,8 @@
           "Affiliation": "IND",
           "CallLetters": "KAUT-TV 43.1",
           "Code": 6844,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAUT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 250,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -738,12 +749,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 425.5100,
+            "Rate": 30.3937,
             "SpotLengthId": 1
           }
         ],
@@ -754,8 +766,8 @@
           "Affiliation": "CW",
           "CallLetters": "KBCW 44.1",
           "Code": 5890,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KBCW",
+          "ManifestMaxEndDate": null,
           "MarketCode": 407,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -779,7 +791,7 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "EffectiveDate": "2017-06-01T00:00:00",
+        "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -823,12 +835,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 736.2600,
+            "Rate": 73.6260,
             "SpotLengthId": 1
           }
         ],
@@ -839,8 +852,8 @@
           "Affiliation": "CW",
           "CallLetters": "WNCT-TV 9.2",
           "Code": 2796,
-          "FlightWeeks": [],
           "LegacyCallLetters": "ENCT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 145,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -893,12 +906,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 527.7300,
+            "Rate": 52.7730,
             "SpotLengthId": 1
           }
         ],
@@ -909,8 +923,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAEF-TV 23.1",
           "Code": 6342,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAEF",
+          "ManifestMaxEndDate": null,
           "MarketCode": 402,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -963,6 +977,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -982,12 +997,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 2999.3500,
+            "Rate": 173.4048,
             "SpotLengthId": 1
           }
         ],
@@ -998,8 +1014,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAMC 28.1",
           "Code": 5933,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAMC",
+          "ManifestMaxEndDate": null,
           "MarketCode": 251,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1052,12 +1068,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 1354.9200,
+            "Rate": 135.4920,
             "SpotLengthId": 1
           }
         ],
@@ -1068,8 +1085,8 @@
           "Affiliation": "IND",
           "CallLetters": "KAUT-TV 43.1",
           "Code": 6844,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAUT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 250,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1093,7 +1110,7 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "EffectiveDate": "2017-06-01T00:00:00",
+        "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -1137,12 +1154,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 736.2600,
+            "Rate": 73.6260,
             "SpotLengthId": 1
           }
         ],
@@ -1153,8 +1171,8 @@
           "Affiliation": "CW",
           "CallLetters": "WNCT-TV 9.2",
           "Code": 2796,
-          "FlightWeeks": [],
           "LegacyCallLetters": "ENCT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 145,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1207,12 +1225,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 527.7300,
+            "Rate": 52.7730,
             "SpotLengthId": 1
           }
         ],
@@ -1223,8 +1242,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAEF-TV 23.1",
           "Code": 6342,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAEF",
+          "ManifestMaxEndDate": null,
           "MarketCode": 402,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1277,6 +1296,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1296,12 +1316,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 2999.3500,
+            "Rate": 173.4048,
             "SpotLengthId": 1
           }
         ],
@@ -1312,8 +1333,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAMC 28.1",
           "Code": 5933,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAMC",
+          "ManifestMaxEndDate": null,
           "MarketCode": 251,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1366,12 +1387,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 1354.9200,
+            "Rate": 135.4920,
             "SpotLengthId": 1
           }
         ],
@@ -1382,8 +1404,8 @@
           "Affiliation": "IND",
           "CallLetters": "KAUT-TV 43.1",
           "Code": 6844,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAUT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 250,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1407,7 +1429,7 @@
     "Manifests": [
       {
         "DaypartCode": "PM News",
-        "EffectiveDate": "2017-06-01T00:00:00",
+        "EffectiveDate": "2017-10-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -1451,12 +1473,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 736.2600,
+            "Rate": 73.6260,
             "SpotLengthId": 1
           }
         ],
@@ -1467,8 +1490,8 @@
           "Affiliation": "CW",
           "CallLetters": "WNCT-TV 9.2",
           "Code": 2796,
-          "FlightWeeks": [],
           "LegacyCallLetters": "ENCT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 145,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1521,12 +1544,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 527.7300,
+            "Rate": 52.7730,
             "SpotLengthId": 1
           }
         ],
@@ -1537,8 +1561,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAEF-TV 23.1",
           "Code": 6342,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAEF",
+          "ManifestMaxEndDate": null,
           "MarketCode": 402,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1591,6 +1615,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1610,12 +1635,13 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 2999.3500,
+            "Rate": 173.4048,
             "SpotLengthId": 1
           }
         ],
@@ -1626,8 +1652,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAMC 28.1",
           "Code": 5933,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAMC",
+          "ManifestMaxEndDate": null,
           "MarketCode": 251,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1651,7 +1677,7 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -1695,6 +1721,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1714,6 +1741,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -1725,8 +1753,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1779,6 +1807,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1798,6 +1827,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1817,6 +1847,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1836,12 +1867,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 15224.5300,
+            "Rate": 315.4550,
             "SpotLengthId": 1
           }
         ],
@@ -1852,8 +1884,8 @@
           "Affiliation": "FOX",
           "CallLetters": "WXIX-TV 19.1",
           "Code": 5894,
-          "FlightWeeks": [],
           "LegacyCallLetters": "WXIX",
+          "ManifestMaxEndDate": null,
           "MarketCode": 115,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1862,7 +1894,7 @@
       },
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -1906,6 +1938,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -1925,6 +1958,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -1936,8 +1970,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -1990,6 +2024,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2009,12 +2044,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 3129.7400,
+            "Rate": 39.1216,
             "SpotLengthId": 1
           }
         ],
@@ -2025,8 +2061,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAIT 8.1",
           "Code": 5160,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAIT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 334,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2079,6 +2115,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2098,12 +2135,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 12037.4900,
+            "Rate": 181.0230,
             "SpotLengthId": 1
           }
         ],
@@ -2112,10 +2150,10 @@
         "SpotsPerWeek": 2,
         "Station": {
           "Affiliation": "ABC",
-          "CallLetters": "KAKE 10.1",
-          "Code": 5297,
-          "FlightWeeks": [],
+          "CallLetters": "KAKE+",
+          "Code": 297,
           "LegacyCallLetters": "KAKE",
+          "ManifestMaxEndDate": null,
           "MarketCode": 278,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2139,7 +2177,7 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -2183,6 +2221,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2202,6 +2241,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -2213,8 +2253,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2267,6 +2307,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2286,6 +2327,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2305,6 +2347,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2324,12 +2367,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 15224.5300,
+            "Rate": 315.4550,
             "SpotLengthId": 1
           }
         ],
@@ -2340,8 +2384,8 @@
           "Affiliation": "FOX",
           "CallLetters": "WXIX-TV 19.1",
           "Code": 5894,
-          "FlightWeeks": [],
           "LegacyCallLetters": "WXIX",
+          "ManifestMaxEndDate": null,
           "MarketCode": 115,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2350,7 +2394,7 @@
       },
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -2394,6 +2438,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2413,6 +2458,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -2424,8 +2470,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2478,6 +2524,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2497,12 +2544,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 3129.7400,
+            "Rate": 39.1216,
             "SpotLengthId": 1
           }
         ],
@@ -2513,8 +2561,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KAIT 8.1",
           "Code": 5160,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KAIT",
+          "ManifestMaxEndDate": null,
           "MarketCode": 334,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2567,6 +2615,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2586,12 +2635,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 12037.4900,
+            "Rate": 181.0230,
             "SpotLengthId": 1
           }
         ],
@@ -2600,10 +2650,10 @@
         "SpotsPerWeek": 2,
         "Station": {
           "Affiliation": "ABC",
-          "CallLetters": "KAKE 10.1",
-          "Code": 5297,
-          "FlightWeeks": [],
+          "CallLetters": "KAKE+",
+          "Code": 297,
           "LegacyCallLetters": "KAKE",
+          "ManifestMaxEndDate": null,
           "MarketCode": 278,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2627,7 +2677,7 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -2671,6 +2721,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2690,6 +2741,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -2701,8 +2753,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2755,6 +2807,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2774,6 +2827,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2793,6 +2847,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2812,12 +2867,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 15224.5300,
+            "Rate": 315.4550,
             "SpotLengthId": 1
           }
         ],
@@ -2828,8 +2884,8 @@
           "Affiliation": "FOX",
           "CallLetters": "WXIX-TV 19.1",
           "Code": 5894,
-          "FlightWeeks": [],
           "LegacyCallLetters": "WXIX",
+          "ManifestMaxEndDate": null,
           "MarketCode": 115,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2838,7 +2894,7 @@
       },
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -2882,6 +2938,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2901,6 +2958,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -2912,8 +2970,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -2966,6 +3024,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -2985,12 +3044,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 12037.4900,
+            "Rate": 181.0230,
             "SpotLengthId": 1
           }
         ],
@@ -2999,10 +3059,10 @@
         "SpotsPerWeek": 1,
         "Station": {
           "Affiliation": "ABC",
-          "CallLetters": "KAKE 10.1",
-          "Code": 5297,
-          "FlightWeeks": [],
+          "CallLetters": "KAKE+",
+          "Code": 297,
           "LegacyCallLetters": "KAKE",
+          "ManifestMaxEndDate": null,
           "MarketCode": 278,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3026,7 +3086,7 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -3070,6 +3130,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3089,6 +3150,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -3100,8 +3162,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3154,6 +3216,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3173,6 +3236,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3192,6 +3256,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3211,12 +3276,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 15224.5300,
+            "Rate": 315.4550,
             "SpotLengthId": 1
           }
         ],
@@ -3227,8 +3293,8 @@
           "Affiliation": "FOX",
           "CallLetters": "WXIX-TV 19.1",
           "Code": 5894,
-          "FlightWeeks": [],
           "LegacyCallLetters": "WXIX",
+          "ManifestMaxEndDate": null,
           "MarketCode": 115,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3237,7 +3303,7 @@
       },
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -3281,6 +3347,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3300,6 +3367,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -3311,8 +3379,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3365,6 +3433,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3384,12 +3453,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 12037.4900,
+            "Rate": 181.0230,
             "SpotLengthId": 1
           }
         ],
@@ -3398,10 +3468,10 @@
         "SpotsPerWeek": 1,
         "Station": {
           "Affiliation": "ABC",
-          "CallLetters": "KAKE 10.1",
-          "Code": 5297,
-          "FlightWeeks": [],
+          "CallLetters": "KAKE+",
+          "Code": 297,
           "LegacyCallLetters": "KAKE",
+          "ManifestMaxEndDate": null,
           "MarketCode": 278,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3425,7 +3495,7 @@
     "Manifests": [
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -3469,6 +3539,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3488,6 +3559,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -3499,8 +3571,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3553,6 +3625,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3572,6 +3645,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3591,6 +3665,7 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3610,12 +3685,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 15224.5300,
+            "Rate": 315.4550,
             "SpotLengthId": 1
           }
         ],
@@ -3626,8 +3702,8 @@
           "Affiliation": "FOX",
           "CallLetters": "WXIX-TV 19.1",
           "Code": 5894,
-          "FlightWeeks": [],
           "LegacyCallLetters": "WXIX",
+          "ManifestMaxEndDate": null,
           "MarketCode": 115,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3636,7 +3712,7 @@
       },
       {
         "DaypartCode": "AM News",
-        "EffectiveDate": "2017-04-17T00:00:00",
+        "EffectiveDate": "2017-11-01T00:00:00",
         "EndDate": null,
         "InventorySourceId": 5,
         "ManifestAudiences": [
@@ -3680,6 +3756,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3699,6 +3776,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
@@ -3710,8 +3788,8 @@
           "Affiliation": "ABC",
           "CallLetters": "KABY-TV 9.1",
           "Code": 5490,
-          "FlightWeeks": [],
           "LegacyCallLetters": "KABY",
+          "ManifestMaxEndDate": null,
           "MarketCode": 325,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,
@@ -3764,6 +3842,7 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
+            "Genres": [],
             "ProgramName": null
           },
           {
@@ -3783,12 +3862,13 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
+            "Genres": [],
             "ProgramName": null
           }
         ],
         "ManifestRates": [
           {
-            "Rate": 12037.4900,
+            "Rate": 181.0230,
             "SpotLengthId": 1
           }
         ],
@@ -3797,10 +3877,10 @@
         "SpotsPerWeek": 1,
         "Station": {
           "Affiliation": "ABC",
-          "CallLetters": "KAKE 10.1",
-          "Code": 5297,
-          "FlightWeeks": [],
+          "CallLetters": "KAKE+",
+          "Code": 297,
           "LegacyCallLetters": "KAKE",
+          "ManifestMaxEndDate": null,
           "MarketCode": 278,
           "ModifiedDate": "0001-01-01T00:00:00",
           "OriginMarket": null,

@@ -123,17 +123,15 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpDelete]
-        [Route("Contacts/{stationContactId}")]
-        public BaseResponse<bool> DeleteStationContact(int stationContactId)
+        [Route("{inventorySource}/Contacts/{stationContactId}")]
+        public BaseResponse<bool> DeleteStationContact(string inventorySource, int stationContactId)
         {
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                        .DeleteStationContact(stationContactId, Identity.Name));
+                        .DeleteStationContact(inventorySource, stationContactId, Identity.Name));
         }
-
-      
-
+        
         [HttpPost]
         [Route("UploadInventoryFile")]
         public BaseResponse<InventoryFileSaveResult> UploadInventoryFile(HttpRequestMessage saveRequest)
@@ -248,24 +246,24 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpDelete]
-        [Route("Programs/{programId}")]
-        public BaseResponse<bool> DeleteProgra(int programId)
+        [Route("{inventorySourceString}/{stationCode}/Programs/{programId}")]
+        public BaseResponse<bool> DeleteProgra(string inventorySourceString, int stationCode, int programId)
         {
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                        .DeleteProgram(programId));
+                        .DeleteProgram(programId, inventorySourceString, stationCode, Identity.Name));
         }
 
         [HttpPost]
-        [Route("Programs/{ProgramId}/Flight")]
-        public BaseResponse<bool> TrimProgramFlight(int programId, [FromUri] DateTime endDate)
+        [Route("{inventorySourceString}/{stationCode}/Programs/{ProgramId}/Flight")]
+        public BaseResponse<bool> TrimProgramFlight(string inventorySourceString, int stationCode, int programId, [FromUri] DateTime endDate)
         {
             return
                 _ConvertToBaseResponse(
                     () =>
                         _ApplicationServiceFactory.GetApplicationService<IInventoryService>()
-                            .ExpireManifest(programId, endDate));
+                            .ExpireManifest(programId, endDate, inventorySourceString, stationCode, Identity.Name));
         }
 
         [HttpGet]

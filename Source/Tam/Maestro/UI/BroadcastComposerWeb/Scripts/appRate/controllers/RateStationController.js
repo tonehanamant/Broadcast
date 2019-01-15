@@ -68,7 +68,7 @@ var RateStationController = BaseController.extend({
         //jquery will not pass query as data to a delete
         //var queryData = { startDate: rec.FlightStartDate, endDate: rec.FlightEndDate };
         var queryData = jQuery.param({ startDate: rec.FlightStartDate, endDate: rec.FlightEndDate });
-        var url = baseUrl + 'api/RatesManager/Programs/' + rec.Id + '?' + queryData;
+        var url = baseUrl + 'api/RatesManager/' + this.getSource() + '/' + this.activeStation.Code +'/Programs/' + rec.Id + '?' + queryData;
         
         httpService.remove(url,
             this.onApiDeleteStationRate.bind(this, rec),
@@ -92,7 +92,7 @@ var RateStationController = BaseController.extend({
     apiEndFlightRate: function (programId, endDate, callback) {
         //...api/RatesManager/Programs/2551/Flight?enddate=2016-10-03
         var queryData = jQuery.param({ enddate: endDate });
-        var url = baseUrl + 'api/RatesManager/Programs/' + programId + '/Flight?' + queryData;
+        var url = baseUrl + 'api/RatesManager/' + this.getSource() + '/' + this.activeStation.Code +'/Programs/' + programId + '/Flight?' + queryData;
        
         httpService.post(url,
             this.onApiEndFlightRate.bind(this, callback),
@@ -268,7 +268,8 @@ var RateStationController = BaseController.extend({
     },
 
     apiDeleteStationContact: function (contact) {
-        var url = baseUrl + 'api/RatesManager/Contacts/' + contact.Id;    
+        //var url = baseUrl + 'api/RatesManager/Contacts/' + contact.Id;    
+        var url = baseUrl + 'api/RatesManager/' + this.getSource() + '/Contacts/' + contact.Id;
         
         httpService.remove(url, this.onApiDeleteStationContact.bind(this, contact), null, {
             $ViewElement: $('#station_contacts_view'), //show processing to form
@@ -287,7 +288,8 @@ var RateStationController = BaseController.extend({
     apiAddEditStationContact: function (contact, isNew) {
         var url = baseUrl + 'api/RatesManager/Contacts';
         //@VINI - remove this line below when you are ready
-        contact.RateSource = this.getSource();
+        //contact.RateSource = this.getSource();
+        contact.InventorySourceString = this.getSource();
 
         var jsonObj = JSON.stringify(contact);
         var type = isNew ? 'Create' : 'Edit';

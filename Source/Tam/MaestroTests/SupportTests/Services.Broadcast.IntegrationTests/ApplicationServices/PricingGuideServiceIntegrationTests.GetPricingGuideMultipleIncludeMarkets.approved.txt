@@ -252,6 +252,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
+          "CPM": 4.6155621370052694334397476826,
           "LegacyCallLetters": "WWSB",
           "MinProgramsBlendedCpm": 4.6155621370052694334397476826,
           "Programs": [
@@ -410,7 +411,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5942
+          "StationCode": 5942,
+          "TotalCost": 60.0000,
+          "TotalImpressions": 12999.5,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 60.0000,
@@ -432,6 +436,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KIII 3.1",
+          "CPM": 3.4504770284491830995635146559,
           "LegacyCallLetters": "KIII",
           "MinProgramsBlendedCpm": 3.4504770284491830995635146559,
           "Programs": [
@@ -612,7 +617,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5319
+          "StationCode": 5319,
+          "TotalCost": 30.0000,
+          "TotalImpressions": 8694.45,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 30.0000,
@@ -634,6 +642,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KYUR 13.1",
+          "CPM": 17.897091722595078299776286353,
           "LegacyCallLetters": "KYUR",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -726,11 +735,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6072
+          "StationCode": 6072,
+          "TotalCost": 20.0000,
+          "TotalImpressions": 1117.5,
+          "TotalSpots": 1
         },
         {
           "Affiliation": "FOX",
           "CallLetters": "KTBY 4.1",
+          "CPM": 0.0,
           "LegacyCallLetters": "KTBY",
           "MinProgramsBlendedCpm": 50.409577819785759294265910523,
           "Programs": [
@@ -757,7 +770,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6682
+          "StationCode": 6682,
+          "TotalCost": 0.0000,
+          "TotalImpressions": 0.0,
+          "TotalSpots": 0
         }
       ],
       "TotalCost": 20.0000,
@@ -779,6 +795,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "WNTZ-TV 48.1",
+          "CPM": 0.0,
           "LegacyCallLetters": "WNTZ",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -805,7 +822,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6433
+          "StationCode": 6433,
+          "TotalCost": 0.0000,
+          "TotalImpressions": 0.0,
+          "TotalSpots": 0
         }
       ],
       "TotalCost": 0.0000,

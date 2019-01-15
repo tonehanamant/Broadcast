@@ -146,6 +146,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ValidFileContent_BCOP4270()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_AffidavitValidFile_BCOP4270.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+
+                VerifyPostLogFile(response.Id.Value);
+            }
+        }
+
         private static void VerifyResults(WWTVSaveResult response)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();

@@ -249,6 +249,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
+          "CPM": 7.4345253234864005001309779245,
           "LegacyCallLetters": "WDBD",
           "MinProgramsBlendedCpm": 7.4345253234864090035412526262,
           "Programs": [
@@ -275,7 +276,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6173
+          "StationCode": 6173,
+          "TotalCost": 25.0000,
+          "TotalImpressions": 3362.68946735,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 25.0000,
@@ -297,6 +301,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KIII 3.1",
+          "CPM": 4.8859934853420195439739413681,
           "LegacyCallLetters": "KIII",
           "MinProgramsBlendedCpm": 4.8859934853420195439739413681,
           "Programs": [
@@ -477,7 +482,10 @@
               "StationImpressionsPerSpot": 1200.0
             }
           ],
-          "StationCode": 5319
+          "StationCode": 5319,
+          "TotalCost": 30.0000,
+          "TotalImpressions": 6140.0,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 30.0000,

@@ -43,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         StationDetailDto GetStationDetailByCode(string inventorySource, int stationCode);
         List<StationContact> GetStationContacts(string inventorySource, int stationCode);
         bool SaveStationContact(StationContact stationContacts, string userName);
-        bool DeleteStationContact(int stationContactId, string userName);
+        bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName);
         List<LookupDto> GetAllGenres();
         LockResponse LockStation(int stationCode);
         ReleaseLockResponse UnlockStation(int stationCode);
@@ -64,8 +64,8 @@ namespace Services.Broadcast.ApplicationServices
         List<StationProgram> GetAllStationPrograms(string inventorySource, int stationCode);
         bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId);
         List<StationProgram> GetStationProgramConflicts(StationProgramConflictRequest conflict);
-        bool DeleteProgram(int programId);
-        bool ExpireManifest(int programId, DateTime endDate);
+        bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
+        bool ExpireManifest(int programId, DateTime endDate, string inventorySource, int stationCode, string user);
         bool HasSpotsAllocated(int programId);
     }
 
@@ -129,8 +129,11 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
         {
-            var stations =
-                _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySource(rateSource));
+            var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySourceOrDefault(rateSource));
+
+            //set null every modified date that looks like 0001-01-01T00:00:00 so the UI knows where to put dashes
+            stations.Where(x=> x.ModifiedDate == DateTime.MinValue).ForEach(x => x.ModifiedDate = null);
+
             _SetRateDataThrough(stations, currentDate);
             return stations;
         }
@@ -138,18 +141,20 @@ namespace Services.Broadcast.ApplicationServices
         public List<DisplayBroadcastStation> GetStationsWithFilter(string rateSourceString, string filterValue,
             DateTime today)
         {
-            DisplayBroadcastStation.StationFilter filter;
-            var parseSuccess = Enum.TryParse(filterValue, true, out filter);
+            var parseSuccess = Enum.TryParse(filterValue, true, out DisplayBroadcastStation.StationFilter filter);
 
             if (!parseSuccess)
             {
                 throw new ArgumentException(string.Format("Invalid station filter parameter: {0}", filterValue));
             }
 
-            var inventorySource = _ParseInventorySource(rateSourceString);
+            var inventorySource = _ParseInventorySourceOrDefault(rateSourceString);
 
             var isIncluded = (filter == DisplayBroadcastStation.StationFilter.WithTodaysData);
             var stations = _stationRepository.GetBroadcastStationsByDate(inventorySource.Id, today, isIncluded);
+
+            //set null every modified date that looks like 0001-01-01T00:00:00 so the UI knows where to put dashes
+            stations.Where(x => x.ModifiedDate == DateTime.MinValue).ForEach(x => x.ModifiedDate = null);
 
             _SetRateDataThrough(stations, today);
 
@@ -319,7 +324,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     _AddNewStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
-                    _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now);
+                    _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now, inventorySource.Id);
                     inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
                     _inventoryFileRepository.UpdateInventoryFile(inventoryFile, request.UserName);
 
@@ -429,12 +434,9 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             var fileStationCodes = inventoryFile.InventoryManifests.Select(m => m.Station.Code).Distinct().ToList();
-            List<StationContact> existingStationContacts =
-                    _stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
+            List<StationContact> existingStationContacts = _stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 
-            var contactsUpdateList =
-                inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer)
-                    .ToList();
+            var contactsUpdateList = inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer).ToList();
 
             //Set the ID for those that exist already
             foreach (var updateContact in contactsUpdateList)
@@ -450,7 +452,7 @@ namespace Services.Broadcast.ApplicationServices
 
             // update modified date for each station
             var timeStamp = DateTime.Now;
-            fileStationCodes.ForEach(code => _stationRepository.UpdateStation(code, request.UserName, timeStamp));
+            _stationRepository.UpdateStationList(fileStationCodes, request.UserName, timeStamp, inventoryFile.InventorySource.Id);
         }
 
         public List<StationContact> GetStationContacts(string inventorySource, int stationCode)
@@ -553,7 +555,7 @@ namespace Services.Broadcast.ApplicationServices
                 _inventoryRepository.UpdateStationInventoryManifest(manifest);
             }
 
-            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
+            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp, manifest.InventorySourceId);
         }
 
         private void _SetManifestValuesFromPreviousManifest(StationInventoryManifest manifest,
@@ -591,7 +593,7 @@ namespace Services.Broadcast.ApplicationServices
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
             }
             var timeStamp = DateTime.Now;
-            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp);
+            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp, manifest.InventorySourceId);
         }
 
         private StationInventoryManifest _MapToStationInventoryManifest(StationProgram stationProgram)
@@ -725,7 +727,7 @@ namespace Services.Broadcast.ApplicationServices
                                 null);
                     }
 
-                    _stationRepository.UpdateStation(stationContact.StationCode, userName, DateTime.Now);
+                    _stationRepository.UpdateStation(stationContact.StationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
 
                     transaction.Complete();
                 }
@@ -734,7 +736,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public bool DeleteStationContact(int stationContactId, string userName)
+        public bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName)
         {
             if (stationContactId <= 0)
                 throw new Exception("Cannot delete station contact with invalid data.");
@@ -749,7 +751,7 @@ namespace Services.Broadcast.ApplicationServices
                     .DeleteStationContact(stationContactId);
 
                 // update staion modified date
-                _stationRepository.UpdateStation(stationCode, userName, DateTime.Now);
+                _stationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
 
                 transaction.Complete();
             }
@@ -778,8 +780,7 @@ namespace Services.Broadcast.ApplicationServices
                     .GetStationContactsByStationCode(stationCode)
             };
         }
-
-
+        
         private void _SetDisplayDaypartForInventoryManifest(List<StationInventoryManifest> manifests)
         {
             manifests.SelectMany(m => m.ManifestDayparts).ForEach(d =>
@@ -925,7 +926,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             const string defaultInventorySource = "OpenMarket";
 
-            if (string.IsNullOrEmpty(sourceString))
+            if (string.IsNullOrWhiteSpace(sourceString))
             {
                 return _inventoryRepository.GetInventorySourceByName(defaultInventorySource);
             }
@@ -1070,17 +1071,17 @@ namespace Services.Broadcast.ApplicationServices
             return _GetStationProgramsFromStationInventoryManifest(filteredPrograms);
         }
 
-        public bool DeleteProgram(int programId)
+        public bool DeleteProgram(int programId, string inventorySource, int stationCode, string user)
         {
             _inventoryRepository.RemoveManifest(programId);
-
+            _stationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
             return true;
         }
 
-        public bool ExpireManifest(int programId, DateTime endDate)
+        public bool ExpireManifest(int programId, DateTime endDate, string inventorySource, int stationCode, string user)
         {
             _inventoryRepository.ExpireManifest(programId, endDate);
-
+            _stationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
             return true;
         }
 

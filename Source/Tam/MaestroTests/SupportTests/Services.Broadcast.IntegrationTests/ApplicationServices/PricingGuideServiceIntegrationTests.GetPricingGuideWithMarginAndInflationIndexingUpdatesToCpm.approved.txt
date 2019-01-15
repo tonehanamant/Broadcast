@@ -68,6 +68,7 @@
         {
           "Affiliation": "PBS",
           "CallLetters": "WUNC-TV 4.1",
+          "CPM": 2.1634698594994596133062050239,
           "LegacyCallLetters": "WUNC",
           "MinProgramsBlendedCpm": 2.1634698594994596133062050239,
           "Programs": [
@@ -99,7 +100,10 @@
               "StationImpressionsPerSpot": 51999.8
             }
           ],
-          "StationCode": 5316
+          "StationCode": 5316,
+          "TotalCost": 112.500000,
+          "TotalImpressions": 51999.8,
+          "TotalSpots": 1
         }
       ],
       "TotalCost": 112.500000,

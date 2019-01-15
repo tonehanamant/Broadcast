@@ -22,7 +22,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         protected IBroadcastAudiencesCache _AudiencesCache;
         protected Dictionary<int, double> _SpotLengthMultipliers;
-        
+
         private Dictionary<int, int> _SpotLengths;
 
         public List<InventoryFileProblem> FileProblems { get; set; } = new List<InventoryFileProblem>();
@@ -47,7 +47,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             set { _AudiencesCache = value; }
         }
-        
+
         /// <summary>
         /// Spot lengths dictionary where key is the length and value is the id
         /// </summary>
@@ -91,7 +91,7 @@ namespace Services.Broadcast.Converters.RateImport
             return HydrateInventoryFile(result);
         }
 
-        protected DisplayBroadcastStation GetDisplayBroadcastStation(string stationName)
+        private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)
         {
             var _stationRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             return _stationRepository.GetBroadcastStationByLegacyCallLetters(stationName) ??
@@ -101,7 +101,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected virtual DisplayBroadcastStation ParseStationCallLetters(string stationName)
         {
             stationName = stationName.Replace("-TV", "").Trim();
-            return GetDisplayBroadcastStation(stationName);
+            return _GetDisplayBroadcastStation(stationName);
         }
 
         protected Dictionary<string, DisplayBroadcastStation> FindStations(List<string> stationNameList)
@@ -204,7 +204,7 @@ namespace Services.Broadcast.Converters.RateImport
                 if (lDays.Contains(","))
                 {
                     string[] lDayGroups = lDays.Split(new char[] { ',' });
-                    
+
                     if (!TryParseDays(lDisplayDaypart, lDayGroups))
                         return false;
                 }
@@ -426,7 +426,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (pTimeString.Contains(":"))
                 {
-                    string[] lTimePieces = pTimeString.Split(new char[] {':'});
+                    string[] lTimePieces = pTimeString.Split(new char[] { ':' });
                     if (lTimePieces.Length == 2)
                     {
                         if (!int.TryParse(lTimePieces[0], out lHour))
@@ -439,7 +439,7 @@ namespace Services.Broadcast.Converters.RateImport
                         if (AM && lHour >= 12)
                             lHour -= 12;
 
-                        lReturn = (lHour*3600) + (lMinute*60);
+                        lReturn = (lHour * 3600) + (lMinute * 60);
                     }
                     else if (lTimePieces.Length == 3)
                     {
@@ -455,7 +455,7 @@ namespace Services.Broadcast.Converters.RateImport
                         if (AM && lHour >= 12)
                             lHour -= 12;
 
-                        lReturn = (lHour*3600) + (lMinute*60) + lSecond;
+                        lReturn = (lHour * 3600) + (lMinute * 60) + lSecond;
                     }
                     else
                     {
@@ -475,7 +475,7 @@ namespace Services.Broadcast.Converters.RateImport
                     if (lHour == 0)
                         lHour = 24;
 
-                    lReturn = (lHour*3600);
+                    lReturn = (lHour * 3600);
                 }
             }
 

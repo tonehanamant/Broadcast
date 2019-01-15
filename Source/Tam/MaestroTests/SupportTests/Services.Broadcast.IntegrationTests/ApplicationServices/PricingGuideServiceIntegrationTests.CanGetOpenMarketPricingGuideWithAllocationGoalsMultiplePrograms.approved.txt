@@ -360,6 +360,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "WWSB 40.1",
+          "CPM": 4.6155621370052694334397476826,
           "LegacyCallLetters": "WWSB",
           "MinProgramsBlendedCpm": 4.6155621370052694334397476826,
           "Programs": [
@@ -518,7 +519,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5942
+          "StationCode": 5942,
+          "TotalCost": 600.0000,
+          "TotalImpressions": 129995.0,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 600.0000,
@@ -540,6 +544,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "WDBD 40.1",
+          "CPM": 5.3548957134059814185118744812,
           "LegacyCallLetters": "WDBD",
           "MinProgramsBlendedCpm": 5.3548957134059814185118744812,
           "Programs": [
@@ -566,7 +571,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6173
+          "StationCode": 6173,
+          "TotalCost": 250.0000,
+          "TotalImpressions": 46686.25,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 250.0000,
@@ -588,6 +596,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "KCYU+",
+          "CPM": 17.481244081870493116760142763,
           "LegacyCallLetters": "KCYU",
           "MinProgramsBlendedCpm": 17.481244081870493116760142763,
           "Programs": [
@@ -658,7 +667,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 1045
+          "StationCode": 1045,
+          "TotalCost": 600.0000,
+          "TotalImpressions": 34322.5,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 600.0000,
@@ -680,6 +692,7 @@
         {
           "Affiliation": "CW",
           "CallLetters": "KION-TV 46.2",
+          "CPM": 0.0,
           "LegacyCallLetters": "NION",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -706,11 +719,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 2784
+          "StationCode": 2784,
+          "TotalCost": 0.0000,
+          "TotalImpressions": 0.0,
+          "TotalSpots": 0
         },
         {
           "Affiliation": "CBS",
           "CallLetters": "KION-TV 46.1",
+          "CPM": 9.345008363782485585324598866,
           "LegacyCallLetters": "KION",
           "MinProgramsBlendedCpm": 9.345008363782485585324598866,
           "Programs": [
@@ -869,7 +886,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5927
+          "StationCode": 5927,
+          "TotalCost": 1250.0000,
+          "TotalImpressions": 133761.25,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 1250.0000,
@@ -891,6 +911,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KIII 3.1",
+          "CPM": 3.4504770284491830995635146559,
           "LegacyCallLetters": "KIII",
           "MinProgramsBlendedCpm": 3.4504770284491830995635146559,
           "Programs": [
@@ -1071,7 +1092,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5319
+          "StationCode": 5319,
+          "TotalCost": 300.0000,
+          "TotalImpressions": 86944.5,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 300.0000,
@@ -1093,6 +1117,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "KDFX-CD 39.1",
+          "CPM": 32.751091703056768558951965066,
           "LegacyCallLetters": "KDFX",
           "MinProgramsBlendedCpm": 32.751091703056768558951965066,
           "Programs": [
@@ -1141,11 +1166,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 7011
+          "StationCode": 7011,
+          "TotalCost": 150.0000,
+          "TotalImpressions": 4580.0,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "CW",
           "CallLetters": "KCWQ",
+          "CPM": 65.854461639776094830424761278,
           "LegacyCallLetters": "KCWQ",
           "MinProgramsBlendedCpm": 65.854461639776094830424761278,
           "Programs": [
@@ -1238,7 +1267,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 2772
+          "StationCode": 2772,
+          "TotalCost": 100.0000,
+          "TotalImpressions": 1518.5,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 250.0000,
@@ -1260,6 +1292,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KYUR 13.1",
+          "CPM": 17.897091722595078299776286353,
           "LegacyCallLetters": "KYUR",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -1352,11 +1385,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6072
+          "StationCode": 6072,
+          "TotalCost": 200.0000,
+          "TotalImpressions": 11175.0,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "FOX",
           "CallLetters": "KTBY 4.1",
+          "CPM": 50.409577819785759294265910523,
           "LegacyCallLetters": "KTBY",
           "MinProgramsBlendedCpm": 50.409577819785759294265910523,
           "Programs": [
@@ -1383,7 +1420,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6682
+          "StationCode": 6682,
+          "TotalCost": 400.0000,
+          "TotalImpressions": 7935.0,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 600.0000,
@@ -1405,6 +1445,7 @@
         {
           "Affiliation": "CBS",
           "CallLetters": "KIDK 3.1",
+          "CPM": 6.9125419432883538069384639756,
           "LegacyCallLetters": "KIDK",
           "MinProgramsBlendedCpm": 6.9125419432883538069384639756,
           "Programs": [
@@ -1541,11 +1582,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5225
+          "StationCode": 5225,
+          "TotalCost": 300.0000,
+          "TotalImpressions": 43399.375,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "FOX",
           "CallLetters": "KXPI-LD 34.2",
+          "CPM": 8.192524321556579621095750128,
           "LegacyCallLetters": "KXPI",
           "MinProgramsBlendedCpm": 8.192524321556579621095750128,
           "Programs": [
@@ -1572,7 +1617,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6444
+          "StationCode": 6444,
+          "TotalCost": 80.0000,
+          "TotalImpressions": 9765.0,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 380.0000,
@@ -1594,6 +1642,7 @@
         {
           "Affiliation": "NBC",
           "CallLetters": "WGEM-TV 10.1",
+          "CPM": 6.3402796380334354646711693219,
           "LegacyCallLetters": "WGEM",
           "MinProgramsBlendedCpm": 6.3402796380334354646711693219,
           "Programs": [
@@ -1752,11 +1801,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5198
+          "StationCode": 5198,
+          "TotalCost": 250.0000,
+          "TotalImpressions": 39430.4375,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "CBS",
           "CallLetters": "KHQA-TV 7.1",
+          "CPM": 6.3932870485989710803656161031,
           "LegacyCallLetters": "KHQA",
           "MinProgramsBlendedCpm": 6.3932870485989710803656161031,
           "Programs": [
@@ -1849,11 +1902,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5192
+          "StationCode": 5192,
+          "TotalCost": 200.0000,
+          "TotalImpressions": 31282.8125,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "ABC",
           "CallLetters": "KHQA-TV 7.2",
+          "CPM": 6.4164260506897658004491498235,
           "LegacyCallLetters": "NHQA",
           "MinProgramsBlendedCpm": 6.4164260506897658004491498235,
           "Programs": [
@@ -1990,11 +2047,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 2279
+          "StationCode": 2279,
+          "TotalCost": 100.0000,
+          "TotalImpressions": 15585.0,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "FOX",
           "CallLetters": "WGEM-TV 10.3",
+          "CPM": 30.173497611264772441538848378,
           "LegacyCallLetters": "GGEM",
           "MinProgramsBlendedCpm": 30.173497611264772441538848378,
           "Programs": [
@@ -2021,7 +2082,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 7634
+          "StationCode": 7634,
+          "TotalCost": 150.0000,
+          "TotalImpressions": 4971.25,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 700.0000,
@@ -2043,6 +2107,7 @@
         {
           "Affiliation": "NBC",
           "CallLetters": "KNBN+",
+          "CPM": 4.4632182991950266996094683988,
           "LegacyCallLetters": "KNBN",
           "MinProgramsBlendedCpm": 4.4632182991950266996094683988,
           "Programs": [
@@ -2179,7 +2244,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 3503
+          "StationCode": 3503,
+          "TotalCost": 70.0000,
+          "TotalImpressions": 15683.75,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 70.0000,
@@ -2201,6 +2269,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "WNTZ-TV 48.1",
+          "CPM": 0.0,
           "LegacyCallLetters": "WNTZ",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -2227,7 +2296,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6433
+          "StationCode": 6433,
+          "TotalCost": 0.0000,
+          "TotalImpressions": 0.0,
+          "TotalSpots": 0
         }
       ],
       "TotalCost": 0.0000,
@@ -2249,6 +2321,7 @@
         {
           "Affiliation": "CBS",
           "CallLetters": "KJNB-LD 39.2",
+          "CPM": 14.540167211922937113776808433,
           "LegacyCallLetters": "NJNB",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -2363,11 +2436,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 10736
+          "StationCode": 10736,
+          "TotalCost": 50.0000,
+          "TotalImpressions": 3438.75,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "FOX",
           "CallLetters": "KJNB-LD 39.1",
+          "CPM": 33.883947479881406183820415078,
           "LegacyCallLetters": "KJNB",
           "MinProgramsBlendedCpm": 33.883947479881406183820415078,
           "Programs": [
@@ -2394,7 +2471,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 10686
+          "StationCode": 10686,
+          "TotalCost": 50.0000,
+          "TotalImpressions": 1475.625,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 100.0000,
@@ -2416,6 +2496,7 @@
         {
           "Affiliation": "NBC",
           "CallLetters": "KTFT-LD 7.1",
+          "CPM": 4.6051116739580934837669813493,
           "LegacyCallLetters": "KTFT",
           "MinProgramsBlendedCpm": 4.6051116739580934837669813493,
           "Programs": [
@@ -2618,7 +2699,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6269
+          "StationCode": 6269,
+          "TotalCost": 150.0000,
+          "TotalImpressions": 32572.5,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 150.0000,
@@ -2640,6 +2724,7 @@
         {
           "Affiliation": "FOX",
           "CallLetters": "KFNB+",
+          "CPM": 237.62376237623762376237623762,
           "LegacyCallLetters": "KFNB",
           "MinProgramsBlendedCpm": 0.0,
           "Programs": [
@@ -2710,11 +2795,15 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 1160
+          "StationCode": 1160,
+          "TotalCost": 300.0000,
+          "TotalImpressions": 1262.5,
+          "TotalSpots": 10
         },
         {
           "Affiliation": "ABC",
           "CallLetters": "KTWO-TV 2.1",
+          "CPM": 11.261789686077612500586551546,
           "LegacyCallLetters": "KTWO",
           "MinProgramsBlendedCpm": 11.261789686077612500586551546,
           "Programs": [
@@ -2829,7 +2918,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5408
+          "StationCode": 5408,
+          "TotalCost": 300.0000,
+          "TotalImpressions": 26638.75,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 600.0000,
@@ -2851,6 +2943,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KATN 2.1",
+          "CPM": 29.551373215374101915298376521,
           "LegacyCallLetters": "KATN",
           "MinProgramsBlendedCpm": 29.551373215374101915298376521,
           "Programs": [
@@ -2943,7 +3036,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6069
+          "StationCode": 6069,
+          "TotalCost": 100.0000,
+          "TotalImpressions": 3383.9375,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 100.0000,
@@ -2965,6 +3061,7 @@
         {
           "Affiliation": "ABC",
           "CallLetters": "KJUD 8.1",
+          "CPM": 15.191796429927838966957842765,
           "LegacyCallLetters": "KJUD",
           "MinProgramsBlendedCpm": 15.191796429927838966957842765,
           "Programs": [
@@ -3057,7 +3154,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6684
+          "StationCode": 6684,
+          "TotalCost": 50.0000,
+          "TotalImpressions": 3291.25,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 50.0000,
@@ -3079,6 +3179,7 @@
         {
           "Affiliation": "CBS",
           "CallLetters": "KXGN-TV 5.1",
+          "CPM": 467.83625730994152046783625731,
           "LegacyCallLetters": "KXGN",
           "MinProgramsBlendedCpm": 467.83625730994152046783625731,
           "Programs": [
@@ -3171,7 +3272,10 @@
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 5465
+          "StationCode": 5465,
+          "TotalCost": 400.0000,
+          "TotalImpressions": 855.0,
+          "TotalSpots": 10
         }
       ],
       "TotalCost": 400.0000,

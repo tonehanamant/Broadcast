@@ -7,6 +7,7 @@ import { toggleModal, createAlert } from "Ducks/app";
 import { getTracker, getTrackerClientScrubbing } from "Ducks/tracker";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
+import moment from "moment";
 
 const mapStateToProps = ({ tracker: { trackerGridData }, menu }) => ({
   trackerGridData,
@@ -94,6 +95,12 @@ export class DataGridContainer extends Component {
         Header: "Advertiser",
         accessor: "Advertiser",
         minWidth: 15
+      },
+      {
+        Header: "Last Updated",
+        accessor: "LastBuyDate",
+        minWidth: 15,
+        Cell: row => (row.value ? moment(row.value).format("MM/DD/YYYY") : "-")
       },
       {
         Header: "Post Log Upload Date",

@@ -113,7 +113,7 @@ namespace Services.Broadcast.ApplicationServices
                 distribution.Markets = _LoadMarketsForDistribution(distribution.DistributionId, proposal.Details.Single(x=>x.Id == proposalDetailId));
                 distribution.AllMarkets = _LoadAllMarketsForDistribution(proposal, distribution.ProposalDetailId, distribution.Markets);
                 _SetProposalOpenMarketPricingGuideGridDisplayFilters(distribution);
-                _SumTotalsForMarkets(distribution.Markets);
+                _SumTotalsForMarketsAndStations(distribution.Markets);
             }
 
             return distribution;
@@ -215,7 +215,7 @@ namespace Services.Broadcast.ApplicationServices
         public PricingGuideDto ApplyFilterOnOpenMarketGrid(PricingGuideDto dto)
         {
             _ApplyFilterForProposalOpenMarketPricingGuideGrid(dto);
-            _SumTotalsForMarkets(dto.Markets);
+            _SumTotalsForMarketsAndStations(dto.Markets);
             dto.Markets = ApplyDefaultSortingForPricingGuideMarkets(dto.Markets);
 
             return dto;
@@ -400,7 +400,6 @@ namespace Services.Broadcast.ApplicationServices
 
             _ProposalProgramsCalculationEngine.CalculateTotalCostForPrograms(programs);
             _ProposalProgramsCalculationEngine.CalculateTotalImpressionsForPrograms(programs);
-            _SumTotalsForMarkets(markets);
         }
 
         private PricingGuideDto _GetPricingGuideOpenMarketInventoryDto(
@@ -408,9 +407,8 @@ namespace Services.Broadcast.ApplicationServices
             List<ProprietaryPricingDto> proprietaryPricingValues)
         {
             pricingGuideDto.Markets = ApplyDefaultSortingForPricingGuideMarkets(pricingGuideDto.Markets);
-            _SetCanEditSpotsForPrograms(pricingGuideDto);
             _SetProposalOpenMarketPricingGuideGridDisplayFilters(pricingGuideDto);
-            _SumTotalsForMarkets(pricingGuideDto.Markets);
+            _SumTotalsForMarketsAndStations(pricingGuideDto.Markets);
             pricingGuideDto.ProprietaryPricing = _GetProprietaryPricings(pricingGuideDto.ProprietaryPricing, pricingGuideDto.ProposalDetailId);
             _SumTotalsForPricingGuide(pricingGuideDto);
             return pricingGuideDto;
@@ -480,12 +478,24 @@ namespace Services.Broadcast.ApplicationServices
             return proprietaryPricing;
         }
 
-        private void _SumTotalsForMarkets(List<PricingGuideMarketDto> markets)
+        private void _SumTotalsForMarketsAndStations(List<PricingGuideMarketDto> markets)
         {
-            markets.ForEach(m => m.TotalCost = m.Stations.Sum(s => s.Programs.Sum(p => p.Cost)));
-            markets.ForEach(m => m.TotalSpots = m.Stations.Sum(s => s.Programs.Sum(p => p.Spots)));
-            markets.ForEach(m => m.TotalImpressions = m.Stations.Sum(s => s.Programs.Sum(p => p.Impressions)));
-            markets.ForEach(m => m.CPM = ProposalMath.CalculateCpm(m.TotalCost, m.TotalImpressions));
+            markets.ForEach(m =>
+            {
+                _SumTotalsForStations(m.Stations);
+                m.TotalCost = m.Stations.Sum(s => s.TotalCost);
+                m.TotalSpots = m.Stations.Sum(s => s.TotalSpots);
+                m.TotalImpressions = m.Stations.Sum(s => s.TotalImpressions);
+                m.CPM = ProposalMath.CalculateCpm(m.TotalCost, m.TotalImpressions);
+            });
+        }
+
+        private void _SumTotalsForStations(List<PricingGuideStationDto> stations)
+        {
+            stations.ForEach(s => s.TotalCost = s.Programs.Sum(p => p.Cost));
+            stations.ForEach(s => s.TotalSpots = s.Programs.Sum(p => p.Spots));
+            stations.ForEach(s => s.TotalImpressions = s.Programs.Sum(p => p.Impressions));
+            stations.ForEach(s => s.CPM = ProposalMath.CalculateCpm(s.TotalCost, s.TotalImpressions));
         }
 
         private static void _SetProposalOpenMarketPricingGuideGridDisplayFilters(PricingGuideDto dto)
@@ -526,16 +536,6 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
-        private void _SetCanEditSpotsForPrograms(PricingGuideDto dto)
-        {
-            var programs = dto.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
-
-            foreach (var program in programs)
-            {
-               // program.HasImpressions = program.EffectiveImpressionsPerSpot > 0;
-            }
-        }
-
         private PricingGuideDto _MapToPricingGuideDto(PricingGuideOpenMarketInventoryRequestDto dto
             , PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory)
         {
@@ -574,7 +574,6 @@ namespace Services.Broadcast.ApplicationServices
 
             inventory.MarketCoverageFileId = marketCoverageDto.MarketCoverageFileId;
 
-            _SumTotalsForMarkets(markets);
             _CalculateCpmForMarkets(markets);
 
             inventory.AllMarkets = _MapAllMarketsObject(markets);
