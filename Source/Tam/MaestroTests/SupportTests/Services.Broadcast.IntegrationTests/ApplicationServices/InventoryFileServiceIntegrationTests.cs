@@ -142,10 +142,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static void VerifyInventoryRaw(List<StationInventoryGroup> inventory)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
             //jsonResolver.Ignore(typeof(DisplayAudience), "Id");
@@ -196,7 +196,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
 
         }
-
 
         [Ignore]
         [Test]
@@ -297,21 +296,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 request.RatingBook = 416;
                 request.EffectiveDate = DateTime.Parse("10/1/2017");
                 _InventoryFileService.SaveInventoryFile(request);
-
-                request2.StreamData = new FileStream(
-                    @".\Files\CNNAMPMBarterObligations_Clean.xlsx",
-                    FileMode.Open,
-                    FileAccess.Read);
-                request2.FileName = "CNNAMPMBarterObligations_Clean.xlsx";
-                request2.InventorySource = "CNN";
-                request2.UserName = "IntegrationTestUser";
-                request2.EffectiveDate = DateTime.Parse("10/1/2017");
-
                 _InventoryFileService.SaveInventoryFile(request);
             }
         }
 
-    
         [Test]
         public void CanLoadGenres()
         {
@@ -551,7 +539,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(saved);
                 var stationContact =
                     _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
-                _InventoryFileService.DeleteStationContact(stationContact.Id, "system");
+                _InventoryFileService.DeleteStationContact("OpenMarket", stationContact.Id, "system");
             }
         }
 
@@ -617,7 +605,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 returnContact = _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == name);
 
                 Assert.AreEqual(returnContact.Company, company);
-                _InventoryFileService.DeleteStationContact(returnContact.Id, "system");
+                _InventoryFileService.DeleteStationContact("OpenMarket", returnContact.Id, "system");
             }
         }
 
@@ -646,7 +634,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // remove 
                 var stationContact =
                     _InventoryFileService.GetStationContacts("OpenMarket", stationCode).Find(q => q.Name == stationContactName);
-                var deleted = _InventoryFileService.DeleteStationContact(stationContact.Id, "system");
+                var deleted = _InventoryFileService.DeleteStationContact("OpenMarket", stationContact.Id, "system");
 
                 Assert.IsTrue(deleted);
             }
@@ -1172,13 +1160,56 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileService.SaveInventoryFile(request);
 
                 // it seems datetime.now has some resolution issues when the time is updated. using utcnow seems to have a higher resolution
-                var stationLastModifiedDate = _InventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26)).Single(q => q.Code == stationCodeWVTM).ModifiedDate.ToUniversalTime();
+                var stationLastModifiedDate = _InventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26)).Single(q => q.Code == stationCodeWVTM).ModifiedDate?.ToUniversalTime();
                 
                 Assert.IsTrue(stationLastModifiedDate != default(DateTime));
                 var dateToCompare = DateTime.UtcNow;
                 Assert.IsTrue(stationLastModifiedDate <= dateToCompare);
 
-                Console.WriteLine("Station modified date {0}/ms:{1} - now {2}/ms:{3}", stationLastModifiedDate, stationLastModifiedDate.Millisecond, dateToCompare, dateToCompare.Millisecond);
+                Console.WriteLine("Station modified date {0}/ms:{1} - now {2}/ms:{3}", stationLastModifiedDate, stationLastModifiedDate?.Millisecond, dateToCompare, dateToCompare.Millisecond);
+            }
+        }
+
+
+        [Test]
+        [Ignore]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStations_OpenMarket()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stations = _InventoryFileService.GetStations("OpenMarket", new DateTime(2016, 09, 26));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [Ignore]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStations_CNN()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stations = _InventoryFileService.GetStations("CNN", new DateTime(2016, 09, 26));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
             }
         }
 
@@ -3539,9 +3570,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const int manifestId = 26684;
 
-                _InventoryFileService.DeleteProgram(manifestId);
+                _InventoryFileService.DeleteProgram(manifestId, "OpenMarket", 5319, "test integration");
 
-                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 123);
+                var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
 
                 var deletedStationProgram = allStationPrograms.FirstOrDefault(p => p.Id == manifestId);
 
@@ -3557,7 +3588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const int manifestId = 26684;
                 var expireDate = new DateTime(2017, 9, 17);
 
-                _InventoryFileService.ExpireManifest(manifestId, expireDate);
+                _InventoryFileService.ExpireManifest(manifestId, expireDate, "OpenMarket", 5319, "test integration");
 
                 var allStationPrograms = _InventoryFileService.GetAllStationPrograms("OpenMarket", 5319);
 

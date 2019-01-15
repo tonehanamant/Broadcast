@@ -615,6 +615,9 @@
     <Compile Include="station_inventory_group.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="station_inventory_loaded.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="station_inventory_manifest.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

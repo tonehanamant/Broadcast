@@ -1537,7 +1537,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProposalOpenMarketService_CanGetInventory()
+        public void CanGetInventory()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 10799);
 
@@ -1555,7 +1555,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_SetsProvidedUnitImpressions()
+        public void SetsProvidedUnitImpressions()
         {
             var proposalDetailId = 10799;
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId);
@@ -1580,7 +1580,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_CalculatesTotalImpressions_ForInventoryWeeks()
+        public void CalculatesTotalImpressions_ForInventoryWeeks()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
             var programWithProvidedUnitImpressions = inventory.Weeks
@@ -1642,7 +1642,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketInventoryService_ReturnsOpenMarketInventory_WithProgramsFilteredByName_CaseInsensitive()
+        public void ReturnsOpenMarketInventory_WithProgramsFilteredByName_CaseInsensitive()
         {
             const int proposalId = 26017;
             const int proposalDetailId = 9979;
@@ -1688,7 +1688,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_SetsCanEditSpotsPropertyTrue_ForProgramsThatHaveImpressions()
+        public void SetsCanEditSpotsPropertyTrue_ForProgramsThatHaveImpressions()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
             var programs = inventory.Weeks
@@ -1703,7 +1703,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_SetsCanEditSpotsPropertyFalse_ForProgramsThatDoNotHaveImpressions()
+        public void SetsCanEditSpotsPropertyFalse_ForProgramsThatDoNotHaveImpressions()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 14);
             var programs = inventory.Weeks
@@ -1718,7 +1718,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void ProposalOpenMarketService_ChecksForAllocatedSpots()
+        public void ChecksForAllocatedSpots()
         {
             var firstDetailId = 10799;
             var secondDetailId = 9979;
@@ -1739,7 +1739,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProposalOpenMarketService_SavesProposalSnapshot()
+        public void SavesProposalSnapshot()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1781,7 +1781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProposalOpenMarketServiceCalculateCpmWhenStationImpressionsIsNullOrZero()
+        public void CalculateCpmWhenStationImpressionsIsNullOrZero()
         {
             var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 9989);
 
