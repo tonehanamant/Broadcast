@@ -507,6 +507,7 @@ export default function reducer(state = initialState, action) {
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         activeOpenMarketData: data.Data,
         isOpenMarketDataSortName: false,
+        changedMarkets: [],
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };
