@@ -77,6 +77,8 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of AffidavitMatchingProposalWeek objects</returns>
         List<MatchingProposalWeek> GetMatchingProposalWeeksByDetailId(int proposalDetailId);
         List<ProposalOpenMarketInventoryWeekDto> GetProposalDetailWeeks(int proposalDetailId);
+        List<Tuple<int, int>> GetIdsOfProposalDetailsWithMisalignedDayparts();
+        void UpdateProposalDetailDayparts(List<Tuple<int, int>> updateProposalDetailDaypartMap);
     }
 
     public class ProposalRepository : BroadcastRepositoryBase, IProposalRepository
@@ -1667,6 +1669,46 @@ namespace Services.Broadcast.Repositories
                             })
                             .ToList();
                 });
+        }
+
+        public List<Tuple<int, int>> GetIdsOfProposalDetailsWithMisalignedDayparts()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var data = (from details in context.proposal_version_details
+                                join timespan in context.timespans on details.daypart.timespan_id equals timespan.id
+                                where (timespan.start_time % 60 > 0 || (timespan.end_time % 60 < 59))
+                                select new
+                                {
+                                    details.id,
+                                    details.daypart_id
+                                })
+                                .ToList();
+
+                    return data
+                            .Select(d => Tuple.Create
+                            (
+                                d.id,
+                                d.daypart_id
+                            ))
+                            .ToList();
+                });
+        }
+
+        public void UpdateProposalDetailDayparts(List<Tuple<int, int>> updateProposalDetailDaypartMap)
+        {
+            _InReadUncommitedTransaction(
+                 context =>
+                 {
+                    foreach(var update in updateProposalDetailDaypartMap)
+                     {
+                         var proposalDetail = context.proposal_version_details.Find(update.Item1);
+                         proposalDetail.daypart_id = update.Item2;
+                         context.SaveChanges();
+                     }
+
+                 });
         }
     }
 }

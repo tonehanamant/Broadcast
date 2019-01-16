@@ -26,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
         private readonly DateTime _CurrentDateTime = new DateTime(2016, 02, 15);
         private readonly IProposalProprietaryInventoryService _ProposalProprietaryInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalProprietaryInventoryService>();
+        private readonly int _SecondsPerHour = 60 * 60;
 
         public static ProposalDto SetupProposalDto()
         {
@@ -2654,6 +2655,67 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileMode.Open,
                         FileAccess.Read)
             };
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save a daypart that has a start or an end time with non-zero seconds", MatchType = MessageMatch.Contains)]
+        public void ThrowExceptionWhenProposalDetailHasDaypartWithNonZeroSecondsStartTime()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = SetupProposalDto();
+                var proposalDetail = SetupProposalDetailDto();
+                proposalDetail.Daypart.startTime = 8;
+                proposalDetail.Daypart.endTime = 1 * _SecondsPerHour;
+                proposalDto.Details.Add(proposalDetail);
+                var res = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save a daypart that has a start or an end time with non-zero seconds", MatchType = MessageMatch.Contains)]
+        public void ThrowExceptionWhenProposalDetailHasDaypartWithNonZeroSecondsEndTime()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = SetupProposalDto();
+                var proposalDetail = SetupProposalDetailDto();
+                proposalDetail.Daypart.startTime = 0;
+                proposalDetail.Daypart.endTime = 1 * _SecondsPerHour + 7;
+                proposalDto.Details.Add(proposalDetail);
+                var res = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save a daypart that has a start time or end time over 24H", MatchType = MessageMatch.Contains)]
+        public void ThrowExceptionWhenProposalDetailHasDaypartStartTimeOver24H()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = SetupProposalDto();
+                var proposalDetail = SetupProposalDetailDto();
+                proposalDetail.Daypart.startTime = 25 * _SecondsPerHour;
+                proposalDetail.Daypart.endTime = 1 * _SecondsPerHour;
+                proposalDto.Details.Add(proposalDetail);
+                var res = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save a daypart that has a start time or end time over 24H", MatchType = MessageMatch.Contains)]
+        public void ThrowExceptionWhenProposalDetailHasDaypartEndTimeOver24H()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposalDto = SetupProposalDto();
+                var proposalDetail = SetupProposalDetailDto();
+                proposalDetail.Daypart.startTime = 1 * _SecondsPerHour;
+                proposalDetail.Daypart.endTime = 25 * _SecondsPerHour;
+                proposalDto.Details.Add(proposalDetail);
+                var res = _ProposalService.SaveProposal(proposalDto, "IntegrationTestUser", _CurrentDateTime);
+            }
         }
     }
 }

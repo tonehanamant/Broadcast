@@ -27,6 +27,7 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
+using System.Text;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -56,6 +57,7 @@ namespace Services.Broadcast.ApplicationServices
 
         List<string> SaveProposalBuy(ProposalBuySaveRequestDto proposalBuyRequest);
         Tuple<string, Stream> GenerateScxFileDetail(int proposalDetailId);
+        string AlignProposalDaypartsToZeroSeconds();
     }
 
     public class ProposalService : IProposalService
@@ -877,6 +879,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             var validSpothLengths = _SpotLengthRepository.GetSpotLengthAndIds();
 
+            const int secondsPerMinute = 60;
+            const int secondsPerDay = 60 * 60 * 24;
+
             foreach (var detail in proposalDto.Details)
             {
                 _ValidateProposalProjectionBooks(detail);
@@ -903,6 +908,12 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Include) && detail.ProgramCriteria.Exists(g => g.Contain == ContainTypeEnum.Exclude))
                     throw new Exception("Cannot save proposal detail that contains both program name inclusion and program name exclusion criteria.");
+
+                if ((detail.Daypart.startTime % secondsPerMinute > 0) || (detail.Daypart.endTime % secondsPerMinute > 0))
+                    throw new Exception("Cannot save a daypart that has a start or an end time with non-zero seconds");
+
+                if ((detail.Daypart.startTime > secondsPerDay) || (detail.Daypart.endTime > secondsPerDay))
+                    throw new Exception("Cannot save a daypart that has a start time or end time over 24H");
             }
         }
 
@@ -1494,6 +1505,28 @@ namespace Services.Broadcast.ApplicationServices
             var detailFileName = string.Format(fileNameTemplate, proposalName, proposal.Id, detailName);
 
             return new Tuple<string, Stream>(detailFileName, scxFile.ScxStream);
+        }
+
+        public string AlignProposalDaypartsToZeroSeconds()
+        {
+            var messageBuilder = new StringBuilder();
+            List<Tuple<int, int>> proposalDetailDaypartList = _ProposalRepository.GetIdsOfProposalDetailsWithMisalignedDayparts();
+            List<Tuple<int, int>> updateProposalDetailDaypartMap = new List<Tuple<int, int>>();
+            foreach(var detailDaypart in proposalDetailDaypartList)
+            {
+                messageBuilder.AppendLine($"Updating daypart on proposal detail {detailDaypart.Item1}");
+
+                var daypart = _DaypartCache.GetDisplayDaypart(detailDaypart.Item2);
+                daypart.StartTime = daypart.StartTime - (daypart.StartTime % 60);
+                if(daypart.EndTime % 60 != 59)
+                {
+                    daypart.EndTime = daypart.EndTime - (daypart.EndTime % 60) - 1;
+                }
+                var daypartId = _DaypartCache.GetIdByDaypart(daypart);
+                updateProposalDetailDaypartMap.Add(Tuple.Create(detailDaypart.Item1, daypartId));              
+            }
+            _ProposalRepository.UpdateProposalDetailDayparts(updateProposalDetailDaypartMap);
+            return messageBuilder.ToString();
         }
     }
 }
