@@ -7,7 +7,7 @@
     "FileHash": "6D-21-22-6E-B8-72-65-E9-17-E6-74-A1-EE-C5-FD-9A-DA-5A-E1-25",
     "FileName": "Sigma-MissingRequiredColumn.csv",
     "FilePath": ".\\Files\\Sigma-MissingRequiredColumn.csv",
-    "Source": 0,
+    "Source": 3,
     "Status": 2
   }
 ]
