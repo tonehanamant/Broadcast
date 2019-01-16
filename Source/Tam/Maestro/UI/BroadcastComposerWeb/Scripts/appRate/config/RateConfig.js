@@ -83,7 +83,7 @@
                     sortable: true,
                     size: '20%',
                     render: function (record, index, column_index) {
-                        return moment(record.ModifiedDate).format("MM/DD/YYYY h:mm:ss a");
+                        return record.ModifiedDate ? moment(record.ModifiedDate).format("MM/DD/YYYY h:mm:ss a") : "-";
                     }
                 }
             ],

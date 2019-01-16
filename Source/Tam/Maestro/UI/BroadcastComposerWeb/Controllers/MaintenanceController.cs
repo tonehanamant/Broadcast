@@ -106,7 +106,18 @@ namespace BroadcastComposerWeb.Controllers
         
             ViewBag.Message = "Get file worked w/o error!\r\n";
             return View("Index");
- }
+        }
+
+        [HttpGet]
+        public ActionResult AlignProposalDaypartsToZeroSeconds()
+        {
+            var proposalService = _ApplicationServiceFactory.GetApplicationService<IProposalService>();
+
+            var result = proposalService.AlignProposalDaypartsToZeroSeconds();
+
+            ViewBag.Message = result;
+            return View("Index");
+        }
 
 
     }

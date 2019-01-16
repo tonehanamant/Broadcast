@@ -5,6 +5,7 @@
       "Company": "Cadent",
       "Email": "paul@cadent.test",
       "Fax": "(098)765-4321",
+      "InventorySourceString": null,
       "Name": "Paul H",
       "Phone": "(123)456-7890",
       "StationCode": 5044,

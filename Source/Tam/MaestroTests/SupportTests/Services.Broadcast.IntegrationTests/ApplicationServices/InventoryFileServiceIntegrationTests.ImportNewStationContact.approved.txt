@@ -3,6 +3,7 @@
     "Company": "WVTM",
     "Email": "josh@cadent.test",
     "Fax": "(098)765-4321",
+    "InventorySourceString": null,
     "Name": "Josh J",
     "Phone": "(123)456-7890",
     "StationCode": 5044,

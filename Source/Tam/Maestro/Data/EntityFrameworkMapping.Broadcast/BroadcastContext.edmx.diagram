@@ -252,6 +252,9 @@
         <EntityTypeShape EntityType="BroadcastModel.market_coverage_files" Width="1.5" PointX="20.375" PointY="25.875" />
         <AssociationConnector Association="BroadcastModel.FK_market_coverages_market_coverage_files" />
         <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distributions_market_coverage_files" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_loaded" Width="1.5" PointX="12.625" PointY="21.625" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_inventory_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_stations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

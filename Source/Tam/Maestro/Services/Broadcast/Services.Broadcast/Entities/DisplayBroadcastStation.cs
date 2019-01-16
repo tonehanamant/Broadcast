@@ -17,7 +17,7 @@ namespace Services.Broadcast.Entities
         public int MarketCode { get; set; }
         public string Affiliation { get; set; }
         public string RateDataThrough { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public DateTime? ManifestMaxEndDate { get; set; }
 
         public override string ToString()
