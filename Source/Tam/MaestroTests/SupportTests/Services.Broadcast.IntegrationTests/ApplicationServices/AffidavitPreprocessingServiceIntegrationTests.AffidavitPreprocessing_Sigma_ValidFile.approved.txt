@@ -5,7 +5,7 @@
     "FileHash": "E5-A6-72-EB-56-14-C1-5E-50-D2-23-DA-B2-F1-79-AF-DA-82-80-17",
     "FileName": "Sigma-ValidFile.csv",
     "FilePath": ".\\Files\\Sigma-ValidFile.csv",
-    "Source": 0,
+    "Source": 3,
     "Status": 1
   }
 ]

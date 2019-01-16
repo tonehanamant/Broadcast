@@ -197,6 +197,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _ProcessCsvFile(WWTVOutboundFileValidationResult currentFile, string filepath)
         {
             List<string> requiredSigmaColumns = new List<string>() { "IDENTIFIER 1", "STATION", "DATE AIRED", "AIR START TIME", "ISCI/AD-ID" };
+            currentFile.Source = FileSourceEnum.Strata;
             var parser = _CsvHelper.SetupCSVParser(filepath, currentFile);
             if (currentFile.ErrorMessages.Any()) return;
 
