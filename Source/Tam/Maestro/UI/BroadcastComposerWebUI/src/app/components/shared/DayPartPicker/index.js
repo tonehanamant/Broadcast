@@ -31,7 +31,7 @@ import "./index.scss";
 const transformTimeFromSeconds = time =>
   moment()
     .startOf("day")
-    .add(time % 3600, "seconds");
+    .add(time % 86400, "seconds");
 
 const transformDayPart = ({
   Text: text,
