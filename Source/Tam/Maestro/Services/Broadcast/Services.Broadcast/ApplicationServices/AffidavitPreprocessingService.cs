@@ -198,22 +198,25 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<string> requiredSigmaColumns = new List<string>() { "IDENTIFIER 1", "STATION", "DATE AIRED", "AIR START TIME", "ISCI/AD-ID" };
             currentFile.Source = FileSourceEnum.Strata;
-            var parser = _CsvHelper.SetupCSVParser(filepath, currentFile);
-            if (currentFile.ErrorMessages.Any()) return;
-
-            var fileColumns = _CsvHelper.GetFileHeader(parser);
-            currentFile.ErrorMessages.AddRange(_CsvHelper.ValidateRequiredColumns(fileColumns, requiredSigmaColumns));
-            if (currentFile.ErrorMessages.Any()) return;
-
-            var headers = _CsvHelper.GetHeaderDictionary(fileColumns, requiredSigmaColumns);
-
-            int rowNumber = 1;
-            while (!parser.EndOfData)
+            using (var parser = _CsvHelper.SetupCSVParser(filepath, currentFile))
             {
-                var fields = parser.ReadFields();
-                var rowValidationErrors = _CsvHelper.GetRowValidationResults(fields, headers, requiredSigmaColumns, rowNumber);
-                currentFile.ErrorMessages.AddRange(rowValidationErrors);
-                rowNumber++;
+                if (currentFile.ErrorMessages.Any()) return;
+
+                var fileColumns = _CsvHelper.GetFileHeader(parser);
+                currentFile.ErrorMessages.AddRange(
+                    _CsvHelper.ValidateRequiredColumns(fileColumns, requiredSigmaColumns));
+                if (currentFile.ErrorMessages.Any()) return;
+
+                var headers = _CsvHelper.GetHeaderDictionary(fileColumns, requiredSigmaColumns);
+
+                int rowNumber = 1;
+                while (!parser.EndOfData)
+                {
+                    var fields = parser.ReadFields();
+                    var rowValidationErrors = _CsvHelper.GetRowValidationResults(fields, headers, requiredSigmaColumns, rowNumber);
+                    currentFile.ErrorMessages.AddRange(rowValidationErrors);
+                    rowNumber++;
+                }
             }
         }
 
