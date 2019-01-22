@@ -1,5 +1,5 @@
 ﻿{
   "Data": null,
-  "Message": "PDF parsing failed.Error: End-of-File, expected line",
+  "Message": "Invalid file",
   "Success": false
 }
