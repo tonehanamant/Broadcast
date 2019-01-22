@@ -31,7 +31,7 @@ import "./index.scss";
 const transformTimeFromSeconds = time =>
   moment()
     .startOf("day")
-    .add(time % 3600, "seconds");
+    .add(time % 86400, "seconds");
 
 const transformDayPart = ({
   Text: text,
@@ -150,8 +150,18 @@ export default class DayPartPicker extends Component {
 
     return (
       <div className="daypart-picker">
-        <InputGroup onClick={this.onShow} className="daypicker-input">
-          <FormControl type="text" value={text} disabled={disabled} />
+        <InputGroup
+          onClick={this.onShow}
+          className="daypicker-input read-only-picker"
+        >
+          <FormControl
+            type="text"
+            value={text}
+            readonly
+            spellcheck="false"
+            autocorrect="off"
+            disabled={disabled}
+          />
           <InputGroup.Addon>
             <span className="glyphicon glyphicon-time" aria-hidden="true" />
           </InputGroup.Addon>

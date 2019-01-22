@@ -47,7 +47,8 @@ namespace Services.Broadcast.Repositories
                 {
                     var data = (from week in context.proposal_version_detail_quarter_weeks
                                 from affidavitClientScrub in week.affidavit_client_scrubs
-                                where week.myevents_report_name == reportName
+                                where week.myevents_report_name == reportName 
+                                && week.proposal_version_detail_quarters.proposal_version_details.proposal_versions.status == (int)ProposalEnums.ProposalStatusType.Contracted
                                 select new { week, affidavitClientScrub })
                                 .GroupBy(x => x.week.id);
                     return data.Select(x => new NtiProposalVersionDetailWeek

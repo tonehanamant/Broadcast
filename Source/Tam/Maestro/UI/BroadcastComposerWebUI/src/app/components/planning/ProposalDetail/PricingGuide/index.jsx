@@ -26,6 +26,7 @@ import {
   calculateBalanceSum,
   parsePrograms
 } from "./util";
+import PricingProposalSummary from "./PricingProposalSummary";
 import "./index.scss";
 
 const isActiveDialog = (detail, modal) =>
@@ -401,7 +402,9 @@ class PricingGuide extends Component {
       hasSpotsAllocated,
       onCopyConfirmMsg,
       isSpotsCopied,
-      isEditMarketsActive
+      isEditMarketsActive,
+      initialdata,
+      proposalEditForm
     } = this.props;
     const { distribution, discard, isGuideEditing } = this.state;
     const show = isActiveDialog(detail, modal);
@@ -473,6 +476,15 @@ class PricingGuide extends Component {
                     <div className="summary-label">TOTAL COST</div>
                   </div>
                 </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12}>
+                <PricingProposalSummary
+                  initialdata={initialdata}
+                  proposalEditForm={proposalEditForm}
+                  detail={detail}
+                />
               </Col>
             </Row>
           </Modal.Header>
