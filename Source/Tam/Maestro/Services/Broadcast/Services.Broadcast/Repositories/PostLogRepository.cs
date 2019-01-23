@@ -53,7 +53,7 @@ namespace Services.Broadcast.Repositories
         /// Gets all the contracted proposals that have played spots
         /// </summary>
         /// <returns>List of PostedContracts objects</returns>
-        List<PostedContracts> GetAllPostedProposals();
+        List<PostedContract> GetAllPostedProposals();
 
         /// <summary>
         /// Get the impression for a list of audiences of a proposal
@@ -283,7 +283,7 @@ namespace Services.Broadcast.Repositories
         /// Gets all the contracted proposals that have played spots
         /// </summary>
         /// <returns>List of PostedContracts objects</returns>
-        public List<PostedContracts> GetAllPostedProposals()
+        public List<PostedContract> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -297,7 +297,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.proposal_version_details.Select(d => d.proposal_buy_files))
                         .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted && p.snapshot_date == null)
                         .ToList();
-                    var posts = new List<PostedContracts>();
+                    var posts = new List<PostedContract>();
 
                     foreach (var proposalVersion in proposalVersions)
                     {
@@ -307,7 +307,7 @@ namespace Services.Broadcast.Repositories
                                      from postlogFileScrub in proposalVersionWeeks.postlog_client_scrubs
                                      select postlogFileScrub).ToList();
 
-                        posts.Add(new PostedContracts
+                        posts.Add(new PostedContract
                         {
                             ContractId = proposalVersion.proposal_id,
                             Equivalized = proposalVersion.equivalized,

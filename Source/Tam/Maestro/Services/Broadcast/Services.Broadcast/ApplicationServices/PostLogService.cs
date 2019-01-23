@@ -267,7 +267,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Sets IsActiveThisWeek property true if proposal has spots bought this week
         /// </summary>
-        private void _SetIsActiveThisWeekProperty(List<PostedContracts> posts, DateTime currentWeekDate)
+        private void _SetIsActiveThisWeekProperty(List<PostedContract> posts, DateTime currentWeekDate)
         {
             var mediaMonthAggregate = _MediaMonthAndWeekAggregateRepository.GetMediaMonthAggregate();
             var mediaWeekId = mediaMonthAggregate.GetMediaWeekContainingDate(currentWeekDate).Id;
@@ -983,7 +983,7 @@ namespace Services.Broadcast.ApplicationServices
             return postLogFile;
         }
 
-        private void _SetPostAdvertiser(PostedContracts post)
+        private void _SetPostAdvertiser(PostedContract post)
         {
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;

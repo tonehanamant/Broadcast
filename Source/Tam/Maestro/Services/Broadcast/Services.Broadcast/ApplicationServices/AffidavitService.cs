@@ -696,8 +696,10 @@ namespace Services.Broadcast.ApplicationServices
             var postedProposals = _PostRepository.GetAllPostedProposals();
 
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
-            var audiences = new List<int>(postedProposals.Select(p => p.GuaranteedAudienceId));
-            audiences.Add(houseHoldAudienceId);
+            var audiences = new List<int>(postedProposals.Select(p => p.GuaranteedAudienceId))
+            {
+                houseHoldAudienceId
+            };
 
             _ratingsAudiencesIds = _BroadcastAudienceRepository
                 .GetRatingsAudiencesByMaestroAudience(audiences).GroupBy(a => a.custom_audience_id)
@@ -708,7 +710,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var post in postedProposals)
             {
                 _SetPostAdvertiser(post);
-
+                _SetFlightWeeks(post);
                 post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions,post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
                 post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, post.PostType, houseHoldAudienceId, post.Equivalized);
                 post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
@@ -719,6 +721,14 @@ namespace Services.Broadcast.ApplicationServices
                 Posts = postedProposals,
                 UnlinkedIscis = _PostRepository.CountUnlinkedIscis()
             };
+        }
+
+        private void _SetFlightWeeks(PostedContract post)
+        {
+            var proposal = _ProposalRepository.GetProposalById(post.ContractId);
+            post.FlightEndDate = proposal.FlightEndDate.Value;
+            post.FlightStartDate = proposal.FlightStartDate.Value;
+            post.FlightWeeks = proposal.FlightWeeks;
         }
 
         private Dictionary<int, List<PostImpressionsData>> _GetPostedProposalImpresssions(List<int> contractIds,List<int> audiences)
@@ -749,7 +759,7 @@ namespace Services.Broadcast.ApplicationServices
             return deliveredImpressions;
         }
 
-        private void _SetPostAdvertiser(PostedContracts post)
+        private void _SetPostAdvertiser(PostedContract post)
         {
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;

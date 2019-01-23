@@ -3,11 +3,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Badge } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Glyphicon,
+  Tooltip,
+  OverlayTrigger
+} from "react-bootstrap";
 import { toggleModal, createAlert } from "Ducks/app";
 import { getPost, getPostClientScrubbing } from "Ducks/post";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
+import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
+import { getDateInFormat } from "../../../utils/dateFormatter";
 
 const mapStateToProps = ({ post: { postGridData }, menu }) => ({
   postGridData,
@@ -154,6 +162,49 @@ export class DataGridContainer extends Component {
         Header: "Advertiser",
         accessor: "Advertiser",
         minWidth: 15
+      },
+      {
+        Header: "Flight",
+        accessor: "FlightStartDate",
+        minWidth: 20,
+        Cell: row => {
+          let hasTip = false;
+          const checkFlightWeeksTip = flightWeeks => {
+            if (flightWeeks.length < 1) return "";
+            const tip = [<div key="flight">Hiatus Weeks</div>];
+            flightWeeks.forEach((flight, idx) => {
+              if (flight.IsHiatus) {
+                hasTip = true;
+                const key = `flight_ + ${idx}`;
+                tip.push(
+                  <div key={key}>
+                    <DateMDYYYY date={flight.StartDate} />
+                    <span> - </span>
+                    <DateMDYYYY date={flight.EndDate} />
+                  </div>
+                );
+              }
+            });
+            const display = tip;
+            return <Tooltip id="flightstooltip">{display}</Tooltip>;
+          };
+          const tooltip = checkFlightWeeksTip(row.original.FlightWeeks);
+          const start = getDateInFormat(row.original.FlightStartDate);
+          const end = getDateInFormat(row.original.FlightEndDate);
+          const display = `${start} - ${end}`;
+          return (
+            <div>
+              <span>{display}</span>
+              {hasTip && (
+                <OverlayTrigger placement="top" overlay={tooltip}>
+                  <Button bsStyle="link">
+                    <Glyphicon style={{ color: "black" }} glyph="info-sign" />
+                  </Button>
+                </OverlayTrigger>
+              )}
+            </div>
+          );
+        }
       },
       {
         Header: "Affidavit Upload Date",

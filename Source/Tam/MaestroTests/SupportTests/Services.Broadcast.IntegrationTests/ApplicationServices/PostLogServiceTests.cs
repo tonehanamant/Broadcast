@@ -42,8 +42,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PostLogService.GetPostLogs(date);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
-            jsonResolver.Ignore(typeof(PostedContracts), "UploadDate");
+            jsonResolver.Ignore(typeof(PostedContract), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContract), "UploadDate");
 
             var jsonSettings = new JsonSerializerSettings()
             {
