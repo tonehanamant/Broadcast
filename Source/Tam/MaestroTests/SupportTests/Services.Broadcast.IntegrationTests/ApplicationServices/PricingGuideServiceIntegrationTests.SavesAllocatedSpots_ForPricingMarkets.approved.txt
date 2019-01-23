@@ -206,6 +206,7 @@
   },
   "DistributionId": 0,
   "Filter": {},
+  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": null,
   "Inflation": null,
@@ -263,6 +264,7 @@
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
               "Spots": 6,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],

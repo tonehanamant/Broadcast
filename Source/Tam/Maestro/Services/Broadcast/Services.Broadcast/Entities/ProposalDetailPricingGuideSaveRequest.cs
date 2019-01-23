@@ -33,6 +33,7 @@ namespace Services.Broadcast.Entities
         public string ProgramName { get; set; }
         public decimal BlendedCpm { get; set; }
         public int Spots { get; set; }
+        public bool SpotsEditedManually { get; set; }
         public double ImpressionsPerSpot { get; set; }
         public double StationImpressionsPerSpot { get; set; }
         public decimal CostPerSpot { get; set; }

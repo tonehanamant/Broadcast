@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Modal, Button, Row, Col } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Row,
+  Col,
+  Radio,
+  ToggleButtonGroup
+} from "react-bootstrap";
 import { bindActionCreators } from "redux";
 
 import { toggleModal, createAlert } from "Ducks/app";
@@ -45,6 +52,7 @@ const mapStateToProps = ({
     isOpenMarketDataSortName,
     openMarketLoading,
     openMarketLoaded,
+    openMarketData,
     activeEditMarkets,
     isEditMarketsActive,
     hasActiveDistribution
@@ -59,6 +67,7 @@ const mapStateToProps = ({
   isOpenMarketDataSortName,
   openMarketLoading,
   openMarketLoaded,
+  openMarketData,
   activeEditMarkets,
   isEditMarketsActive,
   hasActiveDistribution
@@ -100,6 +109,12 @@ class PricingGuide extends Component {
     this.setGuideEditing = this.setGuideEditing.bind(this);
 
     this.onCopyToBuy = this.onCopyToBuy.bind(this);
+    this.clearSpots = this.clearSpots.bind(this);
+    this.onClickToRunDistribution = this.onClickToRunDistribution.bind(this);
+    this.onChangeDistributionOption = this.onChangeDistributionOption.bind(
+      this
+    );
+    this.closeDistributionDialog = this.closeDistributionDialog.bind(this);
     this.hasSpotsAllocate = this.hasSpotsAllocate.bind(this);
     this.copyToBuyFlow = this.copyToBuyFlow.bind(this);
     this.setInventory = this.setInventory.bind(this);
@@ -244,9 +259,23 @@ class PricingGuide extends Component {
 
   // run with params - temporary until get new open market BE object
   onRunDistribution() {
+    const { isAutoDistribution } = this.state;
     const request = this.getDistributionRequest();
-    this.props.loadOpenMarketData(request);
-    this.setState({ isDistributionRunned: true });
+    this.props.loadOpenMarketData({
+      MaintainManuallyEditedSpots: !isAutoDistribution,
+      ...request
+    });
+    this.setState({
+      isDistributionRunned: true,
+      isSpotsChanged: false,
+      discardSpots: false,
+      isAutoDistribution: true,
+      confirmationDistribution: false
+    });
+  }
+
+  onChangeDistributionOption(value) {
+    this.setState({ isAutoDistribution: value });
   }
   // call from edit markets to get params needed here
   onUpdateEditMarkets() {
@@ -290,7 +319,7 @@ class PricingGuide extends Component {
       MarketCoverageFileId: activeOpenMarketData.MarketCoverageFileId
     };
     savePricingData(guideUpdates);
-    this.setState({ isGuideChanged: false });
+    this.setState({ isGuideChanged: false, isSpotsChanged: false });
   }
 
   onSave() {
@@ -349,7 +378,7 @@ class PricingGuide extends Component {
       ...openMarketData,
       ...distribution
     });
-    this.setState({ isGuideChanged: true });
+    this.setState({ isGuideChanged: true, isSpotsChanged: true });
   }
 
   handleChange(fieldName, value) {
@@ -384,6 +413,20 @@ class PricingGuide extends Component {
     return this.onCancel();
   }
 
+  onClickToRunDistribution() {
+    const {
+      activeOpenMarketData: { isChangedSpots }
+    } = this.props;
+    const { isSpotsChanged } = this.state;
+    if (isChangedSpots) {
+      this.onError("confirmationDistribution");
+    } else if (isSpotsChanged && !isChangedSpots) {
+      this.onError("discardSpots");
+    } else {
+      this.onRunDistribution();
+    }
+  }
+
   onError(errorName) {
     const { [errorName]: error } = this.state;
     this.setState({ [errorName]: !error });
@@ -391,6 +434,19 @@ class PricingGuide extends Component {
 
   setGuideEditing(edit) {
     this.setState({ isGuideEditing: edit });
+  }
+
+  clearSpots() {
+    const { openMarketData, activeOpenMarketData } = this.props;
+    this.onAllocateSpots({
+      ...activeOpenMarketData,
+      Markets: openMarketData.Markets
+    });
+  }
+
+  closeDistributionDialog() {
+    this.setState({ isAutoDistribution: true });
+    this.onError("confirmationDistribution");
   }
 
   render() {
@@ -406,7 +462,14 @@ class PricingGuide extends Component {
       initialdata,
       proposalEditForm
     } = this.props;
-    const { distribution, discard, isGuideEditing } = this.state;
+    const {
+      distribution,
+      discard,
+      isGuideEditing,
+      discardSpots,
+      isAutoDistribution,
+      confirmationDistribution
+    } = this.state;
     const show = isActiveDialog(detail, modal);
     return (
       <div>
@@ -500,7 +563,7 @@ class PricingGuide extends Component {
                 onUpdateProprietaryCpms: this.onUpdateProprietaryCpms,
                 onUpdateEditMarkets: this.onUpdateEditMarkets,
                 onAllocateSpots: this.onAllocateSpots,
-                onRunDistribution: this.onRunDistribution,
+                onRunDistribution: this.onClickToRunDistribution,
                 onCopyToBuy: this.copyToBuyFlow,
                 onSetGuideEditing: this.setGuideEditing
               })
@@ -556,6 +619,47 @@ class PricingGuide extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={confirmationDistribution}>
+          <Modal.Header>
+            <Button
+              className="close"
+              bsStyle="link"
+              onClick={this.closeDistributionDialog}
+              style={{ display: "inline-block", float: "right" }}
+            >
+              <span>&times;</span>
+            </Button>
+            <Modal.Title>Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="pricing-guide_confirmation-message">
+              <span className="confirmation-text">
+                You have changed spots, how do you want to run distribution?
+              </span>
+              <ToggleButtonGroup
+                type="radio"
+                name="options"
+                value={isAutoDistribution}
+                onChange={this.onChangeDistributionOption}
+              >
+                <Radio className="confirmation-checkbox" value>
+                  Discard spots you have edited or modified
+                </Radio>
+                <Radio className="confirmation-checkbox" value={false}>
+                  Maintain edited or modified spots
+                </Radio>
+              </ToggleButtonGroup>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.closeDistributionDialog}>Cancel</Button>
+            <Button onClick={this.onRunDistribution} bsStyle="primary">
+              Run Distribution
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <Modal show={discard}>
           <Modal.Header>
             <Button
@@ -574,6 +678,26 @@ class PricingGuide extends Component {
               Discard
             </Button>
             <Button onClick={() => this.onError("discard")}>Cancel</Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={discardSpots}>
+          <Modal.Header>
+            <Button
+              className="close"
+              bsStyle="link"
+              onClick={() => this.onError("discardSpots")}
+              style={{ display: "inline-block", float: "right" }}
+            >
+              <span>&times;</span>
+            </Button>
+            <Modal.Title>Warning</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to discard spots?</Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.onRunDistribution} bsStyle="primary">
+              Run Distribution
+            </Button>
+            <Button onClick={() => this.onError("discardSpots")}>Cancel</Button>
           </Modal.Footer>
         </Modal>
         <Modal show={hasSpotsAllocated}>
@@ -638,6 +762,7 @@ PricingGuide.propTypes = {
   proposalEditForm: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   activeOpenMarketData: PropTypes.object,
+  openMarketData: PropTypes.object,
   allocateSpots: PropTypes.func.isRequired,
   hasActiveDistribution: PropTypes.bool.isRequired,
   showEditMarkets: PropTypes.func.isRequired,
@@ -652,6 +777,7 @@ PricingGuide.defaultProps = {
   modal: null,
   isReadOnly: false,
   activeOpenMarketData: undefined,
+  openMarketData: undefined,
   detail: undefined
 };
 

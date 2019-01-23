@@ -8,10 +8,14 @@ import PricingProprietary from "./PricingProprietary";
 export const initialState = {
   isDistributionRunned: true,
   isGuideChanged: false,
+  isSpotsChanged: false,
   isGuideEditing: false,
   distribution: false,
   discard: false,
+  discardSpots: false,
+  confirmationDistribution: false,
   // goals/adjustments - editing version separate state to cancel/save individually
+  isAutoDistribution: true,
   impression: 0,
   budget: 0,
   margin: 0,
@@ -61,6 +65,7 @@ export const parsePrograms = (data = []) => {
           ProgramId: program.ProgramId,
           Spots: program.Spots,
           ImpressionsPerSpot: program.ImpressionsPerSpot,
+          SpotsEditedManually: program.SpotsEditedManually,
           StationImpressionsPerSpot: program.StationImpressionsPerSpot,
           CostPerSpot: program.CostPerSpot
         });
