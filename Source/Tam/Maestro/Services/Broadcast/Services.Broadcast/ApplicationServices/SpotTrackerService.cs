@@ -150,7 +150,7 @@ namespace Services.Broadcast.ApplicationServices
             var report = new SpotTrackerReport
             {
                 Id = proposal.Id.Value,
-                ZipFileName = $"{proposal.ProposalName.PrepareForUsingInFileName()} Spot Traker Report.zip",
+                ZipFileName = $"{proposal.ProposalName.PrepareForUsingInFileName()} Spot Tracker Report.zip",
                 Details = proposal.Details.Select(d => new SpotTrackerReport.Detail
                 {
                     Id = d.Id.Value
@@ -172,7 +172,7 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _SmsClient.FindAdvertiserById(advertiserId);
             foreach (var detail in report.Details)
             {
-                detail.FileName = $"{advertiser.Display} {detail.ProposalBuyFile.EstimateId} Spot Traker Report.xlsx";
+                detail.FileName = $"{advertiser.Display} {detail.ProposalBuyFile.EstimateId} Spot Tracker Report.xlsx";
             }
         }
 

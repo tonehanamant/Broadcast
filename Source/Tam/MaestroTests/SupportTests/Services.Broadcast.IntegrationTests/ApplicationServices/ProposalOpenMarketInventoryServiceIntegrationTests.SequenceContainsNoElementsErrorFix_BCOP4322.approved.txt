@@ -1,0 +1,117 @@
+﻿{
+  "Criteria": {
+    "CpmCriteria": [],
+    "GenreSearchCriteria": [],
+    "ProgramNameSearchCriteria": []
+  },
+  "DetailBudgetMarginAchieved": false,
+  "DetailBudgetPercent": 0.0,
+  "DetailCpm": 19.774193548387096774193548387,
+  "DetailCpmMarginAchieved": false,
+  "DetailCpmPercent": 0.0,
+  "DetailDaypart": {
+    "endTime": 86400,
+    "fri": true,
+    "mon": true,
+    "sat": true,
+    "startTime": 0,
+    "sun": true,
+    "Text": "M-SU 24HR",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DetailDaypartId": 38,
+  "DetailFlightEndDate": "2019-01-13T00:00:00",
+  "DetailFlightStartDate": "2018-12-24T00:00:00",
+  "DetailFlightWeeks": [
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 783,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2019-01-06T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 784,
+      "StartDate": "2018-12-31T00:00:00"
+    }
+  ],
+  "DetailId": 3248,
+  "DetailImpressionsMarginAchieved": false,
+  "DetailImpressionsPercent": 0.0,
+  "DetailSpotLength": 15,
+  "DetailSpotLengthId": 3,
+  "DetailTargetBudget": 1839.0000,
+  "DetailTargetImpressions": 93000.0,
+  "DetailTotalBudget": 0.0000,
+  "DetailTotalCpm": 0.0,
+  "DetailTotalImpressions": 0.0,
+  "DisplayFilter": {
+    "Affiliations": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": []
+  },
+  "Equivalized": true,
+  "Filter": {
+    "Affiliations": [],
+    "DayParts": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": [],
+    "SpotFilter": 1
+  },
+  "GuaranteedAudience": 31,
+  "HutProjectionBookId": 430,
+  "Margin": 20.0,
+  "Markets": [],
+  "NewCriteriaAffectsExistingAllocations": false,
+  "PlaybackType": 4,
+  "PostType": 1,
+  "ProposalFlightEndDate": "2019-01-13T00:00:00",
+  "ProposalFlightStartDate": "2018-12-24T00:00:00",
+  "ProposalFlightWeeks": [],
+  "ProposalId": 3131,
+  "ProposalName": "BCOP-3282",
+  "ProposalVersion": 1,
+  "ProposalVersionId": 3224,
+  "RefineFilterPrograms": [],
+  "ShareProjectionBookId": 434,
+  "SingleProjectionBookId": null,
+  "Weeks": [
+    {
+      "Budget": 1540.0000,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 0.0,
+      "BudgetTotal": 0.0000,
+      "ImpressionsGoal": 70000.0,
+      "ImpressionsMarginAchieved": false,
+      "ImpressionsPercent": 0.0,
+      "ImpressionsTotal": 0.0,
+      "IsHiatus": false,
+      "Markets": [],
+      "MediaWeekId": 783,
+      "ProposalVersionDetailQuarterWeekId": 3916,
+      "QuarterText": "Q4",
+      "Week": "12/24/2018"
+    },
+    {
+      "Budget": 149.5000,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 0.0,
+      "BudgetTotal": 0.0000,
+      "ImpressionsGoal": 11500.0,
+      "ImpressionsMarginAchieved": false,
+      "ImpressionsPercent": 0.0,
+      "ImpressionsTotal": 0.0,
+      "IsHiatus": false,
+      "Markets": [],
+      "MediaWeekId": 784,
+      "ProposalVersionDetailQuarterWeekId": 3917,
+      "QuarterText": "Q1",
+      "Week": "12/31/2018"
+    }
+  ]
+}

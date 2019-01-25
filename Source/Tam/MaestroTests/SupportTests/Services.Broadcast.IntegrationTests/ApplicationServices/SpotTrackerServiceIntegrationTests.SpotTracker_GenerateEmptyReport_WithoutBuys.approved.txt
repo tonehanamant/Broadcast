@@ -1,4 +1,4 @@
 ﻿{
   "Details": [],
-  "ZipFileName": "Proposal Test Spot Traker Report.zip"
+  "ZipFileName": "Proposal Test Spot Tracker Report.zip"
 }
