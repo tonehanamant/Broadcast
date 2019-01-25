@@ -327,6 +327,29 @@ BEGIN
 END
 /*************************************** END BCOP-4142 *****************************************************/
 
+/*************************************** START BCOP-4315 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 13)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,13)	--Females 50-54
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 14)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,14)	--Females 55-64
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 15)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,15)	--Females 65+
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 347)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,347)	--Females 35-49
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 348)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,348)	--Females 25-34
+END
+/*************************************** END BCOP-4315 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
