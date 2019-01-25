@@ -97,14 +97,17 @@ namespace Services.Broadcast.ApplicationServices
 
         protected void SetFlightWeeks(IEnumerable<ProposalProgramDto> programs)
         {
-            var startDate = programs.Min(p => p.StartDate);
-            var endDate = programs.Max(p => p.EndDate) ?? DateTime.MaxValue;
-
-            var mediaWeeksToUse = _MediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(startDate, endDate);
-
-            foreach (var program in programs)
+            if (programs.Any())
             {
-                program.FlightWeeks = _GetFlightWeeks(program,mediaWeeksToUse);
+                var startDate = programs.Min(p => p.StartDate);
+                var endDate = programs.Max(p => p.EndDate) ?? DateTime.MaxValue;
+
+                var mediaWeeksToUse = _MediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(startDate, endDate);
+
+                foreach (var program in programs)
+                {
+                    program.FlightWeeks = _GetFlightWeeks(program, mediaWeeksToUse);
+                }
             }
         }
 

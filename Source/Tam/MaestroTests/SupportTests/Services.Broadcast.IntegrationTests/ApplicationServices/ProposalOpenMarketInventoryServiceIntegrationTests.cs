@@ -1797,5 +1797,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(inventoryJson);
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SequenceContainsNoElementsErrorFix_BCOP4322()
+        {
+            // this detail will return no programs which will cause error described in BCOP4322
+            var request = new OpenMarketRefineProgramsRequest
+            {
+                ProposalDetailId = 3248,
+                Criteria = new OpenMarketCriterion()
+            };
+            var results = _ProposalOpenMarketInventoryService.RefinePrograms(request);
+
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var json = IntegrationTestHelper.ConvertToJson(results, jsonSettings);
+
+            Approvals.Verify(json);
+        }
+
     }
 }

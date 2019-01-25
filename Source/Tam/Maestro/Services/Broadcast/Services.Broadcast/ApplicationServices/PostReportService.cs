@@ -106,7 +106,7 @@ namespace Services.Broadcast.ApplicationServices
             var reportGenerator = new PostReportGenerator(_LogoImage.Value);
             return reportGenerator.Generate(nsiPostReport);
         }
-
+        
         /// <summary>
         /// Gets the NSI/NTI Post Report data
         /// </summary>
