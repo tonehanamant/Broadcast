@@ -142,6 +142,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalBuyRepository _ProposalBuyRepository;
         private readonly IMediaMonthAndWeekAggregateRepository _MediaMonthAndWeekAggregateRepository;
         private readonly ISpotLengthEngine _SpotLengthEngine;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+
         private const string ARCHIVED_ISCI = "Not a Cadent Isci";
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
 
@@ -158,7 +160,8 @@ namespace Services.Broadcast.ApplicationServices
             , IProgramScrubbingEngine programScrubbingEngine
             , IMatchingEngine matchingEngine
             , IIsciService isciService
-            , ISpotLengthEngine spotLengthEngine)
+            , ISpotLengthEngine spotLengthEngine
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _PostLogRepository = dataRepositoryFactory.GetDataRepository<IPostLogRepository>();
             _PostLogEngine = postLogEngine;
@@ -180,6 +183,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProposalBuyRepository = dataRepositoryFactory.GetDataRepository<IProposalBuyRepository>();
             _MediaMonthAndWeekAggregateRepository = dataRepositoryFactory.GetDataRepository<IMediaMonthAndWeekAggregateRepository>();
             _SpotLengthEngine = spotLengthEngine;
+            _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
         }
 
         /// <summary>
@@ -430,7 +434,10 @@ namespace Services.Broadcast.ApplicationServices
                     Details = _MapToProposalDetailDto(proposal.Details, proposal.SpotLengths),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
-                    SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
+                    SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList(),
+                    CoverageGoal = proposal.MarketCoverage,
+                    PostingType = proposal.PostType.ToString(),
+                    Equivalized = proposal.Equivalized
                 };
 
                 ///Load all Client Scrubs
@@ -449,6 +456,7 @@ namespace Services.Broadcast.ApplicationServices
                         y.Sequence = x.Sequence;
                         y.ProposalDetailId = x.Id;
                     });
+                    x.InventorySourceDisplay = string.Join(",", detailClientScrubs.Select(z => z.InventorySource).Distinct());
                     result.ClientScrubs.AddRange(detailClientScrubs);
                 });
 
@@ -552,6 +560,10 @@ namespace Services.Broadcast.ApplicationServices
                 Programs = x.ProgramCriteria,
                 Genres = x.GenreCriteria,
                 Sequence = x.Sequence,
+                DaypartCodeDisplay = x.DaypartCode,
+                EstimateId = x.EstimateId,
+                PostingBook = _MediaMonthAndWeekCache.GetMediaMonthsByIds(new List<int> { x.PostingBookId.Value }).Single().LongMonthNameAndYear,
+                PlaybackTypeDisplay = x.PostingPlaybackType?.GetDescriptionAttribute()
             }).OrderBy(x => x.Sequence).ToList();
         }
 

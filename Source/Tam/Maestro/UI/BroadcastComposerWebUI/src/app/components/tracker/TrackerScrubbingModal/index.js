@@ -98,6 +98,9 @@ export class TrackerScrubbingModal extends Component {
       SecondaryDemos,
       Notes,
       MarketGroupId,
+      Equivalized,
+      CoverageGoal,
+      PostingType,
       Details
     } = scrubbingData;
 
@@ -129,7 +132,10 @@ export class TrackerScrubbingModal extends Component {
             guaranteedDemo={GuaranteedDemo}
             Id={Id}
             market={Markets}
-            marketId={MarketGroupId}
+            marketGroupId={MarketGroupId}
+            equivalized={Equivalized}
+            coverageGoal={CoverageGoal}
+            postingType={PostingType}
             name={Name}
             notes={Notes}
             secondaryDemo={SecondaryDemos}

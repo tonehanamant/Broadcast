@@ -7,7 +7,7 @@
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
-      "DaypartCodeDisplay": null,
+      "DaypartCodeDisplay": "NAV",
       "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -21,16 +21,16 @@
       ],
       "Genres": [],
       "Id": 14,
-      "InventorySourceDisplay": null,
-      "PlaybackTypeDisplay": null,
-      "PostingBook": null,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": 1,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
-      "DaypartCodeDisplay": null,
+      "DaypartCodeDisplay": "NAV",
       "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -56,16 +56,16 @@
       ],
       "Genres": [],
       "Id": 15,
-      "InventorySourceDisplay": null,
-      "PlaybackTypeDisplay": null,
-      "PostingBook": null,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": 2,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
-      "DaypartCodeDisplay": null,
+      "DaypartCodeDisplay": "NAV",
       "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
@@ -79,15 +79,15 @@
       ],
       "Genres": [],
       "Id": 10799,
-      "InventorySourceDisplay": null,
-      "PlaybackTypeDisplay": null,
-      "PostingBook": null,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": 3,
       "SpotLength": "30"
     }
   ],
-  "Equivalized": false,
+  "Equivalized": true,
   "Filters": {
     "DateAiredEnd": null,
     "DateAiredStart": null,
@@ -115,7 +115,7 @@
   "Markets": [],
   "Name": "Proposal Test",
   "Notes": null,
-  "PostingType": null,
+  "PostingType": "NSI",
   "SecondaryDemos": [
     "Females 15-17",
     "Females 18-20"

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   Row,
@@ -12,7 +12,6 @@ import {
   Tooltip,
   OverlayTrigger
 } from "react-bootstrap";
-// import { Grid } from "react-redux-grid";
 import Table, { withGrid } from "Lib/react-table";
 import CSSModules from "react-css-modules";
 import Select from "react-select";
@@ -28,205 +27,192 @@ const generateMarketLabael = (marketGroupId, markets) => {
   return markets.length ? "Custom" : "None";
 };
 
-export class TrackerScrubbingHeader extends Component {
-  componentDidMount() {
-    // const { date } = this.props;
-    // const dateInProperFormat = getDateForDisplay(date);
-    // console.log('dates', dateInProperFormat);
-    // this.setState({ dates: dateInProperFormat });
-  }
-  render() {
-    const {
-      advertiser,
-      guaranteedDemo,
-      Id,
-      marketGroupId,
-      name,
-      notes,
-      secondaryDemo,
-      market
-    } = this.props;
-    const secondaryDemoOptions = [];
-    const marketLabel = generateMarketLabael(marketGroupId, market);
+const renderCoverageGoal = coverage => (coverage ? `${coverage * 100}%` : "--");
 
-    secondaryDemo.forEach(item => {
-      const option = {};
-      option.Display = item;
-      option.Id = item;
-      secondaryDemoOptions.push(option);
-    });
+function TrackerScrubbingHeader({
+  advertiser,
+  guaranteedDemo,
+  Id,
+  marketGroupId,
+  details,
+  name,
+  notes,
+  coverageGoal,
+  equivalized,
+  postingType,
+  secondaryDemo,
+  market
+}) {
+  const marketLabel = generateMarketLabael(marketGroupId, market);
+  const secondaryDemoOptions = secondaryDemo.map(item => ({
+    Display: item,
+    Id: item
+  }));
 
-    // const stateKey = "TrackerScrubbingDetailsGrid";
-
-    const columns = [
-      {
-        Header: "ID",
-        accessor: "Sequence",
-        maxWidth: 65
+  const columns = [
+    {
+      Header: "ID",
+      accessor: "Sequence",
+      minWidth: 20
+    },
+    {
+      Header: "Flight",
+      accessor: "FlightStartDate",
+      Cell: row => {
+        let hasTip = false;
+        const checkFlightWeeksTip = flightWeeks => {
+          if (flightWeeks.length < 1) return "";
+          const tip = [<div key="flight">Hiatus Weeks</div>];
+          flightWeeks.forEach((flight, idx) => {
+            if (flight.IsHiatus) {
+              hasTip = true;
+              const key = `flight_ + ${idx}`;
+              tip.push(
+                <div key={key}>
+                  <DateMDYYYY date={flight.StartDate} />
+                  <span> - </span>
+                  <DateMDYYYY date={flight.EndDate} />
+                </div>
+              );
+            }
+          });
+          const display = tip;
+          return <Tooltip id="flightstooltip">{display}</Tooltip>;
+        };
+        const tooltip = checkFlightWeeksTip(row.original.FlightWeeks);
+        const start = getDateInFormat(row.original.FlightStartDate);
+        const end = getDateInFormat(row.original.FlightEndDate);
+        const display = `${start} - ${end}`;
+        return (
+          <div>
+            <span>{display}</span>
+            {hasTip && (
+              <OverlayTrigger placement="top" overlay={tooltip}>
+                <Button bsStyle="link">
+                  <Glyphicon style={{ color: "black" }} glyph="info-sign" />
+                </Button>
+              </OverlayTrigger>
+            )}
+          </div>
+        );
       },
-      {
-        Header: "Flight",
-        accessor: "FlightStartDate",
-        // maxWidth: 40
-        Cell: row => {
-          let hasTip = false;
-          const checkFlightWeeksTip = flightWeeks => {
-            console.log(row);
-            if (flightWeeks.length < 1) return "";
-            const tip = [<div key="flight">Hiatus Weeks</div>];
-            flightWeeks.forEach((flight, idx) => {
-              if (flight.IsHiatus) {
-                hasTip = true;
-                const key = `flight_ + ${idx}`;
-                tip.push(
-                  <div key={key}>
-                    <DateMDYYYY date={flight.StartDate} />
-                    <span> - </span>
-                    <DateMDYYYY date={flight.EndDate} />
-                  </div>
-                );
-              }
-            });
-            const display = tip;
-            return <Tooltip id="flightstooltip">{display}</Tooltip>;
-          };
-          const tooltip = checkFlightWeeksTip(row.original.FlightWeeks);
-          const start = getDateInFormat(row.original.FlightStartDate);
-          const end = getDateInFormat(row.original.FlightEndDate);
-          const display = `${start} - ${end}`;
-          return (
-            <div>
-              <span>{display}</span>
-              {hasTip && (
-                <OverlayTrigger placement="top" overlay={tooltip}>
-                  <Button bsStyle="link">
-                    <Glyphicon style={{ color: "black" }} glyph="info-sign" />
-                  </Button>
-                </OverlayTrigger>
-              )}
-            </div>
-          );
-        }
-      },
-      {
-        Header: "Daypart",
-        accessor: "DayPart"
-        // maxWidth: 30
-      },
-      {
-        Header: "Spot Length",
-        accessor: "SpotLength"
-        // maxWidth: 20
-      }
-    ];
+      minWidth: 70
+    },
+    {
+      Header: "Daypart",
+      accessor: "DayPart",
+      minWidth: 60
+    },
+    {
+      Header: "Spot Length",
+      accessor: "SpotLength",
+      minWidth: 40
+    },
+    {
+      Header: "Daypart Code",
+      accessor: "DaypartCodeDisplay",
+      minWidth: 40
+    },
+    {
+      Header: "Estimate Id",
+      accessor: "EstimateId",
+      Cell: row => (row.value ? row.value : "-"),
+      minWidth: 40
+    },
+    {
+      Header: "Inventory Source",
+      accessor: "InventorySourceDisplay"
+    },
+    {
+      Header: "Posting Book",
+      accessor: "PostingBook",
+      minWidth: 60
+    },
+    {
+      Header: "Playback Type",
+      accessor: "PlaybackTypeDisplay",
+      minWidth: 60
+    }
+  ];
 
-    return (
-      <div>
-        <Row>
-          <Col md={12}>
-            <ControlLabel>
-              <strong>Proposal ID : {Id}</strong>
-            </ControlLabel>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Row>
-              <Col md={4}>
-                <FormGroup controlId="proposalName">
-                  <ControlLabel>
-                    <strong>Proposal Name</strong>
-                  </ControlLabel>
-                  <FormControl.Static>{name}</FormControl.Static>
-                </FormGroup>
-              </Col>
-              <Col md={4}>
-                <FormGroup controlId="advertiser">
-                  <ControlLabel>
-                    <strong>Advertiser</strong>
-                  </ControlLabel>
-                  <FormControl.Static>{advertiser}</FormControl.Static>
-                </FormGroup>
-              </Col>
-              <Col md={3}>
-                <FormGroup controlId="proposalMarket">
-                  <ControlLabel>
-                    <strong>Market</strong>
-                  </ControlLabel>
-                  <div style={{ overflow: "hidden" }} href="">
-                    <span className="pull-left " style={{ width: "100%" }}>
-                      <FormControl.Static>{marketLabel}</FormControl.Static>
-                    </span>
-                  </div>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <Panel defaultExpanded>
-                  <Panel.Heading style={{ padding: "0" }}>
-                    <Panel.Title>
-                      <Panel.Toggle>
-                        <Button bsStyle="link" bsSize="xsmall">
-                          <Glyphicon glyph="triangle-bottom" /> Proposal Detail
-                        </Button>
-                      </Panel.Toggle>
-                    </Panel.Title>
-                  </Panel.Heading>
-                  <Panel.Collapse>
-                    <Panel.Body style={{ padding: "10px" }}>
-                      <Table
-                        data={this.props.details}
-                        style={{ margin: 0 }}
-                        columns={columns}
-                      />
-                    </Panel.Body>
-                  </Panel.Collapse>
-                </Panel>
-              </Col>
-            </Row>
-          </Col>
-          <Col md={6}>
-            <Row>
-              <Col md={4}>
-                <FormGroup controlId="guaranteedDemo">
-                  <ControlLabel>
-                    <strong>Guaranteed Demo</strong>
-                  </ControlLabel>
-                  <FormControl.Static>{guaranteedDemo}</FormControl.Static>
-                </FormGroup>
-              </Col>
-              <Col md={4}>
-                <FormGroup
-                  id="proposal_secondary_demo"
-                  controlId="proposalSecondaryDemo"
-                >
-                  <ControlLabel>
-                    <strong>Secondary Demo</strong>
-                  </ControlLabel>
-                  <Select
-                    placeholder="--"
-                    name="proposalSecondaryDemo"
-                    multi
-                    disabled
-                    value={secondaryDemoOptions}
-                    labelKey="Display"
-                    valueKey="Id"
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={4}>
-                <FormGroup controlId="proposalNotes">
-                  <ControlLabel>Notes</ControlLabel>
-                  <FormControl.Static>{notes || "--"}</FormControl.Static>
-                </FormGroup>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+  return (
+    <div className="tracker-scrubbing-header">
+      <Row>
+        <Col md={12}>
+          <ControlLabel>
+            <strong>Proposal ID : {Id}</strong>
+          </ControlLabel>
+        </Col>
+      </Row>
+      <div className="header-items">
+        <FormGroup controlId="proposalName">
+          <ControlLabel>Proposal Name</ControlLabel>
+          <FormControl.Static>{name}</FormControl.Static>
+        </FormGroup>
+        <FormGroup controlId="advertiser">
+          <ControlLabel>Advertiser</ControlLabel>
+          <FormControl.Static>{advertiser}</FormControl.Static>
+        </FormGroup>
+        <FormGroup controlId="proposalMarket">
+          <ControlLabel>Market</ControlLabel>
+          <FormControl.Static>{marketLabel}</FormControl.Static>
+        </FormGroup>
+        <FormGroup controlId="proposalMarket">
+          <ControlLabel>Coverage Goal</ControlLabel>
+          <FormControl.Static>
+            {renderCoverageGoal(coverageGoal)}
+          </FormControl.Static>
+        </FormGroup>
+        <FormGroup controlId="proposalMarket">
+          <ControlLabel>Posting Type</ControlLabel>
+          <FormControl.Static>{postingType}</FormControl.Static>
+        </FormGroup>
+        <FormGroup controlId="proposalMarket">
+          <ControlLabel>Equivalized</ControlLabel>
+          <FormControl.Static>{equivalized ? "Yes" : "No"}</FormControl.Static>
+        </FormGroup>
+        <FormGroup controlId="guaranteedDemo">
+          <ControlLabel>Guaranteed Demo</ControlLabel>
+          <FormControl.Static>{guaranteedDemo}</FormControl.Static>
+        </FormGroup>
+        <FormGroup
+          id="proposal_secondary_demo"
+          controlId="proposalSecondaryDemo"
+        >
+          <ControlLabel>Secondary Demo</ControlLabel>
+          <Select
+            placeholder="--"
+            name="proposalSecondaryDemo"
+            multi
+            disabled
+            value={secondaryDemoOptions}
+            labelKey="Display"
+            valueKey="Id"
+          />
+        </FormGroup>
+        <FormGroup controlId="proposalNotes">
+          <ControlLabel>Notes</ControlLabel>
+          <FormControl.Static>{notes || "--"}</FormControl.Static>
+        </FormGroup>
       </div>
-    );
-  }
+      <Panel defaultExpanded className="tracker-scrubbing-detail">
+        <Panel.Heading style={{ padding: "0" }}>
+          <Panel.Title>
+            <Panel.Toggle>
+              <Button bsStyle="link" bsSize="xsmall">
+                <Glyphicon glyph="triangle-bottom" /> Proposal Detail
+              </Button>
+            </Panel.Toggle>
+          </Panel.Title>
+        </Panel.Heading>
+        <Panel.Collapse>
+          <Panel.Body style={{ padding: "10px" }}>
+            <Table data={details} style={{ margin: 0 }} columns={columns} />
+          </Panel.Body>
+        </Panel.Collapse>
+      </Panel>
+    </div>
+  );
 }
 
 TrackerScrubbingHeader.defaultProps = {
@@ -239,6 +225,9 @@ TrackerScrubbingHeader.defaultProps = {
   Id: undefined,
   guaranteedDemo: undefined,
   advertiser: undefined,
+  coverageGoal: undefined,
+  equivalized: undefined,
+  postingType: undefined,
   details: []
 };
 
@@ -247,7 +236,9 @@ TrackerScrubbingHeader.propTypes = {
   details: PropTypes.array,
   guaranteedDemo: PropTypes.string,
   Id: PropTypes.number,
-  // isReadOnly: PropTypes.bool,
+  coverageGoal: PropTypes.number,
+  equivalized: PropTypes.bool,
+  postingType: PropTypes.string,
   market: PropTypes.array,
   marketGroupId: PropTypes.number,
   name: PropTypes.string,
