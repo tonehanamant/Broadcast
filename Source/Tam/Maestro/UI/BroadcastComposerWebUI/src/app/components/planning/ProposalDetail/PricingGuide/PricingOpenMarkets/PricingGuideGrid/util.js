@@ -22,12 +22,16 @@ const buildFieldPath = (data, rowData, fieldName) => {
       fieldPath = `${fieldPath}[${programIndex}]`;
     }
   }
-  return `${fieldPath}.${fieldName}`;
+  return {
+    fieldPath: `${fieldPath}.${fieldName}`,
+    editedManuallyPath: `${fieldPath}.SpotsEditedManually`
+  };
 };
 
 export const updateItem = (data, fieldName, value, rowData) => {
-  const fieldPath = buildFieldPath(data, rowData, fieldName);
-  return update(data, fieldPath, () => value);
+  const paths = buildFieldPath(data, rowData, fieldName);
+  const stepData = update(data, paths.editedManuallyPath, () => true);
+  return update(stepData, paths.fieldPath, () => value);
 };
 
 export const rowTypes = {

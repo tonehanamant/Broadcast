@@ -131,6 +131,10 @@
       "Id": 46
     },
     {
+      "Display": "Males 25-54",
+      "Id": 51
+    },
+    {
       "Display": "Males 35-64",
       "Id": 53
     },
@@ -205,6 +209,10 @@
     {
       "Display": "Females 25-34",
       "Id": 348
+    },
+    {
+      "Display": "Females 25-54",
+      "Id": 415
     }
   ],
   "InventorySources": [

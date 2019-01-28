@@ -50,6 +50,80 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-4183 *****************************************************/
+
+-- FEMALES 25-54
+IF NOT EXISTS(SELECT 1 FROM audiences 
+          WHERE code = N'F25-54')
+BEGIN
+
+SET IDENTITY_INSERT audiences ON
+
+INSERT INTO audiences(id, category_code, sub_category_code, range_start, range_end, custom, code, name)
+VALUES(415, 0, 'F', 25, 54, 1, 'F25-54', 'Females 25-54')
+
+SET IDENTITY_INSERT audiences OFF
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 8)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 9)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 10)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 11)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 12)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 13)
+
+END
+
+ELSE PRINT 'Audience Females 25-54 already exists'
+
+-- MALES 25-54
+-- The audience already exists, we only need to add the components to broadcast rating group.
+IF NOT EXISTS(SELECT 1 FROM audience_audiences
+          WHERE custom_audience_id = 51 AND rating_category_group_id = 2)
+BEGIN
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 23)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 24)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 25)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 26)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 27)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 28)
+
+END
+
+ELSE PRINT 'Component audiences for custom audience 51 (M25-54) already exist'
+
+/*************************************** END BCOP-4183 *****************************************************/
+
+/*************************************** START BCOP-4186 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'spots_edited_manually'
+          AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distribution_open_market_inventory]'))
+BEGIN
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] ADD [spots_edited_manually] bit NOT NULL DEFAULT(0)
+END
+/*************************************** END BCOP-4186 *****************************************************/
 
 /*************************************** START BCOP-2801 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_audiences]'))
@@ -252,6 +326,29 @@ BEGIN
 	CREATE INDEX IX_station_inventory_loaded_inventory_source_id ON [station_inventory_loaded] ([inventory_source_id])
 END
 /*************************************** END BCOP-4142 *****************************************************/
+
+/*************************************** START BCOP-4315 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 13)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,13)	--Females 50-54
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 14)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,14)	--Females 55-64
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 15)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,15)	--Females 65+
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 347)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,347)	--Females 35-49
+END
+IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 348)
+BEGIN
+	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,348)	--Females 25-34
+END
+/*************************************** END BCOP-4315 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

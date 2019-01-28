@@ -216,6 +216,7 @@
   },
   "DistributionId": 0,
   "Filter": {},
+  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": null,
   "Inflation": null,
@@ -273,6 +274,7 @@
               "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
               "Spots": 1,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -325,6 +327,7 @@
               "ProgramId": 26682,
               "ProgramName": "3 News First Edition",
               "Spots": 1,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 6140.0
             },
             {
@@ -347,6 +350,7 @@
               "ProgramId": 26686,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 8090.0
             },
             {
@@ -369,6 +373,7 @@
               "ProgramId": 26687,
               "ProgramName": "Good Morning America-Sat",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 9230.0
             },
             {
@@ -391,6 +396,7 @@
               "ProgramId": 26688,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 4490.0
             },
             {
@@ -413,6 +419,7 @@
               "ProgramId": 26689,
               "ProgramName": "Good Morning America-Sun",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 8410.0
             },
             {
@@ -435,6 +442,7 @@
               "ProgramId": 26684,
               "ProgramName": "Good Morning America",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 16390.0
             },
             {
@@ -457,6 +465,7 @@
               "ProgramId": 26683,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 12200.0
             },
             {
@@ -479,6 +488,7 @@
               "ProgramId": 26685,
               "ProgramName": "This Week In Agri-Business",
               "Spots": 0,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 1200.0
             }
           ],

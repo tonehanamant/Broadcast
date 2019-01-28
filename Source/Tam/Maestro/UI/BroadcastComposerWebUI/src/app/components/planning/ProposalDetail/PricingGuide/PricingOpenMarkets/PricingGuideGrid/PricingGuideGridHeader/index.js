@@ -187,6 +187,7 @@ class PricingGuideGridHeader extends Component {
                 bsStyle="success"
                 disabled={isGuideEditing}
                 onClick={this.onOpenEditMarkets}
+                style={{ marginLeft: "5px" }}
               >
                 Edit Markets
               </Button>

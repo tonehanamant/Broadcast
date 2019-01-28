@@ -94,3 +94,30 @@
         display: inline-block
     }
 }
+
+
+.pricing-guide_confirmation-message {
+  .confirmation-text {
+    margin-bottom: 10px;
+  }
+
+  .confirmation-checkbox {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .description-icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;   
+      margin: 0 5px;
+      background-color: rgba(171, 171, 171, 0.76);
+      color: black;
+      border-radius: 50%;
+      width: 17px;
+      height: 17px;
+      font-weight: bold;
+    }
+  }
+}

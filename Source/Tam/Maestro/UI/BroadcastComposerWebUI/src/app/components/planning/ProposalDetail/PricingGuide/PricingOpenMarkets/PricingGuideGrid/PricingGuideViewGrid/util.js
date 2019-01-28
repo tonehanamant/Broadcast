@@ -16,7 +16,7 @@ export const generateStationData = (markets, selectedMarket) => {
     ({ Programs }) => Programs && Programs.length
   ).map(station => ({
     rowType: rowTypes.SUB_TITLE,
-    Station: `${station.CallLetters} (${station.LegacyCallLetters})`,
+    Station: `${station.CallLetters} (${station.Affiliation})`,
     isStation: true,
     MarketId: market.MarketId,
     StationCode: station.StationCode,

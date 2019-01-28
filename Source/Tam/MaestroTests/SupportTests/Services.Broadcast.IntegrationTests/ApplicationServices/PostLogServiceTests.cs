@@ -42,8 +42,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PostLogService.GetPostLogs(date);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
-            jsonResolver.Ignore(typeof(PostedContracts), "UploadDate");
+            jsonResolver.Ignore(typeof(PostedContract), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContract), "UploadDate");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -609,7 +609,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)FileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -644,7 +644,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)FileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -679,7 +679,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)FileSourceEnum.KeepingTrac,
                 FileName = "test.file"
             };
 

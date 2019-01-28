@@ -12,6 +12,7 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
         public double? Inflation { get; set; }
         public double? ImpressionLoss { get; set; }
         public decimal OpenMarketShare { get; set; }
+        public bool MaintainManuallyEditedSpots { get; set; }
         public OpenMarketPricingGuideDto OpenMarketPricing { get; set; } = new OpenMarketPricingGuideDto();
         public List<ProprietaryPricingDto> ProprietaryPricing { get; set; }
     }

@@ -10,6 +10,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "NSI1",
       "Market": "New York",
       "MatchDate": true,
@@ -40,6 +41,7 @@
       "DateAired": "2016-06-08T00:00:00",
       "DayOfWeek": 3,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "NSI2",
       "Market": "New York",
       "MatchDate": true,
@@ -70,6 +72,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "NSI3",
       "Market": "New York",
       "MatchDate": true,
@@ -100,6 +103,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "NSI3",
       "Market": "New York",
       "MatchDate": true,
@@ -130,6 +134,7 @@
       "DateAired": "2016-06-08T00:00:00",
       "DayOfWeek": 3,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "NSI4",
       "Market": "New York",
       "MatchDate": true,
@@ -154,9 +159,12 @@
       "WeekStart": "2016-06-06T00:00:00"
     }
   ],
+  "CoverageGoal": null,
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": "NAV1",
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -175,12 +183,17 @@
       ],
       "Genres": [],
       "Id": 9953,
+      "InventorySourceDisplay": "Strata",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": null,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": "NAV1",
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -199,11 +212,15 @@
       ],
       "Genres": [],
       "Id": 9954,
+      "InventorySourceDisplay": "Strata",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": null,
       "SpotLength": "30"
     }
   ],
+  "Equivalized": false,
   "Filters": {
     "DateAiredEnd": "2016-06-08T00:00:00",
     "DateAiredStart": "2016-06-03T00:00:00",
@@ -254,5 +271,6 @@
   "Markets": [],
   "Name": "NSI Report Test",
   "Notes": null,
+  "PostingType": "NSI",
   "SecondaryDemos": []
 }

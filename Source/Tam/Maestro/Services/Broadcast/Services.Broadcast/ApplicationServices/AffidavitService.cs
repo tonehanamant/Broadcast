@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Transactions;
-using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -108,7 +107,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="request">ScrubStatusOverrideRequest object containing the ids of the records to undo</param>
         /// <returns>ClientPostScrubbingProposalDto object</returns>
-        ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request);        
+        ClientPostScrubbingProposalDto UndoOverrideScrubbingStatus(ScrubStatusOverrideRequest request);
     }
 
 
@@ -684,7 +683,7 @@ namespace Services.Broadcast.ApplicationServices
             return spotLengthId;
         }
 
-        private Dictionary<int,List<int>> _ratingsAudiencesIds; 
+        private Dictionary<int, List<int>> _ratingsAudiencesIds;
 
         /// <summary>
         /// Returns a list of the posts and unlinked iscis count in the system
@@ -692,24 +691,25 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of PostDto objects</returns>
         public PostedContractedProposalsDto GetPosts()
         {
-
             var postedProposals = _PostRepository.GetAllPostedProposals();
 
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
-            var audiences = new List<int>(postedProposals.Select(p => p.GuaranteedAudienceId));
-            audiences.Add(houseHoldAudienceId);
+            var audiences = new List<int>(postedProposals.Select(p => p.GuaranteedAudienceId))
+            {
+                houseHoldAudienceId
+            };
 
             _ratingsAudiencesIds = _BroadcastAudienceRepository
                 .GetRatingsAudiencesByMaestroAudience(audiences).GroupBy(a => a.custom_audience_id)
-                .ToDictionary(key => key.Key,val => val.Select(v => v.rating_audience_id).ToList());
+                .ToDictionary(key => key.Key, val => val.Select(v => v.rating_audience_id).ToList());
 
             var proposalImpressions = _GetPostedProposalImpresssions(postedProposals.Select(p => p.ContractId).ToList(), _ratingsAudiencesIds.Values.SelectMany(v => v).Distinct().ToList());
 
             foreach (var post in postedProposals)
             {
                 _SetPostAdvertiser(post);
-
-                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions,post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
+                _SetFlightWeeks(post);
+                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
                 post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(proposalImpressions, post.ContractId, post.PostType, houseHoldAudienceId, post.Equivalized);
                 post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
             }
@@ -721,12 +721,20 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        private Dictionary<int, List<PostImpressionsData>> _GetPostedProposalImpresssions(List<int> contractIds,List<int> audiences)
+        private void _SetFlightWeeks(PostedContract post)
         {
-            var postedProposalImpresssionData = _GetPostImpressionsData(contractIds, audiences).GroupBy(g => g.ProposalId).ToDictionary(key => key.Key,val => val.ToList());
+            var proposal = _ProposalRepository.GetProposalById(post.ContractId);
+            post.FlightEndDate = proposal.FlightEndDate.Value;
+            post.FlightStartDate = proposal.FlightStartDate.Value;
+            post.FlightWeeks = proposal.FlightWeeks;
+        }
+
+        private Dictionary<int, List<PostImpressionsData>> _GetPostedProposalImpresssions(List<int> contractIds, List<int> audiences)
+        {
+            var postedProposalImpresssionData = _GetPostImpressionsData(contractIds, audiences).GroupBy(g => g.ProposalId).ToDictionary(key => key.Key, val => val.ToList());
             return postedProposalImpresssionData;
         }
-        private double _GetImpressionsForAudience(Dictionary<int,List<PostImpressionsData>> contractImpressionsData,int contractId, SchedulePostType type, int audienceId, bool equivalized)
+        private double _GetImpressionsForAudience(Dictionary<int, List<PostImpressionsData>> contractImpressionsData, int contractId, SchedulePostType type, int audienceId, bool equivalized)
         {
             double deliveredImpressions = 0;
             if (contractImpressionsData.ContainsKey(contractId))
@@ -749,15 +757,15 @@ namespace Services.Broadcast.ApplicationServices
             return deliveredImpressions;
         }
 
-        private void _SetPostAdvertiser(PostedContracts post)
+        private void _SetPostAdvertiser(PostedContract post)
         {
             var advertiserLookupDto = _SmsClient.FindAdvertiserById(post.AdvertiserId);
             post.Advertiser = advertiserLookupDto.Display;
         }
 
-        private List<PostImpressionsData> _GetPostImpressionsData(List<int> contractIds,List<int> audiences)
+        private List<PostImpressionsData> _GetPostImpressionsData(List<int> contractIds, List<int> audiences)
         {
-            return _PostRepository.GetPostImpressionsData(contractIds,audiences);
+            return _PostRepository.GetPostImpressionsData(contractIds, audiences);
         }
 
         private List<PostImpressionsData> _GetPostImpressionsData(int contractId, int maestroAudienceId)
@@ -794,7 +802,10 @@ namespace Services.Broadcast.ApplicationServices
                     Details = _MapToProposalDetailDto(proposal.Details, proposal.SpotLengths),
                     GuaranteedDemo = _AudiencesCache.GetDisplayAudienceById(proposal.GuaranteedDemoId).AudienceString,
                     Advertiser = advertiser != null ? advertiser.Display : string.Empty,
-                    SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList()
+                    SecondaryDemos = proposal.SecondaryDemos.Select(x => _AudiencesCache.GetDisplayAudienceById(x).AudienceString).ToList(),
+                    CoverageGoal = proposal.MarketCoverage,
+                    PostingType = proposal.PostType.ToString(),
+                    Equivalized = proposal.Equivalized
                 };
 
                 ///Load all Client Scrubs
@@ -804,7 +815,7 @@ namespace Services.Broadcast.ApplicationServices
                     _SetClientScrubsMarketAndAffiliate(clientScrubs);
                 }
 
-                //Set Sequence and ProposalDetailId
+                //Set Sequence and ProposalDetailId at scrub level and InventorySourceDisplay at detail level
                 result.Details.ForEach(x =>
                 {
                     var detailClientScrubs = clientScrubs.Where(cs => cs.ProposalDetailId == x.Id.Value).ToList();
@@ -813,6 +824,7 @@ namespace Services.Broadcast.ApplicationServices
                         y.Sequence = x.Sequence;
                         y.ProposalDetailId = x.Id;
                     });
+                    x.InventorySourceDisplay = string.Join(",", detailClientScrubs.Select(z => z.InventorySource).Distinct());
                     result.ClientScrubs.AddRange(detailClientScrubs);
                 });
 
@@ -836,6 +848,10 @@ namespace Services.Broadcast.ApplicationServices
                 Programs = x.ProgramCriteria,
                 Genres = x.GenreCriteria,
                 Sequence = x.Sequence,
+                DaypartCodeDisplay = x.DaypartCode,
+                EstimateId = x.EstimateId,
+                PostingBook = _MediaMonthAndWeekCache.GetMediaMonthsByIds(new List<int> { x.PostingBookId.Value }).Single().LongMonthNameAndYear,
+                PlaybackTypeDisplay = x.PostingPlaybackType?.GetDescriptionAttribute()
             }).OrderBy(x => x.Sequence).ToList();
         }
 
@@ -867,7 +883,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<ProposalDetailPostScrubbingDto> _MapClientScrubDataToDto(List<ProposalDetailPostScrubbing> clientScrubsData)
         {
-            return clientScrubsData.Select(x => {
+            return clientScrubsData.Select(x =>
+            {
                 var spotLength = _SpotLengthEngine.GetSpotLengthValueById(x.SpotLengthId);
                 var isIsciMarried = x.WeekIscis.Where(i => i.HouseIsci == x.ISCI).Any(i => i.MarriedHouseIsci);
 
@@ -907,7 +924,8 @@ namespace Services.Broadcast.ApplicationServices
                     StatusOverride = x.StatusOverride,
                     TimeAired = x.TimeAired,
                     WeekStart = x.WeekStart,
-                    SuppliedProgramNameUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName)
+                    SuppliedProgramNameUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName),
+                    InventorySource = x.InventorySource.ToString()
                 };
             }).ToList();
         }
@@ -1094,23 +1112,24 @@ namespace Services.Broadcast.ApplicationServices
                     if (reader.IsEmptyRow())
                         break;
 
-                    var detail = new InboundFileSaveRequestDetail();
-
-                    detail.AirTime = DateTime.Parse(reader.GetCellValue("Spot Time"));
-                    detail.Genre = reader.GetCellValue("Genre");
-                    detail.Isci = reader.GetCellValue("ISCI");
-                    detail.ProgramName = reader.GetCellValue("ProgramName");
-                    detail.Station = reader.GetCellValue("Station");
-                    detail.SpotLength = int.Parse(reader.GetCellValue("Spot Length"));
-                    detail.LeadInProgramName = reader.GetCellValue("LeadInTitle");
-                    detail.LeadInGenre = reader.GetCellValue("LeadInGenre");
-                    detail.LeadOutProgramName = reader.GetCellValue("LeadOutTitle");
-                    detail.LeadOutGenre = reader.GetCellValue("LeadOutGenre");
-                    detail.InventorySource = (AffidavitFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source"));
-                    detail.Affiliate = reader.GetCellValue("Affiliate");
-                    detail.ShowType = reader.GetCellValue("ShowType");
-                    detail.LeadInShowType = reader.GetCellValue("LeadInShowType");
-                    detail.LeadOutShowType = reader.GetCellValue("LeadOutShowType");
+                    var detail = new InboundFileSaveRequestDetail
+                    {
+                        AirTime = DateTime.Parse(reader.GetCellValue("Spot Time")),
+                        Genre = reader.GetCellValue("Genre"),
+                        Isci = reader.GetCellValue("ISCI"),
+                        ProgramName = reader.GetCellValue("ProgramName"),
+                        Station = reader.GetCellValue("Station"),
+                        SpotLength = int.Parse(reader.GetCellValue("Spot Length")),
+                        LeadInProgramName = reader.GetCellValue("LeadInTitle"),
+                        LeadInGenre = reader.GetCellValue("LeadInGenre"),
+                        LeadOutProgramName = reader.GetCellValue("LeadOutTitle"),
+                        LeadOutGenre = reader.GetCellValue("LeadOutGenre"),
+                        InventorySource = (AffidavitFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source")),
+                        Affiliate = reader.GetCellValue("Affiliate"),
+                        ShowType = reader.GetCellValue("ShowType"),
+                        LeadInShowType = reader.GetCellValue("LeadInShowType"),
+                        LeadOutShowType = reader.GetCellValue("LeadOutShowType")
+                    };
 
                     request.Details.Add(detail);
                 }

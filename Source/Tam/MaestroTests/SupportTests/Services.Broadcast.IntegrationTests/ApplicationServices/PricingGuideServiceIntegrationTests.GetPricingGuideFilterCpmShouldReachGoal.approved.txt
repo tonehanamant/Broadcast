@@ -195,6 +195,7 @@
   },
   "DistributionId": 0,
   "Filter": {},
+  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": null,
   "Inflation": null,
@@ -252,6 +253,7 @@
               "ProgramId": 26630,
               "ProgramName": "America next morning",
               "Spots": 1,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
