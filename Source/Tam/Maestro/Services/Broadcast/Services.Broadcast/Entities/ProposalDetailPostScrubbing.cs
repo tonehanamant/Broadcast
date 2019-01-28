@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
@@ -35,5 +36,6 @@ namespace Services.Broadcast.Entities
         public bool MatchIsci { get; set; }
         public string WWTVProgramName { get; set; }
         public List<ProposalWeekIsciDto> WeekIscis { get; set; }
+        public AffidavitFileSourceEnum InventorySource { get; set; }
     }
 }

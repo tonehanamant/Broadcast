@@ -33,5 +33,6 @@ namespace Services.Broadcast.Entities.DTO
         public bool MatchShowType { get; set; }
         public bool MatchIsci { get; set; }
         public bool SuppliedProgramNameUsed { get; set; }
+        public string InventorySource { get; set; }
     }
 }

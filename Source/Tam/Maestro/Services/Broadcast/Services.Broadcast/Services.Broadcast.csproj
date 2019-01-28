@@ -215,6 +215,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
+    <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\MarketCoverageByStation.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
@@ -280,7 +281,6 @@
     <Compile Include="Entities\Nti\NtiRatingSubCategoryDto.cs" />
     <Compile Include="Entities\PricingGuideOpenMarketDistributionSaveRequest.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSaveRequest.cs" />
-    <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />

@@ -316,7 +316,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int)AffidavitFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -351,7 +351,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) FileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -408,7 +408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) FileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -443,7 +443,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) FileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -571,7 +571,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int)AffidavitFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -1697,7 +1697,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 InboundFileSaveRequest affidavitSaveRequest = new InboundFileSaveRequest
                 {
                     FileHash = "abc123",
-                    Source = (int)AffidavitFileSourceEnum.Strata,
+                    Source = (int)FileSourceEnum.Strata,
                     FileName = "test.file",
                     Details = new List<InboundFileSaveRequestDetail>()
                     {

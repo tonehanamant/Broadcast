@@ -3,9 +3,12 @@
   "BlackoutMarketGroup": null,
   "BlackoutMarketGroupId": null,
   "ClientScrubs": [],
+  "CoverageGoal": null,
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": null,
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -18,12 +21,17 @@
       ],
       "Genres": [],
       "Id": 14,
+      "InventorySourceDisplay": null,
+      "PlaybackTypeDisplay": null,
+      "PostingBook": null,
       "Programs": [],
       "Sequence": 1,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": null,
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -48,12 +56,17 @@
       ],
       "Genres": [],
       "Id": 15,
+      "InventorySourceDisplay": null,
+      "PlaybackTypeDisplay": null,
+      "PostingBook": null,
       "Programs": [],
       "Sequence": 2,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": null,
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -66,11 +79,15 @@
       ],
       "Genres": [],
       "Id": 10799,
+      "InventorySourceDisplay": null,
+      "PlaybackTypeDisplay": null,
+      "PostingBook": null,
       "Programs": [],
       "Sequence": 3,
       "SpotLength": "30"
     }
   ],
+  "Equivalized": false,
   "Filters": {
     "DateAiredEnd": null,
     "DateAiredStart": null,
@@ -98,6 +115,7 @@
   "Markets": [],
   "Name": "Proposal Test",
   "Notes": null,
+  "PostingType": null,
   "SecondaryDemos": [
     "Females 15-17",
     "Females 18-20"

@@ -609,7 +609,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)FileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -644,7 +644,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)FileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -679,7 +679,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)FileSourceEnum.KeepingTrac,
                 FileName = "test.file"
             };
 
