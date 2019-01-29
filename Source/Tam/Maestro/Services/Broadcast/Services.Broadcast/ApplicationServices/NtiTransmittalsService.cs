@@ -113,17 +113,17 @@ namespace Services.Broadcast.ApplicationServices
             {
                 return;
             }
-
-            double totalImpressionsForWeeks = detail.ProposalWeeks.Sum(x => x.NsiImpressions ?? 0);
+                        
             foreach (var week in detail.ProposalWeeks)
             {                
                 foreach (var component in totalImpressionsForComponents)
                 {
+                    double totalImpressionsForWeeks = detail.ProposalWeeks.Sum(x => x.NsiImpressions.Where(w=>w.Key == component.AudienceId).Sum(w=>w.Value));
                     var impressions = component.Impressions;
                     if (totalImpressionsForWeeks > 0)
                     {
                         //we split the impression based on the NSI impressions ratio between the weeks matched
-                        impressions = component.Impressions * (week.NsiImpressions ?? 0) / totalImpressionsForWeeks;
+                        impressions = component.Impressions * week.NsiImpressions.Where(w => w.Key == component.AudienceId).Sum(w=>w.Value) / totalImpressionsForWeeks;
                     }
                     else
                     {   //if there are no NSI impressions we split the NTI impressions evenly

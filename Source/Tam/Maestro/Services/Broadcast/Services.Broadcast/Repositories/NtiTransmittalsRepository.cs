@@ -48,12 +48,21 @@ namespace Services.Broadcast.Repositories
                     var data = (from week in context.proposal_version_detail_quarter_weeks
                                 from affidavitClientScrub in week.affidavit_client_scrubs
                                 where week.myevents_report_name == reportName
-                                select new { week, affidavitClientScrub })
-                                .GroupBy(x => x.week.id);
-                    return data.Select(x => new NtiProposalVersionDetailWeek
+                                && week.proposal_version_detail_quarters.proposal_version_details.proposal_versions.status == (int)ProposalEnums.ProposalStatusType.Contracted
+                                select new { week.id, affidavitClientScrub.affidavit_client_scrub_audiences })
+                                .GroupBy(x => x.id);
+                    return data.Select(x => new
                     {
                         WeekId = x.Key,
-                        NsiImpressions = x.Sum(y=>y.affidavitClientScrub.affidavit_client_scrub_audiences.Sum(w=>w.impressions))
+                        Audiences = x.SelectMany(y => y.affidavit_client_scrub_audiences)
+                    })
+                    .AsEnumerable()
+                    .Select(x => new NtiProposalVersionDetailWeek
+                    {
+                        WeekId = x.WeekId,
+                        NsiImpressions = x.Audiences
+                        .GroupBy(y => y.audience_id)
+                        .ToDictionary(k => k.Key, k => k.Sum(w => w.impressions))
                     }).ToList();
                 });
         }
