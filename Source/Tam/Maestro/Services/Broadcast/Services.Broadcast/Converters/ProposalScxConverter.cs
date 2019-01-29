@@ -32,6 +32,8 @@ namespace Services.Broadcast.Converters
         protected const string Currency = "USD";
         protected const string HardCodedAgencyCode = "309";
         protected const string NccMarketKeyValue = "216";  // use this value for some reason.
+        protected const string DocCode = "1";
+        protected const string DocType = "Order";
         protected readonly IDaypartCache _DaypartCache;
         private readonly IProposalScxDataPrep _proposalScxDataPrep;
         private string _AdvertisersName;
@@ -162,8 +164,8 @@ namespace Services.Broadcast.Converters
             xp.document.mediaType = documentMediaType.Spotcable;
             xp.document.schemaVersion = "1.0";
             xp.document.name = " ";
-            xp.document.documentCode = string.Empty;
-            xp.document.documentType = string.Empty;
+            xp.document.documentCode = DocCode;
+            xp.document.documentType = DocType;
         }
 
 

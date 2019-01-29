@@ -248,7 +248,7 @@ namespace Services.Broadcast.Converters
                     Ratingdata demoRating = new Ratingdata()
                     {
                         DaypartId = manifestDetail.DisplayDaypart.Id,
-                        Rating = impressionData.rating * manifestDetail.DisplayDaypart.ActiveDays * 100,
+                        Rating = impressionData.rating  * 100,
                         LegacyCallLetters= impressionData.legacy_call_letters
                     };
                     demo.Ratings.Add(demoRating);
