@@ -9,6 +9,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System;
+using System.Diagnostics;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.DTO;
@@ -55,6 +56,7 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of PostedContracts objects</returns>
         List<PostedContract> GetAllPostedProposals();
 
+
         /// <summary>
         /// Get the impression for a list of audiences of a proposal
         /// </summary>
@@ -62,6 +64,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="ratingsAudiences">List of audiences</param>
         /// <returns>List of PostImpressionsData objects</returns>
         List<PostImpressionsData> GetPostLogImpressionsData(int proposalId, List<int> ratingsAudiences);
+        
+        /// <summary>
+        /// Get the impression for a list of audiences for all proposals
+        /// </summary>
+        /// <param name="proposalIds">Proposals to filter by</param>
+        /// <param name="ratingsAudiences">List of audiences</param>
+        /// <returns>List of PostImpressionsData objects</returns>
+        List<PostImpressionsData> GetPostLogImpressionsData(List<int> proposalIds,List<int> ratingsAudiences);
 
         /// <summary>
         /// Checks if an isci is blacklisted
@@ -427,6 +437,35 @@ namespace Services.Broadcast.Repositories
                             }).ToList();
                 });
         }
+
+        public List<PostImpressionsData> GetPostLogImpressionsData(List<int> proposalIds,List<int> ratingsAudiences)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.Database.Log = message => Debug.WriteLine(message);
+                    return (from proposal in context.proposals
+                            from proposalVersion in proposal.proposal_versions
+                            from proposalVersionDetail in proposalVersion.proposal_version_details
+                            from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                            from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                            from postlogClientScrub in proposalVersionWeeks.postlog_client_scrubs
+                            from postlogClientScrubAudience in postlogClientScrub.postlog_client_scrub_audiences
+                            where proposalIds.Contains(proposal.id) && 
+                                  (ScrubbingStatus)postlogClientScrub.status == ScrubbingStatus.InSpec &&
+                                  ratingsAudiences.Contains(postlogClientScrubAudience.audience_id) &&
+                                  proposalVersion.snapshot_date == null
+                            select new PostImpressionsData
+                            {
+                                ProposalId = proposal.id,
+                                Impressions = postlogClientScrubAudience.impressions,
+                                NtiConversionFactor = proposalVersionDetail.nti_conversion_factor,
+                                SpotLengthId = proposalVersionDetail.spot_length_id,
+                                AudienceId =  postlogClientScrubAudience.audience_id
+                            }).ToList();
+                });
+        }
+
 
         /// <summary>
         /// Checks if an isci is blacklisted

@@ -247,17 +247,27 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of PostDto objects</returns>
         public PostedContractedProposalsDto GetPostLogs(DateTime currentWeekDate)
         {
+            var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
+
             var postedProposals = _PostLogRepository.GetAllPostedProposals();
 
             _SetIsActiveThisWeekProperty(postedProposals, currentWeekDate);
+
+            var proposalMaestroAudiences = postedProposals.Select(p => p.GuaranteedAudienceId).Distinct().ToList();
+            if (!proposalMaestroAudiences.Contains(houseHoldAudienceId))
+                proposalMaestroAudiences.Add(houseHoldAudienceId);
+
+            var proposalRatingAudience =_BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalMaestroAudiences);
+            var proposals = postedProposals.Select(p => p.ContractId).ToList();
+            var postData = _GetImpressionsForAudiences(proposals,proposalRatingAudience.Values.SelectMany(d => d).Distinct().ToList());
 
             foreach (var post in postedProposals)
             {
                 _SetPostAdvertiser(post);
 
-                var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
-                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(post.ContractId, post.PostType, post.GuaranteedAudienceId, post.Equivalized);
-                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(post.ContractId, post.PostType, houseHoldAudienceId, post.Equivalized);
+                var postAudienceIds = proposalRatingAudience[post.GuaranteedAudienceId];
+                post.PrimaryAudienceDeliveredImpressions = _GetImpressionsForAudience(postData,post.ContractId, post.PostType, postAudienceIds, post.Equivalized);
+                post.HouseholdDeliveredImpressions = _GetImpressionsForAudience(postData,post.ContractId, post.PostType, new List<int>() { houseHoldAudienceId}, post.Equivalized);
                 post.PrimaryAudienceDelivery = post.PrimaryAudienceDeliveredImpressions / post.PrimaryAudienceBookedImpressions * 100;
             }
 
@@ -1001,9 +1011,10 @@ namespace Services.Broadcast.ApplicationServices
             post.Advertiser = advertiserLookupDto.Display;
         }
 
-        private double _GetImpressionsForAudience(int contractId, SchedulePostType type, int audienceId, bool equivalized)
+        private double _GetImpressionsForAudience(List<PostImpressionsData> postImpressionData,int proposalData, SchedulePostType type, List<int> postAudienceIds, bool equivalized)
         {
-            var impressionsDataGuaranteed = _GetPostLogImpressionsData(contractId, audienceId);
+            var impressionsDataGuaranteed = postImpressionData.Where(d => d.ProposalId == proposalData && postAudienceIds.Contains(d.AudienceId));
+
             double deliveredImpressions = 0;
             foreach (var impressionData in impressionsDataGuaranteed)
             {
@@ -1016,6 +1027,12 @@ namespace Services.Broadcast.ApplicationServices
                 deliveredImpressions += impressions;
             }
             return deliveredImpressions;
+        }
+
+        private List<PostImpressionsData> _GetImpressionsForAudiences(List<int> proposals,List<int> ratingsAudiencesIds)
+        {
+            var impressionsData =  _PostLogRepository.GetPostLogImpressionsData(proposals,ratingsAudiencesIds);
+            return impressionsData;
         }
 
         private List<PostImpressionsData> _GetPostLogImpressionsData(int contractId, int maestroAudienceId)
