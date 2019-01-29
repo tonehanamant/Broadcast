@@ -1098,10 +1098,12 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Unknown file");
             }
 
-            request = new InboundFileSaveRequest();
-            request.FileName = fileName;
-            request.FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream));
-            request.Source = (int)AffidavitFileSourceEnum.Strata;
+            request = new InboundFileSaveRequest
+            {
+                FileName = fileName,
+                FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream)),
+                Source = (int)AffidavitFileSourceEnum.Strata
+            };
 
             using (reader.Initialize(rawStream))
             {

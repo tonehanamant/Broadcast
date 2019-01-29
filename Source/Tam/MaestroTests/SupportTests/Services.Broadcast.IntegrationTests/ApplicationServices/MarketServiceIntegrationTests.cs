@@ -27,7 +27,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const string filename = @".\Files\Market_Coverages_2.xlsx";
 
-                _MarketService.LoadCoverages(filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
 
                 var jsonSerializerSettings = _GetJsonSerializerSettingsForMarketCoverages();
                 var loadedCoverages = _MarketCoverageRepository.GetAll();
@@ -45,7 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const string filename = @".\Files\Market_Coverages.xlsx";
 
-                _MarketService.LoadCoverages(filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
 
                 var jsonSerializerSettings = _GetJsonSerializerSettingsForMarketCoverages();
                 var loadedCoverages = _MarketCoverageRepository.GetAll();
@@ -61,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string filename = @".\Files\Market_Coverages_With_Not_Existing_Markets.xlsx";
 
-            _MarketService.LoadCoverages(filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+            _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string wrongFileName = @".\Files\WrongFile.xlsx";
 
-            _MarketService.LoadCoverages(wrongFileName, "IntegrationTestUser", new DateTime(2018, 12, 18));
+            _MarketService.LoadCoverages(new FileStream(wrongFileName, FileMode.Open, FileAccess.Read), wrongFileName, "IntegrationTestUser", new DateTime(2018, 12, 18));
         }
 
         private JsonSerializerSettings _GetJsonSerializerSettingsForMarketCoverages()

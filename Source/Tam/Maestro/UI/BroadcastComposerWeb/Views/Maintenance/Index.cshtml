@@ -9,19 +9,18 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>View</title>
-    <script >
+    <script>
         function copyToClip() {
             var copyText = document.getElementById("divJSON");
             /* Select the text field */
             copyText.select();
             /* Copy the text inside the text field */
             document.execCommand("Copy");
-            
+
         }
     </script>
 </head>
 <body>
-
     <form action="" method="post" enctype="multipart/form-data">
 
         <label for="file">Filename:</label>
@@ -42,8 +41,6 @@
         @IdValue
         <div><b>Results:</b></div>
         <textarea rows="20" style="width: 600px;" id="divJSON">@ViewBag.Message</textarea>
-
-
     </form>
     <br />
     <br />
@@ -54,29 +51,41 @@
     {
         <input type="submit" value="test email" id="test_email" />
     }
-    <br/>
-        <div>
-            @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
-            {
-                <input type="submit" value="Clear System Param Cache" id="txtClearCache" />
-            }
+    <br />
+    <div>
+        @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
+        {
+            <input type="submit" value="Clear System Param Cache" id="txtClearCache" />
+        }
 
-            @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
-            {
-                <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
-            }
-        </div>
-        <div>
-<div>
-
+        @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+        {
+            <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
+        }
+    </div>
+    <div>
+        <br />
+        <br />
+        @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
+        {
+            <input type="submit" value="Test FTP" id="txtTestFtpAccess" />
+        }
+    </div>
+    <div>
+        <br />
+        <br />      
+        <form action="UploadMarketCoverageFile" method="post" enctype="multipart/form-data">
+            <label for="file">Filename:</label>
+            <input type="file" name="file" id="file" />
             <br />
+            <input type="submit" text="Upload Market Coverages" />
             <br />
-            @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
-             {
-                    <input type="submit" value="Test FTP" id="txtTestFtpAccess" />
-               }
-        </div>
-
+            <div>
+                <b>Result:</b>
+                <label style="width: 600px;" id="result_market_coverages">@ViewBag.Message</label>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>

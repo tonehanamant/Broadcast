@@ -18,7 +18,7 @@ namespace Services.Broadcast.Extensions
         /// <returns>List of objects with defined type</returns>
         public static IEnumerable<T> ConvertSheetToObjects<T>(this ExcelWorksheet worksheet) where T : new()
         {
-            Func<CustomAttributeData, bool> columnOnly = y => y.AttributeType == typeof(ExcelColumnAttribute);
+            bool columnOnly(CustomAttributeData y) => y.AttributeType == typeof(ExcelColumnAttribute);
 
             var columns = typeof(T)
                     .GetProperties()
