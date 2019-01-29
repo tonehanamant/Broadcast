@@ -160,6 +160,7 @@ export default class DayPartPicker extends Component {
             readonly
             spellcheck="false"
             autocorrect="off"
+            autocomplete="off" // attempt overide chrome
             disabled={disabled}
           />
           <InputGroup.Addon>
