@@ -203,15 +203,15 @@
             },
             {
               "AudienceId": 13,
-              "Impressions": 98.0
+              "Impressions": 980.0
             },
             {
               "AudienceId": 14,
-              "Impressions": 263.0
+              "Impressions": 2630.0
             },
             {
               "AudienceId": 15,
-              "Impressions": 438.0
+              "Impressions": 4380.0
             },
             {
               "AudienceId": 19,
@@ -231,43 +231,43 @@
             },
             {
               "AudienceId": 28,
-              "Impressions": 77.0
+              "Impressions": 770.0
             },
             {
               "AudienceId": 29,
-              "Impressions": 187.0
+              "Impressions": 1870.0
             },
             {
               "AudienceId": 30,
-              "Impressions": 292.0
+              "Impressions": 2920.0
             },
             {
               "AudienceId": 31,
-              "Impressions": 1438.0
+              "Impressions": 14380.0
             },
             {
               "AudienceId": 46,
-              "Impressions": 27.0
+              "Impressions": 270.0
             },
             {
               "AudienceId": 284,
-              "Impressions": 31.0
+              "Impressions": 310.0
             },
             {
               "AudienceId": 290,
-              "Impressions": 111.0
+              "Impressions": 1110.0
             },
             {
               "AudienceId": 339,
-              "Impressions": 30.0
+              "Impressions": 300.0
             },
             {
               "AudienceId": 347,
-              "Impressions": 140.0
+              "Impressions": 1400.0
             },
             {
               "AudienceId": 348,
-              "Impressions": 39.0
+              "Impressions": 390.0
             }
           ],
           "NsiImpressions": 17816.55,
@@ -550,15 +550,15 @@
             },
             {
               "AudienceId": 13,
-              "Impressions": 42.0
+              "Impressions": 420.0
             },
             {
               "AudienceId": 14,
-              "Impressions": 95.0
+              "Impressions": 950.0
             },
             {
               "AudienceId": 15,
-              "Impressions": 131.0
+              "Impressions": 1310.0
             },
             {
               "AudienceId": 19,
@@ -578,43 +578,43 @@
             },
             {
               "AudienceId": 28,
-              "Impressions": 32.0
+              "Impressions": 320.0
             },
             {
               "AudienceId": 29,
-              "Impressions": 75.0
+              "Impressions": 750.0
             },
             {
               "AudienceId": 30,
-              "Impressions": 107.0
+              "Impressions": 1070.0
             },
             {
               "AudienceId": 31,
-              "Impressions": 594.0
+              "Impressions": 5940.0
             },
             {
               "AudienceId": 46,
-              "Impressions": 13.0
+              "Impressions": 130.0
             },
             {
               "AudienceId": 284,
-              "Impressions": 10.0
+              "Impressions": 100.0
             },
             {
               "AudienceId": 290,
-              "Impressions": 56.0
+              "Impressions": 560.0
             },
             {
               "AudienceId": 339,
-              "Impressions": 7.0
+              "Impressions": 70.0
             },
             {
               "AudienceId": 347,
-              "Impressions": 79.0
+              "Impressions": 790.0
             },
             {
               "AudienceId": 348,
-              "Impressions": 18.0
+              "Impressions": 180.0
             }
           ],
           "NsiImpressions": 342133.3,
@@ -807,15 +807,15 @@
             },
             {
               "AudienceId": 13,
-              "Impressions": 151.0
+              "Impressions": 1510.0
             },
             {
               "AudienceId": 14,
-              "Impressions": 365.0
+              "Impressions": 3650.0
             },
             {
               "AudienceId": 15,
-              "Impressions": 579.0
+              "Impressions": 5790.0
             },
             {
               "AudienceId": 19,
@@ -835,43 +835,43 @@
             },
             {
               "AudienceId": 28,
-              "Impressions": 94.0
+              "Impressions": 940.0
             },
             {
               "AudienceId": 29,
-              "Impressions": 226.0
+              "Impressions": 2260.0
             },
             {
               "AudienceId": 30,
-              "Impressions": 251.0
+              "Impressions": 2510.0
             },
             {
               "AudienceId": 31,
-              "Impressions": 2076.0
+              "Impressions": 20760.0
             },
             {
               "AudienceId": 46,
-              "Impressions": 35.0
+              "Impressions": 350.0
             },
             {
               "AudienceId": 284,
-              "Impressions": 53.0
+              "Impressions": 530.0
             },
             {
               "AudienceId": 290,
-              "Impressions": 165.0
+              "Impressions": 1650.0
             },
             {
               "AudienceId": 339,
-              "Impressions": 36.0
+              "Impressions": 360.0
             },
             {
               "AudienceId": 347,
-              "Impressions": 274.0
+              "Impressions": 2740.0
             },
             {
               "AudienceId": 348,
-              "Impressions": 105.0
+              "Impressions": 1050.0
             }
           ],
           "NsiImpressions": 17816.55,

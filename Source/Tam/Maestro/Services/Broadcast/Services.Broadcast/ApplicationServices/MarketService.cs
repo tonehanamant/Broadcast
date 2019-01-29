@@ -20,9 +20,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Loads market coverages from an xlsx file to the broadcast database
         /// </summary>
-        /// <param name="path">Server path to an xlsx file</param>
+        /// <param name="fileName">File name</param>
+        /// <param name="fileStream">File stream</param>
         /// <param name="userName">The name of the current user</param>
-        void LoadCoverages(string path, string userName, DateTime createdDate);
+        /// <param name="createdDate">Created date</param>
+        void LoadCoverages(Stream fileStream, string fileName, string userName, DateTime createdDate);
     }
 
     public class MarketService : IMarketService
@@ -36,24 +38,36 @@ namespace Services.Broadcast.ApplicationServices
             _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
         }
 
-        public void LoadCoverages(string path, string userName, DateTime createdDate)
+        /// <summary>
+        /// Loads market coverages from an xlsx file to the broadcast database
+        /// </summary>
+        /// <param name="fileName">File name</param>
+        /// <param name="fileStream">File stream</param>
+        /// <param name="userName">The name of the current user</param>
+        /// <param name="createdDate">Created date</param>
+        public void LoadCoverages(Stream fileStream, string fileName, string userName, DateTime createdDate)
         {
             var marketCoverageFile = new MarketCoverageFile
             {
-                FileName = Path.GetFileName(path),
+                FileName = fileName,
                 CreatedBy = userName,
                 CreatedDate = createdDate,
-                FileHash = HashGenerator.ComputeHash(File.ReadAllBytes(path))
+                FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(fileStream))
             };
 
             _CheckIfFileAlreadyUploaded(marketCoverageFile.FileHash);
 
-            var marketCoverages = _ReadMarketCoveragesFile(path).ToList();
+            var marketCoverages = _ReadMarketCoveragesFile(fileStream);
             var marketNamesFromFile = marketCoverages.Select(x => x.Market);
             var marketsFromDb = _MarketRepository.GetMarketsByGeographyNames(marketNamesFromFile);
 
             _CheckForMissingMarkets(marketsFromDb, marketNamesFromFile);
-            _SetMarketCodes(marketCoverages, marketsFromDb);
+
+            marketCoverages.ForEach(x =>
+            {
+                var market = marketsFromDb.Single(y => y.geography_name.Equals(x.Market, StringComparison.InvariantCultureIgnoreCase));
+                x.MarketCode = market.market_code;
+            });
 
             marketCoverageFile.MarketCoverages.AddRange(marketCoverages);
 
@@ -66,10 +80,9 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Market coverage file already uploaded to the system");
         }
 
-        private IEnumerable<MarketCoverage> _ReadMarketCoveragesFile(string path)
+        private List<MarketCoverage> _ReadMarketCoveragesFile(Stream stream)
         {
-            var file = new FileInfo(path);
-            var package = new ExcelPackage(file, true);
+            var package = new ExcelPackage(stream);
             var worksheet = package.Workbook.Worksheets[1];
             var marketCoverages = worksheet.ConvertSheetToObjects<MarketCoverage>();
 
@@ -77,7 +90,7 @@ namespace Services.Broadcast.ApplicationServices
             // It shouldn't be loaded. This is how we skip it
             marketCoverages = marketCoverages.Where(x => x.Rank.HasValue);
 
-            return marketCoverages;
+            return marketCoverages.ToList();
         }
 
         private void _CheckForMissingMarkets(IEnumerable<market> marketsFromDb, IEnumerable<string> marketNamesFromFile)
@@ -98,15 +111,6 @@ namespace Services.Broadcast.ApplicationServices
                 stringBuilder.Append($"{notExistingMarkets[notExistingMarkets.Count() - 1]}.");
 
                 throw new Exception(stringBuilder.ToString());
-            }
-        }
-
-        private void _SetMarketCodes(List<MarketCoverage> marketCoverages, IEnumerable<market> marketsFromDb)
-        {
-            foreach (var marketCoverage in marketCoverages)
-            {
-                var market = marketsFromDb.Single(x => x.geography_name.Equals(marketCoverage.Market, StringComparison.InvariantCultureIgnoreCase));
-                marketCoverage.MarketCode = market.market_code;
             }
         }
     }

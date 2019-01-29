@@ -25,14 +25,6 @@ namespace Services.Broadcast.ApplicationServices
         BaseResponse UploadNtiTransmittalsFile(FileRequest request, string name);
 
         /// <summary>
-        /// Send a pdf file content to Nielsen
-        /// This method is public because it's used in the integration tests
-        /// </summary>
-        /// <param name="request">FileRequest object</param>
-        /// <returns>BaseResponse object containing a list of NielsenRatingDocumentDto objects</returns>
-        BaseResponse<List<NtiRatingDocumentDto>> SendPdfDocumentToNielson(FileRequest request);
-
-        /// <summary>
         /// Processes the document received from Nielsen and saves it to db
         /// This method is public because it's used in the integration tests
         /// </summary>
@@ -40,6 +32,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="pdfDocumentFromNielson">List of NtiRatingDocumentDto objects receved from Nielsen</param>
         /// <returns>BaseResponse object</returns>
         BaseResponse ProcessFileContent(NtiFile ntiFile, BaseResponse<List<NtiRatingDocumentDto>> pdfDocumentFromNielson);
+
+        BaseResponse<List<NtiRatingDocumentDto>> _SendPdfDocumentToNielson(FileRequest request);
     }
 
     public class NtiTransmittalsService : INtiTransmittalsService
@@ -65,7 +59,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>BaseResponse object containing message of success or failure</returns>
         public BaseResponse UploadNtiTransmittalsFile(FileRequest request, string name)
         {
-            BaseResponse<List<NtiRatingDocumentDto>> pdfDocumentFromNielson = SendPdfDocumentToNielson(request);
+            BaseResponse<List<NtiRatingDocumentDto>> pdfDocumentFromNielson = _SendPdfDocumentToNielson(request);
             var ntiFile = new NtiFile
             {
                 CreatedDate = DateTime.Now,
@@ -239,6 +233,9 @@ namespace Services.Broadcast.ApplicationServices
                         ntiAudience.Impressions = rM1834 - (rM18 - (rM2554 + rM55));
                         break;
                 }
+                //nti impressions are stored as (0000)
+                //so we are going to multiply by 10 to get it in (000)
+                ntiAudience.Impressions = ntiAudience.Impressions * 10;
 
                 ntiAudiences.Add(ntiAudience);
             }
@@ -286,14 +283,8 @@ namespace Services.Broadcast.ApplicationServices
 
             return categories;
         }
-
-        /// <summary>
-        /// Send a pdf file content to Nielsen
-        /// This method is public because I am using it in the integration tests
-        /// </summary>
-        /// <param name="request">FileRequest object</param>
-        /// <returns>BaseResponse object containing a list of NielsenRatingDocumentDto objects</returns>
-        public BaseResponse<List<NtiRatingDocumentDto>> SendPdfDocumentToNielson(FileRequest request)
+                
+        public BaseResponse<List<NtiRatingDocumentDto>> _SendPdfDocumentToNielson(FileRequest request)
         {
             var nielsonRequest = new NtiPdfDto { Base64String = request.RawData };
             var jsonRequest = JsonConvert.SerializeObject(nielsonRequest);

@@ -39,7 +39,7 @@
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
-      "DaypartCodeDisplay": null,
+      "DaypartCodeDisplay": "NAV",
       "EstimateId": null,
       "FlightEndDate": "2018-10-20T00:00:00",
       "FlightStartDate": "2018-10-02T00:00:00",
@@ -53,9 +53,9 @@
       ],
       "Genres": [],
       "Id": 14751,
-      "InventorySourceDisplay": null,
-      "PlaybackTypeDisplay": null,
-      "PostingBook": null,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "February 2018",
       "Programs": [],
       "Sequence": null,
       "SpotLength": "15"
@@ -111,6 +111,6 @@
   "Markets": [],
   "Name": "Proposal BCOP-3771",
   "Notes": "",
-  "PostingType": null,
+  "PostingType": "NSI",
   "SecondaryDemos": []
 }

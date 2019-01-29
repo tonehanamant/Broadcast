@@ -16,6 +16,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Microsoft.Practices.Unity;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1536,7 +1537,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const string filename = @".\Files\Market_Coverages_Pricing_Guide.xlsx";
 
-                _MarketService.LoadCoverages(filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
 
                 var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
