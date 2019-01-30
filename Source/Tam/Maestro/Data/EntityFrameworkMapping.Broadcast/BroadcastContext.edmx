@@ -640,6 +640,7 @@
           <Property Name="forecasted_impressions_per_spot" Type="float" Nullable="false" />
           <Property Name="station_impressions_per_spot" Type="float" Nullable="false" />
           <Property Name="cost_per_spot" Type="money" Nullable="false" />
+          <Property Name="spots_edited_manually" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="pricing_guide_distribution_proprietary_inventory">
           <Key>
@@ -7860,6 +7861,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station" />
           <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_station_inventory_manifest" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="station_inventory_manifest" />
           <NavigationProperty Name="pricing_guide_distributions" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_pricing_guide_distribution" FromRole="pricing_guide_distribution_open_market_inventory" ToRole="pricing_guide_distributions" />
+          <Property Name="spots_edited_manually" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_pricing_guide_distribution_open_market_inventory_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1">
@@ -9555,6 +9557,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="pricing_guide_distribution_open_market_inventory">
             <EntityTypeMapping TypeName="BroadcastModel.pricing_guide_distribution_open_market_inventory">
               <MappingFragment StoreEntitySet="pricing_guide_distribution_open_market_inventory">
+                <ScalarProperty Name="spots_edited_manually" ColumnName="spots_edited_manually" />
                 <ScalarProperty Name="manifest_id" ColumnName="manifest_id" />
                 <ScalarProperty Name="cost_per_spot" ColumnName="cost_per_spot" />
                 <ScalarProperty Name="station_impressions_per_spot" ColumnName="station_impressions_per_spot" />

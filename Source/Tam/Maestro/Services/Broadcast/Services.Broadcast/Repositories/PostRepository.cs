@@ -16,7 +16,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IPostRepository : IDataRepository
     {
-        List<PostedContracts> GetAllPostedProposals();
+        List<PostedContract> GetAllPostedProposals();
 
         /// <summary>
         /// Counts all the unlinked iscis
@@ -101,12 +101,12 @@ namespace Services.Broadcast.Repositories
         {
         }
 
-        public List<PostedContracts> GetAllPostedProposals()
+        public List<PostedContract> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var posts = context.Database.SqlQuery<PostedContracts>("usp_GetPostedProposals");
+                    var posts = context.Database.SqlQuery<PostedContract>("usp_GetPostedProposals");
                     
                     return posts.OrderByDescending(x => x.UploadDate).ToList();
                 });

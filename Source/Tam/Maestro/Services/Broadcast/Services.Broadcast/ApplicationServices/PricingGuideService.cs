@@ -174,6 +174,7 @@ namespace Services.Broadcast.ApplicationServices
                             {
                                 ProgramId = x.ProgramId,
                                 Spots = x.Spots,
+                                SpotsEditedManually = x.SpotsEditedManually,
                                 BlendedCpm = x.BlendedCpm,
                                 CostPerSpot = x.CostPerSpot,
                                 Daypart = x.Daypart,
@@ -552,7 +553,8 @@ namespace Services.Broadcast.ApplicationServices
                 OpenMarketShare = dto.OpenMarketShare,
                 ProprietaryPricing = dto.ProprietaryPricing,
                 Markets = pricingGuideOpenMarketInventory.Markets,
-                AllMarkets = pricingGuideOpenMarketInventory.AllMarkets
+                AllMarkets = pricingGuideOpenMarketInventory.AllMarkets,
+                MaintainManuallyEditedSpots = dto.MaintainManuallyEditedSpots
             };
         }
 
@@ -597,32 +599,62 @@ namespace Services.Broadcast.ApplicationServices
             PricingGuideOpenMarketInventoryRequestDto request,
             bool shouldRunDistribution)
         {
-            // Markets that need to be included.
-            var mustIncludedMarketCodes = inventory.ProposalMarkets.Where(x => !x.IsBlackout).Select(x => (int)x.Id).ToList();
             // Only markets in the list are allowed.
             var allowedMarkets = _ProposalMarketsCalculationEngine.GetProposalMarketsList(inventory.ProposalId, inventory.ProposalVersion);
             var allowedMarketsIds = allowedMarkets.Select(x => x.Id);
-            // Remove all markets that might have been blacklisted.
-            mustIncludedMarketCodes.RemoveAll(x => !allowedMarketsIds.Contains(x));
-            var includedMarkets = inventory.Markets.Where(x => mustIncludedMarketCodes.Contains(x.MarketId)).ToList();
-            var includedMarketsCoverage = includedMarkets.Sum(x => x.MarketCoverage);
             inventory.Markets.RemoveAll(x => !allowedMarketsIds.Contains(x.MarketId));
-            if (includedMarketsCoverage >= (inventory.MarketCoverage * 100))
-            {
-                inventory.Markets.Clear();
-                inventory.Markets.AddRange(includedMarkets);
-                return;
-            }
-
-            inventory.Markets.RemoveAll(x => mustIncludedMarketCodes.Contains(x.MarketId));
 
             if (shouldRunDistribution)
             {
+                // Markets that need to be included.
+                var mustIncludedMarketCodes = inventory.ProposalMarkets
+                    .Where(x => !x.IsBlackout)
+                    .Select(x => (int)x.Id)
+                    .ToList();
+
+                if (request.MaintainManuallyEditedSpots)
+                {
+                    _SetSpotsEditedManuallyProperty(inventory);
+                    mustIncludedMarketCodes = mustIncludedMarketCodes
+                        .Union(inventory.Markets.Where(x => x.HasEditedManuallySpots).Select(x => x.MarketId))
+                        .ToList();
+                }
+
+                var includedMarkets = inventory.Markets.Where(x => mustIncludedMarketCodes.Contains(x.MarketId)).ToList();
+                var includedMarketsCoverage = includedMarkets.Sum(x => x.MarketCoverage);
+
+                if (includedMarketsCoverage >= (inventory.MarketCoverage * 100))
+                {
+                    inventory.Markets.Clear();
+                    inventory.Markets.AddRange(includedMarkets);
+                    return;
+                }
+
+                inventory.Markets.RemoveAll(x => mustIncludedMarketCodes.Contains(x.MarketId));
+
                 var desiredCoverage = inventory.MarketCoverage - (includedMarketsCoverage / 100);
                 _PricingGuideDistributionEngine.CalculateMarketDistribution(inventory, request, desiredCoverage);
-            }
 
-            inventory.Markets.AddRange(includedMarkets);
+                inventory.Markets.AddRange(includedMarkets);
+            }
+        }
+
+        private void _SetSpotsEditedManuallyProperty(PricingGuideOpenMarketInventory inventory)
+        {
+            var savedDistributionPrograms = _PricingGuideRepository.GetDistributionMarketsByProposalDetailId(inventory.DetailId);
+            var programsWithEditedManuallySpots = savedDistributionPrograms
+                .Where(x => x.SpotsEditedManually && x.Spots > 0)
+                .ToDictionary(x => x.ManifestDaypart.Id, x => x.Spots);
+            var inventoryPrograms = inventory.Markets.SelectMany(x => x.Stations).SelectMany(x => x.Programs);
+
+            foreach(var program in inventoryPrograms)
+            {
+                if (programsWithEditedManuallySpots.TryGetValue(program.ManifestDaypartId, out var spots))
+                {
+                    program.Spots = spots;
+                    program.SpotsEditedManually = true;
+                }
+            }
         }
 
         private void _AllocateSpots(PricingGuideOpenMarketInventory pricingGuideOpenMarketInventory, PricingGuideDto pricingGuideDto)
@@ -643,18 +675,33 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var market in pricingGuideOpenMarketInventory.Markets)
             {
-                var program = _GetProgramForTarget(market.Stations, cpmTarget);
+                if (pricingGuideDto.MaintainManuallyEditedSpots && market.HasEditedManuallySpots)
+                {
+                    market.Stations
+                        .SelectMany(x => x.Programs)
+                        .Where(x => x.SpotsEditedManually)
+                        .ForEach(_CalculateImpressionsAndCost);
+                }
+                else
+                {
+                    var program = _GetProgramForTarget(market.Stations, cpmTarget, pricingGuideDto.MaintainManuallyEditedSpots);
 
-                if (program == null)
-                    continue;
+                    if (program == null)
+                        continue;
 
-                _SetOneSpotProgram(program);
+                    _SetOneSpotProgram(program);
+                }
             }
         }
 
         private void _SetOneSpotProgram(PricingGuideProgramDto program)
         {
             program.Spots = 1;
+            _CalculateImpressionsAndCost(program);
+        }
+
+        private void _CalculateImpressionsAndCost(PricingGuideProgramDto program)
+        {
             program.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(program.Spots, program.EffectiveImpressionsPerSpot);
             program.Cost = _ProposalProgramsCalculationEngine.CalculateSpotCost(program.Spots, program.CostPerSpot);
         }
@@ -665,21 +712,44 @@ namespace Services.Broadcast.ApplicationServices
             var budgetGoal = pricingGuideDto.BudgetGoal ?? Decimal.MaxValue;
             var impressionsGoal = pricingGuideDto.ImpressionGoal ?? Double.MaxValue;
             var cpmTarget = pricingGuideDto.OpenMarketPricing.OpenMarketCpmTarget ?? OpenMarketCpmTarget.Min;
+            var markets = pricingGuideOpenMarketInventory.Markets;
+            var shouldMaintainManuallyEditedSpots = pricingGuideDto.MaintainManuallyEditedSpots;
 
             if (pricingGuideDto.BudgetGoal.HasValue)
                 budgetGoal *= pricingGuideDto.OpenMarketShare;
             if (pricingGuideDto.ImpressionGoal.HasValue)
                 impressionsGoal *= (double)pricingGuideDto.OpenMarketShare;
 
-            // First, we allocate one spot for a program in each market.
-            foreach (var market in pricingGuideOpenMarketInventory.Markets)
+            if (shouldMaintainManuallyEditedSpots)
             {
-                var program = _GetProgramForTarget(market.Stations, cpmTarget);
-                var hasBudget = budgetGoal > 0;
-                var hasImpressionsLeft = impressionsGoal > 0;
+                // We extract budget and impressions of edited manually spots from the goal
+                var programsWithEditedManuallySpots = pricingGuideOpenMarketInventory.Markets
+                    .Where(x => x.HasEditedManuallySpots)
+                    .SelectMany(x => x.Stations)
+                    .SelectMany(x => x.Programs)
+                    .Where(x => x.SpotsEditedManually);
+
+                foreach (var program in programsWithEditedManuallySpots)
+                {
+                    _CalculateImpressionsAndCost(program);
+                    impressionsGoal -= program.Impressions;
+                    budgetGoal -= program.Cost;
+                }
+
+                if (_IsGoalAchieved(budgetGoal, impressionsGoal))
+                    return;
+
+                markets = markets.Where(x => !x.HasEditedManuallySpots).ToList();
+            }
+
+            // We allocate one spot for a program in each market         
+            foreach (var market in markets)
+            {
+                var program = _GetProgramForTarget(market.Stations, cpmTarget, shouldMaintainManuallyEditedSpots);
+
                 if (program == null)
                     continue;
-                if (!hasBudget || !hasImpressionsLeft)
+                if (_IsGoalAchieved(budgetGoal, impressionsGoal))
                     break;
 
                 _SetOneSpotProgram(program);
@@ -687,20 +757,25 @@ namespace Services.Broadcast.ApplicationServices
                 budgetGoal -= program.CostPerSpot;
             }
 
-            // Then, we allocate the rest of the budget one or multiple programs, taking the unit cap per station into consideration.
-            var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget);
-            while (budgetGoal > 0 && impressionsGoal > 0 && allocatableProgram != null)
+            // We allocate the rest of the budget one or multiple programs, taking the unit cap per station into consideration.
+            var allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget, shouldMaintainManuallyEditedSpots);
+
+            while (!_IsGoalAchieved(budgetGoal, impressionsGoal) && allocatableProgram != null)
             {
                 allocatableProgram.Spots = allocatableProgram.Spots + 1;
-                allocatableProgram.Impressions = _ProposalProgramsCalculationEngine.CalculateSpotImpressions(allocatableProgram.Spots, allocatableProgram.EffectiveImpressionsPerSpot);
-                allocatableProgram.Cost = _ProposalProgramsCalculationEngine.CalculateSpotCost(allocatableProgram.Spots, allocatableProgram.CostPerSpot);
+                _CalculateImpressionsAndCost(allocatableProgram);
                 impressionsGoal -= allocatableProgram.EffectiveImpressionsPerSpot;
                 budgetGoal -= allocatableProgram.CostPerSpot;
-                allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget);
+                allocatableProgram = _GetNextGoalAllocatableProgram(pricingGuideOpenMarketInventory.Markets, unitCapPerStation, cpmTarget, shouldMaintainManuallyEditedSpots);
             }
         }
 
-        private PricingGuideProgramDto _GetNextGoalAllocatableProgram(List<PricingGuideMarketDto> markets, int stationCap, OpenMarketCpmTarget cpmTarget)
+        private bool _IsGoalAchieved(decimal budgetGoal, double impressionsGoal)
+        {
+            return budgetGoal <= 0 || impressionsGoal <= 0;
+        }
+
+        private PricingGuideProgramDto _GetNextGoalAllocatableProgram(List<PricingGuideMarketDto> markets, int stationCap, OpenMarketCpmTarget cpmTarget, bool shouldMaintainManuallyEditedSpots)
         {
             IEnumerable<PricingGuideStationDto> allocatableStations;
 
@@ -714,29 +789,35 @@ namespace Services.Broadcast.ApplicationServices
                 allocatableStations = markets.SelectMany(m => m.Stations);
             }
 
-            var program = _GetProgramForTarget(allocatableStations.ToList(), cpmTarget);
+            var program = _GetProgramForTarget(allocatableStations.ToList(), cpmTarget, shouldMaintainManuallyEditedSpots);
 
             return program;
         }
 
-        private PricingGuideProgramDto _GetProgramForTarget(List<PricingGuideStationDto> stations, OpenMarketCpmTarget cpmTarget)
+        private PricingGuideProgramDto _GetProgramForTarget(List<PricingGuideStationDto> stations, OpenMarketCpmTarget cpmTarget, bool shouldMaintainManuallyEditedSpots)
         {
             if (cpmTarget == OpenMarketCpmTarget.Max)
             {
-                return _GetMaxProgram(stations);
+                return _GetMaxProgram(stations, shouldMaintainManuallyEditedSpots);
             }
 
             if (cpmTarget == OpenMarketCpmTarget.Avg)
             {
-                return _GetAvgProgram(stations);
+                return _GetAvgProgram(stations, shouldMaintainManuallyEditedSpots);
             }
 
-            return _GetMinProgram(stations);
+            return _GetMinProgram(stations, shouldMaintainManuallyEditedSpots);
         }
 
-        private PricingGuideProgramDto _GetAvgProgram(List<PricingGuideStationDto> stations)
+        private PricingGuideProgramDto _GetAvgProgram(List<PricingGuideStationDto> stations, bool shouldMaintainManuallyEditedSpots)
         {
             var marketPrograms = stations.SelectMany(s => s.Programs);
+
+            if (shouldMaintainManuallyEditedSpots)
+            {
+                marketPrograms = marketPrograms.Where(x => !x.SpotsEditedManually);
+            }
+
             var avgPrograms = marketPrograms.Where(x => x.BlendedCpm != 0);
             var count = avgPrograms.Count();
 
@@ -760,15 +841,27 @@ namespace Services.Broadcast.ApplicationServices
             return programClosestToAvg;
         }
 
-        private PricingGuideProgramDto _GetMaxProgram(List<PricingGuideStationDto> stations)
+        private PricingGuideProgramDto _GetMaxProgram(List<PricingGuideStationDto> stations, bool shouldMaintainManuallyEditedSpots)
         {
             var marketPrograms = stations.SelectMany(s => s.Programs);
+
+            if (shouldMaintainManuallyEditedSpots)
+            {
+                marketPrograms = marketPrograms.Where(x => !x.SpotsEditedManually);
+            }
+
             return marketPrograms.Where(x => x.BlendedCpm != 0).OrderByDescending(x => x.BlendedCpm).FirstOrDefault();
         }
 
-        private PricingGuideProgramDto _GetMinProgram(List<PricingGuideStationDto> stations)
+        private PricingGuideProgramDto _GetMinProgram(List<PricingGuideStationDto> stations, bool shouldMaintainManuallyEditedSpots)
         {
             var marketPrograms = stations.SelectMany(s => s.Programs);
+            
+            if (shouldMaintainManuallyEditedSpots)
+            {
+                marketPrograms = marketPrograms.Where(x => !x.SpotsEditedManually);
+            }
+            
             return marketPrograms.Where(x => x.BlendedCpm != 0).OrderBy(x => x.BlendedCpm).FirstOrDefault();
         }
 
@@ -927,7 +1020,8 @@ namespace Services.Broadcast.ApplicationServices
                 ProposalDetailId = dto.ProposalDetailId,
                 BudgetGoal = dto.BudgetGoal,
                 ImpressionGoal = dto.ImpressionGoal,
-                OpenMarketPricing = dto.OpenMarketPricing
+                OpenMarketPricing = dto.OpenMarketPricing,
+                MaintainManuallyEditedSpots = dto.MaintainManuallyEditedSpots
             };
         }
 

@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mail;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using Common.Services;
@@ -106,8 +107,46 @@ namespace BroadcastComposerWeb.Controllers
         
             ViewBag.Message = "Get file worked w/o error!\r\n";
             return View("Index");
- }
+        }
 
+        [HttpGet]
+        public ActionResult AlignProposalDaypartsToZeroSeconds()
+        {
+            var proposalService = _ApplicationServiceFactory.GetApplicationService<IProposalService>();
 
+            var result = proposalService.AlignProposalDaypartsToZeroSeconds();
+
+            ViewBag.Message = result;
+            return View("Index");
+        }
+
+        [HttpPost]
+        [Route("UploadMarketCoverageFile")]
+        public ActionResult UploadMarketCoverageFile(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                if (!fileName.EndsWith(".xlsx"))
+                {
+                    ViewBag.Message = "Only Excel (.xlsx) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var service = _ApplicationServiceFactory.GetApplicationService<IMarketService>();
+                        service.LoadCoverages(file.InputStream, fileName, "maintenance controller", DateTime.Now);
+                        ViewBag.Message = "Market coverages file uploaded and processed successfully !";
+                    }
+                    catch(Exception ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                    }                                      
+                }
+            }
+
+            return View("Index");
+        }
     }
 }

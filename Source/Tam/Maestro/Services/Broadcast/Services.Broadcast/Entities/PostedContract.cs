@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
-    public class PostedContracts
+    public class PostedContract
     {
         public int ContractId { get; set; }
         public string ContractName { get; set; }
@@ -20,5 +21,8 @@ namespace Services.Broadcast.Entities
         public bool Equivalized { get; set; }
         public bool IsActiveThisWeek { get; set; }
         public DateTime? LastBuyDate { get; set; }
+        public DateTime FlightStartDate { get; set; }
+        public DateTime FlightEndDate { get; set; }
+        public List<ProposalFlightWeek> FlightWeeks { get; set; }
     }
 }

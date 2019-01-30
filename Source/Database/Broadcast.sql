@@ -50,6 +50,80 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BCOP-4183 *****************************************************/
+
+-- FEMALES 25-54
+IF NOT EXISTS(SELECT 1 FROM audiences 
+          WHERE code = N'F25-54')
+BEGIN
+
+SET IDENTITY_INSERT audiences ON
+
+INSERT INTO audiences(id, category_code, sub_category_code, range_start, range_end, custom, code, name)
+VALUES(415, 0, 'F', 25, 54, 1, 'F25-54', 'Females 25-54')
+
+SET IDENTITY_INSERT audiences OFF
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 8)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 9)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 10)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 11)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 12)
+
+INSERT INTO audience_audiences
+VALUES(2, 415, 13)
+
+END
+
+ELSE PRINT 'Audience Females 25-54 already exists'
+
+-- MALES 25-54
+-- The audience already exists, we only need to add the components to broadcast rating group.
+IF NOT EXISTS(SELECT 1 FROM audience_audiences
+          WHERE custom_audience_id = 51 AND rating_category_group_id = 2)
+BEGIN
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 23)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 24)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 25)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 26)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 27)
+
+INSERT INTO audience_audiences
+VALUES(2, 51, 28)
+
+END
+
+ELSE PRINT 'Component audiences for custom audience 51 (M25-54) already exist'
+
+/*************************************** END BCOP-4183 *****************************************************/
+
+/*************************************** START BCOP-4186 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'spots_edited_manually'
+          AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distribution_open_market_inventory]'))
+BEGIN
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] ADD [spots_edited_manually] bit NOT NULL DEFAULT(0)
+END
+/*************************************** END BCOP-4186 *****************************************************/
 
 /*************************************** START BCOP-2801 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_audiences]'))
@@ -280,7 +354,7 @@ END
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '19.02.1' -- Current release version
+SET parameter_value = '19.03.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -291,8 +365,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '19.01.1' -- Previous release version
-		OR [version] = '19.02.1') -- Current release version
+		WHERE [version] = '19.02.1' -- Previous release version
+		OR [version] = '19.03.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

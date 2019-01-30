@@ -316,7 +316,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int)AffidavitFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -351,7 +351,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) FileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -408,7 +408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) FileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -443,7 +443,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) FileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -571,7 +571,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int)AffidavitFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -1425,7 +1425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _AffidavitService.GetPosts();
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContract), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -1444,8 +1444,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var contract = result.Posts.First(x => x.ContractId == 26011);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostedContracts), "Id");
-            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContract), "Id");
+            jsonResolver.Ignore(typeof(PostedContract), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -1464,8 +1464,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var contract = result.Posts.First(x => x.ContractId == 26012);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PostedContracts), "Id");
-            jsonResolver.Ignore(typeof(PostedContracts), "ContractId");
+            jsonResolver.Ignore(typeof(PostedContract), "Id");
+            jsonResolver.Ignore(typeof(PostedContract), "ContractId");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -1697,7 +1697,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 InboundFileSaveRequest affidavitSaveRequest = new InboundFileSaveRequest
                 {
                     FileHash = "abc123",
-                    Source = (int)AffidavitFileSourceEnum.Strata,
+                    Source = (int)FileSourceEnum.Strata,
                     FileName = "test.file",
                     Details = new List<InboundFileSaveRequestDetail>()
                     {

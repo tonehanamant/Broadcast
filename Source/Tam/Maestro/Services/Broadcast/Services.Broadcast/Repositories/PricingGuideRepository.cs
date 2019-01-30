@@ -54,6 +54,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="distributionId">Distribution id to get the programs for</param>
         /// <returns>List of DistributionProgram objects</returns>
         List<DistributionProgram> GetDistributionMarkets(int distributionId);
+
+        /// <summary>
+        /// Gets the distribution programs by detail id
+        /// </summary>
+        /// <param name="proposalDetailId">Proposal detail id to get the programs for</param>
+        /// <returns>List of DistributionProgram objects</returns>
+        List<DistributionProgram> GetDistributionMarketsByProposalDetailId(int proposalDetailId);
     }
     public class PricingGuideRepository : BroadcastRepositoryBase, IPricingGuideRepository
     {
@@ -404,6 +411,7 @@ namespace Services.Broadcast.Repositories
                         forecasted_impressions_per_spot = x.ImpressionsPerSpot,
                         program_name = x.ProgramName,
                         spots = x.Spots,
+                        spots_edited_manually = x.SpotsEditedManually,
                         station_code = (short)x.StationCode,
                         station_impressions_per_spot = x.StationImpressionsPerSpot,
                         station_inventory_manifest_dayparts_id = x.ManifestDaypartId
@@ -427,6 +435,7 @@ namespace Services.Broadcast.Repositories
                             CostPerSpot = program.cost_per_spot,
                             ImpressionsPerSpot = program.forecasted_impressions_per_spot,
                             Spots = program.spots,
+                            SpotsEditedManually = program.spots_edited_manually,
                             StationImpressionsPerSpot = program.station_impressions_per_spot,
                             ManifestDaypart = new LookupDto
                             {
@@ -454,6 +463,25 @@ namespace Services.Broadcast.Repositories
                                 Display = x.genre.name,
                                 Id = x.genre_id
                             }).ToList()
+                        }).ToList();
+            });
+        }
+
+        public List<DistributionProgram> GetDistributionMarketsByProposalDetailId(int proposalDetailId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return (from distribution in context.pricing_guide_distributions
+                        from program in distribution.pricing_guide_distribution_open_market_inventory
+                        where distribution.proposal_version_detail_id == proposalDetailId
+                        select new DistributionProgram
+                        {
+                            ManifestDaypart = new LookupDto
+                            {
+                                Id = program.station_inventory_manifest_dayparts_id
+                            },
+                            Spots = program.spots,
+                            SpotsEditedManually = program.spots_edited_manually
                         }).ToList();
             });
         }

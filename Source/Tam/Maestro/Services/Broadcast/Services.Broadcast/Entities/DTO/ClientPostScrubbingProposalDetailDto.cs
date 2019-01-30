@@ -15,5 +15,10 @@ namespace Services.Broadcast.Entities.DTO
         public List<GenreCriteria> Genres { get; set; }
         public int? Sequence { get; set; }
         public List<ProposalFlightWeek> FlightWeeks { get; set; }
+        public string DaypartCodeDisplay { get; set; }
+        public int? EstimateId { get; set; }
+        public string PostingBook { get; set; }
+        public string PlaybackTypeDisplay { get; set; }
+        public string InventorySourceDisplay { get; set; }
     }
 }

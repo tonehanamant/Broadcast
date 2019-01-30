@@ -12,3 +12,24 @@
     border: none !important;
   }
 }
+
+.tracker-scrubbing-header {
+  padding-right: 15px;
+
+  .header-items {
+    display: flex;
+    flex-direction: row;
+
+    .form-group {
+      width: 11%;
+      .control-label {
+        font-weight: bold;
+      }
+
+      .form-control-static {
+        overflow: auto;
+        max-height: 175px;
+      }
+    }
+  }
+}

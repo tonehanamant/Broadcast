@@ -689,6 +689,7 @@ export class ProposalDetail extends Component {
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
           detail={detail}
+          // proposalEditForm={proposalEditForm}
           isReadOnly={isReadOnly}
         />
 

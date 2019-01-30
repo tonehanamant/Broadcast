@@ -94,6 +94,9 @@ export class PostScrubbingModal extends Component {
       Name,
       Markets,
       GuaranteedDemo,
+      Equivalized,
+      CoverageGoal,
+      PostingType,
       SecondaryDemos,
       Notes,
       MarketGroupId,
@@ -136,6 +139,9 @@ export class PostScrubbingModal extends Component {
             Id={Id}
             market={Markets}
             marketGroupId={MarketGroupId}
+            equivalized={Equivalized}
+            coverageGoal={CoverageGoal}
+            postingType={PostingType}
             name={Name}
             notes={Notes}
             secondaryDemo={SecondaryDemos}

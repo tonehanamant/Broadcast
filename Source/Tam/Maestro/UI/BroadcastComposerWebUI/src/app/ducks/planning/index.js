@@ -368,7 +368,6 @@ export default function reducer(state = initialState, action) {
       if (isName) data.Data.Markets = sortMarketsData(data.Data.Markets, true);
       return {
         ...state,
-        openMarketData: data.Data,
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         activeOpenMarketData: data.Data,
         openMarketLoading: false,
@@ -376,25 +375,45 @@ export default function reducer(state = initialState, action) {
       };
     }
     case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
+      const newData = {
+        ...data.Data,
+        isChangedSpots: data.Data.HasEditedManuallySpots
+      };
       return {
         ...state,
-        openMarketData: data.Data,
+        openMarketData: cloneDeep(newData),
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         hasActiveDistribution: true,
-        activeOpenMarketData: data.Data,
+        activeOpenMarketData: cloneDeep(newData),
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
         isEditMarketsActive: false
       };
     }
-
-    case ACTIONS.LOAD_PRICING_DATA.success: {
+    case ACTIONS.SAVE_PRICING_GUIDE.success: {
+      const newData = {
+        ...state.activeOpenMarketData,
+        isChangedSpots: state.activeOpenMarketData.HasEditedManuallySpots
+      };
       return {
         ...state,
-        openMarketData: data.Data,
+        openMarketData: cloneDeep(newData),
+        activeOpenMarketData: cloneDeep(newData),
+        changedMarkets: []
+      };
+    }
+
+    case ACTIONS.LOAD_PRICING_DATA.success: {
+      const newData = {
+        ...data.Data,
+        isChangedSpots: data.Data.HasEditedManuallySpots
+      };
+      return {
+        ...state,
+        openMarketData: cloneDeep(newData),
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
-        activeOpenMarketData: data.Data,
+        activeOpenMarketData: cloneDeep(newData),
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
         openMarketLoaded: true,
@@ -484,13 +503,6 @@ export default function reducer(state = initialState, action) {
         changedMarkets
       };
     }
-    case ACTIONS.SAVE_PRICING_GUIDE.success: {
-      return {
-        ...state,
-        changedMarkets: []
-      };
-    }
-
     case ACTIONS.DISCARD_EDIT_MARKETS_DATA: {
       const openMarketsData = { ...state.openMarketData };
       return {

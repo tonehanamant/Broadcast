@@ -44,6 +44,7 @@
     ]
   },
   "Filter": {},
+  "HasEditedManuallySpots": false,
   "ImpressionGoal": 10000.0,
   "ImpressionLoss": 1.0,
   "Inflation": 1.0,
@@ -113,6 +114,7 @@
               "ImpressionsPerSpot": 10.0,
               "ProgramName": "CBS Morning News",
               "Spots": 1,
+              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 43156.671875
             }
           ],

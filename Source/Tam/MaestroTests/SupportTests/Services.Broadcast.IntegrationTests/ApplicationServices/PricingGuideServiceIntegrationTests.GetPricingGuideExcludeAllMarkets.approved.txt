@@ -197,6 +197,7 @@
   },
   "DistributionId": 0,
   "Filter": {},
+  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": null,
   "Inflation": null,

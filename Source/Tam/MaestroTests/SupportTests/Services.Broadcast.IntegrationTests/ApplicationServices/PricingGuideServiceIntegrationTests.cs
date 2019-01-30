@@ -16,6 +16,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Microsoft.Practices.Unity;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -54,6 +55,123 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var afterSaveMarketCpm = proposalInventory.Markets.Where(x => x.MarketId == 101).Single().CPM;
 
                 Assert.AreEqual(initialMarketCpm, afterSaveMarketCpm);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOpenMarketInventory_WithEnteredManuallySpots_WithoutGoals()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var saveRequest = _GetPricingGuideModelForSave();
+                saveRequest.ProposalDetailId = 2290;
+                saveRequest.Markets.Add(new PricingGuideSaveMarketRequest
+                {
+                    ProgramId = 26589,
+                    BlendedCpm = 7.530701184311377M,
+                    CostPerSpot = 1,
+                    DaypartId = 1,
+                    ImpressionsPerSpot = 10,
+                    ManifestDaypartId = 41604,
+                    MarketId = 101,
+                    ProgramName = "CBS Morning News",
+                    Spots = 5,
+                    StationCode = 5060,
+                    StationImpressionsPerSpot = 43156.671875,
+                    SpotsEditedManually = true
+                });
+                _PricingGuideService.SaveDistribution(saveRequest, "integration test");
+
+                var getRequest = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 17616,
+                    ProposalDetailId = 2290,
+                    MaintainManuallyEditedSpots = true
+                };
+                PricingGuideDto proposalInventory = _PricingGuideService.GetOpenMarketInventory(getRequest);
+
+                _VerifyPricingGuideModel(proposalInventory);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOpenMarketInventory_WithEnteredManuallySpots_WithGoals()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var saveRequest = _GetPricingGuideModelForSave();
+                saveRequest.ProposalDetailId = 2290;
+                saveRequest.Markets.Add(new PricingGuideSaveMarketRequest
+                {
+                    ProgramId = 26589,
+                    BlendedCpm = 7.530701184311377M,
+                    CostPerSpot = 1,
+                    DaypartId = 1,
+                    ImpressionsPerSpot = 10,
+                    ManifestDaypartId = 41604,
+                    MarketId = 101,
+                    ProgramName = "CBS Morning News",
+                    Spots = 5,
+                    StationCode = 5060,
+                    StationImpressionsPerSpot = 43156.671875,
+                    SpotsEditedManually = true
+                });
+                _PricingGuideService.SaveDistribution(saveRequest, "integration test");
+
+                var getRequest = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 17616,
+                    ProposalDetailId = 2290,
+                    BudgetGoal = 1000,
+                    ImpressionGoal = 20000,
+                    OpenMarketShare = 1,
+                    MaintainManuallyEditedSpots = true
+                };
+                PricingGuideDto proposalInventory = _PricingGuideService.GetOpenMarketInventory(getRequest);
+
+                _VerifyPricingGuideModel(proposalInventory);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOpenMarketInventory_WithEnteredManuallySpots_WithoutMaintainOfThem()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var saveRequest = _GetPricingGuideModelForSave();
+                saveRequest.ProposalDetailId = 2290;
+                saveRequest.Markets.Add(new PricingGuideSaveMarketRequest
+                {
+                    ProgramId = 26589,
+                    BlendedCpm = 7.530701184311377M,
+                    CostPerSpot = 1,
+                    DaypartId = 1,
+                    ImpressionsPerSpot = 10,
+                    ManifestDaypartId = 41604,
+                    MarketId = 101,
+                    ProgramName = "CBS Morning News",
+                    Spots = 5,
+                    StationCode = 5060,
+                    StationImpressionsPerSpot = 43156.671875,
+                    SpotsEditedManually = true
+                });
+                _PricingGuideService.SaveDistribution(saveRequest, "integration test");
+
+                var getRequest = new PricingGuideOpenMarketInventoryRequestDto
+                {
+                    ProposalId = 17616,
+                    ProposalDetailId = 2290,
+                    BudgetGoal = 1000,
+                    ImpressionGoal = 20000,
+                    OpenMarketShare = 1,
+                    MaintainManuallyEditedSpots = false
+                };
+                PricingGuideDto proposalInventory = _PricingGuideService.GetOpenMarketInventory(getRequest);
+
+                _VerifyPricingGuideModel(proposalInventory);
             }
         }
 
@@ -731,13 +849,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends|Friends 2"));
                 Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends"));
                 Assert.IsFalse(programs.Any(x => x.ProgramName == "Friends 2"));
-
-
-                // Setting program criteria empty as it was initially
-                proposal = _ProposalService.GetProposalById(proposalId);
-                detail = proposal.Details.First(x => x.Id == proposalDetailId);
-                detail.ProgramCriteria = new List<ProgramCriteria>();
-                _ProposalService.SaveProposal(proposal, "IntegrationTestUser", DateTime.Now);
             }
         }
 
@@ -1426,7 +1537,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const string filename = @".\Files\Market_Coverages_Pricing_Guide.xlsx";
 
-                _MarketService.LoadCoverages(filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
 
                 var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
@@ -1752,22 +1863,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProprietaryTotals = new ProprietaryTotalsDto { Cost = 10, Cpm = 10, Impressions = 10000 },
                 UnitCapPerStation = 1,
                 ProposalDetailId = 13402,
-                Markets = new List<PricingGuideSaveMarketRequest>() {
-                        new PricingGuideSaveMarketRequest
-                        {
-                            ProgramId = 26589,
-                            BlendedCpm = 7.530701184311377M,
-                            CostPerSpot = 1,
-                            DaypartId = 1,
-                            ImpressionsPerSpot = 10,
-                            ManifestDaypartId = 213348,
-                            MarketId = 101,
-                            ProgramName = "CBS Morning News",
-                            Spots = 1,
-                            StationCode = 5060,
-                            StationImpressionsPerSpot = 43156.671875
-                        }
+                Markets = new List<PricingGuideSaveMarketRequest>()
+                {
+                    new PricingGuideSaveMarketRequest
+                    {
+                        ProgramId = 26589,
+                        BlendedCpm = 7.530701184311377M,
+                        CostPerSpot = 1,
+                        DaypartId = 1,
+                        ImpressionsPerSpot = 10,
+                        ManifestDaypartId = 213348,
+                        MarketId = 101,
+                        ProgramName = "CBS Morning News",
+                        Spots = 1,
+                        StationCode = 5060,
+                        StationImpressionsPerSpot = 43156.671875
                     }
+                }
             };
         }
     }

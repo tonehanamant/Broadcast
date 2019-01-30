@@ -9,6 +9,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System;
+using System.Diagnostics;
 using Tam.Maestro.Common;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.DTO;
@@ -53,7 +54,8 @@ namespace Services.Broadcast.Repositories
         /// Gets all the contracted proposals that have played spots
         /// </summary>
         /// <returns>List of PostedContracts objects</returns>
-        List<PostedContracts> GetAllPostedProposals();
+        List<PostedContract> GetAllPostedProposals();
+
 
         /// <summary>
         /// Get the impression for a list of audiences of a proposal
@@ -62,6 +64,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="ratingsAudiences">List of audiences</param>
         /// <returns>List of PostImpressionsData objects</returns>
         List<PostImpressionsData> GetPostLogImpressionsData(int proposalId, List<int> ratingsAudiences);
+        
+        /// <summary>
+        /// Get the impression for a list of audiences for all proposals
+        /// </summary>
+        /// <param name="proposalIds">Proposals to filter by</param>
+        /// <param name="ratingsAudiences">List of audiences</param>
+        /// <returns>List of PostImpressionsData objects</returns>
+        List<PostImpressionsData> GetPostLogImpressionsData(List<int> proposalIds,List<int> ratingsAudiences);
 
         /// <summary>
         /// Checks if an isci is blacklisted
@@ -283,7 +293,7 @@ namespace Services.Broadcast.Repositories
         /// Gets all the contracted proposals that have played spots
         /// </summary>
         /// <returns>List of PostedContracts objects</returns>
-        public List<PostedContracts> GetAllPostedProposals()
+        public List<PostedContract> GetAllPostedProposals()
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -297,7 +307,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.proposal_version_details.Select(d => d.proposal_buy_files))
                         .Where(p => (ProposalEnums.ProposalStatusType)p.status == ProposalEnums.ProposalStatusType.Contracted && p.snapshot_date == null)
                         .ToList();
-                    var posts = new List<PostedContracts>();
+                    var posts = new List<PostedContract>();
 
                     foreach (var proposalVersion in proposalVersions)
                     {
@@ -307,7 +317,7 @@ namespace Services.Broadcast.Repositories
                                      from postlogFileScrub in proposalVersionWeeks.postlog_client_scrubs
                                      select postlogFileScrub).ToList();
 
-                        posts.Add(new PostedContracts
+                        posts.Add(new PostedContract
                         {
                             ContractId = proposalVersion.proposal_id,
                             Equivalized = proposalVersion.equivalized,
@@ -427,6 +437,35 @@ namespace Services.Broadcast.Repositories
                             }).ToList();
                 });
         }
+
+        public List<PostImpressionsData> GetPostLogImpressionsData(List<int> proposalIds,List<int> ratingsAudiences)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.Database.Log = message => Debug.WriteLine(message);
+                    return (from proposal in context.proposals
+                            from proposalVersion in proposal.proposal_versions
+                            from proposalVersionDetail in proposalVersion.proposal_version_details
+                            from proposalVersionQuarters in proposalVersionDetail.proposal_version_detail_quarters
+                            from proposalVersionWeeks in proposalVersionQuarters.proposal_version_detail_quarter_weeks
+                            from postlogClientScrub in proposalVersionWeeks.postlog_client_scrubs
+                            from postlogClientScrubAudience in postlogClientScrub.postlog_client_scrub_audiences
+                            where proposalIds.Contains(proposal.id) && 
+                                  (ScrubbingStatus)postlogClientScrub.status == ScrubbingStatus.InSpec &&
+                                  ratingsAudiences.Contains(postlogClientScrubAudience.audience_id) &&
+                                  proposalVersion.snapshot_date == null
+                            select new PostImpressionsData
+                            {
+                                ProposalId = proposal.id,
+                                Impressions = postlogClientScrubAudience.impressions,
+                                NtiConversionFactor = proposalVersionDetail.nti_conversion_factor,
+                                SpotLengthId = proposalVersionDetail.spot_length_id,
+                                AudienceId =  postlogClientScrubAudience.audience_id
+                            }).ToList();
+                });
+        }
+
 
         /// <summary>
         /// Checks if an isci is blacklisted
@@ -610,7 +649,8 @@ namespace Services.Broadcast.Repositories
                             Status = (ScrubbingStatus)x.postlogFileScrub.status,
                             MatchShowType = x.postlogFileScrub.match_show_type,
                             WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList(),
-                            WWTVProgramName = x.postlogDetails.program_name
+                            WWTVProgramName = x.postlogDetails.program_name,
+                            InventorySource = (AffidavitFileSourceEnum)x.postlogDetails.inventory_source
                         };
                     }
                     ).ToList());

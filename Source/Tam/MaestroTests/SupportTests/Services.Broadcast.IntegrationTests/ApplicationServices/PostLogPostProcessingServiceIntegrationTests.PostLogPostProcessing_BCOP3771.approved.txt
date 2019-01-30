@@ -10,6 +10,7 @@
       "DateAired": "2018-10-02T00:00:00",
       "DayOfWeek": 2,
       "GenreName": "Talk Show",
+      "InventorySource": null,
       "ISCI": "BCOP3471STORY",
       "Market": "Albany-Schenectady-Troy",
       "MatchDate": true,
@@ -34,9 +35,12 @@
       "WeekStart": "2018-10-01T00:00:00"
     }
   ],
+  "CoverageGoal": null,
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": "NAV",
+      "EstimateId": null,
       "FlightEndDate": "2018-10-20T00:00:00",
       "FlightStartDate": "2018-10-02T00:00:00",
       "FlightWeeks": [
@@ -49,11 +53,15 @@
       ],
       "Genres": [],
       "Id": 14751,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "February 2018",
       "Programs": [],
       "Sequence": null,
       "SpotLength": "15"
     }
   ],
+  "Equivalized": false,
   "Filters": {
     "DateAiredEnd": "2018-10-02T00:00:00",
     "DateAiredStart": "2018-10-02T00:00:00",
@@ -103,5 +111,6 @@
   "Markets": [],
   "Name": "Proposal BCOP-3771",
   "Notes": "",
+  "PostingType": "NSI",
   "SecondaryDemos": []
 }

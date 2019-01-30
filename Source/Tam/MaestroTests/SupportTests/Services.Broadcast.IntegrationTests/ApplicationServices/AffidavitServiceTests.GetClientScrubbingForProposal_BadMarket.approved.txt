@@ -10,6 +10,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "AAAAAAAA",
       "Market": "New York",
       "MatchDate": true,
@@ -40,6 +41,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "BBBBBBBBB",
       "Market": "New York",
       "MatchDate": true,
@@ -70,6 +72,7 @@
       "DateAired": "2016-06-05T00:00:00",
       "DayOfWeek": 0,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "AAAAAAAA",
       "Market": "New York",
       "MatchDate": true,
@@ -100,6 +103,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "CCCCCCC",
       "Market": "New York",
       "MatchDate": true,
@@ -130,6 +134,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "AAAAAAAA",
       "Market": null,
       "MatchDate": true,
@@ -160,6 +165,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "BBBBBBBBB",
       "Market": "New York",
       "MatchDate": true,
@@ -190,6 +196,7 @@
       "DateAired": "2016-06-05T00:00:00",
       "DayOfWeek": 0,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "AAAAAAAA",
       "Market": "New York",
       "MatchDate": true,
@@ -220,6 +227,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "CCCCCCC",
       "Market": "New York",
       "MatchDate": true,
@@ -250,6 +258,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "AAAAAAAA",
       "Market": "New York",
       "MatchDate": true,
@@ -280,6 +289,7 @@
       "DateAired": "2016-06-03T00:00:00",
       "DayOfWeek": 5,
       "GenreName": "Do It Yourself",
+      "InventorySource": "Strata",
       "ISCI": "AAAAAAAA",
       "Market": null,
       "MatchDate": true,
@@ -304,9 +314,12 @@
       "WeekStart": "2016-05-30T00:00:00"
     }
   ],
+  "CoverageGoal": null,
   "Details": [
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": "NAV",
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -319,12 +332,17 @@
       ],
       "Genres": [],
       "Id": 14,
+      "InventorySourceDisplay": "Strata",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": 1,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": "NAV",
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -349,12 +367,17 @@
       ],
       "Genres": [],
       "Id": 15,
+      "InventorySourceDisplay": "Strata",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": 2,
       "SpotLength": "30"
     },
     {
       "DayPart": "M-F 9AM-10AM",
+      "DaypartCodeDisplay": "NAV",
+      "EstimateId": null,
       "FlightEndDate": "2016-06-06T00:00:00",
       "FlightStartDate": "2016-05-30T00:00:00",
       "FlightWeeks": [
@@ -367,11 +390,15 @@
       ],
       "Genres": [],
       "Id": 10799,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": "Live+3",
+      "PostingBook": "May 2016",
       "Programs": [],
       "Sequence": 3,
       "SpotLength": "30"
     }
   ],
+  "Equivalized": true,
   "Filters": {
     "DateAiredEnd": "2016-06-05T00:00:00",
     "DateAiredStart": "2016-06-03T00:00:00",
@@ -429,6 +456,7 @@
   "Markets": [],
   "Name": "Proposal Test",
   "Notes": null,
+  "PostingType": "NSI",
   "SecondaryDemos": [
     "Females 15-17",
     "Females 18-20"

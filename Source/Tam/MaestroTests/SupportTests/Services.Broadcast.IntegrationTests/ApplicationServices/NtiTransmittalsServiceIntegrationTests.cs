@@ -61,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = "TLA1217 P3 TRANSMITTALS.PDF"
                 };
                 var result = _NtiTransmittalsService.ProcessFileContent(ntiFile, nielsenDocument);
-
+               
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
