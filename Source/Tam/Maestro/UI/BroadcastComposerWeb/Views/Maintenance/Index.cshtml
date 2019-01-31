@@ -42,44 +42,44 @@
         <div><b>Results:</b></div>
         <textarea rows="20" style="width: 600px;" id="divJSON">@ViewBag.Message</textarea>
     </form>
-    <br />
-    <br />
-    <br />
-    <br />
 
-    @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
-    {
-        <input type="submit" value="test email" id="test_email" />
-    }
-    <br />
-    <div>
-        @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
-        {
-            <input type="submit" value="Clear System Param Cache" id="txtClearCache" />
-        }
 
-        @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
-        {
-            <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
-        }
-    </div>
     <div>
-        <br />
-        <br />
+        <h1>Testing Services</h1>
+        <div>
         @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
         {
             <input type="submit" value="Test FTP" id="txtTestFtpAccess" />
         }
+        </div>
+        <div>
+        @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
+        {
+            <input type="submit" value="test email" id="test_email" />
+        }
+        </div>
+    </div>
+
+    <div>
+        <h1>Cache Management</h1>
+        @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
+        {
+            <input type="submit" value="Clear System Param Cache" id="txtClearCache"/>
+        }
+
+        @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+        {
+            <input type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache"/>
+        }
     </div>
     <div>
-        <br />
-        <br />      
+        <h1>Upload Market Coverages</h1>
         <form action="UploadMarketCoverageFile" method="post" enctype="multipart/form-data">
             <label for="file">Filename:</label>
-            <input type="file" name="file" id="file" />
-            <br />
-            <input type="submit" text="Upload Market Coverages" />
-            <br />
+            <input type="file" name="file" id="file"/>
+            <br/>
+            <input type="submit" text="Upload Market Coverages"/>
+            <br/>
             <div>
                 <b>Result:</b>
                 <label style="width: 600px;" id="result_market_coverages">@ViewBag.Message</label>
