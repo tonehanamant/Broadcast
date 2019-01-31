@@ -1,0 +1,26 @@
+[ {
+    "EstimateId": 1082,
+    "Market": "Charlotte",
+    "Date": "08/31/2018",
+    "InventorySource": "Strata",
+    "Station": "WBTV",
+    "SpotLength": "15",
+    "Time": "1200A",
+    "SpotCost": 0.00,
+    "ISCI": "BCOP3471STORY",
+    "Affiliate": "PBS",
+    "Program": "Bill Cunningham",
+    "ShowType": "Series",
+    "Genre": "Talk Show",
+    "ProgramShowType": "Series",
+    "LeadInProgram": "Voice, The",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Series",
+    "LeadInEndTime": "10/02/2018 09:32PM",
+    "LeadOutProgram": "10 News Nightbeat",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "10/02/2018 09:26PM",
+    "Demographics": [ { "Demographic": "HH", "OvernightImpressions":"123","OvernightRating":"1.0"  } ]
+	}	
+]
