@@ -807,6 +807,9 @@
     <Content Include="Files\WWTV_KeepingTracValidFile_WithNullValues.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\WWTV_StrataValidFile_BCOP-4333.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="License.txt" />
     <Content Include="Penny_test.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

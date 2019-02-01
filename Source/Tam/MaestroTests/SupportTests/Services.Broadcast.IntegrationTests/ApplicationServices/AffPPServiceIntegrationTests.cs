@@ -39,8 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _AffidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
             _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void AffPP_ValidFileContent()
@@ -197,32 +196,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private void VerifyAffidavit(int affidavitId)
-        {
-            var response = _AffidavitRepository.GetAffidavit(affidavitId);
-
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(FileProblem), "Id");
-            jsonResolver.Ignore(typeof(FileProblem), "FileId");
-            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
-            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
-            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ModifiedDate");
-            jsonResolver.Ignore(typeof(ClientScrub), "Id");
-            jsonResolver.Ignore(typeof(ClientScrub), "ScrubbingFileDetailId");
-            jsonResolver.Ignore(typeof(ClientScrub), "ModifiedDate");
-            jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
-            jsonResolver.Ignore(typeof(ScrubbingFileAudiences), "ClientScrubId");
-            jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
-
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver,
-            };
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
-        }
-        
         [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -407,6 +380,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(json);
             }
         }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_KeepingTrac_BadTime()
@@ -465,8 +439,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EmailerServiceStubb.ClearLastMessage();
             }
         }
-
-
+        
         [UseReporter(typeof(DiffReporter))]
         [Test]
         // use for manual testing and not automated running 
@@ -510,6 +483,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 VerifyAffidavit(response.Id.Value);
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AffPP_ValidFileContent_BCOP4333()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_StrataValidFile_BCOP-4333.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+
+                VerifyAffidavit(response.Id.Value);
+            }
+        }
+
+        private void VerifyAffidavit(int affidavitId)
+        {
+            var response = _AffidavitRepository.GetAffidavit(affidavitId);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(FileProblem), "Id");
+            jsonResolver.Ignore(typeof(FileProblem), "FileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "Id");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ScrubbingFileId");
+            jsonResolver.Ignore(typeof(ScrubbingFileDetail), "ModifiedDate");
+            jsonResolver.Ignore(typeof(ClientScrub), "Id");
+            jsonResolver.Ignore(typeof(ClientScrub), "ScrubbingFileDetailId");
+            jsonResolver.Ignore(typeof(ClientScrub), "ModifiedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(ScrubbingFileAudiences), "ClientScrubId");
+            jsonResolver.Ignore(typeof(ScrubbingFile), "Id");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
         }
     }
 }

@@ -144,7 +144,7 @@ namespace Services.Broadcast.ApplicationServices
                     InvalidField = fieldName,
                     InvalidLine = recordNumber
                 });
-                return new System.TimeSpan();
+                return new TimeSpan();
             }
 
             DateTime result = new DateTime();
@@ -152,9 +152,10 @@ namespace Services.Broadcast.ApplicationServices
             int hour = Int32.Parse(match.Groups["hours"].Value);
             if (match.Groups["ampm"].Value == "P" && hour < 12)
                 hour += 12;
+            if (match.Groups["ampm"].Value == "A" && hour == 12)
+                hour = 0;
             int minutes = Int32.Parse(match.Groups["minutes"].Value);
-
-
+            
             result = new DateTime(1, 1, 1, hour, minutes, 0);
             return result.TimeOfDay;
         }

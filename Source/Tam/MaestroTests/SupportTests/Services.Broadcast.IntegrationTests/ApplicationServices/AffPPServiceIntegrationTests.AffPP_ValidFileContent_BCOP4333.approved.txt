@@ -1,0 +1,157 @@
+﻿{
+  "FileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "Affiliate": "PBS",
+      "AirTime": 0,
+      "Archived": false,
+      "ClientScrubs": [
+        {
+          "ClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 146.8
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 78.45
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 148.65
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 1716.75
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 6724.85
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 7688.1
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 786.35
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 4349.9
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 2718.95
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 24048.55
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 114.6
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 330.9
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 874.6
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 125.8
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 2462.1
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 121.95
+            }
+          ],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Talk Show",
+          "EffectiveIsci": "BCOP3471STORY",
+          "EffectiveProgramName": "Bill Cunningham",
+          "EffectiveShowType": "Series",
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": true,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": true,
+          "MatchStation": true,
+          "MatchTime": false,
+          "ModifiedBy": "Test User",
+          "PostingBookId": 437,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 14751,
+          "ProposalVersionDetailQuarterWeekId": 15724,
+          "Status": 1
+        }
+      ],
+      "Demographics": [
+        {
+          "AudienceId": 31,
+          "Demographic": null,
+          "OvernightImpressions": 123.0,
+          "OvernightRating": 1.0
+        }
+      ],
+      "EstimateId": 1082,
+      "FileDetailProblems": [],
+      "Genre": "Talk Show",
+      "InventorySource": 1,
+      "Isci": "BCOP3471STORY",
+      "LeadInEndTime": 77520,
+      "LeadinGenre": "Series",
+      "LeadinProgramName": "Voice, The",
+      "LeadInShowType": "Series",
+      "LeadoutGenre": "News",
+      "LeadoutProgramName": "10 News Nightbeat",
+      "LeadOutShowType": "Series",
+      "LeadOutStartTime": 77160,
+      "MappedIsci": null,
+      "Market": "Charlotte",
+      "OriginalAirDate": "2018-08-31T00:00:00",
+      "ProgramName": "Bill Cunningham",
+      "ShowType": "Series",
+      "SpotCost": 0.0,
+      "SpotLengthId": 3,
+      "Station": "WBTV",
+      "SuppliedProgramName": null
+    }
+  ],
+  "FileHash": "17-42-56-87-6E-5D-F3-FB-A9-5B-67-D9-CE-32-A1-71-B3-D2-A7-43",
+  "FileName": "WWTV_StrataValidFile_BCOP-4333.txt",
+  "FileProblems": [],
+  "SourceId": 1,
+  "Status": 1
+}
