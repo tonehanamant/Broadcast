@@ -204,7 +204,6 @@
   },
   "DistributionId": 0,
   "Filter": {},
-  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": null,
   "Inflation": null,
@@ -262,7 +261,6 @@
               "ProgramId": 26630,
               "ProgramName": "America next morning",
               "Spots": 1,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -285,7 +283,6 @@
               "ProgramId": 26632,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -308,7 +305,6 @@
               "ProgramId": 26636,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -331,7 +327,6 @@
               "ProgramId": 26634,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -354,7 +349,6 @@
               "ProgramId": 26638,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -377,7 +371,6 @@
               "ProgramId": 26641,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -400,7 +393,6 @@
               "ProgramId": 26640,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -453,7 +445,6 @@
               "ProgramId": 26648,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],

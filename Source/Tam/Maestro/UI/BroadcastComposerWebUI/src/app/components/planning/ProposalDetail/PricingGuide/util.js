@@ -14,8 +14,11 @@ export const initialState = {
   discard: false,
   discardSpots: false,
   confirmationDistribution: false,
-  // goals/adjustments - editing version separate state to cancel/save individually
   isAutoDistribution: true,
+  isGuideApplied: false,
+  changedPrograms: [],
+
+  // goals/adjustments - editing version separate state to cancel/save individually
   impression: 0,
   budget: 0,
   margin: 0,
@@ -50,7 +53,7 @@ export const panelsList = [
   }
 ];
 
-export const parsePrograms = (data = []) => {
+export const parseProgramsToList = (data = []) => {
   const programs = [];
   data.forEach(market => {
     market.Stations.forEach(station => {
@@ -69,6 +72,23 @@ export const parsePrograms = (data = []) => {
           StationImpressionsPerSpot: program.StationImpressionsPerSpot,
           CostPerSpot: program.CostPerSpot
         });
+      });
+    });
+  });
+  return programs;
+};
+
+export const getDistributionPrograms = (data, changedPrograms) => {
+  const programs = [];
+  data.forEach(market => {
+    market.Stations.forEach(station => {
+      station.Programs.forEach(program => {
+        if (changedPrograms.includes(program.ProgramId) && program.Spots > 0) {
+          programs.push({
+            ManifestDaypartId: program.ManifestDaypartId,
+            Spots: program.Spots
+          });
+        }
       });
     });
   });

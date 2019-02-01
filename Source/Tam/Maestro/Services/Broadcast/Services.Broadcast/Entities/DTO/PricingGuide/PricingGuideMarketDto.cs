@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Services.Broadcast.Entities.OpenMarketInventory;
+﻿using Services.Broadcast.Entities.OpenMarketInventory;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,8 +33,5 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
                 return Stations.SelectMany(s => s.Programs).Sum(p => p.Spots * p.StationImpressionsPerSpot);
             }
         }
-
-        [JsonIgnore]
-        public bool HasEditedManuallySpots => Stations.Any(s => s.Programs.Any(p => p.SpotsEditedManually));
     }
 }

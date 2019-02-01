@@ -281,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices
                     return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
                 
-                if (!inventoryFile.HasManifests)
+                if (!inventoryFile.HasManifests())
                 {
                     throw new ApplicationException("Unable to parse any file records.");
                 }

@@ -116,15 +116,6 @@ ELSE PRINT 'Component audiences for custom audience 51 (M25-54) already exist'
 
 /*************************************** END BCOP-4183 *****************************************************/
 
-/*************************************** START BCOP-4186 *****************************************************/
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N'spots_edited_manually'
-          AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distribution_open_market_inventory]'))
-BEGIN
-	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] ADD [spots_edited_manually] bit NOT NULL DEFAULT(0)
-END
-/*************************************** END BCOP-4186 *****************************************************/
-
 /*************************************** START BCOP-2801 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_audiences]'))
 BEGIN

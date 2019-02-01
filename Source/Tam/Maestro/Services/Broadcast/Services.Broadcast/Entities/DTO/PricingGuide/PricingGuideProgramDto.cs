@@ -16,7 +16,6 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
         public double StationImpressionsPerSpot { get; set; }
         public decimal CostPerSpot { get; set; }
         public decimal Cost { get; set; }
-        public bool SpotsEditedManually { get; set; }
         public bool HasImpressions { get { return EffectiveImpressionsPerSpot > 0; } }
         public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
 

@@ -1663,17 +1663,7 @@ export function* filterOpenMarketData(filters) {
   }
 }
 
-/* export function* allocateSpots({ data, detailId }) {
-  const { allocateSpots } = api.planning;
-  try {
-    yield put(setOverlayLoading({ id: "openMarketFilter", loading: true }));
-    return yield allocateSpots({ ...data, ProposalDetailId: detailId });
-  } finally {
-    yield put(setOverlayLoading({ id: "openMarketFilter", loading: false }));
-  }
-} */
-
-export function* allocateSpots(data) {
+export function* allocateSpots({ data }) {
   const { allocateSpots } = api.planning;
   try {
     yield put(setOverlayLoading({ id: "openMarketFilter", loading: true }));

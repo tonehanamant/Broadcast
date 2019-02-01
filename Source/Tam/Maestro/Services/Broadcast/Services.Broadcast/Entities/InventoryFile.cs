@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
@@ -59,8 +58,7 @@ namespace Services.Broadcast.Entities
                 .Union(InventoryManifests);
         }
 
-        [JsonIgnore]
-        public bool HasManifests => HasGroupManifests || HasInventoryManifests || HasInventoryManifestsStaging;
+        public bool HasManifests() => HasGroupManifests || HasInventoryManifests || HasInventoryManifestsStaging;
 
         private bool HasGroupManifests => InventoryGroups != null && InventoryGroups.Count > 0 && InventoryGroups.SelectMany(g => g.Manifests).Any();
 

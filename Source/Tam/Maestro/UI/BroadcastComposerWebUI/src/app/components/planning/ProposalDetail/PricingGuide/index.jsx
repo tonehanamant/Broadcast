@@ -31,7 +31,8 @@ import {
   numberRender,
   initialState,
   calculateBalanceSum,
-  parsePrograms
+  getDistributionPrograms,
+  parseProgramsToList
 } from "./util";
 import PricingProposalSummary from "./PricingProposalSummary";
 import "./index.scss";
@@ -259,10 +260,16 @@ class PricingGuide extends Component {
 
   // run with params - temporary until get new open market BE object
   onRunDistribution() {
-    const { isAutoDistribution } = this.state;
+    const {
+      activeOpenMarketData: { Markets }
+    } = this.props;
+    const { isAutoDistribution, changedPrograms } = this.state;
     const request = this.getDistributionRequest();
     this.props.loadOpenMarketData({
-      MaintainManuallyEditedSpots: !isAutoDistribution,
+      KeepManuallyEditedSpots: !isAutoDistribution,
+      ProgramsWithManuallyEditedSpots: isAutoDistribution
+        ? []
+        : getDistributionPrograms(Markets, changedPrograms),
       ...request
     });
     this.setState({
@@ -270,6 +277,7 @@ class PricingGuide extends Component {
       isSpotsChanged: false,
       discardSpots: false,
       isAutoDistribution: true,
+      isGuideApplied: false,
       confirmationDistribution: false
     });
   }
@@ -315,11 +323,15 @@ class PricingGuide extends Component {
       ProprietaryPricing: proprietaryData,
       ProprietaryTotals: activeOpenMarketData.ProprietaryTotals,
       OpenMarketTotals: activeOpenMarketData.OpenMarketTotals,
-      Markets: parsePrograms(activeOpenMarketData.Markets),
+      Markets: parseProgramsToList(activeOpenMarketData.Markets),
       MarketCoverageFileId: activeOpenMarketData.MarketCoverageFileId
     };
     savePricingData(guideUpdates);
-    this.setState({ isGuideChanged: false, isSpotsChanged: false });
+    this.setState({
+      isGuideChanged: false,
+      isSpotsChanged: false,
+      isGuideApplied: true
+    });
   }
 
   onSave() {
@@ -372,13 +384,21 @@ class PricingGuide extends Component {
   }
 
   // intercept from grid to update  distribution request
-  onAllocateSpots(openMarketData) {
+  onAllocateSpots(openMarketData, row) {
+    const { changedPrograms } = this.state;
     const distribution = this.getDistributionRequest();
-    this.props.allocateSpots({
-      ...openMarketData,
-      ...distribution
+    this.props.allocateSpots(
+      {
+        ...openMarketData,
+        ...distribution
+      },
+      row
+    );
+    this.setState({
+      isGuideChanged: true,
+      isSpotsChanged: true,
+      changedPrograms: changedPrograms.concat(row.ProgramId)
     });
-    this.setState({ isGuideChanged: true, isSpotsChanged: true });
   }
 
   handleChange(fieldName, value) {
@@ -414,13 +434,10 @@ class PricingGuide extends Component {
   }
 
   onClickToRunDistribution() {
-    const {
-      activeOpenMarketData: { isChangedSpots }
-    } = this.props;
-    const { isSpotsChanged } = this.state;
-    if (isChangedSpots) {
+    const { isSpotsChanged, isGuideApplied } = this.state;
+    if (!isSpotsChanged && isGuideApplied) {
       this.onError("confirmationDistribution");
-    } else if (isSpotsChanged && !isChangedSpots) {
+    } else if (isSpotsChanged && !isGuideApplied) {
       this.onError("discardSpots");
     } else {
       this.onRunDistribution();
