@@ -64,34 +64,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = _GetPricingGuideModelForSave();
-                saveRequest.ProposalDetailId = 2290;
-                saveRequest.Markets.Add(new PricingGuideSaveMarketRequest
-                {
-                    ProgramId = 26589,
-                    BlendedCpm = 7.530701184311377M,
-                    CostPerSpot = 1,
-                    DaypartId = 1,
-                    ImpressionsPerSpot = 10,
-                    ManifestDaypartId = 41604,
-                    MarketId = 101,
-                    ProgramName = "CBS Morning News",
-                    Spots = 5,
-                    StationCode = 5060,
-                    StationImpressionsPerSpot = 43156.671875,
-                    SpotsEditedManually = true
-                });
-                _PricingGuideService.SaveDistribution(saveRequest, "integration test");
-
-                var getRequest = new PricingGuideOpenMarketInventoryRequestDto
+                var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
                     ProposalId = 17616,
                     ProposalDetailId = 2290,
-                    MaintainManuallyEditedSpots = true
+                    KeepManuallyEditedSpots = true,
+                    ProgramsWithManuallyEditedSpots = new List<ProgramSpotsDto>
+                    {
+                        new ProgramSpotsDto
+                        {
+                            ManifestDaypartId = 41604,
+                            Spots = 5
+                        }
+                    }
                 };
-                PricingGuideDto proposalInventory = _PricingGuideService.GetOpenMarketInventory(getRequest);
+                var result = _PricingGuideService.GetOpenMarketInventory(request);
 
-                _VerifyPricingGuideModel(proposalInventory);
+                _VerifyPricingGuideModel(result);
             }
         }
 
@@ -101,37 +90,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = _GetPricingGuideModelForSave();
-                saveRequest.ProposalDetailId = 2290;
-                saveRequest.Markets.Add(new PricingGuideSaveMarketRequest
-                {
-                    ProgramId = 26589,
-                    BlendedCpm = 7.530701184311377M,
-                    CostPerSpot = 1,
-                    DaypartId = 1,
-                    ImpressionsPerSpot = 10,
-                    ManifestDaypartId = 41604,
-                    MarketId = 101,
-                    ProgramName = "CBS Morning News",
-                    Spots = 5,
-                    StationCode = 5060,
-                    StationImpressionsPerSpot = 43156.671875,
-                    SpotsEditedManually = true
-                });
-                _PricingGuideService.SaveDistribution(saveRequest, "integration test");
-
-                var getRequest = new PricingGuideOpenMarketInventoryRequestDto
+                var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
                     ProposalId = 17616,
                     ProposalDetailId = 2290,
                     BudgetGoal = 1000,
                     ImpressionGoal = 20000,
                     OpenMarketShare = 1,
-                    MaintainManuallyEditedSpots = true
+                    KeepManuallyEditedSpots = true,
+                    ProgramsWithManuallyEditedSpots = new List<ProgramSpotsDto>
+                    {
+                        new ProgramSpotsDto
+                        {
+                            ManifestDaypartId = 41604,
+                            Spots = 5
+                        }
+                    }
                 };
-                PricingGuideDto proposalInventory = _PricingGuideService.GetOpenMarketInventory(getRequest);
+                var result = _PricingGuideService.GetOpenMarketInventory(request);
 
-                _VerifyPricingGuideModel(proposalInventory);
+                _VerifyPricingGuideModel(result);
             }
         }
 
@@ -141,37 +119,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var saveRequest = _GetPricingGuideModelForSave();
-                saveRequest.ProposalDetailId = 2290;
-                saveRequest.Markets.Add(new PricingGuideSaveMarketRequest
-                {
-                    ProgramId = 26589,
-                    BlendedCpm = 7.530701184311377M,
-                    CostPerSpot = 1,
-                    DaypartId = 1,
-                    ImpressionsPerSpot = 10,
-                    ManifestDaypartId = 41604,
-                    MarketId = 101,
-                    ProgramName = "CBS Morning News",
-                    Spots = 5,
-                    StationCode = 5060,
-                    StationImpressionsPerSpot = 43156.671875,
-                    SpotsEditedManually = true
-                });
-                _PricingGuideService.SaveDistribution(saveRequest, "integration test");
-
-                var getRequest = new PricingGuideOpenMarketInventoryRequestDto
+                var request = new PricingGuideOpenMarketInventoryRequestDto
                 {
                     ProposalId = 17616,
                     ProposalDetailId = 2290,
                     BudgetGoal = 1000,
                     ImpressionGoal = 20000,
                     OpenMarketShare = 1,
-                    MaintainManuallyEditedSpots = false
+                    KeepManuallyEditedSpots = false,
+                    ProgramsWithManuallyEditedSpots = new List<ProgramSpotsDto>
+                    {
+                        new ProgramSpotsDto
+                        {
+                            ManifestDaypartId = 41604,
+                            Spots = 5
+                        }
+                    }
                 };
-                PricingGuideDto proposalInventory = _PricingGuideService.GetOpenMarketInventory(getRequest);
+                var result = _PricingGuideService.GetOpenMarketInventory(request);
 
-                _VerifyPricingGuideModel(proposalInventory);
+                _VerifyPricingGuideModel(result);
             }
         }
 
@@ -181,7 +148,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                ProposalDetailPricingGuideSaveRequest request = _GetPricingGuideModelForSave();
+                ProposalDetailPricingGuideSaveRequestDto request = _GetPricingGuideModelForSave();
 
                 _PricingGuideService.SaveDistribution(request, "integration test");
 
@@ -1717,7 +1684,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var request = new ProposalDetailPricingGuideSaveRequest
+                var request = new ProposalDetailPricingGuideSaveRequestDto
                 {
                     Inflation = 1,
                     Margin = 1,
@@ -1839,9 +1806,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(json);
         }
 
-        private static ProposalDetailPricingGuideSaveRequest _GetPricingGuideModelForSave()
+        private static ProposalDetailPricingGuideSaveRequestDto _GetPricingGuideModelForSave()
         {
-            return new ProposalDetailPricingGuideSaveRequest
+            return new ProposalDetailPricingGuideSaveRequestDto
             {
                 Inflation = 1,
                 Margin = 1,

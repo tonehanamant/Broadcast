@@ -12,7 +12,6 @@ namespace Services.Broadcast.Entities
         public LookupDto Daypart { get; set; }
         public decimal BlendedCpm { get; set; }
         public int Spots { get; set; }
-        public bool SpotsEditedManually { get; set; }
         public double ImpressionsPerSpot { get; set; }
         public decimal CostPerSpot { get; set; }
         public double StationImpressionsPerSpot { get; set; }

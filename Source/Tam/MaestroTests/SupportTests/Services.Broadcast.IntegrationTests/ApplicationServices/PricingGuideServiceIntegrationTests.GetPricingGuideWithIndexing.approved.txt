@@ -35,7 +35,6 @@
   },
   "DistributionId": 0,
   "Filter": {},
-  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": 0.2,
   "Inflation": 0.1,
@@ -98,7 +97,6 @@
               "ProgramId": 162238,
               "ProgramName": "Adventure Time",
               "Spots": 1,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 51999.8
             }
           ],

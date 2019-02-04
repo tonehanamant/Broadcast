@@ -1,10 +1,8 @@
-﻿using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.DTO.PricingGuide;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Services.Broadcast.Entities
+namespace Services.Broadcast.Entities.DTO.PricingGuide
 {
-    public class ProposalDetailPricingGuideSaveRequest
+    public class ProposalDetailPricingGuideSaveRequestDto
     {
         public int ProposalDetailId { get; set; }
         public int MarketCoverageFileId { get; set; }
@@ -33,7 +31,6 @@ namespace Services.Broadcast.Entities
         public string ProgramName { get; set; }
         public decimal BlendedCpm { get; set; }
         public int Spots { get; set; }
-        public bool SpotsEditedManually { get; set; }
         public double ImpressionsPerSpot { get; set; }
         public double StationImpressionsPerSpot { get; set; }
         public decimal CostPerSpot { get; set; }

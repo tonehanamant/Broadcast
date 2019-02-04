@@ -35,10 +35,18 @@ class PricingGuideGridView extends Component {
     }
   }
 
-  onCellChange(...args) {
+  onCellChange(fieldName, value, row) {
     const { activeOpenMarketData, onAllocateSpots } = this.props;
-    const updatedMarkets = updateItem(activeOpenMarketData.Markets, ...args);
-    onAllocateSpots({ ...activeOpenMarketData, Markets: updatedMarkets });
+    const updatedMarkets = updateItem(
+      activeOpenMarketData.Markets,
+      fieldName,
+      value,
+      row
+    );
+    onAllocateSpots(
+      { ...activeOpenMarketData, Markets: updatedMarkets },
+      { ...row, [fieldName]: value }
+    );
   }
 
   onExpandedChange(nextValue) {

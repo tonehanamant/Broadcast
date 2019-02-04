@@ -309,7 +309,6 @@
     ]
   },
   "Filter": {},
-  "HasEditedManuallySpots": false,
   "ImpressionGoal": 20000.0,
   "ImpressionLoss": null,
   "Inflation": null,
@@ -363,7 +362,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -383,7 +381,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS This Morning Saturday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -403,7 +400,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS Sunday Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -423,7 +419,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -472,7 +467,6 @@
               "ImpressionsPerSpot": 10165.84573254,
               "ProgramName": "America next morning",
               "Spots": 1,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -492,7 +486,6 @@
               "ImpressionsPerSpot": 8707.00442053,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -512,7 +505,6 @@
               "ImpressionsPerSpot": 5004.23034028,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -532,7 +524,6 @@
               "ImpressionsPerSpot": 2772.66853732,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -552,7 +543,6 @@
               "ImpressionsPerSpot": 1828.43389726,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -572,7 +562,6 @@
               "ImpressionsPerSpot": 3064.48480624,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -592,7 +581,6 @@
               "ImpressionsPerSpot": 1608.05308264,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -641,7 +629,6 @@
               "ImpressionsPerSpot": 3362.68946735,
               "ProgramName": "Fox40 Morning News",
               "Spots": 1,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -690,7 +677,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Day Morning News",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -710,7 +696,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "KCYU Marketplace",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -730,7 +715,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -779,7 +763,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "This Week In Agribusiness",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -799,7 +782,6 @@
               "ImpressionsPerSpot": 7031.06251302,
               "ProgramName": "CBS Sunday Morning",
               "Spots": 1,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -819,7 +801,6 @@
               "ImpressionsPerSpot": 3262.33350276,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -839,7 +820,6 @@
               "ImpressionsPerSpot": 1462.77230763,
               "ProgramName": "Wake Up Central Coast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -859,7 +839,6 @@
               "ImpressionsPerSpot": 548.98529646,
               "ProgramName": "Wake Up Central Coast",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -879,7 +858,6 @@
               "ImpressionsPerSpot": 5125.25808406,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -899,7 +877,6 @@
               "ImpressionsPerSpot": 164.51415263,
               "ProgramName": "CBS Saturday Morning News",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -932,7 +909,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Are We There Yet?",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -981,7 +957,6 @@
               "ImpressionsPerSpot": 3736.09437494,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 6140.0
             },
             {
@@ -1001,7 +976,6 @@
               "ImpressionsPerSpot": 5555.08825892,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 8090.0
             },
             {
@@ -1021,7 +995,6 @@
               "ImpressionsPerSpot": 9567.5537589,
               "ProgramName": "Good Morning America-Sat",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 9230.0
             },
             {
@@ -1041,7 +1014,6 @@
               "ImpressionsPerSpot": 3884.75017782,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 4490.0
             },
             {
@@ -1061,7 +1033,6 @@
               "ImpressionsPerSpot": 7087.76263664,
               "ProgramName": "Good Morning America-Sun",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 8410.0
             },
             {
@@ -1081,7 +1052,6 @@
               "ImpressionsPerSpot": 17743.9947581,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 16390.0
             },
             {
@@ -1101,7 +1071,6 @@
               "ImpressionsPerSpot": 10067.7647884,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 12200.0
             },
             {
@@ -1121,7 +1090,6 @@
               "ImpressionsPerSpot": 912.05163621,
               "ProgramName": "This Week In Agri-Business",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 1200.0
             }
           ],
@@ -1170,7 +1138,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "King Of The Hill",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1190,7 +1157,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Cheaters",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1210,7 +1176,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Cops Reloaded",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1230,7 +1195,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Steve Wilkos Show",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1263,7 +1227,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "News Channel 3 on FOX 11",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1283,7 +1246,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1332,7 +1294,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1365,7 +1326,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1385,7 +1345,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Saturday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1405,7 +1364,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1425,7 +1383,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "This Week",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1474,7 +1431,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Business First with Angela Miles",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1494,7 +1450,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS Morning News",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1514,7 +1469,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1534,7 +1488,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS This Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1554,7 +1507,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS Sunday Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1574,7 +1526,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1607,7 +1558,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1656,7 +1606,6 @@
               "ImpressionsPerSpot": 3409.0804394,
               "ProgramName": "CBS THIS MORNING",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1676,7 +1625,6 @@
               "ImpressionsPerSpot": 4973.75175397,
               "ProgramName": "CBS SUNDAY NEWS",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1696,7 +1644,6 @@
               "ImpressionsPerSpot": 2426.53408718,
               "ProgramName": "KHQA THIS MORNING",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1716,7 +1663,6 @@
               "ImpressionsPerSpot": 1085.93318048,
               "ProgramName": "CBS THIS MORNING SAT",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1749,7 +1695,6 @@
               "ImpressionsPerSpot": 1350.75175179,
               "ProgramName": "GOOD MORNING AMERICA",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1769,7 +1714,6 @@
               "ImpressionsPerSpot": 906.64951011,
               "ProgramName": "GOOD MORNING AMERICA",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1789,7 +1733,6 @@
               "ImpressionsPerSpot": 1281.79046339,
               "ProgramName": "GOOD MORNING AMERICA",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1809,7 +1752,6 @@
               "ImpressionsPerSpot": 418.87849586,
               "ProgramName": "KHQA THIS MORNING",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1829,7 +1771,6 @@
               "ImpressionsPerSpot": 585.86029117,
               "ProgramName": "KHQA THIS MORNING",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1849,7 +1790,6 @@
               "ImpressionsPerSpot": 370.41407456,
               "ProgramName": "FULL MEASURE W SHARYLATTKISSON",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -1882,7 +1822,6 @@
               "ImpressionsPerSpot": 3167.07108572,
               "ProgramName": "Today Show 2",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1902,7 +1841,6 @@
               "ImpressionsPerSpot": 4673.59556699,
               "ProgramName": "Sunday Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1922,7 +1860,6 @@
               "ImpressionsPerSpot": 4303.56908594,
               "ProgramName": "Saturday Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1942,7 +1879,6 @@
               "ImpressionsPerSpot": 8372.86998,
               "ProgramName": "Today Show",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1962,7 +1898,6 @@
               "ImpressionsPerSpot": 1227.64523755,
               "ProgramName": "Early Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -1982,7 +1917,6 @@
               "ImpressionsPerSpot": 6786.07822722,
               "ProgramName": "Wgem Early News",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2002,7 +1936,6 @@
               "ImpressionsPerSpot": 2781.10543786,
               "ProgramName": "Wgem News Early Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2035,7 +1968,6 @@
               "ImpressionsPerSpot": 836.55711552,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2084,7 +2016,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Early Today 1",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2104,7 +2035,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Early Today 2",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2124,7 +2054,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "NewsCenter 1 Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2144,7 +2073,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Today Show",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2164,7 +2092,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Saturday Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2184,7 +2111,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Sunday Today",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2233,7 +2159,6 @@
               "ImpressionsPerSpot": 454.81117554,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2282,7 +2207,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2315,7 +2239,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS Morning News",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2335,7 +2258,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "The Early Show",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2355,7 +2277,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "The Saturday Early Show",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2375,7 +2296,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "CBS News Sunday Morning",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2395,7 +2315,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Face The Nation",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2444,7 +2363,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "SATURDAY MORNING NEWS",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 2300.0
             },
             {
@@ -2464,7 +2382,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "NEWSCENTER 7 MIDDAY",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 1500.0
             },
             {
@@ -2484,7 +2401,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "SATURDAY TODAY",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 1400.0
             },
             {
@@ -2504,7 +2420,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "TODAY SHOW",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 2500.0
             },
             {
@@ -2524,7 +2439,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "MEET THE PRESS",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 2100.0
             },
             {
@@ -2544,7 +2458,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "IDAHO AT SUNRISE",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 800.0
             },
             {
@@ -2564,7 +2477,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "MORNING NEWS",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 300.0
             },
             {
@@ -2584,7 +2496,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "MORNING NEWS",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 200.0
             },
             {
@@ -2604,7 +2515,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "SUNDAY TODAY",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 200.0
             }
           ],
@@ -2653,7 +2563,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "AgDay",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2673,7 +2582,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning Wyoming",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2693,7 +2601,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "FOX News Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2726,7 +2633,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning Wyoming",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2746,7 +2652,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2766,7 +2671,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2786,7 +2690,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2806,7 +2709,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "This Week",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2855,7 +2757,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2875,7 +2776,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Saturday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2895,7 +2795,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2915,7 +2814,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "This Week",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -2964,7 +2862,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -2984,7 +2881,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Saturday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -3004,7 +2900,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "Good Morning America Sunday",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -3024,7 +2919,6 @@
               "ImpressionsPerSpot": 0.0,
               "ProgramName": "This Week",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],
@@ -3053,21 +2947,15 @@
     "Impressions": 20559.5977129
   },
   "PricingTotals": {
-    "Cost": -18.43997458778100,
+    "Cost": 210.0000,
     "Coverage": 2.143,
-    "Cpm": 8.07213126,
-    "Impressions": -2284.39974588
+    "Cpm": 10.21420764,
+    "Impressions": 20559.5977129
   },
-  "ProprietaryPricing": [
-    {
-      "Cpm": 10.0000,
-      "ImpressionsBalance": 10.0,
-      "InventorySource": 5
-    }
-  ],
+  "ProprietaryPricing": [],
   "ProprietaryTotals": {
-    "Cost": -228.43997458778100,
-    "Cpm": 10.0000,
-    "Impressions": -22843.99745878
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
   }
 }

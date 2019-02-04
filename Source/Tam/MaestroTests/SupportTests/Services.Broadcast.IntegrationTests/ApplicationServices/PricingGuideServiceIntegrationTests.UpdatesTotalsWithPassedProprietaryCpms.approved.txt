@@ -40,7 +40,6 @@
   },
   "DistributionId": 0,
   "Filter": {},
-  "HasEditedManuallySpots": false,
   "ImpressionGoal": null,
   "ImpressionLoss": null,
   "Inflation": null,
@@ -103,7 +102,6 @@
               "ProgramId": 162236,
               "ProgramName": "Adventure Time",
               "Spots": 100,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             },
             {
@@ -131,7 +129,6 @@
               "ProgramId": 162237,
               "ProgramName": "Friends",
               "Spots": 0,
-              "SpotsEditedManually": false,
               "StationImpressionsPerSpot": 0.0
             }
           ],

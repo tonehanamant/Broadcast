@@ -375,16 +375,12 @@ export default function reducer(state = initialState, action) {
       };
     }
     case ACTIONS.LOAD_OPEN_MARKET_DATA.success: {
-      const newData = {
-        ...data.Data,
-        isChangedSpots: data.Data.HasEditedManuallySpots
-      };
       return {
         ...state,
-        openMarketData: cloneDeep(newData),
+        openMarketData: cloneDeep(data.Data),
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
         hasActiveDistribution: true,
-        activeOpenMarketData: cloneDeep(newData),
+        activeOpenMarketData: cloneDeep(data.Data),
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
         activeEditMarkets: cloneDeep(data.Data.AllMarkets),
@@ -394,7 +390,7 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.SAVE_PRICING_GUIDE.success: {
       const newData = {
         ...state.activeOpenMarketData,
-        isChangedSpots: state.activeOpenMarketData.HasEditedManuallySpots
+        HasEditedManuallySpots: data.Data.HasEditedManuallySpots
       };
       return {
         ...state,
@@ -405,15 +401,11 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.LOAD_PRICING_DATA.success: {
-      const newData = {
-        ...data.Data,
-        isChangedSpots: data.Data.HasEditedManuallySpots
-      };
       return {
         ...state,
-        openMarketData: cloneDeep(newData),
+        openMarketData: cloneDeep(data.Data),
         hasOpenMarketData: data.Data.Markets && data.Data.Markets.length > 0,
-        activeOpenMarketData: cloneDeep(newData),
+        activeOpenMarketData: cloneDeep(data.Data),
         isOpenMarketDataSortName: false,
         openMarketLoading: false,
         openMarketLoaded: true,
@@ -757,13 +749,9 @@ export const setEstimatedId = (detailId, estimatedId) => ({
   }
 });
 
-/* export const allocateSpots = (data, detailId) => ({
+export const allocateSpots = (data, row) => ({
   type: ACTIONS.ALLOCATE_SPOTS.request,
-  payload: { data, detailId }
-}); */
-export const allocateSpots = data => ({
-  type: ACTIONS.ALLOCATE_SPOTS.request,
-  payload: data
+  payload: { data, row }
 });
 
 export const loadPricingData = detailId => ({

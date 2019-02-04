@@ -216,6 +216,7 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
     <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
+    <Compile Include="Entities\DTO\ProgramSpotsDto.cs" />
     <Compile Include="Entities\MarketCoverageByStation.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="BusinessEngines\PostLogEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Entities\PostedContract.cs" />
+    <Compile Include="Entities\PricingGuide.cs" />
     <Compile Include="Helpers\CsvHelper.cs" />
     <Compile Include="Entities\DistributionProgram.cs" />
     <Compile Include="Entities\DTO\CheckForAllocatedSpotsRequestDto.cs" />
@@ -279,8 +281,7 @@
     <Compile Include="Entities\Nti\NtiRatingDocumentDto.cs" />
     <Compile Include="Entities\Nti\NtiRatingHeaderDto.cs" />
     <Compile Include="Entities\Nti\NtiRatingSubCategoryDto.cs" />
-    <Compile Include="Entities\PricingGuideOpenMarketDistributionSaveRequest.cs" />
-    <Compile Include="Entities\ProposalDetailPricingGuideSaveRequest.cs" />
+    <Compile Include="Entities\DTO\PricingGuide\ProposalDetailPricingGuideSaveRequest.cs" />
     <Compile Include="Entities\DownloadAndProcessWWTVFilesResponse.cs" />
     <Compile Include="Entities\DeliveredSpotsValueForStationsForWeek.cs" />
     <Compile Include="Entities\DTO\ArchivedIscisDto.cs" />

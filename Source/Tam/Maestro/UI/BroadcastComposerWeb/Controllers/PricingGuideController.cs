@@ -35,7 +35,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Save")]
-        public BaseResponse<ProposalDetailDto> SavePricingGuideModel(ProposalDetailPricingGuideSaveRequest model)
+        public BaseResponse<bool> SavePricingGuideModel(ProposalDetailPricingGuideSaveRequestDto model)
         {
             return
                 _ConvertToBaseResponse(

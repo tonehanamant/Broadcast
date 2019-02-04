@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +34,5 @@ namespace Services.Broadcast.Entities.DTO.PricingGuide
         public ProprietaryTotalsDto ProprietaryTotals { get; set; }
         public PricingTotalsDto PricingTotals { get; set; }
         public int MarketCoverageFileId { get; set; }
-        public bool HasEditedManuallySpots => Markets.Any(x => x.HasEditedManuallySpots);
-
-        [JsonIgnore]
-        public bool MaintainManuallyEditedSpots { get; set; }
     }
 }

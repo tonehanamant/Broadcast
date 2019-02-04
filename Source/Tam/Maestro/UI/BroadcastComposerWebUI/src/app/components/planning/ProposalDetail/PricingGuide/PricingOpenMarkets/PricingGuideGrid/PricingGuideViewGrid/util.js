@@ -37,6 +37,7 @@ export const generateProgramData = station =>
     rowType: rowTypes.DATA_ROW,
     AiringTime: program.Daypart.Display,
     Program: program.ProgramName,
+    ManifestDaypartId: program.ManifestDaypartId,
     CPM: program.BlendedCpm,
     Spots: program.Spots,
     Impressions: program.DisplayImpressions
