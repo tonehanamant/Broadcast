@@ -10,7 +10,6 @@ import {
 } from "../util";
 
 export const generateStationData = (markets, selectedMarket) => {
-  console.log(selectedMarket);
   if (!selectedMarket) return [];
   const market = markets.find(m => m.MarketId === selectedMarket);
   const data = market.Stations.filter(
