@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Glyphicon, Tooltip, OverlayTrigger } from "react-bootstrap";
-import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
+import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 
 const FlightCellRender = row => {
   let hasTip = false;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getProposals } from "Ducks/planning";
-import PageTitle from "Components/shared/PageTitle";
+import PageTitle from "Patterns/PageTitle";
 import PlanningGrid from "Components/planning/PlanningGrid";
 
 const mapStateToProps = () => ({});

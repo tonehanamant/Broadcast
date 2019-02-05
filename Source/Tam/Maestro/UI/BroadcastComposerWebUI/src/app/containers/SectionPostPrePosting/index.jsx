@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import CSSModules from "react-css-modules";
 import AppBody from "Components/body/AppBody";
-import PageTitle from "Components/shared/PageTitle";
+import PageTitle from "Patterns/PageTitle";
 import PageHeaderContainer from "Components/postPrePosting/PageHeaderContainer";
 import DataGridContainer from "Components/postPrePosting/DataGridContainer";
 import PostPrePostingFileEditModal from "Components/postPrePosting/PostPrePostingFileEditModal";
 import PostPrePostingFileUploadModal from "Components/postPrePosting/PostPrePostingFileUploadModal";
-import Dropzone from "Components/shared/Dropzone";
+import Dropzone from "Patterns/Dropzone";
 
 import { toggleModal, storeFile } from "Ducks/app";
 import {

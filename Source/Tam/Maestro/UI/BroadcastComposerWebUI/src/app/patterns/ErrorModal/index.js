@@ -28,18 +28,23 @@ export class ErrorModal extends Component {
   }
 
   close() {
-    this.props.toggleModal({
+    const {
+      toggleModal,
+      modal: { properties },
+      clearErrors
+    } = this.props;
+    toggleModal({
       modal: "errorModal",
       active: false,
-      properties: this.props.modal.properties
+      properties
     });
-    this.props.clearErrors();
+    clearErrors();
   }
 
   render() {
-    const errors = this.props.errors;
+    const { errors, modal } = this.props;
     return (
-      <Modal show={this.props.modal.active} onHide={this.close}>
+      <Modal show={modal.active} onHide={this.close}>
         <Modal.Header>
           <Modal.Title
             className="modal-title"

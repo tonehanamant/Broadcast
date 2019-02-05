@@ -14,7 +14,7 @@ import { toggleModal, createAlert } from "Ducks/app";
 import { getPost, getPostClientScrubbing } from "Ducks/post";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
-import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
+import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 import { getDateInFormat } from "../../../utils/dateFormatter";
 
 const mapStateToProps = ({ post: { postGridData }, menu }) => ({

@@ -6,7 +6,7 @@ import { Button, Modal } from "react-bootstrap";
 // import { Grid } from "react-redux-grid";
 import Table, { withGrid } from "Lib/react-table";
 
-import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
+import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 
 const mapStateToProps = ({
   app: {

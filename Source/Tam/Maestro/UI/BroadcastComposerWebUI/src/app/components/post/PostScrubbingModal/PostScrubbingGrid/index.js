@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
 import { overrideStatus, undoScrubStatus } from "Ducks/post";
-import ContextMenuRow from "Components/shared/ContextMenuRow";
+import ContextMenuRow from "Patterns/ContextMenuRow";
 
 import SwapDetailModal from "./SwapDetailModal";
 

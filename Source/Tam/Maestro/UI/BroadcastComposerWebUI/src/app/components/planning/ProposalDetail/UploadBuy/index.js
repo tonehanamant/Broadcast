@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { InputNumber } from "antd";
 import { bindActionCreators } from "redux";
-import UploadButton from "Components/shared/UploadButton";
+import UploadButton from "Patterns/UploadButton";
 
 import { clearFile, storeFile } from "Ducks/app";
 import { uploadSCXFile } from "Ducks/planning";

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ContextMenuRow from "Components/shared/ContextMenuRow";
-import CustomPager from "Components/shared/CustomPager";
+import ContextMenuRow from "Patterns/ContextMenuRow";
+import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";

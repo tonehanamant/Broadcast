@@ -9,8 +9,8 @@ import {
   getTrackerFiltered
 } from "Ducks/tracker";
 import { Row, Col, Button } from "react-bootstrap";
-import UploadButton from "Components/shared/UploadButton";
-import SearchInputButton from "Components/shared/SearchInputButton";
+import UploadButton from "Patterns/UploadButton";
+import SearchInputButton from "Patterns/SearchInputButton";
 import UnlinkedIsciModal from "./UnlinkedIsciModal";
 
 const mapStateToProps = ({

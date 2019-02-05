@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { Table, OverlayTrigger, Tooltip, Glyphicon } from "react-bootstrap";
 import numeral from "numeral";
-import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
+import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 
 const findValue = (options, id) => options.find(option => option.Id === id);
 
