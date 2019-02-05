@@ -33,6 +33,11 @@ const shouldGridRender = (isLoaded, data, isEdit) =>
 const defaultSort = [{ id: "MarketRank", desc: false }];
 const FIRST_ROW_INDEX = 0;
 
+export const getFirstMarket = markets =>
+  markets && markets.length > 0
+    ? [FIRST_ROW_INDEX, markets[FIRST_ROW_INDEX]]
+    : undefined;
+
 class PricingOpenMarkets extends Component {
   constructor(props) {
     super(props);
@@ -75,7 +80,7 @@ class PricingOpenMarkets extends Component {
   onSelectMarket(rowIndex, row) {
     this.setState({
       selectedMarket: {
-        marketId: row.MarketId,
+        marketId: row && row.MarketId,
         rowIndex
       }
     });
@@ -94,7 +99,6 @@ class PricingOpenMarkets extends Component {
   onUpdateEditMarkets() {
     const { onUpdateEditMarkets } = this.props;
     onUpdateEditMarkets();
-    this.resetTable();
   }
 
   resetTable() {
@@ -102,7 +106,10 @@ class PricingOpenMarkets extends Component {
       activeOpenMarketData: { Markets }
     } = this.props;
     this.onSortedChange(defaultSort);
-    this.onSelectMarket(FIRST_ROW_INDEX, Markets[FIRST_ROW_INDEX]);
+    const firstMarket = getFirstMarket(Markets);
+    if (firstMarket) {
+      this.onSelectMarket(...firstMarket);
+    }
   }
 
   onSortedChange(nextValue) {
@@ -439,6 +446,7 @@ class PricingOpenMarkets extends Component {
                 selectedMarket={selectedMarket}
                 onSortedChange={this.onSortedChange}
                 onSelectMarket={this.onSelectMarket}
+                resetTable={this.resetTable}
                 isGuideEditing={isGuideEditing}
               />
             )}

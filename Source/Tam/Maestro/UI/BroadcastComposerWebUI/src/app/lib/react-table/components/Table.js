@@ -22,14 +22,9 @@ class Table extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isSelectedFirstTime: false
-    };
-
     this.onShowContextMenu = this.onShowContextMenu.bind(this);
     this.onHideContextMenu = this.onHideContextMenu.bind(this);
     this.onRowClick = this.onRowClick.bind(this);
-    this.onFirstSelect = this.onFirstSelect.bind(this);
     this._getTrProps = this._getTrProps.bind(this);
     this._getTrGroupProps = this._getTrGroupProps.bind(this);
     this._TrGroupComponent = this._TrGroupComponent.bind(this);
@@ -70,15 +65,6 @@ class Table extends Component {
     }
   }
 
-  onFirstSelect(onClick) {
-    const { isSelectedFirstTime } = this.state;
-    const { selectOnRender } = this.props;
-    if (selectOnRender && !isSelectedFirstTime) {
-      onClick();
-      this.setState({ isSelectedFirstTime: true });
-    }
-  }
-
   _getTrProps(state, rowInfo) {
     if (!rowInfo) return {};
     const { hocState, getTrProps, selected, onSelect } = this.props;
@@ -97,9 +83,6 @@ class Table extends Component {
         trProps.onClick();
       }
     };
-    if (rowInfo.index === 0) {
-      this.onFirstSelect(onClick);
-    }
     return {
       ...trProps,
       onClick,
@@ -190,7 +173,6 @@ Table.defaultProps = {
   showPageSizeOptions: false,
   showPagination: false,
   selected: undefined,
-  selectOnRender: false,
   onSelect: null,
   defaultPageSize: undefined
 };
@@ -210,7 +192,6 @@ Table.propTypes = {
   selected: PropTypes.array,
   showPagination: PropTypes.bool,
   showPageSizeOptions: PropTypes.bool,
-  selectOnRender: PropTypes.bool,
   defaultPageSize: PropTypes.number
 };
 
