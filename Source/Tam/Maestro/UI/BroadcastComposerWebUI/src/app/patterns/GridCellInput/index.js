@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import MaskedTextInput from "react-text-mask";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
-/* eslint-disable react/prefer-stateless-function */
 export default class GridCellInput extends Component {
   constructor(props) {
     super(props);
@@ -20,19 +19,15 @@ export default class GridCellInput extends Component {
   onInputFocus() {
     if (this.state.inputValue === 0 || this.state.inputValue === "0") {
       this.setState({
-        // touched: true,
         inputValue: ""
       });
-      // this.props.toggleEditGridCellClass(true);
     }
   }
 
   onInputChange(event) {
     this.setState({
-      // touched: true,
       inputValue: event.target.value
     });
-    // this.props.toggleEditGridCellClass(true);
   }
 
   onInput(event) {
@@ -42,7 +37,6 @@ export default class GridCellInput extends Component {
       (this.state.inputValue === "" || this.state.inputValue === "0")
     ) {
       this.setState({ inputValue: this.props.value });
-      // } else if (this.state.inputValue.toString() !== this.props.value.toString()) {
     } else if (this.state.inputValue !== this.props.value) {
       if (this.props.confirmInput === true) {
         this.props.toggleModal({
@@ -68,10 +62,8 @@ export default class GridCellInput extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({
-        // touched: true,
         inputValue: nextProps.value
       });
-      //	this.props.toggleEditGridCellClass(true);
     }
   }
 
@@ -197,7 +189,6 @@ GridCellInput.propTypes = {
   onSaveShowValidation: PropTypes.bool,
 
   blurAction: PropTypes.func,
-  // enterKeyPressAction: PropTypes.func,
   onKeyPress: PropTypes.func,
 
   maskType: PropTypes.string,
@@ -216,5 +207,4 @@ GridCellInput.propTypes = {
   maxLength: PropTypes.number,
 
   isGridCellEdited: PropTypes.bool.isRequired
-  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };

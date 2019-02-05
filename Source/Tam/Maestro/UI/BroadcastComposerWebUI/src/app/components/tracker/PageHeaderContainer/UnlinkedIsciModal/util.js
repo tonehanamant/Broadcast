@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import ContextMenuRow from "Components/shared/ContextMenuRow";
-import CustomPager from "Components/shared/CustomPager";
+import ContextMenuRow from "Patterns/ContextMenuRow";
+import CustomPager from "Patterns/CustomPager";
 import {
   getDateInFormat,
   getSecondsToTimeString

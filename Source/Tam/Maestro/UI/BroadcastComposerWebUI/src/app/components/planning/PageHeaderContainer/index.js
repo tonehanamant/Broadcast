@@ -6,7 +6,7 @@ import { getPlanningFiltered } from "Ducks/planning";
 import { Glyphicon, Button } from "react-bootstrap";
 import { Checkbox, Menu, Dropdown } from "antd";
 import { isNil } from "lodash";
-import SearchInputButton from "Components/shared/SearchInputButton";
+import SearchInputButton from "Patterns/SearchInputButton";
 
 import "./index.scss";
 

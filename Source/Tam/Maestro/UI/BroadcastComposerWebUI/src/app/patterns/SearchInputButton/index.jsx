@@ -6,7 +6,6 @@ import { FormGroup, InputGroup, FormControl, Button } from "react-bootstrap";
 export default class SearchInputButton extends Component {
   constructor(props) {
     super(props);
-    // this.handleChange = this.handleChange.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -33,20 +32,20 @@ export default class SearchInputButton extends Component {
 
   handleKeyPress(target) {
     if (target.charCode === 13) {
-      // console.log('handleKeyPress', event.keyCode);
       this.handleSubmit();
     }
   }
 
   render() {
-    /* eslint-disable no-return-assign */
     return (
       <FormGroup bsSize="small" style={{ maxWidth: 250, float: "right" }}>
         <InputGroup>
           <FormControl
             type="text"
             placeholder={this.props.fieldPlaceHolder}
-            inputRef={input => (this.searchField = input)}
+            inputRef={input => {
+              this.searchField = input;
+            }}
             onKeyPress={this.handleKeyPress}
           />
           {this.state.hasActiveSearch && (
@@ -79,7 +78,6 @@ export default class SearchInputButton extends Component {
 }
 
 SearchInputButton.propTypes = {
-  // inputAction: PropTypes.func.isRequired,
   submitAction: PropTypes.func.isRequired,
   fieldPlaceHolder: PropTypes.string.isRequired
 };

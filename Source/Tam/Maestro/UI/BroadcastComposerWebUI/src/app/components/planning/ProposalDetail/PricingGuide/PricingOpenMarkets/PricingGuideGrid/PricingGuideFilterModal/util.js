@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-import DayPartPicker from "Components/shared/DayPartPicker";
+import DayPartPicker from "Patterns/DayPartPicker";
 import { isNil, isArray, head, keys, omit } from "lodash";
 import {
   pipe,

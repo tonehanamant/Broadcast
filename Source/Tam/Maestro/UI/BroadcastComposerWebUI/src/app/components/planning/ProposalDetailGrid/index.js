@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "react-redux-grid";
 import numeral from "numeral";
-import GridCellInput from "Components/shared/GridCellInput";
-import GridTextInput from "Components/shared/GridTextInput";
+import GridCellInput from "Patterns/GridCellInput";
+import GridTextInput from "Patterns/GridTextInput";
 import GridIsciCell from "./GridIsciCell";
 
 /* eslint-disable no-unused-vars */

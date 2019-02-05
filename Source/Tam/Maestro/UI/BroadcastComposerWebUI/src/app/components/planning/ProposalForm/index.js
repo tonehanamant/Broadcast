@@ -19,10 +19,10 @@ import { InputNumber } from "antd";
 
 import moment from "moment";
 
-import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
-import CurrencyDollarWhole from "Components/shared/TextFormatters/CurrencyDollarWhole";
-import PercentWhole from "Components/shared/TextFormatters/PercentWhole";
-import NumberCommaWhole from "Components/shared/TextFormatters/NumberCommaWhole";
+import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
+import CurrencyDollarWhole from "Patterns/TextFormatters/CurrencyDollarWhole";
+import PercentWhole from "Patterns/TextFormatters/PercentWhole";
+import NumberCommaWhole from "Patterns/TextFormatters/NumberCommaWhole";
 import MarketGroupSelector from "./MarketGroupSelector";
 
 export default class ProposalForm extends Component {

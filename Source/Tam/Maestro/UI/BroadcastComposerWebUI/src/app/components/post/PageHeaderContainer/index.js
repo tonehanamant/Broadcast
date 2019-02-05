@@ -5,8 +5,8 @@ import { bindActionCreators } from "redux";
 import { createAlert, toggleModal } from "Ducks/app";
 import { getPostFiltered, getUnlinkedIscis, processNtiFile } from "Ducks/post";
 import { Row, Col, Button } from "react-bootstrap";
-import SearchInputButton from "Components/shared/SearchInputButton";
-import UploadButton from "Components/shared/UploadButton";
+import SearchInputButton from "Patterns/SearchInputButton";
+import UploadButton from "Patterns/UploadButton";
 import UnlinkedIsciModal from "./UnlinkedIsciModal";
 
 const mapStateToProps = ({

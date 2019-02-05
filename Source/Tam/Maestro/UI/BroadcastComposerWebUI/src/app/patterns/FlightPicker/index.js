@@ -325,10 +325,6 @@ export default class FlightPicker extends Component {
               zIndex: 99,
               width: 938
             }}
-            // arrowOffsetLeft={null}
-            // arrowOffsetTop={null}
-            // positionLeft={null}
-            // positionTop={null}
           >
             <Row>
               <Col md={8}>
@@ -512,8 +508,6 @@ export default class FlightPicker extends Component {
     );
   }
 }
-
-// ref={(ref) => { this.input = ref; }}
 
 FlightPicker.defaultProps = {
   startDate: moment(),

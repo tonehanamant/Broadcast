@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { Row, Col } from "react-bootstrap";
-import SearchInputButton from "Components/shared/SearchInputButton";
-import UploadButton from "Components/shared/UploadButton";
+import SearchInputButton from "Patterns/SearchInputButton";
+import UploadButton from "Patterns/UploadButton";
 
 import { toggleModal, storeFile } from "Ducks/app";
 

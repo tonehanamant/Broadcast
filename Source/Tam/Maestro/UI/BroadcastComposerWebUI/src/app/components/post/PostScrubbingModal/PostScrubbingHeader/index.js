@@ -15,7 +15,7 @@ import {
 import Table, { withGrid } from "Lib/react-table";
 import CSSModules from "react-css-modules";
 import Select from "react-select";
-import DateMDYYYY from "Components/shared/TextFormatters/DateMDYYYY";
+import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 
 import styles from "./index.scss";
 import { getDateInFormat } from "../../../../utils/dateFormatter";

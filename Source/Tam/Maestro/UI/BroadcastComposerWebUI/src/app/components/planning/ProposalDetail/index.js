@@ -23,8 +23,8 @@ import {
   Glyphicon,
   HelpBlock
 } from "react-bootstrap";
-import FlightPicker from "Components/shared/FlightPicker";
-import DayPartPicker from "Components/shared/DayPartPicker";
+import FlightPicker from "Patterns/FlightPicker";
+import DayPartPicker from "Patterns/DayPartPicker";
 import ProposalDetailGrid from "Components/planning/ProposalDetailGrid";
 import {
   rerunPostScrubing,

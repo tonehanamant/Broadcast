@@ -11,10 +11,10 @@ import SectionPost from "Containers/SectionPost";
 import SectionPlanning from "Containers/SectionPlanning";
 import SectionTracker from "Containers/SectionTracker";
 // import SectionRates from 'Containers/SectionRates';
-import Toast from "Components/shared/Toast";
-import ErrorModal from "Components/shared/ErrorModal";
-import ConfirmModal from "Components/shared/ConfirmModal";
-import Overlay from "Components/shared/Overlay";
+import Toast from "Patterns/Toast";
+import ErrorModal from "Patterns/ErrorModal";
+import ConfirmModal from "Patterns/ConfirmModal";
+import Overlay from "Patterns/Overlay";
 import "font-awesome/css/font-awesome.min.css";
 
 import styles from "./index.style.scss";
