@@ -27,6 +27,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+        private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
         private static InventorySource _ttnwInventorySource;
         private static InventorySource _cnnInventorySource;
         private static InventorySource _openMarketInventorySource;
@@ -3718,6 +3719,38 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var manifestsJson = IntegrationTestHelper.ConvertToJson(manifests, jsonSettings);
 
                 Approvals.Verify(manifestsJson);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadBarterInventoryFile()
+        {
+            const string fileName = "BarterFile.barter_extension";
+
+            using (new TransactionScopeWrapper())
+            {
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFile), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName,
+                    RatingBook = 437
+                };
+
+                var result = _InventoryFileService.SaveBarterInventoryFile(request, "IntegrationTestUser");
+
+                var file = _InventoryFileRepository.GetInventoryFileById(result.FileId);
+                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
+
+                Approvals.Verify(fileJson);
             }
         }
     }
