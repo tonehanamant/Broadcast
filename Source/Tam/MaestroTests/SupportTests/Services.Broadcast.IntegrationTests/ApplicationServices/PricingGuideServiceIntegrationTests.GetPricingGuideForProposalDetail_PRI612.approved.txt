@@ -1,0 +1,1121 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 9.892179375199578578266106968,
+      "Coverage": 0.988,
+      "Id": 112,
+      "MaxCpm": 18.050541516245487364620938628,
+      "MinCpm": 3.9503386004514672686230248307,
+      "Name": "Baltimore",
+      "Programs": 28,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 25.097014220268498539729788322,
+      "Coverage": 1.365,
+      "Id": 134,
+      "MaxCpm": 62.50000000000000000000000000,
+      "MinCpm": 0.4354046152889220625738632829,
+      "Name": "Orlando-Daytona Bch-Melbrn",
+      "Programs": 87,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 9.341022059688369200728154068,
+      "Coverage": 0.465,
+      "Id": 132,
+      "MaxCpm": 33.333333333333333333333333333,
+      "MinCpm": 2.3364485981308411214953271028,
+      "Name": "Albany-Schenectady-Troy",
+      "Programs": 130,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 10.3820593891333930827754670,
+      "Coverage": 2.184,
+      "Id": 124,
+      "MaxCpm": 54.611650485436893203883495145,
+      "MinCpm": 1.5306122448979591836734693878,
+      "Name": "Atlanta",
+      "Programs": 158,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 13.161275798494913293863692735,
+      "Coverage": 0.706,
+      "Id": 235,
+      "MaxCpm": 34.883720930232558139534883721,
+      "MinCpm": 4.7120418848167539267015706805,
+      "Name": "Austin",
+      "Programs": 35,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 36.053358203320692662310738528,
+      "Coverage": 0.613,
+      "Id": 230,
+      "MaxCpm": 100.000,
+      "MinCpm": 1.4705882352941176470588235294,
+      "Name": "Birmingham (Ann and Tusc)",
+      "Programs": 65,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 26.519271900004851909014412418,
+      "Coverage": 0.236,
+      "Id": 357,
+      "MaxCpm": 250.000,
+      "MinCpm": 4.0145985401459854014598540145,
+      "Name": "Boise",
+      "Programs": 33,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 9.611874573255804974909654366,
+      "Coverage": 2.163,
+      "Id": 106,
+      "MaxCpm": 83.33333333333333333333333333,
+      "MinCpm": 2.3299161230195712954333643989,
+      "Name": "Boston (Manchester)",
+      "Programs": 98,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 16.186522572735222441813824147,
+      "Coverage": 0.529,
+      "Id": 114,
+      "MaxCpm": 240.18253872943437012129218206,
+      "MinCpm": 3.0389363722697056030389363723,
+      "Name": "Buffalo",
+      "Programs": 218,
+      "Selected": false,
+      "Stations": 5
+    },
+    {
+      "AvgCpm": 15.207960471155004529423953993,
+      "Coverage": 0.29,
+      "Id": 237,
+      "MaxCpm": 105.32591414944356120826709062,
+      "MinCpm": 2.5000,
+      "Name": "Cedar Rapids-Wtrlo-IWC&Dub",
+      "Programs": 105,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 14.15345772102645325032177416,
+      "Coverage": 0.307,
+      "Id": 248,
+      "MaxCpm": 55.0000,
+      "MinCpm": 4.899497487437185929648241206,
+      "Name": "Champaign&Sprngfld-Decatur",
+      "Programs": 35,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 4.561630669322640429479121709,
+      "Coverage": 0.286,
+      "Id": 119,
+      "MaxCpm": 10.666666666666666666666666667,
+      "MinCpm": 0.5905511811023622047244094488,
+      "Name": "Charleston, SC",
+      "Programs": 41,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 7.0625786675749338400965520519,
+      "Coverage": 1.021,
+      "Id": 117,
+      "MaxCpm": 25.000,
+      "MinCpm": 1.8518518518518518518518518519,
+      "Name": "Charlotte",
+      "Programs": 95,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 13.369448289429377359656488845,
+      "Coverage": 0.3,
+      "Id": 175,
+      "MaxCpm": 62.5000,
+      "MinCpm": 5.994152046783625730994152047,
+      "Name": "Chattanooga",
+      "Programs": 31,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 9.588661068943801058705260335,
+      "Coverage": 2.942,
+      "Id": 202,
+      "MaxCpm": 50.0000,
+      "MinCpm": 1.6025641025641025641025641026,
+      "Name": "Chicago",
+      "Programs": 190,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 7.6088780990254680881717592429,
+      "Coverage": 0.778,
+      "Id": 115,
+      "MaxCpm": 41.39501190106592155645244748,
+      "MinCpm": 1.7391324511680593252861742448,
+      "Name": "Cincinnati",
+      "Programs": 183,
+      "Selected": false,
+      "Stations": 5
+    },
+    {
+      "AvgCpm": 15.190914459269411220608370676,
+      "Coverage": 1.291,
+      "Id": 110,
+      "MaxCpm": 150.000,
+      "MinCpm": 2.2949267774925056297422510363,
+      "Name": "Cleveland-Akron (Canton)",
+      "Programs": 119,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 27.418099203346501341161714036,
+      "Coverage": 0.307,
+      "Id": 352,
+      "MaxCpm": 92.24137931034482758620689655,
+      "MinCpm": 3.1250000000000000000000000000,
+      "Name": "Colorado Springs-Pueblo",
+      "Programs": 36,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 24.897587003227819186732976061,
+      "Coverage": 0.146,
+      "Id": 204,
+      "MaxCpm": 112.35955056179775280898876404,
+      "MinCpm": 1.7010274205620194597536912295,
+      "Name": "Columbia-Jefferson City",
+      "Programs": 39,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 8.883661669570959827006523818,
+      "Coverage": 0.343,
+      "Id": 146,
+      "MaxCpm": 47.619047619047619047619047619,
+      "MinCpm": 2.480916030534351145038167939,
+      "Name": "Columbia, SC",
+      "Programs": 27,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 8.598915764861543039487035601,
+      "Coverage": 0.8,
+      "Id": 135,
+      "MaxCpm": 29.68680421552619860472020187,
+      "MinCpm": 1.896717789138327035637549085,
+      "Name": "Columbus, OH",
+      "Programs": 170,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 31.22299200934472297126153328,
+      "Coverage": 2.362,
+      "Id": 223,
+      "MaxCpm": 52.941176470588235294117647059,
+      "MinCpm": 14.367816091954022988505747126,
+      "Name": "Dallas-Ft. Worth",
+      "Programs": 10,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 24.558482715935083380306459071,
+      "Coverage": 0.248,
+      "Id": 282,
+      "MaxCpm": 174.67248908296943231441048035,
+      "MinCpm": 1.0239606799098914601679295515,
+      "Name": "Davenport-R.Island-Moline",
+      "Programs": 41,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 7.99785128753022511612021798,
+      "Coverage": 0.405,
+      "Id": 142,
+      "MaxCpm": 13.339920948616600790513833992,
+      "MinCpm": 2.9940119760479041916167664671,
+      "Name": "Dayton",
+      "Programs": 38,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 21.548440344855755834267968408,
+      "Coverage": 1.417,
+      "Id": 351,
+      "MaxCpm": 83.33333333333333333333333333,
+      "MinCpm": 7.3529411764705882352941176471,
+      "Name": "Denver",
+      "Programs": 90,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 14.310254346066754196338626791,
+      "Coverage": 0.371,
+      "Id": 279,
+      "MaxCpm": 57.291666666666666666666666665,
+      "MinCpm": 4.2857142857142857142857142857,
+      "Name": "Des Moines-Ames",
+      "Programs": 69,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 19.130593063835809045021535876,
+      "Coverage": 0.284,
+      "Id": 365,
+      "MaxCpm": 48.61111111111111111111111111,
+      "MinCpm": 4.5454545454545454545454545455,
+      "Name": "El Paso (Las Cruces)",
+      "Programs": 45,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 16.725623280211116296982006453,
+      "Coverage": 0.367,
+      "Id": 113,
+      "MaxCpm": 133.33333333333333333333333333,
+      "MinCpm": 2.6058631921824104234527687296,
+      "Name": "Flint-Saginaw-Bay City",
+      "Programs": 74,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 14.571030871644972817603988923,
+      "Coverage": 0.512,
+      "Id": 466,
+      "MaxCpm": 150.000,
+      "MinCpm": 0.8561643835616438356164383562,
+      "Name": "Fresno-Visalia",
+      "Programs": 82,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 13.774511235409366166717713398,
+      "Coverage": 0.49,
+      "Id": 171,
+      "MaxCpm": 41.261253362147441931232963615,
+      "MinCpm": 6.5108020124297129328203610536,
+      "Name": "Ft. Myers-Naples",
+      "Programs": 37,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 13.1877680650148686671008419,
+      "Coverage": 0.261,
+      "Id": 270,
+      "MaxCpm": 56.250,
+      "MinCpm": 0.1607151825624026919793079202,
+      "Name": "Ft. Smith-Fay-Sprngdl-Rgrs",
+      "Programs": 65,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 6.5123199930691901508511664692,
+      "Coverage": 0.615,
+      "Id": 163,
+      "MaxCpm": 18.078512396694214876033057852,
+      "MinCpm": 1.4285714285714285714285714286,
+      "Name": "Grand Rapids-Kalmzoo-B.Crk",
+      "Programs": 64,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 5.3913366468950850940564979149,
+      "Coverage": 0.6,
+      "Id": 118,
+      "MaxCpm": 15.228426395939086294416243655,
+      "MinCpm": 0.8453647416413373860182370821,
+      "Name": "Greensboro-H.Point-W.Salem",
+      "Programs": 63,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 21.204745275564165737131239917,
+      "Coverage": 0.314,
+      "Id": 236,
+      "MaxCpm": 75.0000,
+      "MinCpm": 6.4356435643564356435643564356,
+      "Name": "Harlingen-Wslco-Brnsvl-Mca",
+      "Programs": 30,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 9.624495061556537133598365768,
+      "Coverage": 0.609,
+      "Id": 166,
+      "MaxCpm": 107.33644609026995116191702893,
+      "MinCpm": 1.9841269841269841269841269841,
+      "Name": "Harrisburg-Lncstr-Leb-York",
+      "Programs": 116,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 10.566027246961283904954771372,
+      "Coverage": 0.822,
+      "Id": 133,
+      "MaxCpm": 70.871722182849043231750531538,
+      "MinCpm": 1.9091256204658266513936617029,
+      "Name": "Hartford & New Haven",
+      "Programs": 86,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 15.080896600039889538891704573,
+      "Coverage": 0.374,
+      "Id": 344,
+      "MaxCpm": 19.230769230769230769230769231,
+      "MinCpm": 9.615384615384615384615384615,
+      "Name": "Honolulu",
+      "Programs": 6,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 9.768998125646121793982232052,
+      "Coverage": 0.328,
+      "Id": 291,
+      "MaxCpm": 17.384105960264900662251655629,
+      "MinCpm": 4.761904761904761904761904762,
+      "Name": "Huntsville-Decatur (Flor)",
+      "Programs": 26,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 16.138956895669677827666240568,
+      "Coverage": 0.915,
+      "Id": 127,
+      "MaxCpm": 157.25806451612903225806451612,
+      "MinCpm": 4.251700680272108843537414966,
+      "Name": "Indianapolis",
+      "Programs": 88,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 5.8657568400649133527028626497,
+      "Coverage": 0.273,
+      "Id": 318,
+      "MaxCpm": 12.946428571428571428571428572,
+      "MinCpm": 1.2992125984251968503937007874,
+      "Name": "Jackson, MS",
+      "Programs": 30,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 10.994053538277786789630060735,
+      "Coverage": 0.625,
+      "Id": 161,
+      "MaxCpm": 36.764705882352941176470588235,
+      "MinCpm": 1.094091903719912472647702407,
+      "Name": "Jacksonville",
+      "Programs": 105,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 7.5891400481889227637342853696,
+      "Coverage": 0.803,
+      "Id": 216,
+      "MaxCpm": 22.5000,
+      "MinCpm": 1.2589928057553956834532374101,
+      "Name": "Kansas City",
+      "Programs": 78,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 7.997926659558620780195955112,
+      "Coverage": 0.461,
+      "Id": 157,
+      "MaxCpm": 56.250,
+      "MinCpm": 0.5244755244755244755244755245,
+      "Name": "Knoxville",
+      "Programs": 67,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 25.28814885909234408141881698,
+      "Coverage": 0.675,
+      "Id": 439,
+      "MaxCpm": 64.338235294117647058823529415,
+      "MinCpm": 6.716417910447761194029850746,
+      "Name": "Las Vegas",
+      "Programs": 29,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 17.877813955252455527235968506,
+      "Coverage": 0.41,
+      "Id": 141,
+      "MaxCpm": 62.50000000000000000000000000,
+      "MinCpm": 8.379120879120879120879120879,
+      "Name": "Lexington",
+      "Programs": 21,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 12.548476650448720270814918093,
+      "Coverage": 4.743,
+      "Id": 403,
+      "MaxCpm": 33.333333333333333333333333333,
+      "MinCpm": 6.7934782608695652173913043478,
+      "Name": "Los Angeles",
+      "Programs": 35,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 10.755859926851322080972106228,
+      "Coverage": 0.586,
+      "Id": 129,
+      "MaxCpm": 54.347826086956521739130434783,
+      "MinCpm": 1.4367816091954022988505747126,
+      "Name": "Louisville",
+      "Programs": 179,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 8.065962569230743334703069833,
+      "Coverage": 0.327,
+      "Id": 269,
+      "MaxCpm": 23.049645390070921985815602838,
+      "MinCpm": 2.4509803921568627450980392156,
+      "Name": "Madison",
+      "Programs": 36,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 5.9518170360036247168650611126,
+      "Coverage": 0.579,
+      "Id": 240,
+      "MaxCpm": 16.666666666666666666666666666,
+      "MinCpm": 2.380952380952380952380952381,
+      "Name": "Memphis",
+      "Programs": 38,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 9.899282079261256490593970422,
+      "Coverage": 0.774,
+      "Id": 217,
+      "MaxCpm": 22.849462365591397849462365591,
+      "MinCpm": 2.3094688221709006928406466513,
+      "Name": "Milwaukee",
+      "Programs": 71,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 9.785448269871388020912958578,
+      "Coverage": 1.543,
+      "Id": 213,
+      "MaxCpm": 22.357723577235772357723577236,
+      "MinCpm": 5.040322580645161290322580645,
+      "Name": "Minneapolis-St. Paul",
+      "Programs": 21,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 14.183455508456772331092941652,
+      "Coverage": 0.251,
+      "Id": 170,
+      "MaxCpm": 125.000,
+      "MinCpm": 2.9702970297029702970297029703,
+      "Name": "Myrtle Beach-Florence",
+      "Programs": 42,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 9.998356041866248730480900812,
+      "Coverage": 0.919,
+      "Id": 259,
+      "MaxCpm": 58.736539654239349797185398417,
+      "MinCpm": 1.4705882352941176470588235294,
+      "Name": "Nashville",
+      "Programs": 116,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 7.384498185421586658128224037,
+      "Coverage": 0.569,
+      "Id": 222,
+      "MaxCpm": 25.0000,
+      "MinCpm": 1.7241379310344827586206896552,
+      "Name": "New Orleans",
+      "Programs": 108,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 11.173265456405873495295974674,
+      "Coverage": 6.309,
+      "Id": 101,
+      "MaxCpm": 47.418647383083397546084997925,
+      "MinCpm": 0.7280411416049120935824083419,
+      "Name": "New York",
+      "Programs": 39,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 7.3428392277762306393053342007,
+      "Coverage": 0.601,
+      "Id": 144,
+      "MaxCpm": 23.419546539030138028952414409,
+      "MinCpm": 1.3888888888888888888888888889,
+      "Name": "Norfolk-Portsmth-Newpt Nws",
+      "Programs": 140,
+      "Selected": false,
+      "Stations": 5
+    },
+    {
+      "AvgCpm": 12.066153408007183109649064019,
+      "Coverage": 0.629,
+      "Id": 250,
+      "MaxCpm": 50.000,
+      "MinCpm": 3.3936651583710407239819004525,
+      "Name": "Oklahoma City",
+      "Programs": 110,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 20.362909401913497841438159156,
+      "Coverage": 0.356,
+      "Id": 252,
+      "MaxCpm": 250.000,
+      "MinCpm": 1.0638297872340425531914893617,
+      "Name": "Omaha",
+      "Programs": 120,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 6.3476575690579947846046486694,
+      "Coverage": 0.316,
+      "Id": 232,
+      "MaxCpm": 37.500,
+      "MinCpm": 1.0000,
+      "Name": "Paducah-Cape Girard-Harsbg",
+      "Programs": 136,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 21.506575067564355553611567935,
+      "Coverage": 0.198,
+      "Id": 275,
+      "MaxCpm": 50.163029847002758966641585152,
+      "MinCpm": 8.472930751443046018605143775,
+      "Name": "Peoria-Bloomington",
+      "Programs": 68,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 13.008136157836189534705081642,
+      "Coverage": 2.559,
+      "Id": 104,
+      "MaxCpm": 52.380952380952380952380952381,
+      "MinCpm": 2.5000,
+      "Name": "Philadelphia",
+      "Programs": 89,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 21.005987616913823222857729005,
+      "Coverage": 1.712,
+      "Id": 353,
+      "MaxCpm": 65.610859728506787330316742085,
+      "MinCpm": 3.1914893617021276595744680852,
+      "Name": "Phoenix (Prescott)",
+      "Programs": 126,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 19.252378896059746452894633675,
+      "Coverage": 1.053,
+      "Id": 420,
+      "MaxCpm": 300.000,
+      "MinCpm": 5.2536231884057971014492753625,
+      "Name": "Portland, OR",
+      "Programs": 81,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 67.404440776298596096281906232,
+      "Coverage": 0.328,
+      "Id": 100,
+      "MaxCpm": 500.000,
+      "MinCpm": 8.928571428571428571428571429,
+      "Name": "Portland-Auburn",
+      "Programs": 25,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 7.2522731916987103233984837113,
+      "Coverage": 0.533,
+      "Id": 121,
+      "MaxCpm": 20.648967551622418879056047198,
+      "MinCpm": 2.0000,
+      "Name": "Providence-New Bedford",
+      "Programs": 84,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 17.51420776440211160633896665,
+      "Coverage": 1.01,
+      "Id": 160,
+      "MaxCpm": 232.14285714285714285714285714,
+      "MinCpm": 2.5193798449612403100775193798,
+      "Name": "Raleigh-Durham (Fayetvlle)",
+      "Programs": 35,
+      "Selected": true,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 20.085883741500611956703519469,
+      "Coverage": 0.235,
+      "Id": 411,
+      "MaxCpm": 200.0000,
+      "MinCpm": 1.7006802721088435374149659864,
+      "Name": "Reno",
+      "Programs": 119,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 5.1688858659339666520620866889,
+      "Coverage": 0.506,
+      "Id": 156,
+      "MaxCpm": 24.911032028469750889679715302,
+      "MinCpm": 0.78125,
+      "Name": "Richmond-Petersburg",
+      "Programs": 109,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 8.799510479310214172345822464,
+      "Coverage": 0.37,
+      "Id": 173,
+      "MaxCpm": 22.471910112359550561797752809,
+      "MinCpm": 3.1914893617021276595744680851,
+      "Name": "Roanoke-Lynchburg",
+      "Programs": 19,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 22.490586403077126618432609163,
+      "Coverage": 0.343,
+      "Id": 138,
+      "MaxCpm": 200.50125313283208020050125313,
+      "MinCpm": 0.7633587786259541984732824427,
+      "Name": "Rochester, NY",
+      "Programs": 128,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 326.12581928871587363340827493,
+      "Coverage": 1.26,
+      "Id": 462,
+      "MaxCpm": 3939.3869907513585635617711294,
+      "MinCpm": 1.9083969465648854961832061068,
+      "Name": "Sacramnto-Stkton-Modesto",
+      "Programs": 28,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 27.155430046299819708454537088,
+      "Coverage": 0.846,
+      "Id": 370,
+      "MaxCpm": 325.38843244122671439030342471,
+      "MinCpm": 1.5756302521008403361344537815,
+      "Name": "Salt Lake City",
+      "Programs": 141,
+      "Selected": false,
+      "Stations": 4
+    },
+    {
+      "AvgCpm": 15.263041568251649663027043715,
+      "Coverage": 0.824,
+      "Id": 241,
+      "MaxCpm": 44.444444444444444444444444444,
+      "MinCpm": 2.7027027027027027027027027027,
+      "Name": "San Antonio",
+      "Programs": 85,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 20.197538816973677648119617569,
+      "Coverage": 0.894,
+      "Id": 425,
+      "MaxCpm": 46.8750,
+      "MinCpm": 2.9761904761904761904761904762,
+      "Name": "San Diego",
+      "Programs": 80,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 73.803738575645415391011371565,
+      "Coverage": 2.186,
+      "Id": 407,
+      "MaxCpm": 762.71186440677966101694915254,
+      "MinCpm": 12.417218543046357615894039735,
+      "Name": "San Francisco-Oak-San Jose",
+      "Programs": 52,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 12.472825290349563785980485937,
+      "Coverage": 0.293,
+      "Id": 107,
+      "MaxCpm": 42.55319148936170212765957447,
+      "MinCpm": 1.6483516483516483516483516484,
+      "Name": "Savannah",
+      "Programs": 40,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 10.991928697895153896202270151,
+      "Coverage": 1.677,
+      "Id": 419,
+      "MaxCpm": 60.0000,
+      "MinCpm": 2.0134228187919463087248322148,
+      "Name": "Seattle-Tacoma",
+      "Programs": 98,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 12.084466871939072139678924071,
+      "Coverage": 0.314,
+      "Id": 212,
+      "MaxCpm": 25.862068965517241379310344828,
+      "MinCpm": 1.744186046511627906976744186,
+      "Name": "Shreveport",
+      "Programs": 40,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 32.709270664947129064491188582,
+      "Coverage": 0.265,
+      "Id": 188,
+      "MaxCpm": 200.000,
+      "MinCpm": 2.6315789473684210526315789474,
+      "Name": "South Bend-Elkhart",
+      "Programs": 124,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 12.2055611211921148906000527,
+      "Coverage": 0.366,
+      "Id": 481,
+      "MaxCpm": 33.333333333333333333333333333,
+      "MinCpm": 3.5714285714285714285714285714,
+      "Name": "Spokane",
+      "Programs": 62,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 11.549242859434267610394592141,
+      "Coverage": 1.061,
+      "Id": 209,
+      "MaxCpm": 38.135593220338983050847457625,
+      "MinCpm": 2.1186440677966101694915254238,
+      "Name": "St. Louis",
+      "Programs": 74,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 34.228022991844265120488341094,
+      "Coverage": 0.312,
+      "Id": 155,
+      "MaxCpm": 250.0000,
+      "MinCpm": 3.3333333333333333333333333333,
+      "Name": "Syracuse",
+      "Programs": 36,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 21.344132745132856838781113109,
+      "Coverage": 1.676,
+      "Id": 139,
+      "MaxCpm": 189.16738531727265140345508666,
+      "MinCpm": 4.9956132271349221464901133692,
+      "Name": "Tampa-St. Pete (Sarasota)",
+      "Programs": 100,
+      "Selected": false,
+      "Stations": 3
+    },
+    {
+      "AvgCpm": 5.8108658886550108820271454287,
+      "Coverage": 0.338,
+      "Id": 147,
+      "MaxCpm": 9.585889570552147239263803681,
+      "MinCpm": 1.2711864406779661016949152542,
+      "Name": "Toledo",
+      "Programs": 7,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 14.284975957556701481593880508,
+      "Coverage": 0.386,
+      "Id": 389,
+      "MaxCpm": 21.844660194174757281553398058,
+      "MinCpm": 7.5000,
+      "Name": "Tucson (Sierra Vista)",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 7.6639479028117949742458571414,
+      "Coverage": 0.461,
+      "Id": 271,
+      "MaxCpm": 12.500000000000000000000000000,
+      "MinCpm": 3.4582132564841498559077809798,
+      "Name": "Tulsa",
+      "Programs": 10,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 20.155605239285408870784814206,
+      "Coverage": 0.309,
+      "Id": 225,
+      "MaxCpm": 35.714285714285714285714285714,
+      "MinCpm": 13.106796116504854368932038835,
+      "Name": "Waco-Temple-Bryan",
+      "Programs": 7,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 11.516669571859297074848410723,
+      "Coverage": 2.222,
+      "Id": 111,
+      "MaxCpm": 62.500,
+      "MinCpm": 1.2500,
+      "Name": "Washington, DC (Hagrstwn)",
+      "Programs": 64,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 12.805048793198078549838952932,
+      "Coverage": 0.739,
+      "Id": 148,
+      "MaxCpm": 26.051188299817184643510054844,
+      "MinCpm": 3.6324786324786324786324786325,
+      "Name": "West Palm Beach-Ft. Pierce",
+      "Programs": 32,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 72.645351091235921782984138718,
+      "Coverage": 0.12,
+      "Id": 125,
+      "MaxCpm": 407.75612082052080495115020825,
+      "MinCpm": 10.588723444890862031188302688,
+      "Name": "Albany, GA",
+      "Programs": 11,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 29.850431307140709418297975538,
+      "Coverage": 0.467,
+      "Id": 177,
+      "MaxCpm": 144.23076923076923076923076923,
+      "MinCpm": 3.0060120240480961923847695391,
+      "Name": "Wilkes Barre-Scranton-Hztn",
+      "Programs": 182,
+      "Selected": false,
+      "Stations": 3
+    }
+  ],
+  "BudgetGoal": null,
+  "DisplayFilter": {
+    "Affiliations": [
+      "PBS"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure"
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Raleigh-Durham (Fayetvlle)"
+      }
+    ],
+    "ProgramNames": [
+      "Adventure Time"
+    ]
+  },
+  "Filter": {},
+  "ImpressionGoal": null,
+  "ImpressionLoss": null,
+  "Inflation": null,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": null,
+  "MarketCoverageFileId": 1,
+  "Markets": [
+    {
+      "AvgCpm": 0.9615,
+      "CPM": 1.5865445636329370497578836842,
+      "DisplayImpressions": 1748245.857143,
+      "DisplayStationImpressions": 2079992.0,
+      "MarketCoverage": 1.01,
+      "MarketName": "Raleigh-Durham (Fayetvlle)",
+      "MarketRank": 25,
+      "MaxCpm": 0.9615,
+      "MinCpm": 0.9615,
+      "Stations": [
+        {
+          "Affiliation": "PBS",
+          "CallLetters": "WUNC-TV 4.1",
+          "CPM": 1.5865445636329370497578836842,
+          "LegacyCallLetters": "WUNC",
+          "MinProgramsBlendedCpm": 0.9615,
+          "Programs": [
+            {
+              "BlendedCpm": 0.9615,
+              "Cost": 3300.0000,
+              "CostPerSpot": 66.0000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM"
+              },
+              "DisplayCost": 3300.0000,
+              "DisplayImpressions": 1748245.857143,
+              "DisplayStationImpressions": 2079992.0,
+              "EffectiveImpressionsPerSpot": 41599.84,
+              "Genres": [
+                {
+                  "Display": "Adventure"
+                }
+              ],
+              "HasImpressions": true,
+              "Impressions": 2079992.0,
+              "ImpressionsPerSpot": 34964.91714286,
+              "ProgramName": "Adventure Time",
+              "Spots": 50,
+              "StationImpressionsPerSpot": 41599.84
+            }
+          ],
+          "StationCode": 5316,
+          "TotalCost": 3300.0000,
+          "TotalImpressions": 2079992.0,
+          "TotalSpots": 50
+        }
+      ],
+      "TotalCost": 3300.0000,
+      "TotalImpressions": 2079992.0,
+      "TotalSpots": 50
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": 1
+  },
+  "OpenMarketShare": 0.0,
+  "OpenMarketTotals": {
+    "Cost": 1000.0000,
+    "Coverage": 80.0,
+    "Cpm": 10.0000,
+    "Impressions": 10000.0
+  },
+  "PricingTotals": {
+    "Cost": 1010.0000,
+    "Coverage": 80.0,
+    "Cpm": 50.5,
+    "Impressions": 20000.0
+  },
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 10.0000,
+    "Cpm": 10.0000,
+    "Impressions": 10000.0
+  }
+}
