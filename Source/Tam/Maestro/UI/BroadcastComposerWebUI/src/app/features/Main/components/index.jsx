@@ -3,23 +3,27 @@ import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
 import CSSModules from "react-css-modules";
 
-import AppHeader from "Components/header/AppHeader";
-import AppFooter from "Components/footer/AppFooter";
+// TO CHANGE
 // import SectionHome from 'Containers/SectionHome';
 import SectionPostPrePosting from "Containers/SectionPostPrePosting";
 import SectionPost from "Containers/SectionPost";
 import SectionPlanning from "Containers/SectionPlanning";
 import SectionTracker from "Containers/SectionTracker";
 // import SectionRates from 'Containers/SectionRates';
+
+// NEW STRUCTURE
 import Toast from "Patterns/Toast";
 import ErrorModal from "Patterns/ErrorModal";
 import ConfirmModal from "Patterns/ConfirmModal";
 import Overlay from "Patterns/Overlay";
 import "font-awesome/css/font-awesome.min.css";
 
+import AppFooter from "./MainFooter";
+import AppHeader from "./MainHeader";
+
 import styles from "./index.style.scss";
 
-export const AppMain = ({ match: { path } }) => (
+export const Main = ({ match: { path } }) => (
   <div styleName="main-container">
     <Toast />
     <ErrorModal />
@@ -41,8 +45,8 @@ export const AppMain = ({ match: { path } }) => (
   </div>
 );
 
-AppMain.propTypes = {
+Main.propTypes = {
   match: PropTypes.object.isRequired
 };
 
-export default CSSModules(AppMain, styles);
+export default CSSModules(Main, styles);
