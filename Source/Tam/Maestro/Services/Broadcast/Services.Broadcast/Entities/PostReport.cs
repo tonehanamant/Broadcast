@@ -240,7 +240,7 @@ namespace Services.Broadcast.Entities
                     WeekStartDate = x.Key.WeekStart,
                     Spots = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekUnits }).Select(y => y.Key.ProposalWeekUnits).Sum(),
                     ActualImpressions = isNtiReport
-                    ? items.Select(y => y.NtiImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum()
+                    ? items.Select(y => y.NtiImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).First()
                     : items.Select(y => y.AudienceImpressions.Where(w => w.Key == guaranteedDemoId).Sum(w => w.Value)).Sum(),
                     ProposalWeekTotalCost = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalCost }).Select(y => y.Key.ProposalWeekTotalCost).Sum(),
                     ProposalWeekTotalImpressionsGoal = items.GroupBy(y => new { y.ProposalWeekId, y.ProposalWeekTotalImpressionsGoal }).Select(y => y.Key.ProposalWeekTotalImpressionsGoal).Sum()
