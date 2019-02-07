@@ -114,7 +114,6 @@
               "LegacyCallLetters": "WNBC",
               "ManifestMaxEndDate": null,
               "MarketCode": 101,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
             }
@@ -242,7 +241,6 @@
               "LegacyCallLetters": "KDFW",
               "ManifestMaxEndDate": null,
               "MarketCode": 223,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dallas-Ft. Worth",
               "RateDataThrough": null
             }
@@ -370,7 +368,6 @@
               "LegacyCallLetters": "WNBC",
               "ManifestMaxEndDate": null,
               "MarketCode": 101,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
             }
@@ -519,7 +516,6 @@
               "LegacyCallLetters": "WUSA",
               "ManifestMaxEndDate": null,
               "MarketCode": 111,
-              "ModifiedDate": "2019-02-06T08:44:04.327",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
             }
