@@ -1,0 +1,20 @@
+﻿{
+  "EndDate": "0001-01-01T00:00:00",
+  "FileName": "BarterFile.barter_extension",
+  "FileStatus": 3,
+  "Hash": "F7-E5-E1-D5-F5-80-00-74-2C-3F-CA-B5-49-D8-7A-DC-24-71-A4-E6",
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventoryManifestsStaging": [],
+  "InventorySource": {
+    "Id": 4,
+    "InventoryType": 1,
+    "IsActive": true,
+    "Name": "TTNW"
+  },
+  "PlaybackType": 4,
+  "RatingBook": 437,
+  "StartDate": "0001-01-01T00:00:00",
+  "StationContacts": [],
+  "UniqueIdentifier": null
+}

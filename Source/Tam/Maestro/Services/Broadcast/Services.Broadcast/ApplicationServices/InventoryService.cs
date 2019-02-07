@@ -67,6 +67,7 @@ namespace Services.Broadcast.ApplicationServices
         bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
         bool ExpireManifest(int programId, DateTime endDate, string inventorySource, int stationCode, string user);
         bool HasSpotsAllocated(int programId);
+        InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName);
     }
 
     public class InventoryService : IInventoryService
@@ -1127,6 +1128,40 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return flightWeekGroups;
+        }
+
+        public InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName)
+        {
+            var inventoryFile = _GetInventoryFile(request);
+            inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, userName);
+
+            return new InventoryFileSaveResult
+            {
+                FileId = inventoryFile.Id
+            };
+        }
+
+        private InventoryFile _GetInventoryFile(InventoryFileSaveRequest request)
+        {
+            const string defaultInventorySourceName = "TTNW";
+
+            var file = new InventoryFile
+            {
+                FileName = request.FileName ?? "unknown",
+                FileStatus = InventoryFile.FileStatusEnum.Failed,
+                Hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData)),
+                PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                InventorySource = _inventoryRepository.GetInventorySourceByName(defaultInventorySourceName),
+                RatingBook = request.RatingBook ?? GetRatingBooks().FirstOrDefault()?.Id
+            };
+
+            if (_inventoryFileRepository.GetInventoryFileIdByHash(file.Hash) > 0)
+            {
+                throw new BroadcastDuplicateInventoryFileException(
+                    "Unable to load file. The selected file has already been loaded or is already loading.");
+            }
+
+            return file;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof (StationInventoryManifestBase), "FileId");
             jsonResolver.Ignore(typeof(InventoryFile), "Id");
             jsonResolver.Ignore(typeof (InventorySource), "Id");
-            jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
 
             var jsonSettings = new JsonSerializerSettings
             {

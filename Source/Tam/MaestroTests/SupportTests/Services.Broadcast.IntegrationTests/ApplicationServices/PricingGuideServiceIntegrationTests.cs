@@ -60,6 +60,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideForProposalDetail_PRI612()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(26025);
+                var proposalDetail = proposal.Details.Where(x => x.Id == 9987).Single();
+                proposalDetail.FlightEdited = true;
+                proposalDetail.FlightStartDate = new DateTime(2018, 10, 01);
+                proposalDetail.FlightEndDate = new DateTime(2018, 12, 31);
+                _ProposalService.SaveProposal(proposal, "integration test", null);
+
+                PricingGuideDto proposalInventory = _PricingGuideService.GetPricingGuideForProposalDetail(9987);
+                
+                _VerifyPricingGuideModel(proposalInventory);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetOpenMarketInventory_WithEnteredManuallySpots_WithoutGoals()
         {
             using (new TransactionScopeWrapper())
@@ -1517,7 +1536,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+                var pricingGuideOpenMarketDto = IntegrationTestApplicationServiceFactory.GetApplicationService<IPricingGuideService>().GetOpenMarketInventory(request);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
 

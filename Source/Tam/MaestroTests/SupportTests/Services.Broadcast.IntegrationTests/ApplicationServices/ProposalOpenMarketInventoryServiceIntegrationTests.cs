@@ -19,6 +19,7 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalInventoryMarketDto;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter;
@@ -1805,13 +1806,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // this detail will return no programs which will cause error described in BCOP4322
             var request = new OpenMarketRefineProgramsRequest
             {
-                ProposalDetailId = 3248,
+                ProposalDetailId = 20,
                 Criteria = new OpenMarketCriterion()
             };
             var results = _ProposalOpenMarketInventoryService.RefinePrograms(request);
-
-
+            
             var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(InventoryMarketStationProgram), "ProgramId");
+            jsonResolver.Ignore(typeof(LookupDto), "Id");
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1821,6 +1823,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(json);
         }
-
     }
 }

@@ -131,17 +131,12 @@ namespace Services.Broadcast.ApplicationServices
             return sortedMarkets;
         }
 
-        protected void ApplyInventoryMarketRankings(int mediaMonthId, IEnumerable<IInventoryMarket> inventoryMarkets)
+        protected void ApplyInventoryMarketRankings(IInventoryMarket inventoryMarket, Dictionary<int, int> marketRankings)
         {
-            var marketRankings = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonth(mediaMonthId);
-
-            foreach (var inventoryMarket in inventoryMarkets)
-            {
-                marketRankings.TryGetValue(inventoryMarket.MarketId, out var rank);
-                inventoryMarket.MarketRank = rank;
-            }
+            marketRankings.TryGetValue(inventoryMarket.MarketId, out var rank);
+            inventoryMarket.MarketRank = rank;
         }
-
+        
         protected void _ApplyProjectedImpressions(IEnumerable<ProposalProgramDto> programs, ProposalDetailInventoryBase proposalDetail)
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
@@ -232,11 +227,11 @@ namespace Services.Broadcast.ApplicationServices
             return inventory;
         }
 
-        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto,List<MediaWeek> mediaWeeksToUse = null)
+        private List<ProposalProgramFlightWeek> _GetFlightWeeks(ProposalProgramDto programDto, List<MediaWeek> mediaWeeksToUse = null)
         {
             var nonNullableEndDate = programDto.EndDate ?? programDto.StartDate.AddYears(1);
 
-            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate,mediaWeeksToUse);
+            var displayFlighWeeks = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(programDto.StartDate, nonNullableEndDate, mediaWeeksToUse);
 
             var flighWeeks = new List<ProposalProgramFlightWeek>();
 
@@ -263,5 +258,5 @@ namespace Services.Broadcast.ApplicationServices
 
             return flighWeeks;
         }
-    }   
+    }
 }
