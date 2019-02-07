@@ -519,7 +519,7 @@
               "LegacyCallLetters": "WUSA",
               "ManifestMaxEndDate": null,
               "MarketCode": 111,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
+              "ModifiedDate": "2019-02-06T08:44:04.327",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
             }

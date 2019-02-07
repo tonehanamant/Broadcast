@@ -35,6 +35,9 @@
         <li role="presentation">
             <a data-toggle="tab" name="TTNW" role="tab" href="#rates_content">TTNW</a>
         </li>
+        <li role="presentation">
+            <a data-toggle="tab" name="Barter" role="tab" href="#rates_content">Barter</a>
+        </li>
     </ul>
     <div class="tab-content">
         <div id="rates_content" class="tab-pane fade in active" style="margin-top: 16px;">
@@ -45,7 +48,7 @@
                 </div>
 
                 <div class="col-xs-8">
-                    <div class="form-inline" style="text-align: right;">
+                    <div class="form-inline grid_hider" style="text-align: right;">
                         @*<label for="stations_filter_input">Stations</label>*@
                         <select style="width:180px;" class="form-control input-sm" id="stations_filter_input">
                             <!-- TBD match to filter params - values -->
@@ -57,7 +60,7 @@
                 </div>
 
                 <div class="col-xs-2">
-                    <div class="input-group input-group-sm pull-right" style="width: 100%;">
+                    <div class="input-group input-group-sm pull-right grid_hider" style="width: 100%;">
                         <span class="input-group-btn">
                             <button id="stations_search_btn" style="" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </span>
@@ -69,7 +72,7 @@
                 </div>
             </div>
 
-            <div id="stations_grid" style="height: 600px;">
+            <div id="stations_grid" class="grid_hider" style="height: 600px;">
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@ namespace Services.Broadcast.Repositories
         void UpdateInventoryFile(InventoryFile inventoryFile, string userName);
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, InventoryFile.FileStatusEnum status);
-
+        InventoryFile GetInventoryFileById(int fileId);
     }
 
     public class InventoryFileRepository: BroadcastRepositoryBase, IInventoryFileRepository
@@ -109,6 +109,31 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        
+        public InventoryFile GetInventoryFileById(int fileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var file = context.inventory_files.Single(x => x.id == fileId, $"Could not find existing file with id={fileId}");
+
+                    return new InventoryFile
+                    {
+                        Id = file.id,
+                        FileName = file.name,
+                        FileStatus = (InventoryFile.FileStatusEnum)file.status,
+                        Hash = file.file_hash,
+                        UniqueIdentifier = file.identifier,
+                        InventorySource = new InventorySource
+                        {
+                            Id = file.inventory_sources.id,
+                            InventoryType = (InventoryType)file.inventory_sources.inventory_source_type,
+                            IsActive = file.inventory_sources.is_active,
+                            Name = file.inventory_sources.name
+                        },
+                        RatingBook = file.sweep_book_id,
+                        PlaybackType = (Entities.Enums.ProposalEnums.ProposalPlaybackType)file.play_back_type
+                    };
+                });
+        }
     }    
 }

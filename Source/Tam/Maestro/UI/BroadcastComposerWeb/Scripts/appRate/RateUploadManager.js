@@ -38,7 +38,6 @@ var RateUploadManager = UploadManager.extend({
                 return fileExt == 'csv';
             }
         },
-        //todo
         CNN: {
             name: 'CNN',
             enabled: true,
@@ -50,6 +49,15 @@ var RateUploadManager = UploadManager.extend({
         },
         TTNW: {
             name: 'TTNW',
+            enabled: true,
+            isSingleFile: true, //single file only
+            fileType: 'xls',
+            checkType: function (fileExt) {
+                return fileExt == 'xls' || fileExt == 'xlsx';
+            }
+        },
+        Barter: {
+            name: 'Barter',
             enabled: true,
             isSingleFile: true, //single file only
             fileType: 'xls',

@@ -374,7 +374,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
         }
-        
+
         private void _PopulateMarkets(ProposalDetailOpenMarketInventoryDto dto, bool ignoreExistingAllocation)
         {
             _SetProposalInventoryDetailDaypart(dto);
@@ -461,9 +461,19 @@ namespace Services.Broadcast.ApplicationServices
 
             var inventoryMarkets = _GroupProgramsByMarketAndStation(programs);
 
-            var postingBook = ProposalServiceHelper.GetBookId(dto);
-            _ApplyInventoryMarketSubscribers(postingBook, inventoryMarkets);
-            ApplyInventoryMarketRankings(postingBook, inventoryMarkets);
+            var postingBookId = ProposalServiceHelper.GetBookId(dto);
+            var marketRankings = BroadcastDataRepositoryFactory.GetDataRepository<INsiMarketRepository>().GetMarketRankingsByMediaMonth(postingBookId);
+            var householdAudienceId = BroadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>()
+               .GetDisplayAudienceByCode(HOUSEHOLD_AUDIENCE_CODE).Id;
+            var marketSubscribers = BroadcastDataRepositoryFactory.GetDataRepository<INsiUniverseRepository>()
+                .GetUniverseDataByAudience(postingBookId, new List<int> { householdAudienceId });
+
+            foreach (var inventoryMarket in inventoryMarkets)
+            {
+                ApplyInventoryMarketRankings(inventoryMarket, marketRankings);
+                marketSubscribers.TryGetValue((short)inventoryMarket.MarketId, out double subscribers);
+                inventoryMarket.MarketSubscribers = subscribers;
+            }
 
             dto.Markets.AddRange(inventoryMarkets.OrderBy(m => m.MarketRank).ToList());
 
@@ -577,14 +587,14 @@ namespace Services.Broadcast.ApplicationServices
                             weekProgram.TargetImpressions = program.TargetImpressions;
                             if (weekProgram.ProvidedUnitImpressions.HasValue)
                             {
-                                weekProgram.TotalImpressions = weekProgram.Spots == 0 
-                                    ? weekProgram.ProvidedUnitImpressions.Value 
+                                weekProgram.TotalImpressions = weekProgram.Spots == 0
+                                    ? weekProgram.ProvidedUnitImpressions.Value
                                     : _ProposalProgramsCalculationEngine.CalculateSpotImpressions(weekProgram.Spots, weekProgram.ProvidedUnitImpressions.Value);
                             }
                             else
                             {
-                                weekProgram.TotalImpressions = weekProgram.Spots == 0 
-                                    ? weekProgram.UnitImpression 
+                                weekProgram.TotalImpressions = weekProgram.Spots == 0
+                                    ? weekProgram.UnitImpression
                                     : _ProposalProgramsCalculationEngine.CalculateSpotImpressions(weekProgram.Spots, weekProgram.UnitImpression);
                             }
 
@@ -682,21 +692,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return inventoryMarkets;
         }
-
-        private void _ApplyInventoryMarketSubscribers(int monthId, IEnumerable<ProposalInventoryMarketDto> inventoryMarkets)
-        {
-            var householdAudienceId = BroadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>()
-                .GetDisplayAudienceByCode(HOUSEHOLD_AUDIENCE_CODE).Id;
-            var marketSubscribers = BroadcastDataRepositoryFactory.GetDataRepository<INsiUniverseRepository>()
-                .GetUniverseDataByAudience(monthId, new List<int> { householdAudienceId });
-
-            foreach (var inventoryMarket in inventoryMarkets)
-            {
-                marketSubscribers.TryGetValue((short)inventoryMarket.MarketId, out double subscribers);
-                inventoryMarket.MarketSubscribers = subscribers;
-            }
-        }
-
+        
         public List<OpenMarketInventoryAllocation> GetProposalInventoryAllocations(int proposalVersionDetailId)
         {
             var openMarketInventoryRepository =
@@ -745,14 +741,14 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (program.Spots == numberOfPreviousAllocations)
                         continue;
-                    
+
                     if (program.Spots < numberOfPreviousAllocations)
                     {
                         var numberOfSpotsDifference = numberOfPreviousAllocations - program.Spots;
 
                         allocationsChangeRequest.AllocationsToRemove.AddRange(
                             existingAllocations.Where(
-                                    x => x.MediaWeekId == week.MediaWeekId && 
+                                    x => x.MediaWeekId == week.MediaWeekId &&
                                          x.ManifestId == program.ProgramId)
                                 .Take(numberOfSpotsDifference));
                     }
@@ -819,7 +815,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var totalSpots = 0;
 
-            foreach(var detailId in request.ProposalDetailIds)
+            foreach (var detailId in request.ProposalDetailIds)
             {
                 var inventory = GetInventory(detailId);
                 var spots = inventory.Weeks.SelectMany(x => x.Markets).Sum(x => x.Spots);

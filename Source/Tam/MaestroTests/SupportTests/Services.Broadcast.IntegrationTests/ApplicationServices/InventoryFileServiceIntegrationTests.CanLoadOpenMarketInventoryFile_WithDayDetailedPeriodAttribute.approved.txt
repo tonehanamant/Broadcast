@@ -1,6 +1,2420 @@
 ﻿[
   {
     "AirtimePreviews": [
+      "M-F 9AM-10AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 14000.0,
+    "ProgramNames": [
+      "MEGYN KELLY TODAY"
+    ],
+    "Rate15": 81.2500,
+    "Rate30": 125.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 10AM-11AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 39600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 36000,
+        "sun": false,
+        "Text": "M-F 10AM-11AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 13700.0,
+    "ProgramNames": [
+      "TODAY SHOW 3"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 11AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 39600,
+        "sun": false,
+        "Text": "M-F 11AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 9400.0,
+    "ProgramNames": [
+      "ACCESS"
+    ],
+    "Rate15": 26.0000,
+    "Rate30": 40.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 12:30PM-1PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 46800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 45000,
+        "sun": false,
+        "Text": "M-F 12:30PM-1PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 19900.0,
+    "ProgramNames": [
+      "MILLIONAIRE"
+    ],
+    "Rate15": 55.2500,
+    "Rate30": 85.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 1PM-2PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 50400,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 46800,
+        "sun": false,
+        "Text": "M-F 1PM-2PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 21500.0,
+    "ProgramNames": [
+      "DAYS OF OUR LIVES"
+    ],
+    "Rate15": 74.7500,
+    "Rate30": 115.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 2PM-3PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 54000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 50400,
+        "sun": false,
+        "Text": "M-F 2PM-3PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 8900.0,
+    "ProgramNames": [
+      "DR. OZ"
+    ],
+    "Rate15": 26.0000,
+    "Rate30": 40.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 3PM-4PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 57600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 54000,
+        "sun": false,
+        "Text": "M-F 3PM-4PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 10600.0,
+    "ProgramNames": [
+      "RACHAEL RAY"
+    ],
+    "Rate15": 32.5000,
+    "Rate30": 50.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 7PM-7:30PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 70200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 68400,
+        "sun": false,
+        "Text": "M-F 7PM-7:30PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 21800.0,
+    "ProgramNames": [
+      "ENTERTAINMENT TONIGHT"
+    ],
+    "Rate15": 195.0000,
+    "Rate30": 300.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 7:30PM-8PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 72000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 70200,
+        "sun": false,
+        "Text": "M-F 7:30PM-8PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 23900.0,
+    "ProgramNames": [
+      "INSIDE EDITION"
+    ],
+    "Rate15": 195.0000,
+    "Rate30": 300.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 7PM-8PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 72000,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 68400,
+        "sun": false,
+        "Text": "SA 7PM-8PM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 15100.0,
+    "ProgramNames": [
+      "ET WEEKEND"
+    ],
+    "Rate15": 113.7500,
+    "Rate30": 175.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 11:35PM-12:35AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 2100,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 84900,
+        "sun": false,
+        "Text": "M-F 11:35PM-12:35AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 14400.0,
+    "ProgramNames": [
+      "TONIGHT SHOW W/ FALLON"
+    ],
+    "Rate15": 81.2500,
+    "Rate30": 125.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 12:35AM-1:35AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 5700,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 2100,
+        "sun": false,
+        "Text": "M-F 12:35AM-1:35AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 7500.0,
+    "ProgramNames": [
+      "LATE NIGHT W/ MEYERS"
+    ],
+    "Rate15": 42.2500,
+    "Rate30": 65.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 1:35AM-2:05AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7500,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 5700,
+        "sun": false,
+        "Text": "M-F 1:35AM-2:05AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 4000.0,
+    "ProgramNames": [
+      "LAST CALL W/ DALY"
+    ],
+    "Rate15": 26.0000,
+    "Rate30": 40.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 11:30PM-1AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 3600,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 84600,
+        "sun": false,
+        "Text": "SA 11:30PM-1AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 22700.0,
+    "ProgramNames": [
+      "SATURDAY NIGHT LIVE"
+    ],
+    "Rate15": 162.5000,
+    "Rate30": 250.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 1AM-2AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7200,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 3600,
+        "sun": false,
+        "Text": "SA 1AM-2AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 9800.0,
+    "ProgramNames": [
+      "COMEDY TV"
+    ],
+    "Rate15": 32.5000,
+    "Rate30": 50.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 12AM-1AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 3600,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 0,
+        "sun": true,
+        "Text": "SU 12AM-1AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 10700.0,
+    "ProgramNames": [
+      "AMERICAN NINJA WARRIOR"
+    ],
+    "Rate15": 16.2500,
+    "Rate30": 25.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 1AM-2AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7200,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 3600,
+        "sun": true,
+        "Text": "SU 1AM-2AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-10-01T00:00:00",
+    "EndDate": "2018-11-06T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-10-07T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-01T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-08T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-21T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-15T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-28T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-22T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-04T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-10-29T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 5200.0,
+    "ProgramNames": [
+      "ROOKIE BLUE"
+    ],
+    "Rate15": 16.2500,
+    "Rate30": 25.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 9AM-10AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 36000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 32400,
+        "sun": false,
+        "Text": "M-F 9AM-10AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 14000.0,
+    "ProgramNames": [
+      "MEGYN KELLY TODAY"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 10AM-11AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 39600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 36000,
+        "sun": false,
+        "Text": "M-F 10AM-11AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 13700.0,
+    "ProgramNames": [
+      "TODAY SHOW 3"
+    ],
+    "Rate15": 58.5000,
+    "Rate30": 90.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 11AM-12PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 43200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 39600,
+        "sun": false,
+        "Text": "M-F 11AM-12PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 9400.0,
+    "ProgramNames": [
+      "ACCESS"
+    ],
+    "Rate15": 26.0000,
+    "Rate30": 40.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 12:30PM-1PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 46800,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 45000,
+        "sun": false,
+        "Text": "M-F 12:30PM-1PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 19900.0,
+    "ProgramNames": [
+      "MILLIONAIRE"
+    ],
+    "Rate15": 48.7500,
+    "Rate30": 75.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 1PM-2PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 50400,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 46800,
+        "sun": false,
+        "Text": "M-F 1PM-2PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 21500.0,
+    "ProgramNames": [
+      "DAYS OF OUR LIVES"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 2PM-3PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 54000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 50400,
+        "sun": false,
+        "Text": "M-F 2PM-3PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 8900.0,
+    "ProgramNames": [
+      "DR. OZ"
+    ],
+    "Rate15": 22.7500,
+    "Rate30": 35.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 3PM-4PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 57600,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 54000,
+        "sun": false,
+        "Text": "M-F 3PM-4PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 10600.0,
+    "ProgramNames": [
+      "RACHAEL RAY"
+    ],
+    "Rate15": 32.5000,
+    "Rate30": 50.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 7PM-7:30PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 70200,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 68400,
+        "sun": false,
+        "Text": "M-F 7PM-7:30PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 21800.0,
+    "ProgramNames": [
+      "ENTERTAINMENT TONIGHT"
+    ],
+    "Rate15": 162.5000,
+    "Rate30": 250.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 7:30PM-8PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 72000,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 70200,
+        "sun": false,
+        "Text": "M-F 7:30PM-8PM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-28T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 23900.0,
+    "ProgramNames": [
+      "INSIDE EDITION"
+    ],
+    "Rate15": 162.5000,
+    "Rate30": 250.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 7PM-8PM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 72000,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 68400,
+        "sun": false,
+        "Text": "SA 7PM-8PM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-29T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 15100.0,
+    "ProgramNames": [
+      "ET WEEKEND"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 11:35PM-12:35AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 2100,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 84900,
+        "sun": false,
+        "Text": "M-F 11:35PM-12:35AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-29T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 14400.0,
+    "ProgramNames": [
+      "TONIGHT SHOW W/ FALLON"
+    ],
+    "Rate15": 65.0000,
+    "Rate30": 100.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 12:35AM-1:35AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 5700,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 2100,
+        "sun": false,
+        "Text": "M-F 12:35AM-1:35AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-29T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 7500.0,
+    "ProgramNames": [
+      "LATE NIGHT W/ MEYERS"
+    ],
+    "Rate15": 32.5000,
+    "Rate30": 50.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "M-F 1:35AM-2:05AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7500,
+        "fri": true,
+        "mon": true,
+        "sat": false,
+        "startTime": 5700,
+        "sun": false,
+        "Text": "M-F 1:35AM-2:05AM",
+        "thu": true,
+        "tue": true,
+        "wed": true
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-29T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 4000.0,
+    "ProgramNames": [
+      "LAST CALL W/ DALY"
+    ],
+    "Rate15": 26.0000,
+    "Rate30": 40.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 11:30PM-1AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 3600,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 84600,
+        "sun": false,
+        "Text": "SA 11:30PM-1AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-29T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 22700.0,
+    "ProgramNames": [
+      "SATURDAY NIGHT LIVE"
+    ],
+    "Rate15": 162.5000,
+    "Rate30": 250.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SA 1AM-2AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7200,
+        "fri": false,
+        "mon": false,
+        "sat": true,
+        "startTime": 3600,
+        "sun": false,
+        "Text": "SA 1AM-2AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-29T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 9800.0,
+    "ProgramNames": [
+      "COMEDY TV"
+    ],
+    "Rate15": 32.5000,
+    "Rate30": 50.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 12AM-1AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 3600,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 0,
+        "sun": true,
+        "Text": "SU 12AM-1AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 10700.0,
+    "ProgramNames": [
+      "AMERICAN NINJA WARRIOR"
+    ],
+    "Rate15": 16.2500,
+    "Rate30": 25.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
+      "SU 1AM-2AM"
+    ],
+    "Airtimes": [
+      {
+        "endTime": 7200,
+        "fri": false,
+        "mon": false,
+        "sat": false,
+        "startTime": 3600,
+        "sun": true,
+        "Text": "SU 1AM-2AM",
+        "thu": false,
+        "tue": false,
+        "wed": false
+      }
+    ],
+    "Conflicts": null,
+    "EffectiveDate": "2018-11-07T00:00:00",
+    "EndDate": "2018-12-30T00:00:00",
+    "FlightWeeks": [
+      {
+        "EndDate": "2018-11-11T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-05T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-18T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-12T00:00:00"
+      },
+      {
+        "EndDate": "2018-11-25T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-19T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-02T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-11-26T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-09T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-03T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-16T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-23T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-17T00:00:00"
+      },
+      {
+        "EndDate": "2018-12-30T00:00:00",
+        "IsHiatus": false,
+        "StartDate": "2018-12-24T00:00:00"
+      }
+    ],
+    "Genres": [],
+    "HouseHoldImpressions": 5200.0,
+    "ProgramNames": [
+      "ROOKIE BLUE"
+    ],
+    "Rate15": 16.2500,
+    "Rate30": 25.0000,
+    "RateSource": null,
+    "Rating": null,
+    "SpotLength": 30,
+    "SpotsPerWeek": null,
+    "StationCode": 5491
+  },
+  {
+    "AirtimePreviews": [
       "M-F 4:30AM-4:59AM"
     ],
     "Airtimes": [

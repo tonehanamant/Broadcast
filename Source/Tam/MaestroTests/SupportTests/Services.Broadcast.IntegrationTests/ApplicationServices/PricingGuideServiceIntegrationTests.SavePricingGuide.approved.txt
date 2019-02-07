@@ -1,11 +1,11 @@
 ﻿{
   "AllMarkets": [
     {
-      "AvgCpm": 7.5307,
+      "AvgCpm": 7.3691967575534266764922623434,
       "Coverage": 6.309,
       "Id": 101,
-      "MaxCpm": 7.5307,
-      "MinCpm": 7.5307,
+      "MaxCpm": 7.3691967575534266764922623434,
+      "MinCpm": 7.3691967575534266764922623434,
       "Name": "New York",
       "Programs": 2,
       "Selected": true,
