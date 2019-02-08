@@ -341,6 +341,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("Impressions")]
+        public void PostLogService_Hiatus_TimeMatch_PRI814()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+                var proposal = _ProposalService.GetProposalById(253);
+                proposal.Details[0].Quarters[0].Weeks[0].IsHiatus = true;
+                _ProposalService.CalculateProposalChanges(new ProposalChangeRequest() { Details = proposal.Details });
+                _ProposalService.SaveProposal(proposal, "test user", DateTime.Now);
+
+
+                var request = new ScrubIsciRequest
+                {
+                    Isci = "AAAAAAAA"
+                };
+               
+                _PostLogService.ScrubUnlinkedPostLogDetailsByIsci(request.Isci, DateTime.Now, "test-user");
+
+                var postLogFile = _PostLogRepository.GetPostLogFile(1, true);
+
+                VerifyPostLog(postLogFile);
+            }
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("Impressions")]
         public void PostLogService_MapIsci()
         {
             using (new TransactionScopeWrapper())
