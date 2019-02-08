@@ -13,44 +13,54 @@ import {
 } from "react-bootstrap";
 import Select from "react-select";
 
-import { toggleModal } from "Ducks/app";
+import { toggleModal, clearFile } from "Ducks/app";
 import {
-  updateEquivalized,
-  updatePostingBook,
-  updatePlaybackType,
-  updateDemos,
-  savePostPrePostingFileEdit
-} from "Ducks/postPrePosting";
+  updateUploadEquivalized,
+  updateUploadPostingBook,
+  updateUploadPlaybackType,
+  updateUploadDemos,
+  uploadPostPrePostingFile,
+  clearFileUploadForm
+} from "PostPrePosting/redux/actions";
 
 const mapStateToProps = ({
   app: {
-    modals: { postFileEditModal: modal }
+    employee,
+    modals: { postFileUploadModal: modal },
+    file
   },
-  postPrePosting: { initialdata: formOptions, fileEditForm: fileEditFormValues }
+  postPrePosting: {
+    initialdata: formOptions,
+    fileUploadForm: fileUploadFormValues
+  }
 }) => ({
+  employee,
   modal,
+  file,
   formOptions,
-  fileEditFormValues
+  fileUploadFormValues
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       toggleModal,
-      updateEquivalized,
-      updatePostingBook,
-      updatePlaybackType,
-      updateDemos,
-      savePostPrePostingFileEdit
+      clearFile,
+      clearFileUploadForm,
+      updateUploadEquivalized,
+      updateUploadPostingBook,
+      updateUploadPlaybackType,
+      updateUploadDemos,
+      uploadPostPrePostingFile
     },
     dispatch
   );
 
-export class PostPrePostingFileEditModal extends Component {
+export class PostPrePostingFileUploadModal extends Component {
   constructor(props) {
     super(props);
     this.close = this.close.bind(this);
-    this.save = this.save.bind(this);
+    this.upload = this.upload.bind(this);
     this.onChangeEquivalized = this.onChangeEquivalized.bind(this);
     this.onChangePostingBook = this.onChangePostingBook.bind(this);
     this.onChangePlaybackType = this.onChangePlaybackType.bind(this);
@@ -68,62 +78,66 @@ export class PostPrePostingFileEditModal extends Component {
   close() {
     this.clearValidationStates();
     this.props.toggleModal({
-      modal: "postFileEditModal",
+      modal: "postFileUploadModal",
       active: false,
       properties: this.props.modal.properties
     });
+    this.props.clearFile();
+    this.props.clearFileUploadForm();
   }
 
-  save() {
+  upload() {
+    // todo: validation with indicators
+    // todo MERGE with postFile data
     if (this.checkValid()) {
-      const {
-        Id,
-        Equivalized,
-        PostingBookId,
-        PlaybackType,
-        Demos
-      } = this.props.fileEditFormValues;
-      const ret = {
-        FileId: Id,
-        Audiences: Demos,
-        Equivalized,
-        PostingBookId,
-        PlaybackType
+      const postFile = {
+        UserName: this.props.employee.Username,
+        FileName: this.props.file.name,
+        RawData: this.props.file.base64,
+        BvsStream: null
       };
-      this.props.savePostPrePostingFileEdit(ret);
+
+      const ret = {
+        Equivalized: this.props.fileUploadFormValues.Equivalized,
+        PostingBookId: this.props.fileUploadFormValues.PostingBookId,
+        PlaybackType: this.props.fileUploadFormValues.PlaybackType,
+        Audiences: this.props.fileUploadFormValues.Demos,
+        ...postFile
+      };
+      this.props.uploadPostPrePostingFile(ret);
     }
   }
 
   onChangeEquivalized() {
-    // e.target.checked not reliable
-    this.props.updateEquivalized(!this.props.fileEditFormValues.Equivalized);
+    this.props.updateUploadEquivalized(
+      !this.props.fileUploadFormValues.Equivalized
+    );
   }
 
   onChangePostingBook(value) {
-    // can be empty value
     const val = value ? value.Id : null;
-    this.props.updatePostingBook(val); // actioncreator
+    this.props.updateUploadPostingBook(val); // actioncreator
     this.setValidationState("postingBookInvalid", val ? null : "error");
   }
 
   onChangePlaybackType(value) {
     const val = value ? value.Id : null;
-    this.props.updatePlaybackType(val); // actioncreator
+    this.props.updateUploadPlaybackType(val); // actioncreator
     this.setValidationState("playbackTypeInvalid", val ? null : "error");
   }
 
   onChangeDemos(value) {
     const convert = value.map(item => item.Id);
-    this.props.updateDemos(convert); // actioncreator
+    this.props.updateUploadDemos(convert); // actioncreator
     this.setValidationState("demosInvalid", value.length ? null : "error");
   }
 
   checkValid() {
-    const pbookValid = this.props.fileEditFormValues.PostingBookId != null;
-    const ptypeValid = this.props.fileEditFormValues.PlaybackType != null;
+    const pbookValid = this.props.fileUploadFormValues.PostingBookId != null;
+    const ptypeValid = this.props.fileUploadFormValues.PlaybackType != null;
     const pdemoValid =
-      this.props.fileEditFormValues.Demos &&
-      this.props.fileEditFormValues.Demos.length > 0;
+      this.props.fileUploadFormValues.Demos &&
+      this.props.fileUploadFormValues.Demos.length > 0;
     if (pbookValid && ptypeValid && pdemoValid) {
       this.clearValidationStates();
       return true;
@@ -131,6 +145,7 @@ export class PostPrePostingFileEditModal extends Component {
     this.setValidationState("postingBookInvalid", pbookValid ? null : "error");
     this.setValidationState("playbackTypeInvalid", ptypeValid ? null : "error");
     this.setValidationState("demosInvalid", pdemoValid ? null : "error");
+    this.forceUpdate();
     return false;
   }
 
@@ -147,25 +162,11 @@ export class PostPrePostingFileEditModal extends Component {
   }
 
   render() {
-    const {
-      postingBookInvalid,
-      playbackTypeInvalid,
-      demosInvalid
-    } = this.state;
-    const { fileEditFormValues, modal, formOptions } = this.props;
-    const {
-      FileName,
-      Equivalized,
-      PostingBookId,
-      PlaybackType
-    } = fileEditFormValues;
-    const { PostingBooks, PlaybackTypes } = formOptions;
-
     return (
-      <Modal show={modal.active} onHide={this.close}>
+      <Modal show={this.props.modal.active} onHide={this.close}>
         <Modal.Header>
           <Modal.Title style={{ display: "inline-block" }}>
-            Post File Edit
+            Post File Upload
           </Modal.Title>
           <Button
             className="close"
@@ -177,11 +178,11 @@ export class PostPrePostingFileEditModal extends Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <p>{FileName}</p>
+          <p>{this.props.file.name}</p>
           <form>
             <FormGroup controlId="equivalized">
               <Checkbox
-                checked={Equivalized}
+                checked={this.props.fileUploadFormValues.Equivalized}
                 onChange={this.onChangeEquivalized}
               >
                 <strong>Equivalized</strong>
@@ -189,21 +190,21 @@ export class PostPrePostingFileEditModal extends Component {
             </FormGroup>
             <FormGroup
               controlId="postingBook"
-              validationState={postingBookInvalid}
+              validationState={this.state.postingBookInvalid}
             >
               <ControlLabel>
                 <strong>Posting Book</strong>
               </ControlLabel>
               <Select
                 name="postingBook"
-                value={PostingBookId}
+                value={this.props.fileUploadFormValues.PostingBookId}
                 placeholder="Choose Posting..."
-                options={PostingBooks}
+                options={this.props.formOptions.PostingBooks}
                 labelKey="Display"
                 valueKey="Id"
                 onChange={this.onChangePostingBook}
               />
-              {postingBookInvalid != null && (
+              {this.state.postingBookInvalid != null && (
                 <HelpBlock>
                   <p className="text-danger">Required</p>
                 </HelpBlock>
@@ -211,16 +212,16 @@ export class PostPrePostingFileEditModal extends Component {
             </FormGroup>
             <FormGroup
               controlId="playbackType"
-              validationState={playbackTypeInvalid}
+              validationState={this.state.playbackTypeInvalid}
             >
               <ControlLabel>
                 <strong>Playback Type</strong>
               </ControlLabel>
               <Select
                 name="playbackType"
-                value={PlaybackType}
+                value={this.props.fileUploadFormValues.PlaybackType}
                 placeholder="Choose Playback Type..."
-                options={PlaybackTypes}
+                options={this.props.formOptions.PlaybackTypes}
                 labelKey="Display"
                 valueKey="Id"
                 onChange={this.onChangePlaybackType}
@@ -231,23 +232,25 @@ export class PostPrePostingFileEditModal extends Component {
                 </HelpBlock>
               )}
             </FormGroup>
-            <FormGroup controlId="demos" validationState={demosInvalid}>
+            <FormGroup
+              controlId="demos"
+              validationState={this.state.demosInvalid}
+            >
               <ControlLabel>
                 <strong>Demos</strong>
               </ControlLabel>
               <Select
                 name="demos"
-                value={fileEditFormValues.Demos}
+                value={this.props.fileUploadFormValues.Demos}
                 placeholder="Choose Demo..."
                 multi
-                options={formOptions.Demos}
+                options={this.props.formOptions.Demos}
                 labelKey="Display"
                 valueKey="Id"
                 closeOnSelect
-                // simpleValue
                 onChange={this.onChangeDemos}
               />
-              {demosInvalid != null && (
+              {this.state.demosInvalid != null && (
                 <HelpBlock>
                   <p className="text-danger">Required</p>
                 </HelpBlock>
@@ -256,8 +259,8 @@ export class PostPrePostingFileEditModal extends Component {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.save} bsStyle="success">
-            Save
+          <Button onClick={this.upload} bsStyle="success">
+            Upload
           </Button>
           <Button onClick={this.close}>Cancel</Button>
         </Modal.Footer>
@@ -266,34 +269,42 @@ export class PostPrePostingFileEditModal extends Component {
   }
 }
 
-PostPrePostingFileEditModal.defaultProps = {
+PostPrePostingFileUploadModal.defaultProps = {
   modal: {
     active: false, // modal closed by default
     properties: {}
   },
-  fileEditFormValues: {
-    Id: null,
+  // TBD use basis with file request data
+  fileUploadFormValues: {
+    // Id: null,
     FileName: "File",
     Equivalized: true,
     PostingBookId: null,
     PlaybackType: null,
     Demos: null
+  },
+  file: {
+    name: "No File"
   }
 };
 
-PostPrePostingFileEditModal.propTypes = {
+PostPrePostingFileUploadModal.propTypes = {
+  file: PropTypes.object.isRequired,
   formOptions: PropTypes.object.isRequired,
-  fileEditFormValues: PropTypes.object.isRequired,
+  fileUploadFormValues: PropTypes.object.isRequired,
+  employee: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  savePostPrePostingFileEdit: PropTypes.func.isRequired,
-  updateEquivalized: PropTypes.func.isRequired,
-  updatePostingBook: PropTypes.func.isRequired,
-  updatePlaybackType: PropTypes.func.isRequired,
-  updateDemos: PropTypes.func.isRequired
+  clearFile: PropTypes.func.isRequired,
+  clearFileUploadForm: PropTypes.func.isRequired,
+  uploadPostPrePostingFile: PropTypes.func.isRequired,
+  updateUploadEquivalized: PropTypes.func.isRequired,
+  updateUploadPostingBook: PropTypes.func.isRequired,
+  updateUploadPlaybackType: PropTypes.func.isRequired,
+  updateUploadDemos: PropTypes.func.isRequired
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostPrePostingFileEditModal);
+)(PostPrePostingFileUploadModal);

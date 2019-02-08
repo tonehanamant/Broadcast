@@ -17,8 +17,8 @@ import * as appActions from "Ducks/app/actionTypes";
 import * as planningActions from "Ducks/planning/actionTypes";
 import { hasSpotsAllocate, copyToBuy } from "Ducks/planning";
 
-import sagaWrapper, { errorBuilder } from "../wrapper";
-import api from "../api";
+import sagaWrapper, { errorBuilder } from "Utils/saga-wrapper";
+import api from "API";
 
 const ACTIONS = { ...appActions, ...planningActions };
 

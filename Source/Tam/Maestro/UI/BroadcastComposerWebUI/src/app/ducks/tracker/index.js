@@ -1,6 +1,6 @@
 // Actions
+import { getDay, getDateInFormat } from "Utils/dateFormatter.js";
 import * as ACTIONS from "./actionTypes.js";
-import { getDay, getDateInFormat } from "../../utils/dateFormatter";
 
 const initialState = {
   loadingValidIscis: false,

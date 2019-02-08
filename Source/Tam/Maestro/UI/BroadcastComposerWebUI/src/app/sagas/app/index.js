@@ -2,7 +2,7 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 
 import * as ACTIONS from "Ducks/app/actionTypes";
-import api from "../api";
+import api from "API";
 
 /* ////////////////////////////////// */
 /* REQUEST ENVIRONMENT */

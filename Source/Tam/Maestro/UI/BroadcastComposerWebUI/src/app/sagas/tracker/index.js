@@ -2,6 +2,7 @@ import { takeEvery, put, call, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import _ from "lodash";
+import sagaWrapper from "Utils/saga-wrapper";
 import * as appActions from "Ducks/app/actionTypes";
 import * as trackerActions from "Ducks/tracker/actionTypes";
 import {
@@ -16,8 +17,7 @@ import {
   selectActiveFilterKey
 } from "Ducks/tracker/selectors";
 import { getTracker, saveActiveScrubData } from "Ducks/tracker";
-import api from "../api";
-import sagaWrapper from "../wrapper";
+import api from "API";
 
 const ACTIONS = { ...appActions, ...trackerActions };
 

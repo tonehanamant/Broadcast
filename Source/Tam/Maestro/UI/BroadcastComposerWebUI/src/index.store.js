@@ -1,13 +1,10 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
 import createMiddlewareSaga from "redux-saga";
-import { Reducers as gridReducers } from "react-redux-grid";
+import { rootSaga, rootReducer } from "AppConfigs";
 
 // Reducers
-// import * as reducers from "./index.ducks.js";
-// import sagas from "./index.sagas.js";
-import * as reducers from "./app/ducks/index.js";
-import sagas from "./app/sagas/index.js";
+import oldSagas from "./app/sagas/index.js";
 
 // broadcast specific:
 import { saveLocalStorageState } from "./index.store.localstorage.js";
@@ -21,10 +18,6 @@ const createStoreWithMiddleware =
   process.env.NODE_ENV === "production"
     ? applyMiddleware(mwSaga)
     : applyMiddleware(mwSaga, mwLogger);
-const rootReducer = combineReducers({
-  ...gridReducers,
-  ...reducers
-});
 
 export default function configureStore(initialState) {
   const configuredStore = createStore(
@@ -33,11 +26,11 @@ export default function configureStore(initialState) {
     createStoreWithMiddleware
   );
 
-  mwSaga.run(sagas);
+  mwSaga.run(oldSagas);
+  mwSaga.run(rootSaga);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    // module.hot.accept("./index.ducks.js", () => {
     module.hot.accept("./app/ducks/index.js", () => {
       const nextReducer = rootReducer;
       configuredStore.replaceReducer(nextReducer);

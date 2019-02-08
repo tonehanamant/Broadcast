@@ -1,4 +1,4 @@
-import { createAction } from "../actionCreator";
+import { createAction } from "Utils/action-creator";
 
 export const REQUEST_PROPOSAL_INITIALDATA =
   "planning/REQUEST_PROPOSAL_INITIALDATA";

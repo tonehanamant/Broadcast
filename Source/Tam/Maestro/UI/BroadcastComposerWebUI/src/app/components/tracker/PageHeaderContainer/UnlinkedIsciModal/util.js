@@ -2,10 +2,7 @@
 import React from "react";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import CustomPager from "Patterns/CustomPager";
-import {
-  getDateInFormat,
-  getSecondsToTimeString
-} from "../../../../utils/dateFormatter";
+import { getDateInFormat, getSecondsToTimeString } from "Utils/dateFormatter";
 
 const generateUnlinkedMenuitems = ({
   archiveIscis,
