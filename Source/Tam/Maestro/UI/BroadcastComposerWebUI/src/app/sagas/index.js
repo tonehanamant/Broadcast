@@ -1,6 +1,5 @@
 import * as appSaga from "./app";
 import * as postSaga from "./post";
-import * as postPrePostingSaga from "./postPrePosting";
 import * as planningSaga from "./planning";
 import * as trackerSaga from "./tracker";
 
@@ -36,18 +35,6 @@ export default function* rootSaga() {
     postSaga.watchRequestClearFilteredScrubbingData(),
     postSaga.watchRequestProcessNtiFile(),
     postSaga.watchProcessNtiFileSuccess(),
-
-    postPrePostingSaga.watchRequestPostPrePostingInitialData(),
-    postPrePostingSaga.watchRequestPostPrePosting(),
-    postPrePostingSaga.watchRequestPostPrePostingFiltered(),
-    postPrePostingSaga.watchDeletePostPrePostingById(),
-    postPrePostingSaga.watchDeletePostPrePostingByIdSuccess(),
-    postPrePostingSaga.watchRequestPostPrePostingFileEdit(),
-    postPrePostingSaga.watchPostPrePostingFileEditSuccess(),
-    postPrePostingSaga.watchPostPrePostingFileSave(),
-    postPrePostingSaga.watchPostPrePostingFileSaveSuccess(),
-    postPrePostingSaga.watchUploadPostPrePostingFile(),
-    postPrePostingSaga.watchUploadPostPrePostingFileSuccess(),
 
     planningSaga.watchRequestProposalInitialData(),
     planningSaga.watchRequestProposals(),

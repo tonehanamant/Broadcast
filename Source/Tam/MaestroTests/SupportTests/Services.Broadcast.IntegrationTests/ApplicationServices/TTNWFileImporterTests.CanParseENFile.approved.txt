@@ -127,7 +127,6 @@
               "LegacyCallLetters": "WCBS",
               "ManifestMaxEndDate": null,
               "MarketCode": 101,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
             }
@@ -234,7 +233,6 @@
               "LegacyCallLetters": "WNYW",
               "ManifestMaxEndDate": null,
               "MarketCode": 101,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New York",
               "RateDataThrough": null
             }
@@ -341,7 +339,6 @@
               "LegacyCallLetters": "WUSA",
               "ManifestMaxEndDate": null,
               "MarketCode": 111,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
             }
@@ -448,7 +445,6 @@
               "LegacyCallLetters": "WUSA",
               "ManifestMaxEndDate": null,
               "MarketCode": 111,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Washington, DC (Hagrstwn)",
               "RateDataThrough": null
             }
@@ -555,7 +551,6 @@
               "LegacyCallLetters": "WBZ",
               "ManifestMaxEndDate": null,
               "MarketCode": 106,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
             }
@@ -662,7 +657,6 @@
               "LegacyCallLetters": "WCVB",
               "ManifestMaxEndDate": null,
               "MarketCode": 106,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Boston (Manchester)",
               "RateDataThrough": null
             }
@@ -769,7 +763,6 @@
               "LegacyCallLetters": "WGCL",
               "ManifestMaxEndDate": null,
               "MarketCode": 124,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
             }
@@ -876,7 +869,6 @@
               "LegacyCallLetters": "WGCL",
               "ManifestMaxEndDate": null,
               "MarketCode": 124,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
             }
@@ -983,7 +975,6 @@
               "LegacyCallLetters": "WXIA",
               "ManifestMaxEndDate": null,
               "MarketCode": 124,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
             }
@@ -1090,7 +1081,6 @@
               "LegacyCallLetters": "WXIA",
               "ManifestMaxEndDate": null,
               "MarketCode": 124,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Atlanta",
               "RateDataThrough": null
             }
@@ -1197,7 +1187,6 @@
               "LegacyCallLetters": "WDIV",
               "ManifestMaxEndDate": null,
               "MarketCode": 105,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
             }
@@ -1304,7 +1293,6 @@
               "LegacyCallLetters": "WJBK",
               "ManifestMaxEndDate": null,
               "MarketCode": 105,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Detroit",
               "RateDataThrough": null
             }
@@ -1411,7 +1399,6 @@
               "LegacyCallLetters": "KCPQ",
               "ManifestMaxEndDate": null,
               "MarketCode": 419,
-              "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
             }
@@ -1518,7 +1505,6 @@
               "LegacyCallLetters": "KCPQ",
               "ManifestMaxEndDate": null,
               "MarketCode": 419,
-              "ModifiedDate": "2017-08-17T18:01:02.687",
               "OriginMarket": "Seattle-Tacoma",
               "RateDataThrough": null
             }
@@ -1625,7 +1611,6 @@
               "LegacyCallLetters": "WFOR",
               "ManifestMaxEndDate": null,
               "MarketCode": 128,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
             }
@@ -1732,7 +1717,6 @@
               "LegacyCallLetters": "WSVN",
               "ManifestMaxEndDate": null,
               "MarketCode": 128,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
             }
@@ -1839,7 +1823,6 @@
               "LegacyCallLetters": "WSVN",
               "ManifestMaxEndDate": null,
               "MarketCode": 128,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
             }
@@ -1946,7 +1929,6 @@
               "LegacyCallLetters": "WTVJ",
               "ManifestMaxEndDate": null,
               "MarketCode": 128,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Miami-Ft. Lauderdale",
               "RateDataThrough": null
             }
@@ -2053,7 +2035,6 @@
               "LegacyCallLetters": "WESH",
               "ManifestMaxEndDate": null,
               "MarketCode": 134,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
             }
@@ -2160,7 +2141,6 @@
               "LegacyCallLetters": "WESH",
               "ManifestMaxEndDate": null,
               "MarketCode": 134,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Orlando-Daytona Bch-Melbrn",
               "RateDataThrough": null
             }
@@ -2267,7 +2247,6 @@
               "LegacyCallLetters": "WCCB",
               "ManifestMaxEndDate": null,
               "MarketCode": 117,
-              "ModifiedDate": "2017-08-17T17:59:31.417",
               "OriginMarket": "Charlotte",
               "RateDataThrough": null
             }
@@ -2374,7 +2353,6 @@
               "LegacyCallLetters": "KFMB",
               "ManifestMaxEndDate": null,
               "MarketCode": 425,
-              "ModifiedDate": "2017-08-17T18:02:11.387",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
             }
@@ -2481,7 +2459,6 @@
               "LegacyCallLetters": "KUSI",
               "ManifestMaxEndDate": null,
               "MarketCode": 425,
-              "ModifiedDate": "2017-08-17T17:59:38.447",
               "OriginMarket": "San Diego",
               "RateDataThrough": null
             }
@@ -2588,7 +2565,6 @@
               "LegacyCallLetters": "WTNH",
               "ManifestMaxEndDate": null,
               "MarketCode": 133,
-              "ModifiedDate": "2017-08-17T17:59:39.287",
               "OriginMarket": "Hartford & New Haven",
               "RateDataThrough": null
             }
@@ -2695,7 +2671,6 @@
               "LegacyCallLetters": "KMBC",
               "ManifestMaxEndDate": null,
               "MarketCode": 216,
-              "ModifiedDate": "2017-08-17T18:00:30.21",
               "OriginMarket": "Kansas City",
               "RateDataThrough": null
             }
@@ -2802,7 +2777,6 @@
               "LegacyCallLetters": "WLOS",
               "ManifestMaxEndDate": null,
               "MarketCode": 167,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Greenvll-Spart-Ashevll-And",
               "RateDataThrough": null
             }
@@ -2909,7 +2883,6 @@
               "LegacyCallLetters": "KOKH",
               "ManifestMaxEndDate": null,
               "MarketCode": 250,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Oklahoma City",
               "RateDataThrough": null
             }
@@ -3016,7 +2989,6 @@
               "LegacyCallLetters": "WHP",
               "ManifestMaxEndDate": null,
               "MarketCode": 166,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Harrisburg-Lncstr-Leb-York",
               "RateDataThrough": null
             }
@@ -3165,7 +3137,6 @@
               "LegacyCallLetters": "WOOD",
               "ManifestMaxEndDate": null,
               "MarketCode": 163,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
             }
@@ -3272,7 +3243,6 @@
               "LegacyCallLetters": "WZZM",
               "ManifestMaxEndDate": null,
               "MarketCode": 163,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
               "RateDataThrough": null
             }
@@ -3379,7 +3349,6 @@
               "LegacyCallLetters": "WWL",
               "ManifestMaxEndDate": null,
               "MarketCode": 222,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "New Orleans",
               "RateDataThrough": null
             }
@@ -3486,7 +3455,6 @@
               "LegacyCallLetters": "WLNE",
               "ManifestMaxEndDate": null,
               "MarketCode": 121,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
             }
@@ -3593,7 +3561,6 @@
               "LegacyCallLetters": "WPRI",
               "ManifestMaxEndDate": null,
               "MarketCode": 121,
-              "ModifiedDate": "2017-08-17T17:59:30.487",
               "OriginMarket": "Providence-New Bedford",
               "RateDataThrough": null
             }
@@ -3700,7 +3667,6 @@
               "LegacyCallLetters": "WIVB",
               "ManifestMaxEndDate": null,
               "MarketCode": 114,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Buffalo",
               "RateDataThrough": null
             }
@@ -3807,7 +3773,6 @@
               "LegacyCallLetters": "WBBH",
               "ManifestMaxEndDate": null,
               "MarketCode": 171,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
             }
@@ -3914,7 +3879,6 @@
               "LegacyCallLetters": "WZVN",
               "ManifestMaxEndDate": null,
               "MarketCode": 171,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Myers-Naples",
               "RateDataThrough": null
             }
@@ -4021,7 +3985,6 @@
               "LegacyCallLetters": "WKEF",
               "ManifestMaxEndDate": null,
               "MarketCode": 142,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Dayton",
               "RateDataThrough": null
             }
@@ -4128,7 +4091,6 @@
               "LegacyCallLetters": "KKTV",
               "ManifestMaxEndDate": null,
               "MarketCode": 352,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
             }
@@ -4235,7 +4197,6 @@
               "LegacyCallLetters": "KKTV",
               "ManifestMaxEndDate": null,
               "MarketCode": 352,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Colorado Springs-Pueblo",
               "RateDataThrough": null
             }
@@ -4342,7 +4303,6 @@
               "LegacyCallLetters": "WTVC",
               "ManifestMaxEndDate": null,
               "MarketCode": 175,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Chattanooga",
               "RateDataThrough": null
             }
@@ -4546,7 +4506,6 @@
               "LegacyCallLetters": "WANE",
               "ManifestMaxEndDate": null,
               "MarketCode": 109,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
             }
@@ -4653,7 +4612,6 @@
               "LegacyCallLetters": "WANE",
               "ManifestMaxEndDate": null,
               "MarketCode": 109,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Ft. Wayne",
               "RateDataThrough": null
             }
@@ -4760,7 +4718,6 @@
               "LegacyCallLetters": "WILX",
               "ManifestMaxEndDate": null,
               "MarketCode": 151,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
             }
@@ -4867,7 +4824,6 @@
               "LegacyCallLetters": "WILX",
               "ManifestMaxEndDate": null,
               "MarketCode": 151,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
             }
@@ -4974,7 +4930,6 @@
               "LegacyCallLetters": "WILX",
               "ManifestMaxEndDate": null,
               "MarketCode": 151,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Lansing",
               "RateDataThrough": null
             }
@@ -5081,7 +5036,6 @@
               "LegacyCallLetters": "KSBW",
               "ManifestMaxEndDate": null,
               "MarketCode": 428,
-              "ModifiedDate": "2016-11-16T05:55:10.86",
               "OriginMarket": "Monterey-Salinas",
               "RateDataThrough": null
             }
@@ -5188,7 +5142,6 @@
               "LegacyCallLetters": "WVII",
               "ManifestMaxEndDate": null,
               "MarketCode": 137,
-              "ModifiedDate": "2017-08-17T18:00:22.617",
               "OriginMarket": "Bangor",
               "RateDataThrough": null
             }

@@ -6,13 +6,13 @@ import * as appActions from "Ducks/app/actionTypes";
 import * as postActions from "Ducks/post/actionTypes";
 import { setOverlayLoading, toggleModal } from "Ducks/app";
 import { selectModal } from "Ducks/app/selectors";
+import sagaWrapper from "Utils/saga-wrapper";
 import {
   selectActiveScrubs,
   selectActiveFilterKey
 } from "Ducks/post/selectors";
 import { getPost, saveActiveScrubData } from "Ducks/post";
-import api from "../api";
-import sagaWrapper from "../wrapper";
+import api from "API";
 
 const ACTIONS = { ...appActions, ...postActions };
 

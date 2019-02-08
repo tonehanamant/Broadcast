@@ -1,4 +1,4 @@
-import { createAction } from "../actionCreator";
+import { createAction } from "Utils/action-creator";
 
 export const TRACKER_FILE_UPLOAD = createAction("tracker/FILE_UPLOAD");
 

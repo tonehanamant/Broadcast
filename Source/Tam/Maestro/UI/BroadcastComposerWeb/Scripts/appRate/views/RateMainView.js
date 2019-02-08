@@ -35,14 +35,19 @@ var RateMainView = BaseView.extend({
 
             //set controler with type, upload manager source type
 
+            //Change to handle temporary Barter - no stations/grid - hide
             var type = e.target.name;
             me.uploadManager.setActiveSourceType(type);
-            //load and reset
-            me.resetStationDataFilterAll();
-            me.clearStationsGridSearch(true);
-            me.StationsTextSearch = null;
-            me.controller.apiLoadStations(false, type);
-
+            if (type === 'Barter') {
+                $('.grid_hider').hide();
+            } else {
+                $('.grid_hider').show();
+                //load and reset
+                me.resetStationDataFilterAll();
+                me.clearStationsGridSearch(true);
+                me.StationsTextSearch = null;
+                me.controller.apiLoadStations(false, type);
+            }
         });
     },
 

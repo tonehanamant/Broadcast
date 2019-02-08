@@ -6,7 +6,7 @@ import CSSModules from "react-css-modules";
 import AppHeader from "Components/header/AppHeader";
 import AppFooter from "Components/footer/AppFooter";
 // import SectionHome from 'Containers/SectionHome';
-import SectionPostPrePosting from "Containers/SectionPostPrePosting";
+import SectionPostPrePosting from "PostPrePosting";
 import SectionPost from "Containers/SectionPost";
 import SectionPlanning from "Containers/SectionPlanning";
 import SectionTracker from "Containers/SectionTracker";

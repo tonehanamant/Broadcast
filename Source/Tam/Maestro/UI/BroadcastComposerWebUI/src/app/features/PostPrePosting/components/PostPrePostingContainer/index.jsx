@@ -5,17 +5,17 @@ import { bindActionCreators } from "redux";
 import CSSModules from "react-css-modules";
 import AppBody from "Components/body/AppBody";
 import PageTitle from "Patterns/PageTitle";
-import PageHeaderContainer from "Components/postPrePosting/PageHeaderContainer";
-import DataGridContainer from "Components/postPrePosting/DataGridContainer";
-import PostPrePostingFileEditModal from "Components/postPrePosting/PostPrePostingFileEditModal";
-import PostPrePostingFileUploadModal from "Components/postPrePosting/PostPrePostingFileUploadModal";
+import PostPrePostingHeader from "PostPrePosting/components/PostPrePostingHeader";
+import PostPrePostingGrid from "PostPrePosting/components/PostPrePostingGrid";
+import PostPrePostingFileEditModal from "PostPrePosting/components/PostPrePostingFileEditModal";
+import PostPrePostingFileUploadModal from "PostPrePosting/components/PostPrePostingFileUploadModal";
 import Dropzone from "Patterns/Dropzone";
 
 import { toggleModal, storeFile } from "Ducks/app";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting
-} from "Ducks/postPrePosting";
+} from "PostPrePosting/redux/actions";
 
 import styles from "./index.style.scss";
 
@@ -27,8 +27,9 @@ export class SectionPost extends Component {
   }
 
   componentWillMount() {
-    this.props.getPostPrePostingInitialData();
-    this.props.getPostPrePosting();
+    const { getPostPrePostingInitialData, getPostPrePosting } = this.props;
+    getPostPrePostingInitialData();
+    getPostPrePosting();
   }
 
   processFiles(file) {
@@ -51,8 +52,8 @@ export class SectionPost extends Component {
         >
           <AppBody>
             <PageTitle title="Post Pre Posting" />
-            <PageHeaderContainer />
-            <DataGridContainer />
+            <PostPrePostingHeader />
+            <PostPrePostingGrid />
             <PostPrePostingFileEditModal />
             <PostPrePostingFileUploadModal />
           </AppBody>
@@ -69,8 +70,6 @@ SectionPost.propTypes = {
   storeFile: PropTypes.func.isRequired
 };
 
-const mapStateToProps = () => ({});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -83,6 +82,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(CSSModules(SectionPost, styles));

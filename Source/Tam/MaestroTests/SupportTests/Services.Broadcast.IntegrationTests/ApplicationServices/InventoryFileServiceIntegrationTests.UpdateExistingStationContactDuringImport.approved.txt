@@ -1,6 +1,26 @@
 ﻿[
   {
     "Company": "WVTM",
+    "Email": null,
+    "Fax": null,
+    "InventorySourceString": null,
+    "Name": "Darah Wright ",
+    "Phone": null,
+    "StationCode": 5044,
+    "Type": "Station"
+  },
+  {
+    "Company": "WVTM",
+    "Email": null,
+    "Fax": null,
+    "InventorySourceString": null,
+    "Name": "Darah Wright",
+    "Phone": null,
+    "StationCode": 5044,
+    "Type": "Station"
+  },
+  {
+    "Company": "WVTM",
     "Email": "joshj@cadent.test",
     "Fax": "(121)212-1212",
     "InventorySourceString": null,

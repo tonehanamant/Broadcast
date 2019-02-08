@@ -1,4 +1,4 @@
-import { createAction } from "../actionCreator";
+import { createAction } from "Utils/action-creator";
 
 export const ARCHIVE_UNLIKED_ISCI = createAction("post/ARCHIVE_UNLIKED_ISCI");
 export const UNLINKED_ISCIS_DATA = createAction("post/UNLINKED_ISCIS_DATA");

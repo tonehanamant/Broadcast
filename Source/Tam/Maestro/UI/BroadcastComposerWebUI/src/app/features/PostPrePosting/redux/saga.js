@@ -3,7 +3,6 @@ import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 
 import * as appActions from "Ducks/app/actionTypes";
-import * as postPrePostingActions from "Ducks/postPrePosting/actionTypes";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -12,37 +11,30 @@ import {
   deployError,
   clearFile
 } from "Ducks/app/index";
+
+import sagaWrapper from "Utils/saga-wrapper";
+import api from "API";
 import {
   getPostPrePosting,
   clearFileUploadForm,
   receiveFilteredPostPrePosting
-} from "Ducks/postPrePosting/index";
-
-import sagaWrapper from "../wrapper";
-import api from "../api";
+} from "./actions";
+import * as postPrePostingActions from "./types";
 
 const ACTIONS = { ...appActions, ...postPrePostingActions };
 
 const assignDisplay = data =>
   data.map(item => {
     const post = item;
-    // DemoLookups
     post.DisplayDemos = post.DemoLookups.map((demo, index, arr) => {
-      if (index === arr.length - 1) {
-        return `${demo.Display}`;
-      }
-      return `${demo.Display}, `;
+      const separator = index === arr.length - 1 ? "" : ", ";
+      return `${demo.Display}${separator}`;
     });
-    // UploadDate
     post.DisplayUploadDate = moment(post.UploadDate).format("M/D/YYYY");
-    // ModifiedDate
     post.DisplayModifiedDate = moment(post.ModifiedDate).format("M/D/YYYY");
     return post;
   });
 
-/* ////////////////////////////////// */
-/* REQUEST POST PRE POSTING INITIAL DATA */
-/* ////////////////////////////////// */
 export function* requestPostPrePostingInitialData() {
   const { getInitialData } = api.postPrePosting;
   try {
@@ -53,9 +45,6 @@ export function* requestPostPrePostingInitialData() {
   }
 }
 
-/* ////////////////////////////////// */
-/* REQUEST POST PRE POSTING */
-/* ////////////////////////////////// */
 export function* requestPostPrePosting() {
   const { getPosts } = api.postPrePosting;
   try {
@@ -68,21 +57,21 @@ export function* requestPostPrePosting() {
   }
 }
 
-/* ////////////////////////////////// */
-/* REQUEST POST PRE POSTING FILTERED */
-/* ////////////////////////////////// */
-export function* requestPostPrePostingFiltered({ payload: query }) {
-  const postUnfiltered = yield select(
-    state => state.postPrePosting.postUnfiltered
-  );
+const postFiltered = (postUnfiltered, query) => {
   const searcher = new FuzzySearch(
     postUnfiltered,
     ["FileName", "DisplayDemos", "DisplayUploadDate", "DisplayModifiedDate"],
     { caseSensitive: false }
   );
-  const postFiltered = () => searcher.search(query);
+  return searcher.search(query);
+};
+
+export function* requestPostPrePostingFiltered({ payload: query }) {
+  const postUnfiltered = yield select(
+    state => state.postPrePosting.postUnfiltered
+  );
   try {
-    const filtered = yield postFiltered();
+    const filtered = yield postFiltered(postUnfiltered, query);
     yield put(receiveFilteredPostPrePosting(filtered));
   } catch (e) {
     if (e.message) {
@@ -90,10 +79,6 @@ export function* requestPostPrePostingFiltered({ payload: query }) {
     }
   }
 }
-
-/* ////////////////////////////////// */
-/* DELETE POST PRE POSTING BY ID */
-/* ////////////////////////////////// */
 
 export function* deletePostPrePostingById(id) {
   const { deletePost } = api.postPrePosting;
@@ -111,9 +96,6 @@ export function* deletePostPrePostingByIdSuccess({ payload }) {
   yield put(getPostPrePosting());
 }
 
-/* ////////////////////////////////// */
-/* REQUEST POST FILE EDIT  */
-/* ////////////////////////////////// */
 export function* postPrePostingFileEdit(id) {
   const { getPost } = api.postPrePosting;
   try {
@@ -128,9 +110,6 @@ export function* postPrePostingFileEditSuccess() {
   yield put(toggleModal({ modal: "postFileEditModal", active: true }));
 }
 
-/* ////////////////////////////////// */
-/* SAVE POST PRE POSTING FILE EDIT */
-/* ////////////////////////////////// */
 export function* postPrePostingFileSave(params) {
   const { savePost } = api.postPrePosting;
   try {
@@ -147,9 +126,6 @@ export function* postPrePostingFileSaveSuccess() {
   yield put(getPostPrePosting());
 }
 
-/* ////////////////////////////////// */
-/* UPLOAD POST PRE POSTING FILE */
-/* ////////////////////////////////// */
 export function* uploadPostPrePostingFile(params) {
   const { uploadPost } = api.postPrePosting;
   try {
@@ -171,7 +147,7 @@ export function* uploadPostPrePostingFileSuccess() {
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
-export function* watchRequestPostPrePostingInitialData() {
+function* watchRequestPostPrePostingInitialData() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_INITIALDATA.request,
     sagaWrapper(
@@ -181,74 +157,86 @@ export function* watchRequestPostPrePostingInitialData() {
   );
 }
 
-export function* watchRequestPostPrePosting() {
+function* watchRequestPostPrePosting() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING.request,
     sagaWrapper(requestPostPrePosting, ACTIONS.POST_PRE_POSTING)
   );
 }
 
-export function* watchRequestPostPrePostingFiltered() {
+function* watchRequestPostPrePostingFiltered() {
   yield takeEvery(
     ACTIONS.FILTERED_POST_PRE_POSTING.request,
     requestPostPrePostingFiltered
   );
 }
 
-export function* watchDeletePostPrePostingById() {
+function* watchDeletePostPrePostingById() {
   yield takeEvery(
     ACTIONS.DELETE_POST_PRE_POSTING.request,
     sagaWrapper(deletePostPrePostingById, ACTIONS.DELETE_POST_PRE_POSTING)
   );
 }
 
-export function* watchDeletePostPrePostingByIdSuccess() {
+function* watchDeletePostPrePostingByIdSuccess() {
   yield takeEvery(
     ACTIONS.DELETE_POST_PRE_POSTING.success,
     deletePostPrePostingByIdSuccess
   );
 }
 
-export function* watchRequestPostPrePostingFileEdit() {
+function* watchRequestPostPrePostingFileEdit() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_FILE_EDIT.request,
     sagaWrapper(postPrePostingFileEdit, ACTIONS.POST_PRE_POSTING_FILE_EDIT)
   );
 }
 
-export function* watchPostPrePostingFileEditSuccess() {
+function* watchPostPrePostingFileEditSuccess() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_FILE_EDIT.success,
     postPrePostingFileEditSuccess
   );
 }
 
-export function* watchPostPrePostingFileSave() {
+function* watchPostPrePostingFileSave() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_FILE_SAVE.request,
     sagaWrapper(postPrePostingFileSave, ACTIONS.POST_PRE_POSTING_FILE_SAVE)
   );
 }
 
-export function* watchPostPrePostingFileSaveSuccess() {
+function* watchPostPrePostingFileSaveSuccess() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_FILE_SAVE.success,
     postPrePostingFileSaveSuccess
   );
 }
 
-export function* watchUploadPostPrePostingFile() {
+function* watchUploadPostPrePostingFile() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_FILE_UPLOAD.request,
     sagaWrapper(uploadPostPrePostingFile, ACTIONS.POST_PRE_POSTING_FILE_UPLOAD)
   );
 }
 
-export function* watchUploadPostPrePostingFileSuccess() {
+function* watchUploadPostPrePostingFileSuccess() {
   yield takeEvery(
     ACTIONS.POST_PRE_POSTING_FILE_UPLOAD.success,
     uploadPostPrePostingFileSuccess
   );
 }
 
-// if assign watcher > assign in sagas/index rootSaga also
+export default [
+  watchUploadPostPrePostingFileSuccess,
+  watchUploadPostPrePostingFile,
+  watchPostPrePostingFileSaveSuccess,
+  watchPostPrePostingFileSave,
+  watchPostPrePostingFileEditSuccess,
+  watchRequestPostPrePostingFileEdit,
+  watchDeletePostPrePostingByIdSuccess,
+  watchDeletePostPrePostingById,
+  watchRequestPostPrePostingFiltered,
+  watchRequestPostPrePosting,
+  watchRequestPostPrePostingInitialData
+];
