@@ -1549,6 +1549,7 @@ namespace Services.Broadcast.Repositories
                                                         .proposal_version_details.posting_playback_type,
                                 ProposalVersionDetailWeekStart = i.proposal_version_detail_quarter_weeks.start_date,
                                 ProposalVersionDetailWeekEnd = i.proposal_version_detail_quarter_weeks.end_date,
+                                IsHiatus = i.proposal_version_detail_quarter_weeks.is_hiatus,
                                 Spots = i.proposal_version_detail_quarter_weeks.units,
                                 ProposalVersionDetailDaypartId = i.proposal_version_detail_quarter_weeks
                                                         .proposal_version_detail_quarters
@@ -1592,6 +1593,7 @@ namespace Services.Broadcast.Repositories
                                ProposalVersionDetailPostingPlaybackType = (ProposalEnums.ProposalPlaybackType?)i.detail.posting_playback_type,
                                ProposalVersionDetailWeekStart = i.week.start_date,
                                ProposalVersionDetailWeekEnd = i.week.end_date,
+                               IsHiatus = i.week.is_hiatus,
                                Spots = i.week.units,
                                ProposalVersionDetailDaypartId = i.detail.daypart_id,
                                ProposalVersionDetailQuarterWeekId = i.isci.proposal_version_detail_quarter_week_id,

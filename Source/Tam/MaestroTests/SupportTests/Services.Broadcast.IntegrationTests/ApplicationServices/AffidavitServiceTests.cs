@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Services;
+using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
@@ -1894,6 +1895,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _AffidavitService.SaveAffidavit(request, "test user", postingDate);
 
                 // no scrubs?  Good!
+                VerifyAffidavit(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Scrub_TimeDateMatch_PRI814()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(25999);
+                proposal.Details[1].Quarters[0].Weeks[0].IsHiatus = true;
+                _ProposalService.CalculateProposalChanges(new ProposalChangeRequest() {Details = proposal.Details});
+                _ProposalService.SaveProposal(proposal,"test user",DateTime.Now);
+
+                var request = _SetupAffidavit();
+                request.Details[0].AirTime = DateTime.Parse("2016-06-06 9:04AM");
+                request.Details[0].Isci = "FFFFFF6";
+
+                var postingDate = new DateTime(2016, 4, 20);
+                var result = _AffidavitService.SaveAffidavit(request, "test user", postingDate);
                 VerifyAffidavit(result);
             }
         }

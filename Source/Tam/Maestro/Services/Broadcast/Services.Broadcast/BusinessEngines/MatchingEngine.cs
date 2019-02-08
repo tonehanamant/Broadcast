@@ -160,9 +160,7 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = false;
-
-                            if (proposalDetailWeek.Spots != 0)
-                                proposalDetailWeek.TimeMatch = true;
+                            _SetMatchTime(proposalDetailWeek);
                         }
                     }
                     else if (affidavitDetail.AirTime >= adjustedStartTime && affidavitDetail.AirTime >= actualEndTime)
@@ -170,11 +168,7 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = true;
-
-                            if (proposalDetailWeek.Spots != 0)
-                            {
-                                proposalDetailWeek.TimeMatch = true;
-                            }
+                            _SetMatchTime(proposalDetailWeek);
                         }
                     }
                     else if (affidavitDetail.AirTime <= actualEndTime && affidavitDetail.AirTime <= actualStartTime)
@@ -182,9 +176,7 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = false;
-
-                            if (proposalDetailWeek.Spots != 0)
-                                proposalDetailWeek.TimeMatch = true;
+                            _SetMatchTime(proposalDetailWeek);
                         }
                     }
                 }
@@ -195,9 +187,7 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = false;
-
-                            if (proposalDetailWeek.Spots != 0)
-                                proposalDetailWeek.TimeMatch = true;
+                            _SetMatchTime(proposalDetailWeek);
                         }
                     }
                     else if (affidavitDetail.AirTime >= adjustedStartTime && affidavitDetail.AirTime <= actualEndTime)
@@ -205,9 +195,7 @@ namespace Services.Broadcast.BusinessEngines
                         foreach (var proposalDetailWeek in proposalDetail)
                         {
                             proposalDetailWeek.IsLeadInMatch = true;
-
-                            if (proposalDetailWeek.Spots != 0)
-                                proposalDetailWeek.TimeMatch = true;
+                            _SetMatchTime(proposalDetailWeek);
                         }
                     }
                 }
@@ -222,6 +210,12 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return result;
+        }
+
+        private static void _SetMatchTime(MatchingProposalWeek proposalDetailWeek)
+        {
+            if (proposalDetailWeek.Spots != 0 || proposalDetailWeek.IsHiatus)
+                proposalDetailWeek.TimeMatch = true;
         }
 
         private bool _IsDateMatch(DateTime affidavitDetailAirDate, List<MatchingProposalWeek> result, MatchingProposalWeek proposalDetailWeek)
