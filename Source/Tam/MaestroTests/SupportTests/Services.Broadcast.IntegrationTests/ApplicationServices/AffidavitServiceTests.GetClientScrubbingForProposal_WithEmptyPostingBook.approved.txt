@@ -1,0 +1,70 @@
+﻿{
+  "Advertiser": "Test Advertiser 9",
+  "BlackoutMarketGroup": null,
+  "BlackoutMarketGroupId": null,
+  "ClientScrubs": [],
+  "CoverageGoal": 80.0,
+  "Details": [
+    {
+      "DayPart": "TU 6PM-7:15PM",
+      "DaypartCodeDisplay": "EN",
+      "EstimateId": null,
+      "FlightEndDate": "2019-02-10T00:00:00",
+      "FlightStartDate": "2019-02-04T00:00:00",
+      "FlightWeeks": [
+        {
+          "EndDate": "2019-02-10T00:00:00",
+          "IsHiatus": false,
+          "MediaWeekId": 789,
+          "StartDate": "2019-02-04T00:00:00"
+        }
+      ],
+      "Genres": [],
+      "Id": 256,
+      "InventorySourceDisplay": "",
+      "PlaybackTypeDisplay": null,
+      "PostingBook": null,
+      "Programs": [
+        {
+          "Contain": 2,
+          "Id": 18123,
+          "Program": {
+            "Display": "Modern Family"
+          }
+        }
+      ],
+      "Sequence": null,
+      "SpotLength": "300"
+    }
+  ],
+  "Equivalized": false,
+  "Filters": {
+    "DateAiredEnd": null,
+    "DateAiredStart": null,
+    "DistinctAffiliates": [],
+    "DistinctClientIscis": [],
+    "DistinctComments": [],
+    "DistinctDayOfWeek": [],
+    "DistinctGenres": [],
+    "DistinctHouseIscis": [],
+    "DistinctMarkets": [],
+    "DistinctPrograms": [],
+    "DistinctSequences": [],
+    "DistinctShowTypes": [],
+    "DistinctSpotLengths": [],
+    "DistinctStations": [],
+    "DistinctWeekStarts": [],
+    "TimeAiredEnd": null,
+    "TimeAiredStart": null,
+    "WeekEnd": null,
+    "WeekStart": null
+  },
+  "GuaranteedDemo": "House Holds",
+  "Id": 256,
+  "MarketGroupId": 1,
+  "Markets": [],
+  "Name": "Proposal BCOP-4270",
+  "Notes": "",
+  "PostingType": "NSI",
+  "SecondaryDemos": []
+}

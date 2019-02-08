@@ -1919,5 +1919,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyAffidavit(result);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientScrubbingForProposal_WithEmptyPostingBook()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var scrubbingRequest = new ProposalScrubbingRequest();
+                var result = _AffidavitService.GetClientScrubbingForProposal(256, scrubbingRequest);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
     }
 }
