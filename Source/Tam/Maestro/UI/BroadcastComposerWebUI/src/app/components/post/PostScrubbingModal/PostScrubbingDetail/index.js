@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Well, Row, Col, Nav, NavItem } from "react-bootstrap";
-/* import { getDateInFormat } from '../../../../utils/dateFormatter'; */
 
 import PostScrubbingGrid from "../PostScrubbingGrid";
 import PostScrubbingFilters from "../PostScrubbingFilters";

@@ -7,10 +7,7 @@ import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";
 import { undoArchivedIscis } from "Ducks/tracker";
 import moment from "moment";
-import {
-  getDateInFormat,
-  getSecondsToTimeString
-} from "../../../../utils/dateFormatter";
+import { getDateInFormat, getSecondsToTimeString } from "Utils/dateFormatter";
 
 const {
   SelectionActions: { deselectAll, selectRow }

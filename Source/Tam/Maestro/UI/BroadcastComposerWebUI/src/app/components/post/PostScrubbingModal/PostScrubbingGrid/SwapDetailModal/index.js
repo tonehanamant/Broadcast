@@ -7,8 +7,7 @@ import { FormGroup, ControlLabel, Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import { toggleModal } from "Ducks/app";
 import { swapProposalDetail } from "Ducks/post";
-import { getDateInFormat } from "../../../../../utils/dateFormatter";
-// import { updateEquivalized, updatePostingBook, updatePlaybackType, updateDemos, savePostPrePostingFileEdit } from 'Ducks/postPrePosting';
+import { getDateInFormat } from "Utils/dateFormatter";
 
 const mapStateToProps = ({
   app: {

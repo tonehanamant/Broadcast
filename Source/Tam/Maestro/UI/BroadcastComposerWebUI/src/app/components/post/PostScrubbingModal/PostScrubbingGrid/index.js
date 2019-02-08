@@ -6,14 +6,13 @@ import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
 import { overrideStatus, undoScrubStatus } from "Ducks/post";
 import ContextMenuRow from "Patterns/ContextMenuRow";
-
-import SwapDetailModal from "./SwapDetailModal";
-
 import {
   getDateInFormat,
   getSecondsToTimeString,
   getDay
-} from "../../../../utils/dateFormatter";
+} from "Utils/dateFormatter";
+
+import SwapDetailModal from "./SwapDetailModal";
 
 import "./index.scss";
 

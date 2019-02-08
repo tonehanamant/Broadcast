@@ -10,4 +10,7 @@ module.exports = {
   Utils: resolve(__dirname, '../../src/app/utils'),
   Lib: resolve(__dirname, '../../src/app/lib'),
   Assets: resolve(__dirname, '../../src/assets'),
+  API: resolve(__dirname, '../../src/app/api'),
+  AppConfigs: resolve(__dirname, '../../src/app/app-configs'),
+  PostPrePosting: resolve(__dirname, '../../src/app/features/PostPrePosting')
 };

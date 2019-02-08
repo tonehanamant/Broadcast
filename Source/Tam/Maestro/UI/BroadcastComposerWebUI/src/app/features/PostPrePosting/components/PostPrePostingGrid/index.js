@@ -9,17 +9,10 @@ import {
   getPostPrePostingFiltered,
   deletePostPrePosting,
   getPostPrePostingFileEdit
-} from "Ducks/postPrePosting";
+} from "PostPrePosting/redux/actions";
 import Table, { withGrid } from "Lib/react-table";
 
-/* ////////////////////////////////// */
-/* // MAPPING STATE AND DISPATCH
-/* ////////////////////////////////// */
-const mapStateToProps = ({
-  postPrePosting: { initialdata },
-  postPrePosting: { post },
-  menu
-}) => ({
+const mapStateToProps = ({ postPrePosting: { initialdata, post }, menu }) => ({
   initialdata,
   post,
   menu
@@ -40,10 +33,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-/* ////////////////////////////////// */
-/* // DATAGRIDCONTAINER COMPONENT
-/* ////////////////////////////////// */
-
 export class DataGridContainer extends Component {
   constructor(props, context) {
     super(props, context);
@@ -54,9 +43,6 @@ export class DataGridContainer extends Component {
     );
   }
 
-  /* ////////////////////////////////// */
-  /* GRID CONTEXT MENU METHODS  */
-  /* ////////////////////////////////// */
   contextMenuDeleteAction(rowData) {
     this.props.toggleModal({
       modal: "confirmModal",
@@ -77,15 +63,7 @@ export class DataGridContainer extends Component {
     this.props.getPostPrePostingFileEdit(id);
   }
 
-  /* ////////////////////////////////// */
-  /* // COMPONENT RENDER FUNC
-  /* ////////////////////////////////// */
   render() {
-    /* ////////////////////////////////// */
-    /* // REACT-TABLE CONFIGURATION
-    /* ////////////////////////////////// */
-
-    /* GRID COLUMNS */
     const columns = [
       {
         Header: "File Name",
@@ -99,14 +77,12 @@ export class DataGridContainer extends Component {
       },
       {
         Header: "Upload Date",
-        // accessor: "DisplayUploadDate",
         accessor: "UploadDate",
         minWidth: 10,
         Cell: row => <span>{row.original.DisplayUploadDate}</span>
       },
       {
         Header: "Last Modified",
-        // accessor: "DisplayModifiedDate",
         accessor: "ModifiedDate",
         minWidth: 10,
         Cell: row => <span>{row.original.DisplayModifiedDate}</span>
@@ -162,9 +138,6 @@ export class DataGridContainer extends Component {
   }
 }
 
-/* ////////////////////////////////// */
-/* // PROPTYPES
-/* ////////////////////////////////// */
 DataGridContainer.propTypes = {
   post: PropTypes.array.isRequired,
   toggleModal: PropTypes.func.isRequired,
