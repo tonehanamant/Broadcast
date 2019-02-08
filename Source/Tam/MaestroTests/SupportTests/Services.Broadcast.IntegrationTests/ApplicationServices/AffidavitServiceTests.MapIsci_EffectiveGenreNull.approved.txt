@@ -25,7 +25,7 @@
           "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "test user",
-          "PostingBookId": 428,
+          "PostingBookId": 416,
           "PostingPlaybackType": 4,
           "Status": 2
         }
@@ -79,7 +79,7 @@
           "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "sroibu",
-          "PostingBookId": 428,
+          "PostingBookId": 416,
           "PostingPlaybackType": 4,
           "Status": 2
         }
@@ -118,39 +118,39 @@
           "ClientScrubAudiences": [
             {
               "AudienceId": 4,
-              "Impressions": 0.0
+              "Impressions": 210.0
             },
             {
               "AudienceId": 5,
-              "Impressions": 0.0
+              "Impressions": 1802.85
             },
             {
               "AudienceId": 6,
-              "Impressions": 0.0
+              "Impressions": 833.3
             },
             {
               "AudienceId": 7,
-              "Impressions": 415.2
+              "Impressions": 798.55
             },
             {
               "AudienceId": 13,
-              "Impressions": 6815.2
+              "Impressions": 14532.35
             },
             {
               "AudienceId": 14,
-              "Impressions": 16327.3
+              "Impressions": 27565.65
             },
             {
               "AudienceId": 15,
-              "Impressions": 40255.3
+              "Impressions": 53944.85
             },
             {
               "AudienceId": 19,
-              "Impressions": 0.0
+              "Impressions": 294.1
             },
             {
               "AudienceId": 20,
-              "Impressions": 496.25
+              "Impressions": 901.85
             },
             {
               "AudienceId": 21,
@@ -158,47 +158,47 @@
             },
             {
               "AudienceId": 22,
-              "Impressions": 0.0
+              "Impressions": 1036.85
             },
             {
               "AudienceId": 28,
-              "Impressions": 865.7
+              "Impressions": 7478.0
             },
             {
               "AudienceId": 29,
-              "Impressions": 10556.25
+              "Impressions": 14784.25
             },
             {
               "AudienceId": 30,
-              "Impressions": 3924.25
+              "Impressions": 10248.05
             },
             {
               "AudienceId": 31,
-              "Impressions": 125153.0
+              "Impressions": 157433.4
             },
             {
               "AudienceId": 46,
-              "Impressions": 4794.85
+              "Impressions": 1693.6
             },
             {
               "AudienceId": 284,
-              "Impressions": 907.35
+              "Impressions": 811.2
             },
             {
               "AudienceId": 290,
-              "Impressions": 12973.9
+              "Impressions": 8230.05
             },
             {
               "AudienceId": 339,
-              "Impressions": 2676.0
+              "Impressions": 2490.8
             },
             {
               "AudienceId": 347,
-              "Impressions": 33967.1
+              "Impressions": 30304.75
             },
             {
               "AudienceId": 348,
-              "Impressions": 1975.0
+              "Impressions": 5238.85
             }
           ],
           "Comment": null,
@@ -218,7 +218,7 @@
           "MatchStation": true,
           "MatchTime": true,
           "ModifiedBy": "test-user",
-          "PostingBookId": 428,
+          "PostingBookId": 416,
           "PostingPlaybackType": 4,
           "Status": 1
         }

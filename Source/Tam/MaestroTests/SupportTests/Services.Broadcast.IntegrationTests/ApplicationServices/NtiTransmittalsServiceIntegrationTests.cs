@@ -4,6 +4,7 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Nti;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly INtiTransmittalsService _NtiTransmittalsService = IntegrationTestApplicationServiceFactory.GetApplicationService<INtiTransmittalsService>();
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
+
+        [Ignore("Used to insert data into integration dbs")]
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UploadNtiTransmittalsFile_LoadFilesIntoIntegrationDbs()
+        {
+            foreach (var filePath in Directory.EnumerateFiles(@".\Transmittals files"))
+            {
+                try
+                {
+                    _NtiTransmittalsService.UploadNtiTransmittalsFile(new FileRequest
+                    {
+                        FileName = Path.GetFileName(filePath),
+                        RawData = Convert.ToBase64String(File.ReadAllBytes(filePath))
+                    }, "integration test user");
+                }
+                catch { }
+            }
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -46,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(ntiFile, jsonSettings));
             }
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UploadNtiTransmittalsFile_InvalidFile()
@@ -61,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = "TLA1217 P3 TRANSMITTALS.PDF"
                 };
                 var result = _NtiTransmittalsService.ProcessFileContent(ntiFile, nielsenDocument);
-               
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }

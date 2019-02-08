@@ -581,9 +581,6 @@
     <None Include="Files\ThirdPartyFileWithSameStationDaypartSpotLength.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\TLA1217 P3 TRANSMITTALS.PDF">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Files\TTNW_UPDATE_06.09.17.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -765,7 +762,7 @@
     <Content Include="Files\rate-file-invalid-schema.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Files\Test Adve NAV 30 05-30-16.txt">
+    <None Include="Files\STAPLES EMN 15 8-27-18.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Test Adv NAV3 30 05-30-16.txt">

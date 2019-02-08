@@ -6,12 +6,12 @@
     "2Q'16: 1 week - 5/30"
   ],
   "GuaranteedDemo": "House Holds",
-  "IsNtiReport": false,
+  "IsNtiReport": true,
   "PlaybackTypes": [
     "Live+3"
   ],
   "PostingBooks": [
-    "November 2017"
+    "May 2016"
   ],
   "PostType": "NSI",
   "ProposalAudiences": [
@@ -26,31 +26,16 @@
       "TableName": "2Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 999.0,
+          "ActualImpressions": 44040.0,
           "Adu": false,
-          "Contract": "NSIADU4",
-          "DeliveredImpressionsPercentage": 0.999,
+          "Contract": "NAV",
+          "DeliveredImpressionsPercentage": 0.4404,
           "HHRating": 0,
           "ProposalWeekCost": 2.5000,
-          "ProposalWeekCPM": 25.0000,
-          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekImpressionsGoal": 10000.0,
           "ProposalWeekTotalCost": 25.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
-          "SpotLength": 30,
-          "Spots": 10,
-          "WeekStartDate": "2016-05-30T00:00:00"
-        },
-        {
-          "ActualImpressions": 500.0,
-          "Adu": true,
-          "Contract": "ADU",
-          "DeliveredImpressionsPercentage": null,
-          "HHRating": 0,
-          "ProposalWeekCost": null,
-          "ProposalWeekCPM": null,
-          "ProposalWeekImpressionsGoal": null,
-          "ProposalWeekTotalCost": null,
-          "ProposalWeekTotalImpressionsGoal": null,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
           "SpotLength": 30,
           "Spots": 10,
           "WeekStartDate": "2016-05-30T00:00:00"
@@ -63,34 +48,34 @@
       "TabName": "Spot Detail 2Q16",
       "TabRows": [
         {
-          "Adu": true,
+          "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
-            "31": 500.0
+            "31": 0.0
           },
           "Brand": "",
-          "DateAired": "2016-05-31T00:00:00",
-          "DaypartName": "ADU",
+          "DateAired": "2016-06-03T00:00:00",
+          "DaypartName": "NAV",
           "Isci": null,
-          "Market": "Yakima-Pasco-Rchlnd-Knnwck",
-          "NetworkAffiliate": "ABC",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
           "NtiImpressions": {
-            "31": 18.74604723
+            "31": 44040.0
           },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "1117",
+          "ProposalDetailPostingBook": "0516",
           "ProposalDetailSpotLength": 30,
           "ProposalWeekCost": 2.5000,
-          "ProposalWeekCPM": 25.0000,
-          "ProposalWeekId": 46,
-          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekId": 9951,
+          "ProposalWeekImpressionsGoal": 10000.0,
           "ProposalWeekTotalCost": 25.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
           "ProposalWeekUnits": 10,
-          "Rank": 114,
+          "Rank": 1,
           "SpotLength": 30,
-          "Station": "KAPP",
+          "Station": "WNBC",
           "TimeAired": 32400,
           "WeekStart": "2016-05-30T00:00:00"
         },
@@ -98,31 +83,31 @@
           "Adu": false,
           "Advertiser": "Test Advertiser 9",
           "AudienceImpressions": {
-            "31": 999.0
+            "31": 0.0
           },
           "Brand": "",
           "DateAired": "2016-06-03T00:00:00",
-          "DaypartName": "NSIADU4",
+          "DaypartName": "NAV",
           "Isci": null,
-          "Market": "Yakima-Pasco-Rchlnd-Knnwck",
-          "NetworkAffiliate": "ABC",
+          "Market": "New York",
+          "NetworkAffiliate": "NBC",
           "NtiImpressions": {
-            "31": 0.0
+            "31": 44040.0
           },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",
-          "ProposalDetailPostingBook": "1117",
+          "ProposalDetailPostingBook": "0516",
           "ProposalDetailSpotLength": 30,
           "ProposalWeekCost": 2.5000,
-          "ProposalWeekCPM": 25.0000,
-          "ProposalWeekId": 47,
-          "ProposalWeekImpressionsGoal": 100.0,
+          "ProposalWeekCPM": 0.25000,
+          "ProposalWeekId": 9951,
+          "ProposalWeekImpressionsGoal": 10000.0,
           "ProposalWeekTotalCost": 25.0000,
-          "ProposalWeekTotalImpressionsGoal": 1000.0,
+          "ProposalWeekTotalImpressionsGoal": 100000.0,
           "ProposalWeekUnits": 10,
-          "Rank": 114,
+          "Rank": 1,
           "SpotLength": 30,
-          "Station": "KAPP",
+          "Station": "WNBC",
           "TimeAired": 32400,
           "WeekStart": "2016-05-30T00:00:00"
         }
@@ -130,7 +115,7 @@
       "Title": "Test Advertiser 9 2Q16 Post Spot Detail"
     }
   ],
-  "ReportName": "NSI ADU Adjustment Test 2 - Test Advertiser 9 - Cadent Network 2Q16 Post Report.xlsx",
+  "ReportName": "Proposal Test 5 - Test Advertiser 9 - Cadent Network 2Q16 Post Report - NTI.xlsx",
   "SpotLengthsDisplay": ":30s",
   "WithOvernightImpressions": false
 }
