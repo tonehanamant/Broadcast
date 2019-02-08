@@ -4,6 +4,7 @@
     "ClientIsci": null,
     "DateMatch": true,
     "HouseIsci": "ABC123",
+    "IsHiatus": false,
     "IsLeadInMatch": false,
     "MarriedHouseIsci": false,
     "ProposalVersionDetailDaypartId": 9,
