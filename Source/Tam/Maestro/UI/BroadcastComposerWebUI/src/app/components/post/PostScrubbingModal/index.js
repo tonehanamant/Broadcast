@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { Actions } from "react-redux-grid";
 
 import { Button, Modal } from "react-bootstrap";
-import { toggleModal, setOverlayLoading } from "Ducks/app";
+import { toggleModal, setOverlayLoading } from "Main/redux/actions";
 import { getPost, getPostClientScrubbing } from "Ducks/post";
 
 import PostScrubbingHeader from "./PostScrubbingHeader";

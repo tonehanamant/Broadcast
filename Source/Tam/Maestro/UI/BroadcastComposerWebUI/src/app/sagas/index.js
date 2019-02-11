@@ -1,13 +1,13 @@
-import * as appSaga from "./app";
+// import * as appSaga from "./app";
 import * as postSaga from "./post";
 import * as planningSaga from "./planning";
 import * as trackerSaga from "./tracker";
 
 export default function* rootSaga() {
   yield [
-    appSaga.watchRequestEnvironment(),
-    appSaga.watchRequestEmployee(),
-    appSaga.watchReadFileB64(),
+    // appSaga.watchRequestEnvironment(),
+    // appSaga.watchRequestEmployee(),
+    // appSaga.watchReadFileB64(),
 
     postSaga.watchRequestPost(),
     postSaga.watchRequestPostFiltered(),

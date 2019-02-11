@@ -11,9 +11,9 @@ import {
   toggleModal,
   setOverlayLoading,
   setOverlayProcessing
-} from "Ducks/app/index";
+} from "Main/redux/actions";
 import { receiveFilteredPlanning, setEstimatedId } from "Ducks/planning/index";
-import * as appActions from "Ducks/app/actionTypes";
+import * as appActions from "Main/redux/types";
 import * as planningActions from "Ducks/planning/actionTypes";
 import { hasSpotsAllocate, copyToBuy } from "Ducks/planning";
 

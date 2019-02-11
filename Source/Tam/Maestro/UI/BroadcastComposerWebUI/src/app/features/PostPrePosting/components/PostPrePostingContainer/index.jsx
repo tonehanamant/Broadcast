@@ -11,7 +11,7 @@ import PostPrePostingFileEditModal from "PostPrePosting/components/PostPrePostin
 import PostPrePostingFileUploadModal from "PostPrePosting/components/PostPrePostingFileUploadModal";
 import Dropzone from "Patterns/Dropzone";
 
-import { toggleModal, storeFile } from "Ducks/app";
+import { toggleModal, storeFile } from "Main/redux/actions";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting

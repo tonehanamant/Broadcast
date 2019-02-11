@@ -10,7 +10,7 @@ import {
   Tooltip,
   OverlayTrigger
 } from "react-bootstrap";
-import { toggleModal, createAlert } from "Ducks/app";
+import { toggleModal, createAlert } from "Main/redux/actions";
 import { getPost, getPostClientScrubbing } from "Ducks/post";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";

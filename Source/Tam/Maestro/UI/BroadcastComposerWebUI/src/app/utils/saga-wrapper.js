@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
-import { deployError } from "../ducks/app/index";
+
+import { deployError } from "Main/redux/actions";
 
 const defaultError = {
   error: "Error",

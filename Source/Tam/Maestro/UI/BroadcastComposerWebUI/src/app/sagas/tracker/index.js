@@ -3,15 +3,15 @@ import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import _ from "lodash";
 import sagaWrapper from "Utils/saga-wrapper";
-import * as appActions from "Ducks/app/actionTypes";
+import * as appActions from "Main/redux/types";
 import * as trackerActions from "Ducks/tracker/actionTypes";
 import {
   setOverlayProcessing,
   createAlert,
   setOverlayLoading,
   toggleModal
-} from "Ducks/app";
-import { selectModal } from "Ducks/app/selectors";
+} from "Main/redux/actions";
+import { selectModal } from "Main/redux/selectors";
 import {
   selectActiveScrubs,
   selectActiveFilterKey

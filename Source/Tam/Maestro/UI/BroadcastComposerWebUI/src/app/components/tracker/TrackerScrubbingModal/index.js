@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { Actions } from "react-redux-grid";
 
 import { Button, Modal } from "react-bootstrap";
-import { toggleModal, setOverlayLoading } from "Ducks/app";
+import { toggleModal, setOverlayLoading } from "Main/redux/actions";
 import { getTracker, getTrackerClientScrubbing } from "Ducks/tracker";
 
 import TrackerScrubbingHeader from "./TrackerScrubbingHeader";

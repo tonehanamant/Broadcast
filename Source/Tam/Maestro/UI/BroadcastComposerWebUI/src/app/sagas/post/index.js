@@ -2,10 +2,10 @@ import { takeEvery, put, call, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import _ from "lodash";
-import * as appActions from "Ducks/app/actionTypes";
+import * as appActions from "Main/redux/types";
 import * as postActions from "Ducks/post/actionTypes";
-import { setOverlayLoading, toggleModal } from "Ducks/app";
-import { selectModal } from "Ducks/app/selectors";
+import { setOverlayLoading, toggleModal } from "Main/redux/actions";
+import { selectModal } from "Main/redux/selectors";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
   selectActiveScrubs,

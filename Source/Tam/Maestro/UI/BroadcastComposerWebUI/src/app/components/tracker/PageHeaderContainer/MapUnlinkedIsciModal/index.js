@@ -10,7 +10,8 @@ import {
   loadValidIscis,
   mapUnlinkedIsci
 } from "Ducks/tracker";
-import { toggleModal } from "Ducks/app";
+
+import { toggleModal } from "Main/redux/actions";
 
 import "./index.scss";
 
