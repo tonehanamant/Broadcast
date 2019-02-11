@@ -850,9 +850,14 @@ namespace Services.Broadcast.ApplicationServices
                 Sequence = x.Sequence,
                 DaypartCodeDisplay = x.DaypartCode,
                 EstimateId = x.EstimateId,
-                PostingBook = _MediaMonthAndWeekCache.GetMediaMonthsByIds(new List<int> { x.PostingBookId.Value }).Single().LongMonthNameAndYear,
+                PostingBook = _GetBostingBook(x.PostingBookId),
                 PlaybackTypeDisplay = x.PostingPlaybackType?.GetDescriptionAttribute()
             }).OrderBy(x => x.Sequence).ToList();
+        }
+
+        private string _GetBostingBook(int? postingBookId)
+        {
+            return postingBookId.HasValue ? _MediaMonthAndWeekCache.GetMediaMonthById(postingBookId.Value).LongMonthNameAndYear : null;
         }
 
         private FilterOptions _LoadFilters(List<ProposalDetailPostScrubbingDto> clientScrubs)

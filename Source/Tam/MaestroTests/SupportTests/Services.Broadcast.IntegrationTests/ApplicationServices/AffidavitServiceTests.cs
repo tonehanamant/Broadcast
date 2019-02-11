@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Services;
+using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
@@ -1895,6 +1896,54 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 // no scrubs?  Good!
                 VerifyAffidavit(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Scrub_TimeDateMatch_PRI814()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var proposal = _ProposalService.GetProposalById(25999);
+                proposal.Details[1].Quarters[0].Weeks[0].IsHiatus = true;
+                _ProposalService.CalculateProposalChanges(new ProposalChangeRequest() {Details = proposal.Details});
+                _ProposalService.SaveProposal(proposal,"test user",DateTime.Now);
+
+                var request = _SetupAffidavit();
+                request.Details[0].AirTime = DateTime.Parse("2016-06-06 9:04AM");
+                request.Details[0].Isci = "FFFFFF6";
+
+                var postingDate = new DateTime(2016, 4, 20);
+                var result = _AffidavitService.SaveAffidavit(request, "test user", postingDate);
+                VerifyAffidavit(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetClientScrubbingForProposal_WithEmptyPostingBook()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var scrubbingRequest = new ProposalScrubbingRequest();
+                var result = _AffidavitService.GetClientScrubbingForProposal(256, scrubbingRequest);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalQuarterDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalWeekIsciDto), "Id");
+                jsonResolver.Ignore(typeof(ProposalDetailPostScrubbingDto), "ScrubbingClientId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
     }
