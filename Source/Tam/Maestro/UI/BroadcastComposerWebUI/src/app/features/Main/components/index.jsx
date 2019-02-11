@@ -5,13 +5,15 @@ import CSSModules from "react-css-modules";
 
 // TO CHANGE
 // import SectionHome from 'Containers/SectionHome';
-import SectionPostPrePosting from "Containers/SectionPostPrePosting";
+// import SectionPostPrePosting from "Containers/SectionPostPrePosting";
 import SectionPost from "Containers/SectionPost";
 import SectionPlanning from "Containers/SectionPlanning";
 import SectionTracker from "Containers/SectionTracker";
 // import SectionRates from 'Containers/SectionRates';
 
 // NEW STRUCTURE
+import SectionPostPrePosting from "PostPrePosting";
+
 import Toast from "Patterns/Toast";
 import ErrorModal from "Patterns/ErrorModal";
 import ConfirmModal from "Patterns/ConfirmModal";

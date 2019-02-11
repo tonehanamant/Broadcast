@@ -8,7 +8,8 @@ import { AppContainer } from "react-hot-loader";
 import createHistory from "history/createBrowserHistory";
 
 // import AppRoot from "AppRoot/components";
-import AppRoot from "Containers/AppRoot";
+// import AppRoot from "Containers/AppRoot";
+
 // import "Icons/favicon.ico";
 
 // third party libraries here:
@@ -19,6 +20,7 @@ import "./index.css?raw";
 import "./index.scss";
 // eslint-disable-next-line import/first
 import "antd/dist/antd.css?raw";
+import AppRoot from "./app";
 
 import configureStore from "./index.store";
 // import configureIcons from "./index.icons";
@@ -45,7 +47,8 @@ const render = Component => {
 render(AppRoot);
 
 if (module.hot) {
-  module.hot.accept("./app/containers/AppRoot", () => {
+  // module.hot.accept("./app/containers/AppRoot", () => {
+  module.hot.accept("./app", () => {
     render(AppRoot);
   });
 }

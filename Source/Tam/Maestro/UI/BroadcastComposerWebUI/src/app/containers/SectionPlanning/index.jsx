@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
 import CSSModules from "react-css-modules";
 
-import AppBody from "Components/body/AppBody";
+import AppBody from "Patterns/layout/Body";
 import SectionPlanningHome from "Containers/SectionPlanningHome";
 import SectionPlanningProposalCreate from "Containers/SectionPlanningProposalCreate";
 import SectionPlanningProposal from "Containers/SectionPlanningProposal";

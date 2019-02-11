@@ -1,6 +1,6 @@
 import React from "react";
 import CSSModules from "react-css-modules";
-import AppBody from "Components/body/AppBody";
+import AppBody from "Patterns/layout/Body";
 import PageTitle from "Patterns/PageTitle";
 import PageHeaderContainer from "Components/post/PageHeaderContainer";
 import DataGridContainer from "Components/post/DataGridContainer";
