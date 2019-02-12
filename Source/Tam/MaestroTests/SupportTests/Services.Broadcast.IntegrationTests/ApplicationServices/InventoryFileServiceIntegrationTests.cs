@@ -436,6 +436,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
                 //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Audiences");
                 jsonResolver.Ignore(typeof(StationContact), "Id");
+                jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -476,6 +477,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationContact), "Id");
+                jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -512,6 +514,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationContact), "Id");
+                jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -3774,6 +3777,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
 
                 Approvals.Verify(fileJson);
+            }
+        }
+
+        [Test]
+        public void CanLoadHudsonOpenMarketInventoryFile()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\CTV-Broadcast.xml");
+
+                var problems = new List<InventoryFileProblem>();
+
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                Assert.IsEmpty(problems);
             }
         }
     }

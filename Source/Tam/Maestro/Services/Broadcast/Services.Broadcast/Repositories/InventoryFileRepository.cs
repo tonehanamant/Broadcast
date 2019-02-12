@@ -131,7 +131,7 @@ namespace Services.Broadcast.Repositories
                             Name = file.inventory_sources.name
                         },
                         RatingBook = file.sweep_book_id,
-                        PlaybackType = (Entities.Enums.ProposalEnums.ProposalPlaybackType)file.play_back_type
+                        PlaybackType = (Entities.Enums.ProposalEnums.ProposalPlaybackType?)file.play_back_type
                     };
                 });
         }

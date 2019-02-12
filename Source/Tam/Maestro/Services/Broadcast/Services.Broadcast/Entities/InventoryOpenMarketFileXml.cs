@@ -155,7 +155,7 @@ public partial class AAAAMessageProposal
 
     private AAAAMessageProposalTelevisionStation[] outletsField;
 
-    private AAAAMessageProposalAvailList availListField;
+    private AAAAMessageProposalAvailList[] availListField;
 
     private System.DateTime endDateField;
 
@@ -236,7 +236,8 @@ public partial class AAAAMessageProposal
     }
 
     /// <remarks/>
-    public AAAAMessageProposalAvailList AvailList
+    [System.Xml.Serialization.XmlElementAttribute("AvailList")]
+    public AAAAMessageProposalAvailList[] AvailList
     {
         get
         {

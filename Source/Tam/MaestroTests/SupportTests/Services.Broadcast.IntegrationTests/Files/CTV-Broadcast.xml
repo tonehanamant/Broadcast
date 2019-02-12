@@ -1,0 +1,3130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AAAA-Message xmlns="http://www.AAAA.org/schemas/spotTVCableProposal" xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.AAAA.org/schemas/spotTVCableProposal spotTVCableProposal-0.3.0.5.xsd">
+     <AAAA-Values>
+          <SchemaName>SpotTVCableProposal</SchemaName>
+          <SchemaVersion>0.3.0.5</SchemaVersion>
+          <Media>SpotTV</Media>
+          <BusinessObject>Proposal</BusinessObject>
+          <Action>New</Action>
+          <UniqueMessageID>5c4f3c8842598</UniqueMessageID>
+     </AAAA-Values>
+     <Proposal endDate="2019-03-31" sendDateTime="2019-01-28T17:31:38"  startDate="2018-12-31" uniqueIdentifier="HMX_7413_149_B" version="1" weekStartDay="Mo">
+          <Seller companyName="n/a">
+               <Salesperson name="n/a">
+                    <Phone type="voice">(000)000-0000</Phone>
+                    <Phone type="fax">(000)000-0000</Phone>
+                    <Email type="primary">diag@hudsonmx.com</Email>
+               </Salesperson>
+          </Seller>
+          <Buyer buyingCompanyName="LOCAL B/CAST">
+               <BuyerName>CADENT</BuyerName>
+          </Buyer>
+          <Advertiser name="CADENT">
+               <Product name="CADENT"/>
+          </Advertiser>
+          <Name>CADENT</Name>
+          <Outlets>
+               <TelevisionStation callLetters="KDLH" outletId="OUT0" parentPlus="N"/>
+               <TelevisionStation callLetters="WLEX" outletId="OUT1" parentPlus="N"/>
+               <TelevisionStation callLetters="WKBT" outletId="OUT2" parentPlus="N"/>
+               <TelevisionStation callLetters="KOIN" outletId="OUT3" parentPlus="N"/>
+               <TelevisionStation callLetters="KXLY" outletId="OUT4" parentPlus="N"/>
+               <TelevisionStation callLetters="KARD" outletId="OUT5" parentPlus="N"/>
+               <TelevisionStation callLetters="WFOX" outletId="OUT6" parentPlus="N"/>
+               <TelevisionStation callLetters="KSNB" outletId="OUT7" parentPlus="N"/>
+               <TelevisionStation callLetters="WDJT" outletId="OUT8" parentPlus="N"/>
+               <TelevisionStation callLetters="WAOE" outletId="OUT9" parentPlus="N"/>
+               <TelevisionStation callLetters="KSBW" outletId="OUT10" parentPlus="N"/>
+               <TelevisionStation callLetters="EEEK" outletId="OUT11" parentPlus="N"/>
+               <TelevisionStation callLetters="WCTI" outletId="OUT12" parentPlus="N"/>
+               <TelevisionStation callLetters="WATE" outletId="OUT13" parentPlus="N"/>
+               <TelevisionStation callLetters="WXMI" outletId="OUT14" parentPlus="N"/>
+               <TelevisionStation callLetters="WICU" outletId="OUT15" parentPlus="N"/>
+               <TelevisionStation callLetters="WIS" outletId="OUT16" parentPlus="N"/>
+               <TelevisionStation callLetters="WYCW" outletId="OUT17" parentPlus="N"/>
+               <TelevisionStation callLetters="WNLO" outletId="OUT18" parentPlus="N"/>
+               <TelevisionStation callLetters="WRBL" outletId="OUT19" parentPlus="N"/>
+               <TelevisionStation callLetters="WRAL" outletId="OUT20" parentPlus="N"/>
+               <TelevisionStation callLetters="KHBB" outletId="OUT21" parentPlus="N"/>
+               <TelevisionStation callLetters="KXXV" outletId="OUT22" parentPlus="N"/>
+               <TelevisionStation callLetters="WIVT" outletId="OUT23" parentPlus="N"/>
+               <TelevisionStation callLetters="WFTS" outletId="OUT24" parentPlus="N"/>
+               <TelevisionStation callLetters="KAKE" outletId="OUT25" parentPlus="N"/>
+               <TelevisionStation callLetters="KLFY" outletId="OUT26" parentPlus="N"/>
+               <TelevisionStation callLetters="WYTV" outletId="OUT27" parentPlus="N"/>
+               <TelevisionStation callLetters="WIVB" outletId="OUT28" parentPlus="N"/>
+               <TelevisionStation callLetters="WTHR" outletId="OUT29" parentPlus="N"/>
+               <TelevisionStation callLetters="NBJR" outletId="OUT30" parentPlus="N"/>
+               <TelevisionStation callLetters="KCTV" outletId="OUT31" parentPlus="N"/>
+               <TelevisionStation callLetters="WPDE" outletId="OUT32" parentPlus="N"/>
+               <TelevisionStation callLetters="WEYI" outletId="OUT33" parentPlus="N"/>
+               <TelevisionStation callLetters="KSNV" outletId="OUT34" parentPlus="N"/>
+               <TelevisionStation callLetters="WOAY" outletId="OUT35" parentPlus="N"/>
+               <TelevisionStation callLetters="WATN" outletId="OUT36" parentPlus="N"/>
+               <TelevisionStation callLetters="KNBN" outletId="OUT37" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVF" outletId="OUT38" parentPlus="N"/>
+               <TelevisionStation callLetters="KMBC" outletId="OUT39" parentPlus="N"/>
+               <TelevisionStation callLetters="KMVU" outletId="OUT40" parentPlus="N"/>
+               <TelevisionStation callLetters="WFXT" outletId="OUT41" parentPlus="N"/>
+               <TelevisionStation callLetters="WCNC" outletId="OUT42" parentPlus="N"/>
+               <TelevisionStation callLetters="EJHL" outletId="OUT43" parentPlus="N"/>
+               <TelevisionStation callLetters="WBNX" outletId="OUT44" parentPlus="N"/>
+               <TelevisionStation callLetters="WJHL" outletId="OUT45" parentPlus="N"/>
+               <TelevisionStation callLetters="KSPR" outletId="OUT46" parentPlus="N"/>
+               <TelevisionStation callLetters="WADL" outletId="OUT47" parentPlus="N"/>
+               <TelevisionStation callLetters="KTFT" outletId="OUT48" parentPlus="N"/>
+               <TelevisionStation callLetters="WSEE" outletId="OUT49" parentPlus="N"/>
+               <TelevisionStation callLetters="WDVM" outletId="OUT50" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVN" outletId="OUT51" parentPlus="N"/>
+               <TelevisionStation callLetters="KGUN" outletId="OUT52" parentPlus="N"/>
+               <TelevisionStation callLetters="KVVU" outletId="OUT53" parentPlus="N"/>
+               <TelevisionStation callLetters="WRIC" outletId="OUT54" parentPlus="N"/>
+               <TelevisionStation callLetters="KCBD" outletId="OUT55" parentPlus="N"/>
+               <TelevisionStation callLetters="KATU" outletId="OUT56" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVZ" outletId="OUT57" parentPlus="N"/>
+               <TelevisionStation callLetters="WTRF" outletId="OUT58" parentPlus="N"/>
+               <TelevisionStation callLetters="WNWO" outletId="OUT59" parentPlus="N"/>
+               <TelevisionStation callLetters="WHDF" outletId="OUT60" parentPlus="N"/>
+               <TelevisionStation callLetters="KCRA" outletId="OUT61" parentPlus="N"/>
+               <TelevisionStation callLetters="WTKR" outletId="OUT62" parentPlus="N"/>
+               <TelevisionStation callLetters="EBNX" outletId="OUT63" parentPlus="N"/>
+               <TelevisionStation callLetters="WPLG" outletId="OUT64" parentPlus="N"/>
+               <TelevisionStation callLetters="WQRF" outletId="OUT65" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVI" outletId="OUT66" parentPlus="N"/>
+               <TelevisionStation callLetters="KDBC" outletId="OUT67" parentPlus="N"/>
+               <TelevisionStation callLetters="WBGH" outletId="OUT68" parentPlus="N"/>
+               <TelevisionStation callLetters="WBIR" outletId="OUT69" parentPlus="N"/>
+               <TelevisionStation callLetters="WBOC" outletId="OUT70" parentPlus="N"/>
+               <TelevisionStation callLetters="WJAX" outletId="OUT71" parentPlus="N"/>
+               <TelevisionStation callLetters="WAVY" outletId="OUT72" parentPlus="N"/>
+               <TelevisionStation callLetters="WIFR" outletId="OUT73" parentPlus="N"/>
+               <TelevisionStation callLetters="WPBN" outletId="OUT74" parentPlus="N"/>
+               <TelevisionStation callLetters="KUSI" outletId="OUT75" parentPlus="N"/>
+               <TelevisionStation callLetters="KNPL" outletId="OUT76" parentPlus="N"/>
+               <TelevisionStation callLetters="EOHL" outletId="OUT77" parentPlus="N"/>
+               <TelevisionStation callLetters="WLOS" outletId="OUT78" parentPlus="N"/>
+               <TelevisionStation callLetters="WYOU" outletId="OUT79" parentPlus="N"/>
+               <TelevisionStation callLetters="KYMA" outletId="OUT80" parentPlus="N"/>
+               <TelevisionStation callLetters="KYTV" outletId="OUT81" parentPlus="N"/>
+               <TelevisionStation callLetters="NGET" outletId="OUT82" parentPlus="N"/>
+               <TelevisionStation callLetters="KBJR" outletId="OUT83" parentPlus="N"/>
+               <TelevisionStation callLetters="WMUR" outletId="OUT84" parentPlus="N"/>
+               <TelevisionStation callLetters="KSNF" outletId="OUT85" parentPlus="N"/>
+               <TelevisionStation callLetters="WFLX" outletId="OUT86" parentPlus="N"/>
+               <TelevisionStation callLetters="WPTV" outletId="OUT87" parentPlus="N"/>
+               <TelevisionStation callLetters="EETM" outletId="OUT88" parentPlus="N"/>
+               <TelevisionStation callLetters="WAHU" outletId="OUT89" parentPlus="N"/>
+               <TelevisionStation callLetters="WMC" outletId="OUT90" parentPlus="N"/>
+               <TelevisionStation callLetters="KXJB" outletId="OUT91" parentPlus="N"/>
+               <TelevisionStation callLetters="KDRV" outletId="OUT92" parentPlus="N"/>
+               <TelevisionStation callLetters="KTBS" outletId="OUT93" parentPlus="N"/>
+               <TelevisionStation callLetters="WSMV" outletId="OUT94" parentPlus="N"/>
+               <TelevisionStation callLetters="WJMN" outletId="OUT95" parentPlus="N"/>
+               <TelevisionStation callLetters="WJAR" outletId="OUT96" parentPlus="N"/>
+               <TelevisionStation callLetters="WSBT" outletId="OUT97" parentPlus="N"/>
+               <TelevisionStation callLetters="WOWK" outletId="OUT98" parentPlus="N"/>
+               <TelevisionStation callLetters="WSVF" outletId="OUT99" parentPlus="N"/>
+               <TelevisionStation callLetters="WFLA" outletId="OUT100" parentPlus="N"/>
+               <TelevisionStation callLetters="KESQ" outletId="OUT101" parentPlus="N"/>
+               <TelevisionStation callLetters="KFMB" outletId="OUT102" parentPlus="N"/>
+               <TelevisionStation callLetters="WAGM" outletId="OUT103" parentPlus="N"/>
+               <TelevisionStation callLetters="WSTM" outletId="OUT104" parentPlus="N"/>
+               <TelevisionStation callLetters="WFAA" outletId="OUT105" parentPlus="N"/>
+               <TelevisionStation callLetters="KPTM" outletId="OUT106" parentPlus="N"/>
+               <TelevisionStation callLetters="WCAV" outletId="OUT107" parentPlus="N"/>
+               <TelevisionStation callLetters="WLAX" outletId="OUT108" parentPlus="N"/>
+               <TelevisionStation callLetters="GPTZ" outletId="OUT109" parentPlus="N"/>
+               <TelevisionStation callLetters="WISN" outletId="OUT110" parentPlus="N"/>
+               <TelevisionStation callLetters="WCPO" outletId="OUT111" parentPlus="N"/>
+               <TelevisionStation callLetters="KVLY" outletId="OUT112" parentPlus="N"/>
+               <TelevisionStation callLetters="WGRZ" outletId="OUT113" parentPlus="N"/>
+               <TelevisionStation callLetters="WGMB" outletId="OUT114" parentPlus="N"/>
+               <TelevisionStation callLetters="WHBF" outletId="OUT115" parentPlus="N"/>
+               <TelevisionStation callLetters="EBAL" outletId="OUT116" parentPlus="N"/>
+               <TelevisionStation callLetters="WAXN" outletId="OUT117" parentPlus="N"/>
+               <TelevisionStation callLetters="WSIL" outletId="OUT118" parentPlus="N"/>
+               <TelevisionStation callLetters="KONG" outletId="OUT119" parentPlus="N"/>
+               <TelevisionStation callLetters="WFXR" outletId="OUT120" parentPlus="N"/>
+               <TelevisionStation callLetters="WISH" outletId="OUT121" parentPlus="N"/>
+               <TelevisionStation callLetters="KTXE" outletId="OUT122" parentPlus="N"/>
+               <TelevisionStation callLetters="WPMI" outletId="OUT123" parentPlus="N"/>
+               <TelevisionStation callLetters="WHNT" outletId="OUT124" parentPlus="N"/>
+               <TelevisionStation callLetters="WZVN" outletId="OUT125" parentPlus="N"/>
+               <TelevisionStation callLetters="WVVA" outletId="OUT126" parentPlus="N"/>
+               <TelevisionStation callLetters="WMBF" outletId="OUT127" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVA" outletId="OUT128" parentPlus="N"/>
+               <TelevisionStation callLetters="WHDH" outletId="OUT129" parentPlus="N"/>
+               <TelevisionStation callLetters="KQDS" outletId="OUT130" parentPlus="N"/>
+               <TelevisionStation callLetters="KNWA" outletId="OUT131" parentPlus="N"/>
+               <TelevisionStation callLetters="WCWG" outletId="OUT132" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVR" outletId="OUT133" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVM" outletId="OUT134" parentPlus="N"/>
+               <TelevisionStation callLetters="WPSD" outletId="OUT135" parentPlus="N"/>
+               <TelevisionStation callLetters="WTTV" outletId="OUT136" parentPlus="N"/>
+               <TelevisionStation callLetters="ETVA" outletId="OUT137" parentPlus="N"/>
+               <TelevisionStation callLetters="KVOA" outletId="OUT138" parentPlus="N"/>
+               <TelevisionStation callLetters="WAFF" outletId="OUT139" parentPlus="N"/>
+               <TelevisionStation callLetters="WTAJ" outletId="OUT140" parentPlus="N"/>
+               <TelevisionStation callLetters="NXJB" outletId="OUT141" parentPlus="N"/>
+               <TelevisionStation callLetters="KSWO" outletId="OUT142" parentPlus="N"/>
+               <TelevisionStation callLetters="KPLR" outletId="OUT143" parentPlus="N"/>
+               <TelevisionStation callLetters="WJBF" outletId="OUT144" parentPlus="N"/>
+               <TelevisionStation callLetters="OECY" outletId="OUT145" parentPlus="N"/>
+               <TelevisionStation callLetters="WRGB" outletId="OUT146" parentPlus="N"/>
+               <TelevisionStation callLetters="GBBJ" outletId="OUT147" parentPlus="N"/>
+               <TelevisionStation callLetters="EPBI" outletId="OUT148" parentPlus="N"/>
+               <TelevisionStation callLetters="WGGB" outletId="OUT149" parentPlus="N"/>
+               <TelevisionStation callLetters="WHEC" outletId="OUT150" parentPlus="N"/>
+               <TelevisionStation callLetters="WIBW" outletId="OUT151" parentPlus="N"/>
+               <TelevisionStation callLetters="KKTV" outletId="OUT152" parentPlus="N"/>
+               <TelevisionStation callLetters="WVNS" outletId="OUT153" parentPlus="N"/>
+               <TelevisionStation callLetters="WDTN" outletId="OUT154" parentPlus="N"/>
+               <TelevisionStation callLetters="WLTZ" outletId="OUT155" parentPlus="N"/>
+               <TelevisionStation callLetters="WECT" outletId="OUT156" parentPlus="N"/>
+               <TelevisionStation callLetters="ETWC" outletId="OUT157" parentPlus="N"/>
+               <TelevisionStation callLetters="WMDT" outletId="OUT158" parentPlus="N"/>
+               <TelevisionStation callLetters="KWWL" outletId="OUT159" parentPlus="N"/>
+               <TelevisionStation callLetters="WGNT" outletId="OUT160" parentPlus="N"/>
+               <TelevisionStation callLetters="WXLV" outletId="OUT161" parentPlus="N"/>
+               <TelevisionStation callLetters="WWL" outletId="OUT162" parentPlus="N"/>
+               <TelevisionStation callLetters="WPGH" outletId="OUT163" parentPlus="N"/>
+               <TelevisionStation callLetters="WVAW" outletId="OUT164" parentPlus="N"/>
+               <TelevisionStation callLetters="WDKY" outletId="OUT165" parentPlus="N"/>
+               <TelevisionStation callLetters="WSVN" outletId="OUT166" parentPlus="N"/>
+               <TelevisionStation callLetters="WNEP" outletId="OUT167" parentPlus="N"/>
+               <TelevisionStation callLetters="WDAM" outletId="OUT168" parentPlus="N"/>
+               <TelevisionStation callLetters="WOOD" outletId="OUT169" parentPlus="N"/>
+               <TelevisionStation callLetters="KFOR" outletId="OUT170" parentPlus="N"/>
+               <TelevisionStation callLetters="KARE" outletId="OUT171" parentPlus="N"/>
+               <TelevisionStation callLetters="KQTV" outletId="OUT172" parentPlus="N"/>
+               <TelevisionStation callLetters="ETHI" outletId="OUT173" parentPlus="N"/>
+               <TelevisionStation callLetters="KNOP" outletId="OUT174" parentPlus="N"/>
+               <TelevisionStation callLetters="KEYT" outletId="OUT175" parentPlus="N"/>
+               <TelevisionStation callLetters="EBOC" outletId="OUT176" parentPlus="N"/>
+               <TelevisionStation callLetters="WEAR" outletId="OUT177" parentPlus="N"/>
+               <TelevisionStation callLetters="GTRF" outletId="OUT178" parentPlus="N"/>
+               <TelevisionStation callLetters="WNNE" outletId="OUT179" parentPlus="N"/>
+               <TelevisionStation callLetters="WOIO" outletId="OUT180" parentPlus="N"/>
+               <TelevisionStation callLetters="WVIR" outletId="OUT181" parentPlus="N"/>
+               <TelevisionStation callLetters="WBTW" outletId="OUT182" parentPlus="N"/>
+               <TelevisionStation callLetters="KJTV" outletId="OUT183" parentPlus="N"/>
+               <TelevisionStation callLetters="KVCW" outletId="OUT184" parentPlus="N"/>
+               <TelevisionStation callLetters="WWBT" outletId="OUT185" parentPlus="N"/>
+               <TelevisionStation callLetters="NRQE" outletId="OUT186" parentPlus="N"/>
+               <TelevisionStation callLetters="ENKY" outletId="OUT187" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVA" outletId="OUT188" parentPlus="N"/>
+               <TelevisionStation callLetters="KTAL" outletId="OUT189" parentPlus="N"/>
+               <TelevisionStation callLetters="KLTV" outletId="OUT190" parentPlus="N"/>
+               <TelevisionStation callLetters="KRGV" outletId="OUT191" parentPlus="N"/>
+               <TelevisionStation callLetters="KMSS" outletId="OUT192" parentPlus="N"/>
+               <TelevisionStation callLetters="WBNG" outletId="OUT193" parentPlus="N"/>
+               <TelevisionStation callLetters="WITN" outletId="OUT194" parentPlus="N"/>
+               <TelevisionStation callLetters="KHBS" outletId="OUT195" parentPlus="N"/>
+               <TelevisionStation callLetters="WHIZ" outletId="OUT196" parentPlus="N"/>
+               <TelevisionStation callLetters="WBXX" outletId="OUT197" parentPlus="N"/>
+               <TelevisionStation callLetters="WXYZ" outletId="OUT198" parentPlus="N"/>
+               <TelevisionStation callLetters="WBOY" outletId="OUT199" parentPlus="N"/>
+               <TelevisionStation callLetters="WNCT" outletId="OUT200" parentPlus="N"/>
+               <TelevisionStation callLetters="KDVR" outletId="OUT201" parentPlus="N"/>
+               <TelevisionStation callLetters="KGET" outletId="OUT202" parentPlus="N"/>
+               <TelevisionStation callLetters="WILX" outletId="OUT203" parentPlus="N"/>
+               <TelevisionStation callLetters="KVII" outletId="OUT204" parentPlus="N"/>
+               <TelevisionStation callLetters="WKYC" outletId="OUT205" parentPlus="N"/>
+               <TelevisionStation callLetters="WSAV" outletId="OUT206" parentPlus="N"/>
+               <TelevisionStation callLetters="WCOV" outletId="OUT207" parentPlus="N"/>
+               <TelevisionStation callLetters="WTHI" outletId="OUT208" parentPlus="N"/>
+               <TelevisionStation callLetters="WFMJ" outletId="OUT209" parentPlus="N"/>
+               <TelevisionStation callLetters="KBNZ" outletId="OUT210" parentPlus="N"/>
+               <TelevisionStation callLetters="ETOV" outletId="OUT211" parentPlus="N"/>
+               <TelevisionStation callLetters="KSWT" outletId="OUT212" parentPlus="N"/>
+               <TelevisionStation callLetters="WDIV" outletId="OUT213" parentPlus="N"/>
+               <TelevisionStation callLetters="WBRC" outletId="OUT214" parentPlus="N"/>
+               <TelevisionStation callLetters="HDAM" outletId="OUT215" parentPlus="N"/>
+               <TelevisionStation callLetters="KFNB" outletId="OUT216" parentPlus="N"/>
+               <TelevisionStation callLetters="KOSA" outletId="OUT217" parentPlus="N"/>
+               <TelevisionStation callLetters="WKRC" outletId="OUT218" parentPlus="N"/>
+               <TelevisionStation callLetters="WBNS" outletId="OUT219" parentPlus="N"/>
+               <TelevisionStation callLetters="KBMY" outletId="OUT220" parentPlus="N"/>
+               <TelevisionStation callLetters="KLKN" outletId="OUT221" parentPlus="N"/>
+               <TelevisionStation callLetters="WXIN" outletId="OUT222" parentPlus="N"/>
+               <TelevisionStation callLetters="KPRC" outletId="OUT223" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVG" outletId="OUT224" parentPlus="N"/>
+               <TelevisionStation callLetters="KTIV" outletId="OUT225" parentPlus="N"/>
+               <TelevisionStation callLetters="WTTE" outletId="OUT226" parentPlus="N"/>
+               <TelevisionStation callLetters="KFXK" outletId="OUT227" parentPlus="N"/>
+               <TelevisionStation callLetters="KOAA" outletId="OUT228" parentPlus="N"/>
+               <TelevisionStation callLetters="KPSP" outletId="OUT229" parentPlus="N"/>
+               <TelevisionStation callLetters="DXXV" outletId="OUT230" parentPlus="N"/>
+               <TelevisionStation callLetters="KION" outletId="OUT231" parentPlus="N"/>
+               <TelevisionStation callLetters="KTEN" outletId="OUT232" parentPlus="N"/>
+               <TelevisionStation callLetters="WSYX" outletId="OUT233" parentPlus="N"/>
+               <TelevisionStation callLetters="WTIC" outletId="OUT234" parentPlus="N"/>
+               <TelevisionStation callLetters="KOLD" outletId="OUT235" parentPlus="N"/>
+               <TelevisionStation callLetters="WXVT" outletId="OUT236" parentPlus="N"/>
+               <TelevisionStation callLetters="WLNS" outletId="OUT237" parentPlus="N"/>
+               <TelevisionStation callLetters="WYDC" outletId="OUT238" parentPlus="N"/>
+               <TelevisionStation callLetters="WPBF" outletId="OUT239" parentPlus="N"/>
+               <TelevisionStation callLetters="KARK" outletId="OUT240" parentPlus="N"/>
+               <TelevisionStation callLetters="KTXS" outletId="OUT241" parentPlus="N"/>
+               <TelevisionStation callLetters="KRNV" outletId="OUT242" parentPlus="N"/>
+               <TelevisionStation callLetters="WWSB" outletId="OUT243" parentPlus="N"/>
+               <TelevisionStation callLetters="KGBT" outletId="OUT244" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVW" outletId="OUT245" parentPlus="N"/>
+               <TelevisionStation callLetters="WCWJ" outletId="OUT246" parentPlus="N"/>
+               <TelevisionStation callLetters="MCLO" outletId="OUT247" parentPlus="N"/>
+               <TelevisionStation callLetters="WGBA" outletId="OUT248" parentPlus="N"/>
+               <TelevisionStation callLetters="KSNW" outletId="OUT249" parentPlus="N"/>
+               <TelevisionStation callLetters="WLWT" outletId="OUT250" parentPlus="N"/>
+               <TelevisionStation callLetters="WJW" outletId="OUT251" parentPlus="N"/>
+               <TelevisionStation callLetters="KCPQ" outletId="OUT252" parentPlus="N"/>
+               <TelevisionStation callLetters="KAVU" outletId="OUT253" parentPlus="N"/>
+               <TelevisionStation callLetters="WGCL" outletId="OUT254" parentPlus="N"/>
+               <TelevisionStation callLetters="WCSH" outletId="OUT255" parentPlus="N"/>
+               <TelevisionStation callLetters="NGWN" outletId="OUT256" parentPlus="N"/>
+               <TelevisionStation callLetters="KZJO" outletId="OUT257" parentPlus="N"/>
+               <TelevisionStation callLetters="NECY" outletId="OUT258" parentPlus="N"/>
+               <TelevisionStation callLetters="WMSN" outletId="OUT259" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVB" outletId="OUT260" parentPlus="N"/>
+               <TelevisionStation callLetters="WCYB" outletId="OUT261" parentPlus="N"/>
+               <TelevisionStation callLetters="WAFB" outletId="OUT262" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVK" outletId="OUT263" parentPlus="N"/>
+               <TelevisionStation callLetters="KOLN" outletId="OUT264" parentPlus="N"/>
+               <TelevisionStation callLetters="WUPL" outletId="OUT265" parentPlus="N"/>
+               <TelevisionStation callLetters="WISC" outletId="OUT266" parentPlus="N"/>
+               <TelevisionStation callLetters="KODE" outletId="OUT267" parentPlus="N"/>
+               <TelevisionStation callLetters="WJXT" outletId="OUT268" parentPlus="N"/>
+               <TelevisionStation callLetters="KVHP" outletId="OUT269" parentPlus="N"/>
+               <TelevisionStation callLetters="WLTX" outletId="OUT270" parentPlus="N"/>
+               <TelevisionStation callLetters="WHTM" outletId="OUT271" parentPlus="N"/>
+               <TelevisionStation callLetters="KIVI" outletId="OUT272" parentPlus="N"/>
+               <TelevisionStation callLetters="KWTV" outletId="OUT273" parentPlus="N"/>
+               <TelevisionStation callLetters="WCCB" outletId="OUT274" parentPlus="N"/>
+               <TelevisionStation callLetters="NWWL" outletId="OUT275" parentPlus="N"/>
+               <TelevisionStation callLetters="KLST" outletId="OUT276" parentPlus="N"/>
+               <TelevisionStation callLetters="WNKY" outletId="OUT277" parentPlus="N"/>
+               <TelevisionStation callLetters="KASY" outletId="OUT278" parentPlus="N"/>
+               <TelevisionStation callLetters="KWKT" outletId="OUT279" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVD" outletId="OUT280" parentPlus="N"/>
+               <TelevisionStation callLetters="KGWN" outletId="OUT281" parentPlus="N"/>
+               <TelevisionStation callLetters="KHOU" outletId="OUT282" parentPlus="N"/>
+               <TelevisionStation callLetters="WJAC" outletId="OUT283" parentPlus="N"/>
+               <TelevisionStation callLetters="WNDU" outletId="OUT284" parentPlus="N"/>
+               <TelevisionStation callLetters="WRDW" outletId="OUT285" parentPlus="N"/>
+               <TelevisionStation callLetters="WLOX" outletId="OUT286" parentPlus="N"/>
+               <TelevisionStation callLetters="WEHT" outletId="OUT287" parentPlus="N"/>
+               <TelevisionStation callLetters="WDCW" outletId="OUT288" parentPlus="N"/>
+               <TelevisionStation callLetters="WBKO" outletId="OUT289" parentPlus="N"/>
+               <TelevisionStation callLetters="WLBZ" outletId="OUT290" parentPlus="N"/>
+               <TelevisionStation callLetters="KCCI" outletId="OUT291" parentPlus="N"/>
+               <TelevisionStation callLetters="KOB" outletId="OUT292" parentPlus="N"/>
+               <TelevisionStation callLetters="WPXI" outletId="OUT293" parentPlus="N"/>
+               <TelevisionStation callLetters="WKOW" outletId="OUT294" parentPlus="N"/>
+               <TelevisionStation callLetters="KING" outletId="OUT295" parentPlus="N"/>
+               <TelevisionStation callLetters="KOBI" outletId="OUT296" parentPlus="Y"/>
+               <TelevisionStation callLetters="WALB" outletId="OUT297" parentPlus="N"/>
+               <TelevisionStation callLetters="WNTZ" outletId="OUT298" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVM" outletId="OUT299" parentPlus="N"/>
+               <TelevisionStation callLetters="KRCG" outletId="OUT300" parentPlus="N"/>
+               <TelevisionStation callLetters="EHAM" outletId="OUT301" parentPlus="N"/>
+               <TelevisionStation callLetters="KREM" outletId="OUT302" parentPlus="N"/>
+               <TelevisionStation callLetters="KSAT" outletId="OUT303" parentPlus="N"/>
+               <TelevisionStation callLetters="GHP" outletId="OUT304" parentPlus="N"/>
+               <TelevisionStation callLetters="KREX" outletId="OUT305" parentPlus="N"/>
+               <TelevisionStation callLetters="WVTM" outletId="OUT306" parentPlus="N"/>
+               <TelevisionStation callLetters="KETK" outletId="OUT307" parentPlus="N"/>
+               <TelevisionStation callLetters="KOKI" outletId="OUT308" parentPlus="N"/>
+               <TelevisionStation callLetters="KELO" outletId="OUT309" parentPlus="N"/>
+               <TelevisionStation callLetters="OTEN" outletId="OUT310" parentPlus="N"/>
+               <TelevisionStation callLetters="KADN" outletId="OUT311" parentPlus="N"/>
+               <TelevisionStation callLetters="KIMT" outletId="OUT312" parentPlus="N"/>
+               <TelevisionStation callLetters="WWMT" outletId="OUT313" parentPlus="N"/>
+               <TelevisionStation callLetters="KFDA" outletId="OUT314" parentPlus="N"/>
+               <TelevisionStation callLetters="KXOF" outletId="OUT315" parentPlus="N"/>
+               <TelevisionStation callLetters="WKRG" outletId="OUT316" parentPlus="N"/>
+               <TelevisionStation callLetters="WCMH" outletId="OUT317" parentPlus="N"/>
+               <TelevisionStation callLetters="WLAJ" outletId="OUT318" parentPlus="N"/>
+               <TelevisionStation callLetters="KOLO" outletId="OUT319" parentPlus="N"/>
+               <TelevisionStation callLetters="KDNL" outletId="OUT320" parentPlus="N"/>
+               <TelevisionStation callLetters="KKFX" outletId="OUT321" parentPlus="N"/>
+               <TelevisionStation callLetters="NSBW" outletId="OUT322" parentPlus="N"/>
+               <TelevisionStation callLetters="WESH" outletId="OUT323" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVL" outletId="OUT324" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVX" outletId="OUT325" parentPlus="N"/>
+               <TelevisionStation callLetters="WBMA" outletId="OUT326" parentPlus="N"/>
+               <TelevisionStation callLetters="KTUU" outletId="OUT327" parentPlus="N"/>
+               <TelevisionStation callLetters="KFBB" outletId="OUT328" parentPlus="N"/>
+               <TelevisionStation callLetters="WNOL" outletId="OUT329" parentPlus="N"/>
+               <TelevisionStation callLetters="KWYB" outletId="OUT330" parentPlus="N"/>
+               <TelevisionStation callLetters="WHPM" outletId="OUT331" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVC" outletId="OUT332" parentPlus="N"/>
+               <TelevisionStation callLetters="NFMB" outletId="OUT333" parentPlus="N"/>
+               <TelevisionStation callLetters="KOMU" outletId="OUT334" parentPlus="N"/>
+               <TelevisionStation callLetters="KIDK" outletId="OUT335" parentPlus="N"/>
+               <TelevisionStation callLetters="KTKA" outletId="OUT336" parentPlus="N"/>
+               <TelevisionStation callLetters="KXII" outletId="OUT337" parentPlus="N"/>
+               <TelevisionStation callLetters="WAOW" outletId="OUT338" parentPlus="N"/>
+               <TelevisionStation callLetters="WTNZ" outletId="OUT339" parentPlus="N"/>
+               <TelevisionStation callLetters="WHO" outletId="OUT340" parentPlus="N"/>
+               <TelevisionStation callLetters="NIMT" outletId="OUT341" parentPlus="N"/>
+               <TelevisionStation callLetters="WKCF" outletId="OUT342" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVF" outletId="OUT343" parentPlus="N"/>
+               <TelevisionStation callLetters="WMLW" outletId="OUT344" parentPlus="N"/>
+               <TelevisionStation callLetters="KFQX" outletId="OUT345" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVO" outletId="OUT346" parentPlus="N"/>
+               <TelevisionStation callLetters="KETV" outletId="OUT347" parentPlus="N"/>
+               <TelevisionStation callLetters="WZZM" outletId="OUT348" parentPlus="N"/>
+               <TelevisionStation callLetters="WDRB" outletId="OUT349" parentPlus="N"/>
+               <TelevisionStation callLetters="KRQE" outletId="OUT350" parentPlus="N"/>
+               <TelevisionStation callLetters="KRXI" outletId="OUT351" parentPlus="N"/>
+               <TelevisionStation callLetters="WVLT" outletId="OUT352" parentPlus="N"/>
+               <TelevisionStation callLetters="WNYO" outletId="OUT353" parentPlus="N"/>
+               <TelevisionStation callLetters="KWBA" outletId="OUT354" parentPlus="N"/>
+               <TelevisionStation callLetters="KXNW" outletId="OUT355" parentPlus="N"/>
+               <TelevisionStation callLetters="QRDO" outletId="OUT356" parentPlus="N"/>
+               <TelevisionStation callLetters="WLBT" outletId="OUT357" parentPlus="N"/>
+               <TelevisionStation callLetters="KSLA" outletId="OUT358" parentPlus="N"/>
+               <TelevisionStation callLetters="EKTV" outletId="OUT359" parentPlus="N"/>
+               <TelevisionStation callLetters="KIII" outletId="OUT360" parentPlus="N"/>
+               <TelevisionStation callLetters="WJET" outletId="OUT361" parentPlus="N"/>
+               <TelevisionStation callLetters="KXDF" outletId="OUT362" parentPlus="N"/>
+               <TelevisionStation callLetters="WBBJ" outletId="OUT363" parentPlus="N"/>
+               <TelevisionStation callLetters="KSHB" outletId="OUT364" parentPlus="N"/>
+               <TelevisionStation callLetters="WPMT" outletId="OUT365" parentPlus="N"/>
+               <TelevisionStation callLetters="WEEK" outletId="OUT366" parentPlus="N"/>
+               <TelevisionStation callLetters="KPTV" outletId="OUT367" parentPlus="N"/>
+               <TelevisionStation callLetters="WTXL" outletId="OUT368" parentPlus="N"/>
+               <TelevisionStation callLetters="WJFW" outletId="OUT369" parentPlus="N"/>
+               <TelevisionStation callLetters="KSTP" outletId="OUT370" parentPlus="N"/>
+               <TelevisionStation callLetters="WAVE" outletId="OUT371" parentPlus="N"/>
+               <TelevisionStation callLetters="KUTV" outletId="OUT372" parentPlus="N"/>
+               <TelevisionStation callLetters="WVEC" outletId="OUT373" parentPlus="N"/>
+               <TelevisionStation callLetters="KMTR" outletId="OUT374" parentPlus="N"/>
+               <TelevisionStation callLetters="WICS" outletId="OUT375" parentPlus="N"/>
+               <TelevisionStation callLetters="WTLV" outletId="OUT376" parentPlus="N"/>
+               <TelevisionStation callLetters="WROC" outletId="OUT377" parentPlus="N"/>
+               <TelevisionStation callLetters="KVRR" outletId="OUT378" parentPlus="N"/>
+               <TelevisionStation callLetters="WFRV" outletId="OUT379" parentPlus="N"/>
+               <TelevisionStation callLetters="WSAW" outletId="OUT380" parentPlus="N"/>
+               <TelevisionStation callLetters="KZTV" outletId="OUT381" parentPlus="N"/>
+               <TelevisionStation callLetters="WHP" outletId="OUT382" parentPlus="N"/>
+               <TelevisionStation callLetters="KCLO" outletId="OUT383" parentPlus="N"/>
+               <TelevisionStation callLetters="WSLS" outletId="OUT384" parentPlus="N"/>
+               <TelevisionStation callLetters="KGAN" outletId="OUT385" parentPlus="N"/>
+               <TelevisionStation callLetters="WTAE" outletId="OUT386" parentPlus="N"/>
+               <TelevisionStation callLetters="WVNY" outletId="OUT387" parentPlus="N"/>
+               <TelevisionStation callLetters="WTWC" outletId="OUT388" parentPlus="N"/>
+               <TelevisionStation callLetters="WCTV" outletId="OUT389" parentPlus="N"/>
+               <TelevisionStation callLetters="WXIA" outletId="OUT390" parentPlus="N"/>
+               <TelevisionStation callLetters="KNXV" outletId="OUT391" parentPlus="N"/>
+               <TelevisionStation callLetters="KRIS" outletId="OUT392" parentPlus="N"/>
+               <TelevisionStation callLetters="KYOU" outletId="OUT393" parentPlus="N"/>
+               <TelevisionStation callLetters="WSOC" outletId="OUT394" parentPlus="N"/>
+               <TelevisionStation callLetters="WLUK" outletId="OUT395" parentPlus="N"/>
+               <TelevisionStation callLetters="EHP" outletId="OUT396" parentPlus="N"/>
+               <TelevisionStation callLetters="WDAY" outletId="OUT397" parentPlus="Y"/>
+               <TelevisionStation callLetters="WKRN" outletId="OUT398" parentPlus="N"/>
+               <TelevisionStation callLetters="WCIU" outletId="OUT399" parentPlus="N"/>
+               <TelevisionStation callLetters="KNVA" outletId="OUT400" parentPlus="N"/>
+               <TelevisionStation callLetters="KMEG" outletId="OUT401" parentPlus="N"/>
+               <TelevisionStation callLetters="WITI" outletId="OUT402" parentPlus="N"/>
+               <TelevisionStation callLetters="KMID" outletId="OUT403" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVE" outletId="OUT404" parentPlus="N"/>
+               <TelevisionStation callLetters="KATV" outletId="OUT405" parentPlus="N"/>
+               <TelevisionStation callLetters="WDSU" outletId="OUT406" parentPlus="N"/>
+               <TelevisionStation callLetters="EGGB" outletId="OUT407" parentPlus="N"/>
+               <TelevisionStation callLetters="WTNH" outletId="OUT408" parentPlus="N"/>
+               <TelevisionStation callLetters="GVIR" outletId="OUT409" parentPlus="N"/>
+               <TelevisionStation callLetters="WBRE" outletId="OUT410" parentPlus="N"/>
+               <TelevisionStation callLetters="KGPE" outletId="OUT411" parentPlus="N"/>
+               <TelevisionStation callLetters="WOI" outletId="OUT412" parentPlus="N"/>
+               <TelevisionStation callLetters="WSPA" outletId="OUT413" parentPlus="N"/>
+               <TelevisionStation callLetters="KRDO" outletId="OUT414" parentPlus="N"/>
+               <TelevisionStation callLetters="KWBQ" outletId="OUT415" parentPlus="N"/>
+               <TelevisionStation callLetters="WFXG" outletId="OUT416" parentPlus="N"/>
+               <TelevisionStation callLetters="KVIA" outletId="OUT417" parentPlus="N"/>
+               <TelevisionStation callLetters="WXIX" outletId="OUT418" parentPlus="N"/>
+               <TelevisionStation callLetters="KYTX" outletId="OUT419" parentPlus="N"/>
+               <TelevisionStation callLetters="KLSR" outletId="OUT420" parentPlus="N"/>
+               <TelevisionStation callLetters="KVUE" outletId="OUT421" parentPlus="N"/>
+               <TelevisionStation callLetters="WAPT" outletId="OUT422" parentPlus="N"/>
+               <TelevisionStation callLetters="WHIO" outletId="OUT423" parentPlus="N"/>
+               <TelevisionStation callLetters="WCVB" outletId="OUT424" parentPlus="N"/>
+               <TelevisionStation callLetters="WBAL" outletId="OUT425" parentPlus="N"/>
+               <TelevisionStation callLetters="WLNE" outletId="OUT426" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVQ" outletId="OUT427" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVO" outletId="OUT428" parentPlus="N"/>
+               <TelevisionStation callLetters="KJZZ" outletId="OUT429" parentPlus="N"/>
+               <TelevisionStation callLetters="KEZI" outletId="OUT430" parentPlus="N"/>
+               <TelevisionStation callLetters="WLMT" outletId="OUT431" parentPlus="N"/>
+               <TelevisionStation callLetters="WVLA" outletId="OUT432" parentPlus="N"/>
+               <TelevisionStation callLetters="NTMF" outletId="OUT433" parentPlus="N"/>
+               <TelevisionStation callLetters="KOAM" outletId="OUT434" parentPlus="N"/>
+               <TelevisionStation callLetters="WFFF" outletId="OUT435" parentPlus="N"/>
+               <TelevisionStation callLetters="WMBD" outletId="OUT436" parentPlus="N"/>
+               <TelevisionStation callLetters="WCIA" outletId="OUT437" parentPlus="N"/>
+               <TelevisionStation callLetters="WOAI" outletId="OUT438" parentPlus="N"/>
+               <TelevisionStation callLetters="WRAZ" outletId="OUT439" parentPlus="N"/>
+               <TelevisionStation callLetters="WPEC" outletId="OUT440" parentPlus="N"/>
+               <TelevisionStation callLetters="KENS" outletId="OUT441" parentPlus="N"/>
+               <TelevisionStation callLetters="KFJX" outletId="OUT442" parentPlus="N"/>
+               <TelevisionStation callLetters="KAEF" outletId="OUT443" parentPlus="N"/>
+               <TelevisionStation callLetters="WSTQ" outletId="OUT444" parentPlus="N"/>
+               <TelevisionStation callLetters="WDAF" outletId="OUT445" parentPlus="N"/>
+               <TelevisionStation callLetters="KAUZ" outletId="OUT446" parentPlus="N"/>
+               <TelevisionStation callLetters="KRTV" outletId="OUT447" parentPlus="N"/>
+               <TelevisionStation callLetters="KYUR" outletId="OUT448" parentPlus="N"/>
+               <TelevisionStation callLetters="KPAX" outletId="OUT449" parentPlus="N"/>
+               <TelevisionStation callLetters="WAKA" outletId="OUT450" parentPlus="N"/>
+               <TelevisionStation callLetters="KMOL" outletId="OUT451" parentPlus="N"/>
+               <TelevisionStation callLetters="WMAR" outletId="OUT452" parentPlus="N"/>
+               <TelevisionStation callLetters="WAWV" outletId="OUT453" parentPlus="N"/>
+               <TelevisionStation callLetters="KCWI" outletId="OUT454" parentPlus="N"/>
+               <TelevisionStation callLetters="WHLT" outletId="OUT455" parentPlus="N"/>
+               <TelevisionStation callLetters="KBAK" outletId="OUT456" parentPlus="N"/>
+               <TelevisionStation callLetters="WATL" outletId="OUT457" parentPlus="N"/>
+               <TelevisionStation callLetters="KATC" outletId="OUT458" parentPlus="N"/>
+               <TelevisionStation callLetters="KXPI" outletId="OUT459" parentPlus="N"/>
+               <TelevisionStation callLetters="KXTV" outletId="OUT460" parentPlus="N"/>
+               <TelevisionStation callLetters="WKTV" outletId="OUT461" parentPlus="N"/>
+               <TelevisionStation callLetters="KCAU" outletId="OUT462" parentPlus="N"/>
+               <TelevisionStation callLetters="WEMT" outletId="OUT463" parentPlus="N"/>
+               <TelevisionStation callLetters="EWLP" outletId="OUT464" parentPlus="N"/>
+               <TelevisionStation callLetters="KLAS" outletId="OUT465" parentPlus="N"/>
+               <TelevisionStation callLetters="KEYC" outletId="OUT466" parentPlus="N"/>
+               <TelevisionStation callLetters="KMOV" outletId="OUT467" parentPlus="N"/>
+               <TelevisionStation callLetters="KBTV" outletId="OUT468" parentPlus="N"/>
+               <TelevisionStation callLetters="KWES" outletId="OUT469" parentPlus="N"/>
+               <TelevisionStation callLetters="WXXV" outletId="OUT470" parentPlus="N"/>
+               <TelevisionStation callLetters="WOHL" outletId="OUT471" parentPlus="N"/>
+               <TelevisionStation callLetters="NEYC" outletId="OUT472" parentPlus="N"/>
+               <TelevisionStation callLetters="WDBD" outletId="OUT473" parentPlus="N"/>
+               <TelevisionStation callLetters="KABB" outletId="OUT474" parentPlus="N"/>
+               <TelevisionStation callLetters="WZAW" outletId="OUT475" parentPlus="N"/>
+               <TelevisionStation callLetters="WKEF" outletId="OUT476" parentPlus="N"/>
+               <TelevisionStation callLetters="MXGN" outletId="OUT477" parentPlus="N"/>
+               <TelevisionStation callLetters="WNAC" outletId="OUT478" parentPlus="N"/>
+               <TelevisionStation callLetters="KXVO" outletId="OUT479" parentPlus="N"/>
+               <TelevisionStation callLetters="KRBC" outletId="OUT480" parentPlus="N"/>
+               <TelevisionStation callLetters="WBDT" outletId="OUT481" parentPlus="N"/>
+               <TelevisionStation callLetters="KSBI" outletId="OUT482" parentPlus="N"/>
+               <TelevisionStation callLetters="KBFX" outletId="OUT483" parentPlus="N"/>
+               <TelevisionStation callLetters="WWNY" outletId="OUT484" parentPlus="N"/>
+               <TelevisionStation callLetters="KGW" outletId="OUT485" parentPlus="N"/>
+               <TelevisionStation callLetters="KMIR" outletId="OUT486" parentPlus="N"/>
+               <TelevisionStation callLetters="KTBY" outletId="OUT487" parentPlus="N"/>
+               <TelevisionStation callLetters="KFDM" outletId="OUT488" parentPlus="N"/>
+               <TelevisionStation callLetters="WHAM" outletId="OUT489" parentPlus="N"/>
+               <TelevisionStation callLetters="EBOY" outletId="OUT490" parentPlus="N"/>
+               <TelevisionStation callLetters="KRCR" outletId="OUT491" parentPlus="N"/>
+               <TelevisionStation callLetters="WSFL" outletId="OUT492" parentPlus="N"/>
+               <TelevisionStation callLetters="ENEM" outletId="OUT493" parentPlus="N"/>
+               <TelevisionStation callLetters="KEYE" outletId="OUT494" parentPlus="N"/>
+               <TelevisionStation callLetters="WWCW" outletId="OUT495" parentPlus="N"/>
+               <TelevisionStation callLetters="KIRO" outletId="OUT496" parentPlus="N"/>
+               <TelevisionStation callLetters="WGN" outletId="OUT497" parentPlus="N"/>
+               <TelevisionStation callLetters="NHBS" outletId="OUT498" parentPlus="N"/>
+               <TelevisionStation callLetters="WHAS" outletId="OUT499" parentPlus="N"/>
+               <TelevisionStation callLetters="WFTV" outletId="OUT500" parentPlus="N"/>
+               <TelevisionStation callLetters="WTTA" outletId="OUT501" parentPlus="N"/>
+               <TelevisionStation callLetters="WXII" outletId="OUT502" parentPlus="N"/>
+               <TelevisionStation callLetters="KTLA" outletId="OUT503" parentPlus="N"/>
+               <TelevisionStation callLetters="KAAL" outletId="OUT504" parentPlus="N"/>
+               <TelevisionStation callLetters="ELAJ" outletId="OUT505" parentPlus="N"/>
+               <TelevisionStation callLetters="NIMA" outletId="OUT506" parentPlus="N"/>
+               <TelevisionStation callLetters="KRCW" outletId="OUT507" parentPlus="N"/>
+               <TelevisionStation callLetters="WENY" outletId="OUT508" parentPlus="N"/>
+               <TelevisionStation callLetters="KSAN" outletId="OUT509" parentPlus="N"/>
+               <TelevisionStation callLetters="WSFX" outletId="OUT510" parentPlus="N"/>
+               <TelevisionStation callLetters="WPBI" outletId="OUT511" parentPlus="N"/>
+               <TelevisionStation callLetters="OAIT" outletId="OUT512" parentPlus="N"/>
+               <TelevisionStation callLetters="WRSP" outletId="OUT513" parentPlus="N"/>
+               <TelevisionStation callLetters="WQAD" outletId="OUT514" parentPlus="N"/>
+               <TelevisionStation callLetters="WVBT" outletId="OUT515" parentPlus="N"/>
+               <TelevisionStation callLetters="WLFI" outletId="OUT516" parentPlus="N"/>
+               <TelevisionStation callLetters="WHNS" outletId="OUT517" parentPlus="N"/>
+               <TelevisionStation callLetters="KOTA" outletId="OUT518" parentPlus="N"/>
+               <TelevisionStation callLetters="KAPP" outletId="OUT519" parentPlus="N"/>
+               <TelevisionStation callLetters="KIMA" outletId="OUT520" parentPlus="N"/>
+               <TelevisionStation callLetters="WSFA" outletId="OUT521" parentPlus="N"/>
+               <TelevisionStation callLetters="WACH" outletId="OUT522" parentPlus="N"/>
+               <TelevisionStation callLetters="ENEP" outletId="OUT523" parentPlus="N"/>
+               <TelevisionStation callLetters="KSNT" outletId="OUT524" parentPlus="N"/>
+               <TelevisionStation callLetters="KSTU" outletId="OUT525" parentPlus="N"/>
+               <TelevisionStation callLetters="KEVU" outletId="OUT526" parentPlus="N"/>
+               <TelevisionStation callLetters="KRON" outletId="OUT527" parentPlus="N"/>
+               <TelevisionStation callLetters="KHGI" outletId="OUT528" parentPlus="N"/>
+               <TelevisionStation callLetters="WTWO" outletId="OUT529" parentPlus="N"/>
+               <TelevisionStation callLetters="ESVF" outletId="OUT530" parentPlus="N"/>
+               <TelevisionStation callLetters="WFMY" outletId="OUT531" parentPlus="N"/>
+               <TelevisionStation callLetters="WAND" outletId="OUT532" parentPlus="N"/>
+               <TelevisionStation callLetters="KATN" outletId="OUT533" parentPlus="N"/>
+               <TelevisionStation callLetters="WRGT" outletId="OUT534" parentPlus="N"/>
+               <TelevisionStation callLetters="WTVH" outletId="OUT535" parentPlus="N"/>
+               <TelevisionStation callLetters="KXMC" outletId="OUT536" parentPlus="N"/>
+               <TelevisionStation callLetters="KOTV" outletId="OUT537" parentPlus="N"/>
+               <TelevisionStation callLetters="KSVI" outletId="OUT538" parentPlus="N"/>
+               <TelevisionStation callLetters="KCOY" outletId="OUT539" parentPlus="N"/>
+               <TelevisionStation callLetters="WGNO" outletId="OUT540" parentPlus="N"/>
+               <TelevisionStation callLetters="WTOV" outletId="OUT541" parentPlus="N"/>
+               <TelevisionStation callLetters="WDIO" outletId="OUT542" parentPlus="N"/>
+               <TelevisionStation callLetters="WPTZ" outletId="OUT543" parentPlus="N"/>
+               <TelevisionStation callLetters="KFXA" outletId="OUT544" parentPlus="N"/>
+               <TelevisionStation callLetters="KTAB" outletId="OUT545" parentPlus="N"/>
+               <TelevisionStation callLetters="EMAR" outletId="OUT546" parentPlus="N"/>
+               <TelevisionStation callLetters="WCWN" outletId="OUT547" parentPlus="N"/>
+               <TelevisionStation callLetters="KFYR" outletId="OUT548" parentPlus="N"/>
+               <TelevisionStation callLetters="WUHF" outletId="OUT549" parentPlus="N"/>
+               <TelevisionStation callLetters="WGAL" outletId="OUT550" parentPlus="N"/>
+               <TelevisionStation callLetters="KAUT" outletId="OUT551" parentPlus="N"/>
+               <TelevisionStation callLetters="WNBD" outletId="OUT552" parentPlus="N"/>
+               <TelevisionStation callLetters="WUTV" outletId="OUT553" parentPlus="N"/>
+               <TelevisionStation callLetters="WHBQ" outletId="OUT554" parentPlus="N"/>
+               <TelevisionStation callLetters="KOMO" outletId="OUT555" parentPlus="N"/>
+               <TelevisionStation callLetters="WOLO" outletId="OUT556" parentPlus="N"/>
+               <TelevisionStation callLetters="ELTZ" outletId="OUT557" parentPlus="N"/>
+               <TelevisionStation callLetters="WCIX" outletId="OUT558" parentPlus="N"/>
+               <TelevisionStation callLetters="KLAF" outletId="OUT559" parentPlus="N"/>
+               <TelevisionStation callLetters="KOCO" outletId="OUT560" parentPlus="N"/>
+               <TelevisionStation callLetters="WKYT" outletId="OUT561" parentPlus="N"/>
+               <TelevisionStation callLetters="KVEO" outletId="OUT562" parentPlus="N"/>
+               <TelevisionStation callLetters="WSB" outletId="OUT563" parentPlus="N"/>
+               <TelevisionStation callLetters="FXII" outletId="OUT564" parentPlus="N"/>
+               <TelevisionStation callLetters="WEVV" outletId="OUT565" parentPlus="N"/>
+               <TelevisionStation callLetters="WWTI" outletId="OUT566" parentPlus="N"/>
+               <TelevisionStation callLetters="WQWQ" outletId="OUT567" parentPlus="N"/>
+               <TelevisionStation callLetters="KXGN" outletId="OUT568" parentPlus="N"/>
+               <TelevisionStation callLetters="WGTU" outletId="OUT569" parentPlus="N"/>
+               <TelevisionStation callLetters="KXAN" outletId="OUT570" parentPlus="N"/>
+               <TelevisionStation callLetters="KTHV" outletId="OUT571" parentPlus="N"/>
+               <TelevisionStation callLetters="KPNX" outletId="OUT572" parentPlus="N"/>
+               <TelevisionStation callLetters="WABI" outletId="OUT573" parentPlus="N"/>
+               <TelevisionStation callLetters="KFVS" outletId="OUT574" parentPlus="N"/>
+               <TelevisionStation callLetters="KSKN" outletId="OUT575" parentPlus="N"/>
+               <TelevisionStation callLetters="WRDE" outletId="OUT576" parentPlus="N"/>
+               <TelevisionStation callLetters="KVAL" outletId="OUT577" parentPlus="N"/>
+               <TelevisionStation callLetters="WTOC" outletId="OUT578" parentPlus="N"/>
+               <TelevisionStation callLetters="WNCF" outletId="OUT579" parentPlus="N"/>
+               <TelevisionStation callLetters="WBBH" outletId="OUT580" parentPlus="N"/>
+               <TelevisionStation callLetters="WILM" outletId="OUT581" parentPlus="N"/>
+               <TelevisionStation callLetters="KFOX" outletId="OUT582" parentPlus="N"/>
+               <TelevisionStation callLetters="KHQA" outletId="OUT583" parentPlus="N"/>
+               <TelevisionStation callLetters="KAMR" outletId="OUT584" parentPlus="N"/>
+               <TelevisionStation callLetters="WFSB" outletId="OUT585" parentPlus="N"/>
+               <TelevisionStation callLetters="WTOL" outletId="OUT586" parentPlus="N"/>
+               <TelevisionStation callLetters="KIAH" outletId="OUT587" parentPlus="N"/>
+               <TelevisionStation callLetters="WLIO" outletId="OUT588" parentPlus="N"/>
+               <TelevisionStation callLetters="EENY" outletId="OUT589" parentPlus="N"/>
+               <TelevisionStation callLetters="WIAT" outletId="OUT590" parentPlus="N"/>
+               <TelevisionStation callLetters="WREG" outletId="OUT591" parentPlus="N"/>
+               <TelevisionStation callLetters="WKMG" outletId="OUT592" parentPlus="N"/>
+               <TelevisionStation callLetters="GKTV" outletId="OUT593" parentPlus="N"/>
+               <TelevisionStation callLetters="NAJA" outletId="OUT594" parentPlus="N"/>
+               <TelevisionStation callLetters="WMOR" outletId="OUT595" parentPlus="N"/>
+               <TelevisionStation callLetters="EABI" outletId="OUT596" parentPlus="N"/>
+               <TelevisionStation callLetters="WGHP" outletId="OUT597" parentPlus="N"/>
+               <TelevisionStation callLetters="WACY" outletId="OUT598" parentPlus="N"/>
+               <TelevisionStation callLetters="KTMJ" outletId="OUT599" parentPlus="N"/>
+               <TelevisionStation callLetters="KPLC" outletId="OUT600" parentPlus="N"/>
+               <TelevisionStation callLetters="WRTV" outletId="OUT601" parentPlus="N"/>
+               <TelevisionStation callLetters="WPHL" outletId="OUT602" parentPlus="N"/>
+               <TelevisionStation callLetters="WPBY" outletId="OUT603" parentPlus="N"/>
+               <TelevisionStation callLetters="WSMH" outletId="OUT604" parentPlus="N"/>
+               <TelevisionStation callLetters="EALB" outletId="OUT605" parentPlus="N"/>
+               <TelevisionStation callLetters="NTVB" outletId="OUT606" parentPlus="N"/>
+               <TelevisionStation callLetters="KEVN" outletId="OUT607" parentPlus="N"/>
+               <TelevisionStation callLetters="KTXL" outletId="OUT608" parentPlus="N"/>
+               <TelevisionStation callLetters="KDFX" outletId="OUT609" parentPlus="N"/>
+               <TelevisionStation callLetters="KWGN" outletId="OUT610" parentPlus="N"/>
+               <TelevisionStation callLetters="EVNS" outletId="OUT611" parentPlus="N"/>
+               <TelevisionStation callLetters="WWLP" outletId="OUT612" parentPlus="N"/>
+               <TelevisionStation callLetters="ESEE" outletId="OUT613" parentPlus="N"/>
+               <TelevisionStation callLetters="WBAY" outletId="OUT614" parentPlus="N"/>
+               <TelevisionStation callLetters="KPEJ" outletId="OUT615" parentPlus="N"/>
+               <TelevisionStation callLetters="KTMF" outletId="OUT616" parentPlus="N"/>
+               <TelevisionStation callLetters="KQCA" outletId="OUT617" parentPlus="N"/>
+               <TelevisionStation callLetters="KPHO" outletId="OUT618" parentPlus="N"/>
+               <TelevisionStation callLetters="KMCI" outletId="OUT619" parentPlus="N"/>
+               <TelevisionStation callLetters="KAIT" outletId="OUT620" parentPlus="N"/>
+               <TelevisionStation callLetters="KTVH" outletId="OUT621" parentPlus="N"/>
+               <TelevisionStation callLetters="KJNB" outletId="OUT622" parentPlus="N"/>
+               <TelevisionStation callLetters="WHSV" outletId="OUT623" parentPlus="N"/>
+               <TelevisionStation callLetters="KYCW" outletId="OUT624" parentPlus="N"/>
+               <TelevisionStation callLetters="KFSM" outletId="OUT625" parentPlus="N"/>
+               <TelevisionStation callLetters="KTSM" outletId="OUT626" parentPlus="N"/>
+               <TelevisionStation callLetters="WETM" outletId="OUT627" parentPlus="N"/>
+               <TelevisionStation callLetters="WKBN" outletId="OUT628" parentPlus="N"/>
+               <TelevisionStation callLetters="KAYU" outletId="OUT629" parentPlus="N"/>
+               <TelevisionStation callLetters="KFXL" outletId="OUT630" parentPlus="N"/>
+               <TelevisionStation callLetters="KTUL" outletId="OUT631" parentPlus="N"/>
+               <TelevisionStation callLetters="KXRM" outletId="OUT632" parentPlus="N"/>
+               <TelevisionStation callLetters="WFIE" outletId="OUT633" parentPlus="N"/>
+               <TelevisionStation callLetters="KOHD" outletId="OUT634" parentPlus="N"/>
+               <TelevisionStation callLetters="KCEN" outletId="OUT635" parentPlus="N"/>
+               <TelevisionStation callLetters="WUAB" outletId="OUT636" parentPlus="N"/>
+               <TelevisionStation callLetters="KXLH" outletId="OUT637" parentPlus="N"/>
+               <TelevisionStation callLetters="NJNB" outletId="OUT638" parentPlus="N"/>
+               <TelevisionStation callLetters="KZUP" outletId="OUT639" parentPlus="N"/>
+               <TelevisionStation callLetters="WYDO" outletId="OUT640" parentPlus="N"/>
+               <TelevisionStation callLetters="WMYA" outletId="OUT641" parentPlus="N"/>
+               <TelevisionStation callLetters="KFTA" outletId="OUT642" parentPlus="N"/>
+               <TelevisionStation callLetters="WKBW" outletId="OUT643" parentPlus="N"/>
+               <TelevisionStation callLetters="WANE" outletId="OUT644" parentPlus="N"/>
+               <TelevisionStation callLetters="NTVO" outletId="OUT645" parentPlus="N"/>
+               <TelevisionStation callLetters="KDAF" outletId="OUT646" parentPlus="N"/>
+               <TelevisionStation callLetters="WTSP" outletId="OUT647" parentPlus="N"/>
+               <TelevisionStation callLetters="ETRF" outletId="OUT648" parentPlus="N"/>
+               <TelevisionStation callLetters="WIFS" outletId="OUT649" parentPlus="N"/>
+               <TelevisionStation callLetters="KOFY" outletId="OUT650" parentPlus="N"/>
+               <TelevisionStation callLetters="KDSM" outletId="OUT651" parentPlus="N"/>
+               <TelevisionStation callLetters="WFXB" outletId="OUT652" parentPlus="N"/>
+               <TelevisionStation callLetters="WICZ" outletId="OUT653" parentPlus="N"/>
+               <TelevisionStation callLetters="WYZZ" outletId="OUT654" parentPlus="N"/>
+               <TelevisionStation callLetters="KCBA" outletId="OUT655" parentPlus="N"/>
+               <TelevisionStation callLetters="NHQA" outletId="OUT656" parentPlus="N"/>
+               <TelevisionStation callLetters="WWMB" outletId="OUT657" parentPlus="N"/>
+               <TelevisionStation callLetters="OJUD" outletId="OUT658" parentPlus="N"/>
+               <TelevisionStation callLetters="WFXP" outletId="OUT659" parentPlus="N"/>
+               <TelevisionStation callLetters="NRIS" outletId="OUT660" parentPlus="N"/>
+               <TelevisionStation callLetters="KECI" outletId="OUT661" parentPlus="N"/>
+               <TelevisionStation callLetters="NATN" outletId="OUT662" parentPlus="N"/>
+               <TelevisionStation callLetters="WPCH" outletId="OUT663" parentPlus="N"/>
+               <TelevisionStation callLetters="KXVA" outletId="OUT664" parentPlus="N"/>
+               <TelevisionStation callLetters="EABG" outletId="OUT665" parentPlus="N"/>
+               <TelevisionStation callLetters="KSHV" outletId="OUT666" parentPlus="N"/>
+               <TelevisionStation callLetters="KSTC" outletId="OUT667" parentPlus="N"/>
+               <TelevisionStation callLetters="KMYU" outletId="OUT668" parentPlus="N"/>
+               <TelevisionStation callLetters="WDEF" outletId="OUT669" parentPlus="N"/>
+               <TelevisionStation callLetters="GEEK" outletId="OUT670" parentPlus="N"/>
+               <TelevisionStation callLetters="WYFX" outletId="OUT671" parentPlus="N"/>
+               <TelevisionStation callLetters="KCYU" outletId="OUT672" parentPlus="N"/>
+               <TelevisionStation callLetters="KPXJ" outletId="OUT673" parentPlus="N"/>
+               <TelevisionStation callLetters="KOKH" outletId="OUT674" parentPlus="N"/>
+               <TelevisionStation callLetters="WSTR" outletId="OUT675" parentPlus="N"/>
+               <TelevisionStation callLetters="KNDX" outletId="OUT676" parentPlus="N"/>
+               <TelevisionStation callLetters="WABG" outletId="OUT677" parentPlus="N"/>
+               <TelevisionStation callLetters="KBSI" outletId="OUT678" parentPlus="N"/>
+               <TelevisionStation callLetters="WSHM" outletId="OUT679" parentPlus="N"/>
+               <TelevisionStation callLetters="KXTS" outletId="OUT680" parentPlus="N"/>
+               <TelevisionStation callLetters="ESAV" outletId="OUT681" parentPlus="N"/>
+               <TelevisionStation callLetters="KHMT" outletId="OUT682" parentPlus="N"/>
+               <TelevisionStation callLetters="KMYS" outletId="OUT683" parentPlus="N"/>
+               <TelevisionStation callLetters="WOLF" outletId="OUT684" parentPlus="N"/>
+               <TelevisionStation callLetters="EJAR" outletId="OUT685" parentPlus="N"/>
+               <TelevisionStation callLetters="KSEE" outletId="OUT686" parentPlus="N"/>
+               <TelevisionStation callLetters="WVUE" outletId="OUT687" parentPlus="N"/>
+               <TelevisionStation callLetters="KUSA" outletId="OUT688" parentPlus="N"/>
+               <TelevisionStation callLetters="WNCN" outletId="OUT689" parentPlus="N"/>
+               <TelevisionStation callLetters="OBJR" outletId="OUT690" parentPlus="N"/>
+               <TelevisionStation callLetters="KIDY" outletId="OUT691" parentPlus="N"/>
+               <TelevisionStation callLetters="WBRL" outletId="OUT692" parentPlus="N"/>
+               <TelevisionStation callLetters="KLJB" outletId="OUT693" parentPlus="N"/>
+               <TelevisionStation callLetters="KOAT" outletId="OUT694" parentPlus="N"/>
+               <TelevisionStation callLetters="WRDQ" outletId="OUT695" parentPlus="N"/>
+               <TelevisionStation callLetters="KLRT" outletId="OUT696" parentPlus="N"/>
+               <TelevisionStation callLetters="WLOV" outletId="OUT697" parentPlus="N"/>
+               <TelevisionStation callLetters="WNYF" outletId="OUT698" parentPlus="N"/>
+               <TelevisionStation callLetters="WRLH" outletId="OUT699" parentPlus="N"/>
+               <TelevisionStation callLetters="EMDT" outletId="OUT700" parentPlus="N"/>
+               <TelevisionStation callLetters="KFXO" outletId="OUT701" parentPlus="N"/>
+               <TelevisionStation callLetters="WXTX" outletId="OUT702" parentPlus="N"/>
+               <TelevisionStation callLetters="PCNC" outletId="OUT703" parentPlus="N"/>
+               <TelevisionStation callLetters="WFXL" outletId="OUT704" parentPlus="N"/>
+               <TelevisionStation callLetters="WABM" outletId="OUT705" parentPlus="N"/>
+               <TelevisionStation callLetters="WUPW" outletId="OUT706" parentPlus="N"/>
+               <TelevisionStation callLetters="ENCT" outletId="OUT707" parentPlus="N"/>
+               <TelevisionStation callLetters="KVCT" outletId="OUT708" parentPlus="N"/>
+               <TelevisionStation callLetters="KECY" outletId="OUT709" parentPlus="N"/>
+               <TelevisionStation callLetters="ELIO" outletId="OUT710" parentPlus="N"/>
+               <TelevisionStation callLetters="OATN" outletId="OUT711" parentPlus="N"/>
+               <TelevisionStation callLetters="KSAS" outletId="OUT712" parentPlus="N"/>
+               <TelevisionStation callLetters="KMSB" outletId="OUT713" parentPlus="N"/>
+               <TelevisionStation callLetters="WBMM" outletId="OUT714" parentPlus="N"/>
+               <TelevisionStation callLetters="NTEN" outletId="OUT715" parentPlus="N"/>
+               <TelevisionStation callLetters="KYES" outletId="OUT716" parentPlus="N"/>
+               <TelevisionStation callLetters="EEVV" outletId="OUT717" parentPlus="N"/>
+               <TelevisionStation callLetters="KPSE" outletId="OUT718" parentPlus="N"/>
+               <TelevisionStation callLetters="NFBB" outletId="OUT719" parentPlus="N"/>
+               <TelevisionStation callLetters="KQCW" outletId="OUT720" parentPlus="N"/>
+               <TelevisionStation callLetters="WBCB" outletId="OUT721" parentPlus="N"/>
+               <TelevisionStation callLetters="WVII" outletId="OUT722" parentPlus="N"/>
+               <TelevisionStation callLetters="WDFX" outletId="OUT723" parentPlus="N"/>
+               <TelevisionStation callLetters="ECVB" outletId="OUT724" parentPlus="N"/>
+               <TelevisionStation callLetters="EWMT" outletId="OUT725" parentPlus="N"/>
+               <TelevisionStation callLetters="NHBB" outletId="OUT726" parentPlus="N"/>
+               <TelevisionStation callLetters="KPTH" outletId="OUT727" parentPlus="N"/>
+               <TelevisionStation callLetters="KGJT" outletId="OUT728" parentPlus="N"/>
+               <TelevisionStation callLetters="WJTV" outletId="OUT729" parentPlus="N"/>
+               <TelevisionStation callLetters="WFFT" outletId="OUT730" parentPlus="N"/>
+               <TelevisionStation callLetters="WLVI" outletId="OUT731" parentPlus="N"/>
+               <TelevisionStation callLetters="KCIT" outletId="OUT732" parentPlus="N"/>
+               <TelevisionStation callLetters="WBTV" outletId="OUT733" parentPlus="N"/>
+               <TelevisionStation callLetters="WMYD" outletId="OUT734" parentPlus="N"/>
+               <TelevisionStation callLetters="WCTX" outletId="OUT735" parentPlus="N"/>
+               <TelevisionStation callLetters="EBNG" outletId="OUT736" parentPlus="N"/>
+               <TelevisionStation callLetters="EVVA" outletId="OUT737" parentPlus="N"/>
+               <TelevisionStation callLetters="KTTW" outletId="OUT738" parentPlus="N"/>
+               <TelevisionStation callLetters="NSNB" outletId="OUT739" parentPlus="N"/>
+          </Outlets>
+          <AvailList endDate="2019-03-31" identifier="7506.144" isPackage="N" startDate="2018-12-31">
+               <Name>Television Schedule - Abilene Aug18 DMA Nielsen Live+3</Name>
+               <OutletReferences>
+                    <OutletReference outletForListId="OUL241" outletFromProposalRef="OUT241"/>
+                  <OutletReference outletForListId="OUL480" outletFromProposalRef="OUT480"/>
+                  <OutletReference outletForListId="OUL545" outletFromProposalRef="OUT545"/>
+                  <OutletReference outletForListId="OUL664" outletFromProposalRef="OUT664"/>
+               </OutletReferences>
+               <DemoCategories>
+                    <DemoCategory DemoId="DM0">
+	<tvb:DemoType>Impression</tvb:DemoType>
+	<tvb:Group>Homes</tvb:Group>
+	<tvb:AgeFrom>0</tvb:AgeFrom>
+	<tvb:AgeTo>99</tvb:AgeTo>
+</DemoCategory>
+
+               </DemoCategories>
+               <TargetDemo demoRef="DM0"/>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KTXS News Weekend</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2018-12-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.12</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Abilene Today</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>30.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.79</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>08:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Today Show</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>15.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.97</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>16:58</StartTime>
+                              <EndTime>17:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTAB @ 5P News</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.15</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KTXS News Weekend</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>175.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">7.01</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:30</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>KTXS This Morning 630A</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>35.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.51</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:00</StartTime>
+                              <EndTime>05:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>CBS This Morning @ 5A</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>15.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.34</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>09:30</StartTime>
+                              <EndTime>10:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>The Right Side</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>20.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.78</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>08:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>CBS News Saturday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-01-06">
+                              <Rate>10.00</Rate>
+                              <SpotsPerWeek>1</SpotsPerWeek>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.85</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>08:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>This Week</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>30.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.99</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KRBC News @ 6P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.01</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTXS News at 6P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">8.53</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>CBS This Morning</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>20.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.87</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:30</StartTime>
+                              <EndTime>06:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Early Today</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>10.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">0.94</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Today Show</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.83</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>17:59</StartTime>
+                              <EndTime>18:28</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTAB @ 6P News</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>150.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">6.81</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>09:00</StartTime>
+                              <EndTime>10:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Daytime at 9a w/Kimberly &amp; Esteban</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.45</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL664"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>WAKE UP WEST TEXAS</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>10.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">0.19</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>12:00</StartTime>
+                              <EndTime>13:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>NN</DaypartName>
+                    <AvailName>GMA Day</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.85</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:34</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KRBC 10P News</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.59</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL664"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>09:00</StartTime>
+                              <EndTime>10:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>FOX NEWS SUNDAY</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.29</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>08:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>CBS News Saturday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2019-01-07" endDate="2019-03-31">
+                              <Rate>10.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.85</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:30</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>KTAB Daybreak</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.01</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>08:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Good Morning America</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>30.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.06</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:27</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTAB News 6P Weekend</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>55.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.77</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>08:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Today Show Sunday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>20.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.47</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>12:00</StartTime>
+                              <EndTime>12:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>NN</DaypartName>
+                    <AvailName>KTAB Noontab</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">4.83</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>17:00</StartTime>
+                              <EndTime>17:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTXS News Sunday at 5P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">6.68</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:35</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KTXS News at 10P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>175.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.55</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:30</StartTime>
+                              <EndTime>23:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KTXS Sports Sunday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.96</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:00</StartTime>
+                              <EndTime>05:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>KTXS This Morning 5A</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.08</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:35</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KRBC 10P News Sunday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.32</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>08:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Good Morning America Saturday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>40.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.40</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Good Morning America</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>40.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.69</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>17:00</StartTime>
+                              <EndTime>17:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTXS News at 5P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">7.63</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>08:00</StartTime>
+                              <EndTime>09:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>CBS Sunday Morning</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">4.07</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KTXS News Saturday at 6P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">6.97</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>09:00</StartTime>
+                              <EndTime>09:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Full Measure w/Sheryl Attkisson</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>20.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">1.71</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:35</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KRBC 10P News Saturday</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.24</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>This Week in Agribusiness</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>15.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">0.91</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>16:58</StartTime>
+                              <EndTime>17:28</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KRBC 5P News</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2019-01-07" endDate="2019-03-31">
+                              <Rate>40.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.86</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:30</StartTime>
+                              <EndTime>06:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>KTXS This Morning 530A</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">2.91</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:29</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KRBC 6P News</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>55.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">4.18</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL480"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>16:58</StartTime>
+                              <EndTime>17:28</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>KRBC 5P News</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-01-06">
+                              <Rate>40.00</Rate>
+                              <SpotsPerWeek>1</SpotsPerWeek>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">3.86</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>06:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>KTXS This Morning 6A</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>35.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">4.19</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:35</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>Late News after Super Bowl</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2019-02-03" endDate="2019-02-03">
+                              <Rate>500.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.80</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL545"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>28:30</StartTime>
+                              <EndTime>29:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>Ag Day</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>10.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">0.96</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+          </AvailList>
+          <AvailList endDate="2019-03-31" identifier="7872.236" isPackage="N" startDate="2018-12-31">
+               <Name>Television Schedule - Albany, GA Aug18 DMA Nielsen Live+3</Name>
+               <OutletReferences>
+                    <OutletReference outletForListId="OUL297" outletFromProposalRef="OUT297"/>
+                  <OutletReference outletForListId="OUL605" outletFromProposalRef="OUT605"/>
+                  <OutletReference outletForListId="OUL704" outletFromProposalRef="OUT704"/>
+               </OutletReferences>
+               <DemoCategories>
+                    <DemoCategory DemoId="DM10">
+	<tvb:DemoType>Impression</tvb:DemoType>
+	<tvb:Group>Homes</tvb:Group>
+	<tvb:AgeFrom>0</tvb:AgeFrom>
+	<tvb:AgeTo>99</tvb:AgeTo>
+</DemoCategory>
+
+               </DemoCategories>
+               <TargetDemo demoRef="DM10"/>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:30</StartTime>
+                              <EndTime>19:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>NBC NIGHTLY NEWS</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>350.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">17.05</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 6P SUN</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">6.15</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>23:00</StartTime>
+                              <EndTime>23:35</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>WALB NEWS 10</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>35.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">3.10</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>23:00</StartTime>
+                              <EndTime>23:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 11P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>300.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">11.31</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:00</StartTime>
+                              <EndTime>06:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>AMERICA THIS MORNING</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>5.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">0.77</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>23:00</StartTime>
+                              <EndTime>23:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 11P SUN</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>250.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">10.27</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>WALB NEWS 10</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-01-06">
+                              <Rate>25.00</Rate>
+                              <SpotsPerWeek>1</SpotsPerWeek>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">6.30</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY SHOW I</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>150.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">9.86</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 6P SAT</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">8.82</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY SHOW</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>35.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">3.42</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL704"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>23:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>FOX31 NEWS AT 10P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>50.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">3.60</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 6P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>300.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">17.91</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:00</StartTime>
+                              <EndTime>18:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>WALB NEWS 10</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2019-01-07" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">6.30</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL704"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>06:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>AG DAY</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>10.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">0.60</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>08:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY SHOW</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>35.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">3.03</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>23:00</StartTime>
+                              <EndTime>23:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>WALB NEWS 10</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>35.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">3.29</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL704"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>FULL MEASURE</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>20.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.50</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>08:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>GMA SUNDAY</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>15.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.28</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>18:30</StartTime>
+                              <EndTime>19:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>NBC NIGHTLY NEWS</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>75.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">9.16</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>28:30</StartTime>
+                              <EndTime>28:59</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>ABC WORLD NEWS NOW</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>5.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">0.82</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>07:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>GOOD MORNING AMERICA</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">2.16</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>12:00</StartTime>
+                              <EndTime>12:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>NN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 12P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">7.26</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>23:00</StartTime>
+                              <EndTime>23:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 11P SAT</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>250.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">7.54</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>17:00</StartTime>
+                              <EndTime>18:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>WALB NEWS 10 @ 5P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>150.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">13.10</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY IN GEORGIA</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-02-03">
+                              <Rate>5.00</Rate>
+                              <SpotsPerWeek>1</SpotsPerWeek>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.93</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>16:00</StartTime>
+                              <EndTime>16:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>EN</DaypartName>
+                    <AvailName>FIRST NEWS @ 4P</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>50.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">5.50</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL704"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>09:00</StartTime>
+                              <EndTime>10:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>FOX NEWS SUNDAY</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>20.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.80</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>12:00</StartTime>
+                              <EndTime>12:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>NN</DaypartName>
+                    <AvailName>WALB NEWS 10</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>15.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">2.41</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>08:00</StartTime>
+                              <EndTime>09:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>GMA SATURDAY</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>15.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.85</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY IN GEORGIA 2</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>200.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">11.09</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>28:30</StartTime>
+                              <EndTime>28:59</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>EARLY TODAY</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>25.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.51</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL605"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>06:00</StartTime>
+                              <EndTime>07:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY IN GEORGIA</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2019-02-04" endDate="2019-03-31">
+                              <Rate>5.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">1.93</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL297"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>05:00</StartTime>
+                              <EndTime>06:00</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>Y</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>Y</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>N</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>AN</DaypartName>
+                    <AvailName>TODAY IN GEORGIA 1</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2019-03-31">
+                              <Rate>50.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM10">5.45</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+          </AvailList>
+     </Proposal>
+</AAAA-Message>

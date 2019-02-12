@@ -58,26 +58,35 @@ namespace Services.Broadcast.Converters.RateImport
                 throw new Exception("Can't find XML elements in order to build station programs from.");
             }
 
-            var availLines = new List<AvailLineWithPeriods>();
-
-            if (proposal.AvailList.AvailLineWithDetailedPeriods != null)
+            foreach (var availList in proposal.AvailList)
             {
-                availLines.AddRange(proposal.AvailList.AvailLineWithDetailedPeriods.Select(_Map));
-            }
+                var availLines = new List<AvailLineWithPeriods>();
 
-            if (proposal.AvailList.AvailLineWithPeriods != null)
-            {
-                availLines.AddRange(proposal.AvailList.AvailLineWithPeriods.Select(_Map));
-            }
+                if (availList.AvailLineWithDetailedPeriods != null)
+                {
+                    availLines.AddRange(availList.AvailLineWithDetailedPeriods.Select(_Map));
+                }
 
-            _PopulateProgramsFromAvailLineWithPeriods(proposal, availLines, inventoryFile, FileProblems);
+                if (availList.AvailLineWithPeriods != null)
+                {
+                    availLines.AddRange(availList.AvailLineWithPeriods.Select(_Map));
+                }
+
+                _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, inventoryFile, FileProblems);
+            }
         }
 
-        private bool IsValid(AAAAMessageProposalAvailList availList)
+        private bool IsValid(AAAAMessageProposalAvailList[] availLists)
         {
-            return availList != null && (availList.AvailLineWithDetailedPeriods != null || availList.AvailLineWithPeriods != null);
+            foreach (var availList in availLists)
+            {
+                if (availList == null || (availList.AvailLineWithDetailedPeriods == null && availList.AvailLineWithPeriods == null))
+                    return false;
+            }
+
+            return true;
         }
-        
+
         private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
         {
             return !SpotLengths.ContainsKey(spotLength) ? new InventoryFileProblem()
@@ -127,11 +136,12 @@ namespace Services.Broadcast.Converters.RateImport
 
         private void _PopulateProgramsFromAvailLineWithPeriods(
             AAAAMessageProposal proposal,
+            AAAAMessageProposalAvailList availList,
             List<AvailLineWithPeriods> availLines,
             InventoryFile inventoryFile,
             List<InventoryFileProblem> fileProblems)
         {
-            var audienceMap = _GetAudienceMap(proposal.AvailList.DemoCategories);
+            var audienceMap = _GetAudienceMap(availList.DemoCategories);
             var allStationNames = proposal.Outlets.Select(o => o.callLetters).Distinct().ToList();
             var foundStations = FindStations(allStationNames);
 
@@ -141,7 +151,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                 try
                 {
-                    var outletRef = proposal.AvailList.OutletReferences
+                    var outletRef = availList.OutletReferences
                         .Where(a => a.outletForListId == availLine.OutletReference.OutletFromListRef)
                         .Select(a => a.outletFromProposalRef)
                         .First();
@@ -164,7 +174,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                     foreach (var availLinePeriod in availLine.Periods)
                     {
-                        var manifestAudiences = _GetManifestAudienceListForAvailLine(proposal, audienceMap, _ToDemoValueDict(availLinePeriod.DemoValues));
+                        var manifestAudiences = _GetManifestAudienceListForAvailLine(availList, audienceMap, _ToDemoValueDict(availLinePeriod.DemoValues));
                         var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
 
                         if (station == null)
@@ -201,14 +211,13 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error while processing program " + availLine.AvailName + ": " + e.Message);
-                    throw;
+                    fileProblems.Add(new InventoryFileProblem("Error while processing " + availLine.AvailName + " on " + availList.Name + ": " + e.Message));
                 }
             }
         }
 
         private List<StationInventoryManifestAudience> _GetManifestAudienceListForAvailLine(
-            AAAAMessageProposal proposal,
+            AAAAMessageProposalAvailList availList,
             Dictionary<string, DisplayAudience> audienceMap,
             Dictionary<string, decimal> demoValues)
         {
@@ -216,7 +225,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             foreach (var demoValue in demoValues)
             {
-                var demo = proposal.AvailList.DemoCategories.Where(a => a.DemoId == demoValue.Key).First();
+                var demo = availList.DemoCategories.Where(a => a.DemoId == demoValue.Key).First();
                 var audience = audienceMap[demo.DemoId];
                 var manifestAudience = manifestAudiences.Where(a => a.Audience.Id == audience.Id).FirstOrDefault();
                 var newManifestAudience = false;
