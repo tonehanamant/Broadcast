@@ -17,8 +17,8 @@ import ConfirmModal from "Patterns/ConfirmModal";
 import Overlay from "Patterns/Overlay";
 import "font-awesome/css/font-awesome.min.css";
 
-import AppFooter from "./MainFooter";
-import AppHeader from "./MainHeader";
+import AppFooter from "../MainFooter";
+import AppHeader from "../MainHeader";
 
 import styles from "./index.style.scss";
 

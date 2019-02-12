@@ -1,7 +1,7 @@
 import React from "react";
 import CSSModules from "react-css-modules";
 
-import FooterBar from "./MainFooterBar";
+import FooterBar from "../MainFooterBar";
 
 import styles from "./index.style.scss";
 
