@@ -8,7 +8,6 @@ import {
   SET_OVERLAY_LOADING,
   SET_OVERLAY_PROCESSING,
   STORE_FILE,
-  READ_FILE_B64,
   CLEAR_FILE,
   TOGGLE_DISABLED_DROPZONES
 } from "./types.js";
@@ -56,11 +55,6 @@ export const setOverlayLoading = overlay => ({
 export const storeFile = file => ({
   type: STORE_FILE,
   file
-});
-
-export const readFileB64 = file => ({
-  type: READ_FILE_B64,
-  payload: file
 });
 
 export const clearFile = () => ({

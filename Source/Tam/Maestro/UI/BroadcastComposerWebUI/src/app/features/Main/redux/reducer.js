@@ -8,7 +8,6 @@ import {
   SET_OVERLAY_LOADING,
   SET_OVERLAY_PROCESSING,
   STORE_FILE,
-  STORE_FILE_B64,
   CLEAR_FILE,
   TOGGLE_DISABLED_DROPZONES
 } from "./types.js";
@@ -106,14 +105,6 @@ export default function reducer(state = initialState, action) {
         file: {
           ...state.file,
           ...file
-        }
-      });
-
-    case STORE_FILE_B64:
-      return Object.assign({}, state, {
-        file: {
-          ...state.file,
-          base64: data
         }
       });
 
