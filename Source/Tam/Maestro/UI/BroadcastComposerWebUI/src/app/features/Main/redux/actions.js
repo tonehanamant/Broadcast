@@ -1,8 +1,6 @@
 import {
-  REQUEST_ENVIRONMENT,
-  // RECEIVE_ENVIRONMENT,
-  REQUEST_EMPLOYEE,
-  // RECEIVE_EMPLOYEE,
+  LOAD_ENVIRONMENT,
+  LOAD_EMPLOYEE,
   TOGGLE_MODAL,
   CREATE_ALERT,
   DEPLOY_ERROR,
@@ -11,19 +9,18 @@ import {
   SET_OVERLAY_PROCESSING,
   STORE_FILE,
   READ_FILE_B64,
-  // STORE_FILE_B64,
   CLEAR_FILE,
   TOGGLE_DISABLED_DROPZONES
 } from "./types.js";
 
 // Action Creators
 export const getEnvironment = () => ({
-  type: REQUEST_ENVIRONMENT,
+  type: LOAD_ENVIRONMENT.request,
   payload: {}
 });
 
 export const getEmployee = () => ({
-  type: REQUEST_EMPLOYEE,
+  type: LOAD_EMPLOYEE.request,
   payload: {}
 });
 

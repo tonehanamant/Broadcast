@@ -123,12 +123,12 @@ export default function reducer(state = initialState, action) {
 
 // Action Creators
 export const getEnvironment = () => ({
-  type: ACTIONS.REQUEST_ENVIRONMENT,
+  type: ACTIONS.LOAD_ENVIRONMENT.request,
   payload: {}
 });
 
 export const getEmployee = () => ({
-  type: ACTIONS.REQUEST_EMPLOYEE,
+  type: ACTIONS.LOAD_EMPLOYEE.request,
   payload: {}
 });
 

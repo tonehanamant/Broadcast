@@ -1,177 +1,44 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-// import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";
-// import * as ACTIONS from "Ducks/app/actionTypes";
+import sagaWrapper from "Utils/saga-wrapper";
 import * as ACTIONS from "./types";
+import { setOverlayLoading } from "./actions";
 
-/* ////////////////////////////////// */
-/* REQUEST ENVIRONMENT */
-/* ////////////////////////////////// */
-export function* requestEnvironment() {
+export function* loadEnvironment() {
   const { getEnvironment } = api.app;
   try {
-    // Set loading overlay
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "appEnvironment",
-        loading: true
-      }
-    });
-    // Yield getEnvirontment
-    const response = yield getEnvironment();
-    const { status, data } = response;
-    // Unset loading overlay
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "appEnvironment",
-        loading: false
-      }
-    });
-    // Check for 200 & response.data.Success
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No environment info returned.",
-          message: `The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No environment info returned.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs."
-        }
-      });
-      throw new Error();
-    }
-    // Pass response.data to reducer
-    yield put({
-      type: ACTIONS.RECEIVE_ENVIRONMENT,
-      data
-    });
-  } catch (e) {
-    // Default error for try
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No environment info returned.",
-          message:
-            "The server encountered an error processing the request (environment). Please try again or contact your administrator to review error logs.",
-          exception: e.response.data.ExceptionMessage || ""
-        }
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
-    }
+    yield put(setOverlayLoading({ id: "appEnvironment", loading: true }));
+    return yield getEnvironment();
+  } finally {
+    yield put(setOverlayLoading({ id: "appEnvironment", loading: false }));
   }
 }
 
-/* ////////////////////////////////// */
-/* REQUEST EMPLOYEE */
-/* ////////////////////////////////// */
-export function* requestEmployee() {
+export function* loadEmployee() {
   const { getEmployee } = api.app;
-
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "appEmployee",
-        loading: true
-      }
-    });
-    const response = yield getEmployee();
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "appEmployee",
-        loading: false
-      }
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No employee info returned.",
-          message: `The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No employee info returned.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs."
-        }
-      });
-      throw new Error();
-    }
-    yield put({
-      type: ACTIONS.RECEIVE_EMPLOYEE,
-      data
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No employee info returned.",
-          message:
-            "The server encountered an error processing the request (employee). Please try again or contact your administrator to review error logs.",
-          exception: e.response.data.ExceptionMessage || ""
-        }
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
-    }
+    yield put(setOverlayLoading({ id: "appEmployee", loading: true }));
+    return yield getEmployee();
+  } finally {
+    yield put(setOverlayLoading({ id: "appEmployee", loading: false }));
   }
 }
 
-/* ////////////////////////////////// */
-/* REQUEST READ FILE B64 */
-/* ////////////////////////////////// */
+const read = f =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = resolve;
+    reader.onabort = reject;
+    reader.onerror = reject;
+    reader.readAsDataURL(f);
+  });
+
+const getBase64 = e => e.target.result.split("base64,")[1];
+
 export function* requestReadFileB64({ payload: file }) {
-  const read = f =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = resolve;
-      reader.onabort = reject;
-      reader.onerror = reject;
-      reader.readAsDataURL(f);
-    });
-
-  const getBase64 = e => e.target.result.split("base64,")[1];
-
   try {
     const dataURL = yield call(read, file);
     const b64 = yield getBase64(dataURL);
-    // console.log('BASE64 FILE', b64);
     yield put({
       type: ACTIONS.STORE_FILE_B64,
       data: b64
@@ -191,20 +58,22 @@ export function* requestReadFileB64({ payload: file }) {
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
-export function* watchRequestEnvironment() {
-  yield takeEvery(ACTIONS.REQUEST_ENVIRONMENT, requestEnvironment);
+function* watchLoadEnvironment() {
+  yield takeEvery(
+    ACTIONS.LOAD_ENVIRONMENT.request,
+    sagaWrapper(loadEnvironment, ACTIONS.LOAD_ENVIRONMENT)
+  );
 }
 
-export function* watchRequestEmployee() {
-  yield takeEvery(ACTIONS.REQUEST_EMPLOYEE, requestEmployee);
+function* watchLoadEmployee() {
+  yield takeEvery(
+    ACTIONS.LOAD_EMPLOYEE.request,
+    sagaWrapper(loadEmployee, ACTIONS.LOAD_EMPLOYEE)
+  );
 }
 
-export function* watchReadFileB64() {
+function* watchReadFileB64() {
   yield takeEvery(ACTIONS.READ_FILE_B64, requestReadFileB64);
 }
 
-export default [
-  watchRequestEnvironment,
-  watchRequestEmployee,
-  watchReadFileB64
-];
+export default [watchLoadEnvironment, watchLoadEmployee, watchReadFileB64];

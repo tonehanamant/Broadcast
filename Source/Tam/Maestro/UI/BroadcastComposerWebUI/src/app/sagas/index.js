@@ -1,19 +1,13 @@
-// import * as appSaga from "./app";
 import * as postSaga from "./post";
 import * as planningSaga from "./planning";
 import * as trackerSaga from "./tracker";
 
 export default function* rootSaga() {
   yield [
-    // appSaga.watchRequestEnvironment(),
-    // appSaga.watchRequestEmployee(),
-    // appSaga.watchReadFileB64(),
-
     postSaga.watchRequestPost(),
     postSaga.watchRequestPostFiltered(),
     postSaga.watchRequestUnlinkedFiltered(),
     postSaga.watchRequestArchivedFiltered(),
-    // postSaga.watchRequestAssignPostDisplay(),
     postSaga.watchRequestPostClientScrubbing(),
     postSaga.watchRequestUniqueIscis(),
     postSaga.watchRequestScrubbingDataFiltered(),
@@ -61,7 +55,6 @@ export default function* rootSaga() {
     planningSaga.watchUpdateProprietaryCpms(),
     planningSaga.watchUploadSCXFile(),
     planningSaga.watchAllocateSpots(),
-    // planningSaga.watchUploadSCXFileSuccess(),
     planningSaga.watchFilterOpenMarketData(),
     planningSaga.watchLoadPricingDataSuccess(),
     planningSaga.watchLoadPricingData(),

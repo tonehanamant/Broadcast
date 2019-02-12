@@ -1,25 +1,23 @@
-// import { createAction } from "Utils/action-creator";
-// const ROOT = "app";
+import { createAction } from "Utils/action-creator";
 
-export const REQUEST_ENVIRONMENT = "app/REQUEST_ENVIRONMENT";
-export const RECEIVE_ENVIRONMENT = "app/RECEIVE_ENVIRONMENT";
+const ROOT = "app";
 
-export const REQUEST_EMPLOYEE = "app/REQUEST_EMPLOYEE";
-export const RECEIVE_EMPLOYEE = "app/RECEIVE_EMPLOYEE";
+export const LOAD_ENVIRONMENT = createAction(`${ROOT}/LOAD_ENVIRONMENT`);
+export const LOAD_EMPLOYEE = createAction(`${ROOT}/LOAD_EMPLOYEE`);
 
-export const TOGGLE_MODAL = "app/TOGGLE_MODAL";
+export const TOGGLE_MODAL = `${ROOT}/TOGGLE_MODAL`;
 
-export const DEPLOY_ERROR = "app/DEPLOY_ERROR";
-export const CLEAR_ERRORS = "app/CLEAR_ERRORS";
+export const DEPLOY_ERROR = `${ROOT}/DEPLOY_ERROR`;
+export const CLEAR_ERRORS = `${ROOT}/CLEAR_ERRORS`;
 
-export const CREATE_ALERT = "app/CREATE_ALERT";
+export const CREATE_ALERT = `${ROOT}/CREATE_ALERT`;
 
-export const SET_OVERLAY_LOADING = "app/SET_OVERLAY_LOADING";
-export const SET_OVERLAY_PROCESSING = "app/SET_OVERLAY_PROCESSING";
+export const SET_OVERLAY_LOADING = `${ROOT}/SET_OVERLAY_LOADING`;
+export const SET_OVERLAY_PROCESSING = `${ROOT}/SET_OVERLAY_PROCESSING`;
 
-export const STORE_FILE = "app/STORE_FILE";
-export const READ_FILE_B64 = "app/READ_FILE_B64";
-export const STORE_FILE_B64 = "app/STORE_FILE_B64";
-export const CLEAR_FILE = "app/CLEAR_FILE";
+export const STORE_FILE = `${ROOT}/STORE_FILE`;
+export const READ_FILE_B64 = `${ROOT}/READ_FILE_B64`;
+export const STORE_FILE_B64 = `${ROOT}/STORE_FILE_B64`;
+export const CLEAR_FILE = `${ROOT}/CLEAR_FILE`;
 
-export const TOGGLE_DISABLED_DROPZONES = "app/TOGGLE_DISABLED_DROPZONES";
+export const TOGGLE_DISABLED_DROPZONES = `${ROOT}/TOGGLE_DISABLED_DROPZONES`;
