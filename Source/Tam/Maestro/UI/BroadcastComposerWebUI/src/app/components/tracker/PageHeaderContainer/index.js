@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleModal, storeFile } from "Ducks/app";
+import { toggleModal, storeFile } from "Main/redux/actions";
 import {
   getUnlinkedIscis,
   uploadTrackerFile,

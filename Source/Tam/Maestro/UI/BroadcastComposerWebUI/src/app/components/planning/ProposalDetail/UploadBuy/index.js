@@ -13,7 +13,7 @@ import { InputNumber } from "antd";
 import { bindActionCreators } from "redux";
 import UploadButton from "Patterns/UploadButton";
 
-import { clearFile, storeFile } from "Ducks/app";
+import { clearFile, storeFile } from "Main/redux/actions";
 import { uploadSCXFile } from "Ducks/planning";
 
 const mapStateToProps = ({

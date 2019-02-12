@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleModal, createAlert, setOverlayLoading } from "Ducks/app";
+import {
+  toggleModal,
+  createAlert,
+  setOverlayLoading
+} from "Main/redux/actions";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting,

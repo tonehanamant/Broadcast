@@ -6,7 +6,7 @@ import { Button, Modal } from "react-bootstrap";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { head } from "lodash";
 import { mapUnlinkedIscis, loadValidIscis, mapUnlinkedIsci } from "Ducks/post";
-import { toggleModal } from "Ducks/app";
+import { toggleModal } from "Main/redux/actions";
 
 import "./index.scss";
 

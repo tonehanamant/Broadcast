@@ -1,7 +1,6 @@
 import React from "react";
 import CSSModules from "react-css-modules";
 
-// import Logo from '../../../../assets/images/image-one2one-brand.png';
 import styles from "./index.style.scss";
 
 export const Home = () => (

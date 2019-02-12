@@ -4,9 +4,9 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getEnvironment, getEmployee } from "Ducks/app";
+import { getEnvironment, getEmployee } from "Main/redux/actions";
 
-import NavigationBar from "Components/header/NavigationBar";
+import NavigationBar from "../MainHeaderNavigation";
 
 const mapStateToProps = ({ app: { environment }, app: { employee } }) => ({
   environment,
@@ -16,11 +16,7 @@ const mapStateToProps = ({ app: { environment }, app: { employee } }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ getEnvironment, getEmployee }, dispatch);
 
-export class AppHeader extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
+export class MainHeader extends Component {
   componentWillMount() {
     this.props.getEnvironment();
     this.props.getEmployee();
@@ -45,13 +41,11 @@ export class AppHeader extends Component {
   }
 }
 
-AppHeader.propTypes = {
-  // redux props:
+MainHeader.propTypes = {
   environment: PropTypes.string.isRequired,
   employee: PropTypes.object.isRequired,
   getEnvironment: PropTypes.func.isRequired,
   getEmployee: PropTypes.func.isRequired,
-  // withRouter props:
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
@@ -60,6 +54,6 @@ AppHeader.propTypes = {
 const AppHeaderRedux = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppHeader);
+)(MainHeader);
 
 export default withRouter(AppHeaderRedux);

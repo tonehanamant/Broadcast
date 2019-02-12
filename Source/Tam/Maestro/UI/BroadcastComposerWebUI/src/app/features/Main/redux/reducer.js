@@ -1,5 +1,16 @@
-// Actions
-import * as ACTIONS from "./actionTypes.js";
+import {
+  RECEIVE_ENVIRONMENT,
+  RECEIVE_EMPLOYEE,
+  TOGGLE_MODAL,
+  CREATE_ALERT,
+  DEPLOY_ERROR,
+  CLEAR_ERRORS,
+  SET_OVERLAY_LOADING,
+  SET_OVERLAY_PROCESSING,
+  STORE_FILE,
+  CLEAR_FILE,
+  TOGGLE_DISABLED_DROPZONES
+} from "./types.js";
 
 const initialState = {
   environment: "",
@@ -20,19 +31,19 @@ export default function reducer(state = initialState, action) {
   const { type, data, error, modal, alert, overlay, file } = action;
 
   switch (type) {
-    case ACTIONS.RECEIVE_ENVIRONMENT:
+    case RECEIVE_ENVIRONMENT:
       return {
         ...state,
         environment: data.Data
       };
 
-    case ACTIONS.RECEIVE_EMPLOYEE:
+    case RECEIVE_EMPLOYEE:
       return {
         ...state,
         employee: data.Data
       };
 
-    case ACTIONS.CREATE_ALERT: {
+    case CREATE_ALERT: {
       return {
         ...state,
         alert: {
@@ -44,7 +55,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.TOGGLE_MODAL:
+    case TOGGLE_MODAL:
       return Object.assign({}, state, {
         modals: {
           ...state.modals,
@@ -56,7 +67,7 @@ export default function reducer(state = initialState, action) {
         }
       });
 
-    case ACTIONS.DEPLOY_ERROR:
+    case DEPLOY_ERROR:
       return Object.assign({}, state, {
         modals: {
           ...state.modals,
@@ -68,12 +79,12 @@ export default function reducer(state = initialState, action) {
         errors: [...state.errors, error]
       });
 
-    case ACTIONS.CLEAR_ERRORS:
+    case CLEAR_ERRORS:
       return Object.assign({}, state, {
         errors: []
       });
 
-    case ACTIONS.SET_OVERLAY_LOADING:
+    case SET_OVERLAY_LOADING:
       return Object.assign({}, state, {
         loading: {
           ...state.loading,
@@ -81,7 +92,7 @@ export default function reducer(state = initialState, action) {
         }
       });
 
-    case ACTIONS.SET_OVERLAY_PROCESSING:
+    case SET_OVERLAY_PROCESSING:
       return Object.assign({}, state, {
         processing: {
           ...state.processing,
@@ -89,7 +100,7 @@ export default function reducer(state = initialState, action) {
         }
       });
 
-    case ACTIONS.STORE_FILE:
+    case STORE_FILE:
       return Object.assign({}, state, {
         file: {
           ...state.file,
@@ -97,15 +108,7 @@ export default function reducer(state = initialState, action) {
         }
       });
 
-    case ACTIONS.STORE_FILE_B64:
-      return Object.assign({}, state, {
-        file: {
-          ...state.file,
-          base64: data
-        }
-      });
-
-    case ACTIONS.CLEAR_FILE:
+    case CLEAR_FILE:
       return Object.assign({}, state, {
         file: {
           name: "No File",
@@ -113,68 +116,10 @@ export default function reducer(state = initialState, action) {
         }
       });
 
-    case ACTIONS.TOGGLE_DISABLED_DROPZONES:
+    case TOGGLE_DISABLED_DROPZONES:
       return { ...state, disabledDropzones: !state.disabledDropzones };
 
     default:
       return state;
   }
 }
-
-// Action Creators
-export const getEnvironment = () => ({
-  type: ACTIONS.REQUEST_ENVIRONMENT,
-  payload: {}
-});
-
-export const getEmployee = () => ({
-  type: ACTIONS.REQUEST_EMPLOYEE,
-  payload: {}
-});
-
-export const toggleModal = modal => ({
-  type: ACTIONS.TOGGLE_MODAL,
-  modal
-});
-
-export const createAlert = alert => ({
-  type: ACTIONS.CREATE_ALERT,
-  alert
-});
-
-export const deployError = error => ({
-  type: ACTIONS.DEPLOY_ERROR,
-  error
-});
-
-export const clearErrors = () => ({
-  type: ACTIONS.CLEAR_ERRORS
-});
-
-export const setOverlayProcessing = overlay => ({
-  type: ACTIONS.SET_OVERLAY_PROCESSING,
-  overlay
-});
-
-export const setOverlayLoading = overlay => ({
-  type: ACTIONS.SET_OVERLAY_LOADING,
-  overlay
-});
-
-export const storeFile = file => ({
-  type: ACTIONS.STORE_FILE,
-  file
-});
-
-export const readFileB64 = file => ({
-  type: ACTIONS.READ_FILE_B64,
-  payload: file
-});
-
-export const clearFile = () => ({
-  type: ACTIONS.CLEAR_FILE
-});
-
-export const toggleDisabledDropzones = () => ({
-  type: ACTIONS.TOGGLE_DISABLED_DROPZONES
-});

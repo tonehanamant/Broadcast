@@ -7,7 +7,7 @@ import { Row, Col } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";
 
-import { toggleModal, storeFile } from "Ducks/app";
+import { toggleModal, storeFile } from "Main/redux/actions";
 
 import { getPostPrePostingFiltered } from "PostPrePosting/redux/actions";
 

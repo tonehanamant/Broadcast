@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import Select from "react-select";
 
-import { toggleModal, clearFile } from "Ducks/app";
+import { toggleModal, clearFile } from "Main/redux/actions";
 import {
   updateUploadEquivalized,
   updateUploadPostingBook,

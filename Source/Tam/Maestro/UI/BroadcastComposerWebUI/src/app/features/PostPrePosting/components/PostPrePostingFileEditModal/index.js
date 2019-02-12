@@ -12,8 +12,7 @@ import {
   HelpBlock
 } from "react-bootstrap";
 import Select from "react-select";
-
-import { toggleModal } from "Ducks/app";
+import { toggleModal } from "Main/redux/actions";
 import {
   updateEquivalized,
   updatePostingBook,

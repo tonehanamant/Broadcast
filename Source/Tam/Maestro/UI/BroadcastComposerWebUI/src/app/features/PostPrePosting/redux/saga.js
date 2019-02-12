@@ -2,7 +2,7 @@ import { takeEvery, put, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 
-import * as appActions from "Ducks/app/actionTypes";
+import * as appActions from "Main/redux/types";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -10,7 +10,7 @@ import {
   toggleModal,
   deployError,
   clearFile
-} from "Ducks/app/index";
+} from "Main/redux/actions";
 
 import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";

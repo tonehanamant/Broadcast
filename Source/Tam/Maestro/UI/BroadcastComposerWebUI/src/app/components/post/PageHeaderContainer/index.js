@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createAlert, toggleModal } from "Ducks/app";
+import { toggleModal, createAlert } from "Main/redux/actions";
 import { getPostFiltered, getUnlinkedIscis, processNtiFile } from "Ducks/post";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";

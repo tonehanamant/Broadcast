@@ -12,7 +12,7 @@ import {
 import { bindActionCreators } from "redux";
 import Select from "react-select";
 
-import { toggleModal } from "Ducks/app";
+import { toggleModal } from "Main/redux/actions";
 import { updateProposalEditFormDetail } from "Ducks/planning";
 
 const findValue = (options, id) => options.find(option => option.Id === id);

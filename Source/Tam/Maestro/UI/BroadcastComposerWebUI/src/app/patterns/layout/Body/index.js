@@ -6,7 +6,7 @@ import CSSModules from "react-css-modules";
 import styles from "./index.style.scss";
 
 /* eslint-disable react/prefer-stateless-function */
-export class AppBody extends Component {
+export class Body extends Component {
   // constructor(props) {
   //   super(props);
   // }
@@ -22,7 +22,7 @@ export class AppBody extends Component {
   }
 }
 
-AppBody.propTypes = {
+Body.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.node,
@@ -31,4 +31,4 @@ AppBody.propTypes = {
   ]).isRequired
 };
 
-export default CSSModules(AppBody, styles);
+export default CSSModules(Body, styles);

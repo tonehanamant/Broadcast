@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
-// import CSSModules from 'react-css-modules';
 import { Row, Col } from "react-bootstrap";
 
-export default class StatusBar extends Component {
+export default class MainFooterBar extends Component {
   constructor(props) {
     super(props);
     this.state = {

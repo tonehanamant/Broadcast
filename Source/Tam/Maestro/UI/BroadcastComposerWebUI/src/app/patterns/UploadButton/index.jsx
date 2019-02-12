@@ -12,7 +12,7 @@ import {
 } from "Utils/file-upload";
 import { parseFileToBase64 } from "Utils/file-parser";
 
-import { toggleDisabledDropzones, deployError } from "Ducks/app";
+import { toggleDisabledDropzones, deployError } from "Main/redux/actions";
 
 import styles from "./index.scss";
 
