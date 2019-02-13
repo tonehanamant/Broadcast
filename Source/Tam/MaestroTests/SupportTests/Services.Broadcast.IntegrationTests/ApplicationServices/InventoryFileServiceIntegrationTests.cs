@@ -486,7 +486,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //first make sure the contacts don't exist
                 var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
-                Assert.AreEqual(2, stationContacts.Count);
+                Assert.AreEqual(1, stationContacts.Count);
 
                 request.StreamData = new FileStream(
                     @".\Files\station_contact_new_rate_file_wvtm.xml",

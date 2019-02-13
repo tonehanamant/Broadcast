@@ -10,7 +10,7 @@
       "EstimateId": null,
       "FileDetailProblems": [],
       "Genre": "Do It Yourself",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "DD\"DDDDDD",
       "LeadInEndTime": 30660,
       "LeadinGenre": "News",

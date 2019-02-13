@@ -119,7 +119,7 @@
       "EstimateId": null,
       "FileDetailProblems": [],
       "Genre": "Do It Yourself",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "BCOP3282",
       "LeadInEndTime": 30660,
       "LeadinGenre": "News",
@@ -258,7 +258,7 @@
       "EstimateId": null,
       "FileDetailProblems": [],
       "Genre": "Do It Yourself",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "BCOP3282",
       "LeadInEndTime": 30660,
       "LeadinGenre": "News",
@@ -282,6 +282,6 @@
   "FileHash": "abc123",
   "FileName": "test.file",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }

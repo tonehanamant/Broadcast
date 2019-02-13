@@ -17,7 +17,7 @@
       "EstimateId": null,
       "FileDetailProblems": [],
       "Genre": "Comedy",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "ABC123",
       "LeadInEndTime": 81242,
       "LeadinGenre": "Comedy",
@@ -54,7 +54,7 @@
       "EstimateId": 456,
       "FileDetailProblems": [],
       "Genre": "Talk",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "DEF456",
       "LeadInEndTime": 32462,
       "LeadinGenre": "Talk",
@@ -78,6 +78,6 @@
   "FileHash": "9A-91-E2-51-83-9E-E5-CB-8B-28-36-F1-88-C8-ED-04-C5-31-E1-4C",
   "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }

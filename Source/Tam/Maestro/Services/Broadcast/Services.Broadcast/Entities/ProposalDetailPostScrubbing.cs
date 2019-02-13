@@ -36,6 +36,6 @@ namespace Services.Broadcast.Entities
         public bool MatchIsci { get; set; }
         public string WWTVProgramName { get; set; }
         public List<ProposalWeekIsciDto> WeekIscis { get; set; }
-        public AffidavitFileSourceEnum InventorySource { get; set; }
+        public DeliveryFileSourceEnum InventorySource { get; set; }
     }
 }

@@ -128,7 +128,7 @@
       "EstimateId": 2802,
       "FileDetailProblems": [],
       "Genre": "Talk Show",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "1PRGEXCL",
       "LeadInEndTime": 50400,
       "LeadinGenre": "Series",
@@ -152,6 +152,6 @@
   "FileHash": "7B-33-3B-B2-C7-38-F9-47-CA-32-47-62-92-A8-79-FC-A3-22-E0-4B",
   "FileName": "WWTV_AffidavitValidFile_BCOP4270.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }

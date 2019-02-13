@@ -10,7 +10,7 @@
       "EstimateId": 3926,
       "FileDetailProblems": [],
       "Genre": "Reality",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "C\"ECT\"21LR02H",
       "LeadInEndTime": 59400,
       "LeadinGenre": "Reality",
@@ -34,6 +34,6 @@
   "FileHash": "BC-B4-F9-54-40-14-DB-B4-AE-18-FE-3B-37-50-23-E2-6B-05-86-4E",
   "FileName": "WWTV_Escaped_DoubleQuotes.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }
