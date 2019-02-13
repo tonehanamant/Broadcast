@@ -303,11 +303,11 @@ namespace Services.Broadcast.ApplicationServices
                 startTime = DateTime.Now;
 
                 var fileStationsDict = inventoryFile
-                    .GetAllManifests()
-                    .Select(x => x.Station)
-                    .GroupBy(s => s.Code)
-                    .ToDictionary(g => g.First().Code, g => g.First().LegacyCallLetters);
-                
+                   .GetAllManifests()
+                   .Select(x => x.Station)
+                   .GroupBy(s => s.Code)
+                   .ToDictionary(g => g.First().Code, g => g.First().LegacyCallLetters);
+
                 using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
                 {
                     LockStations(fileStationsDict, lockedStationCodes, stationLocks, inventoryFile);
@@ -434,7 +434,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            var fileStationCodes = inventoryFile.InventoryManifests.Select(m => m.Station.Code).Distinct().ToList();
+            var fileStationCodes = inventoryFile.StationContacts.Select(m => m.StationCode).Distinct().ToList();
             List<StationContact> existingStationContacts = _stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
 
             var contactsUpdateList = inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer).ToList();
@@ -442,8 +442,11 @@ namespace Services.Broadcast.ApplicationServices
             //Set the ID for those that exist already
             foreach (var updateContact in contactsUpdateList)
             {
-                updateContact.Id = existingStationContacts.Single(c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
+                var existingContacts = existingStationContacts.Where(c => StationContact.StationContactComparer.Equals(c, updateContact));
+
+                updateContact.Id = existingContacts.OrderByDescending(c => c.ModifiedDate).First().Id;
             }
+
             _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName, inventoryFile.Id);
 
             var contactsCreateList =

@@ -21,12 +21,11 @@ namespace Services.Broadcast.Entities
         public string Fax { get; set; }
         public string Email { get; set; }
         public string Company { get; set; }
-        
         [JsonConverter(typeof(StringEnumConverter))]
         public StationContactType Type { get; set; }
         public int StationCode { get; set; }
-
         public string InventorySourceString { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         private sealed class StationContactEqualityComparer : IEqualityComparer<StationContact>
         {

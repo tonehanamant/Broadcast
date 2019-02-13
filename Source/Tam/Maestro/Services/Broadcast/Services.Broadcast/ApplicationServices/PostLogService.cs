@@ -619,7 +619,8 @@ namespace Services.Broadcast.ApplicationServices
                     StatusOverride = x.StatusOverride,
                     TimeAired = x.TimeAired,
                     WeekStart = x.WeekStart,
-                    SuppliedProgramNameUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName)
+                    SuppliedProgramNameUsed = string.IsNullOrWhiteSpace(x.WWTVProgramName),
+                    InventorySource = x.InventorySource.ToString()
                 };
             }).ToList();
         }

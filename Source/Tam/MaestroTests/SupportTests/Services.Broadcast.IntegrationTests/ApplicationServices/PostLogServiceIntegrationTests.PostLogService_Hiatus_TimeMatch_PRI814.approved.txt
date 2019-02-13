@@ -487,116 +487,7 @@
       "Affiliate": null,
       "AirTime": 31400,
       "Archived": false,
-      "ClientScrubs": [
-        {
-          "ClientScrubAudiences": [
-            {
-              "AudienceId": 4,
-              "Impressions": 564.5
-            },
-            {
-              "AudienceId": 5,
-              "Impressions": 2113.05
-            },
-            {
-              "AudienceId": 6,
-              "Impressions": 422.65
-            },
-            {
-              "AudienceId": 7,
-              "Impressions": 563.95
-            },
-            {
-              "AudienceId": 13,
-              "Impressions": 16469.35
-            },
-            {
-              "AudienceId": 14,
-              "Impressions": 41040.05
-            },
-            {
-              "AudienceId": 15,
-              "Impressions": 60554.95
-            },
-            {
-              "AudienceId": 19,
-              "Impressions": 294.1
-            },
-            {
-              "AudienceId": 20,
-              "Impressions": 909.4
-            },
-            {
-              "AudienceId": 21,
-              "Impressions": 0.0
-            },
-            {
-              "AudienceId": 22,
-              "Impressions": 1993.95
-            },
-            {
-              "AudienceId": 28,
-              "Impressions": 7734.95
-            },
-            {
-              "AudienceId": 29,
-              "Impressions": 17072.2
-            },
-            {
-              "AudienceId": 30,
-              "Impressions": 8875.5
-            },
-            {
-              "AudienceId": 31,
-              "Impressions": 192712.7
-            },
-            {
-              "AudienceId": 46,
-              "Impressions": 4469.5
-            },
-            {
-              "AudienceId": 284,
-              "Impressions": 3985.7
-            },
-            {
-              "AudienceId": 290,
-              "Impressions": 10983.1
-            },
-            {
-              "AudienceId": 339,
-              "Impressions": 1593.15
-            },
-            {
-              "AudienceId": 347,
-              "Impressions": 39032.35
-            },
-            {
-              "AudienceId": 348,
-              "Impressions": 5252.85
-            }
-          ],
-          "Comment": null,
-          "EffectiveClientIsci": null,
-          "EffectiveGenre": "Do It Yourself",
-          "EffectiveIsci": "AAAAAAAA1",
-          "EffectiveProgramName": "Program Names R us",
-          "EffectiveShowType": "",
-          "LeadIn": false,
-          "MatchDate": true,
-          "MatchGenre": true,
-          "MatchIsci": true,
-          "MatchIsciDays": false,
-          "MatchMarket": true,
-          "MatchProgram": true,
-          "MatchShowType": true,
-          "MatchStation": true,
-          "MatchTime": false,
-          "ModifiedBy": "test-user",
-          "PostingBookId": 416,
-          "PostingPlaybackType": 4,
-          "Status": 1
-        }
-      ],
+      "ClientScrubs": [],
       "Demographics": [],
       "EstimateId": null,
       "FileDetailProblems": [],
@@ -626,7 +517,116 @@
       "Affiliate": null,
       "AirTime": 32400,
       "Archived": false,
-      "ClientScrubs": [],
+      "ClientScrubs": [
+        {
+          "ClientScrubAudiences": [
+            {
+              "AudienceId": 4,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 5,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 6,
+              "Impressions": 610.75
+            },
+            {
+              "AudienceId": 7,
+              "Impressions": 804.25
+            },
+            {
+              "AudienceId": 13,
+              "Impressions": 16703.875
+            },
+            {
+              "AudienceId": 14,
+              "Impressions": 34490.25
+            },
+            {
+              "AudienceId": 15,
+              "Impressions": 50242.625
+            },
+            {
+              "AudienceId": 19,
+              "Impressions": 781.625
+            },
+            {
+              "AudienceId": 20,
+              "Impressions": 778.25
+            },
+            {
+              "AudienceId": 21,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 22,
+              "Impressions": 0.0
+            },
+            {
+              "AudienceId": 28,
+              "Impressions": 10273.875
+            },
+            {
+              "AudienceId": 29,
+              "Impressions": 19975.875
+            },
+            {
+              "AudienceId": 30,
+              "Impressions": 15955.375
+            },
+            {
+              "AudienceId": 31,
+              "Impressions": 177491.0
+            },
+            {
+              "AudienceId": 46,
+              "Impressions": 2654.375
+            },
+            {
+              "AudienceId": 284,
+              "Impressions": 4806.125
+            },
+            {
+              "AudienceId": 290,
+              "Impressions": 13527.375
+            },
+            {
+              "AudienceId": 339,
+              "Impressions": 793.75
+            },
+            {
+              "AudienceId": 347,
+              "Impressions": 26693.125
+            },
+            {
+              "AudienceId": 348,
+              "Impressions": 2872.0
+            }
+          ],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "AAAAAAAA",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "",
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": false,
+          "MatchMarket": true,
+          "MatchProgram": true,
+          "MatchShowType": false,
+          "MatchStation": true,
+          "MatchTime": true,
+          "ModifiedBy": "test-user",
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
+          "Status": 1
+        }
+      ],
       "Demographics": [],
       "EstimateId": null,
       "FileDetailProblems": [],

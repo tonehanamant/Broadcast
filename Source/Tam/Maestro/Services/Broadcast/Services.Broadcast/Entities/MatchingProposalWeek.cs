@@ -12,6 +12,7 @@ namespace Services.Broadcast.Entities
         public int ProposalVersionDetailQuarterWeekId { get; set; }
         public DateTime ProposalVersionDetailWeekStart { get; set; }
         public DateTime ProposalVersionDetailWeekEnd { get; set; }
+        public bool IsHiatus { get; set; }
         public int Spots { get; set; }
         public int ProposalVersionDetailDaypartId { get; set; }
         public string ClientIsci { get; set; }

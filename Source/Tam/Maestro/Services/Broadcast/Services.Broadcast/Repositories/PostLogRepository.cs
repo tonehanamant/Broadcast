@@ -443,7 +443,6 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    context.Database.Log = message => Debug.WriteLine(message);
                     return (from proposal in context.proposals
                             from proposalVersion in proposal.proposal_versions
                             from proposalVersionDetail in proposalVersion.proposal_version_details

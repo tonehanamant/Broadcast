@@ -10,87 +10,87 @@
           "ClientScrubAudiences": [
             {
               "AudienceId": 4,
-              "Impressions": 4635.35
+              "Impressions": 2414.1
             },
             {
               "AudienceId": 5,
-              "Impressions": 1238.15
+              "Impressions": 1099.7
             },
             {
               "AudienceId": 6,
-              "Impressions": 1645.75
+              "Impressions": 198.65
             },
             {
               "AudienceId": 7,
-              "Impressions": 2315.35
+              "Impressions": 2433.85
             },
             {
               "AudienceId": 13,
-              "Impressions": 19191.45
+              "Impressions": 34867.45
             },
             {
               "AudienceId": 14,
-              "Impressions": 48611.5
+              "Impressions": 56733.05
             },
             {
               "AudienceId": 15,
-              "Impressions": 94331.3
+              "Impressions": 119525.8
             },
             {
               "AudienceId": 19,
-              "Impressions": 1121.8
+              "Impressions": 2041.95
             },
             {
               "AudienceId": 20,
-              "Impressions": 1038.35
+              "Impressions": 2808.95
             },
             {
               "AudienceId": 21,
-              "Impressions": 503.6
+              "Impressions": 3224.7
             },
             {
               "AudienceId": 22,
-              "Impressions": 2186.35
+              "Impressions": 3690.3
             },
             {
               "AudienceId": 28,
-              "Impressions": 10765.45
+              "Impressions": 17984.65
             },
             {
               "AudienceId": 29,
-              "Impressions": 38645.2
+              "Impressions": 44661.1
             },
             {
               "AudienceId": 30,
-              "Impressions": 49398.6
+              "Impressions": 64062.8
             },
             {
               "AudienceId": 31,
-              "Impressions": 260245.6
+              "Impressions": 362701.1
             },
             {
               "AudienceId": 46,
-              "Impressions": 4516.5
+              "Impressions": 4187.65
             },
             {
               "AudienceId": 284,
-              "Impressions": 6473.35
+              "Impressions": 9788.6
             },
             {
               "AudienceId": 290,
-              "Impressions": 28123.55
+              "Impressions": 35697.7
             },
             {
               "AudienceId": 339,
-              "Impressions": 1484.4
+              "Impressions": 3114.95
             },
             {
               "AudienceId": 347,
-              "Impressions": 22300.7
+              "Impressions": 43823.8
             },
             {
               "AudienceId": 348,
-              "Impressions": 9517.6
+              "Impressions": 10295.5
             }
           ],
           "Comment": "No WWTV data for Program",
@@ -110,7 +110,7 @@
           "MatchStation": true,
           "MatchTime": false,
           "ModifiedBy": "Test User",
-          "PostingBookId": 437,
+          "PostingBookId": 416,
           "PostingPlaybackType": 4,
           "ProposalVersionDetailId": 9951,
           "ProposalVersionDetailQuarterWeekId": 9951,

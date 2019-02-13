@@ -26,10 +26,10 @@
       "TableName": "2Q'16",
       "TableRows": [
         {
-          "ActualImpressions": 2263.0,
+          "ActualImpressions": 22630.0,
           "Adu": false,
           "Contract": "NAV5",
-          "DeliveredImpressionsPercentage": 2.263,
+          "DeliveredImpressionsPercentage": 22.63,
           "HHRating": 0,
           "ProposalWeekCost": 2.5000,
           "ProposalWeekCPM": 25.0000,
@@ -60,7 +60,7 @@
           "Market": "Yakima-Pasco-Rchlnd-Knnwck",
           "NetworkAffiliate": "ABC",
           "NtiImpressions": {
-            "34": 2263.0
+            "34": 22630.0
           },
           "ProgramName": "Program Names R us",
           "ProposalDetailPlaybackType": "Live+3",

@@ -183,7 +183,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GenerateMyEventsReportTest()
         {
-            var expectedFileName = "Test Adve NAV 30 05-30-16.txt";
+            var expectedFileName = "STAPLES EMN 15 8-27-18.txt";
             var expectedFilePath = @".\Files\" + expectedFileName;
             var myEventsReport = _PostReportService.GenerateMyEventsReport(25999);
             
@@ -388,21 +388,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetNtiPostReportData()
         {
             using (new TransactionScopeWrapper())
             {
-                //because there are no nti impressions in db at this moment I need to parse a document to have some
-                IntegrationTestApplicationServiceFactory.GetApplicationService<INtiTransmittalsService>().UploadNtiTransmittalsFile(new FileRequest
-                {
-                    FileName = "TLA1217 P3 TRANSMITTALS.PDF",
-                    RawData = Convert.ToBase64String(File.ReadAllBytes(@".\Files\TLA1217 P3 TRANSMITTALS.PDF"))
-                }, "integration test user");
-                
                 var result = _PostReportService.GetPostReportData(26006, isNtiReport: true);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNtiPostReportData_PRI711()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PostReportService.GetPostReportData(25999, isNtiReport: true);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PostReport), "ProposalId");

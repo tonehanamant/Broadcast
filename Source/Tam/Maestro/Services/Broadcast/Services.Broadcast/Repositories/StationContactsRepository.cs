@@ -38,18 +38,19 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     return (from c in context.station_contacts
-                        where stationCodes.Contains(c.station_code) 
-                        select new StationContact()
-                        {
-                            Id = c.id,
-                            Name = c.name,
-                            Phone = c.phone,
-                            Fax = c.fax,
-                            Email = c.email,
-                            Company = c.company,
-                            StationCode = c.station_code,
-                            Type = (StationContact.StationContactType) c.type
-                        }).ToList();
+                            where stationCodes.Contains(c.station_code)
+                            select new StationContact()
+                            {
+                                Id = c.id,
+                                Name = c.name,
+                                Phone = c.phone,
+                                Fax = c.fax,
+                                Email = c.email,
+                                Company = c.company,
+                                StationCode = c.station_code,
+                                ModifiedDate = c.modified_date,
+                                Type = (StationContact.StationContactType) c.type
+                            }).ToList();
                 });
         }
 
@@ -79,8 +80,9 @@ namespace Services.Broadcast.Repositories
                                 Fax = c.fax,
                                 Name = c.name,
                                 Phone = c.phone,
-                                Type = (StationContact.StationContactType) c.type,
-                                StationCode = c.station_code
+                                StationCode = c.station_code,
+                                ModifiedDate = c.modified_date,
+                                Type = (StationContact.StationContactType)c.type,
                             }).OrderBy(c => c.Name).ToList();
                     return contactList;
                 });
