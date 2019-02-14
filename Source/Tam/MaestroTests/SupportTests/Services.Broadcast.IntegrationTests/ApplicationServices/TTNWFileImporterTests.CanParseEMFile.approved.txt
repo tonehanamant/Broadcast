@@ -2,19 +2,13 @@
   "fileProblems": [
     {
       "AffectedProposals": null,
-      "ProblemDescription": "Invalid daypart for station: WCBS",
+      "ProblemDescription": "Invalid daypart 'SU 7A-10:30A (SU 7-8A)' for station: WCBS",
       "ProgramName": null,
       "StationLetters": null
     },
     {
       "AffectedProposals": null,
-      "ProblemDescription": "Invalid daypart for station: WBBM",
-      "ProgramName": null,
-      "StationLetters": null
-    },
-    {
-      "AffectedProposals": null,
-      "ProblemDescription": "Invalid station: WHAG",
+      "ProblemDescription": "Invalid daypart 'SU 7-8A (may be SU 8-9A)' for station: WBBM",
       "ProgramName": null,
       "StationLetters": null
     },
@@ -26,7 +20,13 @@
     },
     {
       "AffectedProposals": null,
-      "ProblemDescription": "Invalid daypart for station: KHOU",
+      "ProblemDescription": "Invalid station: WHAG",
+      "ProgramName": null,
+      "StationLetters": null
+    },
+    {
+      "AffectedProposals": null,
+      "ProblemDescription": "Invalid daypart 'SA 6-10A  (6-8:30A)' for station: KHOU",
       "ProgramName": null,
       "StationLetters": null
     },

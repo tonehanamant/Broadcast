@@ -214,6 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\TimeFirstDaypartParser.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\WeekdayFirstDaypartParser.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
     <Compile Include="Entities\Enums\DeliveryFileSourceEnum.cs" />
     <Compile Include="Entities\DTO\ProgramSpotsDto.cs" />

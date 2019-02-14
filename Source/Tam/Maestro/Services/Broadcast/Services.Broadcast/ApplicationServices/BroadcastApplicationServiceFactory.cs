@@ -19,6 +19,7 @@ using Tam.Maestro.Services.Clients;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -149,6 +150,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>();
+            unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

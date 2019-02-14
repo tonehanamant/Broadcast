@@ -100,7 +100,7 @@ namespace Services.Broadcast.Converters.RateImport
                         var daypartCode = _GetCellValue(row, "Barter Network");
                         if (!_ValidDaypartCodes.Contains(daypartCode))
                         {
-                            _AddProblem(string.Format("Invalid daypart code format for Station {0}",
+                            AddProblem(string.Format("Invalid daypart code format for Station {0}",
                                 station.LegacyCallLetters));
                         }
                         var length = _GetCellValue(row, "Spot Length").ToUpper();
@@ -113,7 +113,12 @@ namespace Services.Broadcast.Converters.RateImport
                         var spotsPerday = _ParseNumericPositiveInt(spotPerDay, "Invalid Spots Per Day \"{0}\"");
 
                         var dps = _GetCellValue(row, "Time Periods").ToUpper();
-                        var dayparts = _ParseDayparts(dps, stationName);
+                        var dayparts = ParseDayparts(dps, stationName);
+
+                        if (dayparts.Any())
+                        {
+                            _FoundGoodDaypart = true;
+                        }
 
                         dtos.Add(new CNNFileDto
                         {
@@ -240,18 +245,6 @@ namespace Services.Broadcast.Converters.RateImport
             return groups;
         }
 
-        private void _AddProblem(string description, string stationLetters = null, string programName = null,
-            List<string> affectedProposals = null)
-        {
-            FileProblems.Add(new InventoryFileProblem()
-            {
-                AffectedProposals = affectedProposals,
-                ProblemDescription = description,
-                ProgramName = programName,
-                StationLetters = stationLetters
-            });
-        }
-
         private Dictionary<string, int> _SetupHeadersValidateSheet()
         {
             var validationErrors = new List<string>();
@@ -294,63 +287,13 @@ namespace Services.Broadcast.Converters.RateImport
                 throw new Exception(string.Format("Unable to parse inventory file: {0}. Invalid file size.", Request.FileName));
         }
 
-
-        private List<DisplayDaypart> _ParseDayparts(string daypartInput, string station)
-        {
-            List<DisplayDaypart> dayparts = new List<DisplayDaypart>();
-            try
-            {
-                var dps = Regex.Replace(daypartInput, "\\s+", "\r\n");
-                string[] daypartStrings = Regex.Split(dps, "\r\n|\r|\n");
-                daypartStrings.ForEach(dp =>
-                {
-                    try
-                    {
-                        // switch order of days vs times and add space between them instead of ":"
-                        string daypart = dp;
-                        int spaceIndex = dp.IndexOf(" ");
-                        if (spaceIndex > 0) // remove everything past first space
-                            daypart = daypart.Substring(0, spaceIndex);
-
-                        int lastColon = daypart.LastIndexOf(":");
-                        var dayOfWeekPart = daypart.Substring(lastColon + 1);
-                        dayOfWeekPart = dayOfWeekPart.Replace(";", ",");
-
-                        var timeOfDaypart = daypart.Substring(0, lastColon);
-                        var splitTimeOfDaypart = timeOfDaypart.Split('-');
-                        if (splitTimeOfDaypart.Length != 2 ||
-                            (!splitTimeOfDaypart[0].ToUpper().EndsWith("A") && !splitTimeOfDaypart[0].ToUpper().EndsWith("P"))
-                            ||
-                            (!splitTimeOfDaypart[1].ToUpper().EndsWith("A") && !splitTimeOfDaypart[1].ToUpper().EndsWith("P")))
-                            throw new Exception();
-
-                        daypart = string.Format("{1} {0}", timeOfDaypart, dayOfWeekPart);
-                        dayparts.Add(ParseStringToDaypart(daypart, station));
-                        _FoundGoodDaypart = true;
-                    }
-                    catch (Exception e)
-                    {
-                        _AddProblem(string.Format("Invalid daypart '{0}' on Station {1}.", dp, station));
-                    }
-                });
-
-            }
-            catch (Exception)
-            {
-                _AddProblem(string.Format("Invalid daypart for station: {0}",station));
-            }
-
-            return dayparts;
-        }
-
-
         private int _ParseNumericPositiveInt(string value,string errorMessage)
         {
             int num;
 
             if (!int.TryParse(value, out num) || num <= 0)
             {
-                _AddProblem(string.Format(errorMessage,value));
+                AddProblem(string.Format(errorMessage,value));
                 return -1;
             }
             return num;
@@ -366,9 +309,9 @@ namespace Services.Broadcast.Converters.RateImport
             if (station!=null) stationName = station.LegacyCallLetters;
             
             if (!int.TryParse(length, out int spotLength))
-                _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
+                AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
             if (!_IsValidSpotLenght(spotLength))
-                _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
+                AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
 
 
             if (_SpothLengths == null)
@@ -379,7 +322,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             int spotLengthId;
             if (!_SpothLengths.TryGetValue(spotLength,out spotLengthId))
-                _AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
+                AddProblem(string.Format("Invalid spot length on Station '{0}'", stationName));
 
             return spotLengthId;
         }
@@ -395,7 +338,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (foundStation == null)
             {
-                _AddProblem($"Invalid station: {stationName}");
+                AddProblem($"Invalid station: {stationName}");
             }
             
             return foundStation;

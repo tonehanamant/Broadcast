@@ -1,0 +1,2383 @@
+﻿{
+  "failures": [
+    "5P-5:30P:M-F                                 6P-6:30P:M-Sa                                    5:30:-6P:Su                            10P-10:35P:M-Su",
+    "5A-9A:M-F            6A-8:30A:Sa             8A-9:30A:SuI523"
+  ],
+  "success": {
+    "10P-10:30P:M-F": [
+      "M-F 10PM-10:30PM"
+    ],
+    "5:30A-6A:M-F                           8A-9A:M-F": [
+      "M-F 5:30AM-6AM",
+      "M-F 8AM-9AM"
+    ],
+    "6P-6:30P:M-F                                   11P-11:35P:M-F": [
+      "M-F 6PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "5A-9A:M-F                             7A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-F": [
+      "M-F 5AM-9AM"
+    ],
+    "4A-9A:M-F                    7A-9A:Sa,Su": [
+      "M-F 4AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "5A-6A:M-F             7A-10A:M-F          7A-9A:Sa               8A-9A:Su": [
+      "M-F 5AM-6AM",
+      "M-F 7AM-10AM",
+      "SA 7AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-6:30P:M-F       10P-10:35P:M-F   ": [
+      "M-F 5PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5:30A-7A:M-F": [
+      "M-F 5:30AM-7AM"
+    ],
+    "4P-5:30P:M-F                   6P-6:30P:M-F                      10P-10:30P:M-Su": [
+      "M-F 4PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F\n7A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "7A-8A:M-F": [
+      "M-F 7AM-8AM"
+    ],
+    "5:30P-6P:M-F                                     9P-9:30P:M-F": [
+      "M-F 5:30PM-6PM",
+      "M-F 9PM-9:30PM"
+    ],
+    "4A-7A:M-F ": [
+      "M-F 4AM-7AM"
+    ],
+    "5P-5:30P:M-F;Su\n6P-6:30P:M-F;Sa\n10P-10:30P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "9P-9:30P:M-F": [
+      "M-F 9PM-9:30PM"
+    ],
+    "5A-9A:M-F\n6A-8:30A:Sa\n8A-8:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8:30AM",
+      "SU 8AM-8:30AM"
+    ],
+    "10P-10:30P:M-Su": [
+      "M-SU 10PM-10:30PM"
+    ],
+    "8A-10A:M-Sa": [
+      "M-SA 8AM-10AM"
+    ],
+    "5:30A-9A:M-F\n6A-8A:Sa\n8A-9:30A:Su": [
+      "M-F 5:30AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9:30AM"
+    ],
+    "6A-9A:M-F": [
+      "M-F 6AM-9AM"
+    ],
+    "8P-10:40P:M-F      8P-10:30P:Sa,Su": [
+      "M-F 8PM-10:40PM",
+      "SA-SU 8PM-10:30PM"
+    ],
+    "5A-7A:M-F": [
+      "M-F 5AM-7AM"
+    ],
+    "5P-5:30P:M-F       6P-6:30P:M-Sa     5:30P-6P:Su          10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "SU 5:30PM-6PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-10A:M-F            6A-9A:Sa                7A-9:30A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-9AM",
+      "SU 7AM-9:30AM"
+    ],
+    "5A-9A:M-F                          5A-7A:Sa                             6A-8A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-7AM",
+      "SU 6AM-8AM"
+    ],
+    "5A-10A:M-F\n6A-7:30A:Sa         8A-9A:Su\n": [
+      "M-F 5AM-10AM",
+      "SA 6AM-7:30AM",
+      "SU 8AM-9AM"
+    ],
+    "9P-10P:M-F                                   9P-9:30P:Sa,Su": [
+      "M-F 9PM-10PM",
+      "SA-SU 9PM-9:30PM"
+    ],
+    "5A-9A:M-F\n5A-8A:Sa\n6A-7A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-8AM",
+      "SU 6AM-7AM"
+    ],
+    "5A-7A:M-Sa          7A-8:30A:Su                          ": [
+      "M-SA 5AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "4:30A-9A:M-F                      8A-9A:Su": [
+      "M-F 4:30AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "4P-6P:M-F                           10P-11:30P:M-F                                    10P-10:30P:Sa,Su            ": [
+      "M-F 4PM-6PM",
+      "M-F 10PM-11:30PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5:30A-10A:M-F                 7A-10A:Sa,Su": [
+      "M-F 5:30AM-10AM",
+      "SA-SU 7AM-10AM"
+    ],
+    "7A-10A:M-F": [
+      "M-F 7AM-10AM"
+    ],
+    "9P-9:30P:M-Su": [
+      "M-SU 9PM-9:30PM"
+    ],
+    "5:30A-10A:M-F\n6A-8A:Sa\n7A-8A:Su": [
+      "M-F 5:30AM-10AM",
+      "SA 6AM-8AM",
+      "SU 7AM-8AM"
+    ],
+    "7A-9A:M-F": [
+      "M-F 7AM-9AM"
+    ],
+    "5A-9A:M-F\n6A-9A:Sa                    9A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-9AM",
+      "SU 9AM-10AM"
+    ],
+    "5A-9A:M-F\n8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-6P:M-Su\n9P-10:30P:M-Su\n": [
+      "M-SU 5PM-6PM",
+      "M-SU 9PM-10:30PM"
+    ],
+    "5A-9:M-F              8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-6P:M-Su                 9P-10:30P:M-Su      ": [
+      "M-SU 5PM-6PM",
+      "M-SU 9PM-10:30PM"
+    ],
+    "5A-10A:M-F\n6A-7:30A:Sa\n8A-9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-7:30AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F              10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "4:30A-7A:M-F                     6A-7A:Sa                        7A-8A:Su": [
+      "M-F 4:30AM-7AM",
+      "SA 6AM-7AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F                 5:30P-6P:Su                           6P-6:30P:M-Sa                    10P-10:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "4:30A-9A:M-F                       6A-9A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5A-7A:M-F            6A-9A:Sa,Su": [
+      "M-F 5AM-7AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5A-7A:M-F       ": [
+      "M-F 5AM-7AM"
+    ],
+    "5P-5:30P:M-Su     6P-6:30P:M-F    10P-10:35P:M-Su": [
+      "M-SU 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "6A-7A:M-Su": [
+      "M-SU 6AM-7AM"
+    ],
+    "5A-7A:M-Su          7A-8A:Sa,Su": [
+      "M-SU 5AM-7AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-F\n8A-9A:Sa\n7A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 8AM-9AM",
+      "SU 7AM-9AM"
+    ],
+    "5P-7P:M-F\n5P-7P:Sa,Su\n11P-11:35P:M-Su": [
+      "M-F 5PM-7PM",
+      "SA-SU 5PM-7PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9A:M-F          6A-7A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-7AM"
+    ],
+    "5P-5:30P:M-Su\n10P-10:30P:M-Su             6P-6:30P:M-F": [
+      "M-SU 5PM-5:30PM",
+      "M-SU 10PM-10:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "5A-9A:M-F                            6A-8A:Sa": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM"
+    ],
+    "5P-5:30P:M-F                         6P-7P:M-F                              6P-6:30P:Sa                         5:30P-6P:Su                     10P-10:30P:M-Su    ": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "SA 6PM-6:30PM",
+      "SU 5:30PM-6PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5P-6:30P:M-F             10P-10:35P:M-F": [
+      "M-F 5PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5A-9A:M-F                        5A-7A:Sa                                      7A-8:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "6A-9A:M-F          ": [
+      "M-F 6AM-9AM"
+    ],
+    "6:30P-7P:M-F                9P-9:30P:M-F                            9P-10P:Sa,Su": [
+      "M-F 6:30PM-7PM",
+      "M-F 9PM-9:30PM",
+      "SA-SU 9PM-10PM"
+    ],
+    "5:30P-6P:M-F                         9P-10P:M-F                     9P-9:30P:Sa,Su": [
+      "M-F 5:30PM-6PM",
+      "M-F 9PM-10PM",
+      "SA-SU 9PM-9:30PM"
+    ],
+    "9P-9:35P:M-Su": [
+      "M-SU 9PM-9:35PM"
+    ],
+    "5A-9A:M-F             6A:9A:Sa                       6A-7A:Su": [
+      "M-F 5AM-9AM",
+      "SU 6AM-7AM"
+    ],
+    "4P-4:30P:M-F                      5P-5:30P:M-F               6P-6:30P:M-F": [
+      "M-F 4PM-4:30PM",
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "5:30A-9A-M-F\n7A-9A:Sa\n7A-8A:Su": [
+      "M-F 5:30AM-9AM",
+      "SA 7AM-9AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-7P:M-F": [
+      "M-F 5PM-7PM"
+    ],
+    "5P-6:30P:M-F                   11P-11:35P:M-F": [
+      "M-F 5PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "4A-9A-M-F\n6:30A-7:30A:Sa,Su\n8A-10A:Sa,Su": [
+      "M-F 4AM-9AM",
+      "SA-SU 6:30AM-7:30AM",
+      "SA-SU 8AM-10AM"
+    ],
+    "6A-10A-M-F\n6A-8A:Sa\n7A-8A:Su": [
+      "M-F 6AM-10AM",
+      "SA 6AM-8AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-F        7P-7:30P:M-F\n11P-11:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "4:30A-9A:M-F                      5A-9A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 5AM-9AM"
+    ],
+    "5A-9A-M-F\n5A-7A:Sa\n6A-8A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-7AM",
+      "SU 6AM-8AM"
+    ],
+    "5A-10A:M-F        6A-8A:Sa": [
+      "M-F 5AM-10AM",
+      "SA 6AM-8AM"
+    ],
+    "6A-7A:Sa,Su\n6A-9A:M-F": [
+      "SA-SU 6AM-7AM",
+      "M-F 6AM-9AM"
+    ],
+    "5P-5:30P:M-Su\n10P-10:35P:M-Su                        6P-6:30P:M-F": [
+      "M-SU 5PM-5:30PM",
+      "M-SU 10PM-10:35PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "5A-10A:M-F          5A-6:30A:Sa              5A-6A:Su": [
+      "M-F 5AM-10AM",
+      "SA 5AM-6:30AM",
+      "SU 5AM-6AM"
+    ],
+    "5P-6P:M-F": [
+      "M-F 5PM-6PM"
+    ],
+    "4:30A-8A:M-F": [
+      "M-F 4:30AM-8AM"
+    ],
+    "5P-6:30P:M-F           6P-6:30P:Sa-Su         9P-9:30P:M-F            10P-10:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 9PM-9:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "4:30A-9A:M-F               5A-7A:Sa           7A-8:30A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 5AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "6P-6:30P:M-Su               11P-11:30P:M-Su          5P-5:30P:Su": [
+      "M-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM",
+      "SU 5PM-5:30PM"
+    ],
+    "5P-6P:M-Sa                            9P-10:30P:M-F                       9P-10P:Sa,Su ": [
+      "M-SA 5PM-6PM",
+      "M-F 9PM-10:30PM",
+      "SA-SU 9PM-10PM"
+    ],
+    "5A-7A:M-Sa           8A-9:30A:Su": [
+      "M-SA 5AM-7AM",
+      "SU 8AM-9:30AM"
+    ],
+    "6A-8A:Sa\n6:30A-9A:M-F\n7A-8A:Su": [
+      "SA 6AM-8AM",
+      "M-F 6:30AM-9AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-Su\n11P-11:30P:Sa,Su\n11P-11:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-SU 6PM-6:30PM",
+      "SA-SU 11PM-11:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "5A-7A:M-F           7A-8A:Sa,Su": [
+      "M-F 5AM-7AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-F                                    6A-8A:Sa                                    8A-9:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9:30AM"
+    ],
+    "5A-7A:M-Sa          7A-8:30A:Su": [
+      "M-SA 5AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "5P-5:30P:M-Su                        6P-7P:M-F                            10P-11P:M-F                                  10P-10:30P:Sa,Su": [
+      "M-SU 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F            7A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-F\n8A-10A:Sa                           6A-7A:Su                            8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 8AM-10AM",
+      "SU 6AM-7AM",
+      "SU 8AM-9AM"
+    ],
+    "8A-8:30A:M-F": [
+      "M-F 8AM-8:30AM"
+    ],
+    "7A-9A:M-F            6A-8A:Sa             7A08A:Su": [
+      "M-F 7AM-9AM",
+      "SA 6AM-8AM"
+    ],
+    "4A-9:30A:M-F\n6A-8A:Sa": [
+      "M-F 4AM-9:30AM",
+      "SA 6AM-8AM"
+    ],
+    "5A-9A:M-F           6A-6:30A:Su         8A-8:30A:Su": [
+      "M-F 5AM-9AM",
+      "SU 6AM-6:30AM",
+      "SU 8AM-8:30AM"
+    ],
+    "4P-5:30P:M-F       5P-5:30P:Sa,Su    6P-6:30P:M-Sa    6:30P-7P:Su         11P-11:35P:M-Su": [
+      "M-F 4PM-5:30PM",
+      "SA-SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "SU 6:30PM-7PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5:30P-7P:M-F     10P-10:30P:M-F": [
+      "M-F 5:30PM-7PM",
+      "M-F 10PM-10:30PM"
+    ],
+    "4A-9A:M-F                   7A-9A:Sa,Su                                    ": [
+      "M-F 4AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "5A-7A:M-F                         5A-6A:Sa                                6A-8A:Su": [
+      "M-F 5AM-7AM",
+      "SA 5AM-6AM",
+      "SU 6AM-8AM"
+    ],
+    "5P-5:30P:M-F\n5:30P-6P:Su               6P-6:30P:M-Sa\n10P-10:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "7A-9A:M-F  ": [
+      "M-F 7AM-9AM"
+    ],
+    "5:30P-6P:M-F\n9P-10P:M-F": [
+      "M-F 5:30PM-6PM",
+      "M-F 9PM-10PM"
+    ],
+    "5P-5:30P:M-F         6P-6:30P:M-Sa\n10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-9A:M-F                  7A-8A:Sa,Su             ": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "4P-5:30P:M-F                  6P-6:30P:M-F": [
+      "M-F 4PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "5A-9A:M-F            7A-9A:Sa,Su             ": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "5P-5:30P:M-F                      10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "4A-4:30A:M-F\n5:30A-9A:M-F\n7A-9A:Sa,Su": [
+      "M-F 4AM-4:30AM",
+      "M-F 5:30AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "9P-10P:M-F                9P-9:30P:Sa,Su": [
+      "M-F 9PM-10PM",
+      "SA-SU 9PM-9:30PM"
+    ],
+    "4:30A-9A:M-F                          6A-8A:Sa                                   8A-9:30A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9:30AM"
+    ],
+    "7A-10A:M-F                 8A-10A:Sa                  9A-10A:Su": [
+      "M-F 7AM-10AM",
+      "SA 8AM-10AM",
+      "SU 9AM-10AM"
+    ],
+    "5A-9A:M-F\n6A-8A:Sa\n8A-9:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9:30AM"
+    ],
+    "5:30A-10A:M-F      7A-9A:Sa,Su": [
+      "M-F 5:30AM-10AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "5:30A-8A:M-F": [
+      "M-F 5:30AM-8AM"
+    ],
+    "9P-10P:M-F             9P-9:30P:Sa-Su": [
+      "M-F 9PM-10PM",
+      "SA-SU 9PM-9:30PM"
+    ],
+    "6A-7A:M-F": [
+      "M-F 6AM-7AM"
+    ],
+    "5P-5:30P:M-F,Su\n6P-6:30P:M-F,Sa\n10P-10:35P:M-Su": [
+      "SU 6PM-6:30PM",
+      "SA 10PM-10:35PM"
+    ],
+    "4:30A-9A:M-F                                        5A-9A:Sa                               5A-8A:Su\n": [
+      "M-F 4:30AM-9AM",
+      "SA 5AM-9AM",
+      "SU 5AM-8AM"
+    ],
+    "5:30A-9A:M-F                                   6A-7:30A:Sa\n7A-8A:Su": [
+      "M-F 5:30AM-9AM",
+      "SA 6AM-7:30AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F                6P-6:30P:M-F                    10P-10:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:30PM"
+    ],
+    "4:30A-7A:M-F": [
+      "M-F 4:30AM-7AM"
+    ],
+    "4P-6P:M-F                   5P-6:30P:Sa-Su                  11P-11:30P:M-Su": [
+      "M-F 4PM-6PM",
+      "SA-SU 5PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F            5A-7A:Sa               7A-8:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "4P-5:30P:M-F                 6P-6:30P:M-F": [
+      "M-F 4PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "4A-9A:M-F             6:30A-7:30A:Sa,Su         8A-10A:Sa,Su": [
+      "M-F 4AM-9AM",
+      "SA-SU 6:30AM-7:30AM",
+      "SA-SU 8AM-10AM"
+    ],
+    "4:30A-9A:M-F              7A-8A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-F             6A-8A:Sa": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM"
+    ],
+    "5P-5:30P:M-F               6P-6:30P:M-F\n10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "6A-10A:M-F            7A-9A:Sa                   9A-10A:Su": [
+      "M-F 6AM-10AM",
+      "SA 7AM-9AM",
+      "SU 9AM-10AM"
+    ],
+    "5:30A-9A:M-F                       6A-7A:Sa,Su": [
+      "M-F 5:30AM-9AM",
+      "SA-SU 6AM-7AM"
+    ],
+    "5A-9A:M-F                5A-7A:Sa                    6A-7:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-7AM",
+      "SU 6AM-7:30AM"
+    ],
+    "9P-10P:M-F": [
+      "M-F 9PM-10PM"
+    ],
+    "8A-9A:M-F": [
+      "M-F 8AM-9AM"
+    ],
+    "5A-9A:M-F                       5A-7A:Sa                             6A-8:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-7AM",
+      "SU 6AM-8:30AM"
+    ],
+    "5P-5:30P:M-Su\n6P-7P:M-Su\n11P-11:35P:M-Su": [
+      "M-SU 5PM-5:30PM",
+      "M-SU 6PM-7PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-10A:M-F            7A-8:30A:Sa                      7A-8A:Su                                      ": [
+      "M-F 5AM-10AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F                  6P-6:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "4:30A-10A:M-F                               6A-9A:Sa                           6A-8A:Su": [
+      "M-F 4:30AM-10AM",
+      "SA 6AM-9AM",
+      "SU 6AM-8AM"
+    ],
+    "5:30A-9A:M-F": [
+      "M-F 5:30AM-9AM"
+    ],
+    "5P-5:30P:M-F                           6P-6:30P:M-F                               10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5P-5:30P:M-F                 6P-6:30P:M-Sa                             10P-10:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5A-7A:M-F                  6A-9A:Sa,Su": [
+      "M-F 5AM-7AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5P-5:30P:M-F;Su\n6P-6:30P:M-F;Sa\n10P-10:30P:Sa-Su\n10P-10:35P:M-F": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "SA-SU 10PM-10:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "4A-10A:M-F\n7A-10A:Sa-Su": [
+      "M-F 4AM-10AM",
+      "SA-SU 7AM-10AM"
+    ],
+    "5P-7P:M-F\n8P-9P:M-Su\n10P-11P:M-Su": [
+      "M-F 5PM-7PM",
+      "M-SU 8PM-9PM",
+      "M-SU 10PM-11PM"
+    ],
+    "5A-9A:M-F              5A-8A:Sa               6A-8A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-8AM",
+      "SU 6AM-8AM"
+    ],
+    "4P-5P:M-F            5:30P-6P:M-Su           10P-10:35P:M-Su": [
+      "M-F 4PM-5PM",
+      "M-SU 5:30PM-6PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "9P-10P:M-Su  ": [
+      "M-SU 9PM-10PM"
+    ],
+    "5:30A-10A:M-F           7A-8:30A:Sa           7A-8A:Su": [
+      "M-F 5:30AM-10AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F          6P-6:30P:M-Sa\n10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "4:30A-9A:M-F": [
+      "M-F 4:30AM-9AM"
+    ],
+    "7A-9A:M-F           ": [
+      "M-F 7AM-9AM"
+    ],
+    "5P-5:30P:M-F          6P-7P:M-F\n11P-11:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F             7A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-F                            6A-7A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-7AM"
+    ],
+    "4:30A-9A:M-F                                6A-9A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5A-7A:Sa\n5A-9A:M-F\n7A-8A:Su": [
+      "SA 5AM-7AM",
+      "M-F 5AM-9AM",
+      "SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F                6P-7P:M-F                10P-10:35P:M-F          5P-5:30P:Sa,Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "M-F 10PM-10:35PM",
+      "SA-SU 5PM-5:30PM"
+    ],
+    "5A-9:30A:M-F           6A-8A:Sa                 8A-8:30A:Su            9A-10A:Su": [
+      "M-F 5AM-9:30AM",
+      "SA 6AM-8AM",
+      "SU 8AM-8:30AM",
+      "SU 9AM-10AM"
+    ],
+    "4A-10A:M-F           7A-9A:Sa,Su": [
+      "M-F 4AM-10AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "6P-7P:M-F                     6P-6:30:Sa                       10P-10:30P:M-Su": [
+      "M-F 6PM-7PM",
+      "SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "4:30A-9A:M-F                                       5A-7A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 5AM-7AM"
+    ],
+    "5P-5:30P:M-F,Su                  6P:6:30P:M-Sa                                10P-10:30P:M-Su              ": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5P-5:30P:M-F;Su         6P-6:30P:M-Sa                    10P-10:35P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "7A-8A:M-F                             8A-9A:Sa,Su": [
+      "M-F 7AM-8AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "4:30A-9A:M-F       6:30A-9A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6:30AM-9AM"
+    ],
+    "4P-6P:M-F                           5P-6P:Sa,Su                             9P-10P:M-Su                ": [
+      "M-F 4PM-6PM",
+      "SA-SU 5PM-6PM",
+      "M-SU 9PM-10PM"
+    ],
+    "7A-7:30A:M-F": [
+      "M-F 7AM-7:30AM"
+    ],
+    "4:30A-10A:M-F     8A-9A:Su": [
+      "M-F 4:30AM-10AM",
+      "SU 8AM-9AM"
+    ],
+    "4P-7P:M-F    \n5P-6P:Sa,Su                            6P-7P:M-F                     10P-11P:M-Su": [
+      "M-F 4PM-7PM",
+      "SA-SU 5PM-6PM",
+      "M-F 6PM-7PM",
+      "M-SU 10PM-11PM"
+    ],
+    "5:30A-6A:M-F": [
+      "M-F 5:30AM-6AM"
+    ],
+    "5P-5:30P:M-F                             6P-7P:M-F                                   6P-6:30P:Sa                        5:30P-6:30P:Su                        10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "SA 6PM-6:30PM",
+      "SU 5:30PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5P-5:30P:M-F                    6P-6:30P:M-Sa                   10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5P-5:30P:M-F                        6P-6:30P:M-F                                 10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5A-9A:M-F                          7A-8:30A:Sa                        7A-8A:Su": [
+      "M-F 5AM-9AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-8AM"
+    ],
+    "5A-9A:M-F                           5A-7A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 5AM-7AM"
+    ],
+    "5:30P-6P:M-F                     10P-10:30P:M-Su": [
+      "M-F 5:30PM-6PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "4A-10A:M-F                   6A-9A:Sa                        6A-10A:Su": [
+      "M-F 4AM-10AM",
+      "SA 6AM-9AM",
+      "SU 6AM-10AM"
+    ],
+    "10P-11:30P:M-Sa                           9P-11:30P:Su": [
+      "M-SA 10PM-11:30PM",
+      "SU 9PM-11:30PM"
+    ],
+    "10P-10:35P:M-Su\n": [
+      "M-SU 10PM-10:35PM"
+    ],
+    "4P-5:30P:M-F                     6P-6:30P:M-F": [
+      "M-F 4PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "5P-5:30P:M-F                  5:30P-6P:Su                 6P-7P:M-F             6P-6:30P:Sa             10P-10:35P:M-Su      ": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-F 6PM-7PM",
+      "SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-9A:M-F                         7A-8:30A:Sa                                     7A-8A:Su": [
+      "M-F 5AM-9AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-8AM"
+    ],
+    "4:30A-6A:M-F                        7A-9A:M-F                           5A-7A:Sa                              6A-7A:Su": [
+      "M-F 4:30AM-6AM",
+      "M-F 7AM-9AM",
+      "SA 5AM-7AM",
+      "SU 6AM-7AM"
+    ],
+    "5P-5:30P:M-F,Su                         6P-6:30P:M-F,Sa                                  10P-10:30P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "6A-10A:M-F             5A-6:30A:Sa                   7A-8A:Su": [
+      "M-F 6AM-10AM",
+      "SA 5AM-6:30AM",
+      "SU 7AM-8AM"
+    ],
+    "6A-10A:M-Sa         6A-7A:Su": [
+      "M-SA 6AM-10AM",
+      "SU 6AM-7AM"
+    ],
+    "4A-10A:M-F                    6A-9A:Sa,Su": [
+      "M-F 4AM-10AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5P-6:30P:M-F                      5P-6P:Sa,Su                         9P-10:30P:M-Su                11P-11:30P:M-F": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 5PM-6PM",
+      "M-SU 9PM-10:30PM",
+      "M-F 11PM-11:30PM"
+    ],
+    "5A-9A:M-F\n6A-7:30A:Sa\n8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-7:30AM",
+      "SU 8AM-9AM"
+    ],
+    "5:30A-9A:M-F              5A-7A:Sa                             7A-8:30A:Su": [
+      "M-F 5:30AM-9AM",
+      "SA 5AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "5A-9A:M-F          6A-8A:Sa            7A-9:30A:Su                               ": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 7AM-9:30AM"
+    ],
+    "4:30A-7A:M-F        ": [
+      "M-F 4:30AM-7AM"
+    ],
+    "4P-5:30P:M-Su       6P-6:30P:M-F\n10P-10:35P:M-Su": [
+      "M-SU 4PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-7A:M-F               6A-7:30A:Sa                    7A-8A:Su                     ": [
+      "M-F 5AM-7AM",
+      "SA 6AM-7:30AM",
+      "SU 7AM-8AM"
+    ],
+    "4:30A-10A:M-F    8A-9A:Su": [
+      "M-F 4:30AM-10AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-6:30P:M-F                   5P-6P:Sa                     10P-11P:M-Su      ": [
+      "M-F 5PM-6:30PM",
+      "SA 5PM-6PM",
+      "M-SU 10PM-11PM"
+    ],
+    "5P-6P:M-F               6:30P-7P:M-F                 9:30P-10P:Su                           10P-10:30P:M-F,Sa": [
+      "M-F 5PM-6PM",
+      "M-F 6:30PM-7PM",
+      "SU 9:30PM-10PM",
+      "M-SA 10PM-10:30PM"
+    ],
+    "4A-9A:M-F           7A-9A:Sa                 7A-10A:Su": [
+      "M-F 4AM-9AM",
+      "SA 7AM-9AM",
+      "SU 7AM-10AM"
+    ],
+    "5P-7P:M-F                  6P-7P:Sa,Su               11P-11:30P:M-Su": [
+      "M-F 5PM-7PM",
+      "SA-SU 6PM-7PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "6:30A-9A:M-F      7A-8:30A:Sa        7A-9A:Su": [
+      "M-F 6:30AM-9AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-9AM"
+    ],
+    "5P-5:30P:M-F\n10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5A-10A:M-F                    7A-9A:Sa                         7A-8A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-9AM",
+      "SU 7AM-8AM"
+    ],
+    "4:30A-9A:M-F              6A-10A:Sa                       8:30A-9:30A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 6AM-10AM",
+      "SU 8:30AM-9:30AM"
+    ],
+    "5A-10A:M-F                                7A-8:30A:Sa                       8A-9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-8:30AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F                             6P-7P:M-F                            6P-6:30P:Sa                                  10P-10:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F                           6A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5A-9A:M-F                6A-8A:Sa                    8A-9:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9:30AM"
+    ],
+    "5A-9A:M-F                              6A-7:30A:Sa                   8A-9A:Sa                   7A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-7:30AM",
+      "SA 8AM-9AM",
+      "SU 7AM-9AM"
+    ],
+    "4:30A-7A:M-F             6A-7A:Su               7A-9A:Sa                    8A-9A:Su": [
+      "M-F 4:30AM-7AM",
+      "SU 6AM-7AM",
+      "SA 7AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F;Su               6P-6:30P:M-Sa                   10P-10:30P-M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "6A-9A:M-F                           5A-7A:Sa                                   6A-7:30A:Su": [
+      "M-F 6AM-9AM",
+      "SA 5AM-7AM",
+      "SU 6AM-7:30AM"
+    ],
+    "4A-9A:M-F                      7A-9A:Sa                    9:30A-10A:Su": [
+      "M-F 4AM-9AM",
+      "SA 7AM-9AM",
+      "SU 9:30AM-10AM"
+    ],
+    "5P-5:30P:M-F                      6P-6:30P:M-Sa               10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-9A:M-F                        5A-7A:Sa-Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 5AM-7AM"
+    ],
+    "5P-5:30P:M-F                    6:30P-7P:M-F                9P-9:30P:Sa,Su             9P-10:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6:30PM-7PM",
+      "SA-SU 9PM-9:30PM",
+      "M-F 9PM-10:30PM"
+    ],
+    "5A-9A:M-F                                            6:30A-8:30A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6:30AM-8:30AM"
+    ],
+    "5P-5:30P:M-F                              6P-7P:M-F                        6P-6:30P:Sa                                5:30P-6:30P:Su                                  10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-7PM",
+      "SA 6PM-6:30PM",
+      "SU 5:30PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5P-5:30P:M-Sa                           6P-6:30P:M-F                           5P-6P:Su                               10P-10:30P:M-Su": [
+      "M-SA 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "SU 5PM-6PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "4A-4:30A:M-Sa                          5A-10A:M-F                        6A-9A:Sa                       7A-9A:Su         ": [
+      "M-SA 4AM-4:30AM",
+      "M-F 5AM-10AM",
+      "SA 6AM-9AM",
+      "SU 7AM-9AM"
+    ],
+    "4:30A-9A:M-F                           5A-9A:Sa                                   6A-10:30A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 5AM-9AM",
+      "SU 6AM-10:30AM"
+    ],
+    "5P-6:30P:M-F\n6P-6:30P:Sa                                             6:30P-7P:Su\n11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA 6PM-6:30PM",
+      "SU 6:30PM-7PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "4A-5A:M-F                      6:30A-10A:M-F                   6A-8A:Sa                        8A-9:30A:Su": [
+      "M-F 4AM-5AM",
+      "M-F 6:30AM-10AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9:30AM"
+    ],
+    "4:30A-9A:M-F                         7A-8A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-Su\n10P-10:30P:M-Su": [
+      "M-SU 5PM-5:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "6A-9A:M-F                          7A-8A:Sa,Su": [
+      "M-F 6AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F                        6P-6:30P:M-F                     10P-10:35P:M-F             10P-10:35P:Sa,Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM",
+      "SA-SU 10PM-10:35PM"
+    ],
+    "5A-9A:M-F           6A-8A:Sa               7A-9:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 7AM-9:30AM"
+    ],
+    "5A-10A:M-F           6A-8:30A:Sa              7A-8A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-8:30AM",
+      "SU 7AM-8AM"
+    ],
+    "8A-9A:M-F                        9A-10A:Su": [
+      "M-F 8AM-9AM",
+      "SU 9AM-10AM"
+    ],
+    "5:30A-9A:M-F                        9A-10A:Sa,Su": [
+      "M-F 5:30AM-9AM",
+      "SA-SU 9AM-10AM"
+    ],
+    "4:30A-9A:M-F                   7A-8A:Sa                      8A-9A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 7AM-8AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F\n5:30P-6P:Su\n6P-6:30P:M-Sa\n10P-10:30P:Sa,Su\n10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "SA-SU 10PM-10:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5A-10A:M-F                         7A-8:30A:Sa                        8A:9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-8:30AM"
+    ],
+    "5P-6:30P:M-F": [
+      "M-F 5PM-6:30PM"
+    ],
+    "5A-7A:M-F\n7A-9A:Sa                        8A-9A:Su": [
+      "M-F 5AM-7AM",
+      "SA 7AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F                6P-6:30P:M-Su                 11P-11:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9A:M-F                              6A-8A:Sa                              6A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 6AM-9AM"
+    ],
+    "4:30A-7A:M-F            5A-8A:Sa-Su            9A-10A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 5AM-8AM",
+      "SA-SU 9AM-10AM"
+    ],
+    "4P-6:30P:M-F          6P-6:30P:Sa-Su            11P-11:30P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-7A:M-F    ": [
+      "M-F 5AM-7AM"
+    ],
+    "5P-5:30P:M-F;Su      6P-6:30P:M-Sa\n10P-10:35P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-10A:M-F          5A-9A:Sa,Su            ": [
+      "M-F 5AM-10AM",
+      "SA-SU 5AM-9AM"
+    ],
+    "5P-6:30P:M-F                       7P-8P:M-F": [
+      "M-F 5PM-6:30PM",
+      "M-F 7PM-8PM"
+    ],
+    "4:30A-7A:M-F                  6A-8A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "4P-6:30P:M-F          6P-6:30P:Sa         6P-7P:Su              11P-11:30P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "SA 6PM-6:30PM",
+      "SU 6PM-7PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "7A-9A:M-F                                     8A-9A:Sa,Su": [
+      "M-F 7AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "5:30P-6P:M-F": [
+      "M-F 5:30PM-6PM"
+    ],
+    "5:30A-9A:M-F\n6A-9A:Sa,Su": [
+      "M-F 5:30AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5:30A-9A:M-F\n6A-7A:Su\n6A-9A:Sa": [
+      "M-F 5:30AM-9AM",
+      "SU 6AM-7AM",
+      "SA 6AM-9AM"
+    ],
+    "5P-5:30P:M-F\n5:30P-6P:Su\n6P-6:30P:M-F,Sa                        10P-10:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F\n6A-8A:Sa\n5A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-8AM",
+      "SU 5AM-9AM"
+    ],
+    "10P-11P:M-F   ": [
+      "M-F 10PM-11PM"
+    ],
+    "5:30A-9A:M-F             7A-8A:Sa,Su                         ": [
+      "M-F 5:30AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-9A:M-Sa                             6:30A-9A:Su": [
+      "M-SA 5AM-9AM",
+      "SU 6:30AM-9AM"
+    ],
+    "5A-9A:M-F\n8A-10A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 8AM-10AM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-F;Sa\n11P-11:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F          7A-9A:Sa,Su              ": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "4:30A-7A:M-F          6A-7A:Sa               9A-10A:Sa": [
+      "M-F 4:30AM-7AM",
+      "SA 6AM-7AM",
+      "SA 9AM-10AM"
+    ],
+    "5P-6:30P:M-F           6P-6:30P:Sa-Su      11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F          5A-10A:Sa            5A-7A:Su": [
+      "M-F 5AM-9AM",
+      "SA 5AM-10AM",
+      "SU 5AM-7AM"
+    ],
+    "4:30A-10A:M-F                8A-10A:Sa,Su": [
+      "M-F 4:30AM-10AM",
+      "SA-SU 8AM-10AM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-Su\n11P-11:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9A:M-F,Su           5A-7A:Sa": [
+      "M-F,SU 5AM-9AM",
+      "SA 5AM-7AM"
+    ],
+    "7A-8A:M-F               9A-10A:Su": [
+      "M-F 7AM-8AM",
+      "SU 9AM-10AM"
+    ],
+    "4:30A-9A:M-F        6A-8A:Sa                     8A-9A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9AM"
+    ],
+    "4:30A-7A:M-F                   6A-7A:Sa                       8A-9A:Sa                   7A-8A:Su                                         9A-10A:Su": [
+      "M-F 4:30AM-7AM",
+      "SA 6AM-7AM",
+      "SA 8AM-9AM",
+      "SU 7AM-8AM",
+      "SU 9AM-10AM"
+    ],
+    "5P-6:30P:M-F\n6P-6:30P:Sa,Su\n7P-7:30P:Sa\n11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "SA 7PM-7:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9:30A:M-F": [
+      "M-F 5AM-9:30AM"
+    ],
+    "5P-5:30P:M-F                   6P-6:30P:M-F              10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5A-9A:M-F\n6A-10A:Sa\n7A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-10AM",
+      "SU 7AM-9AM"
+    ],
+    "10P-11P:M-Su": [
+      "M-SU 10PM-11PM"
+    ],
+    "5A-9A:M-F\n6A-9A:Sa              6A-7A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-9AM",
+      "SU 6AM-7AM"
+    ],
+    "5A-7A:M-F               9A-10A:M-F": [
+      "M-F 5AM-7AM",
+      "M-F 9AM-10AM"
+    ],
+    "5P-5:30P:M-F           5:30P-6P:Su\n6P-6:30P:Sa                   6P-7P:M-F\n10P-10:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "SA 6PM-6:30PM",
+      "M-F 6PM-7PM",
+      "M-F 10PM-10:30PM"
+    ],
+    "7P-7:30P:M-F": [
+      "M-F 7PM-7:30PM"
+    ],
+    "4:30A-7A:M-F\n5A-7A:Sa\n6A-8A:Su              8A-9A:Sa             9A-10A:Su": [
+      "M-F 4:30AM-7AM",
+      "SA 5AM-7AM",
+      "SU 6AM-8AM",
+      "SA 8AM-9AM",
+      "SU 9AM-10AM"
+    ],
+    "5P-6:30P:M-F          6P-6:30P:Sa-Su         7P-7:30P:Sa-Su          11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "SA-SU 7PM-7:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F            6A-10A:Sa            9A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-10AM",
+      "SU 9AM-10AM"
+    ],
+    "4P-4:30P:M-F                      5P-6:30P:M-F               7P-7:30P:M-F": [
+      "M-F 4PM-4:30PM",
+      "M-F 5PM-6:30PM",
+      "M-F 7PM-7:30PM"
+    ],
+    "5A-9A:M-F\n7A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "5A-9A:M-F            8A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "10P-11P:M-Su         ": [
+      "M-SU 10PM-11PM"
+    ],
+    "5A-9A:M-F                7A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "4:30A-10A:M-F      7A-9A:Sa,Su": [
+      "M-F 4:30AM-10AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "5P-6:30P:M-F                 9P-11P:M-F,Su                        5P-6P:Sa                            9P-10:30P:Sa               ": [
+      "M-F 5PM-6:30PM",
+      "M-F,SU 9PM-11PM",
+      "SA 5PM-6PM",
+      "SA 9PM-10:30PM"
+    ],
+    "5A-10A:M-F                        7A-9A:Sa                           8A-9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F                 6P-6:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "5:30P-6P:M-F\n9P-9:35P:M-F": [
+      "M-F 5:30PM-6PM",
+      "M-F 9PM-9:35PM"
+    ],
+    "4:30A-9A:M-F                     8A-10A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 8AM-10AM"
+    ],
+    "5A-7A:M-F                      7A-9A:M-F": [
+      "M-F 5AM-7AM",
+      "M-F 7AM-9AM"
+    ],
+    "6P-6:30P:M-F                         7P-7:30P:M-F                     11P-11:35P:M-F": [
+      "M-F 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "10P-10:30P:M-Sa                    10:30P-11P:Su": [
+      "M-SA 10PM-10:30PM",
+      "SU 10:30PM-11PM"
+    ],
+    "6A-9A:M-F                             7A-8A:Sa,Su": [
+      "M-F 6AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F          6P-6:30P:M-F\n10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "4:30A-10A:M-F                                   6A-9:30A:Sa                                              8A-10A:Su": [
+      "M-F 4:30AM-10AM",
+      "SA 6AM-9:30AM",
+      "SU 8AM-10AM"
+    ],
+    "5A-9A:M-F             6A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5P-6:30P:M-F          6P-6:30P:Sa-Su            11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9A:M-F                  9A-10A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 9AM-10AM"
+    ],
+    "5:30A-8A:M-F                6A-7A Sa-Su": [
+      "M-F 5:30AM-8AM"
+    ],
+    "5P-8P:M-F\n6P-7P:Sa-Su\n10P-11P:Sa-Su                          10P-11:30P:M-F": [
+      "M-F 5PM-8PM",
+      "SA-SU 6PM-7PM",
+      "SA-SU 10PM-11PM",
+      "M-F 10PM-11:30PM"
+    ],
+    "4A-10A:M-F         7A-8:30A:Sa         7A-9A:Su": [
+      "M-F 4AM-10AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-9AM"
+    ],
+    "5A-10A:M-F         6A-9:30A:Sa         8A-10A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-9:30AM",
+      "SU 8AM-10AM"
+    ],
+    "4P-4:30P:M-F                 5P-6:30P:M-F": [
+      "M-F 4PM-4:30PM",
+      "M-F 5PM-6:30PM"
+    ],
+    "4P-5:30P:M-F                                    6P-6:30P:M-Sa                      5P-5:30P:Su \n10P-10:35P:M-F": [
+      "M-F 4PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "SU 5PM-5:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-Su     11P-11:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "10P-11P:M-F       10P-10:30P:Sa,Su": [
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "10P-11P:M-F": [
+      "M-F 10PM-11PM"
+    ],
+    "5A-10A:M-F               7A-8:30A:Sa                          7A-8A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-8AM"
+    ],
+    "4P-5:30P:M-F                6P-6:30P:M-F": [
+      "M-F 4PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "4:30A-7A:M-F             6A-8A:Sa-Su               9A-10A:Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-8AM",
+      "SU 9AM-10AM"
+    ],
+    "4P-6:30P:M-F            6P-6:30P:Sa-Su       7P-7:30P:M-F         11P-11:30P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5P-6:30P:M-F\n6P-6:30P:Sa,Su\n10P-10:30P:Sa,Su\n10P-11P:M-F": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "SA-SU 10PM-10:30PM",
+      "M-F 10PM-11PM"
+    ],
+    "5A-9A:M-F               6A-7A:Sa                7A-8:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-7AM",
+      "SU 7AM-8:30AM"
+    ],
+    "7P-7:30P:M-F\n10P-10:30P:M-F": [
+      "M-F 7PM-7:30PM",
+      "M-F 10PM-10:30PM"
+    ],
+    "4P-5:30P:M-F              6P-6:30P:M-F;Sa\n10P-10:30P:M-Su": [
+      "M-F 4PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "10P-11P:M-F          10P-10:35P:Sa,Su": [
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:35PM"
+    ],
+    "10P-11P:M-Su      ": [
+      "M-SU 10PM-11PM"
+    ],
+    "10P-10:35P:M-F": [
+      "M-F 10PM-10:35PM"
+    ],
+    "4:30A-9A:M-F                      6A-10A:Sa                          8A-10A:Su          ": [
+      "M-F 4:30AM-9AM",
+      "SA 6AM-10AM",
+      "SU 8AM-10AM"
+    ],
+    "5A-9A:M-F                      6A-7A:Sa,Su                   8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-7AM",
+      "SU 8AM-9AM"
+    ],
+    "5A-10A:M-F": [
+      "M-F 5AM-10AM"
+    ],
+    "5P-6:30P:M-F              10P-11P:M-F              6P-7P:Sa                  10P-10:30P:Sa,Su": [
+      "M-F 5PM-6:30PM",
+      "M-F 10PM-11PM",
+      "SA 6PM-7PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5:30P-6P-M-F                          9P-10P:M-F": [
+      "M-F 5:30PM-6PM",
+      "M-F 9PM-10PM"
+    ],
+    "4A-10A:M-F                7A-9A:Sa,Su": [
+      "M-F 4AM-10AM",
+      "SA-SU 7AM-9AM"
+    ],
+    "4P-7P:M-F                 9P-10:30P:M-F                  9P-10P:Sa                  9P-9:30P:Su": [
+      "M-F 4PM-7PM",
+      "M-F 9PM-10:30PM",
+      "SA 9PM-10PM",
+      "SU 9PM-9:30PM"
+    ],
+    "5A-7A:M-F            7A-8A:Sa,Su": [
+      "M-F 5AM-7AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-Su     6P-6:30P:M-F, Su 10P-10:30P:M-Su": [
+      "M-SU 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5P-5:30P:M-F,Su             6P-6:30P:M-Sa            10P-10:35P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-10A:M-F\n6A-10A:Sa                    \n7:30A-10:30A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-10AM",
+      "SU 7:30AM-10:30AM"
+    ],
+    "4P-6:30P:M-F\n11P-11:35P:M-F                        6P-7P:Sa,Su                                     11P-11:30P:Sa": [
+      "M-F 4PM-6:30PM",
+      "M-F 11PM-11:35PM",
+      "SA-SU 6PM-7PM",
+      "SA 11PM-11:30PM"
+    ],
+    "5A-9A:M-F                     8A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "4:30A-7A:M-F            6A-7A:Sa-Su           8A-9A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-7AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "5P-6:30P:M-F          6P-6:30P:Sa-Su         7P-7:30P:M-F          11P-11:30P:M-Sa": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-SA 11PM-11:30PM"
+    ],
+    "4:30A-7A:M-F             5A-7A:Sa-Su ": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 5AM-7AM"
+    ],
+    "5P-5:30P:M-F;Su      5:30P-6P:Su          6P-6:30P:M-Sa        10P-10:30P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F                6A-9A:Sa                  8A-9:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-9AM",
+      "SU 8AM-9:30AM"
+    ],
+    "5:00A-7A:M-F": [
+      "M-F 5AM-7AM"
+    ],
+    "4A-9A:M-F            6A-8A:Sa              8A-10A:Su": [
+      "M-F 4AM-9AM",
+      "SA 6AM-8AM",
+      "SU 8AM-10AM"
+    ],
+    "4:30A-9A:M-F        7A-10A:Sa              7A-9A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 7AM-10AM",
+      "SU 7AM-9AM"
+    ],
+    "4P-6:30P:M-F      7P-7:30P:M-F\n6P-6:30P:Sa,Su\n11P-11:35P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-10A:M-F           7A-10A:Sa          8A-9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-10AM",
+      "SU 8AM-9AM"
+    ],
+    "5A-9A:M-F                   6A-10A:Sa-Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-10AM"
+    ],
+    "5P-7P:M-F            6P-6:30P:Sa-Su        10P-11P:M-F          10P-10:30P:Sa": [
+      "M-F 5PM-7PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 10PM-11PM",
+      "SA 10PM-10:30PM"
+    ],
+    "4:30A-9A:M-F\n6A-9A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "5P-6:30P:M-F                 9P-10:35P:M-Sa                 6P-6:30P:Sa                   10P-11P:Su      \n": [
+      "M-F 5PM-6:30PM",
+      "M-SA 9PM-10:35PM",
+      "SA 6PM-6:30PM",
+      "SU 10PM-11PM"
+    ],
+    "4:30-10A:M-F       6A-10A:Sa             7A-10A:Su     ": [
+      "M-F 4:30AM-10AM",
+      "SA 6AM-10AM",
+      "SU 7AM-10AM"
+    ],
+    "4:30A-7A:M-F              6A-8A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "4P-6:30P:M-F            11P-11:30P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "7A-9A:M-F                      8A-9A:Sa,Su": [
+      "M-F 7AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "6P-6:30P:M-F                             11P-11:35P:M-F              ": [
+      "M-F 6PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "4:30A-7A:M-F                         7A-8A:Sa,Su              ": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5P-6:30P:M-F                     6P-6:30P:Sa,Su                 11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5P-6:30P:M-F                          6P-6:30P:Sa,Su                         11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-10A:M-F         6A-8A:Sa               7A-8A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-8AM",
+      "SU 7AM-8AM"
+    ],
+    "4:30A-7A:M-F                                     6A-8A:Sa,Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "5P-6:30P:M-F\n6P-6:30P:Sa,Su                                 7P-7:30P:M-F\n11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "9A-9:30A:M-F": [
+      "M-F 9AM-9:30AM"
+    ],
+    "6:30P-7P:M-F              7:30P-8P:M-F                ": [
+      "M-F 6:30PM-7PM",
+      "M-F 7:30PM-8PM"
+    ],
+    "6P-6:30P:M-F        11P-11:30P:M-F": [
+      "M-F 6PM-6:30PM",
+      "M-F 11PM-11:30PM"
+    ],
+    "4:30A-9A:M-F         6A-10A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-10AM"
+    ],
+    "4:30A-7A:M-F\n6A-7A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-7AM"
+    ],
+    "4P-4:30P:M-F           5P-5:30P:M-F              5:30P-6P:Su                6P-6:30P:M-Sa                 10P-10:30P:M-Sa": [
+      "M-F 4PM-4:30PM",
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "M-SA 10PM-10:30PM"
+    ],
+    "4A-10A:M-F               7A-10A:Sa,Su": [
+      "M-F 4AM-10AM",
+      "SA-SU 7AM-10AM"
+    ],
+    "4P-7:30P:M-F                 10P-11P:M-Su                          6P-7P:Sa,Su": [
+      "M-F 4PM-7:30PM",
+      "M-SU 10PM-11PM",
+      "SA-SU 6PM-7PM"
+    ],
+    "4:30A-10A:M-F\n7A-10A:Sa\n7A-9A:Su": [
+      "M-F 4:30AM-10AM",
+      "SA 7AM-10AM",
+      "SU 7AM-9AM"
+    ],
+    "5A-9A:M-F\n6A-10A:Sa\n8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6AM-10AM",
+      "SU 8AM-9AM"
+    ],
+    "5A-7A:M-F                                         6A-8A:Sa                               7:30A-9A:Su": [
+      "M-F 5AM-7AM",
+      "SA 6AM-8AM",
+      "SU 7:30AM-9AM"
+    ],
+    "5P-6:30P:M-F            6P-6:30P:Sa,Su                      11P-11:30P:M-Su            ": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-Sa\n6A-8A:Su": [
+      "M-SA 5AM-9AM",
+      "SU 6AM-8AM"
+    ],
+    "5A-9A:M-F                                6A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "4:25A-7A:M-F\n5A-6A:Sa\n6A-8A:Su               9A-9:30A:M-F": [
+      "M-F 4:25AM-7AM",
+      "SA 5AM-6AM",
+      "SU 6AM-8AM",
+      "M-F 9AM-9:30AM"
+    ],
+    "5P-5:30P:M-F          6P-6:30P:Sa           6P-7P:M-F            10P-10:30P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "SA 6PM-6:30PM",
+      "M-F 6PM-7PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "4A-7A:M-Sa                  5A-7A:Su             8A-9A:Sa                 9A-10A:Su": [
+      "M-SA 4AM-7AM",
+      "SU 5AM-7AM",
+      "SA 8AM-9AM",
+      "SU 9AM-10AM"
+    ],
+    "4P-5:30P:M-F        5P-5:30P:Sa-Su         6P-6:30P:M-F        10P-10:35P:M-Su": [
+      "M-F 4PM-5:30PM",
+      "SA-SU 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-10A:M-F                          7A-8:30A:Sa                     9A-10A:Sa                    8A-10A:Su                          ": [
+      "M-F 5AM-10AM",
+      "SA 7AM-8:30AM",
+      "SA 9AM-10AM",
+      "SU 8AM-10AM"
+    ],
+    "5P-6:30P:M-F\n6P-6:30P:Sa,Su\n11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-7A:M-F\n6A-8A:Sa\n8A-9A:Su": [
+      "M-F 5AM-7AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9AM"
+    ],
+    "5A-10A:M-F         6A-8:30A:Sa               6A-8A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-8:30AM",
+      "SU 6AM-8AM"
+    ],
+    "9P-10P:M-Su": [
+      "M-SU 9PM-10PM"
+    ],
+    "5A-9A:M-F\n9A-11A:Sa                      9A-10:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 9AM-11AM",
+      "SU 9AM-10:30AM"
+    ],
+    "4:30A-7A:M-F                    6A-7A:Sa,Su                   8A-9A;Sa,Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-7AM"
+    ],
+    "6P-6:30P:M-Su                          11P-11:35P:M-Su": [
+      "M-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "9P-10P:M-F                                            9P-9:45P:Sa,Su": [
+      "M-F 9PM-10PM",
+      "SA-SU 9PM-9:45PM"
+    ],
+    "5A-9A:M-F                       6:30A-8:30A:Sa                  6:30A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 6:30AM-8:30AM",
+      "SU 6:30AM-9AM"
+    ],
+    "5P-5:30P:M-F                      6P-6:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM"
+    ],
+    "4:30A-10A:M-F             7A-8:30A:Sa                   7A-7:30A:Su                         8A-9A:Su": [
+      "M-F 4:30AM-10AM",
+      "SA 7AM-8:30AM",
+      "SU 7AM-7:30AM",
+      "SU 8AM-9AM"
+    ],
+    "5A-9A:M-F\n8A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F           6-6:30P:M-F         10P-10:35P:M-Su  5:30P-6P:Su                              ": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:35PM",
+      "SU 5:30PM-6PM"
+    ],
+    "5P-5:30P:M-F                        5:30P-6P:Sa,Su                       6P-6:30P:M-F                   10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "SA-SU 5:30PM-6PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "5A-10A:M-F             7A-9:30A:Sa             7A-9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 7AM-9:30AM",
+      "SU 7AM-9AM"
+    ],
+    "5A-10A:M-F               6A-9:30A:Sa                    7A-9A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-9:30AM",
+      "SU 7AM-9AM"
+    ],
+    "5P-7P:M-F\n10P-12A:M-F": [
+      "M-F 5PM-7PM",
+      "M-F 10PM-12AM"
+    ],
+    "6P-6:30P:M-F                  11P-11:35P:M-F": [
+      "M-F 6PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "6:30P-11P:M-F": [
+      "M-F 6:30PM-11PM"
+    ],
+    "4A-10A:M-F           5A-9A:Sa              6A-10A:Su": [
+      "M-F 4AM-10AM",
+      "SA 5AM-9AM",
+      "SU 6AM-10AM"
+    ],
+    "6:30P-7P:M-F                    10P-11P:M-F                      10P-10:30P:Sa,Su": [
+      "M-F 6:30PM-7PM",
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "7A-9A:M-F ": [
+      "M-F 7AM-9AM"
+    ],
+    "7A-9A:M-F     ": [
+      "M-F 7AM-9AM"
+    ],
+    "6:30P-7P:M-F           10P-10:30P:M-Su": [
+      "M-F 6:30PM-7PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "4:30A-7A:M-F             6A-7A:Sa                                    6A-9A:Su                  9A-10A:Sa": [
+      "M-F 4:30AM-7AM",
+      "SA 6AM-7AM",
+      "SU 6AM-9AM",
+      "SA 9AM-10AM"
+    ],
+    "5P-6:30P:M-F          6P-6:30P:Sa-Su            11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5P-6:30P:M-F                                             11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "4:30A-10A:M-F       7A-10A:Sa            8A-10A:Su": [
+      "M-F 4:30AM-10AM",
+      "SA 7AM-10AM",
+      "SU 8AM-10AM"
+    ],
+    "10P-10:30P:Sa-Su        10P-11P:M-F": [
+      "SA-SU 10PM-10:30PM",
+      "M-F 10PM-11PM"
+    ],
+    "10P-10:37P:M-F": [
+      "M-F 10PM-10:37PM"
+    ],
+    "5A-9A:M-F            7A-8A:Sa-Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5P-5:30P:M-F\n5:30P-6P:Su\n6P-6:30P:M-Sa\n10P-10:35P:M-Sa    10P-11P:Su": [
+      "M-F 5PM-5:30PM",
+      "SU 5:30PM-6PM",
+      "M-SA 6PM-6:30PM",
+      "M-SA 10PM-10:35PM",
+      "SU 10PM-11PM"
+    ],
+    "5A-9A:M-F           9A-10A:Sa          7A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 9AM-10AM",
+      "SU 7AM-10AM"
+    ],
+    "4P-6:30P:M-F": [
+      "M-F 4PM-6:30PM"
+    ],
+    "4:30A-7A:M-F        5A-8A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 5AM-8AM"
+    ],
+    "5P-6:30P:M-F          6P-7P:Sa-Su         7P-7:30P:M-F          11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-7PM",
+      "M-F 7PM-7:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F                     7A-9A:Sa": [
+      "M-F 5AM-9AM",
+      "SA 7AM-9AM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-Su\n7P-7:30P:M-F\n11P-11:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-SU 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "4A-10A:M-F         6A-9A:Sa              7A-10A:Su": [
+      "M-F 4AM-10AM",
+      "SA 6AM-9AM",
+      "SU 7AM-10AM"
+    ],
+    "4A-9A:M-F             6A-6:30A:Su": [
+      "M-F 4AM-9AM",
+      "SU 6AM-6:30AM"
+    ],
+    "5P-6P:M-Su                        6P-6:30P:M-F                        10P-11P:M-Su             ": [
+      "M-SU 5PM-6PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-11PM"
+    ],
+    "4:30A-9A:M-F\n6A-10:30A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-10:30AM"
+    ],
+    "4A-9A:M-F": [
+      "M-F 4AM-9AM"
+    ],
+    "4P-6P:M-F           10P-11P:M-Su": [
+      "M-F 4PM-6PM",
+      "M-SU 10PM-11PM"
+    ],
+    "4:30A-7A:M-F              6A-8A:Sa               6A-9A:Su": [
+      "M-F 4:30AM-7AM",
+      "SA 6AM-8AM",
+      "SU 6AM-9AM"
+    ],
+    "5P-6:30P:M-F              11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9A:M-F                             6A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "7A-9A:M -F": [
+      "M 7AM-9AM"
+    ],
+    "4:30A-9A:M-F\n6A-10A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-10AM"
+    ],
+    "10P-11P:M-F                    10P-10:30P:Sa": [
+      "M-F 10PM-11PM",
+      "SA 10PM-10:30PM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-F                       7P-7:30P:Sa                 6:30P-7P:Su                                         11P-11:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "SA 7PM-7:30PM",
+      "SU 6:30PM-7PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-9A:M-F             8A-10A:Sa            9A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 8AM-10AM",
+      "SU 9AM-10AM"
+    ],
+    "4:30A-10A:M-F     6A-9A:Sa,Su": [
+      "M-F 4:30AM-10AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "4P-6:30P:M-F       5P-6:30P:Sa        5P-6P:Su          10P-10:35P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "SA 5PM-6:30PM",
+      "SU 5PM-6PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5A-9A:M-F                    7A-9A:Sa                   5A-6A:Su                       8A-9A:Su": [
+      "M-F 5AM-9AM",
+      "SA 7AM-9AM",
+      "SU 5AM-6AM",
+      "SU 8AM-9AM"
+    ],
+    "7A-10A:M-F           6A-8A:Sa               8A-9A:Su": [
+      "M-F 7AM-10AM",
+      "SA 6AM-8AM",
+      "SU 8AM-9AM"
+    ],
+    "4:30A-7A:M-F                 6A-7A:Sa-Su          8A-9A:Sa-Su          9A-10A:M-F": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-7AM",
+      "SA-SU 8AM-9AM",
+      "M-F 9AM-10AM"
+    ],
+    "5A-9A:M-F                             9A-10A:Sa": [
+      "M-F 5AM-9AM",
+      "SA 9AM-10AM"
+    ],
+    "5P-6:30P:M-F            6P-6:30P:Sa-Su\n11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "4:30A-9A:M-F                               6A-10A:Sa                                             6A-9A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 6AM-10AM",
+      "SU 6AM-9AM"
+    ],
+    "4:30A-7A:M-F           6A-7A:Sa-Su              9A-10A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-7AM",
+      "SA-SU 9AM-10AM"
+    ],
+    "5P-6:30P:M-F                       6P-6:30P:Sa-Su                  11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "4A-9A:M-F\n6A-8A:Sa\n7A-9:30A:Su": [
+      "M-F 4AM-9AM",
+      "SA 6AM-8AM",
+      "SU 7AM-9:30AM"
+    ],
+    "4:30A-10A:M-F\n6A-9A:Sa\n8A-9A:Su": [
+      "M-F 4:30AM-10AM",
+      "SA 6AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "8P-9P:M-Su": [
+      "M-SU 8PM-9PM"
+    ],
+    "6P-6:30P:M-F\n11P-11:35P:M-F": [
+      "M-F 6PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "5A-10A:M-F               5:30A-7:30A:Sa                     7A-8A:Su              9A-9:30A:Su": [
+      "M-F 5AM-10AM",
+      "SA 5:30AM-7:30AM",
+      "SU 7AM-8AM",
+      "SU 9AM-9:30AM"
+    ],
+    "10P-11P:M-F                10P-10:30P:Sa,Su             ": [
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5P-6:30P:M-F              6P-6:30P:Sa,Su                             7P-7:30P:M-F                                   11P-11:30P:M-Su                          ": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "4:30A-7A:M-F           6A-8A:Sa-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "5P-6:30P:M-F          6P-6:30P:Sa-Su         7P-7:30P:M-F          11P-11:35P:M-F": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "7A-9A:M-Sa          9A-10A:Su": [
+      "M-SA 7AM-9AM",
+      "SU 9AM-10AM"
+    ],
+    "4P-7P:M-F\n10P-11:30P:M-F": [
+      "M-F 4PM-7PM",
+      "M-F 10PM-11:30PM"
+    ],
+    "5A-9A:M-F             8A-9A:Sa               8A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 8AM-9AM",
+      "SU 8AM-10AM"
+    ],
+    "7A-9A:M-F                          6A-7A:Sa,Su": [
+      "M-F 7AM-9AM",
+      "SA-SU 6AM-7AM"
+    ],
+    "4:30A-9A:M-F                7A-8A:Sa,Su": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "4P-4:30P:M-F                     5P-6:30P:M-F                        11P-11:35P:M-Su               ": [
+      "M-F 4PM-4:30PM",
+      "M-F 5PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5P-6:30P:M-F                            6P-6:30P:Sa,Su\n11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5:30A-9A:M-F        7A-9A:Sa               8A-9A:Su": [
+      "M-F 5:30AM-9AM",
+      "SA 7AM-9AM",
+      "SU 8AM-9AM"
+    ],
+    "4:30A-7A:M-F               6A-10A:SA-Su": [
+      "M-F 4:30AM-7AM",
+      "SA-SU 6AM-10AM"
+    ],
+    "4P-6:30P:M-F          6P-6:30P:Sa-Su            11P-11:35P:M-Su": [
+      "M-F 4PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "4A-10A:M-F                   6A-9A:Sa,Su          ": [
+      "M-F 4AM-10AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "4P-6P:M-F             10P-11:35P:M-Su               ": [
+      "M-F 4PM-6PM",
+      "M-SU 10PM-11:35PM"
+    ],
+    "4P-6:30P:M-F    ": [
+      "M-F 4PM-6:30PM"
+    ],
+    "4P-6:30P:M-F           11P-11:35P:M-Su                  6P-6:30P:Sa                       6:30P-7P:Su": [
+      "M-F 4PM-6:30PM",
+      "M-SU 11PM-11:35PM",
+      "SA 6PM-6:30PM",
+      "SU 6:30PM-7PM"
+    ],
+    "4:30A-9A:M-F                                      5A-8:30A:Sa                                    5A-8A:Su": [
+      "M-F 4:30AM-9AM",
+      "SA 5AM-8:30AM",
+      "SU 5AM-8AM"
+    ],
+    "4P-5:30P:M-F                              6P-7P:M-F                            10P-10:35P:M-F                          5P-5:30P:Sa,Su                           6P-6:30P:Sa                          10P-10:30P:Sa                  10P-11P:Su": [
+      "M-F 4PM-5:30PM",
+      "M-F 6PM-7PM",
+      "M-F 10PM-10:35PM",
+      "SA-SU 5PM-5:30PM",
+      "SA 6PM-6:30PM",
+      "SA 10PM-10:30PM",
+      "SU 10PM-11PM"
+    ],
+    "5P-6:30P:M-F               6P-6:30P:Sa,Su                              11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "5A-10A:M-F         6A-10A:Sa                 6A:7A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-10AM"
+    ],
+    "4P-4:30P:M-F                            5P-6:30P:M-F": [
+      "M-F 4PM-4:30PM",
+      "M-F 5PM-6:30PM"
+    ],
+    "5:30A-9A:M-F        7A-8A:Sa,Su": [
+      "M-F 5:30AM-9AM",
+      "SA-SU 7AM-8AM"
+    ],
+    "5A-10A:M-F              6A-7A:Sa                   8A-10A:Sa                  6:30A-8:30A:Su            9A-10A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-7AM",
+      "SA 8AM-10AM",
+      "SU 6:30AM-8:30AM",
+      "SU 9AM-10AM"
+    ],
+    "5P-6:30P:M-F                     11P-11:30P:M-Su                            6P-6:30P:Sa,Su": [
+      "M-F 5PM-6:30PM",
+      "M-SU 11PM-11:30PM",
+      "SA-SU 6PM-6:30PM"
+    ],
+    "10P-11P:M-F                        10P-10:30P:Sa,Su": [
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5A-10A:M-F                     5A-8:30A:Sa                   5A-7A:Su": [
+      "M-F 5AM-10AM",
+      "SA 5AM-8:30AM",
+      "SU 5AM-7AM"
+    ],
+    "5P-5:30P:M-F,Su               6P-6:30P:M-Sa                   10P-10:35P:M-F                    10P-10:30P:Sa,Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-F 10PM-10:35PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F              8A-9A:Sa,Su         ": [
+      "M-F 5AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "5P-5:30P:M-F,Su                 6P-6:30P:M-F,Sa                    10P-10:30P:M-Su": [
+      "M-F,SU 5PM-5:30PM",
+      "M-SA 6PM-6:30PM",
+      "M-SU 10PM-10:30PM"
+    ],
+    "5A-7A:M-F                       7A-9A:M-F                       9A-10A:M-F ": [
+      "M-F 5AM-7AM",
+      "M-F 7AM-9AM",
+      "M-F 9AM-10AM"
+    ],
+    "5P-6:30P:M-F                 11P-11:35P:M-F": [
+      "M-F 5PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "5A-10A:M-F                6A-9A:Sa                        6A-8A:Su": [
+      "M-F 5AM-10AM",
+      "SA 6AM-9AM",
+      "SU 6AM-8AM"
+    ],
+    "5P-6:30P:M-F    11P-11:30P:M-Su  7P-7:30P:M-F      6P-6:30P:Sa": [
+      "M-F 5PM-6:30PM",
+      "M-SU 11PM-11:30PM",
+      "M-F 7PM-7:30PM",
+      "SA 6PM-6:30PM"
+    ],
+    "6:30P-7P:M-Sa                         6P-6:30P:Su\n9P-10P:M-Su": [
+      "M-SA 6:30PM-7PM",
+      "SU 6PM-6:30PM",
+      "M-SU 9PM-10PM"
+    ],
+    "6P-6:30P:M-Su                  11P-11:30P:M-Su": [
+      "M-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5P-6:30P:M-F\n6:30P-7P:Sa,Su\n11P-11:35P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6:30PM-7PM",
+      "M-SU 11PM-11:35PM"
+    ],
+    "9P-9:45P:M-Su              10P-10:30P:M-F                  10P-10:45P:Sa": [
+      "M-SU 9PM-9:45PM",
+      "M-F 10PM-10:30PM",
+      "SA 10PM-10:45PM"
+    ],
+    "6:30P-7P:M-F": [
+      "M-F 6:30PM-7PM"
+    ],
+    "6:30P-7P:M-F          10P-11P:M-F      ": [
+      "M-F 6:30PM-7PM",
+      "M-F 10PM-11PM"
+    ],
+    "7A-9A:M-F             8A-9A:Sa-Su": [
+      "M-F 7AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "7P-7:30P:M-F            10P-11P:M-Su": [
+      "M-F 7PM-7:30PM",
+      "M-SU 10PM-11PM"
+    ],
+    "5A-7A:M-F          ": [
+      "M-F 5AM-7AM"
+    ],
+    "5P-5:30P:M-F,Su\n6P-6:30P:M-Sa                              \n10P-10:35P:M-Su": [
+      "SU 6PM-6:30PM"
+    ],
+    "5A-9A:M-F\n8A-10A:Sa\n9A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 8AM-10AM",
+      "SU 9AM-10AM"
+    ],
+    "5P-6:30P:M-F                             11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "6P-6:30P:M-F                   7P-7:30P:M-F                      6:30P-7P:Sa,Su                              11P-11:35P:M-F": [
+      "M-F 6PM-6:30PM",
+      "M-F 7PM-7:30PM",
+      "SA-SU 6:30PM-7PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "5P-5:30P:M-F        6P-6:30P:M-F       10P-10:30P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:30PM"
+    ],
+    "5P-5:30P:M-F\n6P-6:30P:M-F\n10P-10:35P:M-F": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-F 10PM-10:35PM"
+    ],
+    "4P-6P:M-F": [
+      "M-F 4PM-6PM"
+    ],
+    "5A-9A:M-F                                         7A-8:30A:Sa                                                8A-9:30A:Su": [
+      "M-F 5AM-9AM",
+      "SA 7AM-8:30AM",
+      "SU 8AM-9:30AM"
+    ],
+    "5:30-9A:M-F": [
+      "M-F 5:30AM-9AM"
+    ],
+    "5P-6:30P:M-F                     11P-11:35P:M-F             ": [
+      "M-F 5PM-6:30PM",
+      "M-F 11PM-11:35PM"
+    ],
+    "5A-10A:M-F             6A-9:30A:Sa,Su": [
+      "M-F 5AM-10AM",
+      "SA-SU 6AM-9:30AM"
+    ],
+    "4:30A-7A:M-F\n6A-7A:Sa\n7A-8A:Su                          9A-10A:Su": [
+      "M-F 4:30AM-7AM",
+      "SA 6AM-7AM",
+      "SU 7AM-8AM",
+      "SU 9AM-10AM"
+    ],
+    "5P-6:30P:M-F                         6P-6:30P:Sa,Su                  11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6PM-6:30PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-9A:M-F                             8A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 8AM-9AM"
+    ],
+    "5P-6:30P:M-F\n6:30P-7P:Sa,Su\n11P-11:30P:M-Su": [
+      "M-F 5PM-6:30PM",
+      "SA-SU 6:30PM-7PM",
+      "M-SU 11PM-11:30PM"
+    ],
+    "5A-8A:M-F": [
+      "M-F 5AM-8AM"
+    ],
+    "4A-10A:M-F                   6A-10A:Sa,Su": [
+      "M-F 4AM-10AM",
+      "SA-SU 6AM-10AM"
+    ],
+    "5A-9A:M-F                       6A-9A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-9AM"
+    ],
+    "4P-7:30P:M-F                             10P-11:30P:M-Su                   ": [
+      "M-F 4PM-7:30PM",
+      "M-SU 10PM-11:30PM"
+    ],
+    "5A-10A:M-F            8A-10A:Sa            6A-7A:Su                    9A-10A:Su": [
+      "M-F 5AM-10AM",
+      "SA 8AM-10AM",
+      "SU 6AM-7AM",
+      "SU 9AM-10AM"
+    ],
+    "5A-9A:M-Su              ": [
+      "M-SU 5AM-9AM"
+    ],
+    "4P-7P:M-F                       10P-11:35P:M-Sa                    10P-11P:Su": [
+      "M-F 4PM-7PM",
+      "M-SA 10PM-11:35PM",
+      "SU 10PM-11PM"
+    ],
+    "5A-9A:M-F                      6A-8A:Sa,Su": [
+      "M-F 5AM-9AM",
+      "SA-SU 6AM-8AM"
+    ],
+    "7P-7:30P:M-F       10P-11P:M-F        10P-10:30P:Sa,Su": [
+      "M-F 7PM-7:30PM",
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:30PM"
+    ],
+    "5A-9A:M-F                       7A-9A:Sa": [
+      "M-F 5AM-9AM",
+      "SA 7AM-9AM"
+    ],
+    "5P-5:30P:M-F                      6P-6:30P:M-F               10P-10:35P:M-Su": [
+      "M-F 5PM-5:30PM",
+      "M-F 6PM-6:30PM",
+      "M-SU 10PM-10:35PM"
+    ],
+    "5:30P-6P:M-F                10P-10:30P:M-F": [
+      "M-F 5:30PM-6PM",
+      "M-F 10PM-10:30PM"
+    ],
+    "4:30A-9A:M-F                           6A-10A:Sa,Su\n": [
+      "M-F 4:30AM-9AM",
+      "SA-SU 6AM-10AM"
+    ],
+    "10P-11P:M-F       10P-10:35P:Sa-Su": [
+      "M-F 10PM-11PM",
+      "SA-SU 10PM-10:35PM"
+    ],
+    "5A-9A:M-F             7A-10A:Sa             8A-10A:Su": [
+      "M-F 5AM-9AM",
+      "SA 7AM-10AM",
+      "SU 8AM-10AM"
+    ]
+  }
+}
