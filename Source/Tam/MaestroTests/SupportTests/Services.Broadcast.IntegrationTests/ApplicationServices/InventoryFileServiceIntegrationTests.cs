@@ -3807,6 +3807,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                // Loading a file with a contact that already exists in the database.
                 var request = _GetInventoryFileSaveRequest(@".\Files\CTV-Broadcast-2.xml");
 
                 var problems = new List<InventoryFileProblem>();
@@ -3820,7 +3821,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     problems = e.Problems;
                 }
 
-                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", 5362);
+                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", 5879);
 
                 Assert.AreEqual(1, stationContacts.Count);
 
