@@ -10,7 +10,7 @@
       "EstimateId": 3832,
       "FileDetailProblems": [],
       "Genre": "News",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "32YO41TC18H",
       "LeadInEndTime": 18000,
       "LeadinGenre": "News",
@@ -34,6 +34,6 @@
   "FileHash": "F2-26-9B-9F-27-C0-E2-22-D9-BF-81-6C-69-A6-C7-76-1E-0B-72-2D",
   "FileName": "Special_Ftp_Phantom_File.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }

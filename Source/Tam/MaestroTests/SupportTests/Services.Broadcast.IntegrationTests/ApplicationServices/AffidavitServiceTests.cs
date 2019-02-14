@@ -282,7 +282,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) AffidavitFileSourceEnum.Strata,
+                Source = (int) DeliveryFileSourceEnum.Strata,
                 FileName = "test.file"
             };
 
@@ -302,7 +302,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 LeadInGenre = "News",
                 LeadOutProgramName = "LeadOutProgramName",
                 LeadInProgramName = "LeadInProgramName",
-                InventorySource = AffidavitFileSourceEnum.Strata,
+                InventorySource = DeliveryFileSourceEnum.Strata,
                 LeadOutGenre = "LeadOutGenre",
                 Affiliate = "Affiate"
             };
@@ -317,7 +317,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.Strata,
+                Source = (int)DeliveryFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -337,7 +337,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -352,7 +352,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) FileSourceEnum.Strata,
+                Source = (int) DeliveryFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -372,7 +372,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -393,7 +393,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -409,7 +409,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) FileSourceEnum.Strata,
+                Source = (int)DeliveryFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -429,7 +429,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -444,7 +444,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int) FileSourceEnum.Strata,
+                Source = (int)DeliveryFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -464,7 +464,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -557,7 +557,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     LeadInGenre = "News",
                     LeadOutProgramName = "LeadOutProgramName",
                     LeadInProgramName = "LeadInProgramName",
-                    InventorySource = AffidavitFileSourceEnum.Strata,
+                    InventorySource = DeliveryFileSourceEnum.Strata,
                     LeadOutGenre = "LeadOutGenre",
                     Affiliate = "Affiate",
                     Market = "market"
@@ -572,7 +572,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.Strata,
+                Source = (int)DeliveryFileSourceEnum.Strata,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -592,7 +592,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -613,7 +613,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.Strata,
+                        InventorySource = DeliveryFileSourceEnum.Strata,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -754,7 +754,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     LeadInGenre = "News",
                     LeadOutProgramName = "LeadOutProgramName",
                     LeadInProgramName = "LeadInProgramName",
-                    InventorySource = AffidavitFileSourceEnum.Strata,
+                    InventorySource = DeliveryFileSourceEnum.Strata,
                     LeadOutGenre = "LeadOutGenre",
                     Affiliate = "Affiate"
                 });
@@ -1698,7 +1698,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 InboundFileSaveRequest affidavitSaveRequest = new InboundFileSaveRequest
                 {
                     FileHash = "abc123",
-                    Source = (int)FileSourceEnum.Strata,
+                    Source = (int)DeliveryFileSourceEnum.Strata,
                     FileName = "test.file",
                     Details = new List<InboundFileSaveRequestDetail>()
                     {
@@ -1718,7 +1718,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             LeadInGenre = "LeadInGenre",
                             LeadOutProgramName = "LeadOutProgramName",
                             LeadInProgramName = "LeadInProgramName",
-                            InventorySource = AffidavitFileSourceEnum.Strata,
+                            InventorySource = DeliveryFileSourceEnum.Strata,
                             LeadOutGenre = "LeadOutGenre",
                             Affiliate = "Affiate",
                             Market = "market"

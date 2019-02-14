@@ -1,12 +1,13 @@
 ﻿using Common.Services;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -47,6 +48,8 @@ namespace Services.Broadcast.Converters.RateImport
         {
             set { _AudiencesCache = value; }
         }
+
+        public IInventoryDaypartParsingEngine InventoryDaypartParsingEngine { get; set; }
 
         /// <summary>
         /// Spot lengths dictionary where key is the length and value is the id
@@ -165,321 +168,24 @@ namespace Services.Broadcast.Converters.RateImport
             return manifestRates;
         }
 
-        protected DisplayDaypart ParseStringToDaypart(string daypartText, string station)
+        protected List<DisplayDaypart> ParseDayparts(string daypartText, string station)
         {
-            if (!TryParse(daypartText, out DisplayDaypart displayDaypart))
-                throw new Exception(string.Format("Invalid daypart '{0}' on Station {1}.", daypartText, station));
-            if (displayDaypart == null || (displayDaypart != null && !displayDaypart.IsValid))
-                throw new Exception(string.Format("Invalid daypart '{0}' on Station {1}.", daypartText, station));
-
-            return displayDaypart;
-        }
-
-        private bool TryParse(string value, out DisplayDaypart result)
-        {
-            result = null;
-            value = value.Trim();
-
-            if (!string.IsNullOrEmpty(value))
+            if (InventoryDaypartParsingEngine.TryParse(daypartText, out var displayDayparts) && displayDayparts.Any() && displayDayparts.All(x => x.IsValid))
             {
-                string lDays;
-                string lTimes;
-                string[] lTimesSplit;
-
-                DisplayDaypart lDisplayDaypart = new DisplayDaypart();
-                lDisplayDaypart.Code = "CUS";
-                lDisplayDaypart.Name = "Custom";
-
-                if (value.Split(new char[] { ' ' }).Length != 2)
-                    return (false);
-
-                lDays = value.Split(new char[] { ' ' })[0].Trim();
-                lTimes = value.Split(new char[] { ' ' })[1].Trim();
-
-                lTimesSplit = lTimes.Split(new char[] { '-' });
-                if (lTimesSplit.Length != 2)
-                    return (false);
-
-                #region Days
-                if (lDays.Contains(","))
-                {
-                    string[] lDayGroups = lDays.Split(new char[] { ',' });
-
-                    if (!TryParseDays(lDisplayDaypart, lDayGroups))
-                        return false;
-                }
-                else
-                {
-                    if (!TryParseDays(lDisplayDaypart, new string[] { lDays }))
-                        return false;
-                }
-                #endregion
-                #region Times
-                #region Start Time
-
-                string startMeridiem = null;
-                string endMeridiem = null;
-                if (lTimesSplit[0].EndsWith("am", StringComparison.InvariantCultureIgnoreCase)
-                    || lTimesSplit[0].EndsWith("a", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    startMeridiem = "am";
-                }
-                else if (lTimesSplit[0].EndsWith("pm", StringComparison.InvariantCultureIgnoreCase)
-                   || lTimesSplit[0].EndsWith("p", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    startMeridiem = "pm";
-                }
-
-                if (lTimesSplit[1].EndsWith("am", StringComparison.InvariantCultureIgnoreCase)
-                    || lTimesSplit[1].EndsWith("a", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    endMeridiem = "am";
-                }
-                else if (lTimesSplit[1].EndsWith("pm", StringComparison.InvariantCultureIgnoreCase)
-                   || lTimesSplit[1].EndsWith("p", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    endMeridiem = "pm";
-                }
-
-                if (startMeridiem == null && endMeridiem == null)
-                {
-                    return false;
-                }
-
-                if (startMeridiem == null)
-                {
-                    lTimesSplit[0] = lTimesSplit[0] + endMeridiem;
-                }
-
-                if (endMeridiem == null)
-                {
-                    lTimesSplit[1] = lTimesSplit[1] + startMeridiem;
-                }
-
-                int? lStartTime = ParseTime(lTimesSplit[0]);
-                if (!lStartTime.HasValue)
-                    return false;
-                lDisplayDaypart.StartTime = lStartTime.Value;
-                #endregion
-                #region End Time
-                int? lEndTime = ParseTime(lTimesSplit[1]);
-                if (!lEndTime.HasValue)
-                    return false;
-                lDisplayDaypart.EndTime = lEndTime.Value - 1;
-                #endregion
-                #endregion
-
-                if (lDisplayDaypart.StartTime == 86400)
-                {
-                    lDisplayDaypart.StartTime = 0;
-                }
-
-                result = lDisplayDaypart;
+                return displayDayparts;
             }
 
-            return (result != null);
+            AddProblem($"Invalid daypart '{daypartText}' for station: {station}");
+            return new List<DisplayDaypart>();
         }
-        private bool TryParseDays(DisplayDaypart pDaypart, string[] pDayGroups)
+
+        protected void AddProblem(string description, string stationLetters = null)
         {
-            string[] lDayConstants1 = new string[7] { "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN" };
-            string[] lDayConstants2 = new string[7] { "M", "TU", "W", "TH", "F", "SA", "SU" };
-            string[] lDayConstants3 = new string[7] { "MO", "TU", "WE", "TH", "FR", "SA", "SU" };
-            string[] lDayConstants4 = new string[7] { "M", "T", "W", "R", "F", "S", "SU" };
-
-            foreach (string lDayGroup in pDayGroups)
+            FileProblems.Add(new InventoryFileProblem()
             {
-                if (lDayGroup.Trim() == "")
-                    continue;
-
-                if (lDayGroup.Contains("-"))
-                {
-                    int lEndIndex = -1;
-                    int lStartIndex = -1;
-                    string[] lSplitDays = lDayGroup.Split(new char[] { '-' });
-
-                    if (lSplitDays.Length != 2)
-                    {
-                        return false;
-                    }
-
-                    for (int i = 0; i < lSplitDays.Length; i++)
-                        lSplitDays[i] = lSplitDays[i].Trim();
-
-                    for (int i = 0; i < 7; i++) //7 -> days of the week
-                    {
-                        if (lDayConstants1[i] == lSplitDays[0].ToUpper() ||
-                            lDayConstants2[i] == lSplitDays[0].ToUpper() ||
-                            lDayConstants3[i] == lSplitDays[0].ToUpper() ||
-                            lDayConstants4[i] == lSplitDays[0].ToUpper())
-                        {
-                            lStartIndex = i;
-                        }
-                        else if (lDayConstants1[i] == lSplitDays[1].ToUpper() ||
-                                 lDayConstants2[i] == lSplitDays[1].ToUpper() ||
-                                 lDayConstants3[i] == lSplitDays[1].ToUpper() ||
-                                 lDayConstants4[i] == lSplitDays[1].ToUpper())
-                        {
-                            lEndIndex = i;
-                        }
-                    }
-                    if (lStartIndex >= 0 && lEndIndex >= 0)
-                    {
-                        for (int i = 0; i < 7; i++)
-                        {
-                            if (i >= lStartIndex && i <= lEndIndex)
-                            {
-                                switch (i)
-                                {
-                                    case (0):
-                                        pDaypart.Monday = true;
-                                        break;
-                                    case (1):
-                                        pDaypart.Tuesday = true;
-                                        break;
-                                    case (2):
-                                        pDaypart.Wednesday = true;
-                                        break;
-                                    case (3):
-                                        pDaypart.Thursday = true;
-                                        break;
-                                    case (4):
-                                        pDaypart.Friday = true;
-                                        break;
-                                    case (5):
-                                        pDaypart.Saturday = true;
-                                        break;
-                                    case (6):
-                                        pDaypart.Sunday = true;
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 7; i++)
-                    {
-                        if (lDayConstants1[i] == lDayGroup.ToUpper() ||
-                            lDayConstants2[i] == lDayGroup.ToUpper() ||
-                            lDayConstants3[i] == lDayGroup.ToUpper() ||
-                            lDayConstants4[i] == lDayGroup.ToUpper())
-                        {
-                            switch (i)
-                            {
-                                case (0):
-                                    pDaypart.Monday = true;
-                                    break;
-                                case (1):
-                                    pDaypart.Tuesday = true;
-                                    break;
-                                case (2):
-                                    pDaypart.Wednesday = true;
-                                    break;
-                                case (3):
-                                    pDaypart.Thursday = true;
-                                    break;
-                                case (4):
-                                    pDaypart.Friday = true;
-                                    break;
-                                case (5):
-                                    pDaypart.Saturday = true;
-                                    break;
-                                case (6):
-                                    pDaypart.Sunday = true;
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        private int? ParseTime(string pTimeString)
-        {
-            int lReturn = -1;
-
-            var checkTime = new Regex(_validTimeExpression);
-
-            if (checkTime.IsMatch(pTimeString))
-            {
-                int lHour;
-                int lMinute;
-                int lSecond;
-
-                bool AM = pTimeString.EndsWith("A", StringComparison.InvariantCultureIgnoreCase) || pTimeString.EndsWith("AM", StringComparison.InvariantCultureIgnoreCase);
-                bool PM = pTimeString.EndsWith("P", StringComparison.InvariantCultureIgnoreCase) || pTimeString.EndsWith("PM", StringComparison.InvariantCultureIgnoreCase);
-
-                pTimeString =
-                    pTimeString.Replace("A", "")
-                        .Replace("a", "")
-                        .Replace("P", "")
-                        .Replace("p", "")
-                        .Replace("M", "")
-                        .Replace("m", "");
-
-                //ad colon separating minutes and hours if missing
-                if (!pTimeString.Contains(":") && pTimeString.Length > 2)
-                {
-                    pTimeString = pTimeString.Substring(0, pTimeString.Length - 2) + ":" + pTimeString.Substring(pTimeString.Length - 2);
-                }
-
-                if (pTimeString.Contains(":"))
-                {
-                    string[] lTimePieces = pTimeString.Split(new char[] { ':' });
-                    if (lTimePieces.Length == 2)
-                    {
-                        if (!int.TryParse(lTimePieces[0], out lHour))
-                            return (null);
-                        if (!int.TryParse(lTimePieces[1], out lMinute))
-                            return (null);
-
-                        if (PM && lHour < 12)
-                            lHour += 12;
-                        if (AM && lHour >= 12)
-                            lHour -= 12;
-
-                        lReturn = (lHour * 3600) + (lMinute * 60);
-                    }
-                    else if (lTimePieces.Length == 3)
-                    {
-                        if (!int.TryParse(lTimePieces[0], out lHour))
-                            return (null);
-                        if (!int.TryParse(lTimePieces[1], out lMinute))
-                            return (null);
-                        if (!int.TryParse(lTimePieces[2], out lSecond))
-                            return (null);
-
-                        if (PM && lHour < 12)
-                            lHour += 12;
-                        if (AM && lHour >= 12)
-                            lHour -= 12;
-
-                        lReturn = (lHour * 3600) + (lMinute * 60) + lSecond;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    if (!int.TryParse(pTimeString, out lHour))
-                        return (null);
-
-                    if (PM && lHour < 12)
-                        lHour += 12;
-                    if (AM && lHour >= 12)
-                        lHour -= 12;
-
-                    if (lHour == 0)
-                        lHour = 24;
-
-                    lReturn = (lHour * 3600);
-                }
-            }
-
-            return lReturn == -1 ? null : (int?)lReturn;
+                ProblemDescription = description,
+                StationLetters = stationLetters
+            });
         }
     }
 }

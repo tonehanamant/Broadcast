@@ -207,7 +207,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
-                if (!Enum.TryParse(jsonDetail.InventorySource, out AffidavitFileSourceEnum inventorySource))
+                if (!Enum.TryParse(jsonDetail.InventorySource, out DeliveryFileSourceEnum inventorySource))
                 {
                     validationErrors.Add(new WWTVInboundFileValidationResult()
                     {
@@ -223,11 +223,11 @@ namespace Services.Broadcast.ApplicationServices
 
                 DateTime airTime = DateTime.Now;
 
-                if (saveRequest.Source == (int)AffidavitFileSourceEnum.Strata)
+                if (saveRequest.Source == (int)DeliveryFileSourceEnum.Strata)
                 {
                     airTime = jsonDetail.Date.Add(ExtractStrataTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
                 }
-                else if (saveRequest.Source == (int)AffidavitFileSourceEnum.KeepingTrac)
+                else if (saveRequest.Source == (int)DeliveryFileSourceEnum.KeepingTrac)
                 {
                     airTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
                 }
@@ -287,10 +287,10 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private bool _ValidateDemography(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
-            , AffidavitFileSourceEnum inventorySource, out string xtransformedCode)
+            , DeliveryFileSourceEnum inventorySource, out string xtransformedCode)
         {
             xtransformedCode = demo.Demographic;
-            if (inventorySource == AffidavitFileSourceEnum.KeepingTrac)
+            if (inventorySource == DeliveryFileSourceEnum.KeepingTrac)
             {
                 if (xtransformedCode.StartsWith("ad", StringComparison.CurrentCultureIgnoreCase))
                 {

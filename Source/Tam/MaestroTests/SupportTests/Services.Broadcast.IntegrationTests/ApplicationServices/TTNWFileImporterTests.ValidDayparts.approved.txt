@@ -200,31 +200,10 @@
                   "_Name": "Custom",
                   "_Saturday": false,
                   "_StartTime": 79200,
-                  "_Sunday": false,
+                  "_Sunday": true,
                   "_Thursday": true,
                   "_Tuesday": true,
                   "_Wednesday": true
-                },
-                "Genres": [],
-                "ProgramName": null
-              },
-              {
-                "Daypart": {
-                  "_Code": "CUS",
-                  "_EndTime": 81299,
-                  "_Friday": false,
-                  "_Id": -1,
-                  "_Is24Hour": false,
-                  "_LastEndTime": 0,
-                  "_LastStartTime": 0,
-                  "_Monday": false,
-                  "_Name": "Custom",
-                  "_Saturday": false,
-                  "_StartTime": 79200,
-                  "_Sunday": true,
-                  "_Thursday": false,
-                  "_Tuesday": false,
-                  "_Wednesday": false
                 },
                 "Genres": [],
                 "ProgramName": null

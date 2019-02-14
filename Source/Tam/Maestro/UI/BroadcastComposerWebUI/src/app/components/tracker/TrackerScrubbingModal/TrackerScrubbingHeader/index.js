@@ -126,11 +126,13 @@ function TrackerScrubbingHeader({
     {
       Header: "Posting Book",
       accessor: "PostingBook",
+      Cell: row => (row.value ? row.value : "-"),
       minWidth: 60
     },
     {
       Header: "Playback Type",
       accessor: "PlaybackTypeDisplay",
+      Cell: row => (row.value ? row.value : "-"),
       minWidth: 60
     }
   ];

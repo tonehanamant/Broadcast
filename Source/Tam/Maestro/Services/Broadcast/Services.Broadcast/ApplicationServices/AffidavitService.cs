@@ -850,14 +850,9 @@ namespace Services.Broadcast.ApplicationServices
                 Sequence = x.Sequence,
                 DaypartCodeDisplay = x.DaypartCode,
                 EstimateId = x.EstimateId,
-                PostingBook = _GetBostingBook(x.PostingBookId),
+                PostingBook = x.PostingBookId.HasValue ? _MediaMonthAndWeekCache.GetMediaMonthById(x.PostingBookId.Value).LongMonthNameAndYear : null,
                 PlaybackTypeDisplay = x.PostingPlaybackType?.GetDescriptionAttribute()
             }).OrderBy(x => x.Sequence).ToList();
-        }
-
-        private string _GetBostingBook(int? postingBookId)
-        {
-            return postingBookId.HasValue ? _MediaMonthAndWeekCache.GetMediaMonthById(postingBookId.Value).LongMonthNameAndYear : null;
         }
 
         private FilterOptions _LoadFilters(List<ProposalDetailPostScrubbingDto> clientScrubs)
@@ -1107,7 +1102,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 FileName = fileName,
                 FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream)),
-                Source = (int)AffidavitFileSourceEnum.Strata
+                Source = (int)DeliveryFileSourceEnum.Strata
             };
 
             using (reader.Initialize(rawStream))
@@ -1131,7 +1126,7 @@ namespace Services.Broadcast.ApplicationServices
                         LeadInGenre = reader.GetCellValue("LeadInGenre"),
                         LeadOutProgramName = reader.GetCellValue("LeadOutTitle"),
                         LeadOutGenre = reader.GetCellValue("LeadOutGenre"),
-                        InventorySource = (AffidavitFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source")),
+                        InventorySource = (DeliveryFileSourceEnum)int.Parse(reader.GetCellValue("Inventory Source")),
                         Affiliate = reader.GetCellValue("Affiliate"),
                         ShowType = reader.GetCellValue("ShowType"),
                         LeadInShowType = reader.GetCellValue("LeadInShowType"),

@@ -20,7 +20,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Affiliate = "AA",
                 AirTime = new DateTime(2018, 01, 01),
                 Genre = "Comedy",
-                InventorySource = AffidavitFileSourceEnum.Strata,
+                InventorySource = DeliveryFileSourceEnum.Strata,
                 Isci = "AAAAAAA",
                 LeadInGenre = "Comedy",
                 LeadInProgramName = "Saturday Night Live",

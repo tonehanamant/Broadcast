@@ -649,7 +649,7 @@ namespace Services.Broadcast.Repositories
                             MatchShowType = x.postlogFileScrub.match_show_type,
                             WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList(),
                             WWTVProgramName = x.postlogDetails.program_name,
-                            InventorySource = (AffidavitFileSourceEnum)x.postlogDetails.inventory_source
+                            InventorySource = (DeliveryFileSourceEnum)x.postlogDetails.inventory_source
                         };
                     }
                     ).ToList());

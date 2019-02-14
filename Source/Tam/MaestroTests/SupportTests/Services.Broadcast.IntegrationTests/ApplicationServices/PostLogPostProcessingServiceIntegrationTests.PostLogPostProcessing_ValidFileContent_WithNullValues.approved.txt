@@ -128,7 +128,7 @@
       "EstimateId": 123,
       "FileDetailProblems": [],
       "Genre": null,
-      "InventorySource": 1,
+      "InventorySource": 2,
       "Isci": "AAAAAAAA",
       "LeadInEndTime": null,
       "LeadinGenre": null,
@@ -149,9 +149,9 @@
       "SuppliedProgramName": "Everybody Loves Raymond"
     }
   ],
-  "FileHash": "02-5A-3C-10-3A-C5-F7-7C-CC-53-BB-01-9A-55-9F-D8-3F-5C-5D-B5",
+  "FileHash": "EC-6A-5C-1C-65-3A-05-B0-BB-84-1B-C0-F4-F0-C2-D3-95-C2-F7-D6",
   "FileName": "WWTV_KeepingTracValidFile_WithNullValues.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 2,
   "Status": 1
 }

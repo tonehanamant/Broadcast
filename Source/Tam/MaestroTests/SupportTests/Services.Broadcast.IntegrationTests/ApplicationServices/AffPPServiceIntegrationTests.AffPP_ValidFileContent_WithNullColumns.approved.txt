@@ -128,7 +128,7 @@
       "EstimateId": 123,
       "FileDetailProblems": [],
       "Genre": null,
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "AAAAAAAA1",
       "LeadInEndTime": null,
       "LeadinGenre": null,
@@ -152,6 +152,6 @@
   "FileHash": "E8-89-98-47-71-12-1B-47-B3-60-8A-31-2A-C5-35-CD-23-39-4A-30",
   "FileName": "WWTV_AffidavitValidFile_NullValues.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }
