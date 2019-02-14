@@ -732,6 +732,9 @@
     <None Include="Files\CTV-Broadcast.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\CTV-Broadcast-2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

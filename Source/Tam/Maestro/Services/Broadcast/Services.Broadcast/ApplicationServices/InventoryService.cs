@@ -442,9 +442,7 @@ namespace Services.Broadcast.ApplicationServices
             //Set the ID for those that exist already
             foreach (var updateContact in contactsUpdateList)
             {
-                var existingContacts = existingStationContacts.Where(c => StationContact.StationContactComparer.Equals(c, updateContact));
-
-                updateContact.Id = existingContacts.OrderByDescending(c => c.ModifiedDate).First().Id;
+                updateContact.Id = existingStationContacts.Single(c => StationContact.StationContactComparer.Equals(c, updateContact)).Id;
             }
 
             _stationContactsRepository.UpdateExistingStationContacts(contactsUpdateList, request.UserName, inventoryFile.Id);

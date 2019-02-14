@@ -486,7 +486,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //first make sure the contacts don't exist
                 var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", stationCodeWVTM);
-                Assert.AreEqual(2, stationContacts.Count);
+                Assert.AreEqual(1, stationContacts.Count);
 
                 request.StreamData = new FileStream(
                     @".\Files\station_contact_new_rate_file_wvtm.xml",
@@ -3797,6 +3797,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     problems = e.Problems;
                 }
+
+                Assert.IsEmpty(problems);
+            }
+        }
+
+        [Test]
+        public void CanLoadOpenMarketInventoryFileWithoutDuplicatingStationContacts()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\CTV-Broadcast-2.xml");
+
+                var problems = new List<InventoryFileProblem>();
+
+                try
+                {
+                    var result = _InventoryFileService.SaveInventoryFile(request);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                var stationContacts = _InventoryFileService.GetStationContacts("OpenMarket", 5362);
+
+                Assert.AreEqual(1, stationContacts.Count);
 
                 Assert.IsEmpty(problems);
             }
