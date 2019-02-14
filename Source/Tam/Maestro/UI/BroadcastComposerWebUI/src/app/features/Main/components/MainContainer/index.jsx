@@ -4,12 +4,13 @@ import { Switch, Route } from "react-router-dom";
 import CSSModules from "react-css-modules";
 
 // TO CHANGE
-import SectionPost from "Containers/SectionPost";
+// import SectionPost from "Containers/SectionPost";
 import SectionPlanning from "Containers/SectionPlanning";
 import SectionTracker from "Containers/SectionTracker";
 
 // NEW STRUCTURE
 import SectionPostPrePosting from "PostPrePosting";
+import SectionPost from "Post";
 
 import Toast from "Patterns/Toast";
 import ErrorModal from "Patterns/ErrorModal";
