@@ -21,7 +21,7 @@ export const getArchivedFiltered = query => ({
 });
 
 export const getPostClientScrubbing = params => ({
-  type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING,
+  type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.request,
   payload: params
 });
 
