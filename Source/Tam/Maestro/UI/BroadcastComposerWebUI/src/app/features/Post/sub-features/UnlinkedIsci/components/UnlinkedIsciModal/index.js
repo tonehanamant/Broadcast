@@ -13,9 +13,9 @@ import {
   getUnlinkedFiltered,
   getArchivedFiltered
 } from "Post/redux/actions";
+import UnlinkedIsciGrid from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciGrid";
+import ArchivedIsciGrid from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciArchivedGrid";
 import MapUnlinkedIsciModal from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciMapModal";
-import UnlinkedIsciGrid from "./unlinkedIsciGrid";
-import ArchivedIsciGrid from "./archivedIsciGrid";
 
 const mapStateToProps = ({
   app: {

@@ -12,7 +12,7 @@ import {
 } from "Post/redux/actions";
 import { toggleModal } from "Main/redux/actions";
 
-import "./index.scss";
+import "./index.style.scss";
 
 const mapStateToProps = ({
   app: {

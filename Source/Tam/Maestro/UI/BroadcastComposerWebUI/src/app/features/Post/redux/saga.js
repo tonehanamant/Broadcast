@@ -5,7 +5,7 @@ import { forEach, cloneDeep, includes, update } from "lodash";
 import { types as appActions } from "Main";
 import {
   setOverlayLoading,
-  setOverlayProccesing,
+  setOverlayProcessing,
   toggleModal,
   deployError
 } from "Main/redux/actions";
@@ -240,7 +240,7 @@ export function* requestPostClientScrubbing(params) {
     if (params.showModal) {
       yield put(setOverlayLoading("PostClientScrubbing", true));
     } else {
-      yield put(setOverlayProccesing("PostClientScrubbing", true));
+      yield put(setOverlayProcessing("PostClientScrubbing", true));
     }
     // clear the data so filters grid registers as update - if not from modal update
     if (!params.showModal) {
@@ -255,7 +255,7 @@ export function* requestPostClientScrubbing(params) {
     if (params.showModal) {
       yield put(setOverlayLoading("PostClientScrubbing", false));
     } else {
-      yield put(setOverlayProccesing("PostClientScrubbing", false));
+      yield put(setOverlayProcessing("PostClientScrubbing", false));
     }
   }
 }

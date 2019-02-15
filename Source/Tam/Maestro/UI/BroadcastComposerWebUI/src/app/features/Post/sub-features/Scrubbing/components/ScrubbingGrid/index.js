@@ -13,7 +13,7 @@ import {
 } from "Utils/dateFormatter";
 import SwapDetailModal from "Post/sub-features/Scrubbing/components/ScrubbingSwapDetailModal";
 
-import "./index.scss";
+import "./index.style.scss";
 
 const { MenuActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;

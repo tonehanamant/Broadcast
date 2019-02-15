@@ -11,8 +11,8 @@ import {
   clearFilteredScrubbingData,
   getClearScrubbingDataFiltered
 } from "Post/redux/actions";
+import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
 import styles from "./index.scss";
-import FilterPopoverWrapper from "./Filters/FilterPopoverWrapper";
 
 const mapStateToProps = (grid, dataSource) => ({
   grid,

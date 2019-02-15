@@ -98,7 +98,8 @@ export class PostScrubbingDetail extends Component {
 
 PostScrubbingDetail.defaultProps = {
   isReadOnly: true,
-  hasActiveScrubbingFilters: false
+  hasActiveScrubbingFilters: false,
+  details: []
 };
 
 PostScrubbingDetail.propTypes = {

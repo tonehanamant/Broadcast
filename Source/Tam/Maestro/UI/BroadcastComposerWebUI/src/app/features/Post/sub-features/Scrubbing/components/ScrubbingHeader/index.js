@@ -18,7 +18,7 @@ import Select from "react-select";
 import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 import { getDateInFormat } from "Utils/dateFormatter";
 
-import styles from "./index.scss";
+import styles from "./index.style.scss";
 
 const generateMarketLabael = (marketGroupId, markets) => {
   if (marketGroupId === 1) {
