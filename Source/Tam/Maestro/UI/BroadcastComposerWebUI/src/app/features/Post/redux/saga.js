@@ -1,18 +1,32 @@
 import { takeEvery, put, call, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
-import _ from "lodash";
-import * as appActions from "Main/redux/types";
-import * as postActions from "Ducks/post/actionTypes";
-import { setOverlayLoading, toggleModal } from "Main/redux/actions";
+import { forEach, cloneDeep, includes, update } from "lodash";
+import { types as appActions } from "Main";
+import {
+  setOverlayLoading,
+  setOverlayProccesing,
+  toggleModal,
+  deployError
+} from "Main/redux/actions";
 import { selectModal } from "Main/redux/selectors";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
   selectActiveScrubs,
+  selectUnfilteredData,
+  selectFilteredIscis,
+  selectActiveScrubbingFilters,
+  selectClientScrubs,
   selectActiveFilterKey
-} from "Ducks/post/selectors";
-import { getPost, saveActiveScrubData } from "Ducks/post";
+} from "Post/redux/selectors";
+import {
+  getPost,
+  saveActiveScrubData,
+  savePostDisplay
+} from "Post/redux/actions";
 import api from "API";
+
+import * as postActions from "./types";
 
 const ACTIONS = { ...appActions, ...postActions };
 
@@ -33,74 +47,24 @@ export function adjustPost(posts) {
   return adjustPost;
 }
 
+export const assignDisplay = posts =>
+  posts.map(post => ({
+    ...post,
+    DisplayUploadDate:
+      post.UploadDate !== null
+        ? moment(post.UploadDate).format("M/D/YYYY")
+        : "-"
+  }));
+
 export function* requestPost() {
   const { getPosts } = api.post;
-
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "postPosts",
-        loading: true
-      }
-    });
-    const response = yield getPosts();
-    const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "postPosts",
-        loading: false
-      }
-    });
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No post returned.",
-          message: `The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No post returned.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs."
-        }
-      });
-      throw new Error();
-    }
-    // adjust the data for grid handling
-    data.Data.Posts = yield adjustPost(data.Data.Posts);
-    yield put({
-      type: ACTIONS.RECEIVE_POST,
-      data
-    });
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No post returned.",
-          message:
-            "The server encountered an error processing the request (post). Please try again or contact your administrator to review error logs.",
-          exception: e.response.data.ExceptionMessage || ""
-        }
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
-    }
+    yield put(setOverlayLoading({ id: "postPosts", loading: true }));
+    const { status, data } = yield getPosts();
+    update(data, "Data.Post", () => adjustPost(data.Data.Posts));
+    return { status, data };
+  } finally {
+    yield put(setOverlayLoading({ id: "postPosts", loading: false }));
   }
 }
 
@@ -108,148 +72,86 @@ export function* requestPost() {
 /* ASSIGN POST DISPLAY */
 /* ////////////////////////////////// */
 export function* assignPostDisplay({ payload: request }) {
-  const assignDisplay = () =>
-    request.data.Posts.map(item => {
-      const post = item;
-
-      // UploadDate
-      post.DisplayUploadDate =
-        post.UploadDate !== null
-          ? moment(post.UploadDate).format("M/D/YYYY")
-          : "-";
-      return post;
-    });
-
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "postPostsDisplay",
-        loading: true
-      }
-    });
-    const Posts = yield assignDisplay();
+    yield put(setOverlayLoading({ id: "postPostsDisplay", loading: true }));
+    const Posts = yield assignDisplay(request.data.Posts);
     const post = Object.assign({}, request.data, { Posts });
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: "postPostsDisplay",
-        loading: false
-      }
-    });
-    yield put({
-      type: ACTIONS.ASSIGN_POST_DISPLAY,
-      data: post
-    });
+    yield put(savePostDisplay(post));
   } catch (e) {
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
+      yield put(deployError({ message: e.message }));
     }
+  } finally {
+    yield put(setOverlayLoading({ id: "postPostsDisplay", loading: false }));
   }
 }
 
-export function* requestPostFiltered({ payload: query }) {
-  const postListUnfiltered = yield select(
-    state => state.post.postUnfilteredGridData
-  );
+const postSearchKeys = [
+  "searchContractId",
+  "ContractName",
+  "Advertiser",
+  "UploadDate",
+  "serchSpotsInSpec",
+  "searchSpotsOutOfSpec"
+];
 
-  const keys = [
-    "searchContractId",
-    "ContractName",
-    "Advertiser",
-    "UploadDate",
-    "serchSpotsInSpec",
-    "searchSpotsOutOfSpec"
-  ];
-  const searcher = new FuzzySearch(postListUnfiltered, keys, {
+const searcher = (data, searchKeys, query) => {
+  const searcher = new FuzzySearch(data, searchKeys, {
     caseSensitive: false
   });
-  const postFiltered = () => searcher.search(query);
+  return searcher.search(query);
+};
 
+export function* requestPostFiltered({ payload: query }) {
+  const data = yield select(selectUnfilteredData);
   try {
-    const filtered = yield postFiltered();
+    const filtered = yield searcher(data, postSearchKeys, query);
     yield put({
       type: ACTIONS.RECEIVE_FILTERED_POST,
       data: filtered
     });
   } catch (e) {
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
+      yield put(deployError({ message: e.message }));
     }
   }
 }
 
+const iscisSearchKeys = ["ISCI"];
+
 export function* requestUnlinkedFiltered({ payload: query }) {
-  const unlinkedListUnfiltered = yield select(
-    state => state.post.unlinkedFilteredIscis
-  );
-
+  const data = yield select(selectFilteredIscis);
   // for each post, convert all properties to string to enable use on FuzzySearch object
-  unlinkedListUnfiltered.map(post => Object.keys(post).map(key => post[key]));
-
-  const keys = ["ISCI"];
-  const searcher = new FuzzySearch(unlinkedListUnfiltered, keys, {
-    caseSensitive: false
-  });
-  const unlinkedFiltered = () => searcher.search(query);
+  data.map(post => Object.keys(post).map(key => post[key]));
 
   try {
-    const filtered = yield unlinkedFiltered();
+    const filtered = yield searcher(data, iscisSearchKeys, query);
     yield put({
       type: ACTIONS.RECEIVE_FILTERED_UNLINKED,
       data: { query, filteredData: filtered }
     });
   } catch (e) {
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
+      yield put(deployError({ message: e.message }));
     }
   }
 }
 
 export function* requestArchivedFiltered({ payload: query }) {
-  const archivedListUnfiltered = yield select(
-    state => state.post.unlinkedFilteredIscis
-  );
-
+  const data = yield select(selectFilteredIscis);
   // for each post, convert all properties to string to enable use on FuzzySearch object
-  archivedListUnfiltered.map(post => Object.keys(post).map(key => post[key]));
+  data.map(post => Object.keys(post).map(key => post[key]));
 
-  if (archivedListUnfiltered.length > 0) {
-    const keys = ["ISCI"];
-    const searcher = new FuzzySearch(archivedListUnfiltered, keys, {
-      caseSensitive: false
-    });
-    const archivedFiltered = () => searcher.search(query);
-
+  if (data.length > 0) {
     try {
-      const filtered = yield archivedFiltered();
+      const filtered = yield searcher(data, iscisSearchKeys, query);
       yield put({
         type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
         data: { query, filteredData: filtered }
       });
     } catch (e) {
       if (e.message) {
-        yield put({
-          type: ACTIONS.DEPLOY_ERROR,
-          error: {
-            message: e.message
-          }
-        });
+        yield put(deployError({ message: e.message }));
       }
     }
   }
@@ -266,12 +168,7 @@ export function* requestClearScrubbingDataFiltersList() {
     });
   } catch (e) {
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
+      yield put(deployError({ message: e.message }));
     }
   }
 }
@@ -279,17 +176,14 @@ export function* requestClearScrubbingDataFiltersList() {
 /* ////////////////////////////////// */
 /* CLEAR FILTERED SCRUBBING DATA - resets filters */
 /* ////////////////////////////////// */
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 export function* clearFilteredScrubbingData() {
   yield call(requestClearScrubbingDataFiltersList);
-  const delay = ms => new Promise(res => setTimeout(res, ms));
   yield delay(500);
-  const originalFilters = yield select(
-    state => state.post.activeScrubbingFilters
-  );
-  const originalScrubs = yield select(
-    state => state.post.proposalHeader.scrubbingData.ClientScrubs
-  );
-  const activeFilters = _.forEach(originalFilters, filter => {
+  const originalFilters = yield select(selectActiveScrubbingFilters);
+  const originalScrubs = yield select(selectClientScrubs);
+  const activeFilters = forEach(originalFilters, filter => {
     if (filter.active) {
       const isList = filter.type === "filterList";
       filter.active = false;
@@ -320,7 +214,6 @@ export function* clearFilteredScrubbingData() {
       }
     }
   });
-  // console.log("clear filters", activeFilters, originalFilters);
   const ret = {
     activeFilters,
     originalScrubs
@@ -341,114 +234,44 @@ export function* clearFilteredScrubbingData() {
 /* ////////////////////////////////// */
 // allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
 // if not from modal show processing, else show loading (loading not shown inside modal)
-export function* requestPostClientScrubbing({ payload: params }) {
-  // console.log('requestPostClientScrubbing', params);
+export function* requestPostClientScrubbing(params) {
   const { getPostClientScrubbing } = api.post;
   try {
     if (params.showModal) {
-      yield put({
-        type: ACTIONS.SET_OVERLAY_LOADING,
-        overlay: {
-          id: "PostClientScrubbing",
-          loading: true
-        }
-      });
+      yield put(setOverlayLoading("PostClientScrubbing", true));
     } else {
-      yield put({
-        type: ACTIONS.SET_OVERLAY_PROCESSING,
-        overlay: {
-          id: "PostClientScrubbing",
-          processing: true
-        }
-      });
+      yield put(setOverlayProccesing("PostClientScrubbing", true));
     }
     // clear the data so filters grid registers as update - if not from modal update
     if (!params.showModal) {
       yield call(requestClearScrubbingDataFiltersList);
     }
-    const response = yield getPostClientScrubbing(params);
-    const { status, data } = response;
-
-    if (params.showModal) {
-      yield put({
-        type: ACTIONS.SET_OVERLAY_LOADING,
-        overlay: {
-          id: "PostClientScrubbing",
-          loading: false
-        }
-      });
-    } else {
-      yield put({
-        type: ACTIONS.SET_OVERLAY_PROCESSING,
-        overlay: {
-          id: "PostClientScrubbing",
-          processing: false
-        }
-      });
-    }
-    if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No proposal client scrubbing data returned.",
-          message: `The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No proposal client scrubbing data returned.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs."
-        }
-      });
-      throw new Error();
-    }
+    const { status, data } = yield getPostClientScrubbing(params);
     if (params.filterKey) {
-      data.Data.filterKey = params.filterKey; // set for ref in store
+      update(data, "Data.filterKey", () => params.filterKey);
     }
-    // console.log('request post scrubbing>>>>>>>', params, data.Data);
-    yield put({
-      type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
-      data
-    });
+    return { status, data };
+  } finally {
     if (params.showModal) {
-      yield put({
-        type: ACTIONS.TOGGLE_MODAL,
-        modal: {
-          modal: "postScrubbingModal",
-          active: true,
-          properties: {
-            titleText: "POST SCRUBBING MODAL",
-            bodyText: "Post Scrubbing details will be shown here!"
-          }
-        }
-      });
+      yield put(setOverlayLoading("PostClientScrubbing", false));
+    } else {
+      yield put(setOverlayProccesing("PostClientScrubbing", false));
     }
-  } catch (e) {
-    if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          error: "No proposal scrubbing data returned.",
-          message:
-            "The server encountered an error processing the request (proposal scrubbing). Please try again or contact your administrator to review error logs.",
-          exception: e.response.data.ExceptionMessage || ""
+  }
+}
+
+export function* requestPostClientScrubbingSuccess({ payload: params }) {
+  if (params.showModal) {
+    yield put(
+      toggleModal({
+        modal: "postScrubbingModal",
+        active: true,
+        properties: {
+          titleText: "POST SCRUBBING MODAL",
+          bodyText: "Post Scrubbing details will be shown here!"
         }
-      });
-    }
-    if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
-          message: e.message
-        }
-      });
-    }
+      })
+    );
   }
 }
 
@@ -462,7 +285,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
   const listFiltered = yield select(
     state => state.post.proposalHeader.activeScrubbingData.ClientScrubs
   );
-  const activeFilters = _.cloneDeep(
+  const activeFilters = cloneDeep(
     yield select(state => state.post.activeScrubbingFilters)
   );
   const originalFilters = yield select(
@@ -491,7 +314,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     // TBD date/time aired versus list
     const filteredResult = listUnfiltered.filter(item => {
       let ret = true;
-      _.forEach(activeFilters, value => {
+      forEach(activeFilters, value => {
         if (value.active && ret === true) {
           hasActiveScrubbingFilters = true;
           if (value.type === "filterList") {
@@ -499,11 +322,11 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
               // just base on one or the other?
               const toMatch = value.matchOptions.inSpec === true;
               ret =
-                !_.includes(value.exclusions, item[value.filterKey]) &&
+                !includes(value.exclusions, item[value.filterKey]) &&
                 item[value.matchOptions.matchKey] === toMatch;
               // console.log('filter each', ret, item[value.filterKey]);
             } else {
-              ret = !_.includes(value.exclusions, item[value.filterKey]);
+              ret = !includes(value.exclusions, item[value.filterKey]);
             }
           } else if (value.type === "dateInput") {
             // tbd check range based on value.filterOptions
@@ -667,15 +490,12 @@ export function* undoArchivedIscis({ ids }) {
 export function refilterOnOverride(clientScrubs, keys, status, isRemove) {
   // if is Remove filter out the keys
   // else for each key find scrub and change Status/overide true
-  // console.log('refilterOnOverride', isRemove, status, keys);
   if (isRemove) {
-    return clientScrubs.filter(
-      item => !_.includes(keys, item.ScrubbingClientId)
-    );
+    return clientScrubs.filter(item => !includes(keys, item.ScrubbingClientId));
   }
 
   return clientScrubs.map(item => {
-    if (_.includes(keys, item.ScrubbingClientId)) {
+    if (includes(keys, item.ScrubbingClientId)) {
       return { ...item, Status: status, StatusOverride: true };
     }
     return { ...item };
@@ -689,17 +509,15 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
   // if options need changing (delete above)
   // compare new to active filters and change filterOptions, exclusions etc; handle date/time separately
   // return new filterOptions
-  // console.log('reset filter options', activeFilters, newFilters);
   const adjustedFilters = {};
-  // console.log('current active filters >>>>>>>>>>', activeFilters);
-  _.forEach(activeFilters, (filter, key) => {
+  forEach(activeFilters, (filter, key) => {
     if (filter && filter.filterOptions) {
       if (filter.type === "filterList") {
         const newOptions = newFilters[filter.distinctKey];
         // console.log('filter options reset', filter, newOptions);
         if (filter.filterOptions.length) {
           const filterOptions = filter.filterOptions.filter(item =>
-            _.includes(newOptions, item.Value)
+            includes(newOptions, item.Value)
           );
           adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
         }
@@ -721,7 +539,6 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
           originalTimeAiredEnd: newFilters.originalTimeAiredEnd
         };
         adjustedFilters[key] = Object.assign({}, filter, { filterOptions });
-        // adjustedFilters[key] = filter;
       }
     }
   });
@@ -747,7 +564,6 @@ export function* requestOverrideStatus({ payload: params }) {
       params.ReturnStatusFilter === "All"
         ? Object.assign({}, params, { ReturnStatusFilter: null })
         : params;
-    //  console.log('adjustParams>>>>>>>>>>>>>', params, adjustParams);
     const response = yield overrideStatus(adjustParams);
     const { status, data } = response;
     const hasActiveScrubbingFilters = yield select(
@@ -799,13 +615,13 @@ export function* requestOverrideStatus({ payload: params }) {
         status,
         isRemove
       );
-      const activeFilters = _.cloneDeep(
+      const activeFilters = cloneDeep(
         yield select(state => state.post.activeScrubbingFilters)
       );
       let adjustedFilters = null;
       // remove so redjust filter options as needed
       if (isRemove) {
-        // const activeFilters = _.cloneDeep(yield select(state => state.post.activeScrubbingFilters));
+        // const activeFilters = cloneDeep(yield select(state => state.post.activeScrubbingFilters));
         adjustedFilters = resetfilterOptionsOnOverride(
           activeFilters,
           data.Data.Filters
@@ -830,7 +646,7 @@ export function* requestOverrideStatus({ payload: params }) {
       // as currently stands need to reset the filter key on data or is removed : TODO REVISE
       data.Data.filterKey = yield select(state => state.post.activeFilterKey);
       yield put({
-        type: ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING,
+        type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
         data
       });
     }
@@ -920,10 +736,6 @@ export function* swapProposalDetail({ payload: params }) {
     );
     const refreshParams = { proposalId: id, showModal: true, filterKey: "All" };
     yield call(requestPostClientScrubbing, { payload: refreshParams });
-    /*  yield put({
-      type: ACTIONS.RECEIVE_SWAP_PROPOSAL_DETAIL,
-      data,
-    }); */
   } catch (e) {
     if (e.response) {
       yield put({
@@ -1084,8 +896,6 @@ export function* processNtiFileSuccess(req) {
         bodyText: req.data.Message,
         bodyList: list,
         closeButtonDisabled: true,
-        // closeButtonText: "Continue",
-        // closeButtonBsStyle: "success",
         actionButtonText: "OK",
         actionButtonBsStyle: "success",
         action: () => {},
@@ -1099,48 +909,58 @@ export function* processNtiFileSuccess(req) {
 /* WATCHERS */
 /* ////////////////////////////////// */
 
-export function* watchRequestPost() {
-  yield takeEvery(ACTIONS.REQUEST_POST, requestPost);
-}
-
-export function* watchRequestAssignPostDisplay() {
-  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, assignPostDisplay);
-}
-
-export function* watchRequestPostFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
-}
-
-export function* watchRequestUnlinkedFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
-}
-
-export function* watchRequestArchivedFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
-}
-
-export function* watchRequestPostClientScrubbing() {
+function* watchRequestPost() {
   yield takeEvery(
-    ACTIONS.REQUEST_POST_CLIENT_SCRUBBING,
-    requestPostClientScrubbing
+    ACTIONS.LOAD_POST.request,
+    sagaWrapper(requestPost, ACTIONS.LOAD_POST)
   );
 }
 
-export function* watchRequestScrubbingDataFiltered() {
+function* watchRequestAssignPostDisplay() {
+  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, savePostDisplay);
+}
+
+function* watchRequestPostFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
+}
+
+function* watchRequestUnlinkedFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
+}
+
+function* watchRequestArchivedFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
+}
+
+function* watchRequestPostClientScrubbing() {
+  yield takeEvery(
+    ACTIONS.LOAD_POST_CLIENT_SCRUBBING.request,
+    sagaWrapper(requestPostClientScrubbing, ACTIONS.LOAD_POST_CLIENT_SCRUBBING)
+  );
+}
+
+function* watchRequestPostClientScrubbingSuccess() {
+  yield takeEvery(
+    ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
+    requestPostClientScrubbingSuccess
+  );
+}
+
+function* watchRequestScrubbingDataFiltered() {
   yield takeEvery(
     ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA,
     requestScrubbingDataFiltered
   );
 }
 
-export function* watchRequestClearScrubbingFiltersList() {
+function* watchRequestClearScrubbingFiltersList() {
   yield takeEvery(
     ACTIONS.REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
     requestClearScrubbingDataFiltersList
   );
 }
 
-export function* watchRequestUniqueIscis() {
+function* watchRequestUniqueIscis() {
   yield takeEvery(
     [
       ACTIONS.UNLINKED_ISCIS_DATA.request,
@@ -1152,101 +972,127 @@ export function* watchRequestUniqueIscis() {
   );
 }
 
-export function* watchRequestUniqueIscisSuccess() {
+function* watchRequestUniqueIscisSuccess() {
   yield takeEvery(ACTIONS.UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
 }
 
-export function* watchRequestArchivedIscisSuccess() {
+function* watchRequestArchivedIscisSuccess() {
   yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.success, archivedIscisSuccess);
 }
 
-export function* watchArchiveUnlinkedIsci() {
+function* watchArchiveUnlinkedIsci() {
   yield takeEvery(
     ACTIONS.ARCHIVE_UNLIKED_ISCI.request,
     sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI)
   );
 }
 
-export function* watchRequestOverrideStatus() {
+function* watchRequestOverrideStatus() {
   yield takeEvery(ACTIONS.REQUEST_POST_OVERRIDE_STATUS, requestOverrideStatus);
 }
 
-export function* watchSwapProposalDetail() {
+function* watchSwapProposalDetail() {
   yield takeEvery(ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL, swapProposalDetail);
 }
 
-/* export function* watchLoadArchivedIscis() {
-  yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.request, sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI));
-} */
-
-export function* watchLoadArchivedIscis() {
+function* watchLoadArchivedIscis() {
   yield takeEvery(
     [ACTIONS.LOAD_ARCHIVED_ISCI.request, ACTIONS.UNDO_ARCHIVED_ISCI.success],
     sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI)
   );
 }
 
-export function* watchLoadValidIscis() {
+function* watchLoadValidIscis() {
   yield takeEvery(
     ACTIONS.LOAD_VALID_ISCI.request,
     sagaWrapper(loadValidIscis, ACTIONS.LOAD_VALID_ISCI)
   );
 }
 
-export function* watchRescrubUnlinkedIsci() {
+function* watchRescrubUnlinkedIsci() {
   yield takeEvery(
     ACTIONS.RESCRUB_UNLIKED_ISCI.request,
     sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI)
   );
 }
 
-export function* watchMapUnlinkedIsci() {
+function* watchMapUnlinkedIsci() {
   yield takeEvery(
     ACTIONS.MAP_UNLINKED_ISCI.request,
     sagaWrapper(mapUnlinkedIsci, ACTIONS.MAP_UNLINKED_ISCI)
   );
 }
 
-export function* watchCloseUnlinkedIsciModal() {
+function* watchCloseUnlinkedIsciModal() {
   yield takeEvery(ACTIONS.CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
 }
 
-export function* watchMapUnlinkedIsciSuccess() {
+function* watchMapUnlinkedIsciSuccess() {
   yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
 }
 
-export function* watchUndoArchivedIscis() {
+function* watchUndoArchivedIscis() {
   yield takeEvery(
     ACTIONS.UNDO_ARCHIVED_ISCI.request,
     sagaWrapper(undoArchivedIscis, ACTIONS.UNDO_ARCHIVED_ISCI)
   );
 }
 
-export function* watchUndoScrubStatus() {
+function* watchUndoScrubStatus() {
   yield takeEvery(
     ACTIONS.UNDO_SCRUB_STATUS.request,
     sagaWrapper(undoScrubStatus, ACTIONS.UNDO_SCRUB_STATUS)
   );
 }
 
-export function* watchUndoScrubStatusSuccess() {
+function* watchUndoScrubStatusSuccess() {
   yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
 }
 
-export function* watchRequestClearFilteredScrubbingData() {
+function* watchRequestClearFilteredScrubbingData() {
   yield takeEvery(
     ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
     clearFilteredScrubbingData
   );
 }
 
-export function* watchRequestProcessNtiFile() {
+function* watchRequestProcessNtiFile() {
   yield takeEvery(
     ACTIONS.PROCESS_NTI_FILE.request,
     sagaWrapper(requestProcessNtiFile, ACTIONS.PROCESS_NTI_FILE)
   );
 }
 
-export function* watchProcessNtiFileSuccess() {
+function* watchProcessNtiFileSuccess() {
   yield takeEvery(ACTIONS.PROCESS_NTI_FILE.success, processNtiFileSuccess);
 }
+
+export default [
+  watchProcessNtiFileSuccess,
+  watchRequestProcessNtiFile,
+  watchRequestClearFilteredScrubbingData,
+  watchUndoScrubStatusSuccess,
+  watchUndoScrubStatus,
+  watchUndoArchivedIscis,
+  watchMapUnlinkedIsciSuccess,
+  watchCloseUnlinkedIsciModal,
+  watchMapUnlinkedIsci,
+  watchRescrubUnlinkedIsci,
+  watchLoadValidIscis,
+  watchLoadArchivedIscis,
+  watchSwapProposalDetail,
+  watchRequestOverrideStatus,
+  watchArchiveUnlinkedIsci,
+  watchRequestArchivedIscisSuccess,
+  watchRequestUniqueIscisSuccess,
+  watchRequestUniqueIscis,
+  watchRequestClearScrubbingFiltersList,
+  watchRequestScrubbingDataFiltered,
+  watchRequestPostClientScrubbing,
+  watchRequestPostClientScrubbingSuccess,
+  watchRequestArchivedFiltered,
+  watchRequestUnlinkedFiltered,
+  watchRequestPostFiltered,
+  watchRequestAssignPostDisplay,
+  watchRequestPost
+];

@@ -1,5 +1,5 @@
 import { getDay, getDateInFormat } from "Utils/dateFormatter.js";
-import * as ACTIONS from "./actionTypes.js";
+import { types as ACTIONS } from "Post/redux";
 
 const initialState = {
   loadingValidIscis: false,
@@ -69,14 +69,7 @@ const initialState = {
       filterDisplay: "Select Date Range",
       filterKey: "DateAired",
       type: "dateInput",
-      // hasMatchSpec: false, // NA
-      // activeMatch: false,
       active: false,
-      /* matchOptions: {
-          matchKey: 'MatchClientISCI', // not currently available
-          inSpec: true,
-          outOfSpec: true,
-        }, */
       exclusions: false,
       filterOptions: {}
     },
@@ -256,7 +249,7 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
-    case ACTIONS.RECEIVE_POST:
+    case ACTIONS.LOAD_POST.success:
       return {
         ...state,
         post: data.Data,
@@ -307,7 +300,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.RECEIVE_POST_CLIENT_SCRUBBING: {
+    case ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success: {
       const filtersData = data.Data.Filters;
       const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
       const prepareFilterOptions = () => {
@@ -406,7 +399,6 @@ export default function reducer(state = initialState, action) {
         activeFilters.WeekStart.filterOptions = weekStartOptions;
       };
       prepareFilterOptions();
-      // console.log('after prepare filter options', activeFilters, state);
       return {
         ...state,
         activeFilterKey: data.Data.filterKey
@@ -423,22 +415,6 @@ export default function reducer(state = initialState, action) {
     }
 
     case ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA:
-      // console.log('RECEIVE_FILTERED_SCRUBBING_DATA >>>>>>>>', data, state);
-      /* return Object.assign({}, state, {
-      proposalHeader: {
-        ...state.proposalHeader,
-        activeScrubbingData: {
-          ...state.proposalHeader.activeScrubbingData,
-          ClientScrubs: data.filteredClientScrubs,
-        },
-      },
-      ...state.activeScrubbingFilters,
-      activeScrubbingFilters: data.activeFilters,
-      ...state.scrubbingFiltersList,
-      scrubbingFiltersList: [data.activeFilters],
-      ...state.hasActiveScrubbingFilters,
-      hasActiveScrubbingFilters: data.hasActiveScrubbingFilters,
-    }); */
       return {
         ...state,
         proposalHeader: {
@@ -478,7 +454,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         unlinkedIscisData: data.Data,
-        // unlinkedIscisLength: data.Data.length,
         unlinkedFilteredIscis: data.Data
       };
 
@@ -487,11 +462,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         scrubbingFiltersList: []
       };
-
-    /* case ACTIONS.RECEIVE_SWAP_PROPOSAL_DETAIL: {
-    const params = {};
-    return getPostClientScrubbing(params)
-    } */
 
     case ACTIONS.LOAD_VALID_ISCI.request:
       return {
@@ -526,134 +496,3 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
-
-// Action Creators
-export const getPost = () => ({
-  type: ACTIONS.REQUEST_POST,
-  payload: {}
-});
-
-export const getPostFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_POST,
-  payload: query
-});
-
-export const getUnlinkedFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_UNLINKED,
-  payload: query
-});
-
-export const getArchivedFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_ARCHIVED,
-  payload: query
-});
-
-export const getPostClientScrubbing = params => ({
-  type: ACTIONS.REQUEST_POST_CLIENT_SCRUBBING,
-  payload: params
-});
-
-export const getScrubbingDataFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA,
-  payload: query
-});
-
-export const clearScrubbingFiltersList = () => ({
-  type: ACTIONS.REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
-  payload: {}
-});
-
-export const getUnlinkedIscis = () => ({
-  type: ACTIONS.UNLINKED_ISCIS_DATA.request,
-  payload: {}
-});
-
-export const overrideStatus = params => ({
-  type: ACTIONS.REQUEST_POST_OVERRIDE_STATUS,
-  payload: params
-});
-
-export const swapProposalDetail = params => ({
-  type: ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL,
-  payload: params
-});
-
-export const archiveUnlinkedIscis = ids => ({
-  type: ACTIONS.ARCHIVE_UNLIKED_ISCI.request,
-  payload: { ids }
-});
-
-export const loadArchivedIscis = () => ({
-  type: ACTIONS.LOAD_ARCHIVED_ISCI.request,
-  payload: {}
-});
-
-export const loadValidIscis = query => ({
-  type: ACTIONS.LOAD_VALID_ISCI.request,
-  payload: { query }
-});
-
-export const mapUnlinkedIsci = payload => ({
-  type: ACTIONS.MAP_UNLINKED_ISCI.request,
-  payload
-});
-
-export const undoArchivedIscis = ids => ({
-  type: ACTIONS.UNDO_ARCHIVED_ISCI.request,
-  payload: { ids }
-});
-
-// toggle unlinked tabs
-const tabsMap = {
-  unlinked: getUnlinkedIscis,
-  archived: loadArchivedIscis
-};
-
-export const toggleUnlinkedTab = tab => {
-  const tabFunction = tabsMap[tab];
-  if (tabFunction) {
-    return tabFunction();
-  }
-  console.error(
-    "You should add function in the tabsMap to load your tab values"
-  );
-  return undefined;
-};
-
-export const rescrubUnlinkedIscis = isci => ({
-  type: ACTIONS.RESCRUB_UNLIKED_ISCI.request,
-  payload: { isci }
-});
-
-export const closeUnlinkedIsciModal = modalPrams => ({
-  type: ACTIONS.CLOSE_UNLINKED_ISCI_MODAL,
-  payload: { modalPrams }
-});
-
-export const undoScrubStatus = (proposalId, scrubIds) => ({
-  type: ACTIONS.UNDO_SCRUB_STATUS.request,
-  payload: {
-    ProposalId: proposalId,
-    ScrubIds: scrubIds
-  }
-});
-
-export const saveActiveScrubData = (newData, fullList) => ({
-  type: ACTIONS.SAVE_NEW_CLIENT_SCRUBS,
-  payload: { Data: newData, FullData: fullList }
-});
-
-// clears scrubbing filters
-export const clearFilteredScrubbingData = () => ({
-  type: ACTIONS.CLEAR_FILTERED_SCRUBBING_DATA,
-  payload: {}
-});
-
-export const getClearScrubbingDataFiltered = () => ({
-  type: ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA
-});
-
-export const processNtiFile = params => ({
-  type: ACTIONS.PROCESS_NTI_FILE.request,
-  payload: params
-});

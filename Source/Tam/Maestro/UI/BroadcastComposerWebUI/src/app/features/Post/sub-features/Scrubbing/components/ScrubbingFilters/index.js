@@ -10,7 +10,7 @@ import {
   clearScrubbingFiltersList,
   clearFilteredScrubbingData,
   getClearScrubbingDataFiltered
-} from "Ducks/post";
+} from "Post/redux/actions";
 import styles from "./index.scss";
 import FilterPopoverWrapper from "./Filters/FilterPopoverWrapper";
 
@@ -37,10 +37,6 @@ export class PostScrubbingFilters extends Component {
 
     this.applyFilter = this.applyFilter.bind(this);
     this.onClear = this.onClear.bind(this);
-    // remove as should not be needed - use saga/props
-    /* this.state = {
-      filterOptions: {},
-    }; */
   }
 
   applyFilter(filter) {
@@ -61,21 +57,11 @@ export class PostScrubbingFilters extends Component {
 
   render() {
     const stateKey = "PostScrubbingFiltersGrid";
-    /* const inactiveFilterStyle = {
-      backgroundColor: "#bfbfbf",
-      minHeight: "20px",
-      maxHeight: "20px",
-      width: "100%",
-      borderRadius: "2px"
-    }; */
     const columns = [
       {
         name: "Status",
         dataIndex: "Status",
-        // width: '3%',
-        // test specific width
         width: 59,
-        // renderer: () => <div style={inactiveFilterStyle} />
         renderer: () => (
           <Button bsSize="xsmall" onClick={this.onClear}>
             Clear
@@ -171,7 +157,6 @@ export class PostScrubbingFilters extends Component {
         name: "Day",
         dataIndex: "DayOfWeek",
         width: 80,
-        // renderer: ({ value, row }) => {
         renderer: ({ value }) => (
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
@@ -187,12 +172,9 @@ export class PostScrubbingFilters extends Component {
       },
       {
         name: "Date",
-        // we don't want to mix TimeAired and MatchTime
-        // dataIndex: 'TimeAired',
         dataIndex: "DateAired",
         width: 100,
         renderer: ({ value }) => (
-          // <div style={inactiveFilterStyle} />
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
             filterKey={value.filterKey}
@@ -208,7 +190,6 @@ export class PostScrubbingFilters extends Component {
         dataIndex: "TimeAired",
         width: 100,
         renderer: ({ value }) => (
-          // <div style={inactiveFilterStyle} />
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
             filterKey={value.filterKey}
@@ -324,7 +305,6 @@ export class PostScrubbingFilters extends Component {
       {
         name: "Comments",
         dataIndex: "Comments",
-        // width: 150,
         width: "100%",
         renderer: ({ value }) => (
           <FilterPopoverWrapper
@@ -378,7 +358,6 @@ PostScrubbingFilters.propTypes = {
   grid: PropTypes.object.isRequired,
   dataSource: PropTypes.object.isRequired,
   activeFilters: PropTypes.array.isRequired,
-  // doLocalSort: PropTypes.func.isRequired,
   getScrubbingDataFiltered: PropTypes.func.isRequired,
   clearScrubbingFiltersList: PropTypes.func.isRequired,
   clearFilteredScrubbingData: PropTypes.func.isRequired,

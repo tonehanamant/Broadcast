@@ -12,7 +12,7 @@ import {
   closeUnlinkedIsciModal,
   getUnlinkedFiltered,
   getArchivedFiltered
-} from "Ducks/post";
+} from "Post/redux/actions";
 import MapUnlinkedIsciModal from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciMapModal";
 import UnlinkedIsciGrid from "./unlinkedIsciGrid";
 import ArchivedIsciGrid from "./archivedIsciGrid";

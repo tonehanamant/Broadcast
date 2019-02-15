@@ -11,7 +11,7 @@ import {
   OverlayTrigger
 } from "react-bootstrap";
 import { toggleModal, createAlert } from "Main/redux/actions";
-import { getPost, getPostClientScrubbing } from "Ducks/post";
+import { getPost, getPostClientScrubbing } from "Post/redux/actions";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
 import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";

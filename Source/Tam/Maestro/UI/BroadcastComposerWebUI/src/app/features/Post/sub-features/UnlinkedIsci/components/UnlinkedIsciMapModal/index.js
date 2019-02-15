@@ -5,7 +5,11 @@ import { bindActionCreators } from "redux";
 import { Button, Modal } from "react-bootstrap";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { head } from "lodash";
-import { mapUnlinkedIscis, loadValidIscis, mapUnlinkedIsci } from "Ducks/post";
+import {
+  mapUnlinkedIscis,
+  loadValidIscis,
+  mapUnlinkedIsci
+} from "Post/redux/actions";
 import { toggleModal } from "Main/redux/actions";
 
 import "./index.scss";

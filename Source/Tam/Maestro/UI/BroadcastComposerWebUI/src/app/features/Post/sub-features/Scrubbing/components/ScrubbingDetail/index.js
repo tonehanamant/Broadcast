@@ -14,7 +14,6 @@ export class PostScrubbingDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('detail component receive props', this.state.activeTabKey, nextProps.activeScrubbingData.filterKey);
     // if change filterKey/data at the saga level (on refresh) - need match filterkey state to change active tab here
     if (nextProps.activeScrubbingData.filterKey && this.state.activeTabKey) {
       if (nextProps.activeScrubbingData.filterKey !== this.state.activeTabKey) {

@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { toggleModal, createAlert } from "Main/redux/actions";
-import { getPostFiltered, getUnlinkedIscis, processNtiFile } from "Ducks/post";
+import {
+  getPostFiltered,
+  getUnlinkedIscis,
+  processNtiFile
+} from "Post/redux/actions";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";

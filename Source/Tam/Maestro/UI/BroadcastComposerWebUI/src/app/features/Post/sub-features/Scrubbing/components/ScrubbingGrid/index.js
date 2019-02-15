@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
-import { overrideStatus, undoScrubStatus } from "Ducks/post";
+import { overrideStatus, undoScrubStatus } from "Post/redux/actions";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import {
   getDateInFormat,
@@ -21,7 +21,6 @@ const { showMenu, hideMenu } = MenuActions;
 const stateKey = "PostScrubbingGrid";
 
 const mapStateToProps = ({ grid, selection, dataSource, menu }) => ({
-  // Grid
   grid,
   selection,
   dataSource,
@@ -52,7 +51,6 @@ export class PostScrubbingGrid extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.activeScrubbingData !== this.props.activeScrubbingData) {
-      // Hide Context Menu (assumes visible)
       this.props.hideMenu({ stateKey: "PostScrubbingGrid" });
     }
   }
@@ -81,7 +79,6 @@ export class PostScrubbingGrid extends Component {
       ReturnStatusFilter: activeFilterKey,
       OverrideStatus: overrideType
     };
-    // console.log('manual overrides', params);
     this.props.overrideStatus(params);
   }
 
@@ -162,8 +159,6 @@ export class PostScrubbingGrid extends Component {
       {
         name: "Status",
         dataIndex: "Status",
-        // width: '3%',
-        // test specific width
         width: 59,
         renderer: ({ row }) => {
           const override = row.StatusOverride;
@@ -239,7 +234,6 @@ export class PostScrubbingGrid extends Component {
           ) : (
             <span style={style}>{getDay(row.DayOfWeek) || "-"}</span>
           );
-          // const DayOfWeek = <span>{getDay(row.DayOfWeek) || '-'}</span>
           return DayOfWeek;
         }
       },
@@ -328,21 +322,18 @@ export class PostScrubbingGrid extends Component {
       {
         name: "House ISCI",
         dataIndex: "ISCI",
-        // defaultSortDirection: 'ASC',
         width: 150,
         renderer: ({ row }) => <span>{row.ISCI || "-"}</span>
       },
       {
         name: "Client ISCI",
         dataIndex: "ClientISCI",
-        // defaultSortDirection: 'ASC',
         width: 150,
         renderer: ({ row }) => <span>{row.ClientISCI || "-"}</span>
       },
       {
         name: "Comments",
         dataIndex: "Comments",
-        // width: 150,
         width: "100%",
         renderer: ({ row }) => <span>{row.Comments || "-"}</span>
       }

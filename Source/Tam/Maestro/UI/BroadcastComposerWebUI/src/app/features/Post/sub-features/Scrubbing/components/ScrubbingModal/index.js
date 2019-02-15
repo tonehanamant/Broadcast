@@ -6,7 +6,7 @@ import { Actions } from "react-redux-grid";
 
 import { Button, Modal } from "react-bootstrap";
 import { toggleModal, setOverlayLoading } from "Main/redux/actions";
-import { getPost, getPostClientScrubbing } from "Ducks/post";
+import { getPost, getPostClientScrubbing } from "Post/redux/actions";
 import PostScrubbingHeader from "Post/sub-features/Scrubbing/components/ScrubbingHeader";
 import PostScrubbingDetail from "Post/sub-features/Scrubbing/components/ScrubbingDetail";
 
@@ -37,8 +37,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      // clearPostScrubbingDetail,
-      // getPostScrubbingDetail,
       getPostClientScrubbing,
       getPost,
       toggleModal,
@@ -64,8 +62,6 @@ export class PostScrubbingModal extends Component {
       active: false,
       properties: this.props.modal.properties
     });
-
-    // this.props.clearPostScrubbingDetail();  //??
   }
 
   dismiss() {
@@ -78,13 +74,18 @@ export class PostScrubbingModal extends Component {
   }
 
   render() {
-    // const { getPostScrubbingDetail } = this.props;
     const {
       proposalHeader,
       scrubbingFiltersList,
       getPostClientScrubbing,
       hasActiveScrubbingFilters,
-      toggleModal
+      toggleModal,
+      grid,
+      dataSource,
+      selectRow,
+      deselectAll,
+      doLocalSort,
+      setOverlayLoading
     } = this.props;
     const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
     const {
@@ -101,13 +102,6 @@ export class PostScrubbingModal extends Component {
       MarketGroupId,
       Details
     } = scrubbingData;
-    const { grid, dataSource } = this.props;
-    const {
-      selectRow,
-      deselectAll,
-      doLocalSort,
-      setOverlayLoading
-    } = this.props;
 
     return (
       <Modal

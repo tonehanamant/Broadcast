@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { FormGroup, ControlLabel, Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import { toggleModal } from "Main/redux/actions";
-import { swapProposalDetail } from "Ducks/post";
+import { swapProposalDetail } from "Post/redux/actions";
 import { getDateInFormat } from "Utils/dateFormatter";
 
 const mapStateToProps = ({

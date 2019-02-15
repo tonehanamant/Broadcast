@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import CSSModules from "react-css-modules";
 
 // TO CHANGE
-// import SectionPost from "Containers/SectionPost";
 import SectionPlanning from "Containers/SectionPlanning";
 import SectionTracker from "Containers/SectionTracker";
 
