@@ -238,9 +238,13 @@ export function* requestPostClientScrubbing(params) {
   const { getPostClientScrubbing } = api.post;
   try {
     if (params.showModal) {
-      yield put(setOverlayLoading("PostClientScrubbing", true));
+      yield put(
+        setOverlayLoading({ id: "PostClientScrubbing", loading: true })
+      );
     } else {
-      yield put(setOverlayProcessing("PostClientScrubbing", true));
+      yield put(
+        setOverlayProcessing({ id: "PostClientScrubbing", processing: true })
+      );
     }
     // clear the data so filters grid registers as update - if not from modal update
     if (!params.showModal) {
@@ -253,9 +257,13 @@ export function* requestPostClientScrubbing(params) {
     return { status, data };
   } finally {
     if (params.showModal) {
-      yield put(setOverlayLoading("PostClientScrubbing", false));
+      yield put(
+        setOverlayLoading({ id: "PostClientScrubbing", loading: false })
+      );
     } else {
-      yield put(setOverlayProcessing("PostClientScrubbing", false));
+      yield put(
+        setOverlayProcessing({ id: "PostClientScrubbing", processing: false })
+      );
     }
   }
 }
