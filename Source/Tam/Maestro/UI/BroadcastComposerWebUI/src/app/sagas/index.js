@@ -1,35 +1,8 @@
-import * as postSaga from "./post";
 import * as planningSaga from "./planning";
 import * as trackerSaga from "./tracker";
 
 export default function* rootSaga() {
   yield [
-    postSaga.watchRequestPost(),
-    postSaga.watchRequestPostFiltered(),
-    postSaga.watchRequestUnlinkedFiltered(),
-    postSaga.watchRequestArchivedFiltered(),
-    postSaga.watchRequestPostClientScrubbing(),
-    postSaga.watchRequestUniqueIscis(),
-    postSaga.watchRequestScrubbingDataFiltered(),
-    postSaga.watchRequestClearScrubbingFiltersList(),
-    postSaga.watchRequestOverrideStatus(),
-    postSaga.watchSwapProposalDetail(),
-    postSaga.watchArchiveUnlinkedIsci(),
-    postSaga.watchRequestUniqueIscisSuccess(),
-    postSaga.watchRequestArchivedIscisSuccess(),
-    postSaga.watchLoadArchivedIscis(),
-    postSaga.watchLoadValidIscis(),
-    postSaga.watchMapUnlinkedIsci(),
-    postSaga.watchMapUnlinkedIsciSuccess(),
-    postSaga.watchRescrubUnlinkedIsci(),
-    postSaga.watchCloseUnlinkedIsciModal(),
-    postSaga.watchUndoArchivedIscis(),
-    postSaga.watchUndoScrubStatus(),
-    postSaga.watchUndoScrubStatusSuccess(),
-    postSaga.watchRequestClearFilteredScrubbingData(),
-    postSaga.watchRequestProcessNtiFile(),
-    postSaga.watchProcessNtiFileSuccess(),
-
     planningSaga.watchRequestProposalInitialData(),
     planningSaga.watchRequestProposals(),
     planningSaga.watchRequestProposalLock(),

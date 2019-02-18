@@ -13,5 +13,6 @@ module.exports = {
   API: resolve(__dirname, '../../src/app/api'),
   AppConfigs: resolve(__dirname, '../../src/app/app-configs'),
   Main: resolve(__dirname, '../../src/app/features/Main'),
+  Post: resolve(__dirname, '../../src/app/features/Post'),
   PostPrePosting: resolve(__dirname, '../../src/app/features/PostPrePosting')
 };
