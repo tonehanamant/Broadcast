@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AAAA-Message xmlns="http://www.AAAA.org/schemas/spotTVCableProposal" xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.AAAA.org/schemas/spotTVCableProposal spotTVCableProposal-0.3.0.5.xsd">
+     <AAAA-Values>
+          <SchemaName>SpotTVCableProposal</SchemaName>
+          <SchemaVersion>0.3.0.5</SchemaVersion>
+          <Media>SpotTV</Media>
+          <BusinessObject>Proposal</BusinessObject>
+          <Action>New</Action>
+          <UniqueMessageID>5c4f3c8842598</UniqueMessageID>
+     </AAAA-Values>
+     <Proposal endDate="2019-03-31" sendDateTime="2019-01-28T17:31:38"  startDate="2018-12-31" uniqueIdentifier="HMX_7413_149_B" version="1" weekStartDay="Mo">
+          <Seller companyName="n/a">
+               <Salesperson name="n/a">
+                    <Phone type="voice">(000)000-0000</Phone>
+                    <Phone type="fax">(000)000-0000</Phone>
+                    <Email type="primary">diag@hudsonmx.com</Email>
+               </Salesperson>
+          </Seller>
+          <Buyer buyingCompanyName="LOCAL B/CAST">
+               <BuyerName>CADENT</BuyerName>
+          </Buyer>
+          <Advertiser name="CADENT">
+               <Product name="CADENT"/>
+          </Advertiser>
+          <Name>CADENT</Name>
+          <Outlets>
+               <TelevisionStation callLetters="WUTV" outletId="OUT241" parentPlus="N"/>
+          </Outlets>
+          <AvailList endDate="2019-03-31" identifier="7506.144" isPackage="N" startDate="2018-12-31">
+               <Name>Television Schedule - Abilene Aug18 DMA Nielsen Live+3</Name>
+               <OutletReferences>
+                    <OutletReference outletForListId="OUL241" outletFromProposalRef="OUT241"/>
+               </OutletReferences>
+               <DemoCategories>
+                    <DemoCategory DemoId="DM0">
+	<tvb:DemoType>Impression</tvb:DemoType>
+	<tvb:Group>Homes</tvb:Group>
+	<tvb:AgeFrom>0</tvb:AgeFrom>
+	<tvb:AgeTo>99</tvb:AgeTo>
+</DemoCategory>
+
+               </DemoCategories>
+               <TargetDemo demoRef="DM0"/>
+               <AvailLineWithDetailedPeriods>
+                    <OutletReference outletFromListRef="OUL241"/>
+                    <DayTimes>
+                         <DayTime>
+                              <StartTime>22:00</StartTime>
+                              <EndTime>22:30</EndTime>
+                              <Days>
+                                   <tvb-tp:Monday>N</tvb-tp:Monday>
+                                   <tvb-tp:Tuesday>N</tvb-tp:Tuesday>
+                                   <tvb-tp:Wednesday>N</tvb-tp:Wednesday>
+                                   <tvb-tp:Thursday>N</tvb-tp:Thursday>
+                                   <tvb-tp:Friday>N</tvb-tp:Friday>
+                                   <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+                                   <tvb-tp:Sunday>N</tvb-tp:Sunday>
+                              </Days>
+                         </DayTime>
+                    </DayTimes>
+                    <DaypartName>LN</DaypartName>
+                    <AvailName>KTXS News Weekend</AvailName>
+                    <SpotLength>00:00:30</SpotLength>
+                    <Periods>
+                         <DetailedPeriod startDate="2018-12-31" endDate="2018-12-31">
+                              <Rate>100.00</Rate>
+                              <DemoValues>
+                                   <DemoValue demoRef="DM0">5.12</DemoValue>
+                              </DemoValues>
+                         </DetailedPeriod>
+                    </Periods>
+               </AvailLineWithDetailedPeriods>
+          </AvailList>
+     </Proposal>
+</AAAA-Message>

@@ -321,6 +321,300 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class AppSettings_Service_GandhiSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_GandhiSystemParameterNames.ComponentID , AppSettings_Service_GandhiSystemParameterNames.TCS); }
+        }
+	}
+	 
+	public static class AppSettings_Service_SenthilSystemParameter 
+	{ 
+		public static string ACCT  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ACCT); }
+        }
+	 
+		public static string ACS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ACS); }
+        }
+	 
+		public static string ARS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ARS); }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ARSLoader); }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.BOMS); }
+        }
+	 
+		public static string BRS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.BRS); }
+        }
+	 
+		public static string BS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.BS); }
+        }
+	 
+		public static string CUS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.CUS); }
+        }
+	 
+		public static string DES  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.DES); }
+        }
+	 
+		public static string FTP  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.FTP); }
+        }
+	 
+		public static string ICS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.ICS); }
+        }
+	 
+		public static string MAS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.MAS); }
+        }
+	 
+		public static string MCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.MCS); }
+        }
+	 
+		public static string PCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.PCS); }
+        }
+	 
+		public static string PLS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.PLS); }
+        }
+	 
+		public static string PST  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.PST); }
+        }
+	 
+		public static string RCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.RCS); }
+        }
+	 
+		public static string REL  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.REL); }
+        }
+	 
+		public static string REL2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.REL2); }
+        }
+	 
+		public static string RS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.RS); }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.SingletonTestService); }
+        }
+	 
+		public static string SMS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.SMS); }
+        }
+	 
+		public static string STS2  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.STS2); }
+        }
+	 
+		public static string TCS  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(AppSettings_Service_SenthilSystemParameterNames.ComponentID , AppSettings_Service_SenthilSystemParameterNames.TCS); }
+        }
+	}
+	 
 	public static class AudienceAndRatingsServiceSystemParameter 
 	{ 
 		public static bool EnableAutomaticForecasting  
@@ -1541,6 +1835,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.AutoDailyMODStartingHour); }
         }
 	 
+		public static string ConfirmationProposalEmailDefaultTemplate  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ConfirmationProposalEmailDefaultTemplate); }
+        }
+	 
+		public static string ConfirmationProposalEmailFileContentPath  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ConfirmationProposalEmailFileContentPath); }
+        }
+	 
+		public static string ConfirmationProposalEmailFilePath  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ConfirmationProposalEmailFilePath); }
+        }
+	 
+		public static string ConfirmationProposalSaveEmailTemplate  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ConfirmationProposalSaveEmailTemplate); }
+        }
+	 
 		public static string ErrorNotificationRecipients  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
@@ -1551,6 +1869,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<bool>
 					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ExportMediaOceanToFileSystem); }
+        }
+	 
+		public static bool LinkISCIToPostPlan  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.LinkISCIToPostPlan); }
+        }
+	 
+		public static int LinkISCIToPostPlanStartHour  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.LinkISCIToPostPlanStartHour); }
         }
 	 
 		public static string MediaOceanFourADSDirectory  
@@ -1593,6 +1923,66 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.MediaOceanTECCServiceUserName); }
+        }
+	 
+		public static string PostingPlanEmailBodyFailure  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanEmailBodyFailure); }
+        }
+	 
+		public static string PostingPlanEmailBodySuccess  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanEmailBodySuccess); }
+        }
+	 
+		public static string PostingPlanEmailFrom  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanEmailFrom); }
+        }
+	 
+		public static string PostingPlanEmailSubjectFailure  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanEmailSubjectFailure); }
+        }
+	 
+		public static string PostingPlanEmailSubjectSuccess  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanEmailSubjectSuccess); }
+        }
+	 
+		public static string PostingPlanEmailTo  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanEmailTo); }
+        }
+	 
+		public static string PostingPlanExcelFileName  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanExcelFileName); }
+        }
+	 
+		public static string PostingPlanExcelPath  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanExcelPath); }
+        }
+	 
+		public static bool PostingPlanNotificationEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.PostingPlanNotificationEnabled); }
+        }
+	 
+		public static int ProductPatternMatchingThreshold  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<int>
+					(ProposalsServiceSystemParameterNames.ComponentID , ProposalsServiceSystemParameterNames.ProductPatternMatchingThreshold); }
         }
 	 
 		public static string ProposalWeeklyImpressionKickoffDays  
@@ -1820,10 +2210,22 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.InternalSalesWebApiUri); }
         }
 	 
-		public static string OrderingApiApprovedEmailAddresses  
+		public static string OrderingApiApproveEmailAddresses  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
-					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.OrderingApiApprovedEmailAddresses); }
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.OrderingApiApproveEmailAddresses); }
+        }
+	 
+		public static string OrderingApiRejectEmailAddresses  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.OrderingApiRejectEmailAddresses); }
+        }
+	 
+		public static string OrderingApiSubmittedEmailAddresses  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(SalesApiSystemParameterNames.ComponentID , SalesApiSystemParameterNames.OrderingApiSubmittedEmailAddresses); }
         }
 	}
 	 
@@ -1950,6 +2352,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelLogsFilePath); }
+        }
+	 
+		public static bool MVPDTotalOrderMinimumFeatureEnabled  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.MVPDTotalOrderMinimumFeatureEnabled); }
         }
 	}
 	 
