@@ -1542,16 +1542,6 @@ export function* updateProprietaryCpms(distributionRequest) {
   }
 }
 
-/* export function* uploadSCXFile(params) {
-  const { uploadSCXFile } = api.planning;
-  try {
-    yield put(setOverlayLoading({ id: 'uploadSCX', loading: true }));
-    return yield uploadSCXFile(params);
-  } finally {
-    yield put(setOverlayLoading({ id: 'uploadSCX', loading: false }));
-  }
-} */
-
 /* ////////////////////////////////// */
 /* UPLOAD SCX - bypass wrapper to handle custom error */
 /* ////////////////////////////////// */
@@ -1576,14 +1566,6 @@ export function* uploadSCXFile({ payload: params }) {
     });
     const response = yield uploadSCXFile(params);
     const { status, data } = response;
-    // see below finally
-    /*  yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
-        id: 'uploadSCX',
-        loading: false,
-      },
-    }); */
     if (status !== 200) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,

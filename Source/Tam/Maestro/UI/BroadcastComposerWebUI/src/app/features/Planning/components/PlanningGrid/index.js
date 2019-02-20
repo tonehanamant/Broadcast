@@ -1,58 +1,59 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import Table, { withGrid } from "Lib/react-table";
-import PageHeaderContainer from "Components/planning/PageHeaderContainer";
+import { columns } from "Planning/util/grid";
 
-import { columns } from "./util";
+import PlanningGridHeader from "../PlanningGridHeader";
 
 const showProposalDetail = id => {
   const url = `/broadcastreact/planning/proposal/${id}`;
   window.location.assign(url);
 };
 
+const defaultSorted = [
+  {
+    id: "LastModified",
+    desc: true
+  }
+];
+
+const getTrGroupProps = (state, rowInfo) => ({
+  onDoubleClick: () => {
+    showProposalDetail(rowInfo.original.Id);
+  }
+});
+
 const mapStateToProps = ({ planning: { planningProposals } }) => ({
   planningProposals
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-export function PlanningGrid({ visibleColumn, planningProposals }) {
+function PlanningContainer({ visibleColumn, planningProposals }) {
   return (
     <Fragment>
-      <PageHeaderContainer columns={columns} visibleColumn={visibleColumn} />
+      <PlanningGridHeader visibleColumn={visibleColumn} />
       <Table
         data={planningProposals}
         style={{ marginBottom: "100px" }}
         columns={columns}
-        getTrGroupProps={(state, rowInfo) => ({
-          onDoubleClick: () => {
-            showProposalDetail(rowInfo.original.Id);
-          }
-        })}
-        defaultSorted={[
-          {
-            id: "LastModified",
-            desc: true
-          }
-        ]}
+        getTrGroupProps={getTrGroupProps}
+        defaultSorted={defaultSorted}
         selection="single"
       />
     </Fragment>
   );
 }
 
-PlanningGrid.defaultProps = {
+PlanningContainer.defaultProps = {
   planningProposals: []
 };
 
-PlanningGrid.propTypes = {
+PlanningContainer.propTypes = {
   planningProposals: PropTypes.array.isRequired,
   visibleColumn: PropTypes.func.isRequired
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(withGrid(PlanningGrid));
+  null
+)(withGrid(PlanningContainer));

@@ -14,5 +14,6 @@ module.exports = {
   AppConfigs: resolve(__dirname, '../../src/app/app-configs'),
   Main: resolve(__dirname, '../../src/app/features/Main'),
   Post: resolve(__dirname, '../../src/app/features/Post'),
+  Planning: resolve(__dirname, '../../src/app/features/Planning'),
   PostPrePosting: resolve(__dirname, '../../src/app/features/PostPrePosting')
 };

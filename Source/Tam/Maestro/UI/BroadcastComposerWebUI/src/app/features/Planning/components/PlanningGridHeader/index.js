@@ -7,10 +7,11 @@ import { Glyphicon, Button } from "react-bootstrap";
 import { Checkbox, Menu, Dropdown } from "antd";
 import { isNil } from "lodash";
 import SearchInputButton from "Patterns/SearchInputButton";
+import { columns } from "Planning/util/grid";
 
 import "./index.scss";
 
-const generateColumnItems = (columns, onVisible) => (
+const generateColumnItems = onVisible => (
   <Menu>
     {columns.filter(c => isNil(c.show)).map(c => (
       <Menu.Item key={`column-item-${c.id}`}>
@@ -78,9 +79,7 @@ export class PageHeaderContainer extends Component {
 
   render() {
     const { visible } = this.state;
-    const { columns } = this.props;
     const cellItems = generateColumnItems(
-      columns,
       this.onVisibleColumn,
       this.handleMenuClick
     );
@@ -116,8 +115,7 @@ export class PageHeaderContainer extends Component {
 
 PageHeaderContainer.propTypes = {
   getPlanningFiltered: PropTypes.func.isRequired,
-  visibleColumn: PropTypes.func.isRequired,
-  columns: PropTypes.array.isRequired
+  visibleColumn: PropTypes.func.isRequired
 };
 
 export default connect(
