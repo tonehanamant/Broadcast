@@ -57,6 +57,13 @@ export class TrackerScrubbingFilters extends Component {
 
   render() {
     const stateKey = "TrackerScrubbingFiltersGrid";
+    const inactiveFilterStyle = {
+      backgroundColor: "#bfbfbf",
+      minHeight: "20px",
+      maxHeight: "20px",
+      width: "100%",
+      borderRadius: "2px"
+    };
     const columns = [
       {
         name: "Status",
@@ -306,7 +313,8 @@ export class TrackerScrubbingFilters extends Component {
         name: "Comments",
         dataIndex: "Comments",
         width: "100%",
-        renderer: ({ value }) => (
+        renderer: () => <div style={inactiveFilterStyle} />
+        /* renderer: ({ value }) => (
           <FilterPopoverWrapper
             filterDisplay={value.filterDisplay}
             filterKey={value.filterKey}
@@ -317,7 +325,7 @@ export class TrackerScrubbingFilters extends Component {
             filterActive={value.active}
             applyFilter={this.applyFilter}
           />
-        )
+        ) */
       }
     ];
 

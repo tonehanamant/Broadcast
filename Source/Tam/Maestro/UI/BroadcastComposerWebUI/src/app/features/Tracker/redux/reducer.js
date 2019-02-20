@@ -49,7 +49,8 @@ const initialState = {
       exclusions: [],
       filterOptions: []
     },
-    Comments: {
+    // future story as in POST
+    /* Comments: {
       filterDisplay: "Comments",
       filterKey: "Comments",
       distinctKey: "DistinctComments",
@@ -64,7 +65,7 @@ const initialState = {
       },
       exclusions: [],
       filterOptions: []
-    },
+    }, */
     DateAired: {
       filterDisplay: "Select Date Range",
       filterKey: "DateAired",
@@ -306,7 +307,7 @@ export default function reducer(state = initialState, action) {
       const prepareFilterOptions = () => {
         const affiliateOptions = [];
         const clientIsciOptions = [];
-        const commentsOptions = [];
+        // const commentsOptions = [];
         const dayOfWeekOptions = [];
         const genreOptions = [];
         const houseIsciOptions = [];
@@ -325,10 +326,10 @@ export default function reducer(state = initialState, action) {
           const ret = { Value: item, Selected: true, Display: item };
           clientIsciOptions.push(ret);
         });
-        filtersData.DistinctComments.forEach(item => {
+        /* filtersData.DistinctComments.forEach(item => {
           const ret = { Value: item, Selected: true, Display: item };
           commentsOptions.push(ret);
-        });
+        }); */
         filtersData.DistinctDayOfWeek.forEach(item => {
           const display = getDay(item);
           const ret = { Value: item, Selected: true, Display: display };
@@ -374,7 +375,7 @@ export default function reducer(state = initialState, action) {
         });
         activeFilters.Affiliate.filterOptions = affiliateOptions;
         activeFilters.ClientISCI.filterOptions = clientIsciOptions;
-        activeFilters.Comments.filterOptions = commentsOptions;
+        // activeFilters.Comments.filterOptions = commentsOptions;
         activeFilters.DayOfWeek.filterOptions = dayOfWeekOptions;
         activeFilters.DateAired.filterOptions = {
           DateAiredStart: filtersData.DateAiredStart,
