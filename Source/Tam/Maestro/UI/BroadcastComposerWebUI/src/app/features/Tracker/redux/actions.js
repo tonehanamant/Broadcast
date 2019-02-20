@@ -1,12 +1,12 @@
 import * as ACTIONS from "./types";
 
-export const getPost = () => ({
-  type: ACTIONS.LOAD_POST.request,
+export const getTracker = () => ({
+  type: ACTIONS.LOAD_TRACKER.request,
   payload: {}
 });
 
-export const getPostFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_POST,
+export const getTrackerFiltered = query => ({
+  type: ACTIONS.REQUEST_FILTERED_TRACKER,
   payload: query
 });
 
@@ -20,8 +20,8 @@ export const getArchivedFiltered = query => ({
   payload: query
 });
 
-export const getPostClientScrubbing = params => ({
-  type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.request,
+export const getTrackerClientScrubbing = params => ({
+  type: ACTIONS.LOAD_TRACKER_CLIENT_SCRUBBING.request,
   payload: params
 });
 
@@ -41,7 +41,7 @@ export const getUnlinkedIscis = () => ({
 });
 
 export const overrideStatus = params => ({
-  type: ACTIONS.REQUEST_POST_OVERRIDE_STATUS,
+  type: ACTIONS.REQUEST_TRACKER_OVERRIDE_STATUS,
   payload: params
 });
 
@@ -124,12 +124,12 @@ export const getClearScrubbingDataFiltered = () => ({
   type: ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA
 });
 
-export const processNtiFile = params => ({
-  type: ACTIONS.PROCESS_NTI_FILE.request,
+export const uploadTrackerFile = params => ({
+  type: ACTIONS.FILE_UPLOAD.request,
   payload: params
 });
 
-export const savePostDisplay = post => ({
-  type: ACTIONS.ASSIGN_POST_DISPLAY,
+export const saveTrackerDisplay = post => ({
+  type: ACTIONS.ASSIGN_TRACKER_DISPLAY,
   data: post
 });

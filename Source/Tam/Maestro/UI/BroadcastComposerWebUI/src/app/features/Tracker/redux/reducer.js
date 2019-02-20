@@ -1,11 +1,11 @@
 import { getDay, getDateInFormat } from "Utils/dateFormatter.js";
-import { types as ACTIONS } from "Post/redux";
+import { types as ACTIONS } from "Tracker/redux";
 
 const initialState = {
   loadingValidIscis: false,
   typeaheadIscisList: [],
-  post: {},
-  postGridData: [],
+  tracker: {},
+  trackerGridData: [],
   proposalHeader: {},
   unlinkedIscisData: [],
   archivedIscisData: [],
@@ -249,19 +249,19 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
-    case ACTIONS.LOAD_POST.success:
+    case ACTIONS.LOAD_TRACKER.success:
       return {
         ...state,
-        post: data.Data,
+        tracker: data.Data,
         unlinkedIscisLength: data.Data.UnlinkedIscis,
-        postGridData: data.Data.Posts,
-        postUnfilteredGridData: data.Data.Posts
+        trackerGridData: data.Data.Posts,
+        trackerUnfilteredGridData: data.Data.Posts
       };
 
-    case ACTIONS.RECEIVE_FILTERED_POST:
+    case ACTIONS.RECEIVE_FILTERED_TRACKER:
       return {
         ...state,
-        postGridData: data
+        trackerGridData: data
       };
 
     case ACTIONS.RECEIVE_FILTERED_UNLINKED:
@@ -300,7 +300,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success: {
+    case ACTIONS.LOAD_TRACKER_CLIENT_SCRUBBING.success: {
       const filtersData = data.Data.Filters;
       const activeFilters = { ...state.defaultScrubbingFilters }; // todo seems to get mutated
       const prepareFilterOptions = () => {
@@ -429,7 +429,7 @@ export default function reducer(state = initialState, action) {
         hasActiveScrubbingFilters: data.hasActiveScrubbingFilters
       };
 
-    case ACTIONS.RECEIVE_POST_OVERRIDE_STATUS:
+    case ACTIONS.RECEIVE_TRACKER_OVERRIDE_STATUS:
       return {
         ...state,
         proposalHeader: {

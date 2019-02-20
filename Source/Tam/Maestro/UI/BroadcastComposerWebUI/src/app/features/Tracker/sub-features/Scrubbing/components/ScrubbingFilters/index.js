@@ -56,7 +56,7 @@ export class TrackerScrubbingFilters extends Component {
   }
 
   render() {
-    const stateKey = "PostScrubbingFiltersGrid";
+    const stateKey = "TrackerScrubbingFiltersGrid";
     const columns = [
       {
         name: "Status",

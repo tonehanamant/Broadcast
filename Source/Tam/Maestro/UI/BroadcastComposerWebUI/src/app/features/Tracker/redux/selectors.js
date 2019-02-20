@@ -1,11 +1,12 @@
 export const selectActiveScrubs = state =>
-  state.post.proposalHeader.activeScrubbingData;
-export const selectActiveFilterKey = state => state.post.activeFilterKey;
-export const selectUnfilteredData = state => state.post.postUnfilteredGridData;
-export const selectFilteredIscis = state => state.post.unlinkedFilteredIscis;
+  state.tracker.proposalHeader.activeScrubbingData;
+export const selectActiveFilterKey = state => state.tracker.activeFilterKey;
+export const selectUnfilteredData = state =>
+  state.tracker.trackerUnfilteredGridData;
+export const selectFilteredIscis = state => state.tracker.unlinkedFilteredIscis;
 export const selectActiveScrubbingFilters = state =>
-  state.post.activeScrubbingFilters;
+  state.tracker.activeScrubbingFilters;
 export const selectClientScrubs = state =>
-  state.post.proposalHeader.scrubbingData.ClientScrubs;
+  state.tracker.proposalHeader.scrubbingData.ClientScrubs;
 export const selectActiveClientScrubs = state =>
-  state.post.proposalHeader.activeScrubbingData.ClientScrubs;
+  state.tracker.proposalHeader.activeScrubbingData.ClientScrubs;

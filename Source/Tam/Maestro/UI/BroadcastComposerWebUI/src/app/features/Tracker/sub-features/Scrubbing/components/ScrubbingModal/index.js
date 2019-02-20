@@ -16,7 +16,7 @@ const { doLocalSort } = GridActions;
 
 const mapStateToProps = ({
   app: {
-    modals: { postScrubbingModal: modal }
+    modals: { trackerScrubbingModal: modal }
   },
   tracker: {
     proposalHeader = {},

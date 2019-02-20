@@ -6,6 +6,7 @@ import { types as appActions } from "Main";
 import {
   setOverlayLoading,
   setOverlayProcessing,
+  createAlert,
   toggleModal,
   deployError
 } from "Main/redux/actions";
@@ -18,33 +19,34 @@ import {
   selectActiveScrubbingFilters,
   selectClientScrubs,
   selectActiveFilterKey
-} from "Post/redux/selectors";
+} from "Tracker/redux/selectors";
 import {
-  getPost,
+  getTracker,
   saveActiveScrubData,
-  savePostDisplay
-} from "Post/redux/actions";
+  saveTrackerDisplay
+} from "Tracker/redux/actions";
 import api from "API";
 
-import * as postActions from "./types";
+import * as trackerActions from "./types";
 
-const ACTIONS = { ...appActions, ...postActions };
+const ACTIONS = { ...appActions, ...trackerActions };
 
 /* ////////////////////////////////// */
-/* Adjust POST Data return */
+/* Adjust Tracker Data return */
 /* ////////////////////////////////// */
-export function adjustPost(posts) {
-  const adjustPost = posts.map(item => {
-    const post = item;
-    post.searchContractId = String(post.ContractId);
-    post.searchSpotsInSpec = String(post.SpotsInSpec);
-    post.searchSpotsOutOfSpec = String(post.SpotsOutOfSpec);
-    post.searchUploadDate = post.UploadDate
-      ? moment(post.UploadDate).format("MM/DD/YYYY")
+
+export function adjustTracker(posts) {
+  const adjustTracker = posts.map(item => {
+    const tracker = item;
+    tracker.searchContractId = String(tracker.ContractId);
+    tracker.searchSpotsInSpec = String(tracker.SpotsInSpec);
+    tracker.searchSpotsOutOfSpec = String(tracker.SpotsOutOfSpec);
+    tracker.searchUploadDate = tracker.UploadDate
+      ? moment(tracker.UploadDate).format("MM/DD/YYYY")
       : "-";
-    return post;
+    return tracker;
   });
-  return adjustPost;
+  return adjustTracker;
 }
 
 export const assignDisplay = posts =>
@@ -56,42 +58,42 @@ export const assignDisplay = posts =>
         : "-"
   }));
 
-export function* requestPost() {
-  const { getPosts } = api.post;
+export function* requestTracker() {
+  const { getTracker } = api.tracker;
   try {
-    yield put(setOverlayLoading({ id: "postPosts", loading: true }));
-    const { status, data } = yield getPosts();
-    update(data, "Data.Post", () => adjustPost(data.Data.Posts));
+    yield put(setOverlayLoading({ id: "trackerPosts", loading: true }));
+    const { status, data } = yield getTracker();
+    update(data, "Data.Post", () => adjustTracker(data.Data.Posts));
     return { status, data };
   } finally {
-    yield put(setOverlayLoading({ id: "postPosts", loading: false }));
+    yield put(setOverlayLoading({ id: "trackerPosts", loading: false }));
   }
 }
 
 /* ////////////////////////////////// */
-/* ASSIGN POST DISPLAY */
+/* ASSIGN Tracker DISPLAY */
 /* ////////////////////////////////// */
-export function* assignPostDisplay({ payload: request }) {
+export function* assignTrackerDisplay({ payload: request }) {
   try {
-    yield put(setOverlayLoading({ id: "postPostsDisplay", loading: true }));
+    yield put(setOverlayLoading({ id: "trackerPostsDisplay", loading: true }));
     const Posts = yield assignDisplay(request.data.Posts);
     const post = Object.assign({}, request.data, { Posts });
-    yield put(savePostDisplay(post));
+    yield put(saveTrackerDisplay(post));
   } catch (e) {
     if (e.message) {
       yield put(deployError({ message: e.message }));
     }
   } finally {
-    yield put(setOverlayLoading({ id: "postPostsDisplay", loading: false }));
+    yield put(setOverlayLoading({ id: "trackerPostsDisplay", loading: false }));
   }
 }
 
-const postSearchKeys = [
+const trackerSearchKeys = [
   "searchContractId",
   "ContractName",
   "Advertiser",
-  "UploadDate",
-  "serchSpotsInSpec",
+  "searchUploadDate",
+  "searchSpotsInSpec",
   "searchSpotsOutOfSpec"
 ];
 
@@ -102,12 +104,12 @@ const searcher = (data, searchKeys, query) => {
   return searcher.search(query);
 };
 
-export function* requestPostFiltered({ payload: query }) {
+export function* requestTrackerFiltered({ payload: query }) {
   const data = yield select(selectUnfilteredData);
   try {
-    const filtered = yield searcher(data, postSearchKeys, query);
+    const filtered = yield searcher(data, trackerSearchKeys, query);
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_POST,
+      type: ACTIONS.RECEIVE_FILTERED_TRACKER,
       data: filtered
     });
   } catch (e) {
@@ -219,38 +221,42 @@ export function* clearFilteredScrubbingData() {
     originalScrubs
   };
   try {
-    yield put(setOverlayLoading({ id: "PostScrubbingFilter", loading: true }));
+    yield put(
+      setOverlayLoading({ id: "TrackerScrubbingFilter", loading: true })
+    );
     yield put({
       type: ACTIONS.RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
       data: ret
     });
   } finally {
-    yield put(setOverlayLoading({ id: "PostScrubbingFilter", loading: false }));
+    yield put(
+      setOverlayLoading({ id: "TrackerScrubbingFilter", loading: false })
+    );
   }
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST CLIENT SCRUBBING */
+/* REQUEST TRACKER CLIENT SCRUBBING */
 /* ////////////////////////////////// */
-// allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Post landing);
+// allow for params (todo from BE) to filterKey All, InSpec, OutOfSpec; optional showModal (from Tracker landing);
 // if not from modal show processing, else show loading (loading not shown inside modal)
-export function* requestPostClientScrubbing(params) {
-  const { getPostClientScrubbing } = api.post;
+export function* requestTrackerClientScrubbing(params) {
+  const { getTrackerClientScrubbing } = api.tracker;
   try {
     if (params.showModal) {
       yield put(
-        setOverlayLoading({ id: "PostClientScrubbing", loading: true })
+        setOverlayLoading({ id: "TrackerClientScrubbing", loading: true })
       );
     } else {
       yield put(
-        setOverlayProcessing({ id: "PostClientScrubbing", processing: true })
+        setOverlayProcessing({ id: "TrackerClientScrubbing", processing: true })
       );
     }
     // clear the data so filters grid registers as update - if not from modal update
     if (!params.showModal) {
       yield call(requestClearScrubbingDataFiltersList);
     }
-    const { status, data } = yield getPostClientScrubbing(params);
+    const { status, data } = yield getTrackerClientScrubbing(params);
     if (params.filterKey) {
       update(data, "Data.filterKey", () => params.filterKey);
     }
@@ -258,25 +264,28 @@ export function* requestPostClientScrubbing(params) {
   } finally {
     if (params.showModal) {
       yield put(
-        setOverlayLoading({ id: "PostClientScrubbing", loading: false })
+        setOverlayLoading({ id: "TrackerClientScrubbing", loading: false })
       );
     } else {
       yield put(
-        setOverlayProcessing({ id: "PostClientScrubbing", processing: false })
+        setOverlayProcessing({
+          id: "TrackerClientScrubbing",
+          processing: false
+        })
       );
     }
   }
 }
 
-export function* requestPostClientScrubbingSuccess({ payload: params }) {
+export function* requestTrackerClientScrubbingSuccess({ payload: params }) {
   if (params.showModal) {
     yield put(
       toggleModal({
-        modal: "postScrubbingModal",
+        modal: "trackerScrubbingModal",
         active: true,
         properties: {
-          titleText: "POST SCRUBBING MODAL",
-          bodyText: "Post Scrubbing details will be shown here!"
+          titleText: "TRACKER SCRUBBING MODAL",
+          bodyText: "Tracker Scrubbing details will be shown here!"
         }
       })
     );
@@ -288,16 +297,16 @@ export function* requestPostClientScrubbingSuccess({ payload: params }) {
 // todo break down original scrubbing to ClientScrubs etc
 export function* requestScrubbingDataFiltered({ payload: query }) {
   const listUnfiltered = yield select(
-    state => state.post.proposalHeader.scrubbingData.ClientScrubs
+    state => state.tracker.proposalHeader.scrubbingData.ClientScrubs
   );
   const listFiltered = yield select(
-    state => state.post.proposalHeader.activeScrubbingData.ClientScrubs
+    state => state.tracker.proposalHeader.activeScrubbingData.ClientScrubs
   );
   const activeFilters = cloneDeep(
-    yield select(state => state.post.activeScrubbingFilters)
+    yield select(state => state.tracker.activeScrubbingFilters)
   );
   const originalFilters = yield select(
-    state => state.post.activeScrubbingFilters
+    state => state.tracker.activeScrubbingFilters
   );
   const actingFilter = activeFilters[query.filterKey]; // this is undefined
   // console.log('request scrub filter', query, activeFilters, actingFilter);
@@ -384,7 +393,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
       overlay: {
-        id: "PostScrubbingFilter",
+        id: "TrackerScrubbingFilter",
         processing: true
       }
     });
@@ -395,7 +404,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     yield put({
       type: ACTIONS.SET_OVERLAY_PROCESSING,
       overlay: {
-        id: "PostScrubbingFilter",
+        id: "TrackerScrubbingFilter",
         processing: false
       }
     });
@@ -432,29 +441,31 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST SCRUBBING HEADER */
+/* REQUEST TRACKER SCRUBBING HEADER */
 /* ////////////////////////////////// */
 export function* requestUnlinkedIscis() {
-  const { getUnlinkedIscis } = api.post;
+  const { getUnlinkedIscis } = api.tracker;
   try {
-    yield put(setOverlayLoading({ id: "PostUniqueIscis", loading: true }));
+    yield put(setOverlayLoading({ id: "TrackerUniqueIscis", loading: true }));
     return yield getUnlinkedIscis();
   } finally {
-    yield put(setOverlayLoading({ id: "PostUniqueIscis", loading: false }));
+    yield put(setOverlayLoading({ id: "TrackerUniqueIscis", loading: false }));
   }
 }
 
 export function* unlinkedIscisSuccess() {
-  const activeQuery = yield select(state => state.post.activeIsciFilterQuery);
+  const activeQuery = yield select(
+    state => state.tracker.activeIsciFilterQuery
+  );
   // console.log('unlinked isci active query success>>>>>>>', activeQuery);
-  const modal = select(selectModal, "postUnlinkedIsciModal");
+  const modal = select(selectModal, "trackerUnlinkedIsciModal");
   if (modal && !modal.active) {
     yield put(
       toggleModal({
-        modal: "postUnlinkedIsciModal",
+        modal: "trackerUnlinkedIsciModal",
         active: true,
         properties: {
-          titleText: "POST Unique Iscis",
+          titleText: "TRACKER Unique Iscis",
           bodyText: "Isci Details"
         }
       })
@@ -466,29 +477,31 @@ export function* unlinkedIscisSuccess() {
 }
 
 export function* archivedIscisSuccess() {
-  const activeQuery = yield select(state => state.post.activeIsciFilterQuery);
+  const activeQuery = yield select(
+    state => state.tracker.activeIsciFilterQuery
+  );
   if (activeQuery.length) {
     yield call(requestArchivedFiltered, { payload: activeQuery });
   }
 }
 
 export function* archiveUnlinkedIsci({ ids }) {
-  const { archiveUnlinkedIscis } = api.post;
+  const { archiveUnlinkedIscis } = api.tracker;
   try {
-    yield put(setOverlayLoading({ id: "postArchiveIsci", loading: true }));
+    yield put(setOverlayLoading({ id: "trackerArchiveIsci", loading: true }));
     return yield archiveUnlinkedIscis(ids);
   } finally {
-    yield put(setOverlayLoading({ id: "postArchiveIsci", loading: false }));
+    yield put(setOverlayLoading({ id: "trackerArchiveIsci", loading: false }));
   }
 }
 
 export function* undoArchivedIscis({ ids }) {
-  const { undoArchivedIscis } = api.post;
+  const { undoArchivedIscis } = api.tracker;
   try {
-    yield put(setOverlayLoading({ id: "postArchiveIsci", loading: true }));
+    yield put(setOverlayLoading({ id: "trackerArchiveIsci", loading: true }));
     return yield undoArchivedIscis(ids);
   } finally {
-    yield put(setOverlayLoading({ id: "postArchiveIsci", loading: false }));
+    yield put(setOverlayLoading({ id: "trackerArchiveIsci", loading: false }));
   }
 }
 
@@ -554,16 +567,16 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
 }
 
 /* ////////////////////////////////// */
-/* REQUEST POST OVERRIDE STATUS */
+/* REQUEST TRACKER OVERRIDE STATUS */
 /* ////////////////////////////////// */
 export function* requestOverrideStatus({ payload: params }) {
-  const { overrideStatus } = api.post;
+  const { overrideStatus } = api.tracker;
 
   try {
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
-        id: "postOverrideStatus",
+        id: "trackerOverrideStatus",
         loading: true
       }
     });
@@ -575,12 +588,12 @@ export function* requestOverrideStatus({ payload: params }) {
     const response = yield overrideStatus(adjustParams);
     const { status, data } = response;
     const hasActiveScrubbingFilters = yield select(
-      state => state.post.hasActiveScrubbingFilters
+      state => state.tracker.hasActiveScrubbingFilters
     );
     yield put({
       type: ACTIONS.SET_OVERLAY_LOADING,
       overlay: {
-        id: "postOverrideStatus",
+        id: "trackerOverrideStatus",
         loading: false
       }
     });
@@ -588,8 +601,8 @@ export function* requestOverrideStatus({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          error: "No post override status returned.",
-          message: `The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
+          error: "No tracker override status returned.",
+          message: `The server encountered an error processing the request (tracker override status). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
         }
       });
       throw new Error();
@@ -598,10 +611,10 @@ export function* requestOverrideStatus({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          error: "No post override status returned.",
+          error: "No tracker override status returned.",
           message:
             data.Message ||
-            "The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs."
+            "The server encountered an error processing the request (tracker override status). Please try again or contact your administrator to review error logs."
         }
       });
       throw new Error();
@@ -609,7 +622,7 @@ export function* requestOverrideStatus({ payload: params }) {
     // if no scrubbing filters - process as receive; else handle filters
     if (hasActiveScrubbingFilters) {
       const scrubs = yield select(
-        state => state.post.proposalHeader.activeScrubbingData.ClientScrubs
+        state => state.tracker.proposalHeader.activeScrubbingData.ClientScrubs
       );
       const status = params.OverrideStatus === "InSpec" ? 2 : 1;
       const isRemove =
@@ -624,12 +637,12 @@ export function* requestOverrideStatus({ payload: params }) {
         isRemove
       );
       const activeFilters = cloneDeep(
-        yield select(state => state.post.activeScrubbingFilters)
+        yield select(state => state.tracker.activeScrubbingFilters)
       );
       let adjustedFilters = null;
       // remove so redjust filter options as needed
       if (isRemove) {
-        // const activeFilters = cloneDeep(yield select(state => state.post.activeScrubbingFilters));
+        // const activeFilters = cloneDeep(yield select(state => state.tracker.activeScrubbingFilters));
         adjustedFilters = resetfilterOptionsOnOverride(
           activeFilters,
           data.Data.Filters
@@ -645,16 +658,18 @@ export function* requestOverrideStatus({ payload: params }) {
       // clear the data so grid registers as update
       yield call(requestClearScrubbingDataFiltersList);
       yield put({
-        type: ACTIONS.RECEIVE_POST_OVERRIDE_STATUS,
+        type: ACTIONS.RECEIVE_TRACKER_OVERRIDE_STATUS,
         data: ret
       });
     } else {
       // clear the data so grid registers as update
       yield call(requestClearScrubbingDataFiltersList);
       // as currently stands need to reset the filter key on data or is removed : TODO REVISE
-      data.Data.filterKey = yield select(state => state.post.activeFilterKey);
+      data.Data.filterKey = yield select(
+        state => state.tracker.activeFilterKey
+      );
       yield put({
-        type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
+        type: ACTIONS.LOAD_TRACKER_CLIENT_SCRUBBING.success,
         data
       });
     }
@@ -663,9 +678,9 @@ export function* requestOverrideStatus({ payload: params }) {
       yield put({
         type: ACTIONS.DEPLOY_ERROR,
         error: {
-          error: "No post override status returned.",
+          error: "No tracker override status returned.",
           message:
-            "The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs.",
+            "The server encountered an error processing the request (tracker override status). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
         }
       });
@@ -682,7 +697,7 @@ export function* requestOverrideStatus({ payload: params }) {
 }
 
 export function* swapProposalDetail({ payload: params }) {
-  const { swapProposalDetail } = api.post;
+  const { swapProposalDetail } = api.tracker;
 
   try {
     yield put({
@@ -740,10 +755,10 @@ export function* swapProposalDetail({ payload: params }) {
     );
     // refresh scrubbing
     const id = yield select(
-      state => state.post.proposalHeader.activeScrubbingData.Id
+      state => state.tracker.proposalHeader.activeScrubbingData.Id
     );
     const refreshParams = { proposalId: id, showModal: true, filterKey: "All" };
-    yield call(requestPostClientScrubbing, { payload: refreshParams });
+    yield call(requestTrackerClientScrubbing, { payload: refreshParams });
   } catch (e) {
     if (e.response) {
       yield put({
@@ -768,7 +783,7 @@ export function* swapProposalDetail({ payload: params }) {
 }
 
 export function* loadArchivedIsci() {
-  const { getArchivedIscis } = api.post;
+  const { getArchivedIscis } = api.tracker;
   try {
     yield put(setOverlayLoading({ id: "loadArchiveIsci", loading: true }));
     return yield getArchivedIscis();
@@ -778,12 +793,12 @@ export function* loadArchivedIsci() {
 }
 
 export function* loadValidIscis({ query }) {
-  const { getValidIscis } = api.post;
+  const { getValidIscis } = api.tracker;
   return yield getValidIscis(query);
 }
 
 export function* rescrubUnlinkedIsci({ isci }) {
-  const { rescrubUnlinkedIscis } = api.post;
+  const { rescrubUnlinkedIscis } = api.tracker;
   try {
     yield put(setOverlayLoading({ id: "rescrubIsci", loading: true }));
     return yield rescrubUnlinkedIscis(isci);
@@ -793,7 +808,7 @@ export function* rescrubUnlinkedIsci({ isci }) {
 }
 
 export function* mapUnlinkedIsci(payload) {
-  const { mapUnlinkedIscis } = api.post;
+  const { mapUnlinkedIscis } = api.tracker;
   try {
     yield put(setOverlayLoading({ id: "mapUnlinkedIsci", loading: true }));
     return yield mapUnlinkedIscis(payload);
@@ -818,12 +833,12 @@ export function* closeUnlinkedIsciModal({ modalPrams }) {
   });
   yield put(
     toggleModal({
-      modal: "postUnlinkedIsciModal",
+      modal: "trackerUnlinkedIsciModal",
       active: false,
       properties: modalPrams
     })
   );
-  yield put(getPost());
+  yield put(getTracker());
 }
 
 const filterMap = {
@@ -832,7 +847,7 @@ const filterMap = {
 };
 
 export function* undoScrubStatus(payload) {
-  const { undoScrubStatus } = api.post;
+  const { undoScrubStatus } = api.tracker;
   const activeFilterKey = yield select(selectActiveFilterKey);
   let params = payload;
   if (activeFilterKey !== "All") {
@@ -876,60 +891,40 @@ export function* undoScrubStatusSuccess({
   );
 }
 
-export function* requestProcessNtiFile(payload) {
-  const { uploadNtiTransmittal } = api.post;
+/* ////////////////////////////////// */
+/* UPLOAD Tracker FILE */
+/* ////////////////////////////////// */
+export function* uploadTrackerFile(params) {
+  const { uploadTracker } = api.tracker;
   try {
-    yield put(setOverlayLoading({ id: "PostNTIUpload", loading: true }));
-    return yield uploadNtiTransmittal(payload);
+    yield put(setOverlayProcessing({ id: "uploadTracker", processing: true }));
+    return yield uploadTracker(params);
   } finally {
-    yield put(setOverlayLoading({ id: "PostNTIUpload", loading: false }));
+    yield put(setOverlayProcessing({ id: "uploadTracker", processing: false }));
   }
 }
 
-export function* processNtiFileSuccess(req) {
-  const list =
-    Array.isArray(req.data.Data) || req.data.Data.length ? req.data.Data : "";
-  const scrollable =
-    Array.isArray(req.data.Data) || req.data.Data.length
-      ? "modalBodyScroll"
-      : null;
-  yield put({
-    type: ACTIONS.TOGGLE_MODAL,
-    modal: {
-      modal: "confirmModal",
-      active: true,
-      properties: {
-        bodyClass: scrollable,
-        titleText: "Upload Complete",
-        bodyText: req.data.Message,
-        bodyList: list,
-        closeButtonDisabled: true,
-        actionButtonText: "OK",
-        actionButtonBsStyle: "success",
-        action: () => {},
-        dismiss: () => {}
-      }
-    }
-  });
+export function* uploadTrackerFileSuccess() {
+  yield put(createAlert({ type: "success", headline: "CSV Files Uploaded" }));
 }
 
 /* ////////////////////////////////// */
 /* WATCHERS */
 /* ////////////////////////////////// */
 
-function* watchRequestPost() {
+function* watchRequestTracker() {
   yield takeEvery(
-    ACTIONS.LOAD_POST.request,
-    sagaWrapper(requestPost, ACTIONS.LOAD_POST)
+    ACTIONS.LOAD_TRACKER.request,
+    sagaWrapper(requestTracker, ACTIONS.LOAD_TRACKER)
   );
 }
 
-function* watchRequestAssignPostDisplay() {
-  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, savePostDisplay);
+function* watchRequestAssignTrackerDisplay() {
+  yield takeEvery(ACTIONS.REQUEST_ASSIGN_TRACKER_DISPLAY, saveTrackerDisplay);
 }
 
-function* watchRequestPostFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
+function* watchRequestTrackerFiltered() {
+  yield takeEvery(ACTIONS.REQUEST_FILTERED_TRACKER, requestTrackerFiltered);
 }
 
 function* watchRequestUnlinkedFiltered() {
@@ -940,17 +935,20 @@ function* watchRequestArchivedFiltered() {
   yield takeEvery(ACTIONS.REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
 }
 
-function* watchRequestPostClientScrubbing() {
+function* watchRequestTrackerClientScrubbing() {
   yield takeEvery(
-    ACTIONS.LOAD_POST_CLIENT_SCRUBBING.request,
-    sagaWrapper(requestPostClientScrubbing, ACTIONS.LOAD_POST_CLIENT_SCRUBBING)
+    ACTIONS.LOAD_TRACKER_CLIENT_SCRUBBING.request,
+    sagaWrapper(
+      requestTrackerClientScrubbing,
+      ACTIONS.LOAD_TRACKER_CLIENT_SCRUBBING
+    )
   );
 }
 
-function* watchRequestPostClientScrubbingSuccess() {
+function* watchRequestTrackerClientScrubbingSuccess() {
   yield takeEvery(
-    ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
-    requestPostClientScrubbingSuccess
+    ACTIONS.LOAD_TRACKER_CLIENT_SCRUBBING.success,
+    requestTrackerClientScrubbingSuccess
   );
 }
 
@@ -996,7 +994,10 @@ function* watchArchiveUnlinkedIsci() {
 }
 
 function* watchRequestOverrideStatus() {
-  yield takeEvery(ACTIONS.REQUEST_POST_OVERRIDE_STATUS, requestOverrideStatus);
+  yield takeEvery(
+    ACTIONS.REQUEST_TRACKER_OVERRIDE_STATUS,
+    requestOverrideStatus
+  );
 }
 
 function* watchSwapProposalDetail() {
@@ -1064,20 +1065,20 @@ function* watchRequestClearFilteredScrubbingData() {
   );
 }
 
-function* watchRequestProcessNtiFile() {
+export function* watchUploadTrackerFile() {
   yield takeEvery(
-    ACTIONS.PROCESS_NTI_FILE.request,
-    sagaWrapper(requestProcessNtiFile, ACTIONS.PROCESS_NTI_FILE)
+    ACTIONS.FILE_UPLOAD.request,
+    sagaWrapper(uploadTrackerFile, ACTIONS.FILE_UPLOAD)
   );
 }
 
-function* watchProcessNtiFileSuccess() {
-  yield takeEvery(ACTIONS.PROCESS_NTI_FILE.success, processNtiFileSuccess);
+export function* watchUploadTrackerFileSuccess() {
+  yield takeEvery(ACTIONS.FILE_UPLOAD.success, uploadTrackerFileSuccess);
 }
 
 export default [
-  watchProcessNtiFileSuccess,
-  watchRequestProcessNtiFile,
+  watchUploadTrackerFileSuccess,
+  watchUploadTrackerFile,
   watchRequestClearFilteredScrubbingData,
   watchUndoScrubStatusSuccess,
   watchUndoScrubStatus,
@@ -1096,11 +1097,11 @@ export default [
   watchRequestUniqueIscis,
   watchRequestClearScrubbingFiltersList,
   watchRequestScrubbingDataFiltered,
-  watchRequestPostClientScrubbing,
-  watchRequestPostClientScrubbingSuccess,
+  watchRequestTrackerClientScrubbing,
+  watchRequestTrackerClientScrubbingSuccess,
   watchRequestArchivedFiltered,
   watchRequestUnlinkedFiltered,
-  watchRequestPostFiltered,
-  watchRequestAssignPostDisplay,
-  watchRequestPost
+  watchRequestTrackerFiltered,
+  watchRequestAssignTrackerDisplay,
+  watchRequestTracker
 ];
