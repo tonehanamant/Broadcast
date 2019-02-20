@@ -324,8 +324,8 @@ BEGIN
 			v.legacy_call_letters, 
 			v.market_code,
 			v.audience_id,
---			case when AVG(u.weekly_avg) = 0 then 0 else AVG(v.weekly_avg) / AVG(u.weekly_avg) END as SHARE
-			AVG(v.weekly_avg) / AVG(u.weekly_avg) SHARE
+			case when AVG(u.weekly_avg) = 0 then 0 else AVG(v.weekly_avg) / AVG(u.weekly_avg) END as SHARE
+			--AVG(v.weekly_avg) / AVG(u.weekly_avg) SHARE
 		FROM 
 			#share_viewer_days v
 			JOIN #share_usage_days u ON v.id = u.id
