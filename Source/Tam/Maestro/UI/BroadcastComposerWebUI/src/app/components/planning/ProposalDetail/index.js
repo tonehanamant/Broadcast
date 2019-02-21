@@ -31,10 +31,10 @@ import {
   loadPricingData,
   generateScx
 } from "Ducks/planning";
+import PricingGuide from "PricingGuide";
 import Sweeps from "./Sweeps";
 import ProgramGenre from "./ProgramGenre";
 import PostingBook from "./PostingBook";
-import PricingGuide from "./PricingGuide";
 import UploadBuy from "./UploadBuy";
 import "./index.scss";
 
@@ -689,14 +689,12 @@ export class ProposalDetail extends Component {
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
           detail={detail}
-          // proposalEditForm={proposalEditForm}
           isReadOnly={isReadOnly}
         />
 
         <ProgramGenre
           toggleModal={this.props.toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
-          // initialdata={initialdata}
           detail={detail}
           isReadOnly={isReadOnly}
         />
