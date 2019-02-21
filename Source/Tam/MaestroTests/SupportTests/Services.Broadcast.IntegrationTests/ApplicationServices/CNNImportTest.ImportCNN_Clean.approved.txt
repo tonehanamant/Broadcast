@@ -3,6 +3,7 @@
   "FileName": null,
   "FileStatus": 0,
   "Hash": null,
+  "Id": 0,
   "InventoryGroups": [
     {
       "DaypartCode": "PM News",
@@ -3312,8 +3313,6 @@
   "InventoryManifests": [],
   "InventoryManifestsStaging": [],
   "InventorySource": null,
-  "PlaybackType": null,
-  "RatingBook": null,
   "StartDate": "0001-01-01T00:00:00",
   "StationContacts": [],
   "UniqueIdentifier": null

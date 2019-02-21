@@ -13,6 +13,7 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> GetNsiPostingBookMonths();
         List<MediaMonth> GetNsiPostingMediaMonths();
         int GetLatestNsiPostingBookForMonthContainingDate(DateTime now);
+        List<LookupDto> GetPostingBookLongMonthNameAndYear();
     }
     public class NsiPostingBookService : INsiPostingBookService
     {
@@ -28,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
             _RatingForecastService = ratingForecastService;
         }
+
         public List<LookupDto> GetNsiPostingBookMonths()
         {
             var postingBooks = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
@@ -39,6 +41,20 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         Id = x.Id,
                         Display = x.MediaMonthX
+                    }).ToList();
+        }
+
+        public List<LookupDto> GetPostingBookLongMonthNameAndYear()
+        {
+            var postingBooks = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
+            var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
+
+            return (from mediaMonth in mediaMonths
+                    orderby mediaMonth.Id descending
+                    select new LookupDto
+                    {
+                        Id = mediaMonth.Id,
+                        Display = mediaMonth.LongMonthNameAndYear
                     }).ToList();
         }
 

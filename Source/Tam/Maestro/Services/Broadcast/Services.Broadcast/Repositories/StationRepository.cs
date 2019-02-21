@@ -11,6 +11,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System.Linq.Expressions;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -65,7 +66,7 @@ namespace Services.Broadcast.Repositories
                                     m => (m.end_date == null || m.end_date > date)
                                          && m.inventory_source_id == inventorySourceId &&
                                          (m.file_id == null ||
-                                          m.inventory_files.status == (byte)InventoryFile.FileStatusEnum.Loaded)
+                                          m.inventory_files.status == (byte)FileStatusEnum.Loaded)
                                           ) == isIncluded);
 
                     return query.Select(_MapToDisplayBroadcastStation(inventorySourceId)).ToList();

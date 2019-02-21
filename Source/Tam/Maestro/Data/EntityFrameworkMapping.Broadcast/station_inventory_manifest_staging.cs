@@ -36,9 +36,9 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
-        public virtual inventory_files inventory_files { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual spot_lengths spot_lengths1 { get; set; }
+        public virtual inventory_files inventory_files { get; set; }
     }
 }

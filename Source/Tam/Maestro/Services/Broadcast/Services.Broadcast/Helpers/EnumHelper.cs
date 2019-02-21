@@ -37,6 +37,15 @@ namespace Services.Broadcast.Helpers
             else return source.ToString();
         }
 
+        public static T GetEnumValueFromDescription<T>(string description)
+        {
+            var type = typeof(T);
+            FieldInfo[] fields = type.GetFields();
+            var field = fields.SelectMany(f => f.GetCustomAttributes(typeof(DescriptionAttribute), false), (f, a) => new { Field = f, Att = a })
+                                .Where(a => ((DescriptionAttribute)a.Att).Description.Equals(description, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
+            return field == null ? default(T) : (T)field.Field.GetRawConstantValue();
+        }
+
         public static List<InventorySourceEnum> GetProprietaryInventorySources()
         {
             var inventorySources = Enum.GetValues(typeof(InventorySourceEnum)).Cast<InventorySourceEnum>().ToList();

@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
@@ -13,10 +14,10 @@ namespace Services.Broadcast.Repositories
     public interface IInventoryFileRepository : IDataRepository
     {
         int GetInventoryFileIdByHash(string hash);
-        int CreateInventoryFile(InventoryFile file, string userName);
+        int CreateInventoryFile(InventoryFileBase file, string userName);
         void UpdateInventoryFile(InventoryFile inventoryFile, string userName);
         void DeleteInventoryFileById(int inventoryFileId);
-        void UpdateInventoryFileStatus(int fileId, InventoryFile.FileStatusEnum status);
+        void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
         InventoryFile GetInventoryFileById(int fileId);
     }
 
@@ -34,13 +35,13 @@ namespace Services.Broadcast.Repositories
                 context => (
                     from x in context.inventory_files
                     where x.file_hash == hash
-                    && (x.status == (short) InventoryFile.FileStatusEnum.Loaded
-                        || x.status == (short) InventoryFile.FileStatusEnum.Pending)
+                    && (x.status == (short) FileStatusEnum.Loaded
+                        || x.status == (short) FileStatusEnum.Pending)
                     select x.id).FirstOrDefault());
             return result;
         }
 
-        public int CreateInventoryFile(InventoryFile inventoryFile, string userName)
+        public int CreateInventoryFile(InventoryFileBase inventoryFile, string userName)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -54,8 +55,6 @@ namespace Services.Broadcast.Repositories
                         created_by = userName,
                         created_date = DateTime.Now,
                         inventory_source_id = inventoryFile.InventorySource.Id,
-                        sweep_book_id = inventoryFile.RatingBook,
-                        play_back_type = (byte?) inventoryFile.PlaybackType
                     };
 
                     context.inventory_files.Add(file);
@@ -97,7 +96,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateInventoryFileStatus(int fileId, InventoryFile.FileStatusEnum status)
+        public void UpdateInventoryFileStatus(int fileId, FileStatusEnum status)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -120,7 +119,7 @@ namespace Services.Broadcast.Repositories
                     {
                         Id = file.id,
                         FileName = file.name,
-                        FileStatus = (InventoryFile.FileStatusEnum)file.status,
+                        FileStatus = (FileStatusEnum)file.status,
                         Hash = file.file_hash,
                         UniqueIdentifier = file.identifier,
                         InventorySource = new InventorySource
@@ -129,9 +128,7 @@ namespace Services.Broadcast.Repositories
                             InventoryType = (InventoryType)file.inventory_sources.inventory_source_type,
                             IsActive = file.inventory_sources.is_active,
                             Name = file.inventory_sources.name
-                        },
-                        RatingBook = file.sweep_book_id,
-                        PlaybackType = (Entities.Enums.ProposalEnums.ProposalPlaybackType?)file.play_back_type
+                        }
                     };
                 });
         }

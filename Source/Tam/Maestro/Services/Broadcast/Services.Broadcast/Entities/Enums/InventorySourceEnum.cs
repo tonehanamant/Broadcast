@@ -28,7 +28,7 @@ namespace Services.Broadcast.Entities.Enums
         [Description("LilaMax")]
         LilaMax = 7,
 
-        [Description("Ferenc Media")]
+        [Description("Ference Media")]
         FerencMedia = 8,
 
         [Description("O&O")]

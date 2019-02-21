@@ -19,7 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public short market_code { get; set; }
         public bool is_blackout { get; set; }
     
-        public virtual market market { get; set; }
         public virtual proposal_versions proposal_versions { get; set; }
+        public virtual market market { get; set; }
     }
 }

@@ -513,8 +513,6 @@
       "IsActive": true,
       "Name": "TTNW"
     },
-    "PlaybackType": null,
-    "RatingBook": null,
     "StartDate": "0001-01-01T00:00:00",
     "StationContacts": [],
     "UniqueIdentifier": null

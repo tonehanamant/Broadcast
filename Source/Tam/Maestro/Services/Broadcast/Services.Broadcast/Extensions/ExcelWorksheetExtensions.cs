@@ -79,5 +79,35 @@ namespace Services.Broadcast.Extensions
             
             return collection;
         }
+
+        /// <summary>
+        /// Gets the string value from a cell handling null reference
+        /// </summary>
+        /// <param name="cell">Excel cell object</param>
+        /// <returns>String value or null</returns>
+        public static string GetStringValue(this ExcelRange cell)
+        {
+            return cell.Value?.ToString()?.Trim();
+        }
+
+        /// <summary>
+        /// Gets the text value from a cell handling null reference
+        /// </summary>
+        /// <param name="cell">Excel cell object</param>
+        /// <returns>String value or null</returns>
+        public static string GetTextValue(this ExcelRange cell)
+        {
+            return cell.Text?.ToString()?.Trim();
+        }
+
+        /// <summary>
+        /// Gets int value or null from the excel cell
+        /// </summary>
+        /// <param name="cell">Excel cell object</param>
+        /// <returns>Int value or null</returns>
+        public static int? GetIntValue(this ExcelRange cell)
+        {
+            return int.TryParse(GetStringValue(cell), out var result) ? result : (int?)null;
+        }
     }
 }

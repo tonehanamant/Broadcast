@@ -3747,39 +3747,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(manifestsJson);
             }
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CanLoadBarterInventoryFile()
-        {
-            const string fileName = "BarterFile.barter_extension";
-
-            using (new TransactionScopeWrapper())
-            {
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFile), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName,
-                    RatingBook = 437
-                };
-
-                var result = _InventoryFileService.SaveBarterInventoryFile(request, "IntegrationTestUser");
-
-                var file = _InventoryFileRepository.GetInventoryFileById(result.FileId);
-                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
-
-                Approvals.Verify(fileJson);
-            }
-        }
-
+        
         [Test]
         public void CanLoadHudsonOpenMarketInventoryFile()
         {

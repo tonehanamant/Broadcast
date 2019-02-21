@@ -215,13 +215,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\BarterInventoryService.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\TimeFirstDaypartParser.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\WeekdayFirstDaypartParser.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
+    <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
+    <Compile Include="Entities\BarterInventory\BarterInventoryFile.cs" />
+    <Compile Include="Entities\BarterInventory\BarterInventoryHeader.cs" />
     <Compile Include="Entities\Enums\DeliveryFileSourceEnum.cs" />
     <Compile Include="Entities\DTO\ProgramSpotsDto.cs" />
+    <Compile Include="Entities\Enums\FileStatusEnum.cs" />
+    <Compile Include="Entities\Enums\InventorySourceTypeEnum.cs" />
+    <Compile Include="Entities\InventoryFileBase.cs" />
     <Compile Include="Entities\MarketCoverageByStation.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
@@ -573,6 +580,7 @@
     <Compile Include="ProposalCache.cs" />
     <Compile Include="ReportGenerators\SpotTrackerReportGenerator.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
+    <Compile Include="Repositories\BarterInventoryRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileDetailFilterResult.cs" />

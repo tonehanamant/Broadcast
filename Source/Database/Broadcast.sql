@@ -50,6 +50,118 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-214 *****************************************************/
+if not exists (select * from inventory_sources where [name] = 'CNN')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('CNN', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'TTNW')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('TTNW', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'TVB')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('TVB', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'Sinclair')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('Sinclair', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'LilaMax')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('LilaMax', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'MLB')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('MLB', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'Ference Media')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('Ference Media', 1, 1)
+end
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_files') AND name = 'play_back_type')
+BEGIN
+	ALTER TABLE [inventory_files] DROP COLUMN [play_back_type]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_files') AND name = 'sweep_book_id')
+BEGIN
+	DROP INDEX [inventory_files].[IX_inventory_files_sweep_book_id]
+	ALTER TABLE [inventory_files] DROP CONSTRAINT [FK_inventory_files_media_months]
+	ALTER TABLE [inventory_files] DROP COLUMN [sweep_book_id]
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[inventory_file_barter_header]'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_file_barter_header]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [INT] NOT NULL,
+		[daypart_code] [VARCHAR](8) NOT NULL,
+		[effective_date] [DATETIME] NOT NULL,
+		[end_date] [DATETIME] NOT NULL,
+		[cpm] [MONEY] NOT NULL,
+		[audience_id] INT NOT NULL,
+		[contracted_daypart_id] INT NOT NULL,
+		[share_projection_book_id] INT NOT NULL,
+		[hut_projection_book_id] INT NULL,
+		[playback_type] INT NOT NULL
+	 CONSTRAINT [PK_inventory_file_barter_header] PRIMARY KEY CLUSTERED 
+	 (
+		[id] ASC
+	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[inventory_file_barter_header] WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_inventory_files] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_inventory_files]
+	CREATE INDEX IX_inventory_file_barter_header_inventory_file_id ON [inventory_file_barter_header] ([inventory_file_id])	
+	
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_audiences]
+	CREATE INDEX IX_inventory_file_barter_header_audience_id ON [inventory_file_barter_header] ([audience_id])
+
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_dayparts] FOREIGN KEY([contracted_daypart_id])
+	REFERENCES [dbo].[dayparts] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_dayparts]
+	CREATE INDEX IX_inventory_file_barter_header_contracted_daypart_id ON [inventory_file_barter_header] ([contracted_daypart_id])
+
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_media_months] FOREIGN KEY([share_projection_book_id])
+	REFERENCES [dbo].[media_months] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_media_months]
+	CREATE INDEX IX_inventory_file_barter_header_share_projection_book_id ON [inventory_file_barter_header] ([share_projection_book_id])
+	
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_media_months_hut_book] FOREIGN KEY([hut_projection_book_id])
+	REFERENCES [dbo].[media_months] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_media_months_hut_book]
+	CREATE INDEX IX_inventory_file_barter_header_hut_projection_book_id ON [inventory_file_barter_header] ([hut_projection_book_id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[inventory_file_problems]'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_file_problems](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [int] NOT NULL,
+		[problem_description] [nvarchar](max) NOT NULL,
+	 CONSTRAINT [PK_inventory_file_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	ALTER TABLE [dbo].[inventory_file_problems] WITH CHECK ADD  CONSTRAINT [FK_inventory_file_problems_inventory_files] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ALTER TABLE [dbo].[inventory_file_problems] CHECK CONSTRAINT [FK_inventory_file_problems_inventory_files]
+	CREATE INDEX IX_inventory_file_problems_inventory_file_id ON [inventory_file_problems] ([inventory_file_id])	
+END
+
+/*************************************** END PRI-214 *****************************************************/
+
 
 /*************************************** START PRI-1071 *****************************************************/
 

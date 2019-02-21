@@ -19,8 +19,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> impressions { get; set; }
         public decimal rate { get; set; }
         public int id { get; set; }
-        public Nullable<double> rating { get; set; }
         public bool is_reference { get; set; }
+        public Nullable<double> rating { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

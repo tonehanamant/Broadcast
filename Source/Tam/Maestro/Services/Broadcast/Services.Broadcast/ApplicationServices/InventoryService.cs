@@ -66,8 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         List<StationProgram> GetStationProgramConflicts(StationProgramConflictRequest conflict);
         bool DeleteProgram(int programId, string inventorySource, int stationCode, string user);
         bool ExpireManifest(int programId, DateTime endDate, string inventorySource, int stationCode, string user);
-        bool HasSpotsAllocated(int programId);
-        InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName);
+        bool HasSpotsAllocated(int programId);        
     }
 
     public class InventoryService : IInventoryService
@@ -91,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationInventoryGroupService _stationInventoryGroupService;
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IRatingForecastService _RatingForecastService;
+        private readonly INsiPostingBookService _NsiPostingBookService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -103,7 +103,8 @@ namespace Services.Broadcast.ApplicationServices
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IStationInventoryGroupService stationInventoryGroupService,
             IBroadcastAudiencesCache audiencesCache,
-            IRatingForecastService ratingForecastService)
+            IRatingForecastService ratingForecastService,
+            INsiPostingBookService nsiPostingBookService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -126,6 +127,8 @@ namespace Services.Broadcast.ApplicationServices
             _stationInventoryGroupService = stationInventoryGroupService;
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _RatingForecastService = ratingForecastService;
+            _NsiPostingBookService = nsiPostingBookService;
+
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -133,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices
             var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySourceOrDefault(rateSource));
 
             //set null every modified date that looks like 0001-01-01T00:00:00 so the UI knows where to put dashes
-            stations.Where(x=> x.ModifiedDate == DateTime.MinValue).ForEach(x => x.ModifiedDate = null);
+            stations.Where(x => x.ModifiedDate == DateTime.MinValue).ForEach(x => x.ModifiedDate = null);
 
             _SetRateDataThrough(stations, currentDate);
             return stations;
@@ -281,7 +284,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
-                
+
                 if (!inventoryFile.HasManifests())
                 {
                     throw new ApplicationException("Unable to parse any file records.");
@@ -326,7 +329,7 @@ namespace Services.Broadcast.ApplicationServices
                     _AddNewStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
                     _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now, inventorySource.Id);
-                    inventoryFile.FileStatus = InventoryFile.FileStatusEnum.Loaded;
+                    inventoryFile.FileStatus = FileStatusEnum.Loaded;
                     _inventoryFileRepository.UpdateInventoryFile(inventoryFile, request.UserName);
 
                     transaction.Complete();
@@ -352,7 +355,7 @@ namespace Services.Broadcast.ApplicationServices
                 try
                 {
                     UnlockStations(lockedStationCodes, stationLocks);
-                    _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, InventoryFile.FileStatusEnum.Failed);
+                    _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
                 }
                 catch
                 {
@@ -782,7 +785,7 @@ namespace Services.Broadcast.ApplicationServices
                     .GetStationContactsByStationCode(stationCode)
             };
         }
-        
+
         private void _SetDisplayDaypartForInventoryManifest(List<StationInventoryManifest> manifests)
         {
             manifests.SelectMany(m => m.ManifestDayparts).ForEach(d =>
@@ -972,7 +975,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var ratesInitialDataDto = new RatesInitialDataDto
             {
-                RatingBooks = GetRatingBooks(),
+                RatingBooks = _NsiPostingBookService.GetPostingBookLongMonthNameAndYear(),
                 PlaybackTypes = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalPlaybackType>(),
                 Audiences = _AudiencesCache.GetAllLookups(),
                 DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3
@@ -980,21 +983,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return ratesInitialDataDto;
         }
-
-        private List<LookupDto> GetRatingBooks()
-        {
-            var postingBooks = _RatingForecastService.GetPostingBooks().Select(x => x.Id).ToList();
-            var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(postingBooks);
-
-            return (from mediaMonth in mediaMonths
-                    orderby mediaMonth.Id descending
-                    select new LookupDto
-                    {
-                        Id = mediaMonth.Id,
-                        Display = mediaMonth.LongMonthNameAndYear
-                    }).ToList();
-        }
-
+        
         public Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength)
         {
             if (!_SpotLengthMap.ContainsKey(outputRateSpotLength))
@@ -1129,40 +1118,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return flightWeekGroups;
-        }
-
-        public InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName)
-        {
-            var inventoryFile = _GetInventoryFile(request);
-            inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, userName);
-
-            return new InventoryFileSaveResult
-            {
-                FileId = inventoryFile.Id
-            };
-        }
-
-        private InventoryFile _GetInventoryFile(InventoryFileSaveRequest request)
-        {
-            const string defaultInventorySourceName = "TTNW";
-
-            var file = new InventoryFile
-            {
-                FileName = request.FileName ?? "unknown",
-                FileStatus = InventoryFile.FileStatusEnum.Failed,
-                Hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(request.StreamData)),
-                PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
-                InventorySource = _inventoryRepository.GetInventorySourceByName(defaultInventorySourceName),
-                RatingBook = request.RatingBook ?? GetRatingBooks().FirstOrDefault()?.Id
-            };
-
-            if (_inventoryFileRepository.GetInventoryFileIdByHash(file.Hash) > 0)
-            {
-                throw new BroadcastDuplicateInventoryFileException(
-                    "Unable to load file. The selected file has already been loaded or is already loading.");
-            }
-
-            return file;
         }
     }
 }
