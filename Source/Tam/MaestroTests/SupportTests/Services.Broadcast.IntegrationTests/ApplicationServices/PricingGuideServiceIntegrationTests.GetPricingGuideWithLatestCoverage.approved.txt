@@ -2,7 +2,7 @@
   "AllMarkets": [
     {
       "AvgCpm": 0.9615421597775376059138688995,
-      "Coverage": 5.0,
+      "Coverage": 1.01,
       "Id": 160,
       "MaxCpm": 0.9615421597775376059138688995,
       "MinCpm": 0.9615421597775376059138688995,
@@ -19,21 +19,18 @@
     ],
     "Genres": [
       {
-        "Display": "Adventure",
-        "Id": 3
+        "Display": "Adventure"
       }
     ],
     "Markets": [
       {
-        "Display": "Raleigh-Durham (Fayetvlle)",
-        "Id": 160
+        "Display": "Raleigh-Durham (Fayetvlle)"
       }
     ],
     "ProgramNames": [
       "Adventure Time"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": null,
@@ -57,8 +54,7 @@
       "CPM": 0.9615421597775376059138688995,
       "DisplayImpressions": 43706.14642857,
       "DisplayStationImpressions": 51999.8,
-      "MarketCoverage": 5.0,
-      "MarketId": 160,
+      "MarketCoverage": 1.01,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 0.9615421597775376059138688995,
@@ -76,8 +72,7 @@
               "Cost": 50.0000,
               "CostPerSpot": 50.0000,
               "Daypart": {
-                "Display": "M-SU 9AM-12AM",
-                "Id": 5
+                "Display": "M-SU 9AM-12AM"
               },
               "DisplayCost": 50.0000,
               "DisplayImpressions": 43706.14642857,
@@ -85,15 +80,12 @@
               "EffectiveImpressionsPerSpot": 51999.8,
               "Genres": [
                 {
-                  "Display": "Adventure",
-                  "Id": 3
+                  "Display": "Adventure"
                 }
               ],
               "HasImpressions": true,
               "Impressions": 51999.8,
               "ImpressionsPerSpot": 43706.14642857,
-              "ManifestDaypartId": 213353,
-              "ProgramId": 162238,
               "ProgramName": "Adventure Time",
               "Spots": 1,
               "StationImpressionsPerSpot": 51999.8
@@ -119,19 +111,16 @@
   "OpenMarketShare": 1.0,
   "OpenMarketTotals": {
     "Cost": 50.0000,
-    "Coverage": 5.0,
+    "Coverage": 1.01,
     "Cpm": 0.9615421597775376059138688995,
     "Impressions": 51999.8
   },
   "PricingTotals": {
     "Cost": 50.0000,
-    "Coverage": 5.0,
+    "Coverage": 1.01,
     "Cpm": 0.96154216,
     "Impressions": 51999.8
   },
-  "ProposalDetailId": 9986,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

@@ -19,21 +19,18 @@
     ],
     "Genres": [
       {
-        "Display": "Adventure",
-        "Id": 3
+        "Display": "Adventure"
       }
     ],
     "Markets": [
       {
-        "Display": "Raleigh-Durham (Fayetvlle)",
-        "Id": 160
+        "Display": "Raleigh-Durham (Fayetvlle)"
       }
     ],
     "ProgramNames": [
       "Ricky and Morty"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": 0.8,
@@ -51,7 +48,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 5.7200192748306686972316331321,
@@ -59,7 +55,6 @@
       "DisplayImpressions": 4370.61464286,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
-      "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 5.7200192748306686972316331321,
@@ -77,8 +72,7 @@
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
-                "Display": "M-SU 9AM-12AM",
-                "Id": 5
+                "Display": "M-SU 9AM-12AM"
               },
               "DisplayCost": 25.0000,
               "DisplayImpressions": 4370.61464286,
@@ -86,15 +80,12 @@
               "EffectiveImpressionsPerSpot": 4370.61464286,
               "Genres": [
                 {
-                  "Display": "Adventure",
-                  "Id": 3
+                  "Display": "Adventure"
                 }
               ],
               "HasImpressions": true,
               "Impressions": 4370.61464286,
               "ImpressionsPerSpot": 4370.61464286,
-              "ManifestDaypartId": 213354,
-              "ProgramId": 162239,
               "ProgramName": "Ricky and Morty",
               "Spots": 1,
               "StationImpressionsPerSpot": 0.0
@@ -130,9 +121,6 @@
     "Cpm": 5.72001927,
     "Impressions": 4370.61464286
   },
-  "ProposalDetailId": 9989,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

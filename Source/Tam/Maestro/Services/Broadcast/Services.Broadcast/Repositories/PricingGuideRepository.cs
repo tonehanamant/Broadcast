@@ -292,7 +292,7 @@ namespace Services.Broadcast.Repositories
                         DistributionId = data.id,
                         ProposalId = data.proposal_version_details.proposal_versions.proposal_id,
                         ProposalDetailId = proposalDetailId,
-                        MarketCoverageFileId = data.market_coverage_file_id,
+                        MarketCoverageFileId = context.market_coverage_files.OrderByDescending(x=>x.id).First().id, //get the latest market coverage file
                         BudgetGoal = data.goal_budget,
                         ImpressionGoal = data.goal_impression,
                         Margin = data.adjustment_margin,

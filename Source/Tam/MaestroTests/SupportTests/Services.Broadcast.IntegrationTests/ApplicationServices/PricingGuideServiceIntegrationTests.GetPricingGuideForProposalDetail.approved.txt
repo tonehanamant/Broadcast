@@ -24,7 +24,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 0,
   "Markets": [],
   "OpenMarketPricing": {
     "CpmMax": null,
