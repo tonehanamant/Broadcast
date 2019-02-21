@@ -191,16 +191,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -217,14 +208,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProposalDetailId = 3253
                 };
                 var pricingGuideDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = new IgnorableSerializerContractResolver()
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideDto);
             }
         }
 
@@ -242,8 +226,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -261,8 +244,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -280,8 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -299,8 +280,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -320,8 +300,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -345,8 +324,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1005,16 +983,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1042,15 +1011,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1145,16 +1106,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1184,16 +1136,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1306,15 +1249,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1344,16 +1279,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1383,16 +1309,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1423,16 +1340,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1537,20 +1445,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = IntegrationTestApplicationServiceFactory.GetApplicationService<IPricingGuideService>().GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                jsonResolver.Ignore(typeof(PricingGuideDto), "MarketCoverageFileId");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings);
-
-                Approvals.Verify(resultJson);
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1572,9 +1467,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
         [Test]
@@ -1595,9 +1488,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
         [Test]
@@ -1619,9 +1510,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
         [Test]
@@ -1673,9 +1562,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
         [Test]
@@ -1769,9 +1656,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
 
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
         
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
@@ -1811,6 +1696,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PricingGuideDto), "ProposalVersionId");
             jsonResolver.Ignore(typeof(PricingGuideDto), "ProposalDetailId");
             jsonResolver.Ignore(typeof(PricingGuideDto), "DistributionId");
+            jsonResolver.Ignore(typeof(PricingGuideDto), "MarketCoverageFileId");
             jsonResolver.Ignore(typeof(PricingGuideMarketDto), "MarketId");
             jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ProgramId");
             jsonResolver.Ignore(typeof(PricingGuideProgramDto), "ManifestDaypartId");
@@ -1868,5 +1754,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
         }
+        
     }
 }

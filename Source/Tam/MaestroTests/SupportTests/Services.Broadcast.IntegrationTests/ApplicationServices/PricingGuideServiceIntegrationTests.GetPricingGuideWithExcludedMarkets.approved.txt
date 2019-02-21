@@ -186,12 +186,10 @@
     "Genres": [],
     "Markets": [
       {
-        "Display": "Alexandria, LA",
-        "Id": 244
+        "Display": "Alexandria, LA"
       },
       {
-        "Display": "Tampa-St. Pete (Sarasota)",
-        "Id": 139
+        "Display": "Tampa-St. Pete (Sarasota)"
       }
     ],
     "ProgramNames": [
@@ -202,7 +200,6 @@
       "Good Morning Suncoast"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": null,
@@ -220,7 +217,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 41.102766392777755806232747603,
@@ -228,7 +224,6 @@
       "DisplayImpressions": 12999.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
-      "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
       "MaxCpm": 100.96548242569571527733955954,
@@ -246,8 +241,7 @@
               "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
-                "Display": "M-F 12PM-1PM",
-                "Id": 1617
+                "Display": "M-F 12PM-1PM"
               },
               "DisplayCost": 60.0000,
               "DisplayImpressions": 12999.5,
@@ -257,8 +251,6 @@
               "HasImpressions": true,
               "Impressions": 12999.5,
               "ImpressionsPerSpot": 12999.5,
-              "ManifestDaypartId": 55369,
-              "ProgramId": 26630,
               "ProgramName": "America next morning",
               "Spots": 1,
               "StationImpressionsPerSpot": 0.0
@@ -268,8 +260,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 100.0000,
               "Daypart": {
-                "Display": "M-F 5AM-5:30AM",
-                "Id": 32756
+                "Display": "M-F 5AM-5:30AM"
               },
               "DisplayCost": 100.0000,
               "DisplayImpressions": 5968.4,
@@ -279,8 +270,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 5968.4,
-              "ManifestDaypartId": 41602,
-              "ProgramId": 26632,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -290,8 +279,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 250.0000,
               "Daypart": {
-                "Display": "M-F 6AM-7AM",
-                "Id": 6447
+                "Display": "M-F 6AM-7AM"
               },
               "DisplayCost": 250.0000,
               "DisplayImpressions": 11283.075,
@@ -301,8 +289,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 11283.075,
-              "ManifestDaypartId": 41606,
-              "ProgramId": 26636,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -312,8 +298,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 150.0000,
               "Daypart": {
-                "Display": "M-F 5:30AM-6AM",
-                "Id": 29947
+                "Display": "M-F 5:30AM-6AM"
               },
               "DisplayCost": 150.0000,
               "DisplayImpressions": 6457.85,
@@ -323,8 +308,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 6457.85,
-              "ManifestDaypartId": 41604,
-              "ProgramId": 26634,
               "ProgramName": "Good Morning Suncoast",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -334,8 +317,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 325.0000,
               "Daypart": {
-                "Display": "M-F 7AM-9AM",
-                "Id": 78
+                "Display": "M-F 7AM-9AM"
               },
               "DisplayCost": 325.0000,
               "DisplayImpressions": 12523.3375,
@@ -345,8 +327,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 12523.3375,
-              "ManifestDaypartId": 41608,
-              "ProgramId": 26638,
               "ProgramName": "Good Morning America",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -356,8 +336,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 275.0000,
               "Daypart": {
-                "Display": "SU 8AM-9AM",
-                "Id": 31233
+                "Display": "SU 8AM-9AM"
               },
               "DisplayCost": 275.0000,
               "DisplayImpressions": 2924.0625,
@@ -367,8 +346,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 2924.0625,
-              "ManifestDaypartId": 41612,
-              "ProgramId": 26641,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -378,8 +355,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 300.0000,
               "Daypart": {
-                "Display": "SA 8AM-9AM",
-                "Id": 31239
+                "Display": "SA 8AM-9AM"
               },
               "DisplayCost": 300.0000,
               "DisplayImpressions": 2971.3125,
@@ -389,8 +365,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 2971.3125,
-              "ManifestDaypartId": 41610,
-              "ProgramId": 26640,
               "ProgramName": "Good Morning America Weekend",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -412,7 +386,6 @@
       "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.073,
-      "MarketId": 244,
       "MarketName": "Alexandria, LA",
       "MarketRank": 179,
       "MaxCpm": 0.0,
@@ -430,8 +403,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 35.0000,
               "Daypart": {
-                "Display": "SU 8AM-9AM",
-                "Id": 31233
+                "Display": "SU 8AM-9AM"
               },
               "DisplayCost": 35.0000,
               "DisplayImpressions": 0.0,
@@ -441,8 +413,6 @@
               "HasImpressions": false,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 0.0,
-              "ManifestDaypartId": 41619,
-              "ProgramId": 26648,
               "ProgramName": "Fox News Sunday",
               "Spots": 0,
               "StationImpressionsPerSpot": 0.0
@@ -478,9 +448,6 @@
     "Cpm": 4.61556214,
     "Impressions": 12999.5
   },
-  "ProposalDetailId": 9985,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

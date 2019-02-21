@@ -20,15 +20,13 @@
     "Genres": [],
     "Markets": [
       {
-        "Display": "Raleigh-Durham (Fayetvlle)",
-        "Id": 160
+        "Display": "Raleigh-Durham (Fayetvlle)"
       }
     ],
     "ProgramNames": [
       "Friends|Friends 2"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": null,
@@ -46,7 +44,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 2.8224718149728601694541515914,
@@ -54,7 +51,6 @@
       "DisplayImpressions": 8857.484375,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.01,
-      "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 2.8224718149728601694541515914,
@@ -72,8 +68,7 @@
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
-                "Display": "M-F 6AM-6PM",
-                "Id": 12
+                "Display": "M-F 6AM-6PM"
               },
               "DisplayCost": 25.0000,
               "DisplayImpressions": 8857.484375,
@@ -83,8 +78,6 @@
               "HasImpressions": true,
               "Impressions": 8857.484375,
               "ImpressionsPerSpot": 8857.484375,
-              "ManifestDaypartId": 213349,
-              "ProgramId": 162234,
               "ProgramName": "Friends|Friends 2",
               "Spots": 1,
               "StationImpressionsPerSpot": 0.0
@@ -120,9 +113,6 @@
     "Cpm": 2.82247181,
     "Impressions": 8857.484375
   },
-  "ProposalDetailId": 9979,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

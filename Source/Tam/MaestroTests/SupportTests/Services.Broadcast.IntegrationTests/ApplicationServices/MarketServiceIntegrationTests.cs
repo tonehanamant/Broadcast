@@ -25,9 +25,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\Market_Coverages_2.xlsx";
+                const string filename = @".\Files\Market_Coverages_3.xlsx";
 
-                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), filename, "IntegrationTestUser", new DateTime(2018, 12, 18));
+                _MarketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), Path.GetFileName(filename), "IntegrationTestUser", new DateTime(2018, 12, 18));
 
                 var jsonSerializerSettings = _GetJsonSerializerSettingsForMarketCoverages();
                 var loadedCoverages = _MarketCoverageRepository.GetAll();
