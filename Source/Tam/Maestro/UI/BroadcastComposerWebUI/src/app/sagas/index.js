@@ -1,5 +1,4 @@
 import * as planningSaga from "./planning";
-import * as trackerSaga from "./tracker";
 
 export default function* rootSaga() {
   yield [
@@ -36,32 +35,6 @@ export default function* rootSaga() {
     planningSaga.watchCopyToBuyFlow(),
     planningSaga.watchCopyToBuySaga(),
     planningSaga.watchGenerateScx(),
-    planningSaga.watchGenerateScxSuccess(),
-
-    trackerSaga.watchUploadTrackerFile(),
-    trackerSaga.watchUploadTrackerFileSuccess(),
-    trackerSaga.watchRequestTracker(),
-    trackerSaga.watchRequestTrackerFiltered(),
-    trackerSaga.watchRequestUnlinkedFiltered(),
-    trackerSaga.watchRequestArchivedFiltered(),
-    trackerSaga.watchRequestTrackerClientScrubbing(),
-    trackerSaga.watchRequestUniqueIscis(),
-    trackerSaga.watchRequestScrubbingDataFiltered(),
-    trackerSaga.watchRequestClearScrubbingFiltersList(),
-    trackerSaga.watchRequestOverrideStatus(),
-    trackerSaga.watchSwapProposalDetail(),
-    trackerSaga.watchArchiveUnlinkedIsci(),
-    trackerSaga.watchRequestUniqueIscisSuccess(),
-    trackerSaga.watchRequestArchivedIscisSuccess(),
-    trackerSaga.watchLoadArchivedIscis(),
-    trackerSaga.watchLoadValidIscis(),
-    trackerSaga.watchMapUnlinkedIsci(),
-    trackerSaga.watchMapUnlinkedIsciSuccess(),
-    trackerSaga.watchRescrubUnlinkedIsci(),
-    trackerSaga.watchCloseUnlinkedIsciModal(),
-    trackerSaga.watchUndoArchivedIscis(),
-    trackerSaga.watchUndoScrubStatus(),
-    trackerSaga.watchUndoScrubStatusSuccess(),
-    trackerSaga.watchRequestClearFilteredScrubbingData()
+    planningSaga.watchGenerateScxSuccess()
   ];
 }
