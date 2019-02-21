@@ -15,6 +15,7 @@ module.exports = {
   Main: resolve(__dirname, '../../src/app/features/Main'),
   Post: resolve(__dirname, '../../src/app/features/Post'),
   Planning: resolve(__dirname, '../../src/app/features/Planning'),
+  PricingGuide: resolve(__dirname, '../../src/app/features/PricingGuide'),
   PostPrePosting: resolve(__dirname, '../../src/app/features/PostPrePosting'),
-  PricingGuide: resolve(__dirname, '../../src/app/features/PricingGuide')
+  Tracker: resolve(__dirname, '../../src/app/features/Tracker')
 };
