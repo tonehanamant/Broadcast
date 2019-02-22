@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import ProposalDetail from "Components/planning/ProposalDetail";
+import ProposalDetail from "Proposal/sub-features/Detail";
 
 export default class ProposalDetails extends Component {
   constructor(props) {

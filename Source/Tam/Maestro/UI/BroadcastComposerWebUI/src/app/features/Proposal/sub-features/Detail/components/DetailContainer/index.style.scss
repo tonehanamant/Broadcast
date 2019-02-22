@@ -1,0 +1,76 @@
+.proposal-detail-wrap {
+
+  .proposal-detail-form {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+
+    .help-block {
+      font-size: 11px;
+      margin: 0;
+    }
+
+    .proposal-detail-form-item {
+      min-height: 53px;
+
+      > label {
+        margin-right: 6px !important;
+      }
+
+      .proposal-form-label {
+        display: flex;
+        flex-direction: column;
+        margin-right: 6px;
+      }
+    }
+
+    > div:first-child {
+      margin-left: 0;
+    }
+
+    .proposal-detail-actions {
+      margin-left: auto;
+      flex-direction: row;
+      display: flex;
+    }
+
+  }
+
+  @media (max-width: 1500px) {
+    .proposal-detail-form-item {
+      display: inline-flex !important;
+      align-items: flex-start;
+      margin: 0 10px !important;  
+      flex-direction: column; 
+      min-height: 34px;
+
+      .proposal-form-label {
+        display: flex;
+        flex-direction: column;
+        margin-right: 6px;
+      }
+    }
+  }
+
+  @media (min-width: 1501px) {
+    .proposal-detail-form-item {
+      display: inline-flex !important;
+      align-items: center;
+      margin: 0 10px !important;
+      flex-direction: row;
+      min-height: 53px;
+
+      .proposal-form-label {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      > label {
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+  }
+}
