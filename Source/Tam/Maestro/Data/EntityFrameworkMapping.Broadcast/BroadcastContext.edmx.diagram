@@ -256,8 +256,8 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_stations" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="14.75" PointY="13.25" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_rates" Width="1.5" PointX="20.75" PointY="33.625" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="14.75" PointY="13.125" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_rates" Width="1.5" PointX="20.75" PointY="33.5" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" />

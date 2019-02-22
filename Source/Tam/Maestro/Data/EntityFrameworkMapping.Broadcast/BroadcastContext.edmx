@@ -1186,7 +1186,6 @@
           <Property Name="file_id" Type="int" />
           <Property Name="spots_per_day" Type="int" />
           <Property Name="end_date" Type="date" />
-          <Property Name="comment" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -6002,7 +6001,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_genres" />
           <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="pricing_guide_distribution_open_market_inventory" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_files" FromRole="station_inventory_manifest" ToRole="inventory_files" />
-          <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
@@ -9028,7 +9026,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_inventory_manifest">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest">
               <MappingFragment StoreEntitySet="station_inventory_manifest">
-                <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="spots_per_day" ColumnName="spots_per_day" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
