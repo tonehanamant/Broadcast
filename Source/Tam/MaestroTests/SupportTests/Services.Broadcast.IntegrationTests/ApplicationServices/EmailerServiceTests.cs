@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Mail;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
 using IntegrationTests.Common;
-using NUnit.Framework;
-using Services.Broadcast.ApplicationServices;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace Services.Broadcast.IntegrationTests
 {

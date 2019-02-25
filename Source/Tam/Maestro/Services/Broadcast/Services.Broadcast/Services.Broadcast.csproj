@@ -216,6 +216,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\BarterInventoryService.cs" />
+    <Compile Include="ApplicationServices\DataLakeFileService.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\TimeFirstDaypartParser.cs" />

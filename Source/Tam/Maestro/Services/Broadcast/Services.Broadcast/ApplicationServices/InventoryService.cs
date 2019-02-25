@@ -91,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly INsiPostingBookService _NsiPostingBookService;
+        private readonly IDataLakeFileService _DataLakeFileService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -104,7 +105,8 @@ namespace Services.Broadcast.ApplicationServices
             IStationInventoryGroupService stationInventoryGroupService,
             IBroadcastAudiencesCache audiencesCache,
             IRatingForecastService ratingForecastService,
-            INsiPostingBookService nsiPostingBookService)
+            INsiPostingBookService nsiPostingBookService,
+            IDataLakeFileService dataLakeFileService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -128,7 +130,7 @@ namespace Services.Broadcast.ApplicationServices
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _RatingForecastService = ratingForecastService;
             _NsiPostingBookService = nsiPostingBookService;
-
+            _DataLakeFileService = dataLakeFileService;
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -262,6 +264,15 @@ namespace Services.Broadcast.ApplicationServices
 
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
+
+            try
+            {
+                _DataLakeFileService.Save(request);
+            }
+            catch
+            {
+                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
+            }
 
             var inventoryFile = fileImporter.GetPendingInventoryFile();
 

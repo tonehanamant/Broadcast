@@ -232,6 +232,7 @@
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\DataLakeFileServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NtiTransmittalsServiceIntegrationTests.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Stubbs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubbs\FileServiceStubb.cs" />
     <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
     <Compile Include="Stubbs\FtpServiceStubb.cs" />

@@ -193,6 +193,8 @@ namespace Services.Broadcast.IntegrationTests
                 case "ImpressionStartOfDayForAdjustment":
                     result = @"18000";
                     break;
+                case "DataLake_SharedFolder":
+                    return @"D:\temp\datalake";
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

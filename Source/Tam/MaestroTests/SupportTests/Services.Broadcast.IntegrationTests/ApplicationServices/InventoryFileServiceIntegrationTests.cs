@@ -2,29 +2,31 @@
 using ApprovalTests.Reporters;
 using Common.Services;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.IntegrationTests.Stubbs;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Transactions;
-using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class InventoryFileServiceIntegrationTests
     {
-        private IInventoryService _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
+        private IInventoryService _InventoryFileService;
         private IStationInventoryGroupService _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
         private IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
@@ -37,7 +39,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ttnwInventorySource = _InventoryRepository.GetInventorySourceByName("TTNW");
             _cnnInventorySource = _InventoryRepository.GetInventorySourceByName("CNN");
             _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("OpenMarket");
-        }
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
+            _InventoryFileService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
+    }
 
         [Ignore]
         [Test]
@@ -1108,7 +1112,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 StreamData = new FileStream(filePath, FileMode.Open, FileAccess.Read),
                 UserName = "IntegrationTestUser",
-                RatingBook = 416
+                RatingBook = 416,
+                FileName = Path.GetFileName(filePath)
             };
         }
 
