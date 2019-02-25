@@ -2,8 +2,8 @@ const { resolve } = require("path");
 
 module.exports = {
   SRCRoot: resolve(__dirname, '../../src'),
-  Components: resolve(__dirname, '../../src/app/components'),
-  Containers: resolve(__dirname, '../../src/app/containers'),
+  // Components: resolve(__dirname, '../../src/app/components'),
+  // Containers: resolve(__dirname, '../../src/app/containers'),
   Patterns: resolve(__dirname, '../../src/app/patterns'),
   Ducks: resolve(__dirname, '../../src/app/ducks'),
   Sagas: resolve(__dirname, '../../src/app/sagas'),

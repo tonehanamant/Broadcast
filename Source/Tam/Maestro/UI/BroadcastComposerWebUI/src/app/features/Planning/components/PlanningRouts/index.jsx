@@ -4,8 +4,8 @@ import { Switch, Route } from "react-router-dom";
 import CSSModules from "react-css-modules";
 
 import AppBody from "Patterns/layout/Body";
-import SectionPlanningProposalCreate from "Containers/SectionPlanningProposalCreate";
-import SectionPlanningProposal from "Containers/SectionPlanningProposal";
+import SectionPlanningProposal from "Proposal";
+import SectionPlanningProposalCreate from "Proposal/components/ProposalCreateContainer";
 import PlanningHome from "../PlanningHome";
 
 import styles from "./index.style.scss";
