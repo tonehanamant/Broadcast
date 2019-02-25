@@ -194,7 +194,13 @@ namespace Services.Broadcast.IntegrationTests
                     result = @"18000";
                     break;
                 case "DataLake_SharedFolder":
-                    return @"D:\temp\datalake";
+                    return Path.GetTempPath();
+                case "DataLake_SharedFolder_UserName":
+                    return "";
+                case "DataLake_SharedFolder_Password":
+                    return "";
+                case "DataLake_NotificationEmail":
+                    return "mhohenshilt@crossmw.com";
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + pSystemParameterID);
             }

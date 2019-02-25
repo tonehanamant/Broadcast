@@ -2,6 +2,7 @@
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
+using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -44,7 +45,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var impersonateUser = IntegrationTestApplicationServiceFactory.Instance.Resolve<IImpersonateUser>();
             var emailService = new EmailerServiceStubb();
-            var dataLakeFileService = new DataLakeFileService(emailService, impersonateUser);
+            var dataLakeSystemParamteres = new Mock<IDataLakeSystemParameters>();
+            dataLakeSystemParamteres.Setup(r => r.GetSharedFolder()).Returns("C:\\");
+            dataLakeSystemParamteres.Setup(r => r.GetNotificationEmail()).Returns("bernardo.botelho@axispoint.com");
+            dataLakeSystemParamteres.Setup(r => r.GetUserName()).Returns(string.Empty);
+            dataLakeSystemParamteres.Setup(r => r.GetPassword()).Returns(string.Empty);
+            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser);
             var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
 
             var request = new FileRequest

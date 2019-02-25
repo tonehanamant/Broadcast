@@ -154,6 +154,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
 
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
+            unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

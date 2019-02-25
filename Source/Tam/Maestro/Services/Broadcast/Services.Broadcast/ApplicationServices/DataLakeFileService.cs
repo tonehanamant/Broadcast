@@ -19,21 +19,23 @@ namespace Services.Broadcast.ApplicationServices
 
     public class DataLakeFileService : IDataLakeFileService
     {
+        private readonly IDataLakeSystemParameters _DataLakeSystemParameter;
         private readonly IEmailerService _EmailerService;
-        private readonly IImpersonateUser _ImpersonateUser;
+        private readonly IImpersonateUser _ImpersonateUser;        
 
-        public DataLakeFileService(IEmailerService emailerService, IImpersonateUser impersonateUser)
+        public DataLakeFileService(IDataLakeSystemParameters dataLakeSystemParameter, IEmailerService emailerService, IImpersonateUser impersonateUser)
         {
+            _DataLakeSystemParameter = dataLakeSystemParameter;
             _EmailerService = emailerService;
             _ImpersonateUser = impersonateUser;
         }
 
         public void Save(FileRequest fileRequest)
         {
-            var folderToSave = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+            var folderToSave = _DataLakeSystemParameter.GetSharedFolder();
+            var userName = _DataLakeSystemParameter.GetUserName();
+            var password = _DataLakeSystemParameter.GetPassword();
             var filePath = Path.Combine(folderToSave, fileRequest.FileName);
-            var userName = BroadcastServiceSystemParameter.DataLake_SharedFolder_UserName;
-            var password = BroadcastServiceSystemParameter.DataLake_SharedFolder_Password;
 
             _ImpersonateUser.Impersonate(string.Empty, userName, password, delegate
             {
@@ -51,7 +53,7 @@ namespace Services.Broadcast.ApplicationServices
         private void SendErrorEmail(string filePath, string errorMessage)
         {
             var from = new MailAddress(BroadcastServiceSystemParameter.EmailFrom);
-            var to = new List<MailAddress>() { new MailAddress(BroadcastServiceSystemParameter.DataLake_NotificationEmail) };
+            var to = new List<MailAddress>() { new MailAddress(_DataLakeSystemParameter.GetNotificationEmail()) };
 
             _EmailerService.QuickSend(false, CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure", MailPriority.Normal, from, to);
         }
