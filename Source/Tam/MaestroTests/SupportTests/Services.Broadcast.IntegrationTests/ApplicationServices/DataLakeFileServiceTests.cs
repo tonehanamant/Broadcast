@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System.IO;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -16,11 +17,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class DataLakeFileServiceTests
     {
-        private readonly IDataLakeFileService _DataLakeFileService = 
+        private readonly IDataLakeFileService _DataLakeFileService =
             IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
 
         [Test]
-        public void FileSaveTest()
+        public void FileStreamSaveTest()
         {
             var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
             var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
@@ -39,18 +40,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.True(File.Exists(Path.Combine(dataLakeFolder, fileName)));
         }
 
+
+        [Test]
+        public void FileSaveTest()
+        {
+            var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+            var filePath = @".\Files\1Chicago WLS Syn 4Q16.xml";
+
+            _DataLakeFileService.Save(filePath);
+
+            Assert.True(File.Exists(Path.Combine(dataLakeFolder, Path.GetFileName(filePath))));
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ErrorEmailTest()
         {
             var impersonateUser = IntegrationTestApplicationServiceFactory.Instance.Resolve<IImpersonateUser>();
             var emailService = new EmailerServiceStubb();
+            var fileService = new FileServiceSingleFileStubb();
             var dataLakeSystemParamteres = new Mock<IDataLakeSystemParameters>();
             dataLakeSystemParamteres.Setup(r => r.GetSharedFolder()).Returns("C:\\");
             dataLakeSystemParamteres.Setup(r => r.GetNotificationEmail()).Returns("bernardo.botelho@axispoint.com");
             dataLakeSystemParamteres.Setup(r => r.GetUserName()).Returns(string.Empty);
             dataLakeSystemParamteres.Setup(r => r.GetPassword()).Returns(string.Empty);
-            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser);
+            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser, fileService);
             var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
 
             var request = new FileRequest

@@ -14,6 +14,16 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IDataLakeFileService : IApplicationService
     {
+        /// <summary>
+        /// Saves a file to data lake folder
+        /// </summary>
+        /// <param name="filePath">Filepath for the file to save</param>
+        void Save(string filePath);
+
+        /// <summary>
+        /// Saves a stream file to data lake folder
+        /// </summary>
+        /// <param name="fileRequest">FileRequest object for the file to save</param>
         void Save(FileRequest fileRequest);
     }
 
@@ -21,44 +31,78 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IDataLakeSystemParameters _DataLakeSystemParameter;
         private readonly IEmailerService _EmailerService;
-        private readonly IImpersonateUser _ImpersonateUser;        
+        private readonly IFileService _FileService;
+        private readonly IImpersonateUser _ImpersonateUser;
 
-        public DataLakeFileService(IDataLakeSystemParameters dataLakeSystemParameter, IEmailerService emailerService, IImpersonateUser impersonateUser)
+        private readonly string _DataLakeFolder;
+        private readonly string _DataLakeUsername;
+        private readonly string _DataLakePassword;
+
+        public DataLakeFileService(IDataLakeSystemParameters dataLakeSystemParameter
+            , IEmailerService emailerService
+            , IImpersonateUser impersonateUser
+            , IFileService fileService)
         {
             _DataLakeSystemParameter = dataLakeSystemParameter;
             _EmailerService = emailerService;
             _ImpersonateUser = impersonateUser;
+            _FileService = fileService;
+            _DataLakeFolder = _DataLakeSystemParameter.GetSharedFolder();
+            _DataLakeUsername = _DataLakeSystemParameter.GetUserName();
+            _DataLakePassword = _DataLakeSystemParameter.GetPassword();
         }
-
+        
+        /// <summary>
+        /// Saves a stream file to data lake folder
+        /// </summary>
+        /// <param name="fileRequest">FileRequest object for the file to save</param>
         public void Save(FileRequest fileRequest)
-        {
-            var folderToSave = _DataLakeSystemParameter.GetSharedFolder();
-            var userName = _DataLakeSystemParameter.GetUserName();
-            var password = _DataLakeSystemParameter.GetPassword();
-            var filePath = Path.Combine(folderToSave, fileRequest.FileName);
+        {            
+            var filePath = Path.Combine(_DataLakeFolder, fileRequest.FileName);
 
-            _ImpersonateUser.Impersonate(string.Empty, userName, password, delegate
+            _ImpersonateUser.Impersonate(string.Empty, _DataLakeUsername, _DataLakePassword, delegate
             {
                 try
                 {
-                    CopyFileToFolder(fileRequest, filePath);
+                    _FileService.Copy(fileRequest.StreamData, filePath, true);
                 }
                 catch(Exception exception)
                 {
-                    SendErrorEmail(filePath, exception.Message);
+                    _SendErrorEmail(filePath, exception.Message);
                 }
             });
         }
 
-        private void SendErrorEmail(string filePath, string errorMessage)
+        /// <summary>
+        /// Saves a file to data lake folder
+        /// </summary>
+        /// <param name="filePath">Filepath for the file to save</param>
+        public void Save(string filePath)
+        {
+            var newFilePath = Path.Combine(_DataLakeFolder, Path.GetFileName(filePath));
+
+            _ImpersonateUser.Impersonate(string.Empty, _DataLakeUsername, _DataLakePassword, delegate
+            {
+                try
+                {
+                    _FileService.Copy(filePath, newFilePath, true);
+                }
+                catch (Exception exception)
+                {
+                    _SendErrorEmail(newFilePath, exception.Message);
+                }
+            });
+        }
+
+        private void _SendErrorEmail(string filePath, string errorMessage)
         {
             var from = new MailAddress(BroadcastServiceSystemParameter.EmailFrom);
             var to = new List<MailAddress>() { new MailAddress(_DataLakeSystemParameter.GetNotificationEmail()) };
 
-            _EmailerService.QuickSend(false, CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure", MailPriority.Normal, from, to);
+            _EmailerService.QuickSend(false, _CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure", MailPriority.Normal, from, to);
         }
 
-        private string CreateErrorEmail(string filePath, string errorMessage)
+        private string _CreateErrorEmail(string filePath, string errorMessage)
         {
             var emailBody = new StringBuilder();
 
@@ -67,17 +111,6 @@ namespace Services.Broadcast.ApplicationServices
             emailBody.AppendFormat("\nTechnical Information:\n\n{0}", errorMessage);
 
             return emailBody.ToString();
-        }
-
-        private void CopyFileToFolder(FileRequest fileRequest, string filePath)
-        {
-            if (File.Exists(filePath))
-                File.Delete(filePath);
-
-            using (var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write))
-            {
-                fileRequest.StreamData.CopyTo(fileStream);
-            }
         }
     }
 }
