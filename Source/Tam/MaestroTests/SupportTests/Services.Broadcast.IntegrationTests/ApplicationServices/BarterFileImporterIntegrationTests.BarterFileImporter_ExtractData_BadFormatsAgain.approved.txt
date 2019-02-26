@@ -1,0 +1,27 @@
+﻿{
+  "CreatedBy": "integration test",
+  "FileName": "BarterFileImporter_BadFormats3.xlsx",
+  "FileStatus": 1,
+  "Hash": "E0-1D-5E-6C-BA-78-28-FD-0B-AE-1E-43-4C-BA-58-5D-A7-37-A9-F1",
+  "Header": {
+    "AudienceId": 37,
+    "Cpm": 99.88,
+    "DaypartCode": "EMN",
+    "EffectiveDate": "0001-01-01T00:00:00",
+    "EndDate": "0001-01-01T00:00:00",
+    "HutBookId": 0,
+    "PlaybackType": 4,
+    "ShareBookId": 425
+  },
+  "InventorySource": {
+    "Id": 4,
+    "InventoryType": 1,
+    "IsActive": true,
+    "Name": "TTNW"
+  },
+  "UniqueIdentifier": null,
+  "ValidationProblems": [
+    "End date (1/30/2019) should be greater then effective date (1/31/2019)",
+    "HUT Book must be prior to the Share book"
+  ]
+}

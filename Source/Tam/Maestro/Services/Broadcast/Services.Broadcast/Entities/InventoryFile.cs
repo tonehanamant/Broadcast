@@ -6,32 +6,10 @@ using System.Linq;
 
 namespace Services.Broadcast.Entities
 {
-    public class InventoryFile
-    {
-        public enum FileStatusEnum
-        {
-            Pending = 1,
-            Loaded = 2,
-            Failed = 3
-        }
-
-        public InventoryFile()
-        {
-            InventoryGroups = new List<StationInventoryGroup>();
-            InventoryManifests = new List<StationInventoryManifest>();
-            InventoryManifestsStaging = new List<StationInventoryManifestStaging>();
-        }
-
-        public int Id { get; set; }
-        public string FileName { get; set; }
-        public string UniqueIdentifier { get; set; }
-        public FileStatusEnum FileStatus { get; set; }
-        public string Hash { get; set; }
+    public class InventoryFile : InventoryFileBase
+    {                    
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int? RatingBook { get; set; }
-        public ProposalEnums.ProposalPlaybackType? PlaybackType { get; set; }
-        public InventorySource InventorySource { get; set; }
         private List<StationContact> _stationContacts; 
 
         public List<StationContact> StationContacts
@@ -47,9 +25,9 @@ namespace Services.Broadcast.Entities
             set { _stationContacts = value;  }
         }
 
-        public List<StationInventoryGroup> InventoryGroups { get; set; }
-        public List<StationInventoryManifest> InventoryManifests { get; set; } //Only used for OpenMarket
-        public List<StationInventoryManifestStaging> InventoryManifestsStaging { get; set; } // Manifests for not found programs
+        public List<StationInventoryGroup> InventoryGroups { get; set; } = new List<StationInventoryGroup>();
+        public List<StationInventoryManifest> InventoryManifests { get; set; } = new List<StationInventoryManifest>();
+        public List<StationInventoryManifestStaging> InventoryManifestsStaging { get; set; } = new List<StationInventoryManifestStaging>();
 
         public IEnumerable<StationInventoryManifest> GetAllManifests()
         {

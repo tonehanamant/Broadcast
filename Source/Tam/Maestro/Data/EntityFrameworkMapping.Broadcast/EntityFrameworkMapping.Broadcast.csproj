@@ -413,6 +413,12 @@
     <Compile Include="inventory_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_file_barter_header.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_file_problems.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="inventory_sources.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

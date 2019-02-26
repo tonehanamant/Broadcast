@@ -1,0 +1,54 @@
+﻿{
+  "AlternateViews": [],
+  "Attachments": [],
+  "Bcc": [],
+  "Body": "File CNNAMPMBarterObligations_Clean.xlsx could not be properly processed.  Including technical information to help figure out the issue.\n\nFile located in C:\\CNNAMPMBarterObligations_Clean.xlsx\n\nTechnical Information:\n\nAccess to the path 'C:\\CNNAMPMBarterObligations_Clean.xlsx' is denied.",
+  "BodyEncoding": {
+    "BodyName": "us-ascii",
+    "CodePage": 20127,
+    "DecoderFallback": {
+      "DefaultString": "?",
+      "MaxCharCount": 1
+    },
+    "EncoderFallback": {
+      "DefaultString": "?",
+      "MaxCharCount": 1
+    },
+    "EncodingName": "US-ASCII",
+    "HeaderName": "us-ascii",
+    "IsBrowserDisplay": false,
+    "IsBrowserSave": false,
+    "IsMailNewsDisplay": true,
+    "IsMailNewsSave": true,
+    "IsReadOnly": true,
+    "IsSingleByte": true,
+    "WebName": "us-ascii",
+    "WindowsCodePage": 1252
+  },
+  "BodyTransferEncoding": -1,
+  "CC": [],
+  "DeliveryNotificationOptions": 0,
+  "From": {
+    "Address": "broadcast@crossmw.com",
+    "DisplayName": "",
+    "Host": "crossmw.com",
+    "User": "broadcast"
+  },
+  "Headers": [],
+  "HeadersEncoding": null,
+  "IsBodyHtml": false,
+  "Priority": 0,
+  "ReplyTo": null,
+  "ReplyToList": [],
+  "Sender": null,
+  "Subject": "Data Lake File Failure",
+  "SubjectEncoding": null,
+  "To": [
+    {
+      "Address": "bernardo.botelho@axispoint.com",
+      "DisplayName": "",
+      "Host": "axispoint.com",
+      "User": "bernardo.botelho"
+    }
+  ]
+}

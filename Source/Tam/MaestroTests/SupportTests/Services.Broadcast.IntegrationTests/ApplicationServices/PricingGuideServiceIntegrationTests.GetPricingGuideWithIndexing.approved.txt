@@ -19,21 +19,18 @@
     ],
     "Genres": [
       {
-        "Display": "Adventure",
-        "Id": 3
+        "Display": "Adventure"
       }
     ],
     "Markets": [
       {
-        "Display": "Raleigh-Durham (Fayetvlle)",
-        "Id": 160
+        "Display": "Raleigh-Durham (Fayetvlle)"
       }
     ],
     "ProgramNames": [
       "Adventure Time"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": 0.2,
@@ -51,7 +48,6 @@
     "9": "OAndO"
   },
   "Margin": 0.2,
-  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 1.2692356509063496398063069473,
@@ -59,7 +55,6 @@
       "DisplayImpressions": 34964.91714286,
       "DisplayStationImpressions": 51999.8,
       "MarketCoverage": 1.01,
-      "MarketId": 160,
       "MarketName": "Raleigh-Durham (Fayetvlle)",
       "MarketRank": 25,
       "MaxCpm": 1.2692356509063496398063069473,
@@ -77,8 +72,7 @@
               "Cost": 66.000000,
               "CostPerSpot": 66.000000,
               "Daypart": {
-                "Display": "M-SU 9AM-12AM",
-                "Id": 5
+                "Display": "M-SU 9AM-12AM"
               },
               "DisplayCost": 66.000000,
               "DisplayImpressions": 34964.91714286,
@@ -86,15 +80,12 @@
               "EffectiveImpressionsPerSpot": 51999.8,
               "Genres": [
                 {
-                  "Display": "Adventure",
-                  "Id": 3
+                  "Display": "Adventure"
                 }
               ],
               "HasImpressions": true,
               "Impressions": 51999.8,
               "ImpressionsPerSpot": 34964.91714286,
-              "ManifestDaypartId": 213353,
-              "ProgramId": 162238,
               "ProgramName": "Adventure Time",
               "Spots": 1,
               "StationImpressionsPerSpot": 51999.8
@@ -130,9 +121,6 @@
     "Cpm": 1.26923565,
     "Impressions": 51999.8
   },
-  "ProposalDetailId": 9986,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

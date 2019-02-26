@@ -16,13 +16,13 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public station_inventory_manifest()
         {
-            this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.station_inventory_manifest_generation = new HashSet<station_inventory_manifest_generation>();
-            this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
             this.station_inventory_spots = new HashSet<station_inventory_spots>();
             this.station_inventory_manifest_genres = new HashSet<station_inventory_manifest_genres>();
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
+            this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
+            this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
         }
     
         public int id { get; set; }
@@ -36,17 +36,17 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> spots_per_day { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
     
-        public virtual inventory_files inventory_files { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual station_inventory_group station_inventory_group { get; set; }
-        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
-        public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
-        public virtual station station { get; set; }
         public virtual ICollection<station_inventory_spots> station_inventory_spots { get; set; }
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
+        public virtual inventory_files inventory_files { get; set; }
+        public virtual station station { get; set; }
+        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
+        public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
     }
 }

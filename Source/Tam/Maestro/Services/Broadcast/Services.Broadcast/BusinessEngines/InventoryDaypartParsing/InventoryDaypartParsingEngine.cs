@@ -125,9 +125,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
                 string lTimes;
                 string[] lTimesSplit;
 
-                DisplayDaypart lDisplayDaypart = new DisplayDaypart();
-                lDisplayDaypart.Code = "CUS";
-                lDisplayDaypart.Name = "Custom";
+                DisplayDaypart lDisplayDaypart = new DisplayDaypart
+                {
+                    Code = "CUS",
+                    Name = "Custom"
+                };
 
                 if (value.Split(new char[] { ' ' }).Length != 2)
                     return (false);

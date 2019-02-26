@@ -226,10 +226,13 @@
     <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
     <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
+    <Compile Include="ApplicationServices\BarterFileImporterIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\BarterInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\DataLakeFileServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NtiTransmittalsServiceIntegrationTests.cs" />
@@ -262,6 +265,7 @@
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Stubbs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubbs\FileServiceStubb.cs" />
     <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
     <Compile Include="Stubbs\FtpServiceStubb.cs" />
@@ -315,8 +319,20 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFile.barter_extension">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Files\BarterFileImporter_BadFormats2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterFileImporter_BadFormats3.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterFileImporter_BadFormats.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterFileImporter_ValidFormat.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\C786.Sigma.MissingColumns.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -512,6 +528,9 @@
     </None>
     <None Include="Files\Market_Coverages_2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Market_Coverages_3.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages_Pricing_Guide.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

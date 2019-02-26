@@ -335,5 +335,22 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             }
         }
+        [Test]
+        public void Test_TwoBook_Divide_Zero_PRI4396()
+        {
+
+            var uniqueRatingsAudiences = new List<int>() {13};
+            var stationDetails = new List<ManifestDetailDaypart>()
+            {
+                new ManifestDetailDaypart()
+                {
+                    DisplayDaypart =
+                        new DisplayDaypart(0, 19800, 21599, false, false, false, false, false, true, false),
+                    LegacyCallLetters = "KRBC"
+                }
+            };
+            _Repo.GetImpressionsDaypart(434, 437, uniqueRatingsAudiences, stationDetails, ProposalEnums.ProposalPlaybackType.LivePlus3, false);
+        }
+
     }
 }

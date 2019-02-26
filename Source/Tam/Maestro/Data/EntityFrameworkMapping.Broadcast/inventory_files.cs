@@ -20,6 +20,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_contacts1 = new HashSet<station_contacts>();
             this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
             this.station_inventory_manifest_staging = new HashSet<station_inventory_manifest_staging>();
+            this.inventory_file_barter_header = new HashSet<inventory_file_barter_header>();
+            this.inventory_file_problems = new HashSet<inventory_file_problems>();
         }
     
         public int id { get; set; }
@@ -29,15 +31,14 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public byte status { get; set; }
-        public Nullable<int> sweep_book_id { get; set; }
-        public Nullable<byte> play_back_type { get; set; }
         public int inventory_source_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
-        public virtual media_months media_months { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_contacts> station_contacts1 { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual ICollection<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
+        public virtual ICollection<inventory_file_barter_header> inventory_file_barter_header { get; set; }
+        public virtual ICollection<inventory_file_problems> inventory_file_problems { get; set; }
     }
 }

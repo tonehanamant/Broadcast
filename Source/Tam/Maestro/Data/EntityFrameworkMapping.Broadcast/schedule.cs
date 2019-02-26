@@ -19,8 +19,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.schedule_details = new HashSet<schedule_details>();
             this.schedule_iscis = new HashSet<schedule_iscis>();
             this.schedule_restriction_dayparts = new HashSet<schedule_restriction_dayparts>();
-            this.markets = new HashSet<market>();
             this.schedule_audiences = new HashSet<schedule_audiences>();
+            this.markets = new HashSet<market>();
         }
     
         public int id { get; set; }
@@ -41,8 +41,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<schedule_details> schedule_details { get; set; }
         public virtual ICollection<schedule_iscis> schedule_iscis { get; set; }
         public virtual ICollection<schedule_restriction_dayparts> schedule_restriction_dayparts { get; set; }
-        public virtual ICollection<market> markets { get; set; }
         public virtual media_months media_months { get; set; }
         public virtual ICollection<schedule_audiences> schedule_audiences { get; set; }
+        public virtual ICollection<market> markets { get; set; }
     }
 }

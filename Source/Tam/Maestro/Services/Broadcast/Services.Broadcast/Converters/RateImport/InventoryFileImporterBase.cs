@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
@@ -127,10 +128,8 @@ namespace Services.Broadcast.Converters.RateImport
         protected InventoryFile HydrateInventoryFile(InventoryFile inventoryFileToHydrate)
         {
             inventoryFileToHydrate.FileName = Request.FileName == null ? "unknown" : Request.FileName;
-            inventoryFileToHydrate.FileStatus = InventoryFile.FileStatusEnum.Pending;
+            inventoryFileToHydrate.FileStatus = FileStatusEnum.Pending;
             inventoryFileToHydrate.Hash = FileHash;
-            inventoryFileToHydrate.RatingBook = Request.RatingBook;
-            inventoryFileToHydrate.PlaybackType = Request.PlaybackType;
             inventoryFileToHydrate.InventorySource = InventorySource;
             return inventoryFileToHydrate;
         }
@@ -171,6 +170,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected List<DisplayDaypart> ParseDayparts(string daypartText, string station)
         {
             if (InventoryDaypartParsingEngine.TryParse(daypartText, out var displayDayparts) && displayDayparts.Any() && displayDayparts.All(x => x.IsValid))
+
             {
                 return displayDayparts;
             }

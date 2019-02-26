@@ -178,14 +178,17 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var program in programs)
             {
                 var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
-                var programDaypartImpressions =
-                    manifestDaypartImpressions.Where(i => programManifestDaypartIds.Contains(i.Key)).ToList();
+                var programDaypartImpressions = programManifestDaypartIds
+                    .Where(d => manifestDaypartImpressions.ContainsKey(d))
+                    .Select(d => manifestDaypartImpressions[d])
+                    .ToList();
                 var daypartCount = programManifestDaypartIds.Count;
                 if (daypartCount > 0)
                 {
-                    program.UnitImpressions = programDaypartImpressions.Sum(i => i.Value) / daypartCount;
+                    program.UnitImpressions = programDaypartImpressions.Sum(i => i) / daypartCount;
                 }
             }
+
         }
 
         protected void ApplyDaypartNames(List<ProposalProgramDto> programs)

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
@@ -239,7 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (var scope = new TransactionScopeWrapper())
             {
                 var fileId =_Setup(MethodBase.GetCurrentMethod().Name);
-                _inventoryFileRepository.UpdateInventoryFileStatus(fileId, InventoryFile.FileStatusEnum.Failed);
+                _inventoryFileRepository.UpdateInventoryFileStatus(fileId, FileStatusEnum.Failed);
                 var today = new DateTime(2016, 01, 01);
                 var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();

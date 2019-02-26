@@ -743,6 +743,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastNTIUploadApiUrl); }
         }
 	 
+		public static string DataLake_NotificationEmail  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DataLake_NotificationEmail); }
+        }
+	 
+		public static string DataLake_SharedFolder  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DataLake_SharedFolder); }
+        }
+	 
+		public static string DataLake_SharedFolder_Password  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DataLake_SharedFolder_Password); }
+        }
+	 
+		public static string DataLake_SharedFolder_UserName  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DataLake_SharedFolder_UserName); }
+        }
+	 
 		public static float DefaultMarketCoverage  
 		{
             get { return SystemComponentHelper.GetPropertyValue<float>
@@ -2318,6 +2342,24 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class TrafficComposerWebSystemParameter 
 	{ 
+		public static string CancellationNotificationEmailList  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.CancellationNotificationEmailList); }
+        }
+	 
+		public static string CancellationNotificationEndPoint  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.CancellationNotificationEndPoint); }
+        }
+	 
+		public static string CancellationNotificationUri  
+		{
+            get { return SystemComponentHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.CancellationNotificationUri); }
+        }
+	 
 		public static string DeliveryInsightPrediction  
 		{
             get { return SystemComponentHelper.GetPropertyValue<string>

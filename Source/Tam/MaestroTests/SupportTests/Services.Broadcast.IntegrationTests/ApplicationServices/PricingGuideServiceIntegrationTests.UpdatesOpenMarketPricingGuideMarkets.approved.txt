@@ -197,12 +197,10 @@
     "Genres": [],
     "Markets": [
       {
-        "Display": "Corpus Christi",
-        "Id": 200
+        "Display": "Corpus Christi"
       },
       {
-        "Display": "Jackson, MS",
-        "Id": 318
+        "Display": "Jackson, MS"
       }
     ],
     "ProgramNames": [
@@ -214,7 +212,6 @@
       "This Week In Agri-Business"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": null,
@@ -232,7 +229,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 7.4345253234864090035412526262,
@@ -240,7 +236,6 @@
       "DisplayImpressions": 3362.68946735,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
-      "MarketId": 318,
       "MarketName": "Jackson, MS",
       "MarketRank": 95,
       "MaxCpm": 7.4345253234864090035412526262,
@@ -258,8 +253,7 @@
               "Cost": 25.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
-                "Display": "M-F 7AM-9AM",
-                "Id": 78
+                "Display": "M-F 7AM-9AM"
               },
               "DisplayCost": 25.0000,
               "DisplayImpressions": 3362.68946735,
@@ -269,8 +263,6 @@
               "HasImpressions": true,
               "Impressions": 3362.68946735,
               "ImpressionsPerSpot": 3362.68946735,
-              "ManifestDaypartId": 41556,
-              "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
               "Spots": 1,
               "StationImpressionsPerSpot": 0.0
@@ -292,7 +284,6 @@
       "DisplayImpressions": 3736.09437494,
       "DisplayStationImpressions": 6140.0,
       "MarketCoverage": 0.177,
-      "MarketId": 200,
       "MarketName": "Corpus Christi",
       "MarketRank": 128,
       "MaxCpm": 25.000,
@@ -310,8 +301,7 @@
               "Cost": 30.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
-                "Display": "M-F 5AM-5:58AM",
-                "Id": 62772
+                "Display": "M-F 5AM-5:58AM"
               },
               "DisplayCost": 30.0000,
               "DisplayImpressions": 3736.09437494,
@@ -321,8 +311,6 @@
               "HasImpressions": true,
               "Impressions": 6140.0,
               "ImpressionsPerSpot": 3736.09437494,
-              "ManifestDaypartId": 41653,
-              "ProgramId": 26682,
               "ProgramName": "3 News First Edition",
               "Spots": 1,
               "StationImpressionsPerSpot": 6140.0
@@ -332,8 +320,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 40.0000,
               "Daypart": {
-                "Display": "SA 5:58AM-7AM",
-                "Id": 62775
+                "Display": "SA 5:58AM-7AM"
               },
               "DisplayCost": 40.0000,
               "DisplayImpressions": 5555.08825892,
@@ -343,8 +330,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 5555.08825892,
-              "ManifestDaypartId": 41657,
-              "ProgramId": 26686,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
               "StationImpressionsPerSpot": 8090.0
@@ -354,8 +339,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
-                "Display": "SA 7AM-8AM",
-                "Id": 35762
+                "Display": "SA 7AM-8AM"
               },
               "DisplayCost": 60.0000,
               "DisplayImpressions": 9567.5537589,
@@ -365,8 +349,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 9567.5537589,
-              "ManifestDaypartId": 41658,
-              "ProgramId": 26687,
               "ProgramName": "Good Morning America-Sat",
               "Spots": 0,
               "StationImpressionsPerSpot": 9230.0
@@ -376,8 +358,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
-                "Display": "SU 5:58AM-7AM",
-                "Id": 62776
+                "Display": "SU 5:58AM-7AM"
               },
               "DisplayCost": 30.0000,
               "DisplayImpressions": 3884.75017782,
@@ -387,8 +368,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 3884.75017782,
-              "ManifestDaypartId": 41659,
-              "ProgramId": 26688,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
               "StationImpressionsPerSpot": 4490.0
@@ -398,8 +377,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
-                "Display": "SU 7AM-8AM",
-                "Id": 35768
+                "Display": "SU 7AM-8AM"
               },
               "DisplayCost": 60.0000,
               "DisplayImpressions": 7087.76263664,
@@ -409,8 +387,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 7087.76263664,
-              "ManifestDaypartId": 41660,
-              "ProgramId": 26689,
               "ProgramName": "Good Morning America-Sun",
               "Spots": 0,
               "StationImpressionsPerSpot": 8410.0
@@ -420,8 +396,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 180.0000,
               "Daypart": {
-                "Display": "M-F 7AM-9AM",
-                "Id": 78
+                "Display": "M-F 7AM-9AM"
               },
               "DisplayCost": 180.0000,
               "DisplayImpressions": 17743.9947581,
@@ -431,8 +406,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 17743.9947581,
-              "ManifestDaypartId": 41655,
-              "ProgramId": 26684,
               "ProgramName": "Good Morning America",
               "Spots": 0,
               "StationImpressionsPerSpot": 16390.0
@@ -442,8 +415,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 180.0000,
               "Daypart": {
-                "Display": "M-F 5:58AM-7AM",
-                "Id": 62773
+                "Display": "M-F 5:58AM-7AM"
               },
               "DisplayCost": 180.0000,
               "DisplayImpressions": 10067.7647884,
@@ -453,8 +425,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 10067.7647884,
-              "ManifestDaypartId": 41654,
-              "ProgramId": 26683,
               "ProgramName": "3 News First Edition",
               "Spots": 0,
               "StationImpressionsPerSpot": 12200.0
@@ -464,8 +434,7 @@
               "Cost": 0.0000,
               "CostPerSpot": 30.0000,
               "Daypart": {
-                "Display": "SA 5AM-5:58AM",
-                "Id": 62774
+                "Display": "SA 5AM-5:58AM"
               },
               "DisplayCost": 30.0000,
               "DisplayImpressions": 912.05163621,
@@ -475,8 +444,6 @@
               "HasImpressions": true,
               "Impressions": 0.0,
               "ImpressionsPerSpot": 912.05163621,
-              "ManifestDaypartId": 41656,
-              "ProgramId": 26685,
               "ProgramName": "This Week In Agri-Business",
               "Spots": 0,
               "StationImpressionsPerSpot": 1200.0
@@ -512,9 +479,6 @@
     "Cpm": 5.78783514,
     "Impressions": 9502.68946735
   },
-  "ProposalDetailId": 2290,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

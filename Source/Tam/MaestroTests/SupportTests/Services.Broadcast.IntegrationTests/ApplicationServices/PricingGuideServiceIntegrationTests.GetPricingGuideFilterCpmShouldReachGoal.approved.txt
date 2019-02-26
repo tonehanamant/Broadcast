@@ -185,15 +185,13 @@
     "Genres": [],
     "Markets": [
       {
-        "Display": "Tampa-St. Pete (Sarasota)",
-        "Id": 139
+        "Display": "Tampa-St. Pete (Sarasota)"
       }
     ],
     "ProgramNames": [
       "America next morning"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": null,
@@ -211,7 +209,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 1,
   "Markets": [
     {
       "AvgCpm": 41.102766392777755806232747603,
@@ -219,7 +216,6 @@
       "DisplayImpressions": 12999.5,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 1.676,
-      "MarketId": 139,
       "MarketName": "Tampa-St. Pete (Sarasota)",
       "MarketRank": 11,
       "MaxCpm": 100.96548242569571527733955954,
@@ -237,8 +233,7 @@
               "Cost": 60.0000,
               "CostPerSpot": 60.0000,
               "Daypart": {
-                "Display": "M-F 12PM-1PM",
-                "Id": 1617
+                "Display": "M-F 12PM-1PM"
               },
               "DisplayCost": 60.0000,
               "DisplayImpressions": 12999.5,
@@ -248,8 +243,6 @@
               "HasImpressions": true,
               "Impressions": 12999.5,
               "ImpressionsPerSpot": 12999.5,
-              "ManifestDaypartId": 55369,
-              "ProgramId": 26630,
               "ProgramName": "America next morning",
               "Spots": 1,
               "StationImpressionsPerSpot": 0.0
@@ -285,9 +278,6 @@
     "Cpm": 4.61556214,
     "Impressions": 12999.5
   },
-  "ProposalDetailId": 9985,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

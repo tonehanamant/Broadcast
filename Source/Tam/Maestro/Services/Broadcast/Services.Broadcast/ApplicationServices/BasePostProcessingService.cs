@@ -160,11 +160,6 @@ namespace Services.Broadcast.ApplicationServices
             return result.TimeOfDay;
         }
 
-        private TimeSpan ExtractKeepingTracTime(string timeToParse, List<WWTVInboundFileValidationResult> validationErrors, string fieldName, int recordNumber)
-        {
-            return ExtractDateTime(timeToParse, validationErrors, fieldName, recordNumber);
-        }
-
         private TimeSpan ExtractDateTime(string datetime, List<WWTVInboundFileValidationResult> validationErrors, string fieldName, int recordNumber)
         {
             if (!DateTime.TryParse(datetime, out DateTime parsedTime))
