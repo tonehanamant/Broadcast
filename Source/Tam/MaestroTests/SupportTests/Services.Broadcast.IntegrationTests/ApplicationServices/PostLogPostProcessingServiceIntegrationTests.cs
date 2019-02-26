@@ -13,6 +13,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -121,31 +122,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyResults(response);
             }
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void DLAndProcessWWTVFiles_Error_InvalidFileFormat()
-        {
-            using (var trans = new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-                
-                EmailerServiceStubb.LastMailMessageGenerated = null;
-                var response = _PostLogPostProcessingService.DownloadAndProcessWWTVFiles(_UserName);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
-                Approvals.Verify(json);
-            }
-        }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ValidFileContent_BCOP4270()
@@ -158,6 +135,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 VerifyPostLogFile(response.Id.Value);
+            }
+        }
+
+        [Test]
+        public void DLAndProcessWWTVFiles_DataLakeCopy()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                string filePath = Path.Combine(dataLakeFolder, "Special_Ftp_Phantom_File.txt");
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+
+                var srv = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
+
+                srv.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                Assert.True(File.Exists(filePath));
             }
         }
 

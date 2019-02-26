@@ -106,6 +106,8 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
                 }
 
+                SendFileToDataLake(fileContents, fileName);
+
                 var result = ProcessFileContents(userName, fileName, fileContents);
                 response.SaveResults.Add(result);
                 if (result.ValidationResults.Any())

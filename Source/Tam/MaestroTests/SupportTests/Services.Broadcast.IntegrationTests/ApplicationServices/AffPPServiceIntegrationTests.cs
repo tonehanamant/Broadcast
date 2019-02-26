@@ -513,7 +513,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     File.Delete(filePath);
                 }
 
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, DownloadAndProcessWWTVFiles_ValidFile_Stubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
 
                 var srv = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
