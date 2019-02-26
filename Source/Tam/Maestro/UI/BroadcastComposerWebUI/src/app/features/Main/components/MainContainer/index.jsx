@@ -3,12 +3,10 @@ import PropTypes from "prop-types";
 import { Switch, Route } from "react-router-dom";
 import CSSModules from "react-css-modules";
 
-// TO CHANGE
-import SectionPlanning from "Containers/SectionPlanning";
-
 // NEW STRUCTURE
 import SectionPostPrePosting from "PostPrePosting";
 import SectionPost from "Post";
+import SectionPlanning from "Planning";
 import SectionTracker from "Tracker";
 
 import Toast from "Patterns/Toast";
