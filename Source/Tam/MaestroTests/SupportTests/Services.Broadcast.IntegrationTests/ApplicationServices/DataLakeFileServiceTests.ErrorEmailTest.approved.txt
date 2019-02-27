@@ -2,7 +2,7 @@
   "AlternateViews": [],
   "Attachments": [],
   "Bcc": [],
-  "Body": "File CNNAMPMBarterObligations_Clean.xlsx could not be properly processed.  Including technical information to help figure out the issue.\n\nFile located in C:\\CNNAMPMBarterObligations_Clean.xlsx\n\nTechnical Information:\n\nAccess to the path 'C:\\CNNAMPMBarterObligations_Clean.xlsx' is denied.",
+  "Body": "File CNNAMPMBarterObligations_Clean.xlsx could not be proper",
   "BodyEncoding": {
     "BodyName": "us-ascii",
     "CodePage": 20127,

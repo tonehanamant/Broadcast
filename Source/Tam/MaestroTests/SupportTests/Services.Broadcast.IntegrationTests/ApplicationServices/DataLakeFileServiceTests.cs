@@ -10,6 +10,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
 using System.IO;
+using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -17,12 +18,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class DataLakeFileServiceTests
     {
-        private readonly IDataLakeFileService _DataLakeFileService =
-            IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
 
         [Test]
         public void FileStreamSaveTest()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+
             var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
             var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
 
@@ -34,22 +36,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileAccess.Read),
                 FileName = fileName
             };
+            IDataLakeFileService _DataLakeFileService =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
 
             _DataLakeFileService.Save(request);
 
-            Assert.True(File.Exists(Path.Combine(dataLakeFolder, fileName)));
+            fileName = Path.Combine(dataLakeFolder, Path.GetFileName(fileName));
+            Assert.True(fileService.Exists(fileName));
         }
 
 
         [Test]
         public void FileSaveTest()
         {
-            var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
-            var filePath = @".\Files\1Chicago WLS Syn 4Q16.xml";
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
+            var filePath = @".\Files\1Chicago WLS Syn 4Q16.xml";
+            var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+
+            IDataLakeFileService _DataLakeFileService =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
             _DataLakeFileService.Save(filePath);
 
-            Assert.True(File.Exists(Path.Combine(dataLakeFolder, Path.GetFileName(filePath))));
+            filePath = Path.Combine(dataLakeFolder, Path.GetFileName(filePath));
+            Assert.True(fileService.Exists(filePath));
         }
 
         [Test]
@@ -79,6 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             dataLakeFileService.Save(request);
 
             var response = EmailerServiceStubb.LastMailMessageGenerated;
+            response.Body = response.Body.Substring(0, 60);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             var jsonSettings = new JsonSerializerSettings()

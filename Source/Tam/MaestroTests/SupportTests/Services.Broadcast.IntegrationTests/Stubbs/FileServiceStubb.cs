@@ -69,6 +69,12 @@ namespace Services.Broadcast.IntegrationTests
             return _Files.Where(x=> x.Equals(path)).Count() == 1;
         }
 
+        public override string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
+        {
+            _Files.Add(destinationPath);
+            return destinationPath;
+        }
+
         public override string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
         {
             _Files.Add(destinationPath);
