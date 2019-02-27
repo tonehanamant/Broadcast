@@ -50,6 +50,59 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-912 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('stations') AND name = 'affiliation')
+BEGIN
+	ALTER TABLE stations ALTER COLUMN affiliation [varchar](7) NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[station_inventory_manifest_weeks]'))
+BEGIN
+	CREATE TABLE [dbo].[station_inventory_manifest_weeks]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[station_inventory_manifest_id] [INT] NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[spots] [INT] NOT NULL
+	 CONSTRAINT [PK_station_inventory_manifest_weeks] PRIMARY KEY CLUSTERED 
+	 (
+		[id] ASC
+	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_weeks_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] CHECK CONSTRAINT [FK_station_inventory_manifest_weeks_station_inventory_manifest]
+	CREATE INDEX IX_station_inventory_manifest_weeks_station_inventory_manifest_id ON [station_inventory_manifest_weeks] ([station_inventory_manifest_id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_weeks_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] CHECK CONSTRAINT [FK_station_inventory_manifest_weeks_media_weeks]
+	CREATE INDEX IX_station_inventory_manifest_weeks_media_week_id ON [station_inventory_manifest_weeks] ([media_week_id])
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_rates') AND name = 'rate')
+BEGIN
+	EXEC sp_rename 'station_inventory_manifest_rates.rate', 'spot_cost', 'COLUMN';
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_audiences') AND name = 'rate')
+BEGIN
+	EXEC sp_rename 'station_inventory_manifest_audiences.rate', 'cpm', 'COLUMN';
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest') AND name = 'comment')
+BEGIN
+	ALTER TABLE station_inventory_manifest ADD comment varchar(255) NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('stations') AND name = 'market_code')
+BEGIN
+	ALTER TABLE stations ALTER COLUMN market_code smallint NULL
+END
+/*************************************** END PRI-912 *****************************************************/
+
+
 /*************************************** START PRI-214 *****************************************************/
 if not exists (select * from inventory_sources where [name] = 'CNN')
 begin

@@ -9,13 +9,13 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Transactions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
@@ -83,7 +83,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryFileImporterFactory _inventoryFileImporterFactory;
         private readonly ISMSClient _SmsClient;
         private readonly IInventoryFileRepository _inventoryFileRepository;
-        private readonly ILockingManagerApplicationService _LockingManager;
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers;
         private readonly IProprietarySpotCostCalculationEngine _proprietarySpotCostCalculationEngine;
@@ -91,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IRatingForecastService _RatingForecastService;
         private readonly INsiPostingBookService _NsiPostingBookService;
+        private readonly ILockingEngine _LockingEngine;
         private readonly IDataLakeFileService _DataLakeFileService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -100,13 +100,13 @@ namespace Services.Broadcast.ApplicationServices
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IInventoryFileImporterFactory inventoryFileImporterFactory,
             ISMSClient smsClient,
-            ILockingManagerApplicationService lockingManager,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IStationInventoryGroupService stationInventoryGroupService,
             IBroadcastAudiencesCache audiencesCache,
             IRatingForecastService ratingForecastService,
             INsiPostingBookService nsiPostingBookService,
-            IDataLakeFileService dataLakeFileService)
+            IDataLakeFileService dataLakeFileService,
+            ILockingEngine lockingEngine)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -120,7 +120,6 @@ namespace Services.Broadcast.ApplicationServices
             _inventoryFileImporterFactory = inventoryFileImporterFactory;
             _SmsClient = smsClient;
             _inventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _LockingManager = lockingManager;
             _SpotLengthMap =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _SpotLengthCostMultipliers =
@@ -130,6 +129,7 @@ namespace Services.Broadcast.ApplicationServices
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _RatingForecastService = ratingForecastService;
             _NsiPostingBookService = nsiPostingBookService;
+            _LockingEngine = lockingEngine;
             _DataLakeFileService = dataLakeFileService;
         }
 
@@ -322,9 +322,9 @@ namespace Services.Broadcast.ApplicationServices
                    .GroupBy(s => s.Code)
                    .ToDictionary(g => g.First().Code, g => g.First().LegacyCallLetters);
 
-                using (var transaction = new TransactionScopeWrapper(_CreateTransactionScope(TimeSpan.FromMinutes(20))))
+                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
-                    LockStations(fileStationsDict, lockedStationCodes, stationLocks, inventoryFile);
+                    _LockingEngine.LockStations(fileStationsDict, lockedStationCodes, stationLocks);
 
                     var isProprietary = inventorySource.Name == "CNN" ||
                                         inventorySource.Name == "TTNW";
@@ -334,7 +334,8 @@ namespace Services.Broadcast.ApplicationServices
                     if (isProprietary)
                     {
                         _EnsureInventoryDaypartIds(inventoryFile);
-                        _proprietarySpotCostCalculationEngine.CalculateSpotCost(request, inventoryFile);
+                        var manifests = inventoryFile.InventoryGroups.SelectMany(x => x.Manifests);
+                        _proprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, request.PlaybackType, request.RatingBook.Value);
                     }
 
                     _AddNewStationInventoryGroups(request, inventoryFile);
@@ -345,7 +346,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     transaction.Complete();
 
-                    UnlockStations(lockedStationCodes, stationLocks);
+                    _LockingEngine.UnlockStations(lockedStationCodes, stationLocks);
 
                     endTime = DateTime.Now;
 
@@ -365,7 +366,7 @@ namespace Services.Broadcast.ApplicationServices
                 // Try to update the status of the file if possible.
                 try
                 {
-                    UnlockStations(lockedStationCodes, stationLocks);
+                    _LockingEngine.UnlockStations(lockedStationCodes, stationLocks);
                     _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
                 }
                 catch
@@ -376,39 +377,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return _SetFileProblemWarnings(inventoryFile.Id, new List<InventoryFileProblem>());
-        }
-
-        private void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes,
-                List<IDisposable> stationLocks, InventoryFile inventoryFile)
-        {
-            //Lock stations before database operations
-            foreach (var fileStation in fileStationsDict)
-            {
-                var lockResult = LockStation(fileStation.Key);
-                if (lockResult.Success)
-                {
-                    lockedStationCodes.Add(fileStation.Key);
-                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(fileStation.Key)));
-                }
-                else
-                {
-                    throw new ApplicationException(
-                        string.Format("Unable to update station. Station locked for editing {0}.",
-                            fileStation.Value));
-                }
-            }
-        }
-
-        private void UnlockStations(List<int> lockedStationCodes, List<IDisposable> stationLocks)
-        {
-            foreach (var stationCode in lockedStationCodes)
-            {
-                UnlockStation(stationCode);
-            }
-            foreach (var stationLock in stationLocks)
-            {
-                stationLock.Dispose();
-            }
         }
 
         private void _AddRequestAudienceInfo(InventoryFileSaveRequest request, InventoryFile inventoryFile)
@@ -426,14 +394,14 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             IsReference = false,
                             Audience = new DisplayAudience() { Id = ap.AudienceId },
-                            Rate = ap.Price
+                            CPM = ap.Price
                         })));
         }
 
         private void _AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
             _EnsureInventoryDaypartIds(inventoryFile);
-            _stationInventoryGroupService.AddNewStationInventoryGroups(request, inventoryFile);
+            _stationInventoryGroupService.AddNewStationInventoryGroups(inventoryFile, request.EffectiveDate);
         }
 
         private void _EnsureInventoryDaypartIds(InventoryFile inventoryFile)
@@ -687,7 +655,7 @@ namespace Services.Broadcast.ApplicationServices
                 manifestRates.Add(new StationInventoryManifestRate
                 {
                     SpotLengthId = spotLength15Id,
-                    Rate = stationProgram.Rate15.Value
+                    SpotCost = stationProgram.Rate15.Value
                 });
             }
 
@@ -891,7 +859,7 @@ namespace Services.Broadcast.ApplicationServices
                 manifestRate = list.FirstOrDefault(c => c.SpotLengthId == _SpotLengthMap[spotLength]);
             }
 
-            return manifestRate != null ? manifestRate.Rate : 0;
+            return manifestRate != null ? manifestRate.SpotCost : 0;
         }
 
         public List<LookupDto> GetAllGenres()
@@ -950,38 +918,6 @@ namespace Services.Broadcast.ApplicationServices
             return _inventoryRepository.GetInventorySourceByName(sourceString);
         }
 
-        private void _SetTransactionManagerField(string fieldName, object value)
-        {
-            typeof(TransactionManager).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static)
-                .SetValue(null, value);
-        }
-
-        private TransactionScope _CreateTransactionScope(TimeSpan timeout)
-        {
-            _SetTransactionManagerField("_cachedMaxTimeout", true);
-            _SetTransactionManagerField("_maximumTimeout", timeout);
-            return new TransactionScope(TransactionScopeOption.Required,
-                   new TransactionOptions
-                   {
-                       IsolationLevel = IsolationLevel.ReadUncommitted,
-                       Timeout = timeout
-                   });
-        }
-
-        public LockResponse LockStation(int stationCode)
-        {
-            var key = string.Format("broadcast_station : {0}", stationCode);
-            var result = _LockingManager.LockObject(key);
-            return result;
-        }
-
-        public ReleaseLockResponse UnlockStation(int stationCode)
-        {
-            var key = string.Format("broadcast_station : {0}", stationCode);
-            var result = _LockingManager.ReleaseObject(key);
-            return result;
-        }
-
         public RatesInitialDataDto GetInitialRatesData()
         {
             var ratesInitialDataDto = new RatesInitialDataDto
@@ -1031,7 +967,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var manifestRate = new StationInventoryManifestRate();
                 manifestRate.SpotLengthId = _SpotLengthMap[spotLength.Key];
-                manifestRate.Rate = rate * (decimal)_SpotLengthCostMultipliers[spotLength.Value];
+                manifestRate.SpotCost = rate * (decimal)_SpotLengthCostMultipliers[spotLength.Value];
                 manifestRates.Add(manifestRate);
             }
 
@@ -1129,6 +1065,16 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return flightWeekGroups;
+        }
+
+        public LockResponse LockStation(int stationCode)
+        {
+            return _LockingEngine.LockStation(stationCode);
+        }
+
+        public ReleaseLockResponse UnlockStation(int stationCode)
+        {
+            return _LockingEngine.UnlockStation(stationCode);
         }
     }
 }

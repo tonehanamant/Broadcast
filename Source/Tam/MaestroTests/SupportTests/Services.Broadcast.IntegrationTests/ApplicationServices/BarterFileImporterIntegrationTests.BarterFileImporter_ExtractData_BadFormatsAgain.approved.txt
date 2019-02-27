@@ -1,18 +1,23 @@
 ﻿{
   "CreatedBy": "integration test",
-  "FileName": "BarterFileImporter_BadFormats3.xlsx",
+  "DataLines": [],
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats3.xlsx",
   "FileStatus": 1,
   "Hash": "E0-1D-5E-6C-BA-78-28-FD-0B-AE-1E-43-4C-BA-58-5D-A7-37-A9-F1",
   "Header": {
     "AudienceId": 37,
+    "ContractedDaypartId": 70562,
     "Cpm": 99.88,
     "DaypartCode": "EMN",
     "EffectiveDate": "0001-01-01T00:00:00",
     "EndDate": "0001-01-01T00:00:00",
-    "HutBookId": 0,
+    "HutBookId": null,
     "PlaybackType": 4,
     "ShareBookId": 425
   },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventoryManifestsStaging": [],
   "InventorySource": {
     "Id": 4,
     "InventoryType": 1,

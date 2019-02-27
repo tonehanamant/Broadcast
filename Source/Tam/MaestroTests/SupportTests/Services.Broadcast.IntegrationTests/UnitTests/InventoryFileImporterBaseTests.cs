@@ -13,7 +13,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     {
         public InventoryFileImporterBaseTests()
         {
-            InventoryDaypartParsingEngine = new InventoryDaypartParsingEngine();
+            InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
         }
 
         public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)

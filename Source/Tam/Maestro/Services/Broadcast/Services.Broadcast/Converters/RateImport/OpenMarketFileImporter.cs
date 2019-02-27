@@ -125,7 +125,7 @@ namespace Services.Broadcast.Converters.RateImport
                     var manifestRate = new StationInventoryManifestRate()
                     {
                         SpotLengthId = spotLengthId,
-                        Rate = availLineRate
+                        SpotCost = availLineRate
                     };
                     manifestRates.Add(manifestRate);
                 }

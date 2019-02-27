@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities.BarterInventory
         public int AudienceId { get; set; }
         public int ContractedDaypartId { get; set; }
         public int ShareBookId { get; set; }
-        public int HutBookId { get; set; }
+        public int? HutBookId { get; set; }
         public ProposalEnums.ProposalPlaybackType PlaybackType { get; set; }
     }
 }

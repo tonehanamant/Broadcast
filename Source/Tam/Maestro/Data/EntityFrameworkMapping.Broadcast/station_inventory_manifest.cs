@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
             this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
             this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
+            this.station_inventory_manifest_weeks = new HashSet<station_inventory_manifest_weeks>();
         }
     
         public int id { get; set; }
@@ -35,6 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> file_id { get; set; }
         public Nullable<int> spots_per_day { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
+        public string comment { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
@@ -48,5 +50,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual station station { get; set; }
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
+        public virtual ICollection<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
     }
 }

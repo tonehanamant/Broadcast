@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,16 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
     {
         private readonly string _validTimeExpression = @"(^([0-9]|[0-1][0-9]|[2][0-3])(:)?([0-5][0-9])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)|(^([0-9]|[1][0-9]|[2][0-3])(\s{0,1})(A|AM|P|PM|a|am|p|pm|aM|Am|pM|Pm{2,2})$)";
         private readonly List<IDaypartParser> _Parsers;
+        private readonly IDaypartCache _DaypartCache;
 
-        public InventoryDaypartParsingEngine()
+        public InventoryDaypartParsingEngine(IDaypartCache daypartCache)
         {
             _Parsers = new List<IDaypartParser>
             {
                 new WeekdayFirstDaypartParser(),
                 new TimeFirstDaypartParser()
             };
+            _DaypartCache = daypartCache;
         }
 
         public bool TryParse(string daypartText, out List<DisplayDaypart> result)
@@ -47,8 +50,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
             
             foreach (var daypartString in daypartStrings)
             {
-                if (_TryParseDaypart(daypartString, out var daypart))
+                if (_TryParseDaypart(daypartString, out var daypart) && daypart.IsValid)
                 {
+                    daypart.Id = _DaypartCache.GetIdByDaypart(daypart);
                     result.Add(daypart);
                 }
                 else

@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int SpotLengthId { get; set; }
-        public decimal Rate { get; set; }
+        public decimal SpotCost { get; set; }
     }
 }

@@ -1186,6 +1186,7 @@
           <Property Name="file_id" Type="int" />
           <Property Name="spots_per_day" Type="int" />
           <Property Name="end_date" Type="date" />
+          <Property Name="comment" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -1194,7 +1195,7 @@
           <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" />
-          <Property Name="rate" Type="money" Nullable="false" />
+          <Property Name="cpm" Type="money" Nullable="false" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="is_reference" Type="bit" Nullable="false" />
           <Property Name="rating" Type="float" />
@@ -1239,7 +1240,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
           <Property Name="spot_length_id" Type="int" Nullable="false" />
-          <Property Name="rate" Type="money" Nullable="false" />
+          <Property Name="spot_cost" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_staging">
           <Key>
@@ -1264,6 +1265,15 @@
           <Property Name="program_name" Type="varchar" MaxLength="255" />
           <Property Name="rate" Type="money" Nullable="false" />
           <Property Name="rate_spot_length_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="station_inventory_manifest_weeks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
+          <Property Name="media_week_id" Type="int" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="station_inventory_spot_audiences">
           <Key>
@@ -1312,8 +1322,8 @@
           </Key>
           <Property Name="station_code" Type="smallint" Nullable="false" />
           <Property Name="station_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="affiliation" Type="varchar" MaxLength="7" Nullable="false" />
-          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="affiliation" Type="varchar" MaxLength="7" />
+          <Property Name="market_code" Type="smallint" />
           <Property Name="legacy_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
@@ -3221,6 +3231,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_station_inventory_manifest_weeks_media_weeks">
+          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
+          <End Role="station_inventory_manifest_weeks" Type="Self.station_inventory_manifest_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_weeks">
+              <PropertyRef Name="media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_weeks_station_inventory_manifest">
+          <End Role="station_inventory_manifest" Type="Self.station_inventory_manifest" Multiplicity="1" />
+          <End Role="station_inventory_manifest_weeks" Type="Self.station_inventory_manifest_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_weeks">
+              <PropertyRef Name="station_inventory_manifest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_station_inventory_spot_audiences_audiences">
           <End Role="audiences" Type="Self.audiences" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3350,7 +3384,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_stations_markets">
-          <End Role="markets" Type="Self.markets" Multiplicity="1" />
+          <End Role="markets" Type="Self.markets" Multiplicity="0..1" />
           <End Role="stations" Type="Self.stations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="markets">
@@ -3461,6 +3495,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="station_inventory_manifest_genres" EntityType="Self.station_inventory_manifest_genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_rates" EntityType="Self.station_inventory_manifest_rates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_staging" EntityType="Self.station_inventory_manifest_staging" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="station_inventory_manifest_weeks" EntityType="Self.station_inventory_manifest_weeks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spot_audiences" EntityType="Self.station_inventory_spot_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spot_snapshots" EntityType="Self.station_inventory_spot_snapshots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_spots" EntityType="Self.station_inventory_spots" Schema="dbo" store:Type="Tables" />
@@ -4057,6 +4092,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_station_inventory_manifest_stations" Association="Self.FK_station_inventory_manifest_stations">
             <End Role="stations" EntitySet="stations" />
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_weeks_media_weeks" Association="Self.FK_station_inventory_manifest_weeks_media_weeks">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="station_inventory_manifest_weeks" EntitySet="station_inventory_manifest_weeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_weeks_station_inventory_manifest" Association="Self.FK_station_inventory_manifest_weeks_station_inventory_manifest">
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="station_inventory_manifest_weeks" EntitySet="station_inventory_manifest_weeks" />
           </AssociationSet>
           <AssociationSet Name="FK_station_inventory_spot_audiences_audiences" Association="Self.FK_station_inventory_spot_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -4824,6 +4867,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
             <End Role="station_inventory_manifest_rates" EntitySet="station_inventory_manifest_rates" />
           </AssociationSet>
+          <EntitySet Name="station_inventory_manifest_weeks" EntityType="BroadcastModel.station_inventory_manifest_weeks" />
+          <AssociationSet Name="FK_station_inventory_manifest_weeks_media_weeks" Association="BroadcastModel.FK_station_inventory_manifest_weeks_media_weeks">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="station_inventory_manifest_weeks" EntitySet="station_inventory_manifest_weeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_weeks_station_inventory_manifest" Association="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest">
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="station_inventory_manifest_weeks" EntitySet="station_inventory_manifest_weeks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -5015,6 +5067,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_detail_quarter_weeks" Relationship="BroadcastModel.FK_proposal_version_detail_quarter_weeks_media_weeks" FromRole="media_weeks" ToRole="proposal_version_detail_quarter_weeks" />
           <NavigationProperty Name="station_inventory_manifest_generation" Relationship="BroadcastModel.FK_station_inventory_manifest_generation_media_weeks" FromRole="media_weeks" ToRole="station_inventory_manifest_generation" />
           <NavigationProperty Name="proposal_buy_file_detail_weeks" Relationship="BroadcastModel.FK_proposal_buy_file_detail_weeks_media_weeks" FromRole="media_weeks" ToRole="proposal_buy_file_detail_weeks" />
+          <NavigationProperty Name="station_inventory_manifest_weeks" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_media_weeks" FromRole="media_weeks" ToRole="station_inventory_manifest_weeks" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -5870,6 +5923,17 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="station_inventory_manifest_rates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="station_inventory_manifest_rates" ToRole="spot_lengths" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest_rates" ToRole="station_inventory_manifest" />
+          <Property Name="spot_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
         <EntityType Name="spot_lengths">
           <Key>
             <PropertyRef Name="id" />
@@ -5892,6 +5956,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_spot_lengths" FromRole="spot_lengths" ToRole="proposal_version_details" />
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_spot_snapshots" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="spot_lengths" ToRole="station_inventory_manifest_rates" />
+        </EntityType>
+        <EntityType Name="station_inventory_manifest_audiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rating" Type="Double" />
+          <Property Name="is_reference" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="station_inventory_manifest_audiences" ToRole="audience" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
+          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_dayparts">
           <Key>
@@ -6001,9 +6079,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_genres" Relationship="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_genres" />
           <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="pricing_guide_distribution_open_market_inventory" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_station_inventory_manifest_inventory_files" FromRole="station_inventory_manifest" ToRole="inventory_files" />
+          <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
           <NavigationProperty Name="station_inventory_manifest_audiences" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_audiences" />
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
+          <NavigationProperty Name="station_inventory_manifest_weeks" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_weeks" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_inventory_sources">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -8267,8 +8347,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="station_code" Type="Int16" Nullable="false" />
           <Property Name="station_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="affiliation" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="affiliation" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int16" />
           <Property Name="legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -8281,7 +8361,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_stations" FromRole="station" ToRole="station_inventory_spot_snapshots" />
         </EntityType>
         <Association Name="FK_stations_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
           <End Type="BroadcastModel.station" Role="station" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="market">
@@ -8366,31 +8446,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="station_inventory_manifest_audiences">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" />
-          <Property Name="rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="is_reference" Type="Boolean" Nullable="false" />
-          <Property Name="rating" Type="Double" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" FromRole="station_inventory_manifest_audiences" ToRole="audience" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" FromRole="station_inventory_manifest_audiences" ToRole="station_inventory_manifest" />
-        </EntityType>
-        <EntityType Name="station_inventory_manifest_rates">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" FromRole="station_inventory_manifest_rates" ToRole="spot_lengths" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest_rates" ToRole="station_inventory_manifest" />
-        </EntityType>
         <Association Name="FK_station_inventory_manifest_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
           <End Type="BroadcastModel.station_inventory_manifest_audiences" Role="station_inventory_manifest_audiences" Multiplicity="*" />
@@ -8439,6 +8494,41 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="station_inventory_manifest_rates">
+              <PropertyRef Name="station_inventory_manifest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="station_inventory_manifest_weeks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_media_weeks" FromRole="station_inventory_manifest_weeks" ToRole="media_weeks" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" FromRole="station_inventory_manifest_weeks" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <Association Name="FK_station_inventory_manifest_weeks_media_weeks">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_weeks" Role="station_inventory_manifest_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_weeks">
+              <PropertyRef Name="media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_weeks_station_inventory_manifest">
+          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_manifest_weeks" Role="station_inventory_manifest_weeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_weeks">
               <PropertyRef Name="station_inventory_manifest_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -9002,6 +9092,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="station_inventory_manifest_rates">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_rates">
+              <MappingFragment StoreEntitySet="station_inventory_manifest_rates">
+                <ScalarProperty Name="spot_cost" ColumnName="spot_cost" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="spot_lengths">
             <EntityTypeMapping TypeName="BroadcastModel.spot_lengths">
               <MappingFragment StoreEntitySet="spot_lengths">
@@ -9010,6 +9110,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="delivery_multiplier" ColumnName="delivery_multiplier" />
                 <ScalarProperty Name="length" ColumnName="length" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="station_inventory_manifest_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_audiences">
+              <MappingFragment StoreEntitySet="station_inventory_manifest_audiences">
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="is_reference" ColumnName="is_reference" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9026,6 +9139,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="station_inventory_manifest">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest">
               <MappingFragment StoreEntitySet="station_inventory_manifest">
+                <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="spots_per_day" ColumnName="spots_per_day" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
@@ -9871,24 +9985,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="station_inventory_manifest_audiences">
-            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_audiences">
-              <MappingFragment StoreEntitySet="station_inventory_manifest_audiences">
-                <ScalarProperty Name="rating" ColumnName="rating" />
-                <ScalarProperty Name="is_reference" ColumnName="is_reference" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="station_inventory_manifest_rates">
-            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_rates">
-              <MappingFragment StoreEntitySet="station_inventory_manifest_rates">
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+          <EntitySetMapping Name="station_inventory_manifest_weeks">
+            <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_weeks">
+              <MappingFragment StoreEntitySet="station_inventory_manifest_weeks">
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
                 <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

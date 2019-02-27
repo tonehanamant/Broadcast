@@ -256,12 +256,15 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_stations" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="14.75" PointY="13.125" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_rates" Width="1.5" PointX="20.75" PointY="33.5" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="14.75" PointY="13.25" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_rates" Width="1.5" PointX="20.75" PointY="33.625" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_weeks" Width="1.5" PointX="17" PointY="14" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_weeks_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

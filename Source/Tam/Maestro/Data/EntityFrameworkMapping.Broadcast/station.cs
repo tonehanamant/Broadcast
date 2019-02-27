@@ -27,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public short station_code { get; set; }
         public string station_call_letters { get; set; }
         public string affiliation { get; set; }
-        public short market_code { get; set; }
+        public Nullable<short> market_code { get; set; }
         public string legacy_call_letters { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }

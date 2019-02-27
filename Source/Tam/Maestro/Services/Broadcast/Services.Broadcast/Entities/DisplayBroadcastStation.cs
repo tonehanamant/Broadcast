@@ -14,7 +14,7 @@ namespace Services.Broadcast.Entities
         public string CallLetters { get; set; }
         public string LegacyCallLetters { get; set; }
         public string OriginMarket { get; set; }
-        public int MarketCode { get; set; }
+        public int? MarketCode { get; set; }
         public string Affiliation { get; set; }
         public string RateDataThrough { get; set; }
         public DateTime? ModifiedDate { get; set; }

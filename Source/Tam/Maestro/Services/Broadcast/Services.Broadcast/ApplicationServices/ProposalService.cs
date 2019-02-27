@@ -700,7 +700,7 @@ namespace Services.Broadcast.ApplicationServices
                         var stationCode = inventoryComponent.StationCode;
                         var broadcastStation = _StationRepository.GetBroadcastStationByCode(stationCode);
 
-                        if (marketIds.Contains(broadcastStation.MarketCode))
+                        if (marketIds.Contains(broadcastStation.MarketCode.Value))
                         {
                             isIncludedInMarkets = true;
 

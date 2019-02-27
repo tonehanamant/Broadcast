@@ -1,8 +1,8 @@
 ﻿{
   "EndDate": "0001-01-01T00:00:00",
-  "FileName": "BarterFileImporter_ValidFormat.xlsx",
+  "FileName": "BarterDataFiles\\BarterFileImporter_ValidFormat.xlsx",
   "FileStatus": 2,
-  "Hash": "F8-90-0F-6B-51-8A-A4-E0-FB-CF-FD-B7-BB-72-A5-BA-D0-61-A5-8D",
+  "Hash": "F6-19-2F-68-07-6F-CA-BC-75-23-D7-EE-01-DE-93-4E-89-F2-69-96",
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventoryManifestsStaging": [],

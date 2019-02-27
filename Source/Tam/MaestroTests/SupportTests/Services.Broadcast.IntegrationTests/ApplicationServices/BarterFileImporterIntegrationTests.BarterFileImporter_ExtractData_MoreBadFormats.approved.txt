@@ -1,6 +1,7 @@
 ﻿{
   "CreatedBy": "integration test",
-  "FileName": "BarterFileImporter_BadFormats2.xlsx",
+  "DataLines": [],
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats2.xlsx",
   "FileStatus": 1,
   "Hash": "2D-C4-4D-03-B8-4A-77-6D-0B-96-DD-B2-0F-59-15-6E-C4-1A-C7-63",
   "Header": {
@@ -10,10 +11,13 @@
     "DaypartCode": "EMN",
     "EffectiveDate": "2018-01-31T00:00:00",
     "EndDate": "2019-03-31T00:00:00",
-    "HutBookId": 0,
+    "HutBookId": null,
     "PlaybackType": 0,
     "ShareBookId": 425
   },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventoryManifestsStaging": [],
   "InventorySource": {
     "Id": 4,
     "InventoryType": 1,

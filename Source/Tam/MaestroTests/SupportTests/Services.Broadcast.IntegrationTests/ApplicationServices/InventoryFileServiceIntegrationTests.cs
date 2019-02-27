@@ -214,9 +214,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
                 var daypartCodes = new List<string>() { "LN1" };
-                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(_ttnwInventorySource, daypartCodes);
+                var inventoryGroups = _InventoryRepository.GetActiveInventoryBySourceAndName(_ttnwInventorySource, daypartCodes, request.EffectiveDate);
 
-                _InventoryRepository.ExpireInventoryGroupsAndManifests(inventoryGroups, expireDate);
+                _InventoryRepository.ExpireInventoryGroupsAndManifests(inventoryGroups, expireDate, request.EffectiveDate);
 
                 inventoryGroups = _InventoryRepository.GetInventoryBySourceAndName(_ttnwInventorySource, daypartCodes);
 

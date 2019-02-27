@@ -264,7 +264,7 @@ namespace Services.Broadcast.Entities
 
                 if (hasMarketRanksForPostingBook)
                 {
-                    marketRankForPostingBook.TryGetValue(currentStation.MarketCode, out rank);
+                    marketRankForPostingBook.TryGetValue(currentStation.MarketCode.Value, out rank);
                 }
             }
 

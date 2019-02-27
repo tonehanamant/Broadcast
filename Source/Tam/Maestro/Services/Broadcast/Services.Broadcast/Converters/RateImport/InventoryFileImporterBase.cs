@@ -159,7 +159,7 @@ namespace Services.Broadcast.Converters.RateImport
                 var manifestRate = new StationInventoryManifestRate
                 {
                     SpotLengthId = spotLength.Value,
-                    Rate = periodRate * (decimal)_SpotLengthMultipliers[spotLength.Key]
+                    SpotCost = periodRate * (decimal)_SpotLengthMultipliers[spotLength.Key]
                 };
                 manifestRates.Add(manifestRate);
             }
