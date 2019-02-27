@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
+using System.Linq;
 using Common.Services;
 
 
@@ -43,6 +43,7 @@ namespace Services.Broadcast.IntegrationTests
             throw new NotImplementedException();
         }
     }
+
     public class FileServiceSingleFileStubb : FileServiceStubb
     {
         private readonly string _SingleFileName = "file1.txt";
@@ -57,54 +58,28 @@ namespace Services.Broadcast.IntegrationTests
             return string.Compare(Path.Combine(_BasePath, _SingleFileName), path,
                        StringComparison.CurrentCultureIgnoreCase) == 0;
         }
+    }
 
-        public override string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
+    public class FileServiceDataLakeStubb : FileServiceStubb
+    {
+        private static List<string> _Files = new List<string>();
+        
+        public override bool Exists(string path)
         {
-            if (Exists(destinationPath))
-            {
-                if (overwriteExisting)
-                {
-                    Delete(destinationPath);
-                }
-                else
-                {
-                    throw new Exception($"Cannot overwrite {destinationPath}");
-                }
-            }
-
-            File.Copy(filePath, destinationPath);
-
-            return destinationPath;
+            return _Files.Where(x=> x.Equals(path)).Count() == 1;
         }
 
         public override string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
         {
-            if (Exists(destinationPath))
-            {
-                if (overwriteExisting)
-                {
-                    Delete(destinationPath);
-                }
-                else
-                {
-                    throw new Exception($"Cannot overwrite {destinationPath}");
-                }
-            }
-
-            using (var fileStream = new FileStream(destinationPath, FileMode.CreateNew, FileAccess.Write))
-            {
-                inputStream.CopyTo(fileStream);
-            }
-
+            _Files.Add(destinationPath);
             return destinationPath;
         }
 
-        public override void Delete(params string[] path)
+        public override void Delete(params string[] paths)
         {
-            foreach(string file in path)
+            foreach(string path in paths)
             {
-                if (Exists(file))
-                    File.Delete(file);
+                _Files.RemoveAll(x => x.Equals(path));
             }
         }
     }

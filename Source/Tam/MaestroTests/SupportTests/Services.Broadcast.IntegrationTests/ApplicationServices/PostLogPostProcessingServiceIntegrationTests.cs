@@ -138,27 +138,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
         [Test]
         public void DLAndProcessWWTVFiles_DataLakeCopy()
         {
             using (var trans = new TransactionScopeWrapper())
             {
-                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
-                string filePath = Path.Combine(dataLakeFolder, "Special_Ftp_Phantom_File.txt");
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                }
-
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
 
-                var srv = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
+                var postLogPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
+                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
-                srv.DownloadAndProcessWWTVFiles("WWTV Service");
+                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                string filePath = Path.Combine(dataLakeFolder, "Special_Ftp_Phantom_File.txt");
+                if (fileService.Exists(filePath))
+                {
+                    fileService.Delete(filePath);
+                }
 
-                Assert.True(File.Exists(filePath));
+                postLogPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                Assert.True(fileService.Exists(filePath));
             }
         }
 
