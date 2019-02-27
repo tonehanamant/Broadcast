@@ -138,6 +138,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore]
         [Test]
         public void DLAndProcessWWTVFiles_DataLakeCopy()
         {
