@@ -137,7 +137,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyPostLogFile(response.Id.Value);
             }
         }
-
+        [Ignore]
         [Test]
         public void DLAndProcessWWTVFiles_DataLakeCopy()
         {
