@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Common.Services;
@@ -66,6 +67,8 @@ namespace Services.Broadcast.IntegrationTests
         
         public override bool Exists(string path)
         {
+            Debug.WriteLine(_Files.Count + " files found");
+            _Files.ForEach(f => Debug.WriteLine(f));
             return _Files.Where(x=> x.Equals(path)).Count() == 1;
         }
 
