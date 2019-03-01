@@ -1,7 +1,9 @@
 ﻿namespace Services.Broadcast.Entities.Enums
 {
-    public enum FileSourceEnum
+    public enum DeliveryFileSourceEnum
     {
+        //Strata = 1,
+        //KeepingTrac = 2
         Unknown = 0,
         Sigma = 1,
         KeepingTrac = 2,

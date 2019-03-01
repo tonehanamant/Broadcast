@@ -929,16 +929,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -960,9 +951,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var result = _PricingGuideService.GetOpenMarketInventory(request);
-            var resultJson = IntegrationTestHelper.ConvertToJsonMoreRounding(result, _GetPricingGuideJsonSerializerSettings());
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(result);
         }
 
         [Test]
@@ -1054,16 +1043,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto, jsonSettings));
+                _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
             }
         }
 
@@ -1186,9 +1166,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             pricingGuideOpenMarketDto.AllMarkets.Last().Selected = true;
 
             var result = _PricingGuideService.UpdateOpenMarketMarkets(pricingGuideOpenMarketDto);
-            var resultJson = IntegrationTestHelper.ConvertToJson(result);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(result);
         }
 
         [Test]
@@ -1216,9 +1194,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             firstMarketProgram.Spots = firstMarketProgram.Spots + 5;
 
             var result = _PricingGuideService.UpdateOpenMarketMarkets(pricingGuideOpenMarketDto);
-            var resultJson = IntegrationTestHelper.ConvertToJson(result);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(result);
         }
 
         [Test]
@@ -1371,9 +1347,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var result = _PricingGuideService.UpdateProprietaryCpms(pricingGuideOpenMarketDto);
-            var resultJson = IntegrationTestHelper.ConvertToJson(result);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(result);
         }
 
         [Test]
@@ -1392,10 +1366,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
         [Test]
@@ -1417,10 +1388,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
-
-            var resultJson = IntegrationTestHelper.ConvertToJson(pricingGuideOpenMarketDto);
-
-            Approvals.Verify(resultJson);
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
 
         [Test]

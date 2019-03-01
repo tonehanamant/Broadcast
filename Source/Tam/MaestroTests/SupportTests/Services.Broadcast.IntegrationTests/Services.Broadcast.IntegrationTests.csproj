@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Services.Broadcast.IntegrationTests</RootNamespace>
     <AssemblyName>Services.Broadcast.IntegrationTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -18,6 +18,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\Solutions\MaestroComplete\</SolutionDir>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -167,6 +168,9 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -222,16 +226,21 @@
     <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
     <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
+    <Compile Include="ApplicationServices\BarterFileImporterIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\BarterInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\DataLakeFileServiceTests.cs" />
+    <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NtiTransmittalsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ProprietarySpotCostCalculationEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
@@ -257,6 +266,7 @@
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Stubbs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubbs\FileServiceStubb.cs" />
     <Compile Include="Stubbs\ImpersonateUserStubb.cs" />
     <Compile Include="Stubbs\FtpServiceStubb.cs" />
@@ -310,7 +320,40 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFile.barter_extension">
+    <None Include="Files\BarterDataFiles\Barter DataLines file with missed values.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with valid data.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with without valid units end.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid unit.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats3.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_TwoBooks.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\C786.Sigma.MissingColumns.csv">
@@ -470,6 +513,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\InventoryCrunchNoFixedPrice.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryDaypartParsing\CNN_dayparts.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryDaypartParsing\CNN_dayparts_2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryDaypartParsing\TTNW_dayparts.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryDaypartParsing\TTNW_dayparts_2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\KeepingTrac_MissingData.xlsx">
@@ -710,7 +765,9 @@
     <None Include="Files\WithPlusS2Extensions.scx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Maestro\Data\EntityFrameworkMapping.Broadcast\EntityFrameworkMapping.Broadcast.csproj">

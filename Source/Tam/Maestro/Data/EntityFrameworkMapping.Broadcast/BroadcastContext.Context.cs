@@ -34,7 +34,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<daypart> dayparts { get; set; }
         public virtual DbSet<day> days { get; set; }
         public virtual DbSet<market_dma_map> market_dma_map { get; set; }
-        public virtual DbSet<market> markets { get; set; }
         public virtual DbSet<media_months> media_months { get; set; }
         public virtual DbSet<media_weeks> media_weeks { get; set; }
         public virtual DbSet<post_file_demos> post_file_demos { get; set; }
@@ -54,7 +53,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<schedule> schedules { get; set; }
         public virtual DbSet<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
         public virtual DbSet<station_contacts> station_contacts { get; set; }
-        public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<system_component_parameters> system_component_parameters { get; set; }
         public virtual DbSet<timespan> timespans { get; set; }
         public virtual DbSet<vw_ccc_daypart> vw_ccc_daypart { get; set; }
@@ -70,10 +68,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_sources> inventory_sources { get; set; }
         public virtual DbSet<station_inventory_group> station_inventory_group { get; set; }
         public virtual DbSet<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
-        public virtual DbSet<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
-        public virtual DbSet<inventory_files> inventory_files { get; set; }
         public virtual DbSet<spot_lengths> spot_lengths { get; set; }
-        public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual DbSet<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual DbSet<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
@@ -127,5 +122,13 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
         public virtual DbSet<market_coverage_files> market_coverage_files { get; set; }
         public virtual DbSet<station_inventory_loaded> station_inventory_loaded { get; set; }
+        public virtual DbSet<inventory_files> inventory_files { get; set; }
+        public virtual DbSet<inventory_file_barter_header> inventory_file_barter_header { get; set; }
+        public virtual DbSet<inventory_file_problems> inventory_file_problems { get; set; }
+        public virtual DbSet<market> markets { get; set; }
+        public virtual DbSet<station> stations { get; set; }
+        public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
+        public virtual DbSet<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
+        public virtual DbSet<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
     }
 }

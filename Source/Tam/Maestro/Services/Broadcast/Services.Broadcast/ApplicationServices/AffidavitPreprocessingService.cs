@@ -197,7 +197,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _ProcessCsvFile(WWTVOutboundFileValidationResult currentFile, string filepath)
         {
             List<string> requiredSigmaColumns = new List<string>() { "IDENTIFIER 1", "STATION", "DATE AIRED", "AIR START TIME", "ISCI/AD-ID" };
-            currentFile.Source = FileSourceEnum.Strata;
+            currentFile.Source = DeliveryFileSourceEnum.Sigma;
             using (var parser = _CsvHelper.SetupCSVParser(filepath, currentFile))
             {
                 if (currentFile.ErrorMessages.Any()) return;
@@ -227,7 +227,7 @@ namespace Services.Broadcast.ApplicationServices
 
             //get the tab that needs processing
             var worksheet = _ExcelHelper.GetWorksheetToProcess(fileInfo, currentFile, _ValidStrataTabName);
-            currentFile.Source = FileSourceEnum.Strata;
+            currentFile.Source = DeliveryFileSourceEnum.Strata;
 
             //if (worksheet == null)
             //{
@@ -236,7 +236,7 @@ namespace Services.Broadcast.ApplicationServices
             //}
             if (worksheet == null)
             {
-                currentFile.Source = FileSourceEnum.Unknown;
+                currentFile.Source = DeliveryFileSourceEnum.Unknown;
                 currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidStrataTabName, currentFile.FilePath));
                 //currentFile.ErrorMessages.Add(string.Format("Could not find the tab {0} in file {1}", _ValidKeepingTracTabName, currentFile.FilePath));
                 return;

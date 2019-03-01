@@ -11,18 +11,23 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using ApprovalTests;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Common.Services;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class TTNWFileImporterTests
     {
+        private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanParseLNFile()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -62,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void CanParseEMFile()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -86,7 +91,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
-                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate"); 
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -102,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void CanParseENFile()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -127,6 +133,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -142,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void InvalidStation()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -176,7 +183,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void NoKnownStations()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -208,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void InvalidDaypartSpots()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -240,7 +247,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ValidDayparts()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -265,6 +272,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -280,7 +288,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void InvalidDaypart()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -314,7 +322,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void ZeroInDaypartSpot()
         {
             var _ttnwFileImporter = new TTNWFileImporter();
-
+            _ttnwFileImporter.InventoryDaypartParsingEngine = _InventoryDaypartParsingEngine;
             _ttnwFileImporter.BroadcastDataDataRepository =
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory;
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))

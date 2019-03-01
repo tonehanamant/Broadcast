@@ -24,13 +24,13 @@ namespace Services.Broadcast.Entities.Enums
             [Description("Previously Contracted")]
             PreviouslyContracted = 4
         }
-
+        
         public enum ProposalPlaybackType
         {
             [Description("Live")]
             Live = 1,
 
-            [Description("Live+Same Day")]
+            [Description("Live+S")]
             LiveSameDay = 2,
 
             [Description("Live+1")]

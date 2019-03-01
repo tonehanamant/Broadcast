@@ -38,6 +38,24 @@ namespace Common.Services
         string Move(string filePath, string destinationFolderPath);
 
         /// <summary>
+        /// Copies a file to another destination
+        /// </summary>
+        /// <param name="filePath">Current file path</param>
+        /// <param name="destinationPath">Destination directory</param>
+        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <returns>New file path</returns>
+        string Copy(string filePath, string destinationPath, bool overwriteExisting = false);
+
+        /// <summary>
+        /// Copies a stream to a file
+        /// </summary>
+        /// <param name="inputStream">Input stream</param>
+        /// <param name="destinationPath">Destination directory</param>
+        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <returns>New file path</returns>
+        string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false);
+
+        /// <summary>
         /// Creates a zip archive file from the file paths
         /// </summary>
         /// <param name="filePaths">List of file paths to add to the archive</param>
@@ -103,6 +121,61 @@ namespace Common.Services
                 Delete(destinationPath);
 
             File.Move(filePath, destinationPath);
+
+            return destinationPath;
+        }
+
+        /// <summary>
+        /// Copies a file to another destination
+        /// </summary>
+        /// <param name="filePath">Current file path</param>
+        /// <param name="destinationPath">Destination directory</param>
+        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <returns>New file path</returns>
+        public string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
+        {
+            if (Exists(destinationPath))
+            {
+                if (overwriteExisting)
+                {
+                    Delete(destinationPath);
+                }
+                else
+                {
+                    throw new Exception($"Cannot overwrite {filePath} with {destinationPath}");
+                }
+            }
+
+            File.Copy(filePath, destinationPath);            
+
+            return destinationPath;
+        }
+
+        /// <summary>
+        /// Copies a stream to a file
+        /// </summary>
+        /// <param name="inputStream">Input stream</param>
+        /// <param name="destinationPath">Destination directory</param>
+        /// <param name="deleteExisting">Optional: Flag to delete the existing file if there is one at the same location</param>
+        /// <returns>New file path</returns>
+        public string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
+        {
+            if (Exists(destinationPath))
+            {
+                if (overwriteExisting)
+                {
+                    Delete(destinationPath);
+                }
+                else
+                {
+                    throw new Exception($"Cannot overwrite {destinationPath}");
+                }
+            }
+
+            using (var fileStream = new FileStream(destinationPath, FileMode.CreateNew, FileAccess.Write))
+            {
+                inputStream.CopyTo(fileStream);
+            }
 
             return destinationPath;
         }

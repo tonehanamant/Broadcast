@@ -128,7 +128,7 @@
       "EstimateId": 1082,
       "FileDetailProblems": [],
       "Genre": "Talk Show",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "BCOP3471STORY",
       "LeadInEndTime": 77520,
       "LeadinGenre": "Series",
@@ -152,6 +152,6 @@
   "FileHash": "17-42-56-87-6E-5D-F3-FB-A9-5B-67-D9-CE-32-A1-71-B3-D2-A7-43",
   "FileName": "WWTV_StrataValidFile_BCOP-4333.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }

@@ -50,296 +50,171 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-/*************************************** START BCOP-4183 *****************************************************/
-
--- FEMALES 25-54
-IF NOT EXISTS(SELECT 1 FROM audiences 
-          WHERE code = N'F25-54')
+/*************************************** START PRI-912 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('stations') AND name = 'affiliation')
 BEGIN
-
-SET IDENTITY_INSERT audiences ON
-
-INSERT INTO audiences(id, category_code, sub_category_code, range_start, range_end, custom, code, name)
-VALUES(415, 0, 'F', 25, 54, 1, 'F25-54', 'Females 25-54')
-
-SET IDENTITY_INSERT audiences OFF
-
-INSERT INTO audience_audiences
-VALUES(2, 415, 8)
-
-INSERT INTO audience_audiences
-VALUES(2, 415, 9)
-
-INSERT INTO audience_audiences
-VALUES(2, 415, 10)
-
-INSERT INTO audience_audiences
-VALUES(2, 415, 11)
-
-INSERT INTO audience_audiences
-VALUES(2, 415, 12)
-
-INSERT INTO audience_audiences
-VALUES(2, 415, 13)
-
+	ALTER TABLE stations ALTER COLUMN affiliation [varchar](7) NULL
 END
 
-ELSE PRINT 'Audience Females 25-54 already exists'
-
--- MALES 25-54
--- The audience already exists, we only need to add the components to broadcast rating group.
-IF NOT EXISTS(SELECT 1 FROM audience_audiences
-          WHERE custom_audience_id = 51 AND rating_category_group_id = 2)
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[station_inventory_manifest_weeks]'))
 BEGIN
-
-INSERT INTO audience_audiences
-VALUES(2, 51, 23)
-
-INSERT INTO audience_audiences
-VALUES(2, 51, 24)
-
-INSERT INTO audience_audiences
-VALUES(2, 51, 25)
-
-INSERT INTO audience_audiences
-VALUES(2, 51, 26)
-
-INSERT INTO audience_audiences
-VALUES(2, 51, 27)
-
-INSERT INTO audience_audiences
-VALUES(2, 51, 28)
-
-END
-
-ELSE PRINT 'Component audiences for custom audience 51 (M25-54) already exist'
-
-/*************************************** END BCOP-4183 *****************************************************/
-
-/*************************************** START BCOP-2801 *****************************************************/
-IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[nti_transmittals_audiences]'))
-BEGIN
-	CREATE TABLE [dbo].[nti_transmittals_audiences](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[nti_transmittals_file_report_id] [INT] NOT NULL,
-	[proposal_version_detail_quarter_week_id] [INT] NOT NULL,
-	[audience_id] [INT] NOT NULL,
-	[impressions] [FLOAT] NOT NULL
-	 CONSTRAINT [PK_nti_transmittals_audiences] PRIMARY KEY CLUSTERED 
-	(
-		[id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
-	) ON [PRIMARY]
-	
-	ALTER TABLE [dbo].[nti_transmittals_audiences]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_audiences_nti_transmittals_file_reports] FOREIGN KEY([nti_transmittals_file_report_id])
-	REFERENCES [dbo].[nti_transmittals_file_reports] ([id])
-	ON DELETE CASCADE
-	ALTER TABLE [dbo].[nti_transmittals_audiences] CHECK CONSTRAINT [FK_nti_transmittals_audiences_nti_transmittals_file_reports]
-	CREATE INDEX IX_nti_transmittals_audiences_nti_transmittals_file_report_id ON [nti_transmittals_audiences] ([nti_transmittals_file_report_id])
-
-	ALTER TABLE [dbo].[nti_transmittals_audiences]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_audiences_proposal_version_detail_quarter_weeks] FOREIGN KEY([proposal_version_detail_quarter_week_id])
-	REFERENCES [dbo].[proposal_version_detail_quarter_weeks] ([id])
-	ALTER TABLE [dbo].[nti_transmittals_audiences] CHECK CONSTRAINT [FK_nti_transmittals_audiences_proposal_version_detail_quarter_weeks]
-	CREATE INDEX IX_nti_transmittals_audiences_proposal_version_detail_quarter_week_id ON [nti_transmittals_audiences] ([proposal_version_detail_quarter_week_id])
-
-	ALTER TABLE [dbo].[nti_transmittals_audiences]  WITH CHECK ADD  CONSTRAINT [FK_nti_transmittals_audiences_audiences] FOREIGN KEY([audience_id])
-	REFERENCES [dbo].[audiences] ([id])
-	ALTER TABLE [dbo].[nti_transmittals_audiences] CHECK CONSTRAINT [FK_nti_transmittals_audiences_audiences]
-	CREATE INDEX IX_nti_transmittals_audiences_audience_id ON [nti_transmittals_audiences] ([audience_id])
-END
-/*************************************** END BCOP-2801 *****************************************************/
-
-/*************************************** START BCOP-4036 *****************************************************/
-
-IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[market_coverage_files]'))
-BEGIN
-	CREATE TABLE [dbo].[market_coverage_files]
-	(
-		[id] [int] IDENTITY(1,1) NOT NULL,
-		[file_name] [varchar](255) NOT NULL,
-		[file_hash] [varchar](255) NOT NULL,
-		[created_date] [datetime] NOT NULL,
-		[created_by] [varchar](63) NOT NULL,
-	 CONSTRAINT [PK_market_coverage_files] PRIMARY KEY CLUSTERED 
-	 (
-		[id] ASC
-	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
-	) ON [PRIMARY]
-
-	SET IDENTITY_INSERT [dbo].[market_coverage_files] ON 
-	INSERT [dbo].[market_coverage_files] ([id], [file_name], [file_hash], [created_date], [created_by]) 
-	VALUES (1, N'Market_Coverages.xlsx', N'3E-E1-54-2A-6F-8C-C7-0E-5A-F3-1F-80-DA-01-EF-B8-C0-78-62-0B', CAST(N'2018-12-18T00:00:00.000' AS DateTime), N'CROSSMW\bbotelho')
-	SET IDENTITY_INSERT [dbo].[market_coverage_files] OFF
-END
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N'market_coverage_file_id'
-          AND Object_ID = Object_ID(N'[dbo].[market_coverages]'))
-BEGIN
-	ALTER TABLE [market_coverages]
-	ADD [market_coverage_file_id] INT NULL
-
-	EXEC('UPDATE [market_coverages]
-		  SET [market_coverage_file_id] = 1')
-
-	ALTER TABLE [market_coverages]
-	ALTER COLUMN [market_coverage_file_id] INT NOT NULL
-
-	ALTER TABLE [dbo].[market_coverages]  WITH CHECK ADD  CONSTRAINT [FK_market_coverages_market_coverage_files] FOREIGN KEY([market_coverage_file_id])
-	REFERENCES [dbo].[market_coverage_files] ([id])
-	ON DELETE CASCADE
-
-	ALTER TABLE [dbo].[market_coverages] CHECK CONSTRAINT [FK_market_coverages_market_coverage_files]
-END
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N'market_coverage_file_id'
-          AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distributions]'))
-BEGIN
-	ALTER TABLE [dbo].[pricing_guide_distributions]
-	ADD market_coverage_file_id INT NULL
-
-	exec('update pricing_guide_distributions
-	      set market_coverage_file_id = (select top 1 id from market_coverage_files order by created_date desc)')
-
-	ALTER TABLE [dbo].[pricing_guide_distributions]
-	ALTER COLUMN market_coverage_file_id INT NOT NULL
-	
-	ALTER TABLE [dbo].[pricing_guide_distributions]  WITH CHECK ADD  CONSTRAINT [FK_pricing_guide_distributions_market_coverage_files] FOREIGN KEY([market_coverage_file_id])
-	REFERENCES [dbo].[market_coverage_files] ([id])
-	
-	ALTER TABLE [dbo].[pricing_guide_distributions] CHECK CONSTRAINT [FK_pricing_guide_distributions_market_coverage_files]
-END
-
-/*************************************** END BCOP-4036 *******************************************************/
-
-/*************************************** START BCOP-4192 *****************************************************/
-
-IF (SELECT character_maximum_length
-	FROM INFORMATION_SCHEMA.COLUMNS
-	WHERE 
-		TABLE_NAME = 'pricing_guide_distribution_open_market_inventory' AND 
-		COLUMN_NAME = 'program_name') = 255
-BEGIN
-	ALTER TABLE pricing_guide_distribution_open_market_inventory
-	ALTER COLUMN program_name VARCHAR(MAX) NULL
-END
-/*************************************** END BCOP-4192 *****************************************************/
-
-/*************************************** START BCOP-4138 *******************************************************/
-IF EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N'nti_conversion_factor'
-		  AND is_nullable = 0
-          AND Object_ID = Object_ID(N'[dbo].[proposal_version_details]'))
-BEGIN
-	ALTER TABLE [dbo].[proposal_version_details] ALTER COLUMN [nti_conversion_factor] FLOAT NULL
-END
-/*************************************** END BCOP-4138 *******************************************************/
-
-/************************************** START BCOP-4041 *******************************************************/
-
-IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_inventory_source_id' AND object_id = OBJECT_ID('station_inventory_manifest'))
-BEGIN
-	DROP INDEX IX_station_inventory_manifest_inventory_source_id ON station_inventory_manifest;
-END
-GO
-CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_inventory_source_id] ON [dbo].[station_inventory_manifest]
-(
-	[inventory_source_id] ASC
-)
-INCLUDE ( 
-	[id],
-	[station_code],
-	[spot_length_id],
-	[spots_per_week],
-	[effective_date],
-	[station_inventory_group_id],
-	[file_id],
-	[spots_per_day],
-	[end_date])
-GO
-
-IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_rates_station_inventory_manifest_id' AND object_id = OBJECT_ID('station_inventory_manifest_rates'))
-BEGIN
-	DROP INDEX IX_station_inventory_manifest_rates_station_inventory_manifest_id ON station_inventory_manifest_rates;
-END
-GO
-CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_rates_station_inventory_manifest_id] 
-	ON [dbo].[station_inventory_manifest_rates]
-(
-	[station_inventory_manifest_id] ASC
-)
-INCLUDE ( 
-	[spot_length_id],
-	[rate]) 
-GO
-IF exists(SELECT * FROM sys.indexes WHERE name='IX_station_inventory_manifest_audiences_station_inventory_manifest_id' AND object_id = OBJECT_ID('station_inventory_manifest_audiences'))
-BEGIN
-	DROP INDEX IX_station_inventory_manifest_audiences_station_inventory_manifest_id ON station_inventory_manifest_audiences;
-END
-GO
-CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_audiences_station_inventory_manifest_id] 
-	ON [dbo].[station_inventory_manifest_audiences]
-( 
-	[station_inventory_manifest_id] ASC
-)
-INCLUDE ( 
-	[audience_id], 
-	[impressions], 
-	[rate], 
-	[is_reference], 
-	[rating]) ;
-GO
-
-/*************************************** END BCOP-4041 *******************************************************/
-
-/*************************************** START BCOP-4142 *****************************************************/
-IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[station_inventory_loaded]'))
-BEGIN
-	CREATE TABLE [dbo].[station_inventory_loaded]
+	CREATE TABLE [dbo].[station_inventory_manifest_weeks]
 	(
 		[id] [INT] IDENTITY(1,1) NOT NULL,
-		[station_code] [SMALLINT] NOT NULL,
-		[inventory_source_id] [INT] NOT NULL,
-		[last_loaded] [DATETIME] NOT NULL
-	 CONSTRAINT [PK_station_inventory_loaded] PRIMARY KEY CLUSTERED 
+		[station_inventory_manifest_id] [INT] NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[spots] [INT] NOT NULL
+	 CONSTRAINT [PK_station_inventory_manifest_weeks] PRIMARY KEY CLUSTERED 
 	 (
 		[id] ASC
 	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
 	) ON [PRIMARY]
-	ALTER TABLE [dbo].[station_inventory_loaded]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_loaded_stations] FOREIGN KEY([station_code])
-	REFERENCES [dbo].[stations] ([station_code])
-	ALTER TABLE [dbo].[station_inventory_loaded] CHECK CONSTRAINT [FK_station_inventory_loaded_stations]
-	CREATE INDEX IX_station_inventory_loaded_station_code ON [station_inventory_loaded] ([station_code])
-	ALTER TABLE [dbo].[station_inventory_loaded]  WITH CHECK ADD  CONSTRAINT [FK_station_inventory_loaded_inventory_sources] FOREIGN KEY([inventory_source_id])
-	REFERENCES [dbo].[inventory_sources] ([id])
-	ALTER TABLE [dbo].[station_inventory_loaded] CHECK CONSTRAINT [FK_station_inventory_loaded_inventory_sources]
-	CREATE INDEX IX_station_inventory_loaded_inventory_source_id ON [station_inventory_loaded] ([inventory_source_id])
-END
-/*************************************** END BCOP-4142 *****************************************************/
 
-/*************************************** START BCOP-4315 *****************************************************/
-IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 13)
-BEGIN
-	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,13)	--Females 50-54
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_weeks_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] CHECK CONSTRAINT [FK_station_inventory_manifest_weeks_station_inventory_manifest]
+	CREATE INDEX IX_station_inventory_manifest_weeks_station_inventory_manifest_id ON [station_inventory_manifest_weeks] ([station_inventory_manifest_id])
+
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] WITH CHECK ADD CONSTRAINT [FK_station_inventory_manifest_weeks_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+	ALTER TABLE [dbo].[station_inventory_manifest_weeks] CHECK CONSTRAINT [FK_station_inventory_manifest_weeks_media_weeks]
+	CREATE INDEX IX_station_inventory_manifest_weeks_media_week_id ON [station_inventory_manifest_weeks] ([media_week_id])
 END
-IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 14)
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_rates') AND name = 'rate')
 BEGIN
-	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,14)	--Females 55-64
+	EXEC sp_rename 'station_inventory_manifest_rates.rate', 'spot_cost', 'COLUMN';
 END
-IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 15)
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest_audiences') AND name = 'rate')
 BEGIN
-	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,15)	--Females 65+
+	EXEC sp_rename 'station_inventory_manifest_audiences.rate', 'cpm', 'COLUMN';
 END
-IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 347)
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('station_inventory_manifest') AND name = 'comment')
 BEGIN
-	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,347)	--Females 35-49
+	ALTER TABLE station_inventory_manifest ADD comment varchar(255) NULL
 END
-IF NOT EXISTS(SELECT 1 FROM audience_audiences WHERE rating_category_group_id = 2 and custom_audience_id = 258 AND rating_audience_id = 348)
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('stations') AND name = 'market_code')
 BEGIN
-	INSERT INTO audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id) VALUES(2,258,348)	--Females 25-34
+	ALTER TABLE stations ALTER COLUMN market_code smallint NULL
 END
-/*************************************** END BCOP-4315 *****************************************************/
+/*************************************** END PRI-912 *****************************************************/
+
+
+/*************************************** START PRI-214 *****************************************************/
+if not exists (select * from inventory_sources where [name] = 'CNN')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('CNN', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'TTNW')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('TTNW', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'TVB')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('TVB', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'Sinclair')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('Sinclair', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'LilaMax')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('LilaMax', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'MLB')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('MLB', 1, 1)
+end
+
+if not exists (select * from inventory_sources where [name] = 'Ference Media')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('Ference Media', 1, 1)
+end
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_files') AND name = 'play_back_type')
+BEGIN
+	ALTER TABLE [inventory_files] DROP COLUMN [play_back_type]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_files') AND name = 'sweep_book_id')
+BEGIN
+	DROP INDEX [inventory_files].[IX_inventory_files_sweep_book_id]
+	ALTER TABLE [inventory_files] DROP CONSTRAINT [FK_inventory_files_media_months]
+	ALTER TABLE [inventory_files] DROP COLUMN [sweep_book_id]
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[inventory_file_barter_header]'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_file_barter_header]
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [INT] NOT NULL,
+		[daypart_code] [VARCHAR](8) NOT NULL,
+		[effective_date] [DATETIME] NOT NULL,
+		[end_date] [DATETIME] NOT NULL,
+		[cpm] [MONEY] NOT NULL,
+		[audience_id] INT NOT NULL,
+		[contracted_daypart_id] INT NOT NULL,
+		[share_projection_book_id] INT NOT NULL,
+		[hut_projection_book_id] INT NULL,
+		[playback_type] INT NOT NULL
+	 CONSTRAINT [PK_inventory_file_barter_header] PRIMARY KEY CLUSTERED 
+	 (
+		[id] ASC
+	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[inventory_file_barter_header] WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_inventory_files] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_inventory_files]
+	CREATE INDEX IX_inventory_file_barter_header_inventory_file_id ON [inventory_file_barter_header] ([inventory_file_id])	
+	
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_audiences]
+	CREATE INDEX IX_inventory_file_barter_header_audience_id ON [inventory_file_barter_header] ([audience_id])
+
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_dayparts] FOREIGN KEY([contracted_daypart_id])
+	REFERENCES [dbo].[dayparts] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_dayparts]
+	CREATE INDEX IX_inventory_file_barter_header_contracted_daypart_id ON [inventory_file_barter_header] ([contracted_daypart_id])
+
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_media_months] FOREIGN KEY([share_projection_book_id])
+	REFERENCES [dbo].[media_months] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_media_months]
+	CREATE INDEX IX_inventory_file_barter_header_share_projection_book_id ON [inventory_file_barter_header] ([share_projection_book_id])
+	
+	ALTER TABLE [dbo].[inventory_file_barter_header]  WITH CHECK ADD  CONSTRAINT [FK_inventory_file_barter_header_media_months_hut_book] FOREIGN KEY([hut_projection_book_id])
+	REFERENCES [dbo].[media_months] ([id])
+	ALTER TABLE [dbo].[inventory_file_barter_header] CHECK CONSTRAINT [FK_inventory_file_barter_header_media_months_hut_book]
+	CREATE INDEX IX_inventory_file_barter_header_hut_projection_book_id ON [inventory_file_barter_header] ([hut_projection_book_id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[inventory_file_problems]'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_file_problems](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [int] NOT NULL,
+		[problem_description] [nvarchar](max) NOT NULL,
+	 CONSTRAINT [PK_inventory_file_problems] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	ALTER TABLE [dbo].[inventory_file_problems] WITH CHECK ADD  CONSTRAINT [FK_inventory_file_problems_inventory_files] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ALTER TABLE [dbo].[inventory_file_problems] CHECK CONSTRAINT [FK_inventory_file_problems_inventory_files]
+	CREATE INDEX IX_inventory_file_problems_inventory_file_id ON [inventory_file_problems] ([inventory_file_id])	
+END
+
+/*************************************** END PRI-214 *****************************************************/
+
 
 /*************************************** START PRI-1071 *****************************************************/
 
@@ -367,7 +242,7 @@ END
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '19.03.1' -- Current release version
+SET parameter_value = '19.04.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -378,8 +253,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '19.02.1' -- Previous release version
-		OR [version] = '19.03.1') -- Current release version
+		WHERE [version] = '19.03.1' -- Previous release version
+		OR [version] = '19.04.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION

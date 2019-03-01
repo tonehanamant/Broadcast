@@ -227,7 +227,7 @@
       "EstimateId": null,
       "FileDetailProblems": [],
       "Genre": "Do It Yourself",
-      "InventorySource": 1,
+      "InventorySource": 3,
       "Isci": "DDDDDDDDD1996",
       "LeadInEndTime": 30660,
       "LeadinGenre": "News",
@@ -251,6 +251,6 @@
   "FileHash": "abc123",
   "FileName": "test.file",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 3,
   "Status": 1
 }

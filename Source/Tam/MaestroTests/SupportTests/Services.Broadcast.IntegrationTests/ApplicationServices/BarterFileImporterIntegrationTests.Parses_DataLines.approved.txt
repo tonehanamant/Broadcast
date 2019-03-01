@@ -1,0 +1,192 @@
+﻿{
+  "CreatedBy": null,
+  "CreatedDate": "0001-01-01T00:00:00",
+  "DataLines": [
+    {
+      "Comment": "Comment 1",
+      "Daypart": "M-F 11-1134P",
+      "Station": "KOB+",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 3
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 2
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 1
+        }
+      ]
+    },
+    {
+      "Comment": "Comment 2",
+      "Daypart": "M-F + SU 10-1035P",
+      "Station": "KOLN",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 7
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 2
+        }
+      ]
+    },
+    {
+      "Comment": "Comment 3",
+      "Daypart": "M-F 10-1130P / SA-SU 10-11P",
+      "Station": "KRQE+",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 2
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 2
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 3
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 1
+        }
+      ]
+    },
+    {
+      "Comment": "Comment 4",
+      "Daypart": "M-F 5-7P + SA 6-630P + SU 6-7P",
+      "Station": "KUON-TV 12.1",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 4
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 2
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 3
+        }
+      ]
+    },
+    {
+      "Comment": "Comment 5",
+      "Daypart": "W-F 3-4A",
+      "Station": "KSWB-TV 69.2",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 4
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 5
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 1
+        }
+      ]
+    }
+  ],
+  "FileName": null,
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": null,
+  "Id": 0,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventoryManifestsStaging": [],
+  "InventorySource": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

@@ -20,7 +20,10 @@ namespace Services.Broadcast.Entities.StationInventory
 
         public List<StationInventoryManifestRate> ManifestRates { get; set; } = new List<StationInventoryManifestRate>();
 
+        public List<StationInventoryManifestWeek> ManifestWeeks { get; set; } = new List<StationInventoryManifestWeek>();
+
         // todo: this date needs to be populated
         public DateTime? EndDate { get; set; }
+        public string Comment { get; set; }
     }
 }

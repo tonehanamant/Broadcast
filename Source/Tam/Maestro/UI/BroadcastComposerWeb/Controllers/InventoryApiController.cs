@@ -145,11 +145,9 @@ namespace BroadcastComposerWeb.Controllers
             ratesSaveRequest.UserName = Identity.Name;
             try
             {
-                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryService>();
-
-                var result = string.Equals(ratesSaveRequest.InventorySource, "Barter", StringComparison.InvariantCultureIgnoreCase)?
-                        service.SaveBarterInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName) :
-                        service.SaveInventoryFile(ratesSaveRequest);
+                var result = string.Equals(ratesSaveRequest.InventorySource, "Barter", StringComparison.InvariantCultureIgnoreCase)
+                    ? _ApplicationServiceFactory.GetApplicationService<IBarterInventoryService>().SaveBarterInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName, DateTime.Now)
+                    : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest);
 
                 return new BaseResponse<InventoryFileSaveResult>()
                 {
@@ -175,7 +173,6 @@ namespace BroadcastComposerWeb.Controllers
                 };
             }
         }
-
 
         [HttpGet]
         [Route("Genres")]

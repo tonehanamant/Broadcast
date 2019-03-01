@@ -16,10 +16,9 @@ namespace Services.Broadcast.ApplicationServices
 
     public interface IStationInventoryGroupService : IApplicationService
     {
-        void AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile);
+        void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
-
 
     public class StationInventoryGroupService : IStationInventoryGroupService
     {
@@ -41,26 +40,26 @@ namespace Services.Broadcast.ApplicationServices
            return null;    
         }
 
-        public void AddNewStationInventoryGroups(InventoryFileSaveRequest request, InventoryFile inventoryFile)
+        public void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate)
         {
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
 
-            var expireDate = request.EffectiveDate.AddDays(-1);
+            var expireDate = newEffectiveDate.AddDays(-1);
             
-            _ExpireExistingInventory(inventoryFile.InventoryGroups, inventoryFile.InventorySource, expireDate);
+            _ExpireExistingInventory(inventoryFile.InventoryGroups, inventoryFile.InventorySource, expireDate, newEffectiveDate);
             _inventoryRepository.AddNewInventoryGroups(inventoryFile);
         }
 
-        private List<StationInventoryGroup> _ExpireExistingInventory(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime expireDate)
+        private List<StationInventoryGroup> _ExpireExistingInventory(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime expireDate, DateTime newEffectiveDate)
         {
             var groupNames = groups.Select(g => g.Name).Distinct().ToList();
-            var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source, groupNames);
+            var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source, groupNames, newEffectiveDate);
 
             if (!existingInventory.Any())
                 return existingInventory;
 
-            _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory, expireDate);
+            _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory, expireDate, newEffectiveDate);
 
             return existingInventory;
         }

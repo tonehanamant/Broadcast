@@ -289,6 +289,262 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class AppSettings_Service_GandhiSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AppSettings_Service_Gandhi" ; }
+        }
+	  
+		public static string ACCT  
+		{
+            get { return "ACCT"; }
+        }
+	 
+		public static string ACS  
+		{
+            get { return "ACS"; }
+        }
+	 
+		public static string ARS  
+		{
+            get { return "ARS"; }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return "ARSLoader"; }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return "BOMS"; }
+        }
+	 
+		public static string BRS  
+		{
+            get { return "BRS"; }
+        }
+	 
+		public static string BS  
+		{
+            get { return "BS"; }
+        }
+	 
+		public static string CUS  
+		{
+            get { return "CUS"; }
+        }
+	 
+		public static string DES  
+		{
+            get { return "DES"; }
+        }
+	 
+		public static string FTP  
+		{
+            get { return "FTP"; }
+        }
+	 
+		public static string ICS  
+		{
+            get { return "ICS"; }
+        }
+	 
+		public static string MAS  
+		{
+            get { return "MAS"; }
+        }
+	 
+		public static string MCS  
+		{
+            get { return "MCS"; }
+        }
+	 
+		public static string PCS  
+		{
+            get { return "PCS"; }
+        }
+	 
+		public static string PLS  
+		{
+            get { return "PLS"; }
+        }
+	 
+		public static string PST  
+		{
+            get { return "PST"; }
+        }
+	 
+		public static string RCS  
+		{
+            get { return "RCS"; }
+        }
+	 
+		public static string REL  
+		{
+            get { return "REL"; }
+        }
+	 
+		public static string REL2  
+		{
+            get { return "REL2"; }
+        }
+	 
+		public static string RS  
+		{
+            get { return "RS"; }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return "SingletonTestService"; }
+        }
+	 
+		public static string SMS  
+		{
+            get { return "SMS"; }
+        }
+	 
+		public static string STS2  
+		{
+            get { return "STS2"; }
+        }
+	 
+		public static string TCS  
+		{
+            get { return "TCS"; }
+        }
+	}
+	 
+	public static class AppSettings_Service_SenthilSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "AppSettings_Service_Senthil" ; }
+        }
+	  
+		public static string ACCT  
+		{
+            get { return "ACCT"; }
+        }
+	 
+		public static string ACS  
+		{
+            get { return "ACS"; }
+        }
+	 
+		public static string ARS  
+		{
+            get { return "ARS"; }
+        }
+	 
+		public static string ARSLoader  
+		{
+            get { return "ARSLoader"; }
+        }
+	 
+		public static string BOMS  
+		{
+            get { return "BOMS"; }
+        }
+	 
+		public static string BRS  
+		{
+            get { return "BRS"; }
+        }
+	 
+		public static string BS  
+		{
+            get { return "BS"; }
+        }
+	 
+		public static string CUS  
+		{
+            get { return "CUS"; }
+        }
+	 
+		public static string DES  
+		{
+            get { return "DES"; }
+        }
+	 
+		public static string FTP  
+		{
+            get { return "FTP"; }
+        }
+	 
+		public static string ICS  
+		{
+            get { return "ICS"; }
+        }
+	 
+		public static string MAS  
+		{
+            get { return "MAS"; }
+        }
+	 
+		public static string MCS  
+		{
+            get { return "MCS"; }
+        }
+	 
+		public static string PCS  
+		{
+            get { return "PCS"; }
+        }
+	 
+		public static string PLS  
+		{
+            get { return "PLS"; }
+        }
+	 
+		public static string PST  
+		{
+            get { return "PST"; }
+        }
+	 
+		public static string RCS  
+		{
+            get { return "RCS"; }
+        }
+	 
+		public static string REL  
+		{
+            get { return "REL"; }
+        }
+	 
+		public static string REL2  
+		{
+            get { return "REL2"; }
+        }
+	 
+		public static string RS  
+		{
+            get { return "RS"; }
+        }
+	 
+		public static string SingletonTestService  
+		{
+            get { return "SingletonTestService"; }
+        }
+	 
+		public static string SMS  
+		{
+            get { return "SMS"; }
+        }
+	 
+		public static string STS2  
+		{
+            get { return "STS2"; }
+        }
+	 
+		public static string TCS  
+		{
+            get { return "TCS"; }
+        }
+	}
+	 
 	public static class AudienceAndRatingsServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -410,6 +666,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string BroadcastNTIUploadApiUrl  
 		{
             get { return "BroadcastNTIUploadApiUrl"; }
+        }
+	 
+		public static string DataLake_NotificationEmail  
+		{
+            get { return "DataLake_NotificationEmail"; }
+        }
+	 
+		public static string DataLake_SharedFolder  
+		{
+            get { return "DataLake_SharedFolder"; }
+        }
+	 
+		public static string DataLake_SharedFolder_Password  
+		{
+            get { return "DataLake_SharedFolder_Password"; }
+        }
+	 
+		public static string DataLake_SharedFolder_UserName  
+		{
+            get { return "DataLake_SharedFolder_UserName"; }
         }
 	 
 		public static string DefaultMarketCoverage  
@@ -1399,6 +1675,26 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "AutoDailyMODStartingHour"; }
         }
 	 
+		public static string ConfirmationProposalEmailDefaultTemplate  
+		{
+            get { return "ConfirmationProposalEmailDefaultTemplate"; }
+        }
+	 
+		public static string ConfirmationProposalEmailFileContentPath  
+		{
+            get { return "ConfirmationProposalEmailFileContentPath"; }
+        }
+	 
+		public static string ConfirmationProposalEmailFilePath  
+		{
+            get { return "ConfirmationProposalEmailFilePath"; }
+        }
+	 
+		public static string ConfirmationProposalSaveEmailTemplate  
+		{
+            get { return "ConfirmationProposalSaveEmailTemplate"; }
+        }
+	 
 		public static string ErrorNotificationRecipients  
 		{
             get { return "ErrorNotificationRecipients"; }
@@ -1407,6 +1703,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ExportMediaOceanToFileSystem  
 		{
             get { return "ExportMediaOceanToFileSystem"; }
+        }
+	 
+		public static string LinkISCIToPostPlan  
+		{
+            get { return "LinkISCIToPostPlan"; }
+        }
+	 
+		public static string LinkISCIToPostPlanStartHour  
+		{
+            get { return "LinkISCIToPostPlanStartHour"; }
         }
 	 
 		public static string MediaOceanFourADSDirectory  
@@ -1442,6 +1748,56 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string MediaOceanTECCServiceUserName  
 		{
             get { return "MediaOceanTECCServiceUserName"; }
+        }
+	 
+		public static string PostingPlanEmailBodyFailure  
+		{
+            get { return "PostingPlanEmailBodyFailure"; }
+        }
+	 
+		public static string PostingPlanEmailBodySuccess  
+		{
+            get { return "PostingPlanEmailBodySuccess"; }
+        }
+	 
+		public static string PostingPlanEmailFrom  
+		{
+            get { return "PostingPlanEmailFrom"; }
+        }
+	 
+		public static string PostingPlanEmailSubjectFailure  
+		{
+            get { return "PostingPlanEmailSubjectFailure"; }
+        }
+	 
+		public static string PostingPlanEmailSubjectSuccess  
+		{
+            get { return "PostingPlanEmailSubjectSuccess"; }
+        }
+	 
+		public static string PostingPlanEmailTo  
+		{
+            get { return "PostingPlanEmailTo"; }
+        }
+	 
+		public static string PostingPlanExcelFileName  
+		{
+            get { return "PostingPlanExcelFileName"; }
+        }
+	 
+		public static string PostingPlanExcelPath  
+		{
+            get { return "PostingPlanExcelPath"; }
+        }
+	 
+		public static string PostingPlanNotificationEnabled  
+		{
+            get { return "PostingPlanNotificationEnabled"; }
+        }
+	 
+		public static string ProductPatternMatchingThreshold  
+		{
+            get { return "ProductPatternMatchingThreshold"; }
         }
 	 
 		public static string ProposalWeeklyImpressionKickoffDays  
@@ -1659,9 +2015,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "InternalSalesWebApiUri"; }
         }
 	 
-		public static string OrderingApiApprovedEmailAddresses  
+		public static string OrderingApiApproveEmailAddresses  
 		{
-            get { return "OrderingApiApprovedEmailAddresses"; }
+            get { return "OrderingApiApproveEmailAddresses"; }
+        }
+	 
+		public static string OrderingApiRejectEmailAddresses  
+		{
+            get { return "OrderingApiRejectEmailAddresses"; }
+        }
+	 
+		public static string OrderingApiSubmittedEmailAddresses  
+		{
+            get { return "OrderingApiSubmittedEmailAddresses"; }
         }
 	}
 	 
@@ -1761,6 +2127,21 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "TrafficComposerWeb" ; }
         }
 	  
+		public static string CancellationNotificationEmailList  
+		{
+            get { return "CancellationNotificationEmailList"; }
+        }
+	 
+		public static string CancellationNotificationEndPoint  
+		{
+            get { return "CancellationNotificationEndPoint"; }
+        }
+	 
+		public static string CancellationNotificationUri  
+		{
+            get { return "CancellationNotificationUri"; }
+        }
+	 
 		public static string DeliveryInsightPrediction  
 		{
             get { return "DeliveryInsightPrediction"; }
@@ -1789,6 +2170,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string IndexRecommendModelLogsFilePath  
 		{
             get { return "IndexRecommendModelLogsFilePath"; }
+        }
+	 
+		public static string MVPDTotalOrderMinimumFeatureEnabled  
+		{
+            get { return "MVPDTotalOrderMinimumFeatureEnabled"; }
         }
 	}
 	 

@@ -80,6 +80,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IProposalBuyRepository, ProposalBuyRepository>();
             instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
+            instance.RegisterType<IBarterRepository, BarterInventoryRepository>();
 
             WasRegistered = true;
         }

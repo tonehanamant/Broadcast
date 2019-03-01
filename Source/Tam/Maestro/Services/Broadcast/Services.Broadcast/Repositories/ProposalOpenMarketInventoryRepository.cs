@@ -175,7 +175,7 @@ namespace Services.Broadcast.Repositories
                         DaypartId = x.daypart.daypart_id,
                         StationCode = x.manifest.station_code,
                         StationCallLetters = x.station.legacy_call_letters,
-                        StationMarketCode = x.station.market_code,
+                        StationMarketCode = x.station.market_code.Value,
                         SpotImpressions = x.audience.calculated_impressions,
                         SpotCost = x.audience.calculated_rate,
                         AudienceId = x.audience.audience_id,

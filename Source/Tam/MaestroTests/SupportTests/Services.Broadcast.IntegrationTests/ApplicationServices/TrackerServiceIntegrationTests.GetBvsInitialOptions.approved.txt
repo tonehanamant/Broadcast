@@ -245,7 +245,7 @@
       "Id": 7
     },
     {
-      "Display": "Ferenc Media",
+      "Display": "Ference Media",
       "Id": 8
     },
     {

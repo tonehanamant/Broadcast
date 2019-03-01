@@ -21,7 +21,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_spot_length = new HashSet<proposal_version_spot_length>();
             this.schedule_details = new HashSet<schedule_details>();
             this.spot_length_cost_multipliers = new HashSet<spot_length_cost_multipliers>();
-            this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
             this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
             this.spot_tracker_file_details = new HashSet<spot_tracker_file_details>();
             this.proposal_buy_file_details = new HashSet<proposal_buy_file_details>();
@@ -29,6 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_staging1 = new HashSet<station_inventory_manifest_staging>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
+            this.station_inventory_manifest_rates = new HashSet<station_inventory_manifest_rates>();
         }
     
         public int id { get; set; }
@@ -42,7 +42,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_spot_length> proposal_version_spot_length { get; set; }
         public virtual ICollection<schedule_details> schedule_details { get; set; }
         public virtual ICollection<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
-        public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
         public virtual ICollection<spot_tracker_file_details> spot_tracker_file_details { get; set; }
         public virtual ICollection<proposal_buy_file_details> proposal_buy_file_details { get; set; }
@@ -50,5 +49,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_staging> station_inventory_manifest_staging1 { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
+        public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
     }
 }

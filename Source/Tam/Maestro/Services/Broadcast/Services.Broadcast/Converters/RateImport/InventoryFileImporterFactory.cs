@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Services;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
@@ -22,13 +23,15 @@ namespace Services.Broadcast.Converters.RateImport
 
         private readonly ICNNStationInventoryGroupService _CNNStationInventoryGroupService;
         private readonly IInventoryRepository _inventoryRepository;
+        private readonly IInventoryDaypartParsingEngine _inventoryDaypartParsingEngine;
 
         public InventoryFileImporterFactory(BroadcastDataDataRepositoryFactory broadcastDataFactory,
                                             IDaypartCache daypartCache, 
                                             MediaMonthAndWeekAggregateCache mediaWeekCache, 
                                             IBroadcastAudiencesCache audiencesCache,
                                             ICNNStationInventoryGroupService CNNStationInventoryGroupService,
-                                            IInventoryFileValidator inventoryFileValidator)
+                                            IInventoryFileValidator inventoryFileValidator,
+                                            IInventoryDaypartParsingEngine inventoryDaypartParsingEngine)
         {
             _broadcastDataDataRepositoryFactory = broadcastDataFactory;
             _daypartCache = daypartCache;
@@ -37,6 +40,7 @@ namespace Services.Broadcast.Converters.RateImport
             _CNNStationInventoryGroupService = CNNStationInventoryGroupService;
             _InventoryFileValidator = inventoryFileValidator;
             _inventoryRepository = _broadcastDataDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _inventoryDaypartParsingEngine = inventoryDaypartParsingEngine;
         }
 
         public InventoryFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -63,6 +67,7 @@ namespace Services.Broadcast.Converters.RateImport
             fileImporter.MediaMonthAndWeekAggregateCache = _MediaMonthAndWeekAggregateCache;
             fileImporter.AudiencesCache = _AudiencesCache;
             fileImporter.InventorySource = inventorySource;
+            fileImporter.InventoryDaypartParsingEngine = _inventoryDaypartParsingEngine;
 
             return fileImporter;
         }

@@ -16,23 +16,23 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public market()
         {
-            this.proposal_version_markets = new HashSet<proposal_version_markets>();
-            this.stations = new HashSet<station>();
-            this.schedules = new HashSet<schedule>();
             this.market_coverages = new HashSet<market_coverages>();
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
+            this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
+            this.schedules = new HashSet<schedule>();
+            this.stations = new HashSet<station>();
         }
     
         public short market_code { get; set; }
         public string geography_name { get; set; }
     
-        public virtual market_dma_map market_dma_map { get; set; }
-        public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
-        public virtual ICollection<station> stations { get; set; }
-        public virtual ICollection<schedule> schedules { get; set; }
         public virtual ICollection<market_coverages> market_coverages { get; set; }
+        public virtual market_dma_map market_dma_map { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
+        public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
+        public virtual ICollection<schedule> schedules { get; set; }
+        public virtual ICollection<station> stations { get; set; }
     }
 }

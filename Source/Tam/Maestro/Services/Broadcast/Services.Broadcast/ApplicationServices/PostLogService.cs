@@ -572,8 +572,8 @@ namespace Services.Broadcast.ApplicationServices
                 Sequence = x.Sequence,
                 DaypartCodeDisplay = x.DaypartCode,
                 EstimateId = x.EstimateId,
-                PostingBook = _MediaMonthAndWeekCache.GetMediaMonthsByIds(new List<int> { x.PostingBookId.Value }).Single().LongMonthNameAndYear,
-                PlaybackTypeDisplay = x.PostingPlaybackType?.GetDescriptionAttribute()
+                PostingBook = x.PostingBookId.HasValue ? _MediaMonthAndWeekCache.GetMediaMonthById(x.PostingBookId.Value).LongMonthNameAndYear : null,
+            PlaybackTypeDisplay = x.PostingPlaybackType?.GetDescriptionAttribute()
             }).OrderBy(x => x.Sequence).ToList();
         }
 

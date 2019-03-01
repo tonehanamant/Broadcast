@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests
 
         public virtual Stream DownloadFileToStream(WebClient webClient, string path)
         {
-            return new MemoryStream(); 
+            return new MemoryStream();
         }
 
     }
@@ -64,7 +64,7 @@ namespace Services.Broadcast.IntegrationTests
                 using (var file = File.Create(localPath))
                 {
                     var byteArray = GetFileContents().ToByteArray();
-                    file.Write(byteArray,0,byteArray.Length);
+                    file.Write(byteArray, 0, byteArray.Length);
                     _FilesCreated.Add(localPath);
                 }
             }

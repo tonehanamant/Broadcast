@@ -17,7 +17,7 @@
       "EstimateId": 123,
       "FileDetailProblems": [],
       "Genre": "Comedy",
-      "InventorySource": 1,
+      "InventorySource": 2,
       "Isci": "ABC123",
       "LeadInEndTime": 81242,
       "LeadinGenre": "Comedy",
@@ -54,7 +54,7 @@
       "EstimateId": 456,
       "FileDetailProblems": [],
       "Genre": "Talk",
-      "InventorySource": 1,
+      "InventorySource": 2,
       "Isci": "DEF456",
       "LeadInEndTime": 32462,
       "LeadinGenre": "Talk",
@@ -75,9 +75,9 @@
       "SuppliedProgramName": null
     }
   ],
-  "FileHash": "12-E4-DE-79-96-CD-D6-6E-B3-65-83-15-45-C3-4C-CB-8C-E0-F7-BB",
+  "FileHash": "D6-2C-AF-30-04-7F-49-64-82-DC-56-56-94-8A-7B-7B-4B-1B-4D-1D",
   "FileName": "WWTV_KeepingTracValidFile.txt",
   "FileProblems": [],
-  "SourceId": 1,
+  "SourceId": 2,
   "Status": 1
 }

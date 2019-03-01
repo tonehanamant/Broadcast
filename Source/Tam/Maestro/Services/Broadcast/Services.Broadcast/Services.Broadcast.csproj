@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Services.Broadcast</RootNamespace>
     <AssemblyName>Services.Broadcast</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\..\Solutions\MaestroComplete\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -214,9 +215,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
+    <Compile Include="ApplicationServices\BarterInventoryService.cs" />
+    <Compile Include="ApplicationServices\DataLakeFileService.cs" />
+    <Compile Include="Helpers\DataLakeSystemParameters.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\TimeFirstDaypartParser.cs" />
+    <Compile Include="BusinessEngines\InventoryDaypartParsing\WeekdayFirstDaypartParser.cs" />
+    <Compile Include="BusinessEngines\LockingEngine.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
-    <Compile Include="Entities\Enums\AffidaviteFileSourceEnum.cs" />
+    <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
+    <Compile Include="Entities\BarterInventory\BarterInventoryFile.cs" />
+    <Compile Include="Entities\BarterInventory\BarterInventoryHeader.cs" />
+    <Compile Include="Entities\BarterInventory\BarterInventoryUnit.cs" />
+    <Compile Include="Entities\Enums\DeliveryFileSourceEnum.cs" />
     <Compile Include="Entities\DTO\ProgramSpotsDto.cs" />
+    <Compile Include="Entities\Enums\FileStatusEnum.cs" />
+    <Compile Include="Entities\Enums\InventorySourceTypeEnum.cs" />
+    <Compile Include="Entities\InventoryFileBase.cs" />
     <Compile Include="Entities\MarketCoverageByStation.cs" />
     <Compile Include="Entities\Nti\NtiComponentAudiencesImpressions.cs" />
     <Compile Include="Converters\PostLogBaseFileConverter.cs" />
@@ -262,6 +278,7 @@
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Entities\PostedContract.cs" />
     <Compile Include="Entities\PricingGuide.cs" />
+    <Compile Include="Entities\StationInventory\StationInventoryManifestWeek.cs" />
     <Compile Include="Helpers\CsvHelper.cs" />
     <Compile Include="Entities\DistributionProgram.cs" />
     <Compile Include="Entities\DTO\CheckForAllocatedSpotsRequestDto.cs" />
@@ -318,13 +335,13 @@
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
+    <Compile Include="Helpers\TransactionScopeHelper.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
     <Compile Include="Helpers\WWTVNetworkHelper.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />
     <Compile Include="Converters\SigmaConverter.cs" />
     <Compile Include="Entities\TrackerFile.cs" />
     <Compile Include="Entities\BvsFileDetail.cs" />
-    <Compile Include="Entities\Enums\FileSourceEnum.cs" />
     <Compile Include="Entities\ProposalDetailPostScrubbing.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="BusinessEngines\StationProcessingEngine.cs" />
@@ -569,6 +586,7 @@
     <Compile Include="ProposalCache.cs" />
     <Compile Include="ReportGenerators\SpotTrackerReportGenerator.cs" />
     <Compile Include="Repositories\AudienceRepository.cs" />
+    <Compile Include="Repositories\BarterInventoryRepository.cs" />
     <Compile Include="Repositories\BroadcastAudienceRepository.cs" />
     <Compile Include="Repositories\BroadcastForecastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileDetailFilterResult.cs" />

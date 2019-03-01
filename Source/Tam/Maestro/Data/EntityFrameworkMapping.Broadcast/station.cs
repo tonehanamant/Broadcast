@@ -16,28 +16,28 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public station()
         {
-            this.station_contacts = new HashSet<station_contacts>();
-            this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
-            this.proposal_buy_file_details = new HashSet<proposal_buy_file_details>();
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
-            this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
+            this.proposal_buy_file_details = new HashSet<proposal_buy_file_details>();
+            this.station_contacts = new HashSet<station_contacts>();
             this.station_inventory_loaded = new HashSet<station_inventory_loaded>();
+            this.station_inventory_manifest = new HashSet<station_inventory_manifest>();
+            this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
         }
     
         public short station_code { get; set; }
         public string station_call_letters { get; set; }
         public string affiliation { get; set; }
-        public short market_code { get; set; }
+        public Nullable<short> market_code { get; set; }
         public string legacy_call_letters { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
     
         public virtual market market { get; set; }
-        public virtual ICollection<station_contacts> station_contacts { get; set; }
-        public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
-        public virtual ICollection<proposal_buy_file_details> proposal_buy_file_details { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
-        public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
+        public virtual ICollection<proposal_buy_file_details> proposal_buy_file_details { get; set; }
+        public virtual ICollection<station_contacts> station_contacts { get; set; }
         public virtual ICollection<station_inventory_loaded> station_inventory_loaded { get; set; }
+        public virtual ICollection<station_inventory_manifest> station_inventory_manifest { get; set; }
+        public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
     }
 }

@@ -22,7 +22,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.schedule_detail_audiences = new HashSet<schedule_detail_audiences>();
             this.proposal_version_audiences = new HashSet<proposal_version_audiences>();
             this.schedule_audiences = new HashSet<schedule_audiences>();
-            this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
             this.station_inventory_spot_audiences = new HashSet<station_inventory_spot_audiences>();
             this.affidavit_file_detail_demographics = new HashSet<affidavit_file_detail_demographics>();
             this.proposal_buy_file_detail_audiences = new HashSet<proposal_buy_file_detail_audiences>();
@@ -32,6 +31,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_staging = new HashSet<station_inventory_manifest_staging>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.nti_transmittals_audiences = new HashSet<nti_transmittals_audiences>();
+            this.inventory_file_barter_header = new HashSet<inventory_file_barter_header>();
+            this.station_inventory_manifest_audiences = new HashSet<station_inventory_manifest_audiences>();
         }
     
         public int id { get; set; }
@@ -49,7 +50,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<schedule_detail_audiences> schedule_detail_audiences { get; set; }
         public virtual ICollection<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual ICollection<schedule_audiences> schedule_audiences { get; set; }
-        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_spot_audiences> station_inventory_spot_audiences { get; set; }
         public virtual nsi_component_audiences nsi_component_audiences { get; set; }
         public virtual ICollection<affidavit_file_detail_demographics> affidavit_file_detail_demographics { get; set; }
@@ -60,5 +60,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_staging> station_inventory_manifest_staging { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<nti_transmittals_audiences> nti_transmittals_audiences { get; set; }
+        public virtual ICollection<inventory_file_barter_header> inventory_file_barter_header { get; set; }
+        public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
     }
 }

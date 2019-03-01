@@ -555,7 +555,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)AffidavitFileSourceEnum.KeepingTrac,
+                Source = (int)DeliveryFileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -575,7 +575,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.KeepingTrac,
+                        InventorySource = DeliveryFileSourceEnum.KeepingTrac,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -616,7 +616,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     LeadInGenre = "News",
                     LeadOutProgramName = "LeadOutProgramName",
                     LeadInProgramName = "LeadInProgramName",
-                    InventorySource = AffidavitFileSourceEnum.KeepingTrac,
+                    InventorySource = DeliveryFileSourceEnum.KeepingTrac,
                     LeadOutGenre = "LeadOutGenre",
                     Affiliate = "Affiate",
                     Market = "market"
@@ -635,7 +635,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)FileSourceEnum.KeepingTrac,
+                Source = (int)DeliveryFileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -655,7 +655,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.KeepingTrac,
+                        InventorySource = DeliveryFileSourceEnum.KeepingTrac,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -670,7 +670,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)FileSourceEnum.KeepingTrac,
+                Source = (int)DeliveryFileSourceEnum.KeepingTrac,
                 FileName = "test.file",
                 Details = new List<InboundFileSaveRequestDetail>()
                 {
@@ -690,7 +690,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         LeadInGenre = "News",
                         LeadOutProgramName = "LeadOutProgramName",
                         LeadInProgramName = "LeadInProgramName",
-                        InventorySource = AffidavitFileSourceEnum.KeepingTrac,
+                        InventorySource = DeliveryFileSourceEnum.KeepingTrac,
                         LeadOutGenre = "LeadOutGenre",
                         Affiliate = "Affiate",
                         Market = "market"
@@ -705,7 +705,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             InboundFileSaveRequest request = new InboundFileSaveRequest
             {
                 FileHash = "abc123",
-                Source = (int)FileSourceEnum.KeepingTrac,
+                Source = (int)DeliveryFileSourceEnum.KeepingTrac,
                 FileName = "test.file"
             };
 
@@ -725,7 +725,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 LeadInGenre = "News",
                 LeadOutProgramName = "LeadOutProgramName",
                 LeadInProgramName = "LeadInProgramName",
-                InventorySource = AffidavitFileSourceEnum.KeepingTrac,
+                InventorySource = DeliveryFileSourceEnum.KeepingTrac,
                 LeadOutGenre = "LeadOutGenre",
                 Affiliate = "Affiate"
             });

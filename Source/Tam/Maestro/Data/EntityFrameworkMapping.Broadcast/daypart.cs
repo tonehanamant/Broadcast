@@ -24,6 +24,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.pricing_guide_distribution_open_market_inventory = new HashSet<pricing_guide_distribution_open_market_inventory>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
+            this.inventory_file_barter_header = new HashSet<inventory_file_barter_header>();
         }
     
         public int id { get; set; }
@@ -42,5 +43,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
+        public virtual ICollection<inventory_file_barter_header> inventory_file_barter_header { get; set; }
     }
 }

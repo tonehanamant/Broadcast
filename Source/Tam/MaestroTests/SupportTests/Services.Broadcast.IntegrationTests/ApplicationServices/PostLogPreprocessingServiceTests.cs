@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\C786.Sigma.ValidFile.csv" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, DeliveryFileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
@@ -65,7 +65,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\C786.Sigma.MissingData.csv" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, DeliveryFileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
@@ -88,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\C786.Sigma.MissingColumns.csv" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Sigma);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, DeliveryFileSourceEnum.Sigma);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
@@ -110,7 +110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileNames = new List<string>() { @".\Files\BCOP3666.txt" };
-                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, FileSourceEnum.Unknown);
+                var validations = _PostLogPreprocessingService.ValidateFiles(fileNames, USERNAME, DeliveryFileSourceEnum.Unknown);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
@@ -173,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         @".\Files\KeepingTrac_MissingHeaders.xlsx",
                         @".\Files\C786.Sigma.MissingColumns.csv"
                     },
-                    userName, FileSourceEnum.KeepingTrac);
+                    userName, DeliveryFileSourceEnum.KeepingTrac);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(WWTVOutboundFileValidationResult), "CreatedDate");
 

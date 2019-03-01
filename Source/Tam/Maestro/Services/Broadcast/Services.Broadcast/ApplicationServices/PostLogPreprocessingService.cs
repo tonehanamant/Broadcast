@@ -19,7 +19,7 @@ namespace Services.Broadcast.ApplicationServices
     public interface IPostLogPreprocessingService : IApplicationService
     {
         void ProcessFiles(string username);
-        List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource);
+        List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filePathList, string userName, DeliveryFileSourceEnum fileSource);
     }
 
     class PostLogPreprocessingService : IPostLogPreprocessingService
@@ -62,16 +62,16 @@ namespace Services.Broadcast.ApplicationServices
             _WWTVSharedNetworkHelper.Impersonate(delegate
             {
                 var dropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_PostLogDropFolder);
-                var validationResults = ValidateFiles(dropFilePathList, username, FileSourceEnum.Sigma);
-                _SaveAndUploadToWWTV(validationResults, FileSourceEnum.Sigma);
+                var validationResults = ValidateFiles(dropFilePathList, username, DeliveryFileSourceEnum.Sigma);
+                _SaveAndUploadToWWTV(validationResults, DeliveryFileSourceEnum.Sigma);
 
                 var ktDropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_KeepingTracDropFolder);
-                var ktValidationResults = ValidateFiles(ktDropFilePathList, username, FileSourceEnum.KeepingTrac);
-                _SaveAndUploadToWWTV(ktValidationResults, FileSourceEnum.KeepingTrac);
+                var ktValidationResults = ValidateFiles(ktDropFilePathList, username, DeliveryFileSourceEnum.KeepingTrac);
+                _SaveAndUploadToWWTV(ktValidationResults, DeliveryFileSourceEnum.KeepingTrac);
             });
         }
 
-        public List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filePathList, string userName, FileSourceEnum fileSource)
+        public List<WWTVOutboundFileValidationResult> ValidateFiles(List<string> filePathList, string userName, DeliveryFileSourceEnum fileSource)
         {
             var results = new List<WWTVOutboundFileValidationResult>();
 
@@ -90,14 +90,14 @@ namespace Services.Broadcast.ApplicationServices
 
                 var fileInfo = new FileInfo(filePath);
 
-                if (fileSource.Equals(FileSourceEnum.Sigma) && fileInfo.Extension.Equals(_CsvFileExtension, StringComparison.InvariantCultureIgnoreCase))
+                if (fileSource.Equals(DeliveryFileSourceEnum.Sigma) && fileInfo.Extension.Equals(_CsvFileExtension, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    currentFile.Source = FileSourceEnum.Sigma;
+                    currentFile.Source = DeliveryFileSourceEnum.Sigma;
                     currentFile.ErrorMessages.AddRange(_SigmaConverter.GetValidationResults(filePath));
                 }
-                else if (fileSource.Equals(FileSourceEnum.KeepingTrac) && fileInfo.Extension.Equals(_ExcelFileExtension, StringComparison.InvariantCultureIgnoreCase))
+                else if (fileSource.Equals(DeliveryFileSourceEnum.KeepingTrac) && fileInfo.Extension.Equals(_ExcelFileExtension, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    currentFile.Source = FileSourceEnum.KeepingTrac;
+                    currentFile.Source = DeliveryFileSourceEnum.KeepingTrac;
                     _LoadKeepingTracValidationResults(filePath, currentFile);
                 }
                 else
@@ -107,7 +107,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (currentFile.ErrorMessages.Any())
                 {
-                    currentFile.Source = FileSourceEnum.Unknown;
+                    currentFile.Source = DeliveryFileSourceEnum.Unknown;
                     currentFile.Status = FileProcessingStatusEnum.Invalid;
                 }                    
             }
@@ -125,7 +125,7 @@ namespace Services.Broadcast.ApplicationServices
             var worksheet = _ExcelHelper.GetWorksheetToProcess(fileInfo, currentFile);            
             if (worksheet == null)
             {
-                currentFile.Source = FileSourceEnum.Unknown;
+                currentFile.Source = DeliveryFileSourceEnum.Unknown;
                 currentFile.ErrorMessages.Add(string.Format("Could not find the tab in file {0}", currentFile.FilePath));
                 return;
             }
@@ -141,7 +141,7 @@ namespace Services.Broadcast.ApplicationServices
                 return;
         }
 
-        private void _SaveAndUploadToWWTV(List<WWTVOutboundFileValidationResult> validationResults, FileSourceEnum source)
+        private void _SaveAndUploadToWWTV(List<WWTVOutboundFileValidationResult> validationResults, DeliveryFileSourceEnum source)
         {
             _PostLogRepository.SavePreprocessingValidationResults(validationResults);
             var validFileList = validationResults.Where(v => v.Status == FileProcessingStatusEnum.Valid)
@@ -161,12 +161,12 @@ namespace Services.Broadcast.ApplicationServices
             _FileService.Delete(validFileList.Select(x => x.FilePath).ToArray());
         }
 
-        private void _MoveToErrorFolderAndSendNotification(List<WWTVOutboundFileValidationResult> invalidFileList, FileSourceEnum source)
+        private void _MoveToErrorFolderAndSendNotification(List<WWTVOutboundFileValidationResult> invalidFileList, DeliveryFileSourceEnum source)
         {
             foreach (var invalidFile in invalidFileList)
             {
                 var invalidFilePath = _FileService.Move(invalidFile.FilePath,
-                    source.Equals(FileSourceEnum.KeepingTrac) ? BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder : BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
+                    source.Equals(DeliveryFileSourceEnum.KeepingTrac) ? BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder : BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
 
                 var emailBody = _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
 

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -24,6 +25,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IEmailerService _EmailerService;
         private readonly IFileService _FileService;
+        private readonly IDataLakeFileService _DataLakeFileService;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -31,13 +33,15 @@ namespace Services.Broadcast.ApplicationServices
             , IWWTVFtpHelper wwtvFTPHelper
             , IBroadcastAudiencesCache audienceCache
             , IEmailerService emailerService
-            , IFileService fileService)
+            , IFileService fileService
+            , IDataLakeFileService dataLakeFileService)
         {
             _EmailHelper = emailHelper;
             _WWTVFtpHelper = wwtvFTPHelper;
             _AudienceCache = audienceCache;
             _EmailerService = emailerService;
             _FileService = fileService;
+            _DataLakeFileService = dataLakeFileService;
         }
 
         /// <summary>
@@ -126,6 +130,27 @@ namespace Services.Broadcast.ApplicationServices
             }
             return localPaths;
         }
+        
+        /// <summary>
+        /// Sends a file to data lake
+        /// </summary>
+        /// <param name="fileContents">File content to send</param>
+        /// <param name="fileName">Filename for the file</param>
+        public void SendFileToDataLake(string fileContents, string fileName)
+        {
+            try
+            {
+                _DataLakeFileService.Save(new FileRequest
+                {
+                    FileName = fileName,
+                    StreamData = new MemoryStream(Encoding.UTF8.GetBytes(fileContents))
+                });
+            }
+            catch
+            {
+                throw new ApplicationException("Unable to send WWTV file to Data Lake shared folder and e-mail reporting the error.");
+            }
+        }
 
         /// <summary>
         /// Deals with fact that time comes in 2 formats  HHMMTT and HMMTT 
@@ -158,11 +183,6 @@ namespace Services.Broadcast.ApplicationServices
             
             result = new DateTime(1, 1, 1, hour, minutes, 0);
             return result.TimeOfDay;
-        }
-
-        private TimeSpan ExtractKeepingTracTime(string timeToParse, List<WWTVInboundFileValidationResult> validationErrors, string fieldName, int recordNumber)
-        {
-            return ExtractDateTime(timeToParse, validationErrors, fieldName, recordNumber);
         }
 
         private TimeSpan ExtractDateTime(string datetime, List<WWTVInboundFileValidationResult> validationErrors, string fieldName, int recordNumber)
@@ -207,7 +227,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var jsonDetail = jsonFile.Details[recordNumber];
 
-                if (!Enum.TryParse(jsonDetail.InventorySource, out AffidavitFileSourceEnum inventorySource))
+                if (!Enum.TryParse(jsonDetail.InventorySource, out DeliveryFileSourceEnum inventorySource))
                 {
                     validationErrors.Add(new WWTVInboundFileValidationResult()
                     {
@@ -223,11 +243,11 @@ namespace Services.Broadcast.ApplicationServices
 
                 DateTime airTime = DateTime.Now;
 
-                if (saveRequest.Source == (int)AffidavitFileSourceEnum.Strata)
+                if (saveRequest.Source == (int)DeliveryFileSourceEnum.Strata)
                 {
                     airTime = jsonDetail.Date.Add(ExtractStrataTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
                 }
-                else if (saveRequest.Source == (int)AffidavitFileSourceEnum.KeepingTrac)
+                else if (saveRequest.Source == (int)DeliveryFileSourceEnum.KeepingTrac)
                 {
                     airTime = jsonDetail.Date.Add(ExtractDateTime(jsonDetail.Time, validationErrors, "Time", recordNumber));
                 }
@@ -287,10 +307,10 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private bool _ValidateDemography(List<WWTVInboundFileValidationResult> validationErrors, ScrubbingDemographics demo, int recordNumber
-            , AffidavitFileSourceEnum inventorySource, out string xtransformedCode)
+            , DeliveryFileSourceEnum inventorySource, out string xtransformedCode)
         {
             xtransformedCode = demo.Demographic;
-            if (inventorySource == AffidavitFileSourceEnum.KeepingTrac)
+            if (inventorySource == DeliveryFileSourceEnum.KeepingTrac)
             {
                 if (xtransformedCode.StartsWith("ad", StringComparison.CurrentCultureIgnoreCase))
                 {

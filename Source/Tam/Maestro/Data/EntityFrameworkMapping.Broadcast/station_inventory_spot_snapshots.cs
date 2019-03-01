@@ -30,9 +30,9 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
-        public virtual market market { get; set; }
         public virtual proposal_version_detail_quarter_weeks proposal_version_detail_quarter_weeks { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual market market { get; set; }
         public virtual station station { get; set; }
     }
 }

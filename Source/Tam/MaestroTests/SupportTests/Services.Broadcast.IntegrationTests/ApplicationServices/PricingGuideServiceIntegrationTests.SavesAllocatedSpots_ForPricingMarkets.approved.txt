@@ -196,15 +196,13 @@
     "Genres": [],
     "Markets": [
       {
-        "Display": "Jackson, MS",
-        "Id": 318
+        "Display": "Jackson, MS"
       }
     ],
     "ProgramNames": [
       "Fox40 Morning News"
     ]
   },
-  "DistributionId": 0,
   "Filter": {},
   "ImpressionGoal": null,
   "ImpressionLoss": null,
@@ -222,7 +220,6 @@
     "9": "OAndO"
   },
   "Margin": null,
-  "MarketCoverageFileId": 199,
   "Markets": [
     {
       "AvgCpm": 7.4345253234864090035412526262,
@@ -230,7 +227,6 @@
       "DisplayImpressions": 20176.13680407,
       "DisplayStationImpressions": 0.0,
       "MarketCoverage": 0.273,
-      "MarketId": 318,
       "MarketName": "Jackson, MS",
       "MarketRank": 95,
       "MaxCpm": 7.4345253234864090035412526262,
@@ -248,8 +244,7 @@
               "Cost": 150.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
-                "Display": "M-F 7AM-9AM",
-                "Id": 78
+                "Display": "M-F 7AM-9AM"
               },
               "DisplayCost": 150.0000,
               "DisplayImpressions": 20176.13680407,
@@ -259,8 +254,6 @@
               "HasImpressions": true,
               "Impressions": 20176.13680407,
               "ImpressionsPerSpot": 3362.68946735,
-              "ManifestDaypartId": 41556,
-              "ProgramId": 26585,
               "ProgramName": "Fox40 Morning News",
               "Spots": 6,
               "StationImpressionsPerSpot": 0.0
@@ -296,9 +289,6 @@
     "Cpm": 7.43452532,
     "Impressions": 20176.13680407
   },
-  "ProposalDetailId": 2290,
-  "ProposalId": 0,
-  "ProposalVersionId": 0,
   "ProprietaryPricing": [],
   "ProprietaryTotals": {
     "Cost": 0.0,

@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_detail_quarter_weeks = new HashSet<proposal_version_detail_quarter_weeks>();
             this.station_inventory_manifest_generation = new HashSet<station_inventory_manifest_generation>();
             this.proposal_buy_file_detail_weeks = new HashSet<proposal_buy_file_detail_weeks>();
+            this.station_inventory_manifest_weeks = new HashSet<station_inventory_manifest_weeks>();
         }
     
         public int id { get; set; }
@@ -35,5 +36,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
         public virtual ICollection<station_inventory_manifest_generation> station_inventory_manifest_generation { get; set; }
         public virtual ICollection<proposal_buy_file_detail_weeks> proposal_buy_file_detail_weeks { get; set; }
+        public virtual ICollection<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
     }
 }

@@ -155,7 +155,7 @@ namespace Services.Broadcast.BusinessEngines
                 Status = FileProcessingStatusEnum.Invalid,
                 FileHash = HashGenerator.ComputeHash(filePath.ToByteArray()), // just so there is something
                 CreatedDate = DateTime.Now,
-                SourceId = (int)AffidavitFileSourceEnum.Strata
+                SourceId = (int)DeliveryFileSourceEnum.Strata
             };
 
             affidavitFile.FileProblems.Add(new FileProblem

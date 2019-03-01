@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 
@@ -9,19 +11,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     [TestFixture]
     class InventoryFileImporterBaseTests : InventoryFileImporterBase
     {
+        public InventoryFileImporterBaseTests()
+        {
+            InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
+        }
+
         public override void ExtractFileData(Stream stream, InventoryFile inventoryFile, DateTime effectiveDate)
         {
         }
 
         [TestCase("M-T-A 10AM-11AM")]
-        [TestCase("3A-4A:M-F")]
-        [TestCase("9A-10A:Su")]
         [TestCase("5:30A-6P:Monday-Friday")]
         [TestCase("MON-SEX 9P-10:11PM")]
-        [ExpectedException(typeof(Exception), ExpectedMessage = "Invalid daypart", MatchType = MessageMatch.Contains)]
-        public void ThrowsExceptionWhenDaypartIsInvalid(string value)
+        public void DoesNotReturnDaypartsWhenDaypartIsInvalid(string value)
         {
-            ParseStringToDaypart(value, "WWTV");
+            var dayparts = ParseDayparts(value, "WWTV");
+            Assert.True(!dayparts.Any());
         }
 
         [TestCase("M-T 10AM-11AM")]
@@ -29,7 +34,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [TestCase("MO-FR 12AM-12PM")]
         public void DaypartIsValid(string value)
         {
-            Assert.IsNotNull(ParseStringToDaypart(value, "WWTV"));
+            var dayparts = ParseDayparts(value, "WWTV");
+            Assert.True(dayparts.Any());
         }
     }
 }

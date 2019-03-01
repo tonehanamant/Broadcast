@@ -60,8 +60,5 @@ namespace Services.Broadcast.ApplicationServices
                 .Where(m => m.Crunched == CrunchStatus.Crunched).Select(m => new LookupDto(m.MediaMonth.Id, m.MediaMonth.MediaMonthX))
                 .ToList();
         }
-
-        
-        
     }
 }

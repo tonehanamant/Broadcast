@@ -13,6 +13,7 @@
         "Id": null,
         "Manifests": [
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -24,9 +25,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 37000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -34,9 +35,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -44,9 +45,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 31000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -54,9 +55,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 34000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -64,9 +65,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -74,9 +75,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -86,7 +87,7 @@
                   "_Code": "CUS",
                   "_EndTime": 7199,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 6029,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -104,6 +105,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -119,6 +121,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -130,9 +133,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 76000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -140,9 +143,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 35000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -150,9 +153,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 52000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -160,9 +163,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 56000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -170,9 +173,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 28000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -180,9 +183,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 31000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -192,7 +195,7 @@
                   "_Code": "CUS",
                   "_EndTime": 79199,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 30773,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -210,6 +213,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -225,6 +229,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -236,9 +241,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 35000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -246,9 +251,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -256,9 +261,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -266,9 +271,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -276,9 +281,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -286,9 +291,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -298,7 +303,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62725,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -316,6 +321,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -331,6 +337,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -342,9 +349,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 51000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -352,9 +359,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 25000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -362,9 +369,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 37000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -372,9 +379,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 40000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -382,9 +389,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -392,9 +399,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -404,7 +411,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 14794,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -425,7 +432,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 14728,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -443,6 +450,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -458,6 +466,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -469,9 +478,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 98000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -479,9 +488,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 57000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -489,9 +498,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 73000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -499,9 +508,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 80000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -509,9 +518,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 38000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -519,9 +528,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 42000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -531,7 +540,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82739,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67264,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -549,6 +558,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -564,6 +574,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -575,9 +586,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 71000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -585,9 +596,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 38000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -595,9 +606,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 50000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -605,9 +616,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 55000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -615,9 +626,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 26000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -625,9 +636,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 28000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -637,7 +648,7 @@
                   "_Code": "CUS",
                   "_EndTime": 86339,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67265,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -655,6 +666,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -670,6 +682,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -681,9 +694,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 45000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -691,9 +704,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -701,9 +714,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 32000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -711,9 +724,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 34000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -721,9 +734,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -731,9 +744,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 19000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -743,7 +756,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31516,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -761,6 +774,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -776,6 +790,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -787,9 +802,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 35000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -797,9 +812,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -807,9 +822,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 23000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -817,9 +832,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 25000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -827,9 +842,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -837,9 +852,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -849,7 +864,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62724,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -867,6 +882,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -882,6 +898,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -893,9 +910,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 41000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -903,9 +920,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 23000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -913,9 +930,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 32000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -923,9 +940,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 35000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -933,9 +950,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -943,9 +960,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 21000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -955,7 +972,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37524,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -973,6 +990,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -988,6 +1006,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -999,9 +1018,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 194000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1009,9 +1028,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 115000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1019,9 +1038,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 150000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1029,9 +1048,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 167000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1039,9 +1058,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 77000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1049,9 +1068,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 84000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1061,7 +1080,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31032,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1079,6 +1098,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1094,6 +1114,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1105,9 +1126,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 25000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1115,9 +1136,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 15000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1125,9 +1146,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1135,9 +1156,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 22000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1145,9 +1166,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1155,9 +1176,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1167,7 +1188,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31516,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1185,6 +1206,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1200,6 +1222,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1211,9 +1234,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1221,9 +1244,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 15000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1231,9 +1254,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1241,9 +1264,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1251,9 +1274,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1261,9 +1284,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1273,7 +1296,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31032,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1294,7 +1317,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 7235,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1312,6 +1335,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1327,6 +1351,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1338,9 +1363,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 13000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1348,9 +1373,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1358,9 +1383,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1368,9 +1393,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1378,9 +1403,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1388,9 +1413,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1400,7 +1425,7 @@
                   "_Code": "CUS",
                   "_EndTime": 79139,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67266,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1421,7 +1446,7 @@
                   "_Code": "CUS",
                   "_EndTime": 77339,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 67267,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1439,6 +1464,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1454,6 +1480,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1465,9 +1492,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 39000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1475,9 +1502,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1485,9 +1512,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 27000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1495,9 +1522,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 29000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1505,9 +1532,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1515,9 +1542,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1527,7 +1554,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62724,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1545,6 +1572,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1560,6 +1588,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1571,9 +1600,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 70000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1581,9 +1610,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 40000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1591,9 +1620,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 52000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1601,9 +1630,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 60000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1611,9 +1640,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 28000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1621,9 +1650,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 30000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1633,7 +1662,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67268,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1651,6 +1680,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1666,6 +1696,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1677,9 +1708,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 32000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1687,9 +1718,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 15000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1697,9 +1728,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 23000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1707,9 +1738,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 27000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1717,9 +1748,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1727,9 +1758,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1739,7 +1770,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62725,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1757,6 +1788,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -1772,6 +1804,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1783,9 +1816,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 34000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1793,9 +1826,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1803,9 +1836,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1813,9 +1846,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 28000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1823,9 +1856,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1833,9 +1866,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1845,7 +1878,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31003,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1853,37 +1886,17 @@
                   "_Name": "Custom",
                   "_Saturday": false,
                   "_StartTime": 79200,
-                  "_Sunday": false,
+                  "_Sunday": true,
                   "_Thursday": true,
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
                 "Genres": [],
                 "ProgramName": null
-              },
-              {
-                "Daypart": {
-                  "_Code": "CUS",
-                  "_EndTime": 82799,
-                  "_Friday": false,
-                  "_Id": -1,
-                  "_Is24Hour": false,
-                  "_LastEndTime": 0,
-                  "_LastStartTime": 0,
-                  "_Monday": false,
-                  "_Name": "Custom",
-                  "_Saturday": false,
-                  "_StartTime": 79200,
-                  "_Sunday": true,
-                  "_Thursday": false,
-                  "_Tuesday": false,
-                  "_Wednesday": false
-                },
-                "Genres": [],
-                "ProgramName": null
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -1899,6 +1912,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -1910,9 +1924,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1920,9 +1934,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 13000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1930,9 +1944,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1940,9 +1954,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 19000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1950,9 +1964,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -1960,9 +1974,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -1972,7 +1986,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31003,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -1980,37 +1994,17 @@
                   "_Name": "Custom",
                   "_Saturday": false,
                   "_StartTime": 79200,
-                  "_Sunday": false,
+                  "_Sunday": true,
                   "_Thursday": true,
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
                 "Genres": [],
                 "ProgramName": null
-              },
-              {
-                "Daypart": {
-                  "_Code": "CUS",
-                  "_EndTime": 82799,
-                  "_Friday": false,
-                  "_Id": -1,
-                  "_Is24Hour": false,
-                  "_LastEndTime": 0,
-                  "_LastStartTime": 0,
-                  "_Monday": false,
-                  "_Name": "Custom",
-                  "_Saturday": false,
-                  "_StartTime": 79200,
-                  "_Sunday": true,
-                  "_Thursday": false,
-                  "_Tuesday": false,
-                  "_Wednesday": false
-                },
-                "Genres": [],
-                "ProgramName": null
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -2026,6 +2020,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2037,9 +2032,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 26000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2047,9 +2042,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2057,9 +2052,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2067,9 +2062,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2077,9 +2072,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2087,9 +2082,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2099,7 +2094,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62724,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2117,6 +2112,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -2132,6 +2128,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2143,9 +2140,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 21000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2153,9 +2150,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2163,9 +2160,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2173,9 +2170,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2183,9 +2180,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2193,9 +2190,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2205,7 +2202,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 62968,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2223,6 +2220,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -2238,6 +2236,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2249,9 +2248,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 30000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2259,9 +2258,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2269,9 +2268,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2279,9 +2278,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2289,9 +2288,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2299,9 +2298,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2311,7 +2310,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31516,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2329,6 +2328,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -2344,6 +2344,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2355,9 +2356,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 45000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2365,9 +2366,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 19000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2375,9 +2376,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 29000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2385,9 +2386,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 33000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2395,9 +2396,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2405,9 +2406,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2417,7 +2418,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31006,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2435,6 +2436,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -2450,6 +2452,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2461,9 +2464,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 57000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2471,9 +2474,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2481,9 +2484,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 37000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2491,9 +2494,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 41000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2501,9 +2504,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2511,9 +2514,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 13000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2523,7 +2526,7 @@
                   "_Code": "CUS",
                   "_EndTime": 81299,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62717,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2541,6 +2544,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -2556,6 +2560,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2567,9 +2572,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 32000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2577,9 +2582,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2587,9 +2592,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 15000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2597,9 +2602,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2607,9 +2612,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2617,9 +2622,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2629,7 +2634,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62725,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2647,6 +2652,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -2662,6 +2668,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2673,9 +2680,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 85000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2683,9 +2690,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 30000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2693,9 +2700,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 49000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2703,9 +2710,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 52000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2713,9 +2720,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 21000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2723,9 +2730,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 23000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2735,7 +2742,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 37526,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2753,6 +2760,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -2768,6 +2776,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2779,9 +2788,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2789,9 +2798,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2799,9 +2808,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2809,9 +2818,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 16000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2819,9 +2828,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2829,9 +2838,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2841,7 +2850,7 @@
                   "_Code": "CUS",
                   "_EndTime": 78599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 63037,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2859,6 +2868,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -2874,6 +2884,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2885,9 +2896,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 28000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2895,9 +2906,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 15000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2905,9 +2916,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2915,9 +2926,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2925,9 +2936,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -2935,9 +2946,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 13000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -2947,7 +2958,7 @@
                   "_Code": "CUS",
                   "_EndTime": 78299,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 35554,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -2965,6 +2976,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -2980,6 +2992,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -2991,9 +3004,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3001,9 +3014,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3011,9 +3024,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3021,9 +3034,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3031,9 +3044,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3041,9 +3054,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3053,7 +3066,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37536,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3071,6 +3084,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -3086,6 +3100,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3097,9 +3112,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 15000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3107,9 +3122,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3117,9 +3132,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3127,9 +3142,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3137,9 +3152,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3147,9 +3162,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3159,7 +3174,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 62968,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3177,6 +3192,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -3192,6 +3208,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3203,9 +3220,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 53000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3213,9 +3230,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 22000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3223,9 +3240,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 31000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3233,9 +3250,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 36000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3243,9 +3260,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 19000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3253,9 +3270,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3265,7 +3282,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31006,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3283,6 +3300,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 4,
@@ -3298,6 +3316,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3309,9 +3328,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 97000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3319,9 +3338,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 41000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3329,9 +3348,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 68000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3339,9 +3358,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 73000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3349,9 +3368,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 26000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3359,9 +3378,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 29000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3371,7 +3390,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 41701,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3389,6 +3408,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -3404,6 +3424,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3415,9 +3436,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 33000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3425,9 +3446,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3435,9 +3456,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 22000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3445,9 +3466,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 25000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3455,9 +3476,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3465,9 +3486,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3477,7 +3498,7 @@
                   "_Code": "CUS",
                   "_EndTime": 81299,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62836,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3495,6 +3516,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -3510,6 +3532,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3521,9 +3544,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 33000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3531,9 +3554,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3541,9 +3564,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3551,9 +3574,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 26000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3561,9 +3584,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3571,9 +3594,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3583,7 +3606,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31006,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3601,6 +3624,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -3616,6 +3640,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3627,9 +3652,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3637,9 +3662,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3647,9 +3672,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3657,9 +3682,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3667,9 +3692,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3677,9 +3702,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3689,7 +3714,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62724,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3707,6 +3732,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -3722,6 +3748,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3733,9 +3760,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3743,9 +3770,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3753,9 +3780,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3763,9 +3790,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3773,9 +3800,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3783,9 +3810,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3795,7 +3822,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37536,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3813,6 +3840,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -3828,6 +3856,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3839,9 +3868,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3849,9 +3878,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3859,9 +3888,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3869,9 +3898,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3879,9 +3908,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3889,9 +3918,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -3901,7 +3930,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31516,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -3919,6 +3948,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -3934,6 +3964,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -3945,9 +3976,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3955,9 +3986,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3965,9 +3996,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3975,9 +4006,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3985,9 +4016,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -3995,9 +4026,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4007,7 +4038,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 34851,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4025,6 +4056,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -4040,6 +4072,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4051,9 +4084,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4061,9 +4094,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4071,9 +4104,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4081,9 +4114,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4091,9 +4124,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4101,9 +4134,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4113,7 +4146,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82799,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 31032,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4131,6 +4164,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -4146,6 +4180,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4157,9 +4192,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4167,9 +4202,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4177,9 +4212,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4187,9 +4222,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4197,9 +4232,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4207,9 +4242,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4219,7 +4254,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80999,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 7235,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4237,6 +4272,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -4252,6 +4288,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4263,9 +4300,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4273,9 +4310,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4283,9 +4320,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4293,9 +4330,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4303,9 +4340,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4313,9 +4350,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4325,7 +4362,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37536,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4343,6 +4380,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -4358,6 +4396,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4369,9 +4408,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4379,9 +4418,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4389,9 +4428,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4399,9 +4438,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4409,9 +4448,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4419,9 +4458,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4431,7 +4470,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 37526,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4449,6 +4488,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -4464,6 +4504,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4475,9 +4516,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 55000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4485,9 +4526,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 19000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4495,9 +4536,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 36000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4505,9 +4546,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 39000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4515,9 +4556,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4525,9 +4566,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4537,7 +4578,7 @@
                   "_Code": "CUS",
                   "_EndTime": 80939,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67269,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4555,6 +4596,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 3,
@@ -4570,6 +4612,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4581,9 +4624,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 17000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4591,9 +4634,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4601,9 +4644,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4611,9 +4654,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 21000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4621,9 +4664,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4631,9 +4674,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4643,7 +4686,7 @@
                   "_Code": "CUS",
                   "_EndTime": 81299,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 63004,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4651,37 +4694,17 @@
                   "_Name": "Custom",
                   "_Saturday": false,
                   "_StartTime": 79200,
-                  "_Sunday": false,
+                  "_Sunday": true,
                   "_Thursday": true,
                   "_Tuesday": true,
                   "_Wednesday": true
                 },
                 "Genres": [],
                 "ProgramName": null
-              },
-              {
-                "Daypart": {
-                  "_Code": "CUS",
-                  "_EndTime": 81299,
-                  "_Friday": false,
-                  "_Id": -1,
-                  "_Is24Hour": false,
-                  "_LastEndTime": 0,
-                  "_LastStartTime": 0,
-                  "_Monday": false,
-                  "_Name": "Custom",
-                  "_Saturday": false,
-                  "_StartTime": 79200,
-                  "_Sunday": true,
-                  "_Thursday": false,
-                  "_Tuesday": false,
-                  "_Wednesday": false
-                },
-                "Genres": [],
-                "ProgramName": null
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -4697,6 +4720,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4708,9 +4732,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 13000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4718,9 +4742,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4728,9 +4752,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4738,9 +4762,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4748,9 +4772,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4758,9 +4782,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4770,7 +4794,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37536,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4788,6 +4812,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -4803,6 +4828,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4814,9 +4840,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 24000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4824,9 +4850,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4834,9 +4860,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4844,9 +4870,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 23000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4854,9 +4880,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4864,9 +4890,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 11000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4876,7 +4902,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 37526,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -4894,6 +4920,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -4909,6 +4936,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -4920,9 +4948,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4930,9 +4958,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 2000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4940,9 +4968,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4950,9 +4978,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4960,9 +4988,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -4970,9 +4998,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -4982,7 +5010,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37536,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -5000,6 +5028,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -5015,6 +5044,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -5026,9 +5056,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 14000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5036,9 +5066,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 6000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5046,9 +5076,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5056,9 +5086,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5066,9 +5096,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5076,9 +5106,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -5088,7 +5118,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": false,
-                  "_Id": -1,
+                  "_Id": 37526,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -5106,6 +5136,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -5121,6 +5152,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -5132,9 +5164,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 8000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5142,9 +5174,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5152,9 +5184,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5162,9 +5194,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5172,9 +5204,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5182,9 +5214,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 3000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -5194,7 +5226,7 @@
                   "_Code": "CUS",
                   "_EndTime": 82739,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67270,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -5212,6 +5244,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -5227,6 +5260,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -5238,9 +5272,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 32000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5248,9 +5282,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 10000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5258,9 +5292,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 18000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5268,9 +5302,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 20000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5278,9 +5312,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5288,9 +5322,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 7000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -5300,7 +5334,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84599,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 37524,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -5318,6 +5352,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -5333,6 +5368,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -5344,9 +5380,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 12000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5354,9 +5390,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 5000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5364,9 +5400,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5374,9 +5410,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 9000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5384,9 +5420,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5394,9 +5430,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 4000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -5406,7 +5442,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84539,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 67271,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -5424,6 +5460,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 1,
@@ -5439,6 +5476,7 @@
             }
           },
           {
+            "Comment": null,
             "DaypartCode": "LN",
             "EndDate": null,
             "Id": null,
@@ -5450,9 +5488,9 @@
                   "AudienceString": "House Holds",
                   "Id": 31
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5460,9 +5498,9 @@
                   "AudienceString": "Adults 25-54",
                   "Id": 37
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5470,9 +5508,9 @@
                   "AudienceString": "Adults 35-64",
                   "Id": 40
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5480,9 +5518,9 @@
                   "AudienceString": "Adults 25-64",
                   "Id": 257
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5490,9 +5528,9 @@
                   "AudienceString": "Adults 25-49",
                   "Id": 36
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               },
               {
@@ -5500,9 +5538,9 @@
                   "AudienceString": "Adults 18-49",
                   "Id": 33
                 },
+                "CPM": 0.0,
                 "Impressions": 1000.0,
                 "IsReference": true,
-                "Rate": 0.0,
                 "Rating": null
               }
             ],
@@ -5512,7 +5550,7 @@
                   "_Code": "CUS",
                   "_EndTime": 84899,
                   "_Friday": true,
-                  "_Id": -1,
+                  "_Id": 62725,
                   "_Is24Hour": false,
                   "_LastEndTime": 0,
                   "_LastStartTime": 0,
@@ -5530,6 +5568,7 @@
               }
             ],
             "ManifestRates": [],
+            "ManifestWeeks": [],
             "SpotLengthId": 1,
             "SpotsPerDay": null,
             "SpotsPerWeek": 2,
@@ -5558,8 +5597,6 @@
       "IsActive": true,
       "Name": "TTNW"
     },
-    "PlaybackType": null,
-    "RatingBook": null,
     "StartDate": "0001-01-01T00:00:00",
     "StationContacts": [],
     "UniqueIdentifier": null

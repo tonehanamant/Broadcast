@@ -82,7 +82,7 @@ namespace Services.Broadcast.Converters.RateImport
                         FileProblems.Add(new InventoryFileProblem(string.Format("Invalid station: {0}", ttnwRecord.StationLetters)));
                     }
 
-                    var dayparts = _ParseDayparts(ttnwRecord.DaypartsString, ttnwRecord.StationLetters);
+                    var dayparts = ParseDayparts(ttnwRecord.DaypartsString, ttnwRecord.StationLetters);
 
                     var manifestDayparts = dayparts.Select(
                         d => new StationInventoryManifestDaypart()
@@ -160,79 +160,6 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             return manifestAudiences;
-        }
-
-        private List<DisplayDaypart> _ParseDayparts(string daypartInput, string station)
-        {
-            List<DisplayDaypart> dayparts = new List<DisplayDaypart>();
-            var daypartProblems = new List<InventoryFileProblem>();
-            try
-            {
-
-                var daypartStrings = Regex.Split(daypartInput, "\\s?/\\s?").ToList();//split on slash with optional spaces arounds
-
-                foreach (var originalDaypartString in daypartStrings.ToList())
-                {
-                    var daypartString = originalDaypartString;
-
-                    if (originalDaypartString.Contains("+"))
-                    {
-                        daypartStrings.Remove(originalDaypartString);
-                    }
-
-                    if (originalDaypartString.Contains("SU-"))
-                    {
-                        daypartString = daypartString.Replace("SU-F", "M-F + SU");
-                        daypartString = daypartString.Replace("SU-TH", "M-TH + SU");
-                        daypartString = daypartString.Replace("SU-W", "M-W + SU");
-                        daypartString = daypartString.Replace("SU-TU", "M-TU + SU");
-                        daypartString = daypartString.Replace("SU-M", "M-M + SU");
-                        daypartStrings.Remove(originalDaypartString);
-                    }
-
-                    if (daypartString.Contains("+"))
-                    {
-                        var splitDayparts = Regex.Split(daypartString, "\\s?\\+\\s?");
-                        if (splitDayparts.Count() == 2)
-                        {
-                            var weekdays = splitDayparts[0];
-                            var weekend = splitDayparts[1].Split(' ')[0];
-                            var time = splitDayparts[1].Split(' ')[1];
-                            daypartStrings.Add(weekdays + " " + time);
-                            daypartStrings.Add(weekend + " " + time);
-                        }
-                        else if (splitDayparts.Count() > 2)
-                        {
-                            daypartStrings.AddRange(splitDayparts);
-                        }
-                        else
-                        {
-                            //try to parse original daypart string
-                            daypartStrings.Add(originalDaypartString);
-                        }
-                        
-                    }
-                }
-
-                daypartStrings.ForEach(dp =>
-                {
-
-                        var daypart = ParseStringToDaypart(dp, station);
-                        if (daypart != null)
-                        {
-                            dayparts.Add(daypart);
-                        }
-
-                });
-
-            }
-            catch (Exception)
-            {
-                daypartProblems.Add(new InventoryFileProblem(string.Format("Invalid daypart for station: {0}", station)));
-            }
-
-            FileProblems.AddRange(daypartProblems);
-            return dayparts;
         }
 
         private List<TTNWFileRecord> _GetTTNWRecords(ExcelWorksheet sheet, SpreadsheetTableDescriptor dataTable)

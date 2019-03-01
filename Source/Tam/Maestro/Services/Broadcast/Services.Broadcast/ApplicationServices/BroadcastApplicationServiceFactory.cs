@@ -19,6 +19,7 @@ using Tam.Maestro.Services.Clients;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -67,6 +68,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();
+            unityContainer.RegisterType<IBarterInventoryService, BarterInventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();
             unityContainer.RegisterType<IScheduleAggregateFactoryService, ScheduleAggregateFactoryService>();
@@ -112,7 +114,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
             unityContainer.RegisterType<IPostLogEngine, PostLogEngine>();
             unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
-
+            unityContainer.RegisterType<IBarterFileImporter, BarterFileImporter>();
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
@@ -149,6 +151,11 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>();
+            unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
+            unityContainer.RegisterType<ILockingEngine, LockingEngine>();
+
+            unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
+            unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

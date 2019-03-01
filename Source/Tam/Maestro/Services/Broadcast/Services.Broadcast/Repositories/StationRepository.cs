@@ -11,6 +11,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using System.Linq.Expressions;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -27,6 +28,7 @@ namespace Services.Broadcast.Repositories
         void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId);
         void UpdateStationList(List<int> stationCodes, string user, DateTime timeStamp, int inventorySourceId);
         short? GetStationCode(string stationName);
+        List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -65,7 +67,7 @@ namespace Services.Broadcast.Repositories
                                     m => (m.end_date == null || m.end_date > date)
                                          && m.inventory_source_id == inventorySourceId &&
                                          (m.file_id == null ||
-                                          m.inventory_files.status == (byte)InventoryFile.FileStatusEnum.Loaded)
+                                          m.inventory_files.status == (byte)FileStatusEnum.Loaded)
                                           ) == isIncluded);
 
                     return query.Select(_MapToDisplayBroadcastStation(inventorySourceId)).ToList();
@@ -84,7 +86,7 @@ namespace Services.Broadcast.Repositories
                 ModifiedDate = (from m in s.station_inventory_loaded
                                 where m.inventory_source_id == inventorySourceId
                                 select m.last_loaded).OrderByDescending(x => x).FirstOrDefault(),
-                MarketCode = s.market_code,
+                MarketCode = s.market_code.Value,
                 ManifestMaxEndDate = (from m in s.station_inventory_manifest
                                       select m.end_date).Max()
             };
@@ -142,7 +144,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code,
+                                MarketCode = s.market_code.Value,
                                 ModifiedDate = s.modified_date
                             }).Single("No station found with code: " + code));
         }
@@ -162,7 +164,7 @@ namespace Services.Broadcast.Repositories
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
                                 ModifiedDate = s.modified_date,
-                                MarketCode = s.market_code
+                                MarketCode = s.market_code.Value
                             }).FirstOrDefault();
                 });
         }
@@ -179,7 +181,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code,
+                                MarketCode = s.market_code.Value,
                                 ModifiedDate = s.modified_date
                             }).FirstOrDefault());
         }
@@ -198,7 +200,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code,
+                                MarketCode = s.market_code.Value,
                                 ModifiedDate = s.modified_date
                             }).ToList();
                 });
@@ -215,7 +217,7 @@ namespace Services.Broadcast.Repositories
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
                                 OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code,
+                                MarketCode = s.market_code.Value,
                                 ModifiedDate = s.modified_date
                             }).ToList());
         }
@@ -289,6 +291,33 @@ namespace Services.Broadcast.Repositories
                     return firstOrDefault.station_code;
                 });
             }
+        }
+
+        public List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var newStations = stations.Select(x => new station
+                    {
+                        station_call_letters = x.CallLetters,
+                        legacy_call_letters = x.LegacyCallLetters,
+                        modified_date = x.ModifiedDate.Value,
+                        modified_by = user
+                    });
+
+                    context.stations.AddRange(newStations);
+
+                    context.SaveChanges();
+
+                    return newStations.Select(s => new DisplayBroadcastStation
+                    {
+                        Code = s.station_code,
+                        CallLetters = s.station_call_letters,
+                        LegacyCallLetters = s.legacy_call_letters,
+                        ModifiedDate = s.modified_date
+                    }).ToList();
+                });
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Net;
+using System.Linq;
 using Common.Services;
 
 
@@ -32,11 +33,22 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+
+        public virtual string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
+        {
+            throw new NotImplementedException();
+        }
     }
+
     public class FileServiceSingleFileStubb : FileServiceStubb
     {
-        private string _SingleFileName = "file1.txt";
-        private string _BasePath = "c:\\temp";
+        private readonly string _SingleFileName = "file1.txt";
+        private readonly string _BasePath = "c:\\temp";
         public override List<string> GetFiles(string path)
         {
             return new List<string>() {_SingleFileName};
@@ -46,6 +58,36 @@ namespace Services.Broadcast.IntegrationTests
         {
             return string.Compare(Path.Combine(_BasePath, _SingleFileName), path,
                        StringComparison.CurrentCultureIgnoreCase) == 0;
+        }
+    }
+
+    public class FileServiceDataLakeStubb : FileServiceStubb
+    {
+        private static List<string> _Files = new List<string>();
+        
+        public override bool Exists(string path)
+        {
+            return _Files.Where(x=> x.Equals(path)).Count() == 1;
+        }
+
+        public override string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
+        {
+            _Files.Add(destinationPath);
+            return destinationPath;
+        }
+
+        public override string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
+        {
+            _Files.Add(destinationPath);
+            return destinationPath;
+        }
+
+        public override void Delete(params string[] paths)
+        {
+            foreach(string path in paths)
+            {
+                _Files.RemoveAll(x => x.Equals(path));
+            }
         }
     }
 }

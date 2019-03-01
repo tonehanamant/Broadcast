@@ -21,7 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
         public short market_code { get; set; }
         public int market_coverage_file_id { get; set; }
     
-        public virtual market market { get; set; }
         public virtual market_coverage_files market_coverage_files { get; set; }
+        public virtual market market { get; set; }
     }
 }

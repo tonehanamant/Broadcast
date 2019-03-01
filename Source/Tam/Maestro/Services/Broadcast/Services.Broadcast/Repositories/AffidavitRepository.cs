@@ -370,7 +370,7 @@ namespace Services.Broadcast.Repositories
                             MatchShowType = x.affidavitFileScrub.match_show_type,
                             WWTVProgramName = x.affidavitDetails.program_name,
                             WeekIscis = x.proposalVersionWeeks.proposal_version_detail_quarter_week_iscis.Select(_MapToProposalWeekIsciDto).ToList(),
-                            InventorySource = (AffidavitFileSourceEnum)x.affidavitDetails.inventory_source
+                            InventorySource = (DeliveryFileSourceEnum)x.affidavitDetails.inventory_source
                         };
                     }).ToList();
                 });
