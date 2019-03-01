@@ -11,7 +11,7 @@ import {
 } from "Utils/file-upload";
 import { parseFileToBase64 } from "Utils/file-parser";
 
-import { deployError } from "Main/redux/actions";
+import { deployError } from "Main/redux/index.ducks";
 
 import styles from "./index.scss";
 

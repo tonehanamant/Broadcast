@@ -1,7 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-// import { delay } from 'redux-saga';
 import { takeEvery, put, call, select } from "redux-saga/effects";
-// import { push } from 'react-router-redux';
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import _ from "lodash";
@@ -11,16 +8,15 @@ import {
   toggleModal,
   setOverlayLoading,
   setOverlayProcessing
-} from "Main/redux/actions";
+} from "Main/redux/index.ducks";
 import { receiveFilteredPlanning, setEstimatedId } from "Ducks/planning/index";
-import * as appActions from "Main/redux/types";
 import * as planningActions from "Ducks/planning/actionTypes";
 import { hasSpotsAllocate, copyToBuy } from "Ducks/planning";
 
 import sagaWrapper, { errorBuilder } from "Utils/saga-wrapper";
 import api from "API";
 
-const ACTIONS = { ...appActions, ...planningActions };
+const ACTIONS = { ...planningActions };
 
 /* ////////////////////////////////// */
 /* REQUEST PROPOSAL INITIAL DATA */
@@ -29,42 +25,38 @@ export function* requestProposalInitialData() {
   const { getProposalInitialData } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalInitialData",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposalInitialData();
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalInitialData",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal initial data returned.",
           message: `The server encountered an error processing the request (proposal initial data). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal initial data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposal initial data). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     yield put({
@@ -73,23 +65,21 @@ export function* requestProposalInitialData() {
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal initial data returned.",
           message:
             "The server encountered an error processing the request (proposal initial data). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -141,42 +131,38 @@ export function* requestProposals() {
   const { getProposals } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposals",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposals();
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposals",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposals data returned.",
           message: `The server encountered an error processing the request (proposals). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposals data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposals). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     // adjust the data for grid handling
@@ -187,23 +173,21 @@ export function* requestProposals() {
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposals data returned.",
           message:
             "The server encountered an error processing the request (proposals). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -245,42 +229,38 @@ export function* requestProposalLock({ payload: id }) {
   const { getProposalLock } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposalLock",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposalLock(id);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposalLock",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal lock data returned.",
           message: `The server encountered an error processing the request (proposal lock ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal lock data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposal lock). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     yield put({
@@ -289,23 +269,21 @@ export function* requestProposalLock({ payload: id }) {
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal data returned.",
           message:
             "The server encountered an error processing the request (proposal lock). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -317,42 +295,38 @@ export function* requestProposalUnlock({ payload: id }) {
   const { getProposalUnlock } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposalUnlock",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposalUnlock(id);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposalUnlock",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal unlock data returned.",
           message: `The server encountered an error processing the request (proposal unlock ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal unlock data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposal unlock). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     yield put({
@@ -361,23 +335,21 @@ export function* requestProposalUnlock({ payload: id }) {
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal unlock data returned.",
           message:
             "The server encountered an error processing the request (proposal unlock). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -458,42 +430,38 @@ export function* requestProposal({ payload: id }) {
   const { getProposal } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposal",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposal(id);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalProposal",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal data returned.",
           message: `The server encountered an error processing the request (proposal ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     // const payload = yield flattenProposalDetails(data.Data);
@@ -506,23 +474,21 @@ export function* requestProposal({ payload: id }) {
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal data returned.",
           message:
             "The server encountered an error processing the request (proposal). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -534,74 +500,67 @@ export function* requestProposalVersions({ payload: id }) {
   const { getProposalVersions } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalVersions",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposalVersions(id);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalVersions",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal versions data returned.",
           message: `The server encountered an error processing the request (proposal versions data ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal versions data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposal versions data). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL_VERSIONS,
       data
     });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
+    yield put(
+      toggleModal({
         modal: "planningSwitchVersionsModal",
         active: true
-      }
-    });
+      })
+    );
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal versions data returned.",
           message:
             "The server encountered an error processing the request (proposal versions data). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -613,42 +572,38 @@ export function* requestProposalVersion({ payload: id, version }) {
   const { getProposalVersion } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalVersion",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield getProposalVersion(id, version);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "proposalVersion",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal version data returned.",
           message: `The server encountered an error processing the request (proposal version data ${id}, ${version}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal version data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (proposal version data). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     data.Data = yield flattenProposalDetails(data.Data);
@@ -658,23 +613,21 @@ export function* requestProposalVersion({ payload: id, version }) {
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal version data returned.",
           message:
             "The server encountered an error processing the request (proposal version data). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -702,13 +655,12 @@ export function* saveProposal({ payload: params }) {
   /* eslint-disable no-shadow */
   const { saveProposal } = api.planning;
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "saveProposal",
         processing: true
-      }
-    });
+      })
+    );
     // let proposal = { ...params.proposal };
     // BUG ISSUE - spread copy not deep (mutates temp create Ids)
     let proposal = _.cloneDeep(params.proposal);
@@ -720,48 +672,44 @@ export function* saveProposal({ payload: params }) {
     const isNew = proposal.Id === null;
     const response = yield saveProposal(proposal);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "saveProposal",
         processing: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not saved.",
           message: `The server encountered an error processing the request (save proposal ${
             params.FileId
           }). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not saved.",
           message:
             data.Message ||
             `The server encountered an error processing the request (save proposal ${
               params.FileId
             }). Please try again or contact your administrator to review error logs.`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Data.ValidationWarning) {
-      yield put({
-        type: ACTIONS.CREATE_ALERT,
-        alert: {
+      yield put(
+        createAlert({
           type: "success",
           headline: "Proposal Saved Successfully",
           message: ""
-        }
-      });
+        })
+      );
     }
     if (isNew) {
       setTimeout(() => {
@@ -778,23 +726,21 @@ export function* saveProposal({ payload: params }) {
     }
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Propsal not saved.",
           message:
             "The server encountered an error processing the request (save proposal). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -806,13 +752,12 @@ export function* saveProposalAsVersion({ payload: params }) {
   /* eslint-disable no-shadow */
   const { saveProposal } = api.planning;
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "saveProposalAsVersion",
         processing: true
-      }
-    });
+      })
+    );
     // let proposal = { ...params };
     // BUG ISSUE - spread copy not deep (mutates temp create Ids)
     let proposal = _.cloneDeep(params);
@@ -820,57 +765,52 @@ export function* saveProposalAsVersion({ payload: params }) {
     proposal = yield preSaveDetailIdNull(proposal);
     const response = yield saveProposal(proposal);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "saveProposalAsVersion",
         processing: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not saved as version.",
           message: `The server encountered an error processing the request (save proposal ${
             params.FileId
           }). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not saved as version.",
           message:
             data.Message ||
             `The server encountered an error processing the request (save proposal ${
               params.FileId
             }). Please try again or contact your administrator to review error logs.`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Data.ValidationWarning) {
-      yield put({
-        type: ACTIONS.CREATE_ALERT,
-        alert: {
+      yield put(
+        createAlert({
           type: "success",
           headline: "Proposal Saved As Version Successfully",
           message: ""
-        }
-      });
+        })
+      );
     }
     data.Data = yield flattenProposalDetails(data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data
     });
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
+    yield put(
+      toggleModal({
         modal: "confirmModal",
         active: true,
         properties: {
@@ -884,27 +824,25 @@ export function* saveProposalAsVersion({ payload: params }) {
           action: () => window.location.assign("/broadcastreact/planning"),
           dismiss: () => {}
         }
-      }
-    });
+      })
+    );
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Propsal not saved.",
           message:
             "The server encountered an error processing the request (save proposal). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -916,59 +854,53 @@ export function* deleteProposalById({ payload: id }) {
   const { deleteProposal } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "deleteProposal",
         processing: true
-      }
-    });
+      })
+    );
     const response = yield deleteProposal(id);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "deleteProposal",
         processing: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not deleted.",
           message: `The server encountered an error processing the request (delete proposal ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not deleted.",
           message:
             data.Message ||
             `The server encountered an error processing the request (delete proposal ${id}). Please try again or contact your administrator to review error logs.`
-        }
-      });
+        })
+      );
       throw new Error();
     }
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
+    yield put(
+      createAlert({
         type: "success",
         headline: "Proposal Removed",
         message: `${id} was successfully removed.`
-      }
-    });
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+      })
+    );
+    yield put(
+      setOverlayProcessing({
         id: "deleteProposal",
         processing: true
-      }
-    });
+      })
+    );
     //  yield call(delay, 2000);
     // yield put(push('/broadcast/planning'));
     setTimeout(() => {
@@ -976,23 +908,21 @@ export function* deleteProposalById({ payload: id }) {
     }, 1000);
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not deleted.",
           message:
             "The server encountered an error processing the request (delete proposal). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -1005,42 +935,38 @@ export function* unorderProposal({ payload: id }) {
   const { unorderProposal } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "unorderProposal",
         processing: true
-      }
-    });
+      })
+    );
     const response = yield unorderProposal(id);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "unorderProposal",
         processing: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No proposal version data returned.",
           message: `The server encountered an error processing the request (unorder proposal data ${id}). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No unorder proposal data returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (unorder proposal data). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     data.Data = yield flattenProposalDetails(data.Data);
@@ -1052,31 +978,28 @@ export function* unorderProposal({ payload: id }) {
     if (e.response) {
       // capture here if 401 with data.Message only/ need to close overlay
       // console.log('unorder error catch', e.response);
-      yield put({
-        type: ACTIONS.SET_OVERLAY_PROCESSING,
-        overlay: {
+      yield put(
+        setOverlayProcessing({
           id: "unorderProposal",
           processing: false
-        }
-      });
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+        })
+      );
+      yield put(
+        deployError({
           error: "No unorder proposal data returned.",
           message:
             e.response.data.Message ||
             "The server encountered an error processing the request (unorder proposal data). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -1172,10 +1095,7 @@ export function* modelNewProposalDetail({ payload: flight }) {
     if (e.message) {
       yield put(
         deployError({
-          type: ACTIONS.DEPLOY_ERROR,
-          error: {
-            message: e.message
-          }
+          message: e.message
         })
       );
     }
@@ -1202,42 +1122,38 @@ export function* updateProposal() {
   const proposalId = yield select(state => state.planning.proposalEditForm.Id);
   const params = { Id: proposalId, Details: details };
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "updateProposal",
         processing: true
-      }
-    });
+      })
+    );
     const response = yield updateProposal(params);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "updateProposal",
         processing: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not updated.",
           message: `The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Proposal not updated.",
           message:
             data.Message ||
             "The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     // TODO resolve to get entire proposal
@@ -1276,9 +1192,8 @@ export function* updateProposal() {
         }
       });
     }
-    yield put({
-      type: ACTIONS.TOGGLE_MODAL,
-      modal: {
+    yield put(
+      toggleModal({
         modal: "confirmModal",
         active: warnings.length > 0,
         properties: {
@@ -1292,31 +1207,29 @@ export function* updateProposal() {
           action: () => {},
           dismiss: () => {}
         }
-      }
-    });
+      })
+    );
     yield put({
       type: ACTIONS.RECEIVE_UPDATED_PROPOSAL,
       data
     });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "Propsal not updated.",
           message:
             "The server encountered an error processing the request (update proposal). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -1348,24 +1261,22 @@ export function* requestGenres({ payload: query }) {
         payload: {}
       });
 
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No genres data returned.",
           message:
             "The server encountered an error processing the request (genres). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
 
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -1397,24 +1308,22 @@ export function* requestPrograms({ payload: params }) {
         payload: {}
       });
 
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No programs returned.",
           message:
             "The server encountered an error processing the request (programs). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
 
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -1446,24 +1355,22 @@ export function* requestShowTypes({ payload: query }) {
         payload: {}
       });
 
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No show types data returned.",
           message:
             "The server encountered an error processing the request (show types). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
 
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -1518,14 +1425,13 @@ export function* updateEditMarketsData(distributionRequest) {
 }
 
 export function* updateEditMarketsDataSuccess() {
-  yield put({
-    type: ACTIONS.CREATE_ALERT,
-    alert: {
+  yield put(
+    createAlert({
       type: "success",
       headline: "Edit Markets Updated",
       message: ""
-    }
-  });
+    })
+  );
 }
 // update proprietary pricing guide if dsistribution active
 export function* updateProprietaryCpms(distributionRequest) {
@@ -1557,23 +1463,21 @@ export function* uploadSCXFile({ payload: params }) {
   const { uploadSCXFile } = api.planning;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "uploadSCX",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield uploadSCXFile(params);
     const { status, data } = response;
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No upload SCX data returned.",
           message: `The server encountered an error processing SCX request upload. Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
@@ -1583,24 +1487,22 @@ export function* uploadSCXFile({ payload: params }) {
           ret.push(item);
         });
         const message = ret.join("<br />");
-        yield put({
-          type: ACTIONS.DEPLOY_ERROR,
-          error: {
+        yield put(
+          deployError({
             error: "Upload SCX File Error",
             message
-          }
-        });
+          })
+        );
         throw new Error();
       } else {
-        yield put({
-          type: ACTIONS.DEPLOY_ERROR,
-          error: {
+        yield put(
+          deployError({
             error: "Problems Encountered Uploading SCX file",
             message:
               data.Message ||
               "The server encountered an error processing the request (upload SCX). Please try again or contact your administrator to review error logs."
-          }
-        });
+          })
+        );
         throw new Error();
       }
     }
@@ -1610,23 +1512,21 @@ export function* uploadSCXFile({ payload: params }) {
     yield call(uploadSCXFileSuccess, [params.ProposalVersionDetailId]);
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No upload SCX data returned.",
           message:
             "The server encountered an error processing the request (upload SCX). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   } finally {
     yield put(setOverlayLoading({ id: "uploadSCX", loading: false }));
@@ -1774,15 +1674,14 @@ export function* generateScxSuccess({
       })
     );
   } else {
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
+    yield put(
+      createAlert({
         type: "warning",
         headline: "Generate SCX Unavailable",
         message:
           "There are no spots allocated for any buy on this proposal, no file will be generated"
-      }
-    });
+      })
+    );
   }
 }
 

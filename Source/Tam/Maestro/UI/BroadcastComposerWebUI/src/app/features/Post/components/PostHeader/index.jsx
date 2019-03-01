@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleModal, createAlert } from "Main/redux/actions";
+import { toggleModal, createAlert } from "Main/redux/index.ducks";
 import {
   getPostFiltered,
   getUnlinkedIscis,

@@ -7,9 +7,10 @@ import {
   setOverlayLoading,
   setOverlayProcessing,
   toggleModal,
+  createAlert,
   deployError
-} from "Main/redux/actions";
-import { selectModal } from "Main/redux/selectors";
+} from "Main/redux/index.ducks";
+import { selectModal } from "Main/redux/index.saga";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
   selectActiveScrubs,
@@ -381,37 +382,34 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
 
   try {
     // show processing?
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "PostScrubbingFilter",
         processing: true
-      }
-    });
+      })
+    );
     // clear the data so grid registers as update
     yield call(requestClearScrubbingDataFiltersList);
     const filtered = yield applyFilter();
 
-    yield put({
-      type: ACTIONS.SET_OVERLAY_PROCESSING,
-      overlay: {
+    yield put(
+      setOverlayProcessing({
         id: "PostScrubbingFilter",
         processing: false
-      }
-    });
+      })
+    );
     // if empty show alert - will set to original state
     if (filtered.alertEmpty) {
       const msg = `${
         filtered.actingFilter.filterDisplay
       } Filter will remove all data.`;
-      yield put({
-        type: ACTIONS.CREATE_ALERT,
-        alert: {
+      yield put(
+        createAlert({
           type: "warning",
           headline: "Filter Not Applied",
           message: msg
-        }
-      });
+        })
+      );
     }
 
     yield put({
@@ -420,13 +418,11 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
     });
   } catch (e) {
     if (e.message) {
-      // todo should reset activeFilters (cleared) if error?
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -560,13 +556,12 @@ export function* requestOverrideStatus({ payload: params }) {
   const { overrideStatus } = api.post;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "postOverrideStatus",
         loading: true
-      }
-    });
+      })
+    );
     // change All for BE to NULL; fix so does not override initial params ReturnStatusFilter
     const adjustParams =
       params.ReturnStatusFilter === "All"
@@ -577,33 +572,30 @@ export function* requestOverrideStatus({ payload: params }) {
     const hasActiveScrubbingFilters = yield select(
       state => state.post.hasActiveScrubbingFilters
     );
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "postOverrideStatus",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No post override status returned.",
           message: `The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No post override status returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
     // if no scrubbing filters - process as receive; else handle filters
@@ -660,23 +652,21 @@ export function* requestOverrideStatus({ payload: params }) {
     }
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No post override status returned.",
           message:
             "The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -685,52 +675,47 @@ export function* swapProposalDetail({ payload: params }) {
   const { swapProposalDetail } = api.post;
 
   try {
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "swapDetail",
         loading: true
-      }
-    });
+      })
+    );
     const response = yield swapProposalDetail(params);
     const { status, data } = response;
-    yield put({
-      type: ACTIONS.SET_OVERLAY_LOADING,
-      overlay: {
+    yield put(
+      setOverlayLoading({
         id: "swapDetail",
         loading: false
-      }
-    });
+      })
+    );
     if (status !== 200) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No swap proposal detail returned.",
           message: `The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        }
-      });
+        })
+      );
       throw new Error();
     }
     if (!data.Success) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No swap proposal detail returned.",
           message:
             data.Message ||
             "The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs."
-        }
-      });
+        })
+      );
       throw new Error();
     }
-    yield put({
-      type: ACTIONS.CREATE_ALERT,
-      alert: {
+    yield put(
+      createAlert({
         type: "success",
         headline: "Swap Proposal Detail",
         message: "Records updated successfully"
-      }
-    });
+      })
+    );
     yield put(
       toggleModal({
         modal: "swapDetailModal",
@@ -746,23 +731,21 @@ export function* swapProposalDetail({ payload: params }) {
     yield call(requestPostClientScrubbing, { payload: refreshParams });
   } catch (e) {
     if (e.response) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           error: "No swap proposal detail returned.",
           message:
             "The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs.",
           exception: e.response.data.ExceptionMessage || ""
-        }
-      });
+        })
+      );
     }
     if (!e.response && e.message) {
-      yield put({
-        type: ACTIONS.DEPLOY_ERROR,
-        error: {
+      yield put(
+        deployError({
           message: e.message
-        }
-      });
+        })
+      );
     }
   }
 }
@@ -887,30 +870,24 @@ export function* requestProcessNtiFile(payload) {
 }
 
 export function* processNtiFileSuccess(req) {
-  const list =
-    Array.isArray(req.data.Data) || req.data.Data.length ? req.data.Data : "";
-  const scrollable =
-    Array.isArray(req.data.Data) || req.data.Data.length
-      ? "modalBodyScroll"
-      : null;
-  yield put({
-    type: ACTIONS.TOGGLE_MODAL,
-    modal: {
+  const isList = Array.isArray(req.data.Data) || req.data.Data.length;
+  yield put(
+    toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
-        bodyClass: scrollable,
+        bodyClass: isList ? "modalBodyScroll" : null,
         titleText: "Upload Complete",
         bodyText: req.data.Message,
-        bodyList: list,
+        bodyList: isList ? req.data.Data : "",
         closeButtonDisabled: true,
         actionButtonText: "OK",
         actionButtonBsStyle: "success",
         action: () => {},
         dismiss: () => {}
       }
-    }
-  });
+    })
+  );
 }
 
 /* ////////////////////////////////// */

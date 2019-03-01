@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 import { Button, Modal } from "react-bootstrap";
 
-import { toggleModal } from "Main/redux/actions";
+import { toggleModal } from "Main/redux/index.ducks";
 
 const mapStateToProps = ({
   app: {
