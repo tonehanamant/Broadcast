@@ -10,13 +10,11 @@ import {
   setOverlayProcessing
 } from "Main/redux/index.ducks";
 import { receiveFilteredPlanning, setEstimatedId } from "Ducks/planning/index";
-import * as planningActions from "Ducks/planning/actionTypes";
+import * as ACTIONS from "Ducks/planning/actionTypes";
 import { hasSpotsAllocate, copyToBuy } from "Ducks/planning";
 
 import sagaWrapper, { errorBuilder } from "Utils/saga-wrapper";
 import api from "API";
-
-const ACTIONS = { ...planningActions };
 
 /* ////////////////////////////////// */
 /* REQUEST PROPOSAL INITIAL DATA */

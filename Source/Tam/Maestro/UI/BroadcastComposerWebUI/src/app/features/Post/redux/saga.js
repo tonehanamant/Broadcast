@@ -2,7 +2,6 @@ import { takeEvery, put, call, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import { forEach, cloneDeep, includes, update } from "lodash";
-import { types as appActions } from "Main";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -32,9 +31,7 @@ import {
 } from "Post/redux/actions";
 import api from "API";
 
-import * as postActions from "./types";
-
-const ACTIONS = { ...appActions, ...postActions };
+import * as ACTIONS from "./types";
 
 /* ////////////////////////////////// */
 /* Adjust POST Data return */

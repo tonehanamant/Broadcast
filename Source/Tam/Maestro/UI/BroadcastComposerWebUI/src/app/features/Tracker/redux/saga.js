@@ -2,7 +2,6 @@ import { takeEvery, put, call, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import { forEach, cloneDeep, includes, update } from "lodash";
-import { types as appActions } from "Main";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -27,9 +26,7 @@ import {
 } from "Tracker/redux/actions";
 import api from "API";
 
-import * as trackerActions from "./types";
-
-const ACTIONS = { ...appActions, ...trackerActions };
+import * as ACTIONS from "./types";
 
 /* ////////////////////////////////// */
 /* Adjust Tracker Data return */

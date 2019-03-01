@@ -18,9 +18,7 @@ import {
   clearFileUploadForm,
   receiveFilteredPostPrePosting
 } from "./actions";
-import * as postPrePostingActions from "./types";
-
-const ACTIONS = { ...postPrePostingActions };
+import * as ACTIONS from "./types";
 
 const assignDisplay = data =>
   data.map(item => {
