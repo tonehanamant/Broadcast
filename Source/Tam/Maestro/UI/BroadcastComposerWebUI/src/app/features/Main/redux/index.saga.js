@@ -1,9 +1,20 @@
 import { takeEvery, put } from "redux-saga/effects";
 import api from "API";
 import sagaWrapper from "Utils/saga-wrapper";
-import * as ACTIONS from "./types";
-import { setOverlayLoading } from "./actions";
+import {
+  setOverlayLoading,
+  LOAD_ENVIRONMENT,
+  LOAD_EMPLOYEE
+} from "./index.ducks";
 
+/* ////////////////////////////////// */
+/* SELECTORS */
+/* ////////////////////////////////// */
+export const selectModal = (state, modalName) => state.app.modals[modalName];
+
+/* ////////////////////////////////// */
+/* SAGAS */
+/* ////////////////////////////////// */
 export function* loadEnvironment() {
   const { getEnvironment } = api.app;
   try {
@@ -29,15 +40,15 @@ export function* loadEmployee() {
 /* ////////////////////////////////// */
 function* watchLoadEnvironment() {
   yield takeEvery(
-    ACTIONS.LOAD_ENVIRONMENT.request,
-    sagaWrapper(loadEnvironment, ACTIONS.LOAD_ENVIRONMENT)
+    LOAD_ENVIRONMENT.request,
+    sagaWrapper(loadEnvironment, LOAD_ENVIRONMENT)
   );
 }
 
 function* watchLoadEmployee() {
   yield takeEvery(
-    ACTIONS.LOAD_EMPLOYEE.request,
-    sagaWrapper(loadEmployee, ACTIONS.LOAD_EMPLOYEE)
+    LOAD_EMPLOYEE.request,
+    sagaWrapper(loadEmployee, LOAD_EMPLOYEE)
   );
 }
 

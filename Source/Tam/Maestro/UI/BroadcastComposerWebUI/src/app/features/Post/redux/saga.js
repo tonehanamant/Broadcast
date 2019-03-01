@@ -2,15 +2,14 @@ import { takeEvery, put, call, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 import { forEach, cloneDeep, includes, update } from "lodash";
-import { types as appActions } from "Main";
 import {
   setOverlayLoading,
   setOverlayProcessing,
   toggleModal,
   createAlert,
   deployError
-} from "Main/redux/actions";
-import { selectModal } from "Main/redux/selectors";
+} from "Main/redux/index.ducks";
+import { selectModal } from "Main/redux/index.saga";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
   selectActiveScrubs,
@@ -32,9 +31,7 @@ import {
 } from "Post/redux/actions";
 import api from "API";
 
-import * as postActions from "./types";
-
-const ACTIONS = { ...appActions, ...postActions };
+import * as ACTIONS from "./types";
 
 /* ////////////////////////////////// */
 /* Adjust POST Data return */
@@ -754,30 +751,24 @@ export function* requestProcessNtiFile(payload) {
 }
 
 export function* processNtiFileSuccess(req) {
-  const list =
-    Array.isArray(req.data.Data) || req.data.Data.length ? req.data.Data : "";
-  const scrollable =
-    Array.isArray(req.data.Data) || req.data.Data.length
-      ? "modalBodyScroll"
-      : null;
-  yield put({
-    type: ACTIONS.TOGGLE_MODAL,
-    modal: {
+  const isList = Array.isArray(req.data.Data) || req.data.Data.length;
+  yield put(
+    toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
-        bodyClass: scrollable,
+        bodyClass: isList ? "modalBodyScroll" : null,
         titleText: "Upload Complete",
         bodyText: req.data.Message,
-        bodyList: list,
+        bodyList: isList ? req.data.Data : "",
         closeButtonDisabled: true,
         actionButtonText: "OK",
         actionButtonBsStyle: "success",
         action: () => {},
         dismiss: () => {}
       }
-    }
-  });
+    })
+  );
 }
 
 /* ////////////////////////////////// */

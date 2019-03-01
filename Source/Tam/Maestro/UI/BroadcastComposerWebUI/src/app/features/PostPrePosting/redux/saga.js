@@ -2,7 +2,6 @@ import { takeEvery, put, select } from "redux-saga/effects";
 import FuzzySearch from "fuzzy-search";
 import moment from "moment";
 
-import * as appActions from "Main/redux/types";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -10,7 +9,7 @@ import {
   toggleModal,
   deployError,
   clearFile
-} from "Main/redux/actions";
+} from "Main/redux/index.ducks";
 
 import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";
@@ -19,9 +18,7 @@ import {
   clearFileUploadForm,
   receiveFilteredPostPrePosting
 } from "./actions";
-import * as postPrePostingActions from "./types";
-
-const ACTIONS = { ...appActions, ...postPrePostingActions };
+import * as ACTIONS from "./types";
 
 const assignDisplay = data =>
   data.map(item => {

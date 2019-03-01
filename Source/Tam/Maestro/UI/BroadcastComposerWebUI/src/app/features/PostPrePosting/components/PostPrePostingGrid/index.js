@@ -6,7 +6,7 @@ import {
   toggleModal,
   createAlert,
   setOverlayLoading
-} from "Main/redux/actions";
+} from "Main/redux/index.ducks";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting,
