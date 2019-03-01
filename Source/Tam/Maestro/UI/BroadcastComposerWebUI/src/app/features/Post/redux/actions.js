@@ -26,7 +26,7 @@ export const getPostClientScrubbing = params => ({
 });
 
 export const getScrubbingDataFiltered = query => ({
-  type: ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA,
+  type: ACTIONS.FILTERED_SCRUBBING_DATA.request,
   payload: query
 });
 
@@ -132,4 +132,13 @@ export const processNtiFile = params => ({
 export const savePostDisplay = post => ({
   type: ACTIONS.ASSIGN_POST_DISPLAY,
   data: post
+});
+
+export const reveiveClearIsciFilter = () => ({
+  type: ACTIONS.RECEIVE_CLEAR_ISCI_FILTER
+});
+
+export const reveiveFilteredScrubbingData = data => ({
+  type: ACTIONS.FILTERED_SCRUBBING_DATA.success,
+  data
 });
