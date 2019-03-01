@@ -59,7 +59,6 @@ export class SwapDetailModal extends Component {
 
   // Select on detail change/select
   onChangeDetail(option) {
-    // console.log('onChangeDetail', option);
     this.setState({ selectedDetailOption: option });
   }
 
@@ -81,7 +80,6 @@ export class SwapDetailModal extends Component {
 
   render() {
     const { details, modal } = this.props;
-    // console.log('modal', modal);
     const detailCnt = modal.properties.selections
       ? modal.properties.selections.length
       : 0;
@@ -116,14 +114,11 @@ export class SwapDetailModal extends Component {
               </ControlLabel>
               <Select
                 name="swapDetail"
-                // value={PostingBookId}
                 placeholder="Choose Detail..."
                 options={details}
                 value={this.state.selectedDetailOption}
-                // labelKey="Sequence"
                 valueRenderer={this.selectDetailRender}
                 optionRenderer={this.selectDetailRender}
-                // valueKey="Id"
                 onChange={this.onChangeDetail}
               />
             </FormGroup>

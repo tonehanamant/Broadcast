@@ -414,7 +414,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA:
+    case ACTIONS.FILTERED_SCRUBBING_DATA.success:
       return {
         ...state,
         proposalHeader: {
@@ -429,7 +429,7 @@ export default function reducer(state = initialState, action) {
         hasActiveScrubbingFilters: data.hasActiveScrubbingFilters
       };
 
-    case ACTIONS.RECEIVE_POST_OVERRIDE_STATUS:
+    case ACTIONS.POST_OVERRIDE_STATUS.store:
       return {
         ...state,
         proposalHeader: {

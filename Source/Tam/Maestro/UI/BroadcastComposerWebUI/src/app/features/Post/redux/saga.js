@@ -17,12 +17,17 @@ import {
   selectUnfilteredData,
   selectFilteredIscis,
   selectActiveScrubbingFilters,
+  selectActiveClientScrubs,
+  selectHasActiveScrubbingFilters,
   selectClientScrubs,
+  selectActiveScrubId,
   selectActiveFilterKey
 } from "Post/redux/selectors";
 import {
   getPost,
   saveActiveScrubData,
+  reveiveClearIsciFilter,
+  reveiveFilteredScrubbingData,
   savePostDisplay
 } from "Post/redux/actions";
 import api from "API";
@@ -284,124 +289,115 @@ export function* requestPostClientScrubbingSuccess({ payload: params }) {
   }
 }
 
+const getFilteredResult = (listUnfiltered, filters) => {
+  let hasActiveScrubbingFilters = false;
+  const filteredResult = listUnfiltered.filter(item => {
+    let ret = true;
+    forEach(filters, value => {
+      if (value.active && ret === true) {
+        hasActiveScrubbingFilters = true;
+        if (value.type === "filterList") {
+          if (value.activeMatch) {
+            // just base on one or the other?
+            const toMatch = value.matchOptions.inSpec === true;
+            ret =
+              !includes(value.exclusions, item[value.filterKey]) &&
+              item[value.matchOptions.matchKey] === toMatch;
+          } else {
+            ret = !includes(value.exclusions, item[value.filterKey]);
+          }
+        } else if (value.type === "dateInput") {
+          // tbd check range based on value.filterOptions
+          // todo: need to check if the 2 values are equal
+          ret = moment(item[value.filterKey]).isBetween(
+            value.filterOptions.DateAiredStart,
+            value.filterOptions.DateAiredEnd,
+            "day",
+            true
+          );
+        } else if (value.type === "timeInput") {
+          // tbd check range based on value.filterOptions
+          // todo: need to check if the 2 values are equal
+          ret = moment(item[value.filterKey]).isBetween(
+            value.filterOptions.TimeAiredStart,
+            value.filterOptions.TimeAiredEnd,
+            "seconds",
+            true
+          );
+        }
+      }
+    });
+    return ret;
+  });
+  return { filteredResult, hasActiveScrubbingFilters };
+};
+
+const applyFilter = (filters, filter, query, listUnfiltered, listFiltered) => {
+  const originalFilters = cloneDeep(filters);
+  const isList = filter.type === "filterList";
+  // active -depends on if clearing etc; also now if matching in play
+  let isActive = false;
+  if (isList) {
+    isActive = query.exclusions.length > 0 || query.activeMatch;
+    filter.matchOptions = query.matchOptions;
+    filter.activeMatch = query.activeMatch;
+  } else {
+    isActive = query.exclusions; // bool for date/time aired
+  }
+  filter.active = isActive;
+  filter.exclusions = query.exclusions;
+  filter.filterOptions = isList
+    ? query.filterOptions
+    : Object.assign(filter.filterOptions, query.filterOptions);
+  const { filteredResult, hasActiveScrubbingFilters } = getFilteredResult(
+    listUnfiltered,
+    filters
+  );
+  if (filteredResult.length < 1) {
+    return {
+      filteredClientScrubs: listFiltered,
+      activeFilter: filter,
+      activeFilters: originalFilters,
+      alertEmpty: true,
+      hasActiveScrubbingFilters
+    };
+  }
+  return {
+    filteredClientScrubs: filteredResult,
+    activeFilter: filter,
+    activeFilters: filters,
+    alertEmpty: false,
+    hasActiveScrubbingFilters
+  };
+};
+
 // FILTERING
 // tbd how to iterate multiple versus single and determine set to check active or original
 // todo break down original scrubbing to ClientScrubs etc
 export function* requestScrubbingDataFiltered({ payload: query }) {
-  const listUnfiltered = yield select(
-    state => state.post.proposalHeader.scrubbingData.ClientScrubs
-  );
-  const listFiltered = yield select(
-    state => state.post.proposalHeader.activeScrubbingData.ClientScrubs
-  );
-  const activeFilters = cloneDeep(
-    yield select(state => state.post.activeScrubbingFilters)
-  );
-  const originalFilters = yield select(
-    state => state.post.activeScrubbingFilters
-  );
-  const actingFilter = activeFilters[query.filterKey]; // this is undefined
-  // console.log('request scrub filter', query, activeFilters, actingFilter);
-  const applyFilter = () => {
-    const isList = actingFilter.type === "filterList";
-    // active -depends on if clearing etc; also now if matching in play
-    let isActive = false;
-    let hasActiveScrubbingFilters = false;
-    if (isList) {
-      isActive = query.exclusions.length > 0 || query.activeMatch;
-      actingFilter.matchOptions = query.matchOptions;
-      actingFilter.activeMatch = query.activeMatch;
-    } else {
-      isActive = query.exclusions; // bool for date/time aired
-    }
-    actingFilter.active = isActive;
-    actingFilter.exclusions = query.exclusions;
-    // leave originals in place if not list
-    actingFilter.filterOptions = isList
-      ? query.filterOptions
-      : Object.assign(actingFilter.filterOptions, query.filterOptions);
-    // TBD date/time aired versus list
-    const filteredResult = listUnfiltered.filter(item => {
-      let ret = true;
-      forEach(activeFilters, value => {
-        if (value.active && ret === true) {
-          hasActiveScrubbingFilters = true;
-          if (value.type === "filterList") {
-            if (value.activeMatch) {
-              // just base on one or the other?
-              const toMatch = value.matchOptions.inSpec === true;
-              ret =
-                !includes(value.exclusions, item[value.filterKey]) &&
-                item[value.matchOptions.matchKey] === toMatch;
-              // console.log('filter each', ret, item[value.filterKey]);
-            } else {
-              ret = !includes(value.exclusions, item[value.filterKey]);
-            }
-          } else if (value.type === "dateInput") {
-            // tbd check range based on value.filterOptions
-            // todo: need to check if the 2 values are equal
-            ret = moment(item[value.filterKey]).isBetween(
-              value.filterOptions.DateAiredStart,
-              value.filterOptions.DateAiredEnd,
-              "day",
-              true
-            );
-          } else if (value.type === "timeInput") {
-            // tbd check range based on value.filterOptions
-            // todo: need to check if the 2 values are equal
-            ret = moment(item[value.filterKey]).isBetween(
-              value.filterOptions.TimeAiredStart,
-              value.filterOptions.TimeAiredEnd,
-              "seconds",
-              true
-            );
-          }
-        }
-      });
-      return ret;
-    });
-    // console.log('request apply filter', actingFilter, activeFilters);
-    // test to make sure there is returned data
-    if (filteredResult.length < 1) {
-      return {
-        filteredClientScrubs: listFiltered,
-        actingFilter,
-        activeFilters: originalFilters,
-        alertEmpty: true,
-        hasActiveScrubbingFilters
-      };
-    }
-    return {
-      filteredClientScrubs: filteredResult,
-      actingFilter,
-      activeFilters,
-      alertEmpty: false,
-      hasActiveScrubbingFilters
-    };
-  };
-
+  const listUnfiltered = yield select(selectClientScrubs);
+  const listFiltered = yield select(selectActiveClientScrubs);
+  const filters = yield select(selectActiveScrubbingFilters);
+  const filter = filters[query.filterKey]; // this is undefined
   try {
-    // show processing?
     yield put(
       setOverlayProcessing({
         id: "PostScrubbingFilter",
         processing: true
       })
     );
-    // clear the data so grid registers as update
     yield call(requestClearScrubbingDataFiltersList);
-    const filtered = yield applyFilter();
-
-    yield put(
-      setOverlayProcessing({
-        id: "PostScrubbingFilter",
-        processing: false
-      })
+    const filtered = yield applyFilter(
+      filters,
+      filter,
+      query,
+      listUnfiltered,
+      listFiltered
     );
-    // if empty show alert - will set to original state
+
     if (filtered.alertEmpty) {
       const msg = `${
-        filtered.actingFilter.filterDisplay
+        filtered.activeFilter.filterDisplay
       } Filter will remove all data.`;
       yield put(
         createAlert({
@@ -412,18 +408,18 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
       );
     }
 
-    yield put({
-      type: ACTIONS.RECEIVE_FILTERED_SCRUBBING_DATA,
-      data: filtered
-    });
-  } catch (e) {
-    if (e.message) {
-      yield put(
-        deployError({
-          message: e.message
-        })
-      );
+    yield put(reveiveFilteredScrubbingData(filtered));
+  } catch ({ message }) {
+    if (message) {
+      yield put(deployError({ message }));
     }
+  } finally {
+    yield put(
+      setOverlayProcessing({
+        id: "PostScrubbingFilter",
+        processing: false
+      })
+    );
   }
 }
 
@@ -518,7 +514,6 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
     if (filter && filter.filterOptions) {
       if (filter.type === "filterList") {
         const newOptions = newFilters[filter.distinctKey];
-        // console.log('filter options reset', filter, newOptions);
         if (filter.filterOptions.length) {
           const filterOptions = filter.filterOptions.filter(item =>
             includes(newOptions, item.Value)
@@ -556,198 +551,89 @@ export function* requestOverrideStatus({ payload: params }) {
   const { overrideStatus } = api.post;
 
   try {
-    yield put(
-      setOverlayLoading({
-        id: "postOverrideStatus",
-        loading: true
-      })
-    );
-    // change All for BE to NULL; fix so does not override initial params ReturnStatusFilter
+    yield put(setOverlayLoading({ id: "postOverrideStatus", loading: true }));
     const adjustParams =
       params.ReturnStatusFilter === "All"
         ? Object.assign({}, params, { ReturnStatusFilter: null })
         : params;
-    const response = yield overrideStatus(adjustParams);
-    const { status, data } = response;
-    const hasActiveScrubbingFilters = yield select(
-      state => state.post.hasActiveScrubbingFilters
+    return yield overrideStatus(adjustParams);
+  } finally {
+    yield put(setOverlayLoading({ id: "postOverrideStatus", loading: false }));
+  }
+}
+
+export function* requestOverrideStatusSuccess({ data, payload: params }) {
+  const hasActiveFilters = yield select(selectHasActiveScrubbingFilters);
+  if (hasActiveFilters) {
+    const scrubs = yield select(selectActiveClientScrubs);
+    const status = params.OverrideStatus === "InSpec" ? 2 : 1;
+    const isRemove =
+      params.ReturnStatusFilter === "All"
+        ? false
+        : params.ReturnStatusFilter !== params.OverrideStatus;
+    const adjustedScrubbing = refilterOnOverride(
+      scrubs,
+      params.ScrubIds,
+      status,
+      isRemove
     );
-    yield put(
-      setOverlayLoading({
-        id: "postOverrideStatus",
-        loading: false
-      })
-    );
-    if (status !== 200) {
-      yield put(
-        deployError({
-          error: "No post override status returned.",
-          message: `The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        })
-      );
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put(
-        deployError({
-          error: "No post override status returned.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs."
-        })
-      );
-      throw new Error();
-    }
-    // if no scrubbing filters - process as receive; else handle filters
-    if (hasActiveScrubbingFilters) {
-      const scrubs = yield select(
-        state => state.post.proposalHeader.activeScrubbingData.ClientScrubs
-      );
-      const status = params.OverrideStatus === "InSpec" ? 2 : 1;
-      const isRemove =
-        params.ReturnStatusFilter === "All"
-          ? false
-          : params.ReturnStatusFilter !== params.OverrideStatus;
-      // console.log('refilter needed as>>>>>>', params.ReturnStatusFilter);
-      const adjustedScrubbing = refilterOnOverride(
-        scrubs,
-        params.ScrubIds,
-        status,
-        isRemove
-      );
-      const activeFilters = cloneDeep(
-        yield select(state => state.post.activeScrubbingFilters)
-      );
-      let adjustedFilters = null;
-      // remove so redjust filter options as needed
-      if (isRemove) {
-        // const activeFilters = cloneDeep(yield select(state => state.post.activeScrubbingFilters));
-        adjustedFilters = resetfilterOptionsOnOverride(
-          activeFilters,
-          data.Data.Filters
-        );
-        // console.log('adjusted filters', adjustedFilters);
-      }
-      const ret = {
-        filteredClientScrubs: adjustedScrubbing,
-        scrubbingData: data.Data,
-        activeFilters: isRemove ? adjustedFilters : activeFilters
-      };
-      // console.log('remove test', isRemove, ret);
-      // clear the data so grid registers as update
-      yield call(requestClearScrubbingDataFiltersList);
-      yield put({
-        type: ACTIONS.RECEIVE_POST_OVERRIDE_STATUS,
-        data: ret
-      });
-    } else {
-      // clear the data so grid registers as update
-      yield call(requestClearScrubbingDataFiltersList);
-      // as currently stands need to reset the filter key on data or is removed : TODO REVISE
-      data.Data.filterKey = yield select(state => state.post.activeFilterKey);
-      yield put({
-        type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
-        data
-      });
-    }
-  } catch (e) {
-    if (e.response) {
-      yield put(
-        deployError({
-          error: "No post override status returned.",
-          message:
-            "The server encountered an error processing the request (post override status). Please try again or contact your administrator to review error logs.",
-          exception: e.response.data.ExceptionMessage || ""
-        })
+    const activeFilters = yield select(selectActiveScrubbingFilters);
+    let adjustedFilters = null;
+    if (isRemove) {
+      adjustedFilters = resetfilterOptionsOnOverride(
+        activeFilters,
+        data.Data.Filters
       );
     }
-    if (!e.response && e.message) {
-      yield put(
-        deployError({
-          message: e.message
-        })
-      );
-    }
+    const ret = {
+      filteredClientScrubs: adjustedScrubbing,
+      scrubbingData: data.Data,
+      activeFilters: isRemove ? adjustedFilters : activeFilters
+    };
+    yield call(requestClearScrubbingDataFiltersList);
+    yield put({
+      type: ACTIONS.POST_OVERRIDE_STATUS.store,
+      data: ret
+    });
+  } else {
+    yield call(requestClearScrubbingDataFiltersList);
+    data.Data.filterKey = yield select(selectActiveFilterKey);
+    yield put({
+      type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
+      data
+    });
   }
 }
 
 export function* swapProposalDetail({ payload: params }) {
   const { swapProposalDetail } = api.post;
-
   try {
-    yield put(
-      setOverlayLoading({
-        id: "swapDetail",
-        loading: true
-      })
-    );
-    const response = yield swapProposalDetail(params);
-    const { status, data } = response;
-    yield put(
-      setOverlayLoading({
-        id: "swapDetail",
-        loading: false
-      })
-    );
-    if (status !== 200) {
-      yield put(
-        deployError({
-          error: "No swap proposal detail returned.",
-          message: `The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs. (HTTP Status: ${status})`
-        })
-      );
-      throw new Error();
-    }
-    if (!data.Success) {
-      yield put(
-        deployError({
-          error: "No swap proposal detail returned.",
-          message:
-            data.Message ||
-            "The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs."
-        })
-      );
-      throw new Error();
-    }
-    yield put(
-      createAlert({
-        type: "success",
-        headline: "Swap Proposal Detail",
-        message: "Records updated successfully"
-      })
-    );
-    yield put(
-      toggleModal({
-        modal: "swapDetailModal",
-        active: false,
-        properties: {}
-      })
-    );
-    // refresh scrubbing
-    const id = yield select(
-      state => state.post.proposalHeader.activeScrubbingData.Id
-    );
-    const refreshParams = { proposalId: id, showModal: true, filterKey: "All" };
-    yield call(requestPostClientScrubbing, { payload: refreshParams });
-  } catch (e) {
-    if (e.response) {
-      yield put(
-        deployError({
-          error: "No swap proposal detail returned.",
-          message:
-            "The server encountered an error processing the request (swap proposal detail). Please try again or contact your administrator to review error logs.",
-          exception: e.response.data.ExceptionMessage || ""
-        })
-      );
-    }
-    if (!e.response && e.message) {
-      yield put(
-        deployError({
-          message: e.message
-        })
-      );
-    }
+    yield put(setOverlayLoading({ id: "swapDetail", loading: true }));
+    return yield swapProposalDetail(params);
+  } finally {
+    yield put(setOverlayLoading({ id: "swapDetail", loading: false }));
   }
+}
+
+export function* swapProposalDetailSuccess() {
+  yield put(
+    createAlert({
+      type: "success",
+      headline: "Swap Proposal Detail",
+      message: "Records updated successfully"
+    })
+  );
+  yield put(
+    toggleModal({
+      modal: "swapDetailModal",
+      active: false,
+      properties: {}
+    })
+  );
+  // refresh scrubbing
+  const id = yield select(selectActiveScrubId);
+  const refreshParams = { proposalId: id, showModal: true, filterKey: "All" };
+  yield call(requestPostClientScrubbing, { payload: refreshParams });
 }
 
 export function* loadArchivedIsci() {
@@ -796,9 +682,7 @@ export function* mapUnlinkedIsciSuccess() {
 }
 
 export function* closeUnlinkedIsciModal({ modalPrams }) {
-  yield put({
-    type: ACTIONS.RECEIVE_CLEAR_ISCI_FILTER
-  });
+  yield put(reveiveClearIsciFilter());
   yield put(
     toggleModal({
       modal: "postUnlinkedIsciModal",
@@ -933,7 +817,7 @@ function* watchRequestPostClientScrubbingSuccess() {
 
 function* watchRequestScrubbingDataFiltered() {
   yield takeEvery(
-    ACTIONS.REQUEST_FILTERED_SCRUBBING_DATA,
+    ACTIONS.FILTERED_SCRUBBING_DATA.request,
     requestScrubbingDataFiltered
   );
 }
@@ -973,11 +857,31 @@ function* watchArchiveUnlinkedIsci() {
 }
 
 function* watchRequestOverrideStatus() {
-  yield takeEvery(ACTIONS.REQUEST_POST_OVERRIDE_STATUS, requestOverrideStatus);
+  yield takeEvery(
+    ACTIONS.POST_OVERRIDE_STATUS.request,
+    sagaWrapper(requestOverrideStatus, ACTIONS.POST_OVERRIDE_STATUS)
+  );
+}
+
+function* watchRequestOverrideStatusSuccess() {
+  yield takeEvery(
+    ACTIONS.POST_OVERRIDE_STATUS.success,
+    requestOverrideStatusSuccess
+  );
+}
+
+function* watchSwapProposalDetailSuccess() {
+  yield takeEvery(
+    ACTIONS.SWAP_PROPOSAL_DETAIL.success,
+    swapProposalDetailSuccess
+  );
 }
 
 function* watchSwapProposalDetail() {
-  yield takeEvery(ACTIONS.REQUEST_SWAP_PROPOSAL_DETAIL, swapProposalDetail);
+  yield takeEvery(
+    ACTIONS.SWAP_PROPOSAL_DETAIL.request,
+    sagaWrapper(swapProposalDetail, ACTIONS.SWAP_PROPOSAL_DETAIL)
+  );
 }
 
 function* watchLoadArchivedIscis() {
@@ -1066,7 +970,9 @@ export default [
   watchLoadValidIscis,
   watchLoadArchivedIscis,
   watchSwapProposalDetail,
+  watchSwapProposalDetailSuccess,
   watchRequestOverrideStatus,
+  watchRequestOverrideStatusSuccess,
   watchArchiveUnlinkedIsci,
   watchRequestArchivedIscisSuccess,
   watchRequestUniqueIscisSuccess,
