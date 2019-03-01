@@ -9,3 +9,7 @@ export const selectClientScrubs = state =>
   state.post.proposalHeader.scrubbingData.ClientScrubs;
 export const selectActiveClientScrubs = state =>
   state.post.proposalHeader.activeScrubbingData.ClientScrubs;
+export const selectActiveScrubId = state =>
+  state.post.proposalHeader.activeScrubbingData.Id;
+export const selectHasActiveScrubbingFilters = state =>
+  state.post.hasActiveScrubbingFilters;

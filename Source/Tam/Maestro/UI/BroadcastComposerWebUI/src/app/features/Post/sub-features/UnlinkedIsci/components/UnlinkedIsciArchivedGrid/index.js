@@ -110,7 +110,6 @@ export class ArchivedIsciGrid extends Component {
         key: "menu-undo-archive",
         EVENT_HANDLER: () => {
           // note: as is selections undefined as multi select not taking on this grid
-          // const stateKey = 'archived_grid';
           const selectedIds = this.props.selection.get(stateKey).get("indexes");
           const rowData = this.props.dataSource.get(stateKey).toJSON(); // currentRecords or data - array
           const activeSelections = [];
@@ -118,7 +117,6 @@ export class ArchivedIsciGrid extends Component {
           selectedIds.forEach(idx => {
             activeSelections.push(rowData.data[idx].FileDetailId);
           });
-          // console.log('undo archive selections', activeSelections, selectedIds, rowData, metaData);
           this.props.undoArchive(activeSelections);
         }
       }
@@ -180,8 +178,6 @@ export class ArchivedIsciGrid extends Component {
         data={archivedIscisData}
         store={this.context.store}
         height={460}
-        // pageSize={archivedIscisData.length}
-        // infinite
       />
     );
   }
