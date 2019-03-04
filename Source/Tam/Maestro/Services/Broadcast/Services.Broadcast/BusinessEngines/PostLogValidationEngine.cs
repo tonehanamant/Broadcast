@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface IPostLogEngine : IApplicationService
+    public interface IPostLogValidationEngine : IApplicationService
     {
         /// <summary>
         /// Validates a post log record
@@ -18,12 +18,12 @@ namespace Services.Broadcast.BusinessEngines
         List<WWTVInboundFileValidationResult> ValidatePostLogRecord(InboundFileSaveRequestDetail requestDetail);
     }
 
-    public class PostLogEngine : IPostLogEngine
+    public class PostLogValidationEngine : IPostLogValidationEngine
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly Dictionary<int, int> _SpotLengthDict;
 
-        public PostLogEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public PostLogValidationEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _SpotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
@@ -79,15 +79,6 @@ namespace Services.Broadcast.BusinessEngines
                 validationResults.Add(new WWTVInboundFileValidationResult()
                 {
                     InvalidField = "Isci",
-                    ErrorMessage = "is required",
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(requestDetail.Affiliate))
-            {
-                validationResults.Add(new WWTVInboundFileValidationResult()
-                {
-                    InvalidField = "Affiliate",
                     ErrorMessage = "is required",
                 });
             }

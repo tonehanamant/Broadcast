@@ -274,7 +274,7 @@
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
-    <Compile Include="BusinessEngines\PostLogEngine.cs" />
+    <Compile Include="BusinessEngines\PostLogValidationEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Entities\PostedContract.cs" />
     <Compile Include="Entities\PricingGuide.cs" />

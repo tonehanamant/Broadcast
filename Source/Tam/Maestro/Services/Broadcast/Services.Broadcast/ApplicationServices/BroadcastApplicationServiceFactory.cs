@@ -112,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
-            unityContainer.RegisterType<IPostLogEngine, PostLogEngine>();
+            unityContainer.RegisterType<IPostLogValidationEngine, PostLogValidationEngine>();
             unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
             unityContainer.RegisterType<IBarterFileImporter, BarterFileImporter>();
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();

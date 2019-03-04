@@ -107,7 +107,6 @@ namespace Services.Broadcast.IntegrationTests
     ""SpotLength"": 30,
     ""Time"": ""0543A"",
     ""SpotCost"": 0,
-    ""ISCI"": ""32YO41TC18H"",
     ""Affiliate"": null,
     ""Program"": ""NBC Boston Today at 05:30 AM"",
     ""ShowType"": ""News"",

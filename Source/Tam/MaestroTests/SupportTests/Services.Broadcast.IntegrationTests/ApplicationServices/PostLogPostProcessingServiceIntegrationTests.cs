@@ -14,6 +14,7 @@ using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -164,6 +165,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PostLogPostProcessing_NonRatedStation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_NonRatedStation.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                var postlogFile = VerifyPostLogFile(response.Id.Value);
+
+                Assert.IsTrue(response.ValidationResults.Count == 0);
+                Assert.IsTrue(postlogFile.FileDetails.Where(x => x.Station.Equals("NewStation")).Count() == 1);
+            }
+        }
+
         private static void VerifyResults(WWTVSaveResult response)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -197,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
 
-        private void VerifyPostLogFile(int fileId)
+        private ScrubbingFile VerifyPostLogFile(int fileId)
         {
             var _PostLogRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostLogRepository>();
             var response = _PostLogRepository.GetPostLogFile(fileId, true);
@@ -222,6 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            return response;
         }
     }
 }

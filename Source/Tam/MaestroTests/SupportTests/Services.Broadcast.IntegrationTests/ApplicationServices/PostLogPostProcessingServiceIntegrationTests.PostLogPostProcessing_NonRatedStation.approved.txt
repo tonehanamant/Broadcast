@@ -1,0 +1,72 @@
+﻿{
+  "FileDetails": [
+    {
+      "AdjustedAirDate": "0001-01-01T00:00:00",
+      "Affiliate": null,
+      "AirTime": 0,
+      "Archived": false,
+      "ClientScrubs": [
+        {
+          "ClientScrubAudiences": [],
+          "Comment": null,
+          "EffectiveClientIsci": null,
+          "EffectiveGenre": "Do It Yourself",
+          "EffectiveIsci": "NSI1",
+          "EffectiveProgramName": "Program Names R us",
+          "EffectiveShowType": "Series",
+          "LeadIn": false,
+          "MatchDate": false,
+          "MatchGenre": true,
+          "MatchIsci": true,
+          "MatchIsciDays": false,
+          "MatchMarket": false,
+          "MatchProgram": true,
+          "MatchShowType": true,
+          "MatchStation": false,
+          "MatchTime": false,
+          "ModifiedBy": "PostLog Post Processing Test User",
+          "PostingBookId": 416,
+          "PostingPlaybackType": 4,
+          "ProposalVersionDetailId": 9953,
+          "ProposalVersionDetailQuarterWeekId": 27,
+          "Status": 1
+        }
+      ],
+      "Demographics": [
+        {
+          "AudienceId": 31,
+          "Demographic": null,
+          "OvernightImpressions": 123.0,
+          "OvernightRating": 1.0
+        }
+      ],
+      "EstimateId": 1082,
+      "FileDetailProblems": [],
+      "Genre": "Do It Yourself",
+      "InventorySource": 3,
+      "Isci": "NSI1",
+      "LeadInEndTime": 77520,
+      "LeadinGenre": "Series",
+      "LeadinProgramName": "Voice, The",
+      "LeadInShowType": "Series",
+      "LeadoutGenre": "News",
+      "LeadoutProgramName": "10 News Nightbeat",
+      "LeadOutShowType": "Series",
+      "LeadOutStartTime": 77160,
+      "MappedIsci": null,
+      "Market": null,
+      "OriginalAirDate": "2016-03-06T00:00:00",
+      "ProgramName": "Program Names R us",
+      "ShowType": "Series",
+      "SpotCost": 0.0,
+      "SpotLengthId": 1,
+      "Station": "NewStation",
+      "SuppliedProgramName": null
+    }
+  ],
+  "FileHash": "DC-9A-01-6E-F5-E9-91-A0-8C-FA-BE-99-30-AD-71-A6-F4-A5-FE-FC",
+  "FileName": "WWTV_NonRatedStation.txt",
+  "FileProblems": [],
+  "SourceId": 3,
+  "Status": 1
+}

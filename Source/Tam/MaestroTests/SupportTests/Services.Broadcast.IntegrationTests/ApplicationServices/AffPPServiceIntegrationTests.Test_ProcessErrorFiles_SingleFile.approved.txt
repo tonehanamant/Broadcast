@@ -1,7 +1,7 @@
 ﻿{
   "AlternateViews": [],
   "Bcc": [],
-  "Body": "File Special_Ftp_Phantom_File.txt file validation for WWTV upload.\n\nRecord: 2: 'Affiliate' is required\r\n\n\nFile located in .\\Files\\Special_Ftp_Phantom_File.txt\n",
+  "Body": "File Special_Ftp_Phantom_File.txt file validation for WWTV upload.\n\nRecord: 2: 'Isci' is required\r\n\n\nFile located in .\\Files\\Special_Ftp_Phantom_File.txt\n",
   "BodyEncoding": {
     "BodyName": "us-ascii",
     "CodePage": 20127,

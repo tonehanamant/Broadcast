@@ -8,9 +8,6 @@
     },
     {
       "ProblemDescription": "Record: 1: Field: 'InventorySource' is invalid\r\nmust be valid"
-    },
-    {
-      "ProblemDescription": "Record: 1: Field: 'Affiliate' is invalid\r\nis required"
     }
   ],
   "SourceId": 2,
