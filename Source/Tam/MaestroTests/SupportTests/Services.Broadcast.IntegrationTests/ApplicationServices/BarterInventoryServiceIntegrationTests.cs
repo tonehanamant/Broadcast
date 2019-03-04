@@ -30,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat.xlsx";
 
             using (new TransactionScopeWrapper())
-            {                
+            {
                 var request = new InventoryFileSaveRequest
                 {
                     StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
@@ -206,6 +206,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var problemsJson = IntegrationTestHelper.ConvertToJson(problems, jsonSettings);
 
                 Approvals.Verify(problemsJson);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterInventoryService_InvalidFileFormat()
+        {
+            const string fileName = @"1Chicago WLS Syn 4Q16 UNKNOWN.xml";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
     }

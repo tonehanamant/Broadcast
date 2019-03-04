@@ -75,6 +75,15 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>InventoryFileSaveResult object</returns>
         public InventoryFileSaveResult SaveBarterInventoryFile(InventoryFileSaveRequest request, string userName, DateTime now)
         {
+            if (!request.FileName.EndsWith(".xlsx"))
+            {
+                return new InventoryFileSaveResult
+                {
+                    Status = FileStatusEnum.Failed,
+                    ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xlsx File" }
+                };
+            }
+
             var stationLocks = new List<IDisposable>();
             var lockedStationCodes = new List<int>();
 
@@ -132,7 +141,9 @@ namespace Services.Broadcast.ApplicationServices
 
             return new InventoryFileSaveResult
             {
-                FileId = barterFile.Id
+                FileId = barterFile.Id,
+                ValidationProblems = barterFile.ValidationProblems,
+                Status = barterFile.FileStatus
             };
         }
 
