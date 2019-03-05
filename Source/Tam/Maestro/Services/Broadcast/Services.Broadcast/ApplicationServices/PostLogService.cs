@@ -123,7 +123,7 @@ namespace Services.Broadcast.ApplicationServices
     public class PostLogService : IPostLogService
     {
         private readonly IPostLogRepository _PostLogRepository;
-        private readonly IPostLogEngine _PostLogEngine;
+        private readonly IPostLogValidationEngine _PostLogEngine;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
         private readonly ISMSClient _SmsClient;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
@@ -148,7 +148,7 @@ namespace Services.Broadcast.ApplicationServices
         private const ProposalEnums.ProposalPlaybackType DefaultPlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3;
 
         public PostLogService(IDataRepositoryFactory dataRepositoryFactory
-            , IPostLogEngine postLogEngine
+            , IPostLogValidationEngine postLogEngine
             , IBroadcastAudiencesCache audiencesCache
             , IImpressionAdjustmentEngine impressionAdjustmentEngine
             , ISMSClient smsClient
