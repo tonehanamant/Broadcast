@@ -31,6 +31,8 @@ namespace Services.Broadcast.Repositories
         /// <returns>Dictionary of market code and percentage coverage</returns>
         MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds);
 
+        MarketCoverageDto GetMarketCoverages(int marketCoverageFileId,IEnumerable<int> marketIds);
+
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
     }
 
@@ -73,6 +75,25 @@ namespace Services.Broadcast.Repositories
                     context.market_coverage_files.Add(marketCoverageFileDb);
 
                     context.SaveChanges();
+                });
+        }
+
+        public MarketCoverageDto GetMarketCoverages(int marketCoverageFileId, IEnumerable<int> marketIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var marketCoverageFile = context.market_coverage_files.First(c => c.id == marketCoverageFileId);
+
+                    var marketCoveragesByMarketCode = (from m in marketCoverageFile.market_coverages
+                        where marketIds.Contains(m.market_code)
+                        select m).ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us);
+
+                    return new MarketCoverageDto
+                    {
+                        MarketCoverageFileId = marketCoverageFile.id,
+                        MarketCoveragesByMarketCode = marketCoveragesByMarketCode
+                    };
                 });
         }
 
