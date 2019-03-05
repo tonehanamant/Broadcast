@@ -24,7 +24,6 @@
     "Could not find inventory source",
     "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
     "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
-    "End date (23/31/2019) should be greater then effective date (31/31/2018)",
     "CPM is not in the correct format (##.##)",
     "Invalid demo (A25-5422)",
     "Invalid contracted daypart (M-SU 4:00AM - 10:00 AM)",

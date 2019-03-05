@@ -138,19 +138,24 @@ namespace Services.Broadcast.Converters.RateImport
             string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetStringValue().Split(' ')[0]; //split is removing time section
             string endDateText = worksheet.Cells[END_DATE_CELL].GetStringValue().Split(' ')[0];
 
+            bool validDate = true;
             if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
             {
                 validationProblems.Add($"Effective date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
+                validDate = false;
             }            
             if (!DateTime.TryParseExact(endDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
                 validationProblems.Add($"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
+                validDate = false;
             }
-            if (endDate <= effectiveDate)
+            if (validDate && endDate <= effectiveDate)
             {
                 validationProblems.Add($"End date ({endDateText}) should be greater then effective date ({effectiveDateText})");
+                validDate = false;
             }
-            else
+
+            if(validDate)
             {
                 header.EffectiveDate = effectiveDate;
                 header.EndDate = endDate;

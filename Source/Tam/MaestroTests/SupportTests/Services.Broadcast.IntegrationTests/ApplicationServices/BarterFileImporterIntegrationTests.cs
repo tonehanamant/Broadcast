@@ -37,18 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _barterfileImporter.CheckFileHash();
                 var file = _barterfileImporter.GetPendingBarterInventoryFile("integration test");
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
-
-                Approvals.Verify(fileJson);
+                _VerifyBarterInventoryFile(file);
             }
         }
 
@@ -70,21 +59,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _barterfileImporter.LoadFromSaveRequest(request);
                 BarterInventoryFile file = _barterfileImporter.GetPendingBarterInventoryFile("integration test"); // _LoadBarterFile(fileName);
                 _barterfileImporter.ExtractData(file);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
-
-                Approvals.Verify(fileJson);
+                _VerifyBarterInventoryFile(file);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterFileImporter_ExtractData_PRI5379()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5379.xlsx";
+            var _barterfileImporter = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterFileImporter>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                _barterfileImporter.LoadFromSaveRequest(request);
+                BarterInventoryFile file = _barterfileImporter.GetPendingBarterInventoryFile("integration test"); // _LoadBarterFile(fileName);
+                _barterfileImporter.ExtractData(file);
+                _VerifyBarterInventoryFile(file);
+            }
+        }
+
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -104,19 +104,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _barterfileImporter.LoadFromSaveRequest(request);
                 BarterInventoryFile file = _barterfileImporter.GetPendingBarterInventoryFile("integration test");
                 _barterfileImporter.ExtractData(file);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
-
-                Approvals.Verify(fileJson);
+                _VerifyBarterInventoryFile(file);
             }
         }
 
@@ -138,19 +126,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _barterfileImporter.LoadFromSaveRequest(request);
                 BarterInventoryFile file = _barterfileImporter.GetPendingBarterInventoryFile("integration test");
                 _barterfileImporter.ExtractData(file);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
-                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
-
-                Approvals.Verify(fileJson);
+                _VerifyBarterInventoryFile(file);
             }
         }
 
@@ -206,6 +182,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _BarterFileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new BarterInventoryFile());
             }
+        }
+
+        private static void _VerifyBarterInventoryFile(BarterInventoryFile file)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
+            jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
+
+            Approvals.Verify(fileJson);
         }
     }
 }
