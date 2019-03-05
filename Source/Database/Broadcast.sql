@@ -50,6 +50,16 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-5325 *****************************************************/
+IF EXISTS(SELECT * FROM sys.columns 
+          WHERE Name = N'spots_edited_manually'
+          AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distribution_open_market_inventory]'))
+BEGIN
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] DROP [DF__pricing_g__spots__1C3EB9D7]
+	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] DROP COLUMN [spots_edited_manually]
+END
+/*************************************** END BCOP-4186 *****************************************************/
+
 /*************************************** START PRI-912 *****************************************************/
 IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('stations') AND name = 'affiliation')
 BEGIN
