@@ -15,7 +15,7 @@ import { toggleModal, storeFile } from "Main/redux/index.ducks";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting
-} from "PostPrePosting/redux/actions";
+} from "PostPrePosting/redux/index.ducks";
 
 import styles from "./index.style.scss";
 

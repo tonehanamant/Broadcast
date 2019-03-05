@@ -14,11 +14,17 @@ import {
 import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";
 import {
+  POST_PRE_POSTING_INITIALDATA,
+  POST_PRE_POSTING,
+  FILTERED_POST_PRE_POSTING,
+  DELETE_POST_PRE_POSTING,
+  POST_PRE_POSTING_FILE_EDIT,
+  POST_PRE_POSTING_FILE_SAVE,
+  POST_PRE_POSTING_FILE_UPLOAD,
   getPostPrePosting,
   clearFileUploadForm,
   receiveFilteredPostPrePosting
-} from "./actions";
-import * as ACTIONS from "./types";
+} from "PostPrePosting/redux/index.ducks";
 
 const assignDisplay = data =>
   data.map(item => {
@@ -146,80 +152,77 @@ export function* uploadPostPrePostingFileSuccess() {
 /* ////////////////////////////////// */
 function* watchRequestPostPrePostingInitialData() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_INITIALDATA.request,
-    sagaWrapper(
-      requestPostPrePostingInitialData,
-      ACTIONS.POST_PRE_POSTING_INITIALDATA
-    )
+    POST_PRE_POSTING_INITIALDATA.request,
+    sagaWrapper(requestPostPrePostingInitialData, POST_PRE_POSTING_INITIALDATA)
   );
 }
 
 function* watchRequestPostPrePosting() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING.request,
-    sagaWrapper(requestPostPrePosting, ACTIONS.POST_PRE_POSTING)
+    POST_PRE_POSTING.request,
+    sagaWrapper(requestPostPrePosting, POST_PRE_POSTING)
   );
 }
 
 function* watchRequestPostPrePostingFiltered() {
   yield takeEvery(
-    ACTIONS.FILTERED_POST_PRE_POSTING.request,
+    FILTERED_POST_PRE_POSTING.request,
     requestPostPrePostingFiltered
   );
 }
 
 function* watchDeletePostPrePostingById() {
   yield takeEvery(
-    ACTIONS.DELETE_POST_PRE_POSTING.request,
-    sagaWrapper(deletePostPrePostingById, ACTIONS.DELETE_POST_PRE_POSTING)
+    DELETE_POST_PRE_POSTING.request,
+    sagaWrapper(deletePostPrePostingById, DELETE_POST_PRE_POSTING)
   );
 }
 
 function* watchDeletePostPrePostingByIdSuccess() {
   yield takeEvery(
-    ACTIONS.DELETE_POST_PRE_POSTING.success,
+    DELETE_POST_PRE_POSTING.success,
     deletePostPrePostingByIdSuccess
   );
 }
 
 function* watchRequestPostPrePostingFileEdit() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_FILE_EDIT.request,
-    sagaWrapper(postPrePostingFileEdit, ACTIONS.POST_PRE_POSTING_FILE_EDIT)
+    POST_PRE_POSTING_FILE_EDIT.request,
+    sagaWrapper(postPrePostingFileEdit, POST_PRE_POSTING_FILE_EDIT)
   );
 }
 
 function* watchPostPrePostingFileEditSuccess() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_FILE_EDIT.success,
+    POST_PRE_POSTING_FILE_EDIT.success,
     postPrePostingFileEditSuccess
   );
 }
 
 function* watchPostPrePostingFileSave() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_FILE_SAVE.request,
-    sagaWrapper(postPrePostingFileSave, ACTIONS.POST_PRE_POSTING_FILE_SAVE)
+    POST_PRE_POSTING_FILE_SAVE.request,
+    sagaWrapper(postPrePostingFileSave, POST_PRE_POSTING_FILE_SAVE)
   );
 }
 
 function* watchPostPrePostingFileSaveSuccess() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_FILE_SAVE.success,
+    POST_PRE_POSTING_FILE_SAVE.success,
     postPrePostingFileSaveSuccess
   );
 }
 
 function* watchUploadPostPrePostingFile() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_FILE_UPLOAD.request,
-    sagaWrapper(uploadPostPrePostingFile, ACTIONS.POST_PRE_POSTING_FILE_UPLOAD)
+    POST_PRE_POSTING_FILE_UPLOAD.request,
+    sagaWrapper(uploadPostPrePostingFile, POST_PRE_POSTING_FILE_UPLOAD)
   );
 }
 
 function* watchUploadPostPrePostingFileSuccess() {
   yield takeEvery(
-    ACTIONS.POST_PRE_POSTING_FILE_UPLOAD.success,
+    POST_PRE_POSTING_FILE_UPLOAD.success,
     uploadPostPrePostingFileSuccess
   );
 }

@@ -9,7 +9,7 @@ import UploadButton from "Patterns/UploadButton";
 
 import { toggleModal, storeFile } from "Main/redux/index.ducks";
 
-import { getPostPrePostingFiltered } from "PostPrePosting/redux/actions";
+import { getPostPrePostingFiltered } from "PostPrePosting/redux/index.ducks";
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

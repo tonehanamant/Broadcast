@@ -21,7 +21,7 @@ import {
   updateUploadDemos,
   uploadPostPrePostingFile,
   clearFileUploadForm
-} from "PostPrePosting/redux/actions";
+} from "PostPrePosting/redux/index.ducks";
 
 const mapStateToProps = ({
   app: {
