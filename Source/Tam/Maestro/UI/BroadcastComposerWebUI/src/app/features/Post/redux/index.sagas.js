@@ -304,7 +304,7 @@ export function* requestPostClientScrubbing(params) {
 }
 
 export function* requestPostClientScrubbingSuccess({ payload: params }) {
-  if (params.showModal) {
+  if (params && params.showModal) {
     yield put(
       toggleModal({
         modal: "postScrubbingModal",

@@ -9,7 +9,7 @@ import {
   mapUnlinkedIscis,
   loadValidIscis,
   mapUnlinkedIsci
-} from "Tracker/redux/actions";
+} from "Tracker/redux/index.ducks";
 import { toggleModal } from "Main/redux/index.ducks";
 
 import "./index.style.scss";
