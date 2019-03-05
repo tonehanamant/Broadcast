@@ -102,6 +102,7 @@ namespace Services.Broadcast.Repositories
                         throw new InvalidOperationException("Day by Day Impression not supported");
                     var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
 
+                    //WriteTableSQLDebug(storedProcedureName,stationDetails,postingBookId,audienceId.Value as string,((char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
             }
@@ -287,7 +288,7 @@ namespace Services.Broadcast.Repositories
         }
 
 
-        private static void WriteTableSQLDebug(List<StationDetailPointInTime> stationDetails,int postingId,string demos,string playback)
+        private static void WriteTableSQLDebug(string storedProcedureName,List<StationDetailPointInTime> stationDetails,int postingId,string demos,string playback)
         {
             string declare = string.Format(@"	DECLARE
 		@posting_media_month_id SMALLINT = {0},
@@ -313,6 +314,7 @@ namespace Services.Broadcast.Repositories
                             p.DayOfWeek == DayOfWeek.Sunday ? "1" : "0",
                             p.TimeAired,
                             p.TimeAired)));
+            Debug.WriteLine(string.Format("EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName));
         }
         private static void WriteTableSQLDebug(string storedProcedureName,IEnumerable<ManifestDetailDaypart> stationDetails,int hutMediaMonth,int shareMediaMonth,string demos,string playback)
         {

@@ -826,7 +826,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
+        [Category("2book")]
         public void Affidavit_Scrub_Isci_Days_No_Match()
         {
             using (new TransactionScopeWrapper())
@@ -861,7 +861,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
+        [Category("2book")]
         public void Affidavit_Scrub_Isci_Days_Match()
         {
             using (new TransactionScopeWrapper())
@@ -900,7 +900,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
+        [Category("2book")]
         public void Affidavit_Match_Proposal_Week_Isci_Day_Without_Matching_Daypart_day()
         {
             using (new TransactionScopeWrapper())

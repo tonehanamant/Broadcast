@@ -420,6 +420,114 @@ BEGIN
 	IF OBJECT_ID('tempdb..#primary_market_universes') IS NOT NULL DROP TABLE #primary_market_universes;
 END
 
+GO
+
+
+/*************************************** START PRI-5085 *****************************************************/
+
+IF OBJECT_ID('nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages', 'P') IS NOT NULL
+BEGIN
+	DROP PROC nsi.usp_GetImpressionsForMultiplePrograms_Daypart_Averages
+END
+GO 
+
+CREATE PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages]
+	@posting_media_month_id SMALLINT,
+	@demo VARCHAR(MAX),
+	@ratings_request RatingsInputWithId READONLY,
+	@min_playback_type VARCHAR(1)
+AS
+BEGIN
+	DECLARE @posting_media_month_id_sniff SMALLINT=@posting_media_month_id;
+	DECLARE @min_playback_type_sniff VARCHAR(1)=@min_playback_type;
+	DECLARE @demo_sniff VARCHAR(MAX)=@demo;
+
+	SET NOCOUNT ON;
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
+	CREATE TABLE #rating_requests (id int NOT NULL,	legacy_call_letters varchar(15) NOT NULL, mon bit NOT NULL, tue bit NOT NULL, wed bit NOT NULL, thu bit NOT NULL, fri bit NOT NULL, sat bit NOT NULL, sun bit NOT NULL, start_time int NOT NULL, end_time int NOT NULL,
+		PRIMARY KEY CLUSTERED (id,legacy_call_letters,mon,tue,wed,thu,fri,sat,sun,start_time,end_time));
+	INSERT into #rating_requests
+		SELECT * FROM @ratings_request;
+
+	CREATE TABLE #audience_ids (audience_id INT NOT NULL, 
+		PRIMARY KEY CLUSTERED(audience_id));
+	INSERT INTO #audience_ids
+		SELECT id FROM dbo.SplitIntegers(@demo_sniff);
+
+	CREATE TABLE #min_playback_types (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), 
+		PRIMARY KEY CLUSTERED(market_code));
+	INSERT INTO #min_playback_types
+		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
+
+	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters varchar(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT  
+		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time));
+	INSERT INTO #viewers
+		SELECT
+			rr.id, 
+			rr.legacy_call_letters,
+			a.audience_id,
+			v.market_code,
+			v.start_time, 
+			v.end_time,
+			-- basically if weekday and weekend then avg the two, otherwise return one or other
+			CASE WHEN rr.mon=1 OR rr.tue=1 OR rr.wed=1 OR rr.thu=1 OR rr.fri=1 THEN 
+				CASE WHEN rr.sat=1 OR rr.sun=1 THEN (vd.weekend_viewers  + vd.weekday_viewers) / 2 
+					ELSE vd.weekday_viewers  
+				END  			
+			ELSE 
+				CASE WHEN rr.sat=1 OR rr.sun=1 THEN vd.weekend_viewers ELSE 0 END 
+			END 
+		FROM
+			#rating_requests rr
+			JOIN nsi.uvw_market_codes_call_letters mccl ON mccl.media_month_id=@posting_media_month_id
+				AND mccl.legacy_call_letters=rr.legacy_call_letters
+			JOIN nsi.viewers v ON v.media_month_id=@posting_media_month_id
+				AND v.legacy_call_letters=rr.legacy_call_letters
+				AND v.market_code=mccl.market_code
+				AND (v.start_time<=rr.end_time AND v.end_time>=rr.start_time)
+			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
+			CROSS APPLY #audience_ids a
+			JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
+				AND vd.viewer_id=v.id
+				AND vd.audience_id=a.audience_id
+				AND vd.playback_type=mpt.available_playback_type OPTION ( OPTIMIZE FOR (@posting_media_month_id UNKNOWN) );
+
+	SELECT 
+		market_averages.id,
+		legacy_call_letters,
+		audience_id, 
+		SUM(market_impression_avg) 'impressions' -- sum of market averages by call letter, etc (aggregating out market_code dimension)
+	FROM 
+	(
+		-- get averages of impressions for each market (aggregating out start_time and end_time dimensions)
+		SELECT 
+			id,
+			legacy_call_letters,
+			market_code, 
+			audience_id, 
+			AVG(viewers) 'market_impression_avg' 
+		FROM 
+			#viewers
+		GROUP BY 
+			id,legacy_call_letters,market_code,audience_id
+	) AS market_averages
+	GROUP BY 
+		id,legacy_call_letters,audience_id;
+
+	IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
+	IF OBJECT_ID('tempdb..#min_playback_types') IS NOT NULL DROP TABLE #min_playback_types;
+	IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
+	IF OBJECT_ID('tempdb..#viewers') IS NOT NULL DROP TABLE #viewers;
+END
+
+GO
+
+/*************************************** END PRI-5085 *****************************************************/
+
+
+
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
