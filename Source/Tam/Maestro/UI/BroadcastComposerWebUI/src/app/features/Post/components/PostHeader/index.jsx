@@ -7,7 +7,7 @@ import {
   getPostFiltered,
   getUnlinkedIscis,
   processNtiFile
-} from "Post/redux/actions";
+} from "Post/redux/index.ducks";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";
