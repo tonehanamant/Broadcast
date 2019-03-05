@@ -147,8 +147,6 @@ namespace Services.Broadcast.Repositories
                         p.DisplayDaypart.StartTime,
                         p.DisplayDaypart.EndTime));
 
-                    //WriteTableSQLDebug(stationDetails);
-
                     var ratingsRequest = new SqlParameter("ratings_request", SqlDbType.Structured) { Value = ratingsInput, TypeName = "RatingsInputWithId" };
 
                     var minPlaybackType = new SqlParameter("min_playback_type", SqlDbType.VarChar, 1) { Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType) };
@@ -158,6 +156,8 @@ namespace Services.Broadcast.Repositories
 
                     //var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_Daypart" : "usp_GetImpressionsForMultiplePrograms_Daypart_Averages";
                     var storedProcedureName = "usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Projections";
+
+                    //WriteTableSQLDebug(storedProcedureName,stationDetails, postingBookId,audienceId.Value as string,((char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
                     return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
@@ -219,7 +219,7 @@ namespace Services.Broadcast.Repositories
                         Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
                     };
                     var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
-//                    WriteTableSQLDebug(storedProcedureName, stationDetails,hutMediaMonth,shareMediaMonth, string.Join(",", uniqueRatingsAudiences), PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType).ToString());
+                    //WriteTableSQLDebug(storedProcedureName, stationDetails,hutMediaMonth,shareMediaMonth, string.Join(",", uniqueRatingsAudiences), ((char) PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
                     return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
@@ -345,6 +345,35 @@ namespace Services.Broadcast.Repositories
             Debug.WriteLine(string.Format("EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName));
         }
 
+        private static void WriteTableSQLDebug(string storedProcedureName, IEnumerable<ManifestDetailDaypart> stationDetails, int postingBookId, string demos, string playback)
+        {
+            string declare = string.Format(@"DECLARE
+            @posting_media_month_id SMALLINT = {0},
+            @demo VARCHAR(MAX) = '{1}',
+            @ratings_request RatingsInputWithId,
+            @min_playback_type VARCHAR(1) = '{2}'", postingBookId, demos, playback);
+
+            Debug.WriteLine(declare);
+            stationDetails
+                .Distinct()
+                .ForEach(p =>
+                    Debug.WriteLine(
+                        string.Format(
+                            "INSERT INTO @ratings_request SELECT {0},'{1}',{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                            p.Id,
+                            string.Format("{0}", p.LegacyCallLetters),
+                            p.DisplayDaypart.Monday ? "1" : "0",
+                            p.DisplayDaypart.Tuesday ? "1" : "0",
+                            p.DisplayDaypart.Wednesday ? "1" : "0",
+                            p.DisplayDaypart.Thursday ? "1" : "0",
+                            p.DisplayDaypart.Friday ? "1" : "0",
+                            p.DisplayDaypart.Saturday ? "1" : "0",
+                            p.DisplayDaypart.Sunday ? "1" : "0",
+                            p.DisplayDaypart.StartTime,
+                            p.DisplayDaypart.EndTime)));
+
+            Debug.WriteLine(string.Format("EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName));
+        }
         public List<RatingsForecastStatus> GetForecastDetails(List<MediaMonth> sweepsMonths)
         {
             return _InReadUncommitedTransaction(c =>
