@@ -9,7 +9,7 @@ import {
   mapUnlinkedIscis,
   loadValidIscis,
   mapUnlinkedIsci
-} from "Post/redux/actions";
+} from "Post/redux/index.ducks";
 import { toggleModal } from "Main/redux/index.ducks";
 
 import "./index.style.scss";

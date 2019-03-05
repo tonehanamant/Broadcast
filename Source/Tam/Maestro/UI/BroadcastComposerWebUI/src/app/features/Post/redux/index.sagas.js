@@ -12,29 +12,61 @@ import {
 import { selectModal } from "Main/redux/index.saga";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
-  selectActiveScrubs,
-  selectUnfilteredData,
-  selectFilteredIscis,
-  selectActiveScrubbingFilters,
-  selectActiveClientScrubs,
-  selectHasActiveScrubbingFilters,
-  selectClientScrubs,
-  selectActiveScrubId,
-  selectActiveFilterKey
-} from "Post/redux/selectors";
-import {
+  ARCHIVE_UNLIKED_ISCI,
+  UNLINKED_ISCIS_DATA,
+  LOAD_ARCHIVED_ISCI,
+  LOAD_VALID_ISCI,
+  MAP_UNLINKED_ISCI,
+  UNDO_ARCHIVED_ISCI,
+  UNDO_SCRUB_STATUS,
+  PROCESS_NTI_FILE,
+  RESCRUB_UNLIKED_ISCI,
+  LOAD_POST,
+  LOAD_POST_CLIENT_SCRUBBING,
+  SWAP_PROPOSAL_DETAIL,
+  FILTERED_SCRUBBING_DATA,
+  POST_OVERRIDE_STATUS,
+  REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
+  RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
+  CLOSE_UNLINKED_ISCI_MODAL,
+  REQUEST_ASSIGN_POST_DISPLAY,
+  REQUEST_FILTERED_POST,
+  RECEIVE_FILTERED_POST,
+  REQUEST_FILTERED_UNLINKED,
+  RECEIVE_FILTERED_UNLINKED,
+  REQUEST_FILTERED_ARCHIVED,
+  RECEIVE_FILTERED_ARCHIVED,
+  REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
+  RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
   getPost,
   saveActiveScrubData,
   reveiveClearIsciFilter,
   reveiveFilteredScrubbingData,
   savePostDisplay
-} from "Post/redux/actions";
+} from "Post/redux/index.ducks";
 import api from "API";
 
-import * as ACTIONS from "./types";
+/* ////////////////////////////////// */
+/* SELECTORS */
+/* ////////////////////////////////// */
+export const selectActiveScrubs = state =>
+  state.post.proposalHeader.activeScrubbingData;
+export const selectActiveFilterKey = state => state.post.activeFilterKey;
+export const selectUnfilteredData = state => state.post.postUnfilteredGridData;
+export const selectFilteredIscis = state => state.post.unlinkedFilteredIscis;
+export const selectActiveScrubbingFilters = state =>
+  state.post.activeScrubbingFilters;
+export const selectClientScrubs = state =>
+  state.post.proposalHeader.scrubbingData.ClientScrubs;
+export const selectActiveClientScrubs = state =>
+  state.post.proposalHeader.activeScrubbingData.ClientScrubs;
+export const selectActiveScrubId = state =>
+  state.post.proposalHeader.activeScrubbingData.Id;
+export const selectHasActiveScrubbingFilters = state =>
+  state.post.hasActiveScrubbingFilters;
 
 /* ////////////////////////////////// */
-/* Adjust POST Data return */
+/* SAGAS */
 /* ////////////////////////////////// */
 export function adjustPost(posts) {
   const adjustPost = posts.map(item => {
@@ -110,7 +142,7 @@ export function* requestPostFiltered({ payload: query }) {
   try {
     const filtered = yield searcher(data, postSearchKeys, query);
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_POST,
+      type: RECEIVE_FILTERED_POST,
       data: filtered
     });
   } catch (e) {
@@ -130,7 +162,7 @@ export function* requestUnlinkedFiltered({ payload: query }) {
   try {
     const filtered = yield searcher(data, iscisSearchKeys, query);
     yield put({
-      type: ACTIONS.RECEIVE_FILTERED_UNLINKED,
+      type: RECEIVE_FILTERED_UNLINKED,
       data: { query, filteredData: filtered }
     });
   } catch (e) {
@@ -149,7 +181,7 @@ export function* requestArchivedFiltered({ payload: query }) {
     try {
       const filtered = yield searcher(data, iscisSearchKeys, query);
       yield put({
-        type: ACTIONS.RECEIVE_FILTERED_ARCHIVED,
+        type: RECEIVE_FILTERED_ARCHIVED,
         data: { query, filteredData: filtered }
       });
     } catch (e) {
@@ -166,7 +198,7 @@ export function* requestArchivedFiltered({ payload: query }) {
 export function* requestClearScrubbingDataFiltersList() {
   try {
     yield put({
-      type: ACTIONS.RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
+      type: RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
       data: []
     });
   } catch (e) {
@@ -224,7 +256,7 @@ export function* clearFilteredScrubbingData() {
   try {
     yield put(setOverlayLoading({ id: "PostScrubbingFilter", loading: true }));
     yield put({
-      type: ACTIONS.RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
+      type: RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
       data: ret
     });
   } finally {
@@ -589,14 +621,14 @@ export function* requestOverrideStatusSuccess({ data, payload: params }) {
     };
     yield call(requestClearScrubbingDataFiltersList);
     yield put({
-      type: ACTIONS.POST_OVERRIDE_STATUS.store,
+      type: POST_OVERRIDE_STATUS.store,
       data: ret
     });
   } else {
     yield call(requestClearScrubbingDataFiltersList);
     data.Data.filterKey = yield select(selectActiveFilterKey);
     yield put({
-      type: ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
+      type: LOAD_POST_CLIENT_SCRUBBING.success,
       data
     });
   }
@@ -776,52 +808,49 @@ export function* processNtiFileSuccess(req) {
 /* ////////////////////////////////// */
 
 function* watchRequestPost() {
-  yield takeEvery(
-    ACTIONS.LOAD_POST.request,
-    sagaWrapper(requestPost, ACTIONS.LOAD_POST)
-  );
+  yield takeEvery(LOAD_POST.request, sagaWrapper(requestPost, LOAD_POST));
 }
 
 function* watchRequestAssignPostDisplay() {
-  yield takeEvery(ACTIONS.REQUEST_ASSIGN_POST_DISPLAY, savePostDisplay);
+  yield takeEvery(REQUEST_ASSIGN_POST_DISPLAY, savePostDisplay);
 }
 
 function* watchRequestPostFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_POST, requestPostFiltered);
+  yield takeEvery(REQUEST_FILTERED_POST, requestPostFiltered);
 }
 
 function* watchRequestUnlinkedFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
+  yield takeEvery(REQUEST_FILTERED_UNLINKED, requestUnlinkedFiltered);
 }
 
 function* watchRequestArchivedFiltered() {
-  yield takeEvery(ACTIONS.REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
+  yield takeEvery(REQUEST_FILTERED_ARCHIVED, requestArchivedFiltered);
 }
 
 function* watchRequestPostClientScrubbing() {
   yield takeEvery(
-    ACTIONS.LOAD_POST_CLIENT_SCRUBBING.request,
-    sagaWrapper(requestPostClientScrubbing, ACTIONS.LOAD_POST_CLIENT_SCRUBBING)
+    LOAD_POST_CLIENT_SCRUBBING.request,
+    sagaWrapper(requestPostClientScrubbing, LOAD_POST_CLIENT_SCRUBBING)
   );
 }
 
 function* watchRequestPostClientScrubbingSuccess() {
   yield takeEvery(
-    ACTIONS.LOAD_POST_CLIENT_SCRUBBING.success,
+    LOAD_POST_CLIENT_SCRUBBING.success,
     requestPostClientScrubbingSuccess
   );
 }
 
 function* watchRequestScrubbingDataFiltered() {
   yield takeEvery(
-    ACTIONS.FILTERED_SCRUBBING_DATA.request,
+    FILTERED_SCRUBBING_DATA.request,
     requestScrubbingDataFiltered
   );
 }
 
 function* watchRequestClearScrubbingFiltersList() {
   yield takeEvery(
-    ACTIONS.REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
+    REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
     requestClearScrubbingDataFiltersList
   );
 }
@@ -829,128 +858,122 @@ function* watchRequestClearScrubbingFiltersList() {
 function* watchRequestUniqueIscis() {
   yield takeEvery(
     [
-      ACTIONS.UNLINKED_ISCIS_DATA.request,
-      ACTIONS.ARCHIVE_UNLIKED_ISCI.success,
-      ACTIONS.RESCRUB_UNLIKED_ISCI.success,
-      ACTIONS.MAP_UNLINKED_ISCI.success
+      UNLINKED_ISCIS_DATA.request,
+      ARCHIVE_UNLIKED_ISCI.success,
+      RESCRUB_UNLIKED_ISCI.success,
+      MAP_UNLINKED_ISCI.success
     ],
-    sagaWrapper(requestUnlinkedIscis, ACTIONS.UNLINKED_ISCIS_DATA)
+    sagaWrapper(requestUnlinkedIscis, UNLINKED_ISCIS_DATA)
   );
 }
 
 function* watchRequestUniqueIscisSuccess() {
-  yield takeEvery(ACTIONS.UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
+  yield takeEvery(UNLINKED_ISCIS_DATA.success, unlinkedIscisSuccess);
 }
 
 function* watchRequestArchivedIscisSuccess() {
-  yield takeEvery(ACTIONS.LOAD_ARCHIVED_ISCI.success, archivedIscisSuccess);
+  yield takeEvery(LOAD_ARCHIVED_ISCI.success, archivedIscisSuccess);
 }
 
 function* watchArchiveUnlinkedIsci() {
   yield takeEvery(
-    ACTIONS.ARCHIVE_UNLIKED_ISCI.request,
-    sagaWrapper(archiveUnlinkedIsci, ACTIONS.ARCHIVE_UNLIKED_ISCI)
+    ARCHIVE_UNLIKED_ISCI.request,
+    sagaWrapper(archiveUnlinkedIsci, ARCHIVE_UNLIKED_ISCI)
   );
 }
 
 function* watchRequestOverrideStatus() {
   yield takeEvery(
-    ACTIONS.POST_OVERRIDE_STATUS.request,
-    sagaWrapper(requestOverrideStatus, ACTIONS.POST_OVERRIDE_STATUS)
+    POST_OVERRIDE_STATUS.request,
+    sagaWrapper(requestOverrideStatus, POST_OVERRIDE_STATUS)
   );
 }
 
 function* watchRequestOverrideStatusSuccess() {
-  yield takeEvery(
-    ACTIONS.POST_OVERRIDE_STATUS.success,
-    requestOverrideStatusSuccess
-  );
+  yield takeEvery(POST_OVERRIDE_STATUS.success, requestOverrideStatusSuccess);
 }
 
 function* watchSwapProposalDetailSuccess() {
-  yield takeEvery(
-    ACTIONS.SWAP_PROPOSAL_DETAIL.success,
-    swapProposalDetailSuccess
-  );
+  yield takeEvery(SWAP_PROPOSAL_DETAIL.success, swapProposalDetailSuccess);
 }
 
 function* watchSwapProposalDetail() {
   yield takeEvery(
-    ACTIONS.SWAP_PROPOSAL_DETAIL.request,
-    sagaWrapper(swapProposalDetail, ACTIONS.SWAP_PROPOSAL_DETAIL)
+    SWAP_PROPOSAL_DETAIL.request,
+    sagaWrapper(swapProposalDetail, SWAP_PROPOSAL_DETAIL)
   );
 }
 
 function* watchLoadArchivedIscis() {
   yield takeEvery(
-    [ACTIONS.LOAD_ARCHIVED_ISCI.request, ACTIONS.UNDO_ARCHIVED_ISCI.success],
-    sagaWrapper(loadArchivedIsci, ACTIONS.LOAD_ARCHIVED_ISCI)
+    [LOAD_ARCHIVED_ISCI.request, UNDO_ARCHIVED_ISCI.success],
+    sagaWrapper(loadArchivedIsci, LOAD_ARCHIVED_ISCI)
   );
 }
 
 function* watchLoadValidIscis() {
   yield takeEvery(
-    ACTIONS.LOAD_VALID_ISCI.request,
-    sagaWrapper(loadValidIscis, ACTIONS.LOAD_VALID_ISCI)
+    LOAD_VALID_ISCI.request,
+    sagaWrapper(loadValidIscis, LOAD_VALID_ISCI)
   );
 }
 
 function* watchRescrubUnlinkedIsci() {
   yield takeEvery(
-    ACTIONS.RESCRUB_UNLIKED_ISCI.request,
-    sagaWrapper(rescrubUnlinkedIsci, ACTIONS.RESCRUB_UNLIKED_ISCI)
+    RESCRUB_UNLIKED_ISCI.request,
+    sagaWrapper(rescrubUnlinkedIsci, RESCRUB_UNLIKED_ISCI)
   );
 }
 
 function* watchMapUnlinkedIsci() {
   yield takeEvery(
-    ACTIONS.MAP_UNLINKED_ISCI.request,
-    sagaWrapper(mapUnlinkedIsci, ACTIONS.MAP_UNLINKED_ISCI)
+    MAP_UNLINKED_ISCI.request,
+    sagaWrapper(mapUnlinkedIsci, MAP_UNLINKED_ISCI)
   );
 }
 
 function* watchCloseUnlinkedIsciModal() {
-  yield takeEvery(ACTIONS.CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
+  yield takeEvery(CLOSE_UNLINKED_ISCI_MODAL, closeUnlinkedIsciModal);
 }
 
 function* watchMapUnlinkedIsciSuccess() {
-  yield takeEvery(ACTIONS.MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
+  yield takeEvery(MAP_UNLINKED_ISCI.success, mapUnlinkedIsciSuccess);
 }
 
 function* watchUndoArchivedIscis() {
   yield takeEvery(
-    ACTIONS.UNDO_ARCHIVED_ISCI.request,
-    sagaWrapper(undoArchivedIscis, ACTIONS.UNDO_ARCHIVED_ISCI)
+    UNDO_ARCHIVED_ISCI.request,
+    sagaWrapper(undoArchivedIscis, UNDO_ARCHIVED_ISCI)
   );
 }
 
 function* watchUndoScrubStatus() {
   yield takeEvery(
-    ACTIONS.UNDO_SCRUB_STATUS.request,
-    sagaWrapper(undoScrubStatus, ACTIONS.UNDO_SCRUB_STATUS)
+    UNDO_SCRUB_STATUS.request,
+    sagaWrapper(undoScrubStatus, UNDO_SCRUB_STATUS)
   );
 }
 
 function* watchUndoScrubStatusSuccess() {
-  yield takeEvery(ACTIONS.UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
+  yield takeEvery(UNDO_SCRUB_STATUS.success, undoScrubStatusSuccess);
 }
 
 function* watchRequestClearFilteredScrubbingData() {
   yield takeEvery(
-    ACTIONS.REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
+    REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
     clearFilteredScrubbingData
   );
 }
 
 function* watchRequestProcessNtiFile() {
   yield takeEvery(
-    ACTIONS.PROCESS_NTI_FILE.request,
-    sagaWrapper(requestProcessNtiFile, ACTIONS.PROCESS_NTI_FILE)
+    PROCESS_NTI_FILE.request,
+    sagaWrapper(requestProcessNtiFile, PROCESS_NTI_FILE)
   );
 }
 
 function* watchProcessNtiFileSuccess() {
-  yield takeEvery(ACTIONS.PROCESS_NTI_FILE.success, processNtiFileSuccess);
+  yield takeEvery(PROCESS_NTI_FILE.success, processNtiFileSuccess);
 }
 
 export default [

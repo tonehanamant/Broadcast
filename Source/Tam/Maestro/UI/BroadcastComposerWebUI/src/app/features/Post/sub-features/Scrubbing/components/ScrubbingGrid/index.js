@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
-import { overrideStatus, undoScrubStatus } from "Post/redux/actions";
+import { overrideStatus, undoScrubStatus } from "Post/redux/index.ducks";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import {
   getDateInFormat,
