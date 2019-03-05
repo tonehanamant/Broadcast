@@ -41,8 +41,8 @@ namespace Services.Broadcast.Converters.RateImport
         const string HUT_BOOK_CELL = "B10";
         const string PLAYBACK_TYPE_CELL = "B11";
 
-        const string BOOK_DATE_FORMAT = "MMM yy";
-        string[] DATE_FORMATS = new string[2] { "MM/dd/yyyy", "M/dd/yyyy" };
+        readonly string[] BOOK_DATE_FORMATS = new string[5]{ "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM" };
+        readonly string[] DATE_FORMATS = new string[2] { "MM/dd/yyyy", "M/dd/yyyy" };
         const string CPM_FORMAT = "##.##";
 
         private readonly IInventoryFileRepository _InventoryFileRepository;
@@ -144,7 +144,7 @@ namespace Services.Broadcast.Converters.RateImport
             }            
             if (!DateTime.TryParseExact(endDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
-                validationProblems.Add($"End date is not in the correct format ({(string.Join(" ", DATE_FORMATS))})");
+                validationProblems.Add($"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
             }
             if (endDate <= effectiveDate)
             {
@@ -196,22 +196,23 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             string shareBookText = worksheet.Cells[SHARE_BOOK_CELL].GetTextValue();
-            if (!DateTime.TryParseExact(shareBookText, BOOK_DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime shareBook))
+            if (!DateTime.TryParseExact(shareBookText, BOOK_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime shareBook))
             {
-                validationProblems.Add($"Share book ({shareBookText}) is not in the correct format ({BOOK_DATE_FORMAT})");
+                validationProblems.Add($"Share book ({shareBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})");
             }
             else
             {
                 header.ShareBookId = _MediaMonthAndWeekAggregateCache.GetMediaMonthByYearAndMonth(shareBook.Year, shareBook.Month).Id;
             }
-            
-            //format May 17 (MMM yy) and Hut book must be a media month prior to the Share book media month if value entered
+
+            //formats MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM 
+            //Hut book must be a media month prior to the Share book media month if value entered
             string hutBookText = worksheet.Cells[HUT_BOOK_CELL].GetTextValue();
             if (!string.IsNullOrWhiteSpace(hutBookText))
             {
-                if (!DateTime.TryParseExact(hutBookText, BOOK_DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime hutBook))
+                if (!DateTime.TryParseExact(hutBookText, BOOK_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime hutBook))
                 {
-                    validationProblems.Add($"Hut book ({hutBookText}) is not in the correct format ({BOOK_DATE_FORMAT})");
+                    validationProblems.Add($"Hut book ({hutBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})");
                 }
                 else
                 if (hutBook >= shareBook)
