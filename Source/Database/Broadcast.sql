@@ -51,11 +51,21 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 /*************************************** START PRI-5325 *****************************************************/
-IF EXISTS(SELECT * FROM sys.columns 
+IF EXISTS(SELECT 1 FROM sys.columns 
           WHERE Name = N'spots_edited_manually'
           AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distribution_open_market_inventory]'))
 BEGIN
-	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] DROP [DF__pricing_g__spots__1C3EB9D7]
+	DECLARE @default_constraint_name VARCHAR(64)
+	SET @default_constraint_name = (SELECT name FROM sys.default_constraints
+		WHERE object_id = (SELECT default_object_id FROM sys.columns WHERE Name = N'spots_edited_manually'
+				  AND Object_ID = Object_ID(N'[dbo].[pricing_guide_distribution_open_market_inventory]')))
+	IF (@default_constraint_name IS NOT NULL)
+	BEGIN
+		DECLARE @SQL VARCHAR(256)
+		SELECT @SQL = 'ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] DROP [' + @default_constraint_name + ']'
+		EXEC (@SQL)
+	END
+	
 	ALTER TABLE [dbo].[pricing_guide_distribution_open_market_inventory] DROP COLUMN [spots_edited_manually]
 END
 /*************************************** END BCOP-4186 *****************************************************/
