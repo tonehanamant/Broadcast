@@ -546,31 +546,6 @@ END
 
 /*************************************** END PRI-214 *****************************************************/
 
-
-/*************************************** START PRI-1071 *****************************************************/
-
-IF NOT EXISTS (SELECT * 
-    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-    WHERE CONSTRAINT_NAME='UQ_station_contacts_name_company_type_station_code')
-BEGIN
-	IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.station_contacts'))
-	BEGIN
-		WITH CTE AS
-		(
-			SELECT *, ROW_NUMBER() OVER (PARTITION BY name,company,type,station_code ORDER BY modified_date desc) AS RN
-			FROM station_contacts
-		)
-
-		DELETE FROM cte
-		WHERE rn > 1
-
-		ALTER TABLE station_contacts
-		ADD CONSTRAINT UQ_station_contacts_name_company_type_station_code UNIQUE (name,company,type,station_code);
-	END	
-END
-
-/*************************************** END PRI-1071 *****************************************************/
-
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
