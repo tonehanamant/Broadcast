@@ -609,7 +609,7 @@ BEGIN
 		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id,@min_playback_type);
 
 	CREATE TABLE #times (id INT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, 
-		PRIMARY KEY CLUSTERED (id));
+		PRIMARY KEY CLUSTERED (id,start_time,end_time));
 	INSERT INTO #times
 		SELECT
 			rr.id,
@@ -712,7 +712,7 @@ BEGIN
 		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
 
 	CREATE TABLE #times (id INT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, 
-		PRIMARY KEY CLUSTERED (id));
+		PRIMARY KEY CLUSTERED (id,start_time,end_time));
 	INSERT INTO #times
 		SELECT
 			rr.id,
@@ -905,7 +905,8 @@ BEGIN
 		SELECT DISTINCT id FROM dbo.SplitIntegers(@demo_sniff);
 
 	CREATE TABLE #times (id INT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, 
-	PRIMARY KEY CLUSTERED (id));
+		PRIMARY KEY CLUSTERED (id,start_time,end_time));
+
 	INSERT INTO #times
 		SELECT
 			rr.id,
@@ -1254,7 +1255,8 @@ BEGIN
 	INSERT INTO #min_playback_types
 		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
 
-	CREATE TABLE #times (id INT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, PRIMARY KEY CLUSTERED (id));
+	CREATE TABLE #times (id INT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, 
+		PRIMARY KEY CLUSTERED (id,start_time,end_time));
 	INSERT INTO #times
 		SELECT
 			rr.id,
