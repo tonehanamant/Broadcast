@@ -491,7 +491,7 @@ BEGIN
 			JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
 				AND vd.viewer_id=v.id
 				AND vd.audience_id=a.audience_id
-				AND vd.playback_type=mpt.available_playback_type --OPTION ( OPTIMIZE FOR (@posting_media_month_id UNKNOWN) );
+				AND vd.playback_type=mpt.available_playback_type OPTION ( OPTIMIZE FOR (@posting_media_month_id UNKNOWN) );
 
 	SELECT 
 		market_averages.id,
