@@ -279,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices
             inventoryFile.Id = _inventoryFileRepository.CreateInventoryFile(inventoryFile, request.UserName);
 
             var stationLocks = new List<IDisposable>();
-            var lockedStationCodes = new List<int>();
+            var lockedStationIds = new List<int>();
 
             try
             {
@@ -319,12 +319,12 @@ namespace Services.Broadcast.ApplicationServices
                 var fileStationsDict = inventoryFile
                    .GetAllManifests()
                    .Select(x => x.Station)
-                   .GroupBy(s => s.Code)
-                   .ToDictionary(g => g.First().Code, g => g.First().LegacyCallLetters);
+                   .GroupBy(s => s.Id)
+                   .ToDictionary(g => g.First().Id, g => g.First().LegacyCallLetters);
 
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
-                    _LockingEngine.LockStations(fileStationsDict, lockedStationCodes, stationLocks);
+                    _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
 
                     var isProprietary = inventorySource.Name == "CNN" ||
                                         inventorySource.Name == "TTNW";
@@ -346,7 +346,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     transaction.Complete();
 
-                    _LockingEngine.UnlockStations(lockedStationCodes, stationLocks);
+                    _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
 
                     endTime = DateTime.Now;
 
@@ -366,7 +366,7 @@ namespace Services.Broadcast.ApplicationServices
                 // Try to update the status of the file if possible.
                 try
                 {
-                    _LockingEngine.UnlockStations(lockedStationCodes, stationLocks);
+                    _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
                     _inventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
                 }
                 catch
@@ -600,7 +600,8 @@ namespace Services.Broadcast.ApplicationServices
                 EndDate = stationProgram.EndDate,
                 Station = new DisplayBroadcastStation
                 {
-                    Code = stationProgram.StationCode
+                    Code = stationProgram.StationCode,
+                    Id = _stationRepository.GetBroadcastStationByCode(stationProgram.StationCode).Id
                 },
                 InventorySourceId = inventorySource.Id,
                 SpotLengthId = spotLengthId,
@@ -798,7 +799,7 @@ namespace Services.Broadcast.ApplicationServices
                         AirtimePreviews = manifest.ManifestDayparts.Select(md => md.Daypart.Preview).ToList(),
                         EffectiveDate = manifest.EffectiveDate,
                         EndDate = manifest.EndDate,
-                        StationCode = manifest.Station.Code,
+                        StationCode = manifest.Station.Code.Value,
                         SpotLength = _SpotLengthMap.Single(a => a.Value == manifest.SpotLengthId).Key,
                         SpotsPerWeek = manifest.SpotsPerWeek,
                         Rate15 = _GetSpotRateFromManifestRates(15, manifest.ManifestRates),
@@ -988,7 +989,7 @@ namespace Services.Broadcast.ApplicationServices
             airtime.Id = _daypartCache.GetIdByDaypart(airtime);
 
             var programs = _inventoryRepository.GetManifestProgramsByStationCodeAndDates(conflict.RateSource,
-                station.Code, conflict.StartDate, conflict.EndDate);
+                station.Code.Value, conflict.StartDate, conflict.EndDate);
 
             _SetDisplayDaypartForInventoryManifest(programs);
             _SetAudienceForInventoryManifest(programs);
@@ -1069,12 +1070,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public LockResponse LockStation(int stationCode)
         {
-            return _LockingEngine.LockStation(stationCode);
+            var station = _stationRepository.GetBroadcastStationByCode(stationCode);
+            return _LockingEngine.LockStation(station.Id);
         }
 
         public ReleaseLockResponse UnlockStation(int stationCode)
         {
-            return _LockingEngine.UnlockStation(stationCode);
+            var station = _stationRepository.GetBroadcastStationByCode(stationCode);
+            return _LockingEngine.UnlockStation(station.Id);
         }
     }
 }

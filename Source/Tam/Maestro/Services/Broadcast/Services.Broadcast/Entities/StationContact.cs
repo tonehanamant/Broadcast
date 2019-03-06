@@ -24,6 +24,7 @@ namespace Services.Broadcast.Entities
         [JsonConverter(typeof(StringEnumConverter))]
         public StationContactType Type { get; set; }
         public int StationCode { get; set; }
+        public int StationId { get; set; }
         public string InventorySourceString { get; set; }
         public DateTime ModifiedDate { get; set; }
 

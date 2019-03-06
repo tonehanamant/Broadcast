@@ -248,14 +248,6 @@
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_markets_markets" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_markets" />
         <AssociationConnector Association="BroadcastModel.schedule_restriction_markets" />
-        <EntityTypeShape EntityType="BroadcastModel.station" Width="1.5" PointX="3" PointY="8.125" />
-        <AssociationConnector Association="BroadcastModel.FK_stations_markets" />
-        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_station_contacts_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_audiences" Width="1.5" PointX="14.75" PointY="13.25" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_rates" Width="1.5" PointX="20.75" PointY="33.625" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_audiences_audiences" />
@@ -265,6 +257,14 @@
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_weeks" Width="1.5" PointX="17" PointY="14" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" />
+        <EntityTypeShape EntityType="BroadcastModel.station" Width="1.5" PointX="3" PointY="8" />
+        <AssociationConnector Association="BroadcastModel.FK_stations_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_proposal_buy_file_details_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_station_contacts_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

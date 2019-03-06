@@ -24,13 +24,14 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
         }
     
-        public short station_code { get; set; }
+        public Nullable<int> station_code { get; set; }
         public string station_call_letters { get; set; }
         public string affiliation { get; set; }
         public Nullable<short> market_code { get; set; }
         public string legacy_call_letters { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
+        public int id { get; set; }
     
         public virtual market market { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
