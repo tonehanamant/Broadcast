@@ -5,7 +5,7 @@ import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";
-import { archiveUnlinkedIscis, rescrubUnlinkedIscis } from "Post/redux/ducks";
+import { unlinkedIsciActions } from "Post";
 
 const {
   SelectionActions: { deselectAll, selectRow }
@@ -20,8 +20,8 @@ const mapStateToProps = ({ grid, selection, dataSource }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      rescrubIscis: rescrubUnlinkedIscis,
-      archiveIscis: archiveUnlinkedIscis,
+      rescrubIscis: unlinkedIsciActions.rescrubUnlinkedIscis,
+      archiveIscis: unlinkedIsciActions.archiveUnlinkedIscis,
       deselectAll,
       selectRow
     },

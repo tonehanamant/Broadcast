@@ -11,13 +11,18 @@ import {
   OverlayTrigger
 } from "react-bootstrap";
 import { toggleModal, createAlert } from "Main/redux/ducks";
-import { getPost, getPostClientScrubbing } from "Post/redux/ducks";
+import { scrubbingActions, postActions } from "Post";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
 import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
 import { getDateInFormat } from "Utils/dateFormatter";
 
-const mapStateToProps = ({ post: { postGridData }, menu }) => ({
+const mapStateToProps = ({
+  post: {
+    master: { postGridData }
+  },
+  menu
+}) => ({
   postGridData,
   menu
 });
@@ -25,10 +30,10 @@ const mapStateToProps = ({ post: { postGridData }, menu }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPost,
+      getPost: postActions.getPost,
       createAlert,
       toggleModal,
-      getPostClientScrubbing
+      getPostClientScrubbing: scrubbingActions.getPostClientScrubbing
     },
     dispatch
   );

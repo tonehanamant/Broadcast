@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { Grid, Actions } from "react-redux-grid";
-import { overrideStatus, undoScrubStatus } from "Post/redux/ducks";
+import { scrubbingActions as actions } from "Post";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import {
   getDateInFormat,
@@ -32,8 +32,8 @@ const mapDispatchToProps = dispatch =>
     {
       showMenu,
       hideMenu,
-      overrideStatus,
-      undoScrubStatus
+      overrideStatus: actions.overrideStatus,
+      undoScrubStatus: actions.undoScrubStatus
     },
     dispatch
   );

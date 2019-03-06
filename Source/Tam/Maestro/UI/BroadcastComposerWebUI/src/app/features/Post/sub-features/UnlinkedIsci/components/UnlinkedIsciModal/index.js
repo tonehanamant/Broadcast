@@ -4,15 +4,7 @@ import SearchInputButton from "Patterns/SearchInputButton";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button, Modal, Nav, NavItem, Row, Col } from "react-bootstrap";
-import {
-  archiveUnlinkedIscis,
-  toggleUnlinkedTab,
-  rescrubUnlinkedIscis,
-  undoArchivedIscis,
-  closeUnlinkedIsciModal,
-  getUnlinkedFiltered,
-  getArchivedFiltered
-} from "Post/redux/ducks";
+import { unlinkedIsciActions } from "Post";
 import UnlinkedIsciGrid from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciGrid";
 import ArchivedIsciGrid from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciArchivedGrid";
 import MapUnlinkedIsciModal from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciMapModal";
@@ -28,13 +20,13 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      closeUnlinkedIsciModal,
-      getUnlinkedFiltered,
-      getArchivedFiltered,
-      rescrubIscis: rescrubUnlinkedIscis,
-      archiveIscis: archiveUnlinkedIscis,
-      undoArchive: undoArchivedIscis,
-      toggleTab: toggleUnlinkedTab
+      closeUnlinkedIsciModal: unlinkedIsciActions.closeUnlinkedIsciModal,
+      getUnlinkedFiltered: unlinkedIsciActions.getUnlinkedFiltered,
+      getArchivedFiltered: unlinkedIsciActions.getArchivedFiltered,
+      rescrubIscis: unlinkedIsciActions.rescrubUnlinkedIscis,
+      archiveIscis: unlinkedIsciActions.archiveUnlinkedIscis,
+      undoArchive: unlinkedIsciActions.undoArchivedIscis,
+      toggleTab: unlinkedIsciActions.toggleUnlinkedTab
     },
     dispatch
   );

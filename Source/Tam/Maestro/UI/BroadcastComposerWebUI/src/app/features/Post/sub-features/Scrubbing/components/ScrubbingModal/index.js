@@ -6,7 +6,7 @@ import { Actions } from "react-redux-grid";
 
 import { Button, Modal } from "react-bootstrap";
 import { toggleModal, setOverlayLoading } from "Main/redux/ducks";
-import { getPost, getPostClientScrubbing } from "Post/redux/ducks";
+import { postActions, scrubbingActions } from "Post";
 import PostScrubbingHeader from "Post/sub-features/Scrubbing/components/ScrubbingHeader";
 import PostScrubbingDetail from "Post/sub-features/Scrubbing/components/ScrubbingDetail";
 
@@ -19,9 +19,11 @@ const mapStateToProps = ({
     modals: { postScrubbingModal: modal }
   },
   post: {
-    proposalHeader = {},
-    scrubbingFiltersList = [],
-    hasActiveScrubbingFilters
+    scrubbing: {
+      proposalHeader = {},
+      scrubbingFiltersList = [],
+      hasActiveScrubbingFilters
+    }
   },
   grid,
   dataSource
@@ -37,8 +39,8 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPostClientScrubbing,
-      getPost,
+      getPostClientScrubbing: scrubbingActions.getPostClientScrubbing,
+      getPost: postActions.getPost,
       toggleModal,
       selectRow,
       deselectAll,
