@@ -6,7 +6,6 @@
   "Hash": "E0-1D-5E-6C-BA-78-28-FD-0B-AE-1E-43-4C-BA-58-5D-A7-37-A9-F1",
   "Header": {
     "AudienceId": 37,
-    "ContractedDaypartId": 70562,
     "Cpm": 99.88,
     "DaypartCode": "EMN",
     "EffectiveDate": "0001-01-01T00:00:00",

@@ -189,6 +189,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
             jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(BarterInventoryHeader), "ContractedDaypartId");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
