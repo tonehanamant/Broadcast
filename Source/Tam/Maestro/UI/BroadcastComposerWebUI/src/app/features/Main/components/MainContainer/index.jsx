@@ -5,7 +5,7 @@ import CSSModules from "react-css-modules";
 
 // NEW STRUCTURE
 import SectionPostPrePosting from "PostPrePosting";
-import SectionPost from "Post";
+import SectionPost from "Post/components";
 import SectionPlanning from "Planning";
 import SectionTracker from "Tracker";
 

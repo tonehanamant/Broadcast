@@ -5,12 +5,7 @@ import { bindActionCreators } from "redux";
 import { Button } from "react-bootstrap";
 import CSSModules from "react-css-modules";
 import { Grid } from "react-redux-grid";
-import {
-  getScrubbingDataFiltered,
-  clearScrubbingFiltersList,
-  clearFilteredScrubbingData,
-  getClearScrubbingDataFiltered
-} from "Post/redux/ducks";
+import { scrubbingActions as actions } from "Post";
 import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
 import styles from "./index.scss";
 
@@ -22,10 +17,10 @@ const mapStateToProps = (grid, dataSource) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getScrubbingDataFiltered,
-      clearScrubbingFiltersList,
-      clearFilteredScrubbingData,
-      getClearScrubbingDataFiltered
+      getScrubbingDataFiltered: actions.getScrubbingDataFiltered,
+      clearScrubbingFiltersList: actions.clearScrubbingFiltersList,
+      clearFilteredScrubbingData: actions.clearFilteredScrubbingData,
+      getClearScrubbingDataFiltered: actions.getClearScrubbingDataFiltered
     },
     dispatch
   );

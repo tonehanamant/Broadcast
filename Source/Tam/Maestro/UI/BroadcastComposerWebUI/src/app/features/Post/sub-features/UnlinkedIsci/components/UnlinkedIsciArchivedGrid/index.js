@@ -5,7 +5,7 @@ import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";
-import { undoArchivedIscis } from "Post/redux/ducks";
+import { unlinkedIsciActions } from "Post";
 import moment from "moment";
 import { getDateInFormat, getSecondsToTimeString } from "Utils/dateFormatter";
 
@@ -22,7 +22,7 @@ const mapStateToProps = ({ grid, selection, dataSource }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      undoArchive: undoArchivedIscis,
+      undoArchive: unlinkedIsciActions.undoArchivedIscis,
       deselectAll,
       selectRow
     },

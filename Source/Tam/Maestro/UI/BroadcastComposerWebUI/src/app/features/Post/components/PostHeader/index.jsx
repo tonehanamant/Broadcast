@@ -3,18 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { toggleModal, createAlert } from "Main/redux/ducks";
-import {
-  getPostFiltered,
-  getUnlinkedIscis,
-  processNtiFile
-} from "Post/redux/ducks";
+import { postActions, unlinkedIsciActions } from "Post";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";
 import UnlinkedIsciModal from "Post/sub-features/UnlinkedIsci/components/UnlinkedIsciModal";
 
 const mapStateToProps = ({
-  post: { unlinkedIscisData, archivedIscisData, unlinkedIscisLength }
+  post: {
+    unlinkedIsci: { unlinkedIscisData, archivedIscisData },
+    master: { unlinkedIscisLength }
+  }
 }) => ({
   unlinkedIscisData,
   archivedIscisData,
@@ -25,10 +24,10 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       createAlert,
-      getPostFiltered,
-      getUnlinkedIscis,
       toggleModal,
-      processNtiFile
+      getPostFiltered: postActions.getPostFiltered,
+      processNtiFile: postActions.processNtiFile,
+      getUnlinkedIscis: unlinkedIsciActions.getUnlinkedIscis
     },
     dispatch
   );
