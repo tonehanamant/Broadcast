@@ -5,10 +5,7 @@ import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";
-import {
-  archiveUnlinkedIscis,
-  rescrubUnlinkedIscis
-} from "Post/redux/index.ducks";
+import { archiveUnlinkedIscis, rescrubUnlinkedIscis } from "Post/redux/ducks";
 
 const {
   SelectionActions: { deselectAll, selectRow }

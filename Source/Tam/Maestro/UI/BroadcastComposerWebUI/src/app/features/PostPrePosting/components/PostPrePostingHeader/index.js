@@ -7,9 +7,9 @@ import { Row, Col } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";
 
-import { toggleModal, storeFile } from "Main/redux/index.ducks";
+import { toggleModal, storeFile } from "Main/redux/ducks";
 
-import { getPostPrePostingFiltered } from "PostPrePosting/redux/index.ducks";
+import { getPostPrePostingFiltered } from "PostPrePosting/redux/ducks";
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

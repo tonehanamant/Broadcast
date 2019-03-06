@@ -8,7 +8,7 @@ import { Grid, Actions } from "react-redux-grid";
 import {
   archiveUnlinkedIscis,
   rescrubUnlinkedIscis
-} from "Tracker/redux/index.ducks";
+} from "Tracker/redux/ducks";
 
 const {
   SelectionActions: { deselectAll, selectRow }

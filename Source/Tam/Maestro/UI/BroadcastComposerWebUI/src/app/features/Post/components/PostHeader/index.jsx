@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleModal, createAlert } from "Main/redux/index.ducks";
+import { toggleModal, createAlert } from "Main/redux/ducks";
 import {
   getPostFiltered,
   getUnlinkedIscis,
   processNtiFile
-} from "Post/redux/index.ducks";
+} from "Post/redux/ducks";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";

@@ -12,14 +12,14 @@ import {
   HelpBlock
 } from "react-bootstrap";
 import Select from "react-select";
-import { toggleModal } from "Main/redux/index.ducks";
+import { toggleModal } from "Main/redux/ducks";
 import {
   updateEquivalized,
   updatePostingBook,
   updatePlaybackType,
   updateDemos,
   savePostPrePostingFileEdit
-} from "PostPrePosting/redux/index.ducks";
+} from "PostPrePosting/redux/ducks";
 
 const mapStateToProps = ({
   app: {

@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 
 import { Button, Modal } from "react-bootstrap";
 
-import { toggleModal, clearErrors } from "Main/redux/index.ducks";
+import { toggleModal, clearErrors } from "Main/redux/ducks";
 
 const mapStateToProps = ({
   app: {
