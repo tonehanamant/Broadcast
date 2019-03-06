@@ -91,6 +91,8 @@ namespace Services.Broadcast.ApplicationServices
             _BarterFileImporter.CheckFileHash();
             BarterInventoryFile barterFile = _BarterFileImporter.GetPendingBarterInventoryFile(userName);
 
+            _CheckValidationProblems(barterFile);
+
             barterFile.Id = _InventoryFileRepository.CreateInventoryFile(barterFile, userName);
             try
             {
@@ -125,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
                 barterFile.ValidationProblems.Add(ex.Message);
@@ -133,11 +135,7 @@ namespace Services.Broadcast.ApplicationServices
                 _BarterRepository.AddValidationProblems(barterFile);
             }
 
-            if (barterFile.ValidationProblems.Any())
-            {
-                var fileProblems = barterFile.ValidationProblems.Select(x => new InventoryFileProblem(x)).ToList();
-                throw new Exceptions.FileUploadException<InventoryFileProblem>(fileProblems);
-            }
+            _CheckValidationProblems(barterFile);
 
             return new InventoryFileSaveResult
             {
@@ -145,6 +143,15 @@ namespace Services.Broadcast.ApplicationServices
                 ValidationProblems = barterFile.ValidationProblems,
                 Status = barterFile.FileStatus
             };
+        }
+
+        private static void _CheckValidationProblems(BarterInventoryFile barterFile)
+        {
+            if (barterFile.ValidationProblems.Any())
+            {
+                var fileProblems = barterFile.ValidationProblems.Select(x => new InventoryFileProblem(x)).ToList();
+                throw new Exceptions.FileUploadException<InventoryFileProblem>(fileProblems);
+            }
         }
 
         private List<StationInventoryGroup> _GetStationInventoryGroups(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
