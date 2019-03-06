@@ -20,7 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string fax { get; set; }
         public string email { get; set; }
         public byte type { get; set; }
-        public short station_code { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
@@ -28,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> created_file_id { get; set; }
         public string company { get; set; }
         public Nullable<int> modified_file_id { get; set; }
+        public int station_id { get; set; }
     
         public virtual inventory_files inventory_files { get; set; }
         public virtual inventory_files inventory_files1 { get; set; }

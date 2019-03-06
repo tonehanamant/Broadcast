@@ -22,12 +22,12 @@ namespace EntityFrameworkMapping.Broadcast
     
         public int id { get; set; }
         public int proposal_buy_file_id { get; set; }
-        public short station_code { get; set; }
         public int total_spots { get; set; }
         public decimal spot_cost { get; set; }
         public decimal total_cost { get; set; }
         public int spot_length_id { get; set; }
         public int daypart_id { get; set; }
+        public int station_id { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual ICollection<proposal_buy_file_detail_audiences> proposal_buy_file_detail_audiences { get; set; }

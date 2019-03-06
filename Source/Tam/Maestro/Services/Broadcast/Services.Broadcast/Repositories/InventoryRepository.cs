@@ -89,10 +89,13 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var inventoryId = (from i in context.station_inventory_group
-                        join m in context.station_inventory_manifest on i.id equals m.station_inventory_group_id
+                    var inventoryId = (
+                        from i in context.station_inventory_group
+                        join m in context.station_inventory_manifest
+                            .Include(x => x.station)
+                            on i.id equals m.station_inventory_group_id
                         where i.daypart_code == daypartCode &&
-                              m.station_code == stationCode &&
+                              m.station.station_code == stationCode &&
                               m.spot_length_id == spotLengthId &&
                               m.spots_per_week == spotsPerWeek &&
                               m.effective_date == effectiveDate
@@ -125,7 +128,7 @@ namespace Services.Broadcast.Repositories
                             {                               
                                 return new station_inventory_manifest()
                                 {
-                                    station_code = (short) manifest.Station.Code,
+                                    station_id = manifest.Station.Id,
                                     spot_length_id = manifest.SpotLengthId,
                                     spots_per_day = manifest.SpotsPerDay,
                                     spots_per_week = manifest.SpotsPerWeek.GetValueOrDefault(),
@@ -185,7 +188,7 @@ namespace Services.Broadcast.Repositories
                             .Select(
                                 manifest => new station_inventory_manifest()
                                 {
-                                    station_code = (short)manifest.Station.Code,
+                                    station_id = manifest.Station.Id,
                                     spot_length_id = manifest.SpotLengthId,
                                     spots_per_day = manifest.SpotsPerDay,
                                     spots_per_week = null,
@@ -385,8 +388,9 @@ namespace Services.Broadcast.Repositories
                         Station =
                             new DisplayBroadcastStation()
                             {
+                                Id = manifest.station.id,
                                 Affiliation = manifest.station.affiliation,
-                                Code = manifest.station_code,
+                                Code = manifest.station.station_code,
                                 CallLetters = manifest.station.station_call_letters,
                                 LegacyCallLetters = manifest.station.legacy_call_letters,
                                 MarketCode = manifest.station.market_code
@@ -529,7 +533,7 @@ namespace Services.Broadcast.Repositories
                             .Include(m => m.station_inventory_group)
                             .Include(m => m.inventory_sources)
                             .Include(m => m.station_inventory_manifest_rates)
-                                     where sp.station_code == (short) stationCode
+                                     where sp.station.station_code == (short)stationCode
                               && sp.inventory_sources.name.ToLower().Equals(rateSource.Name.ToLower())
                                      select new StationInventoryManifest()
                                      {
@@ -537,7 +541,8 @@ namespace Services.Broadcast.Repositories
                                          Station =
                                          new DisplayBroadcastStation()
                                          {
-                                             Code = sp.station.station_code,
+                                             Id = sp.station.id,
+                                             Code = sp.station.station_code.Value,
                                              Affiliation = sp.station.affiliation,
                                              CallLetters = sp.station.station_call_letters,
                                              LegacyCallLetters = sp.station.legacy_call_letters,
@@ -609,7 +614,7 @@ namespace Services.Broadcast.Repositories
                                              .Include(m => m.station_inventory_group)
                                              .Include(m => m.inventory_sources)
                                              .Include(m => m.station_inventory_manifest_rates)
-                                     where sp.station_code == (short)stationCode
+                                     where sp.station.station_code == (short)stationCode
                                            && sp.inventory_sources.name.ToLower().Equals(rateSource.Name.ToLower())
                                            && ((sp.effective_date >= startDateValue && sp.effective_date <= endDateValue)
                                                 || (sp.end_date >= startDateValue && sp.end_date <= endDateValue)
@@ -620,7 +625,8 @@ namespace Services.Broadcast.Repositories
                             Station =
                             new DisplayBroadcastStation()
                             {
-                                Code = sp.station.station_code,
+                                Id = sp.station.id,
+                                Code = sp.station.station_code.Value,
                                 Affiliation = sp.station.affiliation,
                                 CallLetters = sp.station.station_call_letters,
                                 LegacyCallLetters = sp.station.legacy_call_letters,
@@ -694,7 +700,8 @@ namespace Services.Broadcast.Repositories
                             Station =
                                 new DisplayBroadcastStation()
                                 {
-                                    Code = sp.station.station_code,
+                                    Id = sp.station.id,
+                                    Code = sp.station.station_code.Value,
                                     Affiliation = sp.station.affiliation,
                                     CallLetters = sp.station.station_call_letters,
                                     LegacyCallLetters = sp.station.legacy_call_letters,
@@ -785,7 +792,7 @@ namespace Services.Broadcast.Repositories
                             .Include(m => m.inventory_sources)
                             .Include(m => m.station_inventory_manifest_rates)
                         where sp.inventory_sources.name == rateSource &&
-                              sp.station_code == code &&
+                              sp.station.station_code == code &&
                               sp.effective_date <= endDate &&
                               startDate <= sp.end_date
                         select new StationInventoryManifest()
@@ -794,7 +801,8 @@ namespace Services.Broadcast.Repositories
                             Station =
                                 new DisplayBroadcastStation()
                                 {
-                                    Code = sp.station.station_code,
+                                    Id = sp.station.id,
+                                    Code = sp.station.station_code.Value,
                                     Affiliation = sp.station.affiliation,
                                     CallLetters = sp.station.station_call_letters,
                                     LegacyCallLetters = sp.station.legacy_call_letters,
@@ -866,7 +874,7 @@ namespace Services.Broadcast.Repositories
                 {
                     effective_date = stationInventoryManifest.EffectiveDate,
                     end_date = stationInventoryManifest.EndDate,
-                    station_code = (short)stationInventoryManifest.Station.Code,
+                    station_id = stationInventoryManifest.Station.Id,
                     spot_length_id = stationInventoryManifest.SpotLengthId,
                     inventory_source_id = stationInventoryManifest.InventorySourceId
                 };
@@ -991,7 +999,7 @@ namespace Services.Broadcast.Repositories
                         md =>
                             md.daypart_id == daypartId
                             && md.program_name.Equals(programName, StringComparison.InvariantCultureIgnoreCase)
-                            && md.station_inventory_manifest.station_code == stationCode
+                            && md.station_inventory_manifest.station.station_code == stationCode
                             && md.station_inventory_manifest.effective_date == startDate
                             && md.station_inventory_manifest.end_date == endDate).Select(md => md.id).ToList();
                     return matchingManifestDayparts.Any();

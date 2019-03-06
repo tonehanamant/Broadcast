@@ -15,9 +15,9 @@ namespace EntityFrameworkMapping.Broadcast
     public partial class station_inventory_loaded
     {
         public int id { get; set; }
-        public short station_code { get; set; }
         public int inventory_source_id { get; set; }
         public System.DateTime last_loaded { get; set; }
+        public int station_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual station station { get; set; }

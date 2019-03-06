@@ -132,7 +132,7 @@ namespace Services.Broadcast.Converters
         private int _GetStationCode(string stationName)
         {
             var foundStation = _GetDisplayBroadcastStation(stationName);
-            return foundStation == null ? 0 : foundStation.Code;
+            return foundStation == null ? 0 : foundStation?.Code ?? 0;
         }
 
         private DisplayBroadcastStation _GetDisplayBroadcastStation(string stationName)

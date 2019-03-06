@@ -414,7 +414,8 @@ namespace Services.Broadcast.Converters.RateImport
                     message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "fax")
                         .Select(p => p.Value)
                         .FirstOrDefault() : null;
-                stationContact.StationCode = proposalStation.Value.Code;
+                stationContact.StationCode = proposalStation.Value.Code.Value;
+                stationContact.StationId = proposalStation.Value.Id;
 
                 if (proposalStations.Select(s => s.Value.LegacyCallLetters.Trim().ToUpper())
                         .ToList()

@@ -19,6 +19,7 @@ namespace Services.Broadcast.Repositories
     {
         List<DisplayBroadcastStation> GetBroadcastStationsWithFlightWeeksForRateSource(InventorySource inventorySource);
         DisplayBroadcastStation GetBroadcastStationByCode(int code);
+        List<DisplayBroadcastStation> GetBroadcastStationsByCodes(IEnumerable<int> codes);
         DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters);
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
@@ -78,7 +79,8 @@ namespace Services.Broadcast.Repositories
         {
             return s => new DisplayBroadcastStation
             {
-                Code = s.station_code,
+                Id = s.id,
+                Code = s.station_code.Value,
                 Affiliation = s.affiliation,
                 CallLetters = s.station_call_letters,
                 LegacyCallLetters = s.legacy_call_letters,
@@ -139,7 +141,8 @@ namespace Services.Broadcast.Repositories
                             where s.station_code == code
                             select new DisplayBroadcastStation
                             {
-                                Code = s.station_code,
+                                Id = s.id,
+                                Code = s.station_code.Value,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
@@ -147,6 +150,24 @@ namespace Services.Broadcast.Repositories
                                 MarketCode = s.market_code.Value,
                                 ModifiedDate = s.modified_date
                             }).Single("No station found with code: " + code));
+        }
+
+        public List<DisplayBroadcastStation> GetBroadcastStationsByCodes(IEnumerable<int> codes)
+        {
+            return _InReadUncommitedTransaction(
+                context => (from s in context.stations
+                            where codes.Contains(s.station_code.Value)
+                            select new DisplayBroadcastStation
+                            {
+                                Id = s.id,
+                                Code = s.station_code.Value,
+                                Affiliation = s.affiliation,
+                                CallLetters = s.station_call_letters,
+                                LegacyCallLetters = s.legacy_call_letters,
+                                OriginMarket = s.market.geography_name,
+                                MarketCode = s.market_code.Value,
+                                ModifiedDate = s.modified_date
+                            }).ToList());
         }
 
         public DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters)
@@ -158,7 +179,8 @@ namespace Services.Broadcast.Repositories
                             where s.legacy_call_letters == callLetters
                             select new DisplayBroadcastStation
                             {
-                                Code = s.station_code,
+                                Id = s.id,
+                                Code = s.station_code.Value,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
@@ -176,7 +198,8 @@ namespace Services.Broadcast.Repositories
                             where s.station_call_letters == stationCallLetters
                             select new DisplayBroadcastStation
                             {
-                                Code = s.station_code,
+                                Id = s.id,
+                                Code = s.station_code.Value,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
@@ -195,7 +218,8 @@ namespace Services.Broadcast.Repositories
                             where stationNameList.Contains(s.legacy_call_letters)
                             select new DisplayBroadcastStation
                             {
-                                Code = s.station_code,
+                                Id = s.id,
+                                Code = s.station_code.Value,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
@@ -212,7 +236,8 @@ namespace Services.Broadcast.Repositories
                 context => (from s in context.stations
                             select new DisplayBroadcastStation
                             {
-                                Code = s.station_code,
+                                Id = s.id,
+                                Code = s.station_code.Value,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
@@ -244,7 +269,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var stations = context.stations.Where(x => stationCodes.Contains(x.station_code)).ToList();                    
+                    var stations = context.stations.Where(x => stationCodes.Contains(x.station_code.Value)).ToList();                    
                     stations.ForEach(x =>
                     {
                         x.modified_by = user;
@@ -268,7 +293,7 @@ namespace Services.Broadcast.Repositories
                     if (stationContacts == null)
                         throw new Exception("No Station Contact found.");
 
-                    return stationContacts.station.station_code;
+                    return stationContacts.station.station_code.Value;
                 });
         }
 
@@ -287,8 +312,8 @@ namespace Services.Broadcast.Repositories
                     if (firstOrDefault == null)
                         return (short?)null;
 
-                    _StationCache[stationName] = firstOrDefault.station_code;
-                    return firstOrDefault.station_code;
+                    _StationCache[stationName] = (short)firstOrDefault.station_code.Value;
+                    return (short?)firstOrDefault.station_code;
                 });
             }
         }
@@ -304,14 +329,14 @@ namespace Services.Broadcast.Repositories
                         legacy_call_letters = x.LegacyCallLetters,
                         modified_date = x.ModifiedDate.Value,
                         modified_by = user
-                    });
+                    }).ToList();
 
                     context.stations.AddRange(newStations);
-
                     context.SaveChanges();
 
                     return newStations.Select(s => new DisplayBroadcastStation
                     {
+                        Id = s.id,
                         Code = s.station_code,
                         CallLetters = s.station_call_letters,
                         LegacyCallLetters = s.legacy_call_letters,

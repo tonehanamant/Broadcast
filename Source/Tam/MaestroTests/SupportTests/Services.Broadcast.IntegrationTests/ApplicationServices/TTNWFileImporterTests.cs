@@ -52,6 +52,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -93,6 +94,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -134,6 +136,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -273,6 +276,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
