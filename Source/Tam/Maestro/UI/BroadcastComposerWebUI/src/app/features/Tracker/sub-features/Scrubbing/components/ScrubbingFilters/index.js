@@ -10,7 +10,7 @@ import {
   clearScrubbingFiltersList,
   clearFilteredScrubbingData,
   getClearScrubbingDataFiltered
-} from "Tracker/redux/actions";
+} from "Tracker/redux/index.ducks";
 import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
 import styles from "./index.scss";
 

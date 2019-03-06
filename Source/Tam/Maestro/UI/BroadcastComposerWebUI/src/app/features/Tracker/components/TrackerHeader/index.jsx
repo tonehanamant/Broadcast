@@ -10,7 +10,7 @@ import {
   getUnlinkedIscis,
   uploadTrackerFile,
   getTrackerFiltered
-} from "Tracker/redux/actions";
+} from "Tracker/redux/index.ducks";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";

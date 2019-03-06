@@ -5,7 +5,7 @@ import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";
-import { undoArchivedIscis } from "Tracker/redux/actions";
+import { undoArchivedIscis } from "Tracker/redux/index.ducks";
 import moment from "moment";
 import { getDateInFormat, getSecondsToTimeString } from "Utils/dateFormatter";
 
