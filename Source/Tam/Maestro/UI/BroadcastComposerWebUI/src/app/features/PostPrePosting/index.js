@@ -1,4 +1,4 @@
 import container from "./components/PostPrePostingContainer";
 
-export { watchers, reducer, types } from "./redux";
+export { watchers, reducer } from "./redux";
 export default container;

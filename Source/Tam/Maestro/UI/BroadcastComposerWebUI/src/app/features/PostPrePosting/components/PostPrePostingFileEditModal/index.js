@@ -19,7 +19,7 @@ import {
   updatePlaybackType,
   updateDemos,
   savePostPrePostingFileEdit
-} from "PostPrePosting/redux/actions";
+} from "PostPrePosting/redux/index.ducks";
 
 const mapStateToProps = ({
   app: {

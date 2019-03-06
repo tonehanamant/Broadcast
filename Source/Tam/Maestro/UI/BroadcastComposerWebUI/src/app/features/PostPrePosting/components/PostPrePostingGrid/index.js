@@ -13,7 +13,7 @@ import {
   getPostPrePostingFiltered,
   deletePostPrePosting,
   getPostPrePostingFileEdit
-} from "PostPrePosting/redux/actions";
+} from "PostPrePosting/redux/index.ducks";
 import Table, { withGrid } from "Lib/react-table";
 
 const mapStateToProps = ({ postPrePosting: { initialdata, post }, menu }) => ({
