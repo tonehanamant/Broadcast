@@ -354,29 +354,31 @@ END
 
 -- step 12: remove old foreign key columns
 IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.station_inventory_spot_snapshots'))
-BEGIN	
-	ALTER TABLE station_inventory_spot_snapshots DROP COLUMN station_code
+BEGIN
+	EXEC(N'ALTER TABLE station_inventory_spot_snapshots DROP COLUMN station_code')
 END
 IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.station_inventory_manifest'))
 BEGIN
-	ALTER TABLE station_inventory_manifest DROP COLUMN station_code
+	EXEC(N'ALTER TABLE station_inventory_manifest DROP COLUMN station_code')	
 END
 IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.station_inventory_loaded'))
 BEGIN
-	ALTER TABLE station_inventory_loaded DROP COLUMN station_code
+	EXEC(N'ALTER TABLE station_inventory_loaded DROP COLUMN station_code')	
 END
 IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.station_contacts'))
 BEGIN
-	ALTER TABLE station_contacts DROP COLUMN station_code
+	EXEC(N'ALTER TABLE station_contacts DROP COLUMN station_code')	
 END
 IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.pricing_guide_distribution_open_market_inventory'))
 BEGIN
-	ALTER TABLE pricing_guide_distribution_open_market_inventory DROP COLUMN station_code
+	EXEC(N'ALTER TABLE pricing_guide_distribution_open_market_inventory DROP COLUMN station_code')	
 END
 IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.proposal_buy_file_details'))
 BEGIN
-	ALTER TABLE proposal_buy_file_details DROP COLUMN station_code
+	EXEC(N'ALTER TABLE proposal_buy_file_details DROP COLUMN station_code')
 END
+
+GO
 /*************************************** END PRI-912 NEW STATIONS*****************************************************/
 
 /*************************************** START PRI-912 *****************************************************/
@@ -551,18 +553,20 @@ IF NOT EXISTS (SELECT *
     FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
     WHERE CONSTRAINT_NAME='UQ_station_contacts_name_company_type_station_code')
 BEGIN
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'station_code' AND Object_ID = Object_ID(N'dbo.station_contacts'))
+	BEGIN
+		WITH CTE AS
+		(
+			SELECT *, ROW_NUMBER() OVER (PARTITION BY name,company,type,station_code ORDER BY modified_date desc) AS RN
+			FROM station_contacts
+		)
 
-	WITH CTE AS
-	(
-		SELECT *, ROW_NUMBER() OVER (PARTITION BY name,company,type,station_code ORDER BY modified_date desc) AS RN
-		FROM station_contacts
-	)
+		DELETE FROM cte
+		WHERE rn > 1
 
-	DELETE FROM cte
-	WHERE rn > 1
-
-	ALTER TABLE station_contacts
-	ADD CONSTRAINT UQ_station_contacts_name_company_type_station_code UNIQUE (name,company,type,station_code);
+		ALTER TABLE station_contacts
+		ADD CONSTRAINT UQ_station_contacts_name_company_type_station_code UNIQUE (name,company,type,station_code);
+	END	
 END
 
 /*************************************** END PRI-1071 *****************************************************/
