@@ -8,8 +8,8 @@ import {
   createAlert,
   toggleModal,
   deployError
-} from "Main/redux/index.ducks";
-import { selectModal } from "Main/redux/index.saga";
+} from "Main/redux/ducks";
+import { selectModal } from "Main/redux/sagas";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
   LOAD_TRACKER,
@@ -44,7 +44,7 @@ import {
   getTracker,
   saveActiveScrubData,
   saveTrackerDisplay
-} from "Tracker/redux/index.ducks";
+} from "Tracker/redux/ducks";
 import api from "API";
 
 /* ////////////////////////////////// */

@@ -12,7 +12,7 @@ import {
   closeUnlinkedIsciModal,
   getUnlinkedFiltered,
   getArchivedFiltered
-} from "Tracker/redux/index.ducks";
+} from "Tracker/redux/ducks";
 import UnlinkedIsciGrid from "Tracker/sub-features/UnlinkedIsci/components/UnlinkedIsciGrid";
 import ArchivedIsciGrid from "Tracker/sub-features/UnlinkedIsci/components/UnlinkedIsciArchivedGrid";
 import MapUnlinkedIsciModal from "Tracker/sub-features/UnlinkedIsci/components/UnlinkedIsciMapModal";

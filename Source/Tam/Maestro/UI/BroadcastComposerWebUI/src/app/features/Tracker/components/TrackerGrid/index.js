@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
-import { toggleModal, createAlert } from "Main/redux/index.ducks";
-import {
-  getTracker,
-  getTrackerClientScrubbing
-} from "Tracker/redux/index.ducks";
+import { toggleModal, createAlert } from "Main/redux/ducks";
+import { getTracker, getTrackerClientScrubbing } from "Tracker/redux/ducks";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
 import moment from "moment";

@@ -1,11 +1,7 @@
 import { takeEvery, put } from "redux-saga/effects";
 import api from "API";
 import sagaWrapper from "Utils/saga-wrapper";
-import {
-  setOverlayLoading,
-  LOAD_ENVIRONMENT,
-  LOAD_EMPLOYEE
-} from "./index.ducks";
+import { setOverlayLoading, LOAD_ENVIRONMENT, LOAD_EMPLOYEE } from "./ducks";
 
 /* ////////////////////////////////// */
 /* SELECTORS */

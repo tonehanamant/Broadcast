@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleModal } from "Main/redux/index.ducks";
+import { toggleModal } from "Main/redux/ducks";
 import {
   filterOpenMarketData,
   sortOpenMarketData,

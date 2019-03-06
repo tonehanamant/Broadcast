@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getEnvironment, getEmployee } from "Main/redux/index.ducks";
+import { getEnvironment, getEmployee } from "Main/redux/ducks";
 
 import NavigationBar from "../MainHeaderNavigation";
 

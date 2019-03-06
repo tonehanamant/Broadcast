@@ -9,7 +9,7 @@ import {
   toggleModal,
   deployError,
   clearFile
-} from "Main/redux/index.ducks";
+} from "Main/redux/ducks";
 
 import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";
@@ -24,7 +24,7 @@ import {
   getPostPrePosting,
   clearFileUploadForm,
   receiveFilteredPostPrePosting
-} from "PostPrePosting/redux/index.ducks";
+} from "PostPrePosting/redux/ducks";
 
 const assignDisplay = data =>
   data.map(item => {

@@ -8,8 +8,8 @@ import {
   toggleModal,
   createAlert,
   deployError
-} from "Main/redux/index.ducks";
-import { selectModal } from "Main/redux/index.saga";
+} from "Main/redux/ducks";
+import { selectModal } from "Main/redux/sagas";
 import sagaWrapper from "Utils/saga-wrapper";
 import {
   ARCHIVE_UNLIKED_ISCI,
@@ -43,7 +43,7 @@ import {
   reveiveClearIsciFilter,
   reveiveFilteredScrubbingData,
   savePostDisplay
-} from "Post/redux/index.ducks";
+} from "Post/redux/ducks";
 import api from "API";
 
 /* ////////////////////////////////// */
@@ -576,7 +576,7 @@ export function resetfilterOptionsOnOverride(activeFilters, newFilters) {
 /* ////////////////////////////////// */
 /* REQUEST POST OVERRIDE STATUS */
 /* ////////////////////////////////// */
-export function* requestOverrideStatus({ payload: params }) {
+export function* requestOverrideStatus(params) {
   const { overrideStatus } = api.post;
 
   try {

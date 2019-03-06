@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 
-import { toggleModal, createAlert } from "Main/redux/index.ducks";
+import { toggleModal, createAlert } from "Main/redux/ducks";
 import {
   updateProposalEditFormDetail,
   loadOpenMarketData,

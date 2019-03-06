@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 import _ from "lodash";
 
-import { toggleModal, createAlert } from "Main/redux/index.ducks";
+import { toggleModal, createAlert } from "Main/redux/ducks";
 
 import {
   getProposalLock,

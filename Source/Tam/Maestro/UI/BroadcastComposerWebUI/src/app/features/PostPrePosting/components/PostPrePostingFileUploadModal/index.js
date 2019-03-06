@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import Select from "react-select";
 
-import { toggleModal, clearFile } from "Main/redux/index.ducks";
+import { toggleModal, clearFile } from "Main/redux/ducks";
 import {
   updateUploadEquivalized,
   updateUploadPostingBook,
@@ -21,7 +21,7 @@ import {
   updateUploadDemos,
   uploadPostPrePostingFile,
   clearFileUploadForm
-} from "PostPrePosting/redux/index.ducks";
+} from "PostPrePosting/redux/ducks";
 
 const mapStateToProps = ({
   app: {

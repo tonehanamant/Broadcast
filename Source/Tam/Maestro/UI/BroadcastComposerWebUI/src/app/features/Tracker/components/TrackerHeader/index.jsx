@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleModal } from "Main/redux/index.ducks";
+import { toggleModal } from "Main/redux/ducks";
 import {
   // getPostFiltered,
   // getUnlinkedIscis,
@@ -10,7 +10,7 @@ import {
   getUnlinkedIscis,
   uploadTrackerFile,
   getTrackerFiltered
-} from "Tracker/redux/index.ducks";
+} from "Tracker/redux/ducks";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";

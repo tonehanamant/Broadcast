@@ -11,11 +11,11 @@ import PostPrePostingFileEditModal from "PostPrePosting/components/PostPrePostin
 import PostPrePostingFileUploadModal from "PostPrePosting/components/PostPrePostingFileUploadModal";
 import Dropzone from "Patterns/Dropzone";
 
-import { toggleModal, storeFile } from "Main/redux/index.ducks";
+import { toggleModal, storeFile } from "Main/redux/ducks";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting
-} from "PostPrePosting/redux/index.ducks";
+} from "PostPrePosting/redux/ducks";
 
 import styles from "./index.style.scss";
 

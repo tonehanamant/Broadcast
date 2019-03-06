@@ -2,18 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  toggleModal,
-  createAlert,
-  setOverlayLoading
-} from "Main/redux/index.ducks";
+import { toggleModal, createAlert, setOverlayLoading } from "Main/redux/ducks";
 import {
   getPostPrePostingInitialData,
   getPostPrePosting,
   getPostPrePostingFiltered,
   deletePostPrePosting,
   getPostPrePostingFileEdit
-} from "PostPrePosting/redux/index.ducks";
+} from "PostPrePosting/redux/ducks";
 import Table, { withGrid } from "Lib/react-table";
 
 const mapStateToProps = ({ postPrePosting: { initialdata, post }, menu }) => ({
