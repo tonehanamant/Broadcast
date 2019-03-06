@@ -62,7 +62,6 @@
                   "SpotImpressions": 100.0,
                   "SpotLengthId": 1,
                   "StationCallLetters": "WNBC",
-                  "StationCode": 5013,
                   "StationMarketCode": 101,
                   "StationMarketRank": 1
                 }

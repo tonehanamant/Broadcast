@@ -85,7 +85,7 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var stationLocks = new List<IDisposable>();
-            var lockedStationCodes = new List<int>();
+            var lockedStationIds = new List<int>();
 
             _BarterFileImporter.LoadFromSaveRequest(request);
             _BarterFileImporter.CheckFileHash();
@@ -108,10 +108,10 @@ namespace Services.Broadcast.ApplicationServices
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
-                        var stationsDict = stations.ToDictionary(x => x.Code, x => x.LegacyCallLetters);
+                        var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         barterFile.InventoryGroups = _GetStationInventoryGroups(barterFile, stations);
 
-                        _LockingEngine.LockStations(stationsDict, lockedStationCodes, stationLocks);
+                        _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
                         var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
                         _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
@@ -123,13 +123,13 @@ namespace Services.Broadcast.ApplicationServices
                         _BarterRepository.SaveBarterInventoryFile(barterFile);
                         transaction.Complete();
 
-                        _LockingEngine.UnlockStations(lockedStationCodes, stationLocks);
+                        _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
                     }
                 }
             }
             catch (Exception ex)
             {
-                _LockingEngine.UnlockStations(lockedStationCodes, stationLocks);
+                _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
                 barterFile.ValidationProblems.Add(ex.Message);
                 barterFile.FileStatus = FileStatusEnum.Failed;
                 _BarterRepository.AddValidationProblems(barterFile);

@@ -77,7 +77,7 @@ namespace Services.Broadcast.Repositories
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {
-                                    StationCode = m.station_code,
+                                    StationCode = (short)m.station.station_code.Value,
                                     LegacyCallLetters = m.station.legacy_call_letters,
                                     Affiliation = m.station.affiliation,
                                     CallLetters = m.station.station_call_letters
@@ -204,7 +204,7 @@ namespace Services.Broadcast.Repositories
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {
-                                    StationCode = m.station_code,
+                                    StationCode = (short)m.station.station_code.Value,
                                     LegacyCallLetters = m.station.legacy_call_letters,
                                     Affiliation = m.station.affiliation,
                                     CallLetters = m.station.station_call_letters

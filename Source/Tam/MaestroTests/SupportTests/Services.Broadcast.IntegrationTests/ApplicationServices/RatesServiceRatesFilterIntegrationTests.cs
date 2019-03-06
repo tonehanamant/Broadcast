@@ -202,6 +202,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -224,6 +225,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -245,6 +247,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var response = _inventoryService.GetStationsWithFilter("OpenMarket", "withtodaysdata", today);
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

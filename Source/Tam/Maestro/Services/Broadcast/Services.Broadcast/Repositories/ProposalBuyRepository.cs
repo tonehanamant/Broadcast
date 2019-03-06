@@ -79,7 +79,7 @@ namespace Services.Broadcast.Repositories
                 {
                     Station = new DisplayBroadcastStation
                     {
-                        Code = d.station_code,
+                        Code = d.station.station_code.Value,
                         CallLetters = d.station.station_call_letters,
                         LegacyCallLetters = d.station.legacy_call_letters,
                         OriginMarket = d.station.market.geography_name,
@@ -120,7 +120,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var dbProposalBuyDetail = new proposal_buy_file_details
                     {
-                        station_code = (short)(buyDetail.Station.Code),
+                        station_id = buyDetail.Station.Id,
                         spot_cost = buyDetail.SpotCost,
                         total_spots = buyDetail.TotalSpots,
                         total_cost = buyDetail.TotalCost,

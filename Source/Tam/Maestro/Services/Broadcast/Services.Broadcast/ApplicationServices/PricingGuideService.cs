@@ -72,6 +72,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IPricingGuideDistributionEngine _PricingGuideDistributionEngine;
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
+        private readonly IStationRepository _StationRepository;
         
         /// <summary>
         /// Constructor
@@ -96,6 +97,7 @@ namespace Services.Broadcast.ApplicationServices
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _PricingGuideDistributionEngine = pricingGuideDistributionEngine;
             _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
+            _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
         }
 
         /// <summary>
@@ -225,11 +227,61 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="model">ProposalDetailPricingGuideSaveRequest object</param>
         /// <param name="username">User requesting the save</param>
         /// <returns>ProposalDetailDto object</returns>
-        public bool SaveDistribution(ProposalDetailPricingGuideSaveRequestDto model, string username)
+        public bool SaveDistribution(ProposalDetailPricingGuideSaveRequestDto request, string username)
         {
-            _ValidateProprietaryPricing(model.ProprietaryPricing);
+            _ValidateProprietaryPricing(request.ProprietaryPricing);
+            var model = _MapToProposalDetailPricingGuideSave(request);
+            _SetStationsFromStationCodes(model);
             _PricingGuideRepository.SavePricingGuideDistribution(model, username);
             return true;
+        }
+
+        private void _SetStationsFromStationCodes(ProposalDetailPricingGuideSave model)
+        {
+            var stationCodes = model.Markets.Select(x => x.StationCode);
+            var stationsDict = _StationRepository.GetBroadcastStationsByCodes(stationCodes)
+                .Where(x => x.Code.HasValue)
+                .ToDictionary(x => x.Code.Value, x => x.Id);
+
+            foreach(var market in model.Markets)
+            {
+                market.StationId = stationsDict[market.StationCode];
+            }
+        }
+
+        private ProposalDetailPricingGuideSave _MapToProposalDetailPricingGuideSave(ProposalDetailPricingGuideSaveRequestDto request)
+        {
+            return new ProposalDetailPricingGuideSave
+            {
+                ProposalDetailId = request.ProposalDetailId,
+                MarketCoverageFileId = request.MarketCoverageFileId,
+                ImpressionLoss = request.ImpressionLoss,
+                Margin = request.Margin,
+                GoalImpression = request.GoalImpression,
+                GoalBudget = request.GoalBudget,
+                Inflation = request.Inflation,
+                CpmMin = request.CpmMin,
+                CpmMax = request.CpmMax,
+                UnitCapPerStation = request.UnitCapPerStation,
+                OpenMarketCpmTarget = request.OpenMarketCpmTarget,
+                ProprietaryPricing = request.ProprietaryPricing,
+                OpenMarketTotals = request.OpenMarketTotals,
+                ProprietaryTotals = request.ProprietaryTotals,
+                Markets = request.Markets.Select(x => new PricingGuideSaveMarket
+                {
+                    ProgramId = x.ProgramId,
+                    MarketId = x.MarketId,
+                    StationCode = x.StationCode,
+                    ManifestDaypartId = x.ManifestDaypartId,
+                    DaypartId = x.DaypartId,
+                    ProgramName = x.ProgramName,
+                    BlendedCpm = x.BlendedCpm,
+                    Spots = x.Spots,
+                    ImpressionsPerSpot = x.ImpressionsPerSpot,
+                    StationImpressionsPerSpot = x.StationImpressionsPerSpot,
+                    CostPerSpot = x.CostPerSpot
+                }).ToList()
+            };
         }
 
         /// <summary>

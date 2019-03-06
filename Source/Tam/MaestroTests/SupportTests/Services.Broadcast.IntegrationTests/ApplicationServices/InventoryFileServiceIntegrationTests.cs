@@ -385,6 +385,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -407,6 +408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "FlightWeeks");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -435,12 +437,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileService.SaveInventoryFile(request);
                 var response = _InventoryFileService.GetStationDetailByCode("OpenMarket", stationCodeWVTM);
 
-                //Ignore the Id on each Rate record
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationProgram), "Id");
-                //jsonResolver.Ignore(typeof(StationProgramAudienceRateDto), "Audiences");
                 jsonResolver.Ignore(typeof(StationContact), "Id");
                 jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
+                jsonResolver.Ignore(typeof(StationContact), "StationId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -459,6 +460,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationContact), "Id");
+            jsonResolver.Ignore(typeof(StationContact), "StationId");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -482,6 +484,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationContact), "Id");
                 jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
+                jsonResolver.Ignore(typeof(StationContact), "StationId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -519,6 +522,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(StationContact), "Id");
                 jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
+                jsonResolver.Ignore(typeof(StationContact), "StationId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -551,7 +555,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var station = _InventoryFileService.GetStations("OpenMarket", currentDate).First();
+                var stationCode = station.Code.Value;               
                 var stationContactName = "Unit Test " + DateTime.Now.Ticks;
 
                 var contact = new StationContact()
@@ -563,6 +568,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Name = stationContactName,
                     Phone = "+134567890",
                     StationCode = stationCode,
+                    StationId = station.Id,
                     Type = StationContact.StationContactType.Station
                 };
 
@@ -582,7 +588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code.Value;
                 var contact = new StationContact()
                 {
                     Id = 0,
@@ -606,7 +612,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 //get station code and fill in initial data
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var station = _InventoryFileService.GetStations("OpenMarket", currentDate).First();
+                var stationCode = station.Code.Value;
                 var name = "Unit Test " + DateTime.Now.Ticks;
                 var company = "Company Test " + DateTime.Now.Ticks;
                 var contact = new StationContact()
@@ -618,6 +625,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Name = name,
                     Phone = "+134567890",
                     StationCode = stationCode,
+                    StationId = station.Id,
                     Type = StationContact.StationContactType.Station
                 };
 
@@ -646,7 +654,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var currentDate = new DateTime(2016, 11, 1);
-                var stationCode = _InventoryFileService.GetStations("OpenMarket", currentDate).First().Code;
+                var station = _InventoryFileService.GetStations("OpenMarket", currentDate).First();
+                var stationCode = station.Code.Value;
                 var stationContactName = "Unit Test " + DateTime.Now.Ticks;
                 var contact = new StationContact()
                 {
@@ -657,6 +666,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Name = stationContactName,
                     Phone = "+134567890",
                     StationCode = stationCode,
+                    StationId = station.Id,
                     Type = StationContact.StationContactType.Station
                 };
 
