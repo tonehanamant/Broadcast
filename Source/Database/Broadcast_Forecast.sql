@@ -1003,7 +1003,7 @@ BEGIN
 				AND u.audience_id=a.audience_id
 				AND u.start_time=t.start_time
 				AND u.end_time=t.end_time
-				AND u.market_code=hmc.market_code OPTION ( OPTIMIZE FOR (@hut_media_month_id_sniff UNKNOWN) );
+				AND u.market_code=hmc.market_code 
                 
 	CREATE TABLE #hut_univ (market_code SMALLINT NOT NULL, audience_id INT NOT NULL, playback_type VARCHAR(1) NOT NULL, universe FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(market_code,audience_id,playback_type));
@@ -1087,7 +1087,7 @@ BEGIN
 				AND u.audience_id=a.audience_id
 				AND u.start_time=t.start_time
 				AND u.end_time=t.end_time
-				AND u.market_code=smc.market_code OPTION ( OPTIMIZE FOR (@share_media_month_id_sniff UNKNOWN) );
+				AND u.market_code=smc.market_code ;
                
 	CREATE TABLE #share_viewer_days (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, weekly_avg FLOAT NOT NULL --,weekday_usage FLOAT NOT NULL ,weekend_usage FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(id, legacy_call_letters, start_time, end_time, market_code, audience_id));
@@ -1132,7 +1132,7 @@ BEGIN
 		JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
 			AND vd.viewer_id=v.id
 			AND vd.audience_id=a.audience_id
-			AND vd.playback_type=mc.playback_type OPTION ( OPTIMIZE FOR (@share_media_month_id_sniff UNKNOWN) );
+			AND vd.playback_type=mc.playback_type;
 
 	CREATE TABLE #share (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, SHARE FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(id,legacy_call_letters,market_code, audience_id));
