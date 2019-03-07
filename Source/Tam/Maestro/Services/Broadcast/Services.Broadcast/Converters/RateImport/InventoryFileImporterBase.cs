@@ -110,7 +110,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         protected Dictionary<string, DisplayBroadcastStation> FindStations(List<string> stationNameList)
         {
-            var foundStations = new Dictionary<string, DisplayBroadcastStation>();
+            var foundStations = new Dictionary<string, DisplayBroadcastStation>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var stationName in stationNameList)
             {
@@ -159,7 +159,7 @@ namespace Services.Broadcast.Converters.RateImport
                 var manifestRate = new StationInventoryManifestRate
                 {
                     SpotLengthId = spotLength.Value,
-                    Rate = periodRate * (decimal)_SpotLengthMultipliers[spotLength.Key]
+                    SpotCost = periodRate * (decimal)_SpotLengthMultipliers[spotLength.Key]
                 };
                 manifestRates.Add(manifestRate);
             }

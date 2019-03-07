@@ -10,5 +10,10 @@ namespace Services.Broadcast.IntegrationTests.Stubbs
         {
             // Do nothing.
         }
+
+        public void Save(string filePath)
+        {
+            // Do nothing.
+        }
     }
 }

@@ -240,6 +240,7 @@
     <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ProprietarySpotCostCalculationEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\CNNImportTest.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
@@ -319,20 +320,47 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFileImporter_BadFormats2.xlsx">
+    <None Include="Files\BarterDataFiles\Barter DataLines file with missed values.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with valid data.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with without valid units end.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid unit.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats3.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5379.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFileImporter_BadFormats3.xlsx">
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFileImporter_BadFormats.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\BarterFileImporter_ValidFormat.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_TwoBooks.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\C786.Sigma.MissingColumns.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -849,6 +877,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_KeepingTracValidFile_WithNullValues.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\WWTV_NonratedStation.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\WWTV_StrataValidFile_BCOP-4333.txt">

@@ -217,15 +217,18 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\BarterInventoryService.cs" />
     <Compile Include="ApplicationServices\DataLakeFileService.cs" />
+    <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\TimeFirstDaypartParser.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\WeekdayFirstDaypartParser.cs" />
+    <Compile Include="BusinessEngines\LockingEngine.cs" />
     <Compile Include="BusinessEngines\SpotLengthEngine.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporter.cs" />
     <Compile Include="Entities\BarterInventory\BarterInventoryFile.cs" />
     <Compile Include="Entities\BarterInventory\BarterInventoryHeader.cs" />
+    <Compile Include="Entities\BarterInventory\BarterInventoryUnit.cs" />
     <Compile Include="Entities\Enums\DeliveryFileSourceEnum.cs" />
     <Compile Include="Entities\DTO\ProgramSpotsDto.cs" />
     <Compile Include="Entities\Enums\FileStatusEnum.cs" />
@@ -272,10 +275,11 @@
     <Compile Include="BusinessEngines\AffidavitValidationEngine.cs" />
     <Compile Include="BusinessEngines\DateAdjustmentEngine.cs" />
     <Compile Include="BusinessEngines\MyEventsReportNamingEngine.cs" />
-    <Compile Include="BusinessEngines\PostLogEngine.cs" />
+    <Compile Include="BusinessEngines\PostLogValidationEngine.cs" />
     <Compile Include="BusinessEngines\PricingGuideDistributionEngine.cs" />
     <Compile Include="Entities\PostedContract.cs" />
     <Compile Include="Entities\PricingGuide.cs" />
+    <Compile Include="Entities\StationInventory\StationInventoryManifestWeek.cs" />
     <Compile Include="Helpers\CsvHelper.cs" />
     <Compile Include="Entities\DistributionProgram.cs" />
     <Compile Include="Entities\DTO\CheckForAllocatedSpotsRequestDto.cs" />
@@ -319,7 +323,6 @@
     <Compile Include="Entities\ScxFile.cs" />
     <Compile Include="Entities\SpotTrackerFileDetail.cs" />
     <Compile Include="Entities\StationInventory\StationInventoryManifestBase.cs" />
-    <Compile Include="Entities\StationInventory\StationInventoryManifestStaging.cs" />
     <Compile Include="Entities\TrackerFileDetail.cs" />
     <Compile Include="Entities\StationInventory\StationInventorySpots.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
@@ -332,6 +335,7 @@
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\FileTransferEmailHelper.cs" />
     <Compile Include="Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensions.cs" />
+    <Compile Include="Helpers\TransactionScopeHelper.cs" />
     <Compile Include="Helpers\WWTVFtpHelper.cs" />
     <Compile Include="Helpers\WWTVNetworkHelper.cs" />
     <Compile Include="MediaMonthCrunchCache.cs" />

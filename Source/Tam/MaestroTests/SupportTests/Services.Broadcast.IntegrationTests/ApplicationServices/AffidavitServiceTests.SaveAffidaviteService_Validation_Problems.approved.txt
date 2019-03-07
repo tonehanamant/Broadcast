@@ -9,11 +9,6 @@
       "ErrorMessage": "must be valid",
       "InvalidField": "InventorySource",
       "InvalidLine": 1
-    },
-    {
-      "ErrorMessage": "is required",
-      "InvalidField": "Affiliate",
-      "InvalidLine": 1
     }
   ]
 }

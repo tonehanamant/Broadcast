@@ -7,9 +7,6 @@
       "ProblemDescription": "Record: 1: Field: 'Station' is invalid\r\nis required"
     },
     {
-      "ProblemDescription": "Record: 1: Field: 'Affiliate' is invalid\r\nis required"
-    },
-    {
       "ProblemDescription": "Record: 2: Field: 'SpotLength' is invalid\r\nmust be valid broadcast spot length: 15,30,60,120,180,300"
     },
     {

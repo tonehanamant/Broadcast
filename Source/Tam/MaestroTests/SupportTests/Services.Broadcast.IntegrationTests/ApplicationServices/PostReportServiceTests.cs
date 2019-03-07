@@ -6,10 +6,12 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -125,7 +127,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetNsiPostReportDataWithAduNoAdjustments()
@@ -167,7 +169,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-        
+
         [Test]
         [Ignore]
         public void GenerateReportFile()
@@ -186,9 +188,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var expectedFileName = "STAPLES EMN 15 8-27-18.txt";
             var expectedFilePath = @".\Files\" + expectedFileName;
             var myEventsReport = _PostReportService.GenerateMyEventsReport(25999);
-            
+
             var tempPath = Path.GetTempFileName();
-            
+
             File.WriteAllBytes(tempPath, myEventsReport.Stream.ToArray());
 
             using (var zip = new ZipArchive(myEventsReport.Stream, ZipArchiveMode.Read))
@@ -358,7 +360,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var result = _PostReportService.GetMyEventsReportData(253);
-                
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -427,6 +429,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetNsiPostReportData_NonRatedStation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_NonRatedStation.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                var processingResult = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>()
+                    .ProcessFileContents("integration test", filePath, fileContents);
+                
+                var affidavit = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>().GetAffidavit(processingResult.Id.Value);
+                
+                var overrideScrubbingResult = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitService>()
+                    .OverrideScrubbingStatus(new ScrubStatusOverrideRequest
+                    {
+                        OverrideStatus = ScrubbingStatus.InSpec,
+                        ScrubIds = new List<int> { affidavit.FileDetails.First().ClientScrubs.First().Id },
+                        ProposalId = 26000
+                    });
+                var postReportData = _PostReportService.GetPostReportData(26000);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Assert.IsTrue(postReportData.QuarterTabs.SelectMany(x => x.TabRows.Where(y => y.Station.Equals("NewStation"))).Count() == 1);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(postReportData, jsonSettings));
             }
         }
     }

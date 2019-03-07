@@ -14,6 +14,7 @@ using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
 using System.Net.Mail;
 using Services.Broadcast.Entities.Enums;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -497,6 +498,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WWTVSaveResult response = _AffidavitPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 VerifyAffidavit(response.Id.Value);
+            }
+        }
+
+        [Test]
+        public void DLAndProcessWWTVFiles_DataLakeCopy()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+
+                var affidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
+                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+                
+                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                string filePath = Path.Combine(dataLakeFolder, "Special_Ftp_Phantom_File.txt");
+                if (fileService.Exists(filePath))
+                {
+                    fileService.Delete(filePath);
+                }
+                
+                affidavitPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service");
+                
+                Assert.True(fileService.Exists(filePath));
             }
         }
 

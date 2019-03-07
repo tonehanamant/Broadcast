@@ -1,0 +1,24 @@
+[ {
+    "EstimateId": 1082,
+    "Date": "03/06/2016",
+    "InventorySource": "Strata",
+    "Station": "NewStation",
+    "SpotLength": "30",
+    "Time": "1200A",
+    "SpotCost": 0.00,
+    "ISCI": "NSI1",
+    "Program": "Program Names R us",
+    "ShowType": "Series",
+    "Genre": "Do It Yourself",
+    "ProgramShowType": "Series",
+    "LeadInProgram": "Voice, The",
+    "LeadInShowType": "Series",
+    "LeadInGenre": "Series",
+    "LeadInEndTime": "10/02/2018 09:32PM",
+    "LeadOutProgram": "10 News Nightbeat",
+    "LeadOutShowType": "Series",
+    "LeadOutGenre": "News",
+    "LeadOutStartTime": "10/02/2018 09:26PM",
+    "Demographics": [ { "Demographic": "HH", "OvernightImpressions":"123","OvernightRating":"1.0"  } ]
+	}	
+]

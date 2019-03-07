@@ -44,7 +44,7 @@ namespace Services.Broadcast.Validators
                 foreach (var manifestDaypart in manifest.ManifestDayparts.ToList())
                 {
                      var exists = _inventoryRepository.CheckIfManifestByStationProgramFlightDaypartExists(
-                        manifest.Station.Code,
+                        manifest.Station.Id,
                         manifestDaypart.ProgramName,
                         manifest.EffectiveDate,
                         manifest.EndDate.Value,

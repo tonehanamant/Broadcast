@@ -1,0 +1,90 @@
+﻿{
+  "CreatedBy": null,
+  "CreatedDate": "0001-01-01T00:00:00",
+  "DataLines": [
+    {
+      "Comment": null,
+      "Daypart": "M-F 10-1130P / SA-SU 10-11P",
+      "Station": "KRQE+",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 2
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 2
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 3
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 1
+        }
+      ]
+    },
+    {
+      "Comment": "Comment 5",
+      "Daypart": "W-F 3-4A",
+      "Station": "KSWB-TV 69.2",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 4
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 5
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 1
+        }
+      ]
+    }
+  ],
+  "FileName": null,
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": null,
+  "Id": 0,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": [
+    "Line 16 has missing values. Columns: station",
+    "Line 17 has missing values. Columns: AM 2",
+    "Line 19 has missing values. Columns: daypart, AM 3"
+  ]
+}

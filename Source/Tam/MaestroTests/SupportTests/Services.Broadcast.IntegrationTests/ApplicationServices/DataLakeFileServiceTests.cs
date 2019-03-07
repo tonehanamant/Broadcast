@@ -8,7 +8,9 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System.IO;
+using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -16,12 +18,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class DataLakeFileServiceTests
     {
-        private readonly IDataLakeFileService _DataLakeFileService = 
-            IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
 
         [Test]
-        public void FileSaveTest()
+        public void FileStreamSaveTest()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+
             var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
             var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
 
@@ -33,10 +36,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileAccess.Read),
                 FileName = fileName
             };
+            IDataLakeFileService _DataLakeFileService =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
 
             _DataLakeFileService.Save(request);
 
-            Assert.True(File.Exists(Path.Combine(dataLakeFolder, fileName)));
+            fileName = Path.Combine(dataLakeFolder, Path.GetFileName(fileName));
+            Assert.True(fileService.Exists(fileName));
+        }
+
+
+        [Test]
+        public void FileSaveTest()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+
+            var filePath = @".\Files\1Chicago WLS Syn 4Q16.xml";
+            var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+
+            IDataLakeFileService _DataLakeFileService =
+                IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
+            _DataLakeFileService.Save(filePath);
+
+            filePath = Path.Combine(dataLakeFolder, Path.GetFileName(filePath));
+            Assert.True(fileService.Exists(filePath));
         }
 
         [Test]
@@ -45,12 +69,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var impersonateUser = IntegrationTestApplicationServiceFactory.Instance.Resolve<IImpersonateUser>();
             var emailService = new EmailerServiceStubb();
+            var fileService = new FileServiceSingleFileStubb();
             var dataLakeSystemParamteres = new Mock<IDataLakeSystemParameters>();
             dataLakeSystemParamteres.Setup(r => r.GetSharedFolder()).Returns("C:\\");
             dataLakeSystemParamteres.Setup(r => r.GetNotificationEmail()).Returns("bernardo.botelho@axispoint.com");
             dataLakeSystemParamteres.Setup(r => r.GetUserName()).Returns(string.Empty);
             dataLakeSystemParamteres.Setup(r => r.GetPassword()).Returns(string.Empty);
-            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser);
+            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser, fileService);
             var fileName = "CNNAMPMBarterObligations_Clean.xlsx";
 
             var request = new FileRequest
@@ -65,6 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             dataLakeFileService.Save(request);
 
             var response = EmailerServiceStubb.LastMailMessageGenerated;
+            response.Body = response.Body.Substring(0, 60);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             var jsonSettings = new JsonSerializerSettings()

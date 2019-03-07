@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests
 
         public virtual Stream DownloadFileToStream(WebClient webClient, string path)
         {
-            return new MemoryStream(); 
+            return new MemoryStream();
         }
 
     }
@@ -64,7 +64,7 @@ namespace Services.Broadcast.IntegrationTests
                 using (var file = File.Create(localPath))
                 {
                     var byteArray = GetFileContents().ToByteArray();
-                    file.Write(byteArray,0,byteArray.Length);
+                    file.Write(byteArray, 0, byteArray.Length);
                     _FilesCreated.Add(localPath);
                 }
             }
@@ -107,7 +107,6 @@ namespace Services.Broadcast.IntegrationTests
     ""SpotLength"": 30,
     ""Time"": ""0543A"",
     ""SpotCost"": 0,
-    ""ISCI"": ""32YO41TC18H"",
     ""Affiliate"": null,
     ""Program"": ""NBC Boston Today at 05:30 AM"",
     ""ShowType"": ""News"",

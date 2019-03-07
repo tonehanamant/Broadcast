@@ -13,6 +13,8 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -121,31 +123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyResults(response);
             }
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void DLAndProcessWWTVFiles_Error_InvalidFileFormat()
-        {
-            using (var trans = new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-                
-                EmailerServiceStubb.LastMailMessageGenerated = null;
-                var response = _PostLogPostProcessingService.DownloadAndProcessWWTVFiles(_UserName);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(WWTVSaveResult), "Id");
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
-                Approvals.Verify(json);
-            }
-        }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ValidFileContent_BCOP4270()
@@ -158,6 +136,49 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
 
                 VerifyPostLogFile(response.Id.Value);
+            }
+        }
+
+        [Ignore]
+        [Test]
+        public void DLAndProcessWWTVFiles_DataLakeCopy()
+        {
+            using (var trans = new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStubb_SingleFile>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+
+                var postLogPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
+                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+
+                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                string filePath = Path.Combine(dataLakeFolder, "Special_Ftp_Phantom_File.txt");
+                if (fileService.Exists(filePath))
+                {
+                    fileService.Delete(filePath);
+                }
+
+                postLogPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service");
+
+                Assert.True(fileService.Exists(filePath));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PostLogPostProcessing_NonRatedStation()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filePath = @".\Files\WWTV_NonRatedStation.txt";
+                var fileContents = File.ReadAllText(filePath);
+
+                WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents);
+                var postlogFile = VerifyPostLogFile(response.Id.Value);
+
+                Assert.IsTrue(response.ValidationResults.Count == 0);
+                Assert.IsTrue(postlogFile.FileDetails.Where(x => x.Station.Equals("NewStation")).Count() == 1);
             }
         }
 
@@ -194,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
 
-        private void VerifyPostLogFile(int fileId)
+        private ScrubbingFile VerifyPostLogFile(int fileId)
         {
             var _PostLogRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostLogRepository>();
             var response = _PostLogRepository.GetPostLogFile(fileId, true);
@@ -219,6 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            return response;
         }
     }
 }

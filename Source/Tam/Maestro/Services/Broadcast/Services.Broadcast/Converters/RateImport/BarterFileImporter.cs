@@ -1,5 +1,4 @@
-﻿using Common.Services;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
@@ -16,7 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
-using Tam.Maestro.Services.ContractInterfaces.Common;
+using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -26,6 +25,7 @@ namespace Services.Broadcast.Converters.RateImport
         BarterInventoryFile GetPendingBarterInventoryFile(string userName);
         void ExtractData(BarterInventoryFile barterFile);
         void LoadFromSaveRequest(InventoryFileSaveRequest request);
+        void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
     }
 
     public class BarterFileImporter : IBarterFileImporter
@@ -41,42 +41,27 @@ namespace Services.Broadcast.Converters.RateImport
         const string HUT_BOOK_CELL = "B10";
         const string PLAYBACK_TYPE_CELL = "B11";
 
-        const string BOOK_DATE_FORMAT = "MMM yy";
-        string[] DATE_FORMATS = new string[2] { "MM/dd/yyyy", "M/dd/yyyy" };
+        readonly string[] BOOK_DATE_FORMATS = new string[5]{ "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM" };
+        readonly string[] DATE_FORMATS = new string[2] { "MM/dd/yyyy", "M/dd/yyyy" };
         const string CPM_FORMAT = "##.##";
 
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventoryDaypartParsingEngine _DaypartParsingEngine;
-        private readonly IDaypartCache _DaypartCache;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
         private InventoryFileSaveRequest _Request { get; set; }
         private string _FileHash { get; set; }
-        private ExcelWorksheet worksheet;
-        private ExcelWorksheet _Worksheet
-        {
-            get
-            {
-                if (worksheet == null)
-                {
-                    worksheet = new ExcelPackage(_Request.StreamData).Workbook.Worksheets.First();
-                }
-                return worksheet;
-            }
-        }
 
         public BarterFileImporter(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
-            , IDaypartCache daypartCache
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _DaypartParsingEngine = inventoryDaypartParsingEngine;
-            _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _AudienceCache = broadcastAudiencesCache;
         }
@@ -99,7 +84,14 @@ namespace Services.Broadcast.Converters.RateImport
 
         public BarterInventoryFile GetPendingBarterInventoryFile(string userName)
         {
-            InventorySource inventorySource = _InventoryRepository.GetInventorySourceByName(_Worksheet.Cells[INVENTORY_SOURCE_CELL].Value.ToString());
+            InventorySource inventorySource = null;
+
+            using (var package = new ExcelPackage(_Request.StreamData))
+            {
+                var worksheet = package.Workbook.Worksheets.First();
+                inventorySource = _InventoryRepository.GetInventorySourceByName(worksheet.Cells[INVENTORY_SOURCE_CELL].GetStringValue());
+            }
+
             var file = new BarterInventoryFile
             {
                 FileName = _Request.FileName ?? "unknown",
@@ -109,19 +101,22 @@ namespace Services.Broadcast.Converters.RateImport
                 CreatedDate = DateTime.Now,
                 InventorySource = inventorySource
             };
+
             if (inventorySource == null)
             {
                 file.ValidationProblems.Add("Could not find inventory source");
             }
+
             return file;
         }
 
         public void ExtractData(BarterInventoryFile barterFile)
         {
-            using (_Worksheet)
+            using (var package = new ExcelPackage(_Request.StreamData))
             {
+                var worksheet = package.Workbook.Worksheets.First();
                 _LoadAndValidateHeaderData(worksheet, barterFile);
-
+                LoadAndValidateDataLines(worksheet, barterFile);
             }
         }
 
@@ -143,19 +138,24 @@ namespace Services.Broadcast.Converters.RateImport
             string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetStringValue().Split(' ')[0]; //split is removing time section
             string endDateText = worksheet.Cells[END_DATE_CELL].GetStringValue().Split(' ')[0];
 
+            bool validDate = true;
             if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
             {
                 validationProblems.Add($"Effective date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
+                validDate = false;
             }            
             if (!DateTime.TryParseExact(endDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
-                validationProblems.Add($"End date is not in the correct format ({(string.Join(" ", DATE_FORMATS))})");
+                validationProblems.Add($"End date is not in the correct format ({(string.Join(", ", DATE_FORMATS))})");
+                validDate = false;
             }
-            if (endDate <= effectiveDate)
+            if (validDate && endDate <= effectiveDate)
             {
                 validationProblems.Add($"End date ({endDateText}) should be greater then effective date ({effectiveDateText})");
+                validDate = false;
             }
-            else
+
+            if(validDate)
             {
                 header.EffectiveDate = effectiveDate;
                 header.EndDate = endDate;
@@ -191,10 +191,9 @@ namespace Services.Broadcast.Converters.RateImport
 
             //Format: M-F 6:30PM-11PM and Standard Cadent Daypart rules
             string daypartString = worksheet.Cells[CONTRACTED_DAYPART_CELL].GetStringValue();
-            if (_DaypartParsingEngine.TryParse(daypartString, out var displayDayparts) && displayDayparts.Any() && displayDayparts.All(x => x.IsValid))
+            if (_DaypartParsingEngine.TryParse(daypartString, out var displayDayparts))
             {
-                DisplayDaypart daypart = displayDayparts.Single();
-                header.ContractedDaypartId = _DaypartCache.GetIdByDaypart(daypart);
+                header.ContractedDaypartId = displayDayparts.Single().Id;
             }
             else
             {
@@ -202,22 +201,23 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             string shareBookText = worksheet.Cells[SHARE_BOOK_CELL].GetTextValue();
-            if (!DateTime.TryParseExact(shareBookText, BOOK_DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime shareBook))
+            if (!DateTime.TryParseExact(shareBookText, BOOK_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime shareBook))
             {
-                validationProblems.Add($"Share book ({shareBookText}) is not in the correct format ({BOOK_DATE_FORMAT})");
+                validationProblems.Add($"Share book ({shareBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})");
             }
             else
             {
                 header.ShareBookId = _MediaMonthAndWeekAggregateCache.GetMediaMonthByYearAndMonth(shareBook.Year, shareBook.Month).Id;
             }
-            
-            //format May 17 (MMM yy) and Hut book must be a media month prior to the Share book media month if value entered
+
+            //formats MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM 
+            //Hut book must be a media month prior to the Share book media month if value entered
             string hutBookText = worksheet.Cells[HUT_BOOK_CELL].GetTextValue();
             if (!string.IsNullOrWhiteSpace(hutBookText))
             {
-                if (!DateTime.TryParseExact(hutBookText, BOOK_DATE_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime hutBook))
+                if (!DateTime.TryParseExact(hutBookText, BOOK_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime hutBook))
                 {
-                    validationProblems.Add($"Hut book ({hutBookText}) is not in the correct format ({BOOK_DATE_FORMAT})");
+                    validationProblems.Add($"Hut book ({hutBookText}) is not in the correct format ({(string.Join(", ", BOOK_DATE_FORMATS))})");
                 }
                 else
                 if (hutBook >= shareBook)
@@ -245,5 +245,131 @@ namespace Services.Broadcast.Converters.RateImport
             barterFile.ValidationProblems.AddRange(validationProblems);
         }
 
+        public void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
+        {
+            const int firstColumnIndex = 2;
+            var rawIndex = 16;
+            var columnIndex = firstColumnIndex;
+            var units = _ReadBarterInventoryUnits(worksheet);
+
+            while (true)
+            {
+                // don`t simplify object initialization because line columns should be read with the current order 
+                var line = new BarterInventoryDataLine();
+                line.Station = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
+                line.Daypart = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
+
+                foreach (var unit in units)
+                {
+                    line.Units.Add(new BarterInventoryDataLine.Unit
+                    {
+                        BarterInventoryUnit = unit,
+                        Spots = worksheet.Cells[rawIndex, columnIndex++].GetIntValue()
+                    });
+                }
+
+                line.Comment = worksheet.Cells[rawIndex, columnIndex].GetStringValue();
+
+                if (_IsLineEmpty(line))
+                {
+                    break;
+                }
+
+                var missingValues = _GetMissingValues(line);
+
+                if (missingValues.Any())
+                {
+                    barterFile.ValidationProblems.Add($"Line {rawIndex} has missing values. Columns: {string.Join(", ", missingValues)}");
+                }
+                else
+                {
+                    barterFile.DataLines.Add(line);
+                }
+                
+                columnIndex = firstColumnIndex;
+                rawIndex++;
+            }
+        }
+
+        private List<BarterInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet)
+        {
+            const string unitsEnd = "Units End";
+            const int headerRowIndex = 13;
+            const int nameRowIndex = 14;
+            const int spotLengthRowIndex = 15;
+            const int firstColumnIndex = 4;
+            var result = new List<BarterInventoryUnit>();
+            var lastColumnIndex = firstColumnIndex;
+
+            // let's find lastColumnIndex
+            while (true)
+            {
+                try
+                {
+                    var value = worksheet.Cells[headerRowIndex, ++lastColumnIndex].Value?.ToString()?.Trim();
+
+                    if (!string.IsNullOrWhiteSpace(value) && value.Equals(unitsEnd, StringComparison.OrdinalIgnoreCase))
+                    {
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Couldn't find last unit column");
+                }
+            }
+
+            for (var i = firstColumnIndex; i <= lastColumnIndex; i++)
+            {
+                var name = worksheet.Cells[nameRowIndex, i].GetStringValue();
+                var spotLength = worksheet.Cells[spotLengthRowIndex, i].GetIntValue();
+                
+                if (string.IsNullOrWhiteSpace(name) || !spotLength.HasValue)
+                {
+                    throw new Exception("Invalid unit was found");
+                }
+
+                result.Add(new BarterInventoryUnit
+                {
+                    Name = name,
+                    SpotLength = spotLength.Value
+                });
+            }
+
+            return result;
+        }
+
+        private bool _IsLineEmpty(BarterInventoryDataLine line)
+        {
+            return string.IsNullOrWhiteSpace(line.Station) &&
+                string.IsNullOrWhiteSpace(line.Daypart) &&
+                string.IsNullOrWhiteSpace(line.Comment) &&
+                line.Units.All(x => !x.Spots.HasValue);
+        }
+
+        private List<string> _GetMissingValues(BarterInventoryDataLine line)
+        {
+            var result = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(line.Station))
+            {
+                result.Add("station");
+            }
+
+            if (string.IsNullOrWhiteSpace(line.Daypart))
+            {
+                result.Add("daypart");
+            }
+
+            foreach (var lineUnit in line.Units)
+            {
+                if (!lineUnit.Spots.HasValue)
+                {
+                    result.Add(lineUnit.BarterInventoryUnit.Name);
+                }
+            }
+
+            return result;
+        }
     }
 }

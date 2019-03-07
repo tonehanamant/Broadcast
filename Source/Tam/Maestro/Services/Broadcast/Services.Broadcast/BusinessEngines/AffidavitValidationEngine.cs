@@ -73,15 +73,6 @@ namespace Services.Broadcast.BusinessEngines
                 });
             }
 
-            if (string.IsNullOrWhiteSpace(affidavitDetail.Affiliate))
-            {
-                validationResults.Add(new WWTVInboundFileValidationResult()
-                {
-                    InvalidField = "Affiliate",
-                    ErrorMessage = "is required",
-                });
-            }
-
             return validationResults;
         }
         

@@ -1,5 +1,4 @@
-﻿using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.StationInventory;
+﻿using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +24,6 @@ namespace Services.Broadcast.Entities
             set { _stationContacts = value;  }
         }
 
-        public List<StationInventoryGroup> InventoryGroups { get; set; } = new List<StationInventoryGroup>();
-        public List<StationInventoryManifest> InventoryManifests { get; set; } = new List<StationInventoryManifest>();
-        public List<StationInventoryManifestStaging> InventoryManifestsStaging { get; set; } = new List<StationInventoryManifestStaging>();
-
         public IEnumerable<StationInventoryManifest> GetAllManifests()
         {
             return InventoryGroups
@@ -36,12 +31,10 @@ namespace Services.Broadcast.Entities
                 .Union(InventoryManifests);
         }
 
-        public bool HasManifests() => HasGroupManifests || HasInventoryManifests || HasInventoryManifestsStaging;
+        public bool HasManifests() => HasGroupManifests || HasInventoryManifests;
 
         private bool HasGroupManifests => InventoryGroups != null && InventoryGroups.Count > 0 && InventoryGroups.SelectMany(g => g.Manifests).Any();
 
         private bool HasInventoryManifests => InventoryManifests != null && InventoryManifests.Count > 0;
-
-        private bool HasInventoryManifestsStaging => InventoryManifestsStaging != null && InventoryManifestsStaging.Count > 0;
     }
 }

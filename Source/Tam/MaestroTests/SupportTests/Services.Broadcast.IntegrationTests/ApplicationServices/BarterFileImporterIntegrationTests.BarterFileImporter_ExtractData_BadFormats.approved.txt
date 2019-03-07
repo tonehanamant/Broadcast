@@ -1,31 +1,32 @@
 ﻿{
   "CreatedBy": "integration test",
-  "FileName": "BarterFileImporter_BadFormats.xlsx",
+  "DataLines": [],
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats.xlsx",
   "FileStatus": 1,
-  "Hash": "22-43-7E-70-00-5A-EE-98-8C-7B-B9-45-0D-08-8F-9B-80-22-FF-D4",
+  "Hash": "4D-DD-5F-0E-FB-DB-47-61-85-4C-52-C7-08-82-81-28-2D-41-F6-33",
   "Header": {
     "AudienceId": 0,
-    "ContractedDaypartId": 0,
     "Cpm": 0.0,
     "DaypartCode": "EMN",
     "EffectiveDate": "0001-01-01T00:00:00",
     "EndDate": "0001-01-01T00:00:00",
-    "HutBookId": 0,
+    "HutBookId": null,
     "PlaybackType": 0,
     "ShareBookId": 0
   },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "Could not find inventory source",
     "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
-    "End date is not in the correct format (MM/dd/yyyy M/dd/yyyy)",
-    "End date (23/31/2019) should be greater then effective date (31/31/2018)",
+    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
     "CPM is not in the correct format (##.##)",
     "Invalid demo (A25-5422)",
     "Invalid contracted daypart (M-SU 4:00AM - 10:00 AM)",
-    "Share book (Feb-17) is not in the correct format (MMM yy)",
-    "Hut book (Feb-17) is not in the correct format (MMM yy)",
+    "Share book (1-Feb-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM)",
+    "Hut book (02-17) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM)",
     "Invalid playback type (LIVE+31)"
   ]
 }

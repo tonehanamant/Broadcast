@@ -46,7 +46,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="model">ProposalDetailPricingGuideSaveRequest object</param>
         /// <param name="username">User requesting the save</param>
         /// <returns>ProposalDetailDto object</returns>
-        void SavePricingGuideDistribution(ProposalDetailPricingGuideSaveRequestDto model, string username);
+        void SavePricingGuideDistribution(ProposalDetailPricingGuideSave model, string username);
 
         /// <summary>
         /// Gets the distribution programs
@@ -292,7 +292,7 @@ namespace Services.Broadcast.Repositories
                         DistributionId = data.id,
                         ProposalId = data.proposal_version_details.proposal_versions.proposal_id,
                         ProposalDetailId = proposalDetailId,
-                        MarketCoverageFileId = context.market_coverage_files.OrderByDescending(x=>x.id).First().id, //get the latest market coverage file
+                        MarketCoverageFileId = data.market_coverage_file_id,
                         BudgetGoal = data.goal_budget,
                         ImpressionGoal = data.goal_impression,
                         Margin = data.adjustment_margin,
@@ -356,7 +356,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="model">ProposalDetailPricingGuideSaveRequest object</param>
         /// <param name="username">User requesting the save</param>
         /// <returns>ProposalDetailDto object</returns>
-        public void SavePricingGuideDistribution(ProposalDetailPricingGuideSaveRequestDto model, string username)
+        public void SavePricingGuideDistribution(ProposalDetailPricingGuideSave model, string username)
         {
             _InReadUncommitedTransaction(context =>
             {
@@ -404,7 +404,7 @@ namespace Services.Broadcast.Repositories
                         forecasted_impressions_per_spot = x.ImpressionsPerSpot,
                         program_name = x.ProgramName,
                         spots = x.Spots,
-                        station_code = (short)x.StationCode,
+                        station_id = x.StationId,
                         station_impressions_per_spot = x.StationImpressionsPerSpot,
                         station_inventory_manifest_dayparts_id = x.ManifestDaypartId
                     }).ToList()
@@ -440,7 +440,7 @@ namespace Services.Broadcast.Repositories
                             },
                             Station = new DisplayScheduleStation
                             {
-                                StationCode = program.station_code,
+                                StationCode = (short)program.station.station_code.Value,
                                 LegacyCallLetters = program.station.legacy_call_letters,
                                 Affiliation = program.station.affiliation,
                                 CallLetters = program.station.station_call_letters

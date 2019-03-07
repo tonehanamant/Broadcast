@@ -20,13 +20,13 @@ namespace EntityFrameworkMapping.Broadcast
         public int spot_length_id { get; set; }
         public string program_name { get; set; }
         public int daypart_id { get; set; }
-        public short station_code { get; set; }
         public string station_call_letters { get; set; }
         public short station_market_code { get; set; }
         public int station_market_rank { get; set; }
         public Nullable<double> spot_impressions { get; set; }
         public Nullable<decimal> spot_cost { get; set; }
         public int audience_id { get; set; }
+        public int station_id { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }

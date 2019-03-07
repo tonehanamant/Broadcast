@@ -1,0 +1,101 @@
+﻿{
+  "CreatedBy": "integration test",
+  "DataLines": [
+    {
+      "Comment": null,
+      "Daypart": "M-F 5-6A",
+      "Station": "WCBS",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 0
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 0
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": 0
+        }
+      ]
+    },
+    {
+      "Comment": null,
+      "Daypart": "SA-SU 6-630A",
+      "Station": "WNYW",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 0
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 0
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": 0
+        }
+      ]
+    }
+  ],
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5379.xlsx",
+  "FileStatus": 1,
+  "Hash": "0B-12-51-3C-32-68-60-38-43-82-28-93-9D-7A-80-2A-A6-CD-1D-BA",
+  "Header": {
+    "AudienceId": 37,
+    "Cpm": 62.2,
+    "DaypartCode": "MSN",
+    "EffectiveDate": "0001-01-01T00:00:00",
+    "EndDate": "0001-01-01T00:00:00",
+    "HutBookId": 449,
+    "PlaybackType": 2,
+    "ShareBookId": 450
+  },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": {
+    "Id": 4,
+    "InventoryType": 1,
+    "IsActive": true,
+    "Name": "TTNW"
+  },
+  "UniqueIdentifier": null,
+  "ValidationProblems": [
+    "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
+    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)"
+  ]
+}

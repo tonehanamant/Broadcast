@@ -1,0 +1,20 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 16 has missing values. Columns: station",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 17 has missing values. Columns: AM 2",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 19 has missing values. Columns: daypart, AM 3",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

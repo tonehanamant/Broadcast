@@ -17,7 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int station_inventory_manifest_id { get; set; }
         public int spot_length_id { get; set; }
-        public decimal rate { get; set; }
+        public decimal spot_cost { get; set; }
     
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

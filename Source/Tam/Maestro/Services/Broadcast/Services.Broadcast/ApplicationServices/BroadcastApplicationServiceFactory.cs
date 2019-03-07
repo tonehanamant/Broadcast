@@ -112,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
-            unityContainer.RegisterType<IPostLogEngine, PostLogEngine>();
+            unityContainer.RegisterType<IPostLogValidationEngine, PostLogValidationEngine>();
             unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
             unityContainer.RegisterType<IBarterFileImporter, BarterFileImporter>();
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
@@ -152,6 +152,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>();
             unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
+            unityContainer.RegisterType<ILockingEngine, LockingEngine>();
 
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
             unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();

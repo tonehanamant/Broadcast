@@ -1,6 +1,0 @@
-﻿{
-  "FailedDownloads": [],
-  "FilesFoundToProcess": [],
-  "SaveResults": [],
-  "ValidationErrors": {}
-}

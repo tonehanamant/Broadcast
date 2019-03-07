@@ -126,8 +126,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_file_barter_header> inventory_file_barter_header { get; set; }
         public virtual DbSet<inventory_file_problems> inventory_file_problems { get; set; }
         public virtual DbSet<market> markets { get; set; }
-        public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual DbSet<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
+        public virtual DbSet<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
+        public virtual DbSet<station> stations { get; set; }
     }
 }

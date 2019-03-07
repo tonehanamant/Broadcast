@@ -60,9 +60,9 @@ var RateUploadManager = UploadManager.extend({
             name: 'Barter',
             enabled: true,
             isSingleFile: true, //single file only
-            fileType: 'xls',
+            fileType: 'xlsx',
             checkType: function (fileExt) {
-                return fileExt == 'xls' || fileExt == 'xlsx';
+                return fileExt == 'xlsx';
             }
         }
 

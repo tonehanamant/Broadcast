@@ -52,7 +52,8 @@ namespace Services.Broadcast.ApplicationServices
             , IBroadcastAudiencesCache audienceCache
             , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
             , IEmailerService emailerService
-            , IFileService fileService) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService)
+            , IFileService fileService
+            , IDataLakeFileService dataLakeFileService) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService)
         {
             _WWTVFtpHelper = wwtvFtpHelper;
             _EmailProcessorService = emailService;
@@ -104,6 +105,8 @@ namespace Services.Broadcast.ApplicationServices
                     _EmailProcessorService.ProcessAndSendTechError(fileName, errorMessage, fileContents);
                     continue;
                 }
+
+                SendFileToDataLake(fileContents, fileName);
 
                 var result = ProcessFileContents(userName, fileName, fileContents);
                 response.SaveResults.Add(result);

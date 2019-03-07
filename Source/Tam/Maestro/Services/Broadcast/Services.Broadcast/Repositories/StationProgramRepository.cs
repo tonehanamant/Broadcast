@@ -54,7 +54,7 @@ namespace Services.Broadcast.Repositories
                             .ToList();
 
                         if (proposalMarketIds != null && proposalMarketIds.Count > 0)
-                            manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code)).ToList();
+                            manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code.Value)).ToList();
 
                         return (manifests.Select(m =>
                             new ProposalProgramDto()
@@ -73,18 +73,18 @@ namespace Services.Broadcast.Repositories
                                 }).ToList(),
                                 StartDate = m.effective_date,
                                 EndDate = m.end_date,
-                                SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.rate).SingleOrDefault(),
+                                SpotCost = m.station_inventory_manifest_rates.Where(r => r.spot_length_id == spotLengthId).Select(r => r.spot_cost).SingleOrDefault(),
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {
-                                    StationCode = m.station_code,
+                                    StationCode = (short)m.station.station_code.Value,
                                     LegacyCallLetters = m.station.legacy_call_letters,
                                     Affiliation = m.station.affiliation,
                                     CallLetters = m.station.station_call_letters
                                 },
                                 Market = new LookupDto
                                 {
-                                    Id = m.station.market_code,
+                                    Id = m.station.market_code.Value,
                                     Display = m.station.market.geography_name
                                 },
                                 Allocations = m.station_inventory_spots.Select(r => new StationInventorySpots
@@ -204,14 +204,14 @@ namespace Services.Broadcast.Repositories
                                 TotalSpots = m.spots_per_week ?? 0,
                                 Station = new DisplayScheduleStation
                                 {
-                                    StationCode = m.station_code,
+                                    StationCode = (short)m.station.station_code.Value,
                                     LegacyCallLetters = m.station.legacy_call_letters,
                                     Affiliation = m.station.affiliation,
                                     CallLetters = m.station.station_call_letters
                                 },
                                 Market = new LookupDto
                                 {
-                                    Id = m.station.market_code,
+                                    Id = m.station.market_code.Value,
                                     Display = m.station.market.geography_name
                                 },
                                 Allocations = m.station_inventory_spots.Select(r => new StationInventorySpots

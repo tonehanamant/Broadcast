@@ -146,7 +146,7 @@ namespace BroadcastComposerWeb.Controllers
             try
             {
                 var result = string.Equals(ratesSaveRequest.InventorySource, "Barter", StringComparison.InvariantCultureIgnoreCase)
-                    ? _ApplicationServiceFactory.GetApplicationService<IBarterInventoryService>().SaveBarterInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName)
+                    ? _ApplicationServiceFactory.GetApplicationService<IBarterInventoryService>().SaveBarterInventoryFile(ratesSaveRequest, ratesSaveRequest.UserName, DateTime.Now)
                     : _ApplicationServiceFactory.GetApplicationService<IInventoryService>().SaveInventoryFile(ratesSaveRequest);
 
                 return new BaseResponse<InventoryFileSaveResult>()

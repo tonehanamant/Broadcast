@@ -18,7 +18,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new InboundFileSaveRequestDetail()
             {
                 Affiliate = "AA",
-                AirTime = new DateTime(2018, 01, 01),
                 Genre = "Comedy",
                 InventorySource = DeliveryFileSourceEnum.Strata,
                 Isci = "AAAAAAA",
@@ -36,17 +35,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 LeadOutShowType = "News"
             };
         }
-
-        [Test]
-        public void ValidateAffidavitRecordValidTest()
-        {
-            var affidavitSaveRequestDetail = _SetupAffidavitSaveRequestDetail();
-
-            var result = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-
-            Assert.IsTrue(!result.Any());
-        }
-                
+                        
         [Test]
         public void ValidateAffidavitRecordInvalidAirTimeTest()
         {
@@ -112,10 +101,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             affidavitSaveRequestDetail.Affiliate = "";
 
             var results = _AffidavitValidationEngine.ValidateAffidavitRecord(affidavitSaveRequestDetail);
-            var result = results.First(r => r.InvalidField == "Affiliate");
+            var result = results.First(r => r.InvalidField == "AirTime");
 
-            Assert.AreEqual("Affiliate", result.InvalidField);
-            Assert.AreEqual("is required",result.ErrorMessage);
+            Assert.AreEqual("AirTime", result.InvalidField);
+            Assert.AreEqual("must be a valid date", result.ErrorMessage);
         }
     }
 }

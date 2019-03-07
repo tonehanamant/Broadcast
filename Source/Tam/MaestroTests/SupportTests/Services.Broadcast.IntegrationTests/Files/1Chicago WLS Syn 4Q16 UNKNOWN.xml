@@ -21,7 +21,7 @@
 		<Advertiser name="Unwired Various" />
 		<Name>Proposal-66643-1</Name>
 		<Outlets>
-			<TelevisionStation callLetters="WLS_UNKNOWN" parentPlus="N" outletId="OUT0" />
+			<TelevisionStation callLetters="WLS_UNKNOWN1-TV" parentPlus="N" outletId="OUT0" />
 		</Outlets>
 		<AvailList identifier="AL-66643-1" startDate="2016-09-26" endDate="2016-12-25" isPackage="Y">
 			<Name>AVAIL NAME ****</Name>

@@ -10,6 +10,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Common.Services;
+using System.Text;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -36,7 +37,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
         private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
         private readonly IEmailerService _EmailerService;
-        private readonly IFileService _FileService;
+        private readonly IFileService _FileService;        
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -49,7 +50,8 @@ namespace Services.Broadcast.ApplicationServices
             , IBroadcastAudiencesCache audienceCache
             , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
             , IEmailerService emailerService
-            , IFileService fileService) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService)
+            , IFileService fileService
+            , IDataLakeFileService dataLakeFileService) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService)
         {
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;
@@ -99,10 +101,12 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 catch (Exception e)
                 {
-                    var errorDeletingFile = "Error deleting affidavit file from FTP site: " + fullFtpPath  + "\r\n" + e;
+                    var errorDeletingFile = "Error deleting affidavit file from FTP site: " + fullFtpPath + "\r\n" + e;
                     _affidavitEmailProcessorService.ProcessAndSendTechError(filePath, errorDeletingFile, fileContents);
                     continue;
                 }
+
+                SendFileToDataLake(fileContents, fileName);
 
                 var result = ProcessFileContents(userName, fileName, fileContents);
                 response.SaveResults.Add(result);
@@ -119,7 +123,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return response;
         }
-
+        
         public WWTVSaveResult ProcessFileContents(string userName, string fileName, string fileContents)
         {
             List<WWTVInboundFileValidationResult> validationErrors = new List<WWTVInboundFileValidationResult>();

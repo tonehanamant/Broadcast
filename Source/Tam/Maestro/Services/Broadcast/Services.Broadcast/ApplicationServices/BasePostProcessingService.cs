@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -24,6 +25,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IEmailerService _EmailerService;
         private readonly IFileService _FileService;
+        private readonly IDataLakeFileService _DataLakeFileService;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -31,13 +33,15 @@ namespace Services.Broadcast.ApplicationServices
             , IWWTVFtpHelper wwtvFTPHelper
             , IBroadcastAudiencesCache audienceCache
             , IEmailerService emailerService
-            , IFileService fileService)
+            , IFileService fileService
+            , IDataLakeFileService dataLakeFileService)
         {
             _EmailHelper = emailHelper;
             _WWTVFtpHelper = wwtvFTPHelper;
             _AudienceCache = audienceCache;
             _EmailerService = emailerService;
             _FileService = fileService;
+            _DataLakeFileService = dataLakeFileService;
         }
 
         /// <summary>
@@ -125,6 +129,27 @@ namespace Services.Broadcast.ApplicationServices
                 });
             }
             return localPaths;
+        }
+        
+        /// <summary>
+        /// Sends a file to data lake
+        /// </summary>
+        /// <param name="fileContents">File content to send</param>
+        /// <param name="fileName">Filename for the file</param>
+        public void SendFileToDataLake(string fileContents, string fileName)
+        {
+            try
+            {
+                _DataLakeFileService.Save(new FileRequest
+                {
+                    FileName = fileName,
+                    StreamData = new MemoryStream(Encoding.UTF8.GetBytes(fileContents))
+                });
+            }
+            catch
+            {
+                throw new ApplicationException("Unable to send WWTV file to Data Lake shared folder and e-mail reporting the error.");
+            }
         }
 
         /// <summary>
