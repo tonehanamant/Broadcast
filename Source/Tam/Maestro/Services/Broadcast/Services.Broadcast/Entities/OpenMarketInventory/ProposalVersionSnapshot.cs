@@ -283,7 +283,7 @@ namespace Services.Broadcast.Entities.OpenMarketInventory
 
                         public int DaypartId { get; set; }
 
-                        public short StationCode { get; set; }
+                        public int StationId { get; set; }
 
                         public string StationCallLetters { get; set; }
 

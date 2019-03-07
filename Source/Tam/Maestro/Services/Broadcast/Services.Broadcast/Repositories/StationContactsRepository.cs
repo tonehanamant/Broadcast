@@ -1,5 +1,4 @@
-﻿using System.Runtime.Remoting.Contexts;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Exceptions;
@@ -37,8 +36,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from c in context.station_contacts
-                            where stationCodes.Contains(c.station_code)
+                    return (from c in context.station_contacts.Include(x => x.station)
+                            where stationCodes.Contains(c.station.station_code.Value)
                             select new StationContact()
                             {
                                 Id = c.id,
@@ -47,7 +46,8 @@ namespace Services.Broadcast.Repositories
                                 Fax = c.fax,
                                 Email = c.email,
                                 Company = c.company,
-                                StationCode = c.station_code,
+                                StationCode = c.station.station_code.Value,
+                                StationId = c.station_id,
                                 ModifiedDate = c.modified_date,
                                 Type = (StationContact.StationContactType) c.type
                             }).ToList();
@@ -68,7 +68,9 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var contactList = context.station_contacts.Where(c => c.name.ToLower().Contains(query.ToLower()))
+                    var contactList = context.station_contacts
+                        .Include(x => x.station)
+                        .Where(c => c.name.ToLower().Contains(query.ToLower()))
                         .GroupBy(c => new {c.name, c.type, c.company})
                         .Select(g => g.OrderByDescending(c => c.modified_date).FirstOrDefault())
                         .Select(
@@ -80,7 +82,8 @@ namespace Services.Broadcast.Repositories
                                 Fax = c.fax,
                                 Name = c.name,
                                 Phone = c.phone,
-                                StationCode = c.station_code,
+                                StationCode = c.station.station_code.Value,
+                                StationId = c.station_id,
                                 ModifiedDate = c.modified_date,
                                 Type = (StationContact.StationContactType)c.type,
                             }).OrderBy(c => c.Name).ToList();
@@ -104,7 +107,7 @@ namespace Services.Broadcast.Repositories
                             email = stationContact.Email,
                             company = stationContact.Company,
                             type = (byte)stationContact.Type,
-                            station_code = (short)stationContact.StationCode,
+                            station_id = stationContact.StationId,
                             created_by = user,
                             created_date = timestamp,
                             modified_by = user,
@@ -137,7 +140,7 @@ namespace Services.Broadcast.Repositories
                             dbContact.modified_by = user;
                             dbContact.modified_date = DateTime.Now;
                             dbContact.modified_file_id = fileId;
-                            dbContact.station_code = (short) stationContact.StationCode;
+                            dbContact.station_id = stationContact.StationId;
                             context.Entry(dbContact).State = EntityState.Modified;
                         }
                         else

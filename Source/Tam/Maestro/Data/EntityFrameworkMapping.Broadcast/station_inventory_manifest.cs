@@ -27,7 +27,6 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public short station_code { get; set; }
         public int spot_length_id { get; set; }
         public Nullable<int> spots_per_week { get; set; }
         public System.DateTime effective_date { get; set; }
@@ -37,6 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> spots_per_day { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
         public string comment { get; set; }
+        public int station_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
@@ -47,9 +47,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }
         public virtual inventory_files inventory_files { get; set; }
-        public virtual station station { get; set; }
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual ICollection<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
+        public virtual station station { get; set; }
     }
 }

@@ -217,6 +217,7 @@
     <Compile Include="Aggregates\SchedulesAggregate.cs" />
     <Compile Include="ApplicationServices\BarterInventoryService.cs" />
     <Compile Include="ApplicationServices\DataLakeFileService.cs" />
+    <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\InventoryDaypartParsingEngine.cs" />

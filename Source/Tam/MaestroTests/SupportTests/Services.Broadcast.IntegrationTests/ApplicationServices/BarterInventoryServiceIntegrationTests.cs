@@ -81,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
                 jsonResolver.Ignore(typeof(MediaWeek), "_Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -120,6 +121,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
                 jsonResolver.Ignore(typeof(MediaWeek), "_Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -159,6 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
                 jsonResolver.Ignore(typeof(MediaWeek), "_Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -197,15 +200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     problems = e.Problems;
                 }
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var problemsJson = IntegrationTestHelper.ConvertToJson(problems, jsonSettings);
-
-                Approvals.Verify(problemsJson);
+                _VerifyInventoryFileProblems(problems);
             }
         }
 
@@ -226,15 +221,61 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                var jsonSettings = new JsonSerializerSettings()
+                _VerifyInventoryFileSaveResult(result);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterFileImporter_ExtractData_PRI5390()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx";
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                _VerifyInventoryFileProblems(problems);
             }
+        }
+
+        private static void _VerifyInventoryFileProblems(List<InventoryFileProblem> problems)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var problemsJson = IntegrationTestHelper.ConvertToJson(problems, jsonSettings);
+
+            Approvals.Verify(problemsJson);
+        }
+
+        private static void _VerifyInventoryFileSaveResult(InventoryFileSaveResult result)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
     }
 }

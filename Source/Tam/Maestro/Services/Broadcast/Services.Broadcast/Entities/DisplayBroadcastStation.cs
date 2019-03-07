@@ -10,7 +10,8 @@ namespace Services.Broadcast.Entities
             WithoutTodaysData
         }
 
-        public int Code { get; set; }
+        public int Id { get; set; }
+        public int? Code { get; set; }
         public string CallLetters { get; set; }
         public string LegacyCallLetters { get; set; }
         public string OriginMarket { get; set; }

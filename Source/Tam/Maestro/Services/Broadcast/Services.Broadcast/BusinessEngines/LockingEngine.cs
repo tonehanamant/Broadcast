@@ -10,13 +10,13 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface ILockingEngine : IApplicationService
     {
-        void LockStations(Dictionary<int, string> fileStationsDict, List<int> lockedStationCodes, List<IDisposable> stationLocks);
+        void LockStations(Dictionary<int, string> stationsDict, List<int> lockedStationIds, List<IDisposable> stationLocks);
 
-        void UnlockStations(List<int> lockedStationCodes, List<IDisposable> stationLocks);
+        void UnlockStations(List<int> lockedStationIds, List<IDisposable> stationLocks);
 
-        LockResponse LockStation(int stationCode);
+        LockResponse LockStation(int stationId);
 
-        ReleaseLockResponse UnlockStation(int stationCode);
+        ReleaseLockResponse UnlockStation(int stationId);
     }
 
     public class LockingEngine : ILockingEngine
@@ -33,31 +33,31 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public void LockStations(
-            Dictionary<int, string> fileStationsDict, 
-            List<int> lockedStationCodes,
+            Dictionary<int, string> stationsDict, 
+            List<int> lockedStationIds,
             List<IDisposable> stationLocks)
         {
-            foreach (var fileStation in fileStationsDict)
+            foreach (var station in stationsDict)
             {
-                var lockResult = LockStation(fileStation.Key);
+                var lockResult = LockStation(station.Key);
 
                 if (lockResult.Success)
                 {
-                    lockedStationCodes.Add(fileStation.Key);
-                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(fileStation.Key)));
+                    lockedStationIds.Add(station.Key);
+                    stationLocks.Add(new BomsLockManager(_SmsClient, new StationToken(station.Key)));
                 }
                 else
                 {
-                    throw new ApplicationException($"Unable to update station. Station locked for editing {fileStation.Value}.");
+                    throw new ApplicationException($"Unable to update station. Station locked for editing {station.Value}.");
                 }
             }
         }
 
-        public void UnlockStations(List<int> lockedStationCodes, List<IDisposable> stationLocks)
+        public void UnlockStations(List<int> lockedStationIds, List<IDisposable> stationLocks)
         {
-            foreach (var stationCode in lockedStationCodes)
+            foreach (var stationId in lockedStationIds)
             {
-                UnlockStation(stationCode);
+                UnlockStation(stationId);
             }
 
             foreach (var stationLock in stationLocks)
@@ -66,14 +66,14 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public LockResponse LockStation(int stationCode)
+        public LockResponse LockStation(int stationId)
         {
-            return _LockingManager.LockObject($"broadcast_station : {stationCode}");
+            return _LockingManager.LockObject($"broadcast_station : {stationId}");
         }
 
-        public ReleaseLockResponse UnlockStation(int stationCode)
+        public ReleaseLockResponse UnlockStation(int stationId)
         {
-            return _LockingManager.ReleaseObject($"broadcast_station : {stationCode}");
+            return _LockingManager.ReleaseObject($"broadcast_station : {stationId}");
         }
     }
 }

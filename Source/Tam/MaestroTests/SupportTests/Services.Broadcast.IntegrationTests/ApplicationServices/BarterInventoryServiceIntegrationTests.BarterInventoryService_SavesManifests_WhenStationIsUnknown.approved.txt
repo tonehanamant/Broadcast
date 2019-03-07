@@ -530,7 +530,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,
@@ -1075,7 +1075,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,
@@ -1620,7 +1620,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,
@@ -2165,7 +2165,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,
@@ -2710,7 +2710,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,
@@ -3255,7 +3255,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,
@@ -3800,7 +3800,7 @@
         "Station": {
           "Affiliation": null,
           "CallLetters": "Unknowns-TV",
-          "Code": 0,
+          "Code": null,
           "LegacyCallLetters": "Unknowns",
           "ManifestMaxEndDate": null,
           "MarketCode": null,

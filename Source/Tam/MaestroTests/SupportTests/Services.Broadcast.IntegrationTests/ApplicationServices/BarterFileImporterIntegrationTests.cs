@@ -84,8 +84,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _VerifyBarterInventoryFile(file);
             }
         }
-
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void BarterFileImporter_ExtractData_MoreBadFormats()

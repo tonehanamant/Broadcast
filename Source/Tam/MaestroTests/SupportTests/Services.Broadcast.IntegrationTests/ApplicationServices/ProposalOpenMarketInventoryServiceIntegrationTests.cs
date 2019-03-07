@@ -1767,6 +1767,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(ProposalVersionSpotLength), "Id");
                 jsonResolver.Ignore(typeof(StationInventorySpotSnapshot), "Id");
                 jsonResolver.Ignore(typeof(StationInventorySpotSnapshot), "ProposalVersionDetailQuarterWeekId");
+                jsonResolver.Ignore(typeof(StationInventorySpotSnapshot), "StationId");
 
                 var jsonSettings = new JsonSerializerSettings
                 {

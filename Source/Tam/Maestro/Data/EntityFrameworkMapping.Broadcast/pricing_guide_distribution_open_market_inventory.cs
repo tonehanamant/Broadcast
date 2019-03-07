@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int pricing_guide_distribution_id { get; set; }
         public short market_code { get; set; }
-        public short station_code { get; set; }
         public int station_inventory_manifest_dayparts_id { get; set; }
         public int daypart_id { get; set; }
         public string program_name { get; set; }
@@ -27,7 +26,8 @@ namespace EntityFrameworkMapping.Broadcast
         public double station_impressions_per_spot { get; set; }
         public decimal cost_per_spot { get; set; }
         public int manifest_id { get; set; }
-    
+        public int station_id { get; set; }
+
         public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest_dayparts station_inventory_manifest_dayparts { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
