@@ -1,0 +1,13 @@
+﻿[
+  {
+    "Company": "ABC NTVS Inc.",
+    "Email": null,
+    "Fax": "(212) 456-6274",
+    "InventorySourceString": null,
+    "Name": "Hanington, Jack",
+    "Phone": "(212) 456-7871",
+    "StationCallLetters": "WLS_UNKNOWN1-TV",
+    "StationCode": null,
+    "Type": "Station"
+  }
+]

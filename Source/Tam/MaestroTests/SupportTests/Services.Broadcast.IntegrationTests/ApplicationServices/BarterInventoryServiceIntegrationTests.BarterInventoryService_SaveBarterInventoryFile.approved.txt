@@ -5,7 +5,6 @@
   "Hash": "F6-19-2F-68-07-6F-CA-BC-75-23-D7-EE-01-DE-93-4E-89-F2-69-96",
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventoryManifestsStaging": [],
   "InventorySource": {
     "Id": 4,
     "InventoryType": 1,

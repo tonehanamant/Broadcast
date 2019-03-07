@@ -18,7 +18,9 @@ using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -3738,7 +3740,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestStaging), "ManifestId");
+                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(LookupDto), "Id");
+                jsonResolver.Ignore(typeof(DisplayAudience), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
+                jsonResolver.Ignore(typeof(MediaWeek), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Code");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -3747,22 +3758,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _InventoryFileService.SaveInventoryFile(request);
 
-                var manifests = _InventoryRepository.GetManifestsStagingByFileId(result.FileId);
-
-                // sort manifests in order to get the same results for several test runs
-                manifests = manifests
-                    .OrderBy(x => x.EffectiveDate)
-                    .ThenBy(x => x.EndDate)
-                    .ThenBy(x => x.ManifestAudiencesReferences.FirstOrDefault()?.Impressions ?? 0)
-                    .ThenBy(x => x.ManifestDayparts.FirstOrDefault()?.ProgramName ?? string.Empty)
-                    .ToList();
-
+                var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(result.FileId);
                 var manifestsJson = IntegrationTestHelper.ConvertToJson(manifests, jsonSettings);
 
                 Approvals.Verify(manifestsJson);
             }
         }
-        
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanLoadOpenMarketInventoryFileWithUnknownStation_Contacts()
+        {
+            var contactQueryString = "Hanington, Jack";
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationContact), "Id");
+            jsonResolver.Ignore(typeof(StationContact), "StationId");
+            jsonResolver.Ignore(typeof(StationContact), "ModifiedDate");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
+                _InventoryFileService.SaveInventoryFile(request);
+
+                var result = _InventoryFileService.FindStationContactsByName(contactQueryString);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
         [Test]
         public void CanLoadHudsonOpenMarketInventoryFile()
         {

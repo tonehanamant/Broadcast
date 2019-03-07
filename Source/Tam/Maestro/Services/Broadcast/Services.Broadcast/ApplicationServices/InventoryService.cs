@@ -14,7 +14,6 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 using Tam.Maestro.Common;
@@ -71,7 +70,7 @@ namespace Services.Broadcast.ApplicationServices
 
     public class InventoryService : IInventoryService
     {
-        private readonly IStationRepository _stationRepository;
+        private readonly IStationRepository _StationRepository;
         private readonly IDataRepositoryFactory _broadcastDataRepositoryFactory;
         private readonly IDaypartCache _daypartCache;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
@@ -92,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly ILockingEngine _LockingEngine;
         private readonly IDataLakeFileService _DataLakeFileService;
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -106,10 +106,11 @@ namespace Services.Broadcast.ApplicationServices
             IRatingForecastService ratingForecastService,
             INsiPostingBookService nsiPostingBookService,
             IDataLakeFileService dataLakeFileService,
-            ILockingEngine lockingEngine)
+            ILockingEngine lockingEngine,
+            IStationProcessingEngine stationProcessingEngine)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _stationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _daypartCache = daypartCache;
             _AudiencesCache = audiencesCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
@@ -131,12 +132,13 @@ namespace Services.Broadcast.ApplicationServices
             _NsiPostingBookService = nsiPostingBookService;
             _LockingEngine = lockingEngine;
             _DataLakeFileService = dataLakeFileService;
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
         {
-            var stations = _stationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySourceOrDefault(rateSource));
-
+            var stations = _StationRepository.GetBroadcastStationsWithFlightWeeksForRateSource(_ParseInventorySourceOrDefault(rateSource));
+         
             //set null every modified date that looks like 0001-01-01T00:00:00 so the UI knows where to put dashes
             stations.Where(x => x.ModifiedDate == DateTime.MinValue).ForEach(x => x.ModifiedDate = null);
 
@@ -157,7 +159,7 @@ namespace Services.Broadcast.ApplicationServices
             var inventorySource = _ParseInventorySourceOrDefault(rateSourceString);
 
             var isIncluded = (filter == DisplayBroadcastStation.StationFilter.WithTodaysData);
-            var stations = _stationRepository.GetBroadcastStationsByDate(inventorySource.Id, today, isIncluded);
+            var stations = _StationRepository.GetBroadcastStationsByDate(inventorySource.Id, today, isIncluded);
 
             //set null every modified date that looks like 0001-01-01T00:00:00 so the UI knows where to put dashes
             stations.Where(x => x.ModifiedDate == DateTime.MinValue).ForEach(x => x.ModifiedDate = null);
@@ -283,13 +285,7 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
-                var startTime = DateTime.Now;
-
                 fileImporter.ExtractFileData(request.StreamData, inventoryFile, request.EffectiveDate);
-
-                var endTime = DateTime.Now;
-
-                Debug.WriteLine("Completed file parsing in {0}", endTime - startTime);
 
                 if (fileImporter.FileProblems.Any())
                 {
@@ -301,20 +297,16 @@ namespace Services.Broadcast.ApplicationServices
                     throw new ApplicationException("Unable to parse any file records.");
                 }
 
+                _CreateUnknownStationsAndPopulate(inventoryFile, request.UserName);
+
                 var validationProblems = _inventoryFileValidator.ValidateInventoryFile(inventoryFile);
 
                 fileImporter.FileProblems.AddRange(validationProblems.InventoryFileProblems);
-
-                endTime = DateTime.Now;
-
-                Debug.WriteLine("Completed file validation in {0}", endTime - startTime);
 
                 if (fileImporter.FileProblems.Any())
                 {
                     return _SetFileProblemWarnings(inventoryFile.Id, fileImporter.FileProblems);
                 }
-
-                startTime = DateTime.Now;
 
                 var fileStationsDict = inventoryFile
                    .GetAllManifests()
@@ -340,17 +332,13 @@ namespace Services.Broadcast.ApplicationServices
 
                     _AddNewStationInventoryGroups(request, inventoryFile);
                     _SaveInventoryFileContacts(request, inventoryFile);
-                    _stationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now, inventorySource.Id);
+                    _StationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), request.UserName, DateTime.Now, inventorySource.Id);
                     inventoryFile.FileStatus = FileStatusEnum.Loaded;
                     _inventoryFileRepository.UpdateInventoryFile(inventoryFile, request.UserName);
 
                     transaction.Complete();
 
                     _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
-
-                    endTime = DateTime.Now;
-
-                    Debug.WriteLine("Completed file saving in {0}", endTime - startTime);
                 }
             }
             catch (FileUploadException<InventoryFileProblem> e)
@@ -377,6 +365,35 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return _SetFileProblemWarnings(inventoryFile.Id, new List<InventoryFileProblem>());
+        }
+
+        private void _CreateUnknownStationsAndPopulate(InventoryFile inventoryFile, string userName)
+        {
+            var now = DateTime.Now;
+            var manifestsWithUnknownStations = inventoryFile.GetAllManifests().Where(x => x.Station.Id == 0);
+            var contactsWithUnknownStations = inventoryFile.StationContacts.Where(x => x.StationId == 0);
+            var unknownStations = manifestsWithUnknownStations
+                .Select(x => x.Station.CallLetters)
+                .Union(contactsWithUnknownStations.Select(x => x.StationCallLetters))
+                .Distinct(StringComparer.CurrentCultureIgnoreCase);
+            var stationsToCreate = unknownStations.Select(stationName => new DisplayBroadcastStation
+            {
+                CallLetters = stationName,
+                LegacyCallLetters = _StationProcessingEngine.StripStationSuffix(stationName),
+                ModifiedDate = now
+            });
+            var newStations = _StationRepository.CreateStations(stationsToCreate, userName);
+            var stationsDict = newStations.ToDictionary(x => x.CallLetters, x => x);
+
+            foreach (var manifest in manifestsWithUnknownStations)
+            {
+                manifest.Station = stationsDict[manifest.Station.CallLetters];
+            }
+
+            foreach (var contact in contactsWithUnknownStations)
+            {
+                contact.StationId = stationsDict[contact.StationCallLetters].Id;
+            }
         }
 
         private void _AddRequestAudienceInfo(InventoryFileSaveRequest request, InventoryFile inventoryFile)
@@ -416,8 +433,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveInventoryFileContacts(InventoryFileSaveRequest request, InventoryFile inventoryFile)
         {
-            var fileStationCodes = inventoryFile.StationContacts.Select(m => m.StationCode).Distinct().ToList();
-            List<StationContact> existingStationContacts = _stationContactsRepository.GetStationContactsByStationCode(fileStationCodes);
+            var fileStationIds = inventoryFile.StationContacts.Select(m => m.StationId).Distinct().ToList();
+            List<StationContact> existingStationContacts = _stationContactsRepository.GetStationContactsByStationIds(fileStationIds);
 
             var contactsUpdateList = inventoryFile.StationContacts.Intersect(existingStationContacts, StationContact.StationContactComparer).ToList();
 
@@ -436,7 +453,7 @@ namespace Services.Broadcast.ApplicationServices
 
             // update modified date for each station
             var timeStamp = DateTime.Now;
-            _stationRepository.UpdateStationList(fileStationCodes, request.UserName, timeStamp, inventoryFile.InventorySource.Id);
+            _StationRepository.UpdateStationList(fileStationIds, request.UserName, timeStamp, inventoryFile.InventorySource.Id);
         }
 
         public List<StationContact> GetStationContacts(string inventorySource, int stationCode)
@@ -539,7 +556,7 @@ namespace Services.Broadcast.ApplicationServices
                 _inventoryRepository.UpdateStationInventoryManifest(manifest);
             }
 
-            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp, manifest.InventorySourceId);
+            _StationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp, manifest.InventorySourceId);
         }
 
         private void _SetManifestValuesFromPreviousManifest(StationInventoryManifest manifest,
@@ -577,7 +594,7 @@ namespace Services.Broadcast.ApplicationServices
                 _inventoryRepository.SaveStationInventoryManifest(manifest);
             }
             var timeStamp = DateTime.Now;
-            _stationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp, manifest.InventorySourceId);
+            _StationRepository.UpdateStation(stationProgram.StationCode, userName, timeStamp, manifest.InventorySourceId);
         }
 
         private StationInventoryManifest _MapToStationInventoryManifest(StationProgram stationProgram)
@@ -601,7 +618,7 @@ namespace Services.Broadcast.ApplicationServices
                 Station = new DisplayBroadcastStation
                 {
                     Code = stationProgram.StationCode,
-                    Id = _stationRepository.GetBroadcastStationByCode(stationProgram.StationCode).Id
+                    Id = _StationRepository.GetBroadcastStationByCode(stationProgram.StationCode).Id
                 },
                 InventorySourceId = inventorySource.Id,
                 SpotLengthId = spotLengthId,
@@ -673,7 +690,7 @@ namespace Services.Broadcast.ApplicationServices
             if (stationContact == null)
                 throw new Exception("Cannot save station contact with invalid data.");
 
-            using (new BomsLockManager(_SmsClient, new StationToken(stationContact.StationCode)))
+            using (new BomsLockManager(_SmsClient, new StationToken(stationContact.StationCode.Value)))
             {
                 if (string.IsNullOrWhiteSpace(stationContact.Name))
                     throw new Exception("Cannot save station contact without specifying name value.");
@@ -712,7 +729,7 @@ namespace Services.Broadcast.ApplicationServices
                                 null);
                     }
 
-                    _stationRepository.UpdateStation(stationContact.StationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
+                    _StationRepository.UpdateStation(stationContact.StationCode.Value, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
 
                     transaction.Complete();
                 }
@@ -726,7 +743,7 @@ namespace Services.Broadcast.ApplicationServices
             if (stationContactId <= 0)
                 throw new Exception("Cannot delete station contact with invalid data.");
 
-            var stationCode = _stationRepository.GetBroadcastStationCodeByContactId(stationContactId);
+            var stationCode = _StationRepository.GetBroadcastStationCodeByContactId(stationContactId);
 
             using (new BomsLockManager(_SmsClient, new StationToken(stationCode)))
             using (var transaction = new TransactionScopeWrapper())
@@ -736,7 +753,7 @@ namespace Services.Broadcast.ApplicationServices
                     .DeleteStationContact(stationContactId);
 
                 // update staion modified date
-                _stationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
+                _StationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
 
                 transaction.Complete();
             }
@@ -747,7 +764,7 @@ namespace Services.Broadcast.ApplicationServices
         public StationDetailDto GetStationDetailByCode(string inventorySource, int stationCode)
         {
             var rateSource = _ParseInventorySource(inventorySource);
-            var station = _stationRepository.GetBroadcastStationByCode(stationCode);
+            var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             var stationManifests = _inventoryRepository.GetStationManifestsBySourceAndStationCode(rateSource,
                 stationCode);
 
@@ -983,7 +1000,7 @@ namespace Services.Broadcast.ApplicationServices
                     conflict.StartDate, conflict.EndDate));
             }
 
-            var station = _stationRepository.GetBroadcastStationByCode(conflict.StationCode);
+            var station = _StationRepository.GetBroadcastStationByCode(conflict.StationCode);
 
             var airtime = DaypartDto.ConvertDaypartDto(conflict.Airtime);
             airtime.Id = _daypartCache.GetIdByDaypart(airtime);
@@ -1013,14 +1030,14 @@ namespace Services.Broadcast.ApplicationServices
         public bool DeleteProgram(int programId, string inventorySource, int stationCode, string user)
         {
             _inventoryRepository.RemoveManifest(programId);
-            _stationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
+            _StationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
             return true;
         }
 
         public bool ExpireManifest(int programId, DateTime endDate, string inventorySource, int stationCode, string user)
         {
             _inventoryRepository.ExpireManifest(programId, endDate);
-            _stationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
+            _StationRepository.UpdateStation(stationCode, user, DateTime.Now, _ParseInventorySourceOrDefault(inventorySource).Id);
             return true;
         }
 
@@ -1070,13 +1087,13 @@ namespace Services.Broadcast.ApplicationServices
 
         public LockResponse LockStation(int stationCode)
         {
-            var station = _stationRepository.GetBroadcastStationByCode(stationCode);
+            var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             return _LockingEngine.LockStation(station.Id);
         }
 
         public ReleaseLockResponse UnlockStation(int stationCode)
         {
-            var station = _stationRepository.GetBroadcastStationByCode(stationCode);
+            var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             return _LockingEngine.UnlockStation(station.Id);
         }
     }

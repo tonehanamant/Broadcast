@@ -80,7 +80,6 @@
   "Id": 0,
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventoryManifestsStaging": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [

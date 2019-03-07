@@ -23,8 +23,9 @@ namespace Services.Broadcast.Entities
         public string Company { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public StationContactType Type { get; set; }
-        public int StationCode { get; set; }
+        public int? StationCode { get; set; }
         public int StationId { get; set; }
+        public string StationCallLetters { get; set; }
         public string InventorySourceString { get; set; }
         public DateTime ModifiedDate { get; set; }
 
@@ -37,7 +38,7 @@ namespace Services.Broadcast.Entities
                 if (y is null) return false;
                 if (x.GetType() != y.GetType()) return false;
                 return string.Equals(x.Name, y.Name, StringComparison.InvariantCultureIgnoreCase) 
-                    && string.Equals(x.Company, y.Company, StringComparison.InvariantCultureIgnoreCase) && x.Type == y.Type && x.StationCode == y.StationCode;
+                    && string.Equals(x.Company, y.Company, StringComparison.InvariantCultureIgnoreCase) && x.Type == y.Type && x.StationId == y.StationId;
             }
 
             public int GetHashCode(StationContact obj)
@@ -47,7 +48,7 @@ namespace Services.Broadcast.Entities
                     int hashCode = (obj.Name != null ? obj.Name.ToUpperInvariant().GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ (obj.Company != null ? obj.Company.ToUpperInvariant().GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ (int) obj.Type;
-                    hashCode = (hashCode * 397) ^ obj.StationCode;
+                    hashCode = (hashCode * 397) ^ obj.StationId;
                     return hashCode;
                 }
             }
