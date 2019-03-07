@@ -400,24 +400,24 @@ BEGIN
 	ORDER BY 
 		po.id;
 
-	IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
-	IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
+	--IF OBJECT_ID('tempdb..#rating_requests') IS NOT NULL DROP TABLE #rating_requests;
+	--IF OBJECT_ID('tempdb..#audience_ids') IS NOT NULL DROP TABLE #audience_ids;
 
-	IF OBJECT_ID('tempdb..#hut_univ') IS NOT NULL DROP TABLE #hut_univ;
+	--IF OBJECT_ID('tempdb..#hut_univ') IS NOT NULL DROP TABLE #hut_univ;
                 
-	IF OBJECT_ID('tempdb..#hut_market_codes') IS NOT NULL DROP TABLE #hut_market_codes;
-	IF OBJECT_ID('tempdb..#share_market_codes') IS NOT NULL DROP TABLE #share_market_codes;
+	--IF OBJECT_ID('tempdb..#hut_market_codes') IS NOT NULL DROP TABLE #hut_market_codes;
+	--IF OBJECT_ID('tempdb..#share_market_codes') IS NOT NULL DROP TABLE #share_market_codes;
                 
-	IF OBJECT_ID('tempdb..#hut_usage_days') IS NOT NULL DROP TABLE #hut_usage_days;
-	IF OBJECT_ID('tempdb..#share_usage_days') IS NOT NULL DROP TABLE #share_usage_days;
+	--IF OBJECT_ID('tempdb..#hut_usage_days') IS NOT NULL DROP TABLE #hut_usage_days;
+	--IF OBJECT_ID('tempdb..#share_usage_days') IS NOT NULL DROP TABLE #share_usage_days;
                 
-	IF OBJECT_ID('tempdb..#share_viewer_days') IS NOT NULL DROP TABLE #share_viewer_days;
+	--IF OBJECT_ID('tempdb..#share_viewer_days') IS NOT NULL DROP TABLE #share_viewer_days;
 
-	IF OBJECT_ID('tempdb..#hut') IS NOT NULL DROP TABLE #hut;
-	IF OBJECT_ID('tempdb..#share') IS NOT NULL DROP TABLE #share;
+	--IF OBJECT_ID('tempdb..#hut') IS NOT NULL DROP TABLE #hut;
+	--IF OBJECT_ID('tempdb..#share') IS NOT NULL DROP TABLE #share;
 
-	IF OBJECT_ID('tempdb..#pre_output') IS NOT NULL DROP TABLE #pre_output;
-	IF OBJECT_ID('tempdb..#primary_market_universes') IS NOT NULL DROP TABLE #primary_market_universes;
+	--IF OBJECT_ID('tempdb..#pre_output') IS NOT NULL DROP TABLE #pre_output;
+	--IF OBJECT_ID('tempdb..#primary_market_universes') IS NOT NULL DROP TABLE #primary_market_universes;
 END
 
 GO
@@ -1348,7 +1348,7 @@ GO
 
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
-
+GO
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '19.04.1' -- Current release version
