@@ -6,6 +6,7 @@
     "InventorySourceString": null,
     "Name": "Darah Wright",
     "Phone": null,
+    "StationCallLetters": null,
     "StationCode": 5044,
     "Type": "Station"
   },
@@ -16,6 +17,7 @@
     "InventorySourceString": null,
     "Name": "Josh J",
     "Phone": "(001)001-0010",
+    "StationCallLetters": null,
     "StationCode": 5044,
     "Type": "Station"
   }

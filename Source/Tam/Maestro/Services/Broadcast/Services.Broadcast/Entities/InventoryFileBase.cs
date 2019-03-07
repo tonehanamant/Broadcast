@@ -15,6 +15,5 @@ namespace Services.Broadcast.Entities
 
         public List<StationInventoryGroup> InventoryGroups { get; set; } = new List<StationInventoryGroup>();
         public List<StationInventoryManifest> InventoryManifests { get; set; } = new List<StationInventoryManifest>();
-        public List<StationInventoryManifestStaging> InventoryManifestsStaging { get; set; } = new List<StationInventoryManifestStaging>();
     }
 }

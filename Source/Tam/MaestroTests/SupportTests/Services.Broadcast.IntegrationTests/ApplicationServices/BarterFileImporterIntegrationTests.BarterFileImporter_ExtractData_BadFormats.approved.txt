@@ -16,7 +16,6 @@
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventoryManifestsStaging": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
