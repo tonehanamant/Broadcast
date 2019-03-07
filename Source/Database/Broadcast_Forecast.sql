@@ -687,6 +687,7 @@ ALTER PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart_Averages_Pr
 	@demo VARCHAR(MAX),
 	@ratings_request RatingsInputWithId READONLY,
 	@min_playback_type VARCHAR(1)
+WITH RECOMPILE
 AS
 BEGIN
 	DECLARE @posting_media_month_id_sniff SMALLINT=@posting_media_month_id;
@@ -696,20 +697,28 @@ BEGIN
 	SET NOCOUNT ON;
 	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
-	CREATE TABLE #rating_requests (id int NOT NULL,	legacy_call_letters varchar(15) NOT NULL, mon bit NOT NULL, tue bit NOT NULL, wed bit NOT NULL, thu bit NOT NULL, fri bit NOT NULL, sat bit NOT NULL, sun bit NOT NULL, start_time int NOT NULL, end_time int NOT NULL,
-		PRIMARY KEY CLUSTERED (id,legacy_call_letters,mon,tue,wed,thu,fri,sat,sun,start_time,end_time));
+	CREATE TABLE #min_playback_types (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), 
+		PRIMARY KEY CLUSTERED(market_code));
+	INSERT INTO #min_playback_types
+		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
+
+	CREATE TABLE #rating_requests (id int NOT NULL,	legacy_call_letters varchar(15) NOT NULL, mon bit NOT NULL, tue bit NOT NULL, wed bit NOT NULL, thu bit NOT NULL, fri bit NOT NULL, sat bit NOT NULL, sun bit NOT NULL, start_time int NOT NULL, end_time int NOT NULL, market_code SMALLINT NOT NULL, available_playback_type VARCHAR(3),
+		PRIMARY KEY CLUSTERED (id,legacy_call_letters,mon,tue,wed,thu,fri,sat,sun,start_time,end_time,market_code,available_playback_type));
 	INSERT into #rating_requests
-		SELECT * FROM @ratings_request;
+		SELECT 
+			rr.*,
+			mccl.market_code,
+			mpt.available_playback_type
+		FROM 
+			@ratings_request rr
+			JOIN nsi.uvw_market_codes_call_letters mccl ON mccl.media_month_id=@posting_media_month_id_sniff
+				AND mccl.legacy_call_letters=rr.legacy_call_letters
+			JOIN #min_playback_types mpt ON mpt.market_code=mccl.market_code;
 
 	CREATE TABLE #audience_ids (audience_id INT NOT NULL, 
 		PRIMARY KEY CLUSTERED(audience_id));
 	INSERT INTO #audience_ids
 		SELECT id FROM dbo.SplitIntegers(@demo_sniff);
-
-	CREATE TABLE #min_playback_types (market_code SMALLINT NOT NULL, available_playback_type VARCHAR(1), 
-		PRIMARY KEY CLUSTERED(market_code));
-	INSERT INTO #min_playback_types
-		SELECT * FROM nsi.udf_GetMinPlaybackTypes(@posting_media_month_id_sniff,@min_playback_type_sniff);
 
 	CREATE TABLE #times (id INT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, 
 		PRIMARY KEY CLUSTERED (id,start_time,end_time));
@@ -720,7 +729,11 @@ BEGIN
 			qh.end_time
 		FROM
 			#rating_requests rr
-			JOIN nsi.quarter_hours qh ON (qh.start_time<=rr.end_time AND qh.end_time>=rr.start_time);
+			JOIN nsi.quarter_hours qh ON (qh.start_time<=rr.end_time AND qh.end_time>=rr.start_time)
+		GROUP BY
+			rr.id,
+			qh.start_time,
+			qh.end_time;
 
 	CREATE TABLE #viewers (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, audience_id INT NOT NULL, market_code SMALLINT NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, viewers FLOAT, universe FLOAT,  
 		PRIMARY KEY CLUSTERED(id, legacy_call_letters, audience_id, market_code, start_time, end_time));
@@ -754,22 +767,19 @@ BEGIN
 			u.universe
 		FROM
 			#rating_requests rr
-			JOIN nsi.uvw_market_codes_call_letters mccl ON mccl.media_month_id=@posting_media_month_id_sniff
-				AND mccl.legacy_call_letters=rr.legacy_call_letters
 			JOIN #times t ON t.id=rr.id
 			JOIN nsi.viewers v ON v.media_month_id=@posting_media_month_id_sniff
 				AND v.legacy_call_letters=rr.legacy_call_letters
-				AND v.market_code=mccl.market_code
+				AND v.market_code=rr.market_code
 				AND v.start_time=t.start_time
 				AND v.end_time=t.end_time
-			JOIN #min_playback_types mpt ON mpt.market_code=v.market_code
 			CROSS APPLY #audience_ids a
 			JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
 				AND vd.viewer_id=v.id
 				AND vd.audience_id=a.audience_id
-				AND vd.playback_type=mpt.available_playback_type
+				AND vd.playback_type=rr.available_playback_type
 			JOIN nsi.universes u ON u.media_month_id=v.media_month_id
-				AND u.playback_type=mpt.available_playback_type
+				AND u.playback_type=rr.available_playback_type
 				AND u.market_code=v.market_code
 				AND u.audience_id=a.audience_id;
 
@@ -843,7 +853,6 @@ BEGIN
 	--IF OBJECT_ID('tempdb..#times') IS NOT NULL DROP TABLE #times;
 END
 GO
-
 
 
 GO
@@ -993,7 +1002,7 @@ BEGIN
 				AND u.audience_id=a.audience_id
 				AND u.start_time=t.start_time
 				AND u.end_time=t.end_time
-				AND u.market_code=hmc.market_code;
+				AND u.market_code=hmc.market_code OPTION ( OPTIMIZE FOR (@hut_media_month_id_sniff UNKNOWN) );
                 
 	CREATE TABLE #hut_univ (market_code SMALLINT NOT NULL, audience_id INT NOT NULL, playback_type VARCHAR(1) NOT NULL, universe FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(market_code,audience_id,playback_type));
@@ -1077,7 +1086,7 @@ BEGIN
 				AND u.audience_id=a.audience_id
 				AND u.start_time=t.start_time
 				AND u.end_time=t.end_time
-				AND u.market_code=smc.market_code;
+				AND u.market_code=smc.market_code OPTION ( OPTIMIZE FOR (@share_media_month_id_sniff UNKNOWN) );
                
 	CREATE TABLE #share_viewer_days (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, start_time INT NOT NULL, end_time INT NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, weekly_avg FLOAT NOT NULL --,weekday_usage FLOAT NOT NULL ,weekend_usage FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(id, legacy_call_letters, start_time, end_time, market_code, audience_id));
@@ -1122,7 +1131,7 @@ BEGIN
 		JOIN nsi.viewer_details vd ON vd.media_month_id=v.media_month_id
 			AND vd.viewer_id=v.id
 			AND vd.audience_id=a.audience_id
-			AND vd.playback_type=mc.playback_type;
+			AND vd.playback_type=mc.playback_type OPTION ( OPTIMIZE FOR (@share_media_month_id_sniff UNKNOWN) );
 
 	CREATE TABLE #share (id INT NOT NULL, legacy_call_letters VARCHAR(15) NOT NULL, market_code SMALLINT NOT NULL, audience_id INT NOT NULL, SHARE FLOAT NOT NULL
 		PRIMARY KEY CLUSTERED(id,legacy_call_letters,market_code, audience_id));
