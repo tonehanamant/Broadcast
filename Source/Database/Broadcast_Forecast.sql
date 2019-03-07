@@ -588,6 +588,7 @@ ALTER PROCEDURE [nsi].[usp_GetImpressionsForMultiplePrograms_Daypart]
 	@demo VARCHAR(MAX),
 	@ratings_request RatingsInputWithId READONLY,
 	@min_playback_type VARCHAR(1)
+WITH RECOMPILE
 AS
 BEGIN
 	SET NOCOUNT ON;
