@@ -5178,7 +5178,6 @@
       }
     ],
     "InventoryManifests": [],
-    "InventoryManifestsStaging": [],
     "InventorySource": {
       "Id": 4,
       "InventoryType": 1,

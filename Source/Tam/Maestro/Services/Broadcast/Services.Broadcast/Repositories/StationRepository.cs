@@ -27,7 +27,7 @@ namespace Services.Broadcast.Repositories
         List<DisplayBroadcastStation> GetBroadcastStationsByDate(int inventorySourceId, DateTime date, bool isIncluded);
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId);
-        void UpdateStationList(List<int> stationCodes, string user, DateTime timeStamp, int inventorySourceId);
+        void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId);
         short? GetStationCode(string stationName);
         List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user);
     }
@@ -80,15 +80,15 @@ namespace Services.Broadcast.Repositories
             return s => new DisplayBroadcastStation
             {
                 Id = s.id,
-                Code = s.station_code.Value,
+                Code = s.station_code,
                 Affiliation = s.affiliation,
                 CallLetters = s.station_call_letters,
                 LegacyCallLetters = s.legacy_call_letters,
-                OriginMarket = s.market.geography_name,
+                OriginMarket = s.market == null ? null : s.market.geography_name,
                 ModifiedDate = (from m in s.station_inventory_loaded
                                 where m.inventory_source_id == inventorySourceId
                                 select m.last_loaded).OrderByDescending(x => x).FirstOrDefault(),
-                MarketCode = s.market_code.Value,
+                MarketCode = s.market_code,
                 ManifestMaxEndDate = (from m in s.station_inventory_manifest
                                       select m.end_date).Max()
             };
@@ -142,12 +142,12 @@ namespace Services.Broadcast.Repositories
                             select new DisplayBroadcastStation
                             {
                                 Id = s.id,
-                                Code = s.station_code.Value,
+                                Code = s.station_code,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code.Value,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).Single("No station found with code: " + code));
         }
@@ -160,12 +160,12 @@ namespace Services.Broadcast.Repositories
                             select new DisplayBroadcastStation
                             {
                                 Id = s.id,
-                                Code = s.station_code.Value,
+                                Code = s.station_code,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code.Value,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).ToList());
         }
@@ -180,13 +180,13 @@ namespace Services.Broadcast.Repositories
                             select new DisplayBroadcastStation
                             {
                                 Id = s.id,
-                                Code = s.station_code.Value,
+                                Code = s.station_code,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
                                 ModifiedDate = s.modified_date,
-                                MarketCode = s.market_code.Value
+                                MarketCode = s.market_code
                             }).FirstOrDefault();
                 });
         }
@@ -199,12 +199,12 @@ namespace Services.Broadcast.Repositories
                             select new DisplayBroadcastStation
                             {
                                 Id = s.id,
-                                Code = s.station_code.Value,
+                                Code = s.station_code,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code.Value,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).FirstOrDefault());
         }
@@ -219,12 +219,12 @@ namespace Services.Broadcast.Repositories
                             select new DisplayBroadcastStation
                             {
                                 Id = s.id,
-                                Code = s.station_code.Value,
+                                Code = s.station_code,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code.Value,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).ToList();
                 });
@@ -237,12 +237,12 @@ namespace Services.Broadcast.Repositories
                             select new DisplayBroadcastStation
                             {
                                 Id = s.id,
-                                Code = s.station_code.Value,
+                                Code = s.station_code,
                                 Affiliation = s.affiliation,
                                 CallLetters = s.station_call_letters,
                                 LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market.geography_name,
-                                MarketCode = s.market_code.Value,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).ToList());
         }
@@ -264,12 +264,12 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateStationList(List<int> stationCodes, string user, DateTime timeStamp, int inventorySourceId)
+        public void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var stations = context.stations.Where(x => stationCodes.Contains(x.station_code.Value)).ToList();                    
+                    var stations = context.stations.Where(x => stationIds.Contains(x.id)).ToList();                    
                     stations.ForEach(x =>
                     {
                         x.modified_by = user;

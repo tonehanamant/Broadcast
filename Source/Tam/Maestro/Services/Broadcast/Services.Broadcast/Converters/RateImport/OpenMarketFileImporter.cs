@@ -179,9 +179,9 @@ namespace Services.Broadcast.Converters.RateImport
 
                         if (station == null)
                         {
-                            inventoryFile.InventoryManifestsStaging.Add(new StationInventoryManifestStaging
+                            inventoryFile.InventoryManifests.Add(new StationInventoryManifest
                             {
-                                Station = callLetters,
+                                Station = new DisplayBroadcastStation { CallLetters = callLetters },
                                 DaypartCode = availLine.DaypartName,
                                 SpotsPerWeek = null,
                                 SpotLengthId = spotLengthId,
@@ -211,7 +211,7 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 catch (Exception e)
                 {
-                    fileProblems.Add(new InventoryFileProblem("Error while processing " + availLine.AvailName + " on " + availList.Name + ": " + e.Message));
+                    fileProblems.Add(new InventoryFileProblem($"Error while processing {availLine.AvailName} on {availList.Name}: {e.Message}"));
                 }
             }
         }
@@ -387,19 +387,13 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var contacts = new List<StationContact>();
             var stationLetters = message.Proposal.Outlets.Select(s => s.callLetters).ToList();
-            var proposalStations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStationListByLegacyCallLetters(stationLetters).ToDictionary(s => s.LegacyCallLetters);
+            var proposalStations = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStationListByLegacyCallLetters(stationLetters);
             var repTeamNames = _BroadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>().GetRepTeamNames();
 
             foreach (var station in message.Proposal.Outlets)
             {
-                var proposalStation = proposalStations.Where(ps => ps.Key == station.callLetters).SingleOrDefault();
-                if (proposalStation.Value == null)
-                {
-                    continue; //Skip contacts for unknown stations
-                }
-
+                var proposalStation = proposalStations.SingleOrDefault(ps => ps.LegacyCallLetters == station.callLetters);
                 var stationContact = new StationContact();
-
                 stationContact.Company = message.Proposal.Seller.companyName;
                 stationContact.Name = message.Proposal.Seller.Salesperson.name;
                 stationContact.Email = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Email != null) ?
@@ -413,23 +407,30 @@ namespace Services.Broadcast.Converters.RateImport
                 stationContact.Fax = (message.Proposal.Seller.Salesperson != null && message.Proposal.Seller.Salesperson.Phone != null) ?
                     message.Proposal.Seller.Salesperson.Phone.Where(p => p.type == "fax")
                         .Select(p => p.Value)
-                        .FirstOrDefault() : null;
-                stationContact.StationCode = proposalStation.Value.Code.Value;
-                stationContact.StationId = proposalStation.Value.Id;
+                        .FirstOrDefault() : null;               
 
-                if (proposalStations.Select(s => s.Value.LegacyCallLetters.Trim().ToUpper())
-                        .ToList()
-                        .Contains(stationContact.Company.Trim().ToUpper()))
+                if (proposalStation == null)
                 {
+                    // station should be created next
+                    stationContact.StationCallLetters = station.callLetters;
                     stationContact.Type = StationContact.StationContactType.Station;
-                }
-                else if (_IsContactARep(repTeamNames, stationContact))
-                {
-                    stationContact.Type = StationContact.StationContactType.Rep;
                 }
                 else
                 {
-                    stationContact.Type = StationContact.StationContactType.Traffic;
+                    stationContact.StationId = proposalStation.Id;
+
+                    if (proposalStations.Any(x => x.LegacyCallLetters.Equals(stationContact.Company.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    {
+                        stationContact.Type = StationContact.StationContactType.Station;
+                    }
+                    else if (_IsContactARep(repTeamNames, stationContact))
+                    {
+                        stationContact.Type = StationContact.StationContactType.Rep;
+                    }
+                    else
+                    {
+                        stationContact.Type = StationContact.StationContactType.Traffic;
+                    }
                 }
 
                 contacts.Add(stationContact);

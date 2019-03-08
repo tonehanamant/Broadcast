@@ -14,6 +14,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IStationContactsRepository : IDataRepository
     {
+        List<StationContact> GetStationContactsByStationIds(List<int> stationIds);
         List<StationContact> GetStationContactsByStationCode(int stationCode);
         List<StationContact> GetStationContactsByStationCode(List<int> stationCodes);
         void CreateNewStationContacts(List<StationContact> stationContacts, string user, int? fileId);
@@ -29,6 +30,29 @@ namespace Services.Broadcast.Repositories
         public StationContactsRepository(ISMSClient pSmsClient, IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper)
             : base(pSmsClient, pBroadcastContextFactory, pTransactionHelper)
         {
+        }
+
+        public List<StationContact> GetStationContactsByStationIds(List<int> stationIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return (from c in context.station_contacts.Include(x => x.station)
+                            where stationIds.Contains(c.station_id)
+                            select new StationContact()
+                            {
+                                Id = c.id,
+                                Name = c.name,
+                                Phone = c.phone,
+                                Fax = c.fax,
+                                Email = c.email,
+                                Company = c.company,
+                                StationCode = c.station.station_code.Value,
+                                StationId = c.station_id,
+                                ModifiedDate = c.modified_date,
+                                Type = (StationContact.StationContactType)c.type
+                            }).ToList();
+                });
         }
 
         public List<StationContact> GetStationContactsByStationCode(List<int> stationCodes)
@@ -82,7 +106,8 @@ namespace Services.Broadcast.Repositories
                                 Fax = c.fax,
                                 Name = c.name,
                                 Phone = c.phone,
-                                StationCode = c.station.station_code.Value,
+                                StationCode = c.station.station_code,
+                                StationCallLetters = c.station.station_call_letters,
                                 StationId = c.station_id,
                                 ModifiedDate = c.modified_date,
                                 Type = (StationContact.StationContactType)c.type,

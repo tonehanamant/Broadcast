@@ -70,6 +70,54 @@ BEGIN
 END
 /*************************************** END BCOP-4186 *****************************************************/
 
+/***** START PRI-912 to remove open_market_pricing_guide table *********************************************************/
+
+-- drop FKs
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_open_market_pricing_guide_market_code]') AND parent_object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]'))
+ALTER TABLE [dbo].[open_market_pricing_guide]  DROP CONSTRAINT [FK_open_market_pricing_guide_market_code] 
+GO
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_open_market_pricing_guide_proposal_version_detail_id]') AND parent_object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]'))
+ALTER TABLE [dbo].[open_market_pricing_guide]  DROP CONSTRAINT [FK_open_market_pricing_guide_proposal_version_detail_id] 
+GO
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_open_market_pricing_guide_station_code]') AND parent_object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]'))
+ALTER TABLE [dbo].[open_market_pricing_guide]  DROP CONSTRAINT [FK_open_market_pricing_guide_station_code] 
+GO
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id]') AND parent_object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]'))
+ALTER TABLE [dbo].[open_market_pricing_guide]  DROP CONSTRAINT [FK_open_market_pricing_guide_station_inventory_manifest_dayparts_id] 
+GO
+-- Drop indexes
+/****** Object:  Index [IX_open_market_pricing_guide_market_code]    Script Date: 3/7/2019 4:14:31 PM ******/
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]') AND name = N'IX_open_market_pricing_guide_market_code')
+	DROP INDEX [IX_open_market_pricing_guide_market_code] ON [dbo].[open_market_pricing_guide]
+GO
+/****** Object:  Index [IX_open_market_pricing_guide_proposal_version_detail_id]    Script Date: 3/7/2019 4:14:55 PM ******/
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]') AND name = N'IX_open_market_pricing_guide_proposal_version_detail_id')
+DROP INDEX [IX_open_market_pricing_guide_proposal_version_detail_id] ON [dbo].[open_market_pricing_guide]
+GO
+/****** Object:  Index [IX_open_market_pricing_guide_station_code]    Script Date: 3/7/2019 4:15:05 PM ******/
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]') AND name = N'IX_open_market_pricing_guide_station_code')
+DROP INDEX [IX_open_market_pricing_guide_station_code] ON [dbo].[open_market_pricing_guide]
+GO
+/****** Object:  Index [IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id]    Script Date: 3/7/2019 4:15:23 PM ******/
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]') AND name = N'IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id')
+DROP INDEX [IX_open_market_pricing_guide_station_inventory_manifest_dayparts_id] ON [dbo].[open_market_pricing_guide]
+GO
+/****** Object:  Index [PK_open_market_pricing_guide]    Script Date: 3/7/2019 4:15:32 PM ******/
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]') AND name = N'PK_open_market_pricing_guide')
+ALTER TABLE [dbo].[open_market_pricing_guide] DROP CONSTRAINT [PK_open_market_pricing_guide]
+GO
+-- drop table
+/****** Object:  Table [dbo].[open_market_pricing_guide]    Script Date: 3/7/2019 4:10:11 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[open_market_pricing_guide]') AND type in (N'U'))
+DROP TABLE [dbo].[open_market_pricing_guide]
+GO
+
+
+
+/***** END PRI-912 to remove open_market_pricing_guide table ***********************************************************/
+
+
+
 /*************************************** START PRI-912 NEW STATIONS*****************************************************/
 -- step 1: remove indexes
 IF EXISTS (SELECT 1 FROM sys.indexes WHERE name='IX_station_inventory_spot_snapshots_station_code' AND object_id = OBJECT_ID('dbo.station_inventory_spot_snapshots'))

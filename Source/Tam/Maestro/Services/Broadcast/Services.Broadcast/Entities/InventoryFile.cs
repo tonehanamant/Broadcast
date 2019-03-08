@@ -31,12 +31,10 @@ namespace Services.Broadcast.Entities
                 .Union(InventoryManifests);
         }
 
-        public bool HasManifests() => HasGroupManifests || HasInventoryManifests || HasInventoryManifestsStaging;
+        public bool HasManifests() => HasGroupManifests || HasInventoryManifests;
 
         private bool HasGroupManifests => InventoryGroups != null && InventoryGroups.Count > 0 && InventoryGroups.SelectMany(g => g.Manifests).Any();
 
         private bool HasInventoryManifests => InventoryManifests != null && InventoryManifests.Count > 0;
-
-        private bool HasInventoryManifestsStaging => InventoryManifestsStaging != null && InventoryManifestsStaging.Count > 0;
     }
 }
