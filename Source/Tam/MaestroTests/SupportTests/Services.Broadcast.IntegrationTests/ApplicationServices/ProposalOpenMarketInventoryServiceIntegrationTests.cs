@@ -1824,5 +1824,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(json);
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOpenMarketInventoryWithoutNonRatedStations()
+        {
+            var inventory = _ProposalOpenMarketInventoryService.GetInventory(proposalDetailId: 9990);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(ProposalOpenMarketInventoryWeekDto), "ProposalVersionDetailQuarterWeekId");
+
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var inventoryJson = IntegrationTestHelper.ConvertToJson(inventory, jsonSettings);
+
+            Approvals.Verify(inventoryJson);
+        }
     }
 }

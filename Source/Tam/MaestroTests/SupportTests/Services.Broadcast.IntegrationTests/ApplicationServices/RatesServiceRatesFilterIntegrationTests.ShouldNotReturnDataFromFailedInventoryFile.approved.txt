@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Affiliation": "NBC",
+    "CallLetters": "KOB+",
+    "Code": 30,
+    "LegacyCallLetters": "KOB",
+    "ManifestMaxEndDate": "2019-12-08T00:00:00",
+    "MarketCode": 390,
+    "OriginMarket": "Albuquerque-Santa Fe",
+    "RateDataThrough": "12/8/2019"
+  },
+  {
     "Affiliation": "CBS",
     "CallLetters": "WRGB+",
     "Code": 100,
@@ -2208,5 +2218,15 @@
     "MarketCode": 129,
     "OriginMarket": "Louisville",
     "RateDataThrough": "12/30/2018"
+  },
+  {
+    "Affiliation": null,
+    "CallLetters": "WLS_UNKNOWN2-TV",
+    "Code": null,
+    "LegacyCallLetters": "WLS_UNKNOWN2",
+    "ManifestMaxEndDate": "2019-12-08T00:00:00",
+    "MarketCode": null,
+    "OriginMarket": null,
+    "RateDataThrough": "12/8/2019"
   }
 ]
