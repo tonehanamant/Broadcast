@@ -6,7 +6,7 @@ import { Actions } from "react-redux-grid";
 
 import { Button, Modal } from "react-bootstrap";
 import { toggleModal, setOverlayLoading } from "Main/redux/ducks";
-import { getTracker, getTrackerClientScrubbing } from "Tracker/redux/ducks";
+import { trackerActions, scrubbingActions } from "Tracker";
 import TrackerScrubbingHeader from "Tracker/sub-features/Scrubbing/components/ScrubbingHeader";
 import TrackerScrubbingDetail from "Tracker/sub-features/Scrubbing/components/ScrubbingDetail";
 
@@ -19,9 +19,11 @@ const mapStateToProps = ({
     modals: { trackerScrubbingModal: modal }
   },
   tracker: {
-    proposalHeader = {},
-    scrubbingFiltersList = [],
-    hasActiveScrubbingFilters
+    scrubbing: {
+      proposalHeader = {},
+      scrubbingFiltersList = [],
+      hasActiveScrubbingFilters
+    }
   },
   grid,
   dataSource
@@ -37,8 +39,8 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getTrackerClientScrubbing,
-      getTracker,
+      getTrackerClientScrubbing: scrubbingActions.getTrackerClientScrubbing,
+      getTracker: trackerActions.getTracker,
       toggleModal,
       selectRow,
       deselectAll,

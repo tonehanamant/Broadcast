@@ -3,21 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { toggleModal } from "Main/redux/ducks";
-import {
-  // getPostFiltered,
-  // getUnlinkedIscis,
-  // processNtiFile,
-  getUnlinkedIscis,
-  uploadTrackerFile,
-  getTrackerFiltered
-} from "Tracker/redux/ducks";
+import { trackerActions, unlinkedIsciActions } from "Tracker";
 import { Row, Col, Button } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
 import UploadButton from "Patterns/UploadButton";
 import UnlinkedIsciModal from "Tracker/sub-features/UnlinkedIsci/components/UnlinkedIsciModal";
 
 const mapStateToProps = ({
-  tracker: { unlinkedIscisData, archivedIscisData, unlinkedIscisLength }
+  tracker: {
+    unlinkedIsci: { unlinkedIscisData, archivedIscisData },
+    master: { unlinkedIscisLength }
+  }
 }) => ({
   unlinkedIscisData,
   archivedIscisData,
@@ -27,10 +23,10 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getTrackerFiltered,
-      getUnlinkedIscis,
+      getTrackerFiltered: trackerActions.getTrackerFiltered,
+      getUnlinkedIscis: unlinkedIsciActions.getUnlinkedIscis,
       toggleModal,
-      uploadTrackerFile
+      uploadTrackerFile: trackerActions.uploadTrackerFile
     },
     dispatch
   );

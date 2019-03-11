@@ -7,7 +7,7 @@ import CSSModules from "react-css-modules";
 import SectionPostPrePosting from "PostPrePosting";
 import SectionPost from "Post/components";
 import SectionPlanning from "Planning";
-import SectionTracker from "Tracker";
+import SectionTracker from "Tracker/components";
 
 import Toast from "Patterns/Toast";
 import ErrorModal from "Patterns/ErrorModal";
