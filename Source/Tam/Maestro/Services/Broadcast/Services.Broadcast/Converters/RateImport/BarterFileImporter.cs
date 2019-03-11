@@ -50,6 +50,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IInventoryDaypartParsingEngine _DaypartParsingEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly Dictionary<int, int> _SpotLengthDict;
 
         private InventoryFileSaveRequest _Request { get; set; }
         private string _FileHash { get; set; }
@@ -61,6 +62,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _SpotLengthDict = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _DaypartParsingEngine = inventoryDaypartParsingEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _AudienceCache = broadcastAudiencesCache;
@@ -322,11 +324,26 @@ namespace Services.Broadcast.Converters.RateImport
             for (var i = firstColumnIndex; i <= lastColumnIndex; i++)
             {
                 var name = worksheet.Cells[nameRowIndex, i].GetStringValue();
-                var spotLength = worksheet.Cells[spotLengthRowIndex, i].GetIntValue();
-                
-                if (string.IsNullOrWhiteSpace(name) || !spotLength.HasValue)
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    throw new Exception("Unit name missing");
+                }
+                Regex r = new Regex("^[a-zA-Z 0-9]*$");
+                name = name.Trim();
+
+                if (!r.IsMatch(name))
                 {
                     throw new Exception("Invalid unit was found");
+                }
+
+                var spotLength = worksheet.Cells[spotLengthRowIndex, i].GetIntValue();                
+                if (!spotLength.HasValue)
+                {
+                    throw new Exception("Spot length is missing");
+                }
+                if (!_SpotLengthDict.ContainsKey(spotLength.Value))
+                {
+                    throw new Exception("Invalid spot length was found");
                 }
 
                 result.Add(new BarterInventoryUnit

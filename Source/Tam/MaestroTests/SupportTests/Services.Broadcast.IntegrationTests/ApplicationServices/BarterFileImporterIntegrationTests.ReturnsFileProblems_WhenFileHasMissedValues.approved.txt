@@ -30,7 +30,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 2
@@ -65,7 +65,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 1
@@ -100,7 +100,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 1
