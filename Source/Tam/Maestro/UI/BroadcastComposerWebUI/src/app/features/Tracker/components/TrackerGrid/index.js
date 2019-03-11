@@ -4,12 +4,18 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { toggleModal, createAlert } from "Main/redux/ducks";
-import { getTracker, getTrackerClientScrubbing } from "Tracker/redux/ducks";
+// import { getTracker, getTrackerClientScrubbing } from "Tracker/redux/ducks";
+import { scrubbingActions, trackerActions } from "Tracker";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
 import moment from "moment";
 
-const mapStateToProps = ({ tracker: { trackerGridData }, menu }) => ({
+const mapStateToProps = ({
+  tracker: {
+    master: { trackerGridData }
+  },
+  menu
+}) => ({
   trackerGridData,
   menu
 });
@@ -17,10 +23,10 @@ const mapStateToProps = ({ tracker: { trackerGridData }, menu }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getTracker,
+      getTracker: trackerActions.getTracker,
       createAlert,
       toggleModal,
-      getTrackerClientScrubbing
+      getTrackerClientScrubbing: scrubbingActions.getTrackerClientScrubbing
     },
     dispatch
   );

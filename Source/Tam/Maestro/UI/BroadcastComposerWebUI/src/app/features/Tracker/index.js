@@ -1,4 +1,30 @@
-import container from "./components/TrackerContainer";
+import { combineReducers } from "redux";
+import {
+  reducer as unlinkedIsciReducer,
+  actions as unlinkedIsciActions,
+  watchers as unlinkedIsciWathcers
+} from "./sub-features/UnlinkedIsci/redux";
+import {
+  reducer as scrubbingReducer,
+  actions as scrubbingActions,
+  watchers as scrubbingWathcers
+} from "./sub-features/Scrubbing/redux";
+import {
+  reducer as trackersMasterReducer,
+  watchers as trackersMasterWatchers,
+  actions as trackerActions
+} from "./redux";
 
-export { watchers, reducer } from "./redux";
-export default container;
+export const watchers = [
+  ...trackersMasterWatchers,
+  ...unlinkedIsciWathcers,
+  ...scrubbingWathcers
+];
+
+export const reducer = combineReducers({
+  master: trackersMasterReducer,
+  scrubbing: scrubbingReducer,
+  unlinkedIsci: unlinkedIsciReducer
+});
+
+export { trackerActions, unlinkedIsciActions, scrubbingActions };
