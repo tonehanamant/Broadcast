@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { FormGroup, ControlLabel, Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import { toggleModal } from "Main/redux/ducks";
-import { swapProposalDetail } from "Tracker/redux/ducks";
+import { scrubbingActions } from "Tracker";
 import { getDateInFormat } from "Utils/dateFormatter";
 
 const mapStateToProps = ({
@@ -18,7 +18,10 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModal, swapProposalDetail }, dispatch);
+  bindActionCreators(
+    { toggleModal, swapProposalDetail: scrubbingActions.swapProposalDetail },
+    dispatch
+  );
 
 export class SwapDetailModal extends Component {
   constructor(props) {

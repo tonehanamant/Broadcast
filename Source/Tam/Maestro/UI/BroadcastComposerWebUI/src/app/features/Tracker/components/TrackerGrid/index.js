@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
 import { toggleModal, createAlert } from "Main/redux/ducks";
-// import { getTracker, getTrackerClientScrubbing } from "Tracker/redux/ducks";
 import { scrubbingActions, trackerActions } from "Tracker";
 import Table, { withGrid } from "Lib/react-table";
 import numeral from "numeral";
