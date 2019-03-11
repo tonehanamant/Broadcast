@@ -3,6 +3,41 @@
   "CreatedDate": "0001-01-01T00:00:00",
   "DataLines": [
     {
+      "Comment": "Comment 2",
+      "Daypart": "M-F + SU 10-1035P",
+      "Station": "KOLN",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM [n]",
+            "SpotLength": 15
+          },
+          "Spots": 2
+        }
+      ]
+    },
+    {
       "Comment": null,
       "Daypart": "M-F 10-1130P / SA-SU 10-11P",
       "Station": "KRQE+",
@@ -84,7 +119,6 @@
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "Line 16 has missing values. Columns: station",
-    "Line 17 has missing values. Columns: AM 2",
-    "Line 19 has missing values. Columns: daypart, AM 3"
+    "Line 19 has missing values. Columns: daypart"
   ]
 }

@@ -361,14 +361,6 @@ namespace Services.Broadcast.Converters.RateImport
                 result.Add("daypart");
             }
 
-            foreach (var lineUnit in line.Units)
-            {
-                if (!lineUnit.Spots.HasValue)
-                {
-                    result.Add(lineUnit.BarterInventoryUnit.Name);
-                }
-            }
-
             return result;
         }
     }

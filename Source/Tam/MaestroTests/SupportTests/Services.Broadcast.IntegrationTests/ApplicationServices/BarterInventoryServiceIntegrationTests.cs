@@ -72,26 +72,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
-                jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
-                jsonResolver.Ignore(typeof(MediaWeek), "_Id");
-                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var groups = _IInventoryRepository.GetStationInventoryGroupsByFileId(result.FileId);
-                var groupsJson = IntegrationTestHelper.ConvertToJson(groups, jsonSettings);
-
-                Approvals.Verify(groupsJson);
+                _VerifyInventoryGroups(result.FileId);
             }
         }
 
@@ -112,26 +93,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
-                jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
-                jsonResolver.Ignore(typeof(MediaWeek), "_Id");
-                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var groups = _IInventoryRepository.GetStationInventoryGroupsByFileId(result.FileId);
-                var groupsJson = IntegrationTestHelper.ConvertToJson(groups, jsonSettings);
-
-                Approvals.Verify(groupsJson);
+                _VerifyInventoryGroups(result.FileId);
             }
         }
 
@@ -152,26 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
-                jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
-                jsonResolver.Ignore(typeof(MediaWeek), "_Id");
-                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                var groups = _IInventoryRepository.GetStationInventoryGroupsByFileId(result.FileId);
-                var groupsJson = IntegrationTestHelper.ConvertToJson(groups, jsonSettings);
-
-                Approvals.Verify(groupsJson);
+                _VerifyInventoryGroups(result.FileId);
             }
         }
 
@@ -253,6 +196,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterInventoryService_SaveBarterInventoryFile_PRI5667()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                _VerifyInventoryGroups(result.FileId);
+            }
+        }
+
         private static void _VerifyInventoryFileProblems(List<InventoryFileProblem> problems)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -276,6 +240,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
+
+        private void _VerifyInventoryGroups(int fileId)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
+            jsonResolver.Ignore(typeof(MediaWeek), "_Id");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            var groups = _IInventoryRepository.GetStationInventoryGroupsByFileId(fileId);
+            var groupsJson = IntegrationTestHelper.ConvertToJson(groups, jsonSettings);
+
+            Approvals.Verify(groupsJson);
         }
     }
 }

@@ -347,6 +347,9 @@
     <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
