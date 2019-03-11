@@ -1,0 +1,297 @@
+﻿{
+  "Criteria": {
+    "CpmCriteria": [],
+    "GenreSearchCriteria": [],
+    "ProgramNameSearchCriteria": []
+  },
+  "DetailBudgetMarginAchieved": false,
+  "DetailBudgetPercent": 0.0,
+  "DetailCpm": 10.0000,
+  "DetailCpmMarginAchieved": false,
+  "DetailCpmPercent": 0.0,
+  "DetailDaypart": {
+    "endTime": 86400,
+    "fri": true,
+    "mon": true,
+    "sat": true,
+    "startTime": 0,
+    "sun": true,
+    "Text": "M-SU 24HR",
+    "thu": true,
+    "tue": true,
+    "wed": true
+  },
+  "DetailDaypartId": 38,
+  "DetailFlightEndDate": "2019-10-13T00:00:00",
+  "DetailFlightStartDate": "2019-10-07T00:00:00",
+  "DetailFlightWeeks": [
+    {
+      "EndDate": "2019-10-13T00:00:00",
+      "IsHiatus": false,
+      "MediaWeekId": 824,
+      "StartDate": "2019-10-07T00:00:00"
+    }
+  ],
+  "DetailId": 9990,
+  "DetailImpressionsMarginAchieved": false,
+  "DetailImpressionsPercent": 0.0,
+  "DetailSpotLength": 30,
+  "DetailSpotLengthId": 1,
+  "DetailTargetBudget": 50.0000,
+  "DetailTargetImpressions": 5000.0,
+  "DetailTotalBudget": 0.0000,
+  "DetailTotalCpm": 0.0,
+  "DetailTotalImpressions": 0.0,
+  "DisplayFilter": {
+    "Affiliations": [
+      "NBC"
+    ],
+    "Genres": [],
+    "Markets": [
+      {
+        "Display": "Albuquerque-Santa Fe",
+        "Id": 390
+      }
+    ],
+    "ProgramNames": [
+      "Ricky and Morty - Rated"
+    ]
+  },
+  "Equivalized": true,
+  "Filter": {
+    "Affiliations": [],
+    "DayParts": [],
+    "Genres": [],
+    "Markets": [],
+    "ProgramNames": [],
+    "SpotFilter": 1
+  },
+  "GuaranteedAudience": 31,
+  "HutProjectionBookId": null,
+  "Margin": 20.0,
+  "Markets": [
+    {
+      "MarketCoverage": 0.0,
+      "MarketId": 390,
+      "MarketName": "Albuquerque-Santa Fe",
+      "MarketRank": 48,
+      "MarketSubscribers": 662570.0,
+      "Stations": [
+        {
+          "Affiliation": "NBC",
+          "CallLetters": "KOB+",
+          "LegacyCallLetters": "KOB",
+          "Programs": [
+            {
+              "Dayparts": [
+                {
+                  "Display": "M-SU 9AM-12AM",
+                  "Id": 5
+                }
+              ],
+              "FlightWeeks": [
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 824,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-10-13T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 824,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-10-07T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 825,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-10-20T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 825,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-10-14T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 826,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-10-27T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 826,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-10-21T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 827,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-11-03T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 827,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-10-28T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 828,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-11-10T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 828,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-11-04T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 829,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-11-17T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 829,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-11-11T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 830,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-11-24T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 830,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-11-18T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 831,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-12-01T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 831,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-11-25T00:00:00"
+                },
+                {
+                  "Allocations": [
+                    {
+                      "MediaWeekId": 832,
+                      "Spots": 0
+                    }
+                  ],
+                  "EndDate": "2019-12-08T00:00:00",
+                  "IsHiatus": false,
+                  "MediaWeekId": 832,
+                  "Rate": 25.0000,
+                  "StartDate": "2019-12-02T00:00:00"
+                }
+              ],
+              "Genres": [
+                {
+                  "Display": "Adventure",
+                  "Id": 3
+                }
+              ],
+              "ProgramId": 26691,
+              "ProgramNames": [
+                "Ricky and Morty - Rated"
+              ],
+              "ProvidedUnitImpressions": null,
+              "Spots": 0,
+              "StationCode": 30,
+              "TargetCpm": 1.2268876637993614625119473068,
+              "TargetImpressions": 0.0,
+              "UnitImpressions": 20376.76369048
+            }
+          ],
+          "StationCode": 30
+        }
+      ]
+    }
+  ],
+  "NewCriteriaAffectsExistingAllocations": false,
+  "PlaybackType": 4,
+  "PostType": 1,
+  "ProposalFlightEndDate": "2019-10-13T00:00:00",
+  "ProposalFlightStartDate": "2019-10-07T00:00:00",
+  "ProposalFlightWeeks": [],
+  "ProposalId": 26028,
+  "ProposalName": "Pricing Guide Test 13",
+  "ProposalVersion": 1,
+  "ProposalVersionId": 26028,
+  "RefineFilterPrograms": [
+    "Ricky and Morty - Rated"
+  ],
+  "ShareProjectionBookId": null,
+  "SingleProjectionBookId": 413,
+  "Weeks": [
+    {
+      "Budget": 25.0000,
+      "BudgetMarginAchieved": false,
+      "BudgetPercent": 0.0,
+      "BudgetTotal": 0.0000,
+      "ImpressionsGoal": 1000.0,
+      "ImpressionsMarginAchieved": false,
+      "ImpressionsPercent": 0.0,
+      "ImpressionsTotal": 0.0,
+      "IsHiatus": false,
+      "Markets": [
+        {
+          "Cost": 0.0,
+          "DisplayImpressions": 0.0,
+          "DisplayStationImpressions": 0.0,
+          "Impressions": 0.0,
+          "MarketId": 390,
+          "Spots": 0,
+          "Stations": [
+            {
+              "Programs": [
+                {
+                  "Cost": 25.0000,
+                  "DisplayImpressions": 20376.76369048,
+                  "DisplayStationImpressions": 0.0,
+                  "EFF": 0.0,
+                  "HasImpressions": true,
+                  "ProgramId": 26691,
+                  "ProvidedUnitImpressions": null,
+                  "Spots": 0,
+                  "TargetCpm": 0.0,
+                  "TargetImpressions": 0.0,
+                  "TotalImpressions": 20376.76369048,
+                  "UnitCost": 25.0000,
+                  "UnitImpression": 20376.76369048
+                }
+              ],
+              "StationCode": 30
+            }
+          ]
+        }
+      ],
+      "MediaWeekId": 824,
+      "QuarterText": "Q2",
+      "Week": "10/7/2019"
+    }
+  ]
+}

@@ -1,23 +1,56 @@
 ﻿{
   "AllMarkets": [
     {
-      "AvgCpm": 7.4345253234864090035412526262,
-      "Coverage": 0.273,
-      "Id": 318,
-      "MaxCpm": 7.4345253234864090035412526262,
-      "MinCpm": 7.4345253234864090035412526262,
-      "Name": "Jackson, MS",
+      "AvgCpm": 76.955013162738919167850415819,
+      "Coverage": 0.073,
+      "Id": 244,
+      "MaxCpm": 76.955013162738919167850415819,
+      "MinCpm": 76.955013162738919167850415819,
+      "Name": "Alexandria, LA",
       "Programs": 1,
       "Selected": true,
       "Stations": 1
     },
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.022,
-      "Id": 347,
+      "Coverage": 0.133,
+      "Id": 343,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
-      "Name": "Juneau",
+      "Name": "Anchorage",
+      "Programs": 5,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.047,
+      "Id": 367,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Casper-Riverton",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 10.110399242982084500644801441,
+      "Coverage": 0.177,
+      "Id": 200,
+      "MaxCpm": 25.000,
+      "MinCpm": 4.8859934853420195439739413681,
+      "Name": "Corpus Christi",
+      "Programs": 8,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.031,
+      "Id": 345,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Fairbanks",
       "Programs": 4,
       "Selected": false,
       "Stations": 1
@@ -45,6 +78,17 @@
       "Stations": 2
     },
     {
+      "AvgCpm": 7.4345253234864090035412526262,
+      "Coverage": 0.273,
+      "Id": 318,
+      "MaxCpm": 7.4345253234864090035412526262,
+      "MinCpm": 7.4345253234864090035412526262,
+      "Name": "Jackson, MS",
+      "Programs": 1,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
       "AvgCpm": 0.0,
       "Coverage": 0.069,
       "Id": 334,
@@ -56,6 +100,17 @@
       "Stations": 2
     },
     {
+      "AvgCpm": 0.0,
+      "Coverage": 0.022,
+      "Id": 347,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Juneau",
+      "Programs": 4,
+      "Selected": false,
+      "Stations": 1
+    },
+    {
       "AvgCpm": 50.606697763914244618976771423,
       "Coverage": 0.194,
       "Id": 428,
@@ -63,6 +118,17 @@
       "MinCpm": 17.778251831574046924196019488,
       "Name": "Monterey-Salinas",
       "Programs": 8,
+      "Selected": false,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.136,
+      "Id": 404,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Palm Springs",
+      "Programs": 6,
       "Selected": false,
       "Stations": 2
     },
@@ -79,14 +145,14 @@
     },
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.136,
-      "Id": 404,
+      "Coverage": 0.085,
+      "Id": 364,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
-      "Name": "Palm Springs",
+      "Name": "Rapid City",
       "Programs": 6,
       "Selected": false,
-      "Stations": 2
+      "Stations": 1
     },
     {
       "AvgCpm": 68.32514335792869163169270990,
@@ -98,50 +164,6 @@
       "Programs": 7,
       "Selected": false,
       "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.085,
-      "Id": 364,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Rapid City",
-      "Programs": 6,
-      "Selected": false,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 76.955013162738919167850415819,
-      "Coverage": 0.073,
-      "Id": 244,
-      "MaxCpm": 76.955013162738919167850415819,
-      "MinCpm": 76.955013162738919167850415819,
-      "Name": "Alexandria, LA",
-      "Programs": 1,
-      "Selected": false,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.214,
-      "Id": 410,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Yakima-Pasco-Rchlnd-Knnwck",
-      "Programs": 3,
-      "Selected": false,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.133,
-      "Id": 343,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Anchorage",
-      "Programs": 5,
-      "Selected": false,
-      "Stations": 2
     },
     {
       "AvgCpm": 34.91114561766735679779158040,
@@ -156,34 +178,12 @@
     },
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.047,
-      "Id": 367,
+      "Coverage": 0.214,
+      "Id": 410,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
-      "Name": "Casper-Riverton",
-      "Programs": 8,
-      "Selected": false,
-      "Stations": 2
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.031,
-      "Id": 345,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Fairbanks",
-      "Programs": 4,
-      "Selected": false,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 10.110399242982084500644801441,
-      "Coverage": 0.177,
-      "Id": 200,
-      "MaxCpm": 25.000,
-      "MinCpm": 4.8859934853420195439739413681,
-      "Name": "Corpus Christi",
-      "Programs": 8,
+      "Name": "Yakima-Pasco-Rchlnd-Knnwck",
+      "Programs": 3,
       "Selected": true,
       "Stations": 1
     }
@@ -191,25 +191,21 @@
   "BudgetGoal": null,
   "DisplayFilter": {
     "Affiliations": [
-      "ABC",
       "FOX"
     ],
     "Genres": [],
     "Markets": [
       {
-        "Display": "Corpus Christi"
+        "Display": "Alexandria, LA"
       },
       {
-        "Display": "Jackson, MS"
+        "Display": "Yakima-Pasco-Rchlnd-Knnwck"
       }
     ],
     "ProgramNames": [
-      "3 News First Edition",
-      "Fox40 Morning News",
-      "Good Morning America",
-      "Good Morning America-Sat",
-      "Good Morning America-Sun",
-      "This Week In Agri-Business"
+      "FOX News Sunday",
+      "Good Day Morning News",
+      "KCYU Marketplace"
     ]
   },
   "Filter": {},
@@ -231,232 +227,137 @@
   "Margin": null,
   "Markets": [
     {
-      "AvgCpm": 7.4345253234864090035412526262,
-      "CPM": 7.4345253234864005001309779245,
-      "DisplayImpressions": 3362.68946735,
+      "AvgCpm": 0.0,
+      "CPM": 0.0,
+      "DisplayImpressions": 0.0,
       "DisplayStationImpressions": 0.0,
-      "MarketCoverage": 0.273,
-      "MarketName": "Jackson, MS",
-      "MarketRank": 95,
-      "MaxCpm": 7.4345253234864090035412526262,
-      "MinCpm": 7.4345253234864090035412526262,
+      "MarketCoverage": 0.214,
+      "MarketName": "Yakima-Pasco-Rchlnd-Knnwck",
+      "MarketRank": 122,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
       "Stations": [
         {
           "Affiliation": "FOX",
-          "CallLetters": "WDBD 40.1",
-          "CPM": 7.4345253234864005001309779245,
-          "LegacyCallLetters": "WDBD",
-          "MinProgramsBlendedCpm": 7.4345253234864090035412526262,
+          "CallLetters": "KCYU+",
+          "CPM": 0.0,
+          "LegacyCallLetters": "KCYU",
+          "MinProgramsBlendedCpm": 0.0,
           "Programs": [
             {
-              "BlendedCpm": 7.4345253234864090035412526262,
-              "Cost": 25.0000,
+              "BlendedCpm": 0.0,
+              "Cost": 0.0000,
               "CostPerSpot": 25.0000,
               "Daypart": {
                 "Display": "M-F 7AM-9AM"
               },
               "DisplayCost": 25.0000,
-              "DisplayImpressions": 3362.68946735,
+              "DisplayImpressions": 0.0,
               "DisplayStationImpressions": 0.0,
-              "EffectiveImpressionsPerSpot": 3362.68946735,
+              "EffectiveImpressionsPerSpot": 0.0,
+              "Genres": [],
+              "HasImpressions": false,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 0.0,
+              "ProgramName": "Good Day Morning News",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 0.0,
+              "Cost": 0.0000,
+              "CostPerSpot": 20.0000,
+              "Daypart": {
+                "Display": "SA 7AM-9AM"
+              },
+              "DisplayCost": 20.0000,
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
+              "Genres": [],
+              "HasImpressions": false,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 0.0,
+              "ProgramName": "KCYU Marketplace",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            },
+            {
+              "BlendedCpm": 0.0,
+              "Cost": 0.0000,
+              "CostPerSpot": 60.0000,
+              "Daypart": {
+                "Display": "SU 8AM-9AM"
+              },
+              "DisplayCost": 60.0000,
+              "DisplayImpressions": 0.0,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 0.0,
+              "Genres": [],
+              "HasImpressions": false,
+              "Impressions": 0.0,
+              "ImpressionsPerSpot": 0.0,
+              "ProgramName": "FOX News Sunday",
+              "Spots": 0,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 1045,
+          "TotalCost": 0.0000,
+          "TotalImpressions": 0.0,
+          "TotalSpots": 0
+        }
+      ],
+      "TotalCost": 0.0000,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
+    },
+    {
+      "AvgCpm": 76.955013162738919167850415819,
+      "CPM": 76.955013162738971230039874081,
+      "DisplayImpressions": 454.81117554,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.073,
+      "MarketName": "Alexandria, LA",
+      "MarketRank": 179,
+      "MaxCpm": 76.955013162738919167850415819,
+      "MinCpm": 76.955013162738919167850415819,
+      "Stations": [
+        {
+          "Affiliation": "FOX",
+          "CallLetters": "WNTZ-TV 48.1",
+          "CPM": 76.955013162738971230039874081,
+          "LegacyCallLetters": "WNTZ",
+          "MinProgramsBlendedCpm": 76.955013162738919167850415819,
+          "Programs": [
+            {
+              "BlendedCpm": 76.955013162738919167850415819,
+              "Cost": 35.0000,
+              "CostPerSpot": 35.0000,
+              "Daypart": {
+                "Display": "SU 8AM-9AM"
+              },
+              "DisplayCost": 35.0000,
+              "DisplayImpressions": 454.81117554,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 454.81117554,
               "Genres": [],
               "HasImpressions": true,
-              "Impressions": 3362.68946735,
-              "ImpressionsPerSpot": 3362.68946735,
-              "ProgramName": "Fox40 Morning News",
+              "Impressions": 454.81117554,
+              "ImpressionsPerSpot": 454.81117554,
+              "ProgramName": "Fox News Sunday",
               "Spots": 1,
               "StationImpressionsPerSpot": 0.0
             }
           ],
-          "StationCode": 6173,
-          "TotalCost": 25.0000,
-          "TotalImpressions": 3362.68946735,
+          "StationCode": 6433,
+          "TotalCost": 35.0000,
+          "TotalImpressions": 454.81117554,
           "TotalSpots": 1
         }
       ],
-      "TotalCost": 25.0000,
-      "TotalImpressions": 3362.68946735,
-      "TotalSpots": 1
-    },
-    {
-      "AvgCpm": 10.110399242982084500644801441,
-      "CPM": 4.8859934853420195439739413681,
-      "DisplayImpressions": 3736.09437494,
-      "DisplayStationImpressions": 6140.0,
-      "MarketCoverage": 0.177,
-      "MarketName": "Corpus Christi",
-      "MarketRank": 128,
-      "MaxCpm": 25.000,
-      "MinCpm": 4.8859934853420195439739413681,
-      "Stations": [
-        {
-          "Affiliation": "ABC",
-          "CallLetters": "KIII 3.1",
-          "CPM": 4.8859934853420195439739413681,
-          "LegacyCallLetters": "KIII",
-          "MinProgramsBlendedCpm": 4.8859934853420195439739413681,
-          "Programs": [
-            {
-              "BlendedCpm": 4.8859934853420195439739413681,
-              "Cost": 30.0000,
-              "CostPerSpot": 30.0000,
-              "Daypart": {
-                "Display": "M-F 5AM-5:58AM"
-              },
-              "DisplayCost": 30.0000,
-              "DisplayImpressions": 3736.09437494,
-              "DisplayStationImpressions": 6140.0,
-              "EffectiveImpressionsPerSpot": 6140.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 6140.0,
-              "ImpressionsPerSpot": 3736.09437494,
-              "ProgramName": "3 News First Edition",
-              "Spots": 1,
-              "StationImpressionsPerSpot": 6140.0
-            },
-            {
-              "BlendedCpm": 4.9443757725587144622991347342,
-              "Cost": 0.0000,
-              "CostPerSpot": 40.0000,
-              "Daypart": {
-                "Display": "SA 5:58AM-7AM"
-              },
-              "DisplayCost": 40.0000,
-              "DisplayImpressions": 5555.08825892,
-              "DisplayStationImpressions": 8090.0,
-              "EffectiveImpressionsPerSpot": 8090.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 5555.08825892,
-              "ProgramName": "3 News First Edition",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 8090.0
-            },
-            {
-              "BlendedCpm": 6.5005417118093174431202600217,
-              "Cost": 0.0000,
-              "CostPerSpot": 60.0000,
-              "Daypart": {
-                "Display": "SA 7AM-8AM"
-              },
-              "DisplayCost": 60.0000,
-              "DisplayImpressions": 9567.5537589,
-              "DisplayStationImpressions": 9230.0,
-              "EffectiveImpressionsPerSpot": 9230.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 9567.5537589,
-              "ProgramName": "Good Morning America-Sat",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 9230.0
-            },
-            {
-              "BlendedCpm": 6.6815144766146993318485523385,
-              "Cost": 0.0000,
-              "CostPerSpot": 30.0000,
-              "Daypart": {
-                "Display": "SU 5:58AM-7AM"
-              },
-              "DisplayCost": 30.0000,
-              "DisplayImpressions": 3884.75017782,
-              "DisplayStationImpressions": 4490.0,
-              "EffectiveImpressionsPerSpot": 4490.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 3884.75017782,
-              "ProgramName": "3 News First Edition",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 4490.0
-            },
-            {
-              "BlendedCpm": 7.1343638525564803804994054697,
-              "Cost": 0.0000,
-              "CostPerSpot": 60.0000,
-              "Daypart": {
-                "Display": "SU 7AM-8AM"
-              },
-              "DisplayCost": 60.0000,
-              "DisplayImpressions": 7087.76263664,
-              "DisplayStationImpressions": 8410.0,
-              "EffectiveImpressionsPerSpot": 8410.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 7087.76263664,
-              "ProgramName": "Good Morning America-Sun",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 8410.0
-            },
-            {
-              "BlendedCpm": 10.982306284319707138499084808,
-              "Cost": 0.0000,
-              "CostPerSpot": 180.0000,
-              "Daypart": {
-                "Display": "M-F 7AM-9AM"
-              },
-              "DisplayCost": 180.0000,
-              "DisplayImpressions": 17743.9947581,
-              "DisplayStationImpressions": 16390.0,
-              "EffectiveImpressionsPerSpot": 16390.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 17743.9947581,
-              "ProgramName": "Good Morning America",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 16390.0
-            },
-            {
-              "BlendedCpm": 14.754098360655737704918032787,
-              "Cost": 0.0000,
-              "CostPerSpot": 180.0000,
-              "Daypart": {
-                "Display": "M-F 5:58AM-7AM"
-              },
-              "DisplayCost": 180.0000,
-              "DisplayImpressions": 10067.7647884,
-              "DisplayStationImpressions": 12200.0,
-              "EffectiveImpressionsPerSpot": 12200.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 10067.7647884,
-              "ProgramName": "3 News First Edition",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 12200.0
-            },
-            {
-              "BlendedCpm": 25.000,
-              "Cost": 0.0000,
-              "CostPerSpot": 30.0000,
-              "Daypart": {
-                "Display": "SA 5AM-5:58AM"
-              },
-              "DisplayCost": 30.0000,
-              "DisplayImpressions": 912.05163621,
-              "DisplayStationImpressions": 1200.0,
-              "EffectiveImpressionsPerSpot": 1200.0,
-              "Genres": [],
-              "HasImpressions": true,
-              "Impressions": 0.0,
-              "ImpressionsPerSpot": 912.05163621,
-              "ProgramName": "This Week In Agri-Business",
-              "Spots": 0,
-              "StationImpressionsPerSpot": 1200.0
-            }
-          ],
-          "StationCode": 5319,
-          "TotalCost": 30.0000,
-          "TotalImpressions": 6140.0,
-          "TotalSpots": 1
-        }
-      ],
-      "TotalCost": 30.0000,
-      "TotalImpressions": 6140.0,
+      "TotalCost": 35.0000,
+      "TotalImpressions": 454.81117554,
       "TotalSpots": 1
     }
   ],
@@ -468,16 +369,16 @@
   },
   "OpenMarketShare": 0.0,
   "OpenMarketTotals": {
-    "Cost": 55.0000,
-    "Coverage": 0.45,
-    "Cpm": 5.7878351375155139682582471208,
-    "Impressions": 9502.68946735
+    "Cost": 35.0000,
+    "Coverage": 0.073,
+    "Cpm": 76.955013162738971230039874081,
+    "Impressions": 454.81117554
   },
   "PricingTotals": {
-    "Cost": 55.0000,
-    "Coverage": 0.45,
-    "Cpm": 5.78783514,
-    "Impressions": 9502.68946735
+    "Cost": 35.0000,
+    "Coverage": 0.073,
+    "Cpm": 76.95501316,
+    "Impressions": 454.81117554
   },
   "ProprietaryPricing": [],
   "ProprietaryTotals": {

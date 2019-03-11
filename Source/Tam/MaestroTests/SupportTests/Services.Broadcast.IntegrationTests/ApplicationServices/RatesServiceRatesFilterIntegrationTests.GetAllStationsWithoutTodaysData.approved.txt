@@ -1,15 +1,5 @@
 ﻿[
   {
-    "Affiliation": "NBC",
-    "CallLetters": "KOB+",
-    "Code": 30,
-    "LegacyCallLetters": "KOB",
-    "ManifestMaxEndDate": null,
-    "MarketCode": 390,
-    "OriginMarket": "Albuquerque-Santa Fe",
-    "RateDataThrough": "-"
-  },
-  {
     "Affiliation": "ABC",
     "CallLetters": "KSTP+",
     "Code": 39,

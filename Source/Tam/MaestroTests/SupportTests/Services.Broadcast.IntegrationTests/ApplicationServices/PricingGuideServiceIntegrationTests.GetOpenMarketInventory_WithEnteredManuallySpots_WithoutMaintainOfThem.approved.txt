@@ -1,23 +1,56 @@
 ﻿{
   "AllMarkets": [
     {
-      "AvgCpm": 7.4345253234864090035412526262,
-      "Coverage": 0.273,
-      "Id": 318,
-      "MaxCpm": 7.4345253234864090035412526262,
-      "MinCpm": 7.4345253234864090035412526262,
-      "Name": "Jackson, MS",
+      "AvgCpm": 76.955013162738919167850415819,
+      "Coverage": 0.073,
+      "Id": 244,
+      "MaxCpm": 76.955013162738919167850415819,
+      "MinCpm": 76.955013162738919167850415819,
+      "Name": "Alexandria, LA",
       "Programs": 1,
       "Selected": true,
       "Stations": 1
     },
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.022,
-      "Id": 347,
+      "Coverage": 0.133,
+      "Id": 343,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
-      "Name": "Juneau",
+      "Name": "Anchorage",
+      "Programs": 5,
+      "Selected": true,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.047,
+      "Id": 367,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Casper-Riverton",
+      "Programs": 8,
+      "Selected": true,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 10.110399242982084500644801441,
+      "Coverage": 0.177,
+      "Id": 200,
+      "MaxCpm": 25.000,
+      "MinCpm": 4.8859934853420195439739413681,
+      "Name": "Corpus Christi",
+      "Programs": 8,
+      "Selected": true,
+      "Stations": 1
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.031,
+      "Id": 345,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Fairbanks",
       "Programs": 4,
       "Selected": true,
       "Stations": 1
@@ -45,6 +78,17 @@
       "Stations": 2
     },
     {
+      "AvgCpm": 7.4345253234864090035412526262,
+      "Coverage": 0.273,
+      "Id": 318,
+      "MaxCpm": 7.4345253234864090035412526262,
+      "MinCpm": 7.4345253234864090035412526262,
+      "Name": "Jackson, MS",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    },
+    {
       "AvgCpm": 0.0,
       "Coverage": 0.069,
       "Id": 334,
@@ -56,6 +100,17 @@
       "Stations": 2
     },
     {
+      "AvgCpm": 0.0,
+      "Coverage": 0.022,
+      "Id": 347,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Juneau",
+      "Programs": 4,
+      "Selected": true,
+      "Stations": 1
+    },
+    {
       "AvgCpm": 50.606697763914244618976771423,
       "Coverage": 0.194,
       "Id": 428,
@@ -63,6 +118,17 @@
       "MinCpm": 17.778251831574046924196019488,
       "Name": "Monterey-Salinas",
       "Programs": 8,
+      "Selected": true,
+      "Stations": 2
+    },
+    {
+      "AvgCpm": 0.0,
+      "Coverage": 0.136,
+      "Id": 404,
+      "MaxCpm": 0.0,
+      "MinCpm": 0.0,
+      "Name": "Palm Springs",
+      "Programs": 6,
       "Selected": true,
       "Stations": 2
     },
@@ -79,14 +145,14 @@
     },
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.136,
-      "Id": 404,
+      "Coverage": 0.085,
+      "Id": 364,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
-      "Name": "Palm Springs",
+      "Name": "Rapid City",
       "Programs": 6,
       "Selected": true,
-      "Stations": 2
+      "Stations": 1
     },
     {
       "AvgCpm": 68.32514335792869163169270990,
@@ -98,50 +164,6 @@
       "Programs": 7,
       "Selected": true,
       "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.085,
-      "Id": 364,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Rapid City",
-      "Programs": 6,
-      "Selected": true,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 76.955013162738919167850415819,
-      "Coverage": 0.073,
-      "Id": 244,
-      "MaxCpm": 76.955013162738919167850415819,
-      "MinCpm": 76.955013162738919167850415819,
-      "Name": "Alexandria, LA",
-      "Programs": 1,
-      "Selected": true,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.214,
-      "Id": 410,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Yakima-Pasco-Rchlnd-Knnwck",
-      "Programs": 3,
-      "Selected": true,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.133,
-      "Id": 343,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Anchorage",
-      "Programs": 5,
-      "Selected": true,
-      "Stations": 2
     },
     {
       "AvgCpm": 34.91114561766735679779158040,
@@ -156,34 +178,12 @@
     },
     {
       "AvgCpm": 0.0,
-      "Coverage": 0.047,
-      "Id": 367,
+      "Coverage": 0.214,
+      "Id": 410,
       "MaxCpm": 0.0,
       "MinCpm": 0.0,
-      "Name": "Casper-Riverton",
-      "Programs": 8,
-      "Selected": true,
-      "Stations": 2
-    },
-    {
-      "AvgCpm": 0.0,
-      "Coverage": 0.031,
-      "Id": 345,
-      "MaxCpm": 0.0,
-      "MinCpm": 0.0,
-      "Name": "Fairbanks",
-      "Programs": 4,
-      "Selected": true,
-      "Stations": 1
-    },
-    {
-      "AvgCpm": 10.110399242982084500644801441,
-      "Coverage": 0.177,
-      "Id": 200,
-      "MaxCpm": 25.000,
-      "MinCpm": 4.8859934853420195439739413681,
-      "Name": "Corpus Christi",
-      "Programs": 8,
+      "Name": "Yakima-Pasco-Rchlnd-Knnwck",
+      "Programs": 3,
       "Selected": true,
       "Stations": 1
     }

@@ -1626,7 +1626,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
         }
-        
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingGuideNoStationsWithoutMarketData()
+        {
+            var request = new PricingGuideOpenMarketInventoryRequestDto
+            {
+                ProposalId = 26028,
+                ProposalDetailId = 9990,
+                OpenMarketShare = 1,
+                OpenMarketPricing = new OpenMarketPricingGuideDto
+                {
+                    OpenMarketCpmTarget = OpenMarketCpmTarget.Min
+                }
+            };
+
+            var pricingGuideOpenMarketDto = _PricingGuideService.GetOpenMarketInventory(request);
+
+            _VerifyPricingGuideModel(pricingGuideOpenMarketDto);
+        }
+
         private JsonSerializerSettings _GetPricingGuideJsonSerializerSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
