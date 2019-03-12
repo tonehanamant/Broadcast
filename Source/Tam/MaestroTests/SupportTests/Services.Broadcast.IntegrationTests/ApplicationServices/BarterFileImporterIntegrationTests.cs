@@ -211,7 +211,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [ExpectedException(typeof(Exception), ExpectedMessage = "Couldn't find last unit column")]
         public void ThrowsException_WhenFileDoesNotHaveValidUnitsEndColumn()
         {
-            const string fileName = @".\Files\BarterDataFiles\Barter DataLines file with without valid units end.xlsx";
+            const string fileName = @".\Files\BarterDataFiles\BarterFileImporter_WrongCommentsColumn.xlsx";
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {

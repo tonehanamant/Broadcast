@@ -312,25 +312,28 @@ namespace Services.Broadcast.Converters.RateImport
 
         private List<BarterInventoryUnit> _ReadBarterInventoryUnits(ExcelWorksheet worksheet)
         {
-            const string unitsEnd = "Units End";
-            const int headerRowIndex = 13;
+            const string commentsHeader = "COMMENTS";
             const int nameRowIndex = 14;
             const int spotLengthRowIndex = 15;
             const int firstColumnIndex = 4;
             var result = new List<BarterInventoryUnit>();
             var lastColumnIndex = firstColumnIndex;
 
-            // let's find lastColumnIndex
+            // let's find lastColumnIndex by looking for "COMMENTS" cell
             while (true)
             {
                 try
                 {
-                    var value = worksheet.Cells[headerRowIndex, ++lastColumnIndex].Value?.ToString()?.Trim();
-
-                    if (!string.IsNullOrWhiteSpace(value) && value.Equals(unitsEnd, StringComparison.OrdinalIgnoreCase))
+                    // comments header cell should be on the same row with spot lengths and 1 cell after last unit column
+                    var commentsHeaderCell = worksheet.Cells[spotLengthRowIndex, lastColumnIndex + 1].GetStringValue();
+                    var isCommentsHeaderCell = !string.IsNullOrWhiteSpace(commentsHeaderCell) && commentsHeaderCell.Equals(commentsHeader);
+                    
+                    if (isCommentsHeaderCell)
                     {
                         break;
                     }
+
+                    lastColumnIndex++;
                 }
                 catch (Exception)
                 {
