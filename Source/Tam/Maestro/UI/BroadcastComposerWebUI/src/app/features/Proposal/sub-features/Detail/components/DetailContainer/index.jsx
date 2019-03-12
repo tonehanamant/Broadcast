@@ -497,39 +497,38 @@ export class ProposalDetail extends Component {
                   />
                 </FormGroup>
               )}
-              {detail &&
-                proposalEditForm.PostType === 2 && (
-                  <FormGroup
-                    controlId="proposalDetailNtiConversionFactor"
-                    validationState={this.state.validationStates.NtiLength}
-                    className="proposal-detail-form-item"
-                  >
-                    <div className="proposal-form-label">
-                      <ControlLabel>NTI</ControlLabel>
-                      {this.state.validationStates.NtiLength != null && (
-                        <HelpBlock>
-                          <span className="text-danger">Required.</span>
-                        </HelpBlock>
-                      )}
-                    </div>
-                    <InputGroup>
-                      <InputNumber
-                        min={0}
-                        max={99.99}
-                        className="form-control"
-                        style={{ width: "75px" }}
-                        precision={2}
-                        defaultValue={
-                          detail && detail.NtiConversionFactor
-                            ? detail.NtiConversionFactor * 100
-                            : 0
-                        }
-                        onChange={this.onChangeNti}
-                      />
-                      <InputGroup.Addon>%</InputGroup.Addon>
-                    </InputGroup>
-                  </FormGroup>
-                )}
+              {detail && proposalEditForm.PostType === 2 && (
+                <FormGroup
+                  controlId="proposalDetailNtiConversionFactor"
+                  validationState={this.state.validationStates.NtiLength}
+                  className="proposal-detail-form-item"
+                >
+                  <div className="proposal-form-label">
+                    <ControlLabel>NTI</ControlLabel>
+                    {this.state.validationStates.NtiLength != null && (
+                      <HelpBlock>
+                        <span className="text-danger">Required.</span>
+                      </HelpBlock>
+                    )}
+                  </div>
+                  <InputGroup>
+                    <InputNumber
+                      min={0}
+                      max={99.99}
+                      className="form-control"
+                      style={{ width: "75px" }}
+                      precision={2}
+                      defaultValue={
+                        detail && detail.NtiConversionFactor
+                          ? detail.NtiConversionFactor * 100
+                          : 0
+                      }
+                      onChange={this.onChangeNti}
+                    />
+                    <InputGroup.Addon>%</InputGroup.Addon>
+                  </InputGroup>
+                </FormGroup>
+              )}
               {detail && (
                 <FormGroup
                   controlId="proposalDetailADU"
@@ -553,18 +552,14 @@ export class ProposalDetail extends Component {
                 </FormGroup>
               )}
               <div className="proposal-detail-actions">
-                {detail &&
-                  !isReadOnly && (
-                    <Button
-                      bsStyle="link"
-                      onClick={this.onDeleteProposalDetail}
-                    >
-                      <Glyphicon
-                        style={{ color: "#c12e2a", fontSize: "16px" }}
-                        glyph="trash"
-                      />
-                    </Button>
-                  )}
+                {detail && !isReadOnly && (
+                  <Button bsStyle="link" onClick={this.onDeleteProposalDetail}>
+                    <Glyphicon
+                      style={{ color: "#c12e2a", fontSize: "16px" }}
+                      glyph="trash"
+                    />
+                  </Button>
+                )}
                 {detail && (
                   <div>
                     <DropdownButton

@@ -129,7 +129,8 @@ class PricingGuideProprietary extends Component {
               <div className="summary-bar">
                 <div className="summary-item">
                   <div className="summary-display">
-                    ${numberRender(
+                    $
+                    {numberRender(
                       activeOpenMarketData,
                       "ProprietaryTotals.Cpm",
                       "0,0.00"
@@ -150,7 +151,8 @@ class PricingGuideProprietary extends Component {
                 </div>
                 <div className="summary-item">
                   <div className="summary-display">
-                    ${numberRender(
+                    $
+                    {numberRender(
                       activeOpenMarketData,
                       "ProprietaryTotals.Cost",
                       "0,0"
@@ -165,16 +167,15 @@ class PricingGuideProprietary extends Component {
         <Panel.Collapse>
           <Panel.Body>
             <div className="formEditToggle">
-              {!isReadOnly &&
-                !isEditing && (
-                  <Button
-                    onClick={this.toggleEditing}
-                    disabled={isEditMarketsActive || isGuideEditing}
-                    bsStyle="link"
-                  >
-                    <Glyphicon glyph="edit" /> Edit
-                  </Button>
-                )}
+              {!isReadOnly && !isEditing && (
+                <Button
+                  onClick={this.toggleEditing}
+                  disabled={isEditMarketsActive || isGuideEditing}
+                  bsStyle="link"
+                >
+                  <Glyphicon glyph="edit" /> Edit
+                </Button>
+              )}
               {isEditing && (
                 <div>
                   <Button

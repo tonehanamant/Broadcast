@@ -63,7 +63,7 @@ export class PostPrePostingFileEditModal extends Component {
       demosInvalid: null
     };
   }
-  
+
   save() {
     if (this.checkValid()) {
       const {
@@ -83,36 +83,36 @@ export class PostPrePostingFileEditModal extends Component {
       this.props.savePostPrePostingFileEdit(ret);
     }
   }
-  
+
   onChangeEquivalized() {
     this.props.updateEquivalized(!this.props.fileEditFormValues.Equivalized);
   }
-  
+
   onChangePostingBook(value) {
     // can be empty value
     const val = value ? value.Id : null;
     this.props.updatePostingBook(val); // actioncreator
     this.setValidationState("postingBookInvalid", val ? null : "error");
   }
-  
+
   onChangePlaybackType(value) {
     const val = value ? value.Id : null;
     this.props.updatePlaybackType(val); // actioncreator
     this.setValidationState("playbackTypeInvalid", val ? null : "error");
   }
-  
+
   onChangeDemos(value) {
     const convert = value.map(item => item.Id);
     this.props.updateDemos(convert); // actioncreator
     this.setValidationState("demosInvalid", value.length ? null : "error");
   }
-  
+
   checkValid() {
     const pbookValid = this.props.fileEditFormValues.PostingBookId != null;
     const ptypeValid = this.props.fileEditFormValues.PlaybackType != null;
     const pdemoValid =
-    this.props.fileEditFormValues.Demos &&
-    this.props.fileEditFormValues.Demos.length > 0;
+      this.props.fileEditFormValues.Demos &&
+      this.props.fileEditFormValues.Demos.length > 0;
     if (pbookValid && ptypeValid && pdemoValid) {
       this.clearValidationStates();
       return true;
@@ -122,7 +122,7 @@ export class PostPrePostingFileEditModal extends Component {
     this.setValidationState("demosInvalid", pdemoValid ? null : "error");
     return false;
   }
-  
+
   setValidationState(type, state) {
     this.state[type] = state;
   }
@@ -136,7 +136,7 @@ export class PostPrePostingFileEditModal extends Component {
       properties: modal.properties
     });
   }
-  
+
   clearValidationStates() {
     this.setState({
       postingBookInvalid: null,

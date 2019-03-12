@@ -248,8 +248,9 @@ export default class GridIsciCell extends Component {
                 color: "#999999"
               }}
             >
-              <br />Use (m) to denote a married house ISCI. Use - between days
-              in Day Include (M-T-W).
+              <br />
+              Use (m) to denote a married house ISCI. Use - between days in Day
+              Include (M-T-W).
             </span>
           </ControlLabel>
           <FormControl
@@ -304,7 +305,8 @@ export default class GridIsciCell extends Component {
       </Button>
     ) : (
       <Button bsStyle="link" style={{ padding: "2px", fontSize: "11px" }}>
-        <Glyphicon style={{ marginRight: "6px" }} glyph="plus" />Add ISCIs
+        <Glyphicon style={{ marginRight: "6px" }} glyph="plus" />
+        Add ISCIs
       </Button>
     );
     const tooltip = (

@@ -21,7 +21,8 @@ export const transformInvetorySrc = (
         <td>
           {!isEditing && (
             <FormControl.Static>
-              {impression ? numeral(impression * 100).format("0,0.[00]") : "--"}%
+              {impression ? numeral(impression * 100).format("0,0.[00]") : "--"}
+              %
             </FormControl.Static>
           )}
           {isEditing && (

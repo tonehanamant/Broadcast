@@ -516,14 +516,16 @@ class PricingGuideContainer extends Component {
                         activeOpenMarketData,
                         "PricingTotals.Coverage",
                         "0.000"
-                      )}%
+                      )}
+                      %
                     </div>
                     <div className="summary-label">MARKET COVERAGE</div>
                   </div>
                   <div className="summary-item">
                     {/* <div className="summary-tag">--%</div> */}
                     <div className="summary-display">
-                      ${numberRender(
+                      $
+                      {numberRender(
                         activeOpenMarketData,
                         "PricingTotals.Cpm",
                         "0,0.00"
@@ -546,7 +548,8 @@ class PricingGuideContainer extends Component {
                   <div className="summary-item">
                     {/* <div className="summary-tag">--%</div> */}
                     <div className="summary-display">
-                      ${numberRender(
+                      $
+                      {numberRender(
                         activeOpenMarketData,
                         "PricingTotals.Cost",
                         "0,0"

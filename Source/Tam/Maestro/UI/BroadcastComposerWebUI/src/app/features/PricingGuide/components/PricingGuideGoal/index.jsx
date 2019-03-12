@@ -129,16 +129,15 @@ class PricingGuideGoal extends Component {
         <Panel.Collapse>
           <Panel.Body>
             <div className="formEditToggle">
-              {!isReadOnly &&
-                !isEditing && (
-                  <Button
-                    onClick={this.toggleEditing}
-                    disabled={isEditMarketsActive || isGuideEditing}
-                    bsStyle="link"
-                  >
-                    <Glyphicon glyph="edit" /> Edit
-                  </Button>
-                )}
+              {!isReadOnly && !isEditing && (
+                <Button
+                  onClick={this.toggleEditing}
+                  disabled={isEditMarketsActive || isGuideEditing}
+                  bsStyle="link"
+                >
+                  <Glyphicon glyph="edit" /> Edit
+                </Button>
+              )}
               {isEditing && (
                 <div>
                   <Button onClick={this.onSubmit} bsStyle="link">
@@ -210,9 +209,8 @@ class PricingGuideGoal extends Component {
                         )}
                         {!isEditing && (
                           <FormControl.Static>
-                            ${budget
-                              ? numeral(budget).format("0,0.[00]")
-                              : "--"}
+                            $
+                            {budget ? numeral(budget).format("0,0.[00]") : "--"}
                           </FormControl.Static>
                         )}
                       </FormGroup>
@@ -255,7 +253,8 @@ class PricingGuideGoal extends Component {
                               ? numeral(parseToPercent(margin)).format(
                                   "0,0.[00]"
                                 )
-                              : "--"}%
+                              : "--"}
+                            %
                           </FormControl.Static>
                         )}
                       </FormGroup>
@@ -291,7 +290,8 @@ class PricingGuideGoal extends Component {
                               ? numeral(parseToPercent(inflation)).format(
                                   "0,0.[00]"
                                 )
-                              : "--"}%
+                              : "--"}
+                            %
                           </FormControl.Static>
                         )}
                       </FormGroup>
@@ -327,7 +327,8 @@ class PricingGuideGoal extends Component {
                               ? numeral(parseToPercent(impressionLoss)).format(
                                   "0,0.[00]"
                                 )
-                              : "--"}%
+                              : "--"}
+                            %
                           </FormControl.Static>
                         )}
                       </FormGroup>

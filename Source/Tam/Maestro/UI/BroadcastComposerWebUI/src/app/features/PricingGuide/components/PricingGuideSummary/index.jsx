@@ -104,7 +104,8 @@ export default class PricingProposalSummary extends Component {
                 <strong>
                   {proposalSummary.coverage
                     ? numeral(proposalSummary.coverage * 100).format("0,0.[00]")
-                    : "--"}%
+                    : "--"}
+                  %
                 </strong>
               </td>
               <td>

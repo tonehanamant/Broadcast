@@ -233,13 +233,15 @@ class OpenMarketsContainer extends Component {
                       activeOpenMarketData,
                       "OpenMarketTotals.Coverage",
                       "0.000"
-                    )}%
+                    )}
+                    %
                   </div>
                   <div className="summary-label">MARKET COVERAGE</div>
                 </div>
                 <div className="summary-item">
                   <div className="summary-display">
-                    ${numberRender(
+                    $
+                    {numberRender(
                       activeOpenMarketData,
                       "OpenMarketTotals.Cpm",
                       "0,0.00"
@@ -260,7 +262,8 @@ class OpenMarketsContainer extends Component {
                 </div>
                 <div className="summary-item">
                   <div className="summary-display">
-                    ${numberRender(
+                    $
+                    {numberRender(
                       activeOpenMarketData,
                       "OpenMarketTotals.Cost",
                       "0,0"
@@ -275,16 +278,15 @@ class OpenMarketsContainer extends Component {
         <Panel.Collapse>
           <Panel.Body>
             <div className="formEditToggle">
-              {!isReadOnly &&
-                !isEditing && (
-                  <Button
-                    onClick={this.toggleEditing}
-                    disabled={isEditMarketsActive || isGuideEditing}
-                    bsStyle="link"
-                  >
-                    <Glyphicon glyph="edit" /> Edit
-                  </Button>
-                )}
+              {!isReadOnly && !isEditing && (
+                <Button
+                  onClick={this.toggleEditing}
+                  disabled={isEditMarketsActive || isGuideEditing}
+                  bsStyle="link"
+                >
+                  <Glyphicon glyph="edit" /> Edit
+                </Button>
+              )}
               {isEditing && (
                 <div>
                   <Button onClick={this.onSubmit} bsStyle="link">
@@ -326,7 +328,8 @@ class OpenMarketsContainer extends Component {
                         )}
                         {!isEditing && (
                           <FormControl.Static>
-                            ${openCpmMin
+                            $
+                            {openCpmMin
                               ? numeral(openCpmMin).format("0,0.[00]")
                               : "--"}
                           </FormControl.Static>
@@ -355,7 +358,8 @@ class OpenMarketsContainer extends Component {
                         )}
                         {!isEditing && (
                           <FormControl.Static>
-                            ${openCpmMax
+                            $
+                            {openCpmMax
                               ? numeral(openCpmMax).format("0,0.[00]")
                               : "--"}
                           </FormControl.Static>
