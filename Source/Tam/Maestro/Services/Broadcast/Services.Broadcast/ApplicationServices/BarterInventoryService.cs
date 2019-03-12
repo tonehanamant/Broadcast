@@ -220,7 +220,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<StationInventoryManifestWeek> _GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)
         {
-            var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksInRange(startDate, endDate);
+            var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksIntersecting(startDate, endDate);
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
         }
 

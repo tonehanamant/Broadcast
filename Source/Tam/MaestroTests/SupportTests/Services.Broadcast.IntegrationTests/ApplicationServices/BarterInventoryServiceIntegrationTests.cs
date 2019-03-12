@@ -267,6 +267,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterInventoryService_SaveBarterInventoryFile_DateRangeIntersecting()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                _VerifyInventoryGroups(result.FileId);
+            }
+        }
+
         private static void _VerifyInventoryFileProblems(List<InventoryFileProblem> problems)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();

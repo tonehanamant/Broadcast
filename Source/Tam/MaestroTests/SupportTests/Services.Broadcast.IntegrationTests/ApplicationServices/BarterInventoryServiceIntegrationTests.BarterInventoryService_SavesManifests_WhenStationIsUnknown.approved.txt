@@ -55,6 +55,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -519,6 +529,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 1
@@ -600,6 +620,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -1064,6 +1094,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 4
@@ -1145,6 +1185,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -1609,6 +1659,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 3
@@ -1690,6 +1750,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 5
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -2154,6 +2224,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 5
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 5
@@ -2235,6 +2315,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -2699,6 +2789,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 1
@@ -2780,6 +2880,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -3244,6 +3354,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 4
@@ -3325,6 +3445,16 @@
         "ManifestWeeks": [
           {
             "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
+          {
+            "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
               "_MediaMonthId": 449,
               "_StartDate": "2019-02-04T00:00:00",
@@ -3789,6 +3919,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 3
