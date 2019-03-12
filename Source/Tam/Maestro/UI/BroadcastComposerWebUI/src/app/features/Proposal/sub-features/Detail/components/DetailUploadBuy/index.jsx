@@ -10,7 +10,7 @@ import {
   Col
 } from "react-bootstrap";
 import { InputNumber } from "antd";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import UploadButton from "Patterns/UploadButton";
 
 import { clearFile, storeFile } from "Main/redux/ducks";

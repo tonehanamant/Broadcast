@@ -90,13 +90,6 @@ export default class DayPartPicker extends Component {
     }
   }
 
-  editDayPart(nextDayPart) {
-    this.setState({
-      ...nextDayPart,
-      text: dateToString(nextDayPart)
-    });
-  }
-
   onDayChange(name, value) {
     const { days, startTime, endTime } = this.state;
     const nextDayPart = {
@@ -131,13 +124,21 @@ export default class DayPartPicker extends Component {
 
   onApply() {
     const { text, days, startTime, endTime } = this.state;
-    this.props.onApply({
+    const { onApply } = this.props;
+    onApply({
       Text: text,
       startTime: tranformTime(startTime),
       endTime: tranformTime(endTime),
       ...days
     });
     this.setState({ show: false });
+  }
+
+  editDayPart(nextDayPart) {
+    this.setState({
+      ...nextDayPart,
+      text: dateToString(nextDayPart)
+    });
   }
 
   render() {
@@ -204,7 +205,7 @@ export default class DayPartPicker extends Component {
                     this.onTimeChange("startTime", time);
                   }}
                   use12Hours
-                  format={"h:mm a"}
+                  format="h:mm a"
                   allowEmpty={allowEmpty}
                   getPopupContainer={() =>
                     document.getElementById("startTimePicker")
@@ -220,7 +221,7 @@ export default class DayPartPicker extends Component {
                     this.onTimeChange("endTime", time);
                   }}
                   use12Hours
-                  format={"h:mm a"}
+                  format="h:mm a"
                   allowEmpty={allowEmpty}
                   getPopupContainer={() =>
                     document.getElementById("endTimePicker")

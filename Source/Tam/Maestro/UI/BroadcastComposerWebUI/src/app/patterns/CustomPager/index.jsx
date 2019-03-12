@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 const getSelectedId = (rowKey, data, idProperty) => {
   if (rowKey) {
-    const row = data.find(obj => obj._key === rowKey);
+    const row = data.find(({ _key: key }) => key === rowKey);
     const id = row[idProperty];
     return id ? `Record Id: ${id}` : "";
   }
@@ -18,7 +18,7 @@ const mapStateToProps = ({ selection, dataSource }, { stateKey }) => ({
 });
 
 export function CustomPager({ dataSource, selection, idProperty }) {
-  const total = dataSource.total;
+  const { total } = dataSource;
   const keys = Object.keys(selection);
   const rowKey = keys.filter(key => selection[key] === true)[0];
   const recordId = getSelectedId(rowKey, dataSource.data, idProperty);
@@ -40,7 +40,7 @@ CustomPager.defaultProps = {
 };
 
 CustomPager.propTypes = {
-  idProperty: PropTypes.string.isRequired,
+  idProperty: PropTypes.string,
   dataSource: PropTypes.object.isRequired,
   selection: PropTypes.object.isRequired
 };

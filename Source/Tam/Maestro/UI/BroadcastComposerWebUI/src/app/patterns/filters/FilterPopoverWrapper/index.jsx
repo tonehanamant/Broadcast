@@ -8,7 +8,6 @@ import FilterTimeInput from "../FilterTimeInput";
 export default class FilterPopoverWrapper extends Component {
   constructor(props) {
     super(props);
-
     this.popover = null;
     this.closePopover = this.closePopover.bind(this);
     this.showPopover = this.showPopover.bind(this);
@@ -16,29 +15,11 @@ export default class FilterPopoverWrapper extends Component {
     // this.clearFilter = this.clearFilter.bind(this);
   }
 
-  /* componentWillReceiveProps(nextProps) {
-    console.log('filter popover  receive props', nextProps, this);
-  } */
-
-  // REMOVE clear just pass through - unless need a check, etc?
-  // intercept to close popover; todo key from here, etc?
   setFilter(filter) {
-    // console.log('setFilter', filter.filterKey, filter.exclusions);
-    /* if (filter.exclusions.length > 0) {
-      this.props.applyFilter(filter);
-      this.closePopover();
-    } else {
-      this.clearFilter(filter);
-    } */
-    this.props.applyFilter(filter);
+    const { applyFilter } = this.props;
+    applyFilter(filter);
     this.closePopover();
   }
-  // may not need
-  /*  clearFilter(filter) {
-    // console.log('clearFilter', this);
-    this.props.applyFilter(filter);
-    this.closePopover();
-  } */
 
   closePopover() {
     // console.log('closePopover', this, this.popover);
@@ -58,9 +39,10 @@ export default class FilterPopoverWrapper extends Component {
       filterType,
       matchOptions,
       hasTextSearch,
-      hasMatchSpec
+      hasMatchSpec,
+      filterActive
     } = this.props;
-    const isActive = this.props.filterActive;
+    const isActive = filterActive;
     const activeColor = isActive ? "green" : "#999";
     // console.log('render filter wrapper', filterOptions);
     const popoverFilter = (
@@ -106,7 +88,7 @@ export default class FilterPopoverWrapper extends Component {
       >
         <div
           style={{ backgroundColor: "white", cursor: "pointer" }}
-          className={"editable-cell"}
+          className="editable-cell"
         >
           <Glyphicon
             className="pull-right"
@@ -133,12 +115,12 @@ FilterPopoverWrapper.propTypes = {
   applyFilter: PropTypes.func,
   hasTextSearch: PropTypes.bool,
   hasMatchSpec: PropTypes.bool,
-  matchOptions: PropTypes.object.isRequired,
+  matchOptions: PropTypes.object,
   filterType: PropTypes.string,
   filterKey: PropTypes.string.isRequired,
-  filterDisplay: PropTypes.string.isRequired,
+  filterDisplay: PropTypes.string,
   // filterOptions: PropTypes.array.isRequired,
   filterOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
     .isRequired,
-  filterActive: PropTypes.bool.isRequired
+  filterActive: PropTypes.bool
 };

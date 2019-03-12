@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import { Grid, Actions } from "react-redux-grid";
 import { unlinkedIsciActions } from "Post";
 

@@ -8,11 +8,12 @@ import "./index.css";
 class FilterTimeInput extends Component {
   constructor(props) {
     super(props);
+    const { filterOptions } = this.props;
     this.state = {
       startTime: null,
       endTime: null,
-      originalStartTime: this.props.filterOptions.originalTimeAiredStart,
-      originalEndTime: this.props.filterOptions.originalTimeAiredEnd,
+      originalStartTime: filterOptions.originalTimeAiredStart,
+      originalEndTime: filterOptions.originalTimeAiredEnd,
       filterOptions: {}
     };
     this.handleStartChange = this.handleStartChange.bind(this);
@@ -22,37 +23,35 @@ class FilterTimeInput extends Component {
   }
 
   componentWillMount() {
-    console.log("Time Input Mount >>>>", this.props);
-    // console.log(moment(moment().startOf('day').seconds(this.props.filterOptions.TimeAiredStart).format('H:mm:ss')));
-    // startTime: moment(this.props.filterOptions.TimeAiredStart),
-    // endTime: moment(this.props.filterOptions.TimeAiredEnd),
+    // console.log("Time Input Mount >>>>", this.props);
+    const { filterOptions } = this.props;
     this.setState({
       originalStartTime: moment(
         moment()
           .startOf("day")
-          .seconds(this.props.filterOptions.originalTimeAiredStart)
+          .seconds(filterOptions.originalTimeAiredStart)
       ),
       originalEndTime: moment(
         moment()
           .startOf("day")
-          .seconds(this.props.filterOptions.originalTimeAiredEnd)
+          .seconds(filterOptions.originalTimeAiredEnd)
       ),
       // startTime: moment(),
       startTime: moment(
         moment()
           .startOf("day")
-          .seconds(this.props.filterOptions.TimeAiredStart)
+          .seconds(filterOptions.TimeAiredStart)
       ),
       endTime: moment(
         moment()
           .startOf("day")
-          .seconds(this.props.filterOptions.TimeAiredEnd)
+          .seconds(filterOptions.TimeAiredEnd)
       )
     });
   }
 
   handleStartChange(time) {
-    console.log(time);
+    // console.log(time);
     this.setState({
       startTime: time
     });
@@ -67,13 +66,14 @@ class FilterTimeInput extends Component {
   clear() {
     // update states as needed then apply
     // REVIEW may be problematic as filterOptions may be changed - need originals? yes
+    const { filterOptions, filterKey, applySelection } = this.props;
     const options = {
-      TimeAiredStart: this.props.filterOptions.originalTimeAiredStart,
-      TimeAiredEnd: this.props.filterOptions.originalTimeAiredEnd
+      TimeAiredStart: filterOptions.originalTimeAiredStart,
+      TimeAiredEnd: filterOptions.originalTimeAiredEnd
     };
     // using exclusions in this context to denote not active;
-    this.props.applySelection({
-      filterKey: this.props.filterKey,
+    applySelection({
+      filterKey,
       exclusions: false,
       filterOptions: options
     });
@@ -82,12 +82,13 @@ class FilterTimeInput extends Component {
   // apply filters - filterOptions and matchOptions if applicable
   // change to send unselected as flat array of values - exclusions; send all options
   apply() {
-    // const startTime = moment(this.state.startTime).format('hh:mm:ss');
-    const startTime = moment(this.state.startTime, "HH:mm:ss: A").diff(
+    const { startTime, endTime } = this.state;
+    const { filterOptions, filterKey, applySelection } = this.props;
+    const startTimeConvert = moment(startTime, "HH:mm:ss: A").diff(
       moment().startOf("day"),
       "seconds"
     );
-    const endTime = moment(this.state.endTime, "HH:mm:ss: A").diff(
+    const endTimeConvert = moment(endTime, "HH:mm:ss: A").diff(
       moment().startOf("day"),
       "seconds"
     );
@@ -95,23 +96,24 @@ class FilterTimeInput extends Component {
     // if startTime and endTime are the same as originalStartTime and originalEndDate
     // then set exclusions to false, otherwise set to true
     if (
-      startTime === this.props.filterOptions.originalTimeAiredStart &&
-      endTime === this.props.filterOptions.originalTimeAiredEnd
+      startTimeConvert === filterOptions.originalTimeAiredStart &&
+      endTimeConvert === filterOptions.originalTimeAiredEnd
     ) {
       exclusions = false;
     }
     const options = {
-      TimeAiredStart: startTime,
-      TimeAiredEnd: endTime
+      TimeAiredStart: startTimeConvert,
+      TimeAiredEnd: endTimeConvert
     };
-    this.props.applySelection({
-      filterKey: this.props.filterKey,
+    applySelection({
+      filterKey,
       exclusions,
       filterOptions: options
     });
   }
 
   render() {
+    const { startTime, endTime } = this.state;
     return (
       <div>
         <Form horizontal>
@@ -123,8 +125,8 @@ class FilterTimeInput extends Component {
               <TimePicker
                 use12Hours
                 format="h:mm a"
-                value={this.state.startTime}
-                defaultValue={this.state.startTime}
+                value={startTime}
+                defaultValue={startTime}
                 onChange={this.handleStartChange}
                 // popupClassName="time-picker"
                 getPopupContainer={triggerNode => triggerNode.parentNode}
@@ -139,8 +141,8 @@ class FilterTimeInput extends Component {
               <TimePicker
                 use12Hours
                 format="h:mm a"
-                value={this.state.endTime}
-                defaultValue={this.state.endTime}
+                value={endTime}
+                defaultValue={endTime}
                 onChange={this.handleEndChange}
                 // popupClassName="time-picker"
                 getPopupContainer={triggerNode => triggerNode.parentNode}

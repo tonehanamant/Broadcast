@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import SearchInputButton from "Patterns/SearchInputButton";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import { Button, Modal, Nav, NavItem, Row, Col } from "react-bootstrap";
 import { unlinkedIsciActions } from "Tracker";
 import UnlinkedIsciGrid from "Tracker/sub-features/UnlinkedIsci/components/UnlinkedIsciGrid";

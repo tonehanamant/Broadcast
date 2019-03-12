@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 
 import { Button, Modal } from "react-bootstrap";
 
@@ -127,7 +127,7 @@ ConfirmModal.defaultProps = {
 };
 
 ConfirmModal.propTypes = {
-  modal: PropTypes.object.isRequired,
+  modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired
 };
 

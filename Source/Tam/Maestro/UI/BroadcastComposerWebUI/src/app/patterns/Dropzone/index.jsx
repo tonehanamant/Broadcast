@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import { head, pick } from "lodash";
 import CSSModules from "react-css-modules";
 import ReactDropzone from "react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzone";
@@ -50,6 +50,24 @@ export class Dropzone extends PureComponent {
     }
   }
 
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { multiple, isParseFile } = this.props;
+    const validated = this.validateFiles(acceptedFiles, rejectedFiles);
+    // if files are not valid do not process them
+    if (!validated) return false;
+    const processFile = multiple
+      ? this.processMultipleFiles
+      : this.processSingleFile;
+    if (isParseFile) {
+      parseFileToBase64(acceptedFiles, true).then(values => {
+        processFile(values, validated.rejectedFiles);
+      });
+    } else {
+      processFile(validated.acceptedFiles, validated.rejectedFiles);
+    }
+    return true;
+  }
+
   processMultipleFiles(acceptedFiles, rejectedFiles) {
     const { processFiles, fileTypeExtension } = this.props;
     processFiles(acceptedFiles, rejectedFiles, fileTypeExtension);
@@ -78,24 +96,6 @@ export class Dropzone extends PureComponent {
       return false;
     }
     return validated;
-  }
-
-  onDrop(acceptedFiles, rejectedFiles) {
-    const { multiple, isParseFile } = this.props;
-    const validated = this.validateFiles(acceptedFiles, rejectedFiles);
-    // if files are not valid do not process them
-    if (!validated) return false;
-    const processFile = multiple
-      ? this.processMultipleFiles
-      : this.processSingleFile;
-    if (isParseFile) {
-      parseFileToBase64(acceptedFiles, true).then(values => {
-        processFile(values, validated.rejectedFiles);
-      });
-    } else {
-      processFile(validated.acceptedFiles, validated.rejectedFiles);
-    }
-    return true;
   }
 
   render() {

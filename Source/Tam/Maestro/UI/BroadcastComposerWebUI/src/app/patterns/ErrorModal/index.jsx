@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 
 import { Button, Modal } from "react-bootstrap";
 
@@ -100,8 +100,8 @@ ErrorModal.defaultProps = {
 };
 
 ErrorModal.propTypes = {
-  errors: PropTypes.array.isRequired,
-  modal: PropTypes.object.isRequired,
+  errors: PropTypes.array,
+  modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired
 };

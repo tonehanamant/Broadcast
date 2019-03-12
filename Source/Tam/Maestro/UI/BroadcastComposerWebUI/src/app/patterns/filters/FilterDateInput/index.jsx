@@ -14,15 +14,16 @@ const dateFormat = "MM/DD/YYYY";
 class FilterDateInput extends Component {
   constructor(props) {
     super(props);
+    const { filterOptions } = this.props;
     this.state = {
       startDate: moment(),
       endDate: moment(),
       originalStartDate: moment(
-        this.props.filterOptions.originalDateAiredStart,
+        filterOptions.originalDateAiredStart,
         "YYYY-MM-DD"
       ).toDate(),
       originalEndDate: moment(
-        this.props.filterOptions.originalDateAiredEnd,
+        filterOptions.originalDateAiredEnd,
         "YYYY-MM-DD"
       ).toDate(),
       filterOptions: {},
@@ -40,20 +41,34 @@ class FilterDateInput extends Component {
   }
 
   componentWillMount() {
+    const { filterOptions } = this.props;
     this.setState({
-      startDate: moment(this.props.filterOptions.DateAiredStart, "YYYY-MM-DD"),
-      endDate: moment(this.props.filterOptions.DateAiredEnd, "YYYY-MM-DD")
+      startDate: moment(filterOptions.DateAiredStart, "YYYY-MM-DD"),
+      endDate: moment(filterOptions.DateAiredEnd, "YYYY-MM-DD")
     });
   }
 
+  setValidSelections() {
+    const { startValid, endValid } = this.state;
+    if (startValid && endValid) {
+      this.setState({
+        isValidSelection: true
+      });
+    } else {
+      this.setState({
+        isValidSelection: false
+      });
+    }
+  }
+
   disabledStartDate(current) {
-    console.log(this);
-    return current && current.valueOf() < this.state.originalStartDate;
+    const { originalStartDate } = this.state;
+    return current && current.valueOf() < originalStartDate;
   }
 
   disabledEndDate(current) {
-    console.log(this);
-    return current && current.valueOf() > this.state.originalEndDate;
+    const { originalEndDate } = this.state;
+    return current && current.valueOf() > originalEndDate;
   }
 
   handleStartChange(date) {
@@ -84,58 +99,49 @@ class FilterDateInput extends Component {
     }
   }
 
-  setValidSelections() {
-    if (this.state.startValid && this.state.endValid) {
-      this.setState({
-        isValidSelection: true
-      });
-    } else {
-      this.setState({
-        isValidSelection: false
-      });
-    }
-  }
-
   clear() {
     // update states as needed then apply
-    // REVIEW may be problematic as filterOptions may be changed - need originals? yes
+    const { filterOptions, filterKey, applySelection } = this.props;
     const options = {
-      DateAiredStart: this.props.filterOptions.originalDateAiredStart,
-      DateAiredEnd: this.props.filterOptions.originalDateAiredEnd
+      DateAiredStart: filterOptions.originalDateAiredStart,
+      DateAiredEnd: filterOptions.originalDateAiredEnd
     };
     // using exclusions in this context to denote not active;
-    this.props.applySelection({
-      filterKey: this.props.filterKey,
+    applySelection({
+      filterKey,
       exclusions: false,
       filterOptions: options
     });
   }
+
   // apply filters - filterOptions and matchOptions if applicable
   // change to send unselected as flat array of values - exclusions; send all options
   apply() {
+    const { filterOptions, filterKey, applySelection } = this.props;
+    const { startDate, endDate } = this.state;
     // get values of both inputs
-    const startDate = moment(this.state.startDate).toISOString();
-    const endDate = moment(this.state.endDate).toISOString();
+    const startDateIso = moment(startDate).toISOString();
+    const endDateIso = moment(endDate).toISOString();
     let exclusions = true;
     // if startDate and endDate are the same as originalStartDate and originalEndDate
     // then set exclusions to false, otherwise set to true
     if (
-      startDate ===
-        moment(this.props.filterOptions.originalDateAiredStart).toISOString() &&
-      endDate ===
-        moment(this.props.filterOptions.originalDateAiredEnd).toISOString()
+      startDateIso ===
+        moment(filterOptions.originalDateAiredStart).toISOString() &&
+      endDateIso === moment(filterOptions.originalDateAiredEnd).toISOString()
     ) {
       exclusions = false;
     }
-    const options = { DateAiredStart: startDate, DateAiredEnd: endDate };
-    this.props.applySelection({
-      filterKey: this.props.filterKey,
+    const options = { DateAiredStart: startDateIso, DateAiredEnd: endDateIso };
+    applySelection({
+      filterKey,
       exclusions,
       filterOptions: options
     });
   }
 
   render() {
+    const { startDate, endDate, isValidSelection } = this.state;
     return (
       <div>
         <Form horizontal>
@@ -149,7 +155,7 @@ class FilterDateInput extends Component {
                 format={dateFormat}
                 allowClear={false}
                 showToday={false}
-                value={this.state.startDate}
+                value={startDate}
                 onChange={this.handleStartChange}
                 getCalendarContainer={triggerNode => triggerNode.parentNode}
               />
@@ -164,7 +170,7 @@ class FilterDateInput extends Component {
                 disabledDate={this.disabledEndDate}
                 format={dateFormat}
                 allowClear={false}
-                value={this.state.endDate}
+                value={endDate}
                 onChange={this.handleEndChange}
                 showToday={false}
                 getCalendarContainer={triggerNode => triggerNode.parentNode}
@@ -179,7 +185,7 @@ class FilterDateInput extends Component {
           <Button
             bsStyle="success"
             bsSize="xsmall"
-            disabled={!this.state.isValidSelection}
+            disabled={!isValidSelection}
             style={{ marginLeft: "10px" }}
             onClick={this.apply}
           >

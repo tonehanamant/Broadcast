@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import CSSModules from "react-css-modules";
 import AppBody from "Patterns/layout/Body";
 import PageTitle from "Patterns/PageTitle";

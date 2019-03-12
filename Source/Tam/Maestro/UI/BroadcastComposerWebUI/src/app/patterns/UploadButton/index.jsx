@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import { head } from "lodash";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";

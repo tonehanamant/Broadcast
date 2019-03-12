@@ -9,7 +9,7 @@ import {
   ControlLabel,
   Col
 } from "react-bootstrap";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import Select from "react-select";
 
 import { toggleModal } from "Main/redux/ducks";

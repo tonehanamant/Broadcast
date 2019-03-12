@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";

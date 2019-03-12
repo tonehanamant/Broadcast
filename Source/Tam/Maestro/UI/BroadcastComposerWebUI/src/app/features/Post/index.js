@@ -1,4 +1,4 @@
-import { combineReducers } from "react-redux/node_modules/redux";
+import { combineReducers } from "react-redux";
 import {
   reducer as unlinkedIsciReducer,
   actions as unlinkedIsciActions,

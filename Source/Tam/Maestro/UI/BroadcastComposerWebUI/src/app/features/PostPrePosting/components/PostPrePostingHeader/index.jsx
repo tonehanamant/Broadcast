@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "react-redux/node_modules/redux";
+import { bindActionCreators } from "redux";
 
 import { Row, Col } from "react-bootstrap";
 import SearchInputButton from "Patterns/SearchInputButton";
@@ -40,11 +40,13 @@ export class PageHeaderContainer extends Component {
   }
 
   SearchInputAction() {
-    this.props.getPostPrePostingFiltered();
+    const { getPostPrePostingFiltered } = this.props;
+    getPostPrePostingFiltered();
   }
 
   SearchSubmitAction(value) {
-    this.props.getPostPrePostingFiltered(value);
+    const { getPostPrePostingFiltered } = this.props;
+    getPostPrePostingFiltered(value);
   }
 
   render() {

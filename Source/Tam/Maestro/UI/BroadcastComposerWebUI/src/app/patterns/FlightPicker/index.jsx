@@ -39,22 +39,15 @@ const isoWeekEndFuture = moment()
 export default class FlightPicker extends Component {
   constructor(props) {
     super(props);
+    const { startDate, endDate, flightWeeks } = this.props;
     this.state = {
       show: false,
-      startDate: this.props.startDate
-        ? moment(this.props.startDate)
-        : isoWeekStart,
-      endDate: this.props.endDate
-        ? moment(this.props.endDate)
-        : isoWeekEndFuture,
+      startDate: startDate ? moment(startDate) : isoWeekStart,
+      endDate: endDate ? moment(endDate) : isoWeekEndFuture,
       focusedInput: "startDate",
-      inputStartDate: moment(this.props.startDate || isoWeekStart).format(
-        "M/D/YYYY"
-      ),
-      inputEndDate: moment(this.props.endDate || isoWeekEndFuture).format(
-        "M/D/YYYY"
-      ),
-      FlightWeeks: this.props.flightWeeks || [],
+      inputStartDate: moment(startDate || isoWeekStart).format("M/D/YYYY"),
+      inputEndDate: moment(endDate || isoWeekEndFuture).format("M/D/YYYY"),
+      FlightWeeks: flightWeeks || [],
       validationStates: {
         startDate: null,
         endDate: null
@@ -71,20 +64,16 @@ export default class FlightPicker extends Component {
     this.resetDatesDefault = this.resetDatesDefault.bind(this);
   }
 
-  componentDidUpdate() {
-    // Set flight weeks if not default property = []
-    if (this.state.FlightWeeks.length === 0) {
-      this.setFlightWeeks(isoWeekStart, isoWeekEndFuture);
-    }
-  }
-
   componentWillReceiveProps() {
     this.resetOrRestore();
   }
 
-  toggle() {
-    if (this.props.isReadOnly) return;
-    this.setState({ show: !this.state.show });
+  componentDidUpdate() {
+    // Set flight weeks if not default property = []
+    const { FlightWeeks } = this.state;
+    if (FlightWeeks.length === 0) {
+      this.setFlightWeeks(isoWeekStart, isoWeekEndFuture);
+    }
   }
 
   setStartDate(value) {
@@ -208,7 +197,15 @@ export default class FlightPicker extends Component {
   }
 
   setValidationState(type, state) {
-    this.state.validationStates[type] = state;
+    const { validationStates } = this.state;
+    validationStates[type] = state;
+  }
+
+  toggle() {
+    const { isReadOnly } = this.props;
+    const { show } = this.state;
+    if (isReadOnly) return;
+    this.setState({ show: !show });
   }
 
   onApply(event) {

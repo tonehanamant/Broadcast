@@ -43,6 +43,7 @@ const ContextMenuRow = props => {
 
   const rowId = row.get("_key");
   const menuId = `${stateKey}-${rowId}`;
+  const { children } = props;
   return (
     <>
       <ContextMenuProvider
@@ -65,7 +66,7 @@ const ContextMenuRow = props => {
           );
         }}
       >
-        {props.children}
+        {children}
       </ContextMenuProvider>
       <ContextMenu id={menuId}>{generateMenuItems(row)(menuItems)}</ContextMenu>
     </>
