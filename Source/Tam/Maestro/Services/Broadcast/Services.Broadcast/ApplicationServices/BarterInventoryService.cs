@@ -178,6 +178,7 @@ namespace Services.Broadcast.ApplicationServices
                         x.dataLine.Comment
                     })
                 })
+                .Where(x => x.Manifests.Any(y => y.Spots != null))  //exclude empty manifest groups
                 .Select(manifestGroup => new StationInventoryGroup
                 {
                     Name = manifestGroup.UnitName,
@@ -186,7 +187,9 @@ namespace Services.Broadcast.ApplicationServices
                     StartDate = fileHeader.EffectiveDate,
                     EndDate = fileHeader.EndDate,
                     SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
-                    Manifests = manifestGroup.Manifests.Select(manifest => new StationInventoryManifest
+                    Manifests = manifestGroup.Manifests
+                        .Where(x => x.Spots != null) //exclude empty manifests
+                        .Select(manifest => new StationInventoryManifest
                     {
                         EffectiveDate = fileHeader.EffectiveDate,
                         EndDate = fileHeader.EndDate,

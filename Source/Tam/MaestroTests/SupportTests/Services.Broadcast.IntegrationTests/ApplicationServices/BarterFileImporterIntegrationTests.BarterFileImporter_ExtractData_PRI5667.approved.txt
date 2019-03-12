@@ -1,0 +1,98 @@
+﻿{
+  "CreatedBy": "integration test",
+  "DataLines": [
+    {
+      "Comment": "Test1",
+      "Daypart": "M-F 5-6A",
+      "Station": "WCBS",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": null
+        }
+      ]
+    },
+    {
+      "Comment": null,
+      "Daypart": "SA-SU 6-630A",
+      "Station": "WNYW",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": null
+        }
+      ]
+    }
+  ],
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5667.xlsx",
+  "FileStatus": 1,
+  "Hash": "F5-CD-4A-FB-5C-7D-8D-AE-5E-33-22-91-12-2B-29-F9-7C-96-91-7D",
+  "Header": {
+    "AudienceId": 37,
+    "Cpm": 222.22,
+    "DaypartCode": "PMN",
+    "EffectiveDate": "2019-05-22T00:00:00",
+    "EndDate": "2019-05-30T00:00:00",
+    "HutBookId": 449,
+    "PlaybackType": 5,
+    "ShareBookId": 450
+  },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": {
+    "Id": 4,
+    "InventoryType": 1,
+    "IsActive": true,
+    "Name": "TTNW"
+  },
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

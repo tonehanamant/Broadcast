@@ -540,8 +540,8 @@
         }
       }
     ],
-    "Name": "AM(n)",
-    "SlotNumber": 0,
+    "Name": "AM 1",
+    "SlotNumber": 1,
     "StartDate": "2019-01-31T00:00:00"
   },
   {
@@ -1630,8 +1630,8 @@
         }
       }
     ],
-    "Name": "AM 3&4",
-    "SlotNumber": 3,
+    "Name": "AM 34",
+    "SlotNumber": 34,
     "StartDate": "2019-01-31T00:00:00"
   },
   {
@@ -3265,8 +3265,8 @@
         }
       }
     ],
-    "Name": "AM",
-    "SlotNumber": 0,
+    "Name": "AM 7",
+    "SlotNumber": 7,
     "StartDate": "2019-01-31T00:00:00"
   },
   {
@@ -3810,8 +3810,8 @@
         }
       }
     ],
-    "Name": "AM (n)",
-    "SlotNumber": 0,
+    "Name": "AM 6",
+    "SlotNumber": 6,
     "StartDate": "2019-01-31T00:00:00"
   }
 ]

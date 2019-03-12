@@ -145,10 +145,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Unit name missing")]
+        public void ThrowsException_WhenFileHasMissingUnit()
+        {
+            const string fileName = @".\Files\BarterDataFiles\Barter DataLines file with invalid unit.xlsx";
+
+            using (var package = new ExcelPackage(new FileInfo(fileName)))
+            {
+                _BarterFileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new BarterInventoryFile());
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Spot length is missing")]
+        public void ThrowsException_WhenFileHasMissingSpotLength()
+        {
+            const string fileName = @".\Files\BarterDataFiles\Barter DataLines file with invalid spot length.xlsx";
+
+            using (var package = new ExcelPackage(new FileInfo(fileName)))
+            {
+                _BarterFileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new BarterInventoryFile());
+            }
+        }
+
+        [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Invalid unit was found")]
         public void ThrowsException_WhenFileHasInvalidUnit()
         {
-            const string fileName = @".\Files\BarterDataFiles\Barter DataLines file with invalid unit.xlsx";
+            const string fileName = @".\Files\BarterDataFiles\Barter DataLines file with invalid unit PRI-5676.xlsx";
+
+            using (var package = new ExcelPackage(new FileInfo(fileName)))
+            {
+                _BarterFileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new BarterInventoryFile());
+            }
+        }
+
+        [Test]
+        [ExpectedException(typeof(Exception), ExpectedMessage = "Invalid spot length was found")]
+        public void ThrowsException_WhenFileHasInvalidSpotLength()
+        {
+            const string fileName = @".\Files\BarterDataFiles\Barter DataLines file with invalid spot length PRI-5676.xlsx";
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
@@ -180,6 +216,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
                 _BarterFileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new BarterInventoryFile());
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterFileImporter_ExtractData_PRI5667()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx";
+            var _barterfileImporter = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterFileImporter>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                _barterfileImporter.LoadFromSaveRequest(request);
+                BarterInventoryFile file = _barterfileImporter.GetPendingBarterInventoryFile("integration test");
+                _barterfileImporter.ExtractData(file);
+                _VerifyBarterInventoryFile(file);
             }
         }
 

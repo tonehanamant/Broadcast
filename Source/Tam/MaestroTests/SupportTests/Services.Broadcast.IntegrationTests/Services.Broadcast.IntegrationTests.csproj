@@ -320,6 +320,15 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid spot length PRI-5676.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid spot length.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid unit PRI-5676.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\Barter DataLines file with missed values.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -345,6 +354,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
