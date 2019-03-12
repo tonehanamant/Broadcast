@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import MaskedTextInput from "react-text-mask";
+import MaskedTextInput from "react-text-maskk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-text-maskk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-text-mask";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 export default class GridCellInput extends Component {

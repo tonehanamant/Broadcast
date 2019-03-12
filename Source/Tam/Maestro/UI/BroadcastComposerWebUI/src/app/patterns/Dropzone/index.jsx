@@ -1,10 +1,10 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "react-redux/node_modules/redux";
 import { head, pick } from "lodash";
 import CSSModules from "react-css-modules";
-import ReactDropzone from "react-dropzone";
+import ReactDropzone from "react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzone";
 import {
   getDataTransferItems,
   validateFilesByExtension
@@ -147,7 +147,7 @@ export class Dropzone extends PureComponent {
         disableClick
         disabled={disabledDropzones}
       >
-        <Fragment>
+        <>
           {!disabled && (
             <div className="drop-overlay">
               <div className="drop-dialog">
@@ -166,7 +166,7 @@ export class Dropzone extends PureComponent {
             </div>
           )}
           {children}
-        </Fragment>
+        </>
       </ReactDropzone>
     );
   }

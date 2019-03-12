@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Col,
-  Form,
-  ButtonToolbar,
-  Button,
-  FormGroup
-} from "react-bootstrap/lib/";
+import { Col, Form, ButtonToolbar, Button, FormGroup } from "react-bootstrap";
 import { TimePicker } from "antd";
 import moment from "moment";
 import "./index.css";
@@ -84,6 +78,7 @@ class FilterTimeInput extends Component {
       filterOptions: options
     });
   }
+
   // apply filters - filterOptions and matchOptions if applicable
   // change to send unselected as flat array of values - exclusions; send all options
   apply() {

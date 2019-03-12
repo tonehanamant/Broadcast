@@ -20,7 +20,7 @@ module.exports = env => ({
     path: resolve(__dirname, "../dist"),
     publicPath: "/broadcastreact/"
   },
-  devtool: '#source-map',
+  devtool: "#source-map",
   devServer: {
     hot: true,
     port: env || 8080,
@@ -58,7 +58,7 @@ module.exports = env => ({
     new webpack.DefinePlugin({
       __API_HOSTNAME__: `"http://localhost:${env || 8080}"`,
       __API_NAME_AND_VERSION__: '"api/"',
-      __API__: `"http://localhost:${env || 8080}/api/"`,
+      __API__: `"http://localhost:${env || 8080}/api/"`
     }),
     new MiniCSSExtractPlugin("style.css"),
     new HtmlWebpackPlugin({

@@ -18,11 +18,12 @@ class Toast extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { alert } = nextProps;
+    const { alerts } = this.state;
 
     if (alert) {
       alert.id = v4();
       this.setState({
-        alerts: [...this.state.alerts, alert]
+        alerts: [...alerts, alert]
       });
     }
   }
@@ -39,11 +40,13 @@ class Toast extends Component {
   }
 
   render() {
+    const { alerts, timeout } = this.state;
+
     return (
       <AlertList
         position="top-right"
-        alerts={this.state.alerts}
-        timeout={this.state.timeout}
+        alerts={alerts}
+        timeout={timeout}
         dismissTitle="Dismiss"
         onDismiss={alert => {
           this.closeAlert(alert);

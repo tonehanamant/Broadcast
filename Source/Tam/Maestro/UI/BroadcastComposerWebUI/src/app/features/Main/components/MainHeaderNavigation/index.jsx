@@ -7,7 +7,9 @@ import UserEnvironment from "../MainHeaderUserEnvironment";
 
 import styles from "./index.style.scss";
 
+/* eslint-disable no-undef */
 const imgSrc = `${__API__}images/logo.png`;
+/* eslint-enable no-undef */
 
 export const MainHeaderNavigation = ({ environment, employee, routing }) => (
   <Navbar default collapseOnSelect fluid fixedTop>

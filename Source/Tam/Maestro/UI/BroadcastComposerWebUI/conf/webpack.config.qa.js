@@ -11,9 +11,9 @@ module.exports = {
   target: "web",
   entry: resolve(__dirname, "../src/index.jsx"),
   output: {
-    path: resolve(__dirname, '../dist'),
-    filename: '[name]-bundle-[hash].js',
-    publicPath: '/broadcastreact/',
+    path: resolve(__dirname, "../dist"),
+    filename: "[name]-bundle-[hash].js",
+    publicPath: "/broadcastreact/"
   },
   resolve: {
     alias: HELPERS.alias,

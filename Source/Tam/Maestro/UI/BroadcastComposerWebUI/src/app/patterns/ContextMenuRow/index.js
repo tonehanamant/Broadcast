@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { ContextMenuProvider, Item, ContextMenu } from "react-contexify";
 import { map } from "lodash/fp";
@@ -44,7 +44,7 @@ const ContextMenuRow = props => {
   const rowId = row.get("_key");
   const menuId = `${stateKey}-${rowId}`;
   return (
-    <Fragment>
+    <>
       <ContextMenuProvider
         id={menuId}
         storeRef={false}
@@ -68,7 +68,7 @@ const ContextMenuRow = props => {
         {props.children}
       </ContextMenuProvider>
       <ContextMenu id={menuId}>{generateMenuItems(row)(menuItems)}</ContextMenu>
-    </Fragment>
+    </>
   );
 };
 

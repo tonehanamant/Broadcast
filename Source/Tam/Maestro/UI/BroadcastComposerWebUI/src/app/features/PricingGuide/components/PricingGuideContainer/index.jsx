@@ -9,7 +9,7 @@ import {
   Radio,
   ToggleButtonGroup
 } from "react-bootstrap";
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "react-redux/node_modules/redux";
 
 import { toggleModal, createAlert } from "Main/redux/ducks";
 import {

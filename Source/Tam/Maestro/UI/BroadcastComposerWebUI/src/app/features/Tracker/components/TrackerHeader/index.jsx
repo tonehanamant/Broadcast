@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "react-redux/node_modules/redux";
 import { toggleModal } from "Main/redux/ducks";
 import { trackerActions, unlinkedIsciActions } from "Tracker";
 import { Row, Col, Button } from "react-bootstrap";

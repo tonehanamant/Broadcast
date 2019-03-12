@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "react-redux/node_modules/redux";
 import { toggleModal, createAlert } from "Main/redux/ducks";
 import { postActions, unlinkedIsciActions } from "Post";
 import { Row, Col, Button } from "react-bootstrap";
@@ -42,25 +42,32 @@ export class PostHeader extends Component {
   }
 
   SearchInputAction() {
-    this.props.getPostFiltered();
+    const { getPostFiltered } = this.props;
+    getPostFiltered();
   }
 
   SearchSubmitAction(value) {
-    this.props.getPostFiltered(value);
+    const { getPostFiltered } = this.props;
+    getPostFiltered(value);
   }
 
   openUnlinkedIscis() {
-    this.props.getUnlinkedIscis();
+    const { getUnlinkedIscis } = this.props;
+    getUnlinkedIscis();
   }
 
-  processNTIFile(file, isAccepted, fileExtension) {
-    const req = { Filename: file.name, RawData: file.base64 };
-    console.log("processNTIFile", file, isAccepted, fileExtension, req);
-    this.props.processNtiFile(req);
+  processNTIFile({ name, base64 }) {
+    const { processNtiFile } = this.props;
+    processNtiFile({ Filename: name, RawData: base64 });
   }
 
   render() {
-    const { unlinkedIscisLength } = this.props;
+    const {
+      unlinkedIscisLength,
+      toggleModal,
+      unlinkedIscisData,
+      archivedIscisData
+    } = this.props;
     return (
       <div>
         <Row>
@@ -93,9 +100,9 @@ export class PostHeader extends Component {
           </Col>
         </Row>
         <UnlinkedIsciModal
-          toggleModal={this.props.toggleModal}
-          unlinkedIscisData={this.props.unlinkedIscisData}
-          archivedIscisData={this.props.archivedIscisData}
+          toggleModal={toggleModal}
+          unlinkedIscisData={unlinkedIscisData}
+          archivedIscisData={archivedIscisData}
         />
       </div>
     );

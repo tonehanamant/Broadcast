@@ -1,6 +1,8 @@
 import axios from "axios";
 
+/* eslint-disable no-undef */
 const createApiBase = () => __API__;
+/* eslint-enable no-undef */
 
 const instance = axios.create({
   baseURL: createApiBase()

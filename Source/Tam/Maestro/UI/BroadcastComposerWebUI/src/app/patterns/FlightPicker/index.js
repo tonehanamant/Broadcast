@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { DayPickerRangeController } from "react-dates";
+import { DayPickerRangeController } from "react-datesorsuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-datesorsuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dates";
 import moment from "moment";
 /* eslint-disable no-unused-vars */
 import {

@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "react-redux/node_modules/redux";
 import { head } from "lodash";
-import { Button } from "react-bootstrap/lib/";
+import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import CSSModules from "react-css-modules";
-import ReactDropzone from "react-dropzone";
+import ReactDropzone from "react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzone";
 import {
   getDataTransferItems,
   validateFilesByExtension
@@ -38,12 +38,31 @@ export class UploadButton extends Component {
     this.processMultipleFiles = this.processMultipleFiles.bind(this);
   }
 
+  onDrop(acceptedFiles, rejectedFiles) {
+    const { multiple, isParseFile } = this.props;
+    const validated = this.validateFiles(acceptedFiles, rejectedFiles);
+    // if files are not valid do not process them
+    if (!validated) return false;
+    const processFile = multiple
+      ? this.processMultipleFiles
+      : this.processSingleFile;
+    if (isParseFile) {
+      parseFileToBase64(acceptedFiles, true).then(values => {
+        processFile(values, validated.rejectedFiles);
+      });
+    } else {
+      processFile(validated.acceptedFiles, validated.rejectedFiles);
+    }
+    return true;
+  }
+
   openFileDialog() {
     this.input.current.open();
   }
 
   closeFileDialog() {
-    this.props.toggleDisabledDropzones();
+    const { toggleDisabledDropzones } = this.props;
+    toggleDisabledDropzones();
   }
 
   processMultipleFiles(acceptedFiles, rejectedFiles) {
@@ -76,24 +95,6 @@ export class UploadButton extends Component {
     return validated;
   }
 
-  onDrop(acceptedFiles, rejectedFiles) {
-    const { multiple, isParseFile } = this.props;
-    const validated = this.validateFiles(acceptedFiles, rejectedFiles);
-    // if files are not valid do not process them
-    if (!validated) return false;
-    const processFile = multiple
-      ? this.processMultipleFiles
-      : this.processSingleFile;
-    if (isParseFile) {
-      parseFileToBase64(acceptedFiles, true).then(values => {
-        processFile(values, validated.rejectedFiles);
-      });
-    } else {
-      processFile(validated.acceptedFiles, validated.rejectedFiles);
-    }
-    return true;
-  }
-
   render() {
     const {
       text,
@@ -105,7 +106,7 @@ export class UploadButton extends Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         <Button
           bsStyle={bsStyle}
           style={style}
@@ -123,7 +124,7 @@ export class UploadButton extends Component {
           onFileDialogCancel={this.closeFileDialog}
           ref={this.input}
         />
-      </Fragment>
+      </>
     );
   }
 }

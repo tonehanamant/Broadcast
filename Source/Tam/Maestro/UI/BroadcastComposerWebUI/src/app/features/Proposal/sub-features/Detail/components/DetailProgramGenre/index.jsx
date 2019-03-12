@@ -12,8 +12,8 @@ import {
   Glyphicon,
   Table
 } from "react-bootstrap";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
-import { bindActionCreators } from "redux";
+import { AsyncTypeahead } from "react-bootstrapreact-bootstrap-typeahead";
+import { bindActionCreators } from "react-redux/node_modules/redux";
 import { getGenres, getPrograms, getShowTypes } from "Ducks/planning";
 
 const mapStateToProps = ({

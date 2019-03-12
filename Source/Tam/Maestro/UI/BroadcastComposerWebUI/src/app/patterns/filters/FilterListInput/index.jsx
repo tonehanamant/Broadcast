@@ -8,7 +8,7 @@ import {
   Button,
   FormGroup,
   FormControl
-} from "react-bootstrap/lib/";
+} from "react-bootstrap";
 import styles from "./index.scss";
 
 class FilterInput extends Component {
@@ -265,7 +265,6 @@ class FilterInput extends Component {
           <Button
             bsStyle="success"
             bsSize="xsmall"
-            // onClick={() => this.applyCheckToAll(false)}
             onClick={this.clear}
             disabled={!canFilter}
           >
