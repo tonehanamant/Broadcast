@@ -217,6 +217,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterInventoryService_SaveBarterInventoryFile_InvalidDaypart()
+        {
+            const string fileName = @"BarterDataFiles\Barter DataLines file with invalid daypart.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                _VerifyInventoryFileProblems(problems);
+            }
+        }
+
         private static void _VerifyInventoryFileProblems(List<InventoryFileProblem> problems)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();

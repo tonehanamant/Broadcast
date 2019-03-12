@@ -320,6 +320,9 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid daypart.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\Barter DataLines file with invalid spot length PRI-5676.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

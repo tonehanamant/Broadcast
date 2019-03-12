@@ -259,7 +259,12 @@ namespace Services.Broadcast.Converters.RateImport
                 // don`t simplify object initialization because line columns should be read with the current order 
                 var line = new BarterInventoryDataLine();
                 line.Station = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
-                line.Daypart = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
+                var daypartText = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
+
+                if (_DaypartParsingEngine.TryParse(daypartText, out var dayparts))
+                {
+                    line.Dayparts = dayparts;
+                }
 
                 foreach (var unit in units)
                 {
@@ -277,17 +282,29 @@ namespace Services.Broadcast.Converters.RateImport
                     break;
                 }
 
-                var missingValues = _GetMissingValues(line);
+                var hasValidationProblems = false;
 
-                if (missingValues.Any())
+                if (string.IsNullOrWhiteSpace(line.Station))
                 {
-                    barterFile.ValidationProblems.Add($"Line {rawIndex} has missing values. Columns: {string.Join(", ", missingValues)}");
+                    barterFile.ValidationProblems.Add($"Line {rawIndex} contains an empty station cell");
+                    hasValidationProblems = true;
                 }
-                else
+
+                if (line.Dayparts == null)
+                {
+                    var message = string.IsNullOrWhiteSpace(daypartText) ?
+                       $"Line {rawIndex} contains an empty daypart cell" :
+                       $"Line {rawIndex} contains an invalid daypart(s): {daypartText}";
+
+                    barterFile.ValidationProblems.Add(message);
+                    hasValidationProblems = true;
+                }
+
+                if (!hasValidationProblems)
                 {
                     barterFile.DataLines.Add(line);
                 }
-                
+
                 columnIndex = firstColumnIndex;
                 rawIndex++;
             }
@@ -359,26 +376,9 @@ namespace Services.Broadcast.Converters.RateImport
         private bool _IsLineEmpty(BarterInventoryDataLine line)
         {
             return string.IsNullOrWhiteSpace(line.Station) &&
-                string.IsNullOrWhiteSpace(line.Daypart) &&
                 string.IsNullOrWhiteSpace(line.Comment) &&
+                line.Dayparts == null &&
                 line.Units.All(x => !x.Spots.HasValue);
-        }
-
-        private List<string> _GetMissingValues(BarterInventoryDataLine line)
-        {
-            var result = new List<string>();
-
-            if (string.IsNullOrWhiteSpace(line.Station))
-            {
-                result.Add("station");
-            }
-
-            if (string.IsNullOrWhiteSpace(line.Daypart))
-            {
-                result.Add("daypart");
-            }
-
-            return result;
         }
     }
 }

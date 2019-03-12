@@ -174,7 +174,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         x.Spots,
                         x.dataLine.Station,
-                        x.dataLine.Daypart,
+                        x.dataLine.Dayparts,
                         x.dataLine.Comment
                     })
                 })
@@ -199,7 +199,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
                         Comment = manifest.Comment,
                         ManifestWeeks = _GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),
-                        ManifestDayparts = _ParseDayparts(manifest.Daypart),
+                        ManifestDayparts = manifest.Dayparts.Select(x => new StationInventoryManifestDaypart { Daypart = x }).ToList(),
                         ManifestAudiences = new List<StationInventoryManifestAudience>
                         {
                             new StationInventoryManifestAudience
@@ -222,30 +222,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksInRange(startDate, endDate);
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
-        }
-
-        private List<StationInventoryManifestDaypart> _ParseDayparts(string daypartText)
-        {
-            var result = new List<StationInventoryManifestDaypart>();
-
-            if (_DaypartParsingEngine.TryParse(daypartText, out var dayparts))
-            {
-                foreach (var daypart in dayparts)
-                {
-                    var manifestDaypart = new StationInventoryManifestDaypart
-                    {
-                        Daypart = daypart
-                    };
-
-                    result.Add(manifestDaypart);
-                }
-            }
-            else
-            {
-                throw new Exception("Cannot parse dayparts");
-            }
-
-            return result;
         }
 
         private List<DisplayBroadcastStation> _GetFileStationsOrCreate(BarterInventoryFile barterFile, string userName)
