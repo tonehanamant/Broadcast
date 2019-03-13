@@ -218,7 +218,6 @@ function TrackerScrubbingHeader({
 }
 
 TrackerScrubbingHeader.defaultProps = {
-  isReadOnly: true,
   notes: undefined,
   secondaryDemo: [],
   name: "",

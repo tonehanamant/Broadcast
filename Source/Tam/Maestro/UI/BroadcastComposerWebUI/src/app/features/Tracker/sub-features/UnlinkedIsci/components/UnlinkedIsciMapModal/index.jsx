@@ -62,7 +62,8 @@ export class UnlinkedIsciMapModal extends Component {
   }
 
   onCancel() {
-    this.props.toggleModal({
+    const { toggleModal } = this.props;
+    toggleModal({
       modal: "mapUnlinkedIsci",
       active: false,
       properties: {}
@@ -75,10 +76,10 @@ export class UnlinkedIsciMapModal extends Component {
   }
 
   onSubmit() {
-    const { modal } = this.props;
+    const { modal, mapUnlinkedIsci } = this.props;
     const { selectedIsci } = this.state;
     const rowData = modal.properties.rowData || {};
-    this.props.mapUnlinkedIsci({
+    mapUnlinkedIsci({
       OriginalIsci: rowData.ISCI,
       EffectiveIsci: selectedIsci
     });
@@ -96,7 +97,7 @@ export class UnlinkedIsciMapModal extends Component {
     if (!(modal.properties && modal.properties.rowData)) {
       return null;
     }
-    const rowData = modal.properties.rowData;
+    const { rowData } = modal.properties;
 
     return (
       <Modal

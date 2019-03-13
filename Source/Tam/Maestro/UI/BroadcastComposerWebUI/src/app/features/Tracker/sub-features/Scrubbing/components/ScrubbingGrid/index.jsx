@@ -50,14 +50,16 @@ export class TrackerScrubbingGrid extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.activeScrubbingData !== this.props.activeScrubbingData) {
-      this.props.hideMenu({ stateKey: "TrackerScrubbingGrid" });
+    const { activeScrubbingData, hideMenu } = this.props;
+    if (prevProps.activeScrubbingData !== activeScrubbingData) {
+      hideMenu({ stateKey: "TrackerScrubbingGrid" });
     }
   }
 
   getScrubbingSelections() {
-    const selectedIds = this.props.selection.get(stateKey).get("indexes");
-    const rowData = this.props.dataSource.get(stateKey).toJSON(); // currentRecords or data - array
+    const { selection, dataSource } = this.props;
+    const selectedIds = selection.get(stateKey).get("indexes");
+    const rowData = dataSource.get(stateKey).toJSON(); // currentRecords or data - array
     const activeSelections = [];
 
     selectedIds.forEach(idx => {
@@ -66,27 +68,32 @@ export class TrackerScrubbingGrid extends Component {
 
     return activeSelections;
   }
-  // tbd call api with params - slections to Ids, filterKey, etc
+
   processManualOverrides(overrideType, selections) {
-    const activeFilterKey = this.props.activeScrubbingData.filterKey;
-    const proposalId = this.props.activeScrubbingData.Id;
+    const {
+      overrideStatus,
+      activeScrubbingData: { filterKey, Id }
+    } = this.props;
     const selectionIds = selections.map(
       ({ ScrubbingClientId }) => ScrubbingClientId
     );
     const params = {
-      ProposalId: proposalId,
+      ProposalId: Id,
       ScrubIds: selectionIds,
-      ReturnStatusFilter: activeFilterKey,
+      ReturnStatusFilter: filterKey,
       OverrideStatus: overrideType
     };
-    this.props.overrideStatus(params);
+    overrideStatus(params);
   }
 
   hideContextMenu(ref) {
-    this.props.hideMenu(ref);
+    const { hideMenu } = this.props;
+    hideMenu(ref);
   }
+
   showContextMenu(ref) {
-    this.props.showMenu(ref);
+    const { showMenu } = this.props;
+    showMenu(ref);
   }
 
   /* ////////////////////////////////// */
@@ -94,15 +101,18 @@ export class TrackerScrubbingGrid extends Component {
     /* ////////////////////////////////// */
 
   selectRow(ref) {
-    this.props.selectRow(ref);
+    const { selectRow } = this.props;
+    selectRow(ref);
   }
 
   deselectAll(ref) {
-    this.props.deselectAll(ref);
+    const { deselectAll } = this.props;
+    deselectAll(ref);
   }
 
   openSwapDetailModal(selections) {
-    this.props.toggleModal({
+    const { toggleModal } = this.props;
+    toggleModal({
       modal: "swapDetailModal",
       active: true,
       properties: { selections }
@@ -113,6 +123,7 @@ export class TrackerScrubbingGrid extends Component {
     const style = { color: "#FF0000" };
     const stateKey = "TrackerScrubbingGrid";
     const { activeScrubbingData, details } = this.props;
+    const { store } = this.context;
     const { ClientScrubs = [] } = activeScrubbingData;
 
     const gridContextMenu = [
@@ -147,10 +158,10 @@ export class TrackerScrubbingGrid extends Component {
         text: "Undo",
         key: "menu-post-undo",
         EVENT_HANDLER: () => {
-          const { activeScrubbingData } = this.props;
+          const { activeScrubbingData, undoScrubStatus } = this.props;
           const selections = this.getScrubbingSelections();
           const selectedIds = selections.map(it => it.ScrubbingClientId);
-          this.props.undoScrubStatus(activeScrubbingData.Id, selectedIds);
+          undoScrubStatus(activeScrubbingData.Id, selectedIds);
         }
       }
     ];
@@ -361,7 +372,8 @@ export class TrackerScrubbingGrid extends Component {
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
-          const selectedIds = this.props.selection.get(stateKey).get("indexes");
+          const { selection } = this.props;
+          const selectedIds = selection.get(stateKey).get("indexes");
           const isShowContextMenu = !!(selectedIds && selectedIds.size);
           return (
             <ContextMenuRow
@@ -393,12 +405,7 @@ export class TrackerScrubbingGrid extends Component {
 
     return (
       <div>
-        <Grid
-          {...grid}
-          data={ClientScrubs}
-          store={this.context.store}
-          height={340}
-        />
+        <Grid {...grid} data={ClientScrubs} store={store} height={340} />
         <SwapDetailModal details={details} />
       </div>
     );

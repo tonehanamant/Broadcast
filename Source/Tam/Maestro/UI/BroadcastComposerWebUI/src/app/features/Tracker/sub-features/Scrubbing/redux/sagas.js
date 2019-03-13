@@ -68,36 +68,39 @@ export function* clearFilteredScrubbingData() {
   yield delay(500);
   const originalFilters = yield select(selectActiveScrubbingFilters);
   const originalScrubs = yield select(selectClientScrubs);
-  const activeFilters = forEach(originalFilters, filter => {
+  const activeFilters = originalFilters.map(filter => {
+    const newFilter = filter;
     if (filter.active) {
       const isList = filter.type === "filterList";
-      filter.active = false;
+      newFilter.active = false;
       if (isList) {
-        filter.exclusions = [];
+        newFilter.exclusions = [];
         if (filter.hasMatchSpec) {
-          filter.activeMatch = false;
-          filter.matchOptions.outOfSpec = true;
-          filter.matchOptions.inSpec = true;
+          newFilter.activeMatch = false;
+          newFilter.matchOptions.outOfSpec = true;
+          newFilter.matchOptions.inSpec = true;
         }
-        filter.filterOptions.forEach(option => {
-          option.Selected = true;
-        });
+        newFilter.filterOptions.map(option => ({
+          ...option,
+          Selected: true
+        }));
       } else {
-        filter.exclusions = false;
+        newFilter.exclusions = false;
         if (filter.type === "timeInput") {
-          filter.filterOptions.TimeAiredStart =
+          newFilter.filterOptions.TimeAiredStart =
             filter.filterOptions.originalTimeAiredStart;
-          filter.filterOptions.TimeAiredEnd =
+          newFilter.filterOptions.TimeAiredEnd =
             filter.filterOptions.originalTimeAiredEnd;
         }
         if (filter.type === "dateInput") {
-          filter.filterOptions.DateAiredStart =
+          newFilter.filterOptions.DateAiredStart =
             filter.filterOptions.originalDateAiredStart;
-          filter.filterOptions.DateAiredEnd =
+          newFilter.filterOptions.DateAiredEnd =
             filter.filterOptions.originalDateAiredEnd;
         }
       }
     }
+    return newFilter;
   });
   const ret = {
     activeFilters,
@@ -219,20 +222,21 @@ const getFilteredResult = (listUnfiltered, filters) => {
 };
 
 const applyFilter = (filters, filter, query, listUnfiltered, listFiltered) => {
+  const newFilter = cloneDeep(filter);
   const originalFilters = cloneDeep(filters);
   const isList = filter.type === "filterList";
   // active -depends on if clearing etc; also now if matching in play
   let isActive = false;
   if (isList) {
     isActive = query.exclusions.length > 0 || query.activeMatch;
-    filter.matchOptions = query.matchOptions;
-    filter.activeMatch = query.activeMatch;
+    newFilter.matchOptions = query.matchOptions;
+    newFilter.activeMatch = query.activeMatch;
   } else {
     isActive = query.exclusions; // bool for date/time aired
   }
-  filter.active = isActive;
-  filter.exclusions = query.exclusions;
-  filter.filterOptions = isList
+  newFilter.active = isActive;
+  newFilter.exclusions = query.exclusions;
+  newFilter.filterOptions = isList
     ? query.filterOptions
     : Object.assign(filter.filterOptions, query.filterOptions);
   const { filteredResult, hasActiveScrubbingFilters } = getFilteredResult(
@@ -242,7 +246,7 @@ const applyFilter = (filters, filter, query, listUnfiltered, listFiltered) => {
   if (filteredResult.length < 1) {
     return {
       filteredClientScrubs: listFiltered,
-      activeFilter: filter,
+      activeFilter: newFilter,
       activeFilters: originalFilters,
       alertEmpty: true,
       hasActiveScrubbingFilters
@@ -250,7 +254,7 @@ const applyFilter = (filters, filter, query, listUnfiltered, listFiltered) => {
   }
   return {
     filteredClientScrubs: filteredResult,
-    activeFilter: filter,
+    activeFilter: newFilter,
     activeFilters: filters,
     alertEmpty: false,
     hasActiveScrubbingFilters
@@ -426,10 +430,10 @@ export function* requestOverrideStatusSuccess({ data, payload: params }) {
     });
   } else {
     yield call(requestClearScrubbingDataFiltersList);
-    data.Data.filterKey = yield select(selectActiveFilterKey);
+    const filterKey = yield select(selectActiveFilterKey);
     yield put({
       type: LOAD_TRACKER_CLIENT_SCRUBBING.success,
-      data
+      data: { ...data, data: { ...data.Data, filterKey } }
     });
   }
 }

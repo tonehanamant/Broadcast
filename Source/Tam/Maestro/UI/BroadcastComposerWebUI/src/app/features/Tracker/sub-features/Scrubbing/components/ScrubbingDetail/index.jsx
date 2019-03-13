@@ -14,9 +14,10 @@ export class TrackerScrubbingDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { activeTabKey } = this.state;
     // if change filterKey/data at the saga level (on refresh) - need match filterkey state to change active tab here
-    if (nextProps.activeScrubbingData.filterKey && this.state.activeTabKey) {
-      if (nextProps.activeScrubbingData.filterKey !== this.state.activeTabKey) {
+    if (nextProps.activeScrubbingData.filterKey && activeTabKey) {
+      if (nextProps.activeScrubbingData.filterKey !== activeTabKey) {
         this.setState({
           activeTabKey: nextProps.activeScrubbingData.filterKey
         });
@@ -25,10 +26,12 @@ export class TrackerScrubbingDetail extends Component {
   }
 
   handleTabSelect(eventKey) {
-    if (this.state.activeTabKey === eventKey) return;
+    const { activeTabKey } = this.state;
+    const { activeScrubbingData, getTrackerClientScrubbing } = this.props;
+    if (activeTabKey === eventKey) return;
     this.setState({ activeTabKey: eventKey });
-    const Id = this.props.activeScrubbingData.Id;
-    this.props.getTrackerClientScrubbing({
+    const { Id } = activeScrubbingData;
+    getTrackerClientScrubbing({
       proposalId: Id,
       showModal: false,
       filterKey: eventKey
@@ -51,13 +54,14 @@ export class TrackerScrubbingDetail extends Component {
     } = this.props;
     const hasData =
       activeScrubbingData.ClientScrubs.length > 0 || hasActiveScrubbingFilters;
+    const { activeTabKey } = this.state;
 
     return (
       <div>
         <Nav
           style={{ marginBottom: 3 }}
           bsStyle="tabs"
-          activeKey={this.state.activeTabKey}
+          activeKey={activeTabKey}
           onSelect={this.handleTabSelect}
         >
           <NavItem eventKey="All" title="All">
@@ -97,7 +101,6 @@ export class TrackerScrubbingDetail extends Component {
 }
 
 TrackerScrubbingDetail.defaultProps = {
-  isReadOnly: true,
   hasActiveScrubbingFilters: false,
   details: []
 };
@@ -107,8 +110,8 @@ TrackerScrubbingDetail.propTypes = {
   dataSource: PropTypes.object.isRequired,
   activeScrubbingData: PropTypes.object.isRequired,
   scrubbingFiltersList: PropTypes.array.isRequired,
-  hasActiveScrubbingFilters: PropTypes.bool.isRequired,
-  details: PropTypes.array.isRequired,
+  hasActiveScrubbingFilters: PropTypes.bool,
+  details: PropTypes.array,
   setOverlayLoading: PropTypes.func.isRequired,
   getTrackerClientScrubbing: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,

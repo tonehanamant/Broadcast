@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -38,12 +39,13 @@ export class TrackerGridContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.getTracker();
+    const { getTracker } = this.props;
+    getTracker();
   }
 
   showscrubbingModal(Id) {
-    // change to params
-    this.props.getTrackerClientScrubbing({
+    const { getTrackerClientScrubbing } = this.props;
+    getTrackerClientScrubbing({
       proposalId: Id,
       showModal: true,
       filterKey: "All"
@@ -197,14 +199,14 @@ export class TrackerGridContainer extends Component {
       }
     ];
 
+    const { trackerGridData } = this.props;
     return (
       <Table
-        data={this.props.trackerGridData}
+        data={trackerGridData}
         style={{ marginBottom: "100px" }}
         columns={columns}
         getTrGroupProps={(state, rowInfo) => ({
           onDoubleClick: () => {
-            console.log(rowInfo);
             const Id = rowInfo.original.ContractId;
             this.showscrubbingModal(Id);
           }

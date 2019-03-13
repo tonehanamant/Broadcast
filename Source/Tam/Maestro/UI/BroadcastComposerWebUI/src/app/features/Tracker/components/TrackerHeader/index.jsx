@@ -41,15 +41,18 @@ export class TrackerHeader extends Component {
   }
 
   SearchInputAction() {
-    this.props.getTrackerFiltered();
+    const { getTrackerFiltered } = this.props;
+    getTrackerFiltered();
   }
 
   SearchSubmitAction(value) {
-    this.props.getTrackerFiltered(value);
+    const { getTrackerFiltered } = this.props;
+    getTrackerFiltered(value);
   }
 
   openUnlinkedIscis() {
-    this.props.getUnlinkedIscis();
+    const { getUnlinkedIscis } = this.props;
+    getUnlinkedIscis();
   }
 
   processFiles(files) {
@@ -57,11 +60,17 @@ export class TrackerHeader extends Component {
       FileName: file.name,
       RawData: file.base64
     }));
-    this.props.uploadTrackerFile({ Files: filesArray });
+    const { uploadTrackerFile } = this.props;
+    uploadTrackerFile({ Files: filesArray });
   }
 
   render() {
-    const { unlinkedIscisLength } = this.props;
+    const {
+      unlinkedIscisLength,
+      unlinkedIscisData,
+      archivedIscisData,
+      toggleModal
+    } = this.props;
     return (
       <div>
         <Row>
@@ -94,9 +103,9 @@ export class TrackerHeader extends Component {
           </Col>
         </Row>
         <UnlinkedIsciModal
-          toggleModal={this.props.toggleModal}
-          unlinkedIscisData={this.props.unlinkedIscisData}
-          archivedIscisData={this.props.archivedIscisData}
+          toggleModal={toggleModal}
+          unlinkedIscisData={unlinkedIscisData}
+          archivedIscisData={archivedIscisData}
         />
       </div>
     );

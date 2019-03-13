@@ -36,34 +36,38 @@ export class SwapDetailModal extends Component {
     };
   }
 
+  onModalExit() {
+    this.setState({ selectedDetailOption: null });
+  }
+
+  onChangeDetail(option) {
+    this.setState({ selectedDetailOption: option });
+  }
+
   // close the modal
   close() {
-    this.props.toggleModal({
+    const { toggleModal, modal } = this.props;
+    toggleModal({
       modal: "swapDetailModal",
       active: false,
-      properties: this.props.modal.properties
+      properties: modal.properties
     });
   }
 
   // save the detail with selections; close the modal; check that there is a selection
   // TODO call api
   save() {
+    const { modal, swapProposalDetail } = this.props;
+    const { selectedDetailOption } = this.state;
     const scrubbingIds = [];
-    this.props.modal.properties.selections.forEach(scrub => {
+    modal.properties.selections.forEach(scrub => {
       scrubbingIds.push(scrub.ScrubbingClientId);
     });
     const params = {
-      ProposalDetailId: this.state.selectedDetailOption.Id,
+      ProposalDetailId: selectedDetailOption.Id,
       ScrubbingIds: scrubbingIds
     };
-    // console.log('save swap detail', params);
-    this.props.swapProposalDetail(params);
-  }
-
-  // Select on detail change/select
-  onChangeDetail(option) {
-    // console.log('onChangeDetail', option);
-    this.setState({ selectedDetailOption: option });
+    swapProposalDetail(params);
   }
 
   /* eslint-disable class-methods-use-this */
@@ -77,14 +81,9 @@ export class SwapDetailModal extends Component {
     return ret;
   }
 
-  // clear any slections after exit
-  onModalExit() {
-    this.setState({ selectedDetailOption: null });
-  }
-
   render() {
     const { details, modal } = this.props;
-    // console.log('modal', modal);
+    const { selectedDetailOption } = this.state;
     const detailCnt = modal.properties.selections
       ? modal.properties.selections.length
       : 0;
@@ -122,7 +121,7 @@ export class SwapDetailModal extends Component {
                 // value={PostingBookId}
                 placeholder="Choose Detail..."
                 options={details}
-                value={this.state.selectedDetailOption}
+                value={selectedDetailOption}
                 // labelKey="Sequence"
                 valueRenderer={this.selectDetailRender}
                 optionRenderer={this.selectDetailRender}
@@ -135,7 +134,7 @@ export class SwapDetailModal extends Component {
         <Modal.Footer>
           <Button
             onClick={this.save}
-            disabled={this.state.selectedDetailOption == null}
+            disabled={selectedDetailOption == null}
             bsStyle="success"
           >
             OK
@@ -156,9 +155,9 @@ SwapDetailModal.defaultProps = {
 };
 
 SwapDetailModal.propTypes = {
-  modal: PropTypes.object.isRequired,
+  modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
-  details: PropTypes.array.isRequired,
+  details: PropTypes.array,
   swapProposalDetail: PropTypes.func.isRequired
 };
 

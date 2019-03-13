@@ -35,20 +35,14 @@ export class TrackerScrubbingFilters extends Component {
     this.onClear = this.onClear.bind(this);
   }
 
-  applyFilter(filter) {
-    // ISSUE: Data changes but Object so does not update
-    // clear the grid data then reset (combining in saga/reducer does not work)
-    // this.props.clearScrubbingFiltersList();
-    // wait so the store will update/clear first
-    /* setTimeout(() => {
-      this.props.getScrubbingDataFiltered(filter);
-    }, 50); */
-    // Change: use call in saga to block
-    this.props.getScrubbingDataFiltered(filter);
+  onClear() {
+    const { getClearScrubbingDataFiltered } = this.props;
+    getClearScrubbingDataFiltered();
   }
 
-  onClear() {
-    this.props.getClearScrubbingDataFiltered();
+  applyFilter(filter) {
+    const { getScrubbingDataFiltered } = this.props;
+    getScrubbingDataFiltered(filter);
   }
 
   render() {
@@ -341,7 +335,8 @@ export class TrackerScrubbingFilters extends Component {
       plugins,
       stateKey
     };
-
+    const { activeFilters } = this.props;
+    const { store } = this.context;
     return (
       <div
         style={{ maxHeight: "28px", overflow: "hidden", marginBottom: "2px" }}
@@ -349,8 +344,8 @@ export class TrackerScrubbingFilters extends Component {
         <Grid
           {...grid}
           classNames={["filter-grid"]}
-          data={this.props.activeFilters}
-          store={this.context.store}
+          data={activeFilters}
+          store={store}
           height={false}
         />
       </div>

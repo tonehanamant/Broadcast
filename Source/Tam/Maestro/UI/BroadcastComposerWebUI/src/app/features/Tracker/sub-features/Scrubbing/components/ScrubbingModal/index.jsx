@@ -59,20 +59,23 @@ export class TrackerScrubbingModal extends Component {
   }
 
   close() {
-    this.props.toggleModal({
+    const { modal, toggleModal } = this.props;
+    toggleModal({
       modal: "trackerScrubbingModal",
       active: false,
-      properties: this.props.modal.properties
+      properties: modal.properties
     });
   }
 
   dismiss() {
-    this.props.modal.properties.dismiss();
+    const { modal } = this.props;
+    modal.properties.dismiss();
     this.close();
   }
 
   refreshPost() {
-    this.props.getTracker();
+    const { getTracker } = this.props;
+    getTracker();
   }
 
   render() {
@@ -87,7 +90,8 @@ export class TrackerScrubbingModal extends Component {
       selectRow,
       deselectAll,
       doLocalSort,
-      setOverlayLoading
+      setOverlayLoading,
+      modal
     } = this.props;
     const { scrubbingData = {}, activeScrubbingData = {} } = proposalHeader;
     const {
@@ -108,7 +112,7 @@ export class TrackerScrubbingModal extends Component {
     return (
       <Modal
         ref={this.setWrapperRef}
-        show={this.props.modal.active}
+        show={modal.active}
         dialogClassName="large-wide-modal"
         enforceFocus={false}
         onExited={this.refreshPost}
@@ -159,7 +163,7 @@ export class TrackerScrubbingModal extends Component {
         <Modal.Footer>
           <Button
             onClick={this.close}
-            bsStyle={this.props.modal.properties.closeButtonBsStyle}
+            bsStyle={modal.properties.closeButtonBsStyle}
           >
             Cancel
           </Button>
@@ -188,7 +192,7 @@ TrackerScrubbingModal.defaultProps = {
 };
 
 TrackerScrubbingModal.propTypes = {
-  modal: PropTypes.object.isRequired,
+  modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   getTrackerClientScrubbing: PropTypes.func.isRequired,
   getTracker: PropTypes.func.isRequired,
