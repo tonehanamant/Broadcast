@@ -13,7 +13,8 @@ import Toast from "Patterns/Toast";
 import ErrorModal from "Patterns/ErrorModal";
 import ConfirmModal from "Patterns/ConfirmModal";
 import Overlay from "Patterns/Overlay";
-import "font-awesome/css/font-awesome.min.css";
+// import "font-awesome/css/font-awesome.css";
+import "https://use.fontawesome.com/releases/v5.7.2/css/all.css";
 
 import AppFooter from "../MainFooter";
 import AppHeader from "../MainHeader";
