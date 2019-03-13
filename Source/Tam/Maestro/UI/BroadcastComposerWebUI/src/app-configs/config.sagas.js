@@ -7,8 +7,6 @@ import { watchers as post } from "Post";
 import { watchers as tracker } from "Tracker";
 import { watchers as planning } from "Sagas";
 
-console.log(tracker);
-console.log(planning);
 const transform = watchers => watchers.map(watcher => watcher());
 
 export const middlewareSaga =

@@ -1641,7 +1641,7 @@ export function* generateScxSuccess({
   data: { Data },
   payload: { ProposalDetailIds, isSingle }
 }) {
-  console.log(Data, ProposalDetailIds, isSingle);
+  // console.log(Data, ProposalDetailIds, isSingle);
   if (Data) {
     const proposalId = yield select(
       state => state.planning.proposalEditForm.Id

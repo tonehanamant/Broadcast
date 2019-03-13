@@ -146,9 +146,9 @@ const toggleUnlinkedTab = tab => {
   if (tabFunction) {
     return tabFunction();
   }
-  console.error(
+  /* console.error(
     "You should add function in the tabsMap to load your tab values"
-  );
+  ); */
   return undefined;
 };
 

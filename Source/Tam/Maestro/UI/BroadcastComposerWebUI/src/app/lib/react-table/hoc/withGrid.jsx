@@ -21,14 +21,14 @@ function withGrid(WrappedComponent) {
       if (action) {
         this.handleAction(action, type, payload);
       } else {
-        console.exception(`Action is not found. Type - ${type}.`);
+        // console.exception(`Action is not found. Type - ${type}.`);
       }
     }
 
     handleAction(action, type, payload) {
       const nextState = action(this.state, payload);
       if (!nextState) {
-        console.exception(`Action is not defined. Type - ${type}.`);
+        // console.exception(`Action is not defined. Type - ${type}.`);
       }
       if (!isEqual(this.state, nextState)) {
         this.setState(nextState);
