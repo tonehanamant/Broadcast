@@ -89,7 +89,8 @@ class EditMarketsGrid extends Component {
   }
 
   onEditMarketAction(row) {
-    this.props.editMarketAction(row.original);
+    const { editMarketAction } = this.props;
+    editMarketAction(row.original);
   }
 
   render() {
@@ -135,9 +136,6 @@ EditMarketsGrid.propTypes = {
   openCpmTarget: PropTypes.number.isRequired
 };
 
-EditMarketsGrid.defaultProps = {
-  editMarketAction: () => {},
-  isAvailableMarkets: false
-};
+EditMarketsGrid.defaultProps = {};
 
 export default withGrid(EditMarketsGrid);

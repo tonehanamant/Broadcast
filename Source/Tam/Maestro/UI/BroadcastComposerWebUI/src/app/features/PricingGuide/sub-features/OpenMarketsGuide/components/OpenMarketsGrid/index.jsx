@@ -8,11 +8,13 @@ import "./index.scss";
 
 class PricingGuideGrid extends Component {
   componentDidMount() {
-    this.props.resetTable();
+    const { resetTable } = this.props;
+    resetTable();
   }
 
   componentWillUnmount() {
-    this.props.onSelectMarket();
+    const { onSelectMarket } = this.props;
+    onSelectMarket();
   }
 
   render() {
@@ -67,8 +69,6 @@ PricingGuideGrid.propTypes = {
   isGuideEditing: PropTypes.bool.isRequired
 };
 
-PricingGuideGrid.defaultProps = {
-  selectedMarket: {}
-};
+PricingGuideGrid.defaultProps = {};
 
 export default PricingGuideGrid;

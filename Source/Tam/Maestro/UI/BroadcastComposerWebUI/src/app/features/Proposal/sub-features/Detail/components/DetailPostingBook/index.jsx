@@ -62,26 +62,9 @@ class PostingBook extends Component {
     const { modal, detail } = this.props;
     const prevActiveDialog = isActiveDialog(prevProps.detail, prevProps.modal);
     const activeDialog = isActiveDialog(detail, modal);
-    // clear local state if modal window are closing
     if (prevActiveDialog && !activeDialog) {
       this.clearState();
     }
-  }
-
-  clearState() {
-    this.setState({
-      postingBook: null,
-      playbackType: null,
-      showConfirmation: false
-    });
-  }
-
-  showConfirmation() {
-    this.setState({ showConfirmation: true });
-  }
-
-  hideConfirmation() {
-    this.setState({ showConfirmation: false });
   }
 
   onSave() {
@@ -110,11 +93,28 @@ class PostingBook extends Component {
   }
 
   onCancel() {
-    this.props.toggleModal({
+    const { toggleModal, detail } = this.props;
+    toggleModal({
       modal: "postingBook",
       active: false,
-      properties: { detailId: this.props.detail.Id }
+      properties: { detailId: detail.Id }
     });
+  }
+
+  clearState() {
+    this.setState({
+      postingBook: null,
+      playbackType: null,
+      showConfirmation: false
+    });
+  }
+
+  showConfirmation() {
+    this.setState({ showConfirmation: true });
+  }
+
+  hideConfirmation() {
+    this.setState({ showConfirmation: false });
   }
 
   render() {
@@ -243,8 +243,7 @@ PostingBook.propTypes = {
 };
 
 PostingBook.defaultProps = {
-  modal: null,
-  isReadOnly: false
+  modal: null
 };
 
 export default connect(

@@ -45,29 +45,6 @@ export class UnlinkedIsciModal extends Component {
     };
   }
 
-  SearchInputAction() {
-    const { activeTab } = this.state;
-    if (activeTab === "unlinked") {
-      this.props.getUnlinkedFiltered();
-    } else {
-      this.props.getArchivedFiltered();
-    }
-  }
-
-  SearchSubmitAction(value) {
-    const { activeTab } = this.state;
-    if (activeTab === "unlinked") {
-      this.props.getUnlinkedFiltered(value);
-    } else {
-      this.props.getArchivedFiltered(value);
-    }
-  }
-
-  close() {
-    this.props.closeUnlinkedIsciModal(this.props.modal.properties);
-    this.setState({ activeTab: "unlinked" });
-  }
-
   onTabSelect(nextTab) {
     const { activeTab } = this.state;
     const { toggleTab } = this.props;
@@ -76,6 +53,32 @@ export class UnlinkedIsciModal extends Component {
       toggleTab(nextTab);
       this.searchInput.clearForm();
     }
+  }
+
+  SearchInputAction() {
+    const { activeTab } = this.state;
+    const { getUnlinkedFiltered, getArchivedFiltered } = this.props;
+    if (activeTab === "unlinked") {
+      getUnlinkedFiltered();
+    } else {
+      getArchivedFiltered();
+    }
+  }
+
+  SearchSubmitAction(value) {
+    const { activeTab } = this.state;
+    const { getUnlinkedFiltered, getArchivedFiltered } = this.props;
+    if (activeTab === "unlinked") {
+      getUnlinkedFiltered(value);
+    } else {
+      getArchivedFiltered(value);
+    }
+  }
+
+  close() {
+    const { closeUnlinkedIsciModal, modal } = this.props;
+    closeUnlinkedIsciModal(modal.properties);
+    this.setState({ activeTab: "unlinked" });
   }
 
   render() {

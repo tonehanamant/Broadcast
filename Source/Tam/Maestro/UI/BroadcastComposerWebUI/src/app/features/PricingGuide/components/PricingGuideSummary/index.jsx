@@ -59,8 +59,7 @@ export default class PricingProposalSummary extends Component {
 
   render() {
     const proposalSummary = this.getProposalSummaryData();
-    const hasTips = proposalSummary.hasSecondaryTips;
-    const secondaryItems = proposalSummary.secondaryItems;
+    const { hasSecondaryTips: hasTips, secondaryItems } = proposalSummary;
     const secondaryDisplayItems = secondaryItems.length
       ? secondaryItems.slice(0, 2)
       : [];

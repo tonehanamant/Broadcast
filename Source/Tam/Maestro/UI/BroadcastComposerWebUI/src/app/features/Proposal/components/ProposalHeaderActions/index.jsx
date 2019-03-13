@@ -25,22 +25,26 @@ export default class ProposalHeaderActions extends Component {
   }
 
   onChangeStatus(value) {
-    this.props.updateProposalEditForm({
+    const { updateProposalEditForm } = this.props;
+    updateProposalEditForm({
       key: "Status",
       value: value ? value.Id : null
     });
   }
 
   onSaveVersion() {
-    this.props.saveProposalAsVersion(this.props.proposalEditForm);
+    const { saveProposalAsVersion, proposalEditForm } = this.props;
+    saveProposalAsVersion(proposalEditForm);
   }
 
   onSwitchVersions() {
-    this.props.getProposalVersions(this.props.proposalEditForm.Id);
+    const { getProposalVersions, proposalEditForm } = this.props;
+    getProposalVersions(proposalEditForm.Id);
   }
 
   onDeleteProposal() {
-    this.props.toggleModal({
+    const { proposalEditForm, toggleModal, deleteProposal } = this.props;
+    toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
@@ -50,14 +54,15 @@ export default class ProposalHeaderActions extends Component {
         closeButtonText: "Cancel",
         actionButtonText: "Continue",
         actionButtonBsStyle: "danger",
-        action: () => this.props.deleteProposal(this.props.proposalEditForm.Id),
+        action: () => deleteProposal(proposalEditForm.Id),
         dismiss: () => {}
       }
     });
   }
 
   onUnorder() {
-    this.props.toggleModal({
+    const { proposalEditForm, toggleModal, unorderProposal } = this.props;
+    toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
@@ -67,8 +72,7 @@ export default class ProposalHeaderActions extends Component {
         closeButtonText: "Cancel",
         actionButtonText: "Continue",
         actionButtonBsStyle: "warning",
-        action: () =>
-          this.props.unorderProposal(this.props.proposalEditForm.Id),
+        action: () => unorderProposal(proposalEditForm.Id),
         dismiss: () => {}
       }
     });
@@ -76,28 +80,8 @@ export default class ProposalHeaderActions extends Component {
 
   onGenerateSCX() {
     const { proposal, generateScx } = this.props;
-    // const modalUrl = `${__API__}Proposals/GenerateScxArchive/${proposal.Id}`;
     const detailIds = proposal.Details.map(dt => dt.Id);
-    console.log("Generate Scx details", detailIds);
     generateScx(detailIds, false);
-    /*  toggleModal({
-      modal: "confirmModal",
-      active: true,
-      properties: {
-        titleText: "Generate SCX file",
-        bodyText:
-          "Operation will produce SCX files for all Open Market Inventory in each Proposal Detail.",
-        bodyList: ["Select Continue to proceed", "Select Cancel to cancel"],
-        closeButtonText: "Cancel",
-        actionButtonText: "Continue",
-        actionButtonBsStyle: "success",
-        // href: `${__API__}Proposals/GenerateScxArchive/${proposal.Id}`,
-        action: () => {
-          window.open(modalUrl, "_blank");
-        },
-        dismiss: () => {}
-      }
-    }); */
   }
 
   render() {
@@ -119,7 +103,7 @@ export default class ProposalHeaderActions extends Component {
               <Col sm={10}>
                 <Select
                   name="proposalStatus"
-                  disabled={this.props.isReadOnly}
+                  disabled={isReadOnly}
                   value={proposalEditForm.Status}
                   options={statusOptions}
                   labelKey="Display"

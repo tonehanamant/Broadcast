@@ -14,11 +14,57 @@ import {
   HelpBlock
 } from "react-bootstrap";
 
-/* eslint-disable react/prefer-stateless-function */
+const getValidationWarnings = iscisData => {
+  const ret = [];
+  iscisData.forEach((isci, idx) => {
+    const inner = [`Error line ${idx + 1}: `];
+    let lineValid = true;
+    if (isci.HouseIsci === null) {
+      lineValid = false;
+      inner.push("House ISCI cannot be empty; ");
+    }
+    if (isci.ClientIsci === null) {
+      lineValid = false;
+      inner.push("Client ISCI cannot be empty; ");
+    }
+    if (isci.Days === null) {
+      lineValid = false;
+      inner.push("Day Include cannot be empty; ");
+    }
+    if (isci.dayError) {
+      lineValid = false;
+      inner.push(
+        "Day Include invalid days or not unique (M, T, W, Th, F, Sa, Su); "
+      );
+    }
+    if (isci.errorLength) {
+      lineValid = false;
+      inner.push("Too many values entered (limit 4);");
+    }
+    if (!lineValid) {
+      const joinedInner = inner.join(" ");
+      const key = `isci_error_${idx + 1}`;
+      ret.push(<div key={key}>{joinedInner}</div>);
+    }
+  });
+  return ret;
+};
+
+const checkDaysIncludeValid = days => {
+  const daysSplit = days.split("-");
+  let check = daysSplit.every(day => {
+    const dayval = day.toLowerCase();
+    return _.includes(["m", "t", "w", "th", "f", "sa", "su"], dayval);
+  });
+  if (check) {
+    check = _.uniq(daysSplit).length === daysSplit.length;
+  }
+  return check;
+};
+
 export default class GridIsciCell extends Component {
   constructor(props) {
     super(props);
-    // console.log(this.props.Iscis);
     this.state = {
       iscisDisplay: "",
       iscisValue: "",
@@ -31,21 +77,17 @@ export default class GridIsciCell extends Component {
     this.onChangeIscis = this.onChangeIscis.bind(this);
     this.readIscisFromData = this.readIscisFromData.bind(this);
     this.writeIscisFromValues = this.writeIscisFromValues.bind(this);
-    this.checkDaysIncludeValid = this.checkDaysIncludeValid.bind(this);
     this.onSaveIscis = this.onSaveIscis.bind(this);
     this.onSaveIscisNext = this.onSaveIscisNext.bind(this);
     this.saveIscis = this.saveIscis.bind(this);
-    this.getValidationWarnings = this.getValidationWarnings.bind(this);
     this.popover = null;
     this.closePopover = this.closePopover.bind(this);
     this.showPopover = this.showPopover.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('NEXT Props', nextProps);
     this.setState({ validationErrors: "" });
     this.setState({ isValid: null });
-    // this.setState({ isChanged: false });
     this.readIscisFromData(nextProps.Iscis);
   }
 
@@ -53,13 +95,80 @@ export default class GridIsciCell extends Component {
   onChangeIscis(event) {
     const val = event.target.value;
     this.setState({ iscisValue: val, isChanged: true });
-    // this.prosetStateps.toggleEditIsciClass(true);
+  }
+
+  onSaveIscis() {
+    this.saveIscis(false);
+  }
+
+  // next - send the week count + 1 - detail grid will open as needed
+  onSaveIscisNext() {
+    const { hasNext, weekCnt } = this.props;
+    if (hasNext) {
+      const next = weekCnt + 1;
+      this.saveIscis(next);
+    }
+  }
+
+  writeIscisFromValues(iscisValue) {
+    const { isChanged, isInitiallyValid } = this.state;
+    const { Iscis } = this.props;
+    if (isChanged || !isInitiallyValid) {
+      let valid = true;
+      let iscisData = [];
+      if (iscisValue && iscisValue.match(/([^\r\n]+)/g)) {
+        iscisData = iscisValue.match(/([^\r\n]+)/g).map(entry => {
+          const splitted = entry.split(",");
+          valid = valid
+            ? splitted[0] && splitted[1] && splitted[2] && !splitted[4]
+            : false;
+          // console.log('isci check', splitted, valid);
+          let house = splitted[0] ? splitted[0].trim() : null;
+          let married = false;
+          if (house) {
+            married = house.indexOf("(m)") !== -1;
+            if (married) house = house.replace("(m)", "");
+          }
+          // check for valid days
+          let dayCheck = true;
+          if (splitted[2]) {
+            dayCheck = checkDaysIncludeValid(splitted[2].trim());
+            if (!dayCheck) valid = false;
+          }
+          const ret = {
+            HouseIsci: house,
+            ClientIsci: splitted[1] ? splitted[1].trim() : null,
+            Days: splitted[2] ? splitted[2].trim() : null,
+            Brand: splitted[3] ? splitted[3].trim() : null,
+            MarriedHouseIsci: married,
+            dayError: !dayCheck,
+            errorLength: splitted[4] !== undefined
+            // isValid: valid,
+          };
+          return ret;
+        });
+      }
+      return { isValid: valid, data: iscisData };
+    }
+    return { isValid: true, data: Iscis };
+  }
+
+  saveIscis(next) {
+    const { saveInputIscis } = this.props;
+    const { iscisValue } = this.state;
+    const checkIscis = this.writeIscisFromValues(iscisValue);
+    if (checkIscis.isValid) {
+      this.closePopover();
+      saveInputIscis(checkIscis.data, next);
+    } else {
+      const errors = getValidationWarnings(checkIscis.data);
+      this.setState({ validationErrors: errors });
+      this.setState({ isValid: "error" });
+    }
   }
 
   // display/edit conversion - both for popover and edit house display/tips
   readIscisFromData(iscis) {
-    // console.log('readIscis', iscis);
-
     if (iscis && iscis.length) {
       const houseDisplay = [];
       let isInitiallyValid = true;
@@ -97,148 +206,27 @@ export default class GridIsciCell extends Component {
     }
   }
 
-  checkDaysIncludeValid(days) {
-    const daysSplit = days.split("-");
-    let check = daysSplit.every(day => {
-      const dayval = day.toLowerCase();
-      return _.includes(["m", "t", "w", "th", "f", "sa", "su"], dayval);
-    });
-    if (check) {
-      check = _.uniq(daysSplit).length === daysSplit.length;
-    }
-    console.log("checkDaysIncludeValid", check, days, this);
-    return check;
-  }
-
-  // write back into object; check initially valid for legacy
-  writeIscisFromValues(iscisValue) {
-    // console.log('write check', this.state.isChanged, this.state.isInitiallyValid);
-    if (this.state.isChanged || !this.state.isInitiallyValid) {
-      // allow for removing all - no value but changed
-      let valid = true;
-      let iscisData = [];
-      if (iscisValue && iscisValue.match(/([^\r\n]+)/g)) {
-        iscisData = iscisValue.match(/([^\r\n]+)/g).map(entry => {
-          const splitted = entry.split(",");
-          valid = valid
-            ? splitted[0] && splitted[1] && splitted[2] && !splitted[4]
-            : false;
-          // console.log('isci check', splitted, valid);
-          let house = splitted[0] ? splitted[0].trim() : null;
-          let married = false;
-          if (house) {
-            married = house.indexOf("(m)") !== -1;
-            if (married) house = house.replace("(m)", "");
-          }
-          // check for valid days
-          let dayCheck = true;
-          if (splitted[2]) {
-            dayCheck = this.checkDaysIncludeValid(splitted[2].trim());
-            if (!dayCheck) valid = false;
-          }
-          const ret = {
-            HouseIsci: house,
-            ClientIsci: splitted[1] ? splitted[1].trim() : null,
-            Days: splitted[2] ? splitted[2].trim() : null,
-            Brand: splitted[3] ? splitted[3].trim() : null,
-            MarriedHouseIsci: married,
-            dayError: !dayCheck,
-            errorLength: splitted[4] !== undefined
-            // isValid: valid,
-          };
-          return ret;
-        });
-      }
-      return { isValid: valid, data: iscisData };
-    }
-    return { isValid: true, data: this.props.Iscis };
-  }
-
-  onSaveIscis() {
-    this.saveIscis(false);
-  }
-  // next - send the week count + 1 - detail grid will open as needed
-  onSaveIscisNext() {
-    if (this.props.hasNext) {
-      const next = this.props.weekCnt + 1;
-      this.saveIscis(next);
-    }
-  }
-
-  saveIscis(next) {
-    // does overall check  - if invalid then iterate for specific display
-    const checkIscis = this.writeIscisFromValues(this.state.iscisValue);
-    if (checkIscis.isValid) {
-      // save iscis
-      this.closePopover();
-      this.props.saveInputIscis(checkIscis.data, next);
-      // console.log('onSaveiscis Valid', checkIscis, this);
-      // this.setState({ isEdit: true });
-    } else {
-      // else show invalid
-      const errors = this.getValidationWarnings(checkIscis.data);
-      this.setState({ validationErrors: errors });
-      this.setState({ isValid: "error" });
-      // console.log('onSaveiscis Invalid', checkIscis, this);
-    }
-  }
-  /* eslint-disable class-methods-use-this */
-  // get warning from processed object
-  getValidationWarnings(iscisData) {
-    // console.log(this);
-    const ret = [];
-    iscisData.forEach((isci, idx) => {
-      const inner = [`Error line ${idx + 1}: `];
-      let lineValid = true;
-      if (isci.HouseIsci === null) {
-        lineValid = false;
-        inner.push("House ISCI cannot be empty; ");
-      }
-      if (isci.ClientIsci === null) {
-        lineValid = false;
-        inner.push("Client ISCI cannot be empty; ");
-      }
-      if (isci.Days === null) {
-        lineValid = false;
-        inner.push("Day Include cannot be empty; ");
-      }
-      if (isci.dayError) {
-        lineValid = false;
-        inner.push(
-          "Day Include invalid days or not unique (M, T, W, Th, F, Sa, Su); "
-        );
-      }
-      if (isci.errorLength) {
-        lineValid = false;
-        inner.push("Too many values entered (limit 4);");
-      }
-      if (!lineValid) {
-        const joinedInner = inner.join(" ");
-        const key = `isci_error_${idx + 1}`;
-        ret.push(<div key={key}>{joinedInner}</div>);
-      }
-    });
-    // return ret.join(' ');
-    return ret;
-  }
-
   closePopover() {
-    // console.log('closePopover', this, this.popover);
     this.popover.hide();
   }
 
   showPopover() {
-    // console.log('showPopover', this, this.popover);
     this.popover.show();
   }
 
   render() {
-    const isEdit = this.state.isEdit;
-    // const { isISCIEdited } = this.props;
+    const {
+      isEdit,
+      isValid,
+      iscisValue,
+      validationErrors,
+      iscisDisplay
+    } = this.state;
+    const { hasNext } = this.props;
     const title = isEdit ? "Edit ISCIs" : "Add ISCIs";
     const popoverIsciEditor = (
       <Popover id="popover-positioned-scrolling-top" title={title}>
-        <FormGroup controlId="isciEditor" validationState={this.state.isValid}>
+        <FormGroup controlId="isciEditor" validationState={isValid}>
           <ControlLabel>
             House ISCI*,Client ISCI*, Day Include*, Brand{" "}
             <span
@@ -258,17 +246,17 @@ export default class GridIsciCell extends Component {
             placeholder="Enter ISCIs"
             style={{ height: "100px" }}
             onChange={this.onChangeIscis}
-            value={this.state.iscisValue}
+            value={iscisValue}
           />
-          {this.state.isValid != null && (
+          {isValid != null && (
             <HelpBlock>
               <div className="text-danger" style={{ fontSize: 11 }}>
-                {this.state.validationErrors}
+                {validationErrors}
               </div>
             </HelpBlock>
           )}
         </FormGroup>
-        {this.props.hasNext && (
+        {hasNext && (
           <ButtonToolbar
             style={{
               marginLeft: "5px",
@@ -299,9 +287,7 @@ export default class GridIsciCell extends Component {
     // revise to show house display if edit mode with tip
     const button = isEdit ? (
       <Button bsStyle="link" style={{ padding: "2px", fontSize: "11px" }}>
-        <div className="truncate-iscis">
-          {this.state.iscisDisplay.join(" | ")}
-        </div>
+        <div className="truncate-iscis">{iscisDisplay.join(" | ")}</div>
       </Button>
     ) : (
       <Button bsStyle="link" style={{ padding: "2px", fontSize: "11px" }}>
@@ -313,7 +299,7 @@ export default class GridIsciCell extends Component {
       <Tooltip id="Iscistooltip">
         <span style={{ fontSize: "9px" }}>
           ISCIs <br />
-          {this.state.iscisValue}
+          {iscisValue}
         </span>
       </Tooltip>
     );
@@ -345,7 +331,6 @@ export default class GridIsciCell extends Component {
 }
 
 GridIsciCell.defaultProps = {
-  Iscis: [],
   saveInputIscis: () => {}
 };
 

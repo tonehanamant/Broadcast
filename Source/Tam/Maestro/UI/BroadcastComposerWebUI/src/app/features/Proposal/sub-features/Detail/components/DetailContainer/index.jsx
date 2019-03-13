@@ -89,9 +89,10 @@ export class ProposalDetail extends Component {
     };
   }
 
-  openPricingGuide() {
-    const { detail, loadPricingData } = this.props;
-    loadPricingData(detail.Id);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.proposalValidationStates.DetailInvalid === true) {
+      this.onSaveShowValidation(nextProps);
+    }
   }
 
   onFlightPickerApply(flight) {
@@ -118,9 +119,10 @@ export class ProposalDetail extends Component {
   }
 
   onChangeSpotLength(value) {
+    const { updateProposalEditFormDetail, detail } = this.props;
     const val = value ? value.Id : null;
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "SpotLengthId",
       value: val
     });
@@ -128,17 +130,19 @@ export class ProposalDetail extends Component {
   }
 
   onDayPartPickerApply(daypart) {
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    const { updateProposalEditFormDetail, detail } = this.props;
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "Daypart",
       value: daypart
     });
   }
 
   onChangeDaypartCode(event) {
+    const { updateProposalEditFormDetail, detail } = this.props;
     const val = event.target.value || "";
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "DaypartCode",
       value: val
     });
@@ -146,10 +150,11 @@ export class ProposalDetail extends Component {
   }
 
   onChangeNti(value) {
-    const val = value !== null ? value : this.props.detail.NtiConversionFactor;
+    const { updateProposalEditFormDetail, detail } = this.props;
+    const val = value !== null ? value : detail.NtiConversionFactor;
     const newVal = val / 100;
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "NtiConversionFactor",
       value: newVal
     });
@@ -157,17 +162,22 @@ export class ProposalDetail extends Component {
   }
 
   onChangeAdu(event) {
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    const {
+      updateProposalEditFormDetail,
+      detail,
+      onUpdateProposal
+    } = this.props;
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "Adu",
       value: event.target.checked
     });
-    this.props.onUpdateProposal();
-    // console.log('onChangeAdu', event.target.value, event.target.checked, this.props.detail);
+    onUpdateProposal();
   }
 
   onDeleteProposalDetail() {
-    this.props.toggleModal({
+    const { deleteProposalDetail, detail, toggleModal } = this.props;
+    toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
@@ -176,10 +186,46 @@ export class ProposalDetail extends Component {
         closeButtonText: "Cancel",
         actionButtonText: "Continue",
         actionButtonBsStyle: "danger",
-        action: () =>
-          this.props.deleteProposalDetail({ id: this.props.detail.Id }),
+        action: () => deleteProposalDetail({ id: detail.Id }),
         dismiss: () => {}
       }
+    });
+  }
+
+  onSaveShowValidation(nextProps) {
+    const {
+      SpotLengthId,
+      Daypart,
+      DaypartCode,
+      NtiConversionFactor
+    } = nextProps.detail;
+    this.checkValidSpotLength(SpotLengthId);
+    this.checkValidDaypart(Daypart);
+    this.checkValidDaypartCode(DaypartCode);
+    this.checkValidNtiLength(NtiConversionFactor);
+  }
+
+  setValidationState(type, state) {
+    this.setState(prevState => ({
+      ...prevState,
+      validationStates: {
+        ...prevState.validationStates,
+        [type]: state
+      }
+    }));
+  }
+
+  rerunPostScrubing() {
+    const { detail, proposalEditForm, rerunPostScrubing } = this.props;
+    rerunPostScrubing(proposalEditForm.Id, detail.Id);
+  }
+
+  openModal(modal) {
+    const { detail, toggleModal } = this.props;
+    toggleModal({
+      modal,
+      active: true,
+      properties: { detailId: detail.Id }
     });
   }
 
@@ -226,41 +272,9 @@ export class ProposalDetail extends Component {
     }
   }
 
-  openModal(modal) {
-    const { detail } = this.props;
-    this.props.toggleModal({
-      modal,
-      active: true,
-      properties: { detailId: detail.Id }
-    });
-  }
-
-  rerunPostScrubing() {
-    const { detail, proposalEditForm } = this.props;
-    this.props.rerunPostScrubing(proposalEditForm.Id, detail.Id);
-  }
-
-  setValidationState(type, state) {
-    this.setState(prevState => ({
-      ...prevState,
-      validationStates: {
-        ...prevState.validationStates,
-        [type]: state
-      }
-    }));
-  }
-
-  onSaveShowValidation(nextProps) {
-    const {
-      SpotLengthId,
-      Daypart,
-      DaypartCode,
-      NtiConversionFactor
-    } = nextProps.detail;
-    this.checkValidSpotLength(SpotLengthId);
-    this.checkValidDaypart(Daypart);
-    this.checkValidDaypartCode(DaypartCode);
-    this.checkValidNtiLength(NtiConversionFactor);
+  openPricingGuide() {
+    const { detail, loadPricingData } = this.props;
+    loadPricingData(detail.Id);
   }
 
   checkValidSpotLength(value) {
@@ -291,16 +305,23 @@ export class ProposalDetail extends Component {
     const val = value;
     this.setValidationState(
       "NtiLength",
-      !isNaN(val) && val !== "" && val !== null ? null : "error"
+      !Number.isNaN(val) && val !== "" && val !== null ? null : "error"
     );
   }
 
   openInventory(type) {
-    const { location, proposalEditForm, detail } = this.props;
+    const {
+      location,
+      proposalEditForm,
+      detail,
+      isDirty,
+      createAlert,
+      initialdata,
+      toggleModal
+    } = this.props;
 
-    const isDirty = this.props.isDirty();
-    if (isDirty) {
-      this.props.createAlert({
+    if (isDirty()) {
+      createAlert({
         type: "warning",
         headline: "Proposal Not Saved",
         message: "To access Inventory Planner you must save proposal first."
@@ -311,13 +332,9 @@ export class ProposalDetail extends Component {
     const detailId = detail.Id;
     const version = proposalEditForm.Version;
     const proposalId = proposalEditForm.Id;
-    // change readOnly determination to specific inventory variations (1 proposed and 4)
-    // const readOnly = this.props.isReadOnly;
-    // adjust to check route location for version mode
     const status = proposalEditForm.Status;
     const readOnly = status != null ? status === 1 || status === 4 : false;
     const fromVersion = location.pathname.indexOf("/version/") !== -1;
-    // console.log('fromVersion', fromVersion);
     const modalUrl = fromVersion
       ? `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}&version=${version}`
       : `/broadcast/planning?modal=${type}&proposalId=${proposalId}&detailId=${detailId}&readOnly=${readOnly}`;
@@ -326,14 +343,14 @@ export class ProposalDetail extends Component {
         type === "inventory"
           ? "Inventory Read Only"
           : "Open Market Inventory Read Only";
-      const { Statuses } = this.props.initialdata;
+      const { Statuses } = initialdata;
       const statusDisplay = Statuses.find(
         statusItem => statusItem.Id === status
       );
       const body = `Proposal Status of ${
         statusDisplay.Display
       }, you will not be able to save inventory.  Press "Continue" to go to Inventory.`;
-      this.props.toggleModal({
+      toggleModal({
         modal: "confirmModal",
         active: true,
         properties: {
@@ -358,12 +375,6 @@ export class ProposalDetail extends Component {
     generateScx([detail.Id], true);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.proposalValidationStates.DetailInvalid === true) {
-      this.onSaveShowValidation(nextProps);
-    }
-  }
-
   render() {
     const {
       detail,
@@ -374,9 +385,11 @@ export class ProposalDetail extends Component {
       isReadOnly,
       toggleModal,
       proposalValidationStates,
-      proposalEditForm
+      proposalEditForm,
+      isISCIEdited,
+      isGridCellEdited
     } = this.props;
-    const { isISCIEdited, isGridCellEdited } = this.props;
+    const { validationStates } = this.state;
 
     return (
       <Well bsSize="small" className="proposal-detail-wrap">
@@ -407,12 +420,12 @@ export class ProposalDetail extends Component {
               {detail && (
                 <FormGroup
                   controlId="proposalDetailSpotLength"
-                  validationState={this.state.validationStates.SpotLengthId}
+                  validationState={validationStates.SpotLengthId}
                   className="proposal-detail-form-item"
                 >
                   <div className="proposal-form-label">
                     <ControlLabel>Spot Length</ControlLabel>
-                    {this.state.validationStates.SpotLengthId != null && (
+                    {validationStates.SpotLengthId != null && (
                       <HelpBlock>
                         <span className="text-danger">Required.</span>
                       </HelpBlock>
@@ -422,7 +435,7 @@ export class ProposalDetail extends Component {
                     name="proposalDetailSpotLength"
                     value={detail.SpotLengthId}
                     placeholder=""
-                    options={this.props.initialdata.SpotLengths}
+                    options={initialdata.SpotLengths}
                     labelKey="Display"
                     valueKey="Id"
                     onChange={this.onChangeSpotLength}
@@ -435,12 +448,12 @@ export class ProposalDetail extends Component {
               {detail && (
                 <FormGroup
                   controlId="proposalDetailDaypart"
-                  validationState={this.state.validationStates.Daypart}
+                  validationState={validationStates.Daypart}
                   className="proposal-detail-form-item"
                 >
                   <div className="proposal-form-label">
                     <ControlLabel>Daypart</ControlLabel>
-                    {this.state.validationStates.Daypart && (
+                    {validationStates.Daypart && (
                       <HelpBlock>
                         <span className="text-danger">Required.</span>
                       </HelpBlock>
@@ -459,28 +472,26 @@ export class ProposalDetail extends Component {
                   className="proposal-detail-form-item"
                   controlId="proposalDetailDaypartCode"
                   validationState={
-                    this.state.validationStates.DaypartCode ||
-                    this.state.validationStates.DaypartCode_Alphanumeric ||
-                    this.state.validationStates.DaypartCode_MaxChar
+                    validationStates.DaypartCode ||
+                    validationStates.DaypartCode_Alphanumeric ||
+                    validationStates.DaypartCode_MaxChar
                   }
                 >
                   <div className="proposal-form-label">
                     <ControlLabel>Daypart Code</ControlLabel>
-                    {this.state.validationStates.DaypartCode != null && (
+                    {validationStates.DaypartCode != null && (
                       <HelpBlock>
                         <span className="text-danger">Required.</span>
                       </HelpBlock>
                     )}
-                    {this.state.validationStates.DaypartCode_Alphanumeric !=
-                      null && (
+                    {validationStates.DaypartCode_Alphanumeric != null && (
                       <HelpBlock>
                         <span className="text-danger">
                           Please enter only alphanumeric characters.
                         </span>
                       </HelpBlock>
                     )}
-                    {this.state.validationStates.DaypartCode_MaxChar !=
-                      null && (
+                    {validationStates.DaypartCode_MaxChar != null && (
                       <HelpBlock>
                         <span className="text-danger">
                           Please enter no more than 10 characters.
@@ -500,12 +511,12 @@ export class ProposalDetail extends Component {
               {detail && proposalEditForm.PostType === 2 && (
                 <FormGroup
                   controlId="proposalDetailNtiConversionFactor"
-                  validationState={this.state.validationStates.NtiLength}
+                  validationState={validationStates.NtiLength}
                   className="proposal-detail-form-item"
                 >
                   <div className="proposal-form-label">
                     <ControlLabel>NTI</ControlLabel>
-                    {this.state.validationStates.NtiLength != null && (
+                    {validationStates.NtiLength != null && (
                       <HelpBlock>
                         <span className="text-danger">Required.</span>
                       </HelpBlock>
@@ -657,24 +668,16 @@ export class ProposalDetail extends Component {
                 toggleModal={toggleModal}
                 proposalValidationStates={proposalValidationStates}
                 isISCIEdited={isISCIEdited}
-                // toggleEditIsciClass={toggleEditIsciClass}
                 isGridCellEdited={isGridCellEdited}
-                // toggleEditGridCellClass={toggleEditGridCellClass}
               />
             </Col>
           </Row>
         )}
 
-        <UploadBuy
-          toggleModal={this.props.toggleModal}
-          // updateProposalEditFormDetail={updateProposalEditFormDetail}
-          // initialdata={initialdata}
-          detail={detail}
-          // isReadOnly={isReadOnly}
-        />
+        <UploadBuy toggleModal={toggleModal} detail={detail} />
 
         <Sweeps
-          toggleModal={this.props.toggleModal}
+          toggleModal={toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
           detail={detail}
@@ -682,7 +685,7 @@ export class ProposalDetail extends Component {
         />
 
         <PricingGuide
-          toggleModal={this.props.toggleModal}
+          toggleModal={toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           initialdata={initialdata}
           detail={detail}
@@ -690,7 +693,7 @@ export class ProposalDetail extends Component {
         />
 
         <ProgramGenre
-          toggleModal={this.props.toggleModal}
+          toggleModal={toggleModal}
           updateProposalEditFormDetail={updateProposalEditFormDetail}
           detail={detail}
           isReadOnly={isReadOnly}
@@ -722,7 +725,6 @@ ProposalDetail.defaultProps = {
 };
 
 ProposalDetail.propTypes = {
-  // proposal: PropTypes.object.isRequired,
   initialdata: PropTypes.object.isRequired,
   detail: PropTypes.object,
   proposalEditForm: PropTypes.object,
@@ -741,9 +743,6 @@ ProposalDetail.propTypes = {
   isGridCellEdited: PropTypes.bool.isRequired,
   loadPricingData: PropTypes.func.isRequired,
   generateScx: PropTypes.func.isRequired,
-  // toggleEditIsciClass: PropTypes.func.isRequired,
-  // toggleEditGridCellClass: PropTypes.func.isRequired,
-  // withRouter props:
   location: PropTypes.object.isRequired
 };
 

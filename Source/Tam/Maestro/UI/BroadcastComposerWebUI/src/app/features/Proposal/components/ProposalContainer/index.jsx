@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import _ from "lodash";
+import { isEqual } from "lodash";
 
 import { toggleModal, createAlert } from "Main/redux/ducks";
 
@@ -94,41 +94,40 @@ export class SectionPlanningProposal extends Component {
     this.onUnload = this.onUnload.bind(this);
   }
 
-  onUnload() {
-    this.props.getProposalUnlock(this.props.proposal.Id);
+  componentWillMount() {
+    const {
+      match: {
+        params: { id, version }
+      },
+      getProposalLock,
+      getProposalInitialData,
+      getProposalVersion,
+      getProposal
+    } = this.props;
+    getProposalLock(id);
+    getProposalInitialData();
+
+    if (id && version) {
+      getProposalVersion(id, version);
+    } else if (id) {
+      getProposal(id);
+    }
   }
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onUnload);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onUnload);
-  }
-
-  componentWillMount() {
-    const id = this.props.match.params.id;
-    const version = this.props.match.params.version;
-
-    this.props.getProposalLock(id);
-    this.props.getProposalInitialData();
-
-    if (id && version) {
-      this.props.getProposalVersion(id, version);
-    } else if (id) {
-      this.props.getProposal(id);
-    }
-  }
-
   componentDidUpdate() {
+    const { toggleModal, proposalLock } = this.props;
     if (this.isLocked()) {
-      this.props.toggleModal({
+      toggleModal({
         modal: "confirmModal",
         active: true,
         properties: {
           titleText: "Proposal Locked",
           bodyText: `This Proposal is currently in use by ${
-            this.props.proposalLock.LockedUserName
+            proposalLock.LockedUserName
           }. Please try again later.`,
           closeButtonText: "Cancel",
           closeButtonDisabled: true,
@@ -149,6 +148,18 @@ export class SectionPlanningProposal extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.onUnload);
+  }
+
+  onUnload() {
+    const {
+      getProposalUnlock,
+      proposal: { Id }
+    } = this.props;
+    getProposalUnlock(Id);
+  }
+
   isValidProposalForm() {
     const { proposalEditForm } = this.props;
     const { ProposalName, AdvertiserId, GuaranteedDemoId } = proposalEditForm;
@@ -158,7 +169,6 @@ export class SectionPlanningProposal extends Component {
       // const alphanumeric = /^[A-Za-z0-9- ]+$/i;
       const valid = {
         required: value !== "" || null,
-        // alphaNumeric: (alphanumeric.test(value) || value === ''),
         maxChar100: value && value.length <= 100
       };
       return valid.required && valid.maxChar100;
@@ -202,7 +212,7 @@ export class SectionPlanningProposal extends Component {
         const valid = {
           required:
             postType === 2
-              ? !isNaN(value) && value !== "" && value !== null
+              ? !Number.isNaN(value) && value !== "" && value !== null
               : true
         };
         return valid.required;
@@ -243,12 +253,14 @@ export class SectionPlanningProposal extends Component {
   }
 
   isDirty() {
-    return !_.isEqual(this.props.proposalEditForm, this.props.proposal);
+    const { proposalEditForm, proposal } = this.props;
+    return !isEqual(proposalEditForm, proposal);
   }
 
   isLocked() {
     const { proposalLock, employee } = this.props;
 
+    /* eslint-disable no-underscore-dangle */
     const proposalLockResolved = proposalLock && proposalLock.Key;
     const employeeResolved = employee && employee._Accountdomainsid;
 
@@ -256,15 +268,13 @@ export class SectionPlanningProposal extends Component {
       return false;
     } // Proposal not locked
     if (proposalLockResolved && proposalLock.Success === false) {
-      if (
+      return !(
         employeeResolved &&
         employee._Accountdomainsid === proposalLock.LockedUserId
-      ) {
-        return false; // Proposal locked by user; not locked to user
-      }
-      return true; // Propsal lock by another user
+      );
     }
     return false; // Assume not locked
+    /* eslint-enable no-underscore-dangle */
   }
 
   render() {
@@ -289,6 +299,7 @@ export class SectionPlanningProposal extends Component {
       unorderProposal,
       proposalValidationStates,
       setProposalValidationState,
+      proposalLock,
       generateScx
     } = this.props;
     const isReadOnly =
@@ -297,7 +308,7 @@ export class SectionPlanningProposal extends Component {
         : false;
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
-        {this.props.proposalLock.Success &&
+        {proposalLock.Success &&
           !this.isLocked() &&
           Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
@@ -355,8 +366,6 @@ export class SectionPlanningProposal extends Component {
                 isValidProposalDetails={this.isValidProposalDetails}
                 isValidProposalDetailGrids={this.isValidProposalDetailGrids}
                 isDirty={this.isDirty}
-                // toggleEditIsciClass={this.props.toggleEditIsciClass}
-                // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             </div>
           )}
@@ -368,12 +377,7 @@ export class SectionPlanningProposal extends Component {
 /* ////////////////////////////////// */
 /* // PROPTYPES
 /* ////////////////////////////////// */
-SectionPlanningProposal.defaultProps = {
-  proposalLock: {},
-  initialdata: {},
-  proposal: {},
-  proposalEditForm: {}
-};
+SectionPlanningProposal.defaultProps = {};
 
 SectionPlanningProposal.propTypes = {
   match: PropTypes.object.isRequired,
@@ -386,8 +390,6 @@ SectionPlanningProposal.propTypes = {
 
   proposalValidationStates: PropTypes.object.isRequired,
   setProposalValidationState: PropTypes.func.isRequired,
-
-  // restorePlanningProposal: PropTypes.func.isRequired,
 
   getProposalLock: PropTypes.func.isRequired,
   getProposalUnlock: PropTypes.func.isRequired,
@@ -410,8 +412,6 @@ SectionPlanningProposal.propTypes = {
 
   toggleModal: PropTypes.func.isRequired,
   createAlert: PropTypes.func.isRequired
-  // toggleEditIsciClass: PropTypes.func.isRequired,
-  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };
 
 export default connect(

@@ -13,30 +13,36 @@ export default class ProposalActions extends Component {
   }
 
   componentDidUpdate() {
+    const {
+      proposalEditForm,
+      toggleModal,
+      updateProposalEditForm,
+      saveProposal
+    } = this.props;
     if (
-      this.props.proposalEditForm.ValidationWarning &&
-      this.props.proposalEditForm.ValidationWarning.HasWarning
+      proposalEditForm.ValidationWarning &&
+      proposalEditForm.ValidationWarning.HasWarning
     ) {
-      this.props.toggleModal({
+      toggleModal({
         modal: "confirmModal",
         active: true,
         properties: {
           titleText: "Warning",
-          bodyText: this.props.proposalEditForm.ValidationWarning.Message,
+          bodyText: proposalEditForm.ValidationWarning.Message,
           closeButtonText: "Cancel",
           actionButtonText: "Continue",
           actionButtonBsStyle: "warning",
           action: () => {
-            this.props.updateProposalEditForm({
+            updateProposalEditForm({
               key: "ForceSave",
               value: true
             });
-            this.props.updateProposalEditForm({
+            updateProposalEditForm({
               key: "ValidationWarning",
               value: null
             });
-            this.props.saveProposal({
-              proposal: this.props.proposalEditForm,
+            saveProposal({
+              proposal: proposalEditForm,
               force: true
             });
           },
@@ -47,19 +53,25 @@ export default class ProposalActions extends Component {
   }
 
   checkValid() {
-    const formValid = this.props.isValidProposalForm();
-    const detailValid = this.props.isValidProposalDetails();
-    const detailGridsValid = this.props.isValidProposalDetailGrids();
+    const {
+      isValidProposalForm,
+      isValidProposalDetails,
+      isValidProposalDetailGrids,
+      setProposalValidationState
+    } = this.props;
+    const formValid = isValidProposalForm();
+    const detailValid = isValidProposalDetails();
+    const detailGridsValid = isValidProposalDetailGrids();
 
-    this.props.setProposalValidationState({
+    setProposalValidationState({
       type: "FormInvalid",
       state: !formValid
     });
-    this.props.setProposalValidationState({
+    setProposalValidationState({
       type: "DetailInvalid",
       state: !detailValid
     });
-    this.props.setProposalValidationState({
+    setProposalValidationState({
       type: "DetailGridsInvalid",
       state: !detailGridsValid
     });
@@ -68,20 +80,22 @@ export default class ProposalActions extends Component {
   }
 
   save() {
+    const { proposalEditForm, saveProposal, createAlert } = this.props;
     if (this.checkValid()) {
-      this.props.saveProposal({ proposal: this.props.proposalEditForm });
+      saveProposal({ proposal: proposalEditForm });
     } else {
-      this.props.createAlert({
+      createAlert({
         type: "danger",
         headline: "Proposal Cannot Be Saved",
         message: "Required Inputs Incomplete (in red)"
       });
     }
   }
+
   cancel() {
-    if (!this.props.isCreate) {
-      // console.log('cancel', this.props.isCreate, this.props.proposal.Id);
-      this.props.getProposalUnlock(this.props.proposal.Id);
+    const { isCreate, getProposalUnlock, proposal } = this.props;
+    if (!isCreate) {
+      getProposalUnlock(proposal.Id);
     }
     setTimeout(() => {
       window.location = "/broadcastreact/planning";
@@ -89,7 +103,6 @@ export default class ProposalActions extends Component {
   }
 
   render() {
-    // const { proposalEditForm, updateProposalEditForm } = this.props;
     return (
       <div id="proposal-actions">
         <Row>

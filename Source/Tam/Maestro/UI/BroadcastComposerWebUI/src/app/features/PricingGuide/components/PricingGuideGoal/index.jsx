@@ -47,13 +47,6 @@ class PricingGuideGoal extends Component {
     });
   }
 
-  toggleEditing() {
-    const { isEditing } = this.state;
-
-    this.setState({ isEditing: !isEditing });
-    this.props.onSetGuideEditing(!isEditing);
-  }
-
   onSubmit() {
     const { submit } = this.props;
     const {
@@ -93,6 +86,14 @@ class PricingGuideGoal extends Component {
 
   onChange(name, value) {
     this.setState({ [name]: value });
+  }
+
+  toggleEditing() {
+    const { isEditing } = this.state;
+    const { onSetGuideEditing } = this.props;
+
+    this.setState({ isEditing: !isEditing });
+    onSetGuideEditing(!isEditing);
   }
 
   render() {

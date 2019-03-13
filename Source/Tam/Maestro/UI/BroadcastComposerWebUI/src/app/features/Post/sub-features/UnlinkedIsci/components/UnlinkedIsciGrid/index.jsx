@@ -36,8 +36,9 @@ export class UnlinkedIsciGrid extends Component {
 
   render() {
     const { unlinkedIscisData } = this.props;
-    const stateKey = "unlinked_grid";
+    const { store } = this.context;
 
+    const stateKey = "unlinked_grid";
     const columns = [
       {
         name: "ISCI",
@@ -68,21 +69,24 @@ export class UnlinkedIsciGrid extends Component {
         text: "Not a Cadent ISCI",
         key: "menu-archive-isci",
         EVENT_HANDLER: ({ metaData }) => {
-          this.props.archiveIscis([metaData.rowData.ISCI]);
+          const { archiveIscis } = this.props;
+          archiveIscis([metaData.rowData.ISCI]);
         }
       },
       {
         text: "Rescrub this ISCI",
         key: "menu-rescrub-isci",
         EVENT_HANDLER: ({ metaData }) => {
-          this.props.rescrubIscis(metaData.rowData.ISCI);
+          const { rescrubIscis } = this.props;
+          rescrubIscis(metaData.rowData.ISCI);
         }
       },
       {
         text: "Map ISCI",
         key: "menu-map-isci",
         EVENT_HANDLER: ({ metaData }) => {
-          this.props.toggleModal({
+          const { toggleModal } = this.props;
+          toggleModal({
             modal: "mapUnlinkedIsci",
             active: true,
             properties: { rowData: metaData.rowData }
@@ -143,12 +147,7 @@ export class UnlinkedIsciGrid extends Component {
     };
 
     return (
-      <Grid
-        {...grid}
-        data={unlinkedIscisData}
-        store={this.context.store}
-        height={460}
-      />
+      <Grid {...grid} data={unlinkedIscisData} store={store} height={460} />
     );
   }
 }

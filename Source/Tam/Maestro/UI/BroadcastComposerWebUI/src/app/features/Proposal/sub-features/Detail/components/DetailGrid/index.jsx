@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "react-redux-grid";
@@ -6,9 +7,15 @@ import GridCellInput from "Patterns/GridCellInput";
 import GridTextInput from "Patterns/GridTextInput";
 import GridIsciCell from "./GridIsciCell";
 
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
-
+const keyPress = event => {
+  const re = /[0-9a-zA-Z ]+/g;
+  if (!re.test(event.key)) {
+    event.preventDefault();
+  }
+  if (event.key === "Enter") {
+    event.currentTarget.blur();
+  }
+};
 export default class ProposalDetailGrid extends Component {
   constructor(props, context) {
     super(props, context);
@@ -16,46 +23,16 @@ export default class ProposalDetailGrid extends Component {
     this.context = context;
     this.isciCellItems = {};
     this.checkEditable = this.checkEditable.bind(this);
-    this.keyPress = this.keyPress.bind(this);
 
     this.state = {
-      DetailGridsInvalid: this.props.proposalValidationStates.DetailGridsInvalid
+      DetailGridsInvalid: props.proposalValidationStates.DetailGridsInvalid
     };
   }
 
-  keyPress(event) {
-    console.log("keyPress", this.event);
-    // prevent entering special characters
-    const re = /[0-9a-zA-Z ]+/g;
-    if (!re.test(event.key)) {
-      event.preventDefault();
-    }
-    if (event.key === "Enter") {
-      event.currentTarget.blur();
-    }
-  }
-
-  checkEditable(values, isUnits) {
-    // check read only - TODO future pass here
-    if (this.props.isReadOnly) return false;
-    let can = true;
-    if (values.Type === "total") {
-      can = false;
-    }
-    // check for ADU and quarter if editing units
-    if (isUnits && values.Type === "quarter" && this.props.isAdu) {
-      can = false;
-    }
-    // no editing hiatus week level
-    if (values.Type === "week" && values.IsHiatus) {
-      can = false;
-    }
-    return can;
-  }
-
   componentWillReceiveProps(nextProps) {
+    const { proposalValidationStates } = this.props;
     if (
-      this.props.proposalValidationStates.DetailGridsInvalid !==
+      proposalValidationStates.DetailGridsInvalid !==
       nextProps.proposalValidationStates.DetailGridsInvalid
     ) {
       this.setState({
@@ -65,8 +42,37 @@ export default class ProposalDetailGrid extends Component {
     }
   }
 
+  checkEditable(values, isUnits) {
+    const { isReadOnly, isAdu } = this.props;
+    if (isReadOnly) return false;
+    let can = true;
+    if (values.Type === "total") {
+      can = false;
+    }
+    if (isUnits && values.Type === "quarter" && isAdu) {
+      can = false;
+    }
+    if (values.Type === "week" && values.IsHiatus) {
+      can = false;
+    }
+    return can;
+  }
+
   render() {
-    const stateKey = `detailGrid_${this.props.detailId}`;
+    const { DetailGridsInvalid } = this.state;
+    const { store } = this.context;
+    const {
+      detailId,
+      updateProposalEditFormDetailGrid,
+      isGridCellEdited,
+      toggleModal,
+      isISCIEdited,
+      GridQuarterWeeks,
+      proposalValidationStates,
+      isReadOnly,
+      onUpdateProposal
+    } = this.props;
+    const stateKey = `detailGrid_${detailId}`;
     const columns = [
       {
         name: "Type",
@@ -103,36 +109,34 @@ export default class ProposalDetailGrid extends Component {
             unmaskedValue = unmaskedValue.replace(/,/g, "");
             const storeValue = Number(unmaskedValue);
             const storeKey = event.target.getAttribute("valueKey");
-            this.props.updateProposalEditFormDetailGrid({
-              id: this.props.detailId,
+            updateProposalEditFormDetailGrid({
+              id: detailId,
               quarterIndex: row.QuarterIdx,
               weekIndex: null,
               key: storeKey,
               value: storeValue,
               row: row._key
             });
-            this.props.onUpdateProposal();
+            onUpdateProposal();
           };
 
           const inputUnits = event => {
             const storeValue = Number(event.target.value);
             const storeKey = event.target.getAttribute("valueKey");
-            this.props.updateProposalEditFormDetailGrid({
-              id: this.props.detailId,
+            updateProposalEditFormDetailGrid({
+              id: detailId,
               quarterIndex: row.QuarterIdx,
               weekIndex: row.WeekIdx,
               key: storeKey,
               value: storeValue,
               row: row._key
             });
-            this.props.onUpdateProposal();
+            onUpdateProposal();
           };
 
           if (row.Type === "total")
             return row.TotalUnits ? numeral(row.TotalUnits).format("0,0") : "-";
           if (row.Type === "quarter") {
-            // const cpm = numeral(value).format('$0,0[.]00');
-            // return <div><span style={{ color: '#808080' }}>CPM </span><span>{cpm}</span></div>;
             return (
               <GridCellInput
                 name="Cpm"
@@ -141,15 +145,14 @@ export default class ProposalDetailGrid extends Component {
                 valueKey="Cpm"
                 isEditable={isEditable}
                 emptyZeroDefault
-                onSaveShowValidation={this.state.DetailGridsInvalid}
+                onSaveShowValidation={DetailGridsInvalid}
                 blurAction={inputCpm}
                 enterKeyPressAction={inputCpm}
                 maskType="createNumber"
                 maskPrefix="CPM $ "
                 maskAllowDecimal
                 maskDecimalLimit={2}
-                isGridCellEdited={this.props.isGridCellEdited}
-                // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
+                isGridCellEdited={isGridCellEdited}
               />
             );
           }
@@ -161,13 +164,13 @@ export default class ProposalDetailGrid extends Component {
               valueKey="Units"
               isEditable={isEditable}
               emptyZeroDefault
-              onSaveShowValidation={this.state.DetailGridsInvalid}
+              onSaveShowValidation={DetailGridsInvalid}
               blurAction={inputUnits}
               enterKeyPressAction={inputUnits}
               // maskType="default"
               maskType="createNumber"
               maskAllowDecimal={false}
-              isGridCellEdited={this.props.isGridCellEdited}
+              isGridCellEdited={isGridCellEdited}
               //  toggleEditGridCellClass={this.props.toggleEditGridCellClass}
             />
           );
@@ -188,15 +191,15 @@ export default class ProposalDetailGrid extends Component {
             unmaskedValue = unmaskedValue.replace(/,/g, "");
             const storeValue = Number(unmaskedValue) * 1000;
             const storeKey = event.target.getAttribute("valueKey");
-            this.props.updateProposalEditFormDetailGrid({
-              id: this.props.detailId,
+            updateProposalEditFormDetailGrid({
+              id: detailId,
               quarterIndex: row.QuarterIdx,
               weekIndex: null,
               key: storeKey,
               value: storeValue,
               row: row._key
             });
-            this.props.onUpdateProposal();
+            onUpdateProposal();
           };
 
           const inputImpressions = event => {
@@ -204,15 +207,15 @@ export default class ProposalDetailGrid extends Component {
             const storeValue = Number(unmaskedValue) * 1000;
             // const storeValue = (Number(event.target.value) * 1000);
             const storeKey = event.target.getAttribute("valueKey");
-            this.props.updateProposalEditFormDetailGrid({
-              id: this.props.detailId,
+            updateProposalEditFormDetailGrid({
+              id: detailId,
               quarterIndex: row.QuarterIdx,
               weekIndex: row.WeekIdx,
               key: storeKey,
               value: storeValue,
               row: row._key
             });
-            this.props.onUpdateProposal();
+            onUpdateProposal();
           };
 
           if (row.Type === "total")
@@ -243,15 +246,15 @@ export default class ProposalDetailGrid extends Component {
                   actionButtonText: "Continue",
                   actionButtonBsStyle: "warning"
                 }}
-                toggleModal={this.props.toggleModal}
-                onSaveShowValidation={this.state.DetailGridsInvalid}
+                toggleModal={toggleModal}
+                onSaveShowValidation={DetailGridsInvalid}
                 blurAction={inputImpressionGoal}
                 enterKeyPressAction={inputImpressionGoal}
                 maskType="createNumber"
                 maskPrefix="Imp Goal (000) "
                 maskAllowDecimal
                 maskDecimalLimit={3}
-                isGridCellEdited={this.props.isGridCellEdited}
+                isGridCellEdited={isGridCellEdited}
                 // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
               />
             );
@@ -264,13 +267,13 @@ export default class ProposalDetailGrid extends Component {
               valueKey="Impressions"
               isEditable={isEditable}
               emptyZeroDefault
-              onSaveShowValidation={this.state.DetailGridsInvalid}
+              onSaveShowValidation={DetailGridsInvalid}
               blurAction={inputImpressions}
               enterKeyPressAction={inputImpressions}
               maskType="createNumber"
               maskAllowDecimal
               maskDecimalLimit={3}
-              isGridCellEdited={this.props.isGridCellEdited}
+              isGridCellEdited={isGridCellEdited}
               // toggleEditGridCellClass={this.props.toggleEditGridCellClass}
             />
           );
@@ -281,14 +284,13 @@ export default class ProposalDetailGrid extends Component {
         dataIndex: "Cost",
         width: "20%",
         editable: false,
-        renderer: ({ value, row }) => {
+        renderer: ({ row }) => {
           if (row.Type === "total")
             return row.TotalCost
               ? numeral(row.TotalCost).format("$0,0[.]00")
               : "-";
           if (row.Type === "week")
             return row.Cost ? numeral(row.Cost).format("$0,0[.]00") : "-";
-          // empty for quarter
           return "";
         }
       },
@@ -298,18 +300,16 @@ export default class ProposalDetailGrid extends Component {
         width: "20%",
         editable: false,
         renderer: ({ value, row }) => {
-          // console.log('ISCIs Render', value, row);
           if (row.Type === "week" && !row.IsHiatus) {
             const inputIscis = (IscisValue, next) => {
-              this.props.updateProposalEditFormDetailGrid({
-                id: this.props.detailId,
+              updateProposalEditFormDetailGrid({
+                id: detailId,
                 quarterIndex: row.QuarterIdx,
                 weekIndex: row.WeekIdx,
                 key: "Iscis",
                 value: IscisValue,
                 row: row._key
               });
-              // console.log('called InputIscis', IscisValue, row, next);
               if (next) {
                 const nextKey = `isci_cell_${next}`;
                 const nextIsci = this.isciCellItems[nextKey];
@@ -326,8 +326,7 @@ export default class ProposalDetailGrid extends Component {
                 ref={ref => {
                   this.isciCellItems[cellKey] = ref;
                 }}
-                isISCIEdited={this.props.isISCIEdited}
-                // toggleEditIsciClass={this.props.toggleEditIsciClass}
+                isISCIEdited={isISCIEdited}
               />
             );
           }
@@ -344,9 +343,8 @@ export default class ProposalDetailGrid extends Component {
           const isEditable = true;
           const inputMyEvent = event => {
             const storeValue = event.target.value;
-            const storeKey = event.target.getAttribute("valueKey");
-            this.props.updateProposalEditFormDetailGrid({
-              id: this.props.detailId,
+            updateProposalEditFormDetailGrid({
+              id: detailId,
               quarterIndex: row.QuarterIdx,
               weekIndex: row.WeekIdx,
               key: "MyEventsReportName",
@@ -363,8 +361,8 @@ export default class ProposalDetailGrid extends Component {
               valueKey="MyEvent"
               isEditable={isEditable}
               maxLength={25}
-              onKeyPress={this.keyPress}
-              onSaveShowValidation={this.state.DetailGridsInvalid}
+              onKeyPress={keyPress}
+              onSaveShowValidation={DetailGridsInvalid}
               enterKeyPressAction={inputMyEvent}
             />
           );
@@ -403,10 +401,7 @@ export default class ProposalDetailGrid extends Component {
 
       ROW: {
         enabled: true,
-        renderer: ({ rowProps, cells, row }) => {
-          // const stateKey = cells[0].props.stateKey;
-          // const rowId = cells[0].props.rowId;
-          // console.log('ROW>>>>>>', rowProps, cells, row);
+        renderer: ({ rowProps, cells }) => {
           const type = cells[0].props.row.Type;
           let rowStyle = {};
           if (type === "quarter") rowStyle = { backgroundColor: "#dedede" };
@@ -435,21 +430,16 @@ export default class ProposalDetailGrid extends Component {
     return (
       <Grid
         {...grid}
-        data={this.props.GridQuarterWeeks}
-        store={this.context.store}
+        data={GridQuarterWeeks}
+        store={store}
         height="false"
-        key={`${this.props.proposalValidationStates.DetailGridsInvalid}${
-          this.props.isReadOnly
-        }`} // force cell update
+        key={`${proposalValidationStates.DetailGridsInvalid}${isReadOnly}`} // force cell update
       />
     );
   }
 }
 
-ProposalDetailGrid.defaultProps = {
-  detailId: "detailGrid",
-  isReadOnly: false
-};
+ProposalDetailGrid.defaultProps = {};
 
 ProposalDetailGrid.propTypes = {
   detailId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -462,7 +452,5 @@ ProposalDetailGrid.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   proposalValidationStates: PropTypes.object.isRequired,
   isISCIEdited: PropTypes.bool.isRequired,
-  // toggleEditIsciClass: PropTypes.func.isRequired,
   isGridCellEdited: PropTypes.bool.isRequired
-  // toggleEditGridCellClass: PropTypes.func.isRequired,
 };

@@ -26,8 +26,10 @@ export default class ProposalHeader extends Component {
       saveProposalAsVersion,
       unorderProposal,
       proposalValidationStates,
+      isReadOnly,
       generateScx
     } = this.props;
+    const { open } = this.state;
     return (
       <div id="proposal-header">
         {isEdit && (
@@ -42,7 +44,7 @@ export default class ProposalHeader extends Component {
             <Col md={8}>
               <Button
                 bsStyle="primary"
-                onClick={() => this.setState({ open: !this.state.open })}
+                onClick={() => this.setState({ open: !open })}
               >
                 <span
                   className="glyphicon glyphicon-triangle-bottom"
@@ -61,7 +63,7 @@ export default class ProposalHeader extends Component {
                 unorderProposal={unorderProposal}
                 generateScx={generateScx}
                 toggleModal={toggleModal}
-                isReadOnly={this.props.isReadOnly}
+                isReadOnly={isReadOnly}
                 proposal={proposal}
               />
             </Col>
@@ -70,7 +72,7 @@ export default class ProposalHeader extends Component {
         {!isEdit && (
           <Button
             bsStyle="primary"
-            onClick={() => this.setState({ open: !this.state.open })}
+            onClick={() => this.setState({ open: !open })}
           >
             <span
               className="glyphicon glyphicon-triangle-bottom"
@@ -78,7 +80,7 @@ export default class ProposalHeader extends Component {
             />
           </Button>
         )}
-        <Panel style={{ marginTop: 10 }} expanded={this.state.open}>
+        <Panel style={{ marginTop: 10 }} expanded={open}>
           <Panel.Collapse>
             <Panel.Body>
               <ProposalForm
@@ -87,7 +89,7 @@ export default class ProposalHeader extends Component {
                 proposalEditForm={proposalEditForm}
                 updateProposalEditForm={updateProposalEditForm}
                 toggleModal={toggleModal}
-                isReadOnly={this.props.isReadOnly}
+                isReadOnly={isReadOnly}
                 proposalValidationStates={proposalValidationStates}
                 isEdit={isEdit}
               />
@@ -104,8 +106,7 @@ ProposalHeader.defaultProps = {
   getProposalVersions: () => {},
   deleteProposal: () => {},
   saveProposalAsVersion: () => {},
-  unorderProposal: () => {},
-  isReadOnly: false
+  unorderProposal: () => {}
 };
 
 /* eslint-disable react/no-unused-prop-types */

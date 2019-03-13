@@ -55,64 +55,69 @@ export default class ProposalForm extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.proposalValidationStates.FormInvalid === true) {
+      this.onSaveShowValidation(nextProps);
+    }
+  }
+
   onChangeProposalName(event) {
+    const { updateProposalEditForm } = this.props;
     const val = event.target.value;
-    this.props.updateProposalEditForm({ key: "ProposalName", value: val });
+    updateProposalEditForm({ key: "ProposalName", value: val });
     this.checkValidProposalName(val);
   }
 
   onOpenMarketList() {
-    this.props.toggleModal({
+    const { toggleModal } = this.props;
+    toggleModal({
       modal: "marketSelectorModal",
       active: true
     });
   }
 
   onChangeCoverage(value) {
+    const { updateProposalEditForm } = this.props;
     const val = value ? value / 100 : null;
-    this.props.updateProposalEditForm({ key: "MarketCoverage", value: val });
+    updateProposalEditForm({ key: "MarketCoverage", value: val });
   }
 
   onChangePostType(value) {
+    const { updateProposalEditForm } = this.props;
     const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: "PostType", value: val });
+    updateProposalEditForm({ key: "PostType", value: val });
   }
 
   onChangeEquivalized(value) {
+    const { updateProposalEditForm } = this.props;
     const val = value ? value.Bool : null;
-    this.props.updateProposalEditForm({ key: "Equivalized", value: val });
+    updateProposalEditForm({ key: "Equivalized", value: val });
   }
 
   onChangeAdvertiserId(value) {
+    const { updateProposalEditForm } = this.props;
     const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: "AdvertiserId", value: val });
+    updateProposalEditForm({ key: "AdvertiserId", value: val });
     this.checkIsNullFields(val, "AdvertiserId");
   }
 
   onChangeGuaranteedDemoId(value) {
+    const { updateProposalEditForm } = this.props;
     const val = value ? value.Id : null;
-    this.props.updateProposalEditForm({ key: "GuaranteedDemoId", value: val });
+    updateProposalEditForm({ key: "GuaranteedDemoId", value: val });
     this.checkIsNullFields(val, "GuaranteedDemoId");
   }
 
   onChangeSecondaryDemos(value) {
+    const { updateProposalEditForm } = this.props;
     const val = value.map(item => item.Id);
-    this.props.updateProposalEditForm({ key: "SecondaryDemos", value: val });
+    updateProposalEditForm({ key: "SecondaryDemos", value: val });
   }
 
   onChangeNotes(event) {
+    const { updateProposalEditForm } = this.props;
     const val = event.target.value;
-    this.props.updateProposalEditForm({ key: "Notes", value: val });
-  }
-
-  setValidationState(type, state) {
-    this.setState(prevState => ({
-      ...prevState,
-      validationStates: {
-        ...prevState.validationStates,
-        [type]: state
-      }
-    }));
+    updateProposalEditForm({ key: "Notes", value: val });
   }
 
   onSaveShowValidation(nextProps) {
@@ -124,6 +129,16 @@ export default class ProposalForm extends Component {
     this.checkValidProposalName(ProposalName);
     this.checkIsNullFields(AdvertiserId, "AdvertiserId");
     this.checkIsNullFields(GuaranteedDemoId, "GuaranteedDemoId");
+  }
+
+  setValidationState(type, state) {
+    this.setState(prevState => ({
+      ...prevState,
+      validationStates: {
+        ...prevState.validationStates,
+        [type]: state
+      }
+    }));
   }
 
   checkValidProposalName(value) {
@@ -138,27 +153,20 @@ export default class ProposalForm extends Component {
     this.setValidationState(field, value ? null : "error");
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.proposalValidationStates.FormInvalid === true) {
-      this.onSaveShowValidation(nextProps);
-    }
-  }
-
   render() {
-    const { initialdata, proposalEditForm, isReadOnly, isEdit } = this.props;
     const {
-      AdvertiserId,
-      GuaranteedDemoId,
-      Name,
-      NameMaxChar
-    } = this.state.validationStates;
+      initialdata,
+      proposalEditForm,
+      isReadOnly,
+      isEdit,
+      updateProposalEditForm,
+      toggleModal
+    } = this.props;
+    const {
+      validationStates: { AdvertiserId, GuaranteedDemoId, Name, NameMaxChar }
+    } = this.state;
     const { MarketCoverage } = proposalEditForm;
 
-    // update custom count
-    // const customIndex = initialdata.MarketGroups.findIndex(marketGroup => marketGroup.Id === 255);
-    // initialdata.MarketGroups[customIndex].Count = this.state.customMarketCount;
-
-    //  handle hiatus flights tips display
     let hasTip = false;
     const checkFlightWeeksTip = flightWeeks => {
       if (flightWeeks.length < 1) return "";
@@ -179,15 +187,7 @@ export default class ProposalForm extends Component {
       const display = tip;
       return <Tooltip id="flightstooltip">{display}</Tooltip>;
     };
-    const tooltip = checkFlightWeeksTip(
-      this.props.proposalEditForm.FlightWeeks
-    );
-
-    // default coverage from initialData if create (not isEdit)
-    // ISSUE default vlaue only get sets initial render: use value
-    /*     const rawCoverage = isEdit ? MarketCoverage : initialdata.DefaultMarketCoverage;
-    const initialCoverage = rawCoverage ? rawCoverage * 100 : null;
-    console.log('render>>>>>>>>>>>>>>>>', rawCoverage, initialCoverage); */
+    const tooltip = checkFlightWeeksTip(proposalEditForm.FlightWeeks);
 
     const coverage = MarketCoverage ? MarketCoverage * 100 : null;
 
@@ -256,9 +256,6 @@ export default class ProposalForm extends Component {
                           max={100}
                           precision={2}
                           defaultValue={coverage}
-                          // value={coverage}
-                          // formatter={value => `${value}%`}
-                          // parser={value => value.replace('%', '')}
                           disabled={isReadOnly}
                           onChange={this.onChangeCoverage}
                         />
@@ -277,7 +274,6 @@ export default class ProposalForm extends Component {
                     <Select
                       name="proposalPostType"
                       value={proposalEditForm.PostType}
-                      // placeholder=""
                       options={initialdata.SchedulePostTypes}
                       labelKey="Display"
                       valueKey="Id"
@@ -295,7 +291,6 @@ export default class ProposalForm extends Component {
                     <Select
                       name="proposalEquivalized"
                       value={proposalEditForm.Equivalized}
-                      // placeholder=""
                       options={[
                         { Display: "Yes", Bool: true },
                         { Display: "No", Bool: false }
@@ -457,7 +452,7 @@ export default class ProposalForm extends Component {
                     <Select
                       name="proposalGuaranteedDemo"
                       value={proposalEditForm.GuaranteedDemoId}
-                      options={this.props.initialdata.Audiences}
+                      options={initialdata.Audiences}
                       labelKey="Display"
                       valueKey="Id"
                       onChange={this.onChangeGuaranteedDemoId}
@@ -481,7 +476,6 @@ export default class ProposalForm extends Component {
                     <Select
                       name="proposalSecondaryDemo"
                       value={proposalEditForm.SecondaryDemos}
-                      // placeholder=""
                       multi
                       options={initialdata.Audiences}
                       labelKey="Display"
@@ -560,11 +554,10 @@ export default class ProposalForm extends Component {
         </form>
 
         <MarketGroupSelector
-          toggleModal={this.props.toggleModal}
+          toggleModal={toggleModal}
           initialdata={initialdata}
           proposalEditForm={proposalEditForm}
-          updateProposalEditForm={this.props.updateProposalEditForm}
-          // updateMarketCount={this.updateMarketCount}
+          updateProposalEditForm={updateProposalEditForm}
           isReadOnly={isReadOnly}
         />
       </div>

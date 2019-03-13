@@ -86,10 +86,6 @@ class OpenMarketsContainer extends Component {
     });
   }
 
-  handleChange(name, value) {
-    this.setState({ [name]: value });
-  }
-
   onRunDistribution() {
     const { onRunDistribution } = this.props;
     onRunDistribution();
@@ -101,26 +97,8 @@ class OpenMarketsContainer extends Component {
     onUpdateEditMarkets();
   }
 
-  resetTable() {
-    const {
-      activeOpenMarketData: { Markets }
-    } = this.props;
-    this.onSortedChange(defaultSort);
-    const firstMarket = getFirstMarket(Markets);
-    if (firstMarket) {
-      this.onSelectMarket(...firstMarket);
-    }
-  }
-
   onSortedChange(nextValue) {
     this.setState({ sorted: nextValue });
-  }
-
-  toggleEditing() {
-    const { isEditing } = this.state;
-
-    this.setState({ isEditing: !isEditing });
-    this.props.onSetGuideEditing(!isEditing);
   }
 
   onSubmit() {
@@ -149,6 +127,29 @@ class OpenMarketsContainer extends Component {
       editingOpenUnitCap: openUnitCap
     });
     this.toggleEditing();
+  }
+
+  handleChange(name, value) {
+    this.setState({ [name]: value });
+  }
+
+  resetTable() {
+    const {
+      activeOpenMarketData: { Markets }
+    } = this.props;
+    this.onSortedChange(defaultSort);
+    const firstMarket = getFirstMarket(Markets);
+    if (firstMarket) {
+      this.onSelectMarket(...firstMarket);
+    }
+  }
+
+  toggleEditing() {
+    const { isEditing } = this.state;
+    const { onSetGuideEditing } = this.props;
+
+    this.setState({ isEditing: !isEditing });
+    onSetGuideEditing(!isEditing);
   }
 
   render() {
@@ -495,19 +496,9 @@ OpenMarketsContainer.propTypes = {
 
 OpenMarketsContainer.defaultProps = {
   activeOpenMarketData: {},
-  propCpmCNN: 0,
-  propCpmSinclair: 0,
-  propCpmTTNW: 0,
-  propCpmTVB: 0,
-  propImpressionsCNN: 0,
-  propImpressionsSinclair: 0,
-  propImpressionsTTNW: 0,
-  propImpressionsTVB: 0,
-  // open market
   openCpmMin: null,
   openCpmMax: null,
   openUnitCap: null,
-  hasActiveDistribution: false,
   openCpmTarget: 1
 };
 

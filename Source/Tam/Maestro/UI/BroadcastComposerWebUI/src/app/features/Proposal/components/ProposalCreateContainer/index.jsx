@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import _ from "lodash";
+import { isEqual } from "lodash";
 
 import { toggleModal, createAlert } from "Main/redux/ducks";
 import {
@@ -176,7 +175,7 @@ export class SectionPlanningProposalCreate extends Component {
 
   isDirty() {
     const { proposalEditForm, proposal } = this.props;
-    return !_.isEqual(proposalEditForm, proposal);
+    return !isEqual(proposalEditForm, proposal);
   }
 
   render() {
@@ -196,12 +195,9 @@ export class SectionPlanningProposalCreate extends Component {
       proposalValidationStates,
       setProposalValidationState
     } = this.props;
-    const isCreate = true;
     return (
       <div id="planning-section-proposal" style={{ paddingBottom: 80 }}>
-        {// Object.keys(proposalLock).length > 0 &&
-        // !proposalLock.LockedUserId &&
-        Object.keys(initialdata).length > 0 &&
+        {Object.keys(initialdata).length > 0 &&
           Object.keys(proposal).length > 0 &&
           Object.keys(proposalEditForm).length > 0 && (
             <div id="proposal-body">

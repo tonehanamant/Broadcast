@@ -37,18 +37,6 @@ class PricingGuideProprietary extends Component {
     this.setState({ values: toUpdate });
   }
 
-  toggleEditing() {
-    const { isEditing } = this.state;
-
-    this.setState({ isEditing: !isEditing });
-    this.props.onSetGuideEditing(!isEditing);
-  }
-
-  handleChange(name, value) {
-    const { values } = this.state;
-    this.setState({ values: { ...values, [name]: value } });
-  }
-
   onSave() {
     const {
       onUpdateProprietaryCpms,
@@ -73,13 +61,28 @@ class PricingGuideProprietary extends Component {
     } = this.props;
     const oldValues = {};
     invSrcEnum.forEach(({ Display, Id }) => {
-      oldValues[`editingPropImpressions${Id}`] = this.props[
-        `propImpressions${Display}`
-      ];
-      oldValues[`editingPropCpm${Id}`] = this.props[`propCpm${Display}`];
+      const {
+        [`propImpressions${Display}`]: impression,
+        [`propCpm${Display}`]: cpm
+      } = this.props;
+      oldValues[`editingPropImpressions${Id}`] = impression;
+      oldValues[`editingPropCpm${Id}`] = cpm;
     });
     this.setState({ values: oldValues });
     this.toggleEditing();
+  }
+
+  toggleEditing() {
+    const { isEditing } = this.state;
+    const { onSetGuideEditing } = this.props;
+
+    this.setState({ isEditing: !isEditing });
+    onSetGuideEditing(!isEditing);
+  }
+
+  handleChange(name, value) {
+    const { values } = this.state;
+    this.setState({ values: { ...values, [name]: value } });
   }
 
   render() {

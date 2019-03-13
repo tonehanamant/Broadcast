@@ -32,7 +32,6 @@ export const transformInvetorySrc = (
               min={0}
               max={100}
               precision={2}
-              // style={{ width: '100px' }}
               formatter={value =>
                 `% ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               }

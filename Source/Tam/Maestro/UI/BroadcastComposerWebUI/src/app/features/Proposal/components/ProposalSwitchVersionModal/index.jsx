@@ -25,10 +25,11 @@ export class ProposalSwitchVersionModal extends Component {
   }
 
   close() {
-    this.props.toggleModal({
+    const { toggleModal, modal } = this.props;
+    toggleModal({
       modal: "planningSwitchVersionsModal",
       active: false,
-      properties: this.props.modal.properties
+      properties: modal.properties
     });
   }
 
@@ -42,12 +43,12 @@ export class ProposalSwitchVersionModal extends Component {
   }
 
   render() {
-    const { Statuses } = this.props.initialdata;
-    /* ////////////////////////////////// */
-    /* // REACT-REDUX-GRID CONFIGURATION
-    /* ////////////////////////////////// */
+    const {
+      initialdata: { Statuses },
+      modal,
+      versions
+    } = this.props;
 
-    /* GRID COLUMNS */
     const columns = [
       {
         Header: "Version",
@@ -111,7 +112,7 @@ export class ProposalSwitchVersionModal extends Component {
 
     return (
       <Modal
-        show={this.props.modal.active}
+        show={modal.active}
         onHide={this.close}
         dialogClassName="large-80-modal"
       >
@@ -130,7 +131,7 @@ export class ProposalSwitchVersionModal extends Component {
         </Modal.Header>
         <Modal.Body>
           <Table
-            data={this.props.versions}
+            data={versions}
             style={{ marginBottom: "100px" }}
             columns={columns}
             getTrGroupProps={() => ({

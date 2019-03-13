@@ -42,17 +42,18 @@ class PricingGuideEditMarkets extends Component {
   }
 
   onDismissEditMarkets() {
-    this.props.discardEditMarkets();
-    this.props.showEditMarkets(false);
-  }
-  onUpdateEditMarkets() {
-    this.props.onUpdateEditMarkets();
+    const { discardEditMarkets, showEditMarkets } = this.props;
+    discardEditMarkets();
+    showEditMarkets(false);
   }
 
-  removeUsedMarket(rec) {
-    const { changeEditMarkets } = this.props;
-    changeEditMarkets(rec.Id, false);
-    this.setState({ sortedAvailableMarket: [{ id: "newItem", desc: true }] });
+  onUpdateEditMarkets() {
+    const { onUpdateEditMarkets } = this.props;
+    onUpdateEditMarkets();
+  }
+
+  onSortedChange(path, nextValue) {
+    this.setState({ [path]: nextValue });
   }
 
   addAvailableMarket(rec) {
@@ -61,8 +62,10 @@ class PricingGuideEditMarkets extends Component {
     this.setState({ sortedAddedMarket: [{ id: "newItem", desc: true }] });
   }
 
-  onSortedChange(path, nextValue) {
-    this.setState({ [path]: nextValue });
+  removeUsedMarket(rec) {
+    const { changeEditMarkets } = this.props;
+    changeEditMarkets(rec.Id, false);
+    this.setState({ sortedAvailableMarket: [{ id: "newItem", desc: true }] });
   }
 
   render() {
