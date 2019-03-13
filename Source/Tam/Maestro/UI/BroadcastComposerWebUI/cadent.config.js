@@ -102,8 +102,8 @@ module.exports = {
       Sagas: "sagas",
       Utils: "utils",
       Lib: "lib",
-      API: "api",
-      AppConfigs: "app-configs"
+      API: "api"
+      // AppConfigs: "app-configs"
     }
   },
   test: {

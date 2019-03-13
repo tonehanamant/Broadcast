@@ -1,4 +1,4 @@
-import { combineReducers } from "react-redux";
+import { combineReducers } from "redux";
 import { Reducers as gridReducers } from "react-redux-grid";
 import { reducer as postPrePosting } from "PostPrePosting";
 import { reducer as app } from "Main";

@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
 
 import { rootReducer } from "./config.reducers";
 import { rootSaga, middlewareSaga } from "./config.sagas";
