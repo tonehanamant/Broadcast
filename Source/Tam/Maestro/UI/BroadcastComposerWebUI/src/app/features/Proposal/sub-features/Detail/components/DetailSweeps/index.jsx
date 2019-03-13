@@ -112,16 +112,6 @@ class Sweeps extends Component {
     }
   }
 
-  handleOnSaveClick() {
-    const { currentShareBook, currentHutBook } = this.state;
-
-    if (currentHutBook.Id !== -1 && currentHutBook.Id >= currentShareBook.Id) {
-      this.setState({ showError: true });
-    } else {
-      this.setState({ showConfirmation: true });
-    }
-  }
-
   onSave() {
     const { updateProposalEditFormDetail, detail } = this.props;
     const {
@@ -169,11 +159,22 @@ class Sweeps extends Component {
     this.closeModal();
   }
 
+  handleOnSaveClick() {
+    const { currentShareBook, currentHutBook } = this.state;
+
+    if (currentHutBook.Id !== -1 && currentHutBook.Id >= currentShareBook.Id) {
+      this.setState({ showError: true });
+    } else {
+      this.setState({ showConfirmation: true });
+    }
+  }
+
   closeModal() {
-    this.props.toggleModal({
+    const { toggleModal, detail } = this.props;
+    toggleModal({
       modal: "sweepsModal",
       active: false,
-      properties: { detailId: this.props.detail.Id }
+      properties: { detailId: detail.Id }
     });
   }
 

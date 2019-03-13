@@ -143,19 +143,7 @@ class PricingGuideContainer extends Component {
     }
   }
 
-  submitChanges(nextValues, cb) {
-    this.setState(
-      {
-        ...nextValues,
-        isDistributionRunned: false,
-        isGuideChanged: true
-      },
-      cb
-    );
-  }
-
   onModalShow() {
-    // process inventory/proprietary pricing/ open market just once on open
     const { activeOpenMarketData, showEditMarkets } = this.props;
     if (activeOpenMarketData) {
       showEditMarkets(false);
@@ -165,106 +153,14 @@ class PricingGuideContainer extends Component {
     }
   }
 
-  // INVENTORY Goals and Adjustments
-
-  setInventory(guide) {
-    this.setState({
-      impression: guide.ImpressionGoal,
-      budget: guide.BudgetGoal,
-      margin: guide.Margin,
-      impressionLoss: guide.ImpressionLoss,
-      inflation: guide.Inflation
-    });
-  }
-
-  // PROPRIETARY
-
-  // set states from detail ProprietaryPricing array
-  // InventorySource 3 (TVB), 4 (TTNW), 5 (CNN), 6 (Sinclair)
-  setProprietaryPricing({ ProprietaryPricing }) {
-    const {
-      initialdata: { ProprietaryPricingInventorySources }
-    } = this.props;
-    const toUpdate = {};
-    ProprietaryPricingInventorySources.forEach(({ Id, Display }) => {
-      const { ImpressionsBalance: bal = 0, Cpm: cpm = 0 } =
-        (ProprietaryPricing || []).find(it => Id === it.InventorySource) || {};
-      toUpdate[`propImpressions${Display}`] = bal;
-      toUpdate[`propCpm${Display}`] = cpm;
-    });
-    this.setState(toUpdate);
-  }
-
-  setOpenMarketPricing(guide) {
-    if (guide.OpenMarketPricing) {
-      const openData = guide.OpenMarketPricing;
-      const target = openData.OpenMarketCpmTarget || 1;
-      this.setState({
-        openCpmMax: openData.CpmMax,
-        openCpmMin: openData.CpmMin,
-        openCpmTarget: target,
-        openUnitCap: openData.UnitCapPerStation
-      });
-    }
-  }
-
-  getOpenMarketShare() {
-    const { initialdata } = this.props;
-
-    const balanceSum = calculateBalanceSum(
-      initialdata.ProprietaryPricingInventorySources,
-      this.state
-    );
-    const share = 1 - balanceSum;
-    return Number(share.toFixed(2));
-  }
-
-  clearState() {
-    this.setState(initialState);
-  }
-
-  getDistributionRequest() {
-    const { detail, proposalEditForm } = this.props;
-    const proprietaryData = this.saveProprietaryPricingDetail();
-    const {
-      openCpmMax,
-      openCpmMin,
-      openCpmTarget,
-      openUnitCap,
-      budget,
-      margin,
-      impressionLoss,
-      inflation,
-      impression
-    } = this.state;
-    const request = {
-      Margin: margin || null,
-      ImpressionLoss: impressionLoss || null,
-      Inflation: inflation || null,
-      ProposalId: proposalEditForm.Id,
-      ProposalDetailId: detail.Id,
-      BudgetGoal: budget || null,
-      ImpressionGoal: impression || null,
-      ProprietaryPricing: proprietaryData,
-      OpenMarketPricing: {
-        CpmMax: openCpmMax || null,
-        CpmMin: openCpmMin || null,
-        OpenMarketCpmTarget: openCpmTarget,
-        UnitCapPerStation: openUnitCap || null
-      },
-      OpenMarketShare: this.getOpenMarketShare()
-    };
-    return request;
-  }
-
-  // run with params - temporary until get new open market BE object
   onRunDistribution() {
     const {
-      activeOpenMarketData: { Markets }
+      activeOpenMarketData: { Markets },
+      loadOpenMarketData
     } = this.props;
     const { isAutoDistribution, changedPrograms } = this.state;
     const request = this.getDistributionRequest();
-    this.props.loadOpenMarketData({
+    loadOpenMarketData({
       KeepManuallyEditedSpots: !isAutoDistribution,
       ProgramsWithManuallyEditedSpots: isAutoDistribution
         ? []
@@ -284,10 +180,11 @@ class PricingGuideContainer extends Component {
   onChangeDistributionOption(value) {
     this.setState({ isAutoDistribution: value });
   }
-  // call from edit markets to get params needed here
+
   onUpdateEditMarkets() {
+    const { updateEditMarkets } = this.props;
     const request = this.getDistributionRequest();
-    this.props.updateEditMarkets(request);
+    updateEditMarkets(request);
   }
 
   onUpdateProprietaryCpms() {
@@ -298,10 +195,10 @@ class PricingGuideContainer extends Component {
     }
   }
 
-  // change to inner object PricingGuide - need to combine call to updateDetail else each overrides other
   onApply() {
     const {
       impression,
+
       budget,
       margin,
       impressionLoss,
@@ -343,50 +240,16 @@ class PricingGuideContainer extends Component {
     });
   }
 
-  hasSpotsAllocate() {
-    const { detail, hasSpotsAllocate, activeOpenMarketData } = this.props;
-    hasSpotsAllocate(detail.Id, activeOpenMarketData.hasSpotsAllocated);
-  }
-
   onCopyToBuy() {
     const { detail, copyToBuy } = this.props;
     copyToBuy(detail.Id);
   }
 
-  copyToBuyFlow() {
-    const { detail, copyToBuyFlow } = this.props;
-    copyToBuyFlow(detail.Id);
-  }
-
-  // update detail - with proprietary pricing states
-  saveProprietaryPricingDetail() {
-    const {
-      initialdata: { ProprietaryPricingInventorySources: invSrcEnum }
-    } = this.props;
-    const proprietaryPricing = invSrcEnum.map(i => ({
-      InventorySource: i.Id,
-      ImpressionsBalance: this.state[`propImpressions${i.Display}`],
-      Cpm: this.state[`propCpm${i.Display}`]
-    }));
-    return proprietaryPricing;
-  }
-
-  saveOpenMarketPricingDetail() {
-    const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
-    const openData = {
-      CpmMax: openCpmMax || null,
-      CpmMin: openCpmMin || null,
-      OpenMarketCpmTarget: openCpmTarget,
-      UnitCapPerStation: openUnitCap || null
-    };
-    return openData;
-  }
-
-  // intercept from grid to update  distribution request
   onAllocateSpots(openMarketData, row) {
     const { changedPrograms } = this.state;
+    const { allocateSpots } = this.props;
     const distribution = this.getDistributionRequest();
-    this.props.allocateSpots(
+    allocateSpots(
       {
         ...openMarketData,
         ...distribution
@@ -400,18 +263,14 @@ class PricingGuideContainer extends Component {
     });
   }
 
-  handleChange(fieldName, value) {
-    const newVal = !isNaN(value) ? value : 0;
-    this.setState({ [fieldName]: newVal });
-  }
-
   onCancel() {
-    this.props.toggleModal({
+    const { toggleModal, detail, clearOpenMarketData } = this.props;
+    toggleModal({
       modal: "pricingGuide",
       active: false,
-      properties: { detailId: this.props.detail.Id }
+      properties: { detailId: detail.Id }
     });
-    this.props.clearOpenMarketData();
+    clearOpenMarketData();
   }
 
   onClickToSave(cb) {
@@ -448,8 +307,149 @@ class PricingGuideContainer extends Component {
     this.setState({ [errorName]: !error });
   }
 
+  getDistributionRequest() {
+    const { detail, proposalEditForm } = this.props;
+    const proprietaryData = this.saveProprietaryPricingDetail();
+    const {
+      openCpmMax,
+      openCpmMin,
+      openCpmTarget,
+      openUnitCap,
+      budget,
+      margin,
+      impressionLoss,
+      inflation,
+      impression
+    } = this.state;
+    const request = {
+      Margin: margin || null,
+      ImpressionLoss: impressionLoss || null,
+      Inflation: inflation || null,
+      ProposalId: proposalEditForm.Id,
+      ProposalDetailId: detail.Id,
+      BudgetGoal: budget || null,
+      ImpressionGoal: impression || null,
+      ProprietaryPricing: proprietaryData,
+      OpenMarketPricing: {
+        CpmMax: openCpmMax || null,
+        CpmMin: openCpmMin || null,
+        OpenMarketCpmTarget: openCpmTarget,
+        UnitCapPerStation: openUnitCap || null
+      },
+      OpenMarketShare: this.getOpenMarketShare()
+    };
+    return request;
+  }
+
+  getOpenMarketShare() {
+    const { initialdata } = this.props;
+
+    const balanceSum = calculateBalanceSum(
+      initialdata.ProprietaryPricingInventorySources,
+      this.state
+    );
+    const share = 1 - balanceSum;
+    return Number(share.toFixed(2));
+  }
+
+  setInventory(guide) {
+    this.setState({
+      impression: guide.ImpressionGoal,
+      budget: guide.BudgetGoal,
+      margin: guide.Margin,
+      impressionLoss: guide.ImpressionLoss,
+      inflation: guide.Inflation
+    });
+  }
+
+  setProprietaryPricing({ ProprietaryPricing }) {
+    const {
+      initialdata: { ProprietaryPricingInventorySources }
+    } = this.props;
+    const toUpdate = {};
+    ProprietaryPricingInventorySources.forEach(({ Id, Display }) => {
+      const { ImpressionsBalance: bal = 0, Cpm: cpm = 0 } =
+        (ProprietaryPricing || []).find(it => Id === it.InventorySource) || {};
+      toUpdate[`propImpressions${Display}`] = bal;
+      toUpdate[`propCpm${Display}`] = cpm;
+    });
+    this.setState(toUpdate);
+  }
+
+  setOpenMarketPricing(guide) {
+    if (guide.OpenMarketPricing) {
+      const openData = guide.OpenMarketPricing;
+      const target = openData.OpenMarketCpmTarget || 1;
+      this.setState({
+        openCpmMax: openData.CpmMax,
+        openCpmMin: openData.CpmMin,
+        openCpmTarget: target,
+        openUnitCap: openData.UnitCapPerStation
+      });
+    }
+  }
+
   setGuideEditing(edit) {
     this.setState({ isGuideEditing: edit });
+  }
+
+  handleChange(fieldName, value) {
+    const newVal = !Number.isNaN(value) ? value : 0;
+    this.setState({ [fieldName]: newVal });
+  }
+
+  saveOpenMarketPricingDetail() {
+    const { openCpmMax, openCpmMin, openCpmTarget, openUnitCap } = this.state;
+    const openData = {
+      CpmMax: openCpmMax || null,
+      CpmMin: openCpmMin || null,
+      OpenMarketCpmTarget: openCpmTarget,
+      UnitCapPerStation: openUnitCap || null
+    };
+    return openData;
+  }
+
+  saveProprietaryPricingDetail() {
+    const {
+      initialdata: { ProprietaryPricingInventorySources: invSrcEnum }
+    } = this.props;
+    const proprietaryPricing = invSrcEnum.map(({ Id, Display }) => {
+      const {
+        [`propImpressions${Display}`]: impression,
+        [`propCpm${Display}`]: cpm
+      } = this.state;
+      return {
+        InventorySource: Id,
+        ImpressionsBalance: impression,
+        Cpm: cpm
+      };
+    });
+    return proprietaryPricing;
+  }
+
+  copyToBuyFlow() {
+    const { detail, copyToBuyFlow } = this.props;
+    copyToBuyFlow(detail.Id);
+  }
+
+  hasSpotsAllocate() {
+    const { detail, hasSpotsAllocate, activeOpenMarketData } = this.props;
+    hasSpotsAllocate(detail.Id, activeOpenMarketData.hasSpotsAllocated);
+  }
+
+  clearState() {
+    this.setState(initialState);
+  }
+
+  submitChanges(nextValues, cb) {
+    this.setState(
+      {
+        ...nextValues,
+        isDistributionRunned: false,
+        isGuideChanged: true
+      },
+      cb
+    );
   }
 
   clearSpots() {
