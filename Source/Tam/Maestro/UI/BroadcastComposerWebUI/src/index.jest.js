@@ -1,6 +1,6 @@
 import React from "react";
-import Enzyme, { shallow, mount /* , render */ } from "enzymers/iborsuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/enzymers/iborsuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/enzyme";
-import Adapter from "enzyme-adapter-react-16a/Local/Microsoft/TypeScript/2.9/node_modules/@types/enzyme-adapter-react-16a/Local/Microsoft/TypeScript/2.9/node_modules/@types/enzyme-adapter-react-16";
+import Enzyme, { shallow, mount /* , render */ } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-console */

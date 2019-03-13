@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { head, pick } from "lodash";
 import CSSModules from "react-css-modules";
-import ReactDropzone from "react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzoneuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dropzone";
+import ReactDropzone from "react-dropzone";
 import {
   getDataTransferItems,
   validateFilesByExtension

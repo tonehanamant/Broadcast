@@ -12,7 +12,7 @@ import {
   Glyphicon,
   Table
 } from "react-bootstrap";
-import { AsyncTypeahead } from "react-bootstrapreact-bootstrap-typeahead";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { bindActionCreators } from "redux";
 import { getGenres, getPrograms, getShowTypes } from "Ducks/planning";
 

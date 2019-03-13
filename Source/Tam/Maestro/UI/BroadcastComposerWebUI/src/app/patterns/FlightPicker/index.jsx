@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { DayPickerRangeController } from "react-datesorsuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-datesorsuk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-dates";
+import { DayPickerRangeController } from "react-dates";
 import moment from "moment";
-/* eslint-disable no-unused-vars */
 import {
   Row,
   Col,
-  Well,
-  Form,
   FormGroup,
   Panel,
   ListGroup,
@@ -21,8 +18,6 @@ import {
   Overlay
 } from "react-bootstrap";
 
-// import 'react-dates/initialize'; // @root index.jsx
-// import 'react-dates/lib/css/_datepicker.css'; // @root index.jsx
 import "./style.css";
 
 const isValidDate = date =>
@@ -69,14 +64,38 @@ export default class FlightPicker extends Component {
   }
 
   componentDidUpdate() {
-    // Set flight weeks if not default property = []
     const { FlightWeeks } = this.state;
     if (FlightWeeks.length === 0) {
       this.setFlightWeeks(isoWeekStart, isoWeekEndFuture);
     }
   }
 
+  onApply() {
+    const { startDate, endDate, FlightWeeks } = this.state;
+    const { onApply } = this.props;
+    const parsedStartDate = moment(startDate).format();
+    const parsedEndDate = moment(endDate).format();
+    const parsedFlightWeeks = FlightWeeks.map(flightWeek => {
+      const parsedFlightWeek = {
+        ...flightWeek,
+        StartDate: moment(flightWeek.StartDate).format(),
+        EndDate: moment(flightWeek.EndDate).format()
+      };
+      return parsedFlightWeek;
+    });
+
+    onApply({
+      StartDate: parsedStartDate,
+      EndDate: parsedEndDate,
+      FlightWeeks: parsedFlightWeeks
+    });
+
+    this.toggle();
+    this.resetOrRestore();
+  }
+
   setStartDate(value) {
+    const { endDate: eDate, startDate: sDate } = this.state;
     const date = moment(value, "M/D/YYYY", true).isValid() ? value : null;
     let startDate = moment(date).startOf("isoweek");
     const inputStartDate = moment(date)
@@ -89,15 +108,15 @@ export default class FlightPicker extends Component {
 
     this.setState(
       { startDate, inputStartDate },
-      this.setFlightWeeks(startDate, this.state.endDate)
+      this.setFlightWeeks(startDate, eDate)
     );
 
-    if (date && moment(date).isAfter(this.state.endDate)) {
-      const endDate = null; // moment(date).endOf('isoweek');
-      const inputEndDate = moment(null).format("M/D/YYYY"); // moment(date).endOf('isoweek').format('M/D/YYYY');
+    if (date && moment(date).isAfter(eDate)) {
+      const endDate = null;
+      const inputEndDate = moment(null).format("M/D/YYYY");
       this.setState(
         { endDate, inputEndDate },
-        this.setFlightWeeks(this.state.startDate, endDate)
+        this.setFlightWeeks(sDate, endDate)
       );
       this.setValidationState("endDate", "warning");
     }
@@ -111,6 +130,7 @@ export default class FlightPicker extends Component {
   }
 
   setEndDate(value) {
+    const { endDate: eDate, startDate: sDate } = this.state;
     const date = moment(value, "M/D/YYYY", true).isValid() ? value : null;
     let endDate = moment(date).endOf("isoweek");
     const inputEndDate = moment(date)
@@ -123,15 +143,15 @@ export default class FlightPicker extends Component {
 
     this.setState(
       { endDate, inputEndDate },
-      this.setFlightWeeks(this.state.startDate, endDate)
+      this.setFlightWeeks(sDate, endDate)
     );
 
-    if (date && moment(date).isBefore(this.state.startDate)) {
-      const startDate = null; // moment(date).startOf('isoweek');
-      const inputStartDate = moment(null).format("M/D/YYYY"); // moment(date).startOf('isoweek').format('M/D/YYYY');
+    if (date && moment(date).isBefore(sDate)) {
+      const startDate = null;
+      const inputStartDate = moment(null).format("M/D/YYYY");
       this.setState(
         { startDate, inputStartDate },
-        this.setFlightWeeks(startDate, this.state.endDate)
+        this.setFlightWeeks(startDate, eDate)
       );
       this.setValidationState("startDate", "warning");
     }
@@ -148,10 +168,8 @@ export default class FlightPicker extends Component {
     if (moment.isMoment(start) && moment.isMoment(end)) {
       const weeks = end.diff(start, "weeks");
       const FlightWeeks = [];
-      /* eslint-disable no-plusplus */
-      for (let i = 0; i <= weeks; i++) {
+      for (let i = 0; i <= weeks; i += 1) {
         FlightWeeks.push({
-          // Id: i,
           StartDate: moment(start).add(i, "weeks"),
           EndDate: moment(start)
             .add(i, "weeks")
@@ -164,27 +182,9 @@ export default class FlightPicker extends Component {
     }
   }
 
-  updateFlightWeekHiatus(weekId) {
-    const FlightWeeks = [...this.state.FlightWeeks];
-    const adjustedFlightWeeks = [];
-
-    FlightWeeks.map(week => {
-      const adjustedWeek = { ...week };
-      if (week.MediaWeekId === weekId) {
-        adjustedWeek.IsHiatus = !week.IsHiatus;
-      }
-      adjustedFlightWeeks.push(adjustedWeek);
-      return adjustedWeek;
-    });
-
-    this.setState({ FlightWeeks: adjustedFlightWeeks });
-  }
-
-  checkValid() {
-    return (
-      moment.isMoment(this.state.startDate).isValid() &&
-      moment.isMoment(this.state.endDate).isValid()
-    );
+  setValidationState(type, state) {
+    const { validationStates } = this.state;
+    validationStates[type] = state;
   }
 
   clearValidationStates() {
@@ -196,9 +196,20 @@ export default class FlightPicker extends Component {
     });
   }
 
-  setValidationState(type, state) {
-    const { validationStates } = this.state;
-    validationStates[type] = state;
+  checkValid() {
+    const { startDate, endDate } = this.state;
+    return (
+      moment.isMoment(startDate).isValid() && moment.isMoment(endDate).isValid()
+    );
+  }
+
+  updateFlightWeekHiatus(weekId) {
+    const { FlightWeeks = [] } = this.state;
+    const adjustedFlightWeeks = FlightWeeks.map(week => ({
+      ...week,
+      IsHiatus: week.MediaWeekId === weekId ? !week.IsHiatus : week.IsHiatus
+    }));
+    this.setState({ FlightWeeks: adjustedFlightWeeks });
   }
 
   toggle() {
@@ -208,30 +219,9 @@ export default class FlightPicker extends Component {
     this.setState({ show: !show });
   }
 
-  onApply(event) {
-    const parsedStartDate = moment(this.state.startDate).format();
-    const parsedEndDate = moment(this.state.endDate).format();
-    const parsedFlightWeeks = this.state.FlightWeeks.map(flightWeek => {
-      const parsedFlightWeek = {
-        ...flightWeek,
-        StartDate: moment(flightWeek.StartDate).format(),
-        EndDate: moment(flightWeek.EndDate).format()
-      };
-      return parsedFlightWeek;
-    });
-
-    this.props.onApply({
-      StartDate: parsedStartDate,
-      EndDate: parsedEndDate,
-      FlightWeeks: parsedFlightWeeks
-    });
-
-    this.toggle();
-    this.resetOrRestore();
-  }
-
   resetOrRestore() {
-    if (this.props.flightWeeks) {
+    const { flightWeeks } = this.props;
+    if (flightWeeks) {
       this.restoreDatesProps();
     } else {
       this.resetDatesDefault();
@@ -239,16 +229,13 @@ export default class FlightPicker extends Component {
   }
 
   restoreDatesProps() {
+    const { startDate, endDate, flightWeeks } = this.props;
     this.setState({
-      startDate: moment(this.props.startDate) || isoWeekStart,
-      endDate: moment(this.props.endDate) || isoWeekEndFuture,
-      inputStartDate: moment(this.props.startDate || isoWeekStart).format(
-        "M/D/YYYY"
-      ),
-      inputEndDate: moment(this.props.endDate || isoWeekEndFuture).format(
-        "M/D/YYYY"
-      ),
-      FlightWeeks: this.props.flightWeeks
+      startDate: moment(startDate) || isoWeekStart,
+      endDate: moment(endDate) || isoWeekEndFuture,
+      inputStartDate: moment(startDate || isoWeekStart).format("M/D/YYYY"),
+      inputEndDate: moment(endDate || isoWeekEndFuture).format("M/D/YYYY"),
+      FlightWeeks: flightWeeks
     });
   }
 
@@ -263,6 +250,17 @@ export default class FlightPicker extends Component {
   }
 
   render() {
+    const {
+      FlightWeeks,
+      validationStates,
+      startDate,
+      endDate,
+      show,
+      inputStartDate,
+      focusedInput,
+      inputEndDate
+    } = this.state;
+    const { isReadOnly } = this.props;
     return (
       <div
         id="flight-picker"
@@ -270,24 +268,23 @@ export default class FlightPicker extends Component {
       >
         <FormGroup
           validationState={
-            this.state.validationStates.startDate ||
-            this.state.validationStates.endDate === "warning"
+            validationStates.startDate || validationStates.endDate === "warning"
               ? "warning"
               : null
           }
         >
           <InputGroup onClick={this.toggle}>
             <FormControl
-              bsClass={"flight-range-input form-control"}
+              bsClass="flight-range-input form-control"
               type="text"
-              value={`${moment(this.state.startDate).format(
-                "M/D/YYYY"
-              )} - ${moment(this.state.endDate).format("M/D/YYYY")}`}
+              value={`${moment(startDate).format("M/D/YYYY")} - ${moment(
+                endDate
+              ).format("M/D/YYYY")}`}
               onChange={() => null}
               inputRef={ref => {
                 this.input = ref;
               }}
-              disabled={this.props.isReadOnly}
+              disabled={isReadOnly}
             />
             <InputGroup.Addon>
               <span
@@ -298,7 +295,7 @@ export default class FlightPicker extends Component {
           </InputGroup>
         </FormGroup>
         <Overlay
-          show={this.state.show}
+          show={show}
           onHide={() => {
             this.setState({ show: false });
             this.resetOrRestore();
@@ -329,7 +326,7 @@ export default class FlightPicker extends Component {
                   <Col md={12} style={{ paddingRight: 0 }}>
                     <FormGroup
                       style={{ width: "49%" }}
-                      validationState={this.state.validationStates.startDate}
+                      validationState={validationStates.startDate}
                     >
                       <InputGroup style={{ width: "100%" }}>
                         <InputGroup.Addon>
@@ -340,7 +337,7 @@ export default class FlightPicker extends Component {
                         </InputGroup.Addon>
                         <FormControl
                           type="text"
-                          value={this.state.inputStartDate}
+                          value={inputStartDate}
                           autoFocus
                           onFocus={() =>
                             this.setState({ focusedInput: "startDate" })
@@ -359,15 +356,12 @@ export default class FlightPicker extends Component {
                               this.setStartDate(event.target.value);
                             }
                           }}
-                          onBlur={event => {
-                            // this.setStartDate(event.target.value);
-                          }}
                           inputRef={ref => {
                             this.inputStartDate = ref;
                           }}
                           style={{
                             border:
-                              this.state.focusedInput === "startDate"
+                              focusedInput === "startDate"
                                 ? "1px solid #66afe9"
                                 : null
                           }}
@@ -376,7 +370,7 @@ export default class FlightPicker extends Component {
                     </FormGroup>
                     <FormGroup
                       style={{ width: "49%", float: "right" }}
-                      validationState={this.state.validationStates.endDate}
+                      validationState={validationStates.endDate}
                     >
                       <InputGroup style={{ width: "100%" }}>
                         <InputGroup.Addon>
@@ -387,7 +381,7 @@ export default class FlightPicker extends Component {
                         </InputGroup.Addon>
                         <FormControl
                           type="text"
-                          value={this.state.inputEndDate}
+                          value={inputEndDate}
                           onFocus={() =>
                             this.setState({ focusedInput: "endDate" })
                           }
@@ -403,15 +397,12 @@ export default class FlightPicker extends Component {
                               this.setEndDate(event.target.value);
                             }
                           }}
-                          onBlur={event => {
-                            // this.setEndDate(event.target.value);
-                          }}
                           inputRef={ref => {
                             this.inputEndDate = ref;
                           }}
                           style={{
                             border:
-                              this.state.focusedInput === "endDate"
+                              focusedInput === "endDate"
                                 ? "1px solid #66afe9"
                                 : null
                           }}
@@ -426,17 +417,17 @@ export default class FlightPicker extends Component {
                   hideKeyboardShortcutsPanel
                   firstDayOfWeek={1}
                   enableOutsideDays
-                  startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                  endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                  startDate={startDate} // momentPropTypes.momentObj or null,
+                  endDate={endDate} // momentPropTypes.momentObj or null,
                   onDatesChange={({ startDate, endDate }) => {
-                    if (this.state.focusedInput === "startDate") {
+                    if (focusedInput === "startDate") {
                       this.setStartDate(startDate);
                     }
-                    if (this.state.focusedInput === "endDate") {
+                    if (focusedInput === "endDate") {
                       this.setEndDate(endDate || startDate);
                     }
                   }}
-                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                   onFocusChange={focusedInput =>
                     this.setState({ focusedInput })
                   }
@@ -448,14 +439,14 @@ export default class FlightPicker extends Component {
                     fill
                     style={{ minHeight: 250, maxHeight: 250, overflow: "auto" }}
                   >
-                    {this.state.FlightWeeks.map(week => (
+                    {FlightWeeks.map(week => (
                       <ListGroupItem
                         key={week.MediaWeekId}
                         style={{ padding: 10 }}
                       >
                         <Button
                           bsSize="xsmall"
-                          className={"flight-week-btn"}
+                          className="flight-week-btn"
                           style={{ width: "100%" }}
                         >
                           <Checkbox
@@ -490,8 +481,8 @@ export default class FlightPicker extends Component {
                     bsSize="small"
                     onClick={this.onApply}
                     disabled={
-                      this.state.validationStates.startDate ||
-                      this.state.validationStates.endDate === "warning"
+                      validationStates.startDate ||
+                      validationStates.endDate === "warning"
                     }
                   >
                     Apply

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { FormGroup, InputGroup, FormControl, Button } from "react-bootstrap";
 
-/* eslint-disable react/prefer-stateless-function */
 export default class SearchInputButton extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +19,8 @@ export default class SearchInputButton extends Component {
   }
 
   handleSubmit() {
-    this.props.submitAction(this.searchField.value);
+    const { submitAction } = this.props;
+    submitAction(this.searchField.value);
     let showClear = false;
     if (this.searchField.value && this.searchField.value.length) {
       showClear = true;
@@ -37,18 +37,20 @@ export default class SearchInputButton extends Component {
   }
 
   render() {
+    const { fieldPlaceHolder } = this.props;
+    const { hasActiveSearch } = this.state;
     return (
       <FormGroup bsSize="small" style={{ maxWidth: 250, float: "right" }}>
         <InputGroup>
           <FormControl
             type="text"
-            placeholder={this.props.fieldPlaceHolder}
+            placeholder={fieldPlaceHolder}
             inputRef={input => {
               this.searchField = input;
             }}
             onKeyPress={this.handleKeyPress}
           />
-          {this.state.hasActiveSearch && (
+          {hasActiveSearch && (
             <InputGroup.Button className="search-input-clear-btn-group">
               <Button
                 className="search-input-clear-btn"

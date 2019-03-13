@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button, Modal } from "react-bootstrap";
-import { AsyncTypeahead } from "react-bootstrapreact-bootstrap-typeahead";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { head } from "lodash";
 import { unlinkedIsciActions } from "Tracker";
 import { toggleModal } from "Main/redux/ducks";

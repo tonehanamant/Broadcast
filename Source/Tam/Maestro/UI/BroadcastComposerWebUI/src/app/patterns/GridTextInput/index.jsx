@@ -14,7 +14,7 @@ export default class GridTextInput extends Component {
     super(props);
     this.state = {
       touched: false,
-      inputValue: this.props.value
+      inputValue: props.value
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
@@ -22,7 +22,8 @@ export default class GridTextInput extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
+    const { value } = this.props;
+    if (nextProps.value !== value) {
       this.setState({
         inputValue: nextProps.value
       });
@@ -95,7 +96,6 @@ GridTextInput.defaultProps = {
   onSaveShowValidation: false,
   isGridCellEdited: false,
   placeholder: "",
-  blurAction: () => {},
   enterKeyPressAction: () => {},
   onKeyPress: () => {},
   maxLength: 500

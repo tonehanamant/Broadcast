@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import MaskedTextInput from "react-text-maskk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-text-maskk/AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-text-mask";
+import MaskedTextInput from "react-text-mask";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 
 export default class GridCellInput extends Component {
@@ -9,15 +9,25 @@ export default class GridCellInput extends Component {
     super(props);
     this.state = {
       touched: false,
-      inputValue: this.props.value
+      inputValue: props.value
     };
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onInput = this.onInput.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { value } = this.props;
+    if (nextProps.value !== value) {
+      this.setState({
+        inputValue: nextProps.value
+      });
+    }
+  }
+
   onInputFocus() {
-    if (this.state.inputValue === 0 || this.state.inputValue === "0") {
+    const { inputValue } = this.state;
+    if (inputValue === 0 || inputValue === "0") {
       this.setState({
         inputValue: ""
       });
@@ -31,107 +41,128 @@ export default class GridCellInput extends Component {
   }
 
   onInput(event) {
+    const { inputValue } = this.state;
+    const {
+      emptyZeroDefault,
+      confirmInput,
+      toggleModal,
+      confirmModalProperties,
+      blurAction,
+      value
+    } = this.props;
+
     event.persist();
-    if (
-      this.props.emptyZeroDefault &&
-      (this.state.inputValue === "" || this.state.inputValue === "0")
-    ) {
-      this.setState({ inputValue: this.props.value });
-    } else if (this.state.inputValue !== this.props.value) {
-      if (this.props.confirmInput === true) {
-        this.props.toggleModal({
+    if (emptyZeroDefault && (inputValue === "" || inputValue === "0")) {
+      this.setState({ inputValue: value });
+    } else if (inputValue !== value) {
+      if (confirmInput === true) {
+        toggleModal({
           modal: "confirmModal",
           active: true,
           properties: {
-            ...this.props.confirmModalProperties,
+            ...confirmModalProperties,
             action: () => {
-              this.props.blurAction(event);
+              blurAction(event);
             },
             dismiss: () => {
-              this.setState({ inputValue: this.props.value });
+              this.setState({ inputValue: value });
             }
           }
         });
-      } else if (this.props.confirmInput === false) {
+      } else if (confirmInput === false) {
         event.currentTarget.blur();
-        this.props.blurAction(event);
+        blurAction(event);
       }
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      this.setState({
-        inputValue: nextProps.value
-      });
+  maskType(type) {
+    const {
+      maskCustom,
+      maskPrefix,
+      maskSuffix,
+      maskIncludeThousandsSeparator,
+      maskThousandsSeparatorSymbol,
+      maskAllowDecimal,
+      maskDecimalSymbol,
+      maskDecimalLimit,
+      maskRequireDecimal,
+      maskAllowNegative,
+      maskAllowLeadingZeros,
+      maskIntegerLimit
+    } = this.props;
+
+    switch (type) {
+      case "default":
+        return false;
+      case "custom":
+        return maskCustom;
+      case "createNumber":
+        return createNumberMask({
+          prefix: maskPrefix,
+          suffic: maskSuffix,
+          includeThousandsSeparator: maskIncludeThousandsSeparator,
+          thousandsSeparatorSymbol: maskThousandsSeparatorSymbol,
+          allowDecimal: maskAllowDecimal,
+          decimalSymbol: maskDecimalSymbol,
+          decimalLimit: maskDecimalLimit,
+          integerLimit: maskIntegerLimit,
+          requireDecimal: maskRequireDecimal,
+          allowNegative: maskAllowNegative,
+          allowLeadingZeroes: maskAllowLeadingZeros
+        });
+      default:
+        return false;
     }
   }
 
   render() {
-    const maskType = type => {
-      switch (type) {
-        case "default":
-          return false;
-        case "custom":
-          return this.props.maskCustom;
-        case "createNumber":
-          return createNumberMask({
-            prefix: this.props.maskPrefix,
-            suffic: this.props.maskSuffix,
-            includeThousandsSeparator: this.props.maskIncludeThousandsSeparator,
-            thousandsSeparatorSymbol: this.props.maskThousandsSeparatorSymbol,
-            allowDecimal: this.props.maskAllowDecimal,
-            decimalSymbol: this.props.maskDecimalSymbol,
-            decimalLimit: this.props.maskDecimalLimit,
-            integerLimit: this.props.maskIntegerLimit,
-            requireDecimal: this.props.maskRequireDecimal,
-            allowNegative: this.props.maskAllowNegative,
-            allowLeadingZeroes: this.props.maskAllowLeadingZeros
-          });
-        default:
-          return false;
-      }
-    };
+    const { touched, inputValue } = this.state;
+    const {
+      isEditable,
+      isGridCellEdited,
+      onSaveShowValidation,
+      name,
+      placeholder,
+      valueKey,
+      maxLength,
+      maskType,
+      onKeyPress
+    } = this.props;
 
-    const editableClass = this.props.isEditable
-      ? "editable-cell"
-      : "non-editable-cell";
+    const editableClass = isEditable ? "editable-cell" : "non-editable-cell";
     const touchedClass =
-      this.state.touched && this.props.isEditable && this.props.isGridCellEdited
-        ? "editable-cell-changed"
-        : "";
+      touched && isEditable && isGridCellEdited ? "editable-cell-changed" : "";
     const hasErrorTouchedClass =
-      this.state.touched &&
-      (this.state.inputValue === 0 || this.state.inputValue === "0") &&
-      this.props.isEditable
+      touched && (inputValue === 0 || inputValue === "0") && isEditable
         ? "editable-cell-has-error"
         : "";
     const hasErrorOnSaveClass =
-      this.props.onSaveShowValidation &&
-      (this.state.inputValue === 0 || this.state.inputValue === "0") &&
-      this.props.isEditable
+      onSaveShowValidation &&
+      (inputValue === 0 || inputValue === "0") &&
+      isEditable
         ? "editable-cell-has-error"
         : "";
 
     return (
       <MaskedTextInput
         className={`${editableClass} ${touchedClass} ${hasErrorTouchedClass} ${hasErrorOnSaveClass}`}
-        name={this.props.name}
-        placeholder={this.props.placeholder}
-        value={this.state.inputValue}
-        valuekey={this.props.valueKey}
-        disabled={!this.props.isEditable}
+        name={name}
+        placeholder={placeholder}
+        value={inputValue}
+        valuekey={valueKey}
+        disabled={!isEditable}
         onFocus={this.onInputFocus}
         onChange={this.onInputChange}
-        maxLength={this.props.maxLength}
+        maxLength={maxLength}
         onKeyPress={event => {
           if (event.key === "Enter") {
             event.currentTarget.blur();
           }
-          this.props.onKeyPress(event);
+          onKeyPress(event);
         }}
         onBlur={this.onInput}
-        mask={maskType(this.props.maskType)}
+        mask={this.maskType(maskType)}
       />
     );
   }
@@ -154,12 +185,10 @@ GridCellInput.defaultProps = {
   onSaveShowValidation: false,
 
   blurAction: () => {},
-  enterKeyPressAction: () => {},
   onKeyPress: () => {},
 
   maskType: "none", // 'custom', 'createNumber'
   maskCustom: null,
-  maskCreateNumber: false,
   maskPrefix: "",
   maskSuffix: "",
   maskIncludeThousandsSeparator: true,

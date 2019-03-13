@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import CSSModules from "react-css-modules";
 import { sortBy } from "lodash";
-import { Typeahead } from "react-bootstrapreact-bootstrap-typeahead";
+import { Typeahead } from "react-bootstrap-typeahead";
 import { ListGroup, ListGroupItem, Button, Well } from "react-bootstrap";
 
 import styles from "./index.style.scss";
