@@ -44,7 +44,8 @@ export class DataGridContainer extends Component {
   }
 
   contextMenuDeleteAction(rowData) {
-    this.props.toggleModal({
+    const { toggleModal, deletePostPrePosting } = this.props;
+    toggleModal({
       modal: "confirmModal",
       active: true,
       properties: {
@@ -53,17 +54,19 @@ export class DataGridContainer extends Component {
         closeButtonText: "Cancel",
         actionButtonText: "Continue",
         actionButtonBsStyle: "danger",
-        action: () => this.props.deletePostPrePosting(rowData.Id),
+        action: () => deletePostPrePosting(rowData.Id),
         dismiss: () => {}
       }
     });
   }
 
   contextMenuFileSettingsAction(id) {
-    this.props.getPostPrePostingFileEdit(id);
+    const { getPostPrePostingFileEdit } = this.props;
+    getPostPrePostingFileEdit(id);
   }
 
   render() {
+    const { post } = this.props;
     const columns = [
       {
         Header: "File Name",
@@ -105,7 +108,9 @@ export class DataGridContainer extends Component {
             rowData: { Id }
           }
         }) => {
+          /* eslint-disable no-undef */
           window.open(`${__API__}PostPrePosting/Report/${Id}`, "_blank");
+          /* eslint-enable no-undef */
         }
       },
       {
@@ -119,7 +124,7 @@ export class DataGridContainer extends Component {
 
     return (
       <Table
-        data={this.props.post}
+        data={post}
         style={{ marginBottom: "100px" }}
         columns={columns}
         contextMenu={{

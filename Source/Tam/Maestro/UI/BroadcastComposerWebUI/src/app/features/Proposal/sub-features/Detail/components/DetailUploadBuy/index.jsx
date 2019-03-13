@@ -29,7 +29,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      // toggleModal,
       clearFile,
       storeFile,
       uploadSCXFile
@@ -58,10 +57,11 @@ class UploadBuy extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { activeFile } = this.state;
     if (nextProps.file.name === "No File") {
       this.clearState();
     }
-    if (this.state.activeFile) return;
+    if (activeFile) return;
     if (
       nextProps.file &&
       nextProps.file.base64 &&
@@ -76,8 +76,40 @@ class UploadBuy extends Component {
   }
 
   onModalHide() {
+    const { clearFile } = this.props;
     this.clearState();
-    this.props.clearFile();
+    clearFile();
+  }
+
+  onSave() {
+    const { estimateId, fileName } = this.state;
+    const { file, modal, uploadSCXFile } = this.props;
+    uploadSCXFile({
+      EstimateId: estimateId,
+      ProposalVersionDetailId: modal.properties.detailId,
+      FileName: fileName,
+      RawData: file.base64,
+      UserName: "user"
+    });
+  }
+
+  onChangeEstimateId(value) {
+    const estimateId = value;
+    if (estimateId) {
+      this.setState({ estimateId });
+    } else {
+      this.setState({ estimateId: null });
+    }
+  }
+
+  onCancel() {
+    const { modal, toggleModal } = this.props;
+    toggleModal({
+      modal: "uploadBuy",
+      active: false,
+      properties: modal.properties
+    });
+    this.clearState();
   }
 
   clearState() {
@@ -88,61 +120,20 @@ class UploadBuy extends Component {
     });
   }
 
-  onSave() {
-    const ret = {
-      EstimateId: this.state.estimateId, // parseInt(this.state.estimateId, 10),
-      ProposalVersionDetailId: this.props.modal.properties.detailId, // just get from modal props
-      FileName: this.state.fileName,
-      RawData: this.props.file.base64,
-      UserName: "user"
-    };
-    this.props.uploadSCXFile(ret);
-  }
-
-  /* onChangeEstimateId(event) {
-    const estimateId = event.target.value;
-    if (estimateId.length && estimateId !== "0") {
-      this.setState({ estimateId });
-    } else {
-      this.setState({ estimateId: "" });
-    }
-  } */
-  onChangeEstimateId(value) {
-    const estimateId = value;
-    // console.log('On change estimate id', value);
-    if (estimateId) {
-      this.setState({ estimateId });
-    } else {
-      this.setState({ estimateId: null });
-    }
-  }
-
-  onCancel() {
-    this.props.toggleModal({
-      modal: "uploadBuy",
-      active: false,
-      properties: this.props.modal.properties
-    });
-    this.clearState();
-  }
-
   processFile(file) {
+    const { storeFile } = this.props;
     this.setState({ activeFile: false });
-    this.props.storeFile(file);
+    storeFile(file);
   }
 
   render() {
-    const { activeFile, estimateId } = this.state;
-    // const reg = /^(0|[1-9]\d{0})$/; // cant get the + to work
+    const { activeFile, estimateId, fileName } = this.state;
     const reg = /^\d+$/; // cant get the {0} to work
     const valid =
       activeFile &&
       estimateId &&
       estimateId > 0 &&
       String(estimateId).match(reg);
-    // console.log(activeFile, estimateId, estimateId > 0);
-    // console.log(String(estimateId).match(reg));
-    // console.log(valid);
     const { modal, detail } = this.props;
     const show =
       detail && modal && modal.properties.detailId === detail.Id
@@ -179,7 +170,7 @@ class UploadBuy extends Component {
                   />
                 </Col>
                 <Col sm={7} style={{ paddingTop: "5px" }}>
-                  <span>{this.state.fileName}</span>
+                  <span>{fileName}</span>
                 </Col>
               </FormGroup>
 
@@ -188,24 +179,11 @@ class UploadBuy extends Component {
                   Estimate ID <span style={{ color: "red" }}>*</span>
                 </Col>
                 <Col sm={9}>
-                  {/*  <FormControl
-                    type="number"
-                    min="1"
-                    value={this.state.estimateId}
-                    placeholder="Enter Id"
-                    onChange={this.onChangeEstimateId}
-                  /> */}
                   <InputNumber
-                    // style={{ height: '34px' }}
                     min={1}
-                    // max={100}
                     precision={0}
-                    defaultValue={this.state.estimateId}
+                    defaultValue={estimateId}
                     placeholder="Enter Id"
-                    // value={coverage}
-                    // formatter={value => `${value}%`}
-                    // parser={value => value.replace('%', '')}
-                    // disabled={isReadOnly}
                     onChange={this.onChangeEstimateId}
                   />
                 </Col>
@@ -239,9 +217,6 @@ UploadBuy.propTypes = {
 
 UploadBuy.defaultProps = {
   modal: null,
-  file: {
-    name: "No File"
-  },
   detail: null
 };
 

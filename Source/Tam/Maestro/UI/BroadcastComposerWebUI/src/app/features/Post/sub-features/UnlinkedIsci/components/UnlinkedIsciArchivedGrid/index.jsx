@@ -36,7 +36,13 @@ export class ArchivedIsciGrid extends Component {
   }
 
   render() {
-    const { archivedIscisData } = this.props;
+    const {
+      archivedIscisData,
+      selection,
+      dataSource,
+      undoArchive
+    } = this.props;
+    const { store } = this.context;
     const stateKey = "archived_grid";
 
     const columns = [
@@ -109,15 +115,13 @@ export class ArchivedIsciGrid extends Component {
         text: "Undo Archive",
         key: "menu-undo-archive",
         EVENT_HANDLER: () => {
-          // note: as is selections undefined as multi select not taking on this grid
-          const selectedIds = this.props.selection.get(stateKey).get("indexes");
-          const rowData = this.props.dataSource.get(stateKey).toJSON(); // currentRecords or data - array
+          const selectedIds = selection.get(stateKey).get("indexes");
+          const rowData = dataSource.get(stateKey).toJSON();
           const activeSelections = [];
-          // get just slected data FileDetailId for each for API call
           selectedIds.forEach(idx => {
             activeSelections.push(rowData.data[idx].FileDetailId);
           });
-          this.props.undoArchive(activeSelections);
+          undoArchive(activeSelections);
         }
       }
     ];
@@ -150,7 +154,7 @@ export class ArchivedIsciGrid extends Component {
       ROW: {
         enabled: true,
         renderer: ({ cells, ...rowData }) => {
-          const selectedIds = this.props.selection.getIn([stateKey, "indexes"]);
+          const selectedIds = selection.getIn([stateKey, "indexes"]);
           const isRender = !!(selectedIds && selectedIds.size);
           return (
             <ContextMenuRow
@@ -173,12 +177,7 @@ export class ArchivedIsciGrid extends Component {
     };
 
     return (
-      <Grid
-        {...grid}
-        data={archivedIscisData}
-        store={this.context.store}
-        height={460}
-      />
+      <Grid {...grid} data={archivedIscisData} store={store} height={460} />
     );
   }
 }

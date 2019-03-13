@@ -303,7 +303,6 @@ export default class GridIsciCell extends Component {
         </span>
       </Tooltip>
     );
-    // const touchedClass = (this.state.isChanged && isISCIEdited) ? 'editable-cell-changed' : '';
     const touchedClass = "";
     return (
       <div className={`${touchedClass} isci-cell`}>

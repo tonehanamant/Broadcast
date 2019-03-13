@@ -64,55 +64,43 @@ export class PostPrePostingFileEditModal extends Component {
     };
   }
 
-  save() {
-    if (this.checkValid()) {
-      const {
-        Id,
-        Equivalized,
-        PostingBookId,
-        PlaybackType,
-        Demos
-      } = this.props.fileEditFormValues;
-      const ret = {
-        FileId: Id,
-        Audiences: Demos,
-        Equivalized,
-        PostingBookId,
-        PlaybackType
-      };
-      this.props.savePostPrePostingFileEdit(ret);
-    }
-  }
-
   onChangeEquivalized() {
-    this.props.updateEquivalized(!this.props.fileEditFormValues.Equivalized);
+    const { updateEquivalized, fileEditFormValues } = this.props;
+    updateEquivalized(!fileEditFormValues.Equivalized);
   }
 
   onChangePostingBook(value) {
-    // can be empty value
+    const { updatePostingBook } = this.props;
     const val = value ? value.Id : null;
-    this.props.updatePostingBook(val); // actioncreator
+    updatePostingBook(val);
     this.setValidationState("postingBookInvalid", val ? null : "error");
   }
 
   onChangePlaybackType(value) {
+    const { updatePlaybackType } = this.props;
     const val = value ? value.Id : null;
-    this.props.updatePlaybackType(val); // actioncreator
+    updatePlaybackType(val);
     this.setValidationState("playbackTypeInvalid", val ? null : "error");
   }
 
   onChangeDemos(value) {
+    const { updateDemos } = this.props;
     const convert = value.map(item => item.Id);
-    this.props.updateDemos(convert); // actioncreator
+    updateDemos(convert);
     this.setValidationState("demosInvalid", value.length ? null : "error");
   }
 
+  setValidationState(type, state) {
+    this.state[type] = state;
+  }
+
   checkValid() {
-    const pbookValid = this.props.fileEditFormValues.PostingBookId != null;
-    const ptypeValid = this.props.fileEditFormValues.PlaybackType != null;
-    const pdemoValid =
-      this.props.fileEditFormValues.Demos &&
-      this.props.fileEditFormValues.Demos.length > 0;
+    const {
+      fileEditFormValues: { PostingBookId, PlaybackType, Demos }
+    } = this.props;
+    const pbookValid = PostingBookId != null;
+    const ptypeValid = PlaybackType != null;
+    const pdemoValid = Demos && Demos.length > 0;
     if (pbookValid && ptypeValid && pdemoValid) {
       this.clearValidationStates();
       return true;
@@ -123,8 +111,27 @@ export class PostPrePostingFileEditModal extends Component {
     return false;
   }
 
-  setValidationState(type, state) {
-    this.state[type] = state;
+  save() {
+    if (this.checkValid()) {
+      const {
+        fileEditFormValues: {
+          Id,
+          Equivalized,
+          PostingBookId,
+          PlaybackType,
+          Demos
+        },
+        savePostPrePostingFileEdit
+      } = this.props;
+      const ret = {
+        FileId: Id,
+        Audiences: Demos,
+        Equivalized,
+        PostingBookId,
+        PlaybackType
+      };
+      savePostPrePostingFileEdit(ret);
+    }
   }
 
   close() {
@@ -224,7 +231,7 @@ export class PostPrePostingFileEditModal extends Component {
                 valueKey="Id"
                 onChange={this.onChangePlaybackType}
               />
-              {this.state.playbackTypeInvalid != null && (
+              {playbackTypeInvalid != null && (
                 <HelpBlock>
                   <p className="text-danger">Required</p>
                 </HelpBlock>
@@ -243,7 +250,6 @@ export class PostPrePostingFileEditModal extends Component {
                 labelKey="Display"
                 valueKey="Id"
                 closeOnSelect
-                // simpleValue
                 onChange={this.onChangeDemos}
               />
               {demosInvalid != null && (
@@ -282,8 +288,8 @@ PostPrePostingFileEditModal.defaultProps = {
 
 PostPrePostingFileEditModal.propTypes = {
   formOptions: PropTypes.object.isRequired,
-  fileEditFormValues: PropTypes.object.isRequired,
-  modal: PropTypes.object.isRequired,
+  fileEditFormValues: PropTypes.object,
+  modal: PropTypes.object,
   toggleModal: PropTypes.func.isRequired,
   savePostPrePostingFileEdit: PropTypes.func.isRequired,
   updateEquivalized: PropTypes.func.isRequired,

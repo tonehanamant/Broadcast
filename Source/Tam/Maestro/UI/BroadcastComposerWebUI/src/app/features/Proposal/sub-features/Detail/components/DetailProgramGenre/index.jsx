@@ -108,34 +108,122 @@ class ProgramGenre extends Component {
     };
   }
 
-  resetProgramGenre() {
-    this.setState({
-      selectedProgram: [],
-      selectedGenre: [],
-      selectedShowType: [],
-      includeCriteria: [],
-      excludeCriteria: [],
-      disabledButtons: {
-        programInclude: false,
-        programExclude: false,
-        programAll: true,
-        genreInclude: false,
-        genreExclude: false,
-        genreAll: true,
-        showTypeInclude: false,
-        showTypeExclude: false,
-        showTypeAll: true
-      },
-      programPageSize: 10,
-      programResultsLimit: 10
-    });
-    this.programTypeahed.getInstance().clear();
-    this.genreTypeahed.getInstance().clear();
-    this.showTypeTypeahed.getInstance().clear();
+  onModalShow() {
+    const { detail } = this.props;
+    this.readCriteriaFromDetail(detail);
   }
 
-  handleOnSaveClick() {
-    this.onSave();
+  onModalHide() {
+    this.resetProgramGenre();
+  }
+
+  onCancel() {
+    this.closeModal();
+  }
+
+  onGenreSearchSelect(value) {
+    this.setState({ selectedGenre: value });
+
+    if (value && value.length) {
+      this.setButtonDisabled("genreAll", false);
+    } else {
+      this.setButtonDisabled("genreAll", true);
+    }
+  }
+
+  onGenreSearch(query) {
+    const { getGenres } = this.props;
+    getGenres(query);
+  }
+
+  onProgramSearchSelect(value) {
+    this.setState({ selectedProgram: value });
+
+    if (value && value.length) {
+      this.setButtonDisabled("programAll", false);
+    } else {
+      this.setButtonDisabled("programAll", true);
+    }
+  }
+
+  onProgramSearch(programQuery) {
+    const { getPrograms } = this.props;
+    const { programResultsLimit } = this.state;
+    const params = {
+      Name: programQuery,
+      Start: 1,
+      Limit: programResultsLimit + 1
+    };
+    getPrograms(params);
+  }
+
+  onShowTypeSearchSelect(value) {
+    this.setState({ selectedShowType: value });
+
+    if (value && value.length) {
+      this.setButtonDisabled("showTypeAll", false);
+    } else {
+      this.setButtonDisabled("showTypeAll", true);
+    }
+  }
+
+  onShowTypeSearch(query) {
+    const { getShowTypes } = this.props;
+    getShowTypes(query);
+  }
+
+  onProgramIncludeClick() {
+    const { selectedProgram: selected } = this.state;
+    if (selected && selected.length) {
+      selected.forEach(item => {
+        this.addIncludeCriteria("program", item);
+      });
+    }
+  }
+
+  onProgramExcludeClick() {
+    const { selectedProgram: selected } = this.state;
+    if (selected && selected.length) {
+      selected.forEach(item => {
+        this.addExcludeCriteria("program", item);
+      });
+    }
+  }
+
+  onGenreIncludeClick() {
+    const { selectedGenre: selected } = this.state;
+    if (selected && selected.length) {
+      selected.forEach(item => {
+        this.addIncludeCriteria("genre", item);
+      });
+    }
+  }
+
+  onGenreExcludeClick() {
+    const { selectedGenre: selected } = this.state;
+    if (selected && selected.length) {
+      selected.forEach(item => {
+        this.addExcludeCriteria("genre", item);
+      });
+    }
+  }
+
+  onShowTypeIncludeClick() {
+    const { selectedShowType: selected } = this.state;
+    if (selected && selected.length) {
+      selected.forEach(item => {
+        this.addIncludeCriteria("showType", item);
+      });
+    }
+  }
+
+  onShowTypeExcludeClick() {
+    const { selectedShowType: selected } = this.state;
+    if (selected && selected.length) {
+      selected.forEach(item => {
+        this.addExcludeCriteria("showType", item);
+      });
+    }
   }
 
   onSave() {
@@ -143,13 +231,23 @@ class ProgramGenre extends Component {
     this.closeModal();
   }
 
-  // get criteria to update edit form data for BE; break down include/excluded into programs and genres
-  // different format for each
+  setButtonDisabled(type, disabled) {
+    this.setState(prevState => ({
+      ...prevState,
+      disabledButtons: {
+        ...prevState.disabledButtons,
+        [type]: disabled
+      }
+    }));
+  }
+
   setCriteriaForSave() {
+    const { includeCriteria, excludeCriteria } = this.state;
+    const { updateProposalEditFormDetail, detail } = this.props;
     const programCriteria = [];
     const genreCriteria = [];
     const showTypeCriteria = [];
-    this.state.includeCriteria.forEach(item => {
+    includeCriteria.forEach(item => {
       const include = { Contain: 1 };
       if (item.type === "program") {
         include.Program = { Id: item.Id, Display: item.Display };
@@ -164,7 +262,7 @@ class ProgramGenre extends Component {
         showTypeCriteria.push(include);
       }
     });
-    this.state.excludeCriteria.forEach(item => {
+    excludeCriteria.forEach(item => {
       const exclude = { Contain: 2 };
       if (item.type === "program") {
         exclude.Program = { Id: item.Id, Display: item.Display };
@@ -179,25 +277,133 @@ class ProgramGenre extends Component {
         showTypeCriteria.push(exclude);
       }
     });
-    // console.log('Criteria for save >>>', programCriteria, genreCriteria, showTypeCriteria);
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "ProgramCriteria",
       value: programCriteria
     });
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "GenreCriteria",
       value: genreCriteria
     });
-    this.props.updateProposalEditFormDetail({
-      id: this.props.detail.Id,
+    updateProposalEditFormDetail({
+      id: detail.Id,
       key: "ShowTypeCriteria",
       value: showTypeCriteria
     });
   }
 
-  // read from existing detail - based on BE format IE {Contain, Program: {Id, Display}} Contain 1 include, Contain 2 exclude
+  removeIncludeCriteria(includeItem) {
+    const { includeCriteria: includes } = this.state;
+    const removed = includes.filter(item => item.key !== includeItem.key);
+    this.setState({ includeCriteria: removed });
+    const check = removed.find(item => item.type === includeItem.type);
+    if (check === undefined) {
+      const genreType =
+        includeItem.type === "genre" ? "genreExclude" : "showTypeExclude";
+      const toEnable =
+        includeItem.type === "program" ? "programExclude" : genreType;
+      this.setButtonDisabled(toEnable, false);
+    }
+  }
+
+  addExcludeCriteria(type, data) {
+    const { excludeCriteria } = this.state;
+    const dupe = excludeCriteria.find(
+      item => item.Id === data.Id && item.type === type
+    );
+    if (!dupe) {
+      const key = `${type}_${data.Id}`;
+      const item = Object.assign({}, data, { type, key });
+      excludeCriteria.push(item);
+      let toDisable;
+      if (type === "program") {
+        toDisable = "programInclude";
+        this.setState({ selectedProgram: [] });
+        this.programTypeahed.getInstance().clear();
+        this.setButtonDisabled("programAll", true);
+      } else if (type === "genre") {
+        toDisable = "genreInclude";
+        this.setState({ selectedGenre: [] });
+        this.genreTypeahed.getInstance().clear();
+        this.setButtonDisabled("genreAll", true);
+      } else if (type === "showType") {
+        toDisable = "showTypeInclude";
+        this.setState({ selectedShowType: [] });
+        this.showTypeTypeahed.getInstance().clear();
+        this.setButtonDisabled("showTypeAll", true);
+      }
+      this.setButtonDisabled(toDisable, true);
+    }
+  }
+
+  removeExcludeCriteria(excludeItem) {
+    const { excludeCriteria: excludes } = this.state;
+    const removed = excludes.filter(item => item.key !== excludeItem.key);
+    this.setState({ excludeCriteria: removed });
+    const check = removed.find(item => item.type === excludeItem.type);
+    if (check === undefined) {
+      const genreType =
+        excludeItem.type === "genre" ? "genreInclude" : "showTypeInclude";
+      const toEnable =
+        excludeItem.type === "program" ? "programInclude" : genreType;
+      this.setButtonDisabled(toEnable, false);
+    }
+  }
+
+  addIncludeCriteria(type, data) {
+    const { includeCriteria } = this.state;
+    const dupe = includeCriteria.find(
+      item => item.Id === data.Id && item.type === type
+    );
+    if (!dupe) {
+      const key = `${type}_${data.Id}`;
+      const item = Object.assign({}, data, { type, key });
+      includeCriteria.push(item);
+      let toDisable;
+      if (type === "program") {
+        toDisable = "programExclude";
+        this.setState({ selectedProgram: [] });
+        this.programTypeahed.getInstance().clear();
+        this.setButtonDisabled("programAll", true);
+      } else if (type === "genre") {
+        toDisable = "genreExclude";
+        this.setState({ selectedGenre: [] });
+        this.genreTypeahed.getInstance().clear();
+        this.setButtonDisabled("genreAll", true);
+      } else if (type === "showType") {
+        toDisable = "showTypeExclude";
+        this.setState({ selectedShowType: [] });
+        this.showTypeTypeahed.getInstance().clear();
+        this.setButtonDisabled("showTypeAll", true);
+      }
+      this.setButtonDisabled(toDisable, true);
+    }
+  }
+
+  handleProgramPagination() {
+    const { getPrograms } = this.props;
+    const { programResultsLimit, programPageSize } = this.state;
+    const currentLimit = programResultsLimit + programPageSize;
+    this.setState({ programResultsLimit: currentLimit });
+    const params = {
+      Name: this.programTypeahed.state.query,
+      Start: 1,
+      Limit: currentLimit + 1
+    };
+    getPrograms(params);
+  }
+
+  closeModal() {
+    const { toggleModal, detail } = this.props;
+    toggleModal({
+      modal: "programGenreModal",
+      active: false,
+      properties: { detailId: detail.Id }
+    });
+  }
+
   readCriteriaFromDetail(detail) {
     const programCriteria = [...detail.ProgramCriteria];
     const genreCriteria = [...detail.GenreCriteria];
@@ -228,259 +434,34 @@ class ProgramGenre extends Component {
     });
   }
 
-  onModalShow() {
-    // console.log('modal show', this, this.props.detail);
-    this.readCriteriaFromDetail(this.props.detail);
+  handleOnSaveClick() {
+    this.onSave();
   }
 
-  onModalHide() {
-    this.resetProgramGenre();
-    // console.log('modal hide', this);
-  }
-
-  onCancel() {
-    this.closeModal();
-  }
-
-  closeModal() {
-    // this.resetProgramGenre();
-    this.props.toggleModal({
-      modal: "programGenreModal",
-      active: false,
-      properties: { detailId: this.props.detail.Id }
-    });
-  }
-
-  onGenreSearchSelect(value) {
-    this.setState({ selectedGenre: value });
-
-    if (value && value.length) {
-      this.setButtonDisabled("genreAll", false);
-    } else {
-      this.setButtonDisabled("genreAll", true);
-    }
-  }
-
-  onGenreSearch(query) {
-    this.props.getGenres(query);
-  }
-
-  onProgramSearchSelect(value) {
-    this.setState({ selectedProgram: value });
-
-    if (value && value.length) {
-      this.setButtonDisabled("programAll", false);
-    } else {
-      this.setButtonDisabled("programAll", true);
-    }
-  }
-
-  onProgramSearch(programQuery) {
-    const params = {
-      Name: programQuery,
-      Start: 1,
-      Limit: this.state.programResultsLimit + 1
-    };
-    this.props.getPrograms(params);
-  }
-
-  handleProgramPagination() {
-    const currentLimit =
-      this.state.programResultsLimit + this.state.programPageSize;
-    this.setState({ programResultsLimit: currentLimit });
-    const params = {
-      Name: this.programTypeahed.state.query,
-      Start: 1,
-      Limit: currentLimit + 1
-    };
-    // this.props.getPrograms(this.state.programQuery, 1, currentLimit + 1);
-    this.props.getPrograms(params);
-  }
-
-  onShowTypeSearchSelect(value) {
-    this.setState({ selectedShowType: value });
-
-    if (value && value.length) {
-      this.setButtonDisabled("showTypeAll", false);
-    } else {
-      this.setButtonDisabled("showTypeAll", true);
-    }
-  }
-
-  onShowTypeSearch(query) {
-    this.props.getShowTypes(query);
-  }
-
-  // add Include Criteria based on type
-  addIncludeCriteria(type, data) {
-    // check already exists; change disabled states
-    const dupe = this.state.includeCriteria.find(
-      item => item.Id === data.Id && item.type === type
-    );
-    if (!dupe) {
-      const key = `${type}_${data.Id}`;
-      const item = Object.assign({}, data, { type, key });
-      this.state.includeCriteria.push(item);
-      // const toDisable = (type === 'program') ? 'programExclude' : 'genreExclude';
-      let toDisable;
-      // this.setButtonDisabled(toDisable, true);
-      if (type === "program") {
-        toDisable = "programExclude";
-        this.setState({ selectedProgram: [] });
-        this.programTypeahed.getInstance().clear();
-        // disable program selection
-        this.setButtonDisabled("programAll", true);
-      } else if (type === "genre") {
-        toDisable = "genreExclude";
-        this.setState({ selectedGenre: [] });
-        this.genreTypeahed.getInstance().clear();
-        // disable genre selection
-        this.setButtonDisabled("genreAll", true);
-      } else if (type === "showType") {
-        toDisable = "showTypeExclude";
-        this.setState({ selectedShowType: [] });
-        this.showTypeTypeahed.getInstance().clear();
-        // disable show type selection
-        this.setButtonDisabled("showTypeAll", true);
-      }
-      this.setButtonDisabled(toDisable, true);
-      // console.log('addInclude', this.state, type);
-    }
-  }
-  // Remove Include Criteria includeItem type, key
-  removeIncludeCriteria(includeItem) {
-    const includes = [...this.state.includeCriteria];
-    const removed = includes.filter(item => item.key !== includeItem.key);
-    this.setState({ includeCriteria: removed });
-    // check includes by type to reset enable buttons as needed
-    const check = removed.find(item => item.type === includeItem.type);
-    if (check === undefined) {
-      const genreType =
-        includeItem.type === "genre" ? "genreExclude" : "showTypeExclude";
-      const toEnable =
-        includeItem.type === "program" ? "programExclude" : genreType;
-      // console.log('toEnable', toEnable);
-      this.setButtonDisabled(toEnable, false);
-    }
-    // console.log('removeIncludeCriteria', check, includeItem, removed, this.state.includeCriteria);
-  }
-  // add Exclude Criteria based on type
-  addExcludeCriteria(type, data) {
-    // check already exists; change disabled states; check allowed include/exclude?
-    const dupe = this.state.excludeCriteria.find(
-      item => item.Id === data.Id && item.type === type
-    );
-    // console.log('add Exclude', type, dupe, data);
-    if (!dupe) {
-      const key = `${type}_${data.Id}`;
-      const item = Object.assign({}, data, { type, key });
-      this.state.excludeCriteria.push(item);
-      // const toDisable = (type === 'program') ? 'programInclude' : 'genreInclude';
-      let toDisable;
-      // this.setButtonDisabled(toDisable, true);
-      if (type === "program") {
-        toDisable = "programInclude";
-        this.setState({ selectedProgram: [] });
-        this.programTypeahed.getInstance().clear();
-        // disable program selection
-        this.setButtonDisabled("programAll", true);
-      } else if (type === "genre") {
-        toDisable = "genreInclude";
-        this.setState({ selectedGenre: [] });
-        this.genreTypeahed.getInstance().clear();
-        // disable genre selection
-        this.setButtonDisabled("genreAll", true);
-      } else if (type === "showType") {
-        toDisable = "showTypeInclude";
-        this.setState({ selectedShowType: [] });
-        this.showTypeTypeahed.getInstance().clear();
-        // disable genre selection
-        this.setButtonDisabled("showTypeAll", true);
-      }
-      this.setButtonDisabled(toDisable, true);
-      // console.log('addExclude', this.state, type);
-    }
-  }
-  // Remove Exclude Criteria includeItem type, key
-  removeExcludeCriteria(excludeItem) {
-    const excludes = [...this.state.excludeCriteria];
-    const removed = excludes.filter(item => item.key !== excludeItem.key);
-    this.setState({ excludeCriteria: removed });
-    // check excludes by type to reset enable buttons as needed
-    const check = removed.find(item => item.type === excludeItem.type);
-    if (check === undefined) {
-      const genreType =
-        excludeItem.type === "genre" ? "genreInclude" : "showTypeInclude";
-      const toEnable =
-        excludeItem.type === "program" ? "programInclude" : genreType;
-      // console.log('toEnable', toEnable);
-      this.setButtonDisabled(toEnable, false);
-    }
-    // console.log('removeIncludeCriteria', excludeItem, removed, this.state.excludeCriteria);
-  }
-
-  onProgramIncludeClick() {
-    const selected = this.state.selectedProgram;
-    if (selected && selected.length) {
-      selected.forEach(item => {
-        this.addIncludeCriteria("program", item);
-      });
-    }
-  }
-
-  onProgramExcludeClick() {
-    const selected = this.state.selectedProgram;
-    if (selected && selected.length) {
-      selected.forEach(item => {
-        this.addExcludeCriteria("program", item);
-      });
-    }
-  }
-
-  onGenreIncludeClick() {
-    const selected = this.state.selectedGenre;
-    if (selected && selected.length) {
-      selected.forEach(item => {
-        this.addIncludeCriteria("genre", item);
-      });
-    }
-  }
-
-  onGenreExcludeClick() {
-    const selected = this.state.selectedGenre;
-    if (selected && selected.length) {
-      selected.forEach(item => {
-        this.addExcludeCriteria("genre", item);
-      });
-    }
-  }
-
-  onShowTypeIncludeClick() {
-    const selected = this.state.selectedShowType;
-    if (selected && selected.length) {
-      selected.forEach(item => {
-        this.addIncludeCriteria("showType", item);
-      });
-    }
-  }
-
-  onShowTypeExcludeClick() {
-    const selected = this.state.selectedShowType;
-    if (selected && selected.length) {
-      selected.forEach(item => {
-        this.addExcludeCriteria("showType", item);
-      });
-    }
-  }
-
-  setButtonDisabled(type, disabled) {
-    this.setState(prevState => ({
-      ...prevState,
+  resetProgramGenre() {
+    this.setState({
+      selectedProgram: [],
+      selectedGenre: [],
+      selectedShowType: [],
+      includeCriteria: [],
+      excludeCriteria: [],
       disabledButtons: {
-        ...prevState.disabledButtons,
-        [type]: disabled
-      }
-    }));
+        programInclude: false,
+        programExclude: false,
+        programAll: true,
+        genreInclude: false,
+        genreExclude: false,
+        genreAll: true,
+        showTypeInclude: false,
+        showTypeExclude: false,
+        showTypeAll: true
+      },
+      programPageSize: 10,
+      programResultsLimit: 10
+    });
+    this.programTypeahed.getInstance().clear();
+    this.genreTypeahed.getInstance().clear();
+    this.showTypeTypeahed.getInstance().clear();
   }
 
   render() {
@@ -488,10 +469,19 @@ class ProgramGenre extends Component {
       modal,
       detail,
       isReadOnly,
+      genres,
+      isGenresLoading,
+      showTypes,
+      isShowTypesLoading,
       programs,
       isProgramsLoading
     } = this.props;
-    const { disabledButtons, includeCriteria, excludeCriteria } = this.state;
+    const {
+      disabledButtons,
+      includeCriteria,
+      excludeCriteria,
+      programPageSize
+    } = this.state;
     const show =
       detail && modal && modal.properties.detailId === detail.Id
         ? modal.active
@@ -549,7 +539,7 @@ class ProgramGenre extends Component {
                             onSearch={this.onProgramSearch}
                             placeholder="Search Programs..."
                             paginate
-                            maxResults={this.state.programPageSize}
+                            maxResults={programPageSize}
                             onPaginate={this.handleProgramPagination}
                           />
                         </Col>
@@ -608,11 +598,11 @@ class ProgramGenre extends Component {
                       <Row>
                         <Col sm={8}>
                           <AsyncTypeahead
-                            options={this.props.genres}
+                            options={genres}
                             ref={input => {
                               this.genreTypeahed = input;
                             }}
-                            isLoading={this.props.isGenresLoading}
+                            isLoading={isGenresLoading}
                             allowNew={false}
                             multiple
                             labelKey="Display"
@@ -677,11 +667,11 @@ class ProgramGenre extends Component {
                       <Row>
                         <Col sm={8}>
                           <AsyncTypeahead
-                            options={this.props.showTypes}
+                            options={showTypes}
                             ref={input => {
                               this.showTypeTypeahed = input;
                             }}
-                            isLoading={this.props.isShowTypesLoading}
+                            isLoading={isShowTypesLoading}
                             allowNew={false}
                             multiple
                             labelKey="Display"
@@ -859,7 +849,6 @@ class ProgramGenre extends Component {
 
 ProgramGenre.defaultProps = {
   modal: null,
-  updateProposalEditFormDetail: () => {},
   detail: null,
   isReadOnly: false
 };
