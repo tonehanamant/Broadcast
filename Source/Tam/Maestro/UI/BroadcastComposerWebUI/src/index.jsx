@@ -9,6 +9,13 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css?raw";
 import "react-select/dist/react-select.css?raw";
 import "./index.scss";
+
+import "./styles/imports/bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap.css?raw";
+import "./styles/imports/bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap-theme.css?raw";
+
+/* Legacy Broadcast CSS */
+import "./styles/imports/broadcast-css/app.css?raw";
+import "./styles/imports/broadcast-css/appPost.css?raw";
 import "antd/dist/antd.css?raw";
 
 import "./assets/icons/favicon.ico";

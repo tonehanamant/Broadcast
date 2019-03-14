@@ -1,9 +1,7 @@
-/* Bootstrap */
-@import 'bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap.css';
-@import 'bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap-theme.css';
-
-/* Legacy Broadcast CSS */
-@import 'broadcast-css/app.css';
-@import 'broadcast-css/appPost.css';
-/* @import 'broadcast-css/appPlanning.css'; */
-/* @import 'broadcast-css/appTraffic.css'; */
+/* Bootstrap
+  @global-import from 'bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap.css';
+  @global-import from 'bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap-theme.css';
+  
+  /* Legacy Broadcast CSS */
+  /* @global-import from 'broadcast-css/app.css';
+  @global-import from 'broadcast-css/appPost.css'; */
