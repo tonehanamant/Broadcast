@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
@@ -22,6 +23,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IBarterInventoryService _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
         private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
         private IInventoryRepository _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+        private IBarterRepository _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -285,6 +287,156 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
 
                 _VerifyInventoryGroups(result.FileId);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NotValidFile1()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_InvalidFile1.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                _VerifyInventoryFileProblems(problems);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NotValidFile2()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_InvalidFile2.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                _VerifyInventoryFileProblems(problems);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NotValidFile3()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_InvalidFile3.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                _VerifyInventoryFileProblems(problems);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NotValidFile4()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_InvalidFile4.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
+
+                _VerifyInventoryFileProblems(problems);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesOAndOBarterInventoryFile()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
+                jsonResolver.Ignore(typeof(BarterInventoryFile), "CreatedDate");
+                jsonResolver.Ignore(typeof(InventorySource), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var file = _BarterRepository.GetBarterInventoryFileById(result.FileId);
+                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
+
+                Approvals.Verify(fileJson);
             }
         }
 

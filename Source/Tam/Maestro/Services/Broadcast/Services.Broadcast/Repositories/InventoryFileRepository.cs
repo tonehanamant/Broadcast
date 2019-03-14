@@ -125,7 +125,7 @@ namespace Services.Broadcast.Repositories
                         InventorySource = new InventorySource
                         {
                             Id = file.inventory_sources.id,
-                            InventoryType = (InventoryType)file.inventory_sources.inventory_source_type,
+                            InventoryType = (InventorySourceTypeEnum)file.inventory_sources.inventory_source_type,
                             IsActive = file.inventory_sources.is_active,
                             Name = file.inventory_sources.name
                         }

@@ -278,8 +278,8 @@
           <Property Name="daypart_code" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="effective_date" Type="datetime" Nullable="false" />
           <Property Name="end_date" Type="datetime" Nullable="false" />
-          <Property Name="cpm" Type="money" Nullable="false" />
-          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="cpm" Type="money" />
+          <Property Name="audience_id" Type="int" />
           <Property Name="contracted_daypart_id" Type="int" Nullable="false" />
           <Property Name="share_projection_book_id" Type="int" Nullable="false" />
           <Property Name="hut_projection_book_id" Type="int" />
@@ -661,7 +661,7 @@
           <Property Name="forecasted_impressions_per_spot" Type="float" Nullable="false" />
           <Property Name="station_impressions_per_spot" Type="float" Nullable="false" />
           <Property Name="cost_per_spot" Type="money" Nullable="false" />
-		  <Property Name="station_id" Type="int" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="pricing_guide_distribution_proprietary_inventory">
           <Key>
@@ -1614,7 +1614,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_inventory_file_barter_header_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="audiences" Type="Self.audiences" Multiplicity="0..1" />
           <End Role="inventory_file_barter_header" Type="Self.inventory_file_barter_header" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="audiences">
@@ -8156,75 +8156,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="inventory_file_barter_header">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_file_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="effective_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="contracted_daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="share_projection_book_id" Type="Int32" Nullable="false" />
-          <Property Name="hut_projection_book_id" Type="Int32" />
-          <Property Name="playback_type" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_file_barter_header_audiences" FromRole="inventory_file_barter_header" ToRole="audience" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_inventory_file_barter_header_dayparts" FromRole="inventory_file_barter_header" ToRole="daypart" />
-          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_barter_header_inventory_files" FromRole="inventory_file_barter_header" ToRole="inventory_files" />
-          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_inventory_file_barter_header_media_months" FromRole="inventory_file_barter_header" ToRole="media_months" />
-          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_inventory_file_barter_header_media_months_hut_book" FromRole="inventory_file_barter_header" ToRole="media_months" />
-        </EntityType>
-        <Association Name="FK_inventory_file_barter_header_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_file_barter_header">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_file_barter_header_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_file_barter_header">
-              <PropertyRef Name="contracted_daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_file_barter_header_inventory_files">
-          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_files">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_file_barter_header">
-              <PropertyRef Name="inventory_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_file_barter_header_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_file_barter_header">
-              <PropertyRef Name="share_projection_book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="inventory_file_problems">
           <Key>
             <PropertyRef Name="id" />
@@ -8243,18 +8174,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_file_problems">
               <PropertyRef Name="inventory_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_file_barter_header_media_months_hut_book">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
-          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_file_barter_header">
-              <PropertyRef Name="hut_projection_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8526,6 +8445,87 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="station_inventory_spot_snapshots">
               <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="inventory_file_barter_header">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_file_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="effective_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="audience_id" Type="Int32" />
+          <Property Name="contracted_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="share_projection_book_id" Type="Int32" Nullable="false" />
+          <Property Name="hut_projection_book_id" Type="Int32" />
+          <Property Name="playback_type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_file_barter_header_audiences" FromRole="inventory_file_barter_header" ToRole="audience" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_inventory_file_barter_header_dayparts" FromRole="inventory_file_barter_header" ToRole="daypart" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_file_barter_header_inventory_files" FromRole="inventory_file_barter_header" ToRole="inventory_files" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_inventory_file_barter_header_media_months" FromRole="inventory_file_barter_header" ToRole="media_months" />
+          <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_inventory_file_barter_header_media_months_hut_book" FromRole="inventory_file_barter_header" ToRole="media_months" />
+        </EntityType>
+        <Association Name="FK_inventory_file_barter_header_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
+          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_barter_header">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_barter_header_dayparts">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_barter_header">
+              <PropertyRef Name="contracted_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_barter_header_inventory_files">
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_barter_header">
+              <PropertyRef Name="inventory_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_barter_header_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_barter_header">
+              <PropertyRef Name="share_projection_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_file_barter_header_media_months_hut_book">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
+          <End Type="BroadcastModel.inventory_file_barter_header" Role="inventory_file_barter_header" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_file_barter_header">
+              <PropertyRef Name="hut_projection_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

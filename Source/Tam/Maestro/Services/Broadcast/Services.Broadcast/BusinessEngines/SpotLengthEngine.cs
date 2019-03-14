@@ -13,6 +13,8 @@ namespace Services.Broadcast.BusinessEngines
         int GetSpotLengthIdByValue(int spotLengthValue);
 
         int GetSpotLengthValueById(int spotLengthId);
+
+        bool SpotLengthExists(int spotLengthValue);
     }
 
     public class SpotLengthEngine : ISpotLengthEngine
@@ -38,6 +40,11 @@ namespace Services.Broadcast.BusinessEngines
         {
             var spotLenght = _SpotLengthsDict.Single(x => x.Value == spotLengthId, $"Invalid spot length id: '{spotLengthId}' found");
             return spotLenght.Key;
+        }
+
+        public bool SpotLengthExists(int spotLengthValue)
+        {
+            return _SpotLengthsDict.ContainsKey(spotLengthValue);
         }
     }
 }

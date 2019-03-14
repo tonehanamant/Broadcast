@@ -5,21 +5,21 @@
   "FileStatus": 1,
   "Hash": "3D-EF-6C-47-4F-28-1F-09-78-7E-82-33-BB-2B-A4-DF-42-77-AA-06",
   "Header": {
-    "AudienceId": 0,
-    "Cpm": 0.0,
+    "AudienceId": null,
+    "Cpm": null,
     "DaypartCode": "EMN",
     "EffectiveDate": "0001-01-01T00:00:00",
     "EndDate": "0001-01-01T00:00:00",
     "HutBookId": null,
     "PlaybackType": 0,
-    "ShareBookId": 0
+    "ShareBookId": 0,
+    "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
-    "Could not find inventory source",
     "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
     "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
     "CPM is not in the correct format (##.##)",

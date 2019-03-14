@@ -56,7 +56,7 @@
       ]
     },
     {
-      "Comment": null,
+      "Comment": "",
       "Dayparts": [
         {
           "_Code": "CUS",

@@ -1,0 +1,44 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid spot length is specified",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Invalid contracted daypart (Mond-Frid 6:30PM-11PM)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Share book (SEP;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Hut book (SEP;19) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Playback type is missing",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

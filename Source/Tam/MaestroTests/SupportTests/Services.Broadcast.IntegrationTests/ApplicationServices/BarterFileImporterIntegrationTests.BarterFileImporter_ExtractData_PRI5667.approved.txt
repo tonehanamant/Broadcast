@@ -55,7 +55,7 @@
       ]
     },
     {
-      "Comment": null,
+      "Comment": "",
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -119,16 +119,12 @@
     "EndDate": "2019-05-30T00:00:00",
     "HutBookId": 449,
     "PlaybackType": 5,
-    "ShareBookId": 450
+    "ShareBookId": 450,
+    "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": {
-    "Id": 4,
-    "InventoryType": 1,
-    "IsActive": true,
-    "Name": "TTNW"
-  },
+  "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": []
 }

@@ -114,7 +114,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IMyEventsReportNamingEngine, MyEventsReportNamingEngine>();
             unityContainer.RegisterType<IPostLogValidationEngine, PostLogValidationEngine>();
             unityContainer.RegisterType<IPricingGuideDistributionEngine, PricingGuideDistributionEngine>();
-            unityContainer.RegisterType<IBarterFileImporter, BarterFileImporter>();
+            unityContainer.RegisterType<IBarterFileImporterFactory, BarterFileImporterFactory>();
             unityContainer.RegisterType<IInventoryFileImporterFactory, InventoryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();

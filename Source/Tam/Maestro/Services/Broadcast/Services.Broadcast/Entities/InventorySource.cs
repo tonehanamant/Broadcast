@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities
 {
@@ -11,12 +7,6 @@ namespace Services.Broadcast.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public InventoryType InventoryType { get; set; }
-    }
-
-    public enum InventoryType
-    {
-        NationalUnit = 1,
-        Station = 2
+        public InventorySourceTypeEnum InventoryType { get; set; }
     }
 }

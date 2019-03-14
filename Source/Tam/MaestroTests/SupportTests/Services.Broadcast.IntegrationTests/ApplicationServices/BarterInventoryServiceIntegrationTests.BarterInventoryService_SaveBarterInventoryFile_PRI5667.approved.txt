@@ -4,13 +4,13 @@
     "EndDate": "2019-05-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
     "Manifests": [
       {
-        "Comment": null,
+        "Comment": "",
         "DaypartCode": "AM",
         "EffectiveDate": "2019-05-22T00:00:00",
         "EndDate": "2019-05-30T00:00:00",
@@ -99,7 +99,7 @@
     "EndDate": "2019-05-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },

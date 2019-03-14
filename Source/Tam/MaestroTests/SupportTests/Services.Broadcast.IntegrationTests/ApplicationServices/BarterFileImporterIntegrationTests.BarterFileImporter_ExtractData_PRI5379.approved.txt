@@ -2,7 +2,7 @@
   "CreatedBy": "integration test",
   "DataLines": [
     {
-      "Comment": null,
+      "Comment": "",
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "Comment": null,
+      "Comment": "",
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -119,16 +119,12 @@
     "EndDate": "0001-01-01T00:00:00",
     "HutBookId": 449,
     "PlaybackType": 2,
-    "ShareBookId": 450
+    "ShareBookId": 450,
+    "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": {
-    "Id": 4,
-    "InventoryType": 1,
-    "IsActive": true,
-    "Name": "TTNW"
-  },
+  "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",

@@ -3,6 +3,7 @@
     public enum InventorySourceTypeEnum
     {
         OpenMarket = 1,
-        Barter = 2
+        Barter = 2,
+        ProprietaryOAndO = 3
     }
 }

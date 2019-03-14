@@ -14,6 +14,7 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Common.Services;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -361,7 +362,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new InventorySource
             {
                 Id = 4,
-                InventoryType = InventoryType.NationalUnit,
+                InventoryType = InventorySourceTypeEnum.Barter,
                 IsActive = true,
                 Name = "TTNW"
             };

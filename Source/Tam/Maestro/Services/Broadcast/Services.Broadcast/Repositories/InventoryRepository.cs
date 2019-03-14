@@ -15,6 +15,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -63,7 +64,7 @@ namespace Services.Broadcast.Repositories
                     select new InventorySource()
                     {
                         Id = a.id,
-                        InventoryType = (InventoryType)a.inventory_source_type,
+                        InventoryType = (InventorySourceTypeEnum)a.inventory_source_type,
                         IsActive = a.is_active,
                         Name = a.name
                     }).ToList());
@@ -77,7 +78,7 @@ namespace Services.Broadcast.Repositories
                     select new InventorySource()
                     {
                         Id = a.id,
-                        InventoryType = (InventoryType)a.inventory_source_type,
+                        InventoryType = (InventorySourceTypeEnum)a.inventory_source_type,
                         IsActive = a.is_active,
                         Name = a.name
                     }).SingleOrDefault());
@@ -347,7 +348,7 @@ namespace Services.Broadcast.Repositories
                 InventorySource = new InventorySource()
                 {
                     Id = stationInventoryGroup.inventory_sources.id,
-                    InventoryType = (InventoryType)stationInventoryGroup.inventory_sources.inventory_source_type,
+                    InventoryType = (InventorySourceTypeEnum)stationInventoryGroup.inventory_sources.inventory_source_type,
                     Name = stationInventoryGroup.inventory_sources.name,
                     IsActive = stationInventoryGroup.inventory_sources.is_active
                 },

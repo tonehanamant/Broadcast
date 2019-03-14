@@ -6,25 +6,21 @@
   "Hash": "6A-E7-B4-E2-57-EA-64-97-9A-87-39-1F-EB-AD-03-AC-01-FE-2B-BE",
   "Header": {
     "AudienceId": 37,
-    "Cpm": 0.0,
+    "Cpm": null,
     "DaypartCode": "EMN",
     "EffectiveDate": "2018-01-31T00:00:00",
     "EndDate": "2019-03-31T00:00:00",
     "HutBookId": null,
     "PlaybackType": 0,
-    "ShareBookId": 425
+    "ShareBookId": 425,
+    "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": {
-    "Id": 4,
-    "InventoryType": 1,
-    "IsActive": true,
-    "Name": "TTNW"
-  },
+  "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
-    "CPM is not in the correct format (##.##)",
+    "Invalid value for CPM (999999999912345000000000000000000000.000000000)",
     "Invalid contracted daypart (M-SU 4:00AM - 10:00 AM)",
     "HUT Book must be prior to the Share book",
     "Invalid playback type (LIVE+31)"

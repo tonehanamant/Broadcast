@@ -50,6 +50,76 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-5636 *****************************************************/
+--add OAndO sources
+if not exists (select * from inventory_sources where [name] = 'ABC O&O')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('ABC O&O', 1, 3)
+end
+
+if not exists (select * from inventory_sources where [name] = 'NBC O&O')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('NBC O&O', 1, 3)
+end
+
+if not exists (select * from inventory_sources where [name] = 'KATZ')
+begin
+	insert into inventory_sources([name], is_active, inventory_source_type) values('KATZ', 1, 3)
+end
+
+--remove unnecessary 'Assembly' source
+if exists (select * from inventory_sources where [name] = 'Assembly')
+begin
+	delete from inventory_sources where [name] = 'Assembly'
+end
+
+--change type of Barter sources
+if exists (select * from inventory_sources where [name] = 'TVB')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'TVB'
+end
+
+if exists (select * from inventory_sources where [name] = 'TTNW')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'TTNW'
+end
+
+if exists (select * from inventory_sources where [name] = 'CNN')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'CNN'
+end
+
+if exists (select * from inventory_sources where [name] = 'Sinclair')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'Sinclair'
+end
+
+if exists (select * from inventory_sources where [name] = 'LilaMax')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'LilaMax'
+end
+
+if exists (select * from inventory_sources where [name] = 'MLB')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'MLB'
+end
+
+if exists (select * from inventory_sources where [name] = 'Ference Media')
+begin
+	update inventory_sources set inventory_source_type = 2 where [name] = 'Ference Media'
+end
+
+--make cpm and audience_id nullable
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'cpm')
+BEGIN
+	ALTER TABLE inventory_file_barter_header ALTER COLUMN cpm money NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_barter_header') AND name = 'audience_id')
+BEGIN
+	ALTER TABLE inventory_file_barter_header ALTER COLUMN audience_id int NULL
+END
+/*************************************** END PRI-5636 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

@@ -87,7 +87,7 @@ namespace Services.Broadcast.Extensions
         /// <returns>String value or null</returns>
         public static string GetStringValue(this ExcelRange cell)
         {
-            return cell.Value?.ToString()?.Trim();
+            return cell?.Text.ToString()?.Trim() ?? cell.Value?.ToString()?.Trim();
         }
 
         /// <summary>

@@ -19,8 +19,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string daypart_code { get; set; }
         public System.DateTime effective_date { get; set; }
         public System.DateTime end_date { get; set; }
-        public decimal cpm { get; set; }
-        public int audience_id { get; set; }
+        public Nullable<decimal> cpm { get; set; }
+        public Nullable<int> audience_id { get; set; }
         public int contracted_daypart_id { get; set; }
         public int share_projection_book_id { get; set; }
         public Nullable<int> hut_projection_book_id { get; set; }

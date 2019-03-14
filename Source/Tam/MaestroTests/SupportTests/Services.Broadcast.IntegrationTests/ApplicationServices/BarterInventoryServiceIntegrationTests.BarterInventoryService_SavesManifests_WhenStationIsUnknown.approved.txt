@@ -4,7 +4,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -569,7 +569,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -1134,7 +1134,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -1699,7 +1699,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -2264,7 +2264,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -2829,7 +2829,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -3394,7 +3394,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
