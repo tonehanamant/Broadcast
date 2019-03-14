@@ -6,7 +6,8 @@ const api = {
     __API__: "https://jsonplaceholder.typicode.com"
   },
   local: {
-    __API__: "http://localhost:61722/api/"
+    // __API__: "http://localhost:61722/api/"
+    __API__: "http://devvmqa2.dev.crossmw.com/Broadcast/api/"
   }
 };
 
