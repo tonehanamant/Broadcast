@@ -33,7 +33,7 @@ module.exports = {
      */
     envVars: {
       local: {
-        ...api.global
+        ...api.local
       },
       development: {
         ...api.global
