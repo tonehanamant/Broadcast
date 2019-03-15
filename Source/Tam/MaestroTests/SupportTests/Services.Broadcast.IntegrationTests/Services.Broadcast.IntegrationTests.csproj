@@ -596,6 +596,9 @@
     <None Include="Files\Market_Coverages_3.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Market_Coverages_4.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Market_Coverages_Pricing_Guide.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
