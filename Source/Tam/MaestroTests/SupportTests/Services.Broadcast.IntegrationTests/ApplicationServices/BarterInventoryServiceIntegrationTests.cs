@@ -1,19 +1,24 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -23,7 +28,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IBarterInventoryService _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
         private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
         private IInventoryRepository _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private IBarterRepository _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
+        private IBarterRepository _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();     
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -437,6 +442,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
 
                 Approvals.Verify(fileJson);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterInventoryService_SendFileToDataLake()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                var filePath = Path.Combine(dataLakeFolder, fileName);
+                var barterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+
+                if (fileService.Exists(filePath))
+                {
+                    fileService.Delete(filePath);
+                }
+
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = barterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                Assert.True(fileService.Exists(filePath));
             }
         }
 

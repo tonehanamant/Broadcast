@@ -44,6 +44,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IDataLakeFileService _DataLakeFileService;
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBarterFileImporterFactory barterFileImporterFactory
@@ -52,7 +53,8 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IDataLakeFileService dataLakeFileService)
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -65,6 +67,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
+            _DataLakeFileService = dataLakeFileService;
         }
 
         /// <summary>
@@ -91,6 +94,16 @@ namespace Services.Broadcast.ApplicationServices
 
             fileImporter.LoadFromSaveRequest(request);
             fileImporter.CheckFileHash();
+
+            try
+            {
+                _DataLakeFileService.Save(request);
+            }
+            catch
+            {
+                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
+            }
+
             BarterInventoryFile barterFile = fileImporter.GetPendingBarterInventoryFile(userName, inventorySource);
 
             _CheckValidationProblems(barterFile);
