@@ -374,6 +374,12 @@
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\C786.Sigma.MissingColumns.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
