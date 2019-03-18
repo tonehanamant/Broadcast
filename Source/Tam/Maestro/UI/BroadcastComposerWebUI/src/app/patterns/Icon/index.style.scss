@@ -1,0 +1,107 @@
+@import "src/styles/index";
+
+.default {
+  color: $color-grayscale-3;
+}
+.primary {
+  color: $color-primary-1;
+}
+.primary-0 {
+  color: $color-primary-0;
+}
+.primary-2 {
+  color: $color-primary-2;
+}
+.primary-3 {
+  color: $color-primary-3;
+}
+.primary-4 {
+  color: $color-primary-4;
+}
+.secondary {
+  color: $color-secondary-1;
+}
+.secondary-2 {
+  color: $color-secondary-2;
+}
+.secondary-3 {
+  color: $color-secondary-3;
+}
+.secondary-4 {
+  color: $color-secondary-4;
+}
+.tertiary {
+  color: $color-tertiary-1;
+}
+.tertiary-2 {
+  color: $color-tertiary-2;
+}
+.tertiary-3 {
+  color: $color-tertiary-2;
+}
+.tertiary-4 {
+  color: $color-tertiary-2;
+}
+.gray-0 {
+  color: $color-grayscale-0;
+}
+.gray-1 {
+  color: $color-grayscale-1;
+}
+.gray-2 {
+  color: $color-grayscale-2;
+}
+.gray-3 {
+  color: $color-grayscale-3;
+}
+.gray-4 {
+  color: $color-grayscale-4;
+}
+.navigation-hover {
+  color: $color-nav-link-hover;
+}
+.invalid {
+  color: $color-invalid;
+}
+.success {
+  color: $color-success;
+}
+.warning {
+  color: $color-warning;
+}
+.transparent {
+  &50 {
+    color: rgba($color-grayscale-0, 0.5);
+  }
+}
+
+.tiny {
+  @include make_font_icon_size(10px);
+}
+.xxs {
+  @include make_font_icon_size(15px);
+}
+.xs {
+  @include make_font_icon_size(20px);
+}
+.sm {
+  @include make_font_icon_size(25px);
+}
+.md {
+  @include make_font_icon_size(30px);
+}
+.lg {
+  @include make_font_icon_size(40px);
+}
+.xl {
+  @include make_font_icon_size(50px);
+}
+.xxl {
+  @include make_font_icon_size(60px);
+}
+.minor {
+  @include make_font_icon_size(100px);
+}
+.major {
+  @include make_font_icon_size(150px);
+}

@@ -20,6 +20,12 @@
     "docs:build": "docz build"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-brands-svg-icons": "^5.5.0",
+    "@fortawesome/pro-light-svg-icons": "^5.5.0",
+    "@fortawesome/pro-regular-svg-icons": "^5.5.0",
+    "@fortawesome/pro-solid-svg-icons": "^5.5.0",
     "animatewithsass": "^3.2.1",
     "antd": "^3.6.1",
     "attr-accept": "^1.1.3",

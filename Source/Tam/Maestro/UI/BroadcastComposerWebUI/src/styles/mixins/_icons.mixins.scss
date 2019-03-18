@@ -1,0 +1,11 @@
+@mixin make_font_icon_size($size) {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  & > span,
+  & > svg {
+    font-size: $size;
+  }
+}

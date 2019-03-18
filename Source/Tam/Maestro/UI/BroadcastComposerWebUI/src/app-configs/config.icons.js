@@ -1,6 +1,9 @@
-// import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-// solid
-// import { faCheckCircle as fasCheckCircle } from "@fortawesome/pro-solid-svg-icons";
+// light
+import { faSpinnerThird as falSpinnerThird } from "@fortawesome/pro-light-svg-icons";
 
-export const configureIcons = () => {};
+export const configureIcons = () => {
+  // light
+  library.add(falSpinnerThird);
+};
