@@ -28,13 +28,13 @@ export const Main = ({ match: { path } }) => (
     <Overlay type="processing" />
     <Switch>
       <Route exact path={path} component={SectionPostPrePosting} />
-      <Route path={`${path}/post`} component={SectionPost} />
+      <Route path={`${path}post`} component={SectionPost} />
       <Route
-        path={`${path}/post-pre-posting`}
+        path={`${path}post-pre-posting`}
         component={SectionPostPrePosting}
       />
-      <Route path={`${path}/planning`} component={SectionPlanning} />
-      <Route path={`${path}/tracker`} component={SectionTracker} />
+      <Route path={`${path}planning`} component={SectionPlanning} />
+      <Route path={`${path}tracker`} component={SectionTracker} />
     </Switch>
     <AppFooter />
   </div>

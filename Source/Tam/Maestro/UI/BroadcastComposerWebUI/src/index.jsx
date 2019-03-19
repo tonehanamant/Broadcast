@@ -8,6 +8,7 @@ import { store, history, configureIcons } from "AppConfigs";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css?raw";
 import "react-select/dist/react-select.css?raw";
+import "react-table/react-table.css?raw";
 import "./index.scss";
 
 import "./styles/imports/bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap.css?raw";
