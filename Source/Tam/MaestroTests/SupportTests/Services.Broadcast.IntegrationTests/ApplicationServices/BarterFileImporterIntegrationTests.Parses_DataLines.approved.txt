@@ -4,7 +4,25 @@
   "DataLines": [
     {
       "Comment": "Comment 1",
-      "Daypart": "M-F 11-1134P",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 84839,
+          "_Friday": true,
+          "_Id": 70631,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 82800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
       "Station": "KOB+",
       "Units": [
         {
@@ -30,7 +48,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 1
@@ -39,7 +57,25 @@
     },
     {
       "Comment": "Comment 2",
-      "Daypart": "M-F + SU 10-1035P",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 81299,
+          "_Friday": true,
+          "_Id": 63004,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 79200,
+          "_Sunday": true,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
       "Station": "KOLN",
       "Units": [
         {
@@ -65,7 +101,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 2
@@ -74,7 +110,42 @@
     },
     {
       "Comment": "Comment 3",
-      "Daypart": "M-F 10-1130P / SA-SU 10-11P",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 84599,
+          "_Friday": true,
+          "_Id": 14794,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 79200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        {
+          "_Code": "CUS",
+          "_EndTime": 82799,
+          "_Friday": false,
+          "_Id": 14728,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 79200,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        }
+      ],
       "Station": "KRQE+",
       "Units": [
         {
@@ -100,7 +171,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 1
@@ -109,7 +180,59 @@
     },
     {
       "Comment": "Comment 4",
-      "Daypart": "M-F 5-7P + SA 6-630P + SU 6-7P",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 68399,
+          "_Friday": true,
+          "_Id": 34021,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 61200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        {
+          "_Code": "CUS",
+          "_EndTime": 66599,
+          "_Friday": false,
+          "_Id": 35436,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 64800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        {
+          "_Code": "CUS",
+          "_EndTime": 68399,
+          "_Friday": false,
+          "_Id": 14750,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 64800,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        }
+      ],
       "Station": "KUON-TV 12.1",
       "Units": [
         {
@@ -135,7 +258,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 3
@@ -144,7 +267,25 @@
     },
     {
       "Comment": "Comment 5",
-      "Daypart": "W-F 3-4A",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 14399,
+          "_Friday": true,
+          "_Id": 31117,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 10800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": false,
+          "_Wednesday": true
+        }
+      ],
       "Station": "KSWB-TV 69.2",
       "Units": [
         {
@@ -170,7 +311,7 @@
         },
         {
           "BarterInventoryUnit": {
-            "Name": "AM [n]",
+            "Name": "AM 4",
             "SpotLength": 15
           },
           "Spots": 1

@@ -1,19 +1,13 @@
 ﻿[
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 16 has missing values. Columns: station",
+    "ProblemDescription": "Line 16 contains an empty station cell",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Line 17 has missing values. Columns: AM 2",
-    "ProgramName": null,
-    "StationLetters": null
-  },
-  {
-    "AffectedProposals": null,
-    "ProblemDescription": "Line 19 has missing values. Columns: daypart, AM 3",
+    "ProblemDescription": "Line 19 contains an empty daypart cell",
     "ProgramName": null,
     "StationLetters": null
   }

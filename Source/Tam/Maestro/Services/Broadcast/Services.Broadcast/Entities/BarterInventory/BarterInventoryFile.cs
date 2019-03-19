@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities.BarterInventory
 {
@@ -16,9 +17,9 @@ namespace Services.Broadcast.Entities.BarterInventory
         {
             public string Station { get; set; }
 
-            public string Daypart { get; set; }
-
             public string Comment { get; set; }
+
+            public List<DisplayDaypart> Dayparts { get; set; }
 
             public List<Unit> Units { get; set; } = new List<Unit>();
 

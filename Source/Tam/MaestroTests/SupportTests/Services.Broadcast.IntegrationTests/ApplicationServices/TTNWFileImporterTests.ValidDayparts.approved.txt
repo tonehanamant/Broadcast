@@ -509,7 +509,7 @@
     "InventoryManifests": [],
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },

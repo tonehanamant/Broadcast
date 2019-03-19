@@ -4,7 +4,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -53,6 +53,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -519,6 +529,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 1
@@ -540,8 +560,8 @@
         }
       }
     ],
-    "Name": "AM(n)",
-    "SlotNumber": 0,
+    "Name": "AM 1",
+    "SlotNumber": 1,
     "StartDate": "2019-01-31T00:00:00"
   },
   {
@@ -549,7 +569,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -598,6 +618,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -1064,6 +1094,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 4
@@ -1094,7 +1134,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -1143,6 +1183,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -1609,6 +1659,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 3
@@ -1630,8 +1690,8 @@
         }
       }
     ],
-    "Name": "AM 3&4",
-    "SlotNumber": 3,
+    "Name": "AM 34",
+    "SlotNumber": 34,
     "StartDate": "2019-01-31T00:00:00"
   },
   {
@@ -1639,7 +1699,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -1688,6 +1748,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 5
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -2154,6 +2224,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 5
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 5
@@ -2184,7 +2264,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -2233,6 +2313,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -2699,6 +2789,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 1
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 1
@@ -2729,7 +2829,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -2778,6 +2878,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -3244,6 +3354,16 @@
               "_MediaMonthId": 459,
               "_StartDate": "2019-12-23T00:00:00",
               "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 4
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
               "IsDirty": true
             },
             "Spots": 4
@@ -3265,8 +3385,8 @@
         }
       }
     ],
-    "Name": "AM",
-    "SlotNumber": 0,
+    "Name": "AM 7",
+    "SlotNumber": 7,
     "StartDate": "2019-01-31T00:00:00"
   },
   {
@@ -3274,7 +3394,7 @@
     "EndDate": "2019-12-30T00:00:00",
     "InventorySource": {
       "Id": 4,
-      "InventoryType": 1,
+      "InventoryType": 2,
       "IsActive": true,
       "Name": "TTNW"
     },
@@ -3323,6 +3443,16 @@
         ],
         "ManifestRates": [],
         "ManifestWeeks": [
+          {
+            "MediaWeek": {
+              "_EndDate": "2019-02-03T00:00:00",
+              "_MediaMonthId": 449,
+              "_StartDate": "2019-01-28T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 3
+          },
           {
             "MediaWeek": {
               "_EndDate": "2019-02-10T00:00:00",
@@ -3792,6 +3922,16 @@
               "IsDirty": true
             },
             "Spots": 3
+          },
+          {
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 3
           }
         ],
         "SpotLengthId": 3,
@@ -3810,8 +3950,8 @@
         }
       }
     ],
-    "Name": "AM (n)",
-    "SlotNumber": 0,
+    "Name": "AM 6",
+    "SlotNumber": 6,
     "StartDate": "2019-01-31T00:00:00"
   }
 ]

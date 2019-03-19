@@ -1,0 +1,135 @@
+﻿{
+  "CreatedBy": "integration test",
+  "DataLines": [
+    {
+      "Comment": "Test1",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 21599,
+          "_Friday": true,
+          "_Id": 29862,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Station": "WCBS",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": null
+        }
+      ]
+    },
+    {
+      "Comment": "",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 23399,
+          "_Friday": false,
+          "_Id": 30028,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        }
+      ],
+      "Station": "WNYW",
+      "Units": [
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 1",
+            "SpotLength": 60
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 2",
+            "SpotLength": 30
+          },
+          "Spots": 1
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 3",
+            "SpotLength": 30
+          },
+          "Spots": null
+        },
+        {
+          "BarterInventoryUnit": {
+            "Name": "AM 4",
+            "SpotLength": 15
+          },
+          "Spots": null
+        }
+      ]
+    }
+  ],
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5980.xlsx",
+  "FileStatus": 1,
+  "Hash": "E5-45-84-EE-93-50-74-51-63-2C-9A-BE-65-CD-18-0B-E3-CB-18-DC",
+  "Header": {
+    "AudienceId": 37,
+    "Cpm": 222.22,
+    "DaypartCode": "PMN",
+    "EffectiveDate": "2019-05-03T00:00:00",
+    "EndDate": "2019-05-09T00:00:00",
+    "HutBookId": 449,
+    "PlaybackType": 5,
+    "ShareBookId": 450,
+    "SpotLengthId": null
+  },
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": {
+    "Id": 0,
+    "InventoryType": 2,
+    "IsActive": false,
+    "Name": null
+  },
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

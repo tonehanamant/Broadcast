@@ -2,8 +2,26 @@
   "CreatedBy": "integration test",
   "DataLines": [
     {
-      "Comment": null,
-      "Daypart": "M-F 5-6A",
+      "Comment": "",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 21599,
+          "_Friday": true,
+          "_Id": 29862,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
       "Station": "WCBS",
       "Units": [
         {
@@ -37,8 +55,26 @@
       ]
     },
     {
-      "Comment": null,
-      "Daypart": "SA-SU 6-630A",
+      "Comment": "",
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 23399,
+          "_Friday": false,
+          "_Id": 30028,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        }
+      ],
       "Station": "WNYW",
       "Units": [
         {
@@ -83,19 +119,15 @@
     "EndDate": "0001-01-01T00:00:00",
     "HutBookId": 449,
     "PlaybackType": 2,
-    "ShareBookId": 450
+    "ShareBookId": 450,
+    "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": {
-    "Id": 4,
-    "InventoryType": 1,
-    "IsActive": true,
-    "Name": "TTNW"
-  },
+  "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
-    "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
-    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)"
+    "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
+    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)"
   ]
 }

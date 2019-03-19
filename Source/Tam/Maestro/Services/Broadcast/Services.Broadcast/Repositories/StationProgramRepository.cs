@@ -47,6 +47,7 @@ namespace Services.Broadcast.Repositories
                             .Include(m => m.station_inventory_spots)
                             .Include(s => s.station)
                             .Include(i => i.inventory_sources)
+                            .Where(s => s.station.market_code != null)
                             .Where(p => p.inventory_source_id == rateSource)
                             .Where(a => (a.effective_date >= flightStart.Date && a.effective_date <= flightEnd.Date)
                                         || (a.end_date >= flightStart.Date && a.end_date <= flightEnd.Date)
@@ -54,7 +55,9 @@ namespace Services.Broadcast.Repositories
                             .ToList();
 
                         if (proposalMarketIds != null && proposalMarketIds.Count > 0)
+                        {
                             manifests = manifests.Where(b => proposalMarketIds.Contains(b.station.market_code.Value)).ToList();
+                        }
 
                         return (manifests.Select(m =>
                             new ProposalProgramDto()

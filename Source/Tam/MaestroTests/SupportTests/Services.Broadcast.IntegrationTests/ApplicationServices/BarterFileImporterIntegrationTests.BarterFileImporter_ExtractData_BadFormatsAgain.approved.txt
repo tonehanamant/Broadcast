@@ -3,25 +3,21 @@
   "DataLines": [],
   "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats3.xlsx",
   "FileStatus": 1,
-  "Hash": "E0-1D-5E-6C-BA-78-28-FD-0B-AE-1E-43-4C-BA-58-5D-A7-37-A9-F1",
+  "Hash": "23-D2-52-95-35-73-DD-E6-75-68-27-36-8D-A8-E5-82-4A-F6-62-8D",
   "Header": {
     "AudienceId": 37,
-    "Cpm": 99.88,
+    "Cpm": 99.880000000,
     "DaypartCode": "EMN",
     "EffectiveDate": "0001-01-01T00:00:00",
     "EndDate": "0001-01-01T00:00:00",
     "HutBookId": null,
     "PlaybackType": 4,
-    "ShareBookId": 425
+    "ShareBookId": 425,
+    "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": {
-    "Id": 4,
-    "InventoryType": 1,
-    "IsActive": true,
-    "Name": "TTNW"
-  },
+  "InventorySource": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [
     "End date (1/30/2019) should be greater then effective date (1/31/2019)",

@@ -92,7 +92,7 @@
         "OrderedSpots": 1,
         "OutOfSpecSpots": null,
         "ProgramName": "JUDGE ALEX",
-        "Rank": 11,
+        "Rank": 13,
         "SpecStatus": null,
         "SpotClearance": 1.0,
         "SpotCost": 21.00,
@@ -155,7 +155,7 @@
         "OrderedSpots": 1,
         "OutOfSpecSpots": null,
         "ProgramName": "GOOD MORNING ARIZONA 5AM",
-        "Rank": 12,
+        "Rank": 11,
         "SpecStatus": null,
         "SpotClearance": 0.0,
         "SpotCost": 22.00,
@@ -232,28 +232,24 @@
       {
         "AudienceId": 31,
         "AudienceName": "HH",
-        "IsHouseHold": true,
         "Population": 0,
         "Rank": 2
       },
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 1
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 3
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 4
       }
@@ -340,7 +336,7 @@
         "OrderedSpots": 0,
         "OutOfSpecSpots": 1,
         "ProgramName": "SHEPHERD'S CHAPEL",
-        "Rank": 25,
+        "Rank": 22,
         "SpecStatus": "Program Name,Station",
         "SpotClearance": null,
         "SpotCost": null,
@@ -354,28 +350,24 @@
       {
         "AudienceId": 31,
         "AudienceName": "HH",
-        "IsHouseHold": true,
         "Population": 0,
         "Rank": 2
       },
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 1
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 3
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 4
       }
@@ -464,7 +456,7 @@
         "Length": 30,
         "Market": "TAMPA",
         "ProgramName": "JUDGE ALEX",
-        "Rank": 11,
+        "Rank": 13,
         "Station": "WMOR",
         "TimeAired": "9:08 AM"
       },
@@ -677,7 +669,7 @@
         "OrderedSpots": 0,
         "OutOfSpecSpots": 1,
         "ProgramName": null,
-        "Rank": 25,
+        "Rank": 22,
         "SpecStatus": "Program Name,Station",
         "SpotClearance": null,
         "SpotCost": null,
@@ -803,7 +795,7 @@
         "OrderedSpots": 1,
         "OutOfSpecSpots": null,
         "ProgramName": "GOOD MORNING ARIZONA 5AM",
-        "Rank": 12,
+        "Rank": 11,
         "SpecStatus": "",
         "SpotClearance": 0.0,
         "SpotCost": 22.00,
@@ -866,7 +858,7 @@
         "OrderedSpots": 1,
         "OutOfSpecSpots": null,
         "ProgramName": "JUDGE ALEX",
-        "Rank": 11,
+        "Rank": 13,
         "SpecStatus": "Match",
         "SpotClearance": 1.0,
         "SpotCost": 21.00,
@@ -880,28 +872,24 @@
       {
         "AudienceId": 31,
         "AudienceName": "HH",
-        "IsHouseHold": true,
         "Population": 0,
         "Rank": 2
       },
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 1
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 3
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 4
       }
@@ -1000,7 +988,7 @@
             "OrderedSpots": 1,
             "OutOfSpecSpots": null,
             "ProgramName": "JUDGE ALEX",
-            "Rank": 11,
+            "Rank": 13,
             "SpecStatus": "Match",
             "SpotClearance": 1.0,
             "SpotCost": 21.00,
@@ -1063,7 +1051,7 @@
             "OrderedSpots": 1,
             "OutOfSpecSpots": null,
             "ProgramName": "GOOD MORNING ARIZONA 5AM",
-            "Rank": 12,
+            "Rank": 11,
             "SpecStatus": "",
             "SpotClearance": 0.0,
             "SpotCost": 22.00,
@@ -1180,7 +1168,7 @@
             "OrderedSpots": 0,
             "OutOfSpecSpots": null,
             "ProgramName": "SHEPHERD'S CHAPEL",
-            "Rank": 25,
+            "Rank": 22,
             "SpecStatus": "Program Name,Station",
             "SpotClearance": null,
             "SpotCost": null,
@@ -1200,28 +1188,24 @@
       {
         "AudienceId": 31,
         "AudienceName": "HH",
-        "IsHouseHold": true,
         "Population": 0,
         "Rank": 2
       },
       {
         "AudienceId": 33,
         "AudienceName": "A18-49",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 1
       },
       {
         "AudienceId": 61,
         "AudienceName": "W35+",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 3
       },
       {
         "AudienceId": 53,
         "AudienceName": "M35-64",
-        "IsHouseHold": false,
         "Population": 0,
         "Rank": 4
       }

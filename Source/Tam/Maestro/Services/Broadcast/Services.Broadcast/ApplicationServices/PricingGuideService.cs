@@ -1117,7 +1117,7 @@ namespace Services.Broadcast.ApplicationServices
                 MinCpm = x.MinCpm,
                 MaxCpm = x.MaxCpm,
                 AvgCpm = x.AvgCpm
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
         }
 
         private List<PricingGuideMarketDto> _GroupProgramsByMarketAndStationForPricingGuide(IEnumerable<ProposalProgramDto> programs)

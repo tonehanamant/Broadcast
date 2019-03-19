@@ -32,6 +32,10 @@ namespace Services.Broadcast.Repositories
         MarketCoverageDto GetLatestMarketCoverages(IEnumerable<int> marketIds);
 
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
+
+        List<MarketCoverageFile> GetMarketCoverageFiles();
+
+        MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);
     }
 
     public class MarketCoverageRepository : BroadcastRepositoryBase, IMarketCoverageRepository
@@ -124,6 +128,45 @@ namespace Services.Broadcast.Repositories
                             }).ToList()
                         }).ToList()
                     };
+                });
+        }
+
+        public MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var lastMarketCoverageFile = context.market_coverage_files
+                            .Include(x => x.market_coverages)
+                            .Include(x => x.market_coverages.Select(mc => mc.market.stations))
+                            .Single(x => x.id == marketCoverageFileId);
+
+                    return new MarketCoverageByStation
+                    {
+                        MarketCoverageFileId = lastMarketCoverageFile.id,
+                        Markets = lastMarketCoverageFile.market_coverages.Select(x => new MarketCoverageByStation.Market
+                        {
+                            MarketCode = x.market_code,
+                            Rank = x.rank,
+                            Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
+                            {
+                                LegacyCallLetters = s.legacy_call_letters
+                            }).ToList()
+                        }).ToList()
+                    };
+                });
+        }
+
+        public List<MarketCoverageFile> GetMarketCoverageFiles()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.market_coverage_files.Select(x => new MarketCoverageFile
+                    {
+                        Id = x.id,
+                        CreatedDate = x.created_date
+                    }).ToList();                    
                 });
         }
 

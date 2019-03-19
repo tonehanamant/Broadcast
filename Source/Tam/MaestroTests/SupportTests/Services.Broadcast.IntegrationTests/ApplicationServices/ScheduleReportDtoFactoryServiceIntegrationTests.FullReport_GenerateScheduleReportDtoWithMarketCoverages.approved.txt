@@ -1,0 +1,1214 @@
+﻿{
+  "Advertiser": null,
+  "AdvertiserData": {
+    "DeliveredSpots": 3,
+    "ImpressionsAndDelivey": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 16951.8,
+        "OrderedImpressions": 6000.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 16951.8
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 7128.496,
+        "OrderedImpressions": 1990.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 7128.496
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 10962.582,
+        "OrderedImpressions": 10600.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 10962.582
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 2053.216,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 2053.216
+      }
+    ],
+    "OrderedSpots": 3,
+    "ReportData": [
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 1000.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 900.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": 3200.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": 21.00,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 13,
+        "SpecStatus": null,
+        "SpotClearance": 1.0,
+        "SpotCost": 21.00,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 2000.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 190.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 4200.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": 0.00,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "PHOENIX",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "GOOD MORNING ARIZONA 5AM",
+        "Rank": 11,
+        "SpecStatus": null,
+        "SpotClearance": 0.0,
+        "SpotCost": 22.00,
+        "SpotLength": 30,
+        "Station": "KTVK",
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 3893.708,
+            "Impressions": 3000.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 1914.972,
+            "Impressions": 900.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3129.908,
+            "Impressions": 3200.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 599.412,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": 42.00,
+        "DeliveredSpots": 2,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "SpecStatus": null,
+        "SpotClearance": 2.0,
+        "SpotCost": 21.00,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "Population": 0,
+        "Rank": 3
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "Population": 0,
+        "Rank": 4
+      }
+    ]
+  },
+  "OutOfSpecToDate": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 0.0,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 0.0
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "MNTV",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "2017-03-13T00:00:00",
+        "BvsDate": "2017-03-13T00:00:00",
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": "AAABBB",
+        "Market": "PORTLAND,OR",
+        "MatchAirTime": true,
+        "MatchIsci": true,
+        "MatchProgram": false,
+        "MatchSpotLength": true,
+        "MatchStation": false,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 1,
+        "ProgramName": "SHEPHERD'S CHAPEL",
+        "Rank": 22,
+        "SpecStatus": "Program Name,Station",
+        "SpotClearance": null,
+        "SpotCost": null,
+        "SpotLength": 30,
+        "Station": "KPDX",
+        "Status": 0,
+        "TimeAired": "0001-01-01T09:58:38"
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "Population": 0,
+        "Rank": 3
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "Population": 0,
+        "Rank": 4
+      }
+    ]
+  },
+  "SpotDetailData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 37096.094,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 37096.094
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 37096.094,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 37096.094
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 37096.094,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 37096.094
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 37096.094,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 37096.094
+      }
+    ],
+    "ReportData": [
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "IND",
+        "AirTime": 32932,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 0.0,
+            "NsiDelivery": 16322.615
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 0.0,
+            "NsiDelivery": 6516.905
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0.0,
+            "NsiDelivery": 1817.255
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": 0.0,
+            "NsiDelivery": 9790.8425
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "cl_AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "cl_AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "TAMPA",
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 13,
+        "Station": "WMOR",
+        "TimeAired": "9:08 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "CW",
+        "AirTime": 34617,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 1946.854,
+            "Impressions": 0.0,
+            "NsiDelivery": 2433.5675
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 957.486,
+            "Impressions": 0.0,
+            "NsiDelivery": 1196.8575
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 299.706,
+            "Impressions": 0.0,
+            "NsiDelivery": 374.6325
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 1564.954,
+            "Impressions": 0.0,
+            "NsiDelivery": 1956.1925
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "cl_AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "cl_AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "ST LOUIS",
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "Station": "KPLR",
+        "TimeAired": "9:36 AM"
+      },
+      {
+        "Advertiser": "BEIERS HERSHEY",
+        "Affiliate": "CW",
+        "AirTime": 34617,
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 1946.854,
+            "Impressions": 0.0,
+            "NsiDelivery": 2433.5675
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 957.486,
+            "Impressions": 0.0,
+            "NsiDelivery": 1196.8575
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 299.706,
+            "Impressions": 0.0,
+            "NsiDelivery": 374.6325
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 1564.954,
+            "Impressions": 0.0,
+            "NsiDelivery": 1956.1925
+          }
+        ],
+        "Brand": "",
+        "Campaign": 333444,
+        "Date": "2017-03-13T00:00:00",
+        "DateAired": "03/13/2017",
+        "DaypartId": 0,
+        "InventorySource": 2,
+        "Isci": "cl_AAABBB",
+        "IsciDto": [
+          {
+            "Brand": null,
+            "Client": "cl_AAABBB",
+            "House": "AAABBB"
+          }
+        ],
+        "Length": 30,
+        "Market": "ST LOUIS",
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "Station": "KPLR",
+        "TimeAired": "9:36 AM"
+      }
+    ]
+  },
+  "SpotsAndImpressionsBySource": [
+    {
+      "AudienceImpressions": {
+        "31": 16951.8,
+        "33": 7128.496,
+        "61": 10962.582,
+        "53": 2053.216
+      },
+      "Source": 2,
+      "Spots": 3
+    }
+  ],
+  "SpotsAndImpressionsDeliveryByAdvertiser": [
+    {
+      "AdvertiserName": "BEIERS HERSHEY",
+      "AudienceImpressions": {
+        "31": 16951.8,
+        "33": 7128.496,
+        "61": 10962.582,
+        "53": 2053.216
+      },
+      "Spots": 3
+    }
+  ],
+  "StationSummaryData": {
+    "ImpressionsAndDelivery": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "DeliveredImpressions": 16951.8,
+        "OrderedImpressions": 6000.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 16951.8
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "DeliveredImpressions": 7128.496,
+        "OrderedImpressions": 1990.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 7128.496
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "DeliveredImpressions": 10962.582,
+        "OrderedImpressions": 10600.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 10962.582
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "DeliveredImpressions": 2053.216,
+        "OrderedImpressions": 0.0,
+        "OutOfSpecDeliveredImpressions": 0.0,
+        "TotalDeliveredImpressions": 2053.216
+      }
+    ],
+    "ReportData": [
+      {
+        "Affiliate": "MNTV",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": null,
+        "DateAired": "0001-01-01T00:00:00",
+        "DeliveredSpots": null,
+        "DisplayDaypart": null,
+        "Isci": null,
+        "Market": "PORTLAND,OR",
+        "MatchAirTime": true,
+        "MatchIsci": true,
+        "MatchProgram": false,
+        "MatchSpotLength": true,
+        "MatchStation": false,
+        "MediaWeekId": null,
+        "OrderedSpots": 0,
+        "OutOfSpecSpots": 1,
+        "ProgramName": null,
+        "Rank": 22,
+        "SpecStatus": "Program Name,Station",
+        "SpotClearance": null,
+        "SpotCost": null,
+        "SpotLength": 30,
+        "Station": "KPDX",
+        "Status": 0,
+        "TimeAired": "0001-01-01T00:00:00"
+      },
+      {
+        "Affiliate": "CW",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 3893.708,
+            "Impressions": 3000.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 1914.972,
+            "Impressions": 900.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 3129.908,
+            "Impressions": 3200.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 599.412,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": 42.00,
+        "DeliveredSpots": 2,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "ST LOUIS",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+        "Rank": 21,
+        "SpecStatus": "Match",
+        "SpotClearance": 2.0,
+        "SpotCost": 21.00,
+        "SpotLength": 30,
+        "Station": "KPLR",
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 0.0,
+            "Impressions": 2000.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 0.0,
+            "Impressions": 190.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 0.0,
+            "Impressions": 4200.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 0.0,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": 0.00,
+        "DeliveredSpots": 0,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "PHOENIX",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "GOOD MORNING ARIZONA 5AM",
+        "Rank": 11,
+        "SpecStatus": "",
+        "SpotClearance": 0.0,
+        "SpotCost": 22.00,
+        "SpotLength": 30,
+        "Station": "KTVK",
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
+      },
+      {
+        "Affiliate": "IND",
+        "AudienceImpressions": [
+          {
+            "AudienceId": 31,
+            "Delivery": 13058.092,
+            "Impressions": 1000.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 33,
+            "Delivery": 5213.524,
+            "Impressions": 900.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 61,
+            "Delivery": 7832.674,
+            "Impressions": 3200.0,
+            "NsiDelivery": 0.0
+          },
+          {
+            "AudienceId": 53,
+            "Delivery": 1453.804,
+            "Impressions": 0.0,
+            "NsiDelivery": 0.0
+          }
+        ],
+        "BroadcastDate": "0001-01-01T00:00:00",
+        "BvsDate": "0001-01-01T00:00:00",
+        "Cost": 21.00,
+        "DeliveredSpots": 1,
+        "DisplayDaypart": {
+          "_Code": "",
+          "_EndTime": 37799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "",
+          "_Saturday": false,
+          "_StartTime": 18000,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Isci": null,
+        "Market": "TAMPA",
+        "MediaWeekId": null,
+        "OrderedSpots": 1,
+        "OutOfSpecSpots": null,
+        "ProgramName": "JUDGE ALEX",
+        "Rank": 13,
+        "SpecStatus": "Match",
+        "SpotClearance": 1.0,
+        "SpotCost": 21.00,
+        "SpotLength": 30,
+        "Station": "WMOR",
+        "Status": 1,
+        "TimeAired": "0001-01-01T00:00:00"
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "Population": 0,
+        "Rank": 3
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "Population": 0,
+        "Rank": 4
+      }
+    ]
+  },
+  "WeeklyData": {
+    "ImpressionsAndDelivey": [],
+    "ReportDataByWeek": [
+      {
+        "ImpressionsAndDelivery": [
+          {
+            "AudienceId": 31,
+            "AudienceName": "HH",
+            "DeliveredImpressions": 16951.8,
+            "OrderedImpressions": 6000.0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 16951.8
+          },
+          {
+            "AudienceId": 33,
+            "AudienceName": "A18-49",
+            "DeliveredImpressions": 7128.496,
+            "OrderedImpressions": 1990.0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 7128.496
+          },
+          {
+            "AudienceId": 61,
+            "AudienceName": "W35+",
+            "DeliveredImpressions": 10962.582,
+            "OrderedImpressions": 10600.0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 10962.582
+          },
+          {
+            "AudienceId": 53,
+            "AudienceName": "M35-64",
+            "DeliveredImpressions": 2053.216,
+            "OrderedImpressions": 0.0,
+            "OutOfSpecDeliveredImpressions": 0.0,
+            "TotalDeliveredImpressions": 2053.216
+          }
+        ],
+        "ReportData": [
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 13058.092,
+                "Impressions": 1000.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 5213.524,
+                "Impressions": 900.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 7832.674,
+                "Impressions": 3200.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 1453.804,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
+            "Cost": 21.00,
+            "DeliveredSpots": 1,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 37799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "TAMPA",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "JUDGE ALEX",
+            "Rank": 13,
+            "SpecStatus": "Match",
+            "SpotClearance": 1.0,
+            "SpotCost": 21.00,
+            "SpotLength": 30,
+            "Station": "WMOR",
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
+          },
+          {
+            "Affiliate": "IND",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 0.0,
+                "Impressions": 2000.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 190.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 0.0,
+                "Impressions": 4200.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 0.0,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
+            "Cost": 0.00,
+            "DeliveredSpots": 0,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 37799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "PHOENIX",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "GOOD MORNING ARIZONA 5AM",
+            "Rank": 11,
+            "SpecStatus": "",
+            "SpotClearance": 0.0,
+            "SpotCost": 22.00,
+            "SpotLength": 30,
+            "Station": "KTVK",
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
+          },
+          {
+            "Affiliate": "CW",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 3893.708,
+                "Impressions": 3000.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 1914.972,
+                "Impressions": 900.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 3129.908,
+                "Impressions": 3200.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 599.412,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "BroadcastDate": "0001-01-01T00:00:00",
+            "BvsDate": "0001-01-01T00:00:00",
+            "Cost": 42.00,
+            "DeliveredSpots": 2,
+            "DisplayDaypart": {
+              "_Code": "",
+              "_EndTime": 37799,
+              "_Friday": true,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Isci": null,
+            "Market": "ST LOUIS",
+            "MediaWeekId": null,
+            "OrderedSpots": 1,
+            "OutOfSpecSpots": null,
+            "ProgramName": "CRIME WATCH DAILY WITH CHRIS HANSEN",
+            "Rank": 21,
+            "SpecStatus": "Match",
+            "SpotClearance": 2.0,
+            "SpotCost": 21.00,
+            "SpotLength": 30,
+            "Station": "KPLR",
+            "Status": 1,
+            "TimeAired": "0001-01-01T00:00:00"
+          },
+          {
+            "Affiliate": "MNTV",
+            "AudienceImpressions": [
+              {
+                "AudienceId": 31,
+                "Delivery": 0.0,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 33,
+                "Delivery": 0.0,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 61,
+                "Delivery": 0.0,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              },
+              {
+                "AudienceId": 53,
+                "Delivery": 0.0,
+                "Impressions": 0.0,
+                "NsiDelivery": 0.0
+              }
+            ],
+            "BroadcastDate": "2017-03-13T00:00:00",
+            "BvsDate": "2017-03-13T00:00:00",
+            "Cost": null,
+            "DateAired": "0001-01-01T00:00:00",
+            "DeliveredSpots": null,
+            "DisplayDaypart": null,
+            "Isci": "AAABBB",
+            "Market": "PORTLAND,OR",
+            "MatchAirTime": true,
+            "MatchIsci": true,
+            "MatchProgram": false,
+            "MatchSpotLength": true,
+            "MatchStation": false,
+            "MediaWeekId": null,
+            "OrderedSpots": 0,
+            "OutOfSpecSpots": null,
+            "ProgramName": "SHEPHERD'S CHAPEL",
+            "Rank": 22,
+            "SpecStatus": "Program Name,Station",
+            "SpotClearance": null,
+            "SpotCost": null,
+            "SpotLength": 30,
+            "Station": "KPDX",
+            "Status": 0,
+            "TimeAired": "0001-01-01T09:58:38"
+          }
+        ],
+        "Week": {
+          "Display": "3/13/2017",
+          "Id": 690
+        }
+      }
+    ],
+    "ScheduleAudiences": [
+      {
+        "AudienceId": 31,
+        "AudienceName": "HH",
+        "Population": 0,
+        "Rank": 2
+      },
+      {
+        "AudienceId": 33,
+        "AudienceName": "A18-49",
+        "Population": 0,
+        "Rank": 1
+      },
+      {
+        "AudienceId": 61,
+        "AudienceName": "W35+",
+        "Population": 0,
+        "Rank": 3
+      },
+      {
+        "AudienceId": 53,
+        "AudienceName": "M35-64",
+        "Population": 0,
+        "Rank": 4
+      }
+    ]
+  }
+}

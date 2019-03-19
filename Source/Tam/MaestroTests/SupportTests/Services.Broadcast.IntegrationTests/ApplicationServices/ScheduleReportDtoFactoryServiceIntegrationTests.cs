@@ -534,13 +534,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
-        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateScheduleReportDto()
         {
             ScheduleReportDto reportDto = null;
             using (new TransactionScopeWrapper())
             {
+                var scheduleId = _ImportSchedule();
+                ISchedulesReportService sut =
+                    IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
+                reportDto = sut.GenerateScheduleReportDto(scheduleId);
+                // 2 commented lines below are useful for debugging full report
+                //var report = sut.GenerateScheduleReport(scheduleId);
+                //File.WriteAllBytes(string.Format("..\\Schdule_Report{0}.xlsx",scheduleId), report.Stream.GetBuffer());//AppDomain.CurrentDomain.BaseDirectory + @"bvsreport.xlsx", reportStream.GetBuffer());
+            }
+            _VerifyReportData(reportDto);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void FullReport_GenerateScheduleReportDtoWithUpdatedMarketCoverages()
+        {
+            ScheduleReportDto reportDto = null;
+            using (new TransactionScopeWrapper())
+            {
+                const string filename = @".\Files\Market_Coverages_4.xlsx";
+                var marketService = IntegrationTestApplicationServiceFactory.GetApplicationService<IMarketService>();
+                marketService.LoadCoverages(new FileStream(filename, FileMode.Open, FileAccess.Read), Path.GetFileName(filename), "IntegrationTestUser", new DateTime(2016, 12, 18));
+
                 var scheduleId = _ImportSchedule();
                 ISchedulesReportService sut =
                     IntegrationTestApplicationServiceFactory.GetApplicationService<ISchedulesReportService>();
@@ -701,6 +722,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
             _VerifyReportData(reportDto);
 
+        }
     }
-}
 }

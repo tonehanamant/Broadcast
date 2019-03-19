@@ -1,0 +1,130 @@
+﻿{
+  "AllMarkets": [
+    {
+      "AvgCpm": 1.2268876637993601245089787885,
+      "Coverage": 0.602,
+      "Id": 390,
+      "MaxCpm": 1.2268876637993601245089787885,
+      "MinCpm": 1.2268876637993601245089787885,
+      "Name": "Albuquerque-Santa Fe",
+      "Programs": 1,
+      "Selected": true,
+      "Stations": 1
+    }
+  ],
+  "BudgetGoal": null,
+  "DisplayFilter": {
+    "Affiliations": [
+      "NBC"
+    ],
+    "Genres": [
+      {
+        "Display": "Adventure"
+      }
+    ],
+    "Markets": [
+      {
+        "Display": "Albuquerque-Santa Fe"
+      }
+    ],
+    "ProgramNames": [
+      "Ricky and Morty - Rated"
+    ]
+  },
+  "Filter": {},
+  "ImpressionGoal": null,
+  "ImpressionLoss": null,
+  "Inflation": null,
+  "InventorySourceEnum": {
+    "0": "Blank",
+    "1": "OpenMarket",
+    "2": "Assembly",
+    "3": "TVB",
+    "4": "TTNW",
+    "5": "CNN",
+    "6": "Sinclair",
+    "7": "LilaMax",
+    "8": "FerencMedia",
+    "9": "OAndO"
+  },
+  "Margin": null,
+  "Markets": [
+    {
+      "AvgCpm": 1.2268876637993601245089787885,
+      "CPM": 1.2268876637993614625119473068,
+      "DisplayImpressions": 20376.76369048,
+      "DisplayStationImpressions": 0.0,
+      "MarketCoverage": 0.602,
+      "MarketName": "Albuquerque-Santa Fe",
+      "MarketRank": 48,
+      "MaxCpm": 1.2268876637993601245089787885,
+      "MinCpm": 1.2268876637993601245089787885,
+      "Stations": [
+        {
+          "Affiliation": "NBC",
+          "CallLetters": "KOB+",
+          "CPM": 1.2268876637993614625119473068,
+          "LegacyCallLetters": "KOB",
+          "MinProgramsBlendedCpm": 1.2268876637993601245089787885,
+          "Programs": [
+            {
+              "BlendedCpm": 1.2268876637993601245089787885,
+              "Cost": 25.0000,
+              "CostPerSpot": 25.0000,
+              "Daypart": {
+                "Display": "M-SU 9AM-12AM"
+              },
+              "DisplayCost": 25.0000,
+              "DisplayImpressions": 20376.76369048,
+              "DisplayStationImpressions": 0.0,
+              "EffectiveImpressionsPerSpot": 20376.76369048,
+              "Genres": [
+                {
+                  "Display": "Adventure"
+                }
+              ],
+              "HasImpressions": true,
+              "Impressions": 20376.76369048,
+              "ImpressionsPerSpot": 20376.76369048,
+              "ProgramName": "Ricky and Morty - Rated",
+              "Spots": 1,
+              "StationImpressionsPerSpot": 0.0
+            }
+          ],
+          "StationCode": 30,
+          "TotalCost": 25.0000,
+          "TotalImpressions": 20376.76369048,
+          "TotalSpots": 1
+        }
+      ],
+      "TotalCost": 25.0000,
+      "TotalImpressions": 20376.76369048,
+      "TotalSpots": 1
+    }
+  ],
+  "OpenMarketPricing": {
+    "CpmMax": null,
+    "CpmMin": null,
+    "OpenMarketCpmTarget": 1,
+    "UnitCapPerStation": null
+  },
+  "OpenMarketShare": 1.0,
+  "OpenMarketTotals": {
+    "Cost": 25.0000,
+    "Coverage": 0.602,
+    "Cpm": 1.2268876637993614625119473068,
+    "Impressions": 20376.76369048
+  },
+  "PricingTotals": {
+    "Cost": 25.0000,
+    "Coverage": 0.602,
+    "Cpm": 1.22688766,
+    "Impressions": 20376.76369048
+  },
+  "ProprietaryPricing": [],
+  "ProprietaryTotals": {
+    "Cost": 0.0,
+    "Cpm": 0.0,
+    "Impressions": 0.0
+  }
+}

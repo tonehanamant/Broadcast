@@ -777,9 +777,12 @@ namespace Services.Broadcast.ApplicationServices
 
         private Dictionary<string, int> GetMarketRanksByStations(SchedulesAggregate schedulesAggregate)
         {
-            var marketCoveragesWithStations = _BroadcastDataRepositoryFactory
-                .GetDataRepository<IMarketCoverageRepository>()
-                .GetLatestMarketCoveragesWithStations();
+            var marketCoverageRepository = _BroadcastDataRepositoryFactory
+                .GetDataRepository<IMarketCoverageRepository>();
+            var marketCoverageFiles = marketCoverageRepository.GetMarketCoverageFiles();
+            var marketCoverageFile = _FindMarketCoverageFileForPostingBook(marketCoverageFiles, schedulesAggregate.PostingBookId);
+            var marketCoveragesWithStations = marketCoverageRepository
+                .GetMarketCoveragesWithStations(marketCoverageFile.Id);
 
             return marketCoveragesWithStations.Markets
                 .SelectMany(x => x.Stations, (market, station) => new
@@ -788,6 +791,39 @@ namespace Services.Broadcast.ApplicationServices
                     rank = market.Rank
                 })
                 .ToDictionary(x => x.station, x => x.rank, StringComparer.OrdinalIgnoreCase);
+        }
+
+        private MarketCoverageFile _FindMarketCoverageFileForPostingBook(List<MarketCoverageFile> marketCoverageFiles, int postingBookId)
+        {
+            var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(postingBookId);
+            var marketCoverageFilesForYear = marketCoverageFiles.Where(x => x.CreatedDate.Year == mediaMonth.Year);
+
+            // Only one market coverage file for that year, use it.
+            if (marketCoverageFilesForYear.Count() == 1)
+                return marketCoverageFilesForYear.First();
+
+            // More than one coverage file for that year. Use the one closest to the posting book month.
+            if (marketCoverageFilesForYear.Count() > 1)
+            {
+                MarketCoverageFile marketCoverageFileToUse = null;
+                var minMonthDistance = int.MaxValue;
+
+                foreach (var marketCoverageFile in marketCoverageFilesForYear)
+                {
+                    var monthDistance = Math.Abs(marketCoverageFile.CreatedDate.Month - mediaMonth.Month);
+
+                    if (monthDistance < minMonthDistance)
+                    {
+                        minMonthDistance = monthDistance;
+                        marketCoverageFileToUse = marketCoverageFile;
+                    }
+                }
+
+                return marketCoverageFileToUse;
+            }
+
+            // No coverage for the posting book year, use the latest available.
+            return marketCoverageFiles.OrderByDescending(x => x.CreatedDate).First();
         }
 
         private string CombineBvsProgramNames(IEnumerable<string> names)

@@ -9,7 +9,5 @@
   "InventoryManifests": [],
   "InventorySource": null,
   "UniqueIdentifier": null,
-  "ValidationProblems": [
-    "Could not find inventory source"
-  ]
+  "ValidationProblems": []
 }

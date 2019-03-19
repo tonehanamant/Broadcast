@@ -320,13 +320,22 @@
     <None Include="EnvironmentSpecificSettings.config.release">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid daypart.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid spot length PRI-5676.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid spot length.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\Barter DataLines file with invalid unit PRI-5676.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\Barter DataLines file with missed values.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\Barter DataLines file with valid data.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\BarterDataFiles\Barter DataLines file with without valid units end.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\Barter DataLines file with invalid unit.xlsx">
@@ -347,7 +356,19 @@
     <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+       </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5980.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_SingleDataColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat.xlsx">
@@ -360,6 +381,30 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_WrongCommentsColumn.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\OAndO_InvalidFile1.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\OAndO_InvalidFile2.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\OAndO_InvalidFile3.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\OAndO_InvalidFile4.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\OAndO_ValidFile1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\C786.Sigma.MissingColumns.csv">
@@ -558,6 +603,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages_3.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Market_Coverages_4.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Market_Coverages_Pricing_Guide.xlsx">

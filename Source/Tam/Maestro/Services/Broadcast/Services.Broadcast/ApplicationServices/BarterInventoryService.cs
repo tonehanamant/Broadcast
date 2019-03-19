@@ -1,19 +1,20 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Exceptions;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -30,41 +31,43 @@ namespace Services.Broadcast.ApplicationServices
 
     public class BarterInventoryService : IBarterInventoryService
     {
+        private const string INVENTORY_SOURCE_CELL = "B2";
+
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly IBarterRepository _BarterRepository;
-        private readonly IBarterFileImporter _BarterFileImporter;
+        private readonly IBarterFileImporterFactory _BarterFileImporterFactory;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IStationRepository _StationRepository;
         private readonly ILockingEngine _LockingEngine;
-        private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IInventoryDaypartParsingEngine _DaypartParsingEngine;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IDataLakeFileService _DataLakeFileService;
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
-            , IBarterFileImporter barterFileImporter
+            , IBarterFileImporterFactory barterFileImporterFactory
             , IStationProcessingEngine stationProcessingEngine
             , ILockingEngine lockingEngine
-            , ISpotLengthEngine spotLengthEngine
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IDataLakeFileService dataLakeFileService)
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _BarterFileImporter = barterFileImporter;
+            _BarterFileImporterFactory = barterFileImporterFactory;
             _StationProcessingEngine = stationProcessingEngine;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _LockingEngine = lockingEngine;
-            _SpotLengthEngine = spotLengthEngine;
             _DaypartParsingEngine = inventoryDaypartParsingEngine;
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
+            _DataLakeFileService = dataLakeFileService;
         }
 
         /// <summary>
@@ -86,17 +89,29 @@ namespace Services.Broadcast.ApplicationServices
 
             var stationLocks = new List<IDisposable>();
             var lockedStationIds = new List<int>();
+            var inventorySource = _ReadInventorySourceFromFile(request.StreamData);
+            var fileImporter = _BarterFileImporterFactory.GetFileImporterInstance(inventorySource);
 
-            _BarterFileImporter.LoadFromSaveRequest(request);
-            _BarterFileImporter.CheckFileHash();
-            BarterInventoryFile barterFile = _BarterFileImporter.GetPendingBarterInventoryFile(userName);
+            fileImporter.LoadFromSaveRequest(request);
+            fileImporter.CheckFileHash();
+
+            try
+            {
+                _DataLakeFileService.Save(request);
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
+            }
+
+            BarterInventoryFile barterFile = fileImporter.GetPendingBarterInventoryFile(userName, inventorySource);
 
             _CheckValidationProblems(barterFile);
 
             barterFile.Id = _InventoryFileRepository.CreateInventoryFile(barterFile, userName);
             try
             {
-                _BarterFileImporter.ExtractData(barterFile);
+                fileImporter.ExtractData(barterFile);
                 barterFile.FileStatus = barterFile.ValidationProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
 
                 if (barterFile.ValidationProblems.Any())
@@ -109,7 +124,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
-                        barterFile.InventoryGroups = _GetStationInventoryGroups(barterFile, stations);
+
+                        fileImporter.PopulateManifests(barterFile, stations);                     
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
@@ -145,106 +161,36 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
+        private InventorySource _ReadInventorySourceFromFile(Stream streamData)
+        {
+            InventorySource inventorySource = null;
+
+            using (var package = new ExcelPackage(streamData))
+            {
+                var worksheet = package.Workbook.Worksheets.First();
+                inventorySource = _InventoryRepository.GetInventorySourceByName(worksheet.Cells[INVENTORY_SOURCE_CELL].GetStringValue());
+            }
+
+            if (inventorySource == null)
+            {
+                throw new FileUploadException<InventoryFileProblem>(new List<InventoryFileProblem>
+                {
+                    new InventoryFileProblem("Could not find inventory source")
+                });
+            }
+
+            return inventorySource;
+        }
+
         private static void _CheckValidationProblems(BarterInventoryFile barterFile)
         {
             if (barterFile.ValidationProblems.Any())
             {
                 var fileProblems = barterFile.ValidationProblems.Select(x => new InventoryFileProblem(x)).ToList();
-                throw new Exceptions.FileUploadException<InventoryFileProblem>(fileProblems);
+                throw new FileUploadException<InventoryFileProblem>(fileProblems);
             }
         }
-
-        private List<StationInventoryGroup> _GetStationInventoryGroups(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
-        {
-            var fileHeader = barterFile.Header;
-            var stationCodes = stations.ToDictionary(x => x.LegacyCallLetters, x => x, StringComparer.OrdinalIgnoreCase);
-            return barterFile.DataLines
-                .SelectMany(x => x.Units, (dataLine, unit) => new
-                {
-                    dataLine,
-                    unit.BarterInventoryUnit,
-                    unit.Spots
-                })
-                .GroupBy(x => new { x.BarterInventoryUnit.Name, x.BarterInventoryUnit.SpotLength })
-                .Select(groupingByUnit => new
-                {
-                    UnitName = groupingByUnit.Key.Name,
-                    groupingByUnit.Key.SpotLength,
-                    Manifests = groupingByUnit.Select(x => new
-                    {
-                        x.Spots,
-                        x.dataLine.Station,
-                        x.dataLine.Daypart,
-                        x.dataLine.Comment
-                    })
-                })
-                .Select(manifestGroup => new StationInventoryGroup
-                {
-                    Name = manifestGroup.UnitName,
-                    DaypartCode = Regex.Match(manifestGroup.UnitName, @"[a-z]+", RegexOptions.IgnoreCase).Value,
-                    InventorySource = barterFile.InventorySource,
-                    StartDate = fileHeader.EffectiveDate,
-                    EndDate = fileHeader.EndDate,
-                    SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
-                    Manifests = manifestGroup.Manifests.Select(manifest => new StationInventoryManifest
-                    {
-                        EffectiveDate = fileHeader.EffectiveDate,
-                        EndDate = fileHeader.EndDate,
-                        InventorySourceId = barterFile.InventorySource.Id,
-                        FileId = barterFile.Id,
-                        Station = stationCodes[_StationProcessingEngine.StripStationSuffix(manifest.Station)],
-                        SpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
-                        Comment = manifest.Comment,
-                        ManifestWeeks = _GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),
-                        ManifestDayparts = _ParseDayparts(manifest.Daypart),
-                        ManifestAudiences = new List<StationInventoryManifestAudience>
-                        {
-                            new StationInventoryManifestAudience
-                            {
-                                Audience = new DisplayAudience { Id = fileHeader.AudienceId },
-                                CPM = fileHeader.Cpm
-                            }
-                        }
-                    }).ToList()
-                }).ToList();
-        }
-
-        private int _ParseSlotNumber(string unitName)
-        {
-            var slotNumberString = Regex.Match(unitName, @"[0-9]+", RegexOptions.IgnoreCase).Value;
-            return int.TryParse(slotNumberString, out var slotNumber) ? slotNumber : 0;
-        }
-
-        private List<StationInventoryManifestWeek> _GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)
-        {
-            var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksInRange(startDate, endDate);
-            return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
-        }
-
-        private List<StationInventoryManifestDaypart> _ParseDayparts(string daypartText)
-        {
-            var result = new List<StationInventoryManifestDaypart>();
-
-            if (_DaypartParsingEngine.TryParse(daypartText, out var dayparts))
-            {
-                foreach (var daypart in dayparts)
-                {
-                    var manifestDaypart = new StationInventoryManifestDaypart
-                    {
-                        Daypart = daypart
-                    };
-
-                    result.Add(manifestDaypart);
-                }
-            }
-            else
-            {
-                throw new Exception("Cannot parse dayparts");
-            }
-
-            return result;
-        }
-
+        
         private List<DisplayBroadcastStation> _GetFileStationsOrCreate(BarterInventoryFile barterFile, string userName)
         {
             var now = DateTime.Now;

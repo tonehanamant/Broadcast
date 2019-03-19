@@ -34,7 +34,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
         {
             result = new List<DisplayDaypart>();
 
-            if (_HasForbiddenSymbols(daypartText) || 
+            if (string.IsNullOrWhiteSpace(daypartText) ||
+                _HasForbiddenSymbols(daypartText) || 
                 _HasIncorrectDaypartFormat(daypartText) ||
                 _HasWrongWeekDay(daypartText))
             {

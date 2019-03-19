@@ -1,0 +1,14 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 16 contains an invalid daypart(s): M-F 630AM11AM",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 17 contains an invalid daypart(s): M-F 630AMM-11AM",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]
