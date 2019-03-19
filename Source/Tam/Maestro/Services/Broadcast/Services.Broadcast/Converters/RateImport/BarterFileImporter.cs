@@ -31,6 +31,7 @@ namespace Services.Broadcast.Converters.RateImport
         private const string SHARE_BOOK_CELL = "B9";
         private const string HUT_BOOK_CELL = "B10";
         private const string PLAYBACK_TYPE_CELL = "B11";     
+        readonly string[] DATE_FORMATS = new string[3] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
 
         public BarterFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -67,8 +68,8 @@ namespace Services.Broadcast.Converters.RateImport
             header.DaypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
 
             //Format mm/dd/yyyy and end date must be after start date
-            string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetStringValue().Split(' ')[0]; //split is removing time section
-            string endDateText = worksheet.Cells[END_DATE_CELL].GetStringValue().Split(' ')[0];
+            string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue().Split(' ')[0]; //split is removing time section
+            string endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue().Split(' ')[0];
             bool validDate = true;
             if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
             {

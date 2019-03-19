@@ -262,6 +262,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BarterFileImporter_ExtractData_PRI5980()
+        {
+            const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5980.xlsx";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var _barterfileImporter = _BarterFileImporterFactory.GetFileImporterInstance(inventorySource);
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                _barterfileImporter.LoadFromSaveRequest(request);
+                BarterInventoryFile file = _barterfileImporter.GetPendingBarterInventoryFile("integration test", inventorySource);
+                _barterfileImporter.ExtractData(file);
+                _VerifyBarterInventoryFile(file);
+            }
+        }
+
         private static void _VerifyBarterInventoryFile(BarterInventoryFile file)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();

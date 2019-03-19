@@ -361,6 +361,9 @@
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+       </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5980.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_GetPendingBarterInventoryFile.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -378,6 +381,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_WrongCommentsColumn.xlsx">

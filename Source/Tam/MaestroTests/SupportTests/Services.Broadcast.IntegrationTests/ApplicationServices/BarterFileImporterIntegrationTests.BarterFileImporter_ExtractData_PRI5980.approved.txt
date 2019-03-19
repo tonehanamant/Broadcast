@@ -2,7 +2,7 @@
   "CreatedBy": "integration test",
   "DataLines": [
     {
-      "Comment": "",
+      "Comment": "Test1",
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -29,14 +29,14 @@
             "Name": "AM 1",
             "SpotLength": 60
           },
-          "Spots": 0
+          "Spots": null
         },
         {
           "BarterInventoryUnit": {
             "Name": "AM 2",
             "SpotLength": 30
           },
-          "Spots": 0
+          "Spots": null
         },
         {
           "BarterInventoryUnit": {
@@ -50,7 +50,7 @@
             "Name": "AM 4",
             "SpotLength": 15
           },
-          "Spots": 0
+          "Spots": null
         }
       ]
     },
@@ -82,7 +82,7 @@
             "Name": "AM 1",
             "SpotLength": 60
           },
-          "Spots": 0
+          "Spots": null
         },
         {
           "BarterInventoryUnit": {
@@ -96,38 +96,40 @@
             "Name": "AM 3",
             "SpotLength": 30
           },
-          "Spots": 0
+          "Spots": null
         },
         {
           "BarterInventoryUnit": {
             "Name": "AM 4",
             "SpotLength": 15
           },
-          "Spots": 0
+          "Spots": null
         }
       ]
     }
   ],
-  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5379.xlsx",
+  "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5980.xlsx",
   "FileStatus": 1,
-  "Hash": "0B-12-51-3C-32-68-60-38-43-82-28-93-9D-7A-80-2A-A6-CD-1D-BA",
+  "Hash": "E5-45-84-EE-93-50-74-51-63-2C-9A-BE-65-CD-18-0B-E3-CB-18-DC",
   "Header": {
     "AudienceId": 37,
-    "Cpm": 62.2,
-    "DaypartCode": "MSN",
-    "EffectiveDate": "0001-01-01T00:00:00",
-    "EndDate": "0001-01-01T00:00:00",
+    "Cpm": 222.22,
+    "DaypartCode": "PMN",
+    "EffectiveDate": "2019-05-03T00:00:00",
+    "EndDate": "2019-05-09T00:00:00",
     "HutBookId": 449,
-    "PlaybackType": 2,
+    "PlaybackType": 5,
     "ShareBookId": 450,
     "SpotLengthId": null
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": null,
+  "InventorySource": {
+    "Id": 0,
+    "InventoryType": 2,
+    "IsActive": false,
+    "Name": null
+  },
   "UniqueIdentifier": null,
-  "ValidationProblems": [
-    "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
-    "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)"
-  ]
+  "ValidationProblems": []
 }

@@ -112,7 +112,8 @@ namespace Services.Broadcast.Repositories
 
         public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
-            var adjustedDetals = AdjustDayparts(stationDetails);
+            var adjustedDetails = AdjustDayparts(stationDetails);
+            var newAndOldIdsMapping = _ReplaceIdsWithUnique(adjustedDetails);
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -135,7 +136,7 @@ namespace Services.Broadcast.Repositories
                     ratingsInput.Columns.Add("start_time");
                     ratingsInput.Columns.Add("end_time");
 
-                    adjustedDetals.Distinct().ForEach(p => ratingsInput.Rows.Add(
+                    adjustedDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
                         p.Id,
                         p.LegacyCallLetters, 
                         p.DisplayDaypart.Monday,
@@ -160,15 +161,20 @@ namespace Services.Broadcast.Repositories
 
 //                    WriteTableSQLDebug(storedProcedureName,stationDetails, postingBookId,audienceId.Value as string,((char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
-                    return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
+                    var result = c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
+
+                    // lets replace ids back
+                    result.ForEach(x => x.id = newAndOldIdsMapping[x.id]);
+
+                    return result;
                 });
             }
         }
 
-
         public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
             var adjustedDetails = AdjustDayparts(stationDetails);
+            var newAndOldIdsMapping = _ReplaceIdsWithUnique(adjustedDetails);
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -222,9 +228,29 @@ namespace Services.Broadcast.Repositories
                     var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
                 //    WriteTableSQLDebug(storedProcedureName, stationDetails,hutMediaMonth,shareMediaMonth, string.Join(",", uniqueRatingsAudiences), ((char) PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
-                    return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
+                    var result = c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
+
+                    // lets replace ids back
+                    result.ForEach(x => x.id = newAndOldIdsMapping[x.id]);
+
+                    return result;
                 });
             }
+        }
+
+        private Dictionary<int, int> _ReplaceIdsWithUnique(IEnumerable<ManifestDetailDaypart> dayparts)
+        {
+            var newId = 1;
+            var result = new Dictionary<int, int>();
+
+            foreach (var daypart in dayparts)
+            {
+                var oldId = daypart.Id;
+                daypart.Id = newId++;
+                result[daypart.Id] = oldId;
+            }
+
+            return result;
         }
 
         public IEnumerable<ManifestDetailDaypart> AdjustDayparts(List<ManifestDetailDaypart> stationDetails)

@@ -146,7 +146,7 @@ namespace Common.Services
                 }
             }
 
-            File.Copy(filePath, destinationPath);            
+            File.Copy(filePath, destinationPath, overwriteExisting);            
 
             return destinationPath;
         }
