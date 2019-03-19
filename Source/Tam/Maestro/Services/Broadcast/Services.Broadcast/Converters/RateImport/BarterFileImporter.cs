@@ -42,7 +42,7 @@ namespace Services.Broadcast.Converters.RateImport
         const string PLAYBACK_TYPE_CELL = "B11";
 
         readonly string[] BOOK_DATE_FORMATS = new string[5]{ "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM" };
-        readonly string[] DATE_FORMATS = new string[2] { "MM/dd/yyyy", "M/dd/yyyy" };
+        readonly string[] DATE_FORMATS = new string[3] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
         const string CPM_FORMAT = "##.##";
 
         private readonly IInventoryFileRepository _InventoryFileRepository;
@@ -137,8 +137,8 @@ namespace Services.Broadcast.Converters.RateImport
             header.DaypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
 
             //Format mm/dd/yyyy and end date must be after start date
-            string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetStringValue().Split(' ')[0]; //split is removing time section
-            string endDateText = worksheet.Cells[END_DATE_CELL].GetStringValue().Split(' ')[0];
+            string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue().Split(' ')[0]; //split is removing time section
+            string endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue().Split(' ')[0];
 
             bool validDate = true;
             if (!DateTime.TryParseExact(effectiveDateText, DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate))
