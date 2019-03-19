@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import classNames from "classnames";
 
-import "react-table/react-table.css";
+// import "react-table/react-table.css";
 
 import Row from "./Row";
 import { rowStyle, selectedRowStyle } from "../style/Selection";
