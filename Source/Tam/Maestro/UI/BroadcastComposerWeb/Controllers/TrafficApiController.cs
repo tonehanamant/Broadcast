@@ -17,7 +17,7 @@ namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/Traffic")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-    public class TrafficApiController : ControllerBase
+    public class TrafficApiController : BroadcastControllerBase
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IWebLogger _Logger;

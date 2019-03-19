@@ -5,6 +5,7 @@ using Tam.Maestro.Web.Common;
 using System.Web;
 using Common.Services.WebComponents;
 using Tam.Maestro.Services.Cable.Entities;
+using System.Web.Http.Cors;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -15,6 +16,7 @@ namespace BroadcastComposerWeb.Controllers
         public List<TProblem> Problems { get; set; }
     }
 
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BroadcastControllerBase : ControllerBase
     {
         public BroadcastControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever) 

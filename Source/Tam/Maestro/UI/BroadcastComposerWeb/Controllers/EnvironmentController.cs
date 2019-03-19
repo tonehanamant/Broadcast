@@ -7,11 +7,13 @@ using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
+using System.Web.Http.Cors;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api")]
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EnvironmentController : ControllerBase
     {
         public EnvironmentController(IWebLogger logger)
