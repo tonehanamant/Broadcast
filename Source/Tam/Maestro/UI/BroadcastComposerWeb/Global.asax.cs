@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Diagnostics.Tracing;
 using System.Web.Configuration;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -34,6 +35,13 @@ namespace BroadcastComposerWeb
             DependencyResolver.SetResolver(new UnityWebMvcResolver(_container));
 
             AreaRegistration.RegisterAllAreas();
+            //Enable CORS
+            var cors = new EnableCorsAttribute(
+                        origins: "*",
+                        headers: "*",
+                        methods: "*");
+            GlobalConfiguration.Configuration.EnableCors(cors);
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
