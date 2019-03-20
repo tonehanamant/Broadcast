@@ -9,10 +9,10 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css?raw";
 import "react-select/dist/react-select.css?raw";
 import "react-table/react-table.css?raw";
-import "./index.scss";
-
+import "react-contexify/dist/ReactContexify.css?raw";
 import "./styles/imports/bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap.css?raw";
 import "./styles/imports/bootstrap/stylesheets/bootstrap-3.3.5/css/bootstrap-theme.css?raw";
+import "./index.scss";
 
 /* Legacy Broadcast CSS */
 import "./styles/imports/broadcast-css/app.css?raw";

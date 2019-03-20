@@ -179,7 +179,7 @@ export class TrackerScrubbingGrid extends Component {
             iconClassName =
               row.Status === 2 ? "fa-check-circle" : "fa-times-circle";
           }
-          return <i styleName={`status-icon fa ${iconClassName}`} />;
+          return <i className={`status-icon fa ${iconClassName}`} />;
         }
       },
       {

@@ -139,7 +139,7 @@ export class Dropzone extends PureComponent {
         onDrop={this.onDrop}
         onDragEnter={this.onDragEnter}
         onDragOver={this.onDragOver}
-        styleName={styles.dropzoneAsWrapper}
+        className={styles.dropzoneAsWrapper}
         activeClassName={styles.active}
         acceptClassName={styles.accept}
         rejectClassName={styles.reject}

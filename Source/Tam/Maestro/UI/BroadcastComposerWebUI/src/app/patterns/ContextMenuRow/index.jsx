@@ -60,7 +60,7 @@ const ContextMenuRow = props => {
               {...rowProps}
               {...rest}
               onContextMenu={onContextMenu}
-              styleName={rowProps.styleName}
+              className={rowProps.styleName}
             >
               {children}
             </tr>
