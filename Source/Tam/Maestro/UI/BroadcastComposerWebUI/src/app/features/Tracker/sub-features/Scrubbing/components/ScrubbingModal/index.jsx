@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Actions } from "react-redux-grid";
+import { Actions } from "Lib/react-redux-grid";
 
 import { Button, Modal } from "react-bootstrap";
 import { toggleModal, setOverlayLoading } from "Main/redux/ducks";

@@ -106,7 +106,7 @@ class PricingGuideProprietary extends Component {
       <Panel
         id="pricing_proprietary_panel"
         defaultExpanded
-        className="panelCard"
+        styleName="panelCard"
       >
         <Panel.Heading>
           <Panel.Title toggle>
@@ -114,8 +114,8 @@ class PricingGuideProprietary extends Component {
           </Panel.Title>
           <Row>
             <Col sm={1}>
-              <div className="summary-item single">
-                <div className="summary-display">
+              <div styleName="summary-item single">
+                <div styleName="summary-display">
                   {numeral(balanceSum * 100).format("0,0.[00]")}%
                 </div>
               </div>
@@ -129,9 +129,9 @@ class PricingGuideProprietary extends Component {
               </div>
             </Col>
             <Col sm={6}>
-              <div className="summary-bar">
-                <div className="summary-item">
-                  <div className="summary-display">
+              <div styleName="summary-bar">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     $
                     {numberRender(
                       activeOpenMarketData,
@@ -139,10 +139,10 @@ class PricingGuideProprietary extends Component {
                       "0,0.00"
                     )}
                   </div>
-                  <div className="summary-label">CPM</div>
+                  <div styleName="summary-label">CPM</div>
                 </div>
-                <div className="summary-item">
-                  <div className="summary-display">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     {numberRender(
                       activeOpenMarketData,
                       "ProprietaryTotals.Impressions",
@@ -150,10 +150,10 @@ class PricingGuideProprietary extends Component {
                       1000
                     )}
                   </div>
-                  <div className="summary-label">IMPRESSIONS (000)</div>
+                  <div styleName="summary-label">IMPRESSIONS (000)</div>
                 </div>
-                <div className="summary-item">
-                  <div className="summary-display">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     $
                     {numberRender(
                       activeOpenMarketData,
@@ -161,7 +161,7 @@ class PricingGuideProprietary extends Component {
                       "0,0"
                     )}
                   </div>
-                  <div className="summary-label">TOTAL COST</div>
+                  <div styleName="summary-label">TOTAL COST</div>
                 </div>
               </div>
             </Col>
@@ -169,7 +169,7 @@ class PricingGuideProprietary extends Component {
         </Panel.Heading>
         <Panel.Collapse>
           <Panel.Body>
-            <div className="formEditToggle">
+            <div styleName="formEditToggle">
               {!isReadOnly && !isEditing && (
                 <Button
                   onClick={this.toggleEditing}
@@ -189,7 +189,7 @@ class PricingGuideProprietary extends Component {
                     <Glyphicon glyph="save" /> Ok
                   </Button>
                   <Button
-                    className="cancel"
+                    styleName="cancel"
                     onClick={this.onCancel}
                     bsStyle="link"
                   >
@@ -203,9 +203,9 @@ class PricingGuideProprietary extends Component {
                 <Table condensed>
                   <thead>
                     <tr>
-                      <th className="cardLabel">SOURCE</th>
-                      <th className="cardLabel">BALANCE (%)</th>
-                      <th className="cardLabel">CPM ($)</th>
+                      <th styleName="cardLabel">SOURCE</th>
+                      <th styleName="cardLabel">BALANCE (%)</th>
+                      <th styleName="cardLabel">CPM ($)</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -219,7 +219,7 @@ export class PostPrePostingFileUploadModal extends Component {
               />
               {postingBookInvalid != null && (
                 <HelpBlock>
-                  <p className="text-danger">Required</p>
+                  <p styleName="text-danger">Required</p>
                 </HelpBlock>
               )}
             </FormGroup>
@@ -241,7 +241,7 @@ export class PostPrePostingFileUploadModal extends Component {
               />
               {playbackTypeInvalid != null && (
                 <HelpBlock>
-                  <p className="text-danger">Required</p>
+                  <p styleName="text-danger">Required</p>
                 </HelpBlock>
               )}
             </FormGroup>
@@ -262,7 +262,7 @@ export class PostPrePostingFileUploadModal extends Component {
               />
               {demosInvalid != null && (
                 <HelpBlock>
-                  <p className="text-danger">Required</p>
+                  <p styleName="text-danger">Required</p>
                 </HelpBlock>
               )}
             </FormGroup>

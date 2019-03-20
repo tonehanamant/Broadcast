@@ -14,7 +14,7 @@ import { parseFileToBase64 } from "Utils/file-parser";
 
 import { toggleDisabledDropzones, deployError } from "Main/redux/ducks";
 
-import styles from "./index.scss";
+import styles from "./index.style.scss";
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -120,7 +120,7 @@ export class UploadButton extends Component {
           multiple={multiple}
           onDrop={this.onDrop}
           accept={acceptedMimeTypes}
-          className={styles.dropzone}
+          styleName="dropzone"
           onFileDialogCancel={this.closeFileDialog}
           ref={this.input}
         />

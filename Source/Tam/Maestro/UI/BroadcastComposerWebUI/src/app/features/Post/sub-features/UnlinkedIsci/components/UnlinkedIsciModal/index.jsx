@@ -32,9 +32,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class UnlinkedIsciModal extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.close = this.close.bind(this);
     this.onTabSelect = this.onTabSelect.bind(this);
     this.SearchInputAction = this.SearchInputAction.bind(this);

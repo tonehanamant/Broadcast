@@ -103,9 +103,11 @@ export default class ProposalHeader extends Component {
 
 ProposalHeader.defaultProps = {
   isEdit: false,
+  isReadOnly: false,
   getProposalVersions: () => {},
   deleteProposal: () => {},
   saveProposalAsVersion: () => {},
+  generateScx: () => {},
   unorderProposal: () => {}
 };
 
@@ -123,8 +125,8 @@ ProposalHeader.propTypes = {
   deleteProposal: PropTypes.func,
   saveProposalAsVersion: PropTypes.func,
   unorderProposal: PropTypes.func,
-  generateScx: PropTypes.func.isRequired,
+  generateScx: PropTypes.func,
 
   toggleModal: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
 };

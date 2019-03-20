@@ -9,7 +9,7 @@ import {
   FormGroup,
   FormControl
 } from "react-bootstrap";
-import styles from "./index.scss";
+import styles from "./index.style.scss";
 
 class FilterInput extends Component {
   constructor(props) {
@@ -74,30 +74,26 @@ class FilterInput extends Component {
     );
   }
 
-  // applies the 'selectAll' parameter as the selected property of each filter option
   applyCheckToAll(selectAll) {
     const { filterOptions } = this.state;
-    /* eslint-disable no-param-reassign */
     const filterOptionsMap = filterOptions.map(option => {
-      option.Selected = selectAll;
-      return option;
+      return {
+        ...option,
+        Selected: selectAll
+      };
     });
-    /* eslint-enable no-param-reassign */
 
     this.setState({
       selectAll,
       filterOptionsMap
     });
-    // this.setValidSelections(selectAll);
     this.setValidSelections();
   }
 
-  // check select all to handle select all state
   checkSelectAll() {
     const { filterOptions } = this.state;
     const allChecked =
       filterOptions.find(item => item.Selected === false) === undefined;
-    // console.log('check select all', allChecked);
     this.setState({ selectAll: allChecked });
   }
 
@@ -252,7 +248,7 @@ class FilterInput extends Component {
             value={filterText}
           />
         </FormGroup>
-        <div className="filter-list-checkbox-container">
+        <div styleName="filter-list-checkbox-container">
           <Checkbox
             key={v4()}
             defaultChecked={selectAll}
@@ -263,7 +259,7 @@ class FilterInput extends Component {
           </Checkbox>
           {checkboxes}
         </div>
-        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
+        <ButtonToolbar styleName="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button
             bsStyle="success"
             bsSize="xsmall"

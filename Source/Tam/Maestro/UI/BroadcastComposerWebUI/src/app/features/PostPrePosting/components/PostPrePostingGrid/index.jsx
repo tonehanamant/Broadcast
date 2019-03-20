@@ -34,9 +34,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class DataGridContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.contextMenuDeleteAction = this.contextMenuDeleteAction.bind(this);
     this.contextMenuFileSettingsAction = this.contextMenuFileSettingsAction.bind(
       this

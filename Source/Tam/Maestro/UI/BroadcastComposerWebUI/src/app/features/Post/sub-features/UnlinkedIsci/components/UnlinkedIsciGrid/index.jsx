@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+/* eslint-disable react/prop-types */
+import React from "react";
 import PropTypes from "prop-types";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import CustomPager from "Patterns/CustomPager";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Grid, Actions } from "react-redux-grid";
+import { Grid, Actions } from "Lib/react-redux-grid";
 import { unlinkedIsciActions } from "Post";
 
 const {
@@ -28,128 +29,118 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export class UnlinkedIsciGrid extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
-  }
+function UnlinkedIsciGrid({
+  unlinkedIscisData,
+  archiveIscis,
+  rescrubIscis,
+  toggleModal
+}) {
+  const stateKey = "unlinked_grid";
+  const columns = [
+    {
+      name: "ISCI",
+      dataIndex: "ISCI",
+      width: "25%"
+    },
+    {
+      name: "Unlinked Reason",
+      dataIndex: "UnlinkedReason",
+      width: "25%",
+      renderer: ({ row }) => <span>{row.UnlinkedReason || "-"}</span>
+    },
+    {
+      name: "Count",
+      dataIndex: "Count",
+      width: "25%"
+    },
+    {
+      name: "Spot Length",
+      dataIndex: "SpotLength",
+      width: "25%",
+      renderer: ({ row }) => <span>{row.SpotLength || "-"}</span>
+    }
+  ];
 
-  render() {
-    const { unlinkedIscisData } = this.props;
-    const { store } = this.context;
-
-    const stateKey = "unlinked_grid";
-    const columns = [
-      {
-        name: "ISCI",
-        dataIndex: "ISCI",
-        width: "25%"
-      },
-      {
-        name: "Unlinked Reason",
-        dataIndex: "UnlinkedReason",
-        width: "25%",
-        renderer: ({ row }) => <span>{row.UnlinkedReason || "-"}</span>
-      },
-      {
-        name: "Count",
-        dataIndex: "Count",
-        width: "25%"
-      },
-      {
-        name: "Spot Length",
-        dataIndex: "SpotLength",
-        width: "25%",
-        renderer: ({ row }) => <span>{row.SpotLength || "-"}</span>
+  const menuItems = [
+    {
+      text: "Not a Cadent ISCI",
+      key: "menu-archive-isci",
+      EVENT_HANDLER: ({ metaData }) => {
+        archiveIscis([metaData.rowData.ISCI]);
       }
-    ];
-
-    const menuItems = [
-      {
-        text: "Not a Cadent ISCI",
-        key: "menu-archive-isci",
-        EVENT_HANDLER: ({ metaData }) => {
-          const { archiveIscis } = this.props;
-          archiveIscis([metaData.rowData.ISCI]);
-        }
-      },
-      {
-        text: "Rescrub this ISCI",
-        key: "menu-rescrub-isci",
-        EVENT_HANDLER: ({ metaData }) => {
-          const { rescrubIscis } = this.props;
-          rescrubIscis(metaData.rowData.ISCI);
-        }
-      },
-      {
-        text: "Map ISCI",
-        key: "menu-map-isci",
-        EVENT_HANDLER: ({ metaData }) => {
-          const { toggleModal } = this.props;
-          toggleModal({
-            modal: "mapUnlinkedIsci",
-            active: true,
-            properties: { rowData: metaData.rowData }
-          });
-        }
+    },
+    {
+      text: "Rescrub this ISCI",
+      key: "menu-rescrub-isci",
+      EVENT_HANDLER: ({ metaData }) => {
+        rescrubIscis(metaData.rowData.ISCI);
       }
-    ];
+    },
+    {
+      text: "Map ISCI",
+      key: "menu-map-isci",
+      EVENT_HANDLER: ({ metaData }) => {
+        toggleModal({
+          modal: "mapUnlinkedIsci",
+          active: true,
+          properties: { rowData: metaData.rowData }
+        });
+      }
+    }
+  ];
 
-    const beforeOpenMenu = rowId => {
-      deselectAll({ stateKey });
-      selectRow({ rowId, stateKey });
-    };
+  const beforeOpenMenu = rowId => {
+    deselectAll({ stateKey });
+    selectRow({ rowId, stateKey });
+  };
 
-    const plugins = {
-      COLUMN_MANAGER: {
-        resizable: true,
-        moveable: false,
-        sortable: {
-          enabled: true,
-          method: "local"
-        }
-      },
-      EDITOR: {
-        type: "inline",
-        enabled: false
-      },
-      PAGER: {
-        enabled: false,
-        pagingType: "local",
-        pagerComponent: <CustomPager stateKey={stateKey} idProperty="ISCI" />
-      },
-      SELECTION_MODEL: {
-        mode: "single",
+  const plugins = {
+    COLUMN_MANAGER: {
+      resizable: true,
+      moveable: false,
+      sortable: {
         enabled: true,
-        allowDeselect: true,
-        activeCls: "active",
-        selectionEvent: "singleclick"
-      },
-      ROW: {
-        enabled: true,
-        renderer: ({ cells, ...rowData }) => (
-          <ContextMenuRow
-            {...rowData}
-            menuItems={menuItems}
-            stateKey={stateKey}
-            beforeOpenMenu={beforeOpenMenu}
-          >
-            {cells}
-          </ContextMenuRow>
-        )
+        method: "local"
       }
-    };
+    },
+    EDITOR: {
+      type: "inline",
+      enabled: false
+    },
+    PAGER: {
+      enabled: false,
+      pagingType: "local",
+      pagerComponent: <CustomPager stateKey={stateKey} idProperty="ISCI" />
+    },
+    SELECTION_MODEL: {
+      mode: "single",
+      enabled: true,
+      allowDeselect: true,
+      activeCls: "active",
+      selectionEvent: "singleclick"
+    },
+    ROW: {
+      enabled: true,
+      renderer: ({ cells, ...rowData }) => (
+        <ContextMenuRow
+          {...rowData}
+          menuItems={menuItems}
+          stateKey={stateKey}
+          beforeOpenMenu={beforeOpenMenu}
+        >
+          {cells}
+        </ContextMenuRow>
+      )
+    }
+  };
 
-    const grid = {
-      columns,
-      plugins,
-      stateKey
-    };
+  const grid = {
+    columns,
+    plugins,
+    stateKey
+  };
 
-    return (
-      <Grid {...grid} data={unlinkedIscisData} store={store} height={460} />
-    );
-  }
+  return <Grid {...grid} data={unlinkedIscisData} height={460} />;
 }
 
 UnlinkedIsciGrid.propTypes = {

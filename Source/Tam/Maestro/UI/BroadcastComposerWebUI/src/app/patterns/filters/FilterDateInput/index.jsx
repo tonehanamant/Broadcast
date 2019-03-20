@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-// import CSSModules from 'react-css-modules';
+import CSSModules from "react-css-modules";
 import PropTypes from "prop-types";
-// import { v4 } from 'uuid';
 import { Col, Form, ButtonToolbar, Button, FormGroup } from "react-bootstrap";
 import moment from "moment";
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
 import { DatePicker } from "antd";
-import "./index.css";
+import styles from "./index.style.scss";
 
 const dateFormat = "MM/DD/YYYY";
 
@@ -146,7 +143,7 @@ class FilterDateInput extends Component {
       <div>
         <Form horizontal>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
               Start date
             </Col>
             <Col sm={8}>
@@ -162,7 +159,7 @@ class FilterDateInput extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
               End date
             </Col>
             <Col sm={8}>
@@ -178,7 +175,7 @@ class FilterDateInput extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
+        <ButtonToolbar styleName="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button bsStyle="success" bsSize="xsmall" onClick={this.clear}>
             Clear
           </Button>
@@ -208,4 +205,4 @@ FilterDateInput.propTypes = {
   filterKey: PropTypes.string.isRequired
 };
 
-export default FilterDateInput;
+export default CSSModules(FilterDateInput, styles);

@@ -9,6 +9,7 @@ import {
   Col,
   Glyphicon
 } from "react-bootstrap";
+import CSSModules from "react-css-modules";
 import Select from "react-select";
 import { omit } from "lodash";
 import {
@@ -20,7 +21,7 @@ import {
   addFilterToItems
 } from "./util";
 
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const mapStateToProps = ({
   app: {
@@ -192,7 +193,7 @@ class PricingGuideFilterModal extends Component {
                 </Col>
                 <Col sm={2}>
                   <Button
-                    className="remove-button"
+                    styleName="remove-button"
                     onClick={() => {
                       this.onDeleteFilter(filter);
                     }}
@@ -242,4 +243,6 @@ PricingGuideFilterModal.defaultProps = {
   }
 };
 
-export default connect(mapStateToProps)(PricingGuideFilterModal);
+export default connect(mapStateToProps)(
+  CSSModules(PricingGuideFilterModal, styles)
+);

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { Button, Modal } from "react-bootstrap";
-// import { Grid } from "react-redux-grid";
 import Table, { withGrid } from "Lib/react-table";
 
 import DateMDYYYY from "Patterns/TextFormatters/DateMDYYYY";
@@ -17,9 +16,8 @@ const mapStateToProps = ({
 });
 
 export class ProposalSwitchVersionModal extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.close = this.close.bind(this);
     this.openVersion = this.openVersion.bind(this);
   }
@@ -162,7 +160,7 @@ ProposalSwitchVersionModal.defaultProps = {
 
 ProposalSwitchVersionModal.propTypes = {
   modal: PropTypes.object,
-  selected: PropTypes.object.isRequired,
+  selected: PropTypes.array.isRequired,
 
   toggleModal: PropTypes.func.isRequired,
   initialdata: PropTypes.object.isRequired,

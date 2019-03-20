@@ -74,7 +74,7 @@ export class ConfirmModal extends Component {
             <span>&times;</span>
           </Button>
         </Modal.Header>
-        <Modal.Body className={properties.bodyClass}>
+        <Modal.Body styleName={properties.bodyClass}>
           {properties.bodyText && <p>{properties.bodyText}</p>}
           {properties.bodyList && (
             <ul>

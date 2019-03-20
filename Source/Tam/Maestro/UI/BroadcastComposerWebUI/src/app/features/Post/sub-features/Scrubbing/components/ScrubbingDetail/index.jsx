@@ -100,7 +100,9 @@ export class PostScrubbingDetail extends Component {
   }
 }
 
-PostScrubbingDetail.defaultProps = {};
+PostScrubbingDetail.defaultProps = {
+  details: []
+};
 
 PostScrubbingDetail.propTypes = {
   grid: PropTypes.object.isRequired,
@@ -108,7 +110,7 @@ PostScrubbingDetail.propTypes = {
   activeScrubbingData: PropTypes.object.isRequired,
   scrubbingFiltersList: PropTypes.array.isRequired,
   hasActiveScrubbingFilters: PropTypes.bool.isRequired,
-  details: PropTypes.array.isRequired,
+  details: PropTypes.array,
   setOverlayLoading: PropTypes.func.isRequired,
   getPostClientScrubbing: PropTypes.func.isRequired,
   selectRow: PropTypes.func.isRequired,

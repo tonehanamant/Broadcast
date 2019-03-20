@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import CSSModules from "react-css-modules";
 import PricingGuideGridHeader from "../OpenMarketsGridHeader";
 import PricingGuideViewGrid from "../OpenMarketsViewGrid";
 import PricingGuideMasterGrid from "../OpenMarketsMasterGrid";
 
-import "./index.scss";
+import styles from "./index.style.scss";
 
 class PricingGuideGrid extends Component {
   componentDidMount() {
@@ -30,14 +31,14 @@ class PricingGuideGrid extends Component {
       isGuideEditing
     } = this.props;
     return (
-      <div className="pricing-open-market-grid">
+      <div styleName="pricing-open-market-grid">
         <PricingGuideGridHeader
           activeOpenMarketData={activeOpenMarketData}
           hasOpenMarketData={hasOpenMarketData}
           isOpenMarketDataSortName={isOpenMarketDataSortName}
           isGuideEditing={isGuideEditing}
         />
-        <div className="pricing-open-market-tables">
+        <div styleName="pricing-open-market-tables">
           <PricingGuideMasterGrid
             activeOpenMarketData={activeOpenMarketData}
             onSelectMarket={onSelectMarket}
@@ -71,4 +72,4 @@ PricingGuideGrid.propTypes = {
 
 PricingGuideGrid.defaultProps = {};
 
-export default PricingGuideGrid;
+export default CSSModules(PricingGuideGrid, styles);

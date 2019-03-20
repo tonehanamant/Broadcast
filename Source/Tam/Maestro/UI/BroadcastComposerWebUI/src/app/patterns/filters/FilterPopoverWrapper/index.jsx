@@ -88,10 +88,10 @@ export default class FilterPopoverWrapper extends Component {
       >
         <div
           style={{ backgroundColor: "white", cursor: "pointer" }}
-          className="editable-cell"
+          styleName="editable-cell"
         >
           <Glyphicon
-            className="pull-right"
+            styleName="pull-right"
             style={{ marginTop: "4px", fontSize: "14px", color: activeColor }}
             glyph="filter"
           />

@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";
-// import numeral from 'numeral';
+import CSSModules from "react-css-modules";
 import { InputNumber } from "antd";
 import {
   Well,
@@ -38,7 +38,7 @@ import Sweeps from "../DetailSweeps";
 import ProgramGenre from "../DetailProgramGenre";
 import PostingBook from "../DetailPostingBook";
 import UploadBuy from "../DetailUploadBuy";
-import "./index.style.scss";
+import styles from "./index.style.scss";
 
 const mapStateToProps = ({ planning: { isISCIEdited, isGridCellEdited } }) => ({
   isISCIEdited,
@@ -392,13 +392,13 @@ export class ProposalDetail extends Component {
     const { validationStates } = this.state;
 
     return (
-      <Well bsSize="small" className="proposal-detail-wrap">
+      <Well bsSize="small" styleName="proposal-detail-wrap">
         <Row>
           <Col md={12}>
-            <Form inline className="proposal-detail-form">
+            <Form inline styleName="proposal-detail-form">
               <FormGroup
                 controlId="detailFlight"
-                className="proposal-detail-form-item"
+                styleName="proposal-detail-form-item"
               >
                 <ControlLabel>Flight</ControlLabel>
                 <FlightPicker
@@ -421,9 +421,9 @@ export class ProposalDetail extends Component {
                 <FormGroup
                   controlId="proposalDetailSpotLength"
                   validationState={validationStates.SpotLengthId}
-                  className="proposal-detail-form-item"
+                  styleName="proposal-detail-form-item"
                 >
-                  <div className="proposal-form-label">
+                  <div styleName="proposal-form-label">
                     <ControlLabel>Spot Length</ControlLabel>
                     {validationStates.SpotLengthId != null && (
                       <HelpBlock>
@@ -449,9 +449,9 @@ export class ProposalDetail extends Component {
                 <FormGroup
                   controlId="proposalDetailDaypart"
                   validationState={validationStates.Daypart}
-                  className="proposal-detail-form-item"
+                  styleName="proposal-detail-form-item"
                 >
-                  <div className="proposal-form-label">
+                  <div styleName="proposal-form-label">
                     <ControlLabel>Daypart</ControlLabel>
                     {validationStates.Daypart && (
                       <HelpBlock>
@@ -469,7 +469,7 @@ export class ProposalDetail extends Component {
               )}
               {detail && (
                 <FormGroup
-                  className="proposal-detail-form-item"
+                  styleName="proposal-detail-form-item"
                   controlId="proposalDetailDaypartCode"
                   validationState={
                     validationStates.DaypartCode ||
@@ -477,7 +477,7 @@ export class ProposalDetail extends Component {
                     validationStates.DaypartCode_MaxChar
                   }
                 >
-                  <div className="proposal-form-label">
+                  <div styleName="proposal-form-label">
                     <ControlLabel>Daypart Code</ControlLabel>
                     {validationStates.DaypartCode != null && (
                       <HelpBlock>
@@ -512,9 +512,9 @@ export class ProposalDetail extends Component {
                 <FormGroup
                   controlId="proposalDetailNtiConversionFactor"
                   validationState={validationStates.NtiLength}
-                  className="proposal-detail-form-item"
+                  styleName="proposal-detail-form-item"
                 >
-                  <div className="proposal-form-label">
+                  <div styleName="proposal-form-label">
                     <ControlLabel>NTI</ControlLabel>
                     {validationStates.NtiLength != null && (
                       <HelpBlock>
@@ -543,7 +543,7 @@ export class ProposalDetail extends Component {
               {detail && (
                 <FormGroup
                   controlId="proposalDetailADU"
-                  className="proposal-detail-form-item"
+                  styleName="proposal-detail-form-item"
                 >
                   <ControlLabel>ADU</ControlLabel>
                   <Checkbox
@@ -556,13 +556,13 @@ export class ProposalDetail extends Component {
               {detail && (
                 <FormGroup
                   controlId="EstimateId"
-                  className="proposal-detail-form-item"
+                  styleName="proposal-detail-form-item"
                 >
                   <ControlLabel>Estimate ID</ControlLabel>
                   <span>{detail.EstimateId || "-"}</span>
                 </FormGroup>
               )}
-              <div className="proposal-detail-actions">
+              <div styleName="proposal-detail-actions">
                 {detail && !isReadOnly && (
                   <Button bsStyle="link" onClick={this.onDeleteProposalDetail}>
                     <Glyphicon
@@ -749,6 +749,6 @@ ProposalDetail.propTypes = {
 const ProposalDetailRedux = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProposalDetail);
+)(CSSModules(ProposalDetail, styles));
 
 export default withRouter(ProposalDetailRedux);

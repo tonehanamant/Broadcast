@@ -14,13 +14,14 @@ import {
   Button,
   ToggleButton
 } from "react-bootstrap";
+import CSSModules from "react-css-modules";
 import { InputNumber } from "antd";
 import numeral from "numeral";
 import { numberRender, calculateBalanceSum } from "PricingGuide/util/helpers";
 import PricingGuideGrid from "../OpenMarketsGrid";
 import PricingGuideEditMarkets from "../OpenMarketsEdit";
 
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const shouldMarketRender = (isLoaded, data, isEdit) =>
   isLoaded && data && isEdit;
@@ -212,7 +213,7 @@ class OpenMarketsContainer extends Component {
       <Panel
         id="pricing_openmarket_panel"
         defaultExpanded
-        className="panelCard pricing-guide_open-market"
+        styleName="panelCard pricing-guide_open-market"
       >
         <Panel.Heading>
           <Panel.Title toggle>
@@ -220,16 +221,16 @@ class OpenMarketsContainer extends Component {
           </Panel.Title>
           <Row>
             <Col sm={6}>
-              <div className="summary-item single">
-                <div className="summary-display">
+              <div styleName="summary-item single">
+                <div styleName="summary-display">
                   {numeral((1 - balanceSum) * 100).format("0,0.[00]")}%
                 </div>
               </div>
             </Col>
             <Col sm={6}>
-              <div className="summary-bar">
-                <div className="summary-item">
-                  <div className="summary-display">
+              <div styleName="summary-bar">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     {numberRender(
                       activeOpenMarketData,
                       "OpenMarketTotals.Coverage",
@@ -237,10 +238,10 @@ class OpenMarketsContainer extends Component {
                     )}
                     %
                   </div>
-                  <div className="summary-label">MARKET COVERAGE</div>
+                  <div styleName="summary-label">MARKET COVERAGE</div>
                 </div>
-                <div className="summary-item">
-                  <div className="summary-display">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     $
                     {numberRender(
                       activeOpenMarketData,
@@ -248,10 +249,10 @@ class OpenMarketsContainer extends Component {
                       "0,0.00"
                     )}
                   </div>
-                  <div className="summary-label">CPM</div>
+                  <div styleName="summary-label">CPM</div>
                 </div>
-                <div className="summary-item">
-                  <div className="summary-display">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     {numberRender(
                       activeOpenMarketData,
                       "OpenMarketTotals.Impressions",
@@ -259,10 +260,10 @@ class OpenMarketsContainer extends Component {
                       1000
                     )}
                   </div>
-                  <div className="summary-label">IMPRESSIONS (000)</div>
+                  <div styleName="summary-label">IMPRESSIONS (000)</div>
                 </div>
-                <div className="summary-item">
-                  <div className="summary-display">
+                <div styleName="summary-item">
+                  <div styleName="summary-display">
                     $
                     {numberRender(
                       activeOpenMarketData,
@@ -270,7 +271,7 @@ class OpenMarketsContainer extends Component {
                       "0,0"
                     )}
                   </div>
-                  <div className="summary-label">TOTAL COST</div>
+                  <div styleName="summary-label">TOTAL COST</div>
                 </div>
               </div>
             </Col>
@@ -278,7 +279,7 @@ class OpenMarketsContainer extends Component {
         </Panel.Heading>
         <Panel.Collapse>
           <Panel.Body>
-            <div className="formEditToggle">
+            <div styleName="formEditToggle">
               {!isReadOnly && !isEditing && (
                 <Button
                   onClick={this.toggleEditing}
@@ -294,7 +295,7 @@ class OpenMarketsContainer extends Component {
                     <Glyphicon glyph="save" /> Ok
                   </Button>
                   <Button
-                    className="cancel"
+                    styleName="cancel"
                     onClick={this.onCancel}
                     bsStyle="link"
                   >
@@ -305,7 +306,7 @@ class OpenMarketsContainer extends Component {
             </div>
             <Row>
               <Col sm={8}>
-                <form className="formCard">
+                <form styleName="formCard">
                   <Row>
                     <Col sm={2}>
                       <FormGroup>
@@ -413,9 +414,9 @@ class OpenMarketsContainer extends Component {
                         )}
                         {!isEditing && (
                           <div style={{ marginTop: "6px" }}>
-                            <Label className={TargetMinActive}>MIN</Label>
-                            <Label className={TargetAvgActive}>AVG</Label>
-                            <Label className={TargetMaxActive}>MAX</Label>
+                            <Label styleName={TargetMinActive}>MIN</Label>
+                            <Label styleName={TargetAvgActive}>AVG</Label>
+                            <Label styleName={TargetMaxActive}>MAX</Label>
                           </div>
                         )}
                       </FormGroup>
@@ -423,7 +424,7 @@ class OpenMarketsContainer extends Component {
                   </Row>
                 </form>
               </Col>
-              <Col sm={4} className="open-market_toolbox">
+              <Col sm={4} styleName="open-market_toolbox">
                 <Button
                   bsStyle="primary"
                   onClick={onCopyToBuy}
@@ -502,4 +503,4 @@ OpenMarketsContainer.defaultProps = {
   openCpmTarget: 1
 };
 
-export default OpenMarketsContainer;
+export default CSSModules(OpenMarketsContainer, styles);

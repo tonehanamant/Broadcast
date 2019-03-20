@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import CSSModules from "react-css-modules";
 import { Col, Form, ButtonToolbar, Button, FormGroup } from "react-bootstrap";
 import { TimePicker } from "antd";
 import moment from "moment";
-import "./index.css";
+import styles from "./index.style.scss";
 
 class FilterTimeInput extends Component {
   constructor(props) {
@@ -118,7 +119,7 @@ class FilterTimeInput extends Component {
       <div>
         <Form horizontal>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
               Start time
             </Col>
             <Col sm={8}>
@@ -134,7 +135,7 @@ class FilterTimeInput extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
               End time
             </Col>
             <Col sm={8}>
@@ -150,7 +151,7 @@ class FilterTimeInput extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
+        <ButtonToolbar styleName="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button
             bsStyle="success"
             bsSize="xsmall"
@@ -185,4 +186,4 @@ FilterTimeInput.propTypes = {
   filterKey: PropTypes.string.isRequired
 };
 
-export default FilterTimeInput;
+export default CSSModules(FilterTimeInput, styles);

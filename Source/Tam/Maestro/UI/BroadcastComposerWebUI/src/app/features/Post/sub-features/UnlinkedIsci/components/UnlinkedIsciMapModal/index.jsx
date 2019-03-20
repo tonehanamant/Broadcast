@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import CSSModules from "react-css-modules";
 import { Button, Modal } from "react-bootstrap";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { head } from "lodash";
 import { unlinkedIsciActions } from "Post";
 import { toggleModal } from "Main/redux/ducks";
 
-import "./index.style.scss";
+import styles from "./index.style.scss";
 
 const mapStateToProps = ({
   app: {
@@ -35,9 +36,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class UnlinkedIsciMapModal extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.onCancel = this.onCancel.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -105,7 +105,7 @@ export class UnlinkedIsciMapModal extends Component {
       <Modal
         show={active}
         onHide={this.close}
-        className="map-unlinked-isci-modal"
+        styleName="map-unlinked-isci-modal"
         dialogClassName="large-40-modal"
       >
         <Modal.Header>
@@ -122,11 +122,11 @@ export class UnlinkedIsciMapModal extends Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <div className="mapping-section">
+          <div styleName="mapping-section">
             <div>
               <span>{`Mapping: ${ISCI}`}</span>
             </div>
-            <div className="typeahead-wrapper">
+            <div styleName="typeahead-wrapper">
               <span>To:</span>
               <AsyncTypeahead
                 options={typeaheadIscisList}
@@ -136,7 +136,7 @@ export class UnlinkedIsciMapModal extends Component {
                 onSearch={loadValidIscis}
                 onChange={this.onChange}
                 placeholder="Search valid ISCI..."
-                className="typeahead-element"
+                styleName="typeahead-element"
               />
             </div>
           </div>
@@ -175,4 +175,4 @@ UnlinkedIsciMapModal.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UnlinkedIsciMapModal);
+)(CSSModules(UnlinkedIsciMapModal, styles));

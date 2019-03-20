@@ -73,7 +73,7 @@ export const transformInvetoryLabel = (inventorySrc, props) =>
   inventorySrc.map(i => (
     <Label
       key={`invetory-label#${i.Id}`}
-      className={
+      styleName={
         props[`propImpressions${i.Display}`] > 0
           ? "tag-label active"
           : "tag-label inactive"

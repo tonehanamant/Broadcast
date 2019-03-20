@@ -138,7 +138,7 @@ function TrackerScrubbingHeader({
   ];
 
   return (
-    <div className="tracker-scrubbing-header">
+    <div styleName="tracker-scrubbing-header">
       <Row>
         <Col md={12}>
           <ControlLabel>
@@ -146,7 +146,7 @@ function TrackerScrubbingHeader({
           </ControlLabel>
         </Col>
       </Row>
-      <div className="header-items">
+      <div styleName="header-items">
         <FormGroup controlId="proposalName">
           <ControlLabel>Proposal Name</ControlLabel>
           <FormControl.Static>{name}</FormControl.Static>
@@ -197,7 +197,7 @@ function TrackerScrubbingHeader({
           <FormControl.Static>{notes || "--"}</FormControl.Static>
         </FormGroup>
       </div>
-      <Panel defaultExpanded className="tracker-scrubbing-detail">
+      <Panel defaultExpanded>
         <Panel.Heading style={{ padding: "0" }}>
           <Panel.Title>
             <Panel.Toggle>
@@ -247,4 +247,4 @@ TrackerScrubbingHeader.propTypes = {
   secondaryDemo: PropTypes.array
 };
 
-export default CSSModules(withGrid(TrackerScrubbingHeader), styles);
+export default withGrid(CSSModules(TrackerScrubbingHeader, styles));

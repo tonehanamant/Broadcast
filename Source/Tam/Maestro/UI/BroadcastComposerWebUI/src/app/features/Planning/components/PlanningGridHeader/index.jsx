@@ -8,8 +8,9 @@ import { Checkbox, Menu, Dropdown } from "antd";
 import { isNil } from "lodash";
 import SearchInputButton from "Patterns/SearchInputButton";
 import { columns } from "Planning/util/grid";
+import CSSModules from "react-css-modules";
 
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const generateColumnItems = onVisible => (
   <Menu>
@@ -89,7 +90,7 @@ export class PageHeaderContainer extends Component {
     );
 
     return (
-      <div className="planning-grid-header">
+      <div styleName="planning-grid-header">
         <Button
           bsStyle="success"
           bsSize="small"
@@ -97,7 +98,7 @@ export class PageHeaderContainer extends Component {
         >
           Create New Proposal
         </Button>
-        <div className="planning-grid-header_actions">
+        <div styleName="planning-grid-header_actions">
           <SearchInputButton
             inputAction={this.SearchInputAction}
             submitAction={this.SearchSubmitAction}
@@ -125,4 +126,4 @@ PageHeaderContainer.propTypes = {
 export default connect(
   null,
   mapDispatchToProps
-)(PageHeaderContainer);
+)(CSSModules(PageHeaderContainer, styles));

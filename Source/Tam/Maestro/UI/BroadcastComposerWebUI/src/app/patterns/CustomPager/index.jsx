@@ -24,7 +24,7 @@ export function CustomPager({ dataSource, selection, idProperty }) {
   const recordId = getSelectedId(rowKey, dataSource.data, idProperty);
 
   return (
-    <div className="react-grid-pager-toolbar">
+    <div styleName="react-grid-pager-toolbar">
       <span>{recordId}</span>
       {total ? (
         <span>

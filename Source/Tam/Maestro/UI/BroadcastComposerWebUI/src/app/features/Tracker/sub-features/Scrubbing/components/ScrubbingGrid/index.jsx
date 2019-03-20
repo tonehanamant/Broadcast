@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Badge } from "react-bootstrap";
-import { Grid, Actions } from "react-redux-grid";
+import { Grid, Actions } from "Lib/react-redux-grid";
 import { scrubbingActions } from "Tracker";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import {
@@ -39,9 +39,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class TrackerScrubbingGrid extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.getScrubbingSelections = this.getScrubbingSelections.bind(this);
     this.processManualOverrides = this.processManualOverrides.bind(this);
     this.hideContextMenu = this.hideContextMenu.bind(this);
@@ -123,7 +122,6 @@ export class TrackerScrubbingGrid extends Component {
     const style = { color: "#FF0000" };
     const stateKey = "TrackerScrubbingGrid";
     const { activeScrubbingData, details } = this.props;
-    const { store } = this.context;
     const { ClientScrubs = [] } = activeScrubbingData;
 
     const gridContextMenu = [
@@ -181,7 +179,7 @@ export class TrackerScrubbingGrid extends Component {
             iconClassName =
               row.Status === 2 ? "fa-check-circle" : "fa-times-circle";
           }
-          return <i className={`status-icon fa ${iconClassName}`} />;
+          return <i styleName={`status-icon fa ${iconClassName}`} />;
         }
       },
       {
@@ -405,7 +403,7 @@ export class TrackerScrubbingGrid extends Component {
 
     return (
       <div>
-        <Grid {...grid} data={ClientScrubs} store={store} height={340} />
+        <Grid {...grid} data={ClientScrubs} height={340} />
         <SwapDetailModal details={details} />
       </div>
     );

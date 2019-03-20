@@ -40,9 +40,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class PostGridContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.showscrubbingModal = this.showscrubbingModal.bind(this);
   }
 

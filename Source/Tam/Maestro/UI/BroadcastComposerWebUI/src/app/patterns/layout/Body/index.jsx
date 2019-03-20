@@ -6,7 +6,7 @@ import styles from "./index.style.scss";
 
 function Body({ children }) {
   return (
-    <Row className="clearfix" styleName="body-row">
+    <Row styleName="body-row">
       <Col xs={12} sm={12} md={12} styleName="body-row-col-12">
         {children}
       </Col>

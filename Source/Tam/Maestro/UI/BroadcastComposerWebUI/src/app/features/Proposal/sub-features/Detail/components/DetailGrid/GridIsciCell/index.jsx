@@ -188,7 +188,6 @@ export default class GridIsciCell extends Component {
         return `${aggregated +
           house.trim()}${married},${client.trim()},${days.trim()},${brand.trim()}\n`;
       }, "");
-      // console.log('read iscis >>>', isInitiallyValid);
 
       this.setState({
         iscisValue: iscisFormatted,
@@ -303,9 +302,8 @@ export default class GridIsciCell extends Component {
         </span>
       </Tooltip>
     );
-    const touchedClass = "";
     return (
-      <div className={`${touchedClass} isci-cell`}>
+      <div>
         {isEdit && (
           <OverlayTrigger placement="top" overlay={tooltip}>
             <Button bsStyle="link" style={{ fontSize: "11px", padding: "2px" }}>

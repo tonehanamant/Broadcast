@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
-import { store, history, configureIcons } from "AppConfigs";
+import { store, history, configureIcons, StoreContext } from "AppConfigs";
 
 // third party libraries here:
 import "react-dates/initialize";
@@ -27,9 +27,11 @@ configureIcons();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <AppRoot />
-    </Router>
+    <StoreContext.Provider value={store}>
+      <Router history={history}>
+        <AppRoot />
+      </Router>
+    </StoreContext.Provider>
   </Provider>,
   document.getElementById("root")
 );

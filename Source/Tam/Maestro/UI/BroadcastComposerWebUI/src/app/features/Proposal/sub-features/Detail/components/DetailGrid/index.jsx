@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Grid } from "react-redux-grid";
+import { Grid } from "Lib/react-redux-grid";
 import numeral from "numeral";
 import GridCellInput from "Patterns/GridCellInput";
 import GridTextInput from "Patterns/GridTextInput";
@@ -17,10 +17,9 @@ const keyPress = event => {
   }
 };
 export default class ProposalDetailGrid extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
-    this.context = context;
     this.isciCellItems = {};
     this.checkEditable = this.checkEditable.bind(this);
 
@@ -60,7 +59,6 @@ export default class ProposalDetailGrid extends Component {
 
   render() {
     const { DetailGridsInvalid } = this.state;
-    const { store } = this.context;
     const {
       detailId,
       updateProposalEditFormDetailGrid,
@@ -431,7 +429,6 @@ export default class ProposalDetailGrid extends Component {
       <Grid
         {...grid}
         data={GridQuarterWeeks}
-        store={store}
         height="false"
         key={`${proposalValidationStates.DetailGridsInvalid}${isReadOnly}`} // force cell update
       />

@@ -14,7 +14,7 @@ import { parseFileToBase64 } from "Utils/file-parser";
 
 import { deployError } from "Main/redux/ducks";
 
-import styles from "./index.scss";
+import styles from "./index.style.scss";
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -118,7 +118,7 @@ export class Dropzone extends PureComponent {
         <ReactDropzone
           {...dropZoneProps}
           onDrop={onDrop}
-          className={styles.dropzone}
+          styleName={styles.dropzone}
           activeClassName={styles.active}
           acceptClassName={styles.accept}
           rejectClassName={styles.reject}
@@ -126,7 +126,7 @@ export class Dropzone extends PureComponent {
           accept={acceptedMimeTypes}
           getDataTransferItems={getDataTransferItems}
         >
-          <div className="drop-overlay">
+          <div styleName="drop-overlay">
             <h4>Drop your files here or click to select</h4>
           </div>
         </ReactDropzone>
@@ -139,7 +139,7 @@ export class Dropzone extends PureComponent {
         onDrop={this.onDrop}
         onDragEnter={this.onDragEnter}
         onDragOver={this.onDragOver}
-        className={styles.dropzoneAsWrapper}
+        styleName={styles.dropzoneAsWrapper}
         activeClassName={styles.active}
         acceptClassName={styles.accept}
         rejectClassName={styles.reject}
@@ -150,17 +150,17 @@ export class Dropzone extends PureComponent {
       >
         <>
           {!disabled && (
-            <div className="drop-overlay">
-              <div className="drop-dialog">
+            <div styleName="drop-overlay">
+              <div styleName="drop-dialog">
                 <h1>
-                  <i className="fa fa-cloud-upload upload-cloud" />
+                  <i styleName="fa fa-cloud-upload upload-cloud" />
                 </h1>
                 <h2>Drop a {fileType} file here to upload</h2>
-                <p className="reject-prompt">
+                <p styleName="reject-prompt">
                   Invalid file format. Please provide an {fileTypeExtension}{" "}
                   file.
                 </p>
-                <p className="accept-prompt">
+                <p styleName="accept-prompt">
                   Valid {fileTypeExtension} file format.
                 </p>
               </div>

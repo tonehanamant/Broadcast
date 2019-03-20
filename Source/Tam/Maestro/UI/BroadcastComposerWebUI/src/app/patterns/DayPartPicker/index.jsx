@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
 import { TimePicker } from "antd";
 import moment from "moment";
-
+import CSSModules from "react-css-modules";
 import {
   Col,
   Panel,
@@ -16,7 +15,6 @@ import {
   FormControl,
   Overlay
 } from "react-bootstrap";
-
 import {
   daysSelectionsRender,
   transformDaysByWeekends,
@@ -26,7 +24,7 @@ import {
   initialDayPart,
   validator
 } from "./util";
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const transformTimeFromSeconds = time =>
   moment()
@@ -68,7 +66,7 @@ const generateInitialState = (dayPart, allowEmpty) => {
 const tranformTime = time =>
   time.seconds(0).diff(moment().startOf("day"), "seconds");
 
-export default class DayPartPicker extends Component {
+class DayPartPicker extends Component {
   constructor(props) {
     super(props);
 
@@ -150,18 +148,19 @@ export default class DayPartPicker extends Component {
     const isValid = validator(days, startTime, endTime);
 
     return (
-      <div className="daypart-picker">
+      <div styleName="daypart-picker">
         <InputGroup
           onClick={this.onShow}
-          className="daypicker-input read-only-picker"
+          styleName="daypicker-input"
+          className="read-only-picker"
         >
           <FormControl
             type="text"
             value={text}
-            readonly
-            spellcheck="false"
-            autocorrect="off"
-            autocomplete="off" // attempt overide chrome
+            readOnly
+            spellCheck="false"
+            autoCorrect="off"
+            autoComplete="off" // attempt overide chrome
             disabled={disabled}
           />
           <InputGroup.Addon>
@@ -177,11 +176,11 @@ export default class DayPartPicker extends Component {
           shouldUpdatePosition={false}
           rootClose
         >
-          <div className="daypart-picker-overlay">
-            <Panel header="Select Weekdays" className="days-selectors">
+          <div styleName="daypart-picker-overlay">
+            <Panel header="Select Weekdays" styleName="days-selectors">
               <ListGroup>
                 <ListGroupItem>
-                  <div className="days-selections-wrap">
+                  <div styleName="days-selections-wrap">
                     <div>
                       {daysSelectionsRender(weekdays, this.onDayChange)}
                     </div>
@@ -190,13 +189,13 @@ export default class DayPartPicker extends Component {
                     </div>
                   </div>
                 </ListGroupItem>
-                <ListGroupItem className="quick-options">
+                <ListGroupItem styleName="quick-options">
                   <ControlLabel>Quick Options</ControlLabel>
                   {quickOptionsRender(days, this.onRangeChange)}
                 </ListGroupItem>
               </ListGroup>
             </Panel>
-            <Panel header="Select Time" className="time-pickers">
+            <Panel header="Select Time" styleName="time-pickers">
               <Col md={6}>
                 <ControlLabel>Start Time</ControlLabel>
                 <TimePicker
@@ -230,7 +229,7 @@ export default class DayPartPicker extends Component {
                 <div id="endTimePicker" />
               </Col>
             </Panel>
-            <Col md={12} className="actions-toolbar">
+            <Col md={12} styleName="actions-toolbar">
               <hr />
               <ButtonToolbar>
                 <Button bsStyle="default" bsSize="small" onClick={this.onHide}>
@@ -267,3 +266,5 @@ DayPartPicker.propTypes = {
   applyOnMount: PropTypes.bool,
   allowEmpty: PropTypes.bool
 };
+
+export default CSSModules(DayPartPicker, styles);

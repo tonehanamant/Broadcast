@@ -10,7 +10,7 @@ import {
   ToggleButtonGroup
 } from "react-bootstrap";
 import { bindActionCreators } from "redux";
-
+import CSSModules from "react-css-modules";
 import { toggleModal, createAlert } from "Main/redux/ducks";
 import {
   updateProposalEditFormDetail,
@@ -34,7 +34,7 @@ import {
   parseProgramsToList
 } from "./util";
 import PricingProposalSummary from "../PricingGuideSummary";
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const isActiveDialog = (detail, modal) =>
   modal && detail && modal.properties.detailId === detail.Id && modal.active;
@@ -508,10 +508,10 @@ class PricingGuideContainer extends Component {
                 <Modal.Title>Pricing Guide</Modal.Title>
               </Col>
               <Col sm={6}>
-                <div className="summary-bar" style={{ marginRight: "32px" }}>
-                  <div className="summary-item">
-                    {/* <div className="summary-tag">--%</div> */}
-                    <div className="summary-display">
+                <div styleName="summary-bar" style={{ marginRight: "32px" }}>
+                  <div styleName="summary-item">
+                    {/* <div styleName="summary-tag">--%</div> */}
+                    <div styleName="summary-display">
                       {numberRender(
                         activeOpenMarketData,
                         "PricingTotals.Coverage",
@@ -519,11 +519,11 @@ class PricingGuideContainer extends Component {
                       )}
                       %
                     </div>
-                    <div className="summary-label">MARKET COVERAGE</div>
+                    <div styleName="summary-label">MARKET COVERAGE</div>
                   </div>
-                  <div className="summary-item">
-                    {/* <div className="summary-tag">--%</div> */}
-                    <div className="summary-display">
+                  <div styleName="summary-item">
+                    {/* <div styleName="summary-tag">--%</div> */}
+                    <div styleName="summary-display">
                       $
                       {numberRender(
                         activeOpenMarketData,
@@ -531,11 +531,11 @@ class PricingGuideContainer extends Component {
                         "0,0.00"
                       )}
                     </div>
-                    <div className="summary-label">CPM</div>
+                    <div styleName="summary-label">CPM</div>
                   </div>
-                  <div className="summary-item">
-                    {/* <div className="summary-tag">--%</div> */}
-                    <div className="summary-display">
+                  <div styleName="summary-item">
+                    {/* <div styleName="summary-tag">--%</div> */}
+                    <div styleName="summary-display">
                       {numberRender(
                         activeOpenMarketData,
                         "PricingTotals.Impressions",
@@ -543,11 +543,11 @@ class PricingGuideContainer extends Component {
                         1000
                       )}
                     </div>
-                    <div className="summary-label">IMPRESSIONS (000)</div>
+                    <div styleName="summary-label">IMPRESSIONS (000)</div>
                   </div>
-                  <div className="summary-item">
-                    {/* <div className="summary-tag">--%</div> */}
-                    <div className="summary-display">
+                  <div styleName="summary-item">
+                    {/* <div styleName="summary-tag">--%</div> */}
+                    <div styleName="summary-display">
                       $
                       {numberRender(
                         activeOpenMarketData,
@@ -555,7 +555,7 @@ class PricingGuideContainer extends Component {
                         "0,0"
                       )}
                     </div>
-                    <div className="summary-label">TOTAL COST</div>
+                    <div styleName="summary-label">TOTAL COST</div>
                   </div>
                 </div>
               </Col>
@@ -571,7 +571,7 @@ class PricingGuideContainer extends Component {
             </Row>
           </Modal.Header>
 
-          <Modal.Body className="modalBodyScroll">
+          <Modal.Body styleName="modalBodyScroll">
             {panelsList.map(panel =>
               panel.render({
                 key: `prcing-guide-panel#${panel.id}`,
@@ -652,8 +652,8 @@ class PricingGuideContainer extends Component {
             <Modal.Title>Warning</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="pricing-guide_confirmation-message">
-              <span className="confirmation-text">
+            <div styleName="pricing-guide_confirmation-message">
+              <span styleName="confirmation-text">
                 You have changed spots, how do you want to run distribution?
               </span>
               <ToggleButtonGroup
@@ -662,10 +662,10 @@ class PricingGuideContainer extends Component {
                 value={isAutoDistribution}
                 onChange={this.onChangeDistributionOption}
               >
-                <Radio className="confirmation-checkbox" value>
+                <Radio styleName="confirmation-checkbox" value>
                   Discard spots you have edited or modified
                 </Radio>
-                <Radio className="confirmation-checkbox" value={false}>
+                <Radio styleName="confirmation-checkbox" value={false}>
                   Maintain edited or modified spots
                 </Radio>
               </ToggleButtonGroup>
@@ -803,4 +803,4 @@ PricingGuideContainer.defaultProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PricingGuideContainer);
+)(CSSModules(PricingGuideContainer, styles));

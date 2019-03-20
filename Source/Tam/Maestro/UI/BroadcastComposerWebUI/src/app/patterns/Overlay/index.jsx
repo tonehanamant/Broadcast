@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import CSSModules from "react-css-modules";
-import styles from "./index.scss";
+import Icon from "Patterns/Icon";
+import styles from "./index.style.scss";
 
 const Overlay = ({ type, loading, processing }) => {
   if (
@@ -10,9 +11,15 @@ const Overlay = ({ type, loading, processing }) => {
     Object.keys(loading).some(key => loading[key] === true)
   ) {
     return (
-      <div className={styles.overlayLoading}>
-        <div className={styles.overlayDialog}>
-          <i className="fa fa-refresh fa-spin fa-3x fa-fw" />
+      <div styleName="overlayLoading">
+        <div styleName="overlayDialog">
+          <Icon
+            prefix="fas"
+            icon="spinner-third"
+            iconSize="md"
+            spin
+            iconColor="tertiary"
+          />
           Loading...
         </div>
       </div>
@@ -24,9 +31,15 @@ const Overlay = ({ type, loading, processing }) => {
     Object.keys(processing).some(key => processing[key] === true)
   ) {
     return (
-      <div className={styles.overlayProcessing}>
-        <div className={styles.overlayDialog}>
-          <i className="fa fa-spinner fa-spin fa-3x fa-fw" />
+      <div styleName="overlayProcessing">
+        <div styleName="overlayDialog">
+          <Icon
+            prefix="fas"
+            icon="spinner-third"
+            iconSize="md"
+            spin
+            iconColor="tertiary"
+          />
           Processing...
         </div>
       </div>

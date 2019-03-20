@@ -32,9 +32,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class TrackerGridContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.showscrubbingModal = this.showscrubbingModal.bind(this);
   }
 
@@ -79,9 +78,9 @@ export class TrackerGridContainer extends Component {
           return row.original.IsActiveThisWeek ? (
             <div>
               {val}
-              <span className="fa-stack pull-right">
-                <i className="fa fa-circle fa-stack-2x text-success" />
-                <i className="fa fa-bolt fa-stack-1x fa-inverse" />
+              <span styleName="fa-stack pull-right">
+                <i styleName="fa fa-circle fa-stack-2x text-success" />
+                <i styleName="fa fa-bolt fa-stack-1x fa-inverse" />
               </span>
             </div>
           ) : (

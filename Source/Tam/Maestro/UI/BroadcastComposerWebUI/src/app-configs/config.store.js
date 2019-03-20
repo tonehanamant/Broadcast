@@ -1,3 +1,4 @@
+import React from "react";
 import { createStore, applyMiddleware } from "redux";
 
 import { rootReducer } from "./config.reducers";
@@ -28,3 +29,5 @@ export default function configureStore(initialState) {
 }
 
 export const store = configureStore();
+
+export const StoreContext = React.createContext();

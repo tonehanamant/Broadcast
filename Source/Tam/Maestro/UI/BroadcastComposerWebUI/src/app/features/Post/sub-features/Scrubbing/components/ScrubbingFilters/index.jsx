@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button } from "react-bootstrap";
 import CSSModules from "react-css-modules";
-import { Grid } from "react-redux-grid";
+import { Grid } from "Lib/react-redux-grid";
 import { scrubbingActions as actions } from "Post";
 import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
-import styles from "./index.scss";
+import styles from "./index.style.scss";
 
 const mapStateToProps = (grid, dataSource) => ({
   grid,
@@ -26,9 +26,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class PostScrubbingFilters extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
 
     this.applyFilter = this.applyFilter.bind(this);
     this.onClear = this.onClear.bind(this);
@@ -54,7 +53,6 @@ export class PostScrubbingFilters extends Component {
 
   render() {
     const { activeFilters } = this.props;
-    const { store } = this.context;
     const stateKey = "PostScrubbingFiltersGrid";
     const columns = [
       {
@@ -345,7 +343,6 @@ export class PostScrubbingFilters extends Component {
           {...grid}
           classNames={["filter-grid"]}
           data={activeFilters}
-          store={store}
           height={false}
         />
       </div>

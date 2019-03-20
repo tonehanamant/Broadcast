@@ -138,7 +138,7 @@ function PostScrubbingHeader({
   ];
 
   return (
-    <div className="post-scrubbing-header">
+    <div styleName="post-scrubbing-header">
       <Row>
         <Col md={12}>
           <ControlLabel>
@@ -146,7 +146,7 @@ function PostScrubbingHeader({
           </ControlLabel>
         </Col>
       </Row>
-      <div className="header-items">
+      <div styleName="header-items">
         <FormGroup controlId="proposalName">
           <ControlLabel>Proposal Name</ControlLabel>
           <FormControl.Static>{name}</FormControl.Static>
@@ -197,7 +197,7 @@ function PostScrubbingHeader({
           <FormControl.Static>{notes || "--"}</FormControl.Static>
         </FormGroup>
       </div>
-      <Panel defaultExpanded className="post-scrubbing-detail">
+      <Panel defaultExpanded styleName="post-scrubbing-detail">
         <Panel.Heading style={{ padding: "0" }}>
           <Panel.Title>
             <Panel.Toggle>

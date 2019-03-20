@@ -141,7 +141,7 @@ export const daysSelectionsRender = (days, onChange) =>
   days.map(day => (
     <Checkbox
       key={`daypart-checkbox_#${day.indexName}`}
-      className="day-selection-item"
+      styleName="day-selection-item"
       checked={day.value}
       onChange={e => {
         onChange(day.indexName, e.target.checked);

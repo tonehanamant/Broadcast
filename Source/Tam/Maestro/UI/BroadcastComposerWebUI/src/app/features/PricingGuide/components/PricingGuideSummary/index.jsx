@@ -76,17 +76,17 @@ export default class PricingProposalSummary extends Component {
           <thead>
             <tr>
               <th>PROPOSAL</th>
-              <th className="cardLabel">Advertiser</th>
-              <th className="cardLabel">Coverage</th>
-              <th className="cardLabel">Post Type</th>
-              <th className="cardLabel">Equivalized</th>
-              <th className="cardLabel">Guaranteed</th>
-              <th className="cardLabel">Secondary</th>
-              <th className="cardLabel">Flight</th>
-              <th className="cardLabel">Daypart</th>
-              <th className="cardLabel">Spot Length</th>
-              <th className="cardLabel">Share</th>
-              <th className="cardLabel">Hut</th>
+              <th styleName="cardLabel">Advertiser</th>
+              <th styleName="cardLabel">Coverage</th>
+              <th styleName="cardLabel">Post Type</th>
+              <th styleName="cardLabel">Equivalized</th>
+              <th styleName="cardLabel">Guaranteed</th>
+              <th styleName="cardLabel">Secondary</th>
+              <th styleName="cardLabel">Flight</th>
+              <th styleName="cardLabel">Daypart</th>
+              <th styleName="cardLabel">Spot Length</th>
+              <th styleName="cardLabel">Share</th>
+              <th styleName="cardLabel">Hut</th>
             </tr>
           </thead>
           <tbody style={{ fontSize: "11px" }}>

@@ -63,7 +63,7 @@ class MarketSelector extends Component {
         return (
           <ListGroupItem key={market.Id}>
             <Button
-              className="close pull-left"
+              styleName="close pull-left"
               style={{ marginRight: "5px" }}
               disabled={isReadOnly}
               onClick={() => this.onMarketExcluded(market.Id)}
@@ -81,7 +81,7 @@ class MarketSelector extends Component {
     return (
       <div>
         <Button
-          className={`pull-right ${styles.trash}`}
+          styleName={`pull-right ${styles.trash}`}
           bsStyle="link"
           disabled={isReadOnly}
           onClick={() => this.onClearMarketList()}

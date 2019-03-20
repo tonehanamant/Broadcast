@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import CSSModules from "react-css-modules";
 import {
   showEditMarkets,
   changeEditMarkets,
@@ -12,7 +13,7 @@ import numeral from "numeral";
 import { partition, sumBy } from "lodash";
 import EditMarketsGrid from "../OpenMarketsEditGrid";
 
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -121,35 +122,35 @@ class PricingGuideEditMarkets extends Component {
           <Panel.Body>
             <Row style={{ marginTop: "10px" }}>
               <Col xs={6}>
-                <div className="summary-bar-left">
-                  <div className="summary-item">
-                    <div className="summary-display">
+                <div styleName="summary-bar-left">
+                  <div styleName="summary-item">
+                    <div styleName="summary-display">
                       {numeral(marketCoverageGoal).format("0,0%")}
                     </div>
-                    <div className="summary-label">MARKET COVERAGE GOAL</div>
+                    <div styleName="summary-label">MARKET COVERAGE GOAL</div>
                   </div>
-                  <div className="summary-item">
-                    <div className="summary-display">
+                  <div styleName="summary-item">
+                    <div styleName="summary-display">
                       {numeral(currentCoverage).format("0,0.[000]")}%
                     </div>
-                    <div className="summary-label">CURRENT MARKET COVERAGE</div>
+                    <div styleName="summary-label">CURRENT MARKET COVERAGE</div>
                   </div>
-                  <div className="summary-item">
-                    <div className="summary-display">({usedCount})</div>
-                    <div className="summary-label">MARKETS USED</div>
+                  <div styleName="summary-item">
+                    <div styleName="summary-display">({usedCount})</div>
+                    <div styleName="summary-label">MARKETS USED</div>
                   </div>
                 </div>
               </Col>
               <Col xs={6}>
-                <div className="summary-bar-left">
-                  <div className="summary-item">
-                    <div className="summary-display">({availableCount})</div>
-                    <div className="summary-label">AVAILABLE MARKETS</div>
+                <div styleName="summary-bar-left">
+                  <div styleName="summary-item">
+                    <div styleName="summary-display">({availableCount})</div>
+                    <div styleName="summary-label">AVAILABLE MARKETS</div>
                   </div>
                 </div>
               </Col>
             </Row>
-            <Row className="pricing-guide_edit-markets">
+            <Row styleName="pricing-guide_edit-markets">
               <Col xs={6}>
                 <EditMarketsGrid
                   editMarketsData={usedMarkets}
@@ -198,4 +199,4 @@ PricingGuideEditMarkets.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PricingGuideEditMarkets);
+)(CSSModules(PricingGuideEditMarkets, styles));

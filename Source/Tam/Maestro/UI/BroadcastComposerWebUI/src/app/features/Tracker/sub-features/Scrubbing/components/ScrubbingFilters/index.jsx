@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button } from "react-bootstrap";
 import CSSModules from "react-css-modules";
-import { Grid } from "react-redux-grid";
+import { Grid } from "Lib/react-redux-grid";
 import { scrubbingActions } from "Tracker";
 import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
-import styles from "./index.scss";
+import styles from "./index.style.scss";
 
 const mapStateToProps = (grid, dataSource) => ({
   grid,
@@ -27,9 +27,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class TrackerScrubbingFilters extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
 
     this.applyFilter = this.applyFilter.bind(this);
     this.onClear = this.onClear.bind(this);
@@ -304,18 +303,6 @@ export class TrackerScrubbingFilters extends Component {
         dataIndex: "Comments",
         width: "100%",
         renderer: () => <div style={inactiveFilterStyle} />
-        /* renderer: ({ value }) => (
-          <FilterPopoverWrapper
-            filterDisplay={value.filterDisplay}
-            filterKey={value.filterKey}
-            hasTextSearch
-            hasMatchSpec={value.hasMatchSpec}
-            matchOptions={value.matchOptions}
-            filterOptions={value.filterOptions}
-            filterActive={value.active}
-            applyFilter={this.applyFilter}
-          />
-        ) */
       }
     ];
 
@@ -336,7 +323,6 @@ export class TrackerScrubbingFilters extends Component {
       stateKey
     };
     const { activeFilters } = this.props;
-    const { store } = this.context;
     return (
       <div
         style={{ maxHeight: "28px", overflow: "hidden", marginBottom: "2px" }}
@@ -345,7 +331,6 @@ export class TrackerScrubbingFilters extends Component {
           {...grid}
           classNames={["filter-grid"]}
           data={activeFilters}
-          store={store}
           height={false}
         />
       </div>

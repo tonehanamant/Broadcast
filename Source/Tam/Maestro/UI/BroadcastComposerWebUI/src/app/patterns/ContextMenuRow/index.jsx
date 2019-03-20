@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ContextMenuProvider, Item, ContextMenu } from "react-contexify";
+import CSSModules from "react-css-modules";
 import { map } from "lodash/fp";
 
 import "react-contexify/dist/ReactContexify.min.css";
-import "./index.scss";
+import styles from "./index.style.scss";
 
 const onClick = ({ data }) => {
   const { EVENT_HANDLER, row } = data;
@@ -59,7 +60,7 @@ const ContextMenuRow = props => {
               {...rowProps}
               {...rest}
               onContextMenu={onContextMenu}
-              className={rowProps.className}
+              styleName={rowProps.styleName}
             >
               {children}
             </tr>
@@ -92,4 +93,4 @@ ContextMenuRow.propTypes = {
   beforeOpenMenu: PropTypes.func
 };
 
-export default ContextMenuRow;
+export default CSSModules(ContextMenuRow, styles);

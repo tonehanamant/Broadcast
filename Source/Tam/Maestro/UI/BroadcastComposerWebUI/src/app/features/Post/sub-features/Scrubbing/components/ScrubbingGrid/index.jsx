@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import CSSModules from "react-css-modules";
 import { Badge } from "react-bootstrap";
-import { Grid, Actions } from "react-redux-grid";
+import { Grid, Actions } from "Lib/react-redux-grid";
 import { scrubbingActions as actions } from "Post";
 import ContextMenuRow from "Patterns/ContextMenuRow";
 import {
@@ -13,7 +14,7 @@ import {
 } from "Utils/dateFormatter";
 import SwapDetailModal from "Post/sub-features/Scrubbing/components/ScrubbingSwapDetailModal";
 
-import "./index.style.scss";
+import styles from "./index.style.scss";
 
 const { MenuActions } = Actions;
 const { showMenu, hideMenu } = MenuActions;
@@ -39,9 +40,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export class PostScrubbingGrid extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
+  constructor(props) {
+    super(props);
     this.getScrubbingSelections = this.getScrubbingSelections.bind(this);
     this.processManualOverrides = this.processManualOverrides.bind(this);
     this.hideContextMenu = this.hideContextMenu.bind(this);
@@ -123,7 +123,6 @@ export class PostScrubbingGrid extends Component {
     const style = { color: "#FF0000" };
     const stateKey = "PostScrubbingGrid";
     const { activeScrubbingData, details } = this.props;
-    const { store } = this.context;
     const { ClientScrubs = [] } = activeScrubbingData;
 
     const gridContextMenu = [
@@ -405,7 +404,7 @@ export class PostScrubbingGrid extends Component {
 
     return (
       <div>
-        <Grid {...grid} data={ClientScrubs} store={store} height={340} />
+        <Grid {...grid} data={ClientScrubs} height={340} />
         <SwapDetailModal details={details} />
       </div>
     );
@@ -431,4 +430,4 @@ PostScrubbingGrid.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostScrubbingGrid);
+)(CSSModules(PostScrubbingGrid, styles, { allowMultiple: true }));

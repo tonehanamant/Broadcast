@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import CSSModules from "react-css-modules";
 import { DayPickerRangeController } from "react-dates";
 import moment from "moment";
 import {
@@ -18,7 +18,7 @@ import {
   Overlay
 } from "react-bootstrap";
 
-import "./style.css";
+import styles from "./index.style.scss";
 
 const isValidDate = date =>
   !!(date && moment.isMoment(date) && moment(date).isValid());
@@ -31,7 +31,7 @@ const isoWeekEndFuture = moment()
   .add(4, "weeks")
   .endOf("isoweek");
 
-export default class FlightPicker extends Component {
+class FlightPicker extends Component {
   constructor(props) {
     super(props);
     const { startDate, endDate, flightWeeks } = this.props;
@@ -446,7 +446,7 @@ export default class FlightPicker extends Component {
                       >
                         <Button
                           bsSize="xsmall"
-                          className="flight-week-btn"
+                          styleName="flight-week-btn"
                           style={{ width: "100%" }}
                         >
                           <Checkbox
@@ -511,3 +511,5 @@ FlightPicker.propTypes = {
   onApply: PropTypes.func,
   isReadOnly: PropTypes.bool.isRequired
 };
+
+export default CSSModules(FlightPicker, styles);
