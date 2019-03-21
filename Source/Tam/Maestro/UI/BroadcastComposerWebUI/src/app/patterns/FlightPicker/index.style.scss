@@ -2,29 +2,32 @@
 	width:100%;
 }
 
-.CalendarDay__selected_span {
-	background: #f5f9fc !important;
-	border: 1px solid #e4e7e7 !important;
-	color: #357ebd !important;
-}
+:global {
 
-.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
-	background: #357ebd !important;
-	border: 1px solid #e4e7e7 !important;
-	color: #fff !important;
-}
+	.CalendarDay__selected_span {
+		background: #f5f9fc !important;
+		border: 1px solid #e4e7e7 !important;
+		color: #357ebd !important;
+	}
 
-.CalendarDay__hovered_span,.CalendarDay__hovered_span:hover {
-	background: #f5f9fc !important;
-	border: 1px solid #e4e7e7 !important;
-	color: #357ebd !important;
-}
+	.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+		background: #357ebd !important;
+		border: 1px solid #e4e7e7 !important;
+		color: #fff !important;
+	}
+
+	.CalendarDay__hovered_span,.CalendarDay__hovered_span:hover {
+		background: #f5f9fc !important;
+		border: 1px solid #e4e7e7 !important;
+		color: #357ebd !important;
+	}
 
 
-.CalendarDay__outside {
-	border: 0 !important;
-	background: #fff !important;
-	color: #9b9b9b !important;
+	.CalendarDay__outside {
+		border: 0 !important;
+		background: #fff !important;
+		color: #9b9b9b !important;
+	}
 }
 
 .flight-range-input {

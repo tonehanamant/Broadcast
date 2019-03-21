@@ -122,30 +122,30 @@ class PricingGuideEditMarkets extends Component {
           <Panel.Body>
             <Row style={{ marginTop: "10px" }}>
               <Col xs={6}>
-                <div styleName="summary-bar-left">
-                  <div styleName="summary-item">
-                    <div styleName="summary-display">
+                <div className="summary-bar-left">
+                  <div className="summary-item">
+                    <div className="summary-display">
                       {numeral(marketCoverageGoal).format("0,0%")}
                     </div>
-                    <div styleName="summary-label">MARKET COVERAGE GOAL</div>
+                    <div className="summary-label">MARKET COVERAGE GOAL</div>
                   </div>
-                  <div styleName="summary-item">
-                    <div styleName="summary-display">
+                  <div className="summary-item">
+                    <div className="summary-display">
                       {numeral(currentCoverage).format("0,0.[000]")}%
                     </div>
-                    <div styleName="summary-label">CURRENT MARKET COVERAGE</div>
+                    <div className="summary-label">CURRENT MARKET COVERAGE</div>
                   </div>
-                  <div styleName="summary-item">
-                    <div styleName="summary-display">({usedCount})</div>
-                    <div styleName="summary-label">MARKETS USED</div>
+                  <div className="summary-item">
+                    <div className="summary-display">({usedCount})</div>
+                    <div className="summary-label">MARKETS USED</div>
                   </div>
                 </div>
               </Col>
               <Col xs={6}>
-                <div styleName="summary-bar-left">
-                  <div styleName="summary-item">
-                    <div styleName="summary-display">({availableCount})</div>
-                    <div styleName="summary-label">AVAILABLE MARKETS</div>
+                <div className="summary-bar-left">
+                  <div className="summary-item">
+                    <div className="summary-display">({availableCount})</div>
+                    <div className="summary-label">AVAILABLE MARKETS</div>
                   </div>
                 </div>
               </Col>
