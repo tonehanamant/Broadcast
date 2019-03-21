@@ -1,14 +1,14 @@
 
-#proposal_secondary_demo {
-  .Select-arrow-zone {
+:global(#proposal_secondary_demo) {
+ :global(.Select-arrow-zone) {
       display: none !important;
   }
 
-  .Select.is-disabled>.Select-control {
+  :global(.Select.is-disabled>.Select-control) {
     background-color: unset !important;
   }
 
-  .Select-control {
+ :global(.Select-control) {
     border: none !important;
   }
 }
@@ -16,17 +16,17 @@
 .post-scrubbing-header {
   padding-right: 15px;
 
-  .header-items {
+ .header-items {
     display: flex;
     flex-direction: row;
 
-    .form-group {
+   :global(.form-group) {
       width: 11%;
-      .control-label {
+     .control-label {
         font-weight: bold;
       }
 
-      .form-control-static {
+     :global(.form-control-static) {
         overflow: auto;
         max-height: 175px;
       }
@@ -34,7 +34,3 @@
   }
 }
 
-// .rt-tr-group {
-//   min-height: 42px !important;
-//   height: 36px;
-// }

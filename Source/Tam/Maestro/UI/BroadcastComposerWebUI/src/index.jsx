@@ -9,9 +9,9 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css?raw";
 import "react-select/dist/react-select.css?raw";
 import "react-table/react-table.css?raw";
-import "Lib/react-table/index.scss?raw";
 import "react-contexify/dist/ReactContexify.css?raw";
 import "antd/dist/antd.css?raw";
+import "Lib/react-table/index.scss?raw";
 
 import "./index.scss?raw";
 

@@ -1,17 +1,17 @@
-.react-grid-filter-grid .react-grid-header-fixed-container {
+:global(.react-grid-filter-grid .react-grid-header-fixed-container) {
   display: none;
 }
 
 // overrides to prevent selection
 
-.react-grid-container.react-grid-filter-grid .react-grid-table-container {
-  .react-grid-row {
+:global(.react-grid-container.react-grid-filter-grid .react-grid-table-container) {
+  :global(.react-grid-row) {
     &:hover {
       background-color: #fff !important;
     }
   }
 
-  .react-grid-active {
+  :global(.react-grid-active) {
     background-color: #fff !important;
     color: #000000 !important;
 

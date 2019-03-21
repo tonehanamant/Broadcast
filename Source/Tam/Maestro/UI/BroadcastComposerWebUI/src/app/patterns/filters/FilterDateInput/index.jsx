@@ -143,7 +143,7 @@ class FilterDateInput extends Component {
       <div>
         <Form horizontal>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
               Start date
             </Col>
             <Col sm={8}>
@@ -159,7 +159,7 @@ class FilterDateInput extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
               End date
             </Col>
             <Col sm={8}>
@@ -175,7 +175,7 @@ class FilterDateInput extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar styleName="pull-right" style={{ margin: "0 0 8px 0" }}>
+        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button bsStyle="success" bsSize="xsmall" onClick={this.clear}>
             Clear
           </Button>

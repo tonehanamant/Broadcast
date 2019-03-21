@@ -78,9 +78,9 @@ export class TrackerGridContainer extends Component {
           return row.original.IsActiveThisWeek ? (
             <div>
               {val}
-              <span styleName="fa-stack pull-right">
-                <i styleName="fa fa-circle fa-stack-2x text-success" />
-                <i styleName="fa fa-bolt fa-stack-1x fa-inverse" />
+              <span className="fa-stack pull-right">
+                <i className="fa fa-circle fa-stack-2x text-success" />
+                <i className="fa fa-bolt fa-stack-1x fa-inverse" />
               </span>
             </div>
           ) : (

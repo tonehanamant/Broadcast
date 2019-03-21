@@ -1,6 +1,6 @@
 import { takeEvery, put, call, select } from "redux-saga/effects";
 import moment from "moment";
-import { forEach, cloneDeep, includes, update } from "lodash";
+import { forEach, cloneDeep, includes, update, map } from "lodash";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -68,7 +68,7 @@ export function* clearFilteredScrubbingData() {
   yield delay(500);
   const originalFilters = yield select(selectActiveScrubbingFilters);
   const originalScrubs = yield select(selectClientScrubs);
-  const activeFilters = originalFilters.map(filter => {
+  const activeFilters = map(originalFilters, filter => {
     const newFilter = filter;
     if (filter.active) {
       const isList = filter.type === "filterList";

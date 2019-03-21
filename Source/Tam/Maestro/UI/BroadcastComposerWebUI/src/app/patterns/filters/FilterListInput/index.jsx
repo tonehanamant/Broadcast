@@ -258,7 +258,7 @@ class FilterInput extends Component {
           </Checkbox>
           {checkboxes}
         </div>
-        <ButtonToolbar styleName="pull-right" style={{ margin: "0 0 8px 0" }}>
+        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
           <Button
             bsStyle="success"
             bsSize="xsmall"

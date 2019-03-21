@@ -117,7 +117,7 @@ class FilterTimeInput extends Component {
       <div>
         <Form horizontal>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
               Start time
             </Col>
             <Col sm={8}>
@@ -133,7 +133,7 @@ class FilterTimeInput extends Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col style={{ textAlign: "left" }} styleName="control-label" sm={4}>
+            <Col style={{ textAlign: "left" }} className="control-label" sm={4}>
               End time
             </Col>
             <Col sm={8}>
@@ -143,25 +143,18 @@ class FilterTimeInput extends Component {
                 value={endTime}
                 defaultValue={endTime}
                 onChange={this.handleEndChange}
-                // popupClassName="time-picker"
                 getPopupContainer={triggerNode => triggerNode.parentNode}
               />
             </Col>
           </FormGroup>
         </Form>
-        <ButtonToolbar styleName="pull-right" style={{ margin: "0 0 8px 0" }}>
-          <Button
-            bsStyle="success"
-            bsSize="xsmall"
-            onClick={this.clear}
-            // disabled={!canFilter}
-          >
+        <ButtonToolbar className="pull-right" style={{ margin: "0 0 8px 0" }}>
+          <Button bsStyle="success" bsSize="xsmall" onClick={this.clear}>
             Clear
           </Button>
           <Button
             bsStyle="success"
             bsSize="xsmall"
-            // disabled={!canFilter || !this.state.isValidSelection}
             style={{ marginLeft: "10px" }}
             onClick={this.apply}
           >

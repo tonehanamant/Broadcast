@@ -81,7 +81,8 @@ class MarketSelector extends Component {
     return (
       <div>
         <Button
-          styleName={`pull-right ${styles.trash}`}
+          className="pull-right"
+          styleName={styles.trash}
           bsStyle="link"
           disabled={isReadOnly}
           onClick={() => this.onClearMarketList()}
