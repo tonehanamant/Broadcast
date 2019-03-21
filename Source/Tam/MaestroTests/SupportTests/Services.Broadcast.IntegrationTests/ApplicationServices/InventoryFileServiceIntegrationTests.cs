@@ -172,10 +172,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static void VerifyInventoryRaw(List<StationInventoryGroup> inventory)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
             //jsonResolver.Ignore(typeof(DisplayAudience), "Id");
@@ -3740,8 +3740,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _GetInventoryFileSaveRequest(@".\Files\1Chicago WLS Syn 4Q16 UNKNOWN.xml");
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(LookupDto), "Id");
                 jsonResolver.Ignore(typeof(DisplayAudience), "Id");

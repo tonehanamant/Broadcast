@@ -42,6 +42,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
+        private readonly IImpressionsService _ImpressionsService;
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBarterFileImporter barterFileImporter
@@ -51,7 +52,8 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+            , IImpressionsService impressionsService)
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -65,6 +67,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
+            _ImpressionsService = impressionsService;
         }
 
         /// <summary>
@@ -114,7 +117,8 @@ namespace Services.Broadcast.ApplicationServices
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
                         var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                        _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
                         _StationInventoryGroupService.AddNewStationInventoryGroups(barterFile, barterFile.Header.EffectiveDate);
 

@@ -322,7 +322,6 @@
     <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="Entities\ScxFile.cs" />
     <Compile Include="Entities\SpotTrackerFileDetail.cs" />
-    <Compile Include="Entities\StationInventory\StationInventoryManifestBase.cs" />
     <Compile Include="Entities\TrackerFileDetail.cs" />
     <Compile Include="Entities\StationInventory\StationInventorySpots.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
