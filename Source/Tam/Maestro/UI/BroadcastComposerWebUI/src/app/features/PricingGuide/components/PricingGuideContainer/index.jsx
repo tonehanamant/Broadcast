@@ -508,10 +508,10 @@ class PricingGuideContainer extends Component {
                 <Modal.Title>Pricing Guide</Modal.Title>
               </Col>
               <Col sm={6}>
-                <div styleName="summary-bar" style={{ marginRight: "32px" }}>
-                  <div styleName="summary-item">
+                <div className="summary-bar" style={{ marginRight: "32px" }}>
+                  <div className="summary-item">
                     {/* <div styleName="summary-tag">--%</div> */}
-                    <div styleName="summary-display">
+                    <div className="summary-display">
                       {numberRender(
                         activeOpenMarketData,
                         "PricingTotals.Coverage",
@@ -519,11 +519,11 @@ class PricingGuideContainer extends Component {
                       )}
                       %
                     </div>
-                    <div styleName="summary-label">MARKET COVERAGE</div>
+                    <div className="summary-label">MARKET COVERAGE</div>
                   </div>
-                  <div styleName="summary-item">
+                  <div className="summary-item">
                     {/* <div styleName="summary-tag">--%</div> */}
-                    <div styleName="summary-display">
+                    <div className="summary-display">
                       $
                       {numberRender(
                         activeOpenMarketData,
@@ -531,11 +531,11 @@ class PricingGuideContainer extends Component {
                         "0,0.00"
                       )}
                     </div>
-                    <div styleName="summary-label">CPM</div>
+                    <div className="summary-label">CPM</div>
                   </div>
-                  <div styleName="summary-item">
+                  <div className="summary-item">
                     {/* <div styleName="summary-tag">--%</div> */}
-                    <div styleName="summary-display">
+                    <div className="summary-display">
                       {numberRender(
                         activeOpenMarketData,
                         "PricingTotals.Impressions",
@@ -543,11 +543,11 @@ class PricingGuideContainer extends Component {
                         1000
                       )}
                     </div>
-                    <div styleName="summary-label">IMPRESSIONS (000)</div>
+                    <div className="summary-label">IMPRESSIONS (000)</div>
                   </div>
-                  <div styleName="summary-item">
+                  <div className="summary-item">
                     {/* <div styleName="summary-tag">--%</div> */}
-                    <div styleName="summary-display">
+                    <div className="summary-display">
                       $
                       {numberRender(
                         activeOpenMarketData,
@@ -555,7 +555,7 @@ class PricingGuideContainer extends Component {
                         "0,0"
                       )}
                     </div>
-                    <div styleName="summary-label">TOTAL COST</div>
+                    <div className="summary-label">TOTAL COST</div>
                   </div>
                 </div>
               </Col>
