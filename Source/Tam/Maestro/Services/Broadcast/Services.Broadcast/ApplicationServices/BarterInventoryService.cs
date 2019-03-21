@@ -45,6 +45,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IDataLakeFileService _DataLakeFileService;
+        private readonly IImpressionsService _ImpressionsService;
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBarterFileImporterFactory barterFileImporterFactory
@@ -54,7 +55,8 @@ namespace Services.Broadcast.ApplicationServices
             , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IDataLakeFileService dataLakeFileService)
+            , IDataLakeFileService dataLakeFileService
+            , IImpressionsService impressionsService)
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -68,6 +70,7 @@ namespace Services.Broadcast.ApplicationServices
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _DataLakeFileService = dataLakeFileService;
+            _ImpressionsService = impressionsService;
         }
 
         /// <summary>
@@ -122,6 +125,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
+                        var header = barterFile.Header;
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
@@ -130,9 +134,10 @@ namespace Services.Broadcast.ApplicationServices
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
                         var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                        _ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
+                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
-                        _StationInventoryGroupService.AddNewStationInventoryGroups(barterFile, barterFile.Header.EffectiveDate);
+                        _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);
 

@@ -84,7 +84,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryFileRepository _inventoryFileRepository;
         private readonly Dictionary<int, int> _SpotLengthMap;
         private readonly Dictionary<int, double> _SpotLengthCostMultipliers;
-        private readonly IProprietarySpotCostCalculationEngine _proprietarySpotCostCalculationEngine;
+        private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _stationInventoryGroupService;
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IRatingForecastService _RatingForecastService;
@@ -92,6 +92,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ILockingEngine _LockingEngine;
         private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
+        private readonly IImpressionsService _ImpressionsService;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -107,7 +108,8 @@ namespace Services.Broadcast.ApplicationServices
             INsiPostingBookService nsiPostingBookService,
             IDataLakeFileService dataLakeFileService,
             ILockingEngine lockingEngine,
-            IStationProcessingEngine stationProcessingEngine)
+            IStationProcessingEngine stationProcessingEngine,
+            IImpressionsService impressionsService)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -125,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
             _SpotLengthCostMultipliers =
                 broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
-            _proprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
+            _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _stationInventoryGroupService = stationInventoryGroupService;
             _inventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _RatingForecastService = ratingForecastService;
@@ -133,6 +135,7 @@ namespace Services.Broadcast.ApplicationServices
             _LockingEngine = lockingEngine;
             _DataLakeFileService = dataLakeFileService;
             _StationProcessingEngine = stationProcessingEngine;
+            _ImpressionsService = impressionsService;
         }
 
         public List<DisplayBroadcastStation> GetStations(string rateSource, DateTime currentDate)
@@ -327,7 +330,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         _EnsureInventoryDaypartIds(inventoryFile);
                         var manifests = inventoryFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _proprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, request.PlaybackType, request.RatingBook.Value);
+                        _ImpressionsService.GetProjectedStationImpressions(manifests, request.PlaybackType, request.RatingBook.Value);
+                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
                     }
 
                     _AddNewStationInventoryGroups(request, inventoryFile);

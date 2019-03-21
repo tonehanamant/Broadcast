@@ -48,8 +48,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileProblems = _ttnwFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "EffectiveDate");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
@@ -89,8 +90,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileProblems = _ttnwFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "EffectiveDate");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
@@ -131,8 +133,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileProblems = _ttnwFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "EffectiveDate");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
@@ -271,8 +274,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileProblems = _ttnwFileImporter.FileProblems;
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "EffectiveDate");
-                jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "EffectiveDate");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+                jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
                 jsonResolver.Ignore(typeof(StationInventoryGroup), "InventorySource");
                 jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");

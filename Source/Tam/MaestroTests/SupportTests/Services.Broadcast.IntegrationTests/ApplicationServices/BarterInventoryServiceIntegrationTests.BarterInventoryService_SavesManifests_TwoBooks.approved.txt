@@ -51,12 +51,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -606,12 +601,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -1758,12 +1748,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -2883,12 +2868,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -3438,12 +3418,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -4590,12 +4565,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -5715,12 +5685,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -6270,12 +6235,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -7422,12 +7382,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -8547,12 +8502,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -9102,12 +9052,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -10254,12 +10199,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -11379,12 +11319,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -11934,12 +11869,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -13086,12 +13016,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -14211,12 +14136,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -14766,12 +14686,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -15918,12 +15833,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -17043,12 +16953,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -17598,12 +17503,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -18750,12 +18650,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -19875,12 +19770,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -20430,12 +20320,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -21582,12 +21467,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -22707,12 +22587,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -23262,12 +23137,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -24414,12 +24284,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -25539,12 +25404,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -26094,12 +25954,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -27246,12 +27101,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -28371,12 +28221,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -28926,12 +28771,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -30078,12 +29918,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -31203,12 +31038,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -31758,12 +31588,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -32910,12 +32735,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -34035,12 +33855,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -34590,12 +34405,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -35742,12 +35552,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -36867,12 +36672,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -37422,12 +37222,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -38574,12 +38369,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -39699,12 +39489,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -40254,12 +40039,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -41406,12 +41186,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 2
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -42531,12 +42306,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -43086,12 +42856,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -44238,12 +44003,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -45363,12 +45123,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -45918,12 +45673,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -47070,12 +46820,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -48195,12 +47940,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -48750,12 +48490,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -49902,12 +49637,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -51027,12 +50757,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -51582,12 +51307,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -52734,12 +52454,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -53859,12 +53574,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -54414,12 +54124,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -55566,12 +55271,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -56691,12 +56391,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -57246,12 +56941,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -58398,12 +58088,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -59523,12 +59208,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -60078,12 +59758,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -61230,12 +60905,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -62355,12 +62025,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -62910,12 +62575,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -64062,12 +63722,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -65187,12 +64842,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -65742,12 +65392,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -66894,12 +66539,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -68019,12 +67659,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -68574,12 +68209,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -69726,12 +69356,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -70851,12 +70476,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -71406,12 +71026,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -72558,12 +72173,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -73683,12 +73293,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -74238,12 +73843,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -75390,12 +74990,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -76515,12 +76110,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -77070,12 +76660,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -78222,12 +77807,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -79347,12 +78927,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -79902,12 +79477,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -81054,12 +80624,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -82179,12 +81744,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -82734,12 +82294,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -83886,12 +83441,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 1
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -85011,12 +84561,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -85566,12 +85111,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -86718,12 +86258,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -87843,12 +87378,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -88398,12 +87928,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -89550,12 +89075,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -90675,12 +90195,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -91230,12 +90745,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -92382,12 +91892,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -93507,12 +93012,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -94062,12 +93562,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -95214,12 +94709,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -96339,12 +95829,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -96894,12 +96379,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
@@ -98046,12 +97526,7 @@
             "ProgramName": null
           }
         ],
-        "ManifestRates": [
-          {
-            "SpotCost": 0.0000,
-            "SpotLengthId": 3
-          }
-        ],
+        "ManifestRates": [],
         "ManifestWeeks": [
           {
             "MediaWeek": {
