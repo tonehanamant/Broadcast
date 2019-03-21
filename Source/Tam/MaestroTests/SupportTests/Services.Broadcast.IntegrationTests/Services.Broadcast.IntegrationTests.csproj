@@ -258,6 +258,7 @@
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\SpotTrackerServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\StationInventoryGroupServiceTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />

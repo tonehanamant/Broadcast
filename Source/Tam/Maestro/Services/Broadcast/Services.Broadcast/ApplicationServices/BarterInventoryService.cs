@@ -110,6 +110,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
+                        var header = barterFile.Header;
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         barterFile.InventoryGroups = _GetStationInventoryGroups(barterFile, stations);
@@ -117,10 +118,10 @@ namespace Services.Broadcast.ApplicationServices
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
                         var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ImpressionsService.GetProjectedStationImpressions(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                        _ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
                         _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
-                        _StationInventoryGroupService.AddNewStationInventoryGroups(barterFile, barterFile.Header.EffectiveDate);
+                        _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);
 
