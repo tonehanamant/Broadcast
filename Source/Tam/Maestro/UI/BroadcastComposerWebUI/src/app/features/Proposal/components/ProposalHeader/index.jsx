@@ -111,7 +111,6 @@ ProposalHeader.defaultProps = {
   unorderProposal: () => {}
 };
 
-/* eslint-disable react/no-unused-prop-types */
 ProposalHeader.propTypes = {
   isEdit: PropTypes.bool,
   proposal: PropTypes.object.isRequired,

@@ -67,7 +67,6 @@ class UploadBuy extends Component {
       nextProps.file.base64 &&
       nextProps.file.base64.length
     ) {
-      // console.log("recieve file", this, nextProps.file);
       this.setState({
         fileName: nextProps.file.name,
         activeFile: true

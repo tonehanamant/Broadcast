@@ -22,12 +22,10 @@ export default class FilterPopoverWrapper extends Component {
   }
 
   closePopover() {
-    // console.log('closePopover', this, this.popover);
     this.popover.hide();
   }
 
   showPopover() {
-    // console.log('showPopover', this, this.popover);
     this.popover.show();
   }
 
@@ -44,7 +42,6 @@ export default class FilterPopoverWrapper extends Component {
     } = this.props;
     const isActive = filterActive;
     const activeColor = isActive ? "green" : "#999";
-    // console.log('render filter wrapper', filterOptions);
     const popoverFilter = (
       <Popover id="popover-positioned-scrolling-top" title={filterDisplay}>
         {filterType === "dateInput" && (

@@ -77,7 +77,6 @@ export class SwapDetailModal extends Component {
     const end = getDateInFormat(option.FlightEndDate);
     const flightDisplay = `${start} - ${end}`;
     const ret = `${option.Sequence}, ${flightDisplay}, ${option.DayPart}`;
-    // console.log('selectRender', ret, option, this);
     return ret;
   }
 

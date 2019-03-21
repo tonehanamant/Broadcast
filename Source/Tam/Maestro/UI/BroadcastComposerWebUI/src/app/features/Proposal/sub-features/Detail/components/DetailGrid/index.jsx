@@ -221,10 +221,7 @@ export default class ProposalDetailGrid extends Component {
               ? numeral(row.TotalImpressions / 1000).format("0,0.[000]")
               : "-";
           if (row.Type === "quarter") {
-            // const imp = numeral(value).format('0,0.[000]');
-            // return <div><span style={{ color: '#808080' }}>Imp. Goal (000)  </span><span>{imp}</span></div>;
             const toConfirm = value !== 0; // only confirm if not 0
-            // console.log('impression goal>>>>>>>>>>>>>>', toConfirm, value);
             return (
               <GridCellInput
                 name="ImpressionGoal"

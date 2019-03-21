@@ -465,7 +465,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.SORT_OPEN_MARKET_DATA: {
       const activeData = { ...state.activeOpenMarketData };
       const sortedData = sortMarketsData(activeData.Markets, payload);
-      // console.log("SORT_OPEN_MARKET_DATA", payload, sortedData);
       return Object.assign({}, state, {
         activeOpenMarketData: {
           ...state.activeOpenMarketData,

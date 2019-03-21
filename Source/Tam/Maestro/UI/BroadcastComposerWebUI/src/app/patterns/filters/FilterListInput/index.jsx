@@ -165,7 +165,6 @@ class FilterInput extends Component {
       activeMatch,
       matchOptions
     };
-    // console.log('apply', filter);
     applySelection(filter);
   }
 

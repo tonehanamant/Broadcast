@@ -122,7 +122,6 @@ export default class GridIsciCell extends Component {
           valid = valid
             ? splitted[0] && splitted[1] && splitted[2] && !splitted[4]
             : false;
-          // console.log('isci check', splitted, valid);
           let house = splitted[0] ? splitted[0].trim() : null;
           let married = false;
           if (house) {

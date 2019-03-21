@@ -80,7 +80,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-/* eslint-disable react/prefer-stateless-function */
 export class SectionPlanningProposal extends Component {
   constructor(props) {
     super(props);

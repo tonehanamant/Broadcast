@@ -56,7 +56,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-/* eslint-disable react/prefer-stateless-function */
 export class SectionPlanningProposalCreate extends Component {
   constructor(props) {
     super(props);
@@ -143,7 +142,6 @@ export class SectionPlanningProposalCreate extends Component {
         validDaypartCode(detail.DaypartCode);
       validDetails.push(validDetail);
     });
-    // console.log('VALID DETAILS', validDetails);
 
     return !validDetails.includes(null || false);
   }
@@ -168,7 +166,6 @@ export class SectionPlanningProposalCreate extends Component {
         });
       });
     });
-    // console.log('VALID DETAIL GRIDS', validDetailQuarters, validDetailQuarterWeeks);
 
     return validDetailQuarters && validDetailQuarterWeeks;
   }

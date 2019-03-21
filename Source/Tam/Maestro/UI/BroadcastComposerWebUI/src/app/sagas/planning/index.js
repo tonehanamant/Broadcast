@@ -413,7 +413,6 @@ export function flattenDetail(detailSet) {
 
 export function flattenProposalDetails(proposal) {
   const proposalData = { ...proposal };
-  // console.log('flattenProposalDetails', proposal, proposalData);
   proposalData.Details.map(detail => {
     const set = detail;
     set.GridQuarterWeeks = flattenDetail(detail);
@@ -464,9 +463,7 @@ export function* requestProposal({ payload: id }) {
       throw new Error();
     }
     // const payload = yield flattenProposalDetails(data.Data);
-    // console.log('receiveProposal flatten', payload);
     data.Data = yield flattenProposalDetails(data.Data);
-    // console.log('receiveProposal flatten', data.Data);
     yield put({
       type: ACTIONS.RECEIVE_PROPOSAL,
       data
@@ -651,7 +648,6 @@ export function preSaveDetailIdNull(proposal) {
 /* SAVE PROPOSAL */
 /* ////////////////////////////////// */
 export function* saveProposal({ payload: params }) {
-  /* eslint-disable no-shadow */
   const { saveProposal } = api.planning;
   try {
     yield put(
@@ -748,7 +744,6 @@ export function* saveProposal({ payload: params }) {
 /* SAVE PROPOSAL AS VERSION */
 /* ////////////////////////////////// */
 export function* saveProposalAsVersion({ payload: params }) {
-  /* eslint-disable no-shadow */
   const { saveProposal } = api.planning;
   try {
     yield put(
@@ -976,7 +971,6 @@ export function* unorderProposal({ payload: id }) {
   } catch (e) {
     if (e.response) {
       // capture here if 401 with data.Message only/ need to close overlay
-      // console.log('unorder error catch', e.response);
       yield put(
         setOverlayProcessing({
           id: "unorderProposal",
@@ -1112,8 +1106,6 @@ export function* modelNewProposalDetail({ payload: flight }) {
 /* UPDATE PROPOSAL (FROM DETAILS) */
 /* ////////////////////////////////// */
 export function* updateProposal() {
-  // { payload: params }
-  /* eslint-disable no-shadow */
   const { updateProposal } = api.planning;
   const details = yield select(
     state => state.planning.proposalEditForm.Details
@@ -1641,7 +1633,6 @@ export function* generateScxSuccess({
   data: { Data },
   payload: { ProposalDetailIds, isSingle }
 }) {
-  // console.log(Data, ProposalDetailIds, isSingle);
   if (Data) {
     const proposalId = yield select(
       state => state.planning.proposalEditForm.Id

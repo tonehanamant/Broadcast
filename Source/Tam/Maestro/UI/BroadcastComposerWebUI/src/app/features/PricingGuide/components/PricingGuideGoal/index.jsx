@@ -117,7 +117,7 @@ class PricingGuideGoal extends Component {
     } = this.state;
 
     return (
-      <Panel id="pricing_inventory_panel" defaultExpanded styleName="panelCard">
+      <Panel id="pricing_inventory_panel" defaultExpanded className="panelCard">
         <Panel.Heading>
           <Row>
             <Col sm={6}>
@@ -129,7 +129,7 @@ class PricingGuideGoal extends Component {
         </Panel.Heading>
         <Panel.Collapse>
           <Panel.Body>
-            <div styleName="formEditToggle">
+            <div className="formEditToggle">
               {!isReadOnly && !isEditing && (
                 <Button
                   onClick={this.toggleEditing}
@@ -145,7 +145,7 @@ class PricingGuideGoal extends Component {
                     <Glyphicon glyph="save" /> Ok
                   </Button>
                   <Button
-                    styleName="cancel"
+                    className="cancel"
                     onClick={this.onCancel}
                     bsStyle="link"
                   >
@@ -156,7 +156,7 @@ class PricingGuideGoal extends Component {
             </div>
             <Row>
               <Col sm={3}>
-                <form styleName="formCard">
+                <form className="formCard">
                   <p>
                     <strong>GOAL</strong>
                   </p>
@@ -220,7 +220,7 @@ class PricingGuideGoal extends Component {
                 </form>
               </Col>
               <Col sm={5}>
-                <form styleName="formCard">
+                <form className="formCard">
                   <p>
                     <strong>ADJUSTMENTS</strong>
                   </p>

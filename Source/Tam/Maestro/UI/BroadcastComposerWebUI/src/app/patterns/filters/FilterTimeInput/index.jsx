@@ -24,7 +24,6 @@ class FilterTimeInput extends Component {
   }
 
   componentWillMount() {
-    // console.log("Time Input Mount >>>>", this.props);
     const { filterOptions } = this.props;
     this.setState({
       originalStartTime: moment(
@@ -52,7 +51,6 @@ class FilterTimeInput extends Component {
   }
 
   handleStartChange(time) {
-    // console.log(time);
     this.setState({
       startTime: time
     });

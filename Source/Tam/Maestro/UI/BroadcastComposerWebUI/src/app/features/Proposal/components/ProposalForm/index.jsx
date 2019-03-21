@@ -569,7 +569,6 @@ ProposalForm.defaultProps = {
   toggleModal: () => {}
 };
 
-/* eslint-disable react/no-unused-prop-types */
 ProposalForm.propTypes = {
   initialdata: PropTypes.object.isRequired,
   proposalEditForm: PropTypes.object.isRequired,

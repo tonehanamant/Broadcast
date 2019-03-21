@@ -149,7 +149,6 @@ export class TrackerGridContainer extends Component {
         accessor: "PrimaryAudienceDeliveredImpressions",
         minWidth: 15,
         Cell: row => {
-          // console.log(row);
           // handle equivalized indicator as badge if true
           const val = row.value
             ? numeral(row.value / 1000).format("0,0.[000]")
