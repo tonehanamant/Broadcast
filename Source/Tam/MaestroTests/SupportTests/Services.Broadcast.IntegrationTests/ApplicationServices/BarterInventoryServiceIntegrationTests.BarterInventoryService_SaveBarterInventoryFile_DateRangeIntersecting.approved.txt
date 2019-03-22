@@ -90,7 +90,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -265,7 +265,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -440,7 +440,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -615,7 +615,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -790,7 +790,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -965,7 +965,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -1140,7 +1140,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",
@@ -1315,7 +1315,7 @@
         }
       },
       {
-        "Comment": "",
+        "Comment": null,
         "DaypartCode": "AM",
         "EffectiveDate": "2019-03-22T00:00:00",
         "EndDate": "2019-03-30T00:00:00",

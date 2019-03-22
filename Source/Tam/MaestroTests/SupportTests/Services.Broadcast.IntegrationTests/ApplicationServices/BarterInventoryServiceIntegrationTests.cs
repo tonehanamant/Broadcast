@@ -11,7 +11,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
-using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,10 +24,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class BarterInventoryServiceIntegrationTests
     {
-        private IBarterInventoryService _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+        private IBarterInventoryService _BarterService;
         private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
         private IInventoryRepository _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private IBarterRepository _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();     
+
+        [TestFixtureSetUp]
+        public void SetUp()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
+            _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -67,20 +75,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SavesManifests_SingleBook()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_SingleBook.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
@@ -88,20 +83,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SavesManifests_TwoBooks()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_TwoBooks.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
@@ -109,20 +91,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SavesManifests_WhenStationIsUnknown()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat_UnknownStation.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
@@ -130,28 +99,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_ValidationErrors()
         {
             const string fileName = @"BarterDataFiles\Barter DataLines file with missed values.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-                var problems = new List<InventoryFileProblem>();
-
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -180,27 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterFileImporter_ExtractData_PRI5390()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5390.xlsx";
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -208,20 +136,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_PRI5667()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
@@ -229,28 +144,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_InvalidDaypart()
         {
             const string fileName = @"BarterDataFiles\Barter DataLines file with invalid daypart.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -258,20 +152,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_SingleDataColumn()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_SingleDataColumn.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
@@ -279,20 +160,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void BarterInventoryService_SaveBarterInventoryFile_DateRangeIntersecting()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
@@ -300,28 +168,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void OAndO_NotValidFile1()
         {
             const string fileName = @"BarterDataFiles\OAndO_InvalidFile1.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -329,28 +176,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void OAndO_NotValidFile2()
         {
             const string fileName = @"BarterDataFiles\OAndO_InvalidFile2.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -358,28 +184,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void OAndO_NotValidFile3()
         {
             const string fileName = @"BarterDataFiles\OAndO_InvalidFile3.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -387,28 +192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void OAndO_NotValidFile4()
         {
             const string fileName = @"BarterDataFiles\OAndO_InvalidFile4.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
+            _VerifyInventoryFileProblems(fileName);
         }
 
         [Test]
@@ -447,14 +231,92 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void SavesOAndOBarterInventoryFileManifests()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_ValidFile1.xlsx";
+            _VerifyInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesOAndOBarterInventoryFileManifests_EmptyAndSummaryRows()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_ValidFile2.xlsx";
+            _VerifyInventoryManifests(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NoStationHeaderCell()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_NoStationHeaderCell.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_No_HH_HeaderCell()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_No_HH_HeaderCell.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NoEmptyColumnBetweenLastWeekAndHH()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_NoEmptyColumnBetweenLastWeekAndHH.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_WeekIsMissing()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_WeekIsMissing.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NotValidWeek()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_NotValidWeek.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NoMediaWeekFound()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_NoMediaWeekFound.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_MissingData1()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_MissingData1.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OAndO_NoWeeksStartHeaderCell()
+        {
+            const string fileName = @"BarterDataFiles\OAndO_NoWeeksStartHeaderCell.xlsx";
+            _VerifyInventoryFileProblems(fileName);
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void BarterInventoryService_SendFileToDataLake()
         {
             const string fileName = @"BarterDataFiles\BarterFileImporter_ValidFormat.xlsx";
 
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
                 var filePath = Path.Combine(dataLakeFolder, fileName);
@@ -482,37 +344,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-
             const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-
-                _VerifyInventoryGroups(result.FileId);
-            }
+            _VerifyInventoryGroups(fileName);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
-
             const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
+            _VerifyInventoryGroups(fileName);
+        }
 
+        private void _VerifyInventoryFileProblems(string fileName)
+        {
             using (new TransactionScopeWrapper())
             {
                 var request = new InventoryFileSaveRequest
@@ -521,10 +366,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileName = fileName
                 };
 
-                var now = new DateTime(2019, 02, 02);
-                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                var problems = new List<InventoryFileProblem>();
+                try
+                {
+                    var now = new DateTime(2019, 02, 02);
+                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+                }
+                catch (FileUploadException<InventoryFileProblem> e)
+                {
+                    problems = e.Problems;
+                }
 
-                _VerifyInventoryGroups(result.FileId);
+                _VerifyInventoryFileProblems(problems);
             }
         }
 
@@ -553,6 +406,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
 
+        private void _VerifyInventoryGroups(string fileName)
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                _VerifyInventoryGroups(result.FileId);
+            }
+        }
+
         private void _VerifyInventoryGroups(int fileId)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -576,6 +446,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var groupsJson = IntegrationTestHelper.ConvertToJson(groups, jsonSettings);
 
             Approvals.Verify(groupsJson);
+        }
+
+        private void _VerifyInventoryManifests(string fileName)
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
+
+                _VerifyInventoryManifests(result.FileId);
+            }
+        }
+
+        private void _VerifyInventoryManifests(int fileId)
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
+            jsonResolver.Ignore(typeof(MediaWeek), "_Id");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            var manifests = _IInventoryRepository.GetStationInventoryManifestsByFileId(fileId);
+            var manifestsJson = IntegrationTestHelper.ConvertToJson(manifests, jsonSettings);
+
+            Approvals.Verify(manifestsJson);
         }
     }
 }

@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Can not find first data line",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

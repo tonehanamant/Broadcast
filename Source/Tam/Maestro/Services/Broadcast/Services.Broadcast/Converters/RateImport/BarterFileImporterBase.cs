@@ -22,13 +22,14 @@ namespace Services.Broadcast.Converters.RateImport
         void LoadFromSaveRequest(InventoryFileSaveRequest request);
         void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
         void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations);
+        void PopulateRates(BarterInventoryFile barterFile);
     }
 
     public abstract class BarterFileImporterBase : IBarterFileImporter
     {
         protected const string CPM_FORMAT = "##.##";
         protected readonly string[] BOOK_DATE_FORMATS = new string[] { "MMM yy", "MMM-yy", "MMM/yy", "yy-MMM", "yy/MMM" };
-        protected readonly string[] DATE_FORMATS = new string[] { "MM/dd/yyyy", "M/dd/yyyy" };
+        protected readonly string[] DATE_FORMATS = new string[] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
 
         private string _FileHash { get; set; }
 
@@ -42,6 +43,7 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly IMediaMonthAndWeekAggregateCache MediaMonthAndWeekAggregateCache;
         protected readonly IStationProcessingEngine StationProcessingEngine;
         protected readonly ISpotLengthEngine SpotLengthEngine;
+        protected readonly IDaypartCodeRepository DaypartCodeRepository;
 
         public BarterFileImporterBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -53,6 +55,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            DaypartCodeRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartCodeRepository>();
             AudienceCache = broadcastAudiencesCache;
             DaypartParsingEngine = inventoryDaypartParsingEngine;
             MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -104,5 +107,7 @@ namespace Services.Broadcast.Converters.RateImport
         public abstract void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile);
 
         public abstract void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations);
+
+        public abstract void PopulateRates(BarterInventoryFile barterFile);
     }
 }

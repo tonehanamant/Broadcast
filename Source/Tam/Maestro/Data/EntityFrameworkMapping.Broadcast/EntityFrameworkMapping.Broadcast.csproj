@@ -407,6 +407,9 @@
     <Compile Include="daypart.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="daypart_codes.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="genre.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

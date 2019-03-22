@@ -4,6 +4,7 @@
   "DataLines": [
     {
       "Comment": "Comment 1",
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -23,6 +24,8 @@
           "_Wednesday": true
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "KOB+",
       "Units": [
         {
@@ -53,10 +56,12 @@
           },
           "Spots": 1
         }
-      ]
+      ],
+      "Weeks": []
     },
     {
       "Comment": "Comment 2",
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -76,6 +81,8 @@
           "_Wednesday": true
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "KOLN",
       "Units": [
         {
@@ -106,10 +113,12 @@
           },
           "Spots": 2
         }
-      ]
+      ],
+      "Weeks": []
     },
     {
       "Comment": "Comment 3",
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -146,6 +155,8 @@
           "_Wednesday": false
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "KRQE+",
       "Units": [
         {
@@ -176,10 +187,12 @@
           },
           "Spots": 1
         }
-      ]
+      ],
+      "Weeks": []
     },
     {
       "Comment": "Comment 4",
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -233,6 +246,8 @@
           "_Wednesday": false
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "KUON-TV 12.1",
       "Units": [
         {
@@ -263,10 +278,12 @@
           },
           "Spots": 3
         }
-      ]
+      ],
+      "Weeks": []
     },
     {
       "Comment": "Comment 5",
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -286,6 +303,8 @@
           "_Wednesday": true
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "KSWB-TV 69.2",
       "Units": [
         {
@@ -316,7 +335,8 @@
           },
           "Spots": 1
         }
-      ]
+      ],
+      "Weeks": []
     }
   ],
   "FileName": null,

@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Week date is not in the correct format (d-MMM-yyyy, M/d/yyyy)",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

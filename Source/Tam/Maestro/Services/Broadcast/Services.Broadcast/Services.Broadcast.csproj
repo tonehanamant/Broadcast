@@ -220,6 +220,7 @@
     <Compile Include="Converters\RateImport\BarterFileImporterBase.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterFactory.cs" />
     <Compile Include="Converters\RateImport\OAndOBarterFileImporter.cs" />
+    <Compile Include="Entities\DaypartCode.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
@@ -595,6 +596,7 @@
     <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
+    <Compile Include="Repositories\DaypartCodeRepository.cs" />
     <Compile Include="Repositories\IsciRepository.cs" />
     <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />

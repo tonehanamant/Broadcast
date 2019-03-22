@@ -3,9 +3,9 @@
   "DataLines": [],
   "FileName": "BarterDataFiles\\OAndO_ValidFile1.xlsx",
   "FileStatus": 2,
-  "Hash": "65-54-22-6D-05-6B-40-2B-5F-A2-D5-9A-42-AD-A8-2C-24-FA-66-58",
+  "Hash": "1A-2F-16-19-22-09-D1-06-CB-F4-CD-8C-CB-15-37-86-EB-23-C8-D9",
   "Header": {
-    "AudienceId": null,
+    "AudienceId": 31,
     "ContractedDaypartId": 70591,
     "Cpm": null,
     "DaypartCode": "LN",

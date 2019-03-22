@@ -81,6 +81,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             instance.RegisterType<IBarterRepository, BarterInventoryRepository>();
+            instance.RegisterType<IDaypartCodeRepository, DaypartCodeRepository>();
 
             WasRegistered = true;
         }

@@ -19,13 +19,28 @@ namespace Services.Broadcast.Entities.BarterInventory
 
             public string Comment { get; set; }
 
+            public string Program { get; set; }
+
+            public double? Impressions { get; set; }
+
+            public decimal? CPM { get; set; }
+
             public List<DisplayDaypart> Dayparts { get; set; }
 
             public List<Unit> Units { get; set; } = new List<Unit>();
 
+            public List<Week> Weeks { get; set; } = new List<Week>();
+
             public class Unit
             {
                 public BarterInventoryUnit BarterInventoryUnit { get; set; }
+
+                public int? Spots { get; set; }
+            }
+
+            public class Week
+            {
+                public int MediaWeekId { get; set; }
 
                 public int? Spots { get; set; }
             }

@@ -41,22 +41,18 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationRepository _StationRepository;
         private readonly ILockingEngine _LockingEngine;
         private readonly IInventoryDaypartParsingEngine _DaypartParsingEngine;
-        private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IDataLakeFileService _DataLakeFileService;
-        private readonly IImpressionsService _ImpressionsService;
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBarterFileImporterFactory barterFileImporterFactory
             , IStationProcessingEngine stationProcessingEngine
             , ILockingEngine lockingEngine
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
-            , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IDataLakeFileService dataLakeFileService
-            , IImpressionsService impressionsService)
+            , IDataLakeFileService dataLakeFileService)
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -66,11 +62,9 @@ namespace Services.Broadcast.ApplicationServices
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _LockingEngine = lockingEngine;
             _DaypartParsingEngine = inventoryDaypartParsingEngine;
-            _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _DataLakeFileService = dataLakeFileService;
-            _ImpressionsService = impressionsService;
         }
 
         /// <summary>
@@ -102,7 +96,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _DataLakeFileService.Save(request);
             }
-            catch(Exception ex)
+            catch
             {
                 throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
             }
@@ -129,13 +123,11 @@ namespace Services.Broadcast.ApplicationServices
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
-                        fileImporter.PopulateManifests(barterFile, stations);                     
+                        fileImporter.PopulateManifests(barterFile, stations);
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
-                        var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
-                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
+                        fileImporter.PopulateRates(barterFile);
 
                         _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 

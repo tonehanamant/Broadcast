@@ -87,7 +87,7 @@ namespace Services.Broadcast.Extensions
         /// <returns>String value or null</returns>
         public static string GetStringValue(this ExcelRange cell)
         {
-            return cell?.Text.ToString()?.Trim() ?? cell.Value?.ToString()?.Trim();
+            return cell.Value?.ToString()?.Trim();
         }
 
         /// <summary>
@@ -108,6 +108,26 @@ namespace Services.Broadcast.Extensions
         public static int? GetIntValue(this ExcelRange cell)
         {
             return int.TryParse(GetStringValue(cell), out var result) ? result : (int?)null;
+        }
+
+        /// <summary>
+        /// Gets double value or null from the excel cell
+        /// </summary>
+        /// <param name="cell">Excel cell object</param>
+        /// <returns>Double value or null</returns>
+        public static double? GetDoubleValue(this ExcelRange cell)
+        {
+            return double.TryParse(GetStringValue(cell), out var result) ? result : (double?)null;
+        }
+
+        /// <summary>
+        /// Gets decimal value or null from the excel cell
+        /// </summary>
+        /// <param name="cell">Excel cell object</param>
+        /// <returns>Decimal value or null</returns>
+        public static decimal? GetDecimalValue(this ExcelRange cell)
+        {
+            return decimal.TryParse(GetStringValue(cell), out var result) ? result : (decimal?)null;
         }
     }
 }

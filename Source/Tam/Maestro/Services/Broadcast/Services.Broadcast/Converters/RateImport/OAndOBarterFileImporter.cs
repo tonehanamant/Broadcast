@@ -9,8 +9,12 @@ using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
+using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using static Services.Broadcast.Entities.BarterInventory.BarterInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -42,12 +46,288 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
         {
-            // implement in the line data story 
+            const int firstColumnIndex = 2;
+            const int emptyLinesLimitToStopProcessing = 5;
+
+            // index might differ depending on hut book specified or not
+            var stationHeaderRowIndex = _FindRowNumber("STATION", firstColumnIndex, 12, 14, worksheet);
+
+            if (!stationHeaderRowIndex.HasValue)
+            {
+                barterFile.ValidationProblems.Add($"Can not find first data line");
+                return;
+            }
+
+            var rowIndex = stationHeaderRowIndex.Value + 1;
+            var weeks = _ReadWeeks(worksheet);
+            var emptyLinesProcessedAfterLastDataLine = 0;
+
+            while (true)
+            {
+                var line = _ReadDataLine(worksheet, rowIndex, firstColumnIndex, weeks, out var dayText, out var timeText);
+
+                if (_IsSummaryLine(line))
+                {
+                    rowIndex++;
+                    emptyLinesProcessedAfterLastDataLine = 0;
+                    continue;
+                }
+
+                if (_IsLineEmpty(line))
+                {
+                    emptyLinesProcessedAfterLastDataLine++;
+
+                    if (emptyLinesProcessedAfterLastDataLine == emptyLinesLimitToStopProcessing)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        rowIndex++;
+                        continue;
+                    }
+                }
+
+                var validationProblems = _ValidateLine(line, rowIndex, dayText, timeText);
+
+                if (validationProblems.Any())
+                {
+                    barterFile.ValidationProblems.AddRange(validationProblems);
+                }
+                else
+                {
+                    barterFile.DataLines.Add(line);
+                }
+
+                rowIndex++;
+                emptyLinesProcessedAfterLastDataLine = 0;
+            }
+        }
+
+        private List<string> _ValidateLine(BarterInventoryDataLine line, int rowIndex, string dayText, string timeText)
+        {
+            var validationProblems = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(line.Station))
+            {
+                validationProblems.Add($"Line {rowIndex} contains an empty station cell");
+            }
+
+            if (string.IsNullOrWhiteSpace(line.Program))
+            {
+                validationProblems.Add($"Line {rowIndex} contains an empty program name cell");
+            }
+
+            if (line.Dayparts == null)
+            {
+                var dayEmpty = string.IsNullOrWhiteSpace(dayText);
+                var timeEmpty = string.IsNullOrWhiteSpace(timeText);
+
+                if (dayEmpty)
+                {
+                    validationProblems.Add($"Line {rowIndex} contains an empty day cell");
+                }
+
+                if (timeEmpty)
+                {
+                    validationProblems.Add($"Line {rowIndex} contains an empty time cell");
+                }
+
+                if (!dayEmpty && !timeEmpty)
+                {
+                    validationProblems.Add($"Line {rowIndex} contains an invalid daypart(s): {dayText} {timeText}");
+                }
+            }
+
+            if (!line.Impressions.HasValue)
+            {
+                validationProblems.Add($"Line {rowIndex} contains an empty impressions cell");
+            }
+
+            if (!line.CPM.HasValue)
+            {
+                validationProblems.Add($"Line {rowIndex} contains an empty CPM cell");
+            }
+
+            return validationProblems;
+        }
+
+        private BarterInventoryDataLine _ReadDataLine(
+            ExcelWorksheet worksheet, 
+            int rowIndex, 
+            int firstColumnIndex, 
+            List<int> mediaWeekIds, 
+            out string dayText, 
+            out string timeText)
+        {
+            var columnIndex = firstColumnIndex;
+
+            // don`t simplify object initialization because line columns should be read with the current order 
+            var line = new BarterInventoryDataLine();
+            line.Station = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
+
+            dayText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
+            timeText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
+
+            if (!string.IsNullOrWhiteSpace(dayText) && !string.IsNullOrWhiteSpace(timeText))
+            {
+                var daypartText = $"{dayText} {timeText}";
+
+                if (DaypartParsingEngine.TryParse(daypartText, out var dayparts))
+                {
+                    line.Dayparts = dayparts;
+                }
+            }
+
+            line.Program = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
+
+            foreach (var weekId in mediaWeekIds)
+            {
+                line.Weeks.Add(new BarterInventoryDataLine.Week
+                {
+                    MediaWeekId = weekId,
+                    Spots = worksheet.Cells[rowIndex, columnIndex++].GetIntValue()
+                });
+            }
+
+            // skip an empty column
+            columnIndex++;
+
+            line.Impressions = worksheet.Cells[rowIndex, columnIndex++].GetDoubleValue();
+            line.CPM = worksheet.Cells[rowIndex, columnIndex++].GetDecimalValue();
+
+            return line;
+        }
+
+        private bool _IsSummaryLine(BarterInventoryDataLine line)
+        {
+            return !string.IsNullOrWhiteSpace(line.Station) &&
+                string.IsNullOrWhiteSpace(line.Program) &&
+                !line.Impressions.HasValue &&
+                !line.CPM.HasValue &&
+                line.Dayparts == null &&
+                line.Weeks.All(x => !x.Spots.HasValue);
+        }
+
+        private bool _IsLineEmpty(BarterInventoryDataLine line)
+        {
+            return string.IsNullOrWhiteSpace(line.Station) &&
+                string.IsNullOrWhiteSpace(line.Program) &&
+                !line.Impressions.HasValue &&
+                !line.CPM.HasValue &&
+                line.Dayparts == null &&
+                line.Weeks.All(x => !x.Spots.HasValue);
+        }
+
+        private List<int> _ReadWeeks(ExcelWorksheet worksheet)
+        {
+            const string hhHeader = "HH";
+            const int firstColumnIndex = 6;
+            var dateFormats = new string[] { "d-MMM-yyyy", "M/d/yyyy" };
+            var result = new List<int>();
+            var lastColumnIndex = firstColumnIndex;
+            var weeksStartHeaderRowIndex = _FindRowNumber("Weeks Start", firstColumnIndex, 10, 13, worksheet);
+
+            if (!weeksStartHeaderRowIndex.HasValue)
+            {
+                throw new Exception("Couldn't find first week column");
+            }
+
+            var weeksRowIndex = weeksStartHeaderRowIndex.Value + 1;
+            var hhHeaderCellRowIndex = weeksStartHeaderRowIndex.Value + 2;
+
+            // let's find lastColumnIndex by looking for cell value which starts from "HH"
+            while (true)
+            {
+                try
+                {
+                    // hh cell should be 2 cell after last week column
+                    var hhHeaderCell = worksheet.Cells[hhHeaderCellRowIndex, lastColumnIndex + 2].GetStringValue();
+                    var ishhHeaderCell = !string.IsNullOrWhiteSpace(hhHeaderCell) && hhHeaderCell.StartsWith(hhHeader, StringComparison.OrdinalIgnoreCase);
+
+                    if (ishhHeaderCell)
+                    {
+                        break;
+                    }
+
+                    lastColumnIndex++;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Couldn't find last week column");
+                }
+            }
+
+            var beforehhHeaderCell = worksheet.Cells[weeksRowIndex, lastColumnIndex + 1].GetStringValue();
+
+            if (!string.IsNullOrWhiteSpace(beforehhHeaderCell))
+            {
+                throw new Exception("Valid template should contain an empty column between last week column and HH IMPS column");
+            }
+
+            for (var i = firstColumnIndex; i <= lastColumnIndex; i++)
+            {
+                var weekString = worksheet.Cells[weeksRowIndex, i].GetTextValue();
+
+                if (string.IsNullOrWhiteSpace(weekString))
+                {
+                    throw new Exception($"Week is missing. Row: {weeksRowIndex}, column: {i}");
+                }
+
+                if (!DateTime.TryParseExact(weekString, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime week))
+                {
+                    throw new Exception($"Week date is not in the correct format ({(string.Join(", ", dateFormats))})");
+                }
+
+                var mediaWeekId = MediaMonthAndWeekAggregateCache.GetMediaWeekContainingDate(week).Id;
+                result.Add(mediaWeekId);
+            }
+
+            return result;
         }
 
         public override void PopulateManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
         {
-            // implement in the line data story 
+            barterFile.InventoryManifests = _GetStationInventoryManifests(barterFile, stations);
+        }
+
+        private List<StationInventoryManifest> _GetStationInventoryManifests(BarterInventoryFile barterFile, List<DisplayBroadcastStation> stations)
+        {
+            var fileHeader = barterFile.Header;
+            var stationsDict = stations.ToDictionary(x => x.LegacyCallLetters, x => x, StringComparer.OrdinalIgnoreCase);
+
+            return barterFile.DataLines
+                .Select(x => new StationInventoryManifest
+                {
+                    EffectiveDate = fileHeader.EffectiveDate,
+                    EndDate = fileHeader.EndDate,
+                    InventorySourceId = barterFile.InventorySource.Id,
+                    FileId = barterFile.Id,
+                    Station = stationsDict[StationProcessingEngine.StripStationSuffix(x.Station)],
+                    SpotLengthId = fileHeader.SpotLengthId.Value,
+                    DaypartCode = fileHeader.DaypartCode,
+                    ManifestAudiences = new List<StationInventoryManifestAudience>
+                    {
+                        new StationInventoryManifestAudience
+                        {
+                            Audience = new DisplayAudience { Id = fileHeader.AudienceId.Value },
+                            CPM = x.CPM.Value,
+                            Impressions = x.Impressions
+                        }
+                    },
+                    ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart
+                    {
+                        Daypart = d,
+                        ProgramName = x.Program
+                    }).ToList(),
+                    ManifestWeeks = x.Weeks
+                        .Where(w => w.Spots.HasValue) //exclude empty weeks
+                        .Select(w => new StationInventoryManifestWeek
+                    {
+                        MediaWeek = new MediaWeek { Id = w.MediaWeekId },
+                        Spots = w.Spots.Value
+                    }).ToList()
+                }).ToList();
         }
 
         protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
@@ -63,6 +343,9 @@ namespace Services.Broadcast.Converters.RateImport
             _ProcessShareBook(worksheet, validationProblems, header, out var shareBookParsedCorrectly, out var shareBook);
             _ProcessHutBook(worksheet, validationProblems, header, shareBookParsedCorrectly, shareBook);
             _ProcessPlaybackType(worksheet, validationProblems, header);
+
+            // for now we suppose it`s always House Holds
+            header.AudienceId = AudienceCache.GetDisplayAudienceByCode("HH").Id;
 
             barterFile.Header = header;
             barterFile.ValidationProblems.AddRange(validationProblems);
@@ -100,8 +383,8 @@ namespace Services.Broadcast.Converters.RateImport
 
         private void _ProcessEffectiveAndEndDates(ExcelWorksheet worksheet, List<string> validationProblems, BarterInventoryHeader header)
         {
-            var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetStringValue();
-            var endDateText = worksheet.Cells[END_DATE_CELL].GetStringValue();
+            var effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue();
+            var endDateText = worksheet.Cells[END_DATE_CELL].GetTextValue();
             var validDate = true;
 
             if (string.IsNullOrWhiteSpace(effectiveDateText))
@@ -160,6 +443,10 @@ namespace Services.Broadcast.Converters.RateImport
             if (string.IsNullOrWhiteSpace(daypartCode))
             {
                 validationProblems.Add("Daypart code is missing");
+            }
+            else if (!DaypartCodeRepository.ActiveDaypartCodeExists(daypartCode))
+            {
+                validationProblems.Add("Not acceptable daypart code is specified");
             }
             else
             {
@@ -279,6 +566,20 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             return null;
+        }
+
+        public override void PopulateRates(BarterInventoryFile barterFile)
+        {
+            foreach (var manifest in barterFile.InventoryManifests)
+            {
+                var audience = manifest.ManifestAudiences.Single();
+
+                manifest.ManifestRates.Add(new StationInventoryManifestRate
+                {
+                    SpotLengthId = manifest.SpotLengthId,
+                    SpotCost = ProposalMath.CalculateCost(audience.CPM, audience.Impressions.Value)
+                });
+            }
         }
     }
 }
