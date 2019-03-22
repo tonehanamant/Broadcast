@@ -258,6 +258,7 @@
     <Compile Include="ApplicationServices\ProposalTestHelper.cs" />
     <Compile Include="ApplicationServices\ProposalWeeklyTotalCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\SpotTrackerServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\StationInventoryGroupServiceTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TTNWFileImporterTests.cs" />
     <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
@@ -359,6 +360,9 @@
     <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5667.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\BarterDataFiles\BarterFileImporter_BadFormats_PRI5980.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -381,6 +385,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\BarterDataFiles\BarterFileImporter_WrongCommentsColumn.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\C786.Sigma.MissingColumns.csv">

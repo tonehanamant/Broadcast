@@ -219,38 +219,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_InvalidDaypart()
+        public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
         {
-            const string fileName = @"BarterDataFiles\Barter DataLines file with invalid daypart.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var request = new InventoryFileSaveRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var problems = new List<InventoryFileProblem>();
-                try
-                {
-                    var now = new DateTime(2019, 02, 02);
-                    var result = _BarterService.SaveBarterInventoryFile(request, "IntegrationTestUser", now);
-                }
-                catch (FileUploadException<InventoryFileProblem> e)
-                {
-                    problems = e.Problems;
-                }
-
-                _VerifyInventoryFileProblems(problems);
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_SingleDataColumn()
-        {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_SingleDataColumn.xlsx";
+            const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
 
             using (new TransactionScopeWrapper())
             {
@@ -269,9 +240,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void BarterInventoryService_SaveBarterInventoryFile_DateRangeIntersecting()
+        public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()
         {
-            const string fileName = @"BarterDataFiles\BarterFileImporter_DateRangeIntersecting.xlsx";
+            const string fileName = @"BarterDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
 
             using (new TransactionScopeWrapper())
             {
@@ -317,8 +288,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
             jsonResolver.Ignore(typeof(StationInventoryManifestAudience), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");

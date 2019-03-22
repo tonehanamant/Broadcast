@@ -15,6 +15,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -45,6 +46,8 @@ namespace Services.Broadcast.Repositories
         bool CheckIfManifestByStationProgramFlightDaypartExists(int stationId, string programName, DateTime startDate, DateTime endDate, int daypartId);
         void ExpireManifest(int manifestId, DateTime endDate);
         bool HasSpotsAllocated(int manifestId);
+        List<StationInventoryGroup> GetActiveInventoryGroupsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate);
+        void UpdateInventoryGroupsDateIntervals(List<StationInventoryGroup> inventoryGroups);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -996,6 +999,67 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => context.station_inventory_spots.Any(s => s.station_inventory_manifest_id == manifestId));
+        }
+
+        public List<StationInventoryGroup> GetActiveInventoryGroupsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    // separation into 2 requests should work faster than looking at groups -> manifests -> inventory_files -> header.contracted_daypart_id
+                    var fileIds = c.inventory_files
+                        .Where(x =>
+                            x.status == (int)FileStatusEnum.Loaded &&
+                            x.inventory_file_barter_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId)
+                        .Select(x => x.id)
+                        .ToList();
+
+                    var query = c.station_inventory_group
+                                .Include(x => x.station_inventory_manifest)
+                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
+                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks))
+                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
+                                .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
+                                .Include(x => x.station_inventory_manifest.Select(m => m.station))
+                        .Where(x => x.inventory_source_id == source.Id && x.station_inventory_manifest.Any(m => fileIds.Contains(m.file_id.Value)));
+
+                    query = query.Where(x => endDate >= x.start_date && endDate < x.end_date ||
+                                             endDate >= x.end_date && effectiveDate <= x.end_date);
+
+                    return query.ToList().Select(x => _MapToInventoryGroup(x)).ToList();
+                });
+        }
+
+        public void UpdateInventoryGroupsDateIntervals(List<StationInventoryGroup> inventoryGroups)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var groupIds = inventoryGroups.Select(x => x.Id);
+                    var groups = context.station_inventory_group
+                        .Include(x => x.station_inventory_manifest)
+                        .Where(x => groupIds.Contains(x.id));
+
+                    foreach (var group in groups)
+                    {
+                        var inventoryGroup = inventoryGroups.Single(x => x.Id == group.id);
+                        group.start_date = inventoryGroup.StartDate;
+                        group.end_date = inventoryGroup.EndDate;
+
+                        foreach (var manifest in group.station_inventory_manifest)
+                        {
+                            var inventoryManifest = inventoryGroup.Manifests.SingleOrDefault(x => x.Id == manifest.id);
+
+                            if (inventoryManifest != null)
+                            {
+                                manifest.effective_date = inventoryManifest.EffectiveDate;
+                                manifest.end_date = inventoryManifest.EndDate;
+                            }
+                        }
+                    }
+
+                    context.SaveChanges();
+                });
         }
     }
 }

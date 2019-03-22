@@ -112,7 +112,7 @@ namespace Services.Broadcast.Repositories
 
         public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
-            var adjustedDetals = AdjustDayparts(stationDetails);
+            var adjustedDetails = AdjustDayparts(stationDetails);
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -135,7 +135,7 @@ namespace Services.Broadcast.Repositories
                     ratingsInput.Columns.Add("start_time");
                     ratingsInput.Columns.Add("end_time");
 
-                    adjustedDetals.Distinct().ForEach(p => ratingsInput.Rows.Add(
+                    adjustedDetails.Distinct().ForEach(p => ratingsInput.Rows.Add(
                         p.Id,
                         p.LegacyCallLetters, 
                         p.DisplayDaypart.Monday,
@@ -164,7 +164,6 @@ namespace Services.Broadcast.Repositories
                 });
             }
         }
-
 
         public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {

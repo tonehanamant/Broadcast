@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
@@ -16,6 +17,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietarySpotCostCalculationEngine>();
         private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryDaypartParsingEngine>();
+        private readonly IImpressionsService _ImpressionsService = IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionsService>();
 
         [Test]
         public void CanCalculateSpotCost_CustomAudience_TwoBooks()
@@ -56,7 +58,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, playbackType, shareBook, hutBook);
+            _ImpressionsService.GetProjectedStationImpressions(manifests, playbackType, shareBook, hutBook);
+            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
             Assert.AreEqual(3.83, Math.Round(manifests.First().ManifestRates.First().SpotCost, 2));
         }
@@ -99,7 +102,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             };
 
-            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, playbackType, shareBook);
+            _ImpressionsService.GetProjectedStationImpressions(manifests, playbackType, shareBook);
+            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
 
             Assert.AreEqual(3.97, Math.Round(manifests.First().ManifestRates.First().SpotCost, 2));
         }
