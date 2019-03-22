@@ -252,7 +252,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                     lastColumnIndex++;
                 }
-                catch (Exception)
+                catch
                 {
                     throw new Exception("Couldn't find last week column");
                 }
@@ -343,9 +343,9 @@ namespace Services.Broadcast.Converters.RateImport
             _ProcessShareBook(worksheet, validationProblems, header, out var shareBookParsedCorrectly, out var shareBook);
             _ProcessHutBook(worksheet, validationProblems, header, shareBookParsedCorrectly, shareBook);
             _ProcessPlaybackType(worksheet, validationProblems, header);
-
+            
             // for now we suppose it`s always House Holds
-            header.AudienceId = AudienceCache.GetDisplayAudienceByCode("HH").Id;
+            header.AudienceId = AudienceCache.GetDisplayAudienceByCode(BroadcastConstants.HOUSEHOLD_CODE).Id;
 
             barterFile.Header = header;
             barterFile.ValidationProblems.AddRange(validationProblems);
