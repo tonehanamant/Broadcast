@@ -97,6 +97,7 @@ module.exports = {
       PricingGuide: "features/PricingGuide",
       PostPrePosting: "features/PostPrePosting",
       Tracker: "features/Tracker",
+      Inventory: "features/Inventory",
 
       Patterns: "patterns",
       Ducks: "ducks",
