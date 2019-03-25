@@ -3,7 +3,13 @@ const path = require("path");
 // local api environment variables
 const api = {
   global: {
-    __API__: "https://jsonplaceholder.typicode.com"
+    __API__: "/api/"
+  },
+  qa: {
+    __API__: "/api/"
+  },
+  development: {
+    __API__: "/api/"
   },
   local: {
     __API__: "http://localhost:61720/api/"
@@ -37,10 +43,10 @@ module.exports = {
         ...api.local
       },
       development: {
-        ...api.global
+        ...api.development
       },
       qa: {
-        ...api.global
+        ...api.qa
       },
       demo: {
         ...api.global
