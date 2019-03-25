@@ -9,18 +9,11 @@ import { scrubbingActions as actions } from "Post";
 import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
 import styles from "./index.style.scss";
 
-const mapStateToProps = (grid, dataSource) => ({
-  grid,
-  dataSource
-});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getScrubbingDataFiltered: actions.getScrubbingDataFiltered,
-      clearScrubbingFiltersList: actions.clearScrubbingFiltersList,
-      clearFilteredScrubbingData: actions.clearFilteredScrubbingData,
-      getClearScrubbingDataFiltered: actions.getClearScrubbingDataFiltered
+      clearFilteredScrubbingData: actions.clearFilteredScrubbingData
     },
     dispatch
   );
@@ -34,19 +27,11 @@ export class PostScrubbingFilters extends Component {
   }
 
   onClear() {
-    const { getClearScrubbingDataFiltered } = this.props;
-    getClearScrubbingDataFiltered();
+    const { clearFilteredScrubbingData } = this.props;
+    clearFilteredScrubbingData();
   }
 
   applyFilter(filter) {
-    // ISSUE: Data changes but Object so does not update
-    // clear the grid data then reset (combining in saga/reducer does not work)
-    // this.props.clearScrubbingFiltersList();
-    // wait so the store will update/clear first
-    /* setTimeout(() => {
-      this.props.getScrubbingDataFiltered(filter);
-    }, 50); */
-    // Change: use call in saga to block
     const { getScrubbingDataFiltered } = this.props;
     getScrubbingDataFiltered(filter);
   }
@@ -351,16 +336,12 @@ export class PostScrubbingFilters extends Component {
 }
 
 PostScrubbingFilters.propTypes = {
-  grid: PropTypes.object.isRequired,
-  dataSource: PropTypes.object.isRequired,
   activeFilters: PropTypes.array.isRequired,
   getScrubbingDataFiltered: PropTypes.func.isRequired,
-  clearScrubbingFiltersList: PropTypes.func.isRequired,
-  clearFilteredScrubbingData: PropTypes.func.isRequired,
-  getClearScrubbingDataFiltered: PropTypes.func.isRequired
+  clearFilteredScrubbingData: PropTypes.func.isRequired
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(CSSModules(PostScrubbingFilters, styles));

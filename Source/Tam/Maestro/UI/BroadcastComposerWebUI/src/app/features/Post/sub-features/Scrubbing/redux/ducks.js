@@ -18,14 +18,12 @@ export const POST_OVERRIDE_STATUS = createAction(
   `${ROOT}/POST_OVERRIDE_STATUS`
 );
 
-export const REQUEST_CLEAR_FILTERED_SCRUBBING_DATA = `${ROOT}/REQUEST_CLEAR_FILTERED_SCRUBBING_DATA`;
-export const RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA = `${ROOT}/RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA`;
-export const CLEAR_FILTERED_SCRUBBING_DATA = `${ROOT}/CLEAR_FILTERED_SCRUBBING_DATA`;
+export const CLEAR_FILTERED_SCRUBBING_DATA = createAction(
+  `${ROOT}/CLEAR_FILTERED_SCRUBBING_DATA`
+);
 
+export const CLEAR_SCRUBBING_FILTERS_LIST = `${ROOT}/RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST`;
 export const SAVE_NEW_CLIENT_SCRUBS = `${ROOT}/SAVE_NEW_CLIENT_SCRUBS`;
-
-export const REQUEST_CLEAR_SCRUBBING_FILTERS_LIST = `${ROOT}/REQUEST_CLEAR_SCRUBBING_FILTERS_LIST`;
-export const RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST = `${ROOT}/RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST`;
 
 const initialState = {
   proposalHeader: {},
@@ -267,14 +265,14 @@ export default function reducer(state = initialState, action) {
   const { type, data, payload } = action;
 
   switch (type) {
-    case RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA: {
+    case CLEAR_FILTERED_SCRUBBING_DATA.success: {
       return {
         ...state,
         proposalHeader: {
           ...state.proposalHeader,
           activeScrubbingData: {
             ...state.proposalHeader.activeScrubbingData,
-            ClientScrubs: data.originalScrubs
+            ClientScrubs: state.proposalHeader.scrubbingData.ClientScrubs
           }
         },
         hasActiveScrubbingFilters: false,
@@ -427,7 +425,7 @@ export default function reducer(state = initialState, action) {
         scrubbingFiltersList: [data.activeFilters]
       };
 
-    case RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST:
+    case CLEAR_SCRUBBING_FILTERS_LIST:
       return {
         ...state,
         scrubbingFiltersList: []
@@ -459,8 +457,7 @@ const getScrubbingDataFiltered = query => ({
 });
 
 const clearScrubbingFiltersList = () => ({
-  type: REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
-  payload: {}
+  type: CLEAR_SCRUBBING_FILTERS_LIST
 });
 
 const overrideStatus = params => ({
@@ -487,12 +484,7 @@ const saveActiveScrubData = (newData, fullList) => ({
 });
 
 const clearFilteredScrubbingData = () => ({
-  type: CLEAR_FILTERED_SCRUBBING_DATA,
-  payload: {}
-});
-
-const getClearScrubbingDataFiltered = () => ({
-  type: REQUEST_CLEAR_FILTERED_SCRUBBING_DATA
+  type: CLEAR_FILTERED_SCRUBBING_DATA.request
 });
 
 const reveiveFilteredScrubbingData = data => ({
@@ -502,7 +494,6 @@ const reveiveFilteredScrubbingData = data => ({
 
 export const actions = {
   reveiveFilteredScrubbingData,
-  getClearScrubbingDataFiltered,
   clearFilteredScrubbingData,
   saveActiveScrubData,
   undoScrubStatus,
