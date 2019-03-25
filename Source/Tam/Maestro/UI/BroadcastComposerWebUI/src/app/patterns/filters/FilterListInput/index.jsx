@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CSSModules from "react-css-modules";
 import PropTypes from "prop-types";
-import { v4 } from "uuid";
+import { generate as getId } from "shortid";
 import {
   Checkbox,
   ButtonToolbar,
@@ -59,7 +59,6 @@ class FilterInput extends Component {
 
   // match check handler
   handleMatchSpeckCheck(name, checked) {
-    // const change = this.state.matchOptions[name];
     this.setState(
       prevState => ({
         ...prevState,
@@ -85,19 +84,18 @@ class FilterInput extends Component {
 
     this.setState({
       selectAll,
-      filterOptionsMap
+      filterOptions: filterOptionsMap
     });
     this.setValidSelections();
   }
 
   checkSelectAll() {
     const { filterOptions } = this.state;
-    const allChecked =
-      filterOptions.find(item => item.Selected === false) === undefined;
-    this.setState({ selectAll: allChecked });
+    this.setState({
+      selectAll: !filterOptions.some(item => item.Selected === false)
+    });
   }
 
-  // filterOption checked handler
   handleOptionChecked(changedOption) {
     const { filterOptions } = this.state;
     const filterOptionsMap = filterOptions.map(option => {
@@ -107,18 +105,16 @@ class FilterInput extends Component {
       return option;
     });
 
-    this.setState({ filterOptionsMap }, () => {
+    this.setState({ filterOptions: filterOptionsMap }, () => {
       this.checkSelectAll();
       this.setValidSelections();
     });
   }
 
-  // clear all filters
   clear() {
     const { filterKey, applySelection } = this.props;
     const { filterOptions, matchOptions } = this.state;
     this.applyCheckToAll(true);
-    // change the matchOptions to true or revise to send simplified props?
     this.setState(
       prevState => ({
         ...prevState,
@@ -180,18 +176,15 @@ class FilterInput extends Component {
     if (!filterOptions) {
       return null;
     }
-    // disable buttons if no options
     const canFilter = filterOptions.length > 0;
-    // create the checkbox array considering the current text filter
     const checkboxes = filterOptions.reduce((result, option) => {
-      // use startsWith or includes? included for contains
       if (
         !filterText ||
         option.Display.toLowerCase().includes(filterText.toLowerCase())
       ) {
         result.push(
           <Checkbox
-            key={v4()}
+            key={getId()}
             defaultChecked={option.Selected}
             onChange={() => this.handleOptionChecked(option)}
           >
@@ -207,8 +200,8 @@ class FilterInput extends Component {
         {hasMatchSpec && (
           <FormGroup>
             <Checkbox
+              key={getId()}
               inline
-              key={v4()}
               disabled={!canFilter}
               defaultChecked={matchOptions.inSpec}
               onClick={() =>
@@ -218,8 +211,8 @@ class FilterInput extends Component {
               In Spec
             </Checkbox>
             <Checkbox
+              key={getId()}
               inline
-              key={v4()}
               disabled={!canFilter}
               defaultChecked={matchOptions.outOfSpec}
               onClick={() =>
@@ -249,7 +242,7 @@ class FilterInput extends Component {
         </FormGroup>
         <div styleName="filter-list-checkbox-container">
           <Checkbox
-            key={v4()}
+            key={getId()}
             defaultChecked={selectAll}
             disabled={!canFilter}
             onClick={() => this.applyCheckToAll(!selectAll)}

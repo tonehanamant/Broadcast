@@ -9,19 +9,11 @@ import { scrubbingActions } from "Tracker";
 import FilterPopoverWrapper from "Patterns/filters/FilterPopoverWrapper";
 import styles from "./index.style.scss";
 
-const mapStateToProps = (grid, dataSource) => ({
-  grid,
-  dataSource
-});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getScrubbingDataFiltered: scrubbingActions.getScrubbingDataFiltered,
-      clearScrubbingFiltersList: scrubbingActions.clearScrubbingFiltersList,
-      clearFilteredScrubbingData: scrubbingActions.clearFilteredScrubbingData,
-      getClearScrubbingDataFiltered:
-        scrubbingActions.getClearScrubbingDataFiltered
+      clearFilteredScrubbingData: scrubbingActions.clearFilteredScrubbingData
     },
     dispatch
   );
@@ -35,8 +27,8 @@ export class TrackerScrubbingFilters extends Component {
   }
 
   onClear() {
-    const { getClearScrubbingDataFiltered } = this.props;
-    getClearScrubbingDataFiltered();
+    const { clearFilteredScrubbingData } = this.props;
+    clearFilteredScrubbingData();
   }
 
   applyFilter(filter) {
@@ -317,38 +309,33 @@ export class TrackerScrubbingFilters extends Component {
       }
     };
 
+    const { activeFilters } = this.props;
+
     const grid = {
+      data: activeFilters,
+      classNames: ["filter-grid"],
+      height: false,
       columns,
       plugins,
       stateKey
     };
-    const { activeFilters } = this.props;
     return (
       <div
         style={{ maxHeight: "28px", overflow: "hidden", marginBottom: "2px" }}
       >
-        <Grid
-          {...grid}
-          classNames={["filter-grid"]}
-          data={activeFilters}
-          height={false}
-        />
+        <Grid {...grid} />
       </div>
     );
   }
 }
 
 TrackerScrubbingFilters.propTypes = {
-  grid: PropTypes.object.isRequired,
-  dataSource: PropTypes.object.isRequired,
   activeFilters: PropTypes.array.isRequired,
   getScrubbingDataFiltered: PropTypes.func.isRequired,
-  clearScrubbingFiltersList: PropTypes.func.isRequired,
-  clearFilteredScrubbingData: PropTypes.func.isRequired,
-  getClearScrubbingDataFiltered: PropTypes.func.isRequired
+  clearFilteredScrubbingData: PropTypes.func.isRequired
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(CSSModules(TrackerScrubbingFilters, styles));

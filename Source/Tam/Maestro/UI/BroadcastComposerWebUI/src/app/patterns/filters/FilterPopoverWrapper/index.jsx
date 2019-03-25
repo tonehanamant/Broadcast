@@ -8,11 +8,10 @@ import FilterTimeInput from "../FilterTimeInput";
 export default class FilterPopoverWrapper extends Component {
   constructor(props) {
     super(props);
-    this.popover = null;
+    this.popover = React.createRef();
     this.closePopover = this.closePopover.bind(this);
     this.showPopover = this.showPopover.bind(this);
     this.setFilter = this.setFilter.bind(this);
-    // this.clearFilter = this.clearFilter.bind(this);
   }
 
   setFilter(filter) {
@@ -22,11 +21,11 @@ export default class FilterPopoverWrapper extends Component {
   }
 
   closePopover() {
-    this.popover.hide();
+    this.popover.current.hide();
   }
 
   showPopover() {
-    this.popover.show();
+    this.popover.current.show();
   }
 
   render() {
@@ -40,8 +39,7 @@ export default class FilterPopoverWrapper extends Component {
       hasMatchSpec,
       filterActive
     } = this.props;
-    const isActive = filterActive;
-    const activeColor = isActive ? "green" : "#999";
+    const activeColor = filterActive ? "green" : "#999";
     const popoverFilter = (
       <Popover id="popover-positioned-scrolling-top" title={filterDisplay}>
         {filterType === "dateInput" && (
@@ -79,9 +77,7 @@ export default class FilterPopoverWrapper extends Component {
         placement="bottom"
         overlay={popoverFilter}
         rootClose
-        ref={ref => {
-          this.popover = ref;
-        }}
+        ref={this.popover}
       >
         <div
           style={{ backgroundColor: "white", cursor: "pointer" }}
