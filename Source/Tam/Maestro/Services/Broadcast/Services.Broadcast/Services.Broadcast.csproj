@@ -203,9 +203,6 @@
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.12\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
-    <Reference Include="Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating, Version=18.4.1.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.18.4.1.11\lib\net45\Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating.dll</HintPath>
-    </Reference>
     <Reference Include="Tam.Maestro.IntegrationTests.Common, Version=18.4.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.IntegrationTests.Common.18.4.1.12\lib\net45\Tam.Maestro.IntegrationTests.Common.dll</HintPath>
     </Reference>
@@ -220,6 +217,7 @@
     <Compile Include="Converters\RateImport\BarterFileImporterBase.cs" />
     <Compile Include="Converters\RateImport\BarterFileImporterFactory.cs" />
     <Compile Include="Converters\RateImport\OAndOBarterFileImporter.cs" />
+    <Compile Include="Entities\DaypartCode.cs" />
     <Compile Include="Entities\ProposalDetailPricingGuideSave.cs" />
     <Compile Include="Helpers\DataLakeSystemParameters.cs" />
     <Compile Include="BusinessEngines\InventoryDaypartParsing\DaypartParserBase.cs" />
@@ -325,7 +323,6 @@
     <Compile Include="Entities\PostImpressionsData.cs" />
     <Compile Include="Entities\ScxFile.cs" />
     <Compile Include="Entities\SpotTrackerFileDetail.cs" />
-    <Compile Include="Entities\StationInventory\StationInventoryManifestBase.cs" />
     <Compile Include="Entities\TrackerFileDetail.cs" />
     <Compile Include="Entities\StationInventory\StationInventorySpots.cs" />
     <Compile Include="Entities\UnlinkedIscis.cs" />
@@ -596,6 +593,7 @@
     <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
+    <Compile Include="Repositories\DaypartCodeRepository.cs" />
     <Compile Include="Repositories\IsciRepository.cs" />
     <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />

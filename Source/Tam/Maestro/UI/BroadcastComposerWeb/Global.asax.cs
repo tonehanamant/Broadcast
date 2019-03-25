@@ -35,6 +35,7 @@ namespace BroadcastComposerWeb
             DependencyResolver.SetResolver(new UnityWebMvcResolver(_container));
 
             AreaRegistration.RegisterAllAreas();
+
             //Enable CORS
             var cors = new EnableCorsAttribute(
                         origins: "*",

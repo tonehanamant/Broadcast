@@ -1,5 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
@@ -21,6 +22,8 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
+        private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
+        private readonly IImpressionsService _ImpressionsService;
 
         public BarterFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -28,7 +31,9 @@ namespace Services.Broadcast.Converters.RateImport
             IInventoryDaypartParsingEngine inventoryDaypartParsingEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IStationProcessingEngine stationProcessingEngine,
-            ISpotLengthEngine spotLengthEngine)
+            ISpotLengthEngine spotLengthEngine,
+            IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
+            IImpressionsService impressionsService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
@@ -36,6 +41,8 @@ namespace Services.Broadcast.Converters.RateImport
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _StationProcessingEngine = stationProcessingEngine;
             _SpotLengthEngine = spotLengthEngine;
+            _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
+            _ImpressionsService = impressionsService;
         }
 
         public BarterFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -61,7 +68,9 @@ namespace Services.Broadcast.Converters.RateImport
                         _InventoryDaypartParsingEngine,
                         _MediaMonthAndWeekAggregateCache,
                         _StationProcessingEngine,
-                        _SpotLengthEngine);
+                        _SpotLengthEngine,
+                        _ProprietarySpotCostCalculationEngine,
+                        _ImpressionsService);
                     break;
 
                 default:

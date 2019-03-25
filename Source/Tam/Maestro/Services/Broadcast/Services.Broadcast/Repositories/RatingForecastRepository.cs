@@ -113,7 +113,6 @@ namespace Services.Broadcast.Repositories
         public List<StationImpressionsWithAudience> GetImpressionsDaypart(int postingBookId, List<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
             var adjustedDetails = AdjustDayparts(stationDetails);
-            var newAndOldIdsMapping = _ReplaceIdsWithUnique(adjustedDetails);
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -161,12 +160,7 @@ namespace Services.Broadcast.Repositories
 
 //                    WriteTableSQLDebug(storedProcedureName,stationDetails, postingBookId,audienceId.Value as string,((char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
-                    var result = c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
-
-                    // lets replace ids back
-                    result.ForEach(x => x.id = newAndOldIdsMapping[x.id]);
-
-                    return result;
+                    return c.Database.SqlQuery<StationImpressionsWithAudience>(string.Format(@"EXEC [nsi].[{0}] @posting_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), book, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
             }
         }
@@ -174,7 +168,6 @@ namespace Services.Broadcast.Repositories
         public List<StationImpressions> GetImpressionsDaypart(short hutMediaMonth, short shareMediaMonth, IEnumerable<int> uniqueRatingsAudiences, List<ManifestDetailDaypart> stationDetails, ProposalEnums.ProposalPlaybackType? playbackType, bool useDayByDayImpressions)
         {
             var adjustedDetails = AdjustDayparts(stationDetails);
-            var newAndOldIdsMapping = _ReplaceIdsWithUnique(adjustedDetails);
 
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
@@ -228,29 +221,9 @@ namespace Services.Broadcast.Repositories
                     var storedProcedureName = useDayByDayImpressions ? "usp_GetImpressionsForMultiplePrograms_TwoBooks" : "usp_GetImpressionsForMultiplePrograms_TwoBooks_Averages";
                 //    WriteTableSQLDebug(storedProcedureName, stationDetails,hutMediaMonth,shareMediaMonth, string.Join(",", uniqueRatingsAudiences), ((char) PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)).ToString());
 
-                    var result = c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
-
-                    // lets replace ids back
-                    result.ForEach(x => x.id = newAndOldIdsMapping[x.id]);
-
-                    return result;
+                    return c.Database.SqlQuery<StationImpressions>(string.Format(@"EXEC [nsi].[{0}] @hut_media_month_id, @share_media_month_id, @demo, @ratings_request, @min_playback_type", storedProcedureName), hut, share, audienceId, ratingsRequest, minPlaybackType).ToList();
                 });
             }
-        }
-
-        private Dictionary<int, int> _ReplaceIdsWithUnique(IEnumerable<ManifestDetailDaypart> dayparts)
-        {
-            var newId = 1;
-            var result = new Dictionary<int, int>();
-
-            foreach (var daypart in dayparts)
-            {
-                var oldId = daypart.Id;
-                daypart.Id = newId++;
-                result[daypart.Id] = oldId;
-            }
-
-            return result;
         }
 
         public IEnumerable<ManifestDetailDaypart> AdjustDayparts(List<ManifestDetailDaypart> stationDetails)

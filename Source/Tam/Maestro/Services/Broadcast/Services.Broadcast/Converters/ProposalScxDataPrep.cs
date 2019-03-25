@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using Common.Services;
-using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Repositories;
-using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Converters
 {

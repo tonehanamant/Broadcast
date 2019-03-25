@@ -3,6 +3,7 @@
   "DataLines": [
     {
       "Comment": "Test1",
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -22,6 +23,8 @@
           "_Wednesday": true
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "WCBS",
       "Units": [
         {
@@ -52,10 +55,12 @@
           },
           "Spots": null
         }
-      ]
+      ],
+      "Weeks": []
     },
     {
-      "Comment": "",
+      "Comment": null,
+      "CPM": null,
       "Dayparts": [
         {
           "_Code": "CUS",
@@ -75,6 +80,8 @@
           "_Wednesday": false
         }
       ],
+      "Impressions": null,
+      "Program": null,
       "Station": "WNYW",
       "Units": [
         {
@@ -105,7 +112,8 @@
           },
           "Spots": null
         }
-      ]
+      ],
+      "Weeks": []
     }
   ],
   "FileName": "BarterDataFiles\\BarterFileImporter_BadFormats_PRI5980.xlsx",
@@ -114,7 +122,7 @@
   "Header": {
     "AudienceId": 37,
     "Cpm": 222.22,
-    "DaypartCode": "PMN",
+    "DaypartCode": null,
     "EffectiveDate": "2019-05-03T00:00:00",
     "EndDate": "2019-05-09T00:00:00",
     "HutBookId": 449,
@@ -131,5 +139,7 @@
     "Name": null
   },
   "UniqueIdentifier": null,
-  "ValidationProblems": []
+  "ValidationProblems": [
+    "Not acceptable daypart code is specified"
+  ]
 }

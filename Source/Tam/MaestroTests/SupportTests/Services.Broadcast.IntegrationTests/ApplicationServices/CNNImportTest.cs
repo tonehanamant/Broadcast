@@ -70,11 +70,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayDaypart), "_Id");
             jsonResolver.Ignore(typeof(StationInventoryGroup), "Id");
-            jsonResolver.Ignore(typeof(StationInventoryManifestBase), "Id");
-            jsonResolver.Ignore(typeof (StationInventoryManifestBase), "InventorySourceId");
-            jsonResolver.Ignore(typeof (StationInventoryManifestBase), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "InventorySourceId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "FileId");
+            jsonResolver.Ignore(typeof(StationInventoryManifest), "ProjectedStationImpressions");
             jsonResolver.Ignore(typeof(InventoryFile), "Id");
-            jsonResolver.Ignore(typeof (InventorySource), "Id");
+            jsonResolver.Ignore(typeof(InventorySource), "Id");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
             var jsonSettings = new JsonSerializerSettings

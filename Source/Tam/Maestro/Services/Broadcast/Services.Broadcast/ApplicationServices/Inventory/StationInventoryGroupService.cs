@@ -17,6 +17,7 @@ namespace Services.Broadcast.ApplicationServices
     public interface IStationInventoryGroupService : IApplicationService
     {
         void AddNewStationInventoryGroups(InventoryFileBase inventoryFile, DateTime newEffectiveDate);
+        void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId);
         List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId);
     }
 
@@ -45,23 +46,20 @@ namespace Services.Broadcast.ApplicationServices
             if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
                 throw new Exception(string.Format("The selected source type is invalid or inactive."));
 
-            var expireDate = newEffectiveDate.AddDays(-1);
-            
-            _ExpireExistingInventory(inventoryFile.InventoryGroups, inventoryFile.InventorySource, expireDate, newEffectiveDate);
+            _ExpireExistingInventoryGroups(inventoryFile.InventoryGroups, inventoryFile.InventorySource, newEffectiveDate);
             _inventoryRepository.AddNewInventoryGroups(inventoryFile);
         }
 
-        private List<StationInventoryGroup> _ExpireExistingInventory(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime expireDate, DateTime newEffectiveDate)
+        private void _ExpireExistingInventoryGroups(IEnumerable<StationInventoryGroup> groups, InventorySource source, DateTime newEffectiveDate)
         {
+            var expireDate = newEffectiveDate.AddDays(-1);
             var groupNames = groups.Select(g => g.Name).Distinct().ToList();
             var existingInventory = _inventoryRepository.GetActiveInventoryBySourceAndName(source, groupNames, newEffectiveDate);
 
             if (!existingInventory.Any())
-                return existingInventory;
+                return;
 
             _inventoryRepository.ExpireInventoryGroupsAndManifests(existingInventory, expireDate, newEffectiveDate);
-
-            return existingInventory;
         }
 
         public List<StationInventoryGroup> GetStationInventoryGroupsByFileId(int fileId)
@@ -88,7 +86,64 @@ namespace Services.Broadcast.ApplicationServices
 
             dayparts.ForEach(d=> d = _daypartCache.GetDisplayDaypart(d.Id));
         }
-        
-    }
 
+        public void AddNewStationInventory(InventoryFileBase inventoryFile, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)
+        {
+            if (inventoryFile.InventorySource == null || !inventoryFile.InventorySource.IsActive)
+                throw new Exception(string.Format("The selected source type is invalid or inactive."));
+
+            _ExpireExistingInventoryGroups(inventoryFile.InventorySource, newEffectiveDate, newEndDate, contractedDaypartId);
+            _ExpireExistingInventoryManifests(inventoryFile.InventorySource, newEffectiveDate, newEndDate, contractedDaypartId);
+
+            _inventoryRepository.AddNewInventoryGroups(inventoryFile);
+        }
+
+        private void _ExpireExistingInventoryGroups(InventorySource source, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)
+        {
+            var dayAfterNewEndDate = newEndDate.AddDays(1);
+            var dayBeforeNewEffectiveDate = newEffectiveDate.AddDays(-1);
+            var existingInventoryGroups = _inventoryRepository.GetActiveInventoryGroupsBySourceAndContractedDaypart(source, contractedDaypartId, newEffectiveDate, newEndDate);
+
+            // covers case when existing inventory intersects with new inventory and 
+            // we can save part of existing inventory that goes after the new inventory date interval
+            existingInventoryGroups
+                .Where(x => newEndDate >= x.StartDate && newEndDate < x.EndDate)
+                .ForEach(x =>
+                {
+                    x.StartDate = dayAfterNewEndDate;
+                    x.Manifests
+                        .Where(m => newEndDate >= m.EffectiveDate && newEndDate < m.EndDate)
+                        .ForEach(m => m.EffectiveDate = dayAfterNewEndDate);
+                });
+
+            existingInventoryGroups
+                .Where(x => newEndDate >= x.EndDate && newEffectiveDate <= x.EndDate)
+                .ForEach(x =>
+                {
+                    x.EndDate = dayBeforeNewEffectiveDate;
+                    x.Manifests
+                        .Where(m => newEndDate >= m.EndDate && newEffectiveDate <= m.EndDate)
+                        .ForEach(m => m.EndDate = dayBeforeNewEffectiveDate);
+                });
+
+            _inventoryRepository.UpdateInventoryGroupsDateIntervals(existingInventoryGroups);
+        }
+
+        private void _ExpireExistingInventoryManifests(InventorySource source, DateTime newEffectiveDate, DateTime newEndDate, int contractedDaypartId)
+        {
+            var existingInventoryManifests = _inventoryRepository.GetActiveInventoryManifestsBySourceAndContractedDaypart(source, contractedDaypartId, newEffectiveDate, newEndDate);
+
+            // covers case when existing inventory intersects with new inventory and 
+            // we can save part of existing inventory that goes after the new inventory date interval
+            existingInventoryManifests
+                .Where(x => newEndDate >= x.EffectiveDate && newEndDate < x.EndDate)
+                .ForEach(x => x.EffectiveDate = newEndDate.AddDays(1));
+
+            existingInventoryManifests
+                .Where(x => newEndDate >= x.EndDate && newEffectiveDate <= x.EndDate)
+                .ForEach(x => x.EndDate = newEffectiveDate.AddDays(-1));
+
+            _inventoryRepository.UpdateInventoryManifestsDateIntervals(existingInventoryManifests);
+        }
+    }
 }

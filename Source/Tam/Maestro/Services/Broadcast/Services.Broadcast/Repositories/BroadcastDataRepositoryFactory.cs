@@ -5,7 +5,6 @@ using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
-using Tam.Maestro.Data.EntityFrameworkMapping.ExternalRating;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
@@ -25,9 +24,6 @@ namespace Services.Broadcast.Repositories
 
             instance.RegisterType<IBroadcastContextFactory, BroadcastContextFactory>();
             instance.RegisterType<IContextFactory<QueryHintBroadcastContext>, BroadcastContextFactory>();
-            
-            instance.RegisterType<IExternalRatingContextFactory, ExternalRatingContextFactory>();
-            instance.RegisterType<IContextFactory<QueryHintExternalRatingContext>, ExternalRatingContextFactory>();
 
             instance.RegisterType<IContextFactory<QueryHintBroadcastForecastContext>, BroadcastForecastContextFactory>();
 
@@ -81,6 +77,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             instance.RegisterType<IBarterRepository, BarterInventoryRepository>();
+            instance.RegisterType<IDaypartCodeRepository, DaypartCodeRepository>();
 
             WasRegistered = true;
         }

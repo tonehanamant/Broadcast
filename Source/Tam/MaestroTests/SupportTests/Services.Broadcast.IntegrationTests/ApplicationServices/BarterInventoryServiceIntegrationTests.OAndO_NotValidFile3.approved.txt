@@ -7,13 +7,13 @@
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
+    "ProblemDescription": "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
     "ProgramName": null,
     "StationLetters": null
   },
   {
     "AffectedProposals": null,
-    "ProblemDescription": "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy)",
+    "ProblemDescription": "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
     "ProgramName": null,
     "StationLetters": null
   },
@@ -38,6 +38,12 @@
   {
     "AffectedProposals": null,
     "ProblemDescription": "Playback type is missing",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 18 contains an invalid daypart(s): M-F 12n-1p",
     "ProgramName": null,
     "StationLetters": null
   }

@@ -41,7 +41,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationRepository _StationRepository;
         private readonly ILockingEngine _LockingEngine;
         private readonly IInventoryDaypartParsingEngine _DaypartParsingEngine;
-        private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IDataLakeFileService _DataLakeFileService;
@@ -51,7 +50,6 @@ namespace Services.Broadcast.ApplicationServices
             , IStationProcessingEngine stationProcessingEngine
             , ILockingEngine lockingEngine
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
-            , IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine
             , IStationInventoryGroupService stationInventoryGroupService
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IDataLakeFileService dataLakeFileService)
@@ -64,7 +62,6 @@ namespace Services.Broadcast.ApplicationServices
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _LockingEngine = lockingEngine;
             _DaypartParsingEngine = inventoryDaypartParsingEngine;
-            _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _DataLakeFileService = dataLakeFileService;
@@ -99,7 +96,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _DataLakeFileService.Save(request);
             }
-            catch(Exception ex)
+            catch
             {
                 throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
             }
@@ -122,17 +119,17 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
+                        var header = barterFile.Header;
                         var stations = _GetFileStationsOrCreate(barterFile, userName);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
-                        fileImporter.PopulateManifests(barterFile, stations);                     
+                        fileImporter.PopulateManifests(barterFile, stations);
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
-                        var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
-                        _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests, barterFile.Header.PlaybackType, barterFile.Header.ShareBookId, barterFile.Header.HutBookId);
+                        fileImporter.PopulateRates(barterFile);
 
-                        _StationInventoryGroupService.AddNewStationInventoryGroups(barterFile, barterFile.Header.EffectiveDate);
+                        _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 
                         _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, now, barterFile.InventorySource.Id);
 

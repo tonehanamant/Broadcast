@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Valid template should contain an empty column between last week column and HH IMPS column",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

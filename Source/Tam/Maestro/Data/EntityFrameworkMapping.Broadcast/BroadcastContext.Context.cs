@@ -130,5 +130,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual DbSet<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
         public virtual DbSet<station> stations { get; set; }
+        public virtual DbSet<daypart_codes> daypart_codes { get; set; }
     }
 }

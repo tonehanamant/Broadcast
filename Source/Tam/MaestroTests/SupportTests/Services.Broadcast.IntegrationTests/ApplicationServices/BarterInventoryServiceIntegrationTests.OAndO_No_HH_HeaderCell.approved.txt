@@ -1,0 +1,8 @@
+﻿[
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Couldn't find last week column",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

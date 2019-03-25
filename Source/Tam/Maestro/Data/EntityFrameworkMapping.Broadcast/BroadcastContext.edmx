@@ -227,6 +227,14 @@
           <Property Name="delivery" Type="float" Nullable="false" />
           <Property Name="audience_rank" Type="int" />
         </EntityType>
+        <EntityType Name="daypart_codes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="daypart_days">
           <Key>
             <PropertyRef Name="daypart_id" />
@@ -3410,6 +3418,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="bvs_map_types" EntityType="Self.bvs_map_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_maps" EntityType="Self.bvs_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bvs_post_details" EntityType="Self.bvs_post_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="daypart_codes" EntityType="Self.daypart_codes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="daypart_days" EntityType="Self.daypart_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dayparts" EntityType="Self.dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="days" EntityType="Self.days" Schema="dbo" store:Type="Tables" />
@@ -4874,6 +4883,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station" EntitySet="stations" />
             <End Role="station_inventory_spot_snapshots" EntitySet="station_inventory_spot_snapshots" />
           </AssociationSet>
+          <EntitySet Name="daypart_codes" EntityType="BroadcastModel.daypart_codes" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -8529,6 +8539,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="daypart_codes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9988,6 +10006,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="affiliation" ColumnName="affiliation" />
                 <ScalarProperty Name="station_call_letters" ColumnName="station_call_letters" />
                 <ScalarProperty Name="station_code" ColumnName="station_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="daypart_codes">
+            <EntityTypeMapping TypeName="BroadcastModel.daypart_codes">
+              <MappingFragment StoreEntitySet="daypart_codes">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

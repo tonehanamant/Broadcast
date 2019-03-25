@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Microsoft.Practices.ObjectBuilder2;
 using OfficeOpenXml;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
@@ -30,8 +31,10 @@ namespace Services.Broadcast.Converters.RateImport
         private const string CONTRACTED_DAYPART_CELL = "B8";
         private const string SHARE_BOOK_CELL = "B9";
         private const string HUT_BOOK_CELL = "B10";
-        private const string PLAYBACK_TYPE_CELL = "B11";     
-        readonly string[] DATE_FORMATS = new string[3] { "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy" };
+        private const string PLAYBACK_TYPE_CELL = "B11";
+
+        private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
+        private readonly IImpressionsService _ImpressionsService;
 
         public BarterFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -39,7 +42,9 @@ namespace Services.Broadcast.Converters.RateImport
             IInventoryDaypartParsingEngine inventoryDaypartParsingEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IStationProcessingEngine stationProcessingEngine,
-            ISpotLengthEngine spotLengthEngine) : base(
+            ISpotLengthEngine spotLengthEngine,
+            IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
+            IImpressionsService impressionsService) : base(
                 broadcastDataRepositoryFactory, 
                 broadcastAudiencesCache, 
                 inventoryDaypartParsingEngine, 
@@ -47,6 +52,8 @@ namespace Services.Broadcast.Converters.RateImport
                 stationProcessingEngine,
                 spotLengthEngine)
         {
+            _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
+            _ImpressionsService = impressionsService;
         }
 
         protected override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
@@ -65,7 +72,16 @@ namespace Services.Broadcast.Converters.RateImport
 
             if (validationProblems.Any()) return;
 
-            header.DaypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
+            var daypartCode = worksheet.Cells[DAYPART_CODE_CELL].GetStringValue();
+
+            if (!DaypartCodeRepository.ActiveDaypartCodeExists(daypartCode))
+            {
+                validationProblems.Add("Not acceptable daypart code is specified");
+            }
+            else
+            {
+                header.DaypartCode = daypartCode;
+            }
 
             //Format mm/dd/yyyy and end date must be after start date
             string effectiveDateText = worksheet.Cells[EFFECTIVE_DATE_CELL].GetTextValue().Split(' ')[0]; //split is removing time section
@@ -188,7 +204,7 @@ namespace Services.Broadcast.Converters.RateImport
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, BarterInventoryFile barterFile)
         {
             const int firstColumnIndex = 2;
-            var rawIndex = 16;
+            var rowIndex = 16;
             var columnIndex = firstColumnIndex;
             var units = _ReadBarterInventoryUnits(worksheet);
 
@@ -196,8 +212,8 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 // don`t simplify object initialization because line columns should be read with the current order 
                 var line = new BarterInventoryDataLine();
-                line.Station = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
-                var daypartText = worksheet.Cells[rawIndex, columnIndex++].GetStringValue();
+                line.Station = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
+                var daypartText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
 
                 if (DaypartParsingEngine.TryParse(daypartText, out var dayparts))
                 {
@@ -209,11 +225,11 @@ namespace Services.Broadcast.Converters.RateImport
                     line.Units.Add(new BarterInventoryDataLine.Unit
                     {
                         BarterInventoryUnit = unit,
-                        Spots = worksheet.Cells[rawIndex, columnIndex++].GetIntValue()
+                        Spots = worksheet.Cells[rowIndex, columnIndex++].GetIntValue()
                     });
                 }
 
-                line.Comment = worksheet.Cells[rawIndex, columnIndex].GetStringValue();
+                line.Comment = worksheet.Cells[rowIndex, columnIndex].GetStringValue();
 
                 if (_IsLineEmpty(line))
                 {
@@ -224,15 +240,15 @@ namespace Services.Broadcast.Converters.RateImport
 
                 if (string.IsNullOrWhiteSpace(line.Station))
                 {
-                    barterFile.ValidationProblems.Add($"Line {rawIndex} contains an empty station cell");
+                    barterFile.ValidationProblems.Add($"Line {rowIndex} contains an empty station cell");
                     hasValidationProblems = true;
                 }
 
                 if (line.Dayparts == null)
                 {
                     var message = string.IsNullOrWhiteSpace(daypartText) ?
-                       $"Line {rawIndex} contains an empty daypart cell" :
-                       $"Line {rawIndex} contains an invalid daypart(s): {daypartText}";
+                       $"Line {rowIndex} contains an empty daypart cell" :
+                       $"Line {rowIndex} contains an invalid daypart(s): {daypartText}";
 
                     barterFile.ValidationProblems.Add(message);
                     hasValidationProblems = true;
@@ -244,7 +260,7 @@ namespace Services.Broadcast.Converters.RateImport
                 }
 
                 columnIndex = firstColumnIndex;
-                rawIndex++;
+                rowIndex++;
             }
         }
 
@@ -264,7 +280,7 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     // comments header cell should be on the same row with spot lengths and 1 cell after last unit column
                     var commentsHeaderCell = worksheet.Cells[spotLengthRowIndex, lastColumnIndex + 1].GetStringValue();
-                    var isCommentsHeaderCell = !string.IsNullOrWhiteSpace(commentsHeaderCell) && commentsHeaderCell.Equals(commentsHeader);
+                    var isCommentsHeaderCell = !string.IsNullOrWhiteSpace(commentsHeaderCell) && commentsHeaderCell.Equals(commentsHeader, StringComparison.OrdinalIgnoreCase);
                     
                     if (isCommentsHeaderCell)
                     {
@@ -353,7 +369,7 @@ namespace Services.Broadcast.Converters.RateImport
                         x.dataLine.Comment
                     })
                 })
-                .Where(x => x.Manifests.Any(y => y.Spots != null))  //exclude empty manifest groups
+                .Where(x => x.Manifests.Any(y => y.Spots != null))  // exclude empty manifest groups
                 .Select(manifestGroup => new StationInventoryGroup
                 {
                     Name = manifestGroup.UnitName,
@@ -363,7 +379,7 @@ namespace Services.Broadcast.Converters.RateImport
                     EndDate = fileHeader.EndDate,
                     SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
                     Manifests = manifestGroup.Manifests
-                        .Where(x => x.Spots != null) //exclude empty manifests
+                        .Where(x => x.Spots != null) // exclude empty manifests
                         .Select(manifest => new StationInventoryManifest
                         {
                             EffectiveDate = fileHeader.EffectiveDate,
@@ -376,13 +392,13 @@ namespace Services.Broadcast.Converters.RateImport
                             ManifestWeeks = _GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),
                             ManifestDayparts = manifest.Dayparts.Select(x => new StationInventoryManifestDaypart { Daypart = x }).ToList(),
                             ManifestAudiences = new List<StationInventoryManifestAudience>
-                        {
-                            new StationInventoryManifestAudience
                             {
-                                Audience = new DisplayAudience { Id = fileHeader.AudienceId.Value },
-                                CPM = fileHeader.Cpm.Value
+                                new StationInventoryManifestAudience
+                                {
+                                    Audience = new DisplayAudience { Id = fileHeader.AudienceId.Value },
+                                    CPM = fileHeader.Cpm.Value
+                                }
                             }
-                        }
                         }).ToList()
                 }).ToList();
         }
@@ -397,6 +413,14 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
+        }
+
+        public override void PopulateRates(BarterInventoryFile barterFile)
+        {
+            var header = barterFile.Header;
+            var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
+            _ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
+            _ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
         }
     }
 }

@@ -7,6 +7,12 @@
   },
   {
     "AffectedProposals": null,
+    "ProblemDescription": "Not acceptable daypart code is specified",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
     "ProblemDescription": "Only one contracted daypart should be specified (M-F 6:30PM-11PM + M-F 1PM-2PM)",
     "ProgramName": null,
     "StationLetters": null
@@ -20,6 +26,12 @@
   {
     "AffectedProposals": null,
     "ProblemDescription": "Invalid playback type (WrongPlaybackType)",
+    "ProgramName": null,
+    "StationLetters": null
+  },
+  {
+    "AffectedProposals": null,
+    "ProblemDescription": "Line 18 contains an invalid daypart(s): M-F 12n-1p",
     "ProgramName": null,
     "StationLetters": null
   }

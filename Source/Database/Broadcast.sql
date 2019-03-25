@@ -50,6 +50,83 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-5638 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[daypart_codes]'))
+BEGIN
+	CREATE TABLE [dbo].[daypart_codes](
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[name] [varchar](50) NOT NULL,
+		[is_active] [bit] NOT NULL,
+	CONSTRAINT [PK_daypart_codes] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'EMN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('EMN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'MDN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('MDN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'EN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('EN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'LN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('LN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'ENLN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('ENLN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'EF')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('EF', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'PA')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('PA', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'PT')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('PT', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'LF')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('LF', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'SYN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('SYN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'OVN')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('OVN', 1)
+END
+
+IF NOT EXISTS(SELECT * FROM daypart_codes WHERE [name] = 'DAY')
+BEGIN
+	INSERT INTO daypart_codes([name], is_active) VALUES('DAY', 1)
+END
+/*************************************** END PRI-5638 *****************************************************/
+
 /*************************************** START PRI-5636 *****************************************************/
 --add OAndO sources
 if not exists (select * from inventory_sources where [name] = 'ABC O&O')
