@@ -10,13 +10,13 @@ import {
 import {
   faCircle as fasCircle,
   faCheckCircle as fasCheckCircle,
-  faTimeCircle as fasTimeCircle,
+  faTimesCircle as fasTimesCircle,
   faBolt as fasBolt
 } from "@fortawesome/pro-solid-svg-icons";
 
 // solid
 import {
-  faCircle as farTimeCircle,
+  faTimesCircle as farTimesCircle,
   faCheckCircle as farCheckCircle
 } from "@fortawesome/pro-regular-svg-icons";
 
@@ -28,8 +28,8 @@ export const configureIcons = () => {
   library.add(fasCircle);
   library.add(fasBolt);
   library.add(fasCheckCircle);
-  library.add(fasTimeCircle);
+  library.add(fasTimesCircle);
   // refular
   library.add(farCheckCircle);
-  library.add(farTimeCircle);
+  library.add(farTimesCircle);
 };
