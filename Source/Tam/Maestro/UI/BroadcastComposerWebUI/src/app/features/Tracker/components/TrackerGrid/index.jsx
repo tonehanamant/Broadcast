@@ -7,6 +7,7 @@ import { Badge } from "react-bootstrap";
 import { toggleModal, createAlert } from "Main/redux/ducks";
 import { scrubbingActions, trackerActions } from "Tracker";
 import Table, { withGrid } from "Lib/react-table";
+import Icon from "Patterns/Icon";
 import numeral from "numeral";
 import moment from "moment";
 
@@ -78,9 +79,9 @@ export class TrackerGridContainer extends Component {
           return row.original.IsActiveThisWeek ? (
             <div>
               {val}
-              <span className="fa-stack pull-right">
-                <i className="fa fa-circle fa-stack-2x text-success" />
-                <i className="fa fa-bolt fa-stack-1x fa-inverse" />
+              <span className="fa-layers fa-fw pull-right">
+                <Icon iconType="light" icon="circle" size="lg" />
+                <Icon iconType="solid" icon="bolt" size="lg" />
               </span>
             </div>
           ) : (
