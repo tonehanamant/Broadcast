@@ -153,7 +153,7 @@ export class Dropzone extends PureComponent {
             <div styleName="drop-overlay">
               <div styleName="drop-dialog">
                 <h1>
-                  <i styleName="fa fa-cloud-upload upload-cloud" />
+                  <i className="fa fa-cloud-upload upload-cloud" />
                 </h1>
                 <h2>Drop a {fileType} file here to upload</h2>
                 <p styleName="reject-prompt">
