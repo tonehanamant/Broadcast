@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { head, pick } from "lodash";
 import CSSModules from "react-css-modules";
 import ReactDropzone from "react-dropzone";
+import Icon from "Patterns/Icon";
 import {
   getDataTransferItems,
   validateFilesByExtension
@@ -153,7 +154,8 @@ export class Dropzone extends PureComponent {
             <div styleName="drop-overlay">
               <div styleName="drop-dialog">
                 <h1>
-                  <i className="fa fa-cloud-upload upload-cloud" />
+                  {/* <i className="fa fa-cloud-upload upload-cloud" /> */}
+                  <Icon iconType="solid" icon="cloud-upload" size="lg" />
                 </h1>
                 <h2>Drop a {fileType} file here to upload</h2>
                 <p styleName="reject-prompt">
