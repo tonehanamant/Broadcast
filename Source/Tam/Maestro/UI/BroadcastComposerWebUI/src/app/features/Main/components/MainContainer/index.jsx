@@ -7,6 +7,7 @@ import SectionPostPrePosting from "PostPrePosting";
 import SectionPost from "Post/components";
 import SectionPlanning from "Planning";
 import SectionTracker from "Tracker/components";
+import SectionInventory from "Inventory";
 
 import Toast from "Patterns/Toast";
 import ErrorModal from "Patterns/ErrorModal";
@@ -35,6 +36,7 @@ export const Main = ({ match: { path } }) => (
       />
       <Route path={`${path}planning`} component={SectionPlanning} />
       <Route path={`${path}tracker`} component={SectionTracker} />
+      <Route path={`${path}inventory`} component={SectionInventory} />
     </Switch>
     <AppFooter />
   </div>

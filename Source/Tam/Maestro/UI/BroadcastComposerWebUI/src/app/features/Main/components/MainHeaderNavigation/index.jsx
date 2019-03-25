@@ -40,6 +40,12 @@ export const MainHeaderNavigation = ({ environment, employee, routing }) => (
           <Nav>
             <MenuItem href="/broadcast/rates">Rate Cards</MenuItem>
             <MenuItem
+              href="/broadcastreact/inventory"
+              active={routing.location.pathname === "/broadcastreact/inventory"}
+            >
+              Inventory
+            </MenuItem>
+            <MenuItem
               href="/broadcastreact/planning"
               active={routing.location.pathname === "/broadcastreact/planning"}
             >
