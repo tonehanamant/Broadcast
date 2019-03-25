@@ -1,6 +1,6 @@
 import { takeEvery, put, call, select } from "redux-saga/effects";
 import moment from "moment";
-import { forEach, cloneDeep, includes, update, map } from "lodash";
+import { forEach, cloneDeep, includes, update, isObject } from "lodash";
 import {
   setOverlayLoading,
   setOverlayProcessing,
@@ -12,15 +12,12 @@ import sagaWrapper from "Utils/saga-wrapper";
 import api from "API";
 
 import {
+  CLEAR_FILTERED_SCRUBBING_DATA,
   UNDO_SCRUB_STATUS,
   LOAD_TRACKER_CLIENT_SCRUBBING,
   SWAP_PROPOSAL_DETAIL,
   FILTERED_SCRUBBING_DATA,
   TRACKER_OVERRIDE_STATUS,
-  REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
-  RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
-  REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
-  RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
   actions
 } from "./ducks";
 
@@ -43,33 +40,13 @@ export const selectHasActiveScrubbingFilters = state =>
   state.tracker.scrubbing.hasActiveScrubbingFilters;
 
 /* ////////////////////////////////// */
-/* REQUEST CLEAR SCRUBBING FILTER LIST - so grid will update object data */
-/* ////////////////////////////////// */
-export function* requestClearScrubbingDataFiltersList() {
-  try {
-    yield put({
-      type: RECEIVE_CLEAR_SCRUBBING_FILTERS_LIST,
-      data: []
-    });
-  } catch (e) {
-    if (e.message) {
-      yield put(deployError({ message: e.message }));
-    }
-  }
-}
-
-/* ////////////////////////////////// */
 /* CLEAR FILTERED SCRUBBING DATA - resets filters */
 /* ////////////////////////////////// */
-const delay = ms => new Promise(res => setTimeout(res, ms));
 
-export function* clearFilteredScrubbingData() {
-  yield call(requestClearScrubbingDataFiltersList);
-  yield delay(500);
-  const originalFilters = yield select(selectActiveScrubbingFilters);
-  const originalScrubs = yield select(selectClientScrubs);
-  const activeFilters = map(originalFilters, filter => {
-    const newFilter = filter;
+const resetFilters = filters => {
+  const resetedFilters = {};
+  forEach(filters, filter => {
+    const newFilter = { ...filter };
     if (filter.active) {
       const isList = filter.type === "filterList";
       newFilter.active = false;
@@ -80,7 +57,7 @@ export function* clearFilteredScrubbingData() {
           newFilter.matchOptions.outOfSpec = true;
           newFilter.matchOptions.inSpec = true;
         }
-        newFilter.filterOptions.map(option => ({
+        newFilter.filterOptions = newFilter.filterOptions.map(option => ({
           ...option,
           Selected: true
         }));
@@ -100,25 +77,22 @@ export function* clearFilteredScrubbingData() {
         }
       }
     }
-    return newFilter;
+    if (isObject(filter)) {
+      resetedFilters[filter.filterKey] = newFilter;
+    }
   });
-  const ret = {
-    activeFilters,
-    originalScrubs
-  };
-  try {
-    yield put(
-      setOverlayLoading({ id: "TrackerScrubbingFilter", loading: true })
-    );
-    yield put({
-      type: RECEIVE_CLEAR_FILTERED_SCRUBBING_DATA,
-      data: ret
-    });
-  } finally {
-    yield put(
-      setOverlayLoading({ id: "TrackerScrubbingFilter", loading: false })
-    );
-  }
+  return resetedFilters;
+};
+
+export function* clearFilteredScrubbingData() {
+  yield put(actions.clearScrubbingFiltersList());
+  const filters = yield select(selectActiveScrubbingFilters);
+  const activeFilters = resetFilters(filters);
+
+  yield put({
+    type: CLEAR_FILTERED_SCRUBBING_DATA.success,
+    data: { activeFilters }
+  });
 }
 
 /* ////////////////////////////////// */
@@ -140,7 +114,7 @@ export function* requestTrackerClientScrubbing(params) {
     }
     // clear the data so filters grid registers as update - if not from modal update
     if (!params.showModal) {
-      yield call(requestClearScrubbingDataFiltersList);
+      yield put(actions.clearScrubbingFiltersList());
     }
     const { status, data } = yield getTrackerClientScrubbing(params);
     if (params.filterKey) {
@@ -178,86 +152,99 @@ export function* requestTrackerClientScrubbingSuccess({ payload: params }) {
   }
 }
 
-const getFilteredResult = (listUnfiltered, filters) => {
-  let hasActiveScrubbingFilters = false;
-  const filteredResult = listUnfiltered.filter(item => {
+const filterListFn = (value, item) => {
+  if (value.activeMatch) {
+    // just base on one or the other?
+    const toMatch = value.matchOptions.inSpec === true;
+    return (
+      !includes(value.exclusions, item[value.filterKey]) &&
+      item[value.matchOptions.matchKey] === toMatch
+    );
+  }
+  return !includes(value.exclusions, item[value.filterKey]);
+};
+
+const filterDateInputFn = (value, item) =>
+  moment(item[value.filterKey]).isBetween(
+    value.filterOptions.DateAiredStart,
+    value.filterOptions.DateAiredEnd,
+    "day",
+    true
+  );
+
+const filterTimeInputFn = (value, item) =>
+  moment(item[value.filterKey]).isBetween(
+    value.filterOptions.TimeAiredStart,
+    value.filterOptions.TimeAiredEnd,
+    "seconds",
+    true
+  );
+
+const filterFnMap = {
+  filterList: filterListFn,
+  dateInput: filterDateInputFn,
+  timeInput: filterTimeInputFn
+};
+
+const filterScrubbingList = (value, item) => {
+  const filterFn = filterFnMap[value.type];
+  return filterFn ? filterFn(value, item) : true;
+};
+
+const filterData = (listUnfiltered, filters) => {
+  let hasActiveFilters = false;
+  const list = listUnfiltered.filter(item => {
     let ret = true;
     forEach(filters, value => {
-      if (value.active && ret === true) {
-        hasActiveScrubbingFilters = true;
-        if (value.type === "filterList") {
-          if (value.activeMatch) {
-            // just base on one or the other?
-            const toMatch = value.matchOptions.inSpec === true;
-            ret =
-              !includes(value.exclusions, item[value.filterKey]) &&
-              item[value.matchOptions.matchKey] === toMatch;
-          } else {
-            ret = !includes(value.exclusions, item[value.filterKey]);
-          }
-        } else if (value.type === "dateInput") {
-          // tbd check range based on value.filterOptions
-          // todo: need to check if the 2 values are equal
-          ret = moment(item[value.filterKey]).isBetween(
-            value.filterOptions.DateAiredStart,
-            value.filterOptions.DateAiredEnd,
-            "day",
-            true
-          );
-        } else if (value.type === "timeInput") {
-          // tbd check range based on value.filterOptions
-          // todo: need to check if the 2 values are equal
-          ret = moment(item[value.filterKey]).isBetween(
-            value.filterOptions.TimeAiredStart,
-            value.filterOptions.TimeAiredEnd,
-            "seconds",
-            true
-          );
-        }
+      if (value.active && ret) {
+        hasActiveFilters = true;
+        ret = filterScrubbingList(value, item);
       }
     });
     return ret;
   });
-  return { filteredResult, hasActiveScrubbingFilters };
+  return { list, hasActiveFilters };
 };
 
-const applyFilter = (filters, filter, query, listUnfiltered, listFiltered) => {
+const updateFilter = (filter, filters, query) => {
   const newFilter = cloneDeep(filter);
-  const originalFilters = cloneDeep(filters);
+  const newFilters = cloneDeep(filters);
   const isList = filter.type === "filterList";
-  // active -depends on if clearing etc; also now if matching in play
-  let isActive = false;
   if (isList) {
-    isActive = query.exclusions.length > 0 || query.activeMatch;
+    newFilter.active = query.exclusions.length > 0 || query.activeMatch;
     newFilter.matchOptions = query.matchOptions;
     newFilter.activeMatch = query.activeMatch;
   } else {
-    isActive = query.exclusions; // bool for date/time aired
+    newFilter.active = query.exclusions; // bool for date/time aired
   }
-  newFilter.active = isActive;
   newFilter.exclusions = query.exclusions;
   newFilter.filterOptions = isList
     ? query.filterOptions
     : Object.assign(filter.filterOptions, query.filterOptions);
-  const { filteredResult, hasActiveScrubbingFilters } = getFilteredResult(
-    listUnfiltered,
-    filters
-  );
-  if (filteredResult.length < 1) {
+  return {
+    newFilter,
+    newFilters: { ...newFilters, [newFilter.filterKey]: newFilter }
+  };
+};
+
+const applyFilter = (filters, filter, query, listUnfiltered, listFiltered) => {
+  const { newFilter, newFilters } = updateFilter(filter, filters, query);
+  const { list, hasActiveFilters } = filterData(listUnfiltered, newFilters);
+  if (list.length < 1) {
     return {
       filteredClientScrubs: listFiltered,
       activeFilter: newFilter,
-      activeFilters: originalFilters,
+      activeFilters: filters,
       alertEmpty: true,
-      hasActiveScrubbingFilters
+      hasActiveScrubbingFilters: hasActiveFilters
     };
   }
   return {
-    filteredClientScrubs: filteredResult,
+    filteredClientScrubs: list,
     activeFilter: newFilter,
-    activeFilters: filters,
+    activeFilters: newFilters,
     alertEmpty: false,
-    hasActiveScrubbingFilters
+    hasActiveScrubbingFilters: hasActiveFilters
   };
 };
 
@@ -276,7 +263,7 @@ export function* requestScrubbingDataFiltered({ payload: query }) {
         processing: true
       })
     );
-    yield call(requestClearScrubbingDataFiltersList);
+    yield put(actions.clearScrubbingFiltersList());
     const filtered = yield applyFilter(
       filters,
       filter,
@@ -423,13 +410,13 @@ export function* requestOverrideStatusSuccess({ data, payload: params }) {
       scrubbingData: data.Data,
       activeFilters: isRemove ? adjustedFilters : activeFilters
     };
-    yield call(requestClearScrubbingDataFiltersList);
+    yield put(actions.clearScrubbingFiltersList());
     yield put({
       type: TRACKER_OVERRIDE_STATUS.store,
       data: ret
     });
   } else {
-    yield call(requestClearScrubbingDataFiltersList);
+    yield put(actions.clearScrubbingFiltersList());
     const filterKey = yield select(selectActiveFilterKey);
     yield put({
       type: LOAD_TRACKER_CLIENT_SCRUBBING.success,
@@ -544,13 +531,6 @@ function* watchRequestScrubbingDataFiltered() {
   );
 }
 
-function* watchRequestClearScrubbingFiltersList() {
-  yield takeEvery(
-    REQUEST_CLEAR_SCRUBBING_FILTERS_LIST,
-    requestClearScrubbingDataFiltersList
-  );
-}
-
 function* watchRequestOverrideStatus() {
   yield takeEvery(
     TRACKER_OVERRIDE_STATUS.request,
@@ -589,7 +569,7 @@ function* watchUndoScrubStatusSuccess() {
 
 function* watchRequestClearFilteredScrubbingData() {
   yield takeEvery(
-    REQUEST_CLEAR_FILTERED_SCRUBBING_DATA,
+    CLEAR_FILTERED_SCRUBBING_DATA.request,
     clearFilteredScrubbingData
   );
 }
@@ -602,7 +582,6 @@ export default [
   watchSwapProposalDetailSuccess,
   watchRequestOverrideStatus,
   watchRequestOverrideStatusSuccess,
-  watchRequestClearScrubbingFiltersList,
   watchRequestScrubbingDataFiltered,
   watchRequestTrackerClientScrubbing,
   watchRequestTrackerClientScrubbingSuccess

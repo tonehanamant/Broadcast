@@ -14,7 +14,7 @@ const Overlay = ({ type, loading, processing }) => {
       <div styleName="overlayLoading">
         <div styleName="overlayDialog">
           <Icon
-            prefix="fas"
+            iconType="light"
             icon="spinner-third"
             iconSize="md"
             spin
@@ -34,7 +34,7 @@ const Overlay = ({ type, loading, processing }) => {
       <div styleName="overlayProcessing">
         <div styleName="overlayDialog">
           <Icon
-            prefix="fas"
+            iconType="light"
             icon="spinner-third"
             iconSize="md"
             spin
