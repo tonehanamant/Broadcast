@@ -5,12 +5,6 @@ const api = {
   global: {
     __API__: "/api/"
   },
-  qa: {
-    __API__: "/api/"
-  },
-  development: {
-    __API__: "/api/"
-  },
   local: {
     __API__: "http://localhost:61720/api/"
     // __API__: "http://devvmqa2.dev.crossmw.com/Broadcast/api/"
@@ -43,10 +37,10 @@ module.exports = {
         ...api.local
       },
       development: {
-        ...api.development
+        ...api.global
       },
       qa: {
-        ...api.qa
+        ...api.global
       },
       demo: {
         ...api.global
