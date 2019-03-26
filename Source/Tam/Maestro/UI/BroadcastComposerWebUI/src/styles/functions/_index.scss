@@ -1,0 +1,11 @@
+@function make_color($c, $o) {
+  @return mix($c, #ffffff, percentage($o/100));
+}
+
+@function rgba-to-rgb($rgba, $background: #fff) {
+  @return mix(
+    rgb(red($rgba), green($rgba), blue($rgba)),
+    $background,
+    alpha($rgba) * 100%
+  );
+}

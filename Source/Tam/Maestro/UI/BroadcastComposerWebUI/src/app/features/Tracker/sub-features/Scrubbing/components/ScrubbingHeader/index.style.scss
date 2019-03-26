@@ -1,0 +1,40 @@
+
+:global{
+#proposal_secondary_demo {
+  .Select-arrow-zone {
+        display: none !important;
+    }
+
+    .Select.is-disabled>.Select-control {
+      background-color: unset !important;
+    }
+
+  .Select-control {
+      border: none !important;
+    }
+  }
+}
+
+.tracker-scrubbing-header {
+  padding-right: 15px;
+
+ .header-items {
+    display: flex;
+    flex-direction: row;
+
+   :global{
+    .form-group {
+        width: 11%;
+      .control-label {
+          font-weight: bold;
+        }
+
+      .form-control-static {
+          overflow: auto;
+          max-height: 175px;
+        }
+      }
+    }
+  }
+}
+

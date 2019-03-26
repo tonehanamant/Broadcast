@@ -1,0 +1,36 @@
+
+:global(#proposal_secondary_demo) {
+ :global(.Select-arrow-zone) {
+      display: none !important;
+  }
+
+  :global(.Select.is-disabled>.Select-control) {
+    background-color: unset !important;
+  }
+
+ :global(.Select-control) {
+    border: none !important;
+  }
+}
+
+.post-scrubbing-header {
+  padding-right: 15px;
+
+ .header-items {
+    display: flex;
+    flex-direction: row;
+
+   :global(.form-group) {
+      width: 11%;
+     .control-label {
+        font-weight: bold;
+      }
+
+     :global(.form-control-static) {
+        overflow: auto;
+        max-height: 175px;
+      }
+    }
+  }
+}
+

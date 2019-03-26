@@ -182,10 +182,11 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.UPDATE_PROPOSAL_EDIT_FORM_DETAIL_GRID: {
       const details = [...state.proposalEditForm.Details];
       const detailIndex = details.findIndex(detail => detail.Id === payload.id);
-      const quarterIndex = payload.quarterIndex;
-      const weekIndex = payload.weekIndex;
+      const { quarterIndex, weekIndex } = payload;
       let rowIndex = details[detailIndex].GridQuarterWeeks.findIndex(
+        /* eslint-disable no-underscore-dangle */
         row => row._key === payload.row
+        /* eslint-enanle no-underscore-dangle */
       );
       if (rowIndex === -1) rowIndex = payload.row.replace(/row-/, "");
 
@@ -464,7 +465,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.SORT_OPEN_MARKET_DATA: {
       const activeData = { ...state.activeOpenMarketData };
       const sortedData = sortMarketsData(activeData.Markets, payload);
-      // console.log("SORT_OPEN_MARKET_DATA", payload, sortedData);
       return Object.assign({}, state, {
         activeOpenMarketData: {
           ...state.activeOpenMarketData,

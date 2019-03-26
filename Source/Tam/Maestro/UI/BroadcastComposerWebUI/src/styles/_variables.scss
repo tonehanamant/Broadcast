@@ -1,0 +1,194 @@
+@import "./functions/index";
+
+$font-weight: (
+  regular: normal,
+  light: 300,
+  medium: 500,
+  heavy: 900,
+  book: normal
+);
+// Colors
+$color-primary: #ec1a63;
+$color-secondary: #432c76;
+$color-tertiary:#fafafa;
+$color-success: #13d666;
+$color-warning: #ffc612;
+$color-invalid: #e50000;
+$color-link: #009cde;
+$color-grayscale-0: #ffffff;
+$color-grayscale-1: #dcdedd;
+$color-grayscale-2: #7d7d7c;
+$color-grayscale-3: #3e3e3f;
+$color-grayscale-4: #000101;
+$color-primary-0: make_color($color-primary, 100);
+$color-primary-1: make_color($color-primary, 80);
+$color-primary-2: make_color($color-primary, 60);
+$color-primary-3: make_color($color-primary, 40);
+$color-primary-4: make_color($color-primary, 20);
+$color-secondary-0: make_color($color-secondary, 100);
+$color-secondary-1: make_color($color-secondary, 80);
+$color-secondary-2: make_color($color-secondary, 60);
+$color-secondary-3: make_color($color-secondary, 40);
+$color-secondary-4: make_color($color-secondary, 20);
+$color-tertiary-0: make_color($color-tertiary, 100);
+$color-tertiary-1: make_color($color-tertiary, 80);
+$color-tertiary-2: make_color($color-tertiary, 60);
+$color-tertiary-3: make_color($color-tertiary, 40);
+$color-tertiary-4: make_color($color-tertiary, 20);
+$color-success-0: make_color($color-success, 100);
+$color-success-1: make_color($color-success, 80);
+$color-success-2: make_color($color-success, 60);
+$color-success-3: make_color($color-success, 40);
+$color-success-4: make_color($color-success, 20);
+$color-warning-0: make_color($color-warning, 100);
+$color-warning-1: make_color($color-warning, 80);
+$color-warning-2: make_color($color-warning, 60);
+$color-warning-3: make_color($color-warning, 40);
+$color-warning-4: make_color($color-warning, 20);
+$color-invalid-0: make_color($color-invalid, 100);
+$color-invalid-1: make_color($color-invalid, 80);
+$color-invalid-2: make_color($color-invalid, 60);
+$color-invalid-3: make_color($color-invalid, 40);
+$color-invalid-4: make_color($color-invalid, 20);
+$color-contrast-0: rgba($color-grayscale-0, 0);
+$color-contrast-1: rgba($color-grayscale-0, 0.1);
+$color-contrast-2: rgba($color-grayscale-0, 0.2);
+$color-contrast-3: rgba($color-grayscale-0, 0.3);
+$color-contrast-4: rgba($color-grayscale-0, 0.4);
+$color-contrast-5: rgba($color-grayscale-0, 0.5);
+$color-contrast-6: rgba($color-grayscale-0, 0.6);
+$color-contrast-8: rbga($color-grayscale-0, 0.8);
+$color-contrast-9: rbga($color-grayscale-0, 0.9);
+$color-contrast-10: rbga($color-grayscale-0, 1);
+$color-contrast-active: rgba($color-grayscale-0, 0.7);
+$color-contrast-opaque: rgba($color-grayscale-0, 1);
+$color-nav-link-hover: #2d61ff;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1440px
+);
+/* ************** 2. Base Styles ************** */
+/* ****---------- 2.1 Fonts ----------**** */
+/* ****---------- 2.2 Colors ----------**** */
+/* ****---------- 2.3 Transitions ----------**** */
+$transition-default-time: 0.15s;
+$transition-default-easing: ease-in-out;
+/* ************** 3. Components ************** */
+/* ****---------- 3.1 Buttons ----------**** */
+$button-font-size: 14px;
+$button-padding: 10px;
+$button-border-stroke: 1px solid;
+$button-min-width: 130px;
+$button-height: 40px;
+$button-border-radius: 3px;
+$button-icon-font-size: 12px;
+$button-icon-height: 30px;
+$button-icon-background: transparent;
+$button-icon-border: 1px solid $color-grayscale-2;
+$button-icon-border-radius: 3px;
+$button-icon-padding: 0 10px;
+$button-icon-text-decoration: none;
+$button-icon-text-margin: 10px 0 0 0;
+$button-icon-hover-border: 1px solid $color-grayscale-3;
+/* ****---------- 3.2 Inputs ----------**** */
+$input-color-border: make_color($color-grayscale-2, 75);
+$input-color-text: $color-grayscale-3;
+$input-color-disabled: $color-grayscale-1;
+$input-general-display: block;
+$input-general-font-size: 16px;
+$input-general-font-color: $color-grayscale-3;
+$input-general-padding-top: 10px;
+$input-general-padding-bottom: 8px;
+$input-general-padding-sides: 15px;
+$input-general-padding: $input-general-padding-top $input-general-padding-sides
+  $input-general-padding-bottom $input-general-padding-sides;
+$input-general-margin-top: 20px;
+$input-general-height: 42px;
+$input-general-border-stroke: 1px solid;
+$input-general-border: $input-general-border-stroke $input-color-border;
+$input-general-border-radius: 2px;
+$input-general-width: 100%;
+$input-general-placeholder-color: $color-grayscale-1;
+$input-label-line-height: 1.25;
+$input-label-font-size: 16px;
+$input-label-margin-bottom: 5px;
+$input-error-font-size: 12px;
+$input-error-border: $input-general-border-stroke $color-invalid;
+$input-error-text-color: $color-invalid;
+$input-error-text-margin: 5px;
+$input-error-padding-sides: 5px;
+$input-error-text-size: 12px;
+$input-disabled-border: $input-general-border-stroke $color-grayscale-1;
+$input-textarea-min-height: 120px;
+$input-textarea-width: 100%;
+$input-container-margin-bottom: 35px;
+$input-label-margin-bottom: 5px;
+$input-radio-button-checked-size: 12px;
+/* ****---------- 3.3 Tabs ----------**** */
+$tab-list-height: 50px;
+$tab-list-margin: 0;
+$tab-list-padding: 0;
+$tab-link-padding: 0 20px;
+$tab-link-line-height: $tab-list-height;
+$tab-link-text-size: 14px;
+$tab-link-color: $color-grayscale-2;
+$tab-link-active-color: $color-grayscale-4;
+$tab-line-height: 3px;
+$tab-line-transition-speed: 0.15s;
+$tab-line-transition-easing: ease-in-out;
+/* ****---------- 3.4 Modals / Dialogs ----------**** */
+$modal-base-position: fixed;
+$modal-base-zindex: 1000;
+$modal-lightbox-background: rgba($color-grayscale-3, 0.8);
+$modal-lightbox-width: 600px;
+$modal-lightbox-height: 450px;
+$modal-loading-background: rgba($color-grayscale-0, 0.75);
+$modal-dialog-background: rgba($color-grayscale-0, 0.5);
+$modal-dialog-width: 400px;
+$modal-dialog-body-padding: 0;
+$modal-dialog-text-align: center;
+$modal-content-background: $color-grayscale-0;
+$modal-content-border-radius: 3px;
+$modal-content-height: 80%;
+$modal-content-width: 80%;
+$modal-content-shadow: 0 2px 13px 0 rgba($color-grayscale-4, 0.5);
+$modal-general-padding: 40px;
+$modal-general-items-width: 100%;
+$modal-header-text-align: center;
+$modal-body-padding: 0 $modal-general-padding $modal-general-padding
+  $modal-general-padding;
+/* ************** 4. Features ************** */
+/* ****---------- 4.1 Navigation ----------**** */
+/* *------------- 4.1.1 Header -------------* */
+$nav-header-container-height: 50px;
+$nav-header-container-width: 100%;
+$nav-header-container-background: $color-grayscale-0;
+$nav-header-container-border-bottom: 1px solid $color-grayscale-1;
+$nav-header-logo-padding: 15px 20px;
+$nav-header-img-height: 20px;
+$nav-list-item-height: 100%;
+$nav-list-item-width: 100px;
+$nav-list-item-border-left: 1px solid $color-grayscale-1;
+$nav-list-item-padding: 0 24px;
+$nav-list-item-border: 2px solid;
+$nav-header-sub-container-top: calc(100% + 15px);
+$nav-header-sub-container-right: 11px;
+$nav-header-sub-container-width: 170px;
+$nav-header-sub-container-background: $color-grayscale-0;
+$nav-header-sub-container-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.23);
+$nav-header-sub-title-font-style: heavy;
+$nav-header-sub-title-font-size: 12px;
+$nav-header-sub-title-font-transform: uppercase;
+$nav-header-sub-title-padding: 10px;
+$nav-header-sub-list-width: 100%;
+$nav-header-sub-list-item-link-font-size: 14px;
+$nav-header-sub-list-item-link-decoration: none;
+$nav-header-sub-list-item-link-width: 100%;
+$nav-header-sub-list-item-link-height: 50px;
+$nav-header-sub-list-item-link-padding: 0 15px;
+$nav-header-sub-list-item-link-border-top: 1px solid $color-grayscale-1;
+$nav-header-sub-list-item-link-bar-width: 3px;
+$nav-header-sub-list-item-link-bar-color: $color-primary-1;

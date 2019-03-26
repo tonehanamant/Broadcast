@@ -1,36 +1,3 @@
 {
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
-  "rules": {
-    "import/extensions": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-named-as-default": 0,
-    "import/no-unresolved": 0,
-    "import/prefer-default-export": 0,
-    "linebreak-style": [0],
-    "no-console": 0,
-    "no-debugger": 1,
-    "no-multi-str": 0,
-    "no-param-reassign": 0,
-    "no-shadow": 0,
-    "no-underscore-dangle": 0,
-    "prettier/prettier": "error",
-    "react/forbid-prop-types": 0,
-    "react/jsx-filename-extension": 0,
-    "react/sort-comp": 0
-  },
-  "globals": {
-    "__API__": false
-  }
+  "extends": ["@cadent/eslint-config-cadent"]
 }

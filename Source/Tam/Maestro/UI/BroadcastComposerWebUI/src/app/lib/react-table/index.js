@@ -1,5 +1,5 @@
-import { Table, TableFixedColumn, EditableCell } from "./components/index";
-import ACTIONS from "./actions/index";
+import { Table, TableFixedColumn, EditableCell } from "./components";
+import ACTIONS from "./actions";
 import withGrid from "./hoc/withGrid";
 
 export { ACTIONS, EditableCell, withGrid, TableFixedColumn };

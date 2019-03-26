@@ -1,0 +1,41 @@
+.pricing-open-market-grid {
+
+  .pricing-open-market-tables {
+    display: flex;
+    flex-direction: row;
+    
+
+    :global(.pricing-guide-master-table),
+    :global(.pricing-guide-detail-table){
+      margin-top: 6px;
+      height: 500px;
+
+      :global(.rt-thead) {
+        padding-right: 17px;
+      }
+      
+      :global(.rt-tbody) {
+        overflow-y: scroll;
+        overflow-x: auto;
+      }
+    }
+    
+    :global(.pricing-guide-master-table) {
+      width: 40%;
+    }
+    :global(.pricing-guide-detail-table) {
+      width: 60%;
+
+      :global(.ReactTable) {
+        margin: 10px;
+        :global(.rt-thead) {
+          padding-right: 0;
+        }
+        
+        :global(.rt-tbody) {
+          overflow: auto;
+        }
+      }
+    }
+  }
+}

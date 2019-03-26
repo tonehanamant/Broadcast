@@ -1,0 +1,125 @@
+.modalBodyScroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 234px);
+}
+
+:global {
+  .panelCard {
+    .panel-heading {
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    .panel-footer {
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    .panel-title {
+      font-weight: bold;
+    }
+  }
+
+  .formEditToggle {
+    .btn.btn-link {
+      padding: 0px 0px 6px;
+    }
+    .cancel.btn.btn-link {
+      padding: 0px 0px 6px 12px;
+      color: red;
+    }
+  }
+
+  .formCard {
+    .control-label {
+      font-size: 11px;
+      font-weight: normal;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 4px;
+    }
+  }
+
+  .cardLabel {
+    font-size: 11px;
+    font-weight: normal;
+    color: #333;
+    text-transform: uppercase;
+  }
+
+  .tag-label {
+    color: #fff !important;
+    font-size: 14px !important;
+    margin: 0 4px;
+    .active {
+      background-color: #d8d8d8 !important;
+    }
+    .inactive {
+      background-color: #eee !important;
+    }
+  }
+
+  .summary-bar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .summary-bar-left {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .summary-item {
+    margin-right: 34px;
+    &:last-child {
+      margin-right: 4px;
+    }
+    .single {
+      margin-right: 0px;
+    }
+    .summary-display {
+      font-size: 40px;
+      font-weight: bold;
+      line-height: 1.1;
+    }
+    .summary-label {
+      font-size: 14px;
+      color: #777;
+      /* line-height: 10px; */
+    }
+    .summary-tag {
+      font-size: 10px;
+      background-color: #d8d8d8;
+      padding: 2px;
+      text-align: center;
+      min-width: 40px;
+      display: inline-block;
+    }
+  }
+}
+
+.pricing-guide_confirmation-message {
+  .confirmation-text {
+    margin-bottom: 10px;
+  }
+
+  .confirmation-checkbox {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .description-icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 5px;
+      background-color: rgba(171, 171, 171, 0.76);
+      color: black;
+      border-radius: 50%;
+      width: 17px;
+      height: 17px;
+      font-weight: bold;
+    }
+  }
+}
