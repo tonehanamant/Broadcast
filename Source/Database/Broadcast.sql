@@ -196,7 +196,34 @@ IF EXISTS(SELECT 1 FROM sys.columns WHERE OBJECT_ID = OBJECT_ID('inventory_file_
 BEGIN
 	ALTER TABLE inventory_file_barter_header ALTER COLUMN audience_id int NULL
 END
+
 /*************************************** END PRI-5636 *****************************************************/
+
+/*************************************** START PRI-5655 ***************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE OBJECT_ID = OBJECT_ID('[dbo].[inventory_file_ratings_jobs]'))
+BEGIN
+	CREATE TABLE [dbo].inventory_file_ratings_jobs
+	(
+		[id] [INT] IDENTITY(1,1) NOT NULL,
+		[inventory_file_id] [INT] NOT NULL,
+		[status] [int] NOT NULL,
+		[queued_at] [datetime] NOT NULL,
+		[completed_at] [datetime] NULL,
+	 CONSTRAINT [PK_inventory_file_ratings_jobs] PRIMARY KEY CLUSTERED 
+	 (
+		[id] ASC
+	 ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_file_ratings_jobs] WITH CHECK ADD CONSTRAINT [FK_inventory_file_ratings_jobs_inventory_files] FOREIGN KEY([inventory_file_id])
+	REFERENCES [dbo].[inventory_files] ([id])
+	ALTER TABLE [dbo].[inventory_file_ratings_jobs] CHECK CONSTRAINT [FK_inventory_file_ratings_jobs_inventory_files]
+	CREATE INDEX IX_inventory_file_ratings_jobs_status ON [inventory_file_ratings_jobs] ([status])
+END
+
+/*************************************** END PRI-5655 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

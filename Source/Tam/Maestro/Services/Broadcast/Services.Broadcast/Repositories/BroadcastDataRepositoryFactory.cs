@@ -68,6 +68,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IInventoryRepository, InventoryRepository>();
+            instance.RegisterType<IInventoryFileRatingsJobsRepository, InventoryFileRatingsJobsRepository>();
             instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
             instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
             instance.RegisterType<IPostRepository, PostRepository>();

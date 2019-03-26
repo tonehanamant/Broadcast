@@ -4910,12 +4910,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station" EntitySet="stations" />
             <End Role="station_inventory_spot_snapshots" EntitySet="station_inventory_spot_snapshots" />
           </AssociationSet>
+<<<<<<< HEAD
           <EntitySet Name="inventory_file_ratings_jobs" EntityType="BroadcastModel.inventory_file_ratings_jobs" />
           <AssociationSet Name="FK_inventory_file_ratings_jobs_inventory_files" Association="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
           </AssociationSet>
+=======
           <EntitySet Name="daypart_codes" EntityType="BroadcastModel.daypart_codes" />
+>>>>>>> develop
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -8572,11 +8575,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
         <EntityType Name="inventory_file_ratings_jobs">
+=======
+        <EntityType Name="daypart_codes">
+>>>>>>> develop
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+<<<<<<< HEAD
           <Property Name="inventory_file_id" Type="Int32" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
@@ -8595,14 +8603,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="daypart_codes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+=======
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="is_active" Type="Boolean" Nullable="false" />
         </EntityType>
+>>>>>>> develop
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10065,6 +10070,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+<<<<<<< HEAD
           <EntitySetMapping Name="inventory_file_ratings_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_file_ratings_jobs">
               <MappingFragment StoreEntitySet="inventory_file_ratings_jobs">
@@ -10072,15 +10078,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="queued_at" ColumnName="queued_at" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="inventory_file_id" ColumnName="inventory_file_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+=======
           <EntitySetMapping Name="daypart_codes">
             <EntityTypeMapping TypeName="BroadcastModel.daypart_codes">
               <MappingFragment StoreEntitySet="daypart_codes">
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="name" ColumnName="name" />
+>>>>>>> develop
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

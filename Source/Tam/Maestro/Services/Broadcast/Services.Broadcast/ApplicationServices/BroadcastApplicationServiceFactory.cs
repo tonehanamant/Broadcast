@@ -153,6 +153,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>();
             unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
             unityContainer.RegisterType<ILockingEngine, LockingEngine>();
+            unityContainer.RegisterType<IInventoryRatingsProcessingService, InventoryRatingsProcessingService>();
 
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
             unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();

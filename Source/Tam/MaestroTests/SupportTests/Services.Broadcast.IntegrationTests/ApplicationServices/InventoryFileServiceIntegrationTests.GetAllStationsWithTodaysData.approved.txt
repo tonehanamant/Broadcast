@@ -22,9 +22,9 @@
     "CallLetters": "WTTV+",
     "Code": 110,
     "LegacyCallLetters": "WTTV",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Indianapolis",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "NBC",
@@ -211,18 +211,18 @@
     "CallLetters": "WPIX 11.1",
     "Code": 5014,
     "LegacyCallLetters": "WPIX",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "New York",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "KENS 5.1",
     "Code": 5022,
     "LegacyCallLetters": "KENS",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "San Antonio",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "NBC",
@@ -283,9 +283,9 @@
     "CallLetters": "WIVB-TV 4.1",
     "Code": 5049,
     "LegacyCallLetters": "WIVB",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "CBS",
@@ -301,9 +301,9 @@
     "CallLetters": "WBRC 6.1",
     "Code": 5052,
     "LegacyCallLetters": "WBRC",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Birmingham (Ann and Tusc)",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CBS",
@@ -346,9 +346,9 @@
     "CallLetters": "WGN-TV 9.1",
     "Code": 5066,
     "LegacyCallLetters": "WGN",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Chicago",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CBS",
@@ -418,27 +418,27 @@
     "CallLetters": "WHDH 7.1",
     "Code": 5089,
     "LegacyCallLetters": "WHDH",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Boston (Manchester)",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "ABC",
     "CallLetters": "WTNH 8.1",
     "Code": 5094,
     "LegacyCallLetters": "WTNH",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Hartford & New Haven",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "CBS",
     "CallLetters": "WUSA 9.1",
     "Code": 5098,
     "LegacyCallLetters": "WUSA",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Washington, DC (Hagrstwn)",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "NBC",
@@ -463,9 +463,9 @@
     "CallLetters": "WSYX 6.1",
     "Code": 5112,
     "LegacyCallLetters": "WSYX",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Columbus, OH",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CBS",
@@ -481,9 +481,9 @@
     "CallLetters": "WXIA-TV 11.1",
     "Code": 5117,
     "LegacyCallLetters": "WXIA",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Atlanta",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "CW",
@@ -535,9 +535,9 @@
     "CallLetters": "KOAA-TV 5.1",
     "Code": 5151,
     "LegacyCallLetters": "KOAA",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Colorado Springs-Pueblo",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "NBC",
@@ -814,9 +814,9 @@
     "CallLetters": "WESH 2.1",
     "Code": 5376,
     "LegacyCallLetters": "WESH",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Orlando-Daytona Bch-Melbrn",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CBS",
@@ -913,9 +913,9 @@
     "CallLetters": "WWL-TV 4.1",
     "Code": 5417,
     "LegacyCallLetters": "WWL",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "New Orleans",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "CBS",
@@ -931,9 +931,9 @@
     "CallLetters": "WTVC 9.1",
     "Code": 5437,
     "LegacyCallLetters": "WTVC",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Chattanooga",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "CBS",
@@ -985,9 +985,9 @@
     "CallLetters": "WKCF 18.1",
     "Code": 5557,
     "LegacyCallLetters": "WKCF",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Orlando-Daytona Bch-Melbrn",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CW",
@@ -1048,9 +1048,9 @@
     "CallLetters": "WZZM 13.1",
     "Code": 5681,
     "LegacyCallLetters": "WZZM",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "NBC",
@@ -1075,9 +1075,9 @@
     "CallLetters": "WPMT 43.1",
     "Code": 5717,
     "LegacyCallLetters": "WPMT",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Harrisburg-Lncstr-Leb-York",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "CBS",
@@ -1255,9 +1255,9 @@
     "CallLetters": "WGCL-TV 46.1",
     "Code": 5893,
     "LegacyCallLetters": "WGCL",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Atlanta",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "FOX",
@@ -1435,9 +1435,9 @@
     "CallLetters": "WNLO 23.1",
     "Code": 6333,
     "LegacyCallLetters": "WNLO",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Buffalo",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "IND",
@@ -1507,9 +1507,9 @@
     "CallLetters": "WFXT-DT 25.1",
     "Code": 6705,
     "LegacyCallLetters": "WFXT",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Boston (Manchester)",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "3/31/2019"
   },
   {
     "Affiliation": "FOX",
@@ -1651,9 +1651,9 @@
     "CallLetters": "KUSI-TV 51.1",
     "Code": 6907,
     "LegacyCallLetters": "KUSI",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "San Diego",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "FOX",
@@ -1696,9 +1696,9 @@
     "CallLetters": "WXIN 59.1",
     "Code": 6979,
     "LegacyCallLetters": "WXIN",
-    "ManifestMaxEndDate": "2018-12-30T00:00:00",
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Indianapolis",
-    "RateDataThrough": "12/30/2018"
+    "RateDataThrough": "6/30/2019"
   },
   {
     "Affiliation": "CW",

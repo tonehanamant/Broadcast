@@ -27,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cost_per_spot { get; set; }
         public int manifest_id { get; set; }
         public int station_id { get; set; }
-
+    
         public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest_dayparts station_inventory_manifest_dayparts { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

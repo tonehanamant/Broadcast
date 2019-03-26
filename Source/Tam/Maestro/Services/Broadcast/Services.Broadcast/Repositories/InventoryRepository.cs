@@ -50,6 +50,7 @@ namespace Services.Broadcast.Repositories
         bool HasSpotsAllocated(int manifestId);
         List<StationInventoryGroup> GetActiveInventoryGroupsBySourceAndContractedDaypart(InventorySource source, int contractedDaypartId, DateTime effectiveDate, DateTime endDate);
         void UpdateInventoryGroupsDateIntervals(List<StationInventoryGroup> inventoryGroups);
+        void UpdateInventoryRatesForManifests(List<StationInventoryManifest> manifests);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1113,6 +1114,40 @@ namespace Services.Broadcast.Repositories
 
                     context.SaveChanges();
                 });
+        }
+
+        public void UpdateInventoryRatesForManifests(List<StationInventoryManifest> manifests)
+        {
+            _InReadUncommitedTransaction(
+               context =>
+               {
+                   foreach(var manifest in manifests)
+                   {
+                       var dbManifest = context.station_inventory_manifest
+                            .Include(m => m.station_inventory_manifest_rates)
+                            .SingleOrDefault(m => m.id == manifest.Id);
+                       if (dbManifest == null) continue;
+
+                       foreach(var rate in manifest.ManifestRates)
+                       {
+                           var dbRate = dbManifest.station_inventory_manifest_rates
+                                .Where(r => r.spot_length_id == rate.SpotLengthId).SingleOrDefault();
+
+                           if(dbRate == null)
+                           {
+                               dbRate = new station_inventory_manifest_rates
+                               {
+                                   spot_length_id = rate.SpotLengthId
+                               };
+                               dbManifest.station_inventory_manifest_rates.Add(dbRate);
+                           }
+                           dbRate.spot_cost = rate.SpotCost;
+                       }
+
+                   }
+
+                   context.SaveChanges();
+               });
         }
     }
 }

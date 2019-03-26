@@ -265,9 +265,12 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_loaded_stations" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_stations" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations" />
+<<<<<<< HEAD
         <EntityTypeShape EntityType="BroadcastModel.inventory_file_ratings_jobs" Width="1.5" PointX="5" PointY="48.375" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files" />
+=======
         <EntityTypeShape EntityType="BroadcastModel.daypart_codes" Width="1.5" PointX="5.375" PointY="0.75" />
+>>>>>>> develop
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

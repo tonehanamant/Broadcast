@@ -44,7 +44,11 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IDataLakeFileService _DataLakeFileService;
+<<<<<<< HEAD
+        private readonly IImpressionsService _ImpressionsService;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
+=======
+>>>>>>> develop
 
         public BarterInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IBarterFileImporterFactory barterFileImporterFactory
@@ -53,8 +57,13 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IStationInventoryGroupService stationInventoryGroupService
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
+<<<<<<< HEAD
             , IDataLakeFileService dataLakeFileService
+            , IImpressionsService impressionsService
             , IInventoryRatingsProcessingService inventoryRatingsService)
+=======
+            , IDataLakeFileService dataLakeFileService)
+>>>>>>> develop
         {
             _BarterRepository = broadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -67,7 +76,11 @@ namespace Services.Broadcast.ApplicationServices
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _DataLakeFileService = dataLakeFileService;
+<<<<<<< HEAD
+            _ImpressionsService = impressionsService;
             _InventoryRatingsService = inventoryRatingsService;
+=======
+>>>>>>> develop
         }
 
         /// <summary>
@@ -99,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _DataLakeFileService.Save(request);
             }
-            catch(Exception ex)
+            catch
             {
                 throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
             }
@@ -130,11 +143,15 @@ namespace Services.Broadcast.ApplicationServices
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 
+<<<<<<< HEAD
                         var manifests = barterFile.InventoryGroups.SelectMany(x => x.Manifests);
 
                         //The following two steps are processed as a separate background job. See below.
                         //_ImpressionsService.GetProjectedStationImpressions(manifests, header.PlaybackType, header.ShareBookId, header.HutBookId);
                         //_ProprietarySpotCostCalculationEngine.CalculateSpotCost(manifests);
+=======
+                        fileImporter.PopulateRates(barterFile);
+>>>>>>> develop
 
                         _StationInventoryGroupService.AddNewStationInventory(barterFile, header.EffectiveDate, header.EndDate, header.ContractedDaypartId);
 

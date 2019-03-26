@@ -84,7 +84,7 @@
     "CallLetters": "KRQE+",
     "Code": 181,
     "LegacyCallLetters": "KRQE",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Albuquerque-Santa Fe"
   },
   {
@@ -3156,7 +3156,7 @@
     "CallLetters": "WTVC 9.2",
     "Code": 3614,
     "LegacyCallLetters": "ETVC",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Chattanooga"
   },
   {
@@ -4388,7 +4388,7 @@
     "CallLetters": "WNYW 5.1",
     "Code": 5010,
     "LegacyCallLetters": "WNYW",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "New York"
   },
   {
@@ -4396,7 +4396,7 @@
     "CallLetters": "WCBS-TV 2.1",
     "Code": 5012,
     "LegacyCallLetters": "WCBS",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "New York"
   },
   {
@@ -4404,7 +4404,7 @@
     "CallLetters": "WNBC 4.1",
     "Code": 5013,
     "LegacyCallLetters": "WNBC",
-    "ManifestMaxEndDate": "2016-06-06T00:00:00",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "New York"
   },
   {
@@ -4476,7 +4476,7 @@
     "CallLetters": "KFMB-TV 8.1",
     "Code": 5024,
     "LegacyCallLetters": "KFMB",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "San Diego"
   },
   {
@@ -4540,7 +4540,7 @@
     "CallLetters": "KDFW 4.1",
     "Code": 5035,
     "LegacyCallLetters": "KDFW",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Dallas-Ft. Worth"
   },
   {
@@ -4612,7 +4612,7 @@
     "CallLetters": "WBBM-TV 2.1",
     "Code": 5050,
     "LegacyCallLetters": "WBBM",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Chicago"
   },
   {
@@ -4620,7 +4620,7 @@
     "CallLetters": "WBZ-TV 4.1",
     "Code": 5054,
     "LegacyCallLetters": "WBZ",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Boston (Manchester)"
   },
   {
@@ -4740,7 +4740,7 @@
     "CallLetters": "WJBK 2.1",
     "Code": 5075,
     "LegacyCallLetters": "WJBK",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Detroit"
   },
   {
@@ -4772,7 +4772,7 @@
     "CallLetters": "WOOD-TV 8.1",
     "Code": 5081,
     "LegacyCallLetters": "WOOD",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Grand Rapids-Kalmzoo-B.Crk"
   },
   {
@@ -4876,7 +4876,7 @@
     "CallLetters": "WSB-TV 2.1",
     "Code": 5102,
     "LegacyCallLetters": "WSB",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Atlanta"
   },
   {
@@ -4916,7 +4916,7 @@
     "CallLetters": "WTVJ 6.1",
     "Code": 5111,
     "LegacyCallLetters": "WTVJ",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Miami-Ft. Lauderdale"
   },
   {
@@ -4924,7 +4924,7 @@
     "CallLetters": "WDIV-TV 4.1",
     "Code": 5114,
     "LegacyCallLetters": "WDIV",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Detroit"
   },
   {
@@ -5020,7 +5020,7 @@
     "CallLetters": "KKTV 11.1",
     "Code": 5130,
     "LegacyCallLetters": "KKTV",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Colorado Springs-Pueblo"
   },
   {
@@ -5068,7 +5068,7 @@
     "CallLetters": "KHOU 11.1",
     "Code": 5138,
     "LegacyCallLetters": "KHOU",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Houston"
   },
   {
@@ -5316,7 +5316,7 @@
     "CallLetters": "KSBW 8.1",
     "Code": 5180,
     "LegacyCallLetters": "KSBW",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Monterey-Salinas"
   },
   {
@@ -5492,7 +5492,7 @@
     "CallLetters": "WPRI-TV 12.1",
     "Code": 5208,
     "LegacyCallLetters": "WPRI",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Providence-New Bedford"
   },
   {
@@ -5772,7 +5772,7 @@
     "CallLetters": "WKMG-TV 6.1",
     "Code": 5259,
     "LegacyCallLetters": "WKMG",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
@@ -5964,7 +5964,7 @@
     "CallLetters": "WLOS 13.1",
     "Code": 5289,
     "LegacyCallLetters": "WLOS",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Greenvll-Spart-Ashevll-And"
   },
   {
@@ -6148,7 +6148,7 @@
     "CallLetters": "WTVT 13.1",
     "Code": 5321,
     "LegacyCallLetters": "WTVT",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Tampa-St. Pete (Sarasota)"
   },
   {
@@ -6484,7 +6484,7 @@
     "CallLetters": "WSVN 7.1",
     "Code": 5375,
     "LegacyCallLetters": "WSVN",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Miami-Ft. Lauderdale"
   },
   {
@@ -6684,7 +6684,7 @@
     "CallLetters": "WPLG 10.1",
     "Code": 5412,
     "LegacyCallLetters": "WPLG",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Miami-Ft. Lauderdale"
   },
   {
@@ -6724,7 +6724,7 @@
     "CallLetters": "WCVB-TV 5.1",
     "Code": 5420,
     "LegacyCallLetters": "WCVB",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Boston (Manchester)"
   },
   {
@@ -6908,7 +6908,7 @@
     "CallLetters": "WVII-TV 7.1",
     "Code": 5452,
     "LegacyCallLetters": "WVII",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Bangor"
   },
   {
@@ -7164,7 +7164,7 @@
     "CallLetters": "WILX-TV 10.1",
     "Code": 5494,
     "LegacyCallLetters": "WILX",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Lansing"
   },
   {
@@ -7236,7 +7236,7 @@
     "CallLetters": "WFOR-TV 4.1",
     "Code": 5508,
     "LegacyCallLetters": "WFOR",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Miami-Ft. Lauderdale"
   },
   {
@@ -7732,7 +7732,7 @@
     "CallLetters": "WAFB 9.1",
     "Code": 5629,
     "LegacyCallLetters": "WAFB",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Baton Rouge"
   },
   {
@@ -7972,7 +7972,7 @@
     "CallLetters": "WCIV 36.2",
     "Code": 5672,
     "LegacyCallLetters": "ECIV",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Charleston, SC"
   },
   {
@@ -8084,7 +8084,7 @@
     "CallLetters": "WLNE-TV 6.1",
     "Code": 5696,
     "LegacyCallLetters": "WLNE",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Providence-New Bedford"
   },
   {
@@ -8164,7 +8164,7 @@
     "CallLetters": "WZVN-TV 26.1",
     "Code": 5712,
     "LegacyCallLetters": "WZVN",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Ft. Myers-Naples"
   },
   {
@@ -8300,7 +8300,7 @@
     "CallLetters": "WDVM 25.1",
     "Code": 5733,
     "LegacyCallLetters": "WDVM",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Washington, DC (Hagrstwn)"
   },
   {
@@ -8500,7 +8500,7 @@
     "CallLetters": "WCCB 18.1",
     "Code": 5765,
     "LegacyCallLetters": "WCCB",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Charlotte"
   },
   {
@@ -8572,7 +8572,7 @@
     "CallLetters": "WKEF 22.1",
     "Code": 5777,
     "LegacyCallLetters": "WKEF",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Dayton"
   },
   {
@@ -9772,7 +9772,7 @@
     "CallLetters": "WBBH-TV 20.1",
     "Code": 5974,
     "LegacyCallLetters": "WBBH",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Ft. Myers-Naples"
   },
   {
@@ -9972,7 +9972,7 @@
     "CallLetters": "KCPQ 13.1",
     "Code": 6019,
     "LegacyCallLetters": "KCPQ",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Seattle-Tacoma"
   },
   {
@@ -10388,7 +10388,7 @@
     "CallLetters": "WRGT-TV 45.1",
     "Code": 6154,
     "LegacyCallLetters": "WRGT",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Dayton"
   },
   {
@@ -10524,7 +10524,7 @@
     "CallLetters": "KXRM-TV 21.1",
     "Code": 6176,
     "LegacyCallLetters": "KXRM",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Colorado Springs-Pueblo"
   },
   {
@@ -10700,7 +10700,7 @@
     "CallLetters": "WTAT-TV 24.1",
     "Code": 6239,
     "LegacyCallLetters": "WTAT",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Charleston, SC"
   },
   {
@@ -10740,7 +10740,7 @@
     "CallLetters": "WFTX-TV 36.1",
     "Code": 6247,
     "LegacyCallLetters": "WFTX",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Ft. Myers-Naples"
   },
   {
@@ -11924,7 +11924,7 @@
     "CallLetters": "KOKH-TV 25.1",
     "Code": 6704,
     "LegacyCallLetters": "KOKH",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-06-30T00:00:00",
     "OriginMarket": "Oklahoma City"
   },
   {
@@ -12556,7 +12556,7 @@
     "CallLetters": "WOFL 35.1",
     "Code": 6818,
     "LegacyCallLetters": "WOFL",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Orlando-Daytona Bch-Melbrn"
   },
   {
@@ -12852,7 +12852,7 @@
     "CallLetters": "WACH 57.1",
     "Code": 6873,
     "LegacyCallLetters": "WACH",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Columbia, SC"
   },
   {
@@ -13132,7 +13132,7 @@
     "CallLetters": "WNAC-TV 64.1",
     "Code": 6924,
     "LegacyCallLetters": "WNAC",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Providence-New Bedford"
   },
   {
@@ -18052,7 +18052,7 @@
     "CallLetters": "WBTS-LD 8.1",
     "Code": 11704,
     "LegacyCallLetters": "WBTS",
-    "ManifestMaxEndDate": null,
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
     "OriginMarket": "Boston (Manchester)"
   },
   {
@@ -19246,5 +19246,13 @@
     "LegacyCallLetters": "MJCT",
     "ManifestMaxEndDate": null,
     "OriginMarket": "Grand Junction-Montrose"
+  },
+  {
+    "Affiliation": null,
+    "CallLetters": "NECN",
+    "Code": null,
+    "LegacyCallLetters": "NECN",
+    "ManifestMaxEndDate": "2019-03-31T00:00:00",
+    "OriginMarket": null
   }
 ]

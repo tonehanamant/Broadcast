@@ -594,8 +594,11 @@
     <Compile Include="Repositories\BroadcastRepositoryBase.cs" />
     <Compile Include="Entities\BvsFileSummary.cs" />
     <Compile Include="Repositories\BvsPostDetailsRepository.cs" />
+<<<<<<< HEAD
     <Compile Include="Repositories\InventoryFileRatingsJobsRepository.cs" />
+=======
     <Compile Include="Repositories\DaypartCodeRepository.cs" />
+>>>>>>> develop
     <Compile Include="Repositories\IsciRepository.cs" />
     <Compile Include="Repositories\NtiTransmittalsRepository.cs" />
     <Compile Include="Repositories\PricingGuideRepository.cs" />

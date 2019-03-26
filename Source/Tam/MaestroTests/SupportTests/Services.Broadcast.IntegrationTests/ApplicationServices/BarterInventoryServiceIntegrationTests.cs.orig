@@ -11,7 +11,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.BarterInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
-using Services.Broadcast.IntegrationTests.Stubbs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -26,10 +25,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class BarterInventoryServiceIntegrationTests
     {
         private IBarterInventoryService _BarterService;
+<<<<<<< HEAD
         private IInventoryFileRepository _InventoryFileRepository;
         private IInventoryRepository _IInventoryRepository;
         private IBarterRepository _BarterRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+
+    [SetUp]
+        public void init()
+        {
+            try
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
+                _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
+                _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+                _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+                _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
+                _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
+
+    [Test]
+=======
+        private IInventoryFileRepository _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+        private IInventoryRepository _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+        private IBarterRepository _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();     
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -38,13 +63,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStubb>();
             _BarterService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBarterInventoryService>();
-            _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            _BarterRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IBarterRepository>();
-            _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
         }
 
-    [Test]
+        [Test]
+>>>>>>> develop
         [UseReporter(typeof(DiffReporter))]
         public void BarterInventoryService_SaveBarterInventoryFile()
         {
