@@ -236,6 +236,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void ShouldNotReturnDataFromFailedInventoryFile()
         {
