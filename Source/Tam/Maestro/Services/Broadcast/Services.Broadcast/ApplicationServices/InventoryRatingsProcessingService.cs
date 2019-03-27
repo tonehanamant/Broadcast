@@ -74,6 +74,15 @@ namespace Services.Broadcast.ApplicationServices
         public void ProcessInventoryRatingsJob(int jobId)
         {
             var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
+            if(job == null)
+            {
+                throw new ApplicationException($"Job with id {jobId} was not found");
+            }
+            if(job.Status != InventoryFileRatingsProcessingStatus.Queued)
+            {
+                throw new ApplicationException($"Job with id {jobId} already has status {job.Status}");
+            }
+
             job.Status = InventoryFileRatingsProcessingStatus.Processing;
             _InventoryFileRatingsJobsRepository.UpdateJob(job);
             try
@@ -92,6 +101,7 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryRepository.UpdateInventoryRatesForManifests(manifests);
 
                 job.Status = InventoryFileRatingsProcessingStatus.Succeeded;
+                job.CompletedAt = DateTime.Now;
             }
             catch (Exception e)
             {

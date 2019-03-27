@@ -121,6 +121,21 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult ProcessInventoryRatingsJob(int jobId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+                service.ProcessInventoryRatingsJob(jobId);
+                ViewBag.Message = "Job Processed";
+            }catch(Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+            return View("Index");
+        }
+
+        [HttpPost]
         [Route("UploadMarketCoverageFile")]
         public ActionResult UploadMarketCoverageFile(HttpPostedFileBase file)
         {

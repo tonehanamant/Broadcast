@@ -59,7 +59,7 @@ namespace Services.Broadcast.Repositories
                             Status = (InventoryFileRatingsProcessingStatus)j.status,
                             QueuedAt = j.queued_at,
                             CompletedAt = j.completed_at
-                        }).Single();
+                        }).SingleOrDefault();
 
                     return jobs;
                 });
